@@ -248,11 +248,11 @@ function scssInfographs() {
 
 // SASS standalone gallery file
 function scssGallery() {
-  const source = ["node_modules/photoswipe/dist/photoswipe.css", "src/vendor/photoswipe/uos-skin.css", "dist/css/campaigns/grid-gallery.css"];
+  const source = ["node_modules/photoswipe/dist/photoswipe.css", "src/vendor/photoswipe/uos-skin.css", "medias/Categorised/Dist/css/campaigns/grid-gallery.css"];
   return src(source)
     .pipe(concatCss("gallery.min.css"))
     .pipe(cleanCSS({ compatibility: "*" }))
-    .pipe(dest("dist/css"))
+    .pipe(dest("medias/Categorised/Dist/css"))
     .pipe(browserSync.stream());
 }
 
