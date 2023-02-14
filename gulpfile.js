@@ -82,7 +82,7 @@ function js() {
         ],
       })
     )
-    .pipe(dest("dist/js"))
+    .pipe(dest("medias/Categorised/Dist/js"))
     .pipe(browserSync.stream());
 }
 
