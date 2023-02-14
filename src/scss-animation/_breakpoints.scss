@@ -1,0 +1,293 @@
+@media screen and (max-width: 89.99875em) {
+    .c-int-stat {
+        h1 {
+            font-size: 6.25rem; // 100px;
+        }
+        p {
+            font-size: 1.625rem; /* 26px */
+        }
+    }
+    .c-top-150-stat {
+        padding: 100px 0;
+    }
+    .c-top-150-stat span[class*="-study-abroad"] {
+        font-size: 14.375rem; // 230px
+    }
+    .c-alumni-stat.animate .center-pin {
+        animation: bounce 1s linear 1;
+    }
+    .c-research-stat {
+        padding: 100px 0;
+    }
+    .c-research__microscope {
+        max-width: 250px;
+    }
+    .c-fraction {
+        font-size: 9.375rem; // 150px;
+    }
+    .c-fraction-header {
+        font-size: 3.5rem; /* 56px */
+    }
+    .c-overseas-stat {
+        padding: 100px 0;
+        background-position: 100% top;
+    }
+    .c-overseas-stat h1 {
+        font-size: 9.375rem; // 150px;
+    }
+    .c-teaching-stat {
+        padding: 100px 0;
+    } 
+    .c-lecturers-stat h1 {
+        font-size: 9.375rem; // 150px;
+    }
+    .c-campus {
+        padding: 100px 0 0;
+    }
+    .c-campus__trophy {
+        max-width: 230px;
+    }
+    .c-campus__podium {
+        max-width: 430px;
+    }
+    .c-welcoming-stat__wrap {
+        padding: 100px 0;
+    }
+    .c-welcoming-stat img {
+        max-width: 300px;
+    }
+    .c-nationalities {
+        padding: 100px 0;
+    }
+}
+
+@media screen and (max-width: 77.49875em) {
+    .c-int-stat h1,
+    .c-teaching-stat h1 {
+        font-size: 4.5rem; /* 72px */
+    }
+    .c-int-stat p {
+        font-size: 1.375rem; /* 22px */
+    }
+    .c-partners-stat {
+        padding: 150px 0 50px;
+        margin: 100px 0 0;
+    }
+    .c-research__microscope {
+        max-width: 200px;
+        margin: 0 0 0 30px;
+    }
+    .c-teaching-stat h1 {
+        font-size: 3.4375rem; /* 55px */
+    }
+    .c-lecturers-stat h1 {
+        font-size: 6.25rem; // 100px;
+    }
+    .c-lecturers-stat img {
+        max-width: 300px;
+    }
+}
+
+@media screen and (max-width: 63.99875em) {
+    .c-research-stat p {
+        font-size: 1.25rem; /* 20px */
+    }
+    .c-lecturers-stat img {
+        max-width: 250px;
+    }
+    .c-campus__stat-wrap {
+        margin-bottom: 145px;
+    }
+    .c-campus__trophy-wrap {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+    .c-campus__trophy {
+        max-width: 150px;
+    }
+    .c-campus__podium {
+        max-width: 300px;
+    }
+}
+
+@media screen and (max-width: 39.99875em) {
+    .c-int-stat h1,
+    .c-teaching-stat h1 {
+        font-size: 3.75rem; /* 60px */
+        margin: 0;
+    }
+    .c-int-stat{ 
+        padding-bottom: 60px;
+        
+        p {
+            font-size: 1.25rem; /* 20px */
+            margin: 0 0 30px;
+        }
+        p:last-child {
+            margin: 0;
+        }
+        small {
+            font-size: 1rem; /* 16px */
+        }
+    } 
+
+    .c-top-150-stat {
+        padding: 60px 0;
+    }
+    .c-top-150__wrapper {
+        flex-direction: column;
+    }
+    .c-top-150-stat span[class*="-study-abroad"] {
+        font-size: 6.25rem; // 100px
+    }
+
+    .c-alumni-stat {
+        padding: 60px 0;
+        background-image: url('/webcomponents/dist/images/infographics/map-mobile.svg');
+
+        span[class*="-location"] {
+            font-size: 6.25rem; // 100px
+        }
+    }
+
+    .c-partners-stat {
+        padding: 120px 0 10px;
+        margin: 60px 0 0;
+    }
+    .c-partners__group1 {
+        max-width: 150px;
+    }
+    .c-partners-stat.animate .c-partners__group1 {
+        top: -97px;
+    }
+    .c-partners__group2,
+    .c-partners__group3 {
+        max-width: 92px;
+    }
+    .c-partners-stat.animate .c-partners__group2,
+    .c-partners-stat.animate .c-partners__group3 {
+        top: -83px;
+    }
+    .c-partners-stat.animate .c-partners__group2 {
+        left: -219px;
+    }
+    .c-partners-stat.animate .c-partners__group3 {
+        right: -219px;
+    }
+    .c-partners__group4 {
+        max-width: 100px;
+    }
+    .c-partners-stat.animate .c-partners__group4 {
+        top: -120px;
+    }
+
+    .c-research-stat {
+        padding: 40px 0;
+    }
+    .c-research-stat .cell {
+        flex-direction: column;
+    }
+    .c-research-stat .cell .flex-container {
+        order: 2;
+    }
+    .c-fraction-header,
+    .c-fraction {
+        display: inline-block;
+        font-size: 2.5rem; /* 40px */
+        margin-bottom: 15px;
+        text-transform: capitalize;
+    }
+    .c-research__microscope {
+        order: 1;
+    }
+    .c-research-stat img {
+        margin: 0 0 30px 0;
+        max-width: 108px;
+    }
+    .c-research-stat p {
+        font-size: 1.25rem; /* 20px */
+    }
+    .c-research-stat p:last-child {
+        margin: 0;
+    }
+
+    .c-overseas-stat {
+        background-image: url('/webcomponents/dist/images/infographics/planes-mobile.svg');
+        background-position: center 25%;
+        padding: 40px;
+
+        .cell {
+            align-items: center;
+        }
+        h1 {
+            font-size: 5rem; // 80px;
+        }
+    }
+    .c-overseas-stat__wrapper {
+        margin: 150px 0 0;
+    }
+
+    .c-teaching-stat {
+        padding: 60px;
+    }
+    .c-teaching-stat h1 {
+        font-size: 1.875rem; /* 30px */
+        margin: 0 0 30px 0;
+    }
+    .c-teaching-stat.c-int-stat p {
+        margin: 0;
+    }
+    .c-teaching-stat img {
+        max-width: 40px;
+    }
+
+    .c-lecturers-stat {
+        padding: 60px 0;
+    }
+    .c-lecturers-stat img {
+        margin-bottom: 20px;
+        position: relative;
+        left: 0;
+    }
+    .c-lecturers-stat h1 {
+        font-size: 5rem; // 80px;
+    }
+    .c-lecturers-stat__wrap,
+    .c-lecturers-stat .c-int-stat__share {
+        padding: 0;
+    }
+
+    .c-campus-stat {
+        padding: 60px 0;
+    }
+    .c-campus__stat {
+        flex-direction: column;
+    }
+    .c-campus__stat-wrap {
+        order: 2;
+        margin: 20px 0 0;
+    }
+    .c-campus__trophy-wrap {
+        position: relative;
+        order: 1;
+    }
+    .c-campus__podium {
+        max-width: 250px;
+    }
+
+    .c-welcoming-stat img {
+        position: relative;
+        margin: 0 auto;
+    }
+    .c-welcoming-stat__wrap {
+        padding: 0 0 60px;
+    }
+
+    .c-nationalities {
+        padding: 60px 0;
+    }
+    .c-nationalities img {
+        max-width: 200px;
+    }
+}

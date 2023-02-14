@@ -1,0 +1,33 @@
+/* 
+ * Share Buttons
+
+ .c-share {
+    display: inline-block;
+    font-size: 1.5rem; 
+    margin: 30px 0;
+}
+
+a.c-share__icon {
+    margin: 0 2px;
+    display: inline-block;
+}
+
+a.c-share__icon {
+    text-decoration: none;
+    color: $black;
+    outline: none;
+
+    &:hover,
+    &.focus,
+    &.visited {
+        color: $black;
+    }
+}
+
+@media screen and #{breakpoint(small down)} {
+    .c-share {
+        display: block;
+        margin: 20px 0;
+    }
+}
+*/

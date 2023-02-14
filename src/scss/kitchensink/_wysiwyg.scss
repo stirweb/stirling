@@ -1,0 +1,83 @@
+/**
+WYSIWYG Content
+***/
+.c-wysiwyg-content ul {
+    margin-bottom: 16px;
+}
+
+/*
+WYSIWYG Content Styles
+***/
+.c-wysiwyg-content {
+    overflow-x: auto;
+}
+
+/*
+WYSIWYG Content Blockquote
+***/
+.c-wysiwyg-content {
+    p + blockquote:not(.c-pullquote) {
+        margin: 60px auto 0;
+
+        + p:not(.quote-attribute) {
+            margin: 60px auto 1rem;
+        }
+    }
+    blockquote {
+        border-left: 5px solid $energy-green;
+        font-weight: 600;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 0 0 30px;
+
+        p {
+            color: $heritage-green;
+            font-size: 1.25rem !important /* 20px */ ;
+            line-height: 1.5;
+
+            &::before {
+                content: open-quote;
+            }
+            &::after {
+                content: close-quote;
+            }
+        }
+    }
+    .quote-attribute {
+        font-weight: 600;
+        margin: 0 auto 60px;
+        max-width: 960px;
+        padding-left: 35px;
+    }
+}
+@media screen and #{breakpoint(xlarge down)} {
+    .c-wysiwyg-content {
+        p + blockquote {
+            margin: 40px auto 0;
+
+            + p:not(.quote-attribute) {
+                margin: 40px auto 1rem;
+            }
+        }
+        .quote-attribute {
+            margin: 0 auto 40px;
+        }
+    }
+}
+
+/*
+Testimonial - Full Testimonial 
+***/
+.c-wysiwyg-content .c-blockquote--simple,
+.c-blockquote--simple {
+    border: none;
+    font-weight: normal;
+    max-width: initial;
+    padding: 0;
+}
+.c-wysiwyg-content .c-blockquote--simple p,
+.c-wysiwyg-content .c-blockquote--simple li,
+.c-blockquote--simple li,
+.c-blockquote--simple p {
+    color: $black;
+}

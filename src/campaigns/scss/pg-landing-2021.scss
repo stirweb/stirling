@@ -1,0 +1,55 @@
+/* Original (auto-crop) mastheads */
+.c-masthead__image::after {
+  background: rgba(0, 0, 0, 0);
+  background-repeat: repeat-x;
+  background-position: center bottom;
+  background-size: contain;
+  /* background-image: SET BY T4 */
+}
+
+/* Responsive (no-crop) mastheads*/
+.c-responsive-masthead {
+  position: relative;
+  &::after {
+    content: "";
+    background: transparent;
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-size: contain;
+    width: 100%;
+    max-width: 77.6rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /* background-image: SET BY T4; */
+  }
+}
+
+.c-header-nav--primary,
+.c-header-nav--secondary li:nth-of-type(1),
+.c-header-nav--secondary li:nth-of-type(2),
+header nav .hide-for-xlarge,
+#header-portal__button {
+  display: none;
+}
+
+a#pg_camp_2021_register,
+a#pg_camp_2021_opendayregister,
+a#pg_camp_2021_openday,
+[data-component="sticky-button"],
+#pg_camp_2021_howtogrow,
+#cta-120301,
+[id^="cta-"] {
+  border: none;
+  background: rgb(48, 3, 112);
+  background: linear-gradient(130deg, rgba(48, 3, 112, 1) 0%, rgba(1, 131, 142, 1) 50%, rgba(0, 105, 56, 1) 100%);
+
+  &:hover {
+    background: rgb(48, 3, 112);
+    background: linear-gradient(30deg, rgba(48, 3, 112, 1) 0%, rgba(1, 131, 142, 1) 50%, rgba(0, 105, 56, 1) 100%);
+  }
+
+  &:hover {
+    color: #fff !important;
+  }
+}

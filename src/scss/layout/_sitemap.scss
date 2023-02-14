@@ -1,0 +1,102 @@
+.sitemap {
+    position: relative;
+
+    > ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        padding-right: 15px;
+
+        > li {
+            width: 100%;
+            margin-bottom: 80px;
+            border-top: 5px solid #eee;
+            padding-top: 1rem;
+
+            // second level e.g. "Study"
+            > a {
+                font-family: FSMaja, serif;
+                font-weight: 100;
+                font-size: 2.8rem !important;
+            }
+
+            > ul {
+                list-style: none;
+                margin: 0;
+                padding: 30px 0 0 0;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-gap: 10px;
+
+                @media screen and #{breakpoint(medium down)} {
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                @media screen and #{breakpoint(small down)} {
+                    grid-template-columns: 1fr;
+                }
+
+                > li {
+                    margin-bottom: 30px;
+                    padding-right: 30px;
+
+                    // second level e.g. "UG > How to apply"
+                    > a {
+                        font-weight: bold;
+
+                        &:hover {
+                            text-decoration: none;
+                            border-bottom: 2px solid $energy-green;
+                        }
+                    }
+
+                    > ul {
+                        margin-top: 15px;
+                        margin-bottom: 30px;
+                        margin-right: 30px;
+                        list-style: none;
+                        margin-left: 0;
+
+                        > li {
+                            // second level e.g. "UG > How to apply"
+                            margin-top: 0.7rem;
+                            > a {
+                                font-size: 1rem; /* 16px */
+                                color: #3a3c39;
+                                border-bottom: 1px solid #a8a9a8 !important;
+
+                                &:hover {
+                                    text-decoration: none;
+                                    border-bottom: 1px solid #3a3c39 !important;
+                                }
+                            }
+
+                            > ul {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.sitemap--skip-top-level {
+    position: relative;
+
+    > ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        > li {
+            // first level "Home" .. we don't need this link, but can't avoid outputting it
+            > a {
+                display: none;
+            }
+
+            @extend .sitemap;
+        }
+    }
+}

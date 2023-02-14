@@ -1,0 +1,422 @@
+/*
+    Default Button Style Component
+
+    Also .expanded
+*/
+
+button {
+  color: inherit; /* default in Webkit/Blink is blue, others black. normalise by inheriting the colour from parent element */
+}
+
+.button {
+  line-height: 1.6;
+  padding: map-get($button-padding-list, default);
+  font-weight: bold;
+
+  // Padding
+  @each $size, $value in map-remove($button-padding-list, default) {
+    &.#{$size} {
+      padding: $value;
+    }
+  }
+
+  border: 2px solid transparent;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  &:hover {
+    border-bottom-color: transparent;
+  }
+
+  &:after {
+    content: "\e97b";
+    font-family: "uos";
+    margin: 0 0 0 10px;
+    position: relative;
+  }
+
+  &.no-arrow:after {
+    content: none;
+    margin: 0;
+  }
+
+  &.button-gap--right {
+    margin-right: 30px;
+  }
+
+  &.button-gap--right:last-child {
+    margin-right: 0;
+  }
+
+  &.button-gap--left {
+    margin-left: 30px;
+  }
+
+  &.button-gap--left:last-child {
+    margin-left: 0;
+  }
+
+  /*
+        Button Colors - this will handle each color variation (e.g. heritage-green, enery-pink, ...)
+  */
+  @each $name, $color in $button-palette {
+    &.#{$name} {
+      &:hover {
+        background-color: #ffffff;
+        border-color: $color;
+        color: $color;
+      }
+    }
+  }
+
+  &.subtle {
+    background-color: #e5f1f2; // energy teal very light
+    color: $heritage-green;
+
+    &:hover {
+      border-bottom-color: transparent;
+      color: $black;
+    }
+  }
+}
+
+/* 
+    Button pseudo-elements 
+ */
+
+.button--close:after {
+  content: "\e905";
+}
+
+.button--back:before {
+  content: "\e97a";
+  font-family: "uos";
+  margin: 0 10px 0 0;
+  position: relative;
+}
+
+.button--back:after {
+  content: "";
+}
+
+.button--dropdown:after {
+  content: "\e979";
+  font-family: "uos";
+}
+
+.button--left-align {
+  text-align: left;
+}
+
+// @include breakpoint(medium down) {
+//   // TODO remove this as its overwritten below anyway
+//   .button {
+//     font-size: 1rem;
+//   }
+// }
+
+/* 
+    Button component variation - long
+ */
+
+.c-long-button {
+  font-size: 1.25rem; // 20px;
+  margin-bottom: 12px;
+  padding: 11px 15px;
+  text-align: left;
+
+  &::after {
+    position: absolute;
+    right: 10px;
+  }
+}
+
+.c-long-button__badge {
+  font-size: 1rem; // 16px;
+  position: absolute;
+  right: 0;
+  margin-right: 50px;
+}
+
+@include breakpoint(medium down) {
+  .button {
+    font-size: 1.125rem; // 18px;
+  }
+  .c-contact-section .button {
+    margin-bottom: 20px;
+  }
+  .button.x-large {
+    padding: 18px;
+  }
+}
+@include breakpoint(small down) {
+  .c-long-button {
+    line-height: 1.6;
+  }
+}
+
+/* 
+    Button component variation - long
+ */
+
+.c-dropdown-wrapper {
+  display: inline-block;
+  position: relative;
+
+  .button--dropdown {
+    margin: 0;
+
+    &:after {
+      content: "\e979";
+    }
+  }
+
+  .dropdown-pane {
+    position: absolute;
+    background-color: #fff;
+    padding: 10px;
+    border: 0px solid #cacaca;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
+    width: 100%;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    a {
+      border-bottom: 0px solid $heritage-green;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* 
+    Button component variation - outline ghost style
+ */
+
+.button.outine-button {
+  background: transparent;
+  border: 2px solid $heritage-green;
+  color: $heritage-green;
+  &:hover {
+    background-color: transparent;
+    border: 2px solid tint($heritage-green, 50%);
+  }
+  &:focus {
+    background-color: transparent;
+    color: $heritage-green;
+  }
+}
+
+/* 
+    Overides for white--all
+ */
+
+.u-white--all .button,
+.darkmode .button {
+  background-color: transparent;
+  border: 2px solid #fff;
+
+  &.hollow {
+    border-width: 1px;
+  }
+
+  &:hover {
+    background-color: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  &:focus {
+    background-color: transparent;
+  }
+}
+
+/* 
+    label/input[type=radio|checkbox] combos that should display as buttons
+    also, they should show a selected state when :checked
+*/
+
+label.button {
+  margin: 0;
+}
+input:checked {
+  + label.button {
+    background-color: darken($primary-color, 5%);
+    @each $name, $color in $button-palette {
+      // all the colors e.g. <label... class="button energy-green">
+      &.#{$name} {
+        background-color: darken($color, 5%);
+      }
+    }
+  }
+}
+
+/*
+    Button that is styled to look like a link 
+    (see scholarship finder)
+*/
+
+.c-link-button {
+  background-color: transparent;
+  color: $heritage-green;
+  text-align: left;
+  padding: 1em 0;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    color: $heritage-green;
+  }
+}
+
+/* 
+    Button style that can have a icomoon span icon in it 
+*/
+
+.button-icon span[class^="uos-"] {
+  font-size: 25px;
+  margin-right: 5px;
+  position: relative;
+  top: 5px;
+}
+
+[data-hotline][aria-hidden] {
+  display: none;
+}
+
+/*
+    Sticky Button Component
+    Should rename c-button-sticky?
+*/
+
+.button.u-sticky {
+  display: block;
+  width: 87%;
+  font-size: 1.25rem;
+  padding: 1em;
+  text-align: center;
+  transition: 0.2s width ease-in, 0.1s transform linear;
+
+  &[data-offset=""] {
+    margin-bottom: 3rem; /* non-offset buttons need a bottom margin */
+  }
+
+  &[data-hotline] {
+    &[aria-hidden] {
+      display: none;
+    }
+  }
+  &.stuck {
+    width: 100%;
+  }
+  &.energy-pink {
+    color: #fff;
+    font-weight: bold;
+    a {
+      color: #fff;
+    }
+    &:hover {
+      background-color: #fff !important;
+      color: #d41568;
+      a {
+        color: #d41568;
+      }
+    }
+  }
+  &.energy-green {
+    /* The green sticky button classes may be applied to the <a> or a surrounding wrapper e.g. <div> */
+    /* so the selectors here are a bit more specific to ensure the cascade/specificity */
+    /* is correct and we get the right hover colours for wrapped sticky buttons (i.e. Clearing) */
+    color: #fff;
+    font-weight: bold;
+    a {
+      color: #fff;
+    }
+    &:hover {
+      color: #67a51e;
+      a {
+        color: #67a51e;
+      }
+    }
+  }
+
+  &.u-sticky__small {
+    width: 77%;
+  }
+
+  &.u-sticky__small.u-sticky.stuck {
+    width: 77%;
+  }
+}
+
+@include breakpoint(medium up) {
+  .button.u-sticky {
+    &.u-sticky__small {
+      width: 50%;
+    }
+
+    &.u-sticky__small.u-sticky.stuck {
+      width: 50%;
+    }
+  }
+}
+
+@include breakpoint(large up) {
+  a.button.u-sticky {
+    font-size: 1.5rem;
+    padding: 1.5em;
+  }
+}
+
+// @include breakpoint(xlarge up) {
+//     .button.u-sticky {
+//         &.u-sticky__small {
+//             width: 33%;
+//         }
+
+//         &.u-sticky__small.u-sticky.stuck {
+//             width: 33%;
+//         }
+//     }
+// }
+
+@include breakpoint(xxlarge up) {
+  .button.u-sticky {
+    width: 76.5625rem; /* match grid containr i.e. 77.5rem-0.9375rem */
+  }
+}
+
+/*
+    3 x Fat Buttons eg Study Routes
+
+
+.c-button-big3inline {
+  padding: 35px 20px;
+  margin: 10px 0;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .c-button-big3inline {
+    margin: 0;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1050px) {
+  .c-button-big3inline {
+    padding: 50px 20px;
+  }
+}
+
+@media screen and #{breakpoint(xlarge up)} {
+  .c-button-big3inline {
+    padding: 70px 20px;
+  }
+}
+*/
+
+.btn-global-search {
+	border: 0;	
+}

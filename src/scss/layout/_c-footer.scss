@@ -1,0 +1,151 @@
+/***
+FOOTER STYLES
+Original DTP footer styles (non-grid)
+A copy has been moved into the microsites CSS
+**
+.c-footer {
+    background-color: #3a3c39;
+    color: $white;
+    overflow: hidden;
+    padding: 55px 0 0 0;
+}
+.c-footer .cell {
+    padding: 0 15px;
+}
+.c-footer .grid-x.grid-padding-x {
+	position: relative;
+    padding: 0px 0 53px;
+}
+.c-footer__header {
+    color: $white;
+    font-family: $body-font-family;
+    font-size: 1rem; /* 16px *
+    margin: 0 0 32px 0;
+    padding: 0;
+}
+.c-footer__header:after {
+    background-color: transparent;
+    position: relative;
+}
+.c-footer__link:hover {
+	color: $energy-green;
+}
+.t4Edit-page,
+.c-copyright p,
+.c-footer__link,
+.c-footer p {
+    border: none;
+    color: $white;
+    display: inline-block;
+    font-size: 0.75rem; /* 12px 
+    text-decoration: none;
+}
+.c-footer li {
+    line-height: 19px;
+}
+.c-footer .c-footer__address span {
+    display: block;
+}
+.c-footer__link:hover {
+    text-decoration: underline;
+}
+.c-footer__contact .c-footer__link {
+    font-weight: 700;
+}
+.c-footer__contact {
+    background-image: url('../../dist/css/images/maps/footer-map-scotland.svg');
+    background-position: 75% center;
+    background-repeat: no-repeat;
+    background-size: 200px;
+    min-height: 254px;
+}
+.c-footer__contact li {
+    margin: 0 0 10px 0;
+}
+.c-follow__link {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+}
+.c-footer__link--social:hover {
+    text-decoration: none;
+}
+.c-follow__link:last-child {
+    margin: 0 0 10px 0;
+}
+.c-footer [class*="uos-"] {
+    font-size: 1.5rem; /* 24px 
+}
+.c-footer__link--facebook:hover { color: #3b5998; }
+.c-footer__link--instagram:hover { color: #125688; }
+.c-footer__link--twitter:hover { color: #1DA1F2; }
+.c-footer__link--youtube:hover { color: #ff0000; }
+.c-footer__link--linkedin:hover { color: #007bb5; }
+.c-footer__btd {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.c-footer__btd:after {
+    content: '';
+    position: absolute;
+    background-color: $energy-green;
+    height: 4px;
+    width: 9999px;
+    bottom: 0;
+    left: 0;
+}
+
+.c-footer__accreditations img.portrait{   
+    max-width: 90px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+                    
+.c-copyright {
+    padding: 0 0 70px 0;
+}
+.t4Edit-page:hover {
+    color: $white;
+    cursor: default;
+    text-decoration: none;
+}
+
+@media screen and #{breakpoint(xlarge down)} {
+    .c-footer__contact {
+        background-position: 75% 10px;
+        background-size: 155px;
+    }
+}
+@media screen and #{breakpoint(medium down)} {
+    .c-footer .cell {
+        padding: 0 30px;
+    }
+    .c-footer__header {
+        margin: 20px 0;
+    }
+    .c-copyright {
+        padding: 40px 0;
+    }
+}
+@media screen and #{breakpoint(small down)} {
+	.c-footer {
+		padding: 50px 0 0 0;
+	}
+    .c-footer__accreditations {
+        margin-top: 20px;
+    }
+    .c-footer__btd {
+    	position: relative;
+        margin: 40px 0 0 15px;
+        width: 100%;
+        text-align: right;
+    }
+    .c-footer__btd:after {
+        content: initial;
+    }
+    .c-copyright {
+        padding: 0 0 40px;
+    }
+}
+
+*/

@@ -1,0 +1,109 @@
+/***
+Image with text block
+updated Aug 2022 for clearing homepage banner
+***/
+.c-image-text-block {
+	position: relative;
+	padding: 100px 0;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	min-height: 7rem;
+
+	> .grid-container {
+		display: flex;
+		align-items: center;
+	}
+
+	> img {
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.flex-container.u-gap {
+		gap: 0.5rem; /* 8px */
+	}
+}
+
+.c-image-text-block--fixed {
+	margin: 0 auto;
+	max-width: 1240px;
+}
+
+.c-image-text-block--right {
+	justify-content: flex-end;
+}
+
+.c-image-text-block__alt-header {
+	color: $black;
+	font-family: $body-font-family;
+	font-size: 2rem;
+	margin: 0 0 32px 0;
+}
+
+.c-image-text-block__content {
+	position: relative;
+	background-color: #ffffff;
+	margin: 0 25px;
+	max-width: 417px;
+	padding: 1rem;
+
+	.c-wysiwyg-content {
+		margin-bottom: 1rem;
+	}
+
+	p {
+		font-size: 1rem;
+	}
+	h2 {
+		margin: 0 0 1rem 0;
+	}
+
+	.button {
+		padding: 1rem;
+		margin: 0;
+
+		&:not([aria-hidden]){
+			display: block;
+		}
+	}
+
+	.button svg {
+		max-width: 1.5rem;
+		max-height: 1.5rem;
+		vertical-align: middle;
+	}
+
+	.c-link {
+		margin-bottom: 1rem;
+	}
+}
+
+.u-white--all .c-image-text-block__content * {
+	color: $black  !important;
+}
+
+@media screen and (min-width: 641px) {
+	.c-image-text-block {
+		min-height: 24rem;
+	}
+	.c-image-text-block__content {
+		padding: 2rem;
+
+		p {
+			font-size: 1.25rem;
+		}
+	}
+	
+}
+@media screen and (min-width: 1024px) {
+	.c-image-text-block {
+		min-height: 34rem;
+	}
+}

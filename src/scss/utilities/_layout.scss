@@ -1,0 +1,197 @@
+/*
+    Layout
+    --- 
+  
+    Some utility classes are bundled with Foundation
+
+    https://get.foundation/sites/docs/flexbox-utilities.html
+
+    - flex-container
+    - flex-dir-column
+    - flex-dir-column large-flex-dir-row (responsive)
+    - flex-dir-column-reverse
+    - flex-dir-row-reverse
+
+    - flex-child-auto
+
+    - small-order-1 medium-order-2 
+
+    Horizontal Alignment
+
+    - align-left
+    - align-right
+    - align-center
+    - align-justify
+    - align-spaced
+
+    Vertical Alignment
+
+    - align-top
+    - align-middle
+    - align-bottom
+    - align-stretch
+*/
+
+.u-flex-wrap,
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .u-flex-medium-up {
+    display: flex;
+  }
+  .u-grid-medium-up {
+    display: grid;
+  }
+}
+
+@media screen and #{breakpoint(large up)} {
+  .u-flex-large-up {
+    display: flex;
+  }
+  .u-grid-large-up {
+    display: grid;
+  }
+}
+
+@media screen and #{breakpoint(small down)} {
+  .u-items-start-small {
+    align-items: start;
+  }
+}
+
+.u-flex1 {
+  flex: 1;
+}
+
+@media screen and #{breakpoint(large up)} {
+  .u-flex1-large-up {
+    flex: 1;
+  }
+}
+
+/* Gap - Default */
+
+.u-gap {
+  gap: 16px;
+}
+
+.u-gap-x {
+  gap: 0 16px;
+}
+
+.u-gap-y {
+  gap: 16px 0;
+}
+
+/* Gap - Alternatives */
+
+.u-gap-8 {
+  gap: 8px;
+}
+
+.u-gap-16 {
+  gap: 16px;
+}
+
+.u-gap-24 {
+  gap: 24px;
+}
+
+.u-gap-40 {
+  gap: 40px;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .u-gap-32-medium-up {
+    gap: 32px;
+  }
+}
+
+@media screen and #{breakpoint(large up)} {
+  .u-gap-64-large-up {
+    gap: 64px;
+  }
+}
+
+/* Positioning */
+
+.u-relative {
+  position: relative;
+}
+
+.u-absolute {
+  position: absolute;
+}
+
+@media screen and #{breakpoint(large up)} {
+  .u-relative-large-up {
+    position: relative;
+  }
+}
+
+@media screen and #{breakpoint(large up)} {
+  .u-absolute-large-up {
+    position: absolute;
+  }
+}
+
+.u-top-0 {
+  top: 0;
+}
+
+/* Display */
+
+.u-inline {
+  display: inline;
+}
+
+.u-block {
+  display: block;
+}
+
+.u-inline-block {
+  display: inline-block;
+}
+
+/* Object fit */
+
+.u-object-cover,
+.u-object-cover > img {
+  object-fit: cover;
+  object-position: center;
+  height: 100%;
+  width: 100%;
+}
+
+/* Widths / Heights */
+
+.u-w-full,
+.u-full-width {
+  width: 100%;
+}
+
+@media screen and #{breakpoint(small down)} {
+  .u-w-full-small {
+    width: 100%;
+  }
+}
+
+.u-max-width-none {
+  max-width: none;
+}
+
+.u-h-full {
+  height: 100%;
+}
+
+.u-trans-up {
+  transform: translateY(-100%);
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .u-columns-2 {
+    column-count: 2;
+  }
+}

@@ -1,0 +1,390 @@
+/*
+    Only type spectic stuff in here 
+    Otherwise use layout
+
+    Use this file for defaults
+    Overides could be a utility in utilties/_type 
+    eg u-font-primary
+*/
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  position: relative;
+  line-height: 1.5;
+}
+
+h1 {
+  color: $heritage-green;
+  font-family: $header-font-family;
+  font-size: 4.5rem; // 16px * rem = 72px
+  font-weight: 300;
+  line-height: 120%;
+  margin: 0 0 40px 0;
+  position: relative;
+  // max-width: 20ch;
+}
+
+h2,
+h2 > strong {
+  color: $heritage-green;
+  font-family: $header-font-family;
+  font-size: 2.25rem; // 16px * rem = 36px
+  font-weight: 300;
+}
+
+h2,
+h3,
+.c-wysiwyg-content h2:first-of-type,
+.c-wysiwyg-content h3:first-of-type {
+  margin: 0 0 40px 0;
+  padding: 0 0 40px 0;
+}
+
+.c-wysiwyg-content h2,
+.c-wysiwyg-content h3,
+.c-wysiwyg-content > p + h2:first-of-type,
+.c-wysiwyg-content > p + h3:first-of-type,
+.c-wysiwyg-content ul + h2:first-of-type,
+.c-wysiwyg-content ul + h3:first-of-type,
+.c-wysiwyg-content ol + h2:first-of-type,
+.c-wysiwyg-content ol + h3:first-of-type {
+  margin: 60px 0 40px 0;
+}
+
+// p.c-image-block-search-result__heading::after
+h2:after,
+h3:after {
+  content: "";
+  background-color: #76bd22;
+  bottom: 13px;
+  left: 0;
+  position: absolute;
+  width: 60px;
+  height: 8px;
+}
+
+/* Select h2's and h3's after a responsive video to lessen the space between. */
+.c-responsive-embed + h2,
+.c-responsive-embed + h3 {
+  margin: 0 0 40px 0;
+}
+
+//p.c-image-block-search-result__heading,
+h3 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.625rem; // 16px * rem = 26px;
+  font-weight: 700;
+  line-height: 1.5; // prev 2rem
+}
+
+// p.c-image-block-search-result__heading {
+//   position: relative;
+//   margin: 0 0 40px 0;
+//   padding: 0 0 40px 0;
+// }
+
+h4,
+h5 {
+  margin: 20px 0 20px 0;
+}
+
+h4 {
+  font-size: 1.375rem; // 16px * rem = 22px;
+}
+
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+h6 {
+  margin: 20px 0 10px 0;
+}
+
+.c-wysiwyg-content ol > li {
+  margin-bottom: 1em;
+}
+
+small {
+  font-size: 0.75rem; /* 12px */
+}
+
+li small {
+  font-size: 0.6875rem; /* 11px */
+}
+
+p.smaller {
+  font-size: 1rem;
+
+  a.c-link {
+    font-size: 1rem;
+    border-bottom: none;
+
+    &::after {
+      margin: 0 0 0 2px;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media screen and #{breakpoint(xlarge down)} {
+  h1 {
+    font-size: 3.625rem; // 16px * rem =  58px;
+    margin: 0 0 40px 0;
+    // max-width: initial;
+  }
+
+  h2 {
+    font-size: 2.25rem; // 16px * rem = 36px;
+  }
+  // h2,
+  // h3,
+  // .c-wysiwyg-content h2:first-of-type,
+  // .c-wysiwyg-content h3:first-of-type {
+  //     margin: 0 0 40px 0;
+  // }
+  .c-wysiwyg-content h2,
+  .c-wysiwyg-content h3,
+  .c-wysiwyg-content > p + h2:first-of-type,
+  .c-wysiwyg-content > p + h3:first-of-type,
+  .c-wysiwyg-content ul + h2:first-of-type,
+  .c-wysiwyg-content ul + h3:first-of-type,
+  .c-wysiwyg-content ol + h2:first-of-type,
+  .c-wysiwyg-content ol + h3:first-of-type {
+    margin: 40px 0;
+  }
+
+  //p.c-image-block-search-result__heading,
+  h3 {
+    font-size: 1.5rem; // 16px * 1.5 = 24px;
+  }
+
+  h4,
+  h5 {
+    margin: 20px 0;
+  }
+
+  h6 {
+    margin: 20px 0 10px 0;
+  }
+}
+
+@media screen and #{breakpoint(medium down)} {
+  // 640
+  h1 {
+    font-size: 2.625rem; // 16px * rem =  42px;
+    max-width: initial;
+  }
+}
+
+@media screen and #{breakpoint(small down)} {
+  h1 {
+    font-size: 2rem; // 16px * rem = 32px;
+  }
+  h2 {
+    font-size: 1.875rem; // 16px * rem = 30px;
+  }
+}
+
+.u-lede {
+  p {
+    font-size: 1.25rem; /* 16px * 1.25 = 20px */
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .u-lede {
+    p {
+      font-size: 1.5rem; /* 16px * 1.5 = 24px */
+    }
+  }
+}
+
+// Overwrite the Foundation class sizes at small as they are too small
+@media screen and #{breakpoint(small down)} {
+  .h1 {
+    font-size: 1.875rem;
+  }
+  .h2 {
+    font-size: 1.5rem;
+  }
+  .h3 {
+    font-size: 1.4rem;
+  }
+  .h4 {
+    font-size: 1.3rem;
+  }
+  .h5 {
+    font-size: 1.15rem;
+  }
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  line-height: 1.5;
+}
+/*
+    Exceptions for header when placed after classes beginning padding. u-padding-[x]
+*/
+/*
+Removes the margin from header when placed directly after '.u-padding-top' or '.u-padding-y'.
+Also applied when u-padding-top or u-padding-y is placed on a wrapper element with '.c-wrapper'.
+*/
+// .u-padding-y > h2:first-of-type,
+// .u-padding-top > h2:first-of-type,
+// .u-padding-y > h3:first-of-type,
+// .u-padding-top > h3:first-of-type {
+//     margin: 0 0 40px 0;
+// }
+// /*
+// Swaps margin and padding sizes when placed directly after .u-padding-bottom.
+// This allows for the padding to be correct for use with background-color and also gives the same effect.
+// Also applied when '.u-padding-bottom' is placed on a wrapper element with '.c-wrapper'.
+// */
+// .u-padding-bottom > h2:first-of-type,
+// .u-padding-bottom > h3:first-of-type {
+//     margin: 0 0 40px 0;
+//     padding: 60px 0 40px 0;
+// }
+
+// /*
+// Makes headings work normally is a paragraph is placed before the header.
+// Also applied when '.u-padding-top' or '.u-padding-y' is placed on a wrapper element with '.c-wrapper'.
+// */
+// .u-padding-y > p + h2:first-of-type,
+// .u-padding-top > p + h2:first-of-type,
+// .u-padding-y > p + h3:first-of-type,
+// .u-padding-top > p + h3:first-of-type {
+//     margin: 60px 0 40px 0;
+// }
+// /*
+// This will fix the spacing if an h3 is placed directly after an h2 with no text between .
+// Also applied when '.u-padding-bottom' is placed on a wrapper element with '.c-wrapper'.
+// */
+// .u-padding-bottom > h2:first-of-type + h3 {
+//     margin: 60px 0 40px 0;
+//     padding: 0 0 40px 0;
+// }
+// /*
+// In most cases an h2 or h3 are placed inside a wrapper the padding will be set to '.u-padding-top' on the wrapper itself.
+// If this is the case '.u-padding-bottom' will most likely be used to allow for proper stacking on mobile.
+// This should sort h2 and h3 for those instances.
+// */
+// .c-wrapper.u-padding-top .cell.u-padding-bottom > h2:first-of-type,
+// .c-wrapper.u-padding-top .cell.u-padding-bottom > h3:first-of-type {
+//     padding: 0 0 60px 0;
+// }
+
+// .c-wrapper.u-padding-y .cell > h2:first-of-type,
+// .c-wrapper.u-padding-y .cell > h3:first-of-type {
+//     margin: 0 0 40px 0;
+// }
+
+/*
+    Removes the margin for page headers that are automatially output on page.
+    This is because the wrapping div stops margin collapse.
+*/
+
+p {
+  word-wrap: break-word;
+}
+
+p,
+li,
+th,
+td,
+legend {
+  font-size: 1.25rem; // 16px * 1.5 = 20px
+}
+
+legend {
+  margin-bottom: 0;
+}
+
+.c-automatic-page-heading {
+  margin: 0;
+}
+
+/* H1 Variations */
+
+h1.u-header-smaller {
+  font-size: 2.625rem; /* 42px */
+  margin-bottom: 20px;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  h1.u-header-smaller {
+    font-size: 3.25rem; /* 52px */
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and #{breakpoint(large up)} {
+  h1.u-header-smaller {
+    font-size: 3.875rem; /* 62px */
+  }
+}
+
+/* H2 Variations */
+
+h2.u-header-larger {
+  font-size: 2rem; /* 32px */
+}
+
+@media screen and #{breakpoint(large up)} {
+  h2.u-header-larger {
+    font-size: 2.8125rem; /* 45px */
+  }
+}
+
+/* 
+    Overide classes 
+*/
+
+.header-stripped {
+  padding: 0;
+}
+
+.header-stripped:after {
+  display: none;
+}
+
+.u-header--secondary-font {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.875rem; // 16px * 1.5 = 30px
+  font-weight: 700;
+  //line-height: 1.3;
+}
+
+.u-header--margin-stripped {
+  margin: 0 0 10px !important;
+}
+
+.u-compress-line-height,
+.u-line-height-compress {
+  line-height: 1.2;
+}
+
+p.text-larger,
+p.lead {
+  font-size: 1.5rem; // 16px * 1.5 = 24px
+}
+
+span.icon--large {
+  font-size: 80px;
+}
+
+span.icon--medium {
+  font-size: 30px;
+}

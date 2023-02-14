@@ -1,0 +1,14 @@
+.c-maps-travel-mode-list__item {
+	display: inline-block;
+	margin-right: 30px;
+}
+
+.c-map--full-width {
+	height: 600px;
+	width: 100%;
+}
+@media screen and #{breakpoint(medium down)} {
+	.c-getting-here__header {
+		margin: 40px 0;
+	}
+}

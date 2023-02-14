@@ -1,0 +1,29 @@
+.c-teaching-stat {
+    padding: 164px 0;
+    h1 {
+        font-size: 85px;
+    }
+    img {
+        margin: 0 0 40px 0;
+    }
+    &.animate {
+        img {
+            animation: bigBounce 1s linear;
+        }
+        img:nth-child(1n) {
+            animation-delay: 0s
+        }
+        img:nth-child(2n) {
+            animation-delay: 0.1s;
+        }
+        img:nth-child(3n) {
+            animation-delay: 0.2s;
+        }
+        img:nth-child(4n) {
+            animation-delay: 0.3s;
+        }
+        img:nth-child(5n) {
+            animation-delay: 0.4s;
+        }
+    }
+}

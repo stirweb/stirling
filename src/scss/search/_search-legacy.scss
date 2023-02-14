@@ -1,0 +1,299 @@
+/*
+    Legacy stuff still dotted around differnt UIs 
+    such as accommodation and news-archive
+*/
+
+.c-tag-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  li {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+  }
+
+  a {
+    display: block;
+    padding: 10px 15px;
+    background-color: $dark-mink;
+    color: $white;
+    font-size: 1rem !important;
+
+    &.c-tag-list__all-link {
+      background-color: $heritage-green;
+    }
+  }
+}
+
+/*  
+    IN USE ACCOMMODATION FINDER ONLY  
+*/
+.c-search-filters-menu {
+  list-style: none;
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  display: inline-block;
+
+  @media screen and #{breakpoint(small down)} {
+    margin-left: 0;
+  }
+
+  li {
+    display: inline-block;
+    font-size: 100%;
+
+    a {
+      font-weight: 700;
+      display: block;
+      margin-right: 10px;
+      color: $black;
+      border-bottom: 4px solid shade($bg-grey, 95%);
+
+      &.is-active {
+        border-bottom: 4px solid $energy-green;
+        color: $heritage-green;
+      }
+    }
+  }
+}
+
+/*  
+    IN USE ACCOMMODATION FINDER ONLY
+*/
+.c-search-filters-panel {
+  padding: 30px 0;
+
+  label {
+    display: flex;
+    align-items: start;
+    // background-color: shade($bg-grey, 95%);
+    border: none;
+    font-size: 100%;
+    margin: 5px 0;
+    cursor: pointer;
+
+    > [type="checkbox"] {
+      margin-top: 9px;
+    }
+
+    > [type="radio"] {
+      margin-top: 7px;
+    }
+  }
+
+  //label.is-active {
+  // background: shade($bg-grey, 80%);
+  //}
+
+  // input[type='checkbox'] {
+  //     position: absolute;
+  //     left: -9999px;
+  // }
+}
+
+/*  
+    IN USE ACCOMMODATION FINDER ONLY
+*/
+.c-search-filters-panel__filter {
+  label[data-disabled] {
+    //color: $medium-gray;
+    cursor: not-allowed;
+  }
+}
+
+/*  
+    IN USE ACCOMMODATION FINDER ONLY
+*/
+.c-search-ordered-filters button {
+  display: inline-block;
+  padding: 5px 15px 5px 10px;
+  background-color: shade($bg-grey, 95%);
+  border: none;
+  margin: 5px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  line-height: 1.8;
+}
+
+/*  
+    IN USE ACCOMMODATION FINDER ONLY
+*/
+.c-search-filters-panel legend {
+  color: #006938;
+  font-family: FSMaja, serif;
+  font-weight: 300;
+  font-size: 1.75rem; /* 28px */
+  margin-bottom: 20px;
+}
+
+/*  
+    IN USE VARIOUS 
+*/
+.c-search-result {
+  margin-bottom: 1rem;
+}
+
+.c-search-results {
+  max-width: 100%;
+}
+
+/*  In use various */
+.c-search-result__link {
+  @extend .c-section-heading;
+  margin-bottom: 0;
+  padding-bottom: 0;
+
+  a {
+    text-decoration: none;
+  }
+
+  &::after {
+    content: none;
+  }
+}
+
+/*  In use various */
+.c-search-result__summary {
+  margin-bottom: 0;
+  margin-top: 0.5rem;
+  position: relative;
+}
+
+/*
+@media screen and #{breakpoint(medium up)} {
+    .c-global-search-btn {
+        height: 52px;
+    }
+}
+
+
+@media screen and #{breakpoint(xxlarge up)} {
+    .c-global-search-btn {
+        height: 70px;
+    }
+}
+*/
+
+/* CONVERTED TO UTILITIES 
+.c-search-result__breadcrumb {
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+    font-size: 1rem; 
+}
+
+.c-course-search-ordered-filters {
+    button[data-filter-name="starts_with"] {
+        display: none;
+    }
+}*/
+/*
+.c-search-results-area .c-search-result p.c-search-result__notice {
+  font-size: 0.875rem;
+}
+
+.c-search-result__notice {
+  background: #f6f6f6;
+  padding: 0.3rem 0.7rem 0.3rem 2rem;
+  margin: 1rem 0;
+  span[class*="uos-"] {
+    //position: absolute;
+    left: 0.5rem;
+    top: 0.3rem;
+    font-size: 1.3rem;
+  }
+}
+
+.c-search-result__course-stats {
+    font-weight: 700;
+}
+*/
+
+/*
+.c-search-results__loading {
+    margin-bottom: 80px;
+    display: none;
+}
+
+
+.c-site-search__deep-search-link {
+    font-size: 1rem; 
+}
+
+
+.c-site-search__filter-link {
+    display: inline;
+}
+
+
+.c-site-search__external-icon-wrapper {
+    margin-left: 15px;
+    font-size: 1rem;
+    color: $heritage-green;
+}
+
+.c-site-search__external-icon {
+    background: $light-gray;
+    padding: 10px;
+    border-radius: 100%;
+}
+
+
+.c-internal-external-filters {
+    font-size: 1.125rem; 
+}
+
+.c-internal-external-filters__label {
+    display: inline-block;
+    margin-right: 30px !important;
+}
+@media screen and #{breakpoint(small down)} {
+    .c-internal-external-filters__label {
+        display: block;
+    }
+}
+
+.c-internal-external-filters__title {
+    display: inline-block;
+    margin-right: 30px !important;
+    font-weight: bold;
+}
+@media screen and #{breakpoint(small down)} {
+    .c-internal-external-filters__title {
+        // display: none;
+        margin-bottom: 15px !important;
+    }
+}
+*/
+
+/*
+.u-msg-unlocked {
+    background-color: $bg-grey;
+    margin-bottom: 2.5rem;
+    padding-top: 1rem;
+    text-align: center;
+    border-bottom: 2px solid $energy-green;
+}
+
+.u-msg-locked {
+    background-color: $heritage-green;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-top: 1rem;
+    padding-bottom: 0.1rem;
+    color: #fff;
+
+    a {
+        color: #fff;
+        border-bottom: 0;
+    }
+
+    p::after {
+        content: "\e97b";
+        font-family: "uos";
+        margin: 0 0 0 5px;
+        position: relative;
+    }
+}
+*/

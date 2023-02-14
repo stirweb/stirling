@@ -5128,7 +5128,7 @@ stir.String = {
     return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(" ")) : subString) + "&hellip;";
   },
   htmlEntities: function htmlEntities(str) {
-    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&"+"quot;");
+    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   },
   stripHtml: function stripHtml(dirtyString) {
     var doc = new DOMParser().parseFromString(dirtyString, "text/html");
@@ -8187,137 +8187,151 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
  * @title: Search helpers
  * @description: To aid html generation
  * @author: Ryan Kaye
- */
 
 
-var StirSearchHelpers = function () {
+var StirSearchHelpers = (function () {
   /*
       SEARCH SUMMARY
-   */
-  var _formSummary = function _formSummary(total, start, end) {
-    return end === 0 ? "<p>No results found for this query</p>" : "<p>Showing ".concat(start, " - ").concat(end, " of <strong>").concat(total, " results</strong></p>");
+   *
+
+  const _formSummary = function (total, start, end) {
+    return end === 0 ? `<p>No results found for this query</p>` : `<p>Showing ${start} - ${end} of <strong>${total} results</strong></p>`;
   };
+
   /*
       PAGINATION
-   */
+   *
 
-  /* Control the page calculations / rendering of the pagination nav */
+  /* Control the page calculations / rendering of the pagination nav *
+const _formPagination = function (totalResults_, postsPerPage_, currentPage_, numOfLinks_) {
+  const current = parseInt(currentPage_);
+  const numOfLinks = getNumOfPages(parseInt(numOfLinks_));
+  const total = getTotalPages(parseInt(totalResults_), parseInt(postsPerPage_));
+  const start = getStartPage(current, numOfLinks);
+  const end = getEndPage(numOfLinks, current, total);
 
-
-  var _formPagination = function _formPagination(totalResults_, postsPerPage_, currentPage_, numOfLinks_) {
-    var current = parseInt(currentPage_);
-    var numOfLinks = getNumOfPages(parseInt(numOfLinks_));
-    var total = getTotalPages(parseInt(totalResults_), parseInt(postsPerPage_));
-    var start = getStartPage(current, numOfLinks);
-    var end = getEndPage(numOfLinks, current, total);
-    var values = {
-      numOfLinks: numOfLinks,
-      total: total,
-      current: current,
-      previous: current !== 1 ? current - 1 : 0,
-      next: current !== total ? current + 1 : 0,
-      range: getPageRange(start, end, numOfLinks, total, current)
-    };
-    return [renderPrevBtn(values), renderPageNav(values), renderNextBtn(values)].join("");
+  const values = {
+    numOfLinks: numOfLinks,
+    total: total,
+    current: current,
+    previous: current !== 1 ? current - 1 : 0,
+    next: current !== total ? current + 1 : 0,
+    range: getPageRange(start, end, numOfLinks, total, current),
   };
-  /*
+
+  return [renderPrevBtn(values), renderPageNav(values), renderNextBtn(values)].join("");
+};
+
+/*
       HELPERS
-   */
+   *
 
+  const getNumOfPages = (numLinks) => (numLinks % 2 === 0 ? numLinks : numLinks - 1);
 
-  var getNumOfPages = function getNumOfPages(numLinks) {
-    return numLinks % 2 === 0 ? numLinks : numLinks - 1;
-  };
+  const getTotalPages = (totalResults, postsPerPage) => Math.ceil(totalResults / postsPerPage);
 
-  var getTotalPages = function getTotalPages(totalResults, postsPerPage) {
-    return Math.ceil(totalResults / postsPerPage);
-  };
+  const getIdealPadVal = (numOfLinks) => numOfLinks / 2;
 
-  var getIdealPadVal = function getIdealPadVal(numOfLinks) {
-    return numOfLinks / 2;
-  };
+  const getCurrentPadVal = (start, end) => end - start;
 
-  var getCurrentPadVal = function getCurrentPadVal(start, end) {
-    return end - start;
-  };
+  const getStartDifference = (numOfLinks, start, current) => getIdealPadVal(numOfLinks) - current + start;
 
-  var getStartDifference = function getStartDifference(numOfLinks, start, current) {
-    return getIdealPadVal(numOfLinks) - current + start;
-  };
+  const getEndDifference = (numOfLinks, end, current) => getIdealPadVal(numOfLinks) - (end - current);
 
-  var getEndDifference = function getEndDifference(numOfLinks, end, current) {
-    return getIdealPadVal(numOfLinks) - (end - current);
-  };
+  const getAdjustedStart = (dif, start) => (start - dif < 1 ? 1 : start - dif);
 
-  var getAdjustedStart = function getAdjustedStart(dif, start) {
-    return start - dif < 1 ? 1 : start - dif;
-  };
+  const getAdjustedEnd = (dif, total, end) => (end + dif > total ? total : end + dif);
 
-  var getAdjustedEnd = function getAdjustedEnd(dif, total, end) {
-    return end + dif > total ? total : end + dif;
-  };
-  /* Returns an array with the page numbers for the nav eg [4,5,6,7,8,9,10] */
-
-
+  /* Returns an array with the page numbers for the nav eg [4,5,6,7,8,9,10] *
   function getPageRange(start, end, numOfLinks, total, current) {
     if (getCurrentPadVal(start, end) === numOfLinks) {
       return stir.range(start, end, 1);
     }
 
-    var endPadded = current - start !== getIdealPadVal(numOfLinks) ? getAdjustedEnd(getStartDifference(numOfLinks, start, current), total, end) : end;
-    var startPadded = endPadded - current !== getIdealPadVal(numOfLinks) ? getAdjustedStart(getEndDifference(numOfLinks, current, endPadded), start) : start;
+    const endPadded = current - start !== getIdealPadVal(numOfLinks) ? getAdjustedEnd(getStartDifference(numOfLinks, start, current), total, end) : end;
+    const startPadded = endPadded - current !== getIdealPadVal(numOfLinks) ? getAdjustedStart(getEndDifference(numOfLinks, current, endPadded), start) : start;
+
     return stir.range(startPadded, endPadded, 1);
   }
-  /* Returns the start value for the pagination list */
 
-
+  /* Returns the start value for the pagination list *
   function getStartPage(current, numOfLinks) {
-    var start = current > getIdealPadVal(numOfLinks) ? current - getIdealPadVal(numOfLinks) : 0;
+    const start = current > getIdealPadVal(numOfLinks) ? current - getIdealPadVal(numOfLinks) : 0;
     return start < 1 ? 1 : start;
   }
-  /* Returns a end value for the paginaion list */
 
-
+  /* Returns a end value for the paginaion list *
   function getEndPage(numOfLinks, current, total) {
-    var end = getIdealPadVal(numOfLinks) + current;
+    const end = getIdealPadVal(numOfLinks) + current;
     return end > total ? total : end;
   }
+
   /*
       RENDERERS
-   */
-
+   *
 
   function renderNextBtn(vals) {
-    return vals.current === vals.total ? "<div class=\"small-3 medium-3 cell\"></div>" : "\n        <div class=\"small-3 medium-3 cell text-right\">\n            <a href=\"#\" class=\"button small no-arrow\" aria-label=\"Next page\" data-page=\"".concat(vals.next, "\">\n              <span class=\"show-for-medium\">Next <span class=\"show-for-sr\">page</span></span>\n              <span class=\"uos-chevron-right\"></span> \n            </a>\n        </div> ");
+    return vals.current === vals.total
+      ? `<div class="small-3 medium-3 cell"></div>`
+      : `
+        <div class="small-3 medium-3 cell text-right">
+            <a href="#" class="button small no-arrow" aria-label="Next page" data-page="${vals.next}">
+              <span class="show-for-medium">Next <span class="show-for-sr">page</span></span>
+              <span class="uos-chevron-right"></span> 
+            </a>
+        </div> `;
   }
 
   function renderPrevBtn(vals) {
-    return vals.current === 1 ? '<div class="small-3 medium-3 cell"></div>' : "\n        <div class=\"small-3 medium-3 cell\">\n            <a href=\"#\" class=\"button small no-arrow\" aria-label=\"Previous page\" data-page=\"".concat(vals.previous, "\">\n              <span class=\"uos-chevron-left\"></span> \n              <span class=\"show-for-medium\">Previous <span class=\"show-for-sr\">page</span></span>\n            </a>\n        </div> ");
+    return vals.current === 1
+      ? '<div class="small-3 medium-3 cell"></div>'
+      : `
+        <div class="small-3 medium-3 cell">
+            <a href="#" class="button small no-arrow" aria-label="Previous page" data-page="${vals.previous}">
+              <span class="uos-chevron-left"></span> 
+              <span class="show-for-medium">Previous <span class="show-for-sr">page</span></span>
+            </a>
+        </div> `;
   }
 
   function renderPageNav(vals) {
-    return "\n        <nav class=\"small-6 medium-6 cell text-center u-font-bold\" aria-label=\"Pagination\">\n          <ul class=\"pagination show-for-large\">\n              ".concat(renderPageList(vals), "\n          </ul>\n          <p class=\"hide-for-large\">Page ").concat(vals.current, " of ").concat(vals.total, "</p>\n        </nav>");
+    return `
+        <nav class="small-6 medium-6 cell text-center u-font-bold" aria-label="Pagination">
+          <ul class="pagination show-for-large">
+              ${renderPageList(vals)}
+          </ul>
+          <p class="hide-for-large">Page ${vals.current} of ${vals.total}</p>
+        </nav>`;
   }
 
   function renderPageList(vals) {
-    return stir.map(function (page) {
-      return page === vals.current ? "<li class=\"current\">\n              <span class=\"show-for-sr\">You're on page</span> ".concat(page, "\n            </li>") : "<li>\n              <a href=\"#\" aria-label=\"Page ".concat(page, "\" data-page=\"").concat(page, "\">").concat(page, "</a>\n            </li>");
-    }, vals.range).join("");
+    return stir
+      .map((page) => {
+        return page === vals.current
+          ? `<li class="current">
+              <span class="show-for-sr">You're on page</span> ${page}
+            </li>`
+          : `<li>
+              <a href="#" aria-label="Page ${page}" data-page="${page}">${page}</a>
+            </li>`;
+      }, vals.range)
+      .join("");
   }
+
   /*
      PUBLIC GET FUNCTIONS
-   */
-
+   *
 
   return {
     formSearchSummaryHTML: _formSummary,
-    renderSummary: _formSummary,
-    // Nicer name
+    renderSummary: _formSummary, // Nicer name
     formPaginationHTML: _formPagination,
-    renderPagination: _formPagination // Nicer name
-
+    renderPagination: _formPagination, // Nicer name
   };
-}();
+})();
+
+*/
+
 /*
 @author: Ryan Kaye
 @date: March 2022
@@ -9141,11 +9155,11 @@ var stir = stir || {};
   // otherwise just skip this
   switch (window.location.hostname) {
     case "localhost":
-      stir.addScript('/src/js-other/t4-preview-tools.js');
+      stir.addScript("/src/js-other/t4-preview-tools.js");
       break;
 
     case "t4cms.stir.ac.uk":
-      stir.addScript('/webcomponents/dist/js/other/t4-preview-tools.js');
+      stir.addScript("/webcomponents/dist/js/other/t4-preview-tools.js");
       break;
   }
 })();
@@ -9206,9 +9220,10 @@ var stir = stir || {};
         loop: true,
         autoplay: autoplay,
         controls: false,
-        dnt: true,
         transparent: true
       };
+      /* dnt: true, */
+
       videoPlayer = new Vimeo.Player(video, options);
       videoPlayer.on("play", function (data) {
         if (!autoplay) {
@@ -9273,9 +9288,10 @@ var stir = stir || {};
       id = el.getAttribute("data-videoEmbedId");
       id && new Vimeo.Player(el.id, {
         id: id,
-        dnt: true,
         loop: false
       });
+      /* dnt: true, */
+      // tracking enabled 2022-11-09 to improve analytics
     });
   }
   /**
@@ -9327,4 +9343,3 @@ var stir = stir || {};
     buildSchema();
   }
 })();
-

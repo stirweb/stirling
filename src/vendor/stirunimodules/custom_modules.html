@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<!-- <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=11">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+	<title> Media Management – University of Stirling</title>
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="../../../dist/fonts/fonts.css" rel="stylesheet" >
+    <link rel="stylesheet" href="../../../dist/css/app.css">
+</head>
+<body>
+	
+	<section class="c-wrapper u-bg-grey u-padding-y">
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+				<div class="cell">
+					<form action="" method="">
+						<select id="select-roucode-ug" data-course-options="UG">
+							<option value="">~ UG courses ~</option>
+							<!-- <option value="UHX11-ACCFIN">Accountancy &amp; Finance</option> -->
+						</select>
+					</form>
+					<form action="" method="">
+						<select id="select-roucode-pg" data-course-options="PG">
+							<option value="">~ PG courses ~</option>
+							<!-- <option value="UHX11-ACCFIN">Accountancy &amp; Finance</option> -->
+						</select>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section class="c-wrapper u-padding-y">
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+				<div class="cell">
+					<div id="course-modules-container"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Modal for Course info! -->
+	<div class="reveal" id="course__description" aria-labelledby="course-modules-description__header" data-reveal>
+		<div id="course-modules-description__loading">
+			<div class="loader"></div>
+			<span class="show-for-sr">Loading...</span>
+		</div>
+		<div id="course-modules-description__content">
+			<div id="course-modules-description__header"></div>
+			<div id="course-modules-description__body" style="max-height: 600px; overflow: auto;"></div>
+			<button class="close-button" data-close aria-label="Close Accessible Modal" type="button">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
+
+	<script src="../../../dist/js/app.js"></script>
+	<script src="js/StirUniModules.js"></script>
+	<script src="../../other/course.js?v=now"></script>
+	<script>
+
+	StirUniModules.getOptions({
+		autoload_first_option: true
+	});
+
+	var loadingIndicator = document.getElementById("course-modules-container__loading");
+	if(loadingIndicator) loadingIndicator.style.display = "none";
+
+	function createSelectOptions(data) {
+		for(var x in data){
+			if((typeof(data[x].rouCode) !== 'undefined') && ( data[x].rouCode.indexOf("-") >= 0 )){
+				this.insertAdjacentHTML("beforeend", '<option value="'+data[x].rouCode+'">'+data[x].rouName+'</option>');
+			}
+		}
+	}
+
+	var createSelectOptionsUG = createSelectOptions.bind(document.getElementById("select-roucode-ug"))
+	var createSelectOptionsPG = createSelectOptions.bind(document.getElementById("select-roucode-pg"))
+
+
+
+	$(function() {
+
+		var level,
+			rouCode,
+			container = document.getElementById("course-modules-container"),
+			routes = document.getElementById("course-modules-container__routes-list"),
+			options = document.getElementById("course-modules-container__options-list"),
+			header = document.getElementById("course-modules-container__header"),
+			optionSelectBoxes = document.querySelectorAll("[data-course-options]");
+
+		
+		if(optionSelectBoxes) {
+			var sels = Array.prototype.slice.call(optionSelectBoxes);
+			for(var i=0; i<sels.length; i++) {
+				sels[i].addEventListener("change", function(e) {
+			
+					if(container) container.innerHTML = "";
+					if(routes) routes.innerHTML = "";
+					if(options) options.innerHTML = "";
+					rouCode = this.value;
+					header && (header.innerHTML = "<h1 style=\"margin-bottom:0.3em;\">" + this.options[this.selectedIndex].text + "</h1><h3 class=\"header-stripped\">["+rouCode+"]</h3>");
+					level = this.getAttribute("data-course-options");
+					if(rouCode) {
+						StirUniModules.init({
+							container: "#course-modules-container"
+						})
+						StirUniModules.loadCourseOptions(rouCode, level);
+					}
+				});
+			}
+		}
+
+		// load select options
+
+		var url   = "https://portal.stir.ac.uk/servlet/CalendarServlet?",
+			paths = {
+			"UG": "opt=menu&callback=createSelectOptionsUG",
+			"PG": "opt=pgmenu&ct=PG&callback=createSelectOptionsPG"
+		}
+
+		for(var path in paths){
+			jQuery.ajax({
+					"url": url + paths[path],
+					dataType: "script",
+					cache: true
+			}).done(function() {
+	
+			}).fail(function() {
+				console.error("There was an error loading the programmes");
+			});
+		}
+
+	});
+
+	</script>
+
+</body>
+</html>

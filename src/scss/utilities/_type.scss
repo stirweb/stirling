@@ -1,0 +1,148 @@
+/* 
+	  Typography
+    --- 
+
+    Colours - in settings/_colors.scss
+
+    - u-black
+    - u-heritage-green 
+    - u-energy-teal
+    - u-grey--dark
+
+    Foundation 
+
+    https://get.foundation/sites/docs/typography-helpers.html
+
+    - text-center
+    - text-right
+    - text-left
+    - lead (lead paragraph)
+    - no-bullet (for ul's)
+
+    Typescale classes 
+    
+    h1 (3rem)
+    h2 (2.5rem)
+    h3 (1.9375rem)
+    h4 (1.5625rem)
+    h5 (1.25rem)
+    h6 (1rem)
+
+    In our scss/_type.scss
+
+    - u-header--secondary-font
+    - header-stripped
+    - u-header--margin-stripped
+    - ul.stripped
+
+    and more...
+
+ */
+
+/* Sizing */
+
+.u-font-primary,
+.u-font-primary-header {
+  font-family: $header-font-family;
+  font-weight: 300;
+}
+
+.u-font-secondary {
+  font-family: "Open Sans", sans-serif;
+}
+
+.u-text-callout,
+.u-callout-text {
+  font-size: 3.1875rem;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .u-text-callout,
+  .u-callout-text {
+    font-size: 4.1rem;
+    line-height: 105%;
+  }
+}
+
+@media screen and #{breakpoint(large up)} {
+  .u-text-callout,
+  .u-callout-text {
+    font-size: 5.625rem; // 90px;
+  }
+}
+
+.u-text-regular,
+.u-lead,
+.lead {
+  font-size: 1.25rem;
+}
+
+// also p.smaller in _type and .h6 in foundation
+
+.text-xsm {
+  font-size: 0.875rem;
+}
+
+.text-sm {
+  font-size: 1rem;
+}
+
+.text-lg {
+  font-size: 1.625rem;
+}
+
+.text-xlg {
+  font-size: 2.25rem;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .text-xlg {
+    font-size: 3.125rem;
+  }
+}
+
+/* Transforms */
+
+.u-uppercase {
+  text-transform: uppercase;
+}
+
+.u-lowercase {
+  text-transform: lowercase;
+}
+
+.u-text-sentence-case,
+.u-sentence-case {
+  text-transform: lowercase;
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+// .u-underline {
+//   text-decoration: underline;
+//   text-underline-offset: 5px;
+//   text-decoration-thickness: 2px;
+// }
+
+.u-font-normal {
+  font-weight: 400;
+}
+
+.u-font-semibold {
+  font-weight: 600;
+}
+
+.u-font-bold {
+  font-weight: 700;
+}
+
+.u-quote {
+  &::before {
+    content: '"';
+  }
+
+  &::after {
+    content: '"';
+  }
+}

@@ -1,0 +1,262 @@
+/*
+ * Masthead
+ *
+
+.c-masthead {
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 0px;
+
+  .c-masthead__image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    //max-height: 689px;
+    //min-height: 689px;
+    height: 639px;
+    position: relative;
+  }
+
+  .c-masthead__container {
+    margin: 40px auto 70px;
+
+    .c-masthead__callout-text {
+      color: $heritage-green;
+      padding: 20px 20px 20px 0;
+      line-height: 105%;
+      margin: 0;
+      position: relative;
+    }
+
+    .c-masthead__button-group {
+      margin: 0;
+
+      .button {
+        margin: 30px 30px 0 0;
+
+        &:last-child {
+          margin: 30px 0 0;
+        }
+      }
+    }
+  }
+}
+
+[data-has-overlapper="up"].c-masthead.c-masthead-legacy {
+  margin-bottom: 2rem;
+}
+
+@media screen and (min-width: 40em) {
+  [data-has-overlapper="up"].c-masthead.c-masthead-legacy {
+    margin-bottom: 0;
+  }
+
+  [data-has-overlapper="up"].c-masthead.c-masthead-legacy .c-masthead__container {
+    bottom: 20%;
+  }
+}
+
+.c-masthead.c-masthead-legacy {
+  margin-bottom: 0px;
+  overflow: visible;
+
+  .c-masthead__image {
+    height: 689px;
+
+    &:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      height: 100%;
+      left: 0;
+      top: 0;
+    }
+  }
+
+  .c-masthead__container {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    padding: 0 15px;
+    margin: 0 auto 0;
+    z-index: 1;
+
+    .c-masthead__callout-text {
+      color: #ffffff;
+      text-transform: uppercase;
+      line-height: 85%;
+
+      &:after {
+        content: "";
+        position: absolute;
+        height: 31px;
+        bottom: -18px;
+        right: 0;
+        width: 9999px;
+        border-right: 7px solid #fff;
+        border-bottom: 7px solid #fff;
+      }
+    }
+
+    .c-masthead__button-group .button {
+      margin: 50px 30px 0 0;
+
+      &:last-child {
+        margin: 50px 0 0;
+      }
+    }
+  }
+}
+
+/*
+  Overides to default style 
+  NOT IN USE ACCORDING TO SITEIMPROVE
+*/
+
+// .c-masthead--eject .c-masthead__callout-text {
+//   font-size: 3.75rem; /* 60px */
+//   margin-bottom: 20px;
+// }
+
+// .c-masthead--opacity {
+//   color: rgba(255, 255, 255, 0.7);
+// }
+
+/*
+  XLarge down
+*
+
+@include breakpoint(xlarge down) {
+  .c-masthead .c-masthead__image {
+    height: 500px;
+
+    .c-masthead__container .c-masthead__callout-text {
+      font-size: 4.5rem; /* 72px *
+    }
+  }
+
+  .c-masthead.c-masthead-legacy .c-masthead__image {
+    height: 500px;
+  }
+
+  // .c-masthead--eject .c-masthead__container {
+  //   margin: 0 auto 60px;
+  // }
+
+  // .c-masthead--eject .c-masthead__callout-text {
+  //   font-size: 2.75rem; /* 44px *
+  // }
+}
+
+/*
+  Medium
+*
+
+@include breakpoint(medium down) {
+  .c-masthead {
+    .c-masthead__image {
+      height: 350px;
+    }
+
+    .c-masthead__container {
+      margin: 20px auto 40px;
+
+      .c-masthead__callout-text {
+        font-size: 4.1rem; /* 72px *
+      }
+    }
+  }
+
+  .c-masthead.c-masthead-legacy .c-masthead__image {
+    height: 500px;
+  }
+}
+
+/*
+  Small
+*
+
+@include breakpoint(small down) {
+  .c-masthead {
+    overflow: auto;
+
+    .c-masthead__image {
+      height: 256px;
+    }
+
+    .c-masthead__container {
+      margin: 0 auto 60px;
+      padding: 0 15px 20px;
+      bottom: 0;
+      margin: 0;
+
+      .c-masthead__callout-text {
+        color: $heritage-green;
+        font-size: 3.1875rem; /* 51px *
+        padding: 20px 20px 20px 30px;
+      }
+
+      .c-masthead__button-group {
+        margin: 30px 0 0 0;
+
+        .button {
+          display: block;
+          width: 100%;
+          margin: 10px 0;
+        }
+
+        .button:last-child {
+          margin: 10px 0 0;
+        }
+      }
+    }
+  }
+
+  .c-masthead.c-masthead-legacy {
+    .c-masthead__image {
+      height: 256px;
+    }
+
+    .c-masthead__container {
+      position: relative;
+      bottom: 0;
+
+      .c-masthead__callout-text {
+        color: $heritage-green;
+      }
+
+      .c-masthead__callout-text:after {
+        border-right: 6px solid $heritage-green;
+        border-bottom: 6px solid $heritage-green;
+        height: 25px;
+        bottom: -10px;
+      }
+    }
+  }
+}
+
+/*
+  XSmall
+*
+
+@media screen and (max-width: 500px) {
+  .c-masthead .c-masthead__container .c-masthead__callout-text {
+    font-size: 2.5rem; /* 40px *
+  }
+}
+
+/*
+    Masthead - News Pages
+*
+
+.c-masthead--news {
+  overflow: visible;
+
+  .c-masthead__container .c-masthead__callout-text {
+    font-size: 3.75rem; 
+    margin: 0 20px;
+  }
+}
+*/

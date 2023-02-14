@@ -1,0 +1,54 @@
+/*
+	Student Options Block
+	NOT IN USE
+*
+.c-study-options-block {
+	min-height: 740px;
+}
+.c-study-options-block__image {
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: bottom center;
+	position: absolute;
+	height: 100%;
+	width: 50%;
+	left: 0;
+	top: 0;
+}
+.c-study-options-block .c-promo-box {
+	padding: 20px 30px;
+}
+@media screen and #{breakpoint(medium down)} {
+	.c-study-options-block {
+		min-height: initial;
+	}
+	.c-study-options-block__image {
+		background-position: center 80%;
+		min-height: 400px;
+		position: relative;
+		width: 100%;
+	}
+}
+@media screen and #{breakpoint(small down)} {
+	.c-study-options-block__image {
+		background-position: center center;
+	}
+}
+*/
+/***
+Request a prospectus
+**
+.c-request-prospectus {
+	padding: 70px 0;
+}
+.c-request-prospectus h1 {
+	font-size: 74px;
+	margin: 0;
+}
+
+@media screen and #{breakpoint(small down)} {
+	.c-student-satisfaction__image {
+		margin-bottom: 40px;
+	}
+}
+*/

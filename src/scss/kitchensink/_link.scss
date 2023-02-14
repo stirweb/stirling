@@ -1,0 +1,73 @@
+.c-link {
+  /* border-bottom: 2px solid transparent; */
+  display: inline-block;
+  font-size: 1.25rem; // 16 x rem = 20px;
+  max-width: max-content;
+  position: relative;
+  text-decoration: none;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: $heritage-green;
+    transition: width 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  &:after {
+    content: "\e97b";
+    font-family: "uos";
+    margin: 0 0 0 10px;
+    //position: relative;
+    //right: -10px;
+    //bottom: -1px;
+  }
+}
+
+.c-link.u-black:hover {
+  color: $black;
+}
+.c-link.u-black:before {
+  background-color: $black;
+}
+.c-link.u-white:hover {
+  color: $white;
+}
+.c-link.u-white:before {
+  background-color: $white;
+}
+.c-link:hover:before {
+  width: 100%;
+}
+ul .c-link {
+  margin: 0 0 10px 0;
+}
+.c-link.no-arrow:after {
+  content: "";
+}
+.c-wysiwyg-content li a,
+.accordion-content li a,
+.tabs-panel li a {
+  border-bottom: 2px solid $heritage-green;
+}
+
+.c-news-events__title .c-link {
+  display: inline;
+
+  &:after {
+    position: relative;
+    top: 2px;
+  }
+}
+
+.u-white--all .c-news-events__title .c-link:hover {
+  border-bottom-color: #fff;
+}
+
+.c-link.safariFix:after {
+  position: relative;
+  right: 10px;
+}

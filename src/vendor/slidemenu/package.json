@@ -1,0 +1,18 @@
+{
+  "name": "slidemenu",
+  "version": "1.0.0",
+  "description": "Slide menu is a mobile drill down menu but also provides an intuitive way to access menu page links. For example, if we drill down to Menu > Sub-menu 2 > Deep menu 3 .. Deep menu 3 might have another level beyond but perhaps we want to open this menu page instead of drilling down. This slide menu allows that by putting the page link at the sub-menu links.",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0"
+  }
+}

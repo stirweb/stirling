@@ -1,0 +1,24 @@
+.circular-chart {
+    max-height: 230px;
+    max-width: 230px;
+}
+.circle {
+      stroke: white;
+      fill: none;
+      stroke-width: 4;
+      stroke-dasharray: 0 100;
+      transition: stroke-dasharray 2s ease-in-out;
+}
+.circle-bg {
+    fill: none;
+    stroke: #eee;
+    stroke-opacity: 0.5;
+    stroke-width: 4;
+}
+.percentage {
+    fill: #fefefe;
+    font-family: "FSMaja", serif;
+    font-size: 10px;
+    font-weight: 300;
+    text-anchor: middle;
+}

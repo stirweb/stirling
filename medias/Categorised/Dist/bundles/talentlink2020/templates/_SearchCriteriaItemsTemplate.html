@@ -1,0 +1,62 @@
+<%
+/* global criterium, type */
+var bindTo = '', jobCount = '', disable = false;
+
+if (item.bindTo) {
+bindTo = ' data-lumesse-sc-bind-to="'+item.bindTo+'"';
+}
+
+switch(criterium.label){
+    case 'SA_LOV1':
+        if(
+            item.value == 6709 ||
+            item.value == 9154
+        ){
+            type = 'DISPLAY NONE';
+        }
+        break;
+    case 'SA_SiteSubDept2':
+        if(
+            item.value == 8 ||
+            item.value == 118 ||
+            item.value == 121 ||
+            item.value == 149
+        ){
+            type = 'DISPLAY NONE';
+        }
+        break;
+}
+
+if (item.jobCount !== undefined) {
+if (type == 'DROP_DOWN_LIST' || type == 'SCROLLING_WINDOW' || type == 'OTHER') {
+jobCount = ' ('+item.jobCount+')';
+} else {
+jobCount = ' <span class="criteriumJobCount">('+item.jobCount+')</span>';
+}
+} else {
+item.jobCount = '';
+}
+%>
+<% if (type == 'DROP_DOWN_LIST' || type == 'SCROLLING_WINDOW' || type == 'OTHER') { %>
+<option value="<%- item.value %>" data-lumesse-sc-path="<%- item.path %>" data-lumesse-sc-jobcount="<%- item.jobCount %>"<%= bindTo + (disable ? ' style="display: none" disabled' : '') + (selected ? " selected" : "")  %>><%= translate.get(type == 'OTHER' ? "SA_"+item.label : item.label, item.label) + jobCount %></option>
+<% } else if (type == 'CHECK_BOX') { %>
+<label class="<%- settings.checkboxLabelClass %>" id="<%- criterium.id %>FieldLabelDescription-<%- idx %>">
+    <input type="checkbox" name="<%- criterium.id %>" value="<%- item.value %>" aria-labelledby="<%- criterium.id %>FieldLabel" aria-describedby="<%- criterium.id %>FieldLabelDescription-<%- idx %>" data-lumesse-sc-path="<%- item.path %>" data-lumesse-sc-jobcount="<%- item.jobCount %>" data-lumesse-sc-field-id="<%- criterium.id %>"<%= criterium.bindWithHtml + bindTo + (disable ? ' disabled' : '') + (selected ? " checked" : "")  %>> <%= translate.get(item.label, item.label) + jobCount %>
+</label>
+<% } else if (type == 'CHECK_BOX_BLOCK') { %>
+<div class="checkbox">
+    <label id="<%- criterium.id %>FieldLabelDescription-<%- idx %>">
+        <input type="checkbox" name="<%- criterium.id %>" value="<%- item.value %>" aria-labelledby="<%- criterium.id %>FieldLabel" aria-describedby="<%- criterium.id %>FieldLabelDescription-<%- idx %>" data-lumesse-sc-path="<%- item.path %>" data-lumesse-sc-jobcount="<%- item.jobCount %>" data-lumesse-sc-field-id="<%- criterium.id %>"<%= criterium.bindWithHtml + bindTo + (disable ? ' disabled' : '') + (selected ? " checked" : "")  %>> <%= translate.get(item.label, item.label) + jobCount %>
+    </label>
+</div>
+<% } else if (type == 'RADIO_BUTTON') { %>
+<label class="<%- settings.radioLabelClass %>" id="<%- criterium.id %>FieldLabelDescription-<%- idx %>">
+    <input type="radio" name="<%- criterium.id %>" value="<%- item.value %>" aria-labelledby="<%- criterium.id %>FieldLabel" aria-describedby="<%- criterium.id %>FieldLabelDescription-<%- idx %>" data-lumesse-sc-path="<%- item.path %>" data-lumesse-sc-jobcount="<%- item.jobCount %>" data-lumesse-sc-field-id="<%- criterium.id %>"<%= criterium.bindWithHtml + bindTo + (disable ? ' disabled' : '') + (selected ? " checked" : "")  %>> <%= translate.get(item.label, item.label) + jobCount %>
+</label>
+<% } else if (type == 'RADIO_BUTTON_BLOCK') { %>
+<div class="radio">
+    <label id="<%- criterium.id %>FieldLabelDescription-<%- idx %>">
+        <input type="radio" name="<%- criterium.id %>" value="<%- item.value %>" aria-labelledby="<%- criterium.id %>FieldLabel" aria-describedby="<%- criterium.id %>FieldLabelDescription-<%- idx %>" data-lumesse-sc-path="<%- item.path %>" data-lumesse-sc-jobcount="<%- item.jobCount %>" data-lumesse-sc-field-id="<%- criterium.id %>"<%= criterium.bindWithHtml + bindTo + (disable ? ' disabled' : '') + (selected ? " checked" : "")  %>> <%= translate.get(item.label, item.label) + jobCount %>
+    </label>
+</div>
+<% }%>

@@ -1,0 +1,111 @@
+$heritage-green: #006938;
+
+
+.c-activity-timetable,
+.c-activity-timetable thead,
+.c-activity-timetable tbody,
+.c-activity-timetable tr,
+.c-activity-timetable th,
+.c-activity-timetable td {
+	display: block;
+}
+
+.c-activity-timetable {
+	
+	margin: 0 auto 3rem auto;
+	border-top-color: $heritage-green;
+
+	tr {
+		padding: 1rem 0;
+	}
+	
+	td, th {
+		line-height: 1.6;
+		padding: 0 1.25rem;
+	}
+	
+	th {
+		font-size: 1rem;
+		background-color: #f1f1f1;
+	}
+	
+	td {
+		/* padding: 0 1.25rem; */
+	}
+	
+	.button.tiny {
+		padding: 0.3rem 1rem;
+		margin: 0.6rem 0;
+		font-size: 1rem;
+	}
+}
+
+.c-activity-timetable.alt {
+	tr {
+		padding: 0;
+	}
+	
+	th {
+		font-size: 1.125rem;
+		color: white;
+		background-color: $heritage-green;
+		padding: 1rem 0;
+		padding-left: 1.125rem;
+	}
+
+	tr:nth-child(1) th {
+		padding-top: calc(1rem - 5px);
+	}
+
+	td:nth-of-type(1) {
+		padding-top: 1rem;
+	}
+
+	td:last-child {
+		padding-bottom: 1rem;
+	}
+}
+
+@media screen and (min-width: 640px) {
+	
+	.c-activity-timetable {
+		display: table;
+		
+		thead, tbody {
+			display: table-row-group;
+		}
+		
+		tr {
+			display: table-row;
+		}
+		td, th {
+			display: table-cell;
+		}
+		
+		th[rowspan] {
+			padding: 1rem;
+			margin-bottom: 1rem;
+		}
+		
+		td {
+			padding: 1rem;
+			vertical-align: baseline;
+			
+			a.button.tiny {
+				margin: 0;
+			}
+		}
+		
+		
+	}
+	
+	.c-activity-timetable.alt {
+		
+		th[rowspan] {
+			vertical-align: middle;
+			border-bottom: 3px solid white;
+		}
+
+	}
+		
+}

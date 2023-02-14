@@ -1,0 +1,178 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=11" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+        <style>
+
+        .search-box .loader {
+            border: 6px solid #eee; /* Light grey */
+            border-top: 6px solid #999; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .search-box {
+            border: 1px solid #ccc;
+            position: absolute;
+            width: 100%;
+            display: none;
+            min-height: 100px;
+            box-shadow: 5px 5px #ccc;
+            background: #fff;
+        }
+        .search-box h3 {
+            font-size: 100%;
+            text-transform: uppercase;
+            color: #999;
+        }
+        .search-box ul {
+            list-style: none;
+        }
+        .search-box .search-box__results {
+            display: none;
+            padding: 20px;
+        }
+        /*.search-box .search-box__search-item {
+            float: left;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+        .search-box .search-box__search-item img {
+            float: left;
+            margin-right: 20px;
+        }*/
+        .search-box .search-box__search-item h4 {
+            font-size: 100%;
+            font-weight: bold;
+        }
+        .search-box .search-box__loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 20px;
+            background: #eee;
+            display: none;
+            text-align: center;
+            color: #ccc;
+            display: none;
+        }
+
+        fieldset.suggestions {
+            margin-bottom: 1rem;
+        }
+        fieldset.suggestions input {
+            position: absolute;
+            left: -9999px;
+        }
+        fieldset.suggestions a {
+            padding: 10px;
+            display: block;
+        }
+        fieldset.suggestions input:focus + a {
+            background: #ccc;
+        }
+
+        input[name='search'] + a {
+            position: absolute;
+            right: 10px;
+            top: 7px;
+            display: none;
+        }
+
+        </style>
+    </head>
+    <body>
+        <div id="results"></div>
+
+        <script id="template" type="text/x-handlebars-template">
+            {{#each results}}
+                <div class="result">
+                    <h1>{{this.title}}</h1>
+                    <p>{{this.body}}</p>
+                </div>
+            {{/each}}
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+        <script src="js/searchbox.js"></script>
+        <script>
+
+        var searchBox = new SearchBox({
+
+            // datasets are each of our ajax calls to get results and renderers to
+            // handle the data received
+            datasets: {
+
+                results: {
+
+                    // this is essentially the jquery ajax options
+                    // note: some options, such as success, are not configurable here
+                    // as the lib defines its own to do some housekeeping before calling
+                    // renderer functions
+                    request: {
+
+                        url: "https://jsonplaceholder.typicode.com/posts",
+
+                        // The name of the callback parameter, as specified by the api
+                        jsonp: "callback",
+
+                        // Tell jQuery we're expecting JSONP
+                        dataType: "jsonp"
+                    },
+
+                    // the following properties all exist in metaData and have letters
+                    // that don't really match the property name sometimes (e.g. teaser is
+                    // metaData["c"]). So these just improve readability inside the renderer
+                    // title is already a property, so no need to add that
+                    formatters: {
+                        teaser: function(value, result) {
+                            var teaser = result.body.substr(0, 30);
+                            if (teaser < result.body) {
+                                teaser = teaser + "...";
+                            }
+                            return teaser;
+                        }
+                    },
+
+                    //
+                    renderer: function(data, options, _data) {
+                        var ds = options.datasets.results;
+                        var results = searchBox.getResults(data, ds.filters, ds.formatters);
+
+                        // generate results using Handlebars
+                        var template = Handlebars.compile( $("#template").html() );
+
+                        // output html to page
+                        var html = template({
+                            results: results.slice(0,5)
+                        });
+                        $("#results").html(html);
+                    }
+                }
+            }
+        });
+
+        // this could be triggered by a form submission, or input keyup
+        searchBox.request({
+            // q: "e.g. value of input field"
+        });
+
+        </script>
+    </body>
+</html>

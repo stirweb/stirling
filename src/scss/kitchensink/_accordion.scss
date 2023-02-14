@@ -1,0 +1,354 @@
+/* NEW ACCORDION CODE RK8  */
+
+h2.c-tab-accord-group-head,
+h3.c-tab-accord-group-head {
+  margin-bottom: 0;
+}
+
+.stir-accordion {
+  border-bottom: 1px solid #000;
+  margin: 0;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 40px;
+  }
+
+  // Panel content
+  > div {
+    padding-top: 15px;
+
+    h3 {
+      margin-bottom: 0;
+      padding-bottom: 15px;
+      font-size: 1.25rem; /* 20px */
+
+      &::after {
+        content: none;
+      }
+    }
+
+    h4 {
+      font-size: 1.125rem; /* 18px */
+      margin-bottom: 0.5em; /* 9px */
+    }
+
+    p,
+    li {
+      font-size: 1rem; // 16px;
+    }
+
+    li {
+      margin-bottom: 0.3rem;
+    }
+  }
+
+  // Controller headers
+  > h3,
+  > h4,
+  > h5,
+  > h6,
+  > accordion-summary,
+  > h2 {
+    display: block;
+    font-family: "Open Sans", sans-serif;
+    margin-bottom: 0;
+    padding: 0;
+    font-weight: 700;
+    font-size: 1.25rem; // 20px;
+    cursor: pointer;
+
+    &::after {
+      content: none;
+    }
+
+    button {
+      position: relative;
+      font-size: 1.25rem; // 20px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: left;
+      padding: 20px 35px 20px 0;
+      width: 100%;
+      cursor: pointer;
+
+      &:before {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        margin-top: -1.2rem;
+        content: "-";
+      }
+
+      &:focus {
+        outline: 1px dotted #76bd22 !important;
+        outline-offset: 4px;
+      }
+    }
+
+    a {
+      display: inline-block;
+      color: #3a3c39;
+      padding-bottom: 0;
+      padding-right: 30px;
+      border-bottom: 0;
+      width: 100%;
+
+      &:hover {
+        border-bottom: 0;
+      }
+
+      &:before {
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        margin-top: -1.2rem;
+        content: "-";
+      }
+    }
+  }
+
+  &:not(.stir-accordion--active) {
+    > h3 a:before,
+    > h2 a:before,
+    > h4 a:before,
+    > h5 a:before,
+    > accordion-summary a:before,
+    > h6 a:before,
+    > h2 button:before,
+    > h4 button:before,
+    > h5 button:before,
+    > h6 button:before,
+    > accordion-summary button:before,
+    > h3 button:before {
+      content: "+";
+    }
+
+    [role="region"] {
+      display: none;
+    }
+  }
+
+  &.stir-accordion--active {
+    [role="region"] {
+      display: block;
+    }
+  }
+}
+
+.stir-accordion.single-accordion {
+  border-bottom: 0;
+
+  h2,
+  h4,
+  h5,
+  h6,
+  h3 {
+    display: inline-block;
+    background: $heritage-green;
+    margin-bottom: 50px !important;
+    line-height: 1;
+    font-weight: normal;
+  }
+
+  h2 a,
+  h4 a,
+  h5 a,
+  h6 a,
+  h3 a {
+    color: #fff;
+    padding: 20px;
+    padding-right: 40px;
+  }
+
+  h2 button,
+  h4 button,
+  h5 button,
+  h6 button,
+  h3 button {
+    color: #fff;
+    font-weight: 400;
+    padding: 20px;
+    padding-right: 40px;
+  }
+
+  h2 a::before,
+  h4 a::before,
+  h5 a::before,
+  h6 a::before,
+  h3 a::before {
+    top: 65%;
+  }
+
+  h2 button::before,
+  h4 button::before,
+  h5 button::before,
+  h6 button::before,
+  h3 button::before {
+    bottom: 1.2rem;
+  }
+}
+
+.accordion-stacked .stir-accordion:last-child {
+  border-bottom: 1px solid #000;
+  margin-bottom: 0;
+}
+
+.u-white--all {
+  .stir-accordion {
+    border-bottom-color: #fff;
+
+    h2 > button,
+    h4 > button,
+    h5 > button,
+    h6 > button,
+    > p > button,
+    h3 > button {
+      &:focus {
+        outline: 1px dotted #fff !important;
+      }
+    }
+
+    h2 a:before,
+    h4 a:before,
+    h5 a:before,
+    h6 a:before,
+    > p a:before,
+    h3 a:before {
+      background-color: transparent !important;
+    }
+  }
+
+  .accordion-stacked .stir-accordion:last-child {
+    border-bottom-color: #fff;
+  }
+}
+
+/* Course Page Version - 
+ * over ride extra margin added by course tabs 
+ * but keep it for old a based version
+*/
+.c-course-tabs .stir-tabs .stir-tabs__content .stir-accordion > h3 {
+  margin: 0;
+
+  > a {
+    margin: 20px 0;
+  }
+}
+
+/* END NEW ACCORDIONS RK8  */
+
+/* OLD ACCORDION CODE */
+
+/*
+.accordion {
+  background: transparent;
+  margin-bottom: 60px;
+  // :last-child:not(.is-active) > .accordion-title,
+  // :last-child > .accordion-content:last-child {
+  //     border-bottom: 1px solid $black;
+  // }
+  h2 + .accordion-item .accordion-title,
+  .accordion-item:first-child .accordion-title {
+      border-top: 0;
+  }
+
+  .accordion-item:last-child:not(.is-active) .accordion-title {
+      border-bottom: none;
+  }
+
+  .accordion-title {
+      border: none;
+      font-size: 1.25rem ; // 20px;
+      padding-left: 0;
+      padding-right: 2em;
+      color: $black;
+      border-top: 1px solid $black;
+      font-weight: 700;
+      text-decoration: none;
+      line-height: 1.5;
+
+      &:hover,
+      &:focus {
+          background: transparent;
+      }
+  }
+
+  .accordion-content {
+      border: none;
+      background: transparent;
+      padding-left: 0;
+      padding-right: 0;
+      font-size: 1rem; // 16px;
+
+      p,
+      li,
+      th,
+      td {
+          font-size: 1.25rem; /* 16px * 1.25 = 20px *
+      }
+
+      &:last-child {
+          border-bottom: 0;
+      }
+  }
+
+  @media screen and #{breakpoint(medium down)} {
+      .accordion-content {
+          padding: 30px 50px;
+      }
+  }
+
+  @media screen and #{breakpoint(small down)} {
+      .accordion-content {
+          padding: 30px;
+      }
+  }
+}
+
+.u-white--all .accordion-title {
+  border-color: $white;
+}
+
+.u-white--all .accordion-title:before {
+  background-color: transparent !important;
+}
+
+@media screen and #{breakpoint(xlarge down)} {
+  .accordion {
+      margin-bottom: 40px;
+  }
+}
+
+.accordion.accordion-stacked {
+  margin-bottom: 0px;
+  border-bottom: 1px solid $black;
+}
+
+.accordion.accordion-single {
+
+  a.accordion-title {
+      color: $white;
+      background: $heritage-green;
+      padding-left: 30px;
+      padding-right: 50px;
+      display: inline-block;
+      font-weight: 400;
+  }
+
+  a.accordion-title::before {
+      right: 1.8rem;
+      top: 44%;
+  }
+
+  .accordion-title:hover,
+  .accordion-title:focus {
+      background: $heritage-green;
+  }
+
+  .accordion-content {
+      margin-top: 20px;
+  }
+
+}
+*/

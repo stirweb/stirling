@@ -1,0 +1,85 @@
+/*
+    UTILITY CLASSES
+
+    Check the comments of each file to see if a Foundation the utilty already exists
+
+    If adding new utility classes base roughly on Tailwind naming conventions
+    https://tailwindcss.com/docs/
+    
+    u + property shorthand (see Tailwind) + value size short hand (if required) + screen size (if required)
+
+    eg Add a little bit of margin top / bottom - u-my-1  
+
+    0 - none
+    1 - extra small
+    2 - small
+    3 - medium
+    4 - large
+    5 - extra large
+
+    For screen size use full text identifier eg
+
+    u-items-start-small
+    u-items-center-medium-up
+
+    Where there are alternatives below the first is the prefered option, the others are deprecated
+*/
+
+@import "layout";
+@import "type";
+@import "spacing";
+@import "borders";
+@import "brand";
+
+/*
+    Interactivity
+*/
+
+.u-cursor-pointer {
+  cursor: pointer;
+}
+
+.hide-no-js {
+  display: none;
+}
+
+/* 
+    Sticky widgets 
+*/
+
+.u-sticky {
+  /* positioning */
+  position: sticky;
+  top: 0;
+  right: auto;
+  left: 0%;
+  margin: 0 auto;
+  z-index: z($z-index-elements, u-sticky);
+
+  &.stuck {
+    position: fixed; /* for IE/Edge */
+    position: sticky; /* for modern browsers */
+    box-shadow: 0 5px 1px rgba(0, 0, 0, 0.2);
+
+    a {
+      padding: 13px 20px;
+    }
+  }
+
+  /* &.flush {
+		transform: translate(0, 0px);
+	} */
+  /* &[data-sticky-polyfill] {} */
+
+  &.offsetup + .grid-container {
+    margin-top: 2rem;
+  }
+}
+
+@include breakpoint(medium up) {
+  .u-sticky.stuck a {
+    border: 1px solid currentColor;
+  }
+}
+
+@import "animatons";

@@ -1,0 +1,20 @@
+.c-campus {
+    padding: 109px 0 0;
+}
+.c-campus__stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.c-campus__stat-wrap {
+    margin-bottom: 85px;
+}
+.c-campus__podium {
+    max-width: 489px;
+    bottom: -1px;
+    position: relative;
+    margin: 12px 0 0;
+}
+.c-campus.animate .c-campus__trophy {
+    animation: tada 1s ease-in-out 0.1s;
+}

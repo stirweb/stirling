@@ -1,0 +1,261 @@
+/*
+Promo Box
+*/
+.c-promo-box {
+  padding: 15px 0;
+  position: relative;
+}
+
+.c-promo-box:not(.c-promo-box--plain, .c-promo-box--image):after {
+  content: "";
+  background-color: $energy-green;
+  height: 3px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  top: 15px;
+  width: calc(100% - 30px);
+}
+
+.c-promo-box > div:not(.c-promo-box__layout-container) {
+  display: flex;
+  height: 100%;
+}
+
+.c-promo-box__layout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+/*
+Promo Box Heading 
+*/
+
+.c-promo-box__header {
+  color: $black;
+  font-family: $body-font-family;
+  font-size: 1.25rem; // 22px;
+  font-weight: bold;
+  line-height: 1.75;
+  margin: 0 0 16px 0;
+  padding: 0;
+
+  &:after {
+    position: relative;
+  }
+
+  > a.c-link {
+    margin-right: 15px;
+  }
+
+  > [class="c-link"]::after {
+    position: absolute;
+  }
+}
+
+/*
+Promo Box Content 
+*/
+
+.c-promo-box__content {
+  padding-top: 23px;
+
+  p {
+    font-size: 1rem; // 16px;
+    margin-bottom: 0.5rem;
+	&.u-lead {
+		font-size: 1.25rem;
+	}
+  }
+
+  li {
+    font-size: 1rem; // 16px;
+  }
+
+  div > p > a {
+    border-bottom: 1px solid $heritage-green;
+  }
+
+  div > a {
+    border-bottom: 1px solid $heritage-green;
+
+    &:hover {
+      border-bottom: 1px solid $energy-green;
+    }
+  }
+}
+
+.c-promo-box__link {
+  margin-top: 16px;
+}
+
+/*
+Promo Box with Icon
+*/
+
+.c-promo-box__icon {
+  padding-right: 20px;
+  padding-top: 23px;
+}
+
+.c-promo-box.c-promo-box--icon {
+  display: flex;
+}
+
+.c-promo-box__icon span[class^="uos-"] {
+  color: $heritage-green;
+  display: inline-block;
+  font-size: 1.5625rem; /* 25px */
+  //margin: 0 20px 0 0;
+}
+
+/*
+Promo Box with Image
+*/
+.c-promo-box--image {
+  .c-promo-box__header {
+    margin-top: 20px;
+  }
+
+  .c-promo-box__content {
+    border: none;
+    height: 100%;
+    padding-top: 0;
+
+    > div span {
+      display: block;
+      overflow: hidden;
+      position: relative;
+
+      &:after {
+        content: "";
+        display: block;
+        background-color: $energy-green;
+        bottom: 0;
+        height: 3px;
+        left: 0;
+        position: absolute;
+        width: 100%;
+      }
+    }
+  }
+}
+
+/*
+Promo Box - Content
+*/
+
+.c-promo-box__content img {
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+/*
+Promo Box - Pink Line
+*/
+
+.c-promo-box.c-promo-box--energy-pink:not(.c-promo-box--plain):not(.c-promo-box--image):after {
+  background-color: $energy-pink;
+}
+
+/*
+Promo Box - Plain
+*/
+
+.c-promo-box--plain {
+  .c-promo-box__content > div span:after {
+    background-color: #fff;
+    height: 0;
+  }
+
+  .c-promo-box__content {
+    border: none;
+    padding-top: 0;
+  }
+
+  .c-promo-box__icon span:before {
+    position: relative;
+    top: -20px;
+  }
+}
+
+/* fix to normalise images - not tested 2019-07-25
+.c-promo-box__content img {
+    min-width: 100%;
+    object-fit: cover;
+}*/
+
+/**
+ * Promo box with category label
+ */
+
+.c-promo-box_category {
+  background-color: $heritage-green;
+  color: white;
+  position: absolute;
+  right: 0;
+  top: auto;
+  bottom: 1em;
+  padding: 0.1em 1em 0.2em;
+  text-transform: uppercase;
+  font-family: FSMaja, serif;
+  font-weight: 100;
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: 0.6em;
+    bottom: -0.2em;
+    right: 0;
+    left: 0;
+    width: auto;
+    border: 3px solid white;
+    border-width: 0 0 3px 3px;
+  }
+}
+
+.c-promo-box {
+  [data-category="Research Spotlight"] {
+    background-color: $heritage-teal;
+    /* heritage teal */
+  }
+
+  [data-category="Impact"] {
+    background-color: $heritage-berry;
+    /* heritage berry */
+  }
+}
+
+@media screen and #{breakpoint(small down)} {
+  .c-promo-box:not(.c-promo-box--plain, .c-promo-box--image):after {
+    width: calc(100% - 60px);
+  }
+}
+
+/*
+IE10+ specific styles go here
+*/
+
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+  .c-promo-box__icon {
+    margin-right: 20px;
+  }
+}
+
+/*
+  u-white--all overides
+*/
+
+.u-white--all {
+  .c-promo-box .c-promo-box__content p a {
+    text-decoration: none;
+    border-color: #fff;
+  }
+}

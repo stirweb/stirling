@@ -1,0 +1,224 @@
+/*
+ * Half n Half
+ */
+
+.c-half-n-half {
+    margin: 0 0 60px 0;
+
+    &.js-animation {
+        overflow-x: hidden; /* prevent horizontal scroll (before animation is triggered) */
+    }
+
+    .c-half-n-half__image {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top center;
+        width: 58%;
+        height: 100%;
+        max-width: 708px;
+        position: absolute;
+        top: 0;
+    }
+
+    .c-half-n-half__header {
+        color: $black;
+        font-family: $body-font-family;
+        font-size: 1.5rem; // 24px;
+        font-weight: 400;
+        line-height: 140%;
+        margin: 0 0 16px 0;
+    }
+
+    .c-half-n-half__content {
+        background-color: tint($light-mink, 15%);
+        min-height: 333px;
+        padding: 65px 50px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .c-half-n-half__copy {
+        a {
+            color: $heritage-green !important;
+        }
+
+		strong {
+			color: currentColor !important; /* needs !i to defeat u-white--all */
+		}
+
+        p + blockquote {
+            margin: 60px auto 0;
+        }
+
+        blockquote {
+            border-left: 5px solid $energy-green;
+            font-weight: 600;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 0 0 30px;
+
+            p {
+                color: $heritage-green !important;
+                line-height: 1.5;
+
+                &::before {
+                    content: open-quote;
+                }
+                &::after {
+                    content: close-quote;
+                }
+            }
+        }
+
+        .quote-attribute {
+            font-weight: 600;
+            margin: 0 auto 16px;
+            max-width: 960px;
+            padding-left: 35px;
+        }
+    }
+
+    .c-half-n-half__copy p,
+    .c-half-n-half ul li {
+        font-size: 1rem; // 16px;
+    }
+
+    /* odd and even over rides */
+    &:nth-of-type(odd) {
+        .c-half-n-half__image {
+            left: 0;
+            margin-left: 15px;
+        }
+
+        .c-half-n-half__content {
+            margin: 70px 0 70px 50%;
+        }
+    }
+
+    &:nth-of-type(even) {
+        .c-half-n-half__image {
+            right: 0;
+            margin-right: 15px;
+        }
+
+        .c-half-n-half__content {
+            margin: 70px 50% 70px 0;
+        }
+    }
+
+    &:first-of-type {
+        margin: 60px 0;
+    }
+}
+
+/* 
+ *  Wrapper over rides 
+ */
+
+.c-wrapper[class*="u-bg-"] .c-half-n-half {
+    .c-half-n-half__content {
+        background-color: $white;
+    }
+
+    .c-half-n-half__header {
+        color: black !important;
+    }
+
+    .c-half-n-half__copy {
+        p,
+        ul li {
+            color: $black !important;
+        }
+
+        a:after {
+            color: $black !important;
+            background-color: $black !important;
+        }
+    }
+}
+
+.c-wrapper.u-bg-white .c-half-n-half .c-half-n-half__content {
+    background-color: tint($light-mink, 15%);
+}
+
+/* 
+ *  White out over rides 
+ */
+
+.u-white--all .c-half-n-half .c-half-n-half__content {
+    h2 {
+        color: $heritage-green !important;
+    }
+
+    a.c-link {
+        color: $heritage-green !important;
+
+        &::before {
+            background-color: $heritage-green !important;
+        }
+
+        &::after {
+            color: $heritage-green !important;
+        }
+    }
+}
+
+/* 
+ *  Size specific over rides 
+ */
+
+@media screen and #{breakpoint(xlarge down)} {
+    .c-half-n-half {
+        margin: 0 0 40px 0;
+
+        &:first-of-type {
+            margin: 40px 0;
+        }
+
+        .c-half-n-half__copy {
+            p + blockquote {
+                margin: 40px auto 0;
+            }
+            .quote-attribute {
+                margin: 0 auto 40px;
+            }
+        }
+    }
+}
+
+@media screen and #{breakpoint(medium down)} {
+    .c-half-n-half {
+        margin: 0 0 40px 0;
+
+        &:first-of-type {
+            margin: 40px 0;
+        }
+
+        .c-half-n-half__image {
+            height: 430px;
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        &:nth-child(odd) .c-half-n-half__image,
+        &:nth-child(even) .c-half-n-half__image,
+        &:nth-child(odd) .c-half-n-half__content,
+        &:nth-child(even) .c-half-n-half__content {
+            margin: 0;
+        }
+
+        .c-half-n-half__content {
+            min-height: initial;
+            padding: 20px;
+        }
+    }
+}
+
+@media screen and #{breakpoint(small down)} {
+    .c-half-n-half .c-half-n-half__image {
+        height: 250px;
+    }
+}

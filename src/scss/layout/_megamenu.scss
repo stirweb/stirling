@@ -1,0 +1,230 @@
+$megamenu__padding: 2rem 0;
+
+.megamenu {
+  background: #eee;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  z-index: index($z-index-elements, mega-menu);
+  /* display: none; */
+
+  .megamenu__padding {
+    padding: $megamenu__padding;
+  }
+
+  .megamenu__links {
+    position: relative;
+
+    > ul {
+      list-style: none;
+      margin: 0;
+
+      > li {
+        padding-top: 30px;
+
+        // Top-level sections e.g. "Study", "International", "Research", "About", etc.
+        > a {
+          display: inline-block;
+          //margin-bottom: 40px;
+          font-weight: bold;
+          font-size: 1.375rem; /* 22px */
+          @extend .c-link;
+          margin-bottom: 30px;
+        }
+
+        > ul {
+          list-style: none;
+          margin: 0;
+          //display: flex;
+          //flex-direction: column;
+          //flex-wrap: wrap;
+          //height: 500px;
+          font-size: 0;
+          //overflow: hidden;
+
+          > li {
+            width: 100%;
+            padding-right: 30px;
+            padding-bottom: 0px;
+
+            // main subsections, e.g. "Undergraduate"
+            > a {
+              font-weight: bold;
+              font-size: 1.125rem; /* 18px */
+              color: $heritage-green;
+              @extend .c-link;
+
+              &:after {
+                bottom: 0;
+                position: absolute;
+              }
+
+              &:hover {
+                text-decoration: underline;
+
+                &:before {
+                  width: 0;
+                }
+              }
+            }
+
+            > ul {
+              list-style: none;
+              margin: 0;
+              padding: 0;
+              margin-top: 0.5rem;
+              margin-bottom: 1rem;
+
+              > li {
+                line-height: 1.5;
+                //margin-bottom: 10px;
+
+                // second level e.g. "UG > How to apply"
+                > a {
+                  font-size: 0.9375rem; /* 15px (reduced from 16px to prevent overflow scroll) */
+                  color: $black;
+
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .megamenu__prev-button,
+  .megamenu__next-button {
+    display: none;
+    //     color: $heritage-green;
+    //     font-weight: bold;
+    //     padding: 10px 15px;
+    //     position: absolute;
+    //     top: 50%;
+    //     margin-top: -20px;
+    //     cursor: pointer;
+    //     background: $light-gray;
+    //     border-radius: 100%;
+    //     font-size: 1.25rem; /* 20px */
+    //     height: 50px;
+    //     width: 50px;
+    //     display: inline-block;
+
+    //     span {
+    //       position: absolute;
+    //       left: -9999px;
+    //     }
+  }
+  //   .megamenu__prev-button:hover,
+  //   .megamenu__next-button:hover {
+  //     background: darken($light-gray, 5%);
+  //     color: $white;
+  //   }
+  //   .megamenu__prev-button {
+  //     left: -70px;
+  //     display: none;
+  //     &:before {
+  //       content: "\e97a";
+  //       font-family: "uos";
+  //     }
+  //   }
+  //   .megamenu__next-button {
+  //     right: -20px;
+  //     &:before {
+  //       content: "\e97b";
+  //       font-family: "uos";
+  //     }
+  //   }
+  //   &:not([data-slide-controls="true"]) {
+  //     .megamenu__prev-button,
+  //     .megamenu__next-button {
+  //       display: none;
+  //     }
+  //   }
+}
+
+/* Medium up */
+@media screen and (min-width: 55em) {
+  .megamenu {
+    .megamenu__links {
+      li a {
+        background-color: #eee;
+      }
+
+      > ul {
+        > li {
+          > ul {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            height: 512px;
+            font-size: 0;
+            overflow: hidden;
+
+            > li {
+              width: 25% !important;
+              padding-bottom: 20px;
+              overflow: auto;
+
+              > ul {
+                overflow: auto;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .megamenu__prev-button,
+    .megamenu__next-button {
+      color: $heritage-green;
+      font-weight: bold;
+      padding: 10px 15px;
+      position: absolute;
+      top: 50%;
+      margin-top: -20px;
+      cursor: pointer;
+      background: $light-gray;
+      border-radius: 100%;
+      font-size: 1.25rem; /* 20px */
+      height: 50px;
+      width: 50px;
+      display: inline-block;
+
+      span {
+        position: absolute;
+        left: -9999px;
+      }
+    }
+    .megamenu__prev-button:hover,
+    .megamenu__next-button:hover {
+      background: darken($light-gray, 5%);
+      color: $white;
+    }
+    .megamenu__prev-button {
+      left: -70px;
+      display: none;
+      &:before {
+        content: "\e97a";
+        font-family: "uos";
+      }
+    }
+    .megamenu__next-button {
+      right: -20px;
+      &:before {
+        content: "\e97b";
+        font-family: "uos";
+      }
+    }
+    &:not([data-slide-controls="true"]) {
+      .megamenu__prev-button,
+      .megamenu__next-button {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,164 @@
+.c-welcome-calendar {
+	margin-bottom: 2rem;
+
+	.c-welcome-calendar_header {
+		display: none;
+	}
+
+	.h-event {
+		border-bottom: 2px solid #006938;
+		margin-bottom: 2rem;
+		padding-bottom: 2rem;
+
+		&.ejecta {
+			display: none;
+		}
+
+		p {
+			&:not(.p-summary) {
+				margin: 0;
+			}
+			&::before {
+				font-weight: bold;
+			}
+
+			&.p-location::before {
+				content: "Location: ";
+			}
+			&.p-date::before {
+				content: "Time: ";
+			}
+			&.p-attendance::before {
+				content: "Attendance: ";
+			}
+			&.p-audience::before {
+				content: "Audience: ";
+			}
+			&.p-yeargroup::before {
+				content: "Yeargroup: ";
+			}
+		}
+	}
+	time {
+		white-space: nowrap;
+		&[class^="dt-"]{
+			text-transform: lowercase;
+		}
+	}
+	.p-name {
+		font-weight: bold;
+	}
+	.p-date {
+		span {
+			white-space: nowrap;
+			display: inline-block;
+		}
+	}
+}
+
+.c-welcome-calendar > div > p {
+	font-size: 0.875rem;
+}
+
+/* .c-welcome-calendar + button[type="reset"] {} */
+
+@media screen and (min-width: 1024px) {
+	.c-welcome-calendar {
+		border: 1px solid black;
+	}
+	.c-welcome-calendar .h-event {
+		border: 0;
+		margin-bottom: 0;
+		padding-bottom: 0;
+	}
+	.c-welcome-calendar.grid > div {
+		display: grid;
+		grid-template-columns: 10% 20% auto auto auto auto auto auto auto;
+		grid-gap: 1rem;
+		padding: 0.5rem 1rem;
+	}
+	.c-welcome-calendar.table {
+		display: table;
+	}
+	.c-welcome-calendar.table > div,
+	.c-welcome-calendar_header {
+		display: table-row;
+	}
+	.c-welcome-calendar_header {
+		font-weight: bold;
+	}
+	.c-welcome-calendar.table > div > p {
+		display: table-cell;
+		padding: 0.625rem;
+	}
+	.c-welcome-calendar.table .h-event > p::before {
+		content: none;
+	}
+	.c-welcome-calendar > div > p {
+		margin: 0;
+	}
+	.c-welcome-calendar > div:nth-child(2n) {
+		background: #e1deda;
+	}
+}
+
+/*******/
+
+table.c-welcome-events-table .p-name {
+	font-weight: bold;
+}
+.c-welcome-events-table .h-event {
+	margin-bottom: 2rem;
+}
+.c-welcome-events-table .h-event > :not(.p-summary) {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+table.c-welcome-events-table td,
+table.c-welcome-events-table th {
+	font-size: 0.875rem;
+	padding: 0.5rem;
+}
+
+.c-welcome-events-table time {
+	white-space: nowrap;
+}
+
+@media screen and (max-width: 1024px) {
+	table.c-welcome-events-table {
+		border: 0;
+	}
+
+	table.c-welcome-events-table,
+	table.c-welcome-events-table tr,
+	table.c-welcome-events-table tr td {
+		display: block;
+	}
+	table.c-welcome-events-table thead {
+		display: none;
+	}
+	table.c-welcome-events-table .h-event > ::before {
+		font-weight: bold;
+	}
+	table.c-welcome-events-table .p-location::before {
+		content: "Location: ";
+	}
+	table.c-welcome-events-table .p-date::before {
+		content: "Time: ";
+	}
+	table.c-welcome-events-table .p-attendance::before {
+		content: "Attendance: ";
+	}
+	table.c-welcome-events-table .p-audience::before {
+		content: "Audience: ";
+	}
+	table.c-welcome-events-table .p-yeargroup::before {
+		content: "Yeargroup: ";
+	}
+
+	table.c-welcome-events-table tbody,
+	table.c-welcome-events-table tbody tr:nth-child(2n),
+	table.c-welcome-events-table thead {
+		background-color: transparent;
+	}
+}

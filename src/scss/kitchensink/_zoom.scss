@@ -1,0 +1,25 @@
+.c-zoom {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	touch-action: pinch-zoom;
+
+	svg {
+		border: 3px double currentColor;
+	}
+
+	.loupe {
+		display: none;
+		position: absolute;
+		cursor: zoom-in;
+		max-width: 300px;
+		max-height: 300px;
+		height: 40vw;
+		width: 40vw;
+		border-radius: 50%;
+		background-color: white;
+		background: rgba(0, 0, 0, 0) radial-gradient(at center center, rgb(255, 255, 255) 65%, rgb(0, 0, 0)) repeat scroll 0% 0%;
+		z-index: 1;
+		user-select: none;
+	}
+} 

@@ -81,33 +81,72 @@ stir.templates.search = function () {
   var checkSpelling = function checkSpelling(suggestion) {
     return suggestion ? "<p>Did you mean <a href=\"#\" data-suggest>".concat(suggestion.text.split(" ")[0], "</a>?</p>") : "";
   };
+  /**
+   * 
+   * @param {String} name 
+   * @param {String} value 
+   * @returns Element
+   * 
+   * For a given name and value, return the first matching HTML <input> or <option> element.
+   */
 
-  var metaParamToken = function metaParamToken(token) {
-    if (token.charAt(0) == "-") return; // ignore negative parameters
 
-    if (token.charAt(1) == ">") return; // ignore date-range parameters
+  var metaParamElement = function metaParamElement(name, value) {
+    return document.querySelector("input[name=\"".concat(name, "\"][value=\"").concat(value, "\"],select[name=\"").concat(name, "\"] option[value=\"").concat(value, "\"]"));
+  }; //	const metaParamToken = (name, values) => {
+  //		if (name === "meta_type") return; // ignore `type`
+  //		if (name === "meta_faculty") return; // ignore `faculty`
+  //		if (values.charAt(0) == "-") return; // ignore negative parameters
+  //		if (values.charAt(1) == ">") return; // ignore date-range parameters
+  //		if (values.indexOf(" ") >= 1) {
+  //			const tokenArr = values.split(" ");
+  //			const el = metaParamElement(name, tokenArr[1]);
+  //			if (el) {
+  //				return tag(el.parentElement.innerText, tokenArr[0], tokenArr[1]);
+  //			}
+  //		}
+  //		return;
+  //	};
 
-    if (token.indexOf(":") >= 1) {
-      var tokenArr = token.split(":");
-      if (tokenArr[0] === "type") return; // ignore `type`
+  /**
+   * 
+   * @param {Object} tokens 
+   * @returns String (HTML)
+   * 
+   * Create clickable text elements (i.e. "tokens") that represent the active search filters, to give the user the
+   * option to dismiss each filter quickly (and a visual reminder of which filters are active).
+   * 
+   * Becuase the search result data only contains the raw names/values of the filters, we need to derive the correct
+   * text labels from the form inputs on the page. We also need to unbundle checkbox (multi-select) filters and deal
+   * with any other unusual filters (such as Faculty and course Start Date).
+   * 
+   */
 
-      if (tokenArr[0] === "faculty") return; // ignore `faculty`
 
-      var selector = "input[name=\"meta_".concat(encodeURIComponent(tokenArr[0]), "\"][value=\"").concat(encodeURIComponent(tokenArr[1]), "\"]");
-      var el = document.querySelector(selector);
+  var metaParamTokens = function metaParamTokens(tokens) {
+    var metas = Object.keys(tokens).filter(function (key) {
+      return key.indexOf('meta_') === 0 && tokens[key][0];
+    });
+    return metas.map(function (key) {
+      // does the name and value match a DOM element?
+      var el = metaParamElement(key, tokens[key]);
+      if (el) return tag(el.innerText || el.parentElement.innerText, key, tokens[key]); // if not, we might have a multi-select filter (e.g. checkbox)
 
-      if (el) {
-        return tag(el.parentElement.innerText, tokenArr[0], tokenArr[1]);
-      }
-    }
+      var tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
 
-    return;
-  };
+      var values = tokens[key].toString().replace(tokenex, "$1").split(/\s/); // values are space-separated
 
-  var metaParamTokens = function metaParamTokens(token) {
-    // TODO: Porperly handle values that contain spaces?
-    if (token.indexOf("[") > -1) return stir.Array.oxfordComma(token.replace(/\|?\[|\]/g, "").split(" ").map(metaParamToken), false, "or");
-    return metaParamToken(token);
+      return values.map(function (value) {
+        var el = metaParamElement(key, value); // The innerText of the <input> element‘s <label> has the text we need
+
+        if (el) {
+          return tag(el.parentElement.innerText, key, value);
+        } // We will just default to empty string if there is no matching element.
+
+
+        return '';
+      }).join(" ");
+    }).join(" ");
   };
 
   var tag = function tag(_tag, name, value) {
@@ -201,9 +240,12 @@ stir.templates.search = function () {
           currEnd = _data$response$result.currEnd,
           totalMatching = _data$response$result.totalMatching,
           currStart = _data$response$result.currStart;
-      var querySanitised = stir.String.stripHtml(data.question.originalQuery).replace(/^!padrenullquery$/, "");
-      var queryEcho = querySanitised.length > 1 ? " for <strong>".concat(querySanitised, "</strong>") : "";
-      return "<div class=\"u-py-2\">" + (totalMatching > 0 ? "\t<p class=\"text-sm\">There are <strong>".concat(totalMatching.toLocaleString("en"), " results</strong>").concat(queryEcho, ".</p>") : "<p><strong>There are no results".concat(queryEcho, "</strong>.</p>")) + "".concat(data.question.metaParameters.map(metaParamTokens).join(" "), "\n\t\t\t\t\t").concat(querySanitised && checkSpelling(data.response.resultPacket.spell), "\n\t\t\t\t</div>");
+      var querySanitised = stir.String.stripHtml(data.question.originalQuery).replace(/^!padrenullquery$/, "").trim();
+      var queryEcho = querySanitised.length > 1 ? " for <em>".concat(querySanitised, "</em>") : "";
+      var message = totalMatching > 0 ? "\t<p class=\"text-sm\">There are <strong>".concat(totalMatching.toLocaleString("en"), " results</strong>").concat(queryEcho, ".</p>") : "<p id=\"search_summary_noresults\"><strong>There are no results".concat(queryEcho, "</strong>.</p>");
+      var tokens = metaParamTokens(data.question.rawInputParameters);
+      var spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : '';
+      return "<div class=\"u-py-2\"> ".concat(message, " ").concat(tokens, " ").concat(spelling, " </div>");
     },
     pagination: function pagination(summary) {
       var currEnd = summary.currEnd,
@@ -323,7 +365,7 @@ stir.templates.search = function () {
       return "\n\t\t\t<div class=\"c-search-result".concat(hasThumbnail ? " c-search-result__with-thumbnail" : "", "\" data-rank=").concat(item.rank, " data-result-type=event>\n\t\t\t\t<div class=\"c-search-result__tags\">\n\t\t\t\t\t").concat((_item$metaData5 = item.metaData) !== null && _item$metaData5 !== void 0 && _item$metaData5.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : "", "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n            <strong>\n\t\t\t\t\t\t  ").concat(item.metaData.register ? anchor({
         text: title,
         href: item.metaData.register
-      }) : title, "\n\t\t\t\t\t  </strong>\n          </p>\n\t\t\t\t\t<div class=\"flex-container flex-dir-column u-gap-8\">\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-calendar\"></span>\n\t\t\t\t\t\t\t<span>").concat(datespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"uos-clock u-icon h5\"></span>\n\t\t\t\t\t\t\t<span>").concat(timespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-").concat(item.metaData.online ? "web" : "location", "\"></span>\n              <span>").concat(item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : "", "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<p class=\"text-sm\">").concat(item.summary, "</p>\n\t\t\t\t</div>\n\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0]), "\n\t\t\t\t").concat(((_item$metaData6 = item.metaData) === null || _item$metaData6 === void 0 ? void 0 : (_item$metaData6$tags = _item$metaData6.tags) === null || _item$metaData6$tags === void 0 ? void 0 : _item$metaData6$tags.indexOf("Webinar")) > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : "", "\n\t\t\t</div>");
+      }) : title, "\n\t\t\t\t\t  </strong>\n          </p>\n\t\t\t\t\t<div class=\"flex-container flex-dir-column u-gap-8\">\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-calendar\"></span>\n\t\t\t\t\t\t\t<span>").concat(datespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"uos-clock u-icon h5\"></span>\n\t\t\t\t\t\t\t<span>").concat(timespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-").concat(item.metaData.online ? "web" : "location", "\"></span>\n\t\t\t\t\t\t\t<span>").concat(item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : "", "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<p class=\"text-sm\">").concat(item.summary, "</p>\n\t\t\t\t</div>\n\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0]), "\n\t\t\t\t").concat(((_item$metaData6 = item.metaData) === null || _item$metaData6 === void 0 ? void 0 : (_item$metaData6$tags = _item$metaData6.tags) === null || _item$metaData6$tags === void 0 ? void 0 : _item$metaData6$tags.indexOf("Webinar")) > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : "", "\n\t\t\t</div>");
     },
     research: function research(item) {
       return "\n\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank).concat(item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : "", ">\n\t\t\t<div>\n\t\t\t\t<div class=\"c-search-result__tags\"><span class=\"c-search-tag\">").concat(item.title.split(" | ").slice(0, 1).toString(), "</span></div>\n\t\t\t\t<div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t<a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">\n\t\t\t\t\t\t\t").concat(item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title, "\n\t\t\t\t\t\t</a>\n\t\t\t\t\t</strong></p>\n\t\t\t\t\t").concat(stir.String.stripHtml(item.metaData.c || "") ? "<div class=\"text-sm\">" + stir.String.stripHtml(item.metaData.c || "") + "</div>" : "", "\n          ").concat(stir.funnelback.getTags(item.metaData.category) ? "<div class=c-search-result__footer>" + stir.funnelback.getTags(item.metaData.category) + "</div>" : "", "\n        </div>\n\t\t\t\t<!-- p>12344</ -->\n\t\t\t</div>\n\t\t</div>");
@@ -333,6 +375,84 @@ stir.templates.search = function () {
     }
   };
 }();
+(function () {
+  //const debug   = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+  //const preview = UoS_env.name === "preview" ? true : false;
+  //if(!(debug||preview)) return;
+  var date_elements = Array.prototype.slice.call(document.querySelectorAll("[name=meta_startval]"));
+  if (!date_elements.length) return;
+  var months = [, "January",,,,,,,, "September",,,];
+  var regex = new RegExp(/\d\d\d\d/);
+  var ay = new RegExp(/AY\d\d\d\d\D\d\d/i);
+  var delim = new RegExp(/ay/i);
+  var dates = date_elements.map(function (date) {
+    return {
+      data: date.value,
+      date: date.value.replace(ay, ""),
+      month: date.value.indexOf("-") > -1 ? months[parseInt(date.value.split("-")[1])] || "" : "",
+      year: date.value.match(regex) ? date.value.match(regex).shift() : "",
+      acyear: date.value.match(ay) ? date.value.match(ay).shift().replace(delim, "") : ""
+    };
+  });
+  var years = dates.map(function (date) {
+    return date.acyear.replace(delim, "");
+  }).filter(function (value, index, self) {
+    return self.indexOf(value) === index && value;
+  });
+  var root = date_elements[0].parentElement.parentElement.parentElement; // remove checkboxes only if the years array is populated
+
+  if (!years.length) return;
+  date_elements.forEach(function (el) {
+    el.parentElement.parentElement.remove();
+  });
+
+  var DateInput = function DateInput(type, name, value) {
+    var input = document.createElement("input");
+    input.type = type;
+    input.name = name;
+    input.value = value;
+    return input;
+  };
+
+  var DateLabel = function DateLabel(name, value) {
+    var input = new DateInput("radio", "meta_startval", "[1st ".concat(value, "]"));
+    var label = document.createElement("label");
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(name));
+    return label;
+  };
+
+  var picker = document.createElement("li");
+  years.forEach(function (acyear) {
+    // Array: get all dates relevant to this academic year
+    var thisyear = dates.filter(function (date) {
+      return date.acyear === acyear;
+    }); // String: create a meta-search parameter of 'other' dates (i.e. neither Sept nor Jan)
+
+    var other = thisyear.filter(function (date) {
+      return date.date.indexOf("-01") === -1 && date.date.indexOf("-09") === -1;
+    }).map(function (date) {
+      return date.data;
+    }).join(" "); // DOM: show heading
+
+    var set = document.createElement("fieldset");
+    var legend = document.createElement("legend");
+    legend.classList.add("u-my-1", "text-xsm");
+    set.appendChild(legend);
+    set.setAttribute("class", "c-search-filters-subgroup");
+    legend.innerText = "Academic year ".concat(acyear);
+    picker.appendChild(set); // DOM: show conventional start dates (Sept, Jan)
+
+    thisyear.filter(function (date) {
+      return date.acyear === acyear && (date.date.indexOf("-01") > -1 || date.date.indexOf("-09") > -1);
+    }).map(function (date) {
+      set.appendChild(new DateLabel("".concat(date.month, " ").concat(date.year), date.data));
+    }); // DOM: lastly show 'other' dates
+
+    if (other.length) set.appendChild(new DateLabel("Other ".concat(acyear), "".concat(other)));
+  });
+  root.appendChild(picker);
+})();
 var stir = stir || {};
 stir.searchUI = stir.searchUI || {};
 /*
@@ -343,7 +463,8 @@ stir.searchUI = stir.searchUI || {};
 */
 
 stir.searchUI.asideAccordion = function (filterNode, index) {
-  var header = filterNode.querySelector("h3");
+  console.log("hello");
+  var header = filterNode.querySelector("p.c-search-filters-header");
   var body = filterNode.querySelector("div");
 
   if (header && body) {
@@ -626,9 +747,11 @@ stir.searchUI.slideTab = function (scope) {
   var filterNodes = stir.nodes(".c-search-results-filters");
 
   if (stir.MediaQuery.current === "small" || stir.MediaQuery.current === "medium") {
-    if (filterNodes.length) filterNodes.forEach(function (element, index) {
-      return stir.searchUI.asideAccordion(element, index);
-    });
+    if (filterNodes.length) {
+      filterNodes.forEach(function (element, index) {
+        return stir.searchUI.asideAccordion(element, index);
+      });
+    }
   }
 })();
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -925,6 +1048,20 @@ stir.search = function () {
         // metadata buffer length
         num_ranks: NUMRANKS
       }
+    },
+    // extra parameters for no-query searches
+    noquery: {
+      course: {
+        sort: "title" // if no keywords supplied, sort courses 
+        // by title instead of "relevance"
+        //		},
+        //		person: {
+        //			sort: "meta_surname"	//sort people by surname
+        //		},
+        //		event: {
+        //			sort: "adate"	// sort events by date descending 
+
+      }
     }
   };
   if (!constants.form || !constants.form.query) return;
@@ -932,6 +1069,10 @@ stir.search = function () {
 
   var getQuery = function getQuery(type) {
     return constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
+  };
+
+  var getNoQuery = function getNoQuery(type) {
+    return constants.form.query.value ? {} : constants.noquery[type];
   };
 
   var setQuery = function setQuery() {
@@ -1107,15 +1248,18 @@ stir.search = function () {
   var callSearchApi = stir.curry(function (type, callback) {
     var getFBParameters = getParameters(constants.parameters[type]); // curry-in fixed params
 
-    var parameters = getFBParameters({
-      // apply session params
+    var parameters = getFBParameters(stir.Object.extend({}, {
+      // session params:
       start_rank: getStartRank(type),
       query: getQuery(type),
+      // get actual query, or fallback, etc
       curator: getStartRank(type) > 1 ? false : true // only show curator for initial searches
 
-    }); //TODO if type==course and query=='!padrenullquery' then sort=title
+    }, getNoQuery(type) // get special "no query" parameters (sorting, etc.)
+    )); //TODO if type==course and query=='!padrenullquery' then sort=title
 
-    var url = addMoreParameters(setFBParameters(parameters), getFormData(type));
+    var url = addMoreParameters(setFBParameters(parameters), getFormData(type)); //debug && console.info('[Search] URL:');
+
     debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
   }); // A "Meta" version of search() i.e. a search without
   // a querysting, but with some metadata fields set:
@@ -1303,13 +1447,22 @@ stir.search = function () {
         setQuery();
         initialSearch();
       } else if (event.target.hasAttribute("data-value")) {
-        var selector = "input[name=\"meta_".concat(event.target.getAttribute("data-name"), "\"][value=\"").concat(event.target.getAttribute("data-value"), "\"]");
+        var selector = "input[name=\"".concat(event.target.getAttribute("data-name"), "\"][value=\"").concat(event.target.getAttribute("data-value"), "\"]");
         var input = document.querySelector(selector);
 
         if (input) {
           input.checked = !input.checked;
           event.target.parentElement.removeChild(event.target);
           initialSearch();
+        } else {
+          var sel2 = "select[name=\"".concat(event.target.getAttribute("data-name"), "\"]");
+          var select = document.querySelector(sel2);
+
+          if (select) {
+            select.selectedIndex = 0;
+            event.target.parentElement.removeChild(event.target);
+            initialSearch();
+          }
         }
       }
     });

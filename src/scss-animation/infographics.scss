@@ -1,0 +1,36 @@
+/* generic infographic CSS goes here */
+.c-int-stat {
+    h1 {
+        font-size: 6.875rem; // 110px;
+        line-height: 1.1;
+        margin: 0;
+    }
+    p {
+        font-size: 2rem; /* 32px */
+        margin: 0;
+    }
+    small {
+        font-size: 1.125rem; /* 18px */
+    }
+}
+
+/* keyframe animations */
+@import 'keyframes';
+
+/* sprecific infographic CSS is imported */
+@import 'alumni';
+@import 'campus';
+@import 'donut-percentage';
+@import 'lecturers';
+@import 'nationalities';
+@import 'number-rollup';
+@import 'overseas';
+@import 'partners';
+@import 'research';
+@import 'stars';
+@import 'teaching';
+@import 'top-150';
+@import 'welcome';
+
+/* breakpoints for the above infographics (bundled together to save multiple media queries) */
+@import 'breakpoints';

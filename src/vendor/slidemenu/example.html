@@ -1,0 +1,170 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=11" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex, nofollow">
+
+        <title>Slide menu</title>
+
+        <link rel="stylesheet" href="css/slidemenu.css">
+        <style>
+
+        #main {
+            transition: margin-left .5s;
+            padding: 20px;
+        }
+
+        .burger {
+            height: 30px;
+            width: 30px;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+            background-size: contain;
+        }
+
+        /* The side navigation menu */
+        #slider {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            right: 100%;
+            /*overflow: hidden;*/
+            z-index: 1;
+            top: 0;
+            background-color: #fff;
+            transition: 0.2s;
+            transition-timing-function: ease-out;
+        }
+
+        /* Position and style the close button (top right corner) */
+        #slider .closebtn {
+            position: absolute;
+            top: 12px;
+            right: 30px;
+            font-size: 36px;
+            margin-left: 50px;
+            z-index: 10000000;
+        }
+
+        </style>
+    </head>
+    <body>
+        <div id="slider">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+			<ul class="slidemenu">
+                <li class="current-menu-item">
+                    <a href="#">Home</a>
+                    <ul>
+                        <li>
+                            <a href="/menu1">Menu 1</a>
+                            <ul>
+                                <li><a href="/menu1/sub-menu1">Sub Menu 1</a></li>
+                                <li><a href="/menu1/sub-menu2">Sub Menu 2</a></li>
+                                <li><a href="/menu1/sub-menu3">Sub Menu 3</a></li>
+                                <li>
+                                    <a href="/menu1/sub-menu4">Sub Menu 4</a>
+                                    <ul>
+                                        <li>
+                                            <a href="/menu1/sub-menu4/deep-menu1">Deep Menu 1</a>
+                                            <ul>
+                                                <li><a href="/menu1/sub-menu4/deep-menu1">Sub Deep 1</a></li>
+                                                <li><a href="/menu1/sub-menu4/deep-menu2">Sub Deep 2</a></li>
+                                                <li><a href="/menu1/sub-menu4/deep-menu3">Sub Deep 3</a></li>
+                                                <li><a href="/menu1/sub-menu4/deep-menu4">Sub Deep 4</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="/menu1/sub-menu4/deep-menu2">Deep Menu 2</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="/menu1/sub-menu5">Sub Menu 5</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/menu2">Menu 2</a>
+                            <ul>
+                                <li><a href="/menu2/sub-menu1">Sub Menu 1</a></li>
+                                <li><a href="/menu2/sub-menu2">Sub Menu 2</a></li>
+                                <li><a href="/menu2/sub-menu3">Sub Menu 3</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/menu3">Menu 3</a>
+                            <ul>
+                                <li class="dir"><a href="/menu3/sub-menu1">Sub Menu 1</a></li>
+                                <li class="dir">
+                                    <a href="/menu3/sub-menu2">Sub Menu 2 THIS IS SO LONG IT MIGHT CAUSE AN ISSUE BUT MAYBE NOT?</a>
+                                    <ul>
+                                        <li><a href="/menu3/sub-menu2/category1">Category 1</a></li>
+                                        <li><a href="/menu3/sub-menu2/category2">Category 2</a></li>
+                                        <li><a href="/menu3/sub-menu2/category3">Category 3</a></li>
+                                        <li><a href="/menu3/sub-menu2/category4">Category 4</a></li>
+                                        <li><a href="/menu3/sub-menu2/category5">Category 5</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="/menu3/sub-menu3/sub-menu3">Sub Menu 3</a></li>
+                                <li><a href="/menu3/sub-menu4/sub-menu4">Sub Menu 4</a></li>
+                                <li><a href="/menu3/sub-menu5/sub-menu5">Sub Menu 5</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/menu4">Menu 4</a></li>
+                        <li><a href="/menu5">Menu 5</a></li>
+                        <li><a href="/menu6">Menu 6</a></li>
+                        <li><a href="/contact-us">Contact Us</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+		<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the slidemenu to sit on top of the page -->
+        <div id="main">
+            <header>
+                <span class="burger" onclick="openNav()"></span>
+            </header>
+
+            <p>When other websites give you text, they’re not sending the best. They’re not sending you, they’re sending words that have lots of problems and they’re bringing those problems with us. They’re bringing mistakes. They’re bringing misspellings. They’re typists… And some, I assume, are good words. It’s about making placeholder text great again. That’s what people want, they want placeholder text to be great again.</p>
+
+			<p>It’s about making placeholder text great again. That’s what people want, they want placeholder text to be great again. I know words. I have the best words. An 'extremely credible source' has called my office and told me that Lorem Ipsum's birth certificate is a fraud.</p>
+
+			<p>You’re disgusting.</p>
+
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="js/jquery.slidemenu.js"></script>
+        <script>
+
+        // Set the width of the side navigation to 250px and the left margin of the page content to 250px
+        function openNav() {
+            document.getElementById("slider").style.right = "0%";
+        }
+
+        // Set the width of the side navigation to 0 and the left margin of the page content to 0
+        function closeNav() {
+            document.getElementById("slider").style.right = "100%";
+        }
+
+		$(function() {
+
+            // set initial heights
+            $("#main").css("height", "1832px"); // TODO remove this when not using screenshot
+
+            // Set slide to full size
+            $("#slider").css("height", $(document).height() + "px");
+
+            // Apply the slide menu functionality
+            $("ul.slidemenu").slidemenu({
+                goto_text_format: '%s<span class="slidemenu__home-text"> home</span>',
+                // scroll_to: ".slidemenu__current .slidemenu__title"
+            });
+
+        });
+
+        </script>
+    </body>
+</html>

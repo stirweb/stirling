@@ -1,0 +1,148 @@
+/*
+ * Icon Links
+ */
+
+.c-icon-link span[class^="uos-"] {
+    font-size: 4.5rem; /* 72px */
+    margin: 15px;
+}
+
+.c-icon-link .c-icon-link__text-icon {
+    display: block;
+    font-size: 3.125rem; /* 50px */
+    color: $dark-gray;
+}
+
+.c-icon-link--large .c-link {
+    font-size: 2rem; /* 32px */
+}
+
+.c-icon-link-block .cell:nth-child(3) {
+    margin: 0 0 95px 0;
+}
+
+.c-icon-link-block .cell:last-child {
+    margin: 0;
+}
+
+.c-icon-link {
+    color: $heritage-green;
+}
+
+// .c-icon-link .c-link {
+//     color: $black;
+// }
+// .c-icon-link .c-link:before {
+//     background-color: $black;
+// }
+.c-icon-link.u-white,
+.c-icon-link.u-white .c-link {
+    color: $white;
+}
+
+.c-icon-link.u-white .c-link:before {
+    background-color: $white;
+}
+
+.c-icon-link span[class^="uos-facebook"] {
+    color: #3b5998;
+}
+
+.c-icon-link span[class^="uos-instagram"] {
+    color: #262626;
+}
+
+.c-icon-link span[class^="uos-twitter"] {
+    color: #55acee;
+}
+
+.c-icon-link span[class^="uos-youtube"] {
+    color: #ff0000;
+}
+
+.c-icon-link span[class^="uos-linkedin"] {
+    color: #007bb5;
+}
+
+.c-icon-link span[class^="uos-snapchat"] {
+    color: #000000;
+}
+
+.c-icon-link span[class^="uos-facebook"],
+.c-icon-link span[class^="uos-instagram"],
+.c-icon-link span[class^="uos-twitter"],
+.c-icon-link span[class^="uos-youtube"],
+.c-icon-link span[class^="uos-linkedin"],
+.c-icon-link span[class^="uos-snapchat"] {
+    font-size: 3.125rem; /* 50px */
+}
+
+@media screen and #{breakpoint(xlarge down)} {
+    .c-icon-link span[class^="uos-"] {
+        font-size: 3.25rem; /* 52px */
+    }
+
+    .c-icon-link--large .c-link {
+        font-size: 1.625rem; /* 26px */
+    }
+}
+
+/*
+ * Icon Links with Text
+ */
+
+.c-icon-link__header {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 600;
+    margin: 20px 0;
+}
+
+.c-icon-link__text p:not(.c-icon-link__header) {
+    font-size: 1.125rem; /* 18px */
+}
+
+@media screen and (max-width: 639px) {
+    .c-icon-link-block .cell,
+    .c-icon-link-block .cell:nth-child(3) {
+        margin-bottom: 70px;
+    }
+
+    .c-icon-link-block .cell:last-child {
+        margin: 0;
+    }
+
+    /*
+    Icon Links with Text
+    **********/
+    // .c-icon-link__text {
+    //     margin-bottom: 40px;
+    // }
+    // .c-icon-link__text:last-child {
+    //     margin-bottom: 0;
+    // }
+}
+
+/* 
+    Social Media Icons - Colour
+
+.c-icon-twitter {
+    color: #55acee;
+}
+.c-icon-facebook {
+    color: #3b5998;
+}
+.c-icon-instagram {
+    color: #125688;
+}
+.c-icon-youtube {
+    color: #ff0000;
+}
+.c-icon-linkedin {
+    color: #007bb5;
+}
+.c-social-list span[class^="uos-"] {
+    display: inline-block;
+    font-size: 1.875rem; 
+    padding: 15px 15px 0 0;
+}
+*/
