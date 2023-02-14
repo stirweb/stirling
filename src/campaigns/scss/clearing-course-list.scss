@@ -1,0 +1,23 @@
+.c-clearing-list-item {
+
+	margin-bottom: 2rem;
+
+	p {
+		margin: 0;
+	}
+
+	&[data-provider="FV"] .c-clearing-list-item__link::after,
+	&[data-sid="831"] .c-clearing-list-item__link::after,
+	&[data-sid="837"] .c-clearing-list-item__link::after,
+	&[data-sid="858"] .c-clearing-list-item__link::after,
+	&[data-sid="859"] .c-clearing-list-item__link::after {
+		background: #592c82;
+		border-radius: 1rem;
+		color: white;
+		content: "Forth\00a0" "Valley\00a0" "College";
+		font-size: 0.6rem;
+		line-height: 1;
+		margin-left: 1rem;
+		padding: 0.3rem 0.5rem;
+	}
+}

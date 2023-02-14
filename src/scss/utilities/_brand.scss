@@ -1,0 +1,67 @@
+/*
+  BRAND
+  --- 
+
+  Also
+
+  button.no-arrow
+
+*/
+
+.u-arrow:after {
+  content: "\e97b";
+  font-family: "uos";
+  margin: 0 0 0 10px;
+  position: relative;
+}
+
+.u-header-line::after {
+  content: "";
+  background-color: $energy-green;
+  bottom: -20px;
+  left: 0;
+  position: absolute;
+  width: 60px;
+  height: 8px;
+}
+
+.u-green-line-top {
+  border-top: 5px solid $energy-green;
+}
+
+.u-green-line-bottom {
+  border-bottom: 5px solid $energy-green;
+}
+
+.u-green-line-left {
+  border-left: 3px solid $energy-green;
+}
+
+.u-grey-line-bottom {
+  border-bottom: 5px solid #f6f5f4;
+}
+
+/*
+  Icons
+  To control size best to use with one of the foundation helper font size classes eg h3
+  eg <span class="uos-money u-icon h3"></span>
+*/
+
+.u-icon {
+  color: $heritage-green;
+  margin: 0;
+
+  &::before {
+    color: $heritage-green;
+  }
+}
+
+.u-svg-icon-24 {
+  width: 24px;
+  height: 24px;
+}
+
+.u-svg-icon-36 {
+  width: 36px;
+  height: 36px;
+}

@@ -1,0 +1,83 @@
+ul.slidemenu,
+ul.slidemenu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  width: 100%;
+  position: relative;
+  height: 100%; }
+
+ul.slidemenu li > ul {
+  position: absolute;
+  top: 0;
+  right: calc(100% + 10px);
+  transition: 0.2s;
+  transition-timing-function: ease-out; }
+
+/* Home */
+ul.slidemenu ul[data-has-drilldown] li.slidemenu__bc:first-child a,
+ul.slidemenu ul[data-has-drilldown] li.slidemenu__bc:first-child span {
+  background-color: #eee;
+  padding: 25px 30px;
+  display: block;
+  color: #776E64;
+  font-weight: bold;
+  font-size: 120%; }
+
+ul.slidemenu ul[data-has-drilldown] li.slidemenu__bc:first-child a .slidemenu__home-text,
+ul.slidemenu ul[data-has-drilldown] li:nth-child(2) a.slidemenu__goto-link {
+  display: none; }
+
+/* Back links */
+ul.slidemenu ul[data-has-drilldown] li.slidemenu__back a {
+  background-color: #3B6938;
+  display: block;
+  padding: 15px 30px;
+  color: white;
+  font-weight: bold;
+  font-size: 120%; }
+
+ul.slidemenu ul[data-has-drilldown] li.slidemenu__bc:first-child a:before,
+ul.slidemenu ul[data-has-drilldown] li.slidemenu__back a:before {
+  content: '< ';
+  font-size: 80%; }
+
+/* title */
+ul.slidemenu ul[data-has-drilldown] li.slidemenu__title span {
+  background-color: #6E9C6B;
+  display: block;
+  padding: 15px 30px;
+  color: white;
+  font-weight: bold;
+  font-size: 120%; }
+
+/* Submenu links */
+ul.slidemenu li.slidemenu__subitem {
+  background-color: #fff; }
+
+ul.slidemenu li.slidemenu__subitem > a,
+ul.slidemenu li.slidemenu__goto > a {
+  padding: 20px 0px;
+  display: block;
+  text-decoration: none;
+  font-size: 100%;
+  color: #3B6938;
+  transition: 0.3s;
+  position: relative;
+  margin: 0 30px;
+  font-weight: bold; }
+
+ul.slidemenu li.slidemenu__subitem > a,
+ul.slidemenu li.slidemenu__goto > a {
+  border-bottom: 2px solid #8EBB38; }
+
+ul.slidemenu li.slidemenu__subitem:last-child > a {
+  border-bottom: none; }
+
+ul.slidemenu li.slidemenu__has-submenu > a:after {
+  content: '>';
+  position: absolute;
+  top: 22px;
+  right: 0px;
+  font-size: 100%; }

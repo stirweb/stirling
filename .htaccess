@@ -1,0 +1,6 @@
+#RewriteEngine on
+
+# This is to only permit access to the /dist directory when not localhost
+#RewriteCond %{REMOTE_ADDR} !::1
+#RewriteCond %{REMOTE_ADDR} !127.0.0.1
+#RewriteRule !dist - [F]

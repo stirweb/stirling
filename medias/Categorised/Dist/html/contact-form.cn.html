@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Microsite Contact Form</title>
+</head>
+<body>
+    <form action="https://www-cgi.stir.ac.uk/formmail.cgi" method="post" class="wpcf7-form" novalidate="novalidate">
+        <p><label> 名字拼音（必填）<br>
+            <span class="wpcf7-form-control-wrap first-name"><input type="text" name="first-name" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" required></span> </label></p>
+        <p><label> 姓氏拼音（必填）<br>
+            <span class="wpcf7-form-control-wrap last-name"><input type="text" name="last-name" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" required></span> </label></p>
+        <p><label> 请留下你的申请号（必填）<br>
+            <span class="wpcf7-form-control-wrap application-number"><input type="text" name="application-number" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" required></span> </label></p>
+        <p><label> 请留下你的微信号（必填）<br>
+            <span class="wpcf7-form-control-wrap wechat-id"><input type="text" name="wechat-id" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" required></span> </label></p>
+        <p><input type="submit" value="发送" class="wpcf7-form-control wpcf7-submit"><span class="ajax-loader"></span></p>
+        <div class="wpcf7-response-output wpcf7-display-none"></div>
+        <input type="hidden" value="Microsite Contact Form" name="name">
+        <input name="recipient" type="hidden" value="kerry.grassick@stir.ac.uk">
+        <input name="redirect" type="hidden" value="https://www.stir.ac.uk/webcomponents/dist/html/contact-form-thanks.cn.html">
+        <!-- <input name="return_link_url" type="hidden" value="http://stirlinguni.cn/">
+        <input name="return_link_title" type="hidden" value="Continue"> -->
+        <input name="print_config" type="hidden" value="email">
+        <input name="subject" type="hidden" value="Microsite Contact Form">
+        <input name="required" type="hidden" value="first-name,last-name,application-number,wechat-id">
+        <input name="sort" type="hidden" value="order:first-name,last-name,application-number,wechat-id">
+    </form>
+</body>
+</html>

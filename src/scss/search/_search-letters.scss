@@ -1,0 +1,81 @@
+.c-letter-header {
+  font-size: 3.4rem;
+  font-family: FSMaja, serif;
+  font-weight: 200;
+  color: $heritage-green;
+  margin-top: 1rem;
+}
+
+.c-search-letters {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+  margin-right: -10px;
+  margin-top: 1rem;
+}
+
+.c-search-letters__box {
+  display: inline-block;
+  width: calc(100% / 14);
+  padding-right: 10px;
+
+  a {
+    background: $bg-grey;
+    display: block;
+    border: 0;
+    padding: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+
+    &[data-disabled] {
+      //color: $light-mink; // not AA compliant
+      color: #8b857d;
+      cursor: not-allowed;
+    }
+
+    &.c-search-letters__link--is-active {
+      background: #eae9e8;
+    }
+    &:focus {
+      outline: 2px dotted currentColor;
+      outline-offset: -2px;
+    }
+  }
+}
+
+@media screen and #{breakpoint(small only)} {
+  .c-search-letters__box {
+    width: calc(100% / 6);
+  }
+}
+
+@media screen and #{breakpoint(medium only)} {
+  .c-search-letters__box {
+    width: calc(100% / 9);
+  }
+}
+
+.c-search-letters__toggle-link {
+  display: inline-block;
+  border: 1px solid $heritage-green;
+  padding: 1rem;
+  margin: 1rem 0 1.5rem 0;
+  width: 100%;
+  text-align: center;
+
+  &::after {
+    content: "\e981" !important; // plus
+    font-family: "uos" !important;
+    font-size: 0.75rem; /* 12px */
+    // cursor: pointer;
+    margin-left: 5px;
+  }
+  &.c-search-letters__toggle-link--is-active {
+    &::after {
+      content: "\e979" !important; // minus
+    }
+  }
+}

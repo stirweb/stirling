@@ -1,0 +1,62 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=11" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex, nofollow">
+        <!-- meta -->
+
+        <title>p13n – University of Stirling</title>
+
+        <link rel="stylesheet" href="dist/css/app.css" />
+
+        <style>
+
+        </style>
+    </head>
+    <body>
+
+        <h2>Call 1</h2>
+        <pre id="call1"></pre>
+
+        <h2>Call 2</h2>
+        <pre id="call2"></pre>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+        <script src="src/serviceq.js"></script>
+
+        <script>
+
+
+		$(function() {
+
+			var serviceQ = new UoS_ServiceQ({
+				request: {
+					url: "https://ipinfo.io",
+				    dataType: "jsonp",
+				},
+				getData: function(data) {
+					return Cookies.getJSON('UoS_LocationService__data');
+				},
+				setData: function(data) {
+					Cookies.set('UoS_LocationService__data', data);
+				}
+			});
+
+	        serviceQ.do( function(data) {
+	            console.log("Service 1", data);
+                $("#call1").html( JSON.stringify(data) )
+	        } );
+
+	        serviceQ.do( function(data) {
+	            console.log("Service 2", data);
+                $("#call2").html( JSON.stringify(data) )
+	        } );
+
+		});
+
+        </script>
+    </body>
+</html>

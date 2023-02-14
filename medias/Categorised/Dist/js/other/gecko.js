@@ -1,0 +1,1 @@
+!function(){var e,t=stir.t4Globals.section,o=stir.t4Globals.formid,r=document.getElementById("gecko-form");t&&o&&r&&(e=document.createElement("script"),o="https://app.geckoform.com/gecko-embed/form.js?uuid="+o,o+="&refPage="+t.replace(/\s/g,"-"),e.setAttribute("id","gecko-form-embed-script"),e.setAttribute("src",o),r.appendChild(e))}();

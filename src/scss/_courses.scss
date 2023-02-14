@@ -1,0 +1,861 @@
+/* COURSES */
+
+.c-course-heading {
+  font-size: 2.75rem;
+  margin-bottom: 40px;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .c-course-heading {
+    font-size: 3.75rem;
+  }
+}
+
+/* seasonal component, enabled/disabled via JavaScript */
+.c-course-clearing-advert {
+  background: $energy-green;
+  position: relative;
+  position: sticky;
+  top: auto;
+  z-index: index($z-index-elements, c-course-clearing-advert);
+
+  p {
+    margin: 30px 0;
+
+    .button {
+      margin-bottom: 7px;
+    }
+  }
+}
+
+.c-course-title__ucas-codes {
+  font-size: 1.5rem;
+}
+
+.c-course-options {
+  margin-left: 2rem;
+
+  [class^="uos-"],
+  [class*=" uos-"] {
+    color: $heritage-green;
+  }
+}
+
+.c-course-options__icon {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  margin-right: 10px;
+  &:hover .c-course-options__tooltip {
+    display: block;
+  }
+}
+
+.c-course-options__tooltip {
+  display: none;
+  position: absolute;
+  width: 250px;
+  padding: 10px;
+  background-color: $light-gray;
+  color: $heritage-green;
+  text-align: center;
+  font-size: 1rem;
+  z-index: z($z-index-elements, course-options-tooltip);
+}
+
+.c-course-title__buttons {
+  margin: 1rem 0 2rem 0;
+  .button {
+    margin-right: 2rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.c-course-title-sticky-menu {
+  display: none;
+  position: fixed;
+  z-index: z($z-index-elements, course-sticky-menu);
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: $white;
+  box-shadow: 0px 5px 1px rgba(0, 0, 0, 0.2);
+
+  &:focus-within {
+    max-height: none;
+  }
+}
+
+.c-course-title-sticky-menu__title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 3em;
+  font-size: 1.125rem; /* 18px */
+  font-weight: bold;
+}
+
+.c-course-title-sticky-menu__buttons {
+  margin-top: 1rem;
+  text-align: right;
+
+  .button {
+    margin: 0 0 1.25rem 0.5rem;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.course-sticky-close-btn {
+  right: 4rem;
+  top: 1rem;
+
+  > span {
+    display: inline-block;
+    transition: transform 0.2s ease-in-out;
+    font-size: 1.25rem; // 20px;
+  }
+
+  > span:hover {
+    transform: rotate(180deg);
+  }
+}
+
+.kis-widget {
+  margin: 0 0 1em 0;
+
+  /* `revert` so the Discover Uni widget is not affected by our styles */
+  h3 {
+    position: revert;
+    padding: revert;
+
+    &::after {
+      content: none;
+    }
+  }
+
+  &:empty::before {
+    content: "Loading…";
+    display: block;
+    margin: 1em;
+  }
+
+  &.no-data {
+    display: none;
+
+    /*
+	   &::before {
+            content: "Discover Uni data is currently unavailable.";
+            display: block;
+            text-align: center;
+            margin: 1em;
+        }
+
+        > div {
+            display: none;
+		}
+		*/
+  }
+}
+
+.kis-widget__intro {
+  line-height: 1.5 !important;
+  font-size: 1rem !important;
+}
+
+.kis-widget__course {
+  line-height: 1.5 !important;
+  font-size: 0.7rem !important;
+}
+
+// Course modules table
+
+#course-modules-description__header {
+  margin-bottom: 20px;
+
+  h3.c-section-heading {
+    margin-bottom: 10px;
+  }
+}
+
+#course-modules-description__body {
+  max-height: 600px;
+  overflow: auto;
+
+  p,
+  li,
+  th,
+  td {
+    font-size: 1rem; // 16px;
+  }
+}
+
+.c-course-modules__table {
+  margin: 0;
+  border-top: none;
+
+  tbody {
+    tr {
+      background: $white;
+      border-bottom: 14px solid $bg-grey;
+
+      &[data-availability="false"] {
+        border: 2px dashed tomato;
+        &::before {
+          content: "Module " attr(data-modcode) " is marked as unavailable at source.";
+          position: absolute;
+          font-size: 0.8rem;
+          background: white;
+          border: 1px solid tomato;
+        }
+      }
+
+      tr,
+      td {
+        padding: 15px;
+        background: $white;
+      }
+      td:nth-child(2) {
+        width: 20%;
+      }
+    }
+  }
+}
+
+.c-course-modules__module-not-available {
+  display: none;
+}
+
+.c-course-modules__table,
+.c-course-modules__view-more-link,
+.c-course-modules__pdm-note {
+  + .c-course-modules__collection-header {
+    margin-top: 1.5rem;
+  }
+}
+
+.c-course-modules__divide {
+  padding: 18px 24px;
+  background: $heritage-green;
+  color: $white;
+  margin-top: 1rem;
+  margin-bottom: 32px;
+}
+
+.c-course-modules__module-code {
+  font-size: 0.875rem; // 80%;
+  //color: $medium-gray;
+  color: #595858;
+}
+
+.c-course-modules__accordion-content--hide-rows {
+  tr:nth-of-type(5) ~ tr {
+    display: none;
+  }
+}
+
+.c-course-modules__pdm-note {
+  font-size: 0.875rem !important; // 14px !important;
+  font-style: italic;
+}
+
+.c-course-modules__collection-header {
+  font-weight: bold;
+  margin-bottom: 0;
+
+  + table {
+    margin-top: 1rem;
+  }
+}
+
+.c-course-modules__collection-notes {
+  font-size: 0.875rem !important; // 14px !important;
+}
+
+.course-modules__loading {
+  margin-bottom: 50px;
+}
+
+/* .c-local-currency {
+	display: none;
+}
+
+.c-local-currency__title {
+	font-weight: 700;
+}
+
+.c-local-currency__value {
+	font-size: 200%;
+}
+
+.c-local-currency__note {
+	font-style: italic;
+} */
+
+// Fees
+
+/* #ug-course-tabs__course-details {
+	.c-section-heading {
+		margin-bottom: 2rem;
+	}
+}
+ */
+/* .c-course-fees__table {
+	display: none;
+	tbody {
+		tr {
+			display: none;
+		}
+	}
+} */
+
+/* .course-fees-table__tuition-fee-note {
+	font-size: 0.875rem !important; // 14px
+	margin-top: 2rem !important;
+} */
+
+/* reduce default sizes to preven horizontal scroll (this will be reset for larger screens using a media query below) */
+#course-fees-information {
+  th,
+  td {
+    font-size: 1rem; // 16px;
+    padding: 0.333rem;
+  }
+  label {
+	font-size: 1rem;
+
+	select {
+		margin-top: 0.5rem; /* 8px */
+	}
+  }
+
+}
+
+// Video testimonials
+
+.c-course-testimonial__wrapper {
+  .c-responsive-embed {
+    background: #000;
+  }
+}
+
+.c-course-related__buttons {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      background-color: $dark-mink;
+      border: 2px solid transparent;
+      color: $white;
+      cursor: pointer;
+      padding: 11px 15px;
+      margin: 0 0 12px 0;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+      &:after {
+        content: "\e97b";
+        font-family: "uos";
+        position: absolute;
+        right: 20px;
+        top: 11px;
+      }
+
+      &:hover {
+        background-color: $white;
+        border: 2px solid $dark-mink;
+        color: $dark-mink;
+
+        a,
+        strong {
+          color: $dark-mink;
+        }
+      }
+
+      a {
+        color: $white;
+
+        /* [href] just to increase specificity! */
+        &[href] {
+          border: 0;
+        }
+
+        + strong {
+          position: absolute;
+          right: 60px;
+        }
+      }
+    }
+  }
+}
+
+// You may also be interested in
+// .c-course-related {
+// 	padding-right: 100px;
+// 	padding-left: 100px;
+// }
+
+// What's next cta
+.c-whats-next {
+  padding-bottom: 80px;
+  padding-top: 40px;
+}
+
+/* .c-course-whats-next__wrapper {
+	background: $heritage-green;
+	color: $white;
+	padding: 16px;
+
+	h3 {
+		margin: 0 0 15px 0;
+		color: $white;
+	}
+}
+
+.c-course-whats-next__link {
+	text-align: center;
+	color: $white;
+	font-size: 1rem; // 16px;
+	font-weight: bold;
+	margin: 10px 0;
+
+	&::after {
+		content: " \e97b";
+		font-family: "uos";
+	}
+
+	&:hover {
+		color: $white;
+		text-decoration: underline;
+	}
+
+	&:focus {
+		color: $white;
+		text-decoration: underline;
+	}
+} */
+
+/* @media screen and (max-width: 39.9375em) {
+	.c-whats-next {
+		padding: 0;
+	}
+
+	.c-course-whats-next__link {
+		display: block;
+	}
+
+	.c-course-tabs__tabs > .accordion-item div.accordion-content {
+		padding: 15px;
+	}
+} */
+
+svg.icon {
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  margin-right: 1em;
+}
+
+.c-course-datasheet {
+  background-color: $heritage-green;
+
+  &[data-variant] {
+    background-color: $heritage-navy; /* Heritage navy */
+  }
+
+  .cell {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  h2 {
+    border: 0;
+    padding: 0;
+    margin-bottom: 0.666em;
+    line-height: 1;
+    color: inherit;
+    font-size: 2rem;
+
+    &::after {
+      content: none;
+    }
+  }
+
+  .c-icon-block p {
+    font-size: 1rem;
+  }
+  .c-facts__facts a {
+    border-bottom-width: 1px;
+  }
+}
+
+.c-course-funding-kicker {
+  .grid-x {
+    padding-top: 2rem;
+    padding-bottom: 1.2rem; /* vertically centre the text, accounting for line height */
+    background-position: 0.9375rem; /* same as a Foundation gutter so it aligns correctly */
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MCA1MCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0zMi41LDMyLjcxaC02YTMyLDMyLDAsMCwwLTQuMi4yaDBhMy45MywzLjkzLDAsMCwwLDEuNy0zLjcsMTkuNywxOS43LDAsMCwwLS40LTMuNGg2LjVjLjQsMCwuNC0uMS40LS4zdi0xLjdjMC0uMi0uMS0uMy0uNC0uM0gyMy4yYTkuMzQsOS4zNCwwLDAsMS0uMi0yLjNjMC0yLjcsMS42LTQsMy44LTQsMi43LDAsMy42LDIuNSw0LjgsMi41LjgsMCwxLjMtMSwxLjMtMi4xYTIuMTcsMi4xNywwLDAsMC0uOC0xLjgsNy42LDcuNiwwLDAsMC01LjEtMS42LDguNjEsOC42MSwwLDAsMC02LDIuMSw3LjE1LDcuMTUsMCwwLDAtMS44LDUuMWMwLC42LjEsMS4zLjEsMS45aC0yYy0uNCwwLS40LjEtLjQuM3YxLjdjMCwuMy4xLjMuNC4zaDIuNGEyNC41LDI0LjUsMCwwLDEsLjQsMy44YzAsMS44LS41LDIuNi0yLjUsMy44LS4zLjItLjMuNC0uMi45bC4zLjdjLjEuNC4yLjUuNy41aDE0Yy41LDAsLjYtLjIuNi0uNnYtMS41QzMzLjEsMzIuOTEsMzMsMzIuNzEsMzIuNSwzMi43MVpNNDcuMiwxOUEyMywyMywwLDEsMCwyNSw0OGEyNS41NCwyNS41NCwwLDAsMCw2LjEtLjhBMjMsMjMsMCwwLDAsNDcuMiwxOVpNMzAuMyw0NC42MWEyMC4yNCwyMC4yNCwwLDAsMS0xNS40LTIsMjAsMjAsMCwwLDEtOS41LTEyLjNBMjAuNDQsMjAuNDQsMCwwLDEsMTkuNyw1LjQxYTIwLDIwLDAsMCwxLDUuNC0uNywxOS43NiwxOS43NiwwLDAsMSwxMCwyLjcsMjAsMjAsMCwwLDEsOS41LDEyLjNBMjAuMzksMjAuMzksMCwwLDEsMzAuMyw0NC42MVoiIC8+PC9zdmc+");
+    background-repeat: no-repeat;
+    background-size: 3.125rem; /* 50px */
+  }
+  .cell {
+    padding-left: 5rem; /* icon clearance */
+  }
+}
+
+.c-facts__facts {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+
+  strong {
+    display: inline;
+    &::after {
+      content: " – ";
+    }
+  }
+  li {
+    margin: 0 0 1rem 0;
+    padding-left: 3rem;
+    position: relative;
+
+    .icon {
+      position: absolute;
+      left: 0em;
+      top: 0;
+    }
+  }
+}
+.c-facts__no-icon li {
+  padding-left: 0;
+}
+
+.c-icon-block {
+  display: flex;
+
+  h2 {
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    margin: 0;
+    line-height: inherit;
+    color: inherit;
+    font-weight: bold;
+  }
+  > .icon {
+    flex-shrink: 0;
+    /* The accreditation icon is slightly larger than those in key info, and nudged down relative to the text */
+    transform: translateY(0.2em);
+    width: 2em;
+    height: 2em;
+  }
+}
+
+.accred-logos {
+  display: flex;
+  flex-wrap: wrap;
+
+  img {
+    margin: 0 1rem 1rem 0;
+  }
+}
+
+.c-whats-next {
+  padding-top: 0;
+  padding-bottom: 40px;
+
+  h3 {
+    font-family: FSMaja, serif;
+    font-weight: 100;
+    margin: 1em 0;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    a {
+      width: 99%;
+      text-align: left;
+      line-height: 4;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    svg.icon {
+      width: 2em;
+      height: 2em;
+    }
+  }
+}
+
+.c-whats-next nav a::after {
+  content: "";
+  width: 1em;
+  height: 1em;
+  margin-left: 0.5em;
+  display: inline-block;
+  vertical-align: middle;
+  /* there is a bug in gulp-css-concat's "rebase" that strips out
+	   quotes from unencoded data-URIs, but we can get around this
+	   by base-64 encoding it. */
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xOS43MTIgNTkuMzkyYzAtMC41MTIgMC4yNTYtMS4wMjQgMC42NC0xLjQwOGwyNS44NTYtMjUuOTg0LTI1Ljg1Ni0yNS45ODRjLTAuNzY4LTAuNzY4LTAuNzY4LTIuMDQ4IDAtMi45NDQgMC43NjgtMC43NjggMi4wNDgtMC43NjggMi45NDQgMGwyNy4zOTIgMjcuMzkyYzAuNzY4IDAuNzY4IDAuNzY4IDIuMTc2IDAgMi45NDRsLTI3LjUyIDI3LjM5MmMtMC43NjggMC43NjgtMi4wNDggMC43NjgtMi45NDQgMC0wLjM4NC0wLjM4NC0wLjUxMi0wLjg5Ni0wLjUxMi0xLjQwOHoiPjwvcGF0aD48L3N2Zz4=");
+}
+
+/* C A L L S   T O   A C T I O N */
+
+.c-course-ctas {
+  padding: 24px 0;
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+
+    a {
+      font-size: 1.125rem; //1.25rem; /* 20px */
+      width: 90%;
+      text-align: center;
+      line-height: 3;
+      border: 1px solid #fff;
+
+      span {
+        display: inline-block;
+        position: relative;
+        line-height: 1.4;
+
+        // &::before {
+        // 	content: "";
+        // 	position: absolute;
+        // 	bottom: -2px;
+        // 	left: 0;
+        // 	width: 0;
+        // 	height: 2px;
+        // 	background-color: rgba(255, 255, 255, 0);
+        // 	transition: width 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        // }
+      }
+
+      svg.icon {
+        width: 1.3em;
+        height: 1.3em;
+      }
+    }
+
+    a:hover {
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    a:hover span::before {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .c-course-ctas nav a {
+    width: 80%;
+
+    svg.icon {
+      width: 2.2em;
+      height: 2.2em;
+    }
+
+    span {
+      line-height: 4;
+    }
+  }
+}
+
+/* override specifically for Clearing [2020-06-26 rwm2] */
+#course-clearing-advert nav {
+  justify-content: space-around;
+  a {
+    white-space: nowrap;
+  }
+}
+
+/* *** *** *** */
+
+/* T A B S 
+
+˙Moved to _tabs.scss (18 Sep 2020)
+
+*/
+
+//.accordion .accordion-content {
+//	padding: 30px 0px;
+//}
+
+.c-icon-panel {
+  padding: 0 0 35px 0;
+  margin: 0;
+  text-align: center;
+  color: rgb(58, 60, 57);
+
+  > span {
+    color: $heritage-green;
+  }
+}
+
+.c-border-top--en-green {
+  border-top: 5px solid rgb(118, 189, 34);
+  padding: 25px 0;
+  margin: 10px 0;
+  text-align: left;
+}
+
+.c-course-discover-uni {
+  padding-top: 20px;
+}
+
+a[data-mode*="Online"] {
+  position: relative;
+
+  &:not([data-mode*="classroom"])::after {
+    content: "\e907";
+    font-family: "uos";
+    position: absolute;
+    right: -2rem;
+    top: 0;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+}
+
+/* M E D I A   Q U E R I E S */
+
+@media screen and (max-width: 63.9375em) {
+  /** this media query is for screens up to 1024px
+	 * TODO: refactor this to mobile-first?
+	 **/
+  .c-course-related__buttons {
+    ul {
+      li {
+        flex-direction: column;
+
+        a + strong {
+          position: relative;
+          right: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: 640px) {
+  .c-course-datasheet {
+    background-color: #006938; /* fallback to solid green */
+  }
+  .c-course-datasheet[data-accreditation] {
+    background: linear-gradient(90deg, #006938 50%, #f6f5f4 50%); /* hard-stop gradient to give the full-width two-colour background */
+  }
+  .c-course-datasheet .c-icon-block {
+    margin-left: 1rem;
+  }
+  .c-course-datasheet:not([data-accreditation]) .c-facts__facts {
+    flex-direction: row;
+  }
+  .c-course-datasheet:not([data-accreditation]) .c-facts__facts strong {
+    display: block;
+  }
+  .c-course-datasheet:not([data-accreditation]) .c-facts__facts strong::after {
+    content: none;
+  }
+  .c-facts__facts li {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 25%;
+  }
+  .c-facts__no-icon li {
+    padding-left: 0;
+  }
+  [data-accreditation] .c-facts__facts li,
+  li.c-facts__facts__full {
+    width: auto;
+  }
+  /* these are the "default" values but they will cause horizontal scroll on small screens */
+  #course-fees-information {
+    th,
+    td {
+      font-size: 1.25rem; // 20px;
+      padding: 10px 15px;
+    }
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .c-whats-next nav a {
+    width: 49%;
+    line-height: 3;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .course-sticky-close-btn {
+    right: 2rem;
+  }
+  .c-course-tabs {
+    /* Set absolute max width (i.e. for XL screens) to be same as Foundation */
+    width: 90%;
+    max-width: 77.5rem;
+    margin: 0 auto;
+    margin-bottom: 40px;
+  }
+  .c-course-tabs .stir-tabs {
+    top: -5px;
+    justify-content: left;
+  }
+
+  .c-course-tabs .stir-tabs > .stir-tabs__content {
+    padding: 0 80px;
+    max-width: none;
+  }
+
+  .c-course-tabs .stir-tabs > .stir-tabs__tab {
+    background-color: transparent;
+    border-top: 5px solid transparent;
+    border-bottom: 0;
+  }
+
+  .c-course-tabs .stir-tabs > .stir-tabs__tab--active {
+    background-color: rgb(246, 245, 244);
+    border-top: 5px solid rgb(118, 189, 34);
+  }
+
+  .c-whats-next nav a,
+  .c-course-ctas nav a {
+    width: 30%;
+    min-width: max-content;
+    text-align: center;
+  }
+
+  .c-course-ctas {
+    padding: 40px 0;
+
+    nav a {
+      line-height: 1;
+      margin: 0;
+    }
+  }
+
+  .c-course-related__buttons {
+    ul {
+      li {
+        a {
+          /* stop long names overlapping the UCAS code */
+          width: 65%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,156 @@
+
+
+.c-svg-banner > .cell{
+      margin: 30px 0 0 0;  
+}
+
+@media screen and (min-width: 40em) {
+    .c-svg-banner > .cell{
+        margin: 50px 0 20px 0;
+    }
+}
+
+@media screen and (min-width: 64em) { 
+    .c-svg-banner > .cell{
+        margin: 50px 0 30px 0;
+    }
+}
+
+
+main h1 {
+    font-family: 'Anton', sans-serif !important;
+    padding-top: 80px;
+}
+
+@media screen and (min-width: 40em) {
+    main h1 {
+        font-size: 6.875rem !important; // 110px
+    }
+}
+
+@media screen and (max-width: 39.9375em) {
+    main h1 {
+        font-size: 4.375rem !important; /* 70px */ 
+    }
+}
+
+@media screen and (max-width: 39.9375em) {
+    .c-wrapper[data-has-overlapper="up"] {
+        padding-bottom: 2rem;
+    }
+}
+
+main h2 {
+    font-family: 'Anton', sans-serif !important;
+    text-transform: uppercase;
+}
+
+.c-infographic__line1 {
+    font-family: 'Anton', sans-serif !important;
+    text-transform: uppercase;
+    font-size: 2.25rem !important; /* 36px */
+    font-weight: 500 !important;
+    line-height: 1.17 !important; // 42px 
+    margin: 10px 0 10px 0 !important;
+}
+
+main .button {
+    font-family: 'Anton', sans-serif !important;
+    text-transform: uppercase;
+    font-size: 1.75rem !important; /* 28px */
+	font-weight: normal !important; /* fix for IE's blurry text rendering */
+
+    &.energy-green {
+        color: #fff;
+    }
+
+    &.heritage-green {
+        background-color: #67A51E;
+        color: #fff;
+
+        &:hover {
+            border-color: #67A51E;
+            background-color: #fff;
+            color: #67A51E;
+        }
+    }
+}
+
+
+
+.button.energy-pink:hover {
+    background-color: #d41568 !important;
+}
+
+.c-footer__header {
+    font-family: "Open Sans", sans-serif !important;
+    text-transform: none !important;
+}
+
+.c-promo-box__header {
+    color: #3a3c39;
+    font-family: "Open Sans", sans-serif !important;
+    text-transform: none !important;
+}
+
+
+/* Header Doodle */
+/* removed by request 2020-06-04 */
+/* section.c-wrapper:first-of-type {
+background-image: url(/webcomponents/dist/images/campaigns/ug/ug-doodle.svg);
+background-position: left center;
+background-repeat: repeat-x;
+background-size: 290%;
+} */
+
+/* Header intro text panels */
+
+@media screen and (min-width: 64em) {
+
+    section.c-wrapper:first-of-type .cell {
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
+
+    section.c-wrapper:first-of-type .cell .c-wysiwyg-content h2:first-of-type {
+        margin: 50px 0 20px 0;
+        padding-bottom: 0;
+    }
+
+}
+
+/* Header CTA Button */
+
+.button[id^="cta-"]:first-of-type {
+    background: #67A51E;
+    border: 1px solid #67A51E;
+    color: #fff !important;
+}
+
+.button[id^="cta-"]:first-of-type {
+    color: #fff !important;
+}
+
+/* Half and Half Squiggle */
+/* removed by request 2020-06-04 */
+/* 
+.c-half-n-half__content {
+background-image: url(/webcomponents/dist/images/campaigns/ug/ug-squiggle-2.svg);
+background-position: left 0px bottom 10px ; 
+background-repeat:no-repeat;
+background-size: 100%;
+padding-bottom: 120px !important;
+}
+*/
+/* Dots */
+/* removed by request 2020-06-04 */
+/* 
+#d\.en\.64577, #d\.en\.64704, #d\.en\.64775, #d\.en\.64813, #d\.en\.65336, #d\.en\.65627, #d\.en\.65986, #d\.en\.66161, #d\.en\.66278, #d\.en\.68115, #d\.en\.68237{
+background-image: url(/webcomponents/dist/images/campaigns/ug/ug-dots-2.svg);
+background-position: left 0px bottom 10px ; 
+background-repeat:no-repeat;
+background-size: 100%;
+padding-bottom: 180px !important;
+}
+*/

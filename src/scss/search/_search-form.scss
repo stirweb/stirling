@@ -1,0 +1,23 @@
+/*
+	Widget used on homepage etc
+*/
+
+.c-search-form {
+	[type=search],[type=text],button{
+		margin: 0;
+	}
+	input::placeholder {
+		color: #5a5858;
+	}
+}
+@media only screen and (min-width: 720px) {
+	.c-search-form .search-input-area div {
+		display: grid;
+		grid-template-columns: 5fr 1fr;
+	}
+}
+@media only screen and (min-width: 720px) and (max-width: 1439px){
+	.c-search-form.u-trans-up {
+		transform: translateY(-200%);
+	}
+}

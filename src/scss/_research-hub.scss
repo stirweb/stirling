@@ -1,0 +1,57 @@
+/***
+Research Hub Landing Forms
+***/
+.c-research-hub-form {
+	margin: 0 0 30px;
+}
+.c-research-hub-form:last-child {
+	margin: 0;
+}
+@media screen and #{breakpoint(small down)} {
+	.c-research-hub-form {
+		margin: 0 0 10px;
+	}	
+}
+
+/***
+Resaerch Hub Project Overview
+***/
+@media screen and #{breakpoint(large up)} {
+	.c-research-hub-tabs .c-research-project-overview a, .c-research-hub-tabs .c-research-outputs-overview a{
+		font-size: 1.25rem; /* 20px */
+	}
+}
+.c-research-hub-tabs a {
+	text-decoration: none;
+}
+.c-research-hub-tabs--title {
+	display: inline-block;
+	margin: 30px 0 1rem;
+}
+.c-research-hub-tabs p {
+	margin-bottom: 5px;
+}
+.c-research-project--date {
+	margin-top: 1rem;
+}
+.c-research-hub-tabs span[class^="uos-"] {
+	font-size: 1.75rem; /* 28px */
+}
+.c-research-hub-tabs .c-project--seperator {
+	margin-bottom: 15px;
+}
+/*
+Output Tab
+**/
+.c-research-outputs-overview {
+	margin: 30px 0;
+}
+.c-research-outputs-overview:last-of-type {
+	margin: 30px 0 0;
+}
+/*
+Trending Tab
+**/
+.c-research-hub-tabs .c-tag-list {
+	margin-top: 40px;
+}

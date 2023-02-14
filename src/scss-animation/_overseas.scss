@@ -1,0 +1,17 @@
+.c-overseas-stat {
+    background-image: url('/webcomponents/dist/images/infographics/planes.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding: 124px 0;
+    background-size: cover;
+
+    .cell {
+        align-items: flex-end;
+    }
+    h1 {
+        font-size: 190px;
+    }
+}
+.c-overseas-stat__wrapper {
+    margin: 0 0 150px 0;
+}

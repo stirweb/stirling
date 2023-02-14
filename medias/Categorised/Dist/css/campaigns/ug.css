@@ -1,0 +1,189 @@
+/**  
+    GENERAL OVERIDES 
+**/
+
+
+h2{
+    font-family: 'Anton', sans-serif;
+    font-size: 42px;
+    text-transform: uppercase;
+}
+
+
+
+/**  
+ *  MASTHEAD OVERIDES
+**/
+
+.c-masthead .c-masthead__callout-text{
+    font-family: 'Anton', sans-serif;
+    line-height: 110px;
+    text-transform: uppercase;
+    padding-bottom: 50px ;
+}
+
+.c-masthead__callout-text::after {
+    border-right: 0px solid black;
+    border-bottom: none;  
+    background-image: url('../../images/campaigns/ug/ug-squiggle.svg') ;
+    left: -15px;
+    bottom: 12px;
+    height: 72px;
+    background-repeat: no-repeat;
+}
+
+.c-masthead__image{
+        background-position: right center;
+}
+
+/*  Large up  */
+@media only screen and (min-width: 63.9374em) {
+    .c-masthead .c-masthead__callout-text{
+        font-size: 100px ;
+    }
+}
+
+ /*  Medium down  */
+@media only screen and (max-width: 63.9374em) {
+    .c-masthead .c-masthead__callout-text{
+        line-height: 80px;
+    } 
+    .c-masthead .c-masthead__callout-text:after {
+        bottom: 2px;
+        background-size: 340px 59px;
+    }
+}     
+
+/*  Small only */
+@media only screen and (max-width: 39.9375em) {
+    .c-masthead .c-masthead__callout-text{
+        line-height: 66px;
+        line-height: 1.4;
+        line-height: 54px;
+        color: #D41568;
+        margin: 20px 0 0 20px;
+    }
+    .c-masthead .c-masthead__callout-text:after {
+        border-right: 0px solid #006938;
+        border-bottom: 0px solid #006938;
+        background-size: 250px 59px;
+        bottom: 2px;
+        left: -11px;
+    }
+}
+
+
+/**  
+ *  PROMO OVERIDES
+**/
+
+.c-promo-box__header{
+    text-transform: none;
+}
+
+.c-promo-box__icon span[class^="uos-"]{
+    font-size: 42px;
+}
+
+
+/*  Medium up */
+@media only screen and (min-width: 40em)  {
+    .c-promo-box__icon{
+        padding-right:35px;  /* fix for IE 11 */
+    }
+}
+
+/*  Small only */
+@media only screen and (max-width: 39.9375em) {
+
+    .c-promo-box.c-promo-box--icon {
+        display: block;
+    }
+    
+    .c-promo-box > div:not(.c-promo-box__layout-container) {
+        display: block;
+        height: auto;
+        text-align: center;
+    }
+}
+
+
+/**  
+ *  CTA BUTTONS 
+**/
+
+.button.cta-intro {
+    display: block;    
+}
+
+/*  Medium only */
+@media only screen and (min-width: 40em) and (max-width: 63.9374em) {
+    .button.cta-intro {
+        display: inline-block; 
+    }  
+}
+
+/*  Medium down */
+@media only screen and (max-width: 63.9374em)  {
+    .button.cta-intro {
+        margin-top: 15px;
+    }   
+}
+
+
+/** 
+ *  TESTIMONIAL 
+**/
+
+.u-white--all .c-hook--top-right::before {
+    border-right: 7px solid #fff;
+    border-top: 7px solid #fff;
+}
+
+
+/** 
+ *  VIDEO SECTION
+**/
+
+#d\.en\.53484, #d\.en\.56545{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+    to bottom,
+    #fff,
+    #fff 50%,
+    #D41568 50%,
+    #D41568
+    );
+    background-size: 100% auto;  
+}
+
+#d\.en\.53484::before, #d\.en\.56545::before  {
+    content: '';
+    background-image: url('../../images/campaigns/ug/ug-dots.svg') ;
+    background-position: left calc((100%/2) + 50px) ;
+    background-repeat: repeat-x;
+    position: absolute;
+    top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+
+/** 
+ *  FOOTER PROMO
+**/
+
+#d\.en\.53202{
+    background-color: #3a3c39 !important;  
+}
+
+#d\.en\.53202 .c-icon-link__header, #d\.en\.53202 .c-link{
+    color: #76BD22 !important;
+}
+
+#d\.en\.53202 .c-link::after{
+     color: #76BD22 !important;
+}

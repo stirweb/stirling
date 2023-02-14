@@ -1,0 +1,143 @@
+
+html{
+font-size: 100%;
+}
+
+body {
+    font-family: "Open Sans", sans-serif !important;
+}
+
+#silk-content h1,
+h1.c-masthead__callout-text,
+#silk-content h2,
+#silk-content h3 {
+    font-family: "FSMaja", serif !important;
+    font-weight: 300 !important
+}
+
+
+.c-header-nav__link:hover, .c-header-nav__link:focus{
+    text-decoration: none;
+    color: #006938;
+}
+
+.jlist-tile-wrapper h1,
+.lumesse-jobs-list table thead {
+    font-size: 18px !important;
+}
+
+.lumesse-section-header::after{
+    bottom:14px;
+}
+
+.jdesc-params h3::after{
+    content:none;
+}
+
+.jdesc-navigation{
+    margin: 30px 0;
+}
+
+.jlist-tile-wrapper>.list-group {
+    margin-left: 0 !important;
+}
+
+#vanillaKeywordCompact {
+    background-color: white !important;
+    margin: 0px !important;
+}
+
+.c-form [type='text'],
+.c-form [type='password'],
+.c-form [type='date'],
+.c-form [type='datetime'],
+.c-form [type='datetime-local'],
+.c-form [type='month'],
+.c-form [type='week'],
+.c-form [type='email'],
+.c-form [type='number'],
+.c-form [type='search'],
+.c-form [type='tel'],
+.c-form [type='time'],
+.c-form [type='url'],
+.c-form [type='color'],
+.c-form textarea,
+.c-form select,
+.c-form [type='text']:focus,
+.c-form [type='password']:focus,
+.c-form [type='date']:focus,
+.c-form [type='datetime']:focus,
+.c-form [type='datetime-local']:focus,
+.c-form [type='month']:focus,
+.c-form [type='week']:focus,
+.c-form [type='email']:focus,
+.c-form [type='number']:focus,
+.c-form [type='search']:focus,
+.c-form [type='tel']:focus,
+.c-form [type='time']:focus,
+.c-form [type='url']:focus,
+.c-form [type='color']:focus,
+.c-form textarea:focus,
+.c-form select:focus {
+    border-radius: 0px;
+}
+
+.c-form [type="submit"]:not(.c-course-search__button) {
+    margin: 0px;
+    border-radius: 0px;
+    min-height: 70px;
+}
+
+legend {
+    display: none;
+}
+
+.lumesse-grid-number-of-jobs {
+    padding-bottom: 20px;
+}
+
+.agent-button {
+    visibility: visible !important;
+}
+
+.btn {
+    border-radius: 0px !important;
+    min-height: 36px;
+}
+
+.btn-success {
+    width: 100%;
+}
+
+.btn-lg,
+.btn-group-lg>.btn {
+    padding: 10px 30px;
+    border-radius: 0px;
+    
+}
+
+h1 a.btn-lg{
+    font-weight: 300;
+    font-size: 21px;
+}
+
+#silk-content {
+    max-width: 100%;
+}
+
+.badge{ 
+    background-color: #4f4e4e
+}
+
+#silk-content.tl-alert{
+    margin-top: 0;
+    background-color: #f2f2f2;
+    margin-bottom: 60px;
+}
+
+#silk-content a:hover,
+#silk-content a:focus {
+    color: #005a30 !important;
+    text-decoration: none !important;
+}
+

@@ -1,0 +1,188 @@
+/* 
+* Alternative sub navigation addon
+* Now used throughout the site (Move to kitchensink?)
+
+.c-sub-nav-alt {
+	background: $heritage-green;
+
+	a {
+		color: $white;
+
+		&:hover {
+			border-bottom: 2px solid $white;
+		}
+
+		&:focus {
+			outline-color: $white !important;
+		}
+	}
+
+	@media screen and #{breakpoint(large down)} {
+		.c-sub-nav-alt-toggle-link__wrapper {
+			//display: none;
+		}
+
+		.c-header-nav {
+			margin-top: 3rem;
+		}
+
+		.c-header-nav__item {
+			width: 100%;
+			text-align: left;
+			margin-bottom: 1rem;
+			font-weight: normal;
+		}
+	}
+}
+
+.c-sub-nav-alt__heading {
+	margin-bottom: 0;
+	font-size: 2.25rem; 
+}
+*/
+
+/* 
+ * Sports pages
+ * None of this is in use (checked 30th Oct 2020)
+ */
+
+/* Masthead for Sport
+.c-sports-masthead__wrapper {
+	position: relative;
+
+	.c-masthead__callout-text {
+		margin-bottom: 100px;
+	}
+}
+
+.c-sports-masthead__buttons {
+	position: absolute;
+	width: 100%;
+	bottom: 50px;
+}
+
+@media screen and #{breakpoint(small only)} {
+	.c-sports-masthead__wrapper {
+		position: relative;
+
+		.c-masthead__callout-text {
+			margin-bottom: 0px;
+		}
+	}
+
+	.c-sports-masthead__buttons {
+		position: static;
+		padding: 50px map-get($grid-column-gutter, small) 0px map-get($grid-column-gutter, small);
+	}
+}
+
+@media screen and #{breakpoint(medium up)} {
+	.c-sports-masthead__buttons a:first-child {
+		margin-left: map-get($grid-column-gutter, medium);
+	}
+}
+*/
+
+/* Promo area 
+@media screen and #{breakpoint(small only)} {
+	.c-sports-promo-area {
+		.c-promo-area__content {
+			padding: map-get($grid-column-gutter, small);
+		}
+	}
+} */
+
+/* Intro 
+.c-sports-intro {
+	padding: 70px 0;
+} 
+
+@media screen and #{breakpoint(small only)} {
+	.c-sports-intro {
+		padding: 30px 0;
+	}
+} */
+
+/* Sub sections 
+.c-sports-sub-sections {
+	padding: 80px 0;
+	background: $bg-grey;
+}
+
+@media screen and #{breakpoint(small only)} {
+	.c-sports-sub-sections__item {
+		margin-bottom: 2rem;
+	}
+} */
+
+/* Categories 
+.c-sports-categories {
+	padding: 80px 0;
+}
+
+.c-sports-categories__item {
+	border-top: 3px solid $energy-green;
+	padding-bottom: 50px;
+	padding-top: 20px;
+} */
+
+/*
+.c-sports-notes {
+	padding: 24px 40px;
+}
+
+.c-sports-notes__title {
+	float: left;
+	width: 200px;
+}
+
+.c-sports-notes__body {
+	margin-left: 200px;
+}
+
+@media screen and #{breakpoint(small only)} {
+	.c-sports-notes__title {
+		float: none;
+		width: 100%;
+	}
+
+	.c-sports-notes__body {
+		margin-left: 0;
+	}
+} */
+
+/* Induction form
+.c-sports-induction-form {
+
+	input[type='checkbox'],
+	input[type='radio'] {
+		// width: auto;
+	}
+} */
+
+/* Download timetable
+.sports-download-timetable {}
+
+.sports-download-timetable__icon {
+	font-size: 80px;
+}
+
+.sports-download-timetable__link {
+	font-size: 32px;
+}
+
+@media screen and #{breakpoint(small only)} {
+	.sports-download-timetable {}
+
+	.sports-download-timetable__icon {
+		font-size: 60px;
+		display: block;
+		text-align: center;
+		// margin: 0 auto;
+		margin-bottom: 1rem;
+	}
+
+	.sports-download-timetable__link {
+		font-size: 22px;
+	}
+} */

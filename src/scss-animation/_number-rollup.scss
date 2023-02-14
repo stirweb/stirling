@@ -1,0 +1,13 @@
+.number-statistic {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+
+    &.fade-in {
+        opacity: 1;
+    }
+    span {
+        font-family: "FSMaja", serif;
+        font-size: 35px;
+        font-weight: 300;
+    }
+}

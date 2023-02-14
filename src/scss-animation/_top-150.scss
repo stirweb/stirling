@@ -1,0 +1,14 @@
+.c-top-150-stat {
+    padding: 137px 0;
+}
+.c-top-150__wrapper {
+    display: flex;
+    justify-content: center;
+}
+.c-top-150-stat span[class*="-study-abroad"] {
+    display: inline-block;
+    font-size: 260px;
+}
+.c-top-150-stat.animate span[class*="-study-abroad"] {
+    animation: rotate 1s linear;
+}

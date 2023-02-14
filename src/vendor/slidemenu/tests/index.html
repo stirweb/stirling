@@ -1,0 +1,90 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>QUnit Example</title>
+		<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.4.0.css">
+		<style>
+
+		/* Styles for test illustration */
+		ul.slidemenu__current {
+			background-color: #eee;
+		}
+
+		</style>
+	</head>
+    <body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+
+        <ul class="slidemenu" style="display: none;">
+			<li>
+				<a href="/">Home</a>
+				<ul>
+					<li>
+						<a href="/menu1">Menu 1</a>
+						<ul>
+							<li><a href="/menu1/sub-menu1">Sub Menu 1</a></li>
+							<li><a href="/menu1/sub-menu2">Sub Menu 2</a></li>
+							<li><a href="/menu1/sub-menu3">Sub Menu 3</a></li>
+							<li>
+								<a href="/menu1/sub-menu4">Sub Menu 4</a>
+								<ul>
+									<li>
+										<a href="/menu1/sub-menu4/deep-menu1">Deep Menu 1</a>
+										<ul>
+											<li><a href="/menu1/sub-menu4/deep-menu1">Sub Deep 1</a></li>
+											<li><a href="/menu1/sub-menu4/deep-menu2">Sub Deep 2</a></li>
+											<li><a href="/menu1/sub-menu4/deep-menu3">Sub Deep 3</a></li>
+											<li><a href="/menu1/sub-menu4/deep-menu4">Sub Deep 4</a></li>
+										</ul>
+									</li>
+									<li><a href="/menu1/sub-menu4/deep-menu2">Deep Menu 2</a></li>
+								</ul>
+							</li>
+							<li><a href="/menu1/sub-menu5">Sub Menu 5</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="/menu2">Menu 2</a>
+						<ul>
+							<li><a href="/menu2/sub-menu1">Sub Menu 1</a></li>
+							<li><a href="/menu2/sub-menu2">Sub Menu 2</a></li>
+							<li><a href="/menu2/sub-menu3">Sub Menu 3</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="/menu3">Menu 3</a>
+						<ul>
+							<li class="dir"><a href="/menu3/sub-menu1">Sub Menu 1</a></li>
+							<li class="dir">
+								<a href="/menu3/sub-menu2">Sub Menu 2 THIS IS SO LONG IT MIGHT CAUSE AN ISSUE BUT MAYBE NOT?</a>
+								<ul>
+									<li><a href="/menu3/sub-menu2/category1">Category 1</a></li>
+									<li><a href="/menu3/sub-menu2/category2">Category 2</a></li>
+									<li><a href="/menu3/sub-menu2/category3">Category 3</a></li>
+									<li><a href="/menu3/sub-menu2/category4">Category 4</a></li>
+									<li><a href="/menu3/sub-menu2/category5">Category 5</a></li>
+								</ul>
+							</li>
+							<li><a href="/menu3/sub-menu3/sub-menu3">Sub Menu 3</a></li>
+							<li><a href="/menu3/sub-menu4/sub-menu4">Sub Menu 4</a></li>
+							<li><a href="/menu3/sub-menu5/sub-menu5">Sub Menu 5</a></li>
+						</ul>
+					</li>
+					<li><a href="/menu4">Menu 4</a></li>
+					<li><a href="/menu5">Menu 5</a></li>
+					<li><a href="/menu6">Menu 6</a></li>
+					<li><a href="/contact-us">Contact Us</a></li>
+				</ul>
+			</li>
+		</ul>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="../js/jquery.slidemenu.js"></script>
+
+		<script src="https://code.jquery.com/qunit/qunit-2.4.0.js"></script>
+		<script src="./tests.js"></script>
+    </body>
+</html>

@@ -1,0 +1,117 @@
+/*
+ * Colour Swatches
+ */
+ 
+ .color-box {
+    padding: 1rem;
+    color: white;
+    font-weight: bold;
+    min-height: 250px;
+    position: relative;
+}
+
+.colour-swatch-group {
+    display: inline-block;
+    margin: 0 15px 0 0;
+}
+
+.colour-swatch-group:last-child {
+    margin: 0;
+}
+
+.colour-swatch {
+    display: inline-block;
+    margin: 0 15px 0 0;
+    width: 130px;
+    height: 180px;
+    position: relative;
+    box-shadow: 1px 1px 10px 0px #6e6e6e;
+}
+
+.colour-swatch--swatch {
+    height: 130px;
+    width: 130px;
+}
+
+.colour-swatch:last-child {
+    margin: 0;
+}
+
+.colour-swatch--details {
+    background-color: #ffffff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 9px 5px;
+}
+
+.colour-swatch--details p {
+    font-size: 0.625rem; /* 10px */
+}
+
+.hex-code {
+    text-transform: uppercase;
+}
+
+/*
+ * Colour Swatches Brand bank widget
+ */
+
+ figure.c-colour-swatch {
+    //box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.17);
+    border: 3px solid #f6f5f4;
+    margin: 1rem 0 2.5rem;
+}
+
+figure.c-colour-swatch div[class^="u-bg-"] {
+    height: 110px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: 110%;
+}
+
+figure.c-colour-swatch dl,
+figure.c-colour-swatch dd,
+figure.c-colour-swatch ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+figure.c-colour-swatch figcaption {
+    padding: 20px;
+}
+
+dl dd ul li:before {
+    font-size: 1em;
+    display: block;
+    color: #ccc;
+    font-variant: small-caps;
+}
+
+.c-colour-swatch li {
+    font-size: 1em;
+    line-height: 1.4em;
+}
+
+.c-colour-swatch li:before {
+    font-size: 1.1em;
+    color: #bbb;
+}
+
+li.c-colour-swatch__hex:before {
+    content: "hex";
+}
+
+li.c-colour-swatch__rgb:before {
+    content: "rgb";
+}
+
+li.c-colour-swatch__cmyk:before {
+    content: "cmyk";
+}
+
+li.c-colour-swatch__pms:before {
+    content: "pms";
+}

@@ -1,0 +1,21 @@
+.button.energy-pink  {
+	background-color: #9D1E65;
+
+	&:hover {
+		border-color: #9D1E65;
+		color: #9D1E65;
+	}
+}
+
+.button.c-course-search-widget__button {
+	background-color: #9D1E65;
+	border-color: #9D1E65;
+	&:hover {
+		background-color: #fff;
+		border-color: #9D1E65;
+		color: #9D1E65;
+	}
+}
+
+.gecko-btn.btn-success { background: red; }
+.c-responsive-embed { padding-bottom: 122%;};

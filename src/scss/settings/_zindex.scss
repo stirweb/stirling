@@ -1,0 +1,23 @@
+// https://www.smashingmagazine.com/2014/06/sassy-z-index-management-for-complex-layouts/
+
+// Elements will get the index in this array as their z-index value
+$z-index-elements: homepage-masthead-video, hook, u-sticky, c-course-clearing-advert, course-sticky-menu, course-options-tooltip, course-search-widget, course-search-widget-view-all, breadcrumbs-submenu, mega-menu, header-search, cookie-banner, mobile-menu-slider;
+
+/**
+ * Because false isn’t a valid value for z-index, we don’t want it in our compiled
+ * code. We can stop this from happening by making a custom function that acts as
+ * a proxy to the call to list and that uses Sass’ @warn to tell us whether something
+ * has gone wrong.
+ * Example usage: z($z-index-elements, homepage-masthead-vide)
+ */
+@function z($list, $element) {
+
+   $z-index: index($list, $element);
+
+   @if $z-index {
+      @return $z-index;
+   }
+
+   @warn 'There is no item "#{$element}" in this list; choose one of: #{$list}';
+   @return null;
+}

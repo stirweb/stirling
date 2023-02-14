@@ -1,0 +1,1 @@
+var stir=stir||{};stir.getJSON=function(n,t){if("undefined"!=typeof n){"function"!=typeof t&&(t=function(){});var e=new XMLHttpRequest;e.open("GET",n,!0),e.onload=function(){e.status>=200&&e.status<400&&t.call(null,JSON.parse(e.responseText))},e.onerror=function(){},e.send()}};

@@ -1,0 +1,16 @@
+.c-lecturers-stat {
+    padding: 79px 0 0;
+    img {
+        position: absolute;
+        bottom: 0;
+        left: 15px;
+    }
+    h1 {
+        font-size: 190px;
+    }
+}
+
+.c-lecturers-stat__wrap,
+.c-lecturers-stat .c-int-stat__share {
+    padding: 0 0 80px;
+}

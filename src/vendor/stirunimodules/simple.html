@@ -1,0 +1,88 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=11" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title> Media Management – University of Stirling</title>
+
+	<style>
+
+	#progslist ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	#progslist ul li {
+		margin-bottom: 5px;
+	}
+
+	#progslist ul li a {
+		display: inline-block;
+		padding: 5px;
+		border: 1px solid #ccc;
+	}
+
+	#progslist ul li.active a {
+		background: #eee;
+	}
+
+	#course-modules-container__loading{
+		animation: pulse 1s infinite alternate;
+		animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+	}
+
+	@keyframes pulse {
+		50% {opacity: 0;}
+		100% {opacity: 1;}
+	}
+
+	</style>
+</head>
+
+<body>
+	<p>This is an example of modules being fetched for a given course/courses:</p>
+
+	<div id="modules_container">
+		<div id="course-modules-container__loading">Loading…</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="js/StirUniModules.js"></script>
+	<script>
+
+	$(document).ready(function() {
+
+		StirUniModules.setShowLoadingRenderer(function() {
+			console.info("Show loader");
+			$("#course-modules-container__loading").show();
+		});
+		
+		StirUniModules.setHideLoadingRenderer(function() {
+			console.info("Hide loader");
+			$("#course-modules-container__loading").hide();
+		});
+
+		var options = {
+			container: "#modules_container",
+		};
+
+		// StirUniModules.init("TDX44-MMA&course=TDO44-MMA&course=TDO44-SPO&course=TDX44-CFM&course=TDX44-SPR", "PG", options);
+		// StirUniModules.loadOptions("UHX11-ACCFIN", "UG", options); // ug
+		
+		// StirUniModules.loadOptions("UAX24-NUR", "UG", options); // access nursing
+		// StirUniModules.loadOptions("UHM16-CSC", "UG", options); // comp science
+		// StirUniModules.loadOptions("IXX53-ENS", "UG", options); // environmental science
+		
+		//StirUniModules.loadCourseRoutes("TXX44-MMA", "PG", options); // single route, pg
+		//StirUniModules.loadCourseRoutes("TXX44-SPR", "PG", options); // multi route, pg
+		StirUniModules.loadCourseRoutes("UHX12-HIS", "UG", options); // history, ug
+
+	});
+
+	</script>
+
+</body>
+</html>

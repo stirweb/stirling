@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<!-- <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=11">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+	<title> Media Management – University of Stirling</title>
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link href="../../../dist/fonts/fonts.css" rel="stylesheet" >
+    <link rel="stylesheet" href="../../../dist/css/app.css">
+</head>
+<body>
+	
+	<section class="c-wrapper u-bg-grey u-padding-y">
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+				<div class="cell">
+					<form action="" method="">
+						<select id="select-roucode-ug" data-course-options="UG">
+							<option value="">~ UG courses ~</option>
+							<!-- <option value="UHX11-ACCFIN">Accountancy &amp; Finance</option> -->
+						</select>
+					</form>
+					<form action="" method="">
+						<select id="select-roucode-pg" data-course-options="PG">
+							<option value="">~ PG courses ~</option>
+							<!-- <option value="UHX11-ACCFIN">Accountancy &amp; Finance</option> -->
+						</select>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section class="c-wrapper u-padding-y">
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+				<div class="cell">
+                    <div id="course-header"></div>
+					<div id="course-modules-container"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Modal for Course info! -->
+	<div class="reveal" id="course__description" aria-labelledby="course-modules-description__header" data-reveal>
+		<div id="course-modules-description__loading">
+			<div class="loader"></div>
+			<span class="show-for-sr">Loading...</span>
+		</div>
+		<div id="course-modules-description__content">
+			<div id="course-modules-description__header"></div>
+			<div id="course-modules-description__body" style="max-height: 600px; overflow: auto;"></div>
+			<button class="close-button" data-close aria-label="Close Accessible Modal" type="button">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
+
+	<script src="../../../dist/js/app.js"></script>
+	<script src="js/StirUniModules.js"></script>
+	<script src="../../other/course.js"></script>
+	<script>
+
+	StirUniModules.getOptions({
+		autoload_first_option: true
+	});
+
+	var loadingIndicator = document.getElementById("course-modules-container__loading");
+	if(loadingIndicator) loadingIndicator.style.display = "none";
+
+	function createSelectOptions(data) {
+		for(var x in data){
+			if((typeof(data[x].rouCode) !== 'undefined') && ( data[x].rouCode.indexOf("-") >= 0 )){
+				this.insertAdjacentHTML("beforeend", '<option value="'+data[x].rouCode+'">'+data[x].rouName+'</option>');
+			}
+		}
+	}
+
+	var createSelectOptionsUG = createSelectOptions.bind(document.getElementById("select-roucode-ug"));
+    var createSelectOptionsPG = createSelectOptions.bind(document.getElementById("select-roucode-pg"));
+    var moduleQueue = [];
+
+    document.getElementById("select-roucode-ug").addEventListener("change", function(event) {
+        document.getElementById("course-header").innerHTML = "<h1>" + this.options[this.selectedIndex].text + "</h1>";
+    });
+
+    document.getElementById("select-roucode-pg").addEventListener("change", function(event) {
+        document.getElementById("course-header").innerHTML = "<h1>" + this.options[this.selectedIndex].text + "</h1>";
+    });
+
+	StirUniModules.setShowModulesRenderer(function(data) {
+
+        var container = document.querySelector(StirUniModules.getOptions()["container"]);
+        var accordion = container.querySelector("#course-modules-container__accordion");
+
+		var html,
+			groups,
+			year,
+			options,
+			option,
+			semesters,
+			semester,
+			collections,
+			collection,
+			collectionNotEmpty,
+            showModule;
+
+
+		groups = data.semesterGroupBeans;
+		year = 0;
+		html = ['<table>'];
+    
+		for (var g=0; g<groups.length; g++) { // groups loop
+
+			group = data.semesterGroupBeans[g];
+			options = group.groupOptions;
+			
+			for (var o=0; o<options.length; o++) { // options in group
+
+				option = group.groupOptions[o];
+				semesters = option.semestersInOption;
+
+				for (var s=0; s<semesters.length; s++) { // semesters in option
+
+					semester = option.semestersInOption[s];
+					collections = semester.collections;
+
+					// insert accordion content
+					for (var c=0; c<collections.length; c++) { // collections in semester (e.g. COMP)
+
+						collection = collections[c];
+						collectionlist_html = [];
+
+						collectionNotEmpty = false;
+						for(var m=0; m<collection.mods.length; m++) {
+
+							module = collection.mods[m];
+
+							// hide the module if it's unavailable. (This condition was taken from calendar js).
+							if (StirUniModules.getOptions().hide_modules_if_not_available && (module.mavSemSemester === null || module.mavSemSemester.length === 0 || module.mavSemSemester === "[n]" || module.mavSemSemester === "Not Available")) {
+								showModule = false;
+							} else {
+								showModule = true;
+								collectionNotEmpty = true;
+							}
+
+							if (showModule) {
+
+                                moduleQueue.push({
+                                    code: module.modCode,
+                                    semester: module.mavSemCode,
+                                    occurrence: module.mavOccurrence,
+                                    session: module.mavSemSession
+                                });
+
+								collectionlist_html.push('<tr>');
+								collectionlist_html.push('    <td><a target="_blank" href="'+StirUniModules.getDPTModuleLink(module.modCode)+'" data-module-code="' +module.modCode +'" data-semester-code="' + module.mavSemCode + '" data-occurrence="' + module.mavOccurrence + '" data-year-session="' + module.mavSemSession + '">' + module.modName  + '</a> <span class="c-course-modules__module-code">(' + module.modCode + ')</span></td>');
+								collectionlist_html.push('    <td data-course-code="' + module.modCode + '" data-loading> ~loading description~ </td>');
+								collectionlist_html.push('</tr>');
+							}
+
+						} // end of module loop
+
+
+						if (collectionNotEmpty) {
+
+							// in accordance with calendar js, we only show notes on this condition
+							showCollectionNotes = (collection.collectionType == "LIST" || collection.collectionType == "CHOICE");
+
+							// we'll show the header if there are collection notes, if header text has changed,
+							// and if collapse_collection_headers option says to do so
+							//if (!StirUniModules.getOptions().collapse_collection_headers || showCollectionNotes || collectionHeaderTextChanged)
+							//html.push('<p class="c-course-modules__collection-header">' + getCollectionHeaderText(collection) + '</p>');
+							//if (showCollectionNotes) {
+							//	html.push('<p class="c-course-modules__collection-notes">' + collection.collectionNotes + '</p>');
+							//}
+
+							// update the checksum so we can compare with next collection
+							// of this semester
+
+							// now output the table we created earlier
+							html.push( collectionlist_html.join("") );
+
+
+							//if (collection.collectionFootnote) {
+							//	html.push('<p class="c-course-modules__pdm-note">'+collection.collectionFootnote+'</p>');
+							//}
+
+						}
+
+					} // end of collection loop
+
+				} // end of semester loop
+
+			} // end of options in group loop
+
+        } // end of group loop
+        
+        html.push('</table>');
+
+		accordion.innerHTML = html.join("\n");
+		
+
+        displayNextModule();
+
+        /* for(var i=0; i<moduleQueue.length; i++) {
+            var module = moduleQueue[i];
+            StirUniModules.loadModule(module.code, module.semester, module.occurrence, module.session);
+        } */
+
+    });
+    
+    StirUniModules.setShowModuleRenderer(function(data) {
+
+        function getDetail(name) {
+            return data && data[0] && data[0].details && data[0].details[name]; // return last item, or first to fail
+        }
+        var name = getDetail("Module Name");
+		var desc = getDetail("Brief (marketing) description");
+		var code = getDetail("Module Code");
+
+        if (desc) {
+            //desc = desc.replace(/<[font|u][^><]*>|<.[font|u][^><]*>/g, '').replace(/ style="([^"]+)"/gi, ''); // remove inline styles
+		}
+		var el = document.querySelector('[data-course-code="' + code + '"]');
+		if(el) el.innerHTML = desc;
+		removeUnuniqueModules(code)
+		
+        if(moduleQueue.length > 0) displayNextModule();
+    });
+
+    StirUniModules.setShowModuleErrorRenderer(function(data) {
+        var el = document.querySelector('[data-course-code="' + data.details[0] + '"]');
+		if(el) el.innerHTML = "<p> ⚠️ No marketing description is available in the <abbr title=\"Degree Programme Tables\">DPT</abbr> for module <em>" + data.details[0] + "</em>.</p>";
+		removeUnuniqueModules(data.details[0]);
+        if(moduleQueue.length > 0) displayNextModule();
+	});
+	
+	function removeUnuniqueModules(modCode) {
+		var elNodeList = document.querySelectorAll('[data-course-code="' + modCode + '"]');
+		if(elNodeList.length > 1) {
+			for(var i=1; i<elNodeList.length; i++){
+				var node = elNodeList[i];
+				var row = node.parentNode;
+				if (node.parentNode) {
+					row.parentNode.removeChild(row);
+					console.info("Removed duplicate " + i + " of " + modCode);
+				}
+			}
+		}
+	}
+
+    function displayNextModule() {
+		var module = moduleQueue.shift();
+		module && console.log("displayNextModule("+module.code+")");
+        module && StirUniModules.loadModule(module.code, module.semester, module.occurrence, module.session);
+    }
+
+	$(function() {
+
+		var level,
+			rouCode,
+			container = document.getElementById("course-modules-container"),
+			routes = document.getElementById("course-modules-container__routes-list"),
+			options = document.getElementById("course-modules-container__options-list"),
+			header = document.getElementById("course-modules-container__header"),
+			optionSelectBoxes = document.querySelectorAll("[data-course-options]");
+
+		
+		if(optionSelectBoxes) {
+			var sels = Array.prototype.slice.call(optionSelectBoxes);
+			for(var i=0; i<sels.length; i++) {
+				sels[i].addEventListener("change", function(e) {
+			
+					if(container) container.innerHTML = "";
+					if(routes) routes.innerHTML = "";
+					if(options) options.innerHTML = "";
+					rouCode = this.value;
+					header && (header.innerHTML = "<h1 style=\"margin-bottom:0.3em;\">" + this.options[this.selectedIndex].text + "</h1><h3 class=\"header-stripped\">["+rouCode+"]</h3>");
+					level = this.getAttribute("data-course-options");
+					if(rouCode) {
+						StirUniModules.init({
+							container: "#course-modules-container"
+						})
+						StirUniModules.loadCourseOptions(rouCode, level);
+					}
+				});
+			}
+		}
+
+		// load select options
+
+		var url   = "https://portal.stir.ac.uk/servlet/CalendarServlet?",
+			paths = {
+			"UG": "opt=menu&callback=createSelectOptionsUG",
+			"PG": "opt=pgmenu&ct=PG&callback=createSelectOptionsPG"
+		}
+
+		for(var path in paths){
+			jQuery.ajax({
+					"url": url + paths[path],
+					dataType: "script",
+					cache: true
+			}).done(function() {
+	
+			}).fail(function() {
+				console.error("There was an error loading the programmes");
+			});
+        }
+        
+        displayNextModule();
+
+	});
+
+	</script>
+
+</body>
+</html>

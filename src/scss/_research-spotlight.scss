@@ -1,0 +1,81 @@
+.c-category-label {
+    background-color: $heritage-green;
+    color: white;
+    font-family: FSMaja, serif;
+    font-weight: 100;
+    padding: 0 0.4em 0.2em;
+    display: inline-block;
+    margin: 1em 0;
+
+    &[data-category="Research Spotlight"] {
+        background-color: $heritage-teal;
+    }
+    &[data-category="Impact"] {
+        background-color: $heritage-berry;
+    }
+}
+
+blockquote.c-pullquote {
+    border: 0;
+    color: inherit;
+    position: relative;
+    padding: 0;
+    width: 100%;
+    &[data-align="left"] {
+        float: left;
+        margin-right: 2em;
+    }
+    &[data-align="right"] {
+        float: right;
+        margin-left: 2em;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        height: 1em;
+        top: 0;
+        bottom: auto;
+        left: 0;
+        right: 0;
+        width: auto;
+        border-style: solid;
+        border-color: $heritage-green;
+        border-width: 4px 4px 0 0;
+    }
+
+    &.u-pquote-heritage-berry p {
+        color: $heritage-berry;
+    }
+    &.u-pquote-heritage-berry::before{
+        border-color: $heritage-berry;
+    }
+
+    p {
+        background-color: #F6F7F6;
+        color: $heritage-green;
+        padding: 1.25rem;
+        font-family: FSMaja, serif;
+        font-weight: 100;
+        font-size: 2rem;
+        /* line-height: 1; */
+        /* text-transform: uppercase; */
+    }
+}
+
+.c-wysiwyg-content blockquote p::before,
+.c-wysiwyg-content blockquote p::after {
+    content: none;
+}
+.c-wysiwyg-content blockquote.c-pullquote p {
+        font-size: 2rem !important;  /* sigh */
+}
+
+/* Medium and up */
+@media screen and (min-width: 40em) {
+    blockquote.c-pullquote {
+        &[data-align] {
+            width: 50%;
+            margin-top: 0.666em;
+        }
+    }
+}

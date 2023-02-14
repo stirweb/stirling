@@ -1,0 +1,121 @@
+h1{
+    font-family: 'Anton', sans-serif !important;
+    padding-top: 80px;
+}
+
+@media screen and (min-width: 40em) {
+    h1{
+        font-size: 110px !important;
+    }
+}
+
+@media screen and (max-width: 39.9375em) {
+    h1{
+        font-size: 70px !important;
+    } 
+}
+
+
+h2 {
+    font-family: 'Anton', sans-serif !important;
+    text-transform: uppercase;
+}
+
+.c-infographic__line1 {
+    font-family: 'Anton', sans-serif !important;
+    text-transform: uppercase;
+    font-size: 36px !important;
+    font-weight: 500 !important;
+    line-height: 42px !important;
+    margin: 10px 0 10px 0 !important;
+}
+
+.button {
+    font-family: 'Anton', sans-serif !important;
+    text-transform: uppercase;
+    font-size: 28px !important;
+    color: #ffffff !important;
+}
+
+.button.heritage-green {
+    background-color: #67A51E !important;
+    color: #fefefe;
+}
+
+.button.heritage-green:hover {
+    border-color: #67A51E !important;
+}
+
+.button.energy-pink:hover {
+    background-color: #d41568 !important;
+}
+
+.c-footer__header {
+    font-family: "Open Sans",sans-serif !important;
+    text-transform: none !important;
+}
+
+.c-promo-box__header {
+    color: #3a3c39;
+    font-family: "Open Sans",sans-serif !important;
+    text-transform: none !important;
+}
+
+
+/* Header Doodle */
+
+section.c-wrapper:first-of-type {
+    background-image: url(/webcomponents/dist/images/campaigns/ug/ug-doodle.svg);
+    background-position: left center;
+    background-repeat: repeat-x;
+    background-size: 290%;
+}
+
+/* Header intro text panels */
+
+@media screen and (min-width: 64em) {
+    
+    section.c-wrapper:first-of-type .cell  {
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
+
+    section.c-wrapper:first-of-type .cell .c-wysiwyg-content h2:first-of-type {
+        margin:50px 0 20px 0 ;
+        padding-bottom:0;
+    }
+    
+}
+
+/* Header CTA Button */
+
+.button[id^="cta-"]:first-of-type {
+    background: #67A51E;
+    border: 1px solid #67A51E;
+    color: #fff !important ;
+}
+
+.button[id^="cta-"]:first-of-type {
+    color: #fff !important ;
+}
+
+/* Half and Half Squiggle */
+
+.c-half-n-half__content {
+    background-image: url(/webcomponents/dist/images/campaigns/ug/ug-squiggle-2.svg);
+    background-position: left 0px bottom 10px ; 
+    background-repeat:no-repeat;
+    background-size: 100%;
+    padding-bottom: 120px !important;
+}
+
+/* Dots */
+
+#d\.en\.64577, #d\.en\.64704, #d\.en\.64775, #d\.en\.64813, #d\.en\.65336, #d\.en\.65627, #d\.en\.65986, #d\.en\.66161, #d\.en\.66278, #d\.en\.68115, #d\.en\.68237{
+    background-image: url(/webcomponents/dist/images/campaigns/ug/ug-dots-2.svg);
+    background-position: left 0px bottom 10px ; 
+    background-repeat:no-repeat;
+    background-size: 100%;
+    padding-bottom: 180px !important;
+}

@@ -1,0 +1,119 @@
+h1{
+    font-family: 'Anton', sans-serif !important;
+    padding-top: 80px;
+}
+
+@media screen and (min-width: 40em) {
+    h1{
+        font-size: 110px !important;
+    }
+}
+
+@media screen and (max-width: 39.9375em) {
+    h1{
+        font-size: 70px !important;
+    } 
+}
+
+
+h2 {
+    font-family: 'Anton', sans-serif !important;
+    text-transform: uppercase;
+}
+
+.c-infographic__line1 {
+    font-family: 'Anton', sans-serif !important;
+    text-transform: uppercase;
+    font-size: 36px !important;
+    font-weight: 500 !important;
+    line-height: 42px !important;
+    margin: 10px 0 10px 0 !important;
+}
+
+.button {
+    font-family: 'Anton', sans-serif !important;
+    text-transform: uppercase;
+    font-size: 28px !important;
+    color: #ffffff !important;
+}
+
+.button.heritage-green {
+    background-color: #67A51E !important;
+    color: #fefefe;
+}
+
+.button.heritage-green:hover {
+    border-color: #67A51E !important;
+}
+
+.button.energy-pink:hover {
+    background-color: #d41568 !important;
+}
+
+.c-footer__header {
+    font-family: "Open Sans",sans-serif !important;
+    text-transform: none !important;
+}
+
+.c-promo-box__header {
+    color: #3a3c39;
+    font-family: "Open Sans",sans-serif !important;
+    text-transform: none !important;
+}
+
+
+/* Header Doodle */
+
+#d\.en\.64563, #d\.en\.64692, #d\.en\.64802, #d\.en\.64763, #d\.en\.64658, #d\.en\.65616, #d\.en\.65954, #d\.en\.66147, #d\.en\.66286, #d\.en\.68129, #d\.en\.68216 {
+    background-image: url(/webcomponents/dist/images/campaigns/ug/ug-doodle.svg);
+    background-position: left center;
+    background-repeat: repeat-x;
+    background-size: 290%;
+}
+
+/* Header intro text panel */
+
+@media screen and (min-width: 64em) {
+    #d\.en\.65022, #d\.en\.64693, #d\.en\.64764, #d\.en\.64803, #d\.en\.64659, #d\.en\.65606, #d\.en\.65953, #d\.en\.66146, #d\.en\.66287, #d\.en\.68128, #d\.en\.68217 {
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
+
+    #d\.en\.64764 .c-wysiwyg-content h2:first-of-type, #d\.en\.64803 .c-wysiwyg-content h2:first-of-type, #d\.en\.65953 .c-wysiwyg-content h2:first-of-type, #d\.en\.66146 .c-wysiwyg-content h2:first-of-type, #d\.en\.66287 .c-wysiwyg-content h2:first-of-type, #d\.en\.68128 .c-wysiwyg-content h2:first-of-type, #d\.en\.68217 .c-wysiwyg-content h2:first-of-type{
+        margin:50px 0 20px 0 ;
+        padding-bottom:0;
+    }
+}
+
+/* Header CTA Button */
+
+#cta-64591.button, #cta-64716.button, #cta-64787.button, #cta-64824.button, #cta-64682.button, #cta-65638.button, #cta-65962.button, #cta-66142.button, #cta-66283.button, #cta-68124.button, #cta-68222.button   {
+    background: #67A51E;
+    border: 1px solid #67A51E;
+    color: #fff !important ;
+}
+
+#cta-64591.button:after, #cta-64716.button:after, #cta-64787.button:after, #cta-64824.button:after, #cta-64682.button:after, #cta-65638.button:after, #cta-65962.button:after, #cta-66142.button:after, cta-66283.button:after, #cta-68124.button:after, #cta-68222.button:after     {
+    color: #fff !important ;
+}
+
+/* Half and Half Squiggle */
+
+#d\.en\.64589 .c-half-n-half__content, #d\.en\.64792 .c-half-n-half__content, #d\.en\.64780 .c-half-n-half__content, #d\.en\.64822 .c-half-n-half__content, #d\.en\.64680 .c-half-n-half__content, #d\.en\.65636 .c-half-n-half__content, #d\.en\.65976 .c-half-n-half__content, #d\.en\.66141 .c-half-n-half__content, #d\.en\.66295 .c-half-n-half__content, #d\.en\.68135 .c-half-n-half__content, #d\.en\.68230 .c-half-n-half__content{
+    background-image: url(/webcomponents/dist/images/campaigns/ug/ug-squiggle-2.svg);
+    background-position: left 0px bottom 10px ; 
+    background-repeat:no-repeat;
+    background-size: 100%;
+    padding-bottom: 120px !important;
+}
+
+/* Dots */
+
+#d\.en\.64577, #d\.en\.64704, #d\.en\.64775, #d\.en\.64813, #d\.en\.65336, #d\.en\.65627, #d\.en\.65986, #d\.en\.66161, #d\.en\.66278, #d\.en\.68115, #d\.en\.68237{
+    background-image: url(/webcomponents/dist/images/campaigns/ug/ug-dots-2.svg);
+    background-position: left 0px bottom 10px ; 
+    background-repeat:no-repeat;
+    background-size: 100%;
+    padding-bottom: 180px !important;
+}

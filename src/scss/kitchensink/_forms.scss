@@ -1,0 +1,209 @@
+.c-form {
+	[type="text"],
+	[type="password"],
+	[type="date"],
+	[type="datetime"],
+	[type="datetime-local"],
+	[type="month"],
+	[type="week"],
+	[type="email"],
+	[type="number"],
+	[type="search"],
+	[type="tel"],
+	[type="time"],
+	[type="url"],
+	[type="color"],
+	textarea,
+ 	select {
+		font-size: 1.25rem;
+		margin: 0 0 20px;
+		min-height: 70px;
+		padding: 0 20px;
+	}
+}
+.c-form {
+  [type="text"],
+  [type="password"],
+  [type="date"],
+  [type="datetime"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="week"],
+  [type="email"],
+  [type="number"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="url"],
+  [type="color"],
+  textarea,
+  select,
+  [type="text"]:focus,
+  [type="password"]:focus,
+  [type="date"]:focus,
+  [type="datetime"]:focus,
+  [type="datetime-local"]:focus,
+  [type="month"]:focus,
+  [type="week"]:focus,
+  [type="email"]:focus,
+  [type="number"]:focus,
+  [type="search"]:focus,
+  [type="tel"]:focus,
+  [type="time"]:focus,
+  [type="url"]:focus,
+  [type="color"]:focus,
+  textarea:focus,
+  select:focus {
+    background-color: $white;
+    border: 1px solid #979797;
+  }
+
+  textarea {
+    padding: 20px;
+
+    &:focus {
+      padding: 20px;
+    }
+  }
+
+  [type="submit"]:not(.c-course-search__button) {
+    margin: 40px 0 60px;
+  }
+
+  label {
+    font-size: 1.25rem;
+    margin: 0 0 10px 0;
+  }
+
+  h2 {
+    margin: 60px 0;
+  }
+
+  button {
+    width: 100%;
+    padding: 9px 28px;
+  }
+}
+
+@media screen and #{breakpoint(xlarge down)} {
+  .c-form {
+    [type="text"],
+    [type="password"],
+    [type="date"],
+    [type="datetime"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="week"],
+    [type="email"],
+    [type="number"],
+    [type="search"],
+    [type="tel"],
+    [type="time"],
+    [type="url"],
+    [type="color"],
+    textarea,
+    select,
+    [type="text"]:focus,
+    [type="password"]:focus,
+    [type="date"]:focus,
+    [type="datetime"]:focus,
+    [type="datetime-local"]:focus,
+    [type="month"]:focus,
+    [type="week"]:focus,
+    [type="email"]:focus,
+    [type="number"]:focus,
+    [type="search"]:focus,
+    [type="tel"]:focus,
+    [type="time"]:focus,
+    [type="url"]:focus,
+    [type="color"]:focus,
+    textarea:focus,
+    select:focus {
+      font-size: 1rem;
+      min-height: 52px;
+    }
+
+    [type="submit"]:not(.c-course-search__button) {
+      margin: 20px 0 40px;
+    }
+
+    label {
+      font-size: 1rem;
+    }
+
+    h2 {
+      margin: 40px 0;
+    }
+  }
+}
+
+@media screen and #{breakpoint(small down)} {
+  .c-form {
+    p {
+      font-size: 1rem;
+    }
+
+    [type="text"],
+    [type="password"],
+    [type="date"],
+    [type="datetime"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="week"],
+    [type="email"],
+    [type="number"],
+    [type="search"],
+    [type="tel"],
+    [type="time"],
+    [type="url"],
+    [type="color"],
+    textarea,
+    select,
+    [type="text"]:focus,
+    [type="password"]:focus,
+    [type="date"]:focus,
+    [type="datetime"]:focus,
+    [type="datetime-local"]:focus,
+    [type="month"]:focus,
+    [type="week"]:focus,
+    [type="email"]:focus,
+    [type="number"]:focus,
+    [type="search"]:focus,
+    [type="tel"]:focus,
+    [type="time"]:focus,
+    [type="url"]:focus,
+    [type="color"]:focus,
+    textarea:focus,
+    select:focus {
+      font-size: 0.875rem;
+      min-height: 40px;
+    }
+
+    label {
+      font-size: 0.875rem;
+    }
+
+    button {
+      padding: 9px 28px;
+    }
+  }
+}
+
+/*
+	Gecko
+*/
+
+#gecko-form {
+  margin-top: 30px;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .gecko-form-box > * {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  #gecko-form {
+    margin-top: 60px;
+  }
+}

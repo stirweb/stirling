@@ -1,0 +1,314 @@
+/*
+    Video masthead redux
+*
+
+.video-banner {
+  position: relative;
+  background: #006938;
+
+  &:not([data-aspect="16:9"]) span {
+    bottom: 6vw;
+    left: 6vw;
+  }
+
+  span {
+    position: absolute;
+    font-family: FSMaja, serif;
+    display: block;
+    font-weight: 300;
+    color: white;
+    text-transform: uppercase;
+    line-height: 0.85;
+    font-size: 2.5rem; /* 40px *
+    bottom: 0.6em;
+    left: 1.3em;
+    &::after {
+      content: "";
+      position: absolute;
+      height: 31px;
+      bottom: -20px;
+      right: -50px;
+      width: 9999px;
+      border-right: 7px solid white;
+      border-bottom: 7px solid white;
+    }
+  }
+  &[data-aspect="16:9"] {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 40em) {
+  .video-banner {
+    &[data-aspect="16:9"] {
+      width: 77.5rem; // i.e. same as Foundation grid container.
+      max-width: 90%;
+      margin: 0 auto;
+      padding-left: 0.9375rem;
+      padding-right: 0.9375rem;
+    }
+    span {
+      font-size: 3rem; /* 48px *
+    }
+  }
+}
+@media screen and (min-width: 64em) {
+  .video-banner:not([data-aspect="16:9"]) span {
+    font-size: 3.25rem; /* 52px *
+  }
+}
+@media screen and (min-width: 77em) {
+  .video-banner[data-aspect="16:9"] {
+    padding: 0 15px; // i.e. same as Foundation grid container, in concert with max-width.
+  }
+}
+@media screen and (min-width: 1440px) {
+  .video-banner:not([data-aspect="16:9"]) span {
+    font-size: 5.75rem; /* 92px *
+    left: calc(50vw - 38.75rem); /* align with Foundation grid-container edges *
+  }
+}
+*/
+
+/*
+@supports (object-fit: cover) {
+  .vimeo-bg-video.fullframe > img {
+    max-height: 640px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+*/
+
+/***
+Video Masthead
+***
+.c-video-masthead {
+    max-height: 689px;
+    min-height: 689px;
+    overflow: hidden;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+
+    img {
+        width: 100%;
+    }
+    
+    video {
+        min-height: 100%;
+        min-width: 100%;
+        width: auto;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+}
+
+.c-video-masthead__container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    z-index: 1;
+}
+
+.c-video-masthead__callout-text {
+    color: #FFFFFF;
+    padding: 20px 0;
+    line-height: 85%;
+    margin: 0 0 81px 0;
+}
+
+.c-video-masthead__callout-text:after {
+    content: '';
+    position: absolute;
+    height: 31px;
+    bottom: 0;
+    right: -50px;
+    width: 9999px;
+    border-right: 7px solid #FFFFFF;
+    border-bottom: 7px solid #FFFFFF;
+}
+
+.c-video-masthead__callout-text.heritage-green{
+	color: $heritage-green;
+}
+
+.c-video-masthead__callout-text.heritage-green:after {
+	border-right: 7px solid $heritage-green;
+    border-bottom: 7px solid $heritage-green;
+}
+
+.c-video-masthead--opacity {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media screen and #{breakpoint(xlarge down)} {
+    .c-video-masthead {
+        max-height: 500px;
+        min-height: 500px;
+    }
+    .c-video-masthead video {
+        min-height: 500px;
+    }
+    .c-video-masthead__callout-text {
+        font-size: 3.125rem; // 51px;
+        margin: 0 0 40px 0;
+    }
+}
+
+
+
+.c-video-masthead__image {
+    height: 689px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+
+@media screen and #{breakpoint(small down)} {
+    .c-video-masthead__image {
+        height: 470px;
+        // background-size: cover;
+        // background-repeat: no-repeat;
+        // background-position: center;
+    }
+    .c-video-masthead {
+        min-height: initial;
+    }
+}
+@media screen and (max-width: 500px) {
+    .c-video-masthead__callout-text {
+        font-size: 2.5rem; //40px;
+    }
+}
+
+
+.c-video-masthead.vimeo-bg-video iframe {
+    top: -20%;
+}
+
+.c-video-masthead.vimeo-bg-video:after {
+    background: none;
+}
+
+// full-frame fallback image
+#video-masthead-wrapper picture img,
+.vimeo-bg-video.fullframe > img {
+    margin: 0 auto 40px;
+    display: block;
+}
+
+.vimeo-bg-video.fullframe {
+    margin-bottom: 40px;
+}
+
+.video-banner .vimeo-bg-video {
+    [data-videoid]:not([data-playback]){
+        background: $heritage-green;
+        position: relative;
+    }
+    [data-videoid]:not([data-playback])::after {
+        content: "";
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background: rgba(0,0,0,0.15);
+        border-radius: 50%;
+        animation: spin 2s linear 0s infinite normal forwards; 
+        border-width: 5px;
+        border-style: solid;
+        border-color: rgba(0,0,0,0.2) transparent transparent;
+        top: calc(50% - 40px);
+        left: calc(50% - 40px);
+    }
+}
+
+.masthead_suoty {
+    display: flex;
+    background-image: url(../images/homepage/starfield.png), linear-gradient(shade($heritage-green, 30), shade($heritage-green, 80));
+    background-size: 960px 344px, contain;
+    background-repeat: repeat, no-repeat;
+    max-height: 500px;
+    padding: 4em;
+    align-items: flex-start;
+    justify-content: center;
+    
+    span {
+        animation: banner-fade-in 2s ease-in-out 0s 1 normal forwards;
+        color: #fff;
+        font-size: 5vw;
+        text-transform: uppercase;
+        line-height: 0.8;
+        margin-right: 0.8em;  
+
+        span {
+            font-size: 2em;
+            display: block;
+        }
+    }
+    img {
+        max-height: 250px;
+    }
+}
+
+@keyframes banner-fade-in {
+    from { opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* 900px *
+@media only screen and (max-width: 56.250em) {
+    .c-video-masthead.vimeo-bg-video {
+        max-height: 350px;
+        min-height: 350px;
+        background-color: #fff;
+    }
+} 
+
+/* 1980px *
+@media only screen and (max-width: 123.750em) {
+    .vimeo-bg-video iframe {
+        top: -30%;
+    }
+    .vimeo-bg-video.fullframe iframe {
+        top: 0;
+    }
+}
+
+@media screen and (min-width: 640px) {
+    .vimeo-bg-video.fullframe,
+    #video-masthead-wrapper picture img {
+        margin-bottom: 70px;
+    }
+    #vimeoVideo-361040110,
+    #vimeoVideo-360762475 {
+        padding-bottom: 36%;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .masthead_suoty {
+        span {
+            font-size: 3.125rem;
+        }
+    }
+}
+
+*/

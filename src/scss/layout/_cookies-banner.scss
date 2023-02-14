@@ -1,0 +1,32 @@
+#cookiebanner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    padding: 1em;
+    z-index: z($z-index-elements, cookie-banner);
+
+    p {
+        margin: 0 1em;
+    }
+    button {
+        margin: 0;
+    }
+    p, a, button {
+        font-size: 0.875rem;
+    }
+}
+
+@media screen and (min-width: 40em) {
+    #cookiebanner {
+        p, a, button {
+            font-size: 1rem;
+        }
+    }
+}

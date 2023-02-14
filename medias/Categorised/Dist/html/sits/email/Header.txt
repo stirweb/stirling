@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>University of Stirling Admissions</title><style type="text/css">
+body{width:100% !important;-webkit-text-size-adjust:
+100%;-ms-text-size-adjust:100%;margin:0;padding:0}.ExternalClass{width:100%
+}.ExternalClass,.ExternalClass div,.ExternalClass font,.ExternalClass p,
+.ExternalClass span,.ExternalClass td{line-height:100%}body{font-family:
+"Calibri",Arial,sans-serif;font-size:16px;color:#3a3c39 !important}img{
+outline:none;text-decoration:none;-ms-interpolation-mode:bicubic}a img{
+border:none}p{margin:1em 0}h1,h2,h3,h4,h5,h6{color:#3a3c39 !important}a,
+a:link, a:visited,h1 a,h1 a:link, h1 a:visited,h2 a,h2 a:link,h2 a:visited,
+h3 a,h3 a:link,h3 a:visited,h4 a,h4 a:link,h4 a:visited,h5 a,h5 a:visited,
+h6 a,h6 a:visited{color:#006633 !important}a:active,a:hover,h1 a:active,
+h1 a:hover,h2 a:active,h2 a:hover,h3 a:active,h3 a:hover,h4 a:active,
+h4 a:hover,h5 a:active,h5 a:hover,h6 a:active,h6 a:hover
+{color:#76bd22 !important}table{border-collapse:collapse;mso-table-lspace:0;
+mso-table-rspace:0}table td{border-collapse:collapse}
+</style></head><body>
+<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable" 
+style="margin:0; padding:0; width:100% !important; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+<tr>
+<td>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" 
+style="border:0px; background-color: #006938; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+<tr border="0">
+<td width="100%" valign="top" border="0" style="padding: 21px;">
+<a href="http://www.stir.ac.uk" target="_blank" align="center">
+<img alt="University of Stirling" 
+src="https://www.stir.ac.uk/webcomponents/dist/html/sits/email/logo-166x42.png" 
+srcset="https://www.stir.ac.uk/webcomponents/dist/html/sits/email/logo-332x84.png 2x" 
+width="166" height="42" alt="University of Stirling" align="right" 
+style="-ms-interpolation-mode: bicubic"/></a>
+</td>
+</tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" 
+style="border:0px; padding: 0px 21px 0px 21px;border-collapse:collapse;mso-table-lspace:0pt; mso-table-rspace:0pt;">
+<tbody>
+<tr>
+<td style="padding: 12px 21px 12px 21px; background-color:#FFFFFF; color: #3a3c39; font-family:Calibri,Arial,sans-serif;">
+<!-- CONTENT BEGIN -->

@@ -1,0 +1,286 @@
+/*
+   Slightly lighten a color
+   @access public
+   @param {Color} $color - color to tint
+   @param {Number} $percentage - percentage of `$color` in returned color
+   @return {Color}
+*/
+
+@function tint($color, $percentage) {
+  @return mix(white, $color, (100% - $percentage));
+}
+
+/*
+   Slightly darken a color
+   @access public
+   @param {Color} $color - color to shade
+   @param {Number} $percentage - percentage of `$color` in returned color
+   @return {Color}
+*/
+
+@function shade($color, $percentage) {
+  @return mix(black, $color, (100% - $percentage)); //percentage((100-$percentage)/100));
+}
+
+// Shorthand colour variables
+$light-mink: map-get($brand-palette, light-mink);
+$medium-mink: map-get($brand-palette, medium-mink);
+$dark-mink: map-get($brand-palette, dark-mink);
+$energy-green: map-get($brand-palette, energy);
+$energy-pink: map-get($brand-palette, energy-pink);
+$energy-teal: map-get($brand-palette, energy-teal);
+$energy-yellow: map-get($brand-palette, energy-yellow);
+$energy-orange: map-get($brand-palette, energy-orange);
+$energy-blue: map-get($brand-palette, energy-blue);
+$energy-purple: map-get($brand-palette, energy-purple);
+$heritage-green: map-get($brand-palette, heritage-green);
+$heritage-berry: map-get($brand-palette, heritage-berry);
+$heritage-teal: map-get($brand-palette, heritage-teal);
+$heritage-yellow: map-get($brand-palette, heritage-yellow);
+$heritage-orange: map-get($brand-palette, heritage-orange);
+$heritage-blue: map-get($brand-palette, heritage-blue);
+$heritage-navy: map-get($brand-palette, heritage-navy);
+$heritage-purple: map-get($brand-palette, heritage-purple);
+
+// These are variations permitted in the brank bank colours
+$variations: (30, 50, 70);
+
+/* 
+   University of Stirling supplementary web colours
+ */
+@each $name, $hex in $uos-web-supplementary {
+  // generate the text colour classes e.g. u-primary
+  .u-#{$name} {
+    color: $hex !important;
+  }
+
+  // generate the bg classes e.g. u-bg-primary
+  .u-bg-#{$name} {
+    background-color: $hex !important;
+  }
+}
+
+/*
+   University of Stirling brand palette colours
+ */
+@each $name, $hex in $brand-palette {
+  // generate the text colour classes  e.g. u-heritage-green
+  //.u-#{$name} {
+  // color: $hex!important;
+  //}
+
+  // generate the bg classes e.g. u-bg-heritage-green
+  .u-bg-#{$name} {
+    background-color: $hex !important;
+  }
+
+  .bg-#{$name} {
+    border-image-source: linear-gradient($hex, $hex);
+  }
+
+  // generate the bg variation classes e.g. u-heritage-green--30
+  @each $perc in $variations {
+    .u-bg-#{$name}--#{$perc} {
+      background-color: tint($hex, $perc);
+    }
+  }
+}
+
+// this is an exception for the grey section backgrounds
+$bg-grey: tint($light-mink, 15%);
+
+.u-bg-grey {
+  background-color: $bg-grey !important;
+}
+
+.bg-grey {
+  border-image-source: linear-gradient($bg-grey, $bg-grey);
+}
+
+.u-bg-grey--dark {
+  background-color: shade($bg-grey, 95%) !important;
+}
+
+.bg-grey--dark {
+  border-image-source: linear-gradient(shade($bg-grey, 95%), shade($bg-grey, 95%));
+}
+
+.u-bg-grey--darker {
+  background-color: shade($bg-grey, 90%) !important;
+}
+
+.bg-grey--darker {
+  border-image-source: linear-gradient(shade($bg-grey, 90%), shade($bg-grey, 90%));
+}
+
+.bg-dark-grey {
+  border-image-source: linear-gradient(#616361, #616361);
+}
+
+// Used for full width wrappers
+.u-bleed {
+  border-image-slice: 0 fill;
+  border-image-outset: 0 100vw 0 100vw;
+}
+
+/*
+   white--all 
+   will make any text within the element white
+ */
+
+.u-white--all {
+  * {
+    color: $white !important;
+
+    &:after {
+      color: $white !important;
+    }
+  }
+
+  a {
+    &:hover {
+      color: $white !important;
+    }
+
+    &:before {
+      background-color: $white !important; // <-- WHY?
+    }
+
+    &.button--back:before {
+      background-color: transparent !important;
+    }
+  }
+}
+
+.u-white--all {
+  .c-wysiwyg-content li a,
+  li a,
+  p a {
+    border-bottom: 2px solid $white;
+  }
+
+  select {
+    option,
+    &:focus {
+      color: #3a3c39 !important;
+    }
+
+    color: #3a3c39 !important;
+  }
+}
+
+[class*="u-bg-"].u-white {
+  h2,
+  h3,
+  a {
+    color: $white;
+  }
+  a:not(.button) {
+    border-bottom-width: 1px !important;
+  }
+}
+
+/*
+   u-white--all auto overrides 
+   table bg is white/grey, so should be inherited
+ */
+
+.u-white--all {
+  table,
+  td,
+  td strong,
+  th strong,
+  table p,
+  table p strong,
+  th {
+    color: $black !important;
+
+    a {
+      color: $heritage-green !important;
+
+      &:hover {
+        color: $heritage-green !important;
+      }
+    }
+  }
+}
+
+/*
+  Override utility for u-white--all
+*/
+
+.u-unwhite--all {
+  * {
+    color: $black !important;
+
+    &:after {
+      color: $heritage-green !important;
+    }
+    &:before {
+      color: $heritage-green !important;
+    }
+  }
+
+  h1,
+  h2 {
+    color: $heritage-green;
+  }
+
+  a {
+    color: $heritage-green !important;
+
+    &:hover {
+      color: $heritage-green !important;
+    }
+  }
+}
+
+/*
+    Extended palette colours - Backgrounds 
+ */
+
+.u-bg-energy-teal--15 {
+  background-color: tint($energy-teal, 15%) !important;
+}
+
+.u-bg-energy-teal--darker {
+  background-color: #017e89;
+}
+
+.u-bg-grey--mid {
+  background-color: #eee;
+}
+
+/*
+    Extended palette colours - Text 
+ */
+
+.u-energy-teal {
+  color: $energy-teal;
+
+  small {
+    color: #01727d;
+  }
+}
+
+.u-energy-teal--light {
+  color: #b3dce0;
+}
+
+.u-grey--dark {
+  color: #767169;
+}
+/* [a11y] darker dark-grey text when on grey background */
+.bg-grey {
+  .u-grey--dark {
+    color: #726f65;
+  }
+}
+
+.u-heritage-green {
+  color: $heritage-green;
+}
+
+.u-heritage-berry {
+  color: $heritage-berry;
+}

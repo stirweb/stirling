@@ -1,0 +1,49 @@
+
+/* wrapper needed for IE */
+.star-wrap {
+    max-width: 90px;
+    margin-right: 20px;
+}
+
+.star {
+    fill: #fefefe;
+    width: 100%;
+    opacity: 0;
+    max-width: 90px; /* needed for IE */
+}
+.bounceIn .star-wrap:nth-child(2) .star,
+.bounceIn .star-wrap:nth-child(4) .star
+ {
+   color: rgba(255,255,255,0.8);
+   fill: rgba(255,255,255,0.8);
+
+}
+.bounceIn .star-wrap:nth-child(1) .star,
+.bounceIn .star-wrap:nth-child(5) .star {
+    color: rgba(255,255,255,0.6);
+    fill: rgba(255,255,255,0.6);
+}
+
+.star-wrap:last-child {
+    margin-right: 0;
+}
+
+svg.star polygon {
+    color: inherit;
+    opacity: 0.8;
+}
+
+.bounceIn .star-wrap:nth-child(2) .star,
+.bounceIn .star-wrap:nth-child(4) .star {
+    animation-delay: 200ms;
+}
+
+.bounceIn .star-wrap:nth-child(1) .star,
+.bounceIn .star-wrap:nth-child(5) .star {
+    animation-delay: 400ms;
+}
+
+.bounceIn svg {
+    animation: bounceIn 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-fill-mode: forwards;
+}

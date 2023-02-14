@@ -1,0 +1,1 @@
+var stir=stir||{};stir.latestnews=function(t){if(t){for(var e=document.querySelector("[data-latest]"),r=(t.pop(),[]),i=0;i<t.length;i++)r.push('<li><a href="'+t[i].url+'">'+t[i].title+"</a></li>");e&&e.insertAdjacentHTML("beforeend","<ul>"+r.join("")+"</ul>")}};

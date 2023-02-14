@@ -1,0 +1,82 @@
+.c-alumni-stat {
+    padding: 150px 0;
+    background-image: url('/webcomponents/dist/images/infographics/map.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+.c-alumni-stat span[class*="-location"] {
+    font-size: 60px;
+}
+.c-alumni-stat .pin {
+    font-size: 60px;
+    display: inline-block;
+    position: absolute;
+    top: -60px;
+}
+.c-alumni-stat.animate .pin {
+    top: 50%;
+    transition: top 0.6s linear;
+    animation: bounce 1s linear 0.6s; 
+}
+.c-alumni-stat.animate .pin:nth-child(1n) {
+    top: 20%;
+    left: 29%;
+    transition: top 0.6s linear 0.1s;
+    animation: bounce 1s linear 0.7s; 
+}
+.c-alumni-stat.animate .pin:nth-child(2) {
+    top: 31%;
+    left: 31%;
+    transition: top 0.6s linear 0.2s;
+    animation: bounce 1s linear 0.8s; 
+}
+.c-alumni-stat.animate .pin:nth-child(3) {
+    top: 49%;
+    left: 27%;
+    transition: top 0.6s linear 0.3s;
+    animation: bounce 1s linear 0.9s; 
+}
+.c-alumni-stat.animate .pin:nth-child(4) {
+    top: 90%;
+    left: 38%;
+    transition: top 0.6s linear 0.4s;
+    animation: bounce 1s linear 1s; 
+}
+.c-alumni-stat.animate .pin:nth-child(5) {
+    top: 20%;
+    left: 66%;
+    transition: top 0.6s linear 0.5s;
+    animation: bounce 1s linear 1.1s; 
+}
+.c-alumni-stat.animate .pin:nth-child(6) {
+    top: 27%;
+    left: 65%;
+    transition: top 0.6s linear 0.6s;
+    animation: bounce 1s linear 1.2s; 
+}
+.c-alumni-stat.animate .pin:nth-child(7) {
+    top: 66%;
+    left: 64%;
+    transition: top 0.6s linear 0.7s;
+    animation: bounce 1s linear 1.3s; 
+}
+.c-alumni-stat.animate .pin:nth-child(8) {
+    top: 88%;
+    left: 75%;
+    transition: top 0.6s linear 0.8s;
+    animation: bounce 1s linear 1.4s; 
+}
+.c-alumni-stat.animate .pin:nth-child(9) {
+    top: 30%;
+    left: 72%;
+    transition: top 0.6s linear 0.9s;
+    animation: bounce 1s linear 1.5s; 
+}
+.c-alumni-stat.animate .pin:nth-child(10) {
+    top: 26%;
+    left: 77%;
+    transition: top 0.6s linear 1s;
+    animation: bounce 1s linear 1.6s; 
+}

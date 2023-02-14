@@ -1,0 +1,14 @@
+ul.pagination {
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+
+  li {
+    display: flex; // Required for T4 jump links
+    gap: 30px;
+    font-weight: bold;
+  }
+}

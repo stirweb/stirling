@@ -1,0 +1,68 @@
+.c-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 100px;
+  height: 100px;
+  background-color: #008894;
+  color: #fff;
+  font-size: 3.5rem;
+  text-transform: uppercase;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .c-initials {
+    padding: 30px;
+    width: 130px;
+    height: 130px;
+    font-size: 4.5rem;
+  }
+}
+
+/*
+    
+    Person contact details with image left
+
+    
+.c-contact {
+  display: flex;
+}
+
+.c-contact__image {
+  margin: 0 30px 0 0;
+
+  img {
+    width: 100%;
+  }
+}
+
+@media screen and #{breakpoint(medium down)} {
+  .c-contact__image {
+    display: none;
+  }
+  .c-contact__details {
+    margin-left: 0;
+  }
+}
+*/
+
+/*
+    Main button cta widget used by departments
+
+
+.c-contact-section h2 {
+  margin: 0 0 60px 0;
+}
+
+.c-contact-section span[class^="uos-"] {
+  font-size: 2rem; // 32px;
+  margin: 0 15px 0 0;
+}
+
+@media screen and #{breakpoint(xlarge down)} {
+  .c-contact-section h2 {
+    margin: 0 0 40px 0;
+  }
+}
+*/

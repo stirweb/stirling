@@ -1,0 +1,1 @@
+function doUIChanges(){for(var e,d=['[id="d.en.53142"]','[id="d.en.53143"]','[id="d.en.53144"]'],r=0;r<d.length;r++)(e=document.querySelector(d[r]))&&e.classList.remove("large-4","medium-4"),e&&e.classList.add("medium-6","large-6");(e=document.querySelector('[id="d.en.53146"]'))&&e.classList.remove("u-bg-grey"),e&&e.classList.add("u-bg-heritage-berry","u-white--all")}

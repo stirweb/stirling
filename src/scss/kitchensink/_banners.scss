@@ -1,0 +1,145 @@
+/*
+ * New Default Stirling Banner Masthead 
+ * Formerly known as .c-masthead
+ */
+
+.c-banner-masthead div.u-object-cover {
+  height: 256px;
+}
+
+@media only screen and (min-width: 640px) {
+  .c-banner-masthead div.u-object-cover {
+    height: 350px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .c-banner-masthead div.u-object-cover {
+    height: 500px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .c-banner-masthead div.u-object-cover {
+    height: 640px;
+  }
+}
+
+/*
+ * New Full View Masthead
+ * Object fit kicks it at very wide resolutions to avoid rediculousness
+ */
+
+.c-fullview-mast {
+  position: relative;
+}
+
+@media only screen and (min-width: 1900px) {
+  .c-fullview-mast img {
+    max-height: 720px;
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center;
+  }
+}
+
+@media only screen and (min-width: 2400px) {
+  .c-fullview-mast img {
+    max-height: 840px;
+  }
+}
+
+/*
+     Simplified responsive masthead - 
+     intended for (e.g. bordered) images that can't be set to object-fit:cover 
+*/
+
+.c-responsive-masthead {
+  display: flex;
+  justify-content: center;
+}
+
+.c-responsive-masthead img {
+  max-width: 77.5rem; // same as a foundation grid-wrapper
+  width: 100%;
+}
+
+.u-hidey-slidey {
+  transform-origin: top;
+  transition-duration: 0s;
+  transition-property: transform;
+  transition-timing-function: ease-in-out;
+  display: none;
+  transform: translateY(-100%);
+
+  &[data-initialised] {
+    display: block;
+    transition-duration: 0.2s;
+
+    &.stuck {
+      transform: translateY(0%);
+    }
+
+    &[data-sticky-polyfill] {
+      transform: none;
+    }
+  }
+}
+
+.banner {
+  width: 100%;
+
+  &.u-sticky {
+    padding: 1.625rem 0;
+    /* 16px @ 1.625rem = 26px */
+  }
+
+  .cell p {
+    margin: 0;
+    font-size: 1.25rem;
+    /* 16px @ 1.25rem = 20px */
+  }
+
+  p a {
+    font-size: 0.875rem;
+    /* 16px @ 0.875rem = 14px */
+    border: 0;
+  }
+
+  a[data-close] {
+    position: absolute;
+    top: 1.625rem;
+    right: 1.625rem;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+@include breakpoint(medium up) {
+  .banner {
+    &.u-sticky {
+      padding: 1.875rem 0;
+      /* 16px @ 1.875rem = 30px */
+    }
+
+    p a {
+      font-size: 1.25rem;
+      /* 16px @ 1.25rem = 20px */
+    }
+
+    a[data-close] {
+      position: absolute;
+      top: 1.875rem;
+      right: 1.875rem;
+    }
+  }
+
+  [data-has-overlapper="up"] .c-masthead__container {
+    bottom: 15%;
+    /* increase bottom offset to allow for overlapping CTA button */
+  }
+}

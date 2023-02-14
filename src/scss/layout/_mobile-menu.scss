@@ -1,0 +1,80 @@
+/*
+    Main mobile navigation menu 
+*/
+
+@keyframes slideLeft {
+  100% {
+    left: 0;
+  }
+}
+
+.c-mobile-menu {
+  display: none;
+
+  .closebtn {
+    top: 22px;
+    right: 22px;
+    font-size: 2.25rem; /* 36px */
+    line-height: 0.583; /* 21px */
+    position: fixed;
+    padding: 3px 3px 5px 3px;
+    background-color: #fff;
+    border-radius: 3px;
+    display: none;
+  }
+
+  .slidemenu__other-links {
+    li a:before {
+      font-family: "uos";
+      padding-right: 15px;
+      color: $heritage-green;
+    }
+
+    .slidemenu__other-links-portal a::before {
+      content: "\e95c";
+    }
+
+    .slidemenu__other-links-staff a::before {
+      content: "\e95d";
+    }
+
+    .slidemenu__other-links-contact a::before {
+      content: "\e966";
+    }
+
+    .slidemenu__other-links-search a::before {
+      content: "\e93f";
+    }
+
+    .slidemenu__other-links-microsite a::before {
+      content: "\e920";
+    }
+  }
+}
+
+.c-mobile-menu.c-mobile-menu-visible {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: scroll;
+  background: #fff;
+  display: block;
+
+  .closebtn {
+    display: block;
+    z-index: 51;
+  }
+
+  .sitemenu-2 {
+    li a {
+      position: relative;
+      overflow: auto;
+      left: -650px;
+      animation: slideLeft 0.5s forwards;
+      animation-delay: 0s;
+    }
+  }
+}
