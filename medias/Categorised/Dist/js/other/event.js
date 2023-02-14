@@ -1,0 +1,1 @@
+!function(){var e=document.head.querySelector("[name=sid][content]");if(e)for(var t=document.querySelectorAll('a[data-section-id="'+e.getAttribute("content")+'"][data-type="event"]'),n=0;n<t.length;n++)t[n].parentNode.removeChild(t[n])}();

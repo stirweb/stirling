@@ -1,0 +1,1 @@
+var stir=stir||{};stir.getJSON("https://www.stir.ac.uk/webcomponents/dist/php/can-user.php",function(t){var e;console.log(t),void 0!==t&&(e=document.querySelector('[type="text/html"][data-showfor="canuser"]'))&&t.CANUser&&e.insertAdjacentHTML("afterend",e.textContent)});

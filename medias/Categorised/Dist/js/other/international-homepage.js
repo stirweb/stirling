@@ -1,0 +1,1 @@
+var stir=stir||{};!function(){var t=stir.createIntersectionObserver({element:document.querySelector('[data-animation="bounceIn"]'),threshold:.7,once:!0,callback:function(e){(e.intersectionRatio<0||.7<=e.intersectionRatio)&&(this.classList.add("bounceIn"),t.observer.unobserve(this))}})}();

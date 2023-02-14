@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="494px" height="168px" viewBox="0 0 494 168" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>podium</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Our-global-position" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="xxlarge-copy" transform="translate(-918.000000, -5476.000000)" fill-rule="nonzero">
+            <g id="podium" transform="translate(918.000000, 5476.000000)">
+                <rect id="Rectangle-path" fill="#FFFFFF" x="0" y="33.7576768" width="155.991568" height="133.951953"></rect>
+                <rect id="Rectangle-path" fill="#FFFFFF" x="168.609749" y="0.242171717" width="155.991568" height="167.467458"></rect>
+                <path d="M253.465635,103.650438 C253.465635,110.639714 257.983936,109.649108 257.983936,111.795421 C257.983936,113.941734 256.386,113.501465 250.435068,113.501465 L244.208629,113.501465 C238.312798,113.501465 236.659761,113.171263 236.659761,111.795421 C236.659761,110.419579 241.178062,110.639714 241.178062,103.650438 L241.178062,60.1188047 C241.178062,55.3859091 239.910734,54.6154377 234.951623,54.6154377 C234.070004,54.6154377 233.574093,54.1751684 233.574093,53.3496633 L233.574093,48.9469697 C233.574093,48.2865657 233.9047,47.9563636 234.951623,47.8462963 C237.236041,47.5559329 239.536437,47.408888 241.839277,47.4060269 C250.98608,47.4060269 253.465635,50.1026768 253.465635,63.4208249 L253.465635,103.650438 Z" id="Shape" fill="#B3DBDF"></path>
+                <rect id="Rectangle-path" fill="#FFFFFF" x="337.935813" y="50.4879125" width="155.991568" height="117.221717"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

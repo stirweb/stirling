@@ -1,0 +1,126 @@
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+    background-color: #CEE7D9;
+    border-color: #CEE7D9;
+    color: #007836;
+}
+
+.form-control {
+    border-radius: 6px;
+}
+
+.btn {
+    color: #FFFFFF;
+    font-size: 14.4px;
+}
+
+.btn-default {
+    color: #333;
+}
+
+.search-results .btn-lg {
+    font-size: 21px;
+}
+
+.jlist-tile-wrapper h1,
+.lumesse-jobs-list table thead {
+    font-size: 14px;
+}
+
+.jlist-tile-wrapper .list-group li {
+    font-size: 12.6px;
+}
+
+.apply-submit-wrapper {
+    text-align:center;
+}
+
+.lumesse-apply-ready {
+    display: block;
+}
+
+.apply-drag-drop-area {
+    border-color: #9A9A9A;
+}
+
+.apply-description-list {
+    background-color: #F1F2F1;
+}
+
+.fakeDisabled {
+    background-color: #989998;
+}
+
+label {
+    font-size: 12.6px;
+}
+
+#lumesse-menu-sidebar-body {
+    background-color: #F1F2F1;
+}
+
+#lumesse-menu-sidebar-body a {
+    color: #222222;
+}
+
+/*Compact view job alert*/
+#searchCriteriaFieldset > .form-group > label{
+    position: static;
+    height: auto;
+    width: auto;
+    clip: inherit;
+    margin: auto;
+    overflow: inherit;
+}
+
+.search-agent-submit-btn{
+    width: 100%;
+}
+
+#talentSearchAgentForm > fieldset > .row:nth-child(3),
+#talentSearchAgentForm > fieldset > .row:nth-child(4){
+    width: 50%;
+    float: left;
+    margin: 0;
+}
+
+#talentSearchAgentForm > fieldset > .row:nth-child(3){
+    margin-left: -15px;
+}
+
+#talentSearchAgentForm > fieldset > .row:nth-child(4){
+    margin-right: -15px;
+}
+#talentSearchAgentForm > fieldset > .row:last-child > div{
+    margin-bottom: 0;
+}
+
+#talentSearchAgentForm > fieldset > legend:first-child{
+    display: none;
+}
+
+#ResultsperpageFieldLabel {
+    padding-right: 5px;
+}
+
+#ResultsperpageFieldLabel,
+.radio-inline {
+    line-height: 23px;
+}
+
+.control-label.form-field-label label:nth-child(1) {
+    margin-left: 10px;
+}
+
+.control-label.form-field-label label {
+    margin-right: 10px;
+}
+
+
+[data-lumesse-sjtf-insert=jobDescriptionUrl] {
+    word-break: break-all;
+    word-wrap: break-word;
+}
