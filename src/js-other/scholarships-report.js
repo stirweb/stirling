@@ -10,7 +10,7 @@
   const renderOverdue = (item) => {
     return `
         <div class="u-mb-1">
-          <strong>${item.title}</strong>. (Deadline: ${item.deadlineFormatted}). <a class="u-border-bottom-solid" href="https://t4cms.stir.ac.uk/terminalfour/page/section#edit/${item.sid}">Edit section</a>
+          <strong>${item.title}</strong>. (Deadline: ${item.deadlineFormatted}). <a class="u-border-bottom-solid" href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/page/section#edit/${item.sid}">Edit section</a>
         </div>`;
   };
 
@@ -20,7 +20,7 @@
               <p><strong>${item.title}</strong></p>
 
               <div><strong>Deadline:</strong> ${item.deadlineFormatted ? item.deadlineFormatted : "N/A"} |  
-                  <a href="https://t4cms.stir.ac.uk/terminalfour/page/content#edit/${item.sid}/${item.cid}" class="u-border-bottom-solid" target="_blank">Edit this scholarship</a> | 
+                  <a href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/page/content#edit/${item.sid}/${item.cid}" class="u-border-bottom-solid" target="_blank">Edit this scholarship</a> | 
                   <a href="${item.url}" class="u-border-bottom-solid">Preview page</a></div>
               
               <div class="u-mt-1"><strong>Last edited:</strong> ${item.lastEditedFormatted} by ${item.lastEditedBy}</div>

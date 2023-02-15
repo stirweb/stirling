@@ -1,8 +1,8 @@
 var stir = stir || {};
+
 /**
  * Requires Civic CookieControl
  */
-
 stir.cookieControl = function cookieControl() {
   var _name = "Stir Cookie Control";
   var debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
@@ -24,13 +24,16 @@ stir.cookieControl = function cookieControl() {
       button: button
     });
   });
-
   function _magicButton() {
-    var ccc = document.getElementById("ccc-icon"); //var button = document.createElement("button");
+    var ccc = document.getElementById("ccc-icon");
+    //var button = document.createElement("button");
+
     //var dismiss = document.getElementById('ccc-dismiss-button');
+
     //button.innerHTML = "Accept all";
     //button.classList.add('ccc-notify-button');
     //button.classList.add('ccc-accept-button');
+
     // var stirOptInAll = function() {
     // 	CookieControl.changeCategory(0, true);
     // 	CookieControl.changeCategory(1, true);
@@ -38,12 +41,12 @@ stir.cookieControl = function cookieControl() {
     // 	//CookieControl.acceptAll();
     // 	CookieControl.hide();
     // };
+
     //button.addEventListener("click", stirOptInAll);
 
     var moveButton = function moveButton() {
       console.log("clicked");
       var dismiss = document.getElementById("ccc-dismiss-button");
-
       if (dismiss) {
         var targetElement = document.getElementById("ccc-button-holder");
         targetElement && targetElement.appendChild(dismiss);
@@ -52,28 +55,22 @@ stir.cookieControl = function cookieControl() {
         });
       }
     };
-
     ccc && moveButton();
     ccc && ccc.addEventListener("click", moveButton);
   }
+
   /**
    * This will be called automatically by Civic once CookieControl
    * has been initialised (and the consent for each category is known).
    */
-
-
   function _init() {
     if (!window.CookieControl) return console.error("[" + _name + "] Civic CookieControl not initialised. ");
-
     _magicButton();
-
     debug && console.info("[" + _name + "] Initialising…");
-
     if (!CookieControl.getCategoryConsent(2)) {
       debug && console.info("[" + _name + "] 3rd party cookie consent not given, adding placeholders.");
       deactivate();
     }
-
     if (!CookieControl.getCategoryConsent(1)) {
       debug && console.info("[" + _name + "] Performance cookie consent not given, activate request thing.");
       appealCategoryConsent(1);
@@ -81,7 +78,6 @@ stir.cookieControl = function cookieControl() {
       activateCategory(1);
     }
   }
-
   function appealCategoryConsent(category) {
     var templates = Array.prototype.slice.call(document.querySelectorAll('script[data-optin-appeal][data-category="' + category + '"]'));
     templates.forEach(function (template, i) {
@@ -89,7 +85,6 @@ stir.cookieControl = function cookieControl() {
       template.remove();
     });
   }
-
   function activateCategory(category) {
     var templates = Array.prototype.slice.call(document.querySelectorAll('script[data-optin-thanks][data-category="' + category + '"]'));
     templates.forEach(function (template, i) {
@@ -97,17 +92,14 @@ stir.cookieControl = function cookieControl() {
       template.remove();
     });
   }
-
   function optin() {
     CookieControl.changeCategory(2, true);
   }
-
   function deactivate() {
     widgets.forEach(function (widget, i) {
       widget.template.insertAdjacentElement("afterend", widget.placeholder);
     });
   }
-
   function activate() {
     // activate all widgets
     widgets.forEach(function (widget) {
@@ -115,16 +107,13 @@ stir.cookieControl = function cookieControl() {
       widget.template.insertAdjacentHTML("afterend", widget.template.innerHTML);
     });
   }
-
   function _accept() {
     debug && console.info("[" + _name + "] ACCEPTED");
     activate();
   }
-
   function _revoke() {
     debug && console.info("[" + _name + "] REVOKED");
     /* deactivate(); */
-
     if (debug) {
       if (confirm("[Debug] Page will now reload to remove the 3rd party content.")) {
         window.location.reload();
@@ -133,7 +122,6 @@ stir.cookieControl = function cookieControl() {
       window.location.reload();
     }
   }
-
   return {
     accept: _accept,
     revoke: _revoke,

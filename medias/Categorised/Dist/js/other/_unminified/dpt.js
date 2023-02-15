@@ -1,5 +1,4 @@
 var stir = stir || {};
-
 stir.dpt = function () {
   var labels = {
     ug: "undergraduate",
@@ -21,8 +20,8 @@ stir.dpt = function () {
       UG: "?opt=menu&callback=stir.dpt.show.routes",
       //+ (ver?ver:'')
       PG: "?opt=pgmenu&ct=PG&callback=stir.dpt.show.routes" //+ (ver?ver:'')
-
     },
+
     option: function option(type, roucode) {
       return "?opt=".concat(type, "-opts&rouCode=").concat(roucode, "&ct=").concat(type.toUpperCase(), "&callback=stir.dpt.show.options");
     },
@@ -33,23 +32,21 @@ stir.dpt = function () {
       return stir.akari.get.module([mod, year, sem].join('/'));
     }
   };
-
   var getRoutes = function getRoutes(type) {
     stir.getJSONp("".concat(urls.calendar).concat(urls.route[type.toUpperCase()]));
     user.type = type;
   };
-
   var getOptions = function getOptions(type, roucode) {
     return stir.getJSONp("".concat(urls.calendar).concat(urls.option(type.toLowerCase(), roucode)));
   };
-
   var getModules = function getModules(type, roucode, moa, occ) {
     return stir.getJSONp("".concat(urls.calendar).concat(urls.modules(type.toLowerCase(), roucode, moa, occ)));
-  }; //	const debug = data => {
+  };
+
+  //	const debug = data => {
   //		console.info('[DPT] debug', data);
   //		stdout.textContent = JSON.stringify(data,null,'\t');
   //	};
-
 
   var makeSelector = function makeSelector(data, name) {
     var label = document.createElement('label');
@@ -66,14 +63,13 @@ stir.dpt = function () {
         routeBrowser.innerHTML = '';
         optionBrowser.innerHTML = '';
         moduleBrowser.innerHTML = '';
-        routeBrowser.appendChild(label); //stdout.textContent = select[select.selectedIndex].outerHTML;
-
+        routeBrowser.appendChild(label);
+        //stdout.textContent = select[select.selectedIndex].outerHTML;
         user.rouCode = select[select.selectedIndex].value;
         user.rouName = select[select.selectedIndex].textContent;
         optionBrowser.insertAdjacentHTML("afterbegin", "<p>\u21B3 <strong>".concat(user.rouCode, "</strong> selected</p>"));
         getOptions(user.type, user.rouCode);
       }
-
       if (event.target.name === 'option') {
         //stdout.textContent = event.target[event.target.selectedIndex].outerHTML;
         moduleBrowser.innerHTML = '';
@@ -82,11 +78,9 @@ stir.dpt = function () {
       }
     });
   };
-
   var moduleView = function moduleView(data) {
     return !data.modName ? "<p>------- no data</p>" : "<p>".concat(data.modCode, " <a href=\"").concat(urls.viewer, "?code=").concat(data.modCode, "&semester=").concat(data.mavSemCode, "&session=").concat(data.mavSemSession, "\" target=\"_blank\">").concat(data.modName, "</a> <small>").concat(data.mavSemSession, "/").concat(data.mavSemCode, "</small></p>");
   };
-
   var optionView = function optionView(data) {
     var a = document.createElement('button');
     a.classList.add('button');
@@ -112,27 +106,23 @@ stir.dpt = function () {
     });
     return a;
   };
-
   var renderp = function renderp(html, css) {
     var p = document.createElement('p');
     p.innerHTML = html;
     css && p.classList.add(css);
     return p;
   };
-
   var renderOptions = function renderOptions(data) {
     data.map(optionView).forEach(function (element) {
       return optionBrowser.appendChild(element);
     });
   };
-
   var renderModules = function renderModules(data) {
     moduleBrowser.querySelector('.u-loading').remove();
     var div = document.createElement('div');
     div.innerHTML = data.map(moduleView).join("\n");
     moduleBrowser.appendChild(div);
   };
-
   var compare = function compare(a, b) {
     if (a < b) return -1;
     if (a > b) return 1;
@@ -142,28 +132,22 @@ stir.dpt = function () {
   var routeSort = function routeSort(a, b) {
     return compare(a.rouName, b.rouName);
   };
-
   var makeOption = function makeOption(data) {
     var option = document.createElement('option');
-
     if (data.rouName && data.rouCode) {
       option.textContent = "".concat(data.rouName);
       option.value = data.rouCode;
       return option.outerHTML;
     }
-
     if (data[0] && data[2]) {
       option.textContent = data.join('|');
       option.value = data.join('|');
     }
-
     option.textContent = JSON.stringify(data, null, "\t");
     return option.outerHTML;
   };
-
   var extractModules = function extractModules(data) {
     var output = [];
-
     for (var g = 0; g < data.semesterGroupBeans.length; g++) {
       // groups loop
       for (var o = 0; o < data.semesterGroupBeans[g].groupOptions.length; o++) {
@@ -171,10 +155,8 @@ stir.dpt = function () {
         for (var s = 0; s < data.semesterGroupBeans[g].groupOptions[o].semestersInOption.length; s++) {
           var semester = data.semesterGroupBeans[g].groupOptions[o].semestersInOption[s];
           var collections = semester.collections;
-
           for (var c = 0; c < collections.length; c++) {
             var collection = collections[c];
-
             for (var m = 0; m < collection.mods.length; m++) {
               var module = collection.mods[m];
               output.push({
@@ -189,10 +171,8 @@ stir.dpt = function () {
         }
       }
     }
-
     return output;
   };
-
   return {
     show: {
       routes: function routes(data) {

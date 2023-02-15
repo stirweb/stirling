@@ -32,7 +32,7 @@
 
     if (UoS_env.name === "dev" || UoS_env.name === "qa") {
       loadSect = "about";
-      currHref = "https://t4cms.stir.ac.uk/terminalfour/preview/1/en/10872";
+      currHref = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/10872";
     }
   }
 
