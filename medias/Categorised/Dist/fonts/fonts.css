@@ -38,7 +38,7 @@
   font-family: "uos";
   /*src: url("icomoon/fonts/uos-brand-icons.eot?ou5kku");
   src: url("icomoon/fonts/uos-brand-icons.eot?ou5kku#iefix") format("embedded-opentype"), url("icomoon/fonts/uos-brand-icons.ttf?ou5kku") format("truetype"), url("icomoon/fonts/uos-brand-icons.woff?ou5kku") format("woff"), url("icomoon/fonts/uos-brand-icons.svg?ou5kku#uos-brand-icons") format("svg");*/
-  src: url("icomoon/fonts/uos-brand-icons.woff?ou5kku");
+  src: url('<t4 type="media" id="158107" formatter="path/*" />') format("woff"), url("icomoon/fonts/uos-brand-icons.woff?ou5kku") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: block;
