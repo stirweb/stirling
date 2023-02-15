@@ -7,7 +7,7 @@ var stir = stir || {};
     case "localhost":
       stir.addScript("/src/js-other/t4-preview-tools.js");
       break;
-    case "t4cms.stir.ac.uk":
+    case "stiracuk-cms01-production.terminalfour.net":
       stir.addScript("/webcomponents/dist/js/other/t4-preview-tools.js");
       break;
   }

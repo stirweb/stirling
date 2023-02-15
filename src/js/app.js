@@ -7,7 +7,7 @@
 // });
 
 /*
- * Environment object so we don't have to repeat switch commands with hostnames etc
+   Environment object so we don't have to repeat switch commands with hostnames etc
  */
 
 var UoS_env = (function () {
@@ -21,15 +21,15 @@ var UoS_env = (function () {
       env_name = "dev";
       break;
 
-    case "t4cms.stir.ac.uk":
+    case "stiracuk-cms01-production.terminalfour.net":
       env_name = "preview";
       break;
 
-    case "t4appdev.stir.ac.uk":
+    case "stiracuk-cms01-test.terminalfour.net":
       env_name = "appdev-preview";
       break;
 
-    case "www-stir.t4cms.stir.ac.uk":
+    case "stir.ac.uk":
       env_name = "pub";
       break;
 
@@ -37,7 +37,7 @@ var UoS_env = (function () {
       env_name = "dev-pub";
       break;
 
-    case "mediadev.stir.ac.uk":
+    case "stirweb.github.io":
       env_name = "qa";
       break;
   }

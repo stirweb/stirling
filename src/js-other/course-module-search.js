@@ -27,11 +27,7 @@
    * Returns tue if input is probably a year
    * ------------------------------------------------ */
   const isYear = (input) => {
-    return (
-      stir.isNumeric(input) &&
-      initialStartYear.toString().length === 4 &&
-      initialStartYear.toString().slice(0, 2) === new Date().getFullYear().toString().slice(0, 2)
-    );
+    return stir.isNumeric(input) && initialStartYear.toString().length === 4 && initialStartYear.toString().slice(0, 2) === new Date().getFullYear().toString().slice(0, 2);
   };
 
   /* ------------------------------------------------
@@ -65,9 +61,7 @@
     const currentAcadYear = month < acadStartMonth ? year - 1 : year;
 
     // Are we past the switchover point?
-    return month >= parseInt(switchMonth) && month < parseInt(acadStartMonth)
-      ? currentAcadYear + 1
-      : currentAcadYear;
+    return month >= parseInt(switchMonth) && month < parseInt(acadStartMonth) ? currentAcadYear + 1 : currentAcadYear;
   };
 
   /*
@@ -121,14 +115,7 @@
   if (!initialDates.length) return;
 
   /* Check start year is correctly defined */
-  const startYear = isYear(initialStartYear)
-    ? initialStartYear
-    : getStartYear(
-        new Date().getFullYear(),
-        new Date().getMonth() + 1,
-        constants.yearStartMonth,
-        constants.switchMonth
-      );
+  const startYear = isYear(initialStartYear) ? initialStartYear : getStartYear(new Date().getFullYear(), new Date().getMonth() + 1, constants.yearStartMonth, constants.switchMonth);
 
   /* Define the DOM elements and associated years */
   const panels = [
@@ -140,9 +127,7 @@
   const currentDate = getDateAsInt(new Date().getFullYear(), new Date().getMonth() + 1);
 
   /* Get the dates data cleaned and sorted */
-  const sortFn = stir.sort((a, b) =>
-    parseInt(a.num) < parseInt(b.num) ? -1 : parseInt(a.num) > parseInt(b.num) ? 1 : 0
-  );
+  const sortFn = stir.sort((a, b) => (parseInt(a.num) < parseInt(b.num) ? -1 : parseInt(a.num) > parseInt(b.num) ? 1 : 0));
   const dateFilterer = stir.filter((date) => date.num >= currentDate);
   const dates = stir.compose(dateFilterer, sortFn)(initialDates);
 
@@ -169,8 +154,8 @@
  */
 
 (function () {
-  var debug = window.location.hostname.indexOf("stir.ac.uk")===-1 ? true : false;
-  const FB_SERVER = debug ? 'stage-shared-15-24-search.clients.uk.funnelback.com':'search.stir.ac.uk'
+  var debug = window.location.hostname.indexOf("stir.ac.uk") === -1 ? true : false;
+  const FB_SERVER = debug ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
   var searchUrl = `https://${FB_SERVER}/s/search.json?`;
   var form = document.querySelector("form#course-search");
   var hidden = form.querySelectorAll('input[type="hidden"]');
@@ -181,14 +166,15 @@
   var filters = filterBox ? filterBox.querySelectorAll("input[type=checkbox]") : [];
   var subjectSelect = form.querySelector('[name="subject"]');
   var isLive = window.location.hostname === "www.stir.ac.uk";
-  var isPreview = window.location.hostname === "t4cms.stir.ac.uk";
+  var isPreview = window.location.hostname === "stiracuk-cms01-production.terminalfour.net";
 
   var searchLoading = document.getElementById("course-search__loading");
   var resultsArea = document.getElementById("course-search__results");
   var resultSummary = document.getElementById("course-search__summary");
   var resultFooter = document.createElement("div");
   var subjClearBtn = document.getElementById("btnClearSubs");
-  var altSearchUrl = "", altSearch = document.createElement("p");
+  var altSearchUrl = "",
+    altSearch = document.createElement("p");
 
   var index = new stir.indexBoard(document.querySelector("#search-letters__links"));
 
@@ -214,8 +200,7 @@
 
   var strings = {
     cpd: {
-      description:
-        "Continuing Professional Development (CPD) module. Enrol now to gain new skills and up-to-date knowledge for your career development.",
+      description: "Continuing Professional Development (CPD) module. Enrol now to gain new skills and up-to-date knowledge for your career development.",
     },
   };
 
@@ -228,24 +213,23 @@
    * Function: Configure the search depending on params and then query FunnelBack
    */
   function doSearch() {
-    if(needComboLinks) {
-        if (!comboLinkData) {
+    if (needComboLinks) {
+      if (!comboLinkData) {
+        const urls = {
+          dev: "combo-links.json",
+          qa: "combo-links.json",
+          preview: stir?.t4Globals?.search?.comboLinks || "",
+          prod: "https://www.stir.ac.uk/media/stirling/feeds/combo-links.json",
+        };
 
-          const urls = {
-            dev: "combo-links.json",
-            qa: "combo-links.json",
-            preview: stir?.t4Globals?.search?.comboLinks || "",
-            prod: "https://www.stir.ac.uk/media/stirling/feeds/combo-links.json",
-          };
-          
-          debug && console.info(`[Search] Getting combo data for ${UoS_env.name} environment (${urls[UoS_env.name]})`);
-          stir.getJSON(urls[UoS_env.name], (data) => {
-            comboLinkData = data && !data.error ? data.slice(0, -1) : [];
-            search();
-          });
-        } else {
+        debug && console.info(`[Search] Getting combo data for ${UoS_env.name} environment (${urls[UoS_env.name]})`);
+        stir.getJSON(urls[UoS_env.name], (data) => {
+          comboLinkData = data && !data.error ? data.slice(0, -1) : [];
           search();
-        }
+        });
+      } else {
+        search();
+      }
     } else {
       search();
     }
@@ -298,21 +282,11 @@
   }
 
   function renderBestBet(title, link, description) {
-    return [
-      '<div class="small-12 large-9 cell c-clearing-list-item" data-sid="">',
-      '<p class="c-clearing-list-item__link"><a href="' + link + '">' + title + "</a></p>",
-      '<p class="c-clearing-list-item__summary">' + description + "</p>",
-      "</div>",
-    ].join("");
+    return ['<div class="small-12 large-9 cell c-clearing-list-item" data-sid="">', '<p class="c-clearing-list-item__link"><a href="' + link + '">' + title + "</a></p>", '<p class="c-clearing-list-item__summary">' + description + "</p>", "</div>"].join("");
   }
 
   function renderResult(id, link, description, provider) {
-    return [
-      `<div class="small-12 large-9 cell c-clearing-list-item" data-sid="${id}" data-provider="${provider.indexOf("Forth Valley")>=0?"FV":""}">`,
-      `<p class="c-clearing-list-item__link"><strong>${link}</strong></p>`,
-      `<p class="c-clearing-list-item__summary">${description}</p>`,
-      "</div>",
-    ].join("");
+    return [`<div class="small-12 large-9 cell c-clearing-list-item" data-sid="${id}" data-provider="${provider.indexOf("Forth Valley") >= 0 ? "FV" : ""}">`, `<p class="c-clearing-list-item__link"><strong>${link}</strong></p>`, `<p class="c-clearing-list-item__summary">${description}</p>`, "</div>"].join("");
   }
 
   var renderTag = (function () {
@@ -321,15 +295,7 @@
     };
 
     return function renderTag(name, value, label) {
-      return (
-        '<button class="is-active" data-filter-name="' +
-        name +
-        '" data-filter-value="' +
-        value +
-        '">' +
-        (label in dictionary ? dictionary[label] : label) +
-        " ×</button>"
-      );
+      return '<button class="is-active" data-filter-name="' + name + '" data-filter-value="' + value + '">' + (label in dictionary ? dictionary[label] : label) + " ×</button>";
     };
   })();
 
@@ -343,25 +309,11 @@
     comboData = JSON.parse(comboData);
 
     if (comboData.length == 1) {
-      return (
-        qualification +
-        anchor(title, link) +
-        " and " +
-        anchor(comboData[0].title, comboData[0].link) +
-        applycode
-      );
+      return qualification + anchor(title, link) + " and " + anchor(comboData[0].title, comboData[0].link) + applycode;
     }
 
     if (comboData.length == 2) {
-      return (
-        qualification +
-        anchor(title, link) +
-        ", " +
-        anchor(comboData[0].title, comboData[0].link) +
-        " and " +
-        anchor(comboData[1].title, comboData[1].link) +
-        applycode
-      );
+      return qualification + anchor(title, link) + ", " + anchor(comboData[0].title, comboData[0].link) + " and " + anchor(comboData[1].title, comboData[1].link) + applycode;
     }
 
     return anchor(qualification + title + applycode, link); // default; same as if no combodata.
@@ -396,11 +348,7 @@
         show = true;
 
         if (level) {
-          show = matchCSV(
-            level,
-            (result.metaData.level || result.metaData.type || "").replace(" (taught)", ""),
-            true
-          );
+          show = matchCSV(level, (result.metaData.level || result.metaData.type || "").replace(" (taught)", ""), true);
         }
 
         if (show && method) {
@@ -436,39 +384,32 @@
           var qualification = result.metaData.award ? result.metaData.award + " " : "";
           var applycode = result.metaData.ucas ? " - " + result.metaData.ucas : "";
           var description = result.metaData.c || (isCPD ? strings.cpd.description : "");
-          var link = `https://${FB_SERVER}${result.clickTrackingUrl}`;//result.liveUrl;
+          var link = `https://${FB_SERVER}${result.clickTrackingUrl}`; //result.liveUrl;
           var id = result.metaData.sid || "";
           var provider = result.metaData.provider || "";
-          if (isPreview) link = "https://t4cms.stir.ac.uk/terminalfour/preview/1/en/" + id;
+          if (isPreview) link = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/" + id;
 
-          if(result.collection && result.collection==='stir-combos') {
-            const combo = comboLinkData.filter(combo=>combo.sid===parseInt(result.metaData.sid));
-            title = `${qualification} ${combo[0].courses.map(combo=>`<a href="${combo.url}" title="${combo.text}">${combo.text.replace(awards,'')}</a>`).join(' and ')} ${applycode}`;
-            description = description || '';
+          if (result.collection && result.collection === "stir-combos") {
+            const combo = comboLinkData.filter((combo) => combo.sid === parseInt(result.metaData.sid));
+            title = `${qualification} ${combo[0].courses.map((combo) => `<a href="${combo.url}" title="${combo.text}">${combo.text.replace(awards, "")}</a>`).join(" and ")} ${applycode}`;
+            description = description || "";
           } else {
-            title = `${qualification} ${courseTitle('', result.title, '', result.metaData.combo, link)} ${applycode}`;
+            title = `${qualification} ${courseTitle("", result.title, "", result.metaData.combo, link)} ${applycode}`;
           }
           html.push(renderResult(id, title, description, provider));
         }
       }
     }
 
-    summaryText =
-      (html.length > 0 ? "Showing <strong>" + html.length.toString() : "<strong>No ") + " results</strong>";
-    queryQuote =
-      query.charAt(0) === "!" || !query ? "" : " for &ldquo;" + stir.String.stripHtml(query) + "&rdquo;";
+    summaryText = (html.length > 0 ? "Showing <strong>" + html.length.toString() : "<strong>No ") + " results</strong>";
+    queryQuote = query.charAt(0) === "!" || !query ? "" : " for &ldquo;" + stir.String.stripHtml(query) + "&rdquo;";
     punctuation = html.length > 0 ? ":" : ".";
 
     resultSummary.innerHTML = "<p>" + summaryText + queryQuote + punctuation + "</p>";
 
     if (query && DEFAULT_QUERY !== query) {
       altSearchUrl = "https://www.stir.ac.uk/search/?query=" + encodeURI(query);
-      altSearch.innerHTML =
-        'Not looking for a course? <a href="' +
-        altSearchUrl +
-        '" class="c-link" id="course-search-to-main">Search the rest of the website for &ldquo;' +
-        stir.String.stripHtml(query) +
-        "&rdquo;</a>";
+      altSearch.innerHTML = 'Not looking for a course? <a href="' + altSearchUrl + '" class="c-link" id="course-search-to-main">Search the rest of the website for &ldquo;' + stir.String.stripHtml(query) + "&rdquo;</a>";
     }
 
     index.update();
@@ -503,8 +444,7 @@
     letter = "";
 
     for (var i = 0; i < filters.length; i++) {
-      if (filters[i].name && filters[i].value && filters[i].checked)
-        filter[filters[i].name].push(filters[i].value);
+      if (filters[i].name && filters[i].value && filters[i].checked) filter[filters[i].name].push(filters[i].value);
     }
 
     level = filter.level.join(",");
@@ -632,12 +572,8 @@
       // detach tag element (but ignore clicks on `this` so we don't detatch the whole thing!)
       if (e.target && e.target !== this) e.target.parentNode.removeChild(e.target);
 
-      var name = e.target.hasAttribute("data-filter-name")
-        ? e.target.getAttribute("data-filter-name")
-        : undefined;
-      var value = e.target.hasAttribute("data-filter-value")
-        ? e.target.getAttribute("data-filter-value")
-        : undefined;
+      var name = e.target.hasAttribute("data-filter-name") ? e.target.getAttribute("data-filter-name") : undefined;
+      var value = e.target.hasAttribute("data-filter-value") ? e.target.getAttribute("data-filter-value") : undefined;
 
       for (var i = 0; i < filters.length; i++) {
         if (filters[i].name === name && filters[i].value === value) {
@@ -734,11 +670,7 @@
   // if no level set - set up as both to avoid confusion
   if (level === "") {
     var levelValues = [];
-    var filtersEnabled = filterBox
-      ? Array.prototype.slice.call(
-          filterBox.querySelectorAll('input[type=checkbox][name="level"]:not([disabled])')
-        )
-      : [];
+    var filtersEnabled = filterBox ? Array.prototype.slice.call(filterBox.querySelectorAll('input[type=checkbox][name="level"]:not([disabled])')) : [];
 
     filtersEnabled.forEach(function (item) {
       levelValues.push(item.value);
@@ -759,8 +691,8 @@
       case "mediadev.stir.ac.uk":
         url = "subjects.js";
         break;
-      case "t4cms.stir.ac.uk":
-        url = "https://t4cms.stir.ac.uk/terminalfour/preview/1/en/24197";
+      case "stiracuk-cms01-production.terminalfour.net":
+        url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/24197";
         break;
       default:
         break;

@@ -8,7 +8,6 @@ stir.altmetric = {
     var doi;
     var html = ['<table>', '<caption>University of Stirling research papers ranked by Altmetric</caption>', '<thead><tr>', '<th scope=col>Position</th><th scope=col>Research paper</th><th class=donut scope=col>Altmetric score</th>', '</thead></tr>', '<tbody>'];
     var container = document.getElementById('top10');
-
     for (index = 0; index < json.results.length; ++index) {
       handle = 'http://hdl.handle.net/' + json.results[index]['handle'];
       doi = json.results[index]['doi'];
@@ -20,21 +19,21 @@ stir.altmetric = {
       html.push('<div class=altmetric-embed data-badge-type=donut data-badge-popover=left data-doi="' + doi + '" data-hide-no-mentions=true></div>');
       html.push('</td></tr>');
     }
-
     html.push('</tbody>');
     html.push('</table>');
-    container && (container.innerHTML = html.join('')); // call Altmetric's embed function:
+    container && (container.innerHTML = html.join(''));
 
+    // call Altmetric's embed function:
     if ('function' == typeof _altmetric_embed_init) {
       _altmetric_embed_init(container);
     }
   }
 };
-/* Get the feed */
 
+/* Get the feed */
 (function () {
   var query,
-      el = document.createElement('script');
+    el = document.createElement('script');
   query = 'key=' + stir.altmetric.key + '&num_results=' + stir.altmetric.max;
   query += '&group=stirling&order_by=score&callback=stir.altmetric.callback';
   query += '&citation_type=news%2Carticle%2Cclinical_trial_study_record%2Cdataset%2Cbook%2Cchapter%2Cgeneric';

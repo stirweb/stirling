@@ -101,8 +101,8 @@ var stir = stir || {};
   if (!scope) return;
 
   const getFeedUrl = (host, cacheBuster, globals) => {
-    if (host === "localhost" || host === "mediadev.stir.ac.uk") return "homepage.json" + cacheBuster;
-    if (host === "t4cms.stir.ac.uk" || host === "t4appdev.stir.ac.uk") return globals.preview.homepagefeed;
+    if (host === "localhost" || host === "stirweb.github.io") return "homepage.json" + cacheBuster;
+    if (host === "stiracuk-cms01-production.terminalfour.net" || host === "stiracuk-cms01-test.terminalfour.net") return globals.preview.homepagefeed;
 
     return globals.homepagefeed + cacheBuster;
   };

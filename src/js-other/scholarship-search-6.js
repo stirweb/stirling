@@ -575,7 +575,7 @@
   const jsonurl = {
     dev: "data.json",
     qa: "data.json",
-    preview: "https://t4cms.stir.ac.uk/terminalfour/preview/1/en/29339/",
+    preview: "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/29339/",
     prod: "/data/scholarships/json/index.json",
   };
 

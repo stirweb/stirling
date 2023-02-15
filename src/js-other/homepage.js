@@ -250,13 +250,13 @@ stir.loadingProgress = function (el, show) {
         url = "/pages/data/homepage/homepage.json";
         break;
       case "t4appdev.stir.ac.uk": // Dev Preview
-      case "t4cms.stir.ac.uk": // Preview
+      case "stiracuk-cms01-production.terminalfour.net": // Preview
         url = stir.t4Globals.preview.homepagefeed;
         break;
       case "www-stir.t4appdev.stir.ac.uk": // Dev pre-transfer publish
         url = stir.t4Globals.homepagefeed + cacheBuster;
         break;
-      case "mediadev.stir.ac.uk":
+      case "stirweb.github.io":
         url = "data/homepage/homepage.json";
         break;
       default: // live

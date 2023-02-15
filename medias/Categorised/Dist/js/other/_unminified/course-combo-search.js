@@ -1,5 +1,4 @@
 var stir = stir || {};
-
 stir.courseComboSearch = function (courses) {
   var input = document.createElement('input');
   input.setAttribute('type', "search");
@@ -17,32 +16,29 @@ stir.courseComboSearch = function (courses) {
     matchCourse(this.value);
   });
   var course, link;
-
   for (var i = 0; i < courses.length; i++) {
     course = document.createElement("li");
     link = document.createElement('a');
     link.href = 'https://portal.stir.ac.uk/calendar/calendar.jsp?rouCode=' + courses[i]["rouCode"];
     link.insertAdjacentText("afterbegin", courses[i]["rouName"]);
-    course.setAttribute("data-code", courses[i]["rouCode"]); //course.setAttribute("data-qualification", courses[i]["Qualification"])
+    course.setAttribute("data-code", courses[i]["rouCode"]);
+    //course.setAttribute("data-qualification", courses[i]["Qualification"])
     //course.setAttribute("data-faculty", courses[i]["Faculty"])
     //course.setAttribute("data-division", courses[i]["Division"])
-
     course.insertAdjacentElement("afterbegin", link);
     courseElements.push(course);
     output.appendChild(course);
   }
-
-  matchCourse(); //stir.getJSON("data/course-combos.json", function(data) { });
+  matchCourse();
+  //stir.getJSON("data/course-combos.json", function(data) { });
 
   function matchCourse(keyword) {
     var title,
-        match,
-        matches = 0;
-
+      match,
+      matches = 0;
     for (var i in courses) {
       title = courses[i]["rouName"];
       match = new RegExp(keyword, 'i').test(title);
-
       if (match) {
         matches++;
         courseElements[i].style.display = '';
@@ -50,11 +46,9 @@ stir.courseComboSearch = function (courses) {
         courseElements[i].style.display = 'none';
       }
     }
-
     feedback.innerHTML = matches == 0 ? 'No results' : 'Showing ' + matches.toString() + ' courses:';
   }
 };
-
 (function (script) {
   script.src = 'https://portal.stir.ac.uk/servlet/CalendarServlet?opt=menu&callback=stir.courseComboSearch';
   document.body.insertAdjacentElement("beforeend", script);

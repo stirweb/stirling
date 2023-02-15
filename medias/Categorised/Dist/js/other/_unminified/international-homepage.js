@@ -1,5 +1,4 @@
 var stir = stir || {};
-
 (function () {
   var intlObserver = stir.createIntersectionObserver({
     element: document.querySelector('[data-animation="bounceIn"]'),

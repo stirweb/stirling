@@ -1,22 +1,21 @@
 var stir = stir || {};
+
 /**
  * JSONp callback
  * @param data an array of news items
  */
-
 stir.latestnews = function (data) {
   if (!data) return;
   var element = document.querySelector("[data-latest]");
   data.pop(); // last one is always empty!
-
   var html = [];
-
   for (var x = 0; x < data.length; x++) {
     html.push("<li><a href=\"" + data[x].url + "\">" + data[x].title + "</a></li>");
   }
-
   element && element.insertAdjacentHTML("beforeend", "<ul>" + html.join('') + "</ul>");
-}; //$(document).ready(function () {
+};
+
+//$(document).ready(function () {
 
 /***   N E W S    I M A G E S   ***/
 //var appendme = false;
@@ -75,4 +74,5 @@ console.log('image modal');
         $modal.foundation('open');
     });
   } */
+
 //});

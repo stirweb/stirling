@@ -9,7 +9,7 @@
  */
 (function () {
   var circles,
-      donut = document.querySelector('.progress');
+    donut = document.querySelector('.progress');
   if (donut) circles = donut.querySelectorAll(".circle");else return;
   var study = stir.createIntersectionObserver({
     element: donut,
@@ -20,17 +20,15 @@
           var progress = circles[i].getAttribute("stroke-dasharray");
           if (progress) circles[i].style.strokeDasharray = progress.replace(",", "");
         }
-
         study.observer.unobserve(this);
       }
     }
   });
 })();
+
 /**
  * Simple animations
  */
-
-
 (function () {
   var infographic = document.querySelector('[data-animation="bounceIn"]');
   stir.createIntersectionObserver({
@@ -67,12 +65,11 @@
     threshold: [0.5]
   }).setClassAdd('animate');
 })();
+
 /**
  * Number count-up animation
  * requires the TweenMax library
  */
-
-
 (function () {
   var numbers = document.querySelector('.number-stats');
   if (!numbers) return;
@@ -94,18 +91,15 @@
             })(numberStats[i]);
           }
         })(Array.prototype.slice.call(document.querySelectorAll(".number-statistic")));
+
         /**
          * If no animation, just quit now that the stats have faded-in.
          */
-
-
         if (!window.requestAnimationFrame) return;
-
         (function (values) {
           var max = values.length;
           var done = [];
           var stats = [];
-
           for (var i = 0; i < max; i++) {
             (function (item) {
               value = parseInt(item.textContent);
@@ -117,12 +111,11 @@
                 current: 0,
                 //current value during the animation runtime
                 step: value / (59 * 3) //how much to increase by each loop (bigger totals will take bigger steps)
-
               });
+
               done.push(false); //flag to represent when the item reaches its total
             })(values[i]);
           }
-
           var updateNumbers = function updateNumbers() {
             /* iterare each item until current==val */
             for (var i = 0; i < stats.length; i++) {
@@ -132,20 +125,16 @@
               })(stats[i]);
             }
             /* keep requesting loops until all items are flagged as 'done' */
-
-
             if (done.indexOf(false) > -1) {
               window.requestAnimationFrame(updateNumbers);
             }
           };
-
           window.requestAnimationFrame(updateNumbers);
         })(document.getElementsByClassName("value"));
+
         /**
          * Stop observing (the element's scroll-position) once the animation has been triggered
          */
-
-
         rollup.observer.unobserve(this);
       }
     }
