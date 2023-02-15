@@ -112,7 +112,9 @@
       region2: extraDataAllRegions,
       region3: extraDataAllRegions,
       region4: extraDataAllRegions
-    }; // region 1 Scot EU
+    };
+
+    // region 1 Scot EU
     // region 2 rUK
     // region 3 International
     // region 4 SIMD
@@ -124,31 +126,24 @@
     var that = this;
     var FBQueryParameter = '';
     var HTMLfallback = '<p class="error">' + settings.errorMessage + '</p>';
+
     /**
      * Fallback function for use in the case of an error.
      */
-
     var fallback = function fallback() {
       this.append(HTMLfallback);
     };
-
     switch (settings.region) {
       case 1:
         FBQueryParameter = "meta_j_=Yes"; //clearing_places_scoteu
-
         break;
-
       case 2:
       case 4:
         FBQueryParameter = "meta_k_=Yes"; //clearing_places_ruk
-
         break;
-
       case 3:
         FBQueryParameter = "meta_m_=Yes"; //clearing_places_overseas
-
         break;
-
       default:
         fallback.call(this);
         return this;
@@ -162,7 +157,6 @@
     }).done(function (data) {
       $('.c-loading').hide();
       var html = ['<tr><th>Course title</th><th>UCAS code</th></tr>'];
-
       if (data && data.response && data.response.resultPacket && data.response.resultPacket.results) {
         // concatenate the extra data (hard coded above) to the
         //  results returned in JSON; and then sort them all by title:
@@ -171,20 +165,17 @@
         results.sort(function (a, b) {
           a = a.title.replace(/(<([^>]+)>)/ig, "").trim();
           b = b.title.replace(/(<([^>]+)>)/ig, "").trim();
-
           if (a < b) {
             return -1;
           }
-
           if (a > b) {
             return 1;
           }
-
           return 0;
-        }); // loop to format each result to be displayed
+        });
 
+        // loop to format each result to be displayed
         var skip = false; // flag - skip this course (i.e. it's not in clearing)
-
         var tAppend = ""; // extra note about a course, appended after the title 
 
         for (var i = 0; i < results.length; i++) {
@@ -194,13 +185,11 @@
           //}
           if (settings.region === 4 && results[i].title === "Nursing - Adult") {
             skip = true; // Adult Nursing not available in SIMD Clearing
-          } // hack to append note to Secondary Education where it appears, all combinations available except one                                    
-
-
+          }
+          // hack to append note to Secondary Education where it appears, all combinations available except one                                    
           if (results[i].title === "Education (Secondary)") {
             tAppend = "<br/><span>All course combinations are available for Clearing except for the option BSc (Hons) Education (Secondary) with Physical Education CX61</span>";
           }
-
           if (!skip) {
             var prefix = results[i]["metaData"]["B"] ? results[i]["metaData"]["B"] : '';
             var ucas = results[i]["metaData"]["U"] ? results[i]["metaData"]["U"] : '';
@@ -209,12 +198,10 @@
             html.push('<td>' + ucas + "</td>");
             html.push('</tr>');
           }
-
           skip = false;
           tAppend = '';
         }
       }
-
       that.append("<table>" + html.join('') + "</table>");
     }).fail(function () {
       fallback.call(that);

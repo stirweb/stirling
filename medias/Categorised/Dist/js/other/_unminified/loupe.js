@@ -1,6 +1,5 @@
 (function (loupes) {
   if (!loupes) return;
-
   function Loupe(container, loupe, map) {
     var toggle = this.toggle.bind(this);
     var set = this.set.bind(this);
@@ -16,21 +15,16 @@
     this.zoomlevels = [200, 100];
     this.radius = this.zoomlevels[0];
     this.container = container; // HTML wrapper (div) element
-
     this.loupe = loupe; // HTML Loupe (svg#use) element
-
     this.map = map; // HTML map (svg) element	
-
     this.zoomed = false;
     window.addEventListener("resize", reset);
     window.addEventListener("scroll", reset);
     this.init();
-
     function trackPointerMovement(event) {
       set(event);
       update();
     }
-
     this.loupe.addEventListener("click", function (event) {
       zoom();
       update();
@@ -51,9 +45,7 @@
     });
     this.container.addEventListener("pointermove", trackPointerMovement, false);
   }
-
   ;
-
   Loupe.prototype.init = function init() {
     this.toggle(true);
     var loupeDimensions = this.loupe.getBoundingClientRect();
@@ -62,33 +54,28 @@
     this.height = loupeDimensions.height;
     this.reset();
   };
-
   Loupe.prototype.reset = function reset() {
     this.rect = this.container.getBoundingClientRect();
     var viewBox = this.map.getAttribute("viewBox");
-
     if (viewBox) {
       viewBox = viewBox.split(" ");
       this.scalingFactor.x = viewBox[2] > this.rect.width ? viewBox[2] / this.rect.width : this.rect.width / viewBox[2];
       this.scalingFactor.y = viewBox[3] > this.rect.height ? viewBox[3] / this.rect.height : this.rect.height / viewBox[3];
     }
   };
-
   Loupe.prototype.toggle = function toggle(show) {
     this.loupe.style.display = show ? "block" : "none";
     if (!show) this.zoomed = false;
   };
-
   Loupe.prototype.set = function set(event) {
     var offset = {
       top: this.rect.top,
       // + document.body.scrollTop,
       left: this.rect.left // + document.body.scrollLeft
-
     };
+
     this.x = Math.round(event.clientX - offset.left), this.y = Math.round(event.clientY - offset.top);
   };
-
   Loupe.prototype.update = function update() {
     var x1, y1, viewBox;
     /*
@@ -97,7 +84,6 @@
     x1 = Math.round(((this.x) * this.scalingFactor.x));
     y1 = Math.round((this.y) * this.scalingFactor.y);
     */
-
     x1 = Math.round(this.x * this.scalingFactor.x - this.width / 2);
     y1 = Math.round(this.y * this.scalingFactor.y - this.height / 2);
     viewBox = x1.toString() + ' ' + y1.toString() + ' ' + this.radius.toString() + ' ' + this.radius.toString();
@@ -112,9 +98,10 @@
     this.loupe.style.cursor = this.zoomed ? "zoom-in" : "zoom-out";
     this.zoomed = !this.zoomed;
   };
-
   Array.prototype.forEach.call(loupes, function (container) {
-    if (!container || !container.querySelector) return; //		var rect = container.getBoundingClientRect();
+    if (!container || !container.querySelector) return;
+
+    //		var rect = container.getBoundingClientRect();
     //		if(rect && rect.width && rect.width <= 460) return;
 
     var loupe = container.querySelector(".loupe");

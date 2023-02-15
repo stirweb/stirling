@@ -168,6 +168,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/course-subject-search-2.js"
       },
       {
+        "id": 163624,
+        "description": "courses-tagged-2.js",
+        "projectPath": "medias/Categorised/Dist/js/other/courses-tagged-2.js"
+      },
+      {
         "id": 158008,
         "description": "courses-tagged.js",
         "projectPath": "medias/Categorised/Dist/js/other/courses-tagged.js"

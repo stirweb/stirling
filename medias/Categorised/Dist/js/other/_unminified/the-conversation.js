@@ -1,11 +1,10 @@
 function conversation(data) {
   var convoMax,
-      convoEl = document.querySelector(".convo");
+    convoEl = document.querySelector(".convo");
   var html, alt, image, title, name, etc, url;
   if (!convoEl) return;
   convoMax = parseInt(convoEl.getAttribute("data-max")) || 1;
   convoMax = convoMax < data.length ? convoMax : data.length;
-
   for (var i = 0; i < convoMax; i++) {
     alt = data[i].alt || "";
     image = data[i].image || "";
