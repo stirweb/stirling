@@ -171,7 +171,7 @@ stir.String = {
     return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(" ")) : subString) + "&hellip;";
   },
   htmlEntities: function htmlEntities(str) {
-    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&"+"quot;");
   },
   stripHtml: function stripHtml(dirtyString) {
     var doc = new DOMParser().parseFromString(dirtyString, "text/html");
