@@ -102,9 +102,14 @@ var stir = stir || {};
 
   const getFeedUrl = (host, cacheBuster, globals) => {
     if (host === "localhost" || host === "stirweb.github.io") return "homepage.json" + cacheBuster;
-    if (host === "stiracuk-cms01-production.terminalfour.net" || host === "stiracuk-cms01-test.terminalfour.net") return globals.preview.homepagefeed;
 
-    return globals.homepagefeed + cacheBuster;
+    if (globals) {
+      if (host === "stiracuk-cms01-production.terminalfour.net" || host === "stiracuk-cms01-test.terminalfour.net") {
+        return globals.preview && globals.preview.homepagefeed ? globals.preview.homepagefeed : null;
+      }
+      return globals.homepagefeed ? globals.homepagefeed + cacheBuster : null;
+    }
+    return null;
   };
 
   /*
@@ -232,6 +237,8 @@ var stir = stir || {};
 
   const cacheBuster = "?v=" + new Date().getTime();
   const url = getFeedUrl(window.location.hostname, cacheBuster, stir.t4Globals);
+
+  if (!url) return;
 
   /* 
     Get the JSON data and process it 
