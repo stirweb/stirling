@@ -70,7 +70,7 @@
 
   const getMenuAjaxUrl = (sect) => {
     if (UoS_env.name === "dev" || UoS_env.name === "qa") {
-      return "../data/awd/mobilenavs/" + sect + "/index.json";
+      return "/pages/data/awd/mobilenavs/" + sect + "/index.json";
     }
     return "/developer-components/includes/template-external/mobile-nav-json/" + sect + "/index.json"; // live
   };

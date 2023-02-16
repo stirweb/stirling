@@ -15,7 +15,7 @@
 
   switch (UoS_env.name) {
     case "dev":
-      url = "../data/awd/megamenu.html";
+      url = "/pages/data/awd/megamenu.html";
       break;
 
     case "app-preview":
@@ -27,7 +27,7 @@
       break;
 
     case "qa":
-      url = UoS_env.wc_path + "pages/data/awd/megamenu.html";
+      url = "/stirling/pages/data/awd/megamenu.html";
       break;
 
     case "preview":

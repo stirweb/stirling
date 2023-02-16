@@ -15,18 +15,23 @@ var UoS_env = (function () {
 
   // env_name e.g. "dev"
   var env_name = "prod";
+  var wc_path = "/media/dist/";
+
   switch (hostname) {
     case "localhost":
     case "10.0.2.2":
       env_name = "dev";
+      wc_path = "/medias/Categorised/Dist/";
       break;
 
     case "stiracuk-cms01-production.terminalfour.net":
       env_name = "preview";
+      wc_path = "";
       break;
 
     case "stiracuk-cms01-test.terminalfour.net":
       env_name = "appdev-preview";
+      wc_path = "";
       break;
 
     case "stir.ac.uk":
@@ -39,18 +44,20 @@ var UoS_env = (function () {
 
     case "stirweb.github.io":
       env_name = "qa";
+      wc_path = "/medias/Categorised/Dist/";
       break;
   }
 
   // webcomponents path e.g. "/webcomponents/"
-  var wc_path = "/webcomponents/";
-  switch (hostname) {
-    case "localhost":
-      wc_path = "/";
-      break;
-  }
+  //var wc_path = "/webcomponents/";
+  // switch (hostname) {
+  //   case "localhost":
+  //     wc_path = "/";
+  //     break;
+  // }
 
   return {
+    //url: hostname,
     name: env_name,
     wc_path: wc_path,
   };

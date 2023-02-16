@@ -8,7 +8,7 @@ var stir = stir || {};
       stir.addScript("/src/js-other/t4-preview-tools.js");
       break;
     case "stiracuk-cms01-production.terminalfour.net":
-      stir.addScript("/webcomponents/dist/js/other/t4-preview-tools.js");
+      stir.addScript('<t4 type="media" id="158095" formatter="javascript/*" />');
       break;
   }
 })();
