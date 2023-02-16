@@ -4488,7 +4488,7 @@ stir.String = {
     return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(" ")) : subString) + "&hellip;";
   },
   htmlEntities: function htmlEntities(str) {
-    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, ["&","quot;"].join(''));
+    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&" + "quot;");
   },
   stripHtml: function stripHtml(dirtyString) {
     var doc = new DOMParser().parseFromString(dirtyString, "text/html");
@@ -5328,16 +5328,20 @@ var UoS_env = function () {
 
   // env_name e.g. "dev"
   var env_name = "prod";
+  var wc_path = "/media/dist/";
   switch (hostname) {
     case "localhost":
     case "10.0.2.2":
       env_name = "dev";
+      wc_path = "/medias/Categorised/Dist/";
       break;
     case "stiracuk-cms01-production.terminalfour.net":
       env_name = "preview";
+      wc_path = "";
       break;
     case "stiracuk-cms01-test.terminalfour.net":
       env_name = "appdev-preview";
+      wc_path = "";
       break;
     case "stir.ac.uk":
       env_name = "pub";
@@ -5347,17 +5351,20 @@ var UoS_env = function () {
       break;
     case "stirweb.github.io":
       env_name = "qa";
+      wc_path = "/medias/Categorised/Dist/";
       break;
   }
 
   // webcomponents path e.g. "/webcomponents/"
-  var wc_path = "/webcomponents/";
-  switch (hostname) {
-    case "localhost":
-      wc_path = "/";
-      break;
-  }
+  //var wc_path = "/webcomponents/";
+  // switch (hostname) {
+  //   case "localhost":
+  //     wc_path = "/";
+  //     break;
+  // }
+
   return {
+    //url: hostname,
     name: env_name,
     wc_path: wc_path
   };
@@ -6408,7 +6415,7 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
   if (!mm) return;
   switch (UoS_env.name) {
     case "dev":
-      url = "../data/awd/megamenu.html";
+      url = "/pages/data/awd/megamenu.html";
       break;
     case "app-preview":
       url = "https://t4appdev.stir.ac.uk/terminalfour/preview/1/en/2834";
@@ -6417,7 +6424,7 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
       url = "https://t4appdev.stir.ac.uk/terminalfour/preview/1/en/2834";
       break;
     case "qa":
-      url = UoS_env.wc_path + "pages/data/awd/megamenu.html";
+      url = "/pages/data/awd/megamenu.html";
       break;
     case "preview":
       url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2834";
@@ -6612,7 +6619,7 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
 
   var getMenuAjaxUrl = function getMenuAjaxUrl(sect) {
     if (UoS_env.name === "dev" || UoS_env.name === "qa") {
-      return "../data/awd/mobilenavs/" + sect + "/index.json";
+      return "/pages/data/awd/mobilenavs/" + sect + "/index.json";
     }
     return "/developer-components/includes/template-external/mobile-nav-json/" + sect + "/index.json"; // live
   };
@@ -8229,7 +8236,7 @@ var stir = stir || {};
       stir.addScript("/src/js-other/t4-preview-tools.js");
       break;
     case "stiracuk-cms01-production.terminalfour.net":
-      stir.addScript("/webcomponents/dist/js/other/t4-preview-tools.js");
+      stir.addScript('<t4 type="media" id="158095" formatter="javascript/*" />');
       break;
   }
 })();
