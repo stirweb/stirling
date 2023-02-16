@@ -44,8 +44,8 @@ stir.load = function (url, callback) {
 stir.getJSONp = function (url, onload, onerror) {
   if (typeof url == "undefined") return;
   const script = document.createElement("script");
-  if("function"===typeof onload) script.onload = onload;
-  if("function"===typeof onerror) script.onerror = onerror;
+  if ("function" === typeof onload) script.onload = onload;
+  if ("function" === typeof onerror) script.onerror = onerror;
   script.src = url;
   document.head.appendChild(script);
 };
@@ -171,7 +171,8 @@ stir.String = {
     return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(" ")) : subString) + "&hellip;";
   },
   htmlEntities: function htmlEntities(str) {
-    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&"+"quot;");
+    //return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&"+"quot;");
+    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, ["&", "quot;"].join(""));
   },
   stripHtml: function stripHtml(dirtyString) {
     var doc = new DOMParser().parseFromString(dirtyString, "text/html");

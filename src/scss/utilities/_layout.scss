@@ -141,6 +141,24 @@
   top: 0;
 }
 
+.u-right-0 {
+  right: 0;
+}
+
+.u-bottom-0 {
+  bottom: 0;
+}
+
+.u-left-0 {
+  left: 0;
+}
+
+/* Z-indexs */
+
+.u-z-50 {
+  z-index: 50;
+}
+
 /* Display */
 
 .u-inline {
@@ -153,6 +171,10 @@
 
 .u-inline-block {
   display: inline-block;
+}
+
+.u-overflow-hidden {
+  overflow: hidden;
 }
 
 /* Object fit */
