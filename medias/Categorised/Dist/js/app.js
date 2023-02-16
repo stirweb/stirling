@@ -6424,7 +6424,7 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
       url = "https://t4appdev.stir.ac.uk/terminalfour/preview/1/en/2834";
       break;
     case "qa":
-      url = "/pages/data/awd/megamenu.html";
+      url = "/stirling/pages/data/awd/megamenu.html";
       break;
     case "preview":
       url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2834";

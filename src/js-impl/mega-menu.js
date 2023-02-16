@@ -27,7 +27,7 @@
       break;
 
     case "qa":
-      url = "/pages/data/awd/megamenu.html";
+      url = "/stirling/pages/data/awd/megamenu.html";
       break;
 
     case "preview":
