@@ -11,7 +11,7 @@
 
   const renderForm = () => {
     return `
-          <div id="qaformbox" class="u-absolute u-top-0 u-bottom-0 u-right-0 u-left-0 u-z-50 u-bg-grey flex-dir-column large-flex-dir-row align-center" >
+          <div id="qaformbox" class="u-absolute u-top-0 u-bottom-0 u-right-0 u-left-0 u-z-50 u-bg-grey flex-container flex-dir-column large-flex-dir-row align-center" >
             <div class="u-flex1"></div>
             <div class="u-flex1">
                 <form id="qaform" class="u-margin-top flex-container u-gap flex-dir-column u-p-2" >
