@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "Open Sans";
-  src: url("open-sans/OpenSans-Regular.ttf");
+  src: url('<t4 type="media" id="158105" formatter="path/*" />') format('OpenType'), url("open-sans/OpenSans-Regular.ttf") format('OpenType');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: "Open Sans";
-  src: url("open-sans/OpenSans-Bold.ttf");
+  src: url('<t4 type="media" id="158104" formatter="path/*" />')  format('OpenType'), url("open-sans/OpenSans-Bold.ttf") format('OpenType');
   font-weight: 700;
   font-style: bold;
   font-display: swap;
@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: "FSMaja";
-  src: url("fsmaja/FSMajaWeb-Regular.woff");
+  src: url('<t4 type="media" id="158106" formatter="path/*" />') format('woff'), url("fsmaja/FSMajaWeb-Regular.woff") format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
