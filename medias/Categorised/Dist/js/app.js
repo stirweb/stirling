@@ -8241,7 +8241,7 @@ var stir = stir || {};
       stir.addScript("/stirling/src/js-other/qa-protect.js");
       break;
     case "stiracuk-cms01-production.terminalfour.net":
-      //stir.addScript('<t4 type="media" id="158095" formatter="javascript/*" />');
+      stir.addScript('<t4 type="media" id="158095" formatter="path/*" />');
       break;
   }
 })();
