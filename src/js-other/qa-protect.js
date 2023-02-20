@@ -1,6 +1,10 @@
 (function () {
   if (UoS_env.name !== "qa") return;
 
+  const disableProtect = document.querySelector("[data-noqaprotect]");
+
+  if (disableProtect) return;
+
   async function digestMessage(message) {
     const msgUint8 = new TextEncoder().encode(message);
     const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
@@ -15,7 +19,7 @@
             <div class="u-flex1"></div>
             <div class="u-flex1">
                 <form id="qaform" class="u-margin-top flex-container u-gap flex-dir-column u-p-2" >
-                    <label class="text-lg">Speak friend and enter:</label>
+                    <label class="text-lg">Enter password:</label>
                     <input type="password" class="u-p-2" />
                     <input class="button expanded" type="submit" value="Submit" />
                     <p class="hide">Error: Wrong password entered</p>

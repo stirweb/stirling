@@ -4,6 +4,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 (function () {
   if (UoS_env.name !== "qa") return;
+  var disableProtect = document.querySelector("[data-noqaprotect]");
+  if (disableProtect) return;
   function digestMessage(_x) {
     return _digestMessage.apply(this, arguments);
   }
@@ -32,7 +34,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return _digestMessage.apply(this, arguments);
   }
   var renderForm = function renderForm() {
-    return "\n          <div id=\"qaformbox\" class=\"u-absolute u-top-0 u-bottom-0 u-right-0 u-left-0 u-z-50 u-bg-grey flex-container flex-dir-column large-flex-dir-row align-center\" >\n            <div class=\"u-flex1\"></div>\n            <div class=\"u-flex1\">\n                <form id=\"qaform\" class=\"u-margin-top flex-container u-gap flex-dir-column u-p-2\" >\n                    <label class=\"text-lg\">Speak friend and enter:</label>\n                    <input type=\"password\" class=\"u-p-2\" />\n                    <input class=\"button expanded\" type=\"submit\" value=\"Submit\" />\n                    <p class=\"hide\">Error: Wrong password entered</p>\n                </form>\n              </div>\n              <div class=\"u-flex1\"></div>\n          </div>";
+    return "\n          <div id=\"qaformbox\" class=\"u-absolute u-top-0 u-bottom-0 u-right-0 u-left-0 u-z-50 u-bg-grey flex-container flex-dir-column large-flex-dir-row align-center\" >\n            <div class=\"u-flex1\"></div>\n            <div class=\"u-flex1\">\n                <form id=\"qaform\" class=\"u-margin-top flex-container u-gap flex-dir-column u-p-2\" >\n                    <label class=\"text-lg\">Enter password:</label>\n                    <input type=\"password\" class=\"u-p-2\" />\n                    <input class=\"button expanded\" type=\"submit\" value=\"Submit\" />\n                    <p class=\"hide\">Error: Wrong password entered</p>\n                </form>\n              </div>\n              <div class=\"u-flex1\"></div>\n          </div>";
   };
   document.querySelector("main").classList.add("hide");
   document.querySelector("body").insertAdjacentHTML("afterbegin", renderForm());
