@@ -1,6 +1,10 @@
 (function () {
   if (UoS_env.name !== "qa") return;
 
+  const disableProtect = querySelector("[data-noqaprotect]");
+
+  if (disableProtect) return;
+
   async function digestMessage(message) {
     const msgUint8 = new TextEncoder().encode(message);
     const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
