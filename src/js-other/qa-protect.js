@@ -19,7 +19,7 @@
             <div class="u-flex1"></div>
             <div class="u-flex1">
                 <form id="qaform" class="u-margin-top flex-container u-gap flex-dir-column u-p-2" >
-                    <label class="text-lg">Speak friend and enter:</label>
+                    <label class="text-lg">Enter password:</label>
                     <input type="password" class="u-p-2" />
                     <input class="button expanded" type="submit" value="Submit" />
                     <p class="hide">Error: Wrong password entered</p>
