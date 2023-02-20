@@ -1,7 +1,7 @@
 (function () {
   if (UoS_env.name !== "qa") return;
 
-  const disableProtect = querySelector("[data-noqaprotect]");
+  const disableProtect = document.querySelector("[data-noqaprotect]");
 
   if (disableProtect) return;
 

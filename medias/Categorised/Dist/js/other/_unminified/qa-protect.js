@@ -4,7 +4,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 (function () {
   if (UoS_env.name !== "qa") return;
-  var disableProtect = querySelector("[data-noqaprotect]");
+  var disableProtect = document.querySelector("[data-noqaprotect]");
   if (disableProtect) return;
   function digestMessage(_x) {
     return _digestMessage.apply(this, arguments);
