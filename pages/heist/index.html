@@ -778,7 +778,24 @@
             }
         }
 
-        initComparisons();
+        const screenWidth = screen.width - 60;
+        const images = Array.prototype.slice.call(document.querySelectorAll(".img-comp-img-box img"));
+
+        if (images) {
+            images.forEach(element => {
+                const width = element.getAttribute("width");
+
+                if (width > screenWidth) {
+                    const height = element.getAttribute("height");
+                    const adjheight = (screenWidth) * height / width;
+
+                    element.setAttribute("width", screenWidth);
+                    element.setAttribute("heigth", adjheight);
+                }
+            });
+
+            initComparisons();
+        }
     </script>
 </body>
 
