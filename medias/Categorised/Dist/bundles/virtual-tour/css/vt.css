@@ -413,7 +413,7 @@
   .vod-splash {
 	max-height: 100vh;
 	overflow: hidden;
-	background-image: url('"<t4 type="media" id="163761" formatter="path/*" />"');
+	background-image: url('<t4 type="media" id="163761" formatter="path/*" />');
 	background-size: cover;
 	background-position: center;
 	display: flex;
