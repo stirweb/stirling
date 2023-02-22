@@ -413,7 +413,7 @@
   .vod-splash {
 	max-height: 100vh;
 	overflow: hidden;
-	background-image: url("<t4 type="media" id="163761" formatter="path/*" />");
+	background-image: url('"<t4 type="media" id="163761" formatter="path/*" />"');
 	background-size: cover;
 	background-position: center;
 	display: flex;
@@ -985,7 +985,7 @@
 	fill: inherit; }
   
   .vod-gondola h1, .fascia h2 {
-	background-image: url(<t4 type="media" id="163771" formatter="path/*" />);
+	background-image: url('<t4 type="media" id="163771" formatter="path/*" />');
 	background-repeat: no-repeat;
 	background-position: center bottom;
 	padding: 0 6vw 1vw; }
@@ -994,7 +994,7 @@
 	width: 50vw; }
   
   .vod-now h2 {
-	background-image: url(../img/paint-splat-pink.svg); }
+	background-image: url('<t4 type="media" id="163775" formatter="path/*" />'); }
   
   .vod-now .decoration:first-child {
 	fill: #76BD22; }
@@ -1023,7 +1023,7 @@
 	background-color: #AC1154; }
   
   .vod-tour {
-	background-image: url(../img/map-repeat-pink.jpg);
+	background-image: url('<t4 type="media" id="163776" formatter="path/*" />');
 	background-size: 100% auto; }
   
   .dialog-content article {
@@ -1049,7 +1049,7 @@
 	content: none; }
   
   .vod-tour-container {
-	background-image: url(../img/map-repeat-green.jpg);
+	background-image: url('<t4 type="media" id="163777" formatter="path/*" />');
 	background-size: 100% auto; }
   
   .sticky-nav[data-breakpoint="mobile"] {
@@ -1065,7 +1065,7 @@
   
   .vod-map header {
 	background-color: transparent;
-	background-image: url(../img/paint-bg.svg);
+	background-image: url('<t4 type="media" id="163778" formatter="path/*" />');
 	background-size: cover;
 	background-position: center bottom; }
 	.vod-map header nav a {
@@ -1107,7 +1107,7 @@
 	display: block; }
 	.vod-tetraptych figure > a::after {
 	  position: absolute;
-	  background-image: url(../img/frame.svg);
+	  background-image: url('<t4 type="media" id="163779" formatter="path/*" />');
 	  background-size: contain;
 	  background-repeat: no-repeat;
 	  top: -1rem;
@@ -1150,12 +1150,12 @@
   
   .dialog-content article aside ul li a::after,
   .dialog-content article aside a.featured::after {
-	content: url(../img/chevron-htggrn.svg);
+	content: url('<t4 type="media" id="163780" formatter="path/*" />');
 	vertical-align: middle;
 	padding-left: 2px; }
   
   .dialog-content article aside a.featured::after {
-	content: url(../img/chevron-nrgpnk.svg); }
+	content: url('<t4 type="media" id="163781" formatter="path/*" />'); }
   
   .dialog-content article aside a.featured {
 	color: #AC1154; }
@@ -1280,7 +1280,7 @@
 	z-index: 2; }
   
   .map-container {
-	background-image: url(<t4 type="media" id="163772" formatter="path/*" />);
+	background-image: url('<t4 type="media" id="163772" formatter="path/*" />');
 	background-size: contain;
 	background-repeat: no-repeat; }
 	.map-container .location-point {
