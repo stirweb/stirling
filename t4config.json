@@ -1487,10 +1487,30 @@
         "description": "colour-percentages.svg",
         "projectPath": "medias/Categorised/Dist/css/images/misc/colour-percentages.svg"
       },
-      {
+	  {
         "id": 163750,
         "description": "website-escape.js",
         "projectPath": "medias/Categorised/Dist/js/other/website-escape.js"
+      },
+      {
+        "id": 163754,
+        "description": "virtual-tour.vtt",
+        "projectPath": "medias/Categorised/Dist/bundles/virtual-tour/virtual-tour.vtt"
+      },
+      {
+        "id": 163755,
+        "description": "virtual-tour-cn.vtt",
+        "projectPath": "medias/Categorised/Dist/bundles/virtual-tour/virtual-tour-cn.vtt"
+      },
+      {
+        "id": 163759,
+        "description": "vt.css",
+        "projectPath": "medias/Categorised/Dist/bundles/virtual-tour/css/vt.css"
+      },
+      {
+        "id": 163756,
+        "description": "vt.js",
+        "projectPath": "medias/Categorised/Dist/bundles/virtual-tour/css/vt.js"
       }
     ]
   }
