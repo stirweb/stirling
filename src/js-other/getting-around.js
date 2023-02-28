@@ -481,67 +481,86 @@ var UoS_GettingAround = (function () {
   ];
 
   // we have different urls for the json feed depending on the environment
-  var base_path;
-  switch (window.location.hostname) {
-    case "localhost":
-      base_path = "";
-      break;
-    default:
-      base_path = "/webcomponents/";
-  }
+  // update 2023-02-28 to use t4 media URLs instead
+  /* //icons
+		path: "dist/images/markers/food_and_drink.png";
+        name: "uos-fork-knife";
+        path: "dist/images/markers/residences.png";
+        name: "uos-home";
+        path: "dist/images/markers/buildings.png";
+        name: "uos-history-large";
+        path: "dist/images/markers/sports_facilities.png";
+        name: "uos-runner";
+        path: "dist/images/markers/nextbike.png";
+      // 	path: "dist/images/markers/bicycle_parking.png";
+      // 	name: "uos-cyclist";
+        path: "dist/images/markers/parking.png";
+        name: "uos-car";
+        path: "dist/images/markers/disabled_parking.png";
+        name: "uos-wheelchair";
+        path: "dist/images/markers/short-stay-car-park.png";
+        name: "uos-car";
+        path: "dist/images/markers/electric-charge.png";
+        name: "uos-car";
+        path: "dist/images/markers/drop-off.png";
+        name: "uos-car";
+        path: "dist/images/markers/no_road_access.png";
+        name: "uos-pedestrian";
+        path: "dist/images/markers/electric-bike.png";
+  */
 
   // set icons based on type
   for (var i = 0; i < _markerData.length; i++) {
     switch (_markerData[i].type) {
       case types.EATING:
-        _markerData[i].icon = base_path + "dist/images/markers/food_and_drink.png";
+        _markerData[i].icon = '<t4 type="media" id="158271" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-fork-knife";
         continue;
       case types.RESIDENCES:
-        _markerData[i].icon = base_path + "dist/images/markers/residences.png";
+        _markerData[i].icon = '<t4 type="media" id="158276" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-home";
         continue;
       case types.BUILDINGS:
-        _markerData[i].icon = base_path + "dist/images/markers/buildings.png";
+        _markerData[i].icon = '<t4 type="media" id="158266" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-history-large";
         continue;
       case types.SPORT_FACILITES:
-        _markerData[i].icon = base_path + "dist/images/markers/sports_facilities.png";
+        _markerData[i].icon = '<t4 type="media" id="158278" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-runner";
         continue;
       case types.NEXTBIKE:
-        _markerData[i].icon = base_path + "dist/images/markers/nextbike.png";
+        _markerData[i].icon = '<t4 type="media" id="158272" formatter="path/*" />';
         continue;
       // case types.BICYCLE_PARKING:
-      // 	_markerData[i].icon = base_path + "dist/images/markers/bicycle_parking.png";
+      // 	_markerData[i].icon = '<t4 type="media" id="158264" formatter="path/*" />';
       // 	_markerData[i].usoIconClassName = "uos-cyclist";
       // 	continue;
       case types.PARKING:
-        _markerData[i].icon = base_path + "dist/images/markers/parking.png";
+        _markerData[i].icon = '<t4 type="media" id="158274" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-car";
         continue;
       case types.DISABLED_PARKING:
-        _markerData[i].icon = base_path + "dist/images/markers/disabled_parking.png";
+        _markerData[i].icon = '<t4 type="media" id="158267" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-wheelchair";
         continue;
       case types.SHORT_STAY_PARKING:
-        _markerData[i].icon = base_path + "dist/images/markers/short-stay-car-park.png";
+        _markerData[i].icon = '<t4 type="media" id="158277" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-car";
         continue;
       case types.CHARGING_POINT:
-        _markerData[i].icon = base_path + "dist/images/markers/electric-charge.png";
+        _markerData[i].icon = '<t4 type="media" id="158270" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-car";
         continue;
       case types.DROP_OFF:
-        _markerData[i].icon = base_path + "dist/images/markers/drop-off.png";
+        _markerData[i].icon = '<t4 type="media" id="158268" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-car";
         continue;
       case types.PEDESTRIAN_AREA:
-        _markerData[i].icon = base_path + "dist/images/markers/no_road_access.png";
+        _markerData[i].icon = '<t4 type="media" id="158273" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-pedestrian";
         continue;
       case types.ELECTRIC_BIKES:
-        _markerData[i].icon = base_path + "dist/images/markers/electric-bike.png";
+        _markerData[i].icon = '<t4 type="media" id="158269" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-bike";
         continue;
     }
