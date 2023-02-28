@@ -1511,6 +1511,11 @@
         "id": 163756,
         "description": "vt.js",
         "projectPath": "medias/Categorised/Dist/bundles/virtual-tour/css/vt.js"
+      },
+      {
+        "id": 164168,
+        "description": "funnelback-content.js",
+        "projectPath": "medias/Categorised/Dist/js/other/funnelback-content.js"
       }
     ]
   }
