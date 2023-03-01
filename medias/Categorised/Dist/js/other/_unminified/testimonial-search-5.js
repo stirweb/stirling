@@ -63,8 +63,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
    */
 
   var main = function main(data, nodes, consts) {
-    if (data.error) return setDOMContent(nodes, stir.getMaintenanceMsg());
-    if (!gotFBData(data)) return setDOMContent(nodes, renderNoResults());
+    if (data.error) return setDOMContent(nodes, 1, stir.getMaintenanceMsg());
+    if (!gotFBData(data)) return setDOMContent(nodes, 1, renderNoResults());
     var meta = _objectSpread(_objectSpread({}, data.response.resultPacket.resultsSummary), consts);
     return setDOMContent(nodes, calcCurrentPage(meta.currStart, meta.numRanks), renderResults(meta, data.response.resultPacket.results));
   };
