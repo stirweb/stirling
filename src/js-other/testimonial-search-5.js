@@ -52,11 +52,10 @@
    */
 
   const main = (data, nodes, consts) => {
-    if (data.error) return setDOMContent(nodes, stir.getMaintenanceMsg());
-    if (!gotFBData(data)) return setDOMContent(nodes, renderNoResults());
+    if (data.error) return setDOMContent(nodes, 1, stir.getMaintenanceMsg());
+    if (!gotFBData(data)) return setDOMContent(nodes, 1, renderNoResults());
 
     const meta = { ...data.response.resultPacket.resultsSummary, ...consts };
-
     return setDOMContent(nodes, calcCurrentPage(meta.currStart, meta.numRanks), renderResults(meta, data.response.resultPacket.results));
   };
 
