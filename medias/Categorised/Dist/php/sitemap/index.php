@@ -20,7 +20,7 @@
     'site_id' => '4115287',
     'site_url' => 'https://www.stir.ac.uk/',
     'api_key' => 'ps_fjolkhGh.O8fbkGOWDypdlmjkjSNXOHsUS9hdIJm6qs71YvwAKBEVONeX',
-    'sitemap_self_url' => 'https://www.stir.ac.uk/webcomponents/dist/php/sitemap/',
+    'sitemap_self_url' => 'https://www.stir.ac.uk/media/dist/php/sitemap/',
     'sitemap_remote_url' => 'https://pro-sitemaps.com/api/'
  );
 
