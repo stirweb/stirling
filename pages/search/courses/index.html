@@ -526,7 +526,7 @@
 
                     <div class="flex-container flex-dir-column u-gap u-mt-1">
                         <p class="u-text-regular u-m-0">
-                            <strong><a href="${item.liveUrl}" title="${item.metaData.award} ${item.title}">${item.metaData.award} ${item.title} ${item.metaData.ucas ? ' - ' + item.metaData.ucas : ''}</a></strong>
+                            <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ''} ${item.title}">${item.metaData.award ? item.metaData.award : ''} ${item.title} ${item.metaData.ucas ? ' - ' + item.metaData.ucas : ''}</a></strong>
                         </p>
                         <p class="u-m-0">${item.metaData.c}</p>
                         
@@ -558,16 +558,18 @@
             });
         };
 
-
-
+        /* init : Returns null */
+        const init = (favsArea, url, favsStored) => {
+            const fullUrl = url + getFBScope(favsStored);
+            fetchData(fullUrl, favsArea)
+        };
 
         // ON LOAD
         const favsStored = JSON.parse(localStorage.getItem('favs')) || [];
 
-        if (favsStored && favsStored !== null) {
-            const fullUrl = url + getFBScope(favsStored);
-            fetchData(fullUrl, favsArea)
-        }
+        favsStored.length && favsStored.length > 0 ? init(favsArea, url, favsStored) : setDOMContent(favsArea, '<p>No favs stored</p>');
+
+
 
 
         // DEMO ACTION
