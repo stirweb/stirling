@@ -368,6 +368,12 @@
                 </div>
 
                 <div id="favsarea" class="c-search-results-area cell u-padding-y u-bg-grey u-bleed bg-grey"></div>
+
+                <div id="historyarea" class="c-search-results-area cell u-padding-y "></div>
+
+
+
+
             </div>
         </div>
 
@@ -511,13 +517,17 @@
 
         const demoForm = document.querySelector("#demoform");
         const favsArea = document.querySelector("#favsarea");
+        const historyArea = document.querySelector("#historyarea");
+
+        const host = "https://search.stir.ac.uk";
+        //const host = "https://stage-shared-15-24-admin.clients.uk.funnelback.com";
 
         const sf = ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"];
-        const url = "https://search.stir.ac.uk/s/search.json?collection=stir-courses&query=!asdsadsad&fmo=true&num_ranks=2000&SF=[" + sf.join(",") + "]&scope=";
+        const url = host + "/s/search.json?collection=stir-courses&query=!asdsadsad&fmo=true&num_ranks=2000&SF=[" + sf.join(",") + "]&scope=";
 
         /* renderFavs : Returns a String of HTML */
         const renderFavs = (item) => {
-            console.log(item);
+
             return `
                 <div class="c-search-result" data-rank="" data-sid="" data-result-type="course">
                     <div class=" c-search-result__tags">
@@ -551,10 +561,21 @@
         const getFBScope = (favs) => favs.map(item => `` + item.url + ``).join(',');
 
         /* fetchData : Returns null */
-        const fetchData = (url, node) => {
+        const fetchData = (url, node, type) => {
+
             stir.getJSON(url, (initialData) => {
-                const data = initialData.response.resultPacket.results;
-                setDOMContent(node, data.map(renderFavs).join(''));
+
+                if (type === "history") {
+                    console.log(url);
+                    console.log(initialData.session);
+                    console.log("history done")
+                }
+                else {
+
+                    //console.log(initialData.session);
+                    const data = initialData.response.resultPacket.results;
+                    setDOMContent(node, data.map(renderFavs).join(''));
+                }
             });
         };
 
@@ -584,6 +605,14 @@
 
             event.preventDefault();
         });
+
+
+
+        const sessionUrl = host + "/s/search.json?collection=stir-courses&profile=_default_preview&form=history";
+
+
+        fetchData(sessionUrl, historyArea, 'history');
+
 
 
     </script>
