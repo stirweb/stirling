@@ -5,7 +5,7 @@ abstract class Renderer {
     /* Main templating render function */
     protected function render( $filename, $data = array() ) {
         try {
-            $file = './' . $filename. '.php';
+            $file = $filename. '.php';
             if( !is_readable($file) ){
                 throw new Exception("View $file not found!", 1);
             }
