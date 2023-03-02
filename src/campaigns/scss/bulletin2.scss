@@ -1,0 +1,1116 @@
+/** Base styles from the old app.css
+*/
+
+html,body{
+	background:#e8e8e8;
+	font-family: Helvetica, Arial, sans-serif;
+    font-size: 98%;
+}
+.page{ 
+  	background:#fff;
+  	border:0;
+  	-webkit-box-shadow: 2px 0 5px rgba(0,0,0,0.222), -2px 0 5px rgba(0,0,0,0.222);
+  	-moz-box-shadow: 2px 0 5px rgba(0,0,0,0.222), -2px 0 5px rgba(0,0,0,0.222);
+ 	box-shadow: 2px 0 5px rgba(0,0,0,0.222), -2px 0 5px rgba(0,0,0,0.222);  /* rk */
+}
+p, li{
+	font-weight: 300;
+}
+select {
+	width:auto;
+	padding-right: 2rem;
+}
+input[type=submit]{
+	padding: .6em 1em;
+}
+caption{
+    margin-bottom: 10px;
+    text-align: left;
+    font-family: 'Lato', sans-serif;
+}
+address{
+	font-weight: 300;
+}
+.btt {
+	position: fixed;
+	bottom: 2em;
+	right: 4em;
+	&::after {
+		color: #333;
+		content:url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIHdpZHRoPSIyMnB4IiBoZWlnaHQ9IjIycHgiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDUxMiA1MTIiIGlkPSJMYXllcl8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48Zz48cGF0aCBkPSJNMjU2LDExOC40Yy0yLjgsMC01LjUsMS4xLTcuNiwzLjJMMywzNzUuN2MtNCw0LjItMy45LDEwLjksMC4zLDE0LjljNC4yLDQsMTAuOSwzLjksMTQuOS0wLjNsMjQ1LjUtMjU0ICAgYzQtNC4yLDMuOS0xMC45LTAuMy0xNC45QzI2MS4zLDExOS40LDI1OC42LDExOC40LDI1NiwxMTguNHoiIGZpbGw9IiM2QTZFN0MiLz48cGF0aCBkPSJNMjU2LDExOC40Yy0yLjYsMC01LjMsMS03LjMsM2MtNC4yLDQtNC4zLDEwLjctMC4zLDE0LjlsMjQ1LjUsMjU0YzQsNC4yLDEwLjcsNC4zLDE0LjksMC4zICAgYzQuMi00LDQuMy0xMC43LDAuMy0xNC45bC0yNDUuNS0yNTRDMjYxLjUsMTE5LjUsMjU4LjgsMTE4LjQsMjU2LDExOC40eiIgZmlsbD0iIzZBNkU3QyIvPjwvZz48L3N2Zz4=') ;
+		left: -0.7em;
+		top: -0.5em;
+		font-size: 3.5em;
+		background-color: #fff;
+		background-color: rgba(255,255,255,0.7);
+		border-radius: 1px; 
+		padding: 0px 15px;
+	}
+}
+@media only screen and (min-width: 1095px) {
+	.btt::after {
+		color: #aaa;
+	}
+}
+@font-face {
+	font-family: "FSMaja";
+	src: url('<t4 type="media" id="158106" formatter="path/*" />') format('woff'), url("fsmaja/FSMajaWeb-Regular.woff") format('woff');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+a#logo {
+    background: url('<t4 type="media" id="158262" formatter="path/*" />');
+    background-repeat: no-repeat;
+    background-size: 380px 200px;
+	background-position: -30px center;
+}
+h1, h2, h3, h4, .promo {
+  	font-family: 'FSMaja', serif;
+  	font-style: normal;
+  	font-weight:100;
+	color: #727288;
+    font-style: 90%;
+}
+h1{
+	font-size: 4rem;
+	line-height: 4rem;
+}
+a{
+	color: rgba(92,172,52,1);
+}
+a:hover, a:active, a:visited{
+	color: rgba(92,172,52,.7);
+}
+a.button{
+	background:rgba(92,172,52,1); 
+}
+a.button:hover, a.button:active, a.button:visited{
+	background:rgba(92,172,52,.7); 
+	color: #fff;
+}
+.topgap .columns{
+	margin-top: 2rem;	
+}
+.crema h2{
+	font-size: 2.1rem;
+}
+
+/*** end of base styles ***/
+
+/***
+	Bulletin and Roundup redesign 2016/17
+	rmw2 2017-02-06-11.02	
+***/
+
+// Tertiary Colours
+$light-mink: #c5bfb7;
+$medium-mink: #776e64;
+$dark-mink: #373a36;
+$dark-grey: #616361;
+
+// Energy Colours
+$energy: #76BD22;
+$energy-green: #9BBEAC;
+$energy-teal: #008996;
+$energy-yellow: #F4C400;
+$energy-orange: #EE7624;
+$energy-light-blue: #5FB4E5;
+$energy-blue: rgb(8, 9, 10);
+$energy-pink: #D41568;
+$energy-purple: #592C82;
+
+// Heritage Colours
+$heritage: #006938;
+$heritage-green: #2B7051;
+$heritage-teal: #005E63;
+$heritage-yellow: #ECAA00;
+$heritage-orange: #E14504;
+$heritage-blue: #385DAE;
+$heritage-navy: #14315E;
+$heritage-berry: #9D1E65;
+$heritage-purple: #31006F;
+
+
+/* hacks */
+article[id="d.en.144109"].withimage,
+article[id="d.en.144162"].withimage {
+	border-bottom: 0 !important;
+}
+/* end of hacks */
+
+.show-for-sr {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+	border: 0;
+	color: black;
+	background: white;
+}
+
+.titlebar img {
+	margin: 2rem 0 0;
+}
+
+.bulletin2 .titlebar h1 {
+  font-size: 3.3rem;
+}
+.titlebar h1 {
+	margin: 1rem 0 2rem;
+}
+
+
+.bulletin2 aside {
+	min-height: 100vh;
+	padding-top: 1em;
+}
+
+.bulletin2 aside nav {
+	margin: 1em 0;
+}
+
+.bulletin2 aside nav li {
+	font-size: 1rem;
+}
+
+.bulletin2 aside h2 {
+	font-size: 1.6875rem;
+	border-bottom: 1px solid currentColor;
+}
+.bulletin2 aside > h2 {
+	border-bottom-width: 3px;
+}
+.bulletin2 h2,
+.bulletin2 aside article h3 {
+	color: #3a3c39;
+}
+
+.bulletin2 aside article {
+	border-bottom: 1px solid #87847D;
+	margin-bottom: 2rem;
+}
+
+.bulletin2 aside article p {
+    font-size: 0.925rem;
+}
+
+.bulletin2 aside article li {
+    font-size: 0.925rem;
+}
+
+.bulletin2 aside article figure {
+	margin: 0;
+}
+
+a.ba {
+	display: block;
+	font-size: 1.5rem;
+	text-align: center;
+	margin: 2em 0;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAAAAADh3zPnAAAAAnRSTlMA/1uRIrUAAAC9SURBVHgBVdC9asUwDMXxvv9zdSncoRDuYIwxRgQThBFGeBAa1OQqH/Vv/HOm82Vmou0dTmAqYuY5Z9wOCK8iema1wuYYOLB5RlhCOWTgpcYf9PzOTB/4ClunNXgOaPoxssRmLV5ZxS0pfm/0ZN4NkcGMud95pB2qqCqVZy18oN5Jruzr7BJPa7rM6wKuzGtsDseUobp1znVzdc7rswa+s15MKdVwZ7n134TTg64X0zMXwkuDZOIZ4z8Bdc9/Tm3E1D3bJxkAAAAASUVORK5CYII=') left center no-repeat;
+}
+
+p.readmore {
+    font-size: 1.25rem;
+    text-align: center;
+    border-radius: 3px;
+    display: block;
+    padding: 0.3rem 1rem;
+    margin: 0 auto 1rem;
+    text-align: right;
+}
+
+.bulletin2 aside article img {
+    margin: 1em auto;
+    display: block;
+    padding: 5px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+/*** FOOTER ***/ 
+
+.bulletin2 footer.row {
+    margin-top: 4em;
+}
+.bulletin2 footer.row .mocha {
+    color: #FFFFFF;
+}
+.bulletin2 footer.row .crema {
+	background-color: #EFEBE7;
+/* 	color: #373430; */
+	min-height: 8vmin;
+/* 	text-align: center; */
+	padding: 2em;
+}
+.bulletin2 footer.row .mocha span.majastrap {
+	font-family: "FSMaja", serif;
+	font-weight: 300;
+	font-style: normal;
+	text-transform: uppercase;
+	display: inline-block;
+	font-size: 2rem;
+	margin: 3rem 0;
+	padding-left: 8px;
+	position: relative;
+    width: 66%;
+    text-align: right;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+
+}
+span.majastrap:after,
+span.majastrap::after {	
+    content: "";
+    position: absolute;
+    width: 100%;
+    border: 1px solid #FFFFFF;
+    height: 5px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-width: 0 3px 3px 0;
+    padding-bottom: 8px;
+}
+
+/*** END FOOTER ***/
+
+.bulletin2 main article {
+	border-top: 2px solid #CCC;
+	padding-top: 2em;
+}
+
+.bulletin2 main article.boxed {
+	padding-top: 1em;
+	a {
+		&:link {
+			text-decoration: underline;
+		}
+	}
+}
+
+.bulletin2 main article.boxed + article {
+	border-top: 0;
+}
+
+.bulletin2 main article:nth-of-type(1) {
+	border-top: 0;
+	padding-top: 0;
+}
+
+article:first-child img {
+    margin-top: 0;
+}
+
+.bulletin2 .statusbar {
+	line-height: 3;
+	margin-bottom: 4em;
+}
+
+.bulletin2 aside,
+.bulletin2 .statusbar {
+	background: #E8E5E3;
+}
+
+.bulletin2 .statusbar,
+.bulletin2 .statusbar a {
+	color: #3a3c39;
+}
+.bulletin2 .statusbar a:hover {
+	text-decoration: underline;
+}
+.bulletin2 .titlebar h1 a {
+	text-decoration: none;
+}
+.bulletin2 main article {
+	margin-bottom: 2em;
+	overflow: hidden;
+}
+.bulletin2 main article img.portrait {
+	float: right;
+	max-width: 40%;
+	margin: 4em 0 1em 1em;
+}
+
+.bulletin2 main header h1 {
+    font-size: 3.2rem;
+    line-height: 1.4;
+    color: #006938;
+    border-bottom: 1px solid #76BD22;
+    padding-bottom: 0.2em;
+}
+.bulletin2 main header h2 {
+    color: #76BD22;
+    margin-bottom: 1em;
+    letter-spacing: 1.05px;
+}
+
+
+/*********/
+
+
+/*********/
+
+
+
+/*
+
+ /$$      /$$  /$$$$$$     /$$$$$  /$$$$$$  /$$$$$$$$ /$$$$$$$$  /$$$$$$  /$$      
+| $$$    /$$$ /$$__  $$   |__  $$ /$$__  $$|__  $$__/| $$_____/ /$$__  $$| $$      
+| $$$$  /$$$$| $$  \ $$      | $$| $$  \ $$   | $$   | $$      | $$  \ $$| $$      
+| $$ $$/$$ $$| $$$$$$$$      | $$| $$$$$$$$   | $$   | $$$$$   | $$$$$$$$| $$      
+| $$  $$$| $$| $$__  $$ /$$  | $$| $$__  $$   | $$   | $$__/   | $$__  $$| $$      
+| $$\  $ | $$| $$  | $$| $$  | $$| $$  | $$   | $$   | $$      | $$  | $$| $$      
+| $$ \/  | $$| $$  | $$|  $$$$$$/| $$  | $$   | $$   | $$$$$$$$| $$  | $$| $$$$$$$$
+|__/     |__/|__/  |__/ \______/ |__/  |__/   |__/   |________/|__/  |__/|________/
+                                                                                     
+*/
+.majateal a,
+.majateal a:link,
+.majateal a:active,
+.majateal a:visited {
+	color: #006166;
+}
+
+.majateal a:hover,
+.majateal .poster a:hover {
+	color: #25ADB8;
+}
+
+.majateal a.button {
+	color: #fff;
+}
+.majateal a.button,
+.majateal a.button:link,
+.majateal a.button:active,
+.majateal a.button:visited {
+	background-color: #009098;
+}
+.majateal a.button:hover,
+.majateal a.button:focus {
+	background-color: #25ADB8;
+}
+
+
+.majateal .titlebar {
+	background-color: #006166; /* 009098 */;
+	color: #FFFFFF;
+}
+
+.majateal {
+	.titlebar {
+		h1 {
+			color: #FFFFFF;
+			a {
+				&:link,
+				&:hover,
+				&:active,
+				&:visited,
+				&:focus {
+					color: #FFFFFF;
+					text-decoration: none;
+				}
+
+			}
+		}
+
+	}
+
+	.statusbar a {
+		color: #005257;
+	}
+
+}
+
+
+.majateal main article.boxed {
+	background-color: #DDEEEE;
+	border-color: #009097;
+	a {
+		&:link,
+		&:hover,
+		&:active,
+		&:visited,
+		&:focus {
+			color: #005257;
+		}
+
+	}
+}
+
+.majateal main article.boxed.alt {
+	background-color: #C8BBDB;
+	border-color: #5A2B82;
+}
+.majateal main article.boxed.alt h2 {
+    color: #5A2B82;
+}
+
+.majateal main article {
+	border-top-color: #009098;
+}
+
+.majateal aside h2 {
+	color: #006166;
+}
+.bulletin2.majateal footer.row {
+    background-color: #009098;
+}
+
+/*
+   _____      _____        ____.  _____    ________________________________________ _______   
+  /     \    /  _  \      |    | /  _  \  /  _____/\______   \_   _____/\_   _____/ \      \  
+ /  \ /  \  /  /_\  \     |    |/  /_\  \/   \  ___ |       _/|    __)_  |    __)_  /   |   \ 
+/    Y    \/    |    \/\__|    /    |    \    \_\  \|    |   \|        \ |        \/    |    \
+\____|__  /\____|__  /\________\____|__  /\______  /|____|_  /_______  //_______  /\____|__  /
+        \/         \/                  \/        \/        \/        \/         \/         \/ 
+*/
+
+
+.majagreen a,
+.majagreen a:link,
+.majagreen a:active,
+.majagreen a:visited {
+	color: #006938;
+	text-decoration: underline;
+}
+
+.majagreen a:hover,
+.majagreen .poster a:hover {
+	color: #76BD22;
+}
+
+.majagreen a.button {
+	color: #fff;
+	text-decoration: none;
+}
+.majagreen a.button,
+.majagreen a.button:link,
+.majagreen a.button:active,
+.majagreen a.button:visited {
+	background-color: #006938;
+}
+.majagreen a.button:hover,
+.majagreen a.button:focus {
+	background-color: #76BD22;
+}
+
+
+.majagreen .titlebar {
+	background-color: #006938;
+	color: #FFFFFF;
+}
+
+.majagreen .titlebar h1,
+.majagreen .titlebar h1 a,
+.majagreen .titlebar h1 a:hover,
+.majagreen .titlebar h1 a:active,
+.majagreen .titlebar h1 a:visited,
+.majagreen .titlebar h1 a:focus {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.bulletin2.majagreen main article.boxed {
+	background-color: #006938;
+	border-width: 0;
+}
+
+.majagreen main article.boxed a {
+    color: #FFFFFF;
+}
+.majagreen main article.boxed table a {
+	color: #006938;
+	text-decoration: underline;
+}
+
+.majagreen main article.boxed h1,
+.majagreen main article.boxed h2,
+.majagreen main article.boxed h3,
+.majagreen main article.boxed p,
+.majagreen main article.boxed div,
+.majagreen main article.boxed ul,
+.majagreen main article.boxed li {
+    color: #FFFFFF;
+}
+
+.bulletin2.majagreen main article.boxed.alt {
+	background-color: #76BD22;
+	border-width: 0;
+}
+.majagreen main article.boxed.alt h2 {
+    color: #006938;
+}
+
+.majagreen main article {
+	border: 0;
+}
+
+.majagreen aside h2 {
+	color: #006938;
+}
+.bulletin2.majagreen footer.row {
+    background-color: #006938;
+}
+
+/*
+ ▄▄▄▄▄▄▄▄▄▄▄  ▄▄        ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄ 
+▐░░░░░░░░░░░▌▐░░▌      ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌       ▐░▌
+▐░█▀▀▀▀▀▀▀▀▀ ▐░▌░▌     ▐░▌▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀▀▀ ▐░▌       ▐░▌
+▐░▌          ▐░▌▐░▌    ▐░▌▐░▌          ▐░▌       ▐░▌▐░▌          ▐░▌       ▐░▌
+▐░█▄▄▄▄▄▄▄▄▄ ▐░▌ ▐░▌   ▐░▌▐░█▄▄▄▄▄▄▄▄▄ ▐░█▄▄▄▄▄▄▄█░▌▐░▌ ▄▄▄▄▄▄▄▄ ▐░█▄▄▄▄▄▄▄█░▌
+▐░░░░░░░░░░░▌▐░▌  ▐░▌  ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌▐░░░░░░░░▌▐░░░░░░░░░░░▌
+▐░█▀▀▀▀▀▀▀▀▀ ▐░▌   ▐░▌ ▐░▌▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀█░█▀▀ ▐░▌ ▀▀▀▀▀▀█░▌ ▀▀▀▀█░█▀▀▀▀ 
+▐░▌          ▐░▌    ▐░▌▐░▌▐░▌          ▐░▌     ▐░▌  ▐░▌       ▐░▌     ▐░▌     
+▐░█▄▄▄▄▄▄▄▄▄ ▐░▌     ▐░▐░▌▐░█▄▄▄▄▄▄▄▄▄ ▐░▌      ▐░▌ ▐░█▄▄▄▄▄▄▄█░▌     ▐░▌     
+▐░░░░░░░░░░░▌▐░▌      ▐░░▌▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░░▌     ▐░▌     
+ ▀▀▀▀▀▀▀▀▀▀▀  ▀        ▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀      
+                                                                              
+*/
+
+.maja-energy a,
+.maja-energy a:link,
+.maja-energy a:active,
+.maja-energy a:visited {
+	color: #76bd22;
+	text-decoration: underline;
+}
+
+.maja-energy a:hover,
+.maja-energy .poster a:hover {
+	color: #006938;
+}
+
+.maja-energy a.button {
+	color: #fff;
+	text-decoration: none;
+}
+.maja-energy a.button,
+.maja-energy a.button:link,
+.maja-energy a.button:active,
+.maja-energy a.button:visited {
+	background-color: #76bd22;
+}
+.maja-energy a.button:hover,
+.maja-energy a.button:focus {
+	background-color: #006938;
+}
+
+
+.maja-energy .titlebar {
+	background-color: #76bd22;
+	color: #FFFFFF;
+}
+
+.maja-energy .titlebar h1,
+.maja-energy .titlebar h1 a,
+.maja-energy .titlebar h1 a:hover,
+.maja-energy .titlebar h1 a:active,
+.maja-energy .titlebar h1 a:visited,
+.maja-energy .titlebar h1 a:focus {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.bulletin2.maja-energy main article.boxed {
+	background-color: #76bd22;
+	border-width: 0;
+}
+
+.maja-energy main article.boxed a {
+    color: #FFFFFF;
+}
+.maja-energy main article.boxed table a {
+	color: #006938;
+	text-decoration: underline;
+}
+
+.maja-energy main article.boxed h1,
+.maja-energy main article.boxed h2,
+.maja-energy main article.boxed h3,
+.maja-energy main article.boxed p,
+.maja-energy main article.boxed div,
+.maja-energy main article.boxed ul,
+.maja-energy main article.boxed li {
+    color: #FFFFFF;
+}
+
+.bulletin2.maja-energy main article.boxed.alt {
+	background-color: #006938;
+	border-width: 0;
+}
+.maja-energy main article.boxed.alt h2 {
+    color: #76bd22;
+}
+
+.maja-energy main article {
+	border: 0;
+}
+
+.maja-energy aside h2 {
+	color: #76bd22;
+}
+.bulletin2.maja-energy footer.row {
+    background-color: #76bd22;
+}
+
+/* 
+▓█████  ███▄    █ ▓█████  ██▀███    ▄████▓██   ██▓     ▄████  ██▀███  ▓█████ ▓█████  ███▄    █ 
+▓█   ▀  ██ ▀█   █ ▓█   ▀ ▓██ ▒ ██▒ ██▒ ▀█▒▒██  ██▒    ██▒ ▀█▒▓██ ▒ ██▒▓█   ▀ ▓█   ▀  ██ ▀█   █ 
+▒███   ▓██  ▀█ ██▒▒███   ▓██ ░▄█ ▒▒██░▄▄▄░ ▒██ ██░   ▒██░▄▄▄░▓██ ░▄█ ▒▒███   ▒███   ▓██  ▀█ ██▒
+▒▓█  ▄ ▓██▒  ▐▌██▒▒▓█  ▄ ▒██▀▀█▄  ░▓█  ██▓ ░ ▐██▓░   ░▓█  ██▓▒██▀▀█▄  ▒▓█  ▄ ▒▓█  ▄ ▓██▒  ▐▌██▒
+░▒████▒▒██░   ▓██░░▒████▒░██▓ ▒██▒░▒▓███▀▒ ░ ██▒▓░   ░▒▓███▀▒░██▓ ▒██▒░▒████▒░▒████▒▒██░   ▓██░
+░░ ▒░ ░░ ▒░   ▒ ▒ ░░ ▒░ ░░ ▒▓ ░▒▓░ ░▒   ▒   ██▒▒▒     ░▒   ▒ ░ ▒▓ ░▒▓░░░ ▒░ ░░░ ▒░ ░░ ▒░   ▒ ▒ 
+ ░ ░  ░░ ░░   ░ ▒░ ░ ░  ░  ░▒ ░ ▒░  ░   ░ ▓██ ░▒░      ░   ░   ░▒ ░ ▒░ ░ ░  ░ ░ ░  ░░ ░░   ░ ▒░
+   ░      ░   ░ ░    ░     ░░   ░ ░ ░   ░ ▒ ▒ ░░     ░ ░   ░   ░░   ░    ░      ░      ░   ░ ░ 
+   ░  ░         ░    ░  ░   ░           ░ ░ ░              ░    ░        ░  ░   ░  ░         ░ 
+                                          ░ ░                                                  
+*/
+
+.maja-energy-green a,
+.maja-energy-green a:link,
+.maja-energy-green a:active,
+.maja-energy-green a:visited {
+	color: darken($energy-green, 40%);
+	text-decoration: underline;
+}
+
+.maja-energy-green a:hover,
+.maja-energy-green .poster a:hover {
+	color: darken($energy-green, 20%);
+}
+
+.maja-energy-green a.button {
+	color: #fff;
+	text-decoration: none;
+}
+.maja-energy-green a.button,
+.maja-energy-green a.button:link,
+.maja-energy-green a.button:active,
+.maja-energy-green a.button:visited {
+	background-color: #9bbeac;
+}
+.maja-energy-green a.button:hover,
+.maja-energy-green a.button:focus {
+	background-color: darken($energy-green, 40%);;
+}
+
+.maja-energy-green .titlebar {
+	background-color: #9bbeac;
+	color: #FFFFFF;
+}
+
+.maja-energy-green .titlebar h1,
+.maja-energy-green .titlebar h1 a,
+.maja-energy-green .titlebar h1 a:hover,
+.maja-energy-green .titlebar h1 a:active,
+.maja-energy-green .titlebar h1 a:visited,
+.maja-energy-green .titlebar h1 a:focus {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.maja-energy-green h2,
+.maja-energy-green aside article h3 {
+	color: $heritage-teal;
+}
+
+.bulletin2.maja-energy-green main article.boxed {
+	background-color: lighten($energy-green, 10%);
+	border-width: 0;
+}
+
+.maja-energy-green main article.boxed a {
+    color: darken($energy-green, 50%);
+}
+
+.maja-energy-green main article.boxed h1,
+.maja-energy-green main article.boxed h2,
+.maja-energy-green main article.boxed h3{
+	color: #3a3c39;
+}
+.maja-energy-green main article.boxed p,
+.maja-energy-green main article.boxed div,
+.maja-energy-green main article.boxed ul,
+.maja-energy-green main article.boxed li {
+    color: #3a3c39;
+}
+
+.bulletin2.maja-energy-green main article.boxed.alt {
+	background-color: #006938;
+	border-width: 0;
+}
+.maja-energy-green main article.boxed.alt h2 {
+    color: #006938;
+}
+
+.maja-energy-green main article {
+	border: 0;
+}
+
+.maja-energy-green aside h2 {
+	color: darken($energy-green, 40%);
+}
+.bulletin2.maja-energy-green footer.row {
+    background-color: #9bbeac;
+}
+
+
+
+
+/*
+ __   __  _______      ___  _______  _______  ___      __   __  _______ 
+|  |_|  ||   _   |    |   ||   _   ||  _    ||   |    |  | |  ||       |
+|       ||  |_|  |    |   ||  |_|  || |_|   ||   |    |  | |  ||    ___|
+|       ||       |    |   ||       ||       ||   |    |  |_|  ||   |___ 
+|       ||       | ___|   ||       ||  _   | |   |___ |       ||    ___|
+| ||_|| ||   _   ||       ||   _   || |_|   ||       ||       ||   |___ 
+|_|   |_||__| |__||_______||__| |__||_______||_______||_______||_______|
+*/
+
+.majablue a,
+.majablue a:link,
+.majablue a:active,
+.majablue a:visited {
+	color: darken($energy-light-blue, 40%);
+	text-decoration: underline;
+}
+
+.majablue a:hover,
+.majablue .poster a:hover {
+	color: darken($energy-light-blue, 30%);
+}
+
+.majablue a.button {
+	color: #fff;
+}
+.majablue a.button,
+.majablue a.button:link,
+.majablue a.button:active,
+.majablue a.button:visited {
+	background-color: darken($energy-light-blue, 40%);
+}
+.majablue a.button:hover,
+.majablue a.button:focus {
+	background-color: darken($energy-light-blue, 30%);
+}
+
+.majablue .titlebar {
+	background-color:$energy-light-blue;
+	color: $heritage-navy;
+}
+
+.majablue .titlebar h1,
+.majablue .titlebar h1 a,
+.majablue .titlebar h1 a:hover,
+.majablue .titlebar h1 a:active,
+.majablue .titlebar h1 a:visited,
+.majablue .titlebar h1 a:focus {
+	color: $heritage-navy;
+	text-decoration: none;
+}
+
+.majablue aside h2 {
+	color: darken($energy-light-blue, 40%);
+}
+
+.majablue main article.boxed {
+	background-color: lighten($energy-light-blue, 20%);
+	border-color: $energy-light-blue;
+}
+.majablue main article.boxed,
+.majablue main article h2 {
+	color: darken($heritage-navy, 3%);
+}
+.majablue main article.boxed.alt {
+	background-color: #C8BBDB;
+	border-color: #5A2B82;
+}
+.majablue main article.boxed.alt h2 {
+    color: #5A2B82;
+}
+.majablue main article {
+	border-top-color: $energy-light-blue;
+}
+.bulletin2.majablue footer.row {
+    background-color: #295994; /* Energy blue shifted to give 7:1 contrast with white */
+}
+
+
+/*
+    (energy purple)
+     __  __    ___        _    ___      ___   _   _    ___      ___    _       ___   
+	|  \/  |  /   \    _ | |  /   \    | _ \ | | | |  | _ \    | _ \  | |     | __|  
+	| |\/| |  | - |   | || |  | - |    |  _/ | |_| |  |   /    |  _/  | |__   | _|   
+	|_|__|_|  |_|_|   _\__/   |_|_|   _|_|_   \___/   |_|_\   _|_|_   |____|  |___|  
+	_|"""""|_|"""""|_|"""""|_|"""""|_| """ |_|"""""|_|"""""|_| """ |_|"""""|_|"""""| 
+	"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-' 	
+*/
+
+.majapurple a,
+.majapurple a:link,
+.majapurple a:active,
+.majapurple a:visited {
+	color: $energy-purple;
+	text-decoration: underline;
+}
+
+.majapurple a:hover,
+.majapurple .poster a:hover {
+	color: darken($heritage-berry, 8%);
+}
+
+.majapurple a.button {
+	color: #fff;
+}
+.majapurple a.button,
+.majapurple a.button:link,
+.majapurple a.button:active,
+.majapurple a.button:visited {
+	background-color: $energy-purple;
+}
+.majapurple a.button:hover,
+.majapurple a.button:focus {
+	background-color: lighten($energy-purple, 20%);
+}
+
+
+.majapurple .titlebar {
+	background-color: $energy-purple;
+	color: $heritage-purple;
+}
+
+.majapurple .titlebar h1,
+.majapurple .titlebar h1 a,
+.majapurple .titlebar h1 a:hover,
+.majapurple .titlebar h1 a:active,
+.majapurple .titlebar h1 a:visited,
+.majapurple .titlebar h1 a:focus {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.majapurple aside h2 {
+	color: $energy-purple;
+}
+
+.majapurple main article.boxed {
+	background-color: lighten($energy-purple, 55%);
+	border-color: $energy-purple;
+}
+
+.majapurple main article.boxed a {
+	font-weight: bold;
+}
+.majapurple main article.boxed.alt {
+	background-color: #B9DDE0;
+	border-color: #009097;
+}
+.majapurple main article.boxed.alt h2 {
+    color: #009097;
+}
+
+.majapurple main article {
+	border-top-color: $energy-purple;
+}
+
+.bulletin2 main article.boxed {
+	border-width: 2px 0;
+	border-style: solid;
+	padding: 1em;
+}
+.bulletin2.majapurple footer.row {
+    background-color: $energy-purple;
+}
+
+
+/*      _   _           _ _                     ____  _       _    
+     | | | | ___ _ __(_) |_ __ _  __ _  ___  |  _ \(_)_ __ | | __
+     | |_| |/ _ \ '__| | __/ _` |/ _` |/ _ \ | |_) | | '_ \| |/ /
+     |  _  |  __/ |  | | || (_| | (_| |  __/ |  __/| | | | |   < 
+     |_| |_|\___|_|  |_|\__\__,_|\__, |\___| |_|   |_|_| |_|_|\_\
+                                 |___/                           
+*/
+
+.majapink-heritage a,
+.majapink-heritage a:link,
+.majapink-heritage a:active,
+.majapink-heritage a:visited {
+	color: #9D1D65;
+	
+}
+
+.majapink-heritage a:hover,
+.majapink-heritage .poster a:hover {
+	color: #BD6C93;
+}
+
+.majapink-heritage a.button {
+	color: #fff;
+	
+}
+.majapink-heritage a.button,
+.majapink-heritage a.button:link,
+.majapink-heritage a.button:active,
+.majapink-heritage a.button:visited {
+	background-color: #9D1D65;
+}
+.majapink-heritage a.button:hover,
+.majapink-heritage a.button:focus {
+	background-color: #BD6C93;
+}
+
+.majapink-heritage .titlebar {
+	background-color: #9D1D65;
+	color: #CE97B2;
+}
+
+.majapink-heritage .titlebar h1,
+.majapink-heritage .titlebar h1 a,
+.majapink-heritage .titlebar h1 a:hover,
+.majapink-heritage .titlebar h1 a:active,
+.majapink-heritage .titlebar h1 a:visited,
+.majapink-heritage .titlebar h1 a:focus {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.bulletin2.majapink-heritage main article.boxed {
+	background-color: #9D1D65;
+	border-width: 0;
+}
+
+.majapink-heritage main article.boxed a {
+    color: #FFFFFF;
+}
+.majapink-heritage main article.boxed table a {
+	color: $heritage-berry;
+	text-decoration: underline;
+}
+.majapink-heritage main article.boxed.alt table a {
+	color: $heritage-navy;
+}
+
+.majapink-heritage main article.boxed h1,
+.majapink-heritage main article.boxed h2,
+.majapink-heritage main article.boxed h3,
+.majapink-heritage main article.boxed p,
+.majapink-heritage main article.boxed div,
+.majapink-heritage main article.boxed ul,
+.majapink-heritage main article.boxed li {
+    color: white;
+}
+
+.bulletin2.majapink-heritage main article.boxed.alt {
+	background-color: $heritage-navy;
+	border-width: 0;
+}
+.majapink-heritage main article.boxed.alt h2 {
+    color: white;
+}
+.majapink-heritage aside h2 {
+	color: $heritage-berry;
+}
+
+/*
+.majapink-heritage main article {
+	border-top-color: #9D1D65;
+}
+
+.bulletin2 main article.boxed {
+	border-width: 2px 0;
+	border-style: solid;
+	padding: 1em;
+}
+*/
+.bulletin2.majapink-heritage footer.row {
+    background-color: #9D1D65;
+}
+
+
+
+/**** TEMP ****/
+
+.bulletin2 aside .poster{
+	margin-bottom: 4em;
+}
+
+.bulletin2 aside .poster a {
+	display: block;
+	background: #eee;
+	background: -webkit-linear-gradient(#fdfdfd 0%, #eee 100%);
+	background: -moz-linear-gradient(#fdfdfd 0%, #eee 100%);
+	background: linear-gradient(#fdfdfd 0%, #eee 100%);
+	border:1px solid #ccc;
+	margin: 1em 0;
+	padding: 1em;
+	position: relative;
+}
+
+.bulletin2 aside .iconic {
+	text-align: center;
+	margin-bottom: 4em;
+	background-color: #F8F9F8;
+	border: 1px solid #ccc;
+}
+
+.bulletin2 aside .iconic h2 {
+	margin: 0;
+	font-size: 1.8em;
+}
+
+.bulletin2 aside .iconic img {
+	display: block;
+	margin: 1em auto;
+}
+
+.bulletin2 aside .iconic a{
+	display: block;
+	text-decoration: none;
+}
+
+.bulletin2 aside .iconic a:hover{
+	text-decoration: underline;
+}
+
+.poster a {
+	text-decoration: none;
+	color: #007934;
+}
+
+.poster a:hover{
+	text-decoration: underline;
+	color: #69BE28;
+}
+
+.poster a img {
+	position: absolute;
+	right: 10px;
+	top: 8px;
+}
+
+/**** END TEMP *****/
+
+article.oembed_insta {
+	blockquote, iframe {
+		min-width: auto !important; /* override instagram's styles */
+	}
+}
+
+@media only screen and (min-width: 752px) {
+	.titlebar img {
+		float: right;
+		margin: 0 0 2em 0;
+	}
+	.titlebar h1 {
+		margin: 2rem 0;
+	}
+	.bulletin2 main header {
+        margin-top: -2em;
+    }
+}
