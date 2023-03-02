@@ -1541,6 +1541,11 @@
         "id": 163708,
         "description": "dbi.php",
         "projectPath": "medias/Categorised/Dist/php/experts/dbi.php "
+      },
+      {
+        "id": 164333,
+        "description": "bulletin2.css",
+        "projectPath": "medias/Categorised/Dist/css/campaigns/bulletin2.css"
       }
     ]
   }
