@@ -1524,8 +1524,8 @@
       },
       {
         "id": 163731,
-        "description": "renderer.php",
-        "projectPath": "medias/Categorised/Dist/php/experts/renderer.php "
+        "description": "renderer.class.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/renderer.class.php "
       },
       {
         "id": 163730,
