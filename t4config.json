@@ -1546,6 +1546,61 @@
         "id": 164333,
         "description": "bulletin2.css",
         "projectPath": "medias/Categorised/Dist/css/campaigns/bulletin2.css"
+      },
+      {
+        "id": 164428,
+        "description": "browse-intro.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/browse-intro.php"
+      },
+      {
+        "id": 164429,
+        "description": "contact.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/contact.php"
+      },
+      {
+        "id": 164431,
+        "description": "default.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/default.php"
+      },
+      {
+        "id": 164432,
+        "description": "footer.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/footer.php"
+      },
+      {
+        "id": 164433,
+        "description": "form.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/form.php"
+      },
+      {
+        "id": 164434,
+        "description": "grid-container.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/grid-container.php"
+      },
+      {
+        "id": 164436,
+        "description": "meta.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/meta.php"
+      },
+      {
+        "id": 164437,
+        "description": "page.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/page.php"
+      },
+      {
+        "id": 164438,
+        "description": "still-looking.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/still-looking.php"
+      },
+      {
+        "id": 164439,
+        "description": "topic.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/topic.php"
+      },
+      {
+        "id": 164441,
+        "description": "media-guide.css",
+        "projectPath": "medias/Categorised/Dist/php/experts/template/media-guide.css"
       }
     ]
   }
