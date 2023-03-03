@@ -1520,27 +1520,27 @@
       {
         "id": 163733,
         "description": "experts.php",
-        "projectPath": "medias/Categorised/Dist/php/experts/experts.php "
+        "projectPath": "medias/Categorised/Dist/php/experts/experts.php"
       },
       {
         "id": 163731,
         "description": "renderer.class.php",
-        "projectPath": "medias/Categorised/Dist/php/experts/renderer.class.php "
+        "projectPath": "medias/Categorised/Dist/php/experts/renderer.class.php"
       },
       {
         "id": 163730,
         "description": "mediaguide.inc.php",
-        "projectPath": "medias/Categorised/Dist/php/experts/mediaguide.inc.php "
+        "projectPath": "medias/Categorised/Dist/php/experts/mediaguide.inc.php"
       },
       {
         "id": 163709,
         "description": "class.stemmer.inc.php",
-        "projectPath": "medias/Categorised/Dist/php/experts/class.stemmer.inc.php "
+        "projectPath": "medias/Categorised/Dist/php/experts/class.stemmer.inc.php"
       },
       {
         "id": 163708,
         "description": "dbi.php",
-        "projectPath": "medias/Categorised/Dist/php/experts/dbi.php "
+        "projectPath": "medias/Categorised/Dist/php/experts/dbi.php"
       },
       {
         "id": 164333,
@@ -1601,6 +1601,16 @@
         "id": 164441,
         "description": "media-guide.css",
         "projectPath": "medias/Categorised/Dist/php/experts/template/media-guide.css"
+      },
+      {
+        "id": 164308,
+        "description": "browse.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/browse.php"
+      },
+      {
+        "id": 164307,
+        "description": "index.php",
+        "projectPath": "medias/Categorised/Dist/php/experts/index.php"
       }
     ]
   }
