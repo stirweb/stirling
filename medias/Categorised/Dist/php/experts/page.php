@@ -14,10 +14,13 @@
 	<link rel="manifest" href="/manifest.json">
 	<meta name="theme-color" content="#006938">
 
-	<t4 type="navigation" name="Template: External Fonts" id="63" />
-    <t4 type="navigation" name="Template: External CSS" id="31" />
-    <t4 type="navigation" name="Template: Include Content Type CSS" id="43" />
-
+	<link rel="preload" href="/media/dist/fonts/fsmaja/FSMajaWeb-Regular.woff" as="font" type="font/woff" crossorigin>
+	<link rel="preload" href="/media/dist/fonts/open-sans/OpenSans-Regular.ttf" as="font" type="font/ttf" crossorigin>
+	<link rel="preload" href="/media/dist/fonts/open-sans/OpenSans-Bold.ttf" as="font" type="font/ttf" crossorigin>
+	<link rel="preload" href="/media/dist/fonts/fonts.css" as="style"> 
+	<link rel="preload" href="/media/dist/css/app.min.css" as="style">
+	<link rel="stylesheet" href="/media/dist/fonts/fonts.css" type="text/css">
+	<link rel="stylesheet" href="/media/dist/css/app.min.css" type="text/css">
 
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -224,7 +227,7 @@
 				class="show-for-sr">Scroll back to the top</span><span class="uos-arrows-up"></span></a>
 	</footer>
 
-	<t4 type="navigation" name="Template: Footer JS" id="32" />
+	<script type="text/javascript" src="/media/dist/js/app.min.js"></script>
 	<?=$scripts?>
 </body>
 
