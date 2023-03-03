@@ -80,7 +80,7 @@
 		<div class="grid-container">
 			<div class="grid-x grid-padding-x">
 				<div class="cell large-4 medium-4 small-8">
-					<a href="/" title="University of Stirling"><img src="/webcomponents/dist/css/images/logos/logo.svg" alt="University of Stirling logo" class="c-site-logo"></a>
+					<a href="/" title="University of Stirling"><img src="/media/dist/css/images/logos/logo.svg" alt="University of Stirling logo" class="c-site-logo"></a>
 				</div>
 
 				<nav aria-label="primary" class="cell large-8 medium-8 small-4 flex-container align-right">
