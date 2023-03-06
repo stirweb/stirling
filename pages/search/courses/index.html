@@ -365,15 +365,13 @@
                         <input type="text" placeholder="eg /courses/ug/professional-practice/">
                         <button class="button">Add</button>
                     </form>
+
+                    <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="clearallfavs">Clear all
+                        favs</button>
                 </div>
 
                 <div id="favsarea" class="c-search-results-area cell u-padding-y u-bg-grey u-bleed bg-grey"></div>
-
                 <div id="historyarea" class="c-search-results-area cell u-padding-y "></div>
-
-
-
-
             </div>
         </div>
 
@@ -516,8 +514,10 @@
     <script>
 
         const demoForm = document.querySelector("#demoform");
+        const clearAllFavsBtn = document.querySelector("[data-action=clearallfavs]");
         const favsArea = document.querySelector("#favsarea");
         const historyArea = document.querySelector("#historyarea");
+        const identifer = "favs=";
 
         const host = "https://search.stir.ac.uk";
         //const host = "https://stage-shared-15-24-admin.clients.uk.funnelback.com";
@@ -527,7 +527,6 @@
 
         /* renderFavs : Returns a String of HTML */
         const renderFavs = (item) => {
-
             return `
                 <div class="c-search-result" data-rank="" data-sid="" data-result-type="course">
                     <div class=" c-search-result__tags">
@@ -545,9 +544,8 @@
                             <div class="cell medium-4"><strong class="u-heritage-green">Study modes</strong><p class="u-text-sentence-case">${item.metaData.modes}</p></div>
                             <div class="cell medium-4"><strong class="u-heritage-green">Delivery</strong><p class="u-text-sentence-case">${item.metaData.delivery}</p></div>
                         </div>
-                        
-                    
                     </div>
+                    <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="removefav" data-id="${item.liveUrl}">Remove from favs</button>
                 </div>`;
         }
 
@@ -562,56 +560,89 @@
 
         /* fetchData : Returns null */
         const fetchData = (url, node, type) => {
-
             stir.getJSON(url, (initialData) => {
-
-                if (type === "history") {
-                    console.log(url);
-                    console.log(initialData.session);
-                    console.log("history done")
-                }
-                else {
-
-                    //console.log(initialData.session);
-                    const data = initialData.response.resultPacket.results;
-                    setDOMContent(node, data.map(renderFavs).join(''));
-                }
+                const data = initialData.response.resultPacket.results;
+                setDOMContent(node, data.map(renderFavs).join(''));
             });
         };
 
+        /* */
+        const getExpiryDate = (days) => {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            return ";expires=" + d.toUTCString();
+        };
+
+        /* */
+        const getFavsStoredinCookie = (identifer) => {
+            const cookies = document.cookie.split(";");
+
+            const favCookie = cookies.filter(item => item.includes(identifer));
+            const favCookie2 = favCookie.length && favCookie[0].replace(identifer, "");
+
+            return favsStored = JSON.parse(favCookie2) || [];
+        };
+
         /* init : Returns null */
-        const init = (favsArea, url, favsStored) => {
+        const init = (favsArea, url, identifer) => {
+            const favsStored = getFavsStoredinCookie(identifer);
+
+            if (!favsStored.length || favsStored.length < 1) {
+                setDOMContent(favsArea, '<p>No favs stored</p>');
+                return;
+            }
+
             const fullUrl = url + getFBScope(favsStored);
             fetchData(fullUrl, favsArea)
         };
 
+
         // ON LOAD
-        const favsStored = JSON.parse(localStorage.getItem('favs')) || [];
 
-        favsStored.length && favsStored.length > 0 ? init(favsArea, url, favsStored) : setDOMContent(favsArea, '<p>No favs stored</p>');
-
+        init(favsArea, url, identifer);
 
 
-
-        // DEMO ACTION
+        // DEMO ACTION: Add a fav
         demoForm && demoForm.addEventListener("submit", (event) => {
             const text = demoForm.querySelector("[type=text]").value;
 
+            // Update the cookie
+            const favsStored = getFavsStoredinCookie(identifer);
             const favsStored2 = [...favsStored, { url: text }];
-            localStorage.setItem('favs', JSON.stringify(favsStored2));
+            document.cookie = identifer + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
 
-            const fullUrl = url + getFBScope(favsStored2);
-            fetchData(fullUrl, favsArea);
+            init(favsArea, url, identifer);
+            event.preventDefault();
+        });
+
+        /* ACTION: Remove a fav */
+        favsArea && favsArea.addEventListener("click", (event) => {
+            if (event.target.dataset.action && event.target.dataset.action === "removefav") {
+                const id = event.target.dataset.id;
+
+                if (id && id.length) {
+                    const itemUrl = id.replace("https://www.stir.ac.uk", "");
+
+                    const favsStored = getFavsStoredinCookie(identifer);
+                    const favsStored2 = favsStored.filter(item => item.url !== itemUrl);
+
+                    // Update the cookie
+                    document.cookie = identifer + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
+                    init(favsArea, url, identifer);
+                }
+            }
+            event.preventDefault();
+        });
+
+        /* ACTION: Remove all favs */
+        clearAllFavsBtn && clearAllFavsBtn.addEventListener("click", (event) => {
+            document.cookie = identifer + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
+            init(favsArea, url, identifer);
 
             event.preventDefault();
         });
 
 
-
-        const sessionUrl = host + "/s/search.json?collection=stir-courses&profile=_default_preview&form=history";
-
-
-        fetchData(sessionUrl, historyArea, 'history');
 
 
 
