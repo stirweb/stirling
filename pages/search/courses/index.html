@@ -517,7 +517,7 @@
         const clearAllFavsBtn = document.querySelector("[data-action=clearallfavs]");
         const favsArea = document.querySelector("#favsarea");
         const historyArea = document.querySelector("#historyarea");
-        const identifer = "favs=";
+        const cookieId = "favs=";
 
         const host = "https://search.stir.ac.uk";
         //const host = "https://stage-shared-15-24-admin.clients.uk.funnelback.com";
@@ -526,7 +526,7 @@
         const url = host + "/s/search.json?collection=stir-courses&query=!asdsadsad&fmo=true&num_ranks=2000&SF=[" + sf.join(",") + "]&scope=";
 
         /* renderFavs : Returns a String of HTML */
-        const renderFavs = (item) => {
+        const renderFavs = stir.curry((item) => {
             return `
                 <div class="c-search-result" data-rank="" data-sid="" data-result-type="course">
                     <div class=" c-search-result__tags">
@@ -547,7 +547,7 @@
                     </div>
                     <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="removefav" data-id="${item.liveUrl}">Remove from favs</button>
                 </div>`;
-        }
+        });
 
         /* setDOMContent : Returns a Boolean  */
         const setDOMContent = stir.curry((node, html) => {
@@ -559,47 +559,62 @@
         const getFBScope = (favs) => favs.map(item => `` + item.url + ``).join(',');
 
         /* fetchData : Returns null */
-        const fetchData = (url, node, type) => {
+        const fetchData = (url, node, favsStored) => {
             stir.getJSON(url, (initialData) => {
                 const data = initialData.response.resultPacket.results;
-                setDOMContent(node, data.map(renderFavs).join(''));
+
+                // Maintain ordering
+                const favStored2 = favsStored.map(item => {
+                    return data.filter(element => {
+                        if (item.url === element.liveUrl.replace("https://www.stir.ac.uk", "")) return element;
+                    })[0];
+                })
+
+                setDOMContent(node, favStored2.map(renderFavs).join(''));
             });
         };
 
         /* */
-        const getExpiryDate = (days) => {
+        const getUTCDate = (days) => {
             const d = new Date();
             d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-            return ";expires=" + d.toUTCString();
+            return d.toUTCString();
         };
 
+
         /* */
-        const getFavsStoredinCookie = (identifer) => {
+        const getExpiryDate = (days) => ";expires=" + getUTCDate(days);
+
+
+        /* */
+        const getFavsStoredinCookie = (cookieId) => {
             const cookies = document.cookie.split(";");
 
-            const favCookie = cookies.filter(item => item.includes(identifer));
-            const favCookie2 = favCookie.length && favCookie[0].replace(identifer, "");
+            const favCookie = cookies.filter(item => item.includes(cookieId));
+            const favCookie2 = favCookie.length && favCookie[0].replace(cookieId, "");
 
-            return favsStored = JSON.parse(favCookie2) || [];
+            return JSON.parse(favCookie2) || [];
         };
 
         /* init : Returns null */
-        const init = (favsArea, url, identifer) => {
-            const favsStored = getFavsStoredinCookie(identifer);
+        const init = (favsArea, url, cookieId) => {
+            const favsStored = getFavsStoredinCookie(cookieId);
 
             if (!favsStored.length || favsStored.length < 1) {
                 setDOMContent(favsArea, '<p>No favs stored</p>');
                 return;
             }
 
-            const fullUrl = url + getFBScope(favsStored);
-            fetchData(fullUrl, favsArea)
+            const favsStored2 = favsStored.sort((a, b) => b.date - a.date);
+            const fullUrl = url + getFBScope(favsStored2);
+
+            fetchData(fullUrl, favsArea, favsStored2);
+            return;
         };
 
 
-        // ON LOAD
-
-        init(favsArea, url, identifer);
+        /* ON LOAD */
+        init(favsArea, url, cookieId);
 
 
         /* ACTION: Add a fav */
@@ -607,11 +622,11 @@
             const text = (demoForm.querySelector("[type=text]").value).replace("https://www.stir.ac.uk", "");
 
             // Update the cookie
-            const favsStored = getFavsStoredinCookie(identifer);
-            const favsStored2 = [...favsStored, { url: text }];
-            document.cookie = identifer + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
+            const favsStored = getFavsStoredinCookie(cookieId);
+            const favsStored2 = [...favsStored, { url: text, date: Date.now() }];
+            document.cookie = cookieId + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
 
-            init(favsArea, url, identifer);
+            init(favsArea, url, cookieId);
             event.preventDefault();
         });
 
@@ -623,12 +638,12 @@
                 if (id && id.length) {
                     const itemUrl = id.replace("https://www.stir.ac.uk", "");
 
-                    const favsStored = getFavsStoredinCookie(identifer);
+                    const favsStored = getFavsStoredinCookie(cookieId);
                     const favsStored2 = favsStored.filter(item => item.url !== itemUrl);
 
                     // Update the cookie
-                    document.cookie = identifer + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
-                    init(favsArea, url, identifer);
+                    document.cookie = cookieId + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
+                    init(favsArea, url, cookieId);
                 }
             }
             event.preventDefault();
@@ -636,15 +651,11 @@
 
         /* ACTION: Remove all favs */
         clearAllFavsBtn && clearAllFavsBtn.addEventListener("click", (event) => {
-            document.cookie = identifer + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
-            init(favsArea, url, identifer);
+            document.cookie = cookieId + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
+            init(favsArea, url, cookieId);
 
             event.preventDefault();
         });
-
-
-
-
 
     </script>
 
