@@ -602,9 +602,9 @@
         init(favsArea, url, identifer);
 
 
-        // DEMO ACTION: Add a fav
+        /* ACTION: Add a fav */
         demoForm && demoForm.addEventListener("submit", (event) => {
-            const text = demoForm.querySelector("[type=text]").value;
+            const text = (demoForm.querySelector("[type=text]").value).replace("https://www.stir.ac.uk", "");
 
             // Update the cookie
             const favsStored = getFavsStoredinCookie(identifer);
