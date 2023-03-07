@@ -29,7 +29,7 @@ var UoS_GettingAround = function () {
    * although it's probably better suited to have this as an object, however
    * it's easier to add new markers when copying/pasting from tools such as
    * latlng.net etc
-   * var {Array<object>}
+   * @var {Array<object>}
    */
   var _markerData = [{
     name: "Campus Central / Atrium",
@@ -624,9 +624,9 @@ var UoS_GettingAround = function () {
 
     start = document.getElementById("getting-around-directions__origin");
     end = document.getElementById("getting-around-directions__destination");
-    groupselect = document.createElement("select");
-    filtersEl = document.getElementById("filters");
-    filtersLabel = document.createElement("label");
+    groupselect = document.createElement('select');
+    filtersEl = document.getElementById('filters');
+    filtersLabel = document.createElement('label');
     filtersLabel.textContent = "Mark locations on the map:";
     filtersLabel.appendChild(groupselect);
     filtersEl.appendChild(filtersLabel);
@@ -639,7 +639,7 @@ var UoS_GettingAround = function () {
         optgroup.label = name;
         //        for (var j = 0; j < group.length; j++) {
         groupsData[name].forEach(function (location) {
-          var option = document.createElement("option");
+          var option = document.createElement('option');
           option.value = location.coords.replace(/\s/gi, "");
           option.textContent = location.name;
           optgroup.appendChild(option);
@@ -650,10 +650,10 @@ var UoS_GettingAround = function () {
 
       //		html.push('<div style="width: 50%; float: left;">');
       //		html.push('  <label>'); // for="filter__' + name.toLowerCase() + '"
-      //		html.push('    <input class="filter" type="checkbox" name="' + name + '"> ' + name); //id="filter__' + name.toLowerCase() + '"
+      //		html.push('    <input class="filter" type="checkbox" name="' + name + '"> ' + name); //id="filter__' + name.toLowerCase() + '" 
       //		html.push("  </label>");
       //		html.push("</div>");
-      var groupoption = document.createElement("option");
+      var groupoption = document.createElement('option');
       //groupoption.value = name;
       groupoption.textContent = name;
       groupselect.appendChild(groupoption);
