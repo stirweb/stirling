@@ -16,18 +16,36 @@ stir.funnelback = stir.funnelback || (() => {
 
   (function() {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	var el = document.querySelector('[data-funnelback-inject]');
-	if(!el)return;
-	var subject = el.getAttribute('data-subject');
-	if(!subject)return;
-
-	const url = stir.funnelback.getJsonEndpoint().toString() + `?collection=stir-courses&query=!padre&SF=[award]&meta_subject_orsand=%22${subject}%22&sort=title`;
-
-	const callback = data => {
-		if(!data)return;
-		el.innerHTML = data?.response?.resultPacket?.results?.map(result => `<li><a href="${result.liveUrl}">${result.metaData.award} ${result.title}</a></li>`).join('')||'';
+	const templates = {
+		relatedCourses: result => `<li><a href="${result.liveUrl}">${result.metaData.award} ${result.title}</a></li>`,
+		relatedNews: result => `<article class="cell large-4 medium-6 small-12" aria-label="${result.title.split("|").shift().trim()}">
+		<a href="${result.liveUrl}"><img class="show-for-medium" src="${result.metaData.image.split("|").slice(1).shift()}" alt="${result.metaData.imagealt}"></a>
+		<time class="u-block u-my-1 u-grey--dark">${stir.Date.newsDate(new Date(result.date))}</time>
+		<h3 class="header-stripped u-header--margin-stripped u-mt-1 u-font-normal u-compress-line-height"><a href="${result.liveUrl}" class="c-link u-inline">${result.title.split("|").shift().trim()}</a></h3>
+		<p class="text-sm">${result.summary}</p>
+	</article>`,
 	};
+	const parameters = {
+		relatedCourses: '&sort=title&SF=[award]',
+		relatedNews:'&sort=date&SF=[c,d,h1,image,imagealt,tags]&num_ranks=3'
+	};
+	document.querySelectorAll('[data-funnelback-inject]').forEach(el => {
 
-	debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
-
+		if(!el)return;
+		var type = el.getAttribute('data-type');
+		var metaName = el.getAttribute('data-meta-name');
+		var metaValue = el.getAttribute('data-meta-value');
+		var collection = el.getAttribute('data-collection');
+		if(!type||!metaName||!metaValue)return;
+		
+		const url = stir.funnelback.getJsonEndpoint().toString() + `?collection=${collection}&query=!padre&meta_${metaName}_orsand=%22${metaValue}%22${parameters[type]}`;
+		
+		const callback = data => {
+			if(!data)return;
+			el.innerHTML = data?.response?.resultPacket?.results?.map(result => templates[type](result)).join('')||'';
+		};
+		
+		debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
+	});
+		
   })();
