@@ -615,7 +615,7 @@ var UoS_GettingAround = function () {
 
     // populate select boxes with locations, and checkboxes
     var start, $end, $optgroup, group, location, filtersEl, filtersLabel;
-    var html = [];
+    //var html = [];
     //	html.push('<div style="width: 100%; float: left;">');
     //	html.push(' <label style="font-weight: bold;" for="filter__all">');
     //	html.push('    <input id="filter__all" type="checkbox" class="filter" name="all"> Show/ Hide All');
@@ -653,46 +653,46 @@ var UoS_GettingAround = function () {
       //		html.push('    <input class="filter" type="checkbox" name="' + name + '"> ' + name); //id="filter__' + name.toLowerCase() + '"
       //		html.push("  </label>");
       //		html.push("</div>");
+
       var groupoption = document.createElement("option");
       //groupoption.value = name;
       groupoption.textContent = name;
       groupselect.appendChild(groupoption);
     }
 
+    /*
+    // Free text search input
     // Nodes
-    var suggestDataList = stir.node("#getting-around__suggestions");
-    var suggestInput = stir.node("#getting-around__suggestions-input");
-
-    // populate the suggestions datalist
+    const suggestDataList = stir.node("#getting-around__suggestions");
+    const suggestInput = stir.node("#getting-around__suggestions-input");
+     // populate the suggestions datalist
     suggestionsData.sort();
     for (var i = 0; i < suggestionsData.length; i++) {
       suggestDataList.append('<option value="' + suggestionsData[i] + '">');
     }
-
-    // add behaviour to suggestions to center and show info
+     // add behaviour to suggestions to center and show info
     suggestInput.addEventListener("change", function (e) {
       // get the desired marker by value (e.g. "Sports Centre")
       var marker;
-      for (var i = 0; i < _markerData.length; i++) {
+       for (var i = 0; i < _markerData.length; i++) {
         if (_markerData[i].name === this.value) {
           marker = _markerData[i];
         }
       }
-
-      // open infowindow
+       if (!marker) alert("Sorry that destination is not found");
+       // open infowindow
       if (marker) {
         var coords = _getPosObject(marker.coords);
         _map.setCenter(new google.maps.LatLng(coords["lat"], coords["lng"]));
         _map.setZoom(17); //
-
-        infowindow.setContent("<p><strong>" + marker.name + "</strong></p>" + (marker.description ? "<p>" + marker.description + "</p>" : ""));
+         infowindow.setContent("<p><strong>" + marker.name + "</strong></p>" + (marker.description ? "<p>" + marker.description + "</p>" : ""));
         infowindow.open(_map, marker.marker);
       }
-
-      // clear the input coz it filters the drop down options
+       // clear the input coz it filters the drop down options
       //("#getting-around__suggestions-input").val("");
       suggestInput.value = "";
     });
+    */
 
     //    ("#filters").html(html.join(""));
 

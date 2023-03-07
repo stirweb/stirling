@@ -699,7 +699,7 @@ var UoS_GettingAround = (function () {
 
     // populate select boxes with locations, and checkboxes
     var start, $end, $optgroup, group, location, filtersEl, filtersLabel;
-    var html = [];
+    //var html = [];
     //	html.push('<div style="width: 100%; float: left;">');
     //	html.push(' <label style="font-weight: bold;" for="filter__all">');
     //	html.push('    <input id="filter__all" type="checkbox" class="filter" name="all"> Show/ Hide All');
@@ -738,12 +738,15 @@ var UoS_GettingAround = (function () {
       //		html.push('    <input class="filter" type="checkbox" name="' + name + '"> ' + name); //id="filter__' + name.toLowerCase() + '"
       //		html.push("  </label>");
       //		html.push("</div>");
+
       var groupoption = document.createElement("option");
       //groupoption.value = name;
       groupoption.textContent = name;
       groupselect.appendChild(groupoption);
     }
 
+    /*
+    // Free text search input
     // Nodes
     const suggestDataList = stir.node("#getting-around__suggestions");
     const suggestInput = stir.node("#getting-around__suggestions-input");
@@ -765,6 +768,8 @@ var UoS_GettingAround = (function () {
         }
       }
 
+      if (!marker) alert("Sorry that destination is not found");
+
       // open infowindow
       if (marker) {
         var coords = _getPosObject(marker.coords);
@@ -779,6 +784,7 @@ var UoS_GettingAround = (function () {
       //("#getting-around__suggestions-input").val("");
       suggestInput.value = "";
     });
+    */
 
     //    ("#filters").html(html.join(""));
 
@@ -799,6 +805,7 @@ var UoS_GettingAround = (function () {
     var onChangeHandler = function () {
       _calculateAndDisplayRoute(directionsService, directionsDisplay);
     };
+
     document.getElementById("getting-around-directions__origin").addEventListener("change", onChangeHandler);
     document.getElementById("getting-around-directions__destination").addEventListener("change", onChangeHandler);
 
