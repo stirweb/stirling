@@ -17,7 +17,7 @@ stir.funnelback = stir.funnelback || (() => {
   (function() {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 	const templates = {
-		relatedCourses: result => `<li><a href="${result.liveUrl}">${result.metaData.award} ${result.title}</a></li>`,
+		relatedCourses: result => `<li><a href="${result.liveUrl}">${result.metaData.award||""} ${result.title}</a></li>`,
 		relatedNews: result => `<article class="cell large-4 medium-6 small-12" aria-label="${result.title.split("|").shift().trim()}">
 		<a href="${result.liveUrl}"><img class="show-for-medium" src="${result.metaData.image.split("|").slice(1).shift()}" alt="${result.metaData.imagealt}"></a>
 		<time class="u-block u-my-1 u-grey--dark">${stir.Date.newsDate(new Date(result.date))}</time>
@@ -26,7 +26,7 @@ stir.funnelback = stir.funnelback || (() => {
 	</article>`,
 	};
 	const parameters = {
-		relatedCourses: '&sort=title&SF=[award]',
+		relatedCourses: '&sort=title&SF=[award]&num_ranks=25',
 		relatedNews:'&sort=date&SF=[c,d,h1,image,imagealt,tags]&num_ranks=3'
 	};
 	document.querySelectorAll('[data-funnelback-inject]').forEach(el => {
@@ -38,7 +38,14 @@ stir.funnelback = stir.funnelback || (() => {
 		var collection = el.getAttribute('data-collection');
 		if(!type||!metaName||!metaValue)return;
 		
-		const url = stir.funnelback.getJsonEndpoint().toString() + `?collection=${collection}&query=!padre&meta_${metaName}_orsand=%22${metaValue}%22${parameters[type]}`;
+		if("subject"===metaName) {
+			// Subjects are comma separated and need to be wrapped with quotemarks
+			// so that the query language is correct. (This avoids matching on words
+			// like "and" and so on that would otherwise ruin the results).
+			metaValue = metaValue.split(', ').map(value=>`"${value}"`).join(" ");
+		}
+
+		const url = stir.funnelback.getJsonEndpoint().toString() + `?collection=${collection}&query=!padre&meta_${metaName}_orsand=${metaValue}${parameters[type]}`;
 		
 		const callback = data => {
 			if(!data)return;
