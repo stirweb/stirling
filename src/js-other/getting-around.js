@@ -625,12 +625,14 @@ var UoS_GettingAround = (function () {
       zoom: _options.zoom,
       center: _options.center,
     });
+
     directionsDisplay.setMap(_map);
 
     // // fetch data...
 
     // create markers
     infowindow = new google.maps.InfoWindow();
+
     for (var i = 0; i < _markerData.length; i++) {
       markerOptions = {
         position: _getPosObject(_markerData[i].coords),
@@ -795,8 +797,10 @@ var UoS_GettingAround = (function () {
 
     //("input[name='travelmode']").on("click", function (e) {
     const travelInputHandler = (element) => {
-      _options.travelMode = element.value.toUpperCase();
-      _calculateAndDisplayRoute(directionsService, directionsDisplay);
+      element.addEventListener("click", function (e) {
+        _options.travelMode = element.value.toUpperCase();
+        _calculateAndDisplayRoute(directionsService, directionsDisplay);
+      });
     };
 
     travelModeInputs.forEach(travelInputHandler);

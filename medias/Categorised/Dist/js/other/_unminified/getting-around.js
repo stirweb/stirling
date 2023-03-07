@@ -703,8 +703,10 @@ var UoS_GettingAround = function () {
 
     //("input[name='travelmode']").on("click", function (e) {
     var travelInputHandler = function travelInputHandler(element) {
-      _options.travelMode = element.value.toUpperCase();
-      _calculateAndDisplayRoute(directionsService, directionsDisplay);
+      element.addEventListener("click", function (e) {
+        _options.travelMode = element.value.toUpperCase();
+        _calculateAndDisplayRoute(directionsService, directionsDisplay);
+      });
     };
     travelModeInputs.forEach(travelInputHandler);
 
