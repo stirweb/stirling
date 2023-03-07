@@ -1,7 +1,7 @@
 /**
  * Give the map stuff it's own scope and accessor methods
  */
-var UoS_GettingAround = function () {
+var UoS_GettingAround = (function () {
   /**
    * We wanna only change these in one place as they are used when comparing
    * status etc (e.g. compare value of checkbox to determine whether to show/
@@ -21,7 +21,7 @@ var UoS_GettingAround = function () {
     ELECTRIC_BIKES: "Electric bike hire",
     CHARGING_POINT: "Electric car charging point",
     DROP_OFF: "Drop off point",
-    PEDESTRIAN_AREA: "No vehicular access "
+    PEDESTRIAN_AREA: "No vehicular access ",
   };
 
   /**
@@ -29,379 +29,465 @@ var UoS_GettingAround = function () {
    * although it's probably better suited to have this as an object, however
    * it's easier to add new markers when copying/pasting from tools such as
    * latlng.net etc
-   * @var {Array<object>}
+   * var {Array<object>}
    */
-  var _markerData = [{
-    name: "Campus Central / Atrium",
-    type: types.BUILDINGS,
-    coords: "56.145922, -3.920283"
-  }, {
-    name: "Students' Union",
-    type: types.BUILDINGS,
-    coords: "56.145926, -3.918393"
-  }, {
-    name: "Queens Court drop off point",
-    type: types.DROP_OFF,
-    coords: "56.144959, -3.920038"
-  }, {
-    name: "No vehicular access - pedestrians only",
-    type: types.PEDESTRIAN_AREA,
-    coords: "56.145610, -3.923317"
-  }, {
-    name: "No vehicular access - pedestrians only",
-    type: types.PEDESTRIAN_AREA,
-    coords: "56.145245, -3.920502"
-  }, {
-    name: "Parking",
-    type: types.PARKING,
-    coords: "56.149712, -3.925524"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.145336, -3.920214"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.149366, -3.916759"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.148727, -3.913141"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.149104, -3.906754"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.148378, -3.927181"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.149931, -3.926829"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.145243, -3.922320"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.144765, -3.921848"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.143794, -3.919998"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.143627, -3.923367"
-  }, {
-    name: "Parking",
-    // pathfoot
-    type: types.PARKING,
-    coords: "56.148595, -3.928518"
-  }, {
-    name: "Parking",
-    // pathfoot
-    type: types.PARKING,
-    coords: "56.148320, -3.926168"
-  }, {
-    name: "Parking",
-    // beach court, etc
-    type: types.PARKING,
-    coords: "56.149372, -3.922807"
-  }, {
-    name: "Parking",
-    // beach court, etc
-    type: types.PARKING,
-    coords: "56.149416, -3.921820"
-  }, {
-    name: "Parking",
-    // beach court, etc
-    type: types.PARKING,
-    coords: "56.148940, -3.919535"
-  }, {
-    name: "Parking",
-    // medical centre
-    type: types.PARKING,
-    coords: "56.149215, -3.915994"
-  }, {
-    name: "Parking",
-    // medical centre
-    type: types.PARKING,
-    coords: "56.148767, -3.913752"
-  }, {
-    name: "Parking",
-    // medical centre
-    type: types.PARKING,
-    coords: "56.149469, -3.910930"
-  }, {
-    name: "Parking",
-    // medical centre
-    type: types.PARKING,
-    coords: "56.149603, -3.909943"
-  }, {
-    name: "Parking",
-    // medical centre
-    type: types.PARKING,
-    coords: "56.148790, -3.906778"
-  }, {
-    name: "Disabled Parking",
-    type: types.DISABLED_PARKING,
-    coords: "56.146569, -3.925578"
-  }, {
-    name: "Parking",
-    // into
-    type: types.PARKING,
-    coords: "56.145128, -3.923044"
-  }, {
-    name: "Parking",
-    // court
-    type: types.PARKING,
-    coords: "56.143813, -3.923044"
-  }, {
-    name: "Parking",
-    // court behind
-    type: types.PARKING,
-    coords: "56.142424, -3.921624"
-  }, {
-    name: "Parking",
-    // cottrell over road
-    type: types.PARKING,
-    coords: "56.143172, -3.919779"
-  }, {
-    name: "Parking",
-    // cottrell over road 2
-    type: types.PARKING,
-    coords: "56.142968, -3.918878"
-  }, {
-    name: "Parking",
-    // colin bell
-    type: types.PARKING,
-    coords: "56.143435, -3.918148"
-  }, {
-    name: "Parking",
-    // property management office
-    type: types.PARKING,
-    coords: "56.142472, -3.913620"
-  }, {
-    name: "The Bite",
-    type: types.EATING,
-    coords: "56.144471, -3.920713"
-  }, {
-    name: "Haldane's",
-    type: types.EATING,
-    coords: "56.145882, -3.918882"
-  }, {
-    name: "Scran",
-    type: types.EATING,
-    coords: "56.146062, -3.920032"
-  }, {
-    name: "SUP",
-    type: types.EATING,
-    coords: "56.145762, -3.920271"
-  }, {
-    name: "Pathfoot Dining Room",
-    type: types.EATING,
-    coords: "56.149127, -3.925329"
-  }, {
-    name: "Crush Hall Pod",
-    type: types.EATING,
-    coords: "56.149494, -3.926526"
-  }, {
-    name: "Stirling Court Hotel",
-    type: types.EATING,
-    coords: "56.143324, -3.922643"
-  }, {
-    name: "Food and Drink at Macrobert",
-    type: types.EATING,
-    coords: "56.145644, -3.920007"
-  }, {
-    name: "Nourish",
-    type: types.EATING,
-    coords: "56.145701, -3.924482"
-  }, {
-    name: "Refresh Bar and Bistro",
-    type: types.EATING,
-    coords: "56.149127, -3.92082"
-  }, {
-    name: "Students’ Union",
-    description: "Studio, Underground and Venue",
-    type: types.EATING,
-    coords: "56.146026, -3.918340"
-  }, {
-    name: "UMAMI",
-    type: types.EATING,
-    coords: "56.144384, -3.921226"
-  }, {
-    name: "Parking",
-    // cottrell behind
-    type: types.SHORT_STAY_PARKING,
-    coords: "56.143692, -3.919897"
-  }, {
-    name: "Alangrange",
-    type: types.RESIDENCES,
-    coords: "56.150993, -3.929349"
-  }, {
-    name: "Alexander Court",
-    type: types.RESIDENCES,
-    coords: "56.149023, -3.906662"
-  }, {
-    name: "Andrew Stewart Hall",
-    type: types.RESIDENCES,
-    coords: "56.148859, -3.922686"
-  }, {
-    name: "Beech Court",
-    type: types.RESIDENCES,
-    coords: "56.148575,-3.919705"
-  }, {
-    name: "Fraser of Allander House",
-    type: types.RESIDENCES,
-    coords: "56.148525, -3.921504"
-  }, {
-    name: "Friarscroft",
-    type: types.RESIDENCES,
-    coords: "56.140727,-3.9261935"
-  }, {
-    name: "H H Donnelly House",
-    type: types.RESIDENCES,
-    coords: "56.149045, -3.921639"
-  }, {
-    name: "John Forty's Court",
-    type: types.RESIDENCES,
-    coords: "56.129741, -3.934522"
-  }, {
-    name: "Juniper Court Standard Flats",
-    type: types.RESIDENCES,
-    coords: "56.149070, -3.917518"
-  }, {
-    name: "Lyon Crescent",
-    type: types.RESIDENCES,
-    coords: "56.149936, -3.947224"
-  }, {
-    name: "Muirhead House",
-    type: types.RESIDENCES,
-    coords: "56.149126, -3.919097"
-  }, {
-    name: "Pendreich Way",
-    type: types.RESIDENCES,
-    coords: "56.149918, -3.924077"
-  }, {
-    name: "Polwarth House",
-    type: types.RESIDENCES,
-    coords: "56.148953, -3.920406"
-  }, {
-    name: "Spittal Hill",
-    type: types.RESIDENCES,
-    coords: "56.141321, -3.92499"
-  }, {
-    name: "Thistle Chambers",
-    type: types.RESIDENCES,
-    coords: "56.118522, -3.935718"
-  }, {
-    name: "Union Street, Bridge of Allan",
-    type: types.RESIDENCES,
-    coords: "56.154105, -3.948818"
-  }, {
-    name: "Union Street Development",
-    type: types.RESIDENCES,
-    coords: "56.126040, -3.940609"
-  }, {
-    name: "Willow Court",
-    type: types.RESIDENCES,
-    coords: "56.149183, -3.921046"
-  }, {
-    name: "Swimming pool",
-    type: types.SPORT_FACILITES,
-    coords: "56.146876, -3.925188"
-  }, {
-    name: "Sports Pavilion",
-    type: types.SPORT_FACILITES,
-    coords: "56.149051,-3.910593"
-  }, {
-    name: "Sports Facilities",
-    type: types.SPORT_FACILITES,
-    coords: "56.145705, -3.924490"
-  }, {
-    name: "National Tennis Centre",
-    type: types.SPORT_FACILITES,
-    coords: "56.145541, -3.925086"
-  }, {
-    name: "Airthrey Castle",
-    type: types.BUILDINGS,
-    coords: "56.148213,-3.913375"
-  }, {
-    name: "Pathfoot Building",
-    type: types.BUILDINGS,
-    coords: "56.149210,-3.926748"
-  }, {
-    name: "Colin Bell Building",
-    type: types.BUILDINGS,
-    coords: "56.143963, -3.917316"
-  }, {
-    name: "Iris Murdoch Building",
-    type: types.BUILDINGS,
-    coords: "56.143974, -3.91697"
-  }, {
-    name: "Macrobert Arts Centre",
-    type: types.BUILDINGS,
-    coords: "56.145636,-3.920355"
-  }, {
-    name: "Airthrey Medical Centre",
-    type: types.BUILDINGS,
-    coords: "56.149604, -3.917463"
-  }, {
-    name: "Innovation Park",
-    type: types.BUILDINGS,
-    coords: "56.142750, -3.917021"
-  }, {
-    name: "Stirling Court Hotel",
-    type: types.BUILDINGS,
-    coords: "56.143324, -3.922643"
-  }, {
-    name: "Scottish Institute of Sport",
-    type: types.BUILDINGS,
-    coords: "56.143065, -3.926171"
-  }, {
-    name: "Cottrell Building",
-    type: types.BUILDINGS,
-    coords: "56.145389, -3.921220"
-  }, {
-    name: "INTO Building",
-    type: types.BUILDINGS,
-    coords: "56.144384, -3.921226"
-  }, {
-    name: "NextBike Willow Café",
-    type: types.NEXTBIKE,
-    coords: "56.149110, -3.921319"
-  }, {
-    name: "NextBike Alexander Court",
-    type: types.NEXTBIKE,
-    coords: "56.148906, -3.906572"
-  },
-  // {
-  // 	"name": "Sports Centre Cycle parking",
-  // 	"type": types.BICYCLE_PARKING,
-  // 	"coords": "56.146166, -3.925530"
-  //
-  // },
-  {
-    name: "NextBike Cottrell Building",
-    type: types.NEXTBIKE,
-    coords: "56.144154, -3.922263"
-  }, {
-    name: "Electric Car Charge Point",
-    type: types.CHARGING_POINT,
-    coords: "56.144836, -3.922242"
-  }, {
-    name: "Electric Car Charge Point",
-    type: types.CHARGING_POINT,
-    coords: "56.149575, -3.925748"
-  }, {
-    name: "Electric Bikes",
-    type: types.ELECTRIC_BIKES,
-    coords: "56.144053, -3.920842"
-  }];
+  var _markerData = [
+    {
+      name: "Campus Central / Atrium",
+      type: types.BUILDINGS,
+      coords: "56.145922, -3.920283",
+    },
+    {
+      name: "Students' Union",
+      type: types.BUILDINGS,
+      coords: "56.145926, -3.918393",
+    },
+    {
+      name: "Queens Court drop off point",
+      type: types.DROP_OFF,
+      coords: "56.144959, -3.920038",
+    },
+    {
+      name: "No vehicular access - pedestrians only",
+      type: types.PEDESTRIAN_AREA,
+      coords: "56.145610, -3.923317",
+    },
+    {
+      name: "No vehicular access - pedestrians only",
+      type: types.PEDESTRIAN_AREA,
+      coords: "56.145245, -3.920502",
+    },
+    {
+      name: "Parking",
+      type: types.PARKING,
+      coords: "56.149712, -3.925524",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.145336, -3.920214",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.149366, -3.916759",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.148727, -3.913141",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.149104, -3.906754",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.148378, -3.927181",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.149931, -3.926829",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.145243, -3.922320",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.144765, -3.921848",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.143794, -3.919998",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.143627, -3.923367",
+    },
+    {
+      name: "Parking",
+      // pathfoot
+      type: types.PARKING,
+      coords: "56.148595, -3.928518",
+    },
+    {
+      name: "Parking",
+      // pathfoot
+      type: types.PARKING,
+      coords: "56.148320, -3.926168",
+    },
+    {
+      name: "Parking",
+      // beach court, etc
+      type: types.PARKING,
+      coords: "56.149372, -3.922807",
+    },
+    {
+      name: "Parking",
+      // beach court, etc
+      type: types.PARKING,
+      coords: "56.149416, -3.921820",
+    },
+    {
+      name: "Parking",
+      // beach court, etc
+      type: types.PARKING,
+      coords: "56.148940, -3.919535",
+    },
+    {
+      name: "Parking",
+      // medical centre
+      type: types.PARKING,
+      coords: "56.149215, -3.915994",
+    },
+    {
+      name: "Parking",
+      // medical centre
+      type: types.PARKING,
+      coords: "56.148767, -3.913752",
+    },
+    {
+      name: "Parking",
+      // medical centre
+      type: types.PARKING,
+      coords: "56.149469, -3.910930",
+    },
+    {
+      name: "Parking",
+      // medical centre
+      type: types.PARKING,
+      coords: "56.149603, -3.909943",
+    },
+    {
+      name: "Parking",
+      // medical centre
+      type: types.PARKING,
+      coords: "56.148790, -3.906778",
+    },
+    {
+      name: "Disabled Parking",
+      type: types.DISABLED_PARKING,
+      coords: "56.146569, -3.925578",
+    },
+    {
+      name: "Parking",
+      // into
+      type: types.PARKING,
+      coords: "56.145128, -3.923044",
+    },
+    {
+      name: "Parking",
+      // court
+      type: types.PARKING,
+      coords: "56.143813, -3.923044",
+    },
+    {
+      name: "Parking",
+      // court behind
+      type: types.PARKING,
+      coords: "56.142424, -3.921624",
+    },
+    {
+      name: "Parking",
+      // cottrell over road
+      type: types.PARKING,
+      coords: "56.143172, -3.919779",
+    },
+    {
+      name: "Parking",
+      // cottrell over road 2
+      type: types.PARKING,
+      coords: "56.142968, -3.918878",
+    },
+    {
+      name: "Parking",
+      // colin bell
+      type: types.PARKING,
+      coords: "56.143435, -3.918148",
+    },
+    {
+      name: "Parking",
+      // property management office
+      type: types.PARKING,
+      coords: "56.142472, -3.913620",
+    },
+    {
+      name: "The Bite",
+      type: types.EATING,
+      coords: "56.144471, -3.920713",
+    },
+    {
+      name: "Haldane's",
+      type: types.EATING,
+      coords: "56.145882, -3.918882",
+    },
+    {
+      name: "Scran",
+      type: types.EATING,
+      coords: "56.146062, -3.920032",
+    },
+    {
+      name: "SUP",
+      type: types.EATING,
+      coords: "56.145762, -3.920271",
+    },
+    {
+      name: "Pathfoot Dining Room",
+      type: types.EATING,
+      coords: "56.149127, -3.925329",
+    },
+    {
+      name: "Crush Hall Pod",
+      type: types.EATING,
+      coords: "56.149494, -3.926526",
+    },
+    {
+      name: "Stirling Court Hotel",
+      type: types.EATING,
+      coords: "56.143324, -3.922643",
+    },
+    {
+      name: "Food and Drink at Macrobert",
+      type: types.EATING,
+      coords: "56.145644, -3.920007",
+    },
+    {
+      name: "Nourish",
+      type: types.EATING,
+      coords: "56.145701, -3.924482",
+    },
+    {
+      name: "Refresh Bar and Bistro",
+      type: types.EATING,
+      coords: "56.149127, -3.92082",
+    },
+    {
+      name: "Students’ Union",
+      description: "Studio, Underground and Venue",
+      type: types.EATING,
+      coords: "56.146026, -3.918340",
+    },
+    {
+      name: "UMAMI",
+      type: types.EATING,
+      coords: "56.144384, -3.921226",
+    },
+    {
+      name: "Parking",
+      // cottrell behind
+      type: types.SHORT_STAY_PARKING,
+      coords: "56.143692, -3.919897",
+    },
+    {
+      name: "Alangrange",
+      type: types.RESIDENCES,
+      coords: "56.150993, -3.929349",
+    },
+    {
+      name: "Alexander Court",
+      type: types.RESIDENCES,
+      coords: "56.149023, -3.906662",
+    },
+    {
+      name: "Andrew Stewart Hall",
+      type: types.RESIDENCES,
+      coords: "56.148859, -3.922686",
+    },
+    {
+      name: "Beech Court",
+      type: types.RESIDENCES,
+      coords: "56.148575,-3.919705",
+    },
+    {
+      name: "Fraser of Allander House",
+      type: types.RESIDENCES,
+      coords: "56.148525, -3.921504",
+    },
+    {
+      name: "Friarscroft",
+      type: types.RESIDENCES,
+      coords: "56.140727,-3.9261935",
+    },
+    {
+      name: "H H Donnelly House",
+      type: types.RESIDENCES,
+      coords: "56.149045, -3.921639",
+    },
+    {
+      name: "John Forty's Court",
+      type: types.RESIDENCES,
+      coords: "56.129741, -3.934522",
+    },
+    {
+      name: "Juniper Court Standard Flats",
+      type: types.RESIDENCES,
+      coords: "56.149070, -3.917518",
+    },
+    {
+      name: "Lyon Crescent",
+      type: types.RESIDENCES,
+      coords: "56.149936, -3.947224",
+    },
+    {
+      name: "Muirhead House",
+      type: types.RESIDENCES,
+      coords: "56.149126, -3.919097",
+    },
+    {
+      name: "Pendreich Way",
+      type: types.RESIDENCES,
+      coords: "56.149918, -3.924077",
+    },
+    {
+      name: "Polwarth House",
+      type: types.RESIDENCES,
+      coords: "56.148953, -3.920406",
+    },
+    {
+      name: "Spittal Hill",
+      type: types.RESIDENCES,
+      coords: "56.141321, -3.92499",
+    },
+    {
+      name: "Thistle Chambers",
+      type: types.RESIDENCES,
+      coords: "56.118522, -3.935718",
+    },
+    {
+      name: "Union Street, Bridge of Allan",
+      type: types.RESIDENCES,
+      coords: "56.154105, -3.948818",
+    },
+    {
+      name: "Union Street Development",
+      type: types.RESIDENCES,
+      coords: "56.126040, -3.940609",
+    },
+    {
+      name: "Willow Court",
+      type: types.RESIDENCES,
+      coords: "56.149183, -3.921046",
+    },
+    {
+      name: "Swimming pool",
+      type: types.SPORT_FACILITES,
+      coords: "56.146876, -3.925188",
+    },
+    {
+      name: "Sports Pavilion",
+      type: types.SPORT_FACILITES,
+      coords: "56.149051,-3.910593",
+    },
+    {
+      name: "Sports Facilities",
+      type: types.SPORT_FACILITES,
+      coords: "56.145705, -3.924490",
+    },
+    {
+      name: "National Tennis Centre",
+      type: types.SPORT_FACILITES,
+      coords: "56.145541, -3.925086",
+    },
+    {
+      name: "Airthrey Castle",
+      type: types.BUILDINGS,
+      coords: "56.148213,-3.913375",
+    },
+    {
+      name: "Pathfoot Building",
+      type: types.BUILDINGS,
+      coords: "56.149210,-3.926748",
+    },
+    {
+      name: "Colin Bell Building",
+      type: types.BUILDINGS,
+      coords: "56.143963, -3.917316",
+    },
+    {
+      name: "Iris Murdoch Building",
+      type: types.BUILDINGS,
+      coords: "56.143974, -3.91697",
+    },
+    {
+      name: "Macrobert Arts Centre",
+      type: types.BUILDINGS,
+      coords: "56.145636,-3.920355",
+    },
+    {
+      name: "Airthrey Medical Centre",
+      type: types.BUILDINGS,
+      coords: "56.149604, -3.917463",
+    },
+    {
+      name: "Innovation Park",
+      type: types.BUILDINGS,
+      coords: "56.142750, -3.917021",
+    },
+    {
+      name: "Stirling Court Hotel",
+      type: types.BUILDINGS,
+      coords: "56.143324, -3.922643",
+    },
+    {
+      name: "Scottish Institute of Sport",
+      type: types.BUILDINGS,
+      coords: "56.143065, -3.926171",
+    },
+    {
+      name: "Cottrell Building",
+      type: types.BUILDINGS,
+      coords: "56.145389, -3.921220",
+    },
+    {
+      name: "INTO Building",
+      type: types.BUILDINGS,
+      coords: "56.144384, -3.921226",
+    },
+    {
+      name: "NextBike Willow Café",
+      type: types.NEXTBIKE,
+      coords: "56.149110, -3.921319",
+    },
+    {
+      name: "NextBike Alexander Court",
+      type: types.NEXTBIKE,
+      coords: "56.148906, -3.906572",
+    },
+    // {
+    // 	"name": "Sports Centre Cycle parking",
+    // 	"type": types.BICYCLE_PARKING,
+    // 	"coords": "56.146166, -3.925530"
+    //
+    // },
+    {
+      name: "NextBike Cottrell Building",
+      type: types.NEXTBIKE,
+      coords: "56.144154, -3.922263",
+    },
+    {
+      name: "Electric Car Charge Point",
+      type: types.CHARGING_POINT,
+      coords: "56.144836, -3.922242",
+    },
+    {
+      name: "Electric Car Charge Point",
+      type: types.CHARGING_POINT,
+      coords: "56.149575, -3.925748",
+    },
+    {
+      name: "Electric Bikes",
+      type: types.ELECTRIC_BIKES,
+      coords: "56.144053, -3.920842",
+    },
+  ];
 
   // we have different urls for the json feed depending on the environment
   // update 2023-02-28 to use t4 media URLs instead
@@ -503,10 +589,10 @@ var UoS_GettingAround = function () {
     zoom: 16,
     center: {
       lat: 56.14643094488868,
-      lng: -3.918399958166454
+      lng: -3.918399958166454,
     },
     travelMode: "WALKING",
-    checkCurrentLocationWithinBounds: true
+    checkCurrentLocationWithinBounds: true,
   };
 
   /**
@@ -517,10 +603,13 @@ var UoS_GettingAround = function () {
   /**
    * @var {array}
    */
-  var validDirectionSelectTypes = [types.RESIDENCES, types.SPORT_FACILITES, types.BUILDINGS
-  // types.EATING,
-  // types.NEXTBIKE,
-  // types.BICYCLE_PARKING
+  var validDirectionSelectTypes = [
+    types.RESIDENCES,
+    types.SPORT_FACILITES,
+    types.BUILDINGS,
+    // types.EATING,
+    // types.NEXTBIKE,
+    // types.BICYCLE_PARKING
   ];
 
   /**
@@ -542,7 +631,7 @@ var UoS_GettingAround = function () {
     var bounds = new google.maps.LatLngBounds();
     _map = new google.maps.Map(document.getElementById("getting-around__map"), {
       zoom: _options.zoom,
-      center: _options.center
+      center: _options.center,
     });
     directionsDisplay.setMap(_map);
 
@@ -554,7 +643,7 @@ var UoS_GettingAround = function () {
       markerOptions = {
         position: _getPosObject(_markerData[i].coords),
         map: _map,
-        title: _markerData[i].title
+        title: _markerData[i].title,
       };
 
       // insert icon is there
@@ -566,18 +655,22 @@ var UoS_GettingAround = function () {
       _markerData[i].marker = new google.maps.Marker(markerOptions);
 
       // Allow each marker to have an info window listener
-      google.maps.event.addListener(_markerData[i].marker, "click", function (marker, i) {
-        return function () {
-          var getDirectionsLink = "";
+      google.maps.event.addListener(
+        _markerData[i].marker,
+        "click",
+        (function (marker, i) {
+          return function () {
+            var getDirectionsLink = "";
 
-          // only show get deirections link if in if validDirectionSelectTypes array
-          if (validDirectionSelectTypes.indexOf(_markerData[i].type) > -1) {
-            getDirectionsLink = '<p><a href="#" class="c-link" onclick="UoS_GettingAround.setDirectionsFromLink(event)" data-name="' + _markerData[i].coords.replace(/\s/gi, "") + '">Get directions</a></p>';
-          }
-          infowindow.setContent("<p><strong>" + _markerData[i].name + "</strong></p>" + (_markerData[i].description ? "<p>" + _markerData[i].description + "</p>" : "") + '<p><span class="' + _markerData[i].usoIconClassName + '"></span> ' + _markerData[i].type + "</strong></p>" + getDirectionsLink);
-          infowindow.open(_map, marker);
-        };
-      }(_markerData[i].marker, i));
+            // only show get deirections link if in if validDirectionSelectTypes array
+            if (validDirectionSelectTypes.indexOf(_markerData[i].type) > -1) {
+              getDirectionsLink = '<p><a href="#" class="c-link" onclick="UoS_GettingAround.setDirectionsFromLink(event)" data-name="' + _markerData[i].coords.replace(/\s/gi, "") + '">Get directions</a></p>';
+            }
+            infowindow.setContent("<p><strong>" + _markerData[i].name + "</strong></p>" + (_markerData[i].description ? "<p>" + _markerData[i].description + "</p>" : "") + '<p><span class="' + _markerData[i].usoIconClassName + '"></span> ' + _markerData[i].type + "</strong></p>" + getDirectionsLink);
+            infowindow.open(_map, marker);
+          };
+        })(_markerData[i].marker, i)
+      );
 
       // extend the bounds to include each marker's position. If zoom and
       // center have been given, we should ignore this later
@@ -619,9 +712,9 @@ var UoS_GettingAround = function () {
 
     start = document.getElementById("getting-around-directions__origin");
     end = document.getElementById("getting-around-directions__destination");
-    groupselect = document.createElement('select');
-    filtersEl = document.getElementById('filters');
-    filtersLabel = document.createElement('label');
+    groupselect = document.createElement("select");
+    filtersEl = document.getElementById("filters");
+    filtersLabel = document.createElement("label");
     filtersLabel.textContent = "Mark locations on the map:";
     filtersLabel.appendChild(groupselect);
     filtersEl.appendChild(filtersLabel);
@@ -630,11 +723,11 @@ var UoS_GettingAround = function () {
       // select boxes for 'Get directions' tab
       if (validDirectionSelectTypes.indexOf(name) > -1) {
         //$optgroup = $('<optgroup label="' + name + '">');
-        optgroup = document.createElement('optgroup');
+        optgroup = document.createElement("optgroup");
         optgroup.label = name;
         //        for (var j = 0; j < group.length; j++) {
         groupsData[name].forEach(function (location) {
-          var option = document.createElement('option');
+          var option = document.createElement("option");
           option.value = location.coords.replace(/\s/gi, "");
           option.textContent = location.name;
           optgroup.appendChild(option);
@@ -645,10 +738,10 @@ var UoS_GettingAround = function () {
 
       //		html.push('<div style="width: 50%; float: left;">');
       //		html.push('  <label>'); // for="filter__' + name.toLowerCase() + '"
-      //		html.push('    <input class="filter" type="checkbox" name="' + name + '"> ' + name); //id="filter__' + name.toLowerCase() + '" 
+      //		html.push('    <input class="filter" type="checkbox" name="' + name + '"> ' + name); //id="filter__' + name.toLowerCase() + '"
       //		html.push("  </label>");
       //		html.push("</div>");
-      var groupoption = document.createElement('option');
+      var groupoption = document.createElement("option");
       //groupoption.value = name;
       groupoption.textContent = name;
       groupselect.appendChild(groupoption);
@@ -794,7 +887,7 @@ var UoS_GettingAround = function () {
   function _getPosObject(coords) {
     return {
       lat: parseFloat(coords.split(",")[0]),
-      lng: parseFloat(coords.split(",")[1])
+      lng: parseFloat(coords.split(",")[1]),
     };
   }
   function _calculateAndDisplayRoute(directionsService, directionsDisplay) {
@@ -814,22 +907,25 @@ var UoS_GettingAround = function () {
 
     // hide the infowindow if it's open
     infowindow.close();
-    directionsService.route({
-      origin: origin,
-      destination: destination,
-      travelMode: _options.travelMode
-    }, function (response, status) {
-      if (status === "OK") {
-        directionsDisplay.setDirections(response);
-      } else {
-        window.alert("Directions request failed due to " + status);
+    directionsService.route(
+      {
+        origin: origin,
+        destination: destination,
+        travelMode: _options.travelMode,
+      },
+      function (response, status) {
+        if (status === "OK") {
+          directionsDisplay.setDirections(response);
+        } else {
+          window.alert("Directions request failed due to " + status);
+        }
       }
-    });
+    );
   }
   return {
     initMap: _initMap,
     // setCurrentLocation: _setCurrentLocation,
     setDirectionsFromLink: _setDirectionsFromLink,
-    setGoogleMapsLink: _setGoogleMapsLink
+    setGoogleMapsLink: _setGoogleMapsLink,
   };
-}();
+})();
