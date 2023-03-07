@@ -21,7 +21,7 @@ var UoS_GettingAround = function () {
     ELECTRIC_BIKES: "Electric bike hire",
     CHARGING_POINT: "Electric car charging point",
     DROP_OFF: "Drop off point",
-    PEDESTRIAN_AREA: "No vehicular access "
+    PEDESTRIAN_AREA: "No vehicular access"
   };
 
   /**
@@ -29,7 +29,7 @@ var UoS_GettingAround = function () {
    * although it's probably better suited to have this as an object, however
    * it's easier to add new markers when copying/pasting from tools such as
    * latlng.net etc
-   * @var {Array<object>}
+   * var {Array<object>}
    */
   var _markerData = [{
     name: "Campus Central / Atrium",
@@ -575,7 +575,6 @@ var UoS_GettingAround = function () {
 
           // only show get deirections link if in if validDirectionSelectTypes array
           if (validDirectionSelectTypes.indexOf(_markerData[i].type) > -1) {
-            //getDirectionsLink = '<p><a href="#" class="c-link" onclick="UoS_GettingAround.setDirectionsFromLink(event)" data-name="' + _markerData[i].coords.replace(/\s/gi, "") + '">Get directions</a></p>';
             getDirectionsLink = "";
           }
           infowindow.setContent("<p><strong>" + _markerData[i].name + "</strong></p>" + (_markerData[i].description ? "<p>" + _markerData[i].description + "</p>" : "") + '<p><span class="' + _markerData[i].usoIconClassName + '"></span> ' + _markerData[i].type + "</strong></p>" + getDirectionsLink);
@@ -585,7 +584,6 @@ var UoS_GettingAround = function () {
 
       // extend the bounds to include each marker's position. If zoom and
       // center have been given, we should ignore this later
-
       bounds.extend(_markerData[i].marker.position);
     }
 
@@ -615,18 +613,11 @@ var UoS_GettingAround = function () {
 
     // populate select boxes with locations, and checkboxes
     var start, $end, $optgroup, group, location, filtersEl, filtersLabel;
-    //var html = [];
-    //	html.push('<div style="width: 100%; float: left;">');
-    //	html.push(' <label style="font-weight: bold;" for="filter__all">');
-    //	html.push('    <input id="filter__all" type="checkbox" class="filter" name="all"> Show/ Hide All');
-    //	html.push("  </label>");
-    //	html.push("</div>");
-
     start = document.getElementById("getting-around-directions__origin");
     end = document.getElementById("getting-around-directions__destination");
-    groupselect = document.createElement('select');
-    filtersEl = document.getElementById('filters');
-    filtersLabel = document.createElement('label');
+    groupselect = document.createElement("select");
+    filtersEl = document.getElementById("filters");
+    filtersLabel = document.createElement("label");
     filtersLabel.textContent = "Mark locations on the map:";
     filtersLabel.appendChild(groupselect);
     filtersEl.appendChild(filtersLabel);
@@ -639,7 +630,7 @@ var UoS_GettingAround = function () {
         optgroup.label = name;
         //        for (var j = 0; j < group.length; j++) {
         groupsData[name].forEach(function (location) {
-          var option = document.createElement('option');
+          var option = document.createElement("option");
           option.value = location.coords.replace(/\s/gi, "");
           option.textContent = location.name;
           optgroup.appendChild(option);
@@ -647,61 +638,15 @@ var UoS_GettingAround = function () {
         start.appendChild(optgroup);
         end.appendChild(optgroup.cloneNode(true));
       }
-
-      //		html.push('<div style="width: 50%; float: left;">');
-      //		html.push('  <label>'); // for="filter__' + name.toLowerCase() + '"
-      //		html.push('    <input class="filter" type="checkbox" name="' + name + '"> ' + name); //id="filter__' + name.toLowerCase() + '" 
-      //		html.push("  </label>");
-      //		html.push("</div>");
-
       var groupoption = document.createElement("option");
       //groupoption.value = name;
       groupoption.textContent = name;
       groupselect.appendChild(groupoption);
     }
-
-    /*
-    // Free text search input
-    // Nodes
-    const suggestDataList = stir.node("#getting-around__suggestions");
-    const suggestInput = stir.node("#getting-around__suggestions-input");
-     // populate the suggestions datalist
-    suggestionsData.sort();
-    for (var i = 0; i < suggestionsData.length; i++) {
-      suggestDataList.append('<option value="' + suggestionsData[i] + '">');
-    }
-     // add behaviour to suggestions to center and show info
-    suggestInput.addEventListener("change", function (e) {
-      // get the desired marker by value (e.g. "Sports Centre")
-      var marker;
-       for (var i = 0; i < _markerData.length; i++) {
-        if (_markerData[i].name === this.value) {
-          marker = _markerData[i];
-        }
-      }
-       if (!marker) alert("Sorry that destination is not found");
-       // open infowindow
-      if (marker) {
-        var coords = _getPosObject(marker.coords);
-        _map.setCenter(new google.maps.LatLng(coords["lat"], coords["lng"]));
-        _map.setZoom(17); //
-         infowindow.setContent("<p><strong>" + marker.name + "</strong></p>" + (marker.description ? "<p>" + marker.description + "</p>" : ""));
-        infowindow.open(_map, marker.marker);
-      }
-       // clear the input coz it filters the drop down options
-      //("#getting-around__suggestions-input").val("");
-      suggestInput.value = "";
-    });
-    */
-
-    //    ("#filters").html(html.join(""));
-
     var travelModeInputs = stir.nodes("input[name='travelmode']");
 
     // set travel mode
     //("input[name='travelmode'][value='" + _options.travelMode.toLowerCase() + "']").attr("checked", true);
-
-    //("input[name='travelmode']").on("click", function (e) {
     var travelInputHandler = function travelInputHandler(element) {
       element.addEventListener("click", function (e) {
         _options.travelMode = element.value.toUpperCase();
@@ -716,34 +661,7 @@ var UoS_GettingAround = function () {
     };
     document.getElementById("getting-around-directions__origin").addEventListener("change", onChangeHandler);
     document.getElementById("getting-around-directions__destination").addEventListener("change", onChangeHandler);
-
-    // set event handlers for filters
-    //    ("#filters input[type='checkbox']").on("change", function () {
-    //      _filterMarkers(_map); // will re-render the show/hide
-    //    });
-
     filtersEl.addEventListener("change", _filterMarkers);
-
-    // ("#filter__all").on("change", function () {
-    //   var items = document.getElementsByClassName("filter");
-    //   var x = document.getElementById("filter__all").checked;
-    //   if (x == true) {
-    //     for (var i = 0; i < items.length; i++) {
-    //       if (items[i].type == "checkbox") {
-    //         items[i].checked = true;
-    //       }
-    //     }
-    //     _filterMarkers();
-    //   } else if (x == false) {
-    //     for (var i = 0; i < items.length; i++) {
-    //       if (items[i].type == "checkbox") {
-    //         items[i].checked = false;
-    //       }
-    //     }
-    //     _filterMarkers();
-    //   }
-    // });
-
     var items = document.getElementsByClassName("filter");
     for (var i = 0; i < items.length; i++) {
       if (items[i].type === "checkbox" && items[i].name === "Buildings") {
