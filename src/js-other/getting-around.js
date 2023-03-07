@@ -6,7 +6,7 @@ var UoS_GettingAround = (function () {
    * We wanna only change these in one place as they are used when comparing
    * status etc (e.g. compare value of checkbox to determine whether to show/
    * hide a marker)
-   * @var {obejct}
+   * var {obejct}
    */
   var types = {
     RESIDENCES: "Residences",
@@ -29,19 +29,19 @@ var UoS_GettingAround = (function () {
    * although it's probably better suited to have this as an object, however
    * it's easier to add new markers when copying/pasting from tools such as
    * latlng.net etc
-   * @var {Array<object>}
+   * var {Array<object>}
    */
   var _markerData = [
-	{
-		name: "Campus Central / Atrium",
-		type: types.BUILDINGS,
-		coords:"56.145922, -3.920283"
-	},
-	{
-		name: "Students' Union",
-		type: types.BUILDINGS,
-		coords:"56.145926, -3.918393"
-	},
+    {
+      name: "Campus Central / Atrium",
+      type: types.BUILDINGS,
+      coords: "56.145922, -3.920283",
+    },
+    {
+      name: "Students' Union",
+      type: types.BUILDINGS,
+      coords: "56.145926, -3.918393",
+    },
     {
       name: "Queens Court drop off point",
       type: types.DROP_OFF,
@@ -509,58 +509,61 @@ var UoS_GettingAround = (function () {
         path: "dist/images/markers/electric-bike.png";
   */
 
+  const isDev = UoS_env.name === "dev" ? true : false;
+  const iconRoot = UoS_env.wc_path + "/images/markers/";
+
   // set icons based on type
   for (var i = 0; i < _markerData.length; i++) {
     switch (_markerData[i].type) {
       case types.EATING:
-        _markerData[i].icon = '<t4 type="media" id="158271" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "food_and_drink.png" : '<t4 type="media" id="158271" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-fork-knife";
         continue;
       case types.RESIDENCES:
-        _markerData[i].icon = '<t4 type="media" id="158276" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "residences.png" : '<t4 type="media" id="158276" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-home";
         continue;
       case types.BUILDINGS:
-        _markerData[i].icon = '<t4 type="media" id="158266" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "buildings.png" : '<t4 type="media" id="158266" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-history-large";
         continue;
       case types.SPORT_FACILITES:
-        _markerData[i].icon = '<t4 type="media" id="158278" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "sports_facilities.png" : '<t4 type="media" id="158278" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-runner";
         continue;
       case types.NEXTBIKE:
-        _markerData[i].icon = '<t4 type="media" id="158272" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "nextbike.png" : '<t4 type="media" id="158272" formatter="path/*" />';
         continue;
       // case types.BICYCLE_PARKING:
       // 	_markerData[i].icon = '<t4 type="media" id="158264" formatter="path/*" />';
       // 	_markerData[i].usoIconClassName = "uos-cyclist";
       // 	continue;
       case types.PARKING:
-        _markerData[i].icon = '<t4 type="media" id="158274" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "parking.png" : '<t4 type="media" id="158274" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-car";
         continue;
       case types.DISABLED_PARKING:
-        _markerData[i].icon = '<t4 type="media" id="158267" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "disabled_parking.png" : '<t4 type="media" id="158267" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-wheelchair";
         continue;
       case types.SHORT_STAY_PARKING:
-        _markerData[i].icon = '<t4 type="media" id="158277" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "short-stay-car-park.png" : '<t4 type="media" id="158277" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-car";
         continue;
       case types.CHARGING_POINT:
-        _markerData[i].icon = '<t4 type="media" id="158270" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "electric-charge.png" : '<t4 type="media" id="158270" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-car";
         continue;
       case types.DROP_OFF:
-        _markerData[i].icon = '<t4 type="media" id="158268" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "drop-off.png" : '<t4 type="media" id="158268" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-car";
         continue;
       case types.PEDESTRIAN_AREA:
-        _markerData[i].icon = '<t4 type="media" id="158273" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "no_road_access.png" : '<t4 type="media" id="158273" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-pedestrian";
         continue;
       case types.ELECTRIC_BIKES:
-        _markerData[i].icon = '<t4 type="media" id="158269" formatter="path/*" />';
+        _markerData[i].icon = isDev ? iconRoot + "electric-bike.png" : '<t4 type="media" id="158269" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-bike";
         continue;
     }
@@ -568,13 +571,13 @@ var UoS_GettingAround = (function () {
 
   /**
    * Where current location is available, we'll store here
-   * @var {null|boolean}
+   * var {null|boolean}
    */
   var _currentLocation = null;
 
   /**
    * Options used in this scope
-   * @var {object}
+   * var {object}
    */
   var _options = {
     zoom: 16,
@@ -584,12 +587,12 @@ var UoS_GettingAround = (function () {
   };
 
   /**
-   * @var {google.maps.Map}
+   * var {google.maps.Map}
    */
   var _map;
 
   /**
-   * @var {array}
+   * var {array}
    */
   var validDirectionSelectTypes = [
     types.RESIDENCES,
@@ -602,7 +605,7 @@ var UoS_GettingAround = (function () {
 
   /**
    * We want other methods to be able to access this so it's defined here
-   * @var {google.maps.InfoWindow}
+   * var {google.maps.InfoWindow}
    */
   var infowindow;
 
@@ -653,7 +656,8 @@ var UoS_GettingAround = (function () {
 
             // only show get deirections link if in if validDirectionSelectTypes array
             if (validDirectionSelectTypes.indexOf(_markerData[i].type) > -1) {
-              getDirectionsLink = '<p><a href="#" class="c-link" onclick="UoS_GettingAround.setDirectionsFromLink(event)" data-name="' + _markerData[i].coords.replace(/\s/gi, "") + '">Get directions</a></p>';
+              //getDirectionsLink = '<p><a href="#" class="c-link" onclick="UoS_GettingAround.setDirectionsFromLink(event)" data-name="' + _markerData[i].coords.replace(/\s/gi, "") + '">Get directions</a></p>';
+              getDirectionsLink = "";
             }
 
             infowindow.setContent("<p><strong>" + _markerData[i].name + "</strong></p>" + (_markerData[i].description ? "<p>" + _markerData[i].description + "</p>" : "") + '<p><span class="' + _markerData[i].usoIconClassName + '"></span> ' + _markerData[i].type + "</strong></p>" + getDirectionsLink);
@@ -664,6 +668,7 @@ var UoS_GettingAround = (function () {
 
       // extend the bounds to include each marker's position. If zoom and
       // center have been given, we should ignore this later
+
       bounds.extend(_markerData[i].marker.position);
     }
 
@@ -678,8 +683,9 @@ var UoS_GettingAround = (function () {
     }
 
     // format data into groups, we'll use this groupsData in the select and checkboxes
-    var groupsData = {},
-      suggestionsData = [];
+    var groupsData = {};
+    var suggestionsData = [];
+
     for (var i = 0; i < _markerData.length; i++) {
       // create empty array for this group if not yet set
       if (!groupsData[_markerData[i].type]) groupsData[_markerData[i].type] = [];
@@ -694,62 +700,65 @@ var UoS_GettingAround = (function () {
     // populate select boxes with locations, and checkboxes
     var start, $end, $optgroup, group, location, filtersEl, filtersLabel;
     var html = [];
-//	html.push('<div style="width: 100%; float: left;">');
-//	html.push(' <label style="font-weight: bold;" for="filter__all">');
-//	html.push('    <input id="filter__all" type="checkbox" class="filter" name="all"> Show/ Hide All');
-//	html.push("  </label>");
-//	html.push("</div>");
-	
-	start = document.getElementById("getting-around-directions__origin");
-	end =  document.getElementById("getting-around-directions__destination");
-	groupselect = document.createElement('select');
-	filtersEl = document.getElementById('filters');
-	filtersLabel = document.createElement('label');
-	filtersLabel.textContent = "Mark locations on the map:"
-	filtersLabel.appendChild(groupselect);
-	filtersEl.appendChild(filtersLabel);
+    //	html.push('<div style="width: 100%; float: left;">');
+    //	html.push(' <label style="font-weight: bold;" for="filter__all">');
+    //	html.push('    <input id="filter__all" type="checkbox" class="filter" name="all"> Show/ Hide All');
+    //	html.push("  </label>");
+    //	html.push("</div>");
+
+    start = document.getElementById("getting-around-directions__origin");
+    end = document.getElementById("getting-around-directions__destination");
+    groupselect = document.createElement("select");
+    filtersEl = document.getElementById("filters");
+    filtersLabel = document.createElement("label");
+    filtersLabel.textContent = "Mark locations on the map:";
+    filtersLabel.appendChild(groupselect);
+    filtersEl.appendChild(filtersLabel);
 
     for (var name in groupsData) {
       group = groupsData[name];
       // select boxes for 'Get directions' tab
       if (validDirectionSelectTypes.indexOf(name) > -1) {
-        //$optgroup = $('<optgroup label="' + name + '">');
-        optgroup = document.createElement('optgroup');
-		optgroup.label = name;
-//        for (var j = 0; j < group.length; j++) {
-		groupsData[name].forEach( location => {
-			var option = document.createElement('option');
-			option.value = location.coords.replace(/\s/gi, "");
-			option.textContent = location.name;
-			optgroup.appendChild(option);
-		});
+        //$optgroup = ('<optgroup label="' + name + '">');
+        optgroup = document.createElement("optgroup");
+        optgroup.label = name;
+        //        for (var j = 0; j < group.length; j++) {
+        groupsData[name].forEach((location) => {
+          var option = document.createElement("option");
+          option.value = location.coords.replace(/\s/gi, "");
+          option.textContent = location.name;
+          optgroup.appendChild(option);
+        });
         start.appendChild(optgroup);
         end.appendChild(optgroup.cloneNode(true));
       }
 
-//		html.push('<div style="width: 50%; float: left;">');
-//		html.push('  <label>'); // for="filter__' + name.toLowerCase() + '"
-//		html.push('    <input class="filter" type="checkbox" name="' + name + '"> ' + name); //id="filter__' + name.toLowerCase() + '" 
-//		html.push("  </label>");
-//		html.push("</div>");
-	  var groupoption = document.createElement('option');
-	  //groupoption.value = name;
-	  groupoption.textContent = name;
-	  groupselect.appendChild(groupoption);
-
+      //		html.push('<div style="width: 50%; float: left;">');
+      //		html.push('  <label>'); // for="filter__' + name.toLowerCase() + '"
+      //		html.push('    <input class="filter" type="checkbox" name="' + name + '"> ' + name); //id="filter__' + name.toLowerCase() + '"
+      //		html.push("  </label>");
+      //		html.push("</div>");
+      var groupoption = document.createElement("option");
+      //groupoption.value = name;
+      groupoption.textContent = name;
+      groupselect.appendChild(groupoption);
     }
 
+    // Nodes
+    const suggestDataList = stir.node("#getting-around__suggestions");
+    const suggestInput = stir.node("#getting-around__suggestions-input");
 
     // populate the suggestions datalist
     suggestionsData.sort();
     for (var i = 0; i < suggestionsData.length; i++) {
-      $("#getting-around__suggestions").append('<option value="' + suggestionsData[i] + '">');
+      suggestDataList.append('<option value="' + suggestionsData[i] + '">');
     }
 
     // add behaviour to suggestions to center and show info
-    $("#getting-around__suggestions-input").on("change", function (e) {
+    suggestInput.addEventListener("change", function (e) {
       // get the desired marker by value (e.g. "Sports Centre")
       var marker;
+
       for (var i = 0; i < _markerData.length; i++) {
         if (_markerData[i].name === this.value) {
           marker = _markerData[i];
@@ -757,8 +766,8 @@ var UoS_GettingAround = (function () {
       }
 
       // open infowindow
-      var coords = _getPosObject(marker.coords);
       if (marker) {
+        var coords = _getPosObject(marker.coords);
         _map.setCenter(new google.maps.LatLng(coords["lat"], coords["lng"]));
         _map.setZoom(17); //
 
@@ -767,18 +776,24 @@ var UoS_GettingAround = (function () {
       }
 
       // clear the input coz it filters the drop down options
-      $("#getting-around__suggestions-input").val("");
+      //("#getting-around__suggestions-input").val("");
+      suggestInput.value = "";
     });
 
-//    $("#filters").html(html.join(""));
+    //    ("#filters").html(html.join(""));
+
+    const travelModeInputs = stir.nodes("input[name='travelmode']");
 
     // set travel mode
-    $("input[name='travelmode'][value='" + _options.travelMode.toLowerCase() + "']").attr("checked", true);
+    //("input[name='travelmode'][value='" + _options.travelMode.toLowerCase() + "']").attr("checked", true);
 
-    $("input[name='travelmode']").on("click", function (e) {
-      _options.travelMode = this.value.toUpperCase();
+    //("input[name='travelmode']").on("click", function (e) {
+    const travelInputHandler = (element) => {
+      _options.travelMode = element.value.toUpperCase();
       _calculateAndDisplayRoute(directionsService, directionsDisplay);
-    });
+    };
+
+    travelModeInputs.forEach(travelInputHandler);
 
     // set event handlers for select boxes
     var onChangeHandler = function () {
@@ -788,31 +803,31 @@ var UoS_GettingAround = (function () {
     document.getElementById("getting-around-directions__destination").addEventListener("change", onChangeHandler);
 
     // set event handlers for filters
-//    $("#filters input[type='checkbox']").on("change", function () {
-//      _filterMarkers(_map); // will re-render the show/hide
-//    });
+    //    ("#filters input[type='checkbox']").on("change", function () {
+    //      _filterMarkers(_map); // will re-render the show/hide
+    //    });
 
-	filtersEl.addEventListener("change", _filterMarkers);
+    filtersEl.addEventListener("change", _filterMarkers);
 
-    $("#filter__all").on("change", function () {
-      var items = document.getElementsByClassName("filter");
-      var x = document.getElementById("filter__all").checked;
-      if (x == true) {
-        for (var i = 0; i < items.length; i++) {
-          if (items[i].type == "checkbox") {
-            items[i].checked = true;
-          }
-        }
-        _filterMarkers();
-      } else if (x == false) {
-        for (var i = 0; i < items.length; i++) {
-          if (items[i].type == "checkbox") {
-            items[i].checked = false;
-          }
-        }
-        _filterMarkers();
-      }
-    });
+    // ("#filter__all").on("change", function () {
+    //   var items = document.getElementsByClassName("filter");
+    //   var x = document.getElementById("filter__all").checked;
+    //   if (x == true) {
+    //     for (var i = 0; i < items.length; i++) {
+    //       if (items[i].type == "checkbox") {
+    //         items[i].checked = true;
+    //       }
+    //     }
+    //     _filterMarkers();
+    //   } else if (x == false) {
+    //     for (var i = 0; i < items.length; i++) {
+    //       if (items[i].type == "checkbox") {
+    //         items[i].checked = false;
+    //       }
+    //     }
+    //     _filterMarkers();
+    //   }
+    // });
 
     var items = document.getElementsByClassName("filter");
 
@@ -829,33 +844,34 @@ var UoS_GettingAround = (function () {
   }
 
   function _setDirectionsFromLink(e) {
-    var link = e.target;
+    //var link = e.target;
 
     // pre-select the <select>
-    $("#getting-around-directions__destination").val(link.getAttribute("data-name"));
+    //("#getting-around-directions__destination").val(link.getAttribute("data-name"));
 
     // reset the start
-    $("#getting-around-directions__origin option").eq(0).prop("selected", true);
+    //("#getting-around-directions__origin option").eq(0).prop("selected", true);
 
     // open tab
-    $("#getting-around-tabs__directions-label").trigger("click");
+    //("#getting-around-tabs__directions-label").trigger("click");
+    //stir.node("#tab_1_2").click();
 
     e.preventDefault();
     return false;
   }
 
   function _setGoogleMapsLink() {
-    /* var origin      = $("#getting-around-directions__origin").val();
-		var destination = $("#getting-around-directions__destination").val();
-		var travelmode  = $("input[name='travelmode']:checked").val();
+    /* var origin      = ("#getting-around-directions__origin").val();
+		var destination = ("#getting-around-directions__destination").val();
+		var travelmode  = ("input[name='travelmode']:checked").val();
 
 		if (origin && destination && travelmode) {
 			var gmUrl = "https://www.google.com/maps/dir/?api=1&origin="+origin+"&destination="+destination+"&travelmode="+travelmode.toLowerCase();
-			//$("#getting-around__google-maps-link").attr("href", gmUrl).show();
+			//("#getting-around__google-maps-link").attr("href", gmUrl).show();
 			//console.info({gmUrl: gmUrl});
 		} */
     /* else {
-			$("#getting-around__google-maps-link").hide();
+			("#getting-around__google-maps-link").hide();
 		} */
   }
 
@@ -866,18 +882,18 @@ var UoS_GettingAround = (function () {
    * and show/hide that marker whether or not the checkbox is checked
    */
 
-	const _showMarkerIfLocationTypeIsEnabled = location => {
-		const type = groupselect.options[groupselect.selectedIndex].value;
-		location.marker.setMap(location.type===type?_map:null)
-	};
+  const _showMarkerIfLocationTypeIsEnabled = (location) => {
+    const type = groupselect.options[groupselect.selectedIndex].value;
+    location.marker.setMap(location.type === type ? _map : null);
+  };
 
-	const _filterMarkers = () => _markerData.forEach(_showMarkerIfLocationTypeIsEnabled);
-// loop through each marker
-//	var isValid;
-//	for (var i = 0; i < _markerData.length; i++) {
-//		isValid = $("#filters input[name='" + _markerData[i].type + "']").is(":checked");
-//		_markerData[i].marker.setMap(isValid ? _map : null);
-//	}
+  const _filterMarkers = () => _markerData.forEach(_showMarkerIfLocationTypeIsEnabled);
+  // loop through each marker
+  //	var isValid;
+  //	for (var i = 0; i < _markerData.length; i++) {
+  //		isValid = ("#filters input[name='" + _markerData[i].type + "']").is(":checked");
+  //		_markerData[i].marker.setMap(isValid ? _map : null);
+  //	}
 
   /**
    * a helper function that will convert a csv string of coords
@@ -891,11 +907,16 @@ var UoS_GettingAround = (function () {
   }
 
   function _calculateAndDisplayRoute(directionsService, directionsDisplay) {
-    //var origin = $("#getting-around-directions__origin").find(":selected").data("latlng"),
-    // destination = $("#getting-around-directions__destination").find(":selected").data("latlng");
+    //var origin = ("#getting-around-directions__origin").find(":selected").data("latlng"),
+    // destination = ("#getting-around-directions__destination").find(":selected").data("latlng");
 
-    var origin = $("#getting-around-directions__origin").val();
-    var destination = $("#getting-around-directions__destination").val();
+    //var origin = ("#getting-around-directions__origin").val();
+    const originNode = stir.node("#getting-around-directions__origin");
+    const origin = originNode.options[originNode.selectedIndex].value;
+
+    //var destination = ("#getting-around-directions__destination").val();
+    const destinationNode = stir.node("#getting-around-directions__destination");
+    const destination = destinationNode.options[destinationNode.selectedIndex].value;
 
     //_setGoogleMapsLink();
 
