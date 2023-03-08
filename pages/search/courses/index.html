@@ -360,13 +360,26 @@
                 </div>
 
                 <div class="cell u-padding-bottom">
-                    To demo enter a course url
-                    <form id="demoform">
+                    <p>Demo add buttons</p>
+                    <!-- form id="demoform">
                         <input type="text" placeholder="eg /courses/ug/professional-practice/">
                         <button class="button">Add</button>
                     </form>
+                    <hr / -->
+                    <div class="flex-container flex-dir-column large-flex-dir-row u-gap-x">
+                        <button class="button" data-action="addtofavs" data-url="/courses/ug/professional-practice/">Add
+                            Professional Practice to favs</button>
+                        <button class="button" data-action="addtofavs" data-url="/courses/ug/animal-biology/">Add
+                            Animal
+                            Biology to favs</button>
+                        <button class="button" data-action="addtofavs" data-url="/courses/ug/applied-mathematics/">Add
+                            Applied Mathematics to favs</button>
+                        <button class="button" data-action="addtofavs" data-url="/courses/ug/business-computing/">Add
+                            Business Computing to favs</button>
+                    </div>
 
-                    <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="clearallfavs">Clear all
+                    <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="clearallfavs">Clear
+                        all
                         favs</button>
                 </div>
 
@@ -381,129 +394,10 @@
     <!-- 
 				 MAIN FOOTER 
 				-->
-    <footer aria-label="Main footer">
-        <div class="u-bg-black u-clip u-padding-top">
-            <div class="stir-grid site-footer" data-lazy-container>
-                <!-- Contact -->
-                <div class="site-footer__contact">
-                    <h2><a href="/about/contact-us/">Contact us</a></h2>
-                    <ul>
-                        <li><a href="https://portal.stir.ac.uk/student/enquiry/ask.jsp">Ask us a question &#10217;</a>
-                        </li>
-                        <li><a href="tel:+44(0)1786473171">Tel: +44 (0) 1786 473171</a></li>
-                        <li class="site-footer__address u-font-bold"><span>University of Stirling</span>
-                            <span>Stirling</span> <span>FK9 4LA</span> <span>Scotland UK</span>
-                        </li>
-                    </ul>
-                </div>
-                <figure class="site-footer__map">
-                    <a href="/about/getting-here/">
-                        <img src="../../../medias/Categorised/Dist/css/images/maps/footer-map-scotland.svg"
-                            alt="Map of the UK with a marker indicating the location of the University of Stirling"
-                            loading=lazy>
-                    </a>
-                    <figcaption class="show-for-sr">Map of the United Kingdom of Great Britain and Northern Ireland
-                    </figcaption>
-                </figure>
-                <!-- Social -->
-                <div class="site-footer__follow">
-                    <h2>Follow us</h2>
-                    <ul>
-                        <li>
-                            <a href="https://www.facebook.com/universityofstirling/">
-                                <span class="show-for-sr">Facebook</span>
-                                <span class="uos-facebook"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.instagram.com/universityofstirling/">
-                                <span class="show-for-sr">Instagram</span>
-                                <span class="uos-instagram"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.twitter.com/StirUni">
-                                <span class="show-for-sr">Twitter</span>
-                                <span class="uos-twitter"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.youtube.com/user/UniversityOfStirling">
-                                <span class="show-for-sr">YouTube</span>
-                                <span class="uos-youtube-old"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.linkedin.com/school/university-of-stirling/">
-                                <span class="show-for-sr">LinkedIn</span>
-                                <span class="uos-linkedin"></span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- Popular links -->
-                <div class="site-footer__popular-links">
-                    <h2>Popular links</h2>
-                    <ul>
-                        <li><a href="/about/faculties/">Faculties</a></li>
-                        <li><a href="/about/professional-services/">Professional services</a></li>
-                        <li><a href="/about/our-people/alumni/">Alumni</a></li>
-                        <li><a href="/about/work-at-stirling/">Jobs at Stirling</a></li>
-                        <li><a href="/about/getting-here/">Getting here</a></li>
-                        <li><a href="/student-life/students-union/">Students’ Union</a></li>
-                        <li><a href="https://shop.stir.ac.uk/">Online shop</a></li>
-                        <li><a href="https://blog.stir.ac.uk/ ">Blog</a></li>
-                        <li><a aria-label="Information for current students" id="footer-link-students" rel="nofollow"
-                                href="/internal-students/">Current students</a></li>
-                        <li><a aria-label="Information for current staff" id="footer-link-staff" rel="nofollow"
-                                href="/internal-staff/">Staff</a></li>
-                    </ul>
-                </div>
-                <!-- Site information -->
-                <div class="site-footer__site-info">
-                    <h2>Site information</h2>
-                    <ul>
-                        <li><a href="/about/policy-legal-and-cookies/">Policy, Legal and Cookies</a></li>
-                        <li><a href="/about/accessibility/">Accessibility statement</a></li>
-                        <li><a href="/sitemap/">Sitemap</a></li>
-                        <li><a href="/about/modern-slavery-statement/">Modern Slavery Statement</a></li>
-                        <li><a href="/about/">Scottish Charity No SC011159</a></li>
-                    </ul>
-                </div>
-                <!-- Accreditations -->
-                <div class="site-footer__awards">
-                    <a
-                        href="/news/news-archive/../2019/11/university-of-stirling-wins-the-uks-highest-academic-honour/"><img
-                            src="../../../medias/Categorised/Dist/images/accreditations/qap-2019.svg"
-                            alt="The Queen's Anniversary Prizes for Higher and Further Education 2019" loading=lazy></a>
-                </div>
-                <div class="site-footer__accreditations">
-                    <a href="/about/our-reputation/facts-and-figures/" aria-label="University facts and figures"><img
-                            src="../../../medias/Categorised/Dist/images/accreditations/accreditations-cluster.png"
-                            srcset="../../../medias/Categorised/Dist/images/accreditations/accreditations-cluster2x.png 2x"
-                            width="250" height="38" alt="UK QAA, Athena Swan Bronze Award, SCQF" loading=lazy></a>
-                </div>
-                <div class="site-footer__lockup">
-                    <img src="../../../medias/Categorised/Dist/images/btd-strap-energy.svg" alt="Be the difference"
-                        loading=lazy>
-                </div>
-            </div>
-        </div>
-        <!-- Copyright Footer -->
-        <div class="c-copyright u-bg-black">
-            <div class="grid-container">
-                <div class="grid-x grid-padding-x">
-                    <div class="cell large-12 medium-12 small-12">
-                        <p>&copy; University of Stirling</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Back to top button -->
-        <a href="#" id="c-scroll-to-top-button" class="c-scroll-to-top flex-container align-middle align-center"><span
-                class="show-for-sr">Scroll back to the top</span><span class="uos-arrows-up"></span></a>
-    </footer>
+
     <!--endnoindex-->
+
+
 
     <!-- app.min.js -->
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js"></script>
@@ -512,149 +406,166 @@
 
 
     <script>
+        (function () {
+            // NODES & VARS
+            const demoForm = stir.node("#demoform");
+            const clearAllFavsBtn = stir.node("[data-action=clearallfavs]");
+            const addToFavsBtns = stir.nodes("[data-action=addtofavs]");
+            const favsArea = stir.node("#favsarea");
+            const historyArea = stir.node("#historyarea");
 
-        const demoForm = document.querySelector("#demoform");
-        const clearAllFavsBtn = document.querySelector("[data-action=clearallfavs]");
-        const favsArea = document.querySelector("#favsarea");
-        const historyArea = document.querySelector("#historyarea");
-        const cookieId = "favs=";
+            const cookieId = "favs=";
 
-        const host = "https://search.stir.ac.uk";
-        //const host = "https://stage-shared-15-24-admin.clients.uk.funnelback.com";
+            const host = "https://search.stir.ac.uk";
+            //const host = "https://stage-shared-15-24-admin.clients.uk.funnelback.com";
 
-        const sf = ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"];
-        const url = host + "/s/search.json?collection=stir-courses&query=!asdsadsad&fmo=true&num_ranks=2000&SF=[" + sf.join(",") + "]&scope=";
+            const sf = ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"];
+            const url = host + "/s/search.json?collection=stir-courses&query=!asdsadsad&fmo=true&num_ranks=2000&SF=[" + sf.join(",") + "]&scope=";
 
-        /* renderFavs : Returns a String of HTML */
-        const renderFavs = stir.curry((item) => {
-            return `
-                <div class="c-search-result" data-rank="" data-sid="" data-result-type="course">
-                    <div class=" c-search-result__tags">
-                        <span class="c-search-tag">${item.metaData.level}</span>
-                    </div>
-
-                    <div class="flex-container flex-dir-column u-gap u-mt-1">
-                        <p class="u-text-regular u-m-0">
-                            <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ''} ${item.title}">${item.metaData.award ? item.metaData.award : ''} ${item.title} ${item.metaData.ucas ? ' - ' + item.metaData.ucas : ''}</a></strong>
-                        </p>
-                        <p class="u-m-0">${item.metaData.c}</p>
-                        
-                        <div class="c-search-result__meta grid-x">
-                            <div class="cell medium-4"><strong class="u-heritage-green">Start dates</strong><p>${item.metaData.start}</p></div>
-                            <div class="cell medium-4"><strong class="u-heritage-green">Study modes</strong><p class="u-text-sentence-case">${item.metaData.modes}</p></div>
-                            <div class="cell medium-4"><strong class="u-heritage-green">Delivery</strong><p class="u-text-sentence-case">${item.metaData.delivery}</p></div>
+            /* renderFavs : Returns a String of HTML */
+            const renderFavs = stir.curry((item) => {
+                return `
+                    <div class="c-search-result" data-rank="" data-sid="" data-result-type="course">
+                        <div class=" c-search-result__tags">
+                            <span class="c-search-tag">${item.metaData.level}</span>
                         </div>
-                    </div>
-                    <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="removefav" data-id="${item.liveUrl}">Remove from favs</button>
-                </div>`;
-        });
 
-        /* setDOMContent : Returns a Boolean  */
-        const setDOMContent = stir.curry((node, html) => {
-            stir.setHTML(node, html);
-            return true;
-        });
-
-        /* getFBScope : Returns a String */
-        const getFBScope = (favs) => favs.map(item => `` + item.url + ``).join(',');
-
-        /* fetchData : Returns null */
-        const fetchData = (url, node, favsStored) => {
-            stir.getJSON(url, (initialData) => {
-                const data = initialData.response.resultPacket.results;
-
-                // Maintain ordering
-                const favStored2 = favsStored.map(item => {
-                    return data.filter(element => {
-                        if (item.url === element.liveUrl.replace("https://www.stir.ac.uk", "")) return element;
-                    })[0];
-                })
-
-                setDOMContent(node, favStored2.map(renderFavs).join(''));
+                        <div class="flex-container flex-dir-column u-gap u-mt-1">
+                            <p class="u-text-regular u-m-0">
+                                <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ''} ${item.title}">${item.metaData.award ? item.metaData.award : ''} ${item.title} ${item.metaData.ucas ? ' - ' + item.metaData.ucas : ''}</a></strong>
+                            </p>
+                            <p class="u-m-0">${item.metaData.c}</p>
+                            
+                            <div class="c-search-result__meta grid-x">
+                                <div class="cell medium-4"><strong class="u-heritage-green">Start dates</strong><p>${item.metaData.start}</p></div>
+                                <div class="cell medium-4"><strong class="u-heritage-green">Study modes</strong><p class="u-text-sentence-case">${item.metaData.modes}</p></div>
+                                <div class="cell medium-4"><strong class="u-heritage-green">Delivery</strong><p class="u-text-sentence-case">${item.metaData.delivery}</p></div>
+                            </div>
+                        </div>
+                        <div class="flex-container align-middle u-gap u-mt-1">
+                            <button class="u-border-solid u-p-1 u-cursor-pointer" data-action="removefav" data-url="${item.liveUrl}">Remove from favs</button>
+                            <span>Saved on ${stir.Date.newsDate(new Date(item.dateSaved))}</span>
+                        </div>
+                    </div>`;
             });
-        };
 
-        /* */
-        const getUTCDate = (days) => {
-            const d = new Date();
-            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-            return d.toUTCString();
-        };
+            /* setDOMContent : Returns a Boolean  */
+            const setDOMContent = stir.curry((node, html) => {
+                stir.setHTML(node, html);
+                return true;
+            });
 
+            /* getFBScope : Returns a String */
+            const getFBScope = (favs) => favs.map(item => `` + item.url + ``).join(',');
 
-        /* */
-        const getExpiryDate = (days) => ";expires=" + getUTCDate(days);
+            /* fetchData : Returns null */
+            const fetchData = (url, node, favsStored) => {
+                stir.getJSON(url, (initialData) => {
+                    const data = initialData.response.resultPacket.results;
 
-        /* */
-        const getFavsStoredinCookie = (cookieId) => {
-            const cookies = document.cookie.split(";");
+                    // Maintain ordering by merging FB result into cookie object
+                    const dataOrdered = favsStored.map(item => {
+                        return {
+                            ...data.filter(element => {
+                                if (item.url === element.liveUrl.replace("https://www.stir.ac.uk", "")) return element;
+                            })[0], ...{ dateSaved: item.date }
+                        };
+                    });
 
-            const favCookie = cookies.filter(item => item.includes(cookieId));
-            const favCookie2 = favCookie.length && favCookie[0].replace(cookieId, "");
+                    setDOMContent(node, dataOrdered.map(renderFavs).join(''));
+                });
+            };
 
-            return JSON.parse(favCookie2) || [];
-        };
+            /* getExpiryDate: Returns a String (cookie expiry date)  */
+            const getExpiryDate = (days) => {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                return ";expires=" + d.toUTCString();
+            };
 
-        /* init : Returns null */
-        const init = (favsArea, url, cookieId) => {
-            const favsStored = getFavsStoredinCookie(cookieId);
+            /* */
+            const getFavsStoredinCookie = (cookieId) => {
+                const cookies = document.cookie.split(";");
 
-            if (!favsStored.length || favsStored.length < 1) {
-                setDOMContent(favsArea, '<p>No favs stored</p>');
-                return;
-            }
+                const favCookie = cookies.filter(item => item.includes(cookieId));
+                const favCookie2 = favCookie.length && favCookie[0].replace(cookieId, "");
 
-            const favsStored2 = favsStored.sort((a, b) => b.date - a.date);
-            const fullUrl = url + getFBScope(favsStored2);
+                return JSON.parse(favCookie2) || [];
+            };
 
-            fetchData(fullUrl, favsArea, favsStored2);
-            return;
-        };
+            /* INIT : Returns null */
+            const init = (favsArea, url, cookieId) => {
+                const favsStored = getFavsStoredinCookie(cookieId);
 
-
-        /* ON LOAD */
-        init(favsArea, url, cookieId);
-
-
-        /* ACTION: Add a fav */
-        demoForm && demoForm.addEventListener("submit", (event) => {
-            const text = (demoForm.querySelector("[type=text]").value).replace("https://www.stir.ac.uk", "");
-
-            // Update the cookie
-            const favsStored = getFavsStoredinCookie(cookieId);
-            const favsStored2 = [...favsStored, { url: text, date: Date.now() }];
-            document.cookie = cookieId + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
-
-            init(favsArea, url, cookieId);
-            event.preventDefault();
-        });
-
-        /* ACTION: Remove a fav */
-        favsArea && favsArea.addEventListener("click", (event) => {
-            if (event.target.dataset.action && event.target.dataset.action === "removefav") {
-                const id = event.target.dataset.id;
-
-                if (id && id.length) {
-                    const itemUrl = id.replace("https://www.stir.ac.uk", "");
-
-                    const favsStored = getFavsStoredinCookie(cookieId);
-                    const favsStored2 = favsStored.filter(item => item.url !== itemUrl);
-
-                    // Update the cookie
-                    document.cookie = cookieId + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
-                    init(favsArea, url, cookieId);
+                if (!favsStored.length || favsStored.length < 1) {
+                    setDOMContent(favsArea, '<p>No favs stored</p>');
+                    return;
                 }
-            }
-            event.preventDefault();
-        });
 
-        /* ACTION: Remove all favs */
-        clearAllFavsBtn && clearAllFavsBtn.addEventListener("click", (event) => {
-            document.cookie = cookieId + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
+                const favsStoredSorted = favsStored.sort((a, b) => b.date - a.date);
+                const fullUrl = url + getFBScope(favsStoredSorted);
+
+                fetchData(fullUrl, favsArea, favsStoredSorted);
+                return;
+            };
+
+            /* ACTION: Add a fav
+            demoForm && demoForm.addEventListener("submit", (event) => {
+                const text = (demoForm.querySelector("[type=text]").value).replace("https://www.stir.ac.uk", "");
+
+                // Update the cookie
+                const favsStored = getFavsStoredinCookie(cookieId);
+                const favsStored2 = [...favsStored, { url: text, date: Date.now() }];
+                document.cookie = cookieId + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
+
+                init(favsArea, url, cookieId);
+                event.preventDefault();
+            }); */
+
+            /* ACTION: Remove a fav */
+            favsArea && favsArea.addEventListener("click", (event) => {
+                if (event.target.dataset.action && event.target.dataset.action === "removefav") {
+                    const id = event.target.dataset.url;
+
+                    if (id && id.length) {
+                        const itemUrl = id.replace("https://www.stir.ac.uk", "");
+
+                        const favsStored = getFavsStoredinCookie(cookieId);
+                        const favsStored2 = favsStored.filter(item => item.url !== itemUrl);
+
+                        // Update the cookie
+                        document.cookie = cookieId + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
+                        init(favsArea, url, cookieId);
+                    }
+                }
+                event.preventDefault();
+            });
+
+            /* ACTION: Remove all favs */
+            clearAllFavsBtn && clearAllFavsBtn.addEventListener("click", (event) => {
+                document.cookie = cookieId + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
+                init(favsArea, url, cookieId);
+
+                event.preventDefault();
+            });
+
+            /* ACTION: Add a fav */
+            addToFavsBtns && addToFavsBtns.forEach(element => {
+                element.addEventListener("click", event => {
+                    // Update the cookie
+                    const favsStored = getFavsStoredinCookie(cookieId);
+                    const favsStored2 = [...favsStored, { url: event.target.dataset.url, date: Date.now() }];
+                    document.cookie = cookieId + JSON.stringify(favsStored2) + getExpiryDate(30) + ";path=/";
+
+                    init(favsArea, url, cookieId);
+                    event.preventDefault();
+                });
+            });
+
+            /* ON LOAD */
             init(favsArea, url, cookieId);
 
-            event.preventDefault();
-        });
+        })();
 
     </script>
 
