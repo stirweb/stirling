@@ -175,6 +175,7 @@ stir.search = () => {
       news: {
         collection: "stir-www",
         meta_type: "News",
+		meta_v_not:"faculty-news",
         sort: "date",
         fmo: "true",
         SF: "[c,d,h1,image,imagealt,tags]",
