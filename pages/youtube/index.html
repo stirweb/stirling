@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>YouTube Channel Listing</title>
+
+</head>
+
+<body>
+    <div id="videos"></div>
+
+
+    <script>
+
+        //https://stackoverflow.com/questions/30081301/getting-all-videos-of-a-channel-using-youtube-api
+
+        const renderPagination = (nexttoken) => {
+            return `<p><a class="nextBtn" data-nextToken="${nexttoken}" href="#">Next</a></p>`;
+
+        };
+
+        const renderItems = (item) => {
+            //console.log(item.snippet);
+            return `
+                <p><strong>${item.snippet.title}</strong><br>
+                    Published ${item.snippet.publishedAt}<br>
+                    <a href="https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}">View video on YouTube</a>
+                    <hr/>
+                </p>`;
+        };
+
+        /* */
+        const fetchChannelVideos = (uploadItemsId, apikey, nextPageToken) => {
+            const apiUrl2 = `https://youtube.googleapis.com/youtube/v3/playlistItems?maxResults=50&pageToken=${nextPageToken}&part=contentDetails,snippet&playlistId=${uploadItemsId}&key=${apikey}`;
+
+            fetch(apiUrl2).then((response) => response.json())
+                .then((data2) => {
+                    console.log(data2);
+                    const html = data2.items.map(renderItems).join('') + renderPagination(data2.nextPageToken);
+                    document.querySelector("#videos").innerHTML = html;
+                });
+        };
+
+        /* */
+        const showVideoListChannel = (channelId, apikey, nextPageToken) => {
+            const apiUrl = `https://youtube.googleapis.com/youtube/v3/channels?part=contentDetails,snippet&id=${channelId}&key=${apikey}`;
+
+            fetch(apiUrl)
+                .then((response) => response.json())
+                .then((data) => {
+                    const uploadItemsId = data && data.items ? data.items[0].contentDetails.relatedPlaylists.uploads : null;
+                    if (uploadItemsId) fetchChannelVideos(uploadItemsId, apikey, nextPageToken);
+                });
+        };
+
+        /* */
+        document.querySelector("#videos").addEventListener(
+            "click", (event) => {
+                const el = event.target;
+
+                if (el.classList && el.classList.contains("nextBtn")) {
+                    console.log(el.dataset)
+
+                    if (el.dataset && el.dataset.nexttoken) {
+                        showVideoListChannel("UCuulvnEIgjx9NLrRca9h9GA", "AIzaSyAi-re6lxvUyNhAuIyqajWZkGRH2JpBYiQ", el.dataset.nexttoken);
+                    }
+                }
+            }
+        );
+
+        showVideoListChannel("UCuulvnEIgjx9NLrRca9h9GA", "AIzaSyAi-re6lxvUyNhAuIyqajWZkGRH2JpBYiQ", "");
+    </script>
+</body>
+
+</html>

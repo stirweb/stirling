@@ -190,11 +190,10 @@
   };
 
   /* 
-    Sorts a comma separated string 
+    Sorts a comma separated string. Returns an array
   */
-  const getReorderString = (str, direction) => {
-    if (direction !== "desc") return str.split(", ").sort().join(", ");
-    return str.split(", ").sort().reverse().join(", ");
+  const getReorderedString = (str, direction) => {
+    return direction !== "desc" ? str.split(", ").sort() : str.split(", ").sort().reverse();
   };
 
   /*
@@ -208,8 +207,7 @@
   */
   const renderFormResults = stir.curry((feeSpanders, _meta, _data) => {
     return `
-        <p class="u-margin-bottom text-center"> Displaying  ${_meta.start + 1} - ${_meta.last}  of  
-            <strong>${_meta.totalPosts} results</strong> that match your criteria.</p>
+        <p class="u-margin-bottom text-center"> Displaying  ${_meta.start + 1} - ${_meta.last}  of  <strong>${_meta.totalPosts} results</strong> that match your criteria.</p>
         ${stir.map((schol) => renderItem(feeSpanders, schol), _data).join("")} 
         <div class="grid-x grid-padding-x " id="pagination-box">
           ${renderPagination(_meta)}
@@ -252,35 +250,37 @@
   */
   const renderItem = (feeSpanders, schol) => {
     return `
-        <div class="u-margin-bottom">
+        <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative">
+            <div class="u-absolute u-top--15">
+            ${getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join("")}
+            </div>
             <div class="grid-x grid-padding-x">
-                <div class="cell u-mb-2">
-                <h3 class="u-heritage-green u-mb-1">
-                    <a href="${schol.scholarship.url}">${schol.scholarship.title}</a></h3>
-                    <p>${schol.scholarship.teaser}</p> 
+                <div class="cell  u-mt-1">
+                <p class="u-heritage-green u-mb-2">
+                    <strong><a href="${schol.scholarship.url}">${schol.scholarship.title}</a></strong></p>
+                    <p class="u-mb-2">${schol.scholarship.teaser}</p> 
                 </div>
 
-              ${renderDetail(getFeeStatus(schol.scholarship.feeStatus, feeSpanders).join(", "), "Fee status")}
-              ${renderDetail(getReorderString(schol.scholarship.studyLevel, "desc"), "Level")}
-      
-                <div class="cell small-12">
-                  <a href="${schol.scholarship.url}" class="c-link" aria-label="View 
-                  ${schol.scholarship.title}" >${schol.scholarship.title}</a>
-                  ${debug && schol ? renderDebug(schol) : ""}
-                </div>
+                ${renderDetail(schol.scholarship.value, "Value", false)}
+                ${renderDetail(schol.scholarship.awards, "Number of awards", true)}
+                ${renderDetail(getFeeStatus(schol.scholarship.feeStatus, feeSpanders).join(", "), "Fee status", true)}
+              
+                ${debug && schol ? renderDebug(schol) : ""}
             </div>
         </div>`;
   };
 
+  const renderTag = (item) => `<span class="u-bg-mint c-tag u-mr-1 ">${item}</span>`;
+
   /* 
     Form the HTML for the details snippet 
   */
-  const renderDetail = (content, header) => {
-    if (!content) return ``;
-
-    return `
-        <div class="cell small-12 medium-6 large-5 u-mb-2">
-          <div class="u-bg-grey u-p-2  u-green-line-left u-h-full">
+  const renderDetail = (content, header, addDivider) => {
+    return !content
+      ? ``
+      : `
+        <div class="cell small-12 medium-4 large-4 ${addDivider ? `u-grey-line-left` : ``} ">
+          <div class="  u-h-full">
             <p class="u-font-bold">${header}</p>
             <p class="u-m-0">${content}</p>
           </div>
@@ -291,8 +291,8 @@
     Form the HTML for debugging info 
   */
   const renderDebug = (schol) => {
-    return `
-        <div class="u-my-2 u-p-2 u-border-solid " >
+    return `<!--
+        <div class="cell u-mt-2 u-p-2 u-border-solid " >
           <h3>Debugger</h3>
           <b>Weighting: </b> ${schol.rank}
           <br><b>Nationalities (M):</b> ${schol.scholarship.nationality}
@@ -301,7 +301,7 @@
           <br><b>Order (UG, PG):</b> ${schol.scholarship.ugOrder}, ${schol.scholarship.pgOrder}
           <br><b>Faculty:</b> ${schol.scholarship.faculty}
           <br><b>Faculty Order (UG, PG):</b> ${schol.scholarship.ugOrderFaculty} , ${schol.scholarship.pgOrderFaculty}</p>
-        </div> `;
+        </div> -->`;
   };
 
   /*
@@ -396,13 +396,13 @@
     return value;
   };
 
-  const getSubjectType = (value) => (value && value.length > 0 ? value : "");
+  //const getSubjectType = (value) => (value && value.length > 0 ? value : "");
 
   /* 
     Extract filter vars from the form and reconfig them if nec 
   */
   const getFilterVars = (nodes, regionmacros) => {
-    const subjectType = getSubjectType(nodes.inputSubject.options[nodes.inputSubject.selectedIndex].parentNode.label);
+    const subjectType = "Subject"; // getSubjectType(nodes.inputSubject.options[nodes.inputSubject.selectedIndex].parentNode.label);
 
     const regionTagCurry = getRegionTags(getInputValue(nodes.inputNation));
 
