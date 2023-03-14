@@ -191,11 +191,10 @@
   };
 
   /* 
-    Sorts a comma separated string 
+    Sorts a comma separated string. Returns an array
   */
-  var getReorderString = function getReorderString(str, direction) {
-    if (direction !== "desc") return str.split(", ").sort().join(", ");
-    return str.split(", ").sort().reverse().join(", ");
+  var getReorderedString = function getReorderedString(str, direction) {
+    return direction !== "desc" ? str.split(", ").sort() : str.split(", ").sort().reverse();
   };
 
   /*
@@ -208,7 +207,7 @@
     Form the HTML for all results 
   */
   var renderFormResults = stir.curry(function (feeSpanders, _meta, _data) {
-    return "\n        <p class=\"u-margin-bottom text-center\"> Displaying  ".concat(_meta.start + 1, " - ").concat(_meta.last, "  of  \n            <strong>").concat(_meta.totalPosts, " results</strong> that match your criteria.</p>\n        ").concat(stir.map(function (schol) {
+    return "\n        <p class=\"u-margin-bottom text-center\"> Displaying  ".concat(_meta.start + 1, " - ").concat(_meta.last, "  of  <strong>").concat(_meta.totalPosts, " results</strong> that match your criteria.</p>\n        ").concat(stir.map(function (schol) {
       return renderItem(feeSpanders, schol);
     }, _data).join(""), " \n        <div class=\"grid-x grid-padding-x \" id=\"pagination-box\">\n          ").concat(renderPagination(_meta), "\n        </div> ");
   });
@@ -246,22 +245,24 @@
     Form the HTML for an individual result
   */
   var renderItem = function renderItem(feeSpanders, schol) {
-    return "\n        <div class=\"u-margin-bottom\">\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell u-mb-2\">\n                <h3 class=\"u-heritage-green u-mb-1\">\n                    <a href=\"".concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></h3>\n                    <p>").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n              ").concat(renderDetail(getFeeStatus(schol.scholarship.feeStatus, feeSpanders).join(", "), "Fee status"), "\n              ").concat(renderDetail(getReorderString(schol.scholarship.studyLevel, "desc"), "Level"), "\n      \n                <div class=\"cell small-12\">\n                  <a href=\"").concat(schol.scholarship.url, "\" class=\"c-link\" aria-label=\"View \n                  ").concat(schol.scholarship.title, "\" >").concat(schol.scholarship.title, "</a>\n                  ").concat(debug && schol ? renderDebug(schol) : "", "\n                </div>\n            </div>\n        </div>");
+    return "\n        <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n            <div class=\"u-absolute u-top--15\">\n            ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell  u-mt-1\">\n                <p class=\"u-heritage-green u-mb-2\">\n                    <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                    <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n                ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                ").concat(renderDetail(getFeeStatus(schol.scholarship.feeStatus, feeSpanders).join(", "), "Fee status", true), "\n              \n                ").concat(debug && schol ? renderDebug(schol) : "", "\n            </div>\n        </div>");
+  };
+  var renderTag = function renderTag(item) {
+    return "<span class=\"u-bg-mint c-tag u-mr-1 \">".concat(item, "</span>");
   };
 
   /* 
     Form the HTML for the details snippet 
   */
-  var renderDetail = function renderDetail(content, header) {
-    if (!content) return "";
-    return "\n        <div class=\"cell small-12 medium-6 large-5 u-mb-2\">\n          <div class=\"u-bg-grey u-p-2  u-green-line-left u-h-full\">\n            <p class=\"u-font-bold\">".concat(header, "</p>\n            <p class=\"u-m-0\">").concat(content, "</p>\n          </div>\n        </div> ");
+  var renderDetail = function renderDetail(content, header, addDivider) {
+    return !content ? "" : "\n        <div class=\"cell small-12 medium-4 large-4 ".concat(addDivider ? "u-grey-line-left" : "", " \">\n          <div class=\"  u-h-full\">\n            <p class=\"u-font-bold\">").concat(header, "</p>\n            <p class=\"u-m-0\">").concat(content, "</p>\n          </div>\n        </div> ");
   };
 
   /* 
     Form the HTML for debugging info 
   */
   var renderDebug = function renderDebug(schol) {
-    return "\n        <div class=\"u-my-2 u-p-2 u-border-solid \" >\n          <h3>Debugger</h3>\n          <b>Weighting: </b> ".concat(schol.rank, "\n          <br><b>Nationalities (M):</b> ").concat(schol.scholarship.nationality, "\n          <br><b>Promoted (R):</b> ").concat(schol.scholarship.promotedSubject, "\n          <br><b>Other (Q):</b> ").concat(schol.scholarship.otherSubject, "\n          <br><b>Order (UG, PG):</b> ").concat(schol.scholarship.ugOrder, ", ").concat(schol.scholarship.pgOrder, "\n          <br><b>Faculty:</b> ").concat(schol.scholarship.faculty, "\n          <br><b>Faculty Order (UG, PG):</b> ").concat(schol.scholarship.ugOrderFaculty, " , ").concat(schol.scholarship.pgOrderFaculty, "</p>\n        </div> ");
+    return "<!--\n        <div class=\"cell u-mt-2 u-p-2 u-border-solid \" >\n          <h3>Debugger</h3>\n          <b>Weighting: </b> ".concat(schol.rank, "\n          <br><b>Nationalities (M):</b> ").concat(schol.scholarship.nationality, "\n          <br><b>Promoted (R):</b> ").concat(schol.scholarship.promotedSubject, "\n          <br><b>Other (Q):</b> ").concat(schol.scholarship.otherSubject, "\n          <br><b>Order (UG, PG):</b> ").concat(schol.scholarship.ugOrder, ", ").concat(schol.scholarship.pgOrder, "\n          <br><b>Faculty:</b> ").concat(schol.scholarship.faculty, "\n          <br><b>Faculty Order (UG, PG):</b> ").concat(schol.scholarship.ugOrderFaculty, " , ").concat(schol.scholarship.pgOrderFaculty, "</p>\n        </div> -->");
   };
 
   /*
@@ -340,15 +341,15 @@
     if (value === "Postgraduate Research") return "Postgraduate (research)";
     return value;
   };
-  var getSubjectType = function getSubjectType(value) {
-    return value && value.length > 0 ? value : "";
-  };
+
+  //const getSubjectType = (value) => (value && value.length > 0 ? value : "");
 
   /* 
     Extract filter vars from the form and reconfig them if nec 
   */
   var getFilterVars = function getFilterVars(nodes, regionmacros) {
-    var subjectType = getSubjectType(nodes.inputSubject.options[nodes.inputSubject.selectedIndex].parentNode.label);
+    var subjectType = "Subject"; // getSubjectType(nodes.inputSubject.options[nodes.inputSubject.selectedIndex].parentNode.label);
+
     var regionTagCurry = getRegionTags(getInputValue(nodes.inputNation));
     return {
       subjectType: subjectType,
