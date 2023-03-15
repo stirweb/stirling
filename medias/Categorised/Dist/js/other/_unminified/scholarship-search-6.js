@@ -197,6 +197,19 @@
     return direction !== "desc" ? str.split(", ").sort() : str.split(", ").sort().reverse();
   };
 
+  /* 
+    Return Fee Status as a full string 
+  */
+  var getFeeStatus = function getFeeStatus(feeStatus, feeSpanders) {
+    return feeStatus.split(", ").map(function (schol) {
+      var matched = stir.filter(function (el) {
+        if (el.short === schol) return el;
+      }, feeSpanders);
+      if (matched[0]) return matched[0].long;
+      return schol;
+    });
+  };
+
   /*
     
      R E N D E R E R S
@@ -222,30 +235,11 @@
     return last >= totalPosts ? "" : "<div class=\"cell text-center\">\n              <button class=\"button hollow tiny\" data-page=\"".concat(currentPage, "\">Load more results</button>\n        </div>");
   };
 
-  // const renderPagination = (_meta) => {
-  //   if (_meta.postsPerPage > _meta.totalPosts) return ``;
-
-  //   return StirSearchHelpers.formPaginationHTML(_meta.totalPosts, _meta.postsPerPage, _meta.currentPage, _meta.noPageLinks);
-  // };
-
-  /* 
-    Return Fee Status as a full string 
-  */
-  var getFeeStatus = function getFeeStatus(feeStatus, feeSpanders) {
-    return feeStatus.split(", ").map(function (schol) {
-      var matched = stir.filter(function (el) {
-        if (el.short === schol) return el;
-      }, feeSpanders);
-      if (matched[0]) return matched[0].long;
-      return schol;
-    });
-  };
-
   /* 
     Form the HTML for an individual result
   */
   var renderItem = function renderItem(feeSpanders, schol) {
-    return "\n        <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n            <div class=\"u-absolute u-top--15\">\n            ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell  u-mt-1\">\n                <p class=\"u-heritage-green u-mb-2\">\n                    <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                    <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n                ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                ").concat(renderDetail(getFeeStatus(schol.scholarship.feeStatus, feeSpanders).join(", "), "Fee status", true), "\n              \n                ").concat(debug && schol ? renderDebug(schol) : "", "\n            </div>\n        </div>");
+    return "\n        <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n            <div class=\"u-absolute u-top--15\">\n            ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell  u-mt-1\">\n                    <p class=\"u-heritage-green u-mb-2\">\n                      <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                    <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n                ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                ").concat(renderDetail(getFeeStatus(schol.scholarship.feeStatus, feeSpanders).join(", "), "Fee status", true), "\n              \n                ").concat(debug && schol ? renderDebug(schol) : "", "\n            </div>\n        </div>");
   };
   var renderTag = function renderTag(item) {
     return "<span class=\"u-bg-mint c-tag u-mr-1 \">".concat(item, "</span>");
@@ -255,7 +249,7 @@
     Form the HTML for the details snippet 
   */
   var renderDetail = function renderDetail(content, header, addDivider) {
-    return !content ? "" : "\n        <div class=\"cell small-12 medium-4 large-4 ".concat(addDivider ? "u-grey-line-left" : "", " \">\n          <div class=\"  u-h-full\">\n            <p class=\"u-font-bold\">").concat(header, "</p>\n            <p class=\"u-m-0\">").concat(content, "</p>\n          </div>\n        </div> ");
+    return !content ? "" : "\n        <div class=\"cell small-12  large-4 ".concat(addDivider ? "u-grey-line-left u-no-border-medium" : "", " \">\n          <div class=\"u-mb-fixed-1 u-h-full\">\n            <p class=\"u-font-bold\">").concat(header, "</p>\n            <p class=\"u-m-0\">").concat(content, "</p>\n          </div>\n        </div> ");
   };
 
   /* 

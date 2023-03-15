@@ -196,6 +196,20 @@
     return direction !== "desc" ? str.split(", ").sort() : str.split(", ").sort().reverse();
   };
 
+  /* 
+    Return Fee Status as a full string 
+  */
+  const getFeeStatus = (feeStatus, feeSpanders) => {
+    return feeStatus.split(", ").map((schol) => {
+      const matched = stir.filter((el) => {
+        if (el.short === schol) return el;
+      }, feeSpanders);
+
+      if (matched[0]) return matched[0].long;
+      return schol;
+    });
+  };
+
   /*
     
      R E N D E R E R S
@@ -225,26 +239,6 @@
         </div>`;
   };
 
-  // const renderPagination = (_meta) => {
-  //   if (_meta.postsPerPage > _meta.totalPosts) return ``;
-
-  //   return StirSearchHelpers.formPaginationHTML(_meta.totalPosts, _meta.postsPerPage, _meta.currentPage, _meta.noPageLinks);
-  // };
-
-  /* 
-    Return Fee Status as a full string 
-  */
-  const getFeeStatus = (feeStatus, feeSpanders) => {
-    return feeStatus.split(", ").map((schol) => {
-      const matched = stir.filter((el) => {
-        if (el.short === schol) return el;
-      }, feeSpanders);
-
-      if (matched[0]) return matched[0].long;
-      return schol;
-    });
-  };
-
   /* 
     Form the HTML for an individual result
   */
@@ -256,8 +250,8 @@
             </div>
             <div class="grid-x grid-padding-x">
                 <div class="cell  u-mt-1">
-                <p class="u-heritage-green u-mb-2">
-                    <strong><a href="${schol.scholarship.url}">${schol.scholarship.title}</a></strong></p>
+                    <p class="u-heritage-green u-mb-2">
+                      <strong><a href="${schol.scholarship.url}">${schol.scholarship.title}</a></strong></p>
                     <p class="u-mb-2">${schol.scholarship.teaser}</p> 
                 </div>
 
@@ -279,8 +273,8 @@
     return !content
       ? ``
       : `
-        <div class="cell small-12 medium-4 large-4 ${addDivider ? `u-grey-line-left` : ``} ">
-          <div class="  u-h-full">
+        <div class="cell small-12  large-4 ${addDivider ? `u-grey-line-left u-no-border-medium` : ``} ">
+          <div class="u-mb-fixed-1 u-h-full">
             <p class="u-font-bold">${header}</p>
             <p class="u-m-0">${content}</p>
           </div>

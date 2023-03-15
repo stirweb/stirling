@@ -49,6 +49,14 @@
   border-left: 1px solid #eae9e8;
 }
 
+/* Borders for medium down */
+
+@media screen and #{breakpoint(medium down)} {
+  .u-no-border-medium {
+    border: none;
+  }
+}
+
 /*
   Icons
   To control size best to use with one of the foundation helper font size classes eg h3
