@@ -21,19 +21,6 @@
   var countryNodes = stir.nodes("[data-scholcountrylisting]");
   var subjectNodes = stir.nodes("[data-scholsubjectlisting]");
   var debug = window.location.hostname == "localhost" || window.location.hostname == "mediadev.stir.ac.uk" ? true : false;
-  var feeSpanders = [{
-    short: "RUK",
-    long: "England, Wales, NI, Republic of Ireland"
-  }, {
-    short: "European",
-    long: "European Union"
-  }, {
-    short: "International",
-    long: "International"
-  }, {
-    short: "Scotland",
-    long: "Scotland"
-  }];
 
   /* DOM elements for FORM version (found on the main scholarship page) */
 
@@ -44,7 +31,9 @@
   var searchForm = stir.node("#scholarship-search__form");
   var resultsArea = stir.node("#scholarship-search__results");
   var searchClearBtn = stir.node("#scholarship-search__clear");
-  var regionmacros = stir.t4Globals.regionmacros || [];
+  var stirt4globals = stir.t4Globals || {};
+  var regionmacros = stirt4globals.regionmacros || [];
+  var feeStatusesAll = stirt4globals.feeStatusesAll.feestatuses || [];
   var CONSTANTS = {
     debug: debug,
     regions: {
@@ -58,7 +47,10 @@
     regionmacros: stir.filter(function (item) {
       if (item.tag) return item;
     }, regionmacros) || [],
-    feeSpanders: feeSpanders,
+    feeStatusesAll: feeStatusesAll,
+    feeStatusAllSize: feeStatusesAll.map(function (item) {
+      return item.name;
+    }).join(", ").split(", ").length,
     nodes: {
       inputNation: inputNation,
       inputSubject: inputSubject,
@@ -200,14 +192,15 @@
   /* 
     Return Fee Status as a full string 
   */
-  var getFeeStatus = function getFeeStatus(feeStatus, feeSpanders) {
-    return feeStatus.split(", ").map(function (schol) {
+  var getFeeStatus = function getFeeStatus(feeStatus, consts) {
+    var feeStatuses = feeStatus.split(", ").map(function (schol) {
       var matched = stir.filter(function (el) {
-        if (el.short === schol) return el;
-      }, feeSpanders);
-      if (matched[0]) return matched[0].long;
+        if (el.value === schol) return el;
+      }, consts.feeStatusesAll);
+      if (matched[0]) return matched[0].name;
       return schol;
     });
+    return feeStatuses.join(", ").split(", ").length === consts.feeStatusAllSize ? "All fee statuses" : feeStatuses.join(", ");
   };
 
   /*
@@ -215,15 +208,6 @@
      R E N D E R E R S
     
    */
-
-  /* 
-    Form the HTML for all results 
-  */
-  var renderFormResults = stir.curry(function (feeSpanders, _meta, _data) {
-    return "\n        <p class=\"u-margin-bottom text-center\"> Displaying  ".concat(_meta.start + 1, " - ").concat(_meta.last, "  of  <strong>").concat(_meta.totalPosts, " results</strong> that match your criteria.</p>\n        ").concat(stir.map(function (schol) {
-      return renderItem(feeSpanders, schol);
-    }, _data).join(""), " \n        <div class=\"grid-x grid-padding-x \" id=\"pagination-box\">\n          ").concat(renderPagination(_meta), "\n        </div> ");
-  });
 
   /* 
     Form the html for the pagination  
@@ -236,10 +220,19 @@
   };
 
   /* 
+    Form the HTML for all results 
+  */
+  var renderFormResults = stir.curry(function (consts, _meta, _data) {
+    return "\n        <p class=\"u-margin-bottom text-center\"> Displaying  ".concat(_meta.start + 1, " - ").concat(_meta.last, "  of  <strong>").concat(_meta.totalPosts, " results</strong> that match your criteria.</p>\n        ").concat(stir.map(function (schol) {
+      return renderItem(consts, schol);
+    }, _data).join(""), " \n        <div class=\"grid-x grid-padding-x \" id=\"pagination-box\">\n          ").concat(renderPagination(_meta), "\n        </div> ");
+  });
+
+  /* 
     Form the HTML for an individual result
   */
-  var renderItem = function renderItem(feeSpanders, schol) {
-    return "\n        <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n            <div class=\"u-absolute u-top--15\">\n            ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell  u-mt-1\">\n                    <p class=\"u-heritage-green u-mb-2\">\n                      <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                    <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n                ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                ").concat(renderDetail(getFeeStatus(schol.scholarship.feeStatus, feeSpanders).join(", "), "Fee status", true), "\n              \n                ").concat(debug && schol ? renderDebug(schol) : "", "\n            </div>\n        </div>");
+  var renderItem = function renderItem(consts, schol) {
+    return "\n        <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n            <div class=\"u-absolute u-top--15\">\n            ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell  u-mt-1\">\n                    <p class=\"u-heritage-green u-mb-2\">\n                      <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                    <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n                ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                ").concat(renderDetail(getFeeStatus(schol.scholarship.feeStatus, consts), "Fee status", true), "\n              \n                ").concat(debug && schol ? renderDebug(schol) : "", "\n            </div>\n        </div>");
   };
   var renderTag = function renderTag(item) {
     return "<span class=\"u-bg-mint c-tag u-mr-1 \">".concat(item, "</span>");
@@ -382,7 +375,7 @@
     var paginationFilter = stir.filter(function (schol, index) {
       return index >= meta.start && index < last;
     });
-    var renderer = renderFormResults(CONSTS.feeSpanders, meta);
+    var renderer = renderFormResults(CONSTS, meta);
     return stir.compose(setDOMResults, renderer, paginationFilter)(data);
   };
 
