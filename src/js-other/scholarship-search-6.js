@@ -23,13 +23,6 @@
 
   const debug = window.location.hostname == "localhost" || window.location.hostname == "mediadev.stir.ac.uk" ? true : false;
 
-  const feeSpanders = [
-    { short: "RUK", long: "England, Wales, NI, Republic of Ireland" },
-    { short: "European", long: "European Union" },
-    { short: "International", long: "International" },
-    { short: "Scotland", long: "Scotland" },
-  ];
-
   /* DOM elements for FORM version (found on the main scholarship page) */
 
   const inputNation = stir.node("#scholarship-search__nationality");
@@ -41,7 +34,10 @@
   const resultsArea = stir.node("#scholarship-search__results");
   const searchClearBtn = stir.node("#scholarship-search__clear");
 
-  const regionmacros = stir.t4Globals.regionmacros || [];
+  const stirt4globals = stir.t4Globals || {};
+
+  const regionmacros = stirt4globals.regionmacros || [];
+  const feeStatusesAll = stirt4globals.feeStatusesAll.feestatuses || [];
 
   const CONSTANTS = {
     debug: debug,
@@ -52,7 +48,11 @@
       stir.filter((item) => {
         if (item.tag) return item;
       }, regionmacros) || [],
-    feeSpanders: feeSpanders,
+    feeStatusesAll: feeStatusesAll,
+    feeStatusAllSize: feeStatusesAll
+      .map((item) => item.name)
+      .join(", ")
+      .split(", ").length,
     nodes: {
       inputNation: inputNation,
       inputSubject: inputSubject,
@@ -199,15 +199,16 @@
   /* 
     Return Fee Status as a full string 
   */
-  const getFeeStatus = (feeStatus, feeSpanders) => {
-    return feeStatus.split(", ").map((schol) => {
+  const getFeeStatus = (feeStatus, consts) => {
+    const feeStatuses = feeStatus.split(", ").map((schol) => {
       const matched = stir.filter((el) => {
-        if (el.short === schol) return el;
-      }, feeSpanders);
+        if (el.value === schol) return el;
+      }, consts.feeStatusesAll);
 
-      if (matched[0]) return matched[0].long;
+      if (matched[0]) return matched[0].name;
       return schol;
     });
+    return feeStatuses.join(", ").split(", ").length === consts.feeStatusAllSize ? "All fee statuses" : feeStatuses.join(", ");
   };
 
   /*
@@ -215,18 +216,6 @@
      R E N D E R E R S
     
    */
-
-  /* 
-    Form the HTML for all results 
-  */
-  const renderFormResults = stir.curry((feeSpanders, _meta, _data) => {
-    return `
-        <p class="u-margin-bottom text-center"> Displaying  ${_meta.start + 1} - ${_meta.last}  of  <strong>${_meta.totalPosts} results</strong> that match your criteria.</p>
-        ${stir.map((schol) => renderItem(feeSpanders, schol), _data).join("")} 
-        <div class="grid-x grid-padding-x " id="pagination-box">
-          ${renderPagination(_meta)}
-        </div> `;
-  });
 
   /* 
     Form the html for the pagination  
@@ -240,9 +229,21 @@
   };
 
   /* 
+    Form the HTML for all results 
+  */
+  const renderFormResults = stir.curry((consts, _meta, _data) => {
+    return `
+        <p class="u-margin-bottom text-center"> Displaying  ${_meta.start + 1} - ${_meta.last}  of  <strong>${_meta.totalPosts} results</strong> that match your criteria.</p>
+        ${stir.map((schol) => renderItem(consts, schol), _data).join("")} 
+        <div class="grid-x grid-padding-x " id="pagination-box">
+          ${renderPagination(_meta)}
+        </div> `;
+  });
+
+  /* 
     Form the HTML for an individual result
   */
-  const renderItem = (feeSpanders, schol) => {
+  const renderItem = (consts, schol) => {
     return `
         <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative">
             <div class="u-absolute u-top--15">
@@ -257,7 +258,7 @@
 
                 ${renderDetail(schol.scholarship.value, "Value", false)}
                 ${renderDetail(schol.scholarship.awards, "Number of awards", true)}
-                ${renderDetail(getFeeStatus(schol.scholarship.feeStatus, feeSpanders).join(", "), "Fee status", true)}
+                ${renderDetail(getFeeStatus(schol.scholarship.feeStatus, consts), "Fee status", true)}
               
                 ${debug && schol ? renderDebug(schol) : ""}
             </div>
@@ -437,7 +438,7 @@
     const meta = stir.Object.extend({}, initMeta, newMeta, { last: last });
 
     const paginationFilter = stir.filter((schol, index) => index >= meta.start && index < last);
-    const renderer = renderFormResults(CONSTS.feeSpanders, meta);
+    const renderer = renderFormResults(CONSTS, meta);
 
     return stir.compose(setDOMResults, renderer, paginationFilter)(data);
   };
