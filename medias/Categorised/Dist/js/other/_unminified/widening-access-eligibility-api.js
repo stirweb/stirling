@@ -12,7 +12,7 @@ var stir = stir || {};
     var formData = new FormData(form);
     output.innerHTML = '&nbsp;';
     if (formData.get("postcode")) {
-      var url = form.getAttribute("action") + "?format=json&postcode=" + encodeURIComponent(formData.get("postcode"));
+      var url = form.getAttribute("action") + (form.getAttribute("action").indexOf('?') > -1 ? '&' : '?') + "format=json&postcode=" + encodeURIComponent(formData.get("postcode"));
       stir.getJSON(url, function (data) {
         if (data) {
           var regex = /__1__/gi;
