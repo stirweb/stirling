@@ -1,10 +1,10 @@
 (function () {
-  if (!stir.node("#favsarea")) return;
+  if (!stir.node("#coursefavsarea")) return;
 
   // NODES
   const NODES = {
-    favsArea: stir.node("#favsarea"),
-    sharedArea: stir.node("#sharedarea"),
+    favsArea: stir.node("#coursefavsarea"),
+    sharedArea: stir.node("#coursesharedarea"),
   };
 
   // VARS
