@@ -6132,7 +6132,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
 })();
 */
 (function () {
-  if (!stir.node("#favsarea") || !stir.node("#sharedarea")) return;
+  if (!stir.node("#favsarea")) return;
 
   // NODES
   var NODES = {
