@@ -480,5 +480,25 @@ stir.templates.search = (() => {
 			: `<div class="c-search-result-curated" data-result-type=curated-message>
 					${item.messageHtml}
 				</div>`,
+		facet: (item) => 
+			`<fieldset>	
+				<legend class="show-for-sr">Filter by ${item.name}</legend>
+				<div class="stir-accordion--active" data-behaviour=accordion>
+				<accordion-summary>${item.name}</accordion-summary>
+				<div>
+					<ul>${item.allValues.map(batman=>`<li><label><input type=checkbox>${batman.label}</input></label></li>`).join('')}
+					<!-- 
+						<li><label><input name="meta_level" type="radio"  value="undergraduate"> Undergraduate</label></li>
+						<li><label><input name="meta_level" type="radio"  value="postgraduate"> Postgraduate</label></li>
+						<li><label><input name="meta_level" type="radio"  value="module"> CPD and short courses</label></li>
+						<li><label><input name=meta_level type=radio value=undergraduate> Undergraduate</label></li>
+						<li><label><input name=meta_level type=radio value=postgraduate> Postgraduate</label></li>
+						<li><label><input name=meta_level type=radio value=module> CPD and short courses</label></li>
+					-->
+					</ul>
+						
+				</div>
+				</div>
+			</fieldset>`
 	};
 })();

@@ -63,7 +63,9 @@ stir.templates.search = function () {
     if (trail && trail.length > 0) {
       return stir.templates.search.breadcrumb(stir.templates.search.trailstring(trail));
     }
-    if (isDocUrl(liveUrl)) return "Document: ".concat(isDocUrl(liveUrl), " <small>").concat(stir.Math.fileSize(fileSize || 0, 0), "</small>");
+    if (isDocUrl(liveUrl)) {
+      return "Document: ".concat(isDocUrl(liveUrl), " <small>").concat(stir.Math.fileSize(fileSize || 0, 0), "</small>");
+    }
     return "";
   };
   var checkSpelling = function checkSpelling(suggestion) {
@@ -149,12 +151,12 @@ stir.templates.search = function () {
   var image = function image(_image, alt, width, height) {
     if (!_image) return "";
     var url = _image.indexOf("|") > -1 ? _image.split("|")[1] || _image.split("|")[0] : _image;
-    return "<div class=c-search-result__image>\n\t\t".concat(stir.funnelback.getCroppedImageElement({
+    return "<div class=c-search-result__image>\n\t\t\t".concat(stir.funnelback.getCroppedImageElement({
       url: url.trim(),
       alt: alt || "",
       width: width || 550,
       height: height || 550
-    }), "\n\t\t</div>");
+    }), "\n\t\t\t</div>");
   };
   var flickrUrl = function flickrUrl(flickr) {
     return flickr.id ? "https://farm".concat(flickr.farm, ".staticflickr.com/").concat(flickr.server, "/").concat(flickr.id, "_").concat(flickr.secret, "_c.jpg") : "";
@@ -208,6 +210,7 @@ stir.templates.search = function () {
       return trail.length ? trail.map(anchor).join(" > ") : "";
     },
     summary: function summary(data) {
+      console.info(data);
       var _data$response$result = data.response.resultPacket.resultsSummary,
         currEnd = _data$response$result.currEnd,
         totalMatching = _data$response$result.totalMatching,
@@ -223,7 +226,7 @@ stir.templates.search = function () {
       var currEnd = summary.currEnd,
         totalMatching = summary.totalMatching,
         progress = summary.progress;
-      return totalMatching === 0 ? "" : "\n\t\t\t<div class=\"cell text-center u-margin-y\">\n\t\t\t\t<progress value=\"".concat(progress, "\" max=\"100\"></progress><br />\n\t\t\t\tYou have viewed ").concat(totalMatching === currEnd ? "all" : currEnd + " of " + totalMatching, " results\n\t\t\t</div>");
+      return totalMatching === 0 ? "" : "\n\t\t\t\t<div class=\"cell text-center u-margin-y\">\n\t\t\t\t\t<progress value=\"".concat(progress, "\" max=\"100\"></progress><br />\n\t\t\t\t\tYou have viewed ").concat(totalMatching === currEnd ? "all" : currEnd + " of " + totalMatching, " results\n\t\t\t\t</div>");
     },
     suppressed: function suppressed(reason) {
       return "<!-- Suppressed search result: ".concat(reason, " -->");
@@ -253,7 +256,7 @@ stir.templates.search = function () {
       });
       var label = item.liveUrl.indexOf("policyblog.stir") > -1 ? "<div class=\" c-search-result__tags\"><span class=\"c-search-tag\">Public Policy Blog</span></div>" : "";
       if (item.metaData.type && item.metaData.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item, trail);
-      return "\n\t\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank).concat(item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : "").concat(item.metaData.access ? ' data-access="' + item.metaData.access + '"' : "", ">\n\t\t\t\t<div class=\"c-search-result__body u-mt-1 flex-container flex-dir-column u-gap\">\n\t\t\t\t\t").concat(label, "\n\t\t\t\t\t").concat(makeBreadcrumbs(trail, item.liveUrl, item.fileSize), "\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong><a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">").concat(item.title.split("|")[0].trim().replace(/\xA0/g, " "), "</a></strong></p>\n\t\t\t\t\t<p >").concat(item.summary.replace(/\xA0/g, " "), "</p>\n\t\t\t\t</div>\n\t\t\t</div>");
+      return "\n\t\t\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank).concat(item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : "").concat(item.metaData.access ? ' data-access="' + item.metaData.access + '"' : "", ">\n\t\t\t\t\t<div class=\"c-search-result__body u-mt-1 flex-container flex-dir-column u-gap\">\n\t\t\t\t\t\t").concat(label, "\n\t\t\t\t\t\t").concat(makeBreadcrumbs(trail, item.liveUrl, item.fileSize), "\n\t\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong><a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">").concat(item.title.split("|")[0].trim().replace(/\xA0/g, " "), "</a></strong></p>\n\t\t\t\t\t\t<p >").concat(item.summary.replace(/\xA0/g, " "), "</p>\n\t\t\t\t\t</div>\n\t\t\t\t</div>");
     },
     internal: function internal(item) {
       var _item$metaData2, _item$metaData2$bread;
@@ -269,7 +272,7 @@ stir.templates.search = function () {
           href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/"
         };
       }).slice(0, -1)) : "<a href=\"https://www.stir.ac.uk/".concat(crumbs.href[0], "/\">").concat(crumbs.text[0], "</a>");
-      return "\n      <div class=\"c-search-result".concat(authClass(item.metaData.group), "\" data-rank=").concat(item.rank).concat(item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : "", " data-access=\"").concat(item.metaData.access, "\">\n\t\t\t  <div class=\"c-search-result__body u-mt-1 flex-container flex-dir-column u-gap\">\n\t\t\t    <p class=\"c-search-result__breadcrumb\">").concat(trail, "</p>\n\t\t\t    <p class=\"u-text-regular u-m-0\"><a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0], "</a></p>\n\t\t\t    ").concat(internalSummary(item.summary, item.metaData.group), "\n\t\t\t  </div>\n\t\t\t</div>");
+      return "\n\t\t\t<div class=\"c-search-result".concat(authClass(item.metaData.group), "\" data-rank=").concat(item.rank).concat(item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : "", " data-access=\"").concat(item.metaData.access, "\">\n\t\t\t\t<div class=\"c-search-result__body u-mt-1 flex-container flex-dir-column u-gap\">\n\t\t\t\t\t<p class=\"c-search-result__breadcrumb\">").concat(trail, "</p>\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0], "</a></p>\n\t\t\t\t\t").concat(internalSummary(item.summary, item.metaData.group), "\n\t\t\t\t</div>\n\t\t\t</div>");
     },
     combo: function combo(item) {
       var _item$codes;
@@ -284,14 +287,14 @@ stir.templates.search = function () {
       }
     },
     combos: function combos(item) {
-      return item.combos.length === 0 ? "" : "\n\t\t\t<div class=\"combo-accordion\" data-behaviour=accordion>\n\t\t\t\t<accordion-summary>Course combinations</accordion-summary>\n\t\t\t\t<div>\n\t\t\t\t\t<p>".concat(item.title, " can be combined with:</p>\n\t\t\t\t\t<ul class=\"u-columns-2\">\n\t\t\t\t\t\t").concat(item.combos.map(stir.templates.search.combo).join(""), "\n\t\t\t\t\t</ul>\n\t\t\t\t\t").concat(item.combos.map(clearingTest).indexOf(true) >= 0 ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>' : "", "\n\t\t\t\t</div>\n\t\t\t</div>");
+      return item.combos.length === 0 ? "" : "\n\t\t\t\t<div class=\"combo-accordion\" data-behaviour=accordion>\n\t\t\t\t\t<accordion-summary>Course combinations</accordion-summary>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<p>".concat(item.title, " can be combined with:</p>\n\t\t\t\t\t\t<ul class=\"u-columns-2\">\n\t\t\t\t\t\t\t").concat(item.combos.map(stir.templates.search.combo).join(""), "\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t").concat(item.combos.map(clearingTest).indexOf(true) >= 0 ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>' : "", "\n\t\t\t\t\t</div>\n\t\t\t\t</div>");
     },
     pathways: function pathways(item) {
       if (!item.metaData.pathways) return "";
       var paths = item.metaData.pathways.split("|");
-      return paths === 0 ? "" : "\n\t\t\t<div class=\"combo-accordion\" data-behaviour=accordion>\n\t\t\t\t<accordion-summary>Course pathways</accordion-summary>\n\t\t\t\t<div>\n\t\t\t\t\t<p>".concat(item.title, " has the following optional pathways:</p>\n\t\t\t\t\t<ul class=\"u-columns-2\">\n\t\t\t\t\t\t").concat(paths.map(function (path) {
+      return paths === 0 ? "" : "\n\t\t\t\t<div class=\"combo-accordion\" data-behaviour=accordion>\n\t\t\t\t\t<accordion-summary>Course pathways</accordion-summary>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<p>".concat(item.title, " has the following optional pathways:</p>\n\t\t\t\t\t\t<ul class=\"u-columns-2\">\n\t\t\t\t\t\t\t").concat(paths.map(function (path) {
         return "<li>".concat(path, "</li>");
-      }).join("\n\t"), "\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t\t</div>");
+      }).join("\n\t"), "\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</div>");
     },
     courseFact: function courseFact(head, body, sentenceCase) {
       return head && body ? "<div class=\"cell medium-4\"><strong class=\"u-heritage-green\">".concat(head, "</strong><p").concat(sentenceCase ? " class=u-text-sentence-case" : "", ">").concat(body, "</p></div>") : "";
@@ -303,42 +306,47 @@ stir.templates.search = function () {
       var link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.metaData.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
       item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.metaData.sid : item.liveUrl);
       //item.combos = stir.courses.showCombosFor(item.metaData.sid); // this is for debugging t4 preview mode
-      return "\n\t\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank, " data-sid=").concat(item.metaData.sid, " data-result-type=course").concat(isOnline ? " data-delivery=online" : "", ">\n\t\t\t\t<div class=\" c-search-result__tags\">\n\t\t\t\t\t<span class=\"c-search-tag\">").concat(courseLabel(item.metaData.level || item.metaData.type || ""), "</span>\n\t\t\t\t</div>\n\n        <div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n          <p class=\"u-text-regular u-m-0\">\n            <strong><a href=\"").concat(link, "\" title=\"").concat(item.liveUrl, "\">\n            ").concat(item.metaData.award || "", " ").concat(item.title, "\n            ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "\n            ").concat(item.metaData.code ? " - " + item.metaData.code : "", "\n            </a></strong>\n          </p>\n          <p class=\"u-m-0\">").concat(item.summary, "</p>\n          ").concat(stir.templates.search.clearing(item) || "", "\n          <div class=\"c-search-result__meta grid-x\">\n            ").concat(stir.templates.search.courseFact("Start dates", item.metaData.start, false), "\n            ").concat(stir.templates.search.courseFact("Study modes", item.metaData.modes, true), "\n            ").concat(stir.templates.search.courseFact("Delivery", item.metaData.delivery, true), "\n          </div>\n          ").concat(stir.templates.search.combos(item), "\n          ").concat(stir.templates.search.pathways(item), "\n        </div>\n\t\t\t</div>");
+      return "\n\t\t\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank, " data-sid=").concat(item.metaData.sid, " data-result-type=course").concat(isOnline ? " data-delivery=online" : "", ">\n\t\t\t\t\t<div class=\" c-search-result__tags\">\n\t\t\t\t\t\t<span class=\"c-search-tag\">").concat(courseLabel(item.metaData.level || item.metaData.type || ""), "</span>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n\t\t\t\t\t\t<strong><a href=\"").concat(link, "\" title=\"").concat(item.liveUrl, "\">\n\t\t\t\t\t\t").concat(item.metaData.award || "", " ").concat(item.title, "\n\t\t\t\t\t\t").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "\n\t\t\t\t\t\t").concat(item.metaData.code ? " - " + item.metaData.code : "", "\n\t\t\t\t\t\t</a></strong>\n\t\t\t\t\t</p>\n\t\t\t\t\t<p class=\"u-m-0\">").concat(item.summary, "</p>\n\t\t\t\t\t").concat(stir.templates.search.clearing(item) || "", "\n\t\t\t\t\t<div class=\"c-search-result__meta grid-x\">\n\t\t\t\t\t\t").concat(stir.templates.search.courseFact("Start dates", item.metaData.start, false), "\n\t\t\t\t\t\t").concat(stir.templates.search.courseFact("Study modes", item.metaData.modes, true), "\n\t\t\t\t\t\t").concat(stir.templates.search.courseFact("Delivery", item.metaData.delivery, true), "\n\t\t\t\t\t</div>\n\t\t\t\t\t").concat(stir.templates.search.combos(item), "\n\t\t\t\t\t").concat(stir.templates.search.pathways(item), "\n\t\t\t\t\t</div>\n\t\t\t\t</div>");
     },
     coursemini: function coursemini(item) {
-      return "\n\t\t<div>\n\t\t\t<p><strong><a href=\"".concat(FB_BASE() + item.clickTrackingUrl, "\" title=\"").concat(item.liveUrl, "\" class=\"u-border-none\">\n\t\t\t\t").concat(item.metaData.award || "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", " ").concat(item.metaData.code ? " - " + item.metaData.code : "", "\n\t\t\t</a></strong></p>\n\t\t\t<p>").concat(item.summary, "</p>\n\t\t</div>");
+      return "\n\t\t\t<div>\n\t\t\t\t<p><strong><a href=\"".concat(FB_BASE() + item.clickTrackingUrl, "\" title=\"").concat(item.liveUrl, "\" class=\"u-border-none\">\n\t\t\t\t\t").concat(item.metaData.award || "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", " ").concat(item.metaData.code ? " - " + item.metaData.code : "", "\n\t\t\t\t</a></strong></p>\n\t\t\t\t<p>").concat(item.summary, "</p>\n\t\t\t</div>");
     },
     person: function person(item) {
-      return "\n\t\t\t<div class=c-search-result data-result-type=person>\n\t\t\t\t<div class=c-search-result__tags>\n\t\t\t\t\t".concat(stir.templates.search.stag(item.metaData.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.metaData.faculty) : ""), "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0].trim(), "</a>\n\t\t\t\t\t</strong></p>\n\t\t\t\t\t<div>").concat(item.metaData.role || "<!-- Job title -->", "<br>").concat(item.metaData.faculty || "", "</div>\n\t\t\t\t\t<!-- <p>").concat(item.metaData.c ? (item.metaData.c + ".").replace(" at the University of Stirling", "") : "", "</p> -->\n\t\t\t\t</div>\n\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0].trim(), 400, 400), "\n\t\t\t\t<div class=c-search-result__footer>\n\t\t\t\t\t").concat(stir.funnelback.getTags(item.metaData.category) ? "<p><strong>Research interests</strong></p>" : "", "\n\t\t\t\t\t<p>").concat(stir.funnelback.getTags(item.metaData.category) || "", "</p>\n\t\t\t\t</div>\n\t\t\t</div>");
+      return "\n\t\t\t\t<div class=c-search-result data-result-type=person>\n\t\t\t\t\t<div class=c-search-result__tags>\n\t\t\t\t\t\t".concat(stir.templates.search.stag(item.metaData.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.metaData.faculty) : ""), "\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0].trim(), "</a>\n\t\t\t\t\t\t</strong></p>\n\t\t\t\t\t\t<div>").concat(item.metaData.role || "<!-- Job title -->", "<br>").concat(item.metaData.faculty || "", "</div>\n\t\t\t\t\t\t<!-- <p>").concat(item.metaData.c ? (item.metaData.c + ".").replace(" at the University of Stirling", "") : "", "</p> -->\n\t\t\t\t\t</div>\n\t\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0].trim(), 400, 400), "\n\t\t\t\t\t<div class=c-search-result__footer>\n\t\t\t\t\t\t").concat(stir.funnelback.getTags(item.metaData.category) ? "<p><strong>Research interests</strong></p>" : "", "\n\t\t\t\t\t\t<p>").concat(stir.funnelback.getTags(item.metaData.category) || "", "</p>\n\t\t\t\t\t</div>\n\t\t\t\t</div>");
     },
     studentstory: function studentstory(item, trail) {
-      return "\n\t  \t<div class=c-search-result data-result-type=studentstory>\n\t  \t\t<div ><a href=\"".concat(trail[0].href, "\">").concat(trail[0].text, "</a></div>\n\t\t  \t<div class=\"c-search-result__body flex-container flex-dir-column u-gap \">\n\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t  \t<a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0].trim(), "</a>\n\t\t\t  \t</strong></p>\n\t\t\t  \t<p class=\"u-m-0\">").concat(item.metaData.profileCourse1, "<br />\n\t\t\t  \t").concat(item.metaData.profileCountry, "</p>\n\t\t\t  \t<p>").concat(item.metaData.c, "</p>\n\t\t\t</div>\n\t\t  ").concat(image("https://www.stir.ac.uk" + item.metaData.profileImage, item.title.split(" | ")[0].trim(), 400, 400), "\n\t  \t</div>");
+      return "\n\t\t\t\t<div class=c-search-result data-result-type=studentstory>\n\t\t\t\t\t<div><a href=\"".concat(trail[0].href, "\">").concat(trail[0].text, "</a></div>\n\t\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap \">\n\t\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0].trim(), "</a>\n\t\t\t\t\t\t</strong></p>\n\t\t\t\t\t\t<p class=\"u-m-0\">").concat(item.metaData.profileCourse1, "<br />\n\t\t\t\t\t\t").concat(item.metaData.profileCountry, "</p>\n\t\t\t\t\t\t<p>").concat(item.metaData.c, "</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t").concat(image("https://www.stir.ac.uk" + item.metaData.profileImage, item.title.split(" | ")[0].trim(), 400, 400), "\n\t\t\t\t</div>");
     },
     news: function news(item) {
-      return "\n\t\t\t<div class=\"c-search-result".concat(item.metaData.image ? " c-search-result__with-thumbnail" : "", "\" data-rank=").concat(item.rank, " data-result-type=news>\n\t\t\t\t\n\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n            <strong>\n\t\t\t\t\t\t  <a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.metaData.h1 || item.title.split(" | ")[0].trim(), "</a>\n\t\t\t\t\t  </strong>\n          </p>\n          <div >\n\t\t\t\t\t\t\t").concat(item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d)) : "", "\n\t\t\t\t\t</div>\n\t\t\t\t\t<p class=\"text-sm\">").concat(item.summary, "</p>\n\t\t\t\t</div>\n\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0].trim()), "\n\t\t\t</div>");
+      return "\n\t\t\t\t<div class=\"c-search-result".concat(item.metaData.image ? " c-search-result__with-thumbnail" : "", "\" data-rank=").concat(item.rank, " data-result-type=news>\n\t\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n\t\t\t\t\t\t\t<strong>\n\t\t\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.metaData.h1 || item.title.split(" | ")[0].trim(), "</a>\n\t\t\t\t\t\t\t</strong>\n\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<div>").concat(item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d)) : "", "</div>\n\t\t\t\t\t\t<p class=\"text-sm\">").concat(item.summary, "</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0].trim()), "\n\t\t\t\t</div>");
     },
     gallery: function gallery(item) {
-      return "\n\t\t\t<div class=\"c-search-result c-search-result__with-thumbnail\" data-rank=".concat(item.rank, " data-result-type=news>\n\t\t\t\t\n\t\t\t\t<div class=c-search-result__body>\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.metaData.h1 || item.title.split(" | ")[0].trim(), "</a>\n\t\t\t\t\t</strong></p>\n\t\t\t\t\t<p class=\"c-search-result__secondary\">").concat(stir.Date.newsDate(new Date(item.metaData.d)), "</p>\n\t\t\t\t\t<p >").concat(item.summary, "</p>\t\n\t\t\t\t</div>\n\t\t\t\t<div class=c-search-result__image>\n\t\t\t\t\t").concat(stir.funnelback.getCroppedImageElement({
+      return "\n\t\t\t\t<div class=\"c-search-result c-search-result__with-thumbnail\" data-rank=".concat(item.rank, " data-result-type=news>\n\t\t\t\t\t\n\t\t\t\t\t<div class=c-search-result__body>\n\t\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.metaData.h1 || item.title.split(" | ")[0].trim(), "</a>\n\t\t\t\t\t\t</strong></p>\n\t\t\t\t\t\t<p class=\"c-search-result__secondary\">").concat(stir.Date.newsDate(new Date(item.metaData.d)), "</p>\n\t\t\t\t\t\t<p >").concat(item.summary, "</p>\t\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=c-search-result__image>\n\t\t\t\t\t\t").concat(stir.funnelback.getCroppedImageElement({
         url: flickrUrl(JSON.parse(item.metaData.custom)),
         alt: "Image of ".concat(item.title.split(" | ")[0].trim()),
         width: 550,
         height: 550
-      }), "\n\t\t\t\t</div>\n\t\t\t</div>");
+      }), "\n\t\t\t\t\t</div>\n\t\t\t\t</div>");
     },
     event: function event(item) {
       var _item$metaData3, _item$metaData4, _item$metaData4$tags, _item$metaData5, _item$metaData6, _item$metaData6$tags;
       var hasThumbnail = ((_item$metaData3 = item.metaData) === null || _item$metaData3 === void 0 ? void 0 : _item$metaData3.image) || ((_item$metaData4 = item.metaData) === null || _item$metaData4 === void 0 ? void 0 : (_item$metaData4$tags = _item$metaData4.tags) === null || _item$metaData4$tags === void 0 ? void 0 : _item$metaData4$tags.indexOf("Webinar")) > -1;
       var title = item.title.split(" | ")[0];
-      return "\n\t\t\t<div class=\"c-search-result".concat(hasThumbnail ? " c-search-result__with-thumbnail" : "", "\" data-rank=").concat(item.rank, " data-result-type=event>\n\t\t\t\t<div class=\"c-search-result__tags\">\n\t\t\t\t\t").concat((_item$metaData5 = item.metaData) !== null && _item$metaData5 !== void 0 && _item$metaData5.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : "", "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n            <strong>\n\t\t\t\t\t\t  ").concat(item.metaData.register ? anchor({
+      return "\n\t\t\t\t<div class=\"c-search-result".concat(hasThumbnail ? " c-search-result__with-thumbnail" : "", "\" data-rank=").concat(item.rank, " data-result-type=event>\n\t\t\t\t\t<div class=\"c-search-result__tags\">\n\t\t\t\t\t\t").concat((_item$metaData5 = item.metaData) !== null && _item$metaData5 !== void 0 && _item$metaData5.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : "", "\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n\t\t\t\t<strong>\n\t\t\t\t\t\t\t").concat(item.metaData.register ? anchor({
         text: title,
         href: item.metaData.register
-      }) : title, "\n\t\t\t\t\t  </strong>\n          </p>\n\t\t\t\t\t<div class=\"flex-container flex-dir-column u-gap-8\">\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-calendar\"></span>\n\t\t\t\t\t\t\t<span>").concat(datespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"uos-clock u-icon h5\"></span>\n\t\t\t\t\t\t\t<span>").concat(timespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-").concat(item.metaData.online ? "web" : "location", "\"></span>\n\t\t\t\t\t\t\t<span>").concat(item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : "", "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<p class=\"text-sm\">").concat(item.summary, "</p>\n\t\t\t\t</div>\n\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0]), "\n\t\t\t\t").concat(((_item$metaData6 = item.metaData) === null || _item$metaData6 === void 0 ? void 0 : (_item$metaData6$tags = _item$metaData6.tags) === null || _item$metaData6$tags === void 0 ? void 0 : _item$metaData6$tags.indexOf("Webinar")) > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : "", "\n\t\t\t</div>");
+      }) : title, "\n\t\t\t\t\t\t</strong>\n\t\t\t</p>\n\t\t\t\t\t\t<div class=\"flex-container flex-dir-column u-gap-8\">\n\t\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-calendar\"></span>\n\t\t\t\t\t\t\t\t<span>").concat(datespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t\t<span class=\"uos-clock u-icon h5\"></span>\n\t\t\t\t\t\t\t\t<span>").concat(timespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-").concat(item.metaData.online ? "web" : "location", "\"></span>\n\t\t\t\t\t\t\t\t<span>").concat(item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : "", "</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<p class=\"text-sm\">").concat(item.summary, "</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0]), "\n\t\t\t\t\t").concat(((_item$metaData6 = item.metaData) === null || _item$metaData6 === void 0 ? void 0 : (_item$metaData6$tags = _item$metaData6.tags) === null || _item$metaData6$tags === void 0 ? void 0 : _item$metaData6$tags.indexOf("Webinar")) > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : "", "\n\t\t\t\t</div>");
     },
     research: function research(item) {
-      return "\n\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank).concat(item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : "", ">\n\t\t\t<div>\n\t\t\t\t<div class=\"c-search-result__tags\"><span class=\"c-search-tag\">").concat(item.title.split(" | ").slice(0, 1).toString(), "</span></div>\n\t\t\t\t<div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t<a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">\n\t\t\t\t\t\t\t").concat(item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title, "\n\t\t\t\t\t\t</a>\n\t\t\t\t\t</strong></p>\n\t\t\t\t\t").concat(stir.String.stripHtml(item.metaData.c || "") ? "<div class=\"text-sm\">" + stir.String.stripHtml(item.metaData.c || "") + "</div>" : "", "\n          ").concat(stir.funnelback.getTags(item.metaData.category) ? "<div class=c-search-result__footer>" + stir.funnelback.getTags(item.metaData.category) + "</div>" : "", "\n        </div>\n\t\t\t\t<!-- p>12344</ -->\n\t\t\t</div>\n\t\t</div>");
+      return "\n\t\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank).concat(item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : "", ">\n\t\t\t\t<div>\n\t\t\t\t\t<div class=\"c-search-result__tags\"><span class=\"c-search-tag\">").concat(item.title.split(" | ").slice(0, 1).toString(), "</span></div>\n\t\t\t\t\t<div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t\t<a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">\n\t\t\t\t\t\t\t\t").concat(item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title, "\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t</strong></p>\n\t\t\t\t\t\t").concat(stir.String.stripHtml(item.metaData.c || "") ? "<div class=\"text-sm\">" + stir.String.stripHtml(item.metaData.c || "") + "</div>" : "", "\n\t\t\t\t\t\t").concat(stir.funnelback.getTags(item.metaData.category) ? "<div class=c-search-result__footer>" + stir.funnelback.getTags(item.metaData.category) + "</div>" : "", "\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>");
     },
     cura: function cura(item) {
-      return !item.messageHtml ? "<div class=\"c-search-result\" data-result-type=curated>\n\t\t\t\t<div class=c-search-result__body>\n\t\t\t\t\t<p class=\"c-search-result__breadcrumb\">".concat(item.displayUrl, "</p>\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.linkUrl, "\" title=\"").concat(item.displayUrl, "\">").concat(item.titleHtml, "</a>\n\t\t\t\t\t</strong></p>\n\t\t\t\t\t<p >").concat(item.descriptionHtml, "</p>\n\t\t\t\t\t<!-- <pre>").concat(JSON.stringify(item, null, "\t"), "</pre> -->\n\t\t\t\t</div>\n\t\t\t</div>") : "<div class=\"c-search-result-curated\" data-result-type=curated-message>\n\t\t\t\t".concat(item.messageHtml, "\n\t\t\t</div>");
+      return !item.messageHtml ? "<div class=\"c-search-result\" data-result-type=curated>\n\t\t\t\t\t<div class=c-search-result__body>\n\t\t\t\t\t\t<p class=\"c-search-result__breadcrumb\">".concat(item.displayUrl, "</p>\n\t\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.linkUrl, "\" title=\"").concat(item.displayUrl, "\">").concat(item.titleHtml, "</a>\n\t\t\t\t\t\t</strong></p>\n\t\t\t\t\t\t<p >").concat(item.descriptionHtml, "</p>\n\t\t\t\t\t\t<!-- <pre>").concat(JSON.stringify(item, null, "\t"), "</pre> -->\n\t\t\t\t\t</div>\n\t\t\t\t</div>") : "<div class=\"c-search-result-curated\" data-result-type=curated-message>\n\t\t\t\t\t".concat(item.messageHtml, "\n\t\t\t\t</div>");
+    },
+    facet: function facet(item) {
+      return "<fieldset>\t\n\t\t\t\t<legend class=\"show-for-sr\">Filter by ".concat(item.name, "</legend>\n\t\t\t\t<div class=\"stir-accordion--active\" data-behaviour=accordion>\n\t\t\t\t<accordion-summary>").concat(item.name, "</accordion-summary>\n\t\t\t\t<div>\n\t\t\t\t\t<ul>").concat(item.allValues.map(function (batman) {
+        return "<li><label><input type=checkbox>".concat(batman.label, "</input></label></li>");
+      }).join(''), "\n\t\t\t\t\t<!-- \n\t\t\t\t\t\t<li><label><input name=\"meta_level\" type=\"radio\"  value=\"undergraduate\"> Undergraduate</label></li>\n\t\t\t\t\t\t<li><label><input name=\"meta_level\" type=\"radio\"  value=\"postgraduate\"> Postgraduate</label></li>\n\t\t\t\t\t\t<li><label><input name=\"meta_level\" type=\"radio\"  value=\"module\"> CPD and short courses</label></li>\n\t\t\t\t\t\t<li><label><input name=meta_level type=radio value=undergraduate> Undergraduate</label></li>\n\t\t\t\t\t\t<li><label><input name=meta_level type=radio value=postgraduate> Postgraduate</label></li>\n\t\t\t\t\t\t<li><label><input name=meta_level type=radio value=module> CPD and short courses</label></li>\n\t\t\t\t\t-->\n\t\t\t\t\t</ul>\n\t\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</fieldset>");
     }
   };
 }();
@@ -1052,10 +1060,10 @@ stir.search = function () {
   //
   //	};
   /* if(filters.length>0){
-  filters.forEach((filter,i)=>{
-  a.append(filter,values[i].length===1?values[i]:`[${values[i].join(' ')}]`);
-  })
-  } */
+    filters.forEach((filter,i)=>{
+  	  a.append(filter,values[i].length===1?values[i]:`[${values[i].join(' ')}]`);
+    })
+   } */
 
   var getFormData = function getFormData(type) {
     var form = document.querySelector(".c-search-results-area form[data-filters=" + type + "]");
@@ -1120,10 +1128,16 @@ stir.search = function () {
     return data; // data pass-thru so we can compose() this function
   });
 
+  var updateFacets = stir.curry(function (type, data) {
+    var form = document.querySelector("form[data-filters=\"".concat(type, "\"]"));
+    form.insertAdjacentHTML("afterbegin", stir.templates.search.facet(data.response.facets[0]));
+    return data; // data pass-thru so we can compose() this function
+  });
+
   var renderResultsWithPagination = stir.curry(function (type, data) {
     return (
       /*       (debug
-              ? `<details class=debug>
+      		? `<details class=debug>
       			<summary>query debug data</summary>
       			<pre class=debug data-label="user query">${stir.String.htmlEntities(JSON.stringify(data.response.resultPacket.queryCleaned, null, "  "))}</pre>
       			<pre class=debug data-label="queryAsProcessed by FB">${JSON.stringify(data.response.resultPacket.queryAsProcessed, null, "  ")}</pre>
@@ -1131,7 +1145,7 @@ stir.search = function () {
       			<pre class=debug data-label=metaParameters>${JSON.stringify(data.question.metaParameters, null, "  ")}</pre>
       		</details></div>
       		`
-              : "") + */
+      		: "") + */
       renderers["cura"](data.response.curator.exhibits) + renderers[type](data.response.resultPacket.results) + stir.templates.search.pagination({
         currEnd: data.response.resultPacket.resultsSummary.currEnd,
         totalMatching: data.response.resultPacket.resultsSummary.totalMatching,
@@ -1266,12 +1280,13 @@ stir.search = function () {
   var getInitialResults = function getInitialResults(element, button) {
     var type = getType(element);
     if (!searchers[type]) return;
+    var facets = updateFacets(type);
     var status = updateStatus(element);
     var more = enableLoadMore(button);
     var replace = replaceHtml(element);
     var render = renderResultsWithPagination(type);
     var reflow = flow(element);
-    var composition = stir.compose(reflow, replace, render, more, status);
+    var composition = stir.compose(reflow, replace, render, more, status, facets);
     var callback = function callback(data) {
       if (!element || !element.parentElement) {
         return debug && console.error("[Search] late callback, element no longer on DOM");

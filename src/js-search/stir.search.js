@@ -360,6 +360,14 @@ stir.search = () => {
 		return data; // data pass-thru so we can compose() this function
 	});
 
+	const updateFacets = stir.curry((type, data) => {
+		const form = document.querySelector(`form[data-filters="${type}"]`)
+		
+		form.insertAdjacentHTML("afterbegin", stir.templates.search.facet(data.response.facets[0]))
+
+		return data; // data pass-thru so we can compose() this function
+	});
+
 	const renderResultsWithPagination = stir.curry(
 		(type, data) =>
 			/*       (debug
@@ -493,12 +501,13 @@ stir.search = () => {
 	const getInitialResults = (element, button) => {
 		const type = getType(element);
 		if (!searchers[type]) return;
+		const facets = updateFacets(type);
 		const status = updateStatus(element);
 		const more = enableLoadMore(button);
 		const replace = replaceHtml(element);
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
-		const composition = stir.compose(reflow, replace, render, more, status);
+		const composition = stir.compose(reflow, replace, render, more, status, facets);
 		const callback = (data) => {
 			if (!element || !element.parentElement) {
 				return debug && console.error("[Search] late callback, element no longer on DOM");
