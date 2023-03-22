@@ -1,10 +1,11 @@
 (function () {
-  if (!stir.node("#coursefavsarea")) return;
+  if (!stir.node("#coursefavsarea") && !stir.node("#coursesharedarea")) return;
 
   // NODES
   const NODES = {
     favsArea: stir.node("#coursefavsarea"),
     sharedArea: stir.node("#coursesharedarea"),
+    sharedfavArea: stir.node("#coursesharedfavsarea"),
   };
 
   // VARS
@@ -18,9 +19,8 @@
 
         RENDERERS
 
-    */
+  */
 
-  /* renderFavs : Returns a String of HTML */
   const renderFavs = stir.curry((item) => {
     return !item.metaData
       ? ``
@@ -49,16 +49,20 @@
         </div>`;
   });
 
+  const renderNoFavs = () => {
+    return `<p>No favourites stored</p>`;
+  };
+
   const renderShared = (item) => {
     return !item.metaData
       ? ``
-      : `<div class="cell small-6 medium-4 large-3">
+      : `<div class="cell small-6 ">
             <div class=" u-green-line-top">
                 <p class="u-text-regular u-py-1">
                   <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title}</a></strong>
                 </p>
                 <div class="u-mb-1">${item.metaData.c}</div>
-                <button class="u-border-solid u-p-1 u-cursor-pointer u-w-full" data-action="addtofavs" data-id="${item.metaData.sid}">Add to shortlist</button>
+                <button class="u-border-solid u-p-1 u-cursor-pointer u-w-full" data-action="addtofavs" data-id="${item.metaData.sid}">${isInCookie(item.metaData.sid) ? `Shortlisted` : `Add to my shortlist`}</button>
             </div>
         </div>`;
   };
@@ -67,7 +71,7 @@
     return !items.length
       ? ``
       : `<div class="cell">
-          <p class=" u-mb-2">Someone has shared the following courses with you from their shortlist. <button class="u-border-solid u-cursor-pointer u-p-tiny" data-action="clearshortlist">Clear all</button></p>
+          <p class=" u-mb-2">Someone has shared the following courses with you from their shortlist.</p>
         </div>`;
   };
 
@@ -77,20 +81,26 @@
 
     */
 
-  /* setDOMContent : Returns a Boolean  */
+  /* 
+    setDOMContent : Returns a Boolean  
+  */
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
   });
 
-  /* getExpiryDate: Returns a String (cookie expiry date)  */
+  /* 
+    getExpiryDate: Returns a String (cookie expiry date)  
+  */
   const getExpiryDate = (days) => {
     const d = new Date();
     d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
     return ";expires=" + d.toUTCString();
   };
 
-  /* */
+  /* 
+    getfavsCookie
+  */
   const getfavsCookie = (cookieId) => {
     const cookies = document.cookie.split(";");
 
@@ -100,25 +110,30 @@
     return JSON.parse(favCookie2) || [];
   };
 
+  /* */
+  const isInCookie = (courseId) => {
+    const favsCookie = getfavsCookie(cookieId);
+    const inCookie = favsCookie.map((item) => item.id === courseId);
+
+    if (!stir.any((item) => item, inCookie)) return false;
+
+    return true;
+  };
+
   /*
-
-        CONTROLLERS
-
-    */
-
-  /* doFavs : Returns null */
-  const doFavs = (favsArea, data, cookieId) => {
+    Returns an array of course objects 
+  */
+  const getFavsList = (data, cookieId) => {
     const favsCookie = getfavsCookie(cookieId);
 
     if (!favsCookie.length || favsCookie.length < 1) {
-      setDOMContent(favsArea, "<p>No favourites stored</p>");
-      return;
+      return null;
     }
 
     const favsCookieSorted = favsCookie.sort((a, b) => b.date - a.date);
 
     // Maintain ordering by merging FB result into cookie object
-    const dataOrdered = favsCookieSorted.map((item) => {
+    return favsCookieSorted.map((item) => {
       return {
         ...data.filter((element) => {
           if (item.id === element.metaData.sid) return element;
@@ -126,19 +141,18 @@
         ...{ id: item.id, dateSaved: item.date },
       };
     });
-    // const shareLink = 'http://www.stir.ac.uk/'+dataOrdered;
-    setDOMContent(favsArea, dataOrdered.map(renderFavs).join(""));
-    return;
   };
 
-  /* doShared : Returns null */
-  const doShared = (sharedArea, data) => {
+  /* 
+    Returns an array of course objects 
+  */
+  const getShareList = (data) => {
     const sharedList = QueryParams.get("shared") || "";
 
-    sharedList.length ? sharedArea.classList.remove("hide") : sharedArea.classList.add("hide");
+    if (!sharedList.length) return null;
 
     // Maintain ordering by merging FB result into cookie object
-    const sharedOrdered = sharedList.split(",").map((item) => {
+    return sharedList.split(",").map((item) => {
       return {
         ...data.filter((element) => {
           if (item === element.metaData.sid) return element;
@@ -146,8 +160,49 @@
         ...{ id: item },
       };
     });
+  };
 
-    setDOMContent(sharedArea, renderSharedIntro(sharedOrdered.map(renderShared).join("")) + sharedOrdered.map(renderShared).join(""));
+  /*
+
+        CONTROLLERS
+
+    */
+
+  /* 
+    doFavs : Returns null 
+  */
+  const doFavs = (favsArea, data, cookieId) => {
+    const list = getFavsList(data, cookieId);
+
+    if (!list) {
+      setDOMContent(favsArea, renderNoFavs());
+      return;
+    }
+
+    setDOMContent(favsArea, list.map(renderFavs).join(""));
+    return;
+  };
+
+  /* 
+    doShared : Returns null 
+  */
+  const doShared = (nodes, data, cookieId) => {
+    const shareList = getShareList(data);
+
+    if (!shareList) {
+      //setDOMContent(favsArea, renderNoFavs());
+    } else {
+      setDOMContent(nodes.sharedArea, renderSharedIntro(shareList.map(renderShared).join("")) + shareList.map(renderShared).join(""));
+    }
+
+    const list = getFavsList(data, cookieId);
+
+    if (!list) {
+      setDOMContent(nodes.sharedfavArea, renderNoFavs());
+      return;
+    }
+
+    setDOMContent(nodes.sharedfavArea, list.map(renderFavs).join(""));
     return;
   };
 
@@ -157,35 +212,23 @@
       const data = initialData.response.resultPacket.results || []; // Full list of courses
 
       // On Load
-      doShared(nodes.sharedArea, data);
-      doFavs(nodes.favsArea, data, cookieId);
+      nodes.sharedArea && doShared(nodes, data, cookieId);
+      nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
 
       /* EVENT LISTENERS */
       stir.node("main").addEventListener("click", (event) => {
-        /* ACTION: ADD a fav */
+        /* ACTION: ADD a FAV */
         if (event.target.dataset && event.target.dataset.action === "addtofavs") {
-          const favsCookie = getfavsCookie(cookieId);
-
-          // check if its already in the cookie - if not add it
-          const inCookie = favsCookie.map((item) => item.id === event.target.dataset.id);
-          if (!stir.any((item) => item, inCookie)) {
-            const favsCookie2 = [...favsCookie, { id: event.target.dataset.id, date: Date.now() }];
+          if (!isInCookie(event.target.dataset.id)) {
+            const favsCookie2 = [...getfavsCookie(cookieId), { id: event.target.dataset.id, date: Date.now() }];
             document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
           }
 
-          const shortlist = QueryParams.get("shared") || "";
-          const sharedListFiltered = shortlist
-            .split(",")
-            .filter((item) => item !== event.target.dataset.id)
-            .join(",");
-
-          QueryParams.set("shared", sharedListFiltered);
-
-          doShared(nodes.sharedArea, data);
-          doFavs(nodes.favsArea, data, cookieId);
+          nodes.sharedArea && doShared(nodes, data, cookieId);
+          nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
         }
 
-        /* ACTION: REMOVE a fav */
+        /* ACTION: REMOVE a FAV */
         if (event.target.dataset && event.target.dataset.action === "removefav") {
           const id = event.target.dataset.id;
 
@@ -193,32 +236,30 @@
             const favsCookie = getfavsCookie(cookieId);
             const favsCookie2 = favsCookie.filter((item) => item.id !== id);
             document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
-            doFavs(nodes.favsArea, data, cookieId);
+            nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
           }
         }
 
-        /* ACTION: REMOVE ALL favs */
+        /* ACTION: REMOVE ALL FAVS */
         if (event.target.dataset && event.target.dataset.action === "clearallfavs") {
           document.cookie = cookieId + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
-          doFavs(nodes.favsArea, data, cookieId);
+          nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
         }
 
-        if (event.target.dataset && event.target.dataset.action === "clearshortlist") {
-          QueryParams.remove("shared");
-          doShared(nodes.sharedArea, data);
-        }
+        // if (event.target.dataset && event.target.dataset.action === "clearshortlist") {
+        //   QueryParams.remove("shared");
+        //   nodes.sharedArea && doShared(nodes, data, cookieId);
+        // }
 
+        /* ACTION: COPY SHARE LINK */
         if (event.target.dataset && event.target.dataset.action === "copysharelink") {
           const favsCookie = getfavsCookie(cookieId);
 
-          //console.log(favsCookie.map((item) => item.id).join(","));
           const link = "https://www.stir.ac.uk/courses/favs/?shared=" + favsCookie.map((item) => item.id).join(",");
           navigator.clipboard.writeText(link);
 
           alert("The following share link has been copied to your clipboard: \n\n" + link);
         }
-
-        document.documentElement.addEventListener("mouseleave", () => console.log("out"));
       });
     });
   };

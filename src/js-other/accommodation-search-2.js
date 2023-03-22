@@ -125,6 +125,9 @@
 
   /*
      Render html for an individual result item
+     <li class="flex-container align-middle u-gap-16">
+                          <span class="uos-money h3 u-icon"></span>
+                          From ${renderPrice(getLowestFloat(item.prices))} per week</li>
    */
   const renderItem = (item) => {
     return `
@@ -138,9 +141,7 @@
                   <ul class="no-bullet flex-container flex-dir-column u-gap-8">
                       <li class="flex-container align-middle u-gap-16">
                           <span class="uos-home h3 u-icon"></span>${item.location} </li>
-                      <li class="flex-container align-middle u-gap-16">
-                          <span class="uos-money h3 u-icon"></span>
-                          From ${renderPrice(getLowestFloat(item.prices))} per week</li>
+
                   </ul>
               </div>
             </div>

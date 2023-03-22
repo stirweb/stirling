@@ -353,37 +353,48 @@
     <main class="wrapper-content" aria-label="Main content" id="content">
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
+
                 <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
-                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Starred courses</h1>
+                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Shared courses</h1>
                 </div>
 
-                <div class="cell u-padding-bottom">
-                    <p>Demo add buttons</p>
+                <!--div class="cell u-py-2 u-bg-grey u-bleed bg-grey">
+                    <p>Demo buttons</p>
 
                     <div class="flex-container flex-dir-column large-flex-dir-row u-gap-x">
-                        <button class="button" data-action="addtofavs" data-id="30704">Add
-                            Professional Practice to favs</button>
-                        <button class="button" data-action="addtofavs" data-id="857">Add
-                            Animal
-                            Biology to favs</button>
-                        <button class="button" data-action="addtofavs" data-id="860">Add
-                            Applied Mathematics to favs</button>
-                        <button class="button" data-action="addtofavs" data-id="863">Add
-                            Business Computing to favs</button>
+                        <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="addtofavs"
+                            data-id="30704">Shortlist
+                            Professional Practice</button>
+                        <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="addtofavs"
+                            data-id="857">Shortlist
+                            Animal Biology</button>
+                        <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="addtofavs"
+                            data-id="860">Shortlist
+                            Applied Mathematics</button>
+                        <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="addtofavs"
+                            data-id="863">Shortlist
+                            Business Computing</button>
                     </div>
+                </div-->
+
+
+                <div class=" cell small-12 medium-8 ">
+                    <div class="grid-x grid-padding-x" id="coursesharedarea"></div>
                 </div>
 
-                <div class="cell" id="shareBtn">
-                </div>
+                <div class="cell small-12 medium-4" id="coursesharedfavsarea">Current shortlist</div>
 
-                <div class="cell u-pb-2">
-                    <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1" data-action="clearallfavs">Clear
-                        all favs</button>
-                </div>
+                <!-- div class="cell u-bg-grey u-bleed bg-grey u-padding-y">
+                    <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-action="clearallfavs">Clear
+                        shortlist
+                    </button -->
 
-                <div id="favsarea" class="c-search-results-area cell u-padding-y u-bg-grey u-bleed bg-grey"></div>
-                <div id="historyarea" class="c-search-results-area cell u-padding-y "></div>
+                <!-- button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-action="copysharelink">Generate
+                        share link</button -->
             </div>
+
+            <!--div id="coursefavsarea" class="c-search-results-area cell u-padding-bottom u-bg-grey u-bleed bg-grey" -->
+
         </div>
 
     </main>
@@ -403,182 +414,6 @@
     <script type="text/javascript" src="../../../../medias/Categorised/Dist/js/other/unibuddy.min.js"></script>
 
 
-    <script>
-        (function () {
-            // NODES & VARS
-            const demoForm = stir.node("#demoform");
-            const clearAllFavsBtn = stir.node("[data-action=clearallfavs]");
-            const addToFavsBtns = stir.nodes("[data-action=addtofavs]");
-            const favsArea = stir.node("#favsarea");
-            const historyArea = stir.node("#historyarea");
-
-            const cookieId = "favs=";
-
-            const host = "https://search.stir.ac.uk";
-            //const host = "https://stage-shared-15-24-admin.clients.uk.funnelback.com";
-
-            const sf = ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"];
-            const url = host + "/s/search.json?collection=stir-courses&query=!nullpadre&fmo=true&num_ranks=2000&SF=[" + sf.join(",") + "]&";
-
-
-            /*
-
-                RENDERERS
-
-            */
-
-            const renderShareLink = (url) => {
-                return `<p>Copy share link ${url}</p>`;
-            };
-
-            /* renderFavs : Returns a String of HTML */
-            const renderFavs = stir.curry((item) => {
-                return !item.metaData ? `` : `
-                    <div class="c-search-result" data-rank="" data-sid="" data-result-type="course">
-                        <div class=" c-search-result__tags">
-                            <span class="c-search-tag">${item.metaData.level}</span>
-                        </div>
-
-                        <div class="flex-container flex-dir-column u-gap u-mt-1">
-                            <p class="u-text-regular u-m-0">
-                                <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ''} ${item.title}">${item.metaData.award ? item.metaData.award : ''} ${item.title} ${item.metaData.ucas ? ' - ' + item.metaData.ucas : ''}</a></strong>
-                            </p>
-                            <p class="u-m-0">${item.metaData.c}</p>
-                            
-                            <div class="c-search-result__meta grid-x">
-                                <div class="cell medium-4"><strong class="u-heritage-green">Start dates</strong><p>${item.metaData.start}</p></div>
-                                <div class="cell medium-4"><strong class="u-heritage-green">Study modes</strong><p class="u-text-sentence-case">${item.metaData.modes}</p></div>
-                                <div class="cell medium-4"><strong class="u-heritage-green">Delivery</strong><p class="u-text-sentence-case">${item.metaData.delivery}</p></div>
-                            </div>
-                        </div>
-                        <div class="flex-container align-middle u-gap u-mt-1">
-                            <button class="u-border-solid u-p-1 u-cursor-pointer" data-action="removefav" data-id="${item.metaData.sid}">Remove from favs</button>
-                            <span>Saved on ${stir.Date.newsDate(new Date(item.dateSaved))}</span>
-                        </div>
-                    </div>`;
-            });
-
-
-            /*
-
-                HELPERS
-
-            */
-
-            /* setDOMContent : Returns a Boolean  */
-            const setDOMContent = stir.curry((node, html) => {
-                stir.setHTML(node, html);
-                return true;
-            });
-
-            /* getExpiryDate: Returns a String (cookie expiry date)  */
-            const getExpiryDate = (days) => {
-                const d = new Date();
-                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-                return ";expires=" + d.toUTCString();
-            };
-
-
-            /* */
-            const getfavsCookieinCookie = (cookieId) => {
-                const cookies = document.cookie.split(";");
-
-                const favCookie = cookies.filter(item => item.includes(cookieId));
-                const favCookie2 = favCookie.length && favCookie[0].replace(cookieId, "");
-
-                return JSON.parse(favCookie2) || [];
-            };
-
-
-            /*
-
-                CONTROLLERS
-
-            */
-
-            /* INIT : Returns null */
-            const init = (favsArea, data, cookieId) => {
-                const favsCookie = getfavsCookieinCookie(cookieId);
-
-                if (!favsCookie.length || favsCookie.length < 1) {
-                    setDOMContent(favsArea, '<p>No favs stored</p>');
-                    return;
-                }
-
-                const favsCookieSorted = favsCookie.sort((a, b) => b.date - a.date);
-
-                // Maintain ordering by merging FB result into cookie object
-                const dataOrdered = favsCookieSorted.map(item => {
-                    return {
-                        ...data.filter(element => {
-                            if (item.id === element.metaData.sid) return element;
-                        })[0], ...{ id: item.id, dateSaved: item.date }
-                    };
-                });
-
-                // const shareLink = 'http://www.stir.ac.uk/'+dataOrdered;
-                setDOMContent(favsArea, renderShareLink('') + dataOrdered.map(renderFavs).join(''));
-
-                return;
-            };
-
-            /* fetchData : Returns null */
-            const fetchData = (favsArea, url, cookieId) => {
-                stir.getJSON(url, (initialData) => {
-                    const data = initialData.response.resultPacket.results || []; // Full list of courses
-
-                    /* ACTION: ON LOAD */
-                    init(favsArea, data, cookieId);
-
-                    /* ACTION: REMOVE a fav */
-                    favsArea && favsArea.addEventListener("click", (event) => {
-                        if (event.target.dataset.action && event.target.dataset.action === "removefav") {
-                            const id = event.target.dataset.id;
-
-                            if (id && id.length) {
-                                const favsCookie = getfavsCookieinCookie(cookieId);
-                                const favsCookie2 = favsCookie.filter(item => item.id !== id);
-
-                                // Update the cookie
-                                document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
-                                init(favsArea, data, cookieId);
-                            }
-                        }
-                        event.preventDefault();
-                    });
-
-                    /* ACTION: REMOVE ALL favs */
-                    clearAllFavsBtn && clearAllFavsBtn.addEventListener("click", (event) => {
-                        document.cookie = cookieId + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
-                        init(favsArea, data, cookieId);
-
-                        event.preventDefault();
-                    });
-
-                    /* ACTION: ADD a fav */
-                    addToFavsBtns && addToFavsBtns.forEach(element => {
-                        element.addEventListener("click", event => {
-                            // Update the cookie
-                            const favsCookie = getfavsCookieinCookie(cookieId);
-                            const favsCookie2 = [...favsCookie, { id: event.target.dataset.id, date: Date.now() }];
-                            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
-
-                            init(favsArea, data, cookieId);
-                            event.preventDefault();
-                        });
-                    });
-                });
-            };
-
-
-
-
-            /* ON LOAD */
-            fetchData(favsArea, url, cookieId);
-
-        })();
-
-    </script>
 
 </body>
 

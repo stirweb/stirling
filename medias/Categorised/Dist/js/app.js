@@ -6132,12 +6132,13 @@ stir.Concierge.prototype.obj2param = function (obj) {
 })();
 */
 (function () {
-  if (!stir.node("#coursefavsarea")) return;
+  if (!stir.node("#coursefavsarea") && !stir.node("#coursesharedarea")) return;
 
   // NODES
   var NODES = {
     favsArea: stir.node("#coursefavsarea"),
-    sharedArea: stir.node("#coursesharedarea")
+    sharedArea: stir.node("#coursesharedarea"),
+    sharedfavArea: stir.node("#coursesharedfavsarea")
   };
 
   // VARS
@@ -6148,37 +6149,45 @@ stir.Concierge.prototype.obj2param = function (obj) {
 
   /*
          RENDERERS
-     */
+   */
 
-  /* renderFavs : Returns a String of HTML */
   var renderFavs = stir.curry(function (item) {
     return !item.metaData ? "" : "\n        <div class=\"c-search-result\" data-rank=\"\" data-sid=\"".concat(item.metaData.sid, "\" data-result-type=\"course\">\n            <div class=\" c-search-result__tags\">\n                <span class=\"c-search-tag\">").concat(item.metaData.level, "</span>\n            </div>\n\n            <div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n                <p class=\"u-text-regular u-m-0\">\n                    <strong><a href=\"").concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n                </p>\n                <p class=\"u-m-0\">").concat(item.metaData.c, "</p>\n                \n                <div class=\"c-search-result__meta grid-x\">\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Start dates</strong><p>").concat(item.metaData.start, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Study modes</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.modes, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Delivery</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.delivery, "</p></div>\n                </div>\n            </div>\n            <div class=\"flex-container align-middle u-gap u-mt-1\">\n                <button class=\"u-border-solid u-p-1 u-cursor-pointer\" data-action=\"removefav\" data-id=\"").concat(item.metaData.sid, "\">Remove from shortlist</button>\n                <span>Shortlisted on ").concat(stir.Date.newsDate(new Date(item.dateSaved)), "</span>\n            </div>\n        </div>");
   });
+  var renderNoFavs = function renderNoFavs() {
+    return "<p>No favourites stored</p>";
+  };
   var renderShared = function renderShared(item) {
-    return !item.metaData ? "" : "<div class=\"cell small-6 medium-4 large-3\">\n            <div class=\" u-green-line-top\">\n                <p class=\"u-text-regular u-py-1\">\n                  <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "</a></strong>\n                </p>\n                <div class=\"u-mb-1\">").concat(item.metaData.c, "</div>\n                <button class=\"u-border-solid u-p-1 u-cursor-pointer u-w-full\" data-action=\"addtofavs\" data-id=\"").concat(item.metaData.sid, "\">Add to shortlist</button>\n            </div>\n        </div>");
+    return !item.metaData ? "" : "<div class=\"cell small-6 \">\n            <div class=\" u-green-line-top\">\n                <p class=\"u-text-regular u-py-1\">\n                  <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "</a></strong>\n                </p>\n                <div class=\"u-mb-1\">").concat(item.metaData.c, "</div>\n                <button class=\"u-border-solid u-p-1 u-cursor-pointer u-w-full\" data-action=\"addtofavs\" data-id=\"").concat(item.metaData.sid, "\">").concat(isInCookie(item.metaData.sid) ? "Shortlisted" : "Add to my shortlist", "</button>\n            </div>\n        </div>");
   };
   var renderSharedIntro = function renderSharedIntro(items) {
-    return !items.length ? "" : "<div class=\"cell\">\n          <p class=\" u-mb-2\">Someone has shared the following courses with you from their shortlist. <button class=\"u-border-solid u-cursor-pointer u-p-tiny\" data-action=\"clearshortlist\">Clear all</button></p>\n        </div>";
+    return !items.length ? "" : "<div class=\"cell\">\n          <p class=\" u-mb-2\">Someone has shared the following courses with you from their shortlist.</p>\n        </div>";
   };
 
   /*
          HELPERS
      */
 
-  /* setDOMContent : Returns a Boolean  */
+  /* 
+    setDOMContent : Returns a Boolean  
+  */
   var setDOMContent = stir.curry(function (node, html) {
     stir.setHTML(node, html);
     return true;
   });
 
-  /* getExpiryDate: Returns a String (cookie expiry date)  */
+  /* 
+    getExpiryDate: Returns a String (cookie expiry date)  
+  */
   var getExpiryDate = function getExpiryDate(days) {
     var d = new Date();
     d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
     return ";expires=" + d.toUTCString();
   };
 
-  /* */
+  /* 
+    getfavsCookie
+  */
   var getfavsCookie = function getfavsCookie(cookieId) {
     var cookies = document.cookie.split(";");
     var favCookie = cookies.filter(function (item) {
@@ -6188,23 +6197,32 @@ stir.Concierge.prototype.obj2param = function (obj) {
     return JSON.parse(favCookie2) || [];
   };
 
-  /*
-         CONTROLLERS
-     */
+  /* */
+  var isInCookie = function isInCookie(courseId) {
+    var favsCookie = getfavsCookie(cookieId);
+    var inCookie = favsCookie.map(function (item) {
+      return item.id === courseId;
+    });
+    if (!stir.any(function (item) {
+      return item;
+    }, inCookie)) return false;
+    return true;
+  };
 
-  /* doFavs : Returns null */
-  var doFavs = function doFavs(favsArea, data, cookieId) {
+  /*
+    Returns an array of course objects 
+  */
+  var getFavsList = function getFavsList(data, cookieId) {
     var favsCookie = getfavsCookie(cookieId);
     if (!favsCookie.length || favsCookie.length < 1) {
-      setDOMContent(favsArea, "<p>No favourites stored</p>");
-      return;
+      return null;
     }
     var favsCookieSorted = favsCookie.sort(function (a, b) {
       return b.date - a.date;
     });
 
     // Maintain ordering by merging FB result into cookie object
-    var dataOrdered = favsCookieSorted.map(function (item) {
+    return favsCookieSorted.map(function (item) {
       return _objectSpread(_objectSpread({}, data.filter(function (element) {
         if (item.id === element.metaData.sid) return element;
       })[0]), {
@@ -6212,25 +6230,58 @@ stir.Concierge.prototype.obj2param = function (obj) {
         dateSaved: item.date
       });
     });
-    // const shareLink = 'http://www.stir.ac.uk/'+dataOrdered;
-    setDOMContent(favsArea, dataOrdered.map(renderFavs).join(""));
-    return;
   };
 
-  /* doShared : Returns null */
-  var doShared = function doShared(sharedArea, data) {
+  /* 
+    Returns an array of course objects 
+  */
+  var getShareList = function getShareList(data) {
     var sharedList = QueryParams.get("shared") || "";
-    sharedList.length ? sharedArea.classList.remove("hide") : sharedArea.classList.add("hide");
+    if (!sharedList.length) return null;
 
     // Maintain ordering by merging FB result into cookie object
-    var sharedOrdered = sharedList.split(",").map(function (item) {
+    return sharedList.split(",").map(function (item) {
       return _objectSpread(_objectSpread({}, data.filter(function (element) {
         if (item === element.metaData.sid) return element;
       })[0]), {
         id: item
       });
     });
-    setDOMContent(sharedArea, renderSharedIntro(sharedOrdered.map(renderShared).join("")) + sharedOrdered.map(renderShared).join(""));
+  };
+
+  /*
+         CONTROLLERS
+     */
+
+  /* 
+    doFavs : Returns null 
+  */
+  var doFavs = function doFavs(favsArea, data, cookieId) {
+    var list = getFavsList(data, cookieId);
+    if (!list) {
+      setDOMContent(favsArea, renderNoFavs());
+      return;
+    }
+    setDOMContent(favsArea, list.map(renderFavs).join(""));
+    return;
+  };
+
+  /* 
+    doShared : Returns null 
+  */
+  var doShared = function doShared(nodes, data, cookieId) {
+    var shareList = getShareList(data);
+    if (!shareList) {
+      //setDOMContent(favsArea, renderNoFavs());
+    } else {
+      setDOMContent(nodes.sharedArea, renderSharedIntro(shareList.map(renderShared).join("")) + shareList.map(renderShared).join(""));
+    }
+    var list = getFavsList(data, cookieId);
+    if (!list) {
+      setDOMContent(nodes.sharedfavArea, renderNoFavs());
+      return;
+    }
+    setDOMContent(nodes.sharedfavArea, list.map(renderFavs).join(""));
     return;
   };
 
@@ -6240,72 +6291,57 @@ stir.Concierge.prototype.obj2param = function (obj) {
       var data = initialData.response.resultPacket.results || []; // Full list of courses
 
       // On Load
-      doShared(nodes.sharedArea, data);
-      doFavs(nodes.favsArea, data, cookieId);
+      nodes.sharedArea && doShared(nodes, data, cookieId);
+      nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
 
       /* EVENT LISTENERS */
       stir.node("main").addEventListener("click", function (event) {
-        /* ACTION: ADD a fav */
+        /* ACTION: ADD a FAV */
         if (event.target.dataset && event.target.dataset.action === "addtofavs") {
-          var favsCookie = getfavsCookie(cookieId);
-
-          // check if its already in the cookie - if not add it
-          var inCookie = favsCookie.map(function (item) {
-            return item.id === event.target.dataset.id;
-          });
-          if (!stir.any(function (item) {
-            return item;
-          }, inCookie)) {
-            var favsCookie2 = [].concat(_toConsumableArray(favsCookie), [{
+          if (!isInCookie(event.target.dataset.id)) {
+            var favsCookie2 = [].concat(_toConsumableArray(getfavsCookie(cookieId)), [{
               id: event.target.dataset.id,
               date: Date.now()
             }]);
             document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
           }
-          var shortlist = QueryParams.get("shared") || "";
-          var sharedListFiltered = shortlist.split(",").filter(function (item) {
-            return item !== event.target.dataset.id;
-          }).join(",");
-          QueryParams.set("shared", sharedListFiltered);
-          doShared(nodes.sharedArea, data);
-          doFavs(nodes.favsArea, data, cookieId);
+          nodes.sharedArea && doShared(nodes, data, cookieId);
+          nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
         }
 
-        /* ACTION: REMOVE a fav */
+        /* ACTION: REMOVE a FAV */
         if (event.target.dataset && event.target.dataset.action === "removefav") {
           var id = event.target.dataset.id;
           if (id && id.length) {
-            var _favsCookie = getfavsCookie(cookieId);
-            var _favsCookie2 = _favsCookie.filter(function (item) {
+            var favsCookie = getfavsCookie(cookieId);
+            var _favsCookie = favsCookie.filter(function (item) {
               return item.id !== id;
             });
-            document.cookie = cookieId + JSON.stringify(_favsCookie2) + getExpiryDate(30) + ";path=/";
-            doFavs(nodes.favsArea, data, cookieId);
+            document.cookie = cookieId + JSON.stringify(_favsCookie) + getExpiryDate(30) + ";path=/";
+            nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
           }
         }
 
-        /* ACTION: REMOVE ALL favs */
+        /* ACTION: REMOVE ALL FAVS */
         if (event.target.dataset && event.target.dataset.action === "clearallfavs") {
           document.cookie = cookieId + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
-          doFavs(nodes.favsArea, data, cookieId);
+          nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
         }
-        if (event.target.dataset && event.target.dataset.action === "clearshortlist") {
-          QueryParams.remove("shared");
-          doShared(nodes.sharedArea, data);
-        }
-        if (event.target.dataset && event.target.dataset.action === "copysharelink") {
-          var _favsCookie3 = getfavsCookie(cookieId);
 
-          //console.log(favsCookie.map((item) => item.id).join(","));
-          var link = "https://www.stir.ac.uk/courses/favs/?shared=" + _favsCookie3.map(function (item) {
+        // if (event.target.dataset && event.target.dataset.action === "clearshortlist") {
+        //   QueryParams.remove("shared");
+        //   nodes.sharedArea && doShared(nodes, data, cookieId);
+        // }
+
+        /* ACTION: COPY SHARE LINK */
+        if (event.target.dataset && event.target.dataset.action === "copysharelink") {
+          var _favsCookie2 = getfavsCookie(cookieId);
+          var link = "https://www.stir.ac.uk/courses/favs/?shared=" + _favsCookie2.map(function (item) {
             return item.id;
           }).join(",");
           navigator.clipboard.writeText(link);
           alert("The following share link has been copied to your clipboard: \n\n" + link);
         }
-        document.documentElement.addEventListener("mouseleave", function () {
-          return console.log("out");
-        });
       });
     });
   };
