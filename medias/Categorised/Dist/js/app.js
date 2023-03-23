@@ -6151,22 +6151,49 @@ stir.Concierge.prototype.obj2param = function (obj) {
          RENDERERS
    */
 
-  var renderFavs = stir.curry(function (item) {
-    return !item.metaData ? "" : "\n        <div class=\"c-search-result\" data-rank=\"\" data-sid=\"".concat(item.metaData.sid, "\" data-result-type=\"course\">\n            <div class=\" c-search-result__tags\">\n                <span class=\"c-search-tag\">").concat(item.metaData.level, "</span>\n            </div>\n\n            <div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n                <p class=\"u-text-regular u-m-0\">\n                    <strong><a href=\"").concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n                </p>\n                <p class=\"u-m-0\">").concat(item.metaData.c, "</p>\n                \n                <div class=\"c-search-result__meta grid-x\">\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Start dates</strong><p>").concat(item.metaData.start, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Study modes</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.modes, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Delivery</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.delivery, "</p></div>\n                </div>\n            </div>\n            <div class=\"flex-container align-middle u-gap u-mt-1\">\n                <button class=\"u-border-solid u-p-1 u-cursor-pointer\" data-action=\"removefav\" data-id=\"").concat(item.metaData.sid, "\">Remove from shortlist</button>\n                <span>Shortlisted on ").concat(stir.Date.newsDate(new Date(item.dateSaved)), "</span>\n            </div>\n        </div>");
+  var renderMiniFav = function renderMiniFav(item) {
+    return !item.metaData ? "" : "<p class=\"text-sm\">\n            <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n         </p>");
+  };
+  var renderFav = stir.curry(function (item) {
+    console.log(getDaysAgo(new Date(item.dateSaved)));
+    return !item.metaData ? "" : "\n        <div class=\"c-search-result\" data-rank=\"\" data-sid=\"".concat(item.metaData.sid, "\" data-result-type=\"course\">\n            <div class=\" c-search-result__tags\">\n                <span class=\"c-search-tag\">").concat(item.metaData.level, "</span>\n            </div>\n\n            <div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n                <p class=\"u-text-regular u-m-0\">\n                    <strong><a href=\"").concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n                </p>\n                <p class=\"u-m-0\">").concat(item.metaData.c, "</p>\n                \n                <div class=\"c-search-result__meta grid-x u-mt-1\">\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Start dates</strong><p>").concat(item.metaData.start, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Study modes</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.modes, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Delivery</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.delivery, "</p></div>\n                </div>\n            </div>\n            <div class=\"flex-container align-middle u-gap u-mt-1\">\n                <button class=\"u-energy-teal u-border-solid u-p-1 u-cursor-pointer flex-container u-gap-8 align-middle\" data-action=\"removefav\" data-id=\"").concat(item.metaData.sid, "\">\n                <svg version=\"1.1\" id=\"Layer_1\"\n                                xmlns=\"http://www.w3.org/2000/svg\" stroke=\"currentColorz\" stroke-width=\"1.5\"\n                                fill=\"#008996\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n                                viewBox=\"0 0 50 50\" style=\"enable-background:new 0 0 50 50; width:24px; height: 24px;\"\n                                xml:space=\"preserve\">\n                                <path d=\"M9.7,20.4c0.2,0.4,0.3,0.8,0.1,1.2l-0.6,1.9c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9\n                        c0.6,0.5,2.4,2,3,2.4c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.4-4.3c0.1-0.3,0.3-0.6,0.6-0.8\n                        c2.3-1.6,3.9-4.1,4-6.9c0.3-2.8-0.9-5.6-3-7.5c-1.1-0.9-2.1-1.5-3.5-2l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8\n                        c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5L28.1,11l-7.1-2.3c-2.1-0.6-4.3-0.4-6.2,0.4\n                        c-2,0.9-3.5,2.4-4.4,4.3C9.2,15.8,9,18.2,9.7,20.4z M12.3,22.7l24.2,7.8l-1.2,3.8c-1,3-3,5.4-5.8,6.9c-2.9,1.7-6.4,2.5-10.3,2.6\n                        l-0.4-0.1l-0.1,0c-2.7-2-4.8-4.4-6.3-7c-1.5-2.8-2.1-5.8-1.5-8.7l0,0c0.1-0.6,0.4-1.6,0.7-2.5c0.3-0.9,0.5-2,0.6-2.2L12.3,22.7z\n                         M13,14.3c1.6-2.6,4.5-3.8,7.5-2.8l16.7,5.4c2.2,1,3.5,2.7,3.9,5.1c0.3,2.4-0.5,4.4-2.3,5.9c-0.2,0.2-0.6,0.4-1.2,0.2l-24.5-7.9\n                        c-0.3-0.1-0.5-0.3-0.7-0.7l0,0C11.8,17.6,12,15.8,13,14.3z\" /></svg>\n              \n                Remove from my favourites</button>\n                <span>Favourited ").concat(getDaysAgo(new Date(item.dateSaved)), "</span>\n            </div>\n        </div>");
   });
   var renderNoFavs = function renderNoFavs() {
-    return "<p>No favourites stored</p>";
+    return "<p>Nothing saved here yet. <a href=\"https://www.stir.ac.uk/courses/\">View courses</a> and add them to your favourites. </p>";
+  };
+  var renderNoShared = function renderNoShared() {
+    return "<div class=\"cell\"><p>No courses shared</p></div>";
+  };
+  var renderLinkToFavs = function renderLinkToFavs() {
+    return "<hr><p class=\"text-sm u-arrow\"><a href=\"https://www.stir.ac.uk/courses/favs/\">View and manage my favourites</a></p>";
+  };
+  var renderFavActionBtns = function renderFavActionBtns() {
+    return "\n        <div class=\" u-mb-3 \">\n          <button class=\"u-border-solid u-p-1  u-cursor-pointer u-mt-1 \" data-action=\"clearallfavs\">Clear favourites</button>\n          <button class=\"u-border-solid u-p-1 u-cursor-pointer u-mt-1 \" data-action=\"copysharelink\">Generate share link</button>\n        </div>";
   };
   var renderShared = function renderShared(item) {
-    return !item.metaData ? "" : "<div class=\"cell small-6 \">\n            <div class=\" u-green-line-top\">\n                <p class=\"u-text-regular u-py-1\">\n                  <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "</a></strong>\n                </p>\n                <div class=\"u-mb-1\">").concat(item.metaData.c, "</div>\n                <button class=\"u-border-solid u-p-1 u-cursor-pointer u-w-full\" data-action=\"addtofavs\" data-id=\"").concat(item.metaData.sid, "\">").concat(isInCookie(item.metaData.sid) ? "Shortlisted" : "Add to my shortlist", "</button>\n            </div>\n        </div>");
+    return !item.metaData ? "" : "<div class=\"cell small-6 \">\n            <div class=\" u-green-line-top u-margin-bottom\">\n                <p class=\"u-text-regular u-py-1\">\n                  <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "</a></strong>\n                </p>\n                <div class=\"u-mb-1\">").concat(item.metaData.c, "</div>\n                <").concat(isInCookie(item.metaData.sid) ? "div" : "button", "  class=\"u-w-full ").concat(isInCookie(item.metaData.sid) ? "u-energy-teal--light" : "u-energy-teal u-cursor-pointer", "  u-border-solid u-p-1  u-mt-1 flex-container u-gap-8 align-middle align-center\" data-action=\"").concat(isInCookie(item.metaData.sid) ? "" : "addtofavs", "\" data-id=\"").concat(item.metaData.sid, "\">\n                <svg version=\"1.1\" id=\"Layer_1\"\n                                xmlns=\"http://www.w3.org/2000/svg\" stroke=\"currentColorz\" stroke-width=\"1.5\"\n                                fill=\" ").concat(isInCookie(item.metaData.sid) ? "#b3dce0" : "#008996", "\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n                                viewBox=\"0 0 50 50\" style=\"enable-background:new 0 0 50 50; width:24px; height: 24px;\"\n                                xml:space=\"preserve\">\n                                <path d=\"M9.7,20.4c0.2,0.4,0.3,0.8,0.1,1.2l-0.6,1.9c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9\n                        c0.6,0.5,2.4,2,3,2.4c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.4-4.3c0.1-0.3,0.3-0.6,0.6-0.8\n                        c2.3-1.6,3.9-4.1,4-6.9c0.3-2.8-0.9-5.6-3-7.5c-1.1-0.9-2.1-1.5-3.5-2l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8\n                        c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5L28.1,11l-7.1-2.3c-2.1-0.6-4.3-0.4-6.2,0.4\n                        c-2,0.9-3.5,2.4-4.4,4.3C9.2,15.8,9,18.2,9.7,20.4z M12.3,22.7l24.2,7.8l-1.2,3.8c-1,3-3,5.4-5.8,6.9c-2.9,1.7-6.4,2.5-10.3,2.6\n                        l-0.4-0.1l-0.1,0c-2.7-2-4.8-4.4-6.3-7c-1.5-2.8-2.1-5.8-1.5-8.7l0,0c0.1-0.6,0.4-1.6,0.7-2.5c0.3-0.9,0.5-2,0.6-2.2L12.3,22.7z\n                         M13,14.3c1.6-2.6,4.5-3.8,7.5-2.8l16.7,5.4c2.2,1,3.5,2.7,3.9,5.1c0.3,2.4-0.5,4.4-2.3,5.9c-0.2,0.2-0.6,0.4-1.2,0.2l-24.5-7.9\n                        c-0.3-0.1-0.5-0.3-0.7-0.7l0,0C11.8,17.6,12,15.8,13,14.3z\" /></svg>\n                <span class=\"u-energy-teal--darker\">").concat(isInCookie(item.metaData.sid) ? "Already in my favourites" : "Add to my favourites", "</span>\n                </").concat(isInCookie(item.metaData.sid) ? "div" : "button", ">\n            </div>\n        </div>");
   };
   var renderSharedIntro = function renderSharedIntro(items) {
-    return !items.length ? "" : "<div class=\"cell\">\n          <p class=\" u-mb-2\">Someone has shared the following courses with you from their shortlist.</p>\n        </div>";
+    return !items.length ? "" : "";
+  };
+  var renderHeader = function renderHeader(size, content) {
+    return "<".concat(size, " class=\"header-stripped h3 u-mb-2\">").concat(content, "</").concat(size, ">");
   };
 
   /*
          HELPERS
      */
+
+  var getDaysAgo = function getDaysAgo(date) {
+    var today = new Date();
+    var createdOn = new Date(date);
+    var msInDay = 24 * 60 * 60 * 1000;
+    createdOn.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    var diff = (+today - +createdOn) / msInDay;
+    var dayText = diff > 1 ? "days" : "day";
+    return diff === 0 ? "today" : "".concat(diff, " ").concat(dayText, " ago");
+  };
 
   /* 
     setDOMContent : Returns a Boolean  
@@ -6186,7 +6213,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
   };
 
   /* 
-    getfavsCookie
+    getfavsCookie: Returns an array of course objects
   */
   var getfavsCookie = function getfavsCookie(cookieId) {
     var cookies = document.cookie.split(";");
@@ -6197,7 +6224,9 @@ stir.Concierge.prototype.obj2param = function (obj) {
     return JSON.parse(favCookie2) || [];
   };
 
-  /* */
+  /* 
+      isInCookie: Returns a boolean
+  */
   var isInCookie = function isInCookie(courseId) {
     var favsCookie = getfavsCookie(cookieId);
     var inCookie = favsCookie.map(function (item) {
@@ -6210,7 +6239,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
   };
 
   /*
-    Returns an array of course objects 
+    getFavsList: Returns an array of course objects 
   */
   var getFavsList = function getFavsList(data, cookieId) {
     var favsCookie = getfavsCookie(cookieId);
@@ -6248,6 +6277,11 @@ stir.Concierge.prototype.obj2param = function (obj) {
       });
     });
   };
+  var setQueryParam = function setQueryParam(data) {
+    return QueryParams.set("shared", encodeURI(data.map(function (item) {
+      return item.id;
+    }).join(",")));
+  };
 
   /*
          CONTROLLERS
@@ -6262,7 +6296,8 @@ stir.Concierge.prototype.obj2param = function (obj) {
       setDOMContent(favsArea, renderNoFavs());
       return;
     }
-    setDOMContent(favsArea, list.map(renderFavs).join(""));
+    setQueryParam(list);
+    setDOMContent(favsArea, renderFavActionBtns() + list.map(renderFav).join(""));
     return;
   };
 
@@ -6272,7 +6307,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
   var doShared = function doShared(nodes, data, cookieId) {
     var shareList = getShareList(data);
     if (!shareList) {
-      //setDOMContent(favsArea, renderNoFavs());
+      setDOMContent(nodes.sharedArea, renderNoShared());
     } else {
       setDOMContent(nodes.sharedArea, renderSharedIntro(shareList.map(renderShared).join("")) + shareList.map(renderShared).join(""));
     }
@@ -6281,11 +6316,13 @@ stir.Concierge.prototype.obj2param = function (obj) {
       setDOMContent(nodes.sharedfavArea, renderNoFavs());
       return;
     }
-    setDOMContent(nodes.sharedfavArea, list.map(renderFavs).join(""));
+    setDOMContent(nodes.sharedfavArea, renderHeader("h2", "My favourites") + list.map(renderMiniFav).join("") + renderLinkToFavs());
     return;
   };
 
-  /* fetchData : Returns null */
+  /* 
+    fetchData : Returns null 
+  */
   var fetchData = function fetchData(nodes, url, cookieId) {
     stir.getJSON(url, function (initialData) {
       var data = initialData.response.resultPacket.results || []; // Full list of courses
@@ -6296,11 +6333,14 @@ stir.Concierge.prototype.obj2param = function (obj) {
 
       /* EVENT LISTENERS */
       stir.node("main").addEventListener("click", function (event) {
+        var target = event.target.nodeName === "BUTTON" ? event.target : event.target.parentElement;
+
         /* ACTION: ADD a FAV */
-        if (event.target.dataset && event.target.dataset.action === "addtofavs") {
+        if (target.dataset && target.dataset.action === "addtofavs") {
+          console.log(target);
           if (!isInCookie(event.target.dataset.id)) {
             var favsCookie2 = [].concat(_toConsumableArray(getfavsCookie(cookieId)), [{
-              id: event.target.dataset.id,
+              id: target.dataset.id,
               date: Date.now()
             }]);
             document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
@@ -6310,8 +6350,8 @@ stir.Concierge.prototype.obj2param = function (obj) {
         }
 
         /* ACTION: REMOVE a FAV */
-        if (event.target.dataset && event.target.dataset.action === "removefav") {
-          var id = event.target.dataset.id;
+        if (target.dataset && target.dataset.action === "removefav") {
+          var id = target.dataset.id;
           if (id && id.length) {
             var favsCookie = getfavsCookie(cookieId);
             var _favsCookie = favsCookie.filter(function (item) {
@@ -6323,7 +6363,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
         }
 
         /* ACTION: REMOVE ALL FAVS */
-        if (event.target.dataset && event.target.dataset.action === "clearallfavs") {
+        if (target.dataset && target.dataset.action === "clearallfavs") {
           document.cookie = cookieId + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
           nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
         }
@@ -6334,7 +6374,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
         // }
 
         /* ACTION: COPY SHARE LINK */
-        if (event.target.dataset && event.target.dataset.action === "copysharelink") {
+        if (target.dataset && target.dataset.action === "copysharelink") {
           var _favsCookie2 = getfavsCookie(cookieId);
           var link = "https://www.stir.ac.uk/courses/favs/?shared=" + _favsCookie2.map(function (item) {
             return item.id;
