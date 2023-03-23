@@ -275,6 +275,10 @@ $bg-grey: tint($light-mink, 15%);
   color: #b3dce0;
 }
 
+.u-energy-teal--darker {
+  color: #02616a;
+}
+
 .u-grey--dark {
   color: #767169;
 }
@@ -287,6 +291,10 @@ $bg-grey: tint($light-mink, 15%);
 
 .u-heritage-green {
   color: $heritage-green;
+}
+
+.u-enery-green {
+  color: $energy-green; // Not accessible but can use to colour borders etc
 }
 
 .u-heritage-berry {

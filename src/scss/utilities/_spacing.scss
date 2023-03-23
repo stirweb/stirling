@@ -330,6 +330,11 @@
   padding-bottom: 32px;
 }
 
+.u-px-3 {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
 @media screen and #{breakpoint(medium up)} {
   .u-p-3 {
     padding: 40px;
@@ -338,6 +343,11 @@
   .u-py-3 {
     padding-top: 40px;
     padding-bottom: 40px;
+  }
+
+  .u-px-3 {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 
