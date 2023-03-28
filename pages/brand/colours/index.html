@@ -246,116 +246,162 @@
                 {
                     name: "Dark grey",
                     class: "dark-grey",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Grey",
                     class: "grey",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: false
                 },
                 {
                     name: "Light mink",
                     class: "light-mink",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: false
                 },
                 {
                     name: "Medium mink",
                     class: "medium-mink",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Dark mink",
                     class: "dark-mink",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Energy pink",
                     class: "energy-pink",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Energy green",
                     class: "energy-green",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Energy teal",
                     class: "energy-teal",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Energy turq",
                     class: "energy-turq",
-                    whiteall: true
+                    textcolour: "white",
+                    headcolour: "heritage-purple",
+                    whiteall: false
                 },
                 {
                     name: "Energy yellow",
                     class: "energy-yellow",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: false
                 },
                 {
                     name: "Energy orange",
                     class: "energy-orange",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Energy light-blue",
                     class: "energy-light-blue",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: false
                 },
                 {
                     name: "Energy blue",
                     class: "energy-blue",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Energy purple",
                     class: "energy-purple",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Heritage green",
                     class: "heritage-green",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Heritage green (alt)",
                     class: "heritage-green-alt",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Heritage teal",
                     class: "heritage-teal",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Heritage yellow",
                     class: "heritage-yellow",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: false
                 },
                 {
                     name: "Heritage orange",
                     class: "heritage-orange",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Heritage blue",
                     class: "heritage-blue",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Heritage navy",
                     class: "heritage-navy",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Heritage berry",
                     class: "heritage-berry",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 },
                 {
                     name: "Heritage purple",
                     class: "heritage-purple",
+                    textcolour: "",
+                    headcolour: "",
                     whiteall: true
                 }
             ]
@@ -367,8 +413,8 @@
                     <div class="cell u-padding-y  bg-${item.class} u-bleed ${item.whiteall ? 'u-white--all' : ''}">
                          <code class="u-p-1">bg-${item.class} u-bleed</code>
 
-                         <h2 class="u-pt-2 header-stripped">${item.name}</h2>
-                         <p class="" >Example text for accessibilty checking. <br /><strong >And some bold for checking.</strong></p>
+                         <h2 class="u-pt-2 header-stripped ${item.headcolour ? `u-` + item.headcolour : ``}">${item.name}</h2>
+                         <p class="${item.textcolour ? `u-` + item.textcolour : ``}" >Example text for accessibilty checking. <br /><strong >And some bold for checking.</strong></p>
 
                     </div>`;
             };
