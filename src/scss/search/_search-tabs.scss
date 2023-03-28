@@ -191,8 +191,8 @@
         margin: 0 0 0 0;
         padding: 30px;
         background-color: #fff;
-        border-left: 5px solid #d41568;
-        color: #d41568;
+        border-left: 5px solid $energy-pink;
+        color: $energy-pink;
         position: relative;
 
         &:hover {
@@ -211,7 +211,7 @@
         > div {
           > p:first-of-type {
             font-size: 2rem;
-            border-bottom: 1px solid #d41568;
+            border-bottom: 1px solid $energy-pink;
             margin-bottom: 0.5rem;
             display: inline-block;
           }

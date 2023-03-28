@@ -33,6 +33,7 @@ $energy-yellow: map-get($brand-palette, energy-yellow);
 $energy-orange: map-get($brand-palette, energy-orange);
 $energy-blue: map-get($brand-palette, energy-blue);
 $energy-purple: map-get($brand-palette, energy-purple);
+$energy-turq: map-get($brand-palette, energy-turq);
 $heritage-green: map-get($brand-palette, heritage-green);
 $heritage-berry: map-get($brand-palette, heritage-berry);
 $heritage-teal: map-get($brand-palette, heritage-teal);
@@ -275,8 +276,8 @@ $bg-grey: tint($light-mink, 15%);
   color: #b3dce0;
 }
 
-.u-energy-teal--darker {
-  color: #02616a;
+.u-heritage-teal {
+  color: $heritage-teal;
 }
 
 .u-grey--dark {
@@ -288,7 +289,6 @@ $bg-grey: tint($light-mink, 15%);
     color: #726f65;
   }
 }
-
 .u-heritage-green {
   color: $heritage-green;
 }
@@ -299,4 +299,8 @@ $bg-grey: tint($light-mink, 15%);
 
 .u-heritage-berry {
   color: $heritage-berry;
+}
+
+.u-energy-turq {
+  color: $energy-turq;
 }
