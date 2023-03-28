@@ -78,6 +78,10 @@ button {
       color: $black;
     }
   }
+
+  &.energy:hover {
+    color: $heritage-green;
+  }
 }
 
 /* 
@@ -320,9 +324,9 @@ input:checked {
     }
     &:hover {
       background-color: #fff !important;
-      color: #d41568;
+      color: $energy-pink;
       a {
-        color: #d41568;
+        color: $energy-pink;
       }
     }
   }
@@ -336,9 +340,9 @@ input:checked {
       color: #fff;
     }
     &:hover {
-      color: #67a51e;
+      color: $energy-green; //was set to #67a51e;
       a {
-        color: #67a51e;
+        color: $energy-green; // was set to #67a51e;
       }
     }
   }
@@ -418,5 +422,5 @@ input:checked {
 */
 
 .btn-global-search {
-	border: 0;	
+  border: 0;
 }
