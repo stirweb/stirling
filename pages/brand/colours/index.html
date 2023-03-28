@@ -181,13 +181,20 @@
         <div class="grid-x grid-padding-x" id="wrappers">
             <div class="cell u-padding-top u-bg-grey bg-grey u-bleed">
                 <h2>Background wrappers</h2>
-            </div>
 
-            <div class="cell u-bleed u-padding-y">
+            </div>
+            <div class="cell u-padding-y ">
                 <code class="u-p-1">Default white - classes not required</code>
-            </div>
 
+
+                <h2 class="header-stripped u-pt-2 ">White</h2>
+
+                <p>Example text for accessibilty checking.</p>
+                <p>And some bold for checking.</p>
+            </div>
         </div>
+
+    </div>
     </div>
 
 
@@ -237,8 +244,8 @@
             */
             var colours = [
                 {
-                    name: "whiteall grey",
-                    class: "whiteall-grey",
+                    name: "Dark grey",
+                    class: "dark-grey",
                     whiteall: true
                 },
                 {
@@ -357,8 +364,8 @@
 
             const render = (item) => {
                 return `
-                    <div class="cell u-padding-y u-bg-${item.class} bg-${item.class} u-bleed ${item.whiteall ? 'u-white--all' : ''}">
-                         <code class="u-p-1">u-bg-${item.class} bg-${item.class} u-bleed</code>
+                    <div class="cell u-padding-y  bg-${item.class} u-bleed ${item.whiteall ? 'u-white--all' : ''}">
+                         <code class="u-p-1">bg-${item.class} u-bleed</code>
 
                          <h2 class="u-pt-2 header-stripped">${item.name}</h2>
                          <p class="" >Example text for accessibilty checking. <br /><strong >And some bold for checking.</strong></p>
