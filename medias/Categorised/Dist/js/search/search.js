@@ -186,6 +186,27 @@ stir.templates.search = function () {
   var clearingTest = function clearingTest(item) {
     return stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
   };
+  var facetDisplayTypes = {
+    SINGLE_DRILL_DOWN: undefined,
+    CHECKBOX: 'checkbox',
+    RADIO_BUTTON: 'radio',
+    TAB: undefined,
+    UNKNOWN: undefined
+  };
+  var months = {
+    "01": "January",
+    "02": "February",
+    "05": "May",
+    "08": "August",
+    "09": "September",
+    "10": "October"
+  };
+  var readableDate = function readableDate(date) {
+    return months[date.split('-').pop()] + ' ' + date.split('-').shift();
+  };
+  var facetCategoryLabel = function facetCategoryLabel(label) {
+    return label.indexOf('ay') === 7 ? readableDate(label.split('ay').shift()) : label;
+  };
 
   /**
    * PUBLIC members that can be called externally.
@@ -344,9 +365,9 @@ stir.templates.search = function () {
       return !item.messageHtml ? "<div class=\"c-search-result\" data-result-type=curated>\n\t\t\t\t\t<div class=c-search-result__body>\n\t\t\t\t\t\t<p class=\"c-search-result__breadcrumb\">".concat(item.displayUrl, "</p>\n\t\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.linkUrl, "\" title=\"").concat(item.displayUrl, "\">").concat(item.titleHtml, "</a>\n\t\t\t\t\t\t</strong></p>\n\t\t\t\t\t\t<p >").concat(item.descriptionHtml, "</p>\n\t\t\t\t\t\t<!-- <pre>").concat(JSON.stringify(item, null, "\t"), "</pre> -->\n\t\t\t\t\t</div>\n\t\t\t\t</div>") : "<div class=\"c-search-result-curated\" data-result-type=curated-message>\n\t\t\t\t\t".concat(item.messageHtml, "\n\t\t\t\t</div>");
     },
     facet: function facet(item) {
-      return "<fieldset>\t\n\t\t\t\t<legend class=\"show-for-sr\">Filter by ".concat(item.name, "</legend>\n\t\t\t\t<div class=\"stir-accordion--active\" data-behaviour=accordion>\n\t\t\t\t<accordion-summary>").concat(item.name, "</accordion-summary>\n\t\t\t\t<div>\n\t\t\t\t\t<ul>").concat(item.allValues.map(function (batman) {
-        return "<li><label><input type=checkbox>".concat(batman.label, "</input></label></li>");
-      }).join(''), "\n\t\t\t\t\t<!-- \n\t\t\t\t\t\t<li><label><input name=\"meta_level\" type=\"radio\"  value=\"undergraduate\"> Undergraduate</label></li>\n\t\t\t\t\t\t<li><label><input name=\"meta_level\" type=\"radio\"  value=\"postgraduate\"> Postgraduate</label></li>\n\t\t\t\t\t\t<li><label><input name=\"meta_level\" type=\"radio\"  value=\"module\"> CPD and short courses</label></li>\n\t\t\t\t\t\t<li><label><input name=meta_level type=radio value=undergraduate> Undergraduate</label></li>\n\t\t\t\t\t\t<li><label><input name=meta_level type=radio value=postgraduate> Postgraduate</label></li>\n\t\t\t\t\t\t<li><label><input name=meta_level type=radio value=module> CPD and short courses</label></li>\n\t\t\t\t\t-->\n\t\t\t\t\t</ul>\n\t\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</fieldset>");
+      return "<fieldset>\t\n\t\t\t\t<legend class=\"show-for-sr\">Filter by ".concat(item.name, "</legend>\n\t\t\t\t<div class=\"stir-accordion--active\" data-behaviour=accordion>\n\t\t\t\t<accordion-summary>").concat(item.name, "</accordion-summary>\n\t\t\t\t<div>\n\t\t\t\t<ul>").concat(item.allValues.map(function (batman) {
+        return "<li><label><input type=".concat(facetDisplayTypes[item.guessedDisplayType] || 'text', " name=\"").concat(batman.queryStringParamName, "\" value=\"").concat(batman.queryStringParamValue, "\" ").concat(batman.selected ? 'checked' : '', ">").concat(facetCategoryLabel(batman.label), " <span>").concat(batman.count ? batman.count : '0', "</span></label></li>");
+      }).join(''), "\n\t\t\t\t</ul>\n\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</fieldset>");
     }
   };
 }();
@@ -1073,6 +1094,7 @@ stir.search = function () {
     try {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var key = _step2.value;
+        if (key.indexOf('f.') === 0) continue;
         a.getAll(key).length > 1 && a.set(key, "[" + a.getAll(key).join(" ") + "]");
       }
     } catch (err) {
@@ -1111,26 +1133,41 @@ stir.search = function () {
     if (data.response.resultPacket.resultsSummary.currEnd === data.response.resultPacket.resultsSummary.totalMatching) button.setAttribute("disabled", true);
     return data;
   });
+  var newAccordion = function newAccordion(accordion) {
+    return new stir.accord(accordion, false);
+  };
+  var imageErrorHandler = function imageErrorHandler(image) {
+    return image.addEventListener("error", stir.funnelback.imgError);
+  };
 
   // "reflow" events and handlers for dynamically added DOM elements
   var flow = stir.curry(function (_element, data) {
-    Array.prototype.forEach.call(_element.querySelectorAll('[data-behaviour="accordion"]'), function (accordion) {
-      return new stir.accord(accordion, false);
-    });
-    Array.prototype.forEach.call(_element.querySelectorAll("img"), function (image) {
-      image.addEventListener("error", stir.funnelback.imgError);
-    });
+    if (!_element.closest) return;
+    var root = _element.closest('[data-panel]');
+    var cords = root.querySelectorAll('[data-behaviour="accordion"]');
+    var pics = root.querySelectorAll("img");
+    Array.prototype.forEach.call(cords, newAccordion);
+    Array.prototype.forEach.call(pics, imageErrorHandler);
   });
   var updateStatus = stir.curry(function (element, data) {
-    element.setAttribute("data-page", calcPage(data.response.resultPacket.resultsSummary.currStart, data.response.resultPacket.resultsSummary.numRanks));
+    var start = data.response.resultPacket.resultsSummary.currStart;
+    var ranks = data.response.resultPacket.resultsSummary.numRanks;
     var summary = element.parentElement.parentElement.querySelector(".c-search-results-summary");
+    element.setAttribute("data-page", calcPage(start, ranks));
     summary && (summary.innerHTML = stir.templates.search.summary(data));
     return data; // data pass-thru so we can compose() this function
   });
 
   var updateFacets = stir.curry(function (type, data) {
     var form = document.querySelector("form[data-filters=\"".concat(type, "\"]"));
-    form.insertAdjacentHTML("afterbegin", stir.templates.search.facet(data.response.facets[0]));
+    if (form) {
+      Array.prototype.slice.call(form.querySelectorAll('fieldset')).forEach(function (fieldset) {
+        return fieldset.parentElement.removeChild(fieldset);
+      });
+      data.response.facets.forEach(function (facet) {
+        return form.insertAdjacentHTML("afterbegin", stir.templates.search.facet(facet));
+      });
+    }
     return data; // data pass-thru so we can compose() this function
   });
 
@@ -1179,7 +1216,7 @@ stir.search = function () {
     ));
     //TODO if type==course and query=='!padrenullquery' then sort=title
     var url = addMoreParameters(setFBParameters(parameters), getFormData(type));
-    //debug && console.info('[Search] URL:');
+    debug && console.info('[Search] URL:', url);
     debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
   });
 

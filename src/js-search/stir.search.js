@@ -311,6 +311,7 @@ stir.search = () => {
 		let a = form ? new FormData(form) : new FormData();
 
 		for (var key of a.keys()) {
+			if (key.indexOf('f.')===0) continue;
 			a.getAll(key).length > 1 && a.set(key, "[" + a.getAll(key).join(" ") + "]");
 		}
 
@@ -345,26 +346,34 @@ stir.search = () => {
 		return data;
 	});
 
+	const newAccordion = accordion => new stir.accord(accordion, false);
+	const imageErrorHandler = image => image.addEventListener("error", stir.funnelback.imgError);
+
 	// "reflow" events and handlers for dynamically added DOM elements
 	const flow = stir.curry((_element, data) => {
-		Array.prototype.forEach.call(_element.querySelectorAll('[data-behaviour="accordion"]'), (accordion) => new stir.accord(accordion, false));
-		Array.prototype.forEach.call(_element.querySelectorAll("img"), (image) => {
-			image.addEventListener("error", stir.funnelback.imgError);
-		});
+		if(!_element.closest) return;
+		const root = _element.closest('[data-panel]');
+		const cords = root.querySelectorAll('[data-behaviour="accordion"]');
+		const pics = root.querySelectorAll("img");
+		Array.prototype.forEach.call(cords, newAccordion);
+		Array.prototype.forEach.call(pics, imageErrorHandler);
 	});
 
 	const updateStatus = stir.curry((element, data) => {
-		element.setAttribute("data-page", calcPage(data.response.resultPacket.resultsSummary.currStart, data.response.resultPacket.resultsSummary.numRanks));
+		const start = data.response.resultPacket.resultsSummary.currStart;
+		const ranks = data.response.resultPacket.resultsSummary.numRanks;
 		const summary = element.parentElement.parentElement.querySelector(".c-search-results-summary");
+		element.setAttribute("data-page", calcPage(start, ranks));
 		summary && (summary.innerHTML = stir.templates.search.summary(data));
 		return data; // data pass-thru so we can compose() this function
 	});
 
 	const updateFacets = stir.curry((type, data) => {
 		const form = document.querySelector(`form[data-filters="${type}"]`)
-		
-		form.insertAdjacentHTML("afterbegin", stir.templates.search.facet(data.response.facets[0]))
-
+		if(form) {
+			Array.prototype.slice.call(form.querySelectorAll('fieldset')).forEach(fieldset=>fieldset.parentElement.removeChild(fieldset));
+			data.response.facets.forEach(facet=>form.insertAdjacentHTML("afterbegin", stir.templates.search.facet(facet)));
+		}
 		return data; // data pass-thru so we can compose() this function
 	});
 
@@ -418,7 +427,7 @@ stir.search = () => {
 		);
 		//TODO if type==course and query=='!padrenullquery' then sort=title
 		const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
-		//debug && console.info('[Search] URL:');
+		debug && console.info('[Search] URL:', url);
 		debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
 	});
 

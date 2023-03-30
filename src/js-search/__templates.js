@@ -160,6 +160,27 @@ stir.templates.search = (() => {
 
 	const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
 
+	const facetDisplayTypes = {
+		SINGLE_DRILL_DOWN: undefined,
+		CHECKBOX: 'checkbox',
+		RADIO_BUTTON: 'radio',
+		TAB: undefined,
+		UNKNOWN: undefined
+	};
+
+	const months = {
+		"01":"January",
+		"02":"February",
+		"05":"May",
+		"08":"August",
+		"09":"September",
+		"10":"October",
+	};
+
+	const readableDate = date => months[date.split('-').pop()] + ' ' + date.split('-').shift();
+
+	const facetCategoryLabel = label => label.indexOf('ay')===7?readableDate(label.split('ay').shift()):label;
+
 	/**
 	 * PUBLIC members that can be called externally.
 	 * Principally for `stir.search` but could be reused elsewhere.
@@ -480,23 +501,15 @@ stir.templates.search = (() => {
 			: `<div class="c-search-result-curated" data-result-type=curated-message>
 					${item.messageHtml}
 				</div>`,
-		facet: (item) => 
+		facet: (item) =>
 			`<fieldset>	
 				<legend class="show-for-sr">Filter by ${item.name}</legend>
 				<div class="stir-accordion--active" data-behaviour=accordion>
 				<accordion-summary>${item.name}</accordion-summary>
 				<div>
-					<ul>${item.allValues.map(batman=>`<li><label><input type=checkbox>${batman.label}</input></label></li>`).join('')}
-					<!-- 
-						<li><label><input name="meta_level" type="radio"  value="undergraduate"> Undergraduate</label></li>
-						<li><label><input name="meta_level" type="radio"  value="postgraduate"> Postgraduate</label></li>
-						<li><label><input name="meta_level" type="radio"  value="module"> CPD and short courses</label></li>
-						<li><label><input name=meta_level type=radio value=undergraduate> Undergraduate</label></li>
-						<li><label><input name=meta_level type=radio value=postgraduate> Postgraduate</label></li>
-						<li><label><input name=meta_level type=radio value=module> CPD and short courses</label></li>
-					-->
-					</ul>
-						
+				<ul>${item.allValues.map(batman=>`<li><label><input type=${facetDisplayTypes[item.guessedDisplayType]||'text'} name="${batman.queryStringParamName}" value="${batman.queryStringParamValue}" ${batman.selected?'checked':''}>${facetCategoryLabel(batman.label)} <span>${batman.count?batman.count:'0'}</span></label></li>`).join('')}
+				</ul>
+				
 				</div>
 				</div>
 			</fieldset>`
