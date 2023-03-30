@@ -21,7 +21,6 @@
   var countryNodes = stir.nodes("[data-scholcountrylisting]");
   var subjectNodes = stir.nodes("[data-scholsubjectlisting]");
   var debug = UoS_env.name == "dev" || UoS_env.name == "qa" ? true : false;
-  console.log(UoS_env);
 
   /* DOM elements for FORM version (found on the main scholarship page) */
 
@@ -101,7 +100,6 @@
 
   var matchStudyLevel = function matchStudyLevel(scholStudyLevel, filterStudyLevel) {
     if (filterStudyLevel === "Any") return true;
-    console.log(scholStudyLevel, filterStudyLevel);
     return scholStudyLevel.includes(filterStudyLevel);
   };
   var matchFeeStatus = function matchFeeStatus(scholFeeStatus, filterFeeStatus) {
@@ -114,8 +112,10 @@
     return scholData.otherSubject.toLowerCase().includes(filterSubject.toLowerCase()) || scholData.promotedSubject.toLowerCase().includes(filterSubject.toLowerCase());
   };
   var matchFaculty = function matchFaculty(scholFaculty, filterFaculty) {
-    return scholFaculty.includes(filterFaculty) || scholFaculty.includes("All Faculties");
+    return true;
+    //return scholFaculty.includes(filterFaculty) || scholFaculty.includes("All Faculties");
   };
+
   var isInternational = function isInternational(scholNation, filterNation, ukroi) {
     if (ukroi.includes(filterNation)) return false;
     return scholNation.includes("All international");
@@ -139,9 +139,9 @@
   */
   var isMatch = function isMatch(filters, schol, CONSTS) {
     var matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, CONSTS.regions.ukroi)];
-    if (stir.all(function (b) {
-      return b;
-    }, matchFilter)) console.log(schol.title);
+
+    //console.log(matchFilter);
+
     return stir.all(function (b) {
       return b;
     }, matchFilter);

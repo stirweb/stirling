@@ -23,8 +23,6 @@
 
   const debug = UoS_env.name == "dev" || UoS_env.name == "qa" ? true : false;
 
-  console.log(UoS_env);
-
   /* DOM elements for FORM version (found on the main scholarship page) */
 
   const inputNation = stir.node("#scholarship-search__nationality");
@@ -103,8 +101,6 @@
   const matchStudyLevel = (scholStudyLevel, filterStudyLevel) => {
     if (filterStudyLevel === "Any") return true;
 
-    console.log(scholStudyLevel, filterStudyLevel);
-
     return scholStudyLevel.includes(filterStudyLevel);
   };
 
@@ -122,7 +118,8 @@
   };
 
   const matchFaculty = (scholFaculty, filterFaculty) => {
-    return scholFaculty.includes(filterFaculty) || scholFaculty.includes("All Faculties");
+    return true;
+    //return scholFaculty.includes(filterFaculty) || scholFaculty.includes("All Faculties");
   };
 
   const isInternational = (scholNation, filterNation, ukroi) => {
@@ -149,7 +146,8 @@
   const isMatch = (filters, schol, CONSTS) => {
     const matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, CONSTS.regions.ukroi)];
 
-    if (stir.all((b) => b, matchFilter)) console.log(schol.title);
+    //console.log(matchFilter);
+
     return stir.all((b) => b, matchFilter);
   };
 
@@ -673,6 +671,7 @@
         const filters = getSubjectListingFilters(element);
 
         const filterDataCurry = stir.filter(filterData(CONSTANTS, filters));
+
         const mapRankCurry = stir.map(mapRank(filters));
         const sortCurry = stir.sort((a, b) => (parseInt(a.rank) < parseInt(b.rank) ? -1 : parseInt(a.rank) > parseInt(b.rank) ? 1 : 0));
         const setDOMResultsCurry = setDOMContent(element);
