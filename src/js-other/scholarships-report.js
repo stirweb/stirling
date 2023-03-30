@@ -15,6 +15,7 @@
   };
 
   const renderReport = (item) => {
+    console.log(item);
     return `
           <div class="u-border-solid u-p-2 u-mt-2">
               <p><strong>${item.title}</strong></p>
@@ -32,6 +33,7 @@
               <div>${item.teaser}</div>
 
               <div class="u-mt-1"><strong>Study Level (tag):</strong> ${item.studyLevel}</div>
+              <div><strong>Fee Status (tag):</strong> ${item.feeStatus}</div>
               <div><strong>Nationalities (tag):</strong> ${item.nationality}</div>
               <div><strong>Promoted Subjects (Tag):</strong> ${item.promotedSubject}</div>
               <div><strong>Value:</strong> ${item.value}</div>
