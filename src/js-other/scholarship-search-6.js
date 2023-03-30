@@ -39,8 +39,6 @@
   const regionmacros = stirt4globals.regionmacros || [];
   const feeStatusesAll = stirt4globals.feeStatusesAll.feestatuses || [];
 
-  console.log(feeStatusesAll);
-
   const CONSTANTS = {
     debug: debug,
     regions: {
@@ -101,15 +99,23 @@
   */
 
   const matchStudyLevel = (scholStudyLevel, filterStudyLevel) => {
+    if (filterStudyLevel === "Any") return true;
+
+    console.log(scholStudyLevel, filterStudyLevel);
+
     return scholStudyLevel.includes(filterStudyLevel);
   };
 
   const matchFeeStatus = (scholFeeStatus, filterFeeStatus) => {
-    console.log(scholFeeStatus, filterFeeStatus);
+    if (filterFeeStatus == "Any" || filterFeeStatus == "International") return true;
+    if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+
     return scholFeeStatus.includes(filterFeeStatus);
   };
 
   const matchSubject = (scholData, filterSubject) => {
+    if (filterSubject === "Any") return true;
+
     return scholData.otherSubject.toLowerCase().includes(filterSubject.toLowerCase()) || scholData.promotedSubject.toLowerCase().includes(filterSubject.toLowerCase());
   };
 
@@ -130,6 +136,8 @@
   };
 
   const matchLocation = (scholNation, filterNation, filterRegions, ukroi) => {
+    if (filterNation === "Any") return true;
+
     return scholNation.includes(filterNation) || scholNation.includes("All nationalities") || isInternational(scholNation, filterNation, ukroi) || isRegion(scholNation, filterRegions);
   };
 
@@ -139,6 +147,7 @@
   const isMatch = (filters, schol, CONSTS) => {
     const matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, CONSTS.regions.ukroi)];
 
+    if (stir.all((b) => b, matchFilter)) console.log(schol.title);
     return stir.all((b) => b, matchFilter);
   };
 
@@ -326,10 +335,10 @@
     Populate selects with query params from url string e.g. ?level=ug  
   */
   const setFormValues = (nodes) => {
-    nodes.inputNation.value = QueryParams.get("nationality") || "";
+    nodes.inputNation.value = QueryParams.get("nationality") || "Any";
     nodes.inputSubject.value = QueryParams.get("subject") || "!padrenullquery";
-    nodes.inputLevel.value = QueryParams.get("level") || "";
-    nodes.inputFeeStatus.value = QueryParams.get("feestatus") || "";
+    nodes.inputLevel.value = QueryParams.get("level") || "Any";
+    nodes.inputFeeStatus.value = QueryParams.get("feestatus") || "Any";
 
     return true;
   };
@@ -352,7 +361,7 @@
   });
 
   const getInputValue = (input) => {
-    if (!input.options[input.selectedIndex].value) return "";
+    if (!input.options[input.selectedIndex].value) return "Any";
     return input.options[input.selectedIndex].value;
   };
 
@@ -369,7 +378,7 @@
   };
 
   const getSubject = (type, value) => {
-    if (!value) return "";
+    if (!value) return "Any";
 
     if (type === "Faculty") return "";
     if (value === "!padrenullquery") return "";
@@ -378,7 +387,7 @@
   };
 
   const getFaculty = (type, value) => {
-    if (!value) return "";
+    if (!value) return "Any";
 
     if (type === "Subject") return "";
     if (value === "!padrenullquery") return "";
@@ -387,7 +396,7 @@
   };
 
   const getStudyLevel = (value) => {
-    if (!value) return "";
+    if (!value) return "Any";
 
     if (value === "Postgraduate Taught") return "Postgraduate (taught)";
     if (value === "Postgraduate Research") return "Postgraduate (research)";
@@ -528,10 +537,10 @@
       searchClearBtn.onclick = (e) => {
         const params = {
           page: 1,
-          nationality: "",
+          nationality: "Any",
           subject: "!padrenullquery",
-          level: "",
-          feestatus: "",
+          level: "Any",
+          feestatus: "Any",
         };
 
         QueryParams.set(params);
@@ -587,12 +596,12 @@
   */
   const getCountryListingFilters = (el, country, regionmacros) => {
     return {
-      subject: "",
+      subject: "Any",
       subjectType: "",
       nation: country,
       studyLevel: el.dataset.studylevel,
-      feeStatus: "",
-      faculty: "",
+      feeStatus: "Any",
+      faculty: "Any",
       sortBy: el.dataset.studylevel.includes("Postgraduate") ? "pgOrder" : "ugOrder",
       regions: stir.map(getRegionTags(country), regionmacros),
     };
@@ -641,10 +650,10 @@
     return {
       subject: el.dataset.subject,
       subjectType: "Subject",
-      nation: "",
+      nation: "Any",
       studyLevel: el.dataset.studylevel,
-      feeStatus: "",
-      faculty: "",
+      feeStatus: "Any",
+      faculty: "Any",
       sortBy: el.dataset.studylevel.includes("Postgraduate") ? "pgOrder" : "ugOrder",
       regions: [],
     };
