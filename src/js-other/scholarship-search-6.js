@@ -21,7 +21,9 @@
   const countryNodes = stir.nodes("[data-scholcountrylisting]");
   const subjectNodes = stir.nodes("[data-scholsubjectlisting]");
 
-  const debug = window.location.hostname == "localhost" || window.location.hostname == "mediadev.stir.ac.uk" ? true : false;
+  const debug = UoS_env.name == "dev" || UoS_env.name == "qa" ? true : false;
+
+  console.log(UoS_env);
 
   /* DOM elements for FORM version (found on the main scholarship page) */
 
