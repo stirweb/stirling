@@ -34,6 +34,7 @@
   var stirt4globals = stir.t4Globals || {};
   var regionmacros = stirt4globals.regionmacros || [];
   var feeStatusesAll = stirt4globals.feeStatusesAll.feestatuses || [];
+  console.log(feeStatusesAll);
   var CONSTANTS = {
     debug: debug,
     regions: {
@@ -102,6 +103,7 @@
     return scholStudyLevel.includes(filterStudyLevel);
   };
   var matchFeeStatus = function matchFeeStatus(scholFeeStatus, filterFeeStatus) {
+    console.log(scholFeeStatus, filterFeeStatus);
     return scholFeeStatus.includes(filterFeeStatus);
   };
   var matchSubject = function matchSubject(scholData, filterSubject) {
@@ -249,7 +251,7 @@
     Form the HTML for debugging info 
   */
   var renderDebug = function renderDebug(schol) {
-    return "<!--\n        <div class=\"cell u-mt-2 u-p-2 u-border-solid \" >\n          <h3>Debugger</h3>\n          <b>Weighting: </b> ".concat(schol.rank, "\n          <br><b>Nationalities (M):</b> ").concat(schol.scholarship.nationality, "\n          <br><b>Promoted (R):</b> ").concat(schol.scholarship.promotedSubject, "\n          <br><b>Other (Q):</b> ").concat(schol.scholarship.otherSubject, "\n          <br><b>Order (UG, PG):</b> ").concat(schol.scholarship.ugOrder, ", ").concat(schol.scholarship.pgOrder, "\n          <br><b>Faculty:</b> ").concat(schol.scholarship.faculty, "\n          <br><b>Faculty Order (UG, PG):</b> ").concat(schol.scholarship.ugOrderFaculty, " , ").concat(schol.scholarship.pgOrderFaculty, "</p>\n        </div> -->");
+    return "\n        <div class=\"cell u-mt-2 u-p-2 u-border-solid \" >\n          <h3>Debugger</h3>\n          <b>Weighting: </b> ".concat(schol.rank, "\n          <br><b>Nationalities (M):</b> ").concat(schol.scholarship.nationality, "\n          <br><b>Fee Status (M):</b> ").concat(schol.scholarship.feeStatus, "\n          <br><b>Promoted (R):</b> ").concat(schol.scholarship.promotedSubject, "\n          <br><b>Other (Q):</b> ").concat(schol.scholarship.otherSubject, "\n          <br><b>Order (UG, PG):</b> ").concat(schol.scholarship.ugOrder, ", ").concat(schol.scholarship.pgOrder, "\n          <br><b>Faculty:</b> ").concat(schol.scholarship.faculty, "\n          <br><b>Faculty Order (UG, PG):</b> ").concat(schol.scholarship.ugOrderFaculty, " , ").concat(schol.scholarship.pgOrderFaculty, "</p>\n        </div> ");
   };
 
   /*

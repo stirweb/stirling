@@ -39,6 +39,8 @@
   const regionmacros = stirt4globals.regionmacros || [];
   const feeStatusesAll = stirt4globals.feeStatusesAll.feestatuses || [];
 
+  console.log(feeStatusesAll);
+
   const CONSTANTS = {
     debug: debug,
     regions: {
@@ -103,6 +105,7 @@
   };
 
   const matchFeeStatus = (scholFeeStatus, filterFeeStatus) => {
+    console.log(scholFeeStatus, filterFeeStatus);
     return scholFeeStatus.includes(filterFeeStatus);
   };
 
@@ -286,17 +289,18 @@
     Form the HTML for debugging info 
   */
   const renderDebug = (schol) => {
-    return `<!--
+    return `
         <div class="cell u-mt-2 u-p-2 u-border-solid " >
           <h3>Debugger</h3>
           <b>Weighting: </b> ${schol.rank}
           <br><b>Nationalities (M):</b> ${schol.scholarship.nationality}
+          <br><b>Fee Status (M):</b> ${schol.scholarship.feeStatus}
           <br><b>Promoted (R):</b> ${schol.scholarship.promotedSubject}
           <br><b>Other (Q):</b> ${schol.scholarship.otherSubject}
           <br><b>Order (UG, PG):</b> ${schol.scholarship.ugOrder}, ${schol.scholarship.pgOrder}
           <br><b>Faculty:</b> ${schol.scholarship.faculty}
           <br><b>Faculty Order (UG, PG):</b> ${schol.scholarship.ugOrderFaculty} , ${schol.scholarship.pgOrderFaculty}</p>
-        </div> -->`;
+        </div> `;
   };
 
   /*
