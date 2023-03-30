@@ -244,7 +244,7 @@ stir.templates.search = (() => {
       <div class="c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""} data-access="${item.metaData.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 			    <p class="c-search-result__breadcrumb">${trail}</p>
-			    <p class="u-text-regular u-m-0"><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split(" | ")[0]}</a></p>
+			    <p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split(" | ")[0]}</a></strong></p>
 			    ${internalSummary(item.summary, item.metaData.group)}
 			  </div>
 			</div>`;
