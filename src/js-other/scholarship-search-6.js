@@ -105,8 +105,16 @@
   };
 
   const matchFeeStatus = (scholFeeStatus, filterFeeStatus) => {
-    if (filterFeeStatus == "Any" || filterFeeStatus == "International") return true;
-    if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+    //if (filterFeeStatus == "Any" || filterFeeStatus == "International") return true;
+    //if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+
+    if (filterFeeStatus == "Any") return true;
+
+    if (filterFeeStatus == "European") {
+      if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+    }
+
+    //console.log(scholFeeStatus, filterFeeStatus);
 
     return scholFeeStatus.includes(filterFeeStatus);
   };
@@ -118,7 +126,7 @@
   };
 
   const matchFaculty = (scholFaculty, filterFaculty) => {
-    return true;
+    return true; // NO LONGER IN USE
     //return scholFaculty.includes(filterFaculty) || scholFaculty.includes("All Faculties");
   };
 
@@ -209,18 +217,30 @@
   };
 
   /* 
-    Return Fee Status as a full string 
+    Return Fee Status as an array of full strings 
   */
-  const getFeeStatus = (feeStatus, consts) => {
-    const feeStatuses = feeStatus.split(", ").map((schol) => {
+  const getFeeStatusFullName = (feeStatusesAll, feeStatus) => {
+    return feeStatus.split(", ").map((schol) => {
       const matched = stir.filter((el) => {
         if (el.value === schol) return el;
-      }, consts.feeStatusesAll);
+      }, feeStatusesAll);
 
       if (matched[0]) return matched[0].name;
       return schol;
     });
-    return feeStatuses.join(", ").split(", ").length === consts.feeStatusAllSize ? "All fee statuses" : feeStatuses.join(", ");
+  };
+
+  /* 
+    Return Fee Status as a full string 
+  */
+  const getFeeStatusText = (feeStatus, consts, feeStatusFilter) => {
+    const feeStatuses = getFeeStatusFullName(consts.feeStatusesAll, feeStatus);
+    const feeStatusFilterFull = getFeeStatusFullName(consts.feeStatusesAll, feeStatusFilter);
+    // const appendix = !feeStatuses.join(", ").includes(feeStatusFilterFull) ? feeStatuses.join(", ") + ` (including ` + feeStatusFilterFull + ` )` : feeStatuses.join(", ");
+
+    const appendix = feeStatuses.join(", ");
+
+    return feeStatuses.join(", ").split(", ").length === consts.feeStatusAllSize ? "All fee statuses" : appendix;
   };
 
   /*
@@ -246,7 +266,7 @@
   const renderFormResults = stir.curry((consts, _meta, _data) => {
     return `
         <p class="u-margin-bottom text-center"> Displaying  ${_meta.start + 1} - ${_meta.last}  of  <strong>${_meta.totalPosts} results</strong> that match your criteria.</p>
-        ${stir.map((schol) => renderItem(consts, schol), _data).join("")} 
+        ${stir.map((schol) => renderItem(consts, _meta, schol), _data).join("")} 
         <div class="grid-x grid-padding-x " id="pagination-box">
           ${renderPagination(_meta)}
         </div> `;
@@ -255,7 +275,7 @@
   /* 
     Form the HTML for an individual result
   */
-  const renderItem = (consts, schol) => {
+  const renderItem = (consts, _meta, schol) => {
     return `
         <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative">
             <div class="u-absolute u-top--15">
@@ -270,7 +290,7 @@
 
                 ${renderDetail(schol.scholarship.value, "Value", false)}
                 ${renderDetail(schol.scholarship.awards, "Number of awards", true)}
-                ${renderDetail(getFeeStatus(schol.scholarship.feeStatus, consts), "Fee status", true)}
+                ${renderDetail(getFeeStatusText(schol.scholarship.feeStatus, consts, _meta.feeStatusFilter) + " ", "Fee status", true)}
               
                 ${debug && schol ? renderDebug(schol) : ""}
             </div>
@@ -435,7 +455,6 @@
     const setDOMResults = page === 1 ? setDOMContent(CONSTS.nodes.resultsArea) : appendDOMContent(CONSTS.nodes.resultsArea);
     const filterDataCurry = stir.filter(filterData(CONSTS, getFilterVars(CONSTS.nodes, CONSTS.regionmacros)));
     const mapRankCurry = stir.map(mapRank(getFilterVars(CONSTS.nodes, CONSTS.regionmacros)));
-
     const sortDataCurry = stir.sort((a, b) => (parseInt(a.rank) < parseInt(b.rank) ? -1 : parseInt(a.rank) > parseInt(b.rank) ? 1 : 0));
 
     const data = stir.compose(sortDataCurry, mapRankCurry, filterDataCurry)(initData);
@@ -445,6 +464,7 @@
       totalPosts: data.length,
       start: (page - 1) * initMeta.postsPerPage,
       end: (page - 1) * initMeta.postsPerPage + initMeta.postsPerPage,
+      feeStatusFilter: getFilterVars(CONSTS.nodes, CONSTS.regionmacros).feeStatus,
     };
 
     const last = newMeta.end > newMeta.totalPosts ? newMeta.totalPosts : newMeta.end;

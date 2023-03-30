@@ -103,8 +103,16 @@
     return scholStudyLevel.includes(filterStudyLevel);
   };
   var matchFeeStatus = function matchFeeStatus(scholFeeStatus, filterFeeStatus) {
-    if (filterFeeStatus == "Any" || filterFeeStatus == "International") return true;
-    if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+    //if (filterFeeStatus == "Any" || filterFeeStatus == "International") return true;
+    //if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+
+    if (filterFeeStatus == "Any") return true;
+    if (filterFeeStatus == "European") {
+      if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+    }
+
+    //console.log(scholFeeStatus, filterFeeStatus);
+
     return scholFeeStatus.includes(filterFeeStatus);
   };
   var matchSubject = function matchSubject(scholData, filterSubject) {
@@ -112,7 +120,7 @@
     return scholData.otherSubject.toLowerCase().includes(filterSubject.toLowerCase()) || scholData.promotedSubject.toLowerCase().includes(filterSubject.toLowerCase());
   };
   var matchFaculty = function matchFaculty(scholFaculty, filterFaculty) {
-    return true;
+    return true; // NO LONGER IN USE
     //return scholFaculty.includes(filterFaculty) || scholFaculty.includes("All Faculties");
   };
 
@@ -200,17 +208,28 @@
   };
 
   /* 
-    Return Fee Status as a full string 
+    Return Fee Status as an array of full strings 
   */
-  var getFeeStatus = function getFeeStatus(feeStatus, consts) {
-    var feeStatuses = feeStatus.split(", ").map(function (schol) {
+  var getFeeStatusFullName = function getFeeStatusFullName(feeStatusesAll, feeStatus) {
+    return feeStatus.split(", ").map(function (schol) {
       var matched = stir.filter(function (el) {
         if (el.value === schol) return el;
-      }, consts.feeStatusesAll);
+      }, feeStatusesAll);
       if (matched[0]) return matched[0].name;
       return schol;
     });
-    return feeStatuses.join(", ").split(", ").length === consts.feeStatusAllSize ? "All fee statuses" : feeStatuses.join(", ");
+  };
+
+  /* 
+    Return Fee Status as a full string 
+  */
+  var getFeeStatusText = function getFeeStatusText(feeStatus, consts, feeStatusFilter) {
+    var feeStatuses = getFeeStatusFullName(consts.feeStatusesAll, feeStatus);
+    var feeStatusFilterFull = getFeeStatusFullName(consts.feeStatusesAll, feeStatusFilter);
+    // const appendix = !feeStatuses.join(", ").includes(feeStatusFilterFull) ? feeStatuses.join(", ") + ` (including ` + feeStatusFilterFull + ` )` : feeStatuses.join(", ");
+
+    var appendix = feeStatuses.join(", ");
+    return feeStatuses.join(", ").split(", ").length === consts.feeStatusAllSize ? "All fee statuses" : appendix;
   };
 
   /*
@@ -234,15 +253,15 @@
   */
   var renderFormResults = stir.curry(function (consts, _meta, _data) {
     return "\n        <p class=\"u-margin-bottom text-center\"> Displaying  ".concat(_meta.start + 1, " - ").concat(_meta.last, "  of  <strong>").concat(_meta.totalPosts, " results</strong> that match your criteria.</p>\n        ").concat(stir.map(function (schol) {
-      return renderItem(consts, schol);
+      return renderItem(consts, _meta, schol);
     }, _data).join(""), " \n        <div class=\"grid-x grid-padding-x \" id=\"pagination-box\">\n          ").concat(renderPagination(_meta), "\n        </div> ");
   });
 
   /* 
     Form the HTML for an individual result
   */
-  var renderItem = function renderItem(consts, schol) {
-    return "\n        <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n            <div class=\"u-absolute u-top--15\">\n            ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell  u-mt-1\">\n                    <p class=\"u-heritage-green u-mb-2\">\n                      <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                    <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n                ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                ").concat(renderDetail(getFeeStatus(schol.scholarship.feeStatus, consts), "Fee status", true), "\n              \n                ").concat(debug && schol ? renderDebug(schol) : "", "\n            </div>\n        </div>");
+  var renderItem = function renderItem(consts, _meta, schol) {
+    return "\n        <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n            <div class=\"u-absolute u-top--15\">\n            ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell  u-mt-1\">\n                    <p class=\"u-heritage-green u-mb-2\">\n                      <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                    <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n                ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                ").concat(renderDetail(getFeeStatusText(schol.scholarship.feeStatus, consts, _meta.feeStatusFilter) + " ", "Fee status", true), "\n              \n                ").concat(debug && schol ? renderDebug(schol) : "", "\n            </div>\n        </div>");
   };
   var renderTag = function renderTag(item) {
     return "<span class=\"u-bg-mint c-tag u-mr-1 \">".concat(item, "</span>");
@@ -376,7 +395,8 @@
       currentPage: page,
       totalPosts: data.length,
       start: (page - 1) * initMeta.postsPerPage,
-      end: (page - 1) * initMeta.postsPerPage + initMeta.postsPerPage
+      end: (page - 1) * initMeta.postsPerPage + initMeta.postsPerPage,
+      feeStatusFilter: getFilterVars(CONSTS.nodes, CONSTS.regionmacros).feeStatus
     };
     var last = newMeta.end > newMeta.totalPosts ? newMeta.totalPosts : newMeta.end;
     var meta = stir.Object.extend({}, initMeta, newMeta, {
