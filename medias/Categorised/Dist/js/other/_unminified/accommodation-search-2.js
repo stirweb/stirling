@@ -124,9 +124,12 @@
 
   /*
      Render html for an individual result item
+     <li class="flex-container align-middle u-gap-16">
+                          <span class="uos-money h3 u-icon"></span>
+                          From ${renderPrice(getLowestFloat(item.prices))} per week</li>
    */
   var renderItem = function renderItem(item) {
-    return "\n        <div class=\"cell small-12 medium-6 large-4 u-mb-2\">\n          <div class=\"u-bg-grey flex-container flex-dir-column u-h-full\">\n              <img src=\"".concat(item.image, "\" loading=\"lazy\" width=\"578\" height=\"358\" alt=\"").concat(item.title, "\" />\n              <div class=\"u-p-3\">  \n                  <p class=\"u-heritage-green text-lg u-margin-bottom u-header-line u-relative\">\n                      <strong><a href=\"").concat(item.url, "\" class=\"u-border-none\">").concat(item.title, "</a></strong>\n                  </p>\n                  <ul class=\"no-bullet flex-container flex-dir-column u-gap-8\">\n                      <li class=\"flex-container align-middle u-gap-16\">\n                          <span class=\"uos-home h3 u-icon\"></span>").concat(item.location, " </li>\n                      <li class=\"flex-container align-middle u-gap-16\">\n                          <span class=\"uos-money h3 u-icon\"></span>\n                          From ").concat(renderPrice(getLowestFloat(item.prices)), " per week</li>\n                  </ul>\n              </div>\n            </div>\n        </div>");
+    return "\n        <div class=\"cell small-12 medium-6 large-4 u-mb-2\">\n          <div class=\"u-bg-grey flex-container flex-dir-column u-h-full\">\n              <img src=\"".concat(item.image, "\" loading=\"lazy\" width=\"578\" height=\"358\" alt=\"").concat(item.title, "\" />\n              <div class=\"u-p-3\">  \n                  <p class=\"u-heritage-green text-lg u-margin-bottom u-header-line u-relative\">\n                      <strong><a href=\"").concat(item.url, "\" class=\"u-border-none\">").concat(item.title, "</a></strong>\n                  </p>\n                  <ul class=\"no-bullet flex-container flex-dir-column u-gap-8\">\n                      <li class=\"flex-container align-middle u-gap-16\">\n                          <span class=\"uos-home h3 u-icon\"></span>").concat(item.location, " </li>\n\n                  </ul>\n              </div>\n            </div>\n        </div>");
   };
 
   /*

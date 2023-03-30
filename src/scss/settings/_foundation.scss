@@ -94,7 +94,7 @@ $uos-web-supplementary: (
   white: $white,
   dark-grey: #616361,
   // reinstated by Martyn
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -104,19 +104,24 @@ $brand-palette: (
   dark-mink: #373a36,
 
   // Energy Colours
-  energy: #76bd22,
+  energy: #77bf22,
+  //76bd22,
   // "Energy" is the correct name for this colour
-  energy-green: #76bd22,
+  energy-green: #77bf22,
+  //76bd22,
   // This is the synonym for "Energy" that's already in wide use.
   energy-light-green: #9bbeac,
   // This is actually "Energy green" but has been established in CSS as energy-light-green
   energy-teal: #008996,
   energy-yellow: #f4c400,
-  energy-orange: #ee7624,
+  energy-orange: #ff6d00,
+  //ee7624,
   energy-light-blue: #5fb4e5,
   energy-blue: #3d7dca,
-  energy-pink: #d41568,
+  energy-pink: #e80068,
+  //d41568
   energy-purple: #592c82,
+  energy-turq: #00a5ac,
 
   // Heritage Colours
   heritage-green: #006938,
@@ -137,9 +142,11 @@ $uos-button-palette: (
   success: map-get($foundation-palette, success),
   warning: map-get($foundation-palette, warning),
   alert: map-get($foundation-palette, alert),
-  energy-green: #67a51e,
+  energy-green: map-get($brand-palette, energy-green),
+  //67a51e,
   // amended for accessibility
-  energy: #67a51e,
+  energy: map-get($brand-palette, energy-green),
+  //67a51e,
   // amended for accessibility
   energy-pink: map-get($brand-palette, energy-pink),
   heritage-green: map-get($brand-palette, heritage-green),

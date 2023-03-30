@@ -20,7 +20,7 @@
 
   var countryNodes = stir.nodes("[data-scholcountrylisting]");
   var subjectNodes = stir.nodes("[data-scholsubjectlisting]");
-  var debug = window.location.hostname == "localhost" || window.location.hostname == "mediadev.stir.ac.uk" ? true : false;
+  var debug = UoS_env.name == "dev" || UoS_env.name == "qa" ? true : false;
 
   /* DOM elements for FORM version (found on the main scholarship page) */
 
@@ -99,17 +99,31 @@
   */
 
   var matchStudyLevel = function matchStudyLevel(scholStudyLevel, filterStudyLevel) {
+    if (filterStudyLevel === "Any") return true;
     return scholStudyLevel.includes(filterStudyLevel);
   };
   var matchFeeStatus = function matchFeeStatus(scholFeeStatus, filterFeeStatus) {
+    //if (filterFeeStatus == "Any" || filterFeeStatus == "International") return true;
+    //if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+
+    if (filterFeeStatus == "Any") return true;
+    if (filterFeeStatus == "European") {
+      if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+    }
+
+    //console.log(scholFeeStatus, filterFeeStatus);
+
     return scholFeeStatus.includes(filterFeeStatus);
   };
   var matchSubject = function matchSubject(scholData, filterSubject) {
+    if (filterSubject === "Any") return true;
     return scholData.otherSubject.toLowerCase().includes(filterSubject.toLowerCase()) || scholData.promotedSubject.toLowerCase().includes(filterSubject.toLowerCase());
   };
   var matchFaculty = function matchFaculty(scholFaculty, filterFaculty) {
-    return scholFaculty.includes(filterFaculty) || scholFaculty.includes("All Faculties");
+    return true; // NO LONGER IN USE
+    //return scholFaculty.includes(filterFaculty) || scholFaculty.includes("All Faculties");
   };
+
   var isInternational = function isInternational(scholNation, filterNation, ukroi) {
     if (ukroi.includes(filterNation)) return false;
     return scholNation.includes("All international");
@@ -124,6 +138,7 @@
     }, hasRegion);
   };
   var matchLocation = function matchLocation(scholNation, filterNation, filterRegions, ukroi) {
+    if (filterNation === "Any") return true;
     return scholNation.includes(filterNation) || scholNation.includes("All nationalities") || isInternational(scholNation, filterNation, ukroi) || isRegion(scholNation, filterRegions);
   };
 
@@ -132,6 +147,9 @@
   */
   var isMatch = function isMatch(filters, schol, CONSTS) {
     var matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, CONSTS.regions.ukroi)];
+
+    //console.log(matchFilter);
+
     return stir.all(function (b) {
       return b;
     }, matchFilter);
@@ -190,17 +208,28 @@
   };
 
   /* 
-    Return Fee Status as a full string 
+    Return Fee Status as an array of full strings 
   */
-  var getFeeStatus = function getFeeStatus(feeStatus, consts) {
-    var feeStatuses = feeStatus.split(", ").map(function (schol) {
+  var getFeeStatusFullName = function getFeeStatusFullName(feeStatusesAll, feeStatus) {
+    return feeStatus.split(", ").map(function (schol) {
       var matched = stir.filter(function (el) {
         if (el.value === schol) return el;
-      }, consts.feeStatusesAll);
+      }, feeStatusesAll);
       if (matched[0]) return matched[0].name;
       return schol;
     });
-    return feeStatuses.join(", ").split(", ").length === consts.feeStatusAllSize ? "All fee statuses" : feeStatuses.join(", ");
+  };
+
+  /* 
+    Return Fee Status as a full string 
+  */
+  var getFeeStatusText = function getFeeStatusText(feeStatus, consts, feeStatusFilter) {
+    var feeStatuses = getFeeStatusFullName(consts.feeStatusesAll, feeStatus);
+    var feeStatusFilterFull = getFeeStatusFullName(consts.feeStatusesAll, feeStatusFilter);
+    // const appendix = !feeStatuses.join(", ").includes(feeStatusFilterFull) ? feeStatuses.join(", ") + ` (including ` + feeStatusFilterFull + ` )` : feeStatuses.join(", ");
+
+    var appendix = feeStatuses.join(", ");
+    return feeStatuses.join(", ").split(", ").length === consts.feeStatusAllSize ? "All fee statuses" : appendix;
   };
 
   /*
@@ -224,15 +253,15 @@
   */
   var renderFormResults = stir.curry(function (consts, _meta, _data) {
     return "\n        <p class=\"u-margin-bottom text-center\"> Displaying  ".concat(_meta.start + 1, " - ").concat(_meta.last, "  of  <strong>").concat(_meta.totalPosts, " results</strong> that match your criteria.</p>\n        ").concat(stir.map(function (schol) {
-      return renderItem(consts, schol);
+      return renderItem(consts, _meta, schol);
     }, _data).join(""), " \n        <div class=\"grid-x grid-padding-x \" id=\"pagination-box\">\n          ").concat(renderPagination(_meta), "\n        </div> ");
   });
 
   /* 
     Form the HTML for an individual result
   */
-  var renderItem = function renderItem(consts, schol) {
-    return "\n        <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n            <div class=\"u-absolute u-top--15\">\n            ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell  u-mt-1\">\n                    <p class=\"u-heritage-green u-mb-2\">\n                      <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                    <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n                ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                ").concat(renderDetail(getFeeStatus(schol.scholarship.feeStatus, consts), "Fee status", true), "\n              \n                ").concat(debug && schol ? renderDebug(schol) : "", "\n            </div>\n        </div>");
+  var renderItem = function renderItem(consts, _meta, schol) {
+    return "\n        <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n            <div class=\"u-absolute u-top--15\">\n            ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell  u-mt-1\">\n                    <p class=\"u-heritage-green u-mb-2\">\n                      <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                    <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n                ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                ").concat(renderDetail(getFeeStatusText(schol.scholarship.feeStatus, consts, _meta.feeStatusFilter) + " ", "Fee status", true), "\n              \n                ").concat(debug && schol ? renderDebug(schol) : "", "\n            </div>\n        </div>");
   };
   var renderTag = function renderTag(item) {
     return "<span class=\"u-bg-mint c-tag u-mr-1 \">".concat(item, "</span>");
@@ -249,7 +278,7 @@
     Form the HTML for debugging info 
   */
   var renderDebug = function renderDebug(schol) {
-    return "<!--\n        <div class=\"cell u-mt-2 u-p-2 u-border-solid \" >\n          <h3>Debugger</h3>\n          <b>Weighting: </b> ".concat(schol.rank, "\n          <br><b>Nationalities (M):</b> ").concat(schol.scholarship.nationality, "\n          <br><b>Promoted (R):</b> ").concat(schol.scholarship.promotedSubject, "\n          <br><b>Other (Q):</b> ").concat(schol.scholarship.otherSubject, "\n          <br><b>Order (UG, PG):</b> ").concat(schol.scholarship.ugOrder, ", ").concat(schol.scholarship.pgOrder, "\n          <br><b>Faculty:</b> ").concat(schol.scholarship.faculty, "\n          <br><b>Faculty Order (UG, PG):</b> ").concat(schol.scholarship.ugOrderFaculty, " , ").concat(schol.scholarship.pgOrderFaculty, "</p>\n        </div> -->");
+    return "\n        <div class=\"cell u-mt-2 u-p-2 u-border-solid \" >\n          <h3>Debugger</h3>\n          <b>Weighting: </b> ".concat(schol.rank, "\n          <br><b>Nationalities (M):</b> ").concat(schol.scholarship.nationality, "\n          <br><b>Fee Status (M):</b> ").concat(schol.scholarship.feeStatus, "\n          <br><b>Promoted (R):</b> ").concat(schol.scholarship.promotedSubject, "\n          <br><b>Other (Q):</b> ").concat(schol.scholarship.otherSubject, "\n          <br><b>Order (UG, PG):</b> ").concat(schol.scholarship.ugOrder, ", ").concat(schol.scholarship.pgOrder, "\n          <br><b>Faculty:</b> ").concat(schol.scholarship.faculty, "\n          <br><b>Faculty Order (UG, PG):</b> ").concat(schol.scholarship.ugOrderFaculty, " , ").concat(schol.scholarship.pgOrderFaculty, "</p>\n        </div> ");
   };
 
   /*
@@ -274,10 +303,10 @@
     Populate selects with query params from url string e.g. ?level=ug  
   */
   var setFormValues = function setFormValues(nodes) {
-    nodes.inputNation.value = QueryParams.get("nationality") || "";
+    nodes.inputNation.value = QueryParams.get("nationality") || "Any";
     nodes.inputSubject.value = QueryParams.get("subject") || "!padrenullquery";
-    nodes.inputLevel.value = QueryParams.get("level") || "";
-    nodes.inputFeeStatus.value = QueryParams.get("feestatus") || "";
+    nodes.inputLevel.value = QueryParams.get("level") || "Any";
+    nodes.inputFeeStatus.value = QueryParams.get("feestatus") || "Any";
     return true;
   };
 
@@ -298,7 +327,7 @@
     return "!No findy me!";
   });
   var getInputValue = function getInputValue(input) {
-    if (!input.options[input.selectedIndex].value) return "";
+    if (!input.options[input.selectedIndex].value) return "Any";
     return input.options[input.selectedIndex].value;
   };
   var getSortBy = function getSortBy(type, value) {
@@ -311,19 +340,19 @@
     if (value.includes("Postgraduate")) return "pgOrder";
   };
   var getSubject = function getSubject(type, value) {
-    if (!value) return "";
+    if (!value) return "Any";
     if (type === "Faculty") return "";
     if (value === "!padrenullquery") return "";
     return value.toLowerCase();
   };
   var getFaculty = function getFaculty(type, value) {
-    if (!value) return "";
+    if (!value) return "Any";
     if (type === "Subject") return "";
     if (value === "!padrenullquery") return "";
     return value;
   };
   var getStudyLevel = function getStudyLevel(value) {
-    if (!value) return "";
+    if (!value) return "Any";
     if (value === "Postgraduate Taught") return "Postgraduate (taught)";
     if (value === "Postgraduate Research") return "Postgraduate (research)";
     return value;
@@ -366,7 +395,8 @@
       currentPage: page,
       totalPosts: data.length,
       start: (page - 1) * initMeta.postsPerPage,
-      end: (page - 1) * initMeta.postsPerPage + initMeta.postsPerPage
+      end: (page - 1) * initMeta.postsPerPage + initMeta.postsPerPage,
+      feeStatusFilter: getFilterVars(CONSTS.nodes, CONSTS.regionmacros).feeStatus
     };
     var last = newMeta.end > newMeta.totalPosts ? newMeta.totalPosts : newMeta.end;
     var meta = stir.Object.extend({}, initMeta, newMeta, {
@@ -453,10 +483,10 @@
       searchClearBtn.onclick = function (e) {
         var params = {
           page: 1,
-          nationality: "",
+          nationality: "Any",
           subject: "!padrenullquery",
-          level: "",
-          feestatus: ""
+          level: "Any",
+          feestatus: "Any"
         };
         QueryParams.set(params);
         main(true, 1, CONSTANTS, initialMeta, initialData);
@@ -512,12 +542,12 @@
   */
   var getCountryListingFilters = function getCountryListingFilters(el, country, regionmacros) {
     return {
-      subject: "",
+      subject: "Any",
       subjectType: "",
       nation: country,
       studyLevel: el.dataset.studylevel,
-      feeStatus: "",
-      faculty: "",
+      feeStatus: "Any",
+      faculty: "Any",
       sortBy: el.dataset.studylevel.includes("Postgraduate") ? "pgOrder" : "ugOrder",
       regions: stir.map(getRegionTags(country), regionmacros)
     };
@@ -566,10 +596,10 @@
     return {
       subject: el.dataset.subject,
       subjectType: "Subject",
-      nation: "",
+      nation: "Any",
       studyLevel: el.dataset.studylevel,
-      feeStatus: "",
-      faculty: "",
+      feeStatus: "Any",
+      faculty: "Any",
       sortBy: el.dataset.studylevel.includes("Postgraduate") ? "pgOrder" : "ugOrder",
       regions: []
     };

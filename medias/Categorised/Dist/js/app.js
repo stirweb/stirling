@@ -1,3 +1,8 @@
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -6126,6 +6131,267 @@ stir.Concierge.prototype.obj2param = function (obj) {
     }
 })();
 */
+(function () {
+  if (!stir.node("#coursefavsarea") && !stir.node("#coursesharedarea")) return;
+
+  // NODES
+  var NODES = {
+    favsArea: stir.node("#coursefavsarea"),
+    sharedArea: stir.node("#coursesharedarea"),
+    sharedfavArea: stir.node("#coursesharedfavsarea")
+  };
+
+  // VARS
+  var cookieId = "favs=";
+  var host = "https://search.stir.ac.uk";
+  var sf = ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"];
+  var url = host + "/s/search.json?collection=stir-courses&query=!nullpadre&fmo=true&num_ranks=2000&SF=[" + sf.join(",") + "]&";
+
+  /*
+         RENDERERS
+   */
+
+  var renderMiniFav = function renderMiniFav(item) {
+    return !item.metaData ? "" : "<p class=\"text-sm\">\n            <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n         </p>");
+  };
+  var renderFav = stir.curry(function (item) {
+    console.log(getDaysAgo(new Date(item.dateSaved)));
+    return !item.metaData ? "" : "\n        <div class=\"c-search-result\" data-rank=\"\" data-sid=\"".concat(item.metaData.sid, "\" data-result-type=\"course\">\n            <div class=\" c-search-result__tags\">\n                <span class=\"c-search-tag\">").concat(item.metaData.level, "</span>\n            </div>\n\n            <div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n                <p class=\"u-text-regular u-m-0\">\n                    <strong><a href=\"").concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n                </p>\n                <p class=\"u-m-0\">").concat(item.metaData.c, "</p>\n                \n                <div class=\"c-search-result__meta grid-x u-mt-1\">\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Start dates</strong><p>").concat(item.metaData.start, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Study modes</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.modes, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Delivery</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.delivery, "</p></div>\n                </div>\n            </div>\n            <div class=\"flex-container align-middle u-gap u-mt-1\">\n                <button class=\"u-energy-teal u-border-solid u-p-1 u-cursor-pointer flex-container u-gap-8 align-middle\" data-action=\"removefav\" data-id=\"").concat(item.metaData.sid, "\">\n                <svg version=\"1.1\" id=\"Layer_1\"\n                                xmlns=\"http://www.w3.org/2000/svg\" stroke=\"currentColorz\" stroke-width=\"1.5\"\n                                fill=\"#008996\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n                                viewBox=\"0 0 50 50\" style=\"enable-background:new 0 0 50 50; width:24px; height: 24px;\"\n                                xml:space=\"preserve\">\n                                <path d=\"M9.7,20.4c0.2,0.4,0.3,0.8,0.1,1.2l-0.6,1.9c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9\n                        c0.6,0.5,2.4,2,3,2.4c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.4-4.3c0.1-0.3,0.3-0.6,0.6-0.8\n                        c2.3-1.6,3.9-4.1,4-6.9c0.3-2.8-0.9-5.6-3-7.5c-1.1-0.9-2.1-1.5-3.5-2l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8\n                        c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5L28.1,11l-7.1-2.3c-2.1-0.6-4.3-0.4-6.2,0.4\n                        c-2,0.9-3.5,2.4-4.4,4.3C9.2,15.8,9,18.2,9.7,20.4z M12.3,22.7l24.2,7.8l-1.2,3.8c-1,3-3,5.4-5.8,6.9c-2.9,1.7-6.4,2.5-10.3,2.6\n                        l-0.4-0.1l-0.1,0c-2.7-2-4.8-4.4-6.3-7c-1.5-2.8-2.1-5.8-1.5-8.7l0,0c0.1-0.6,0.4-1.6,0.7-2.5c0.3-0.9,0.5-2,0.6-2.2L12.3,22.7z\n                         M13,14.3c1.6-2.6,4.5-3.8,7.5-2.8l16.7,5.4c2.2,1,3.5,2.7,3.9,5.1c0.3,2.4-0.5,4.4-2.3,5.9c-0.2,0.2-0.6,0.4-1.2,0.2l-24.5-7.9\n                        c-0.3-0.1-0.5-0.3-0.7-0.7l0,0C11.8,17.6,12,15.8,13,14.3z\" /></svg>\n                <span class=\"u-heritage-teal\">Remove from my favourites</span></button>\n                <span>Favourited ").concat(getDaysAgo(new Date(item.dateSaved)), "</span>\n            </div>\n        </div>");
+  });
+  var renderNoFavs = function renderNoFavs() {
+    return "<p>Nothing saved here yet. <a href=\"https://www.stir.ac.uk/courses/\">View courses</a> and add them to your favourites. </p>";
+  };
+  var renderNoShared = function renderNoShared() {
+    return "<div class=\"cell\"><p>No courses shared</p></div>";
+  };
+  var renderLinkToFavs = function renderLinkToFavs() {
+    return "<hr><p class=\"text-sm u-arrow\"><a href=\"https://www.stir.ac.uk/courses/favs/\">View and manage my favourites</a></p>";
+  };
+  var renderFavActionBtns = function renderFavActionBtns() {
+    return "\n        <div class=\" u-mb-3 \">\n          <button class=\"u-border-solid u-p-1  u-cursor-pointer u-mt-1 \" data-action=\"clearallfavs\">Clear favourites</button>\n          <button class=\"u-border-solid u-p-1 u-cursor-pointer u-mt-1 \" data-action=\"copysharelink\">Generate share link</button>\n        </div>";
+  };
+  var renderShared = function renderShared(item) {
+    return !item.metaData ? "" : "<div class=\"cell small-6 \">\n            <div class=\" u-green-line-top u-margin-bottom\">\n                <p class=\"u-text-regular u-py-1\">\n                  <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "</a></strong>\n                </p>\n                <div class=\"u-mb-1\">").concat(item.metaData.c, "</div>\n                <").concat(isInCookie(item.metaData.sid) ? "div" : "button", "  class=\"u-w-full ").concat(isInCookie(item.metaData.sid) ? "u-energy-teal--light" : "u-energy-teal u-cursor-pointer", "  u-border-solid u-p-1  u-mt-1 flex-container u-gap-8 align-middle align-center\" data-action=\"").concat(isInCookie(item.metaData.sid) ? "" : "addtofavs", "\" data-id=\"").concat(item.metaData.sid, "\">\n                <svg version=\"1.1\" id=\"Layer_1\"\n                                xmlns=\"http://www.w3.org/2000/svg\" stroke=\"currentColorz\" stroke-width=\"1.5\"\n                                fill=\" ").concat(isInCookie(item.metaData.sid) ? "#b3dce0" : "#008996", "\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n                                viewBox=\"0 0 50 50\" style=\"enable-background:new 0 0 50 50; width:24px; height: 24px;\"\n                                xml:space=\"preserve\">\n                                <path d=\"M9.7,20.4c0.2,0.4,0.3,0.8,0.1,1.2l-0.6,1.9c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9\n                        c0.6,0.5,2.4,2,3,2.4c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.4-4.3c0.1-0.3,0.3-0.6,0.6-0.8\n                        c2.3-1.6,3.9-4.1,4-6.9c0.3-2.8-0.9-5.6-3-7.5c-1.1-0.9-2.1-1.5-3.5-2l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8\n                        c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5L28.1,11l-7.1-2.3c-2.1-0.6-4.3-0.4-6.2,0.4\n                        c-2,0.9-3.5,2.4-4.4,4.3C9.2,15.8,9,18.2,9.7,20.4z M12.3,22.7l24.2,7.8l-1.2,3.8c-1,3-3,5.4-5.8,6.9c-2.9,1.7-6.4,2.5-10.3,2.6\n                        l-0.4-0.1l-0.1,0c-2.7-2-4.8-4.4-6.3-7c-1.5-2.8-2.1-5.8-1.5-8.7l0,0c0.1-0.6,0.4-1.6,0.7-2.5c0.3-0.9,0.5-2,0.6-2.2L12.3,22.7z\n                         M13,14.3c1.6-2.6,4.5-3.8,7.5-2.8l16.7,5.4c2.2,1,3.5,2.7,3.9,5.1c0.3,2.4-0.5,4.4-2.3,5.9c-0.2,0.2-0.6,0.4-1.2,0.2l-24.5-7.9\n                        c-0.3-0.1-0.5-0.3-0.7-0.7l0,0C11.8,17.6,12,15.8,13,14.3z\" /></svg>\n                <span class=\"u-heritage-teal\">").concat(isInCookie(item.metaData.sid) ? "Already in my favourites" : "Add to my favourites", "</span>\n                </").concat(isInCookie(item.metaData.sid) ? "div" : "button", ">\n            </div>\n        </div>");
+  };
+  var renderSharedIntro = function renderSharedIntro(items) {
+    return !items.length ? "" : "";
+  };
+  var renderHeader = function renderHeader(size, content) {
+    return "<".concat(size, " class=\"header-stripped h3 u-mb-2\">").concat(content, "</").concat(size, ">");
+  };
+
+  /*
+         HELPERS
+     */
+
+  /* 
+    getDaysAgo : Returns a String  
+  */
+  var getDaysAgo = function getDaysAgo(createdOn) {
+    var today = new Date();
+    //const createdOn = new Date(date);
+    var msInDay = 24 * 60 * 60 * 1000;
+    createdOn.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    var diff = Math.floor((+today - +createdOn) / msInDay);
+    var dayText = diff > 1 ? "days" : "day";
+    return diff === 0 ? "today" : "".concat(diff, " ").concat(dayText, " ago");
+  };
+
+  /* 
+    setDOMContent : Returns a Boolean  
+  */
+  var setDOMContent = stir.curry(function (node, html) {
+    stir.setHTML(node, html);
+    return true;
+  });
+
+  /* 
+    getExpiryDate: Returns a String (cookie expiry date)  
+  */
+  var getExpiryDate = function getExpiryDate(days) {
+    var d = new Date();
+    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+    return ";expires=" + d.toUTCString();
+  };
+
+  /* 
+    getfavsCookie: Returns an array of course objects
+  */
+  var getfavsCookie = function getfavsCookie(cookieId) {
+    var cookies = document.cookie.split(";");
+    var favCookie = cookies.filter(function (item) {
+      return item.includes(cookieId);
+    });
+    var favCookie2 = favCookie.length && favCookie[0].replace(cookieId, "");
+    return JSON.parse(favCookie2) || [];
+  };
+
+  /* 
+      isInCookie: Returns a boolean
+  */
+  var isInCookie = function isInCookie(courseId) {
+    var favsCookie = getfavsCookie(cookieId);
+    var inCookie = favsCookie.map(function (item) {
+      return item.id === courseId;
+    });
+    if (!stir.any(function (item) {
+      return item;
+    }, inCookie)) return false;
+    return true;
+  };
+
+  /*
+    getFavsList: Returns an array of course objects 
+  */
+  var getFavsList = function getFavsList(data, cookieId) {
+    var favsCookie = getfavsCookie(cookieId);
+    if (!favsCookie.length || favsCookie.length < 1) {
+      return null;
+    }
+    var favsCookieSorted = favsCookie.sort(function (a, b) {
+      return b.date - a.date;
+    });
+
+    // Maintain ordering by merging FB result into cookie object
+    return favsCookieSorted.map(function (item) {
+      return _objectSpread(_objectSpread({}, data.filter(function (element) {
+        if (item.id === element.metaData.sid) return element;
+      })[0]), {
+        id: item.id,
+        dateSaved: item.date
+      });
+    });
+  };
+
+  /* 
+    Returns an array of course objects 
+  */
+  var getShareList = function getShareList(data) {
+    var sharedList = QueryParams.get("shared") || "";
+    if (!sharedList.length) return null;
+
+    // Maintain ordering by merging FB result into cookie object
+    return sharedList.split(",").map(function (item) {
+      return _objectSpread(_objectSpread({}, data.filter(function (element) {
+        if (item === element.metaData.sid) return element;
+      })[0]), {
+        id: item
+      });
+    });
+  };
+  var setQueryParam = function setQueryParam(data) {
+    return QueryParams.set("shared", encodeURI(data.map(function (item) {
+      return item.id;
+    }).join(",")));
+  };
+
+  /*
+         CONTROLLERS
+     */
+
+  /* 
+    doFavs : Returns null 
+  */
+  var doFavs = function doFavs(favsArea, data, cookieId) {
+    var list = getFavsList(data, cookieId);
+    if (!list) {
+      setDOMContent(favsArea, renderNoFavs());
+      return;
+    }
+    setQueryParam(list);
+    setDOMContent(favsArea, renderFavActionBtns() + list.map(renderFav).join(""));
+    return;
+  };
+
+  /* 
+    doShared : Returns null 
+  */
+  var doShared = function doShared(nodes, data, cookieId) {
+    var shareList = getShareList(data);
+    if (!shareList) {
+      setDOMContent(nodes.sharedArea, renderNoShared());
+    } else {
+      setDOMContent(nodes.sharedArea, renderSharedIntro(shareList.map(renderShared).join("")) + shareList.map(renderShared).join(""));
+    }
+    var list = getFavsList(data, cookieId);
+    if (!list) {
+      setDOMContent(nodes.sharedfavArea, renderNoFavs());
+      return;
+    }
+    setDOMContent(nodes.sharedfavArea, renderHeader("h2", "My favourites") + list.map(renderMiniFav).join("") + renderLinkToFavs());
+    return;
+  };
+
+  /* 
+    fetchData : Returns null 
+  */
+  var fetchData = function fetchData(nodes, url, cookieId) {
+    stir.getJSON(url, function (initialData) {
+      var data = initialData.response.resultPacket.results || []; // Full list of courses
+
+      // On Load
+      nodes.sharedArea && doShared(nodes, data, cookieId);
+      nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+
+      /* EVENT LISTENERS */
+      stir.node("main").addEventListener("click", function (event) {
+        var target = event.target.nodeName === "BUTTON" ? event.target : event.target.parentElement;
+
+        /* ACTION: ADD a FAV */
+        if (target.dataset && target.dataset.action === "addtofavs") {
+          console.log(target);
+          if (!isInCookie(event.target.dataset.id)) {
+            var favsCookie2 = [].concat(_toConsumableArray(getfavsCookie(cookieId)), [{
+              id: target.dataset.id,
+              date: Date.now()
+            }]);
+            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
+          }
+          nodes.sharedArea && doShared(nodes, data, cookieId);
+          nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+        }
+
+        /* ACTION: REMOVE a FAV */
+        if (target.dataset && target.dataset.action === "removefav") {
+          var id = target.dataset.id;
+          if (id && id.length) {
+            var favsCookie = getfavsCookie(cookieId);
+            var _favsCookie = favsCookie.filter(function (item) {
+              return item.id !== id;
+            });
+            document.cookie = cookieId + JSON.stringify(_favsCookie) + getExpiryDate(30) + ";path=/";
+            nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+          }
+        }
+
+        /* ACTION: REMOVE ALL FAVS */
+        if (target.dataset && target.dataset.action === "clearallfavs") {
+          document.cookie = cookieId + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
+          nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+        }
+
+        // if (event.target.dataset && event.target.dataset.action === "clearshortlist") {
+        //   QueryParams.remove("shared");
+        //   nodes.sharedArea && doShared(nodes, data, cookieId);
+        // }
+
+        /* ACTION: COPY SHARE LINK */
+        if (target.dataset && target.dataset.action === "copysharelink") {
+          var _favsCookie2 = getfavsCookie(cookieId);
+          var link = "https://www.stir.ac.uk/courses/favs/?shared=" + _favsCookie2.map(function (item) {
+            return item.id;
+          }).join(",");
+          navigator.clipboard.writeText(link);
+          alert("The following share link has been copied to your clipboard: \n\n" + link);
+        }
+      });
+    });
+  };
+
+  /* ON LOAD */
+  fetchData(NODES, url, cookieId);
+})();
 
 // this will swap the native action for js-action. Useful for search
 // forms where we want non-js situations to be able to submit
