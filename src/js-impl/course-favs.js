@@ -30,7 +30,6 @@
   };
 
   const renderFav = stir.curry((item) => {
-    console.log(getDaysAgo(new Date(item.dateSaved)));
     return !item.metaData
       ? ``
       : `
@@ -53,19 +52,7 @@
             </div>
             <div class="flex-container align-middle u-gap u-mt-1">
                 <button class="u-energy-teal u-border-solid u-p-1 u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${item.metaData.sid}">
-                <svg version="1.1" id="Layer_1"
-                                xmlns="http://www.w3.org/2000/svg" stroke="currentColorz" stroke-width="1.5"
-                                fill="#008996" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                viewBox="0 0 50 50" style="enable-background:new 0 0 50 50; width:24px; height: 24px;"
-                                xml:space="preserve">
-                                <path d="M9.7,20.4c0.2,0.4,0.3,0.8,0.1,1.2l-0.6,1.9c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9
-                        c0.6,0.5,2.4,2,3,2.4c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.4-4.3c0.1-0.3,0.3-0.6,0.6-0.8
-                        c2.3-1.6,3.9-4.1,4-6.9c0.3-2.8-0.9-5.6-3-7.5c-1.1-0.9-2.1-1.5-3.5-2l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8
-                        c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5L28.1,11l-7.1-2.3c-2.1-0.6-4.3-0.4-6.2,0.4
-                        c-2,0.9-3.5,2.4-4.4,4.3C9.2,15.8,9,18.2,9.7,20.4z M12.3,22.7l24.2,7.8l-1.2,3.8c-1,3-3,5.4-5.8,6.9c-2.9,1.7-6.4,2.5-10.3,2.6
-                        l-0.4-0.1l-0.1,0c-2.7-2-4.8-4.4-6.3-7c-1.5-2.8-2.1-5.8-1.5-8.7l0,0c0.1-0.6,0.4-1.6,0.7-2.5c0.3-0.9,0.5-2,0.6-2.2L12.3,22.7z
-                         M13,14.3c1.6-2.6,4.5-3.8,7.5-2.8l16.7,5.4c2.2,1,3.5,2.7,3.9,5.1c0.3,2.4-0.5,4.4-2.3,5.9c-0.2,0.2-0.6,0.4-1.2,0.2l-24.5-7.9
-                        c-0.3-0.1-0.5-0.3-0.7-0.7l0,0C11.8,17.6,12,15.8,13,14.3z" /></svg>
+                ${renderActiveIcon()}
                 <span class="u-heritage-teal">Remove from my favourites</span></button>
                 <span>Favourited ${getDaysAgo(new Date(item.dateSaved))}</span>
             </div>
@@ -84,6 +71,41 @@
         </div>`;
   };
 
+  const renderInactiveIcon = () => {
+    return `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;width:24px; height: 24px;" xml:space="preserve">
+              <g id="Layer_1_00000157273399641228684280000005207056774539682203_">
+                <g id="icons">
+                </g>
+              </g>
+              <path d="M9.7,20.4c0.2,0.4,0.3,0.8,0.1,1.2l-0.6,1.9c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9
+                c0.6,0.5,2.4,2,3,2.4c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.4-4.3c0.1-0.3,0.3-0.6,0.6-0.8
+                c2.3-1.6,3.9-4.1,4-6.9c0.3-2.8-0.9-5.6-3-7.5c-1.1-0.9-2.1-1.5-3.5-2l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8
+                c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5L28.1,11l-7.1-2.3c-2.1-0.6-4.3-0.4-6.2,0.4
+                c-2,0.9-3.5,2.4-4.4,4.3C9.2,15.8,9,18.2,9.7,20.4z M12.3,22.7l24.2,7.8l-1.2,3.8c-1,3-3,5.4-5.8,6.9c-2.9,1.7-6.4,2.5-10.3,2.6
+                l-0.4-0.1l-0.1,0c-2.7-2-4.8-4.4-6.3-7c-1.5-2.8-2.1-5.8-1.5-8.7l0,0c0.1-0.6,0.4-1.6,0.7-2.5c0.3-0.9,0.5-2,0.6-2.2L12.3,22.7z
+                  M13,14.3c1.6-2.6,4.5-3.8,7.5-2.8l16.7,5.4c2.2,1,3.5,2.7,3.9,5.1c0.3,2.4-0.5,4.4-2.3,5.9c-0.2,0.2-0.6,0.4-1.2,0.2l-24.5-7.9
+                c-0.3-0.1-0.5-0.3-0.7-0.7l0,0C11.8,17.6,12,15.8,13,14.3z"/>
+            </svg>`;
+  };
+
+  const renderActiveIcon = () => {
+    return `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
+              style="enable-background:new 0 0 50 50;width:24px; height: 24px;" xml:space="preserve">
+              <g id="Layer_1_00000157273399641228684280000005207056774539682203_">
+                  <g id="icons">
+                  </g>
+              </g>
+              <path d="M9.2,23.5c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9c0.6,0.5,2.4,2,3,2.4
+          c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.3-3.9L9.7,21.8L9.2,23.5z M41,15.8c-1.1-0.9-2.1-1.5-3.5-2
+          l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5
+          L28.1,11L21,8.7c-2.1-0.6-4.3-0.4-6.2,0.4c-2,0.9-3.5,2.4-4.4,4.3c-0.9,1.9-1.3,3.7-1,5.5l31.8,10.3c1.7-1.6,2.8-3.7,2.9-6
+          C44.3,20.5,43.1,17.7,41,15.8z" />
+        </svg> `;
+  };
+
   const renderShared = (item) => {
     return !item.metaData
       ? ``
@@ -94,19 +116,7 @@
                 </p>
                 <div class="u-mb-1">${item.metaData.c}</div>
                 <${isInCookie(item.metaData.sid) ? `div` : `button`}  class="u-w-full ${isInCookie(item.metaData.sid) ? `u-energy-teal--light` : `u-energy-teal u-cursor-pointer`}  u-border-solid u-p-1  u-mt-1 flex-container u-gap-8 align-middle align-center" data-action="${isInCookie(item.metaData.sid) ? `` : `addtofavs`}" data-id="${item.metaData.sid}">
-                <svg version="1.1" id="Layer_1"
-                                xmlns="http://www.w3.org/2000/svg" stroke="currentColorz" stroke-width="1.5"
-                                fill=" ${isInCookie(item.metaData.sid) ? `#b3dce0` : `#008996`}" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                viewBox="0 0 50 50" style="enable-background:new 0 0 50 50; width:24px; height: 24px;"
-                                xml:space="preserve">
-                                <path d="M9.7,20.4c0.2,0.4,0.3,0.8,0.1,1.2l-0.6,1.9c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9
-                        c0.6,0.5,2.4,2,3,2.4c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.4-4.3c0.1-0.3,0.3-0.6,0.6-0.8
-                        c2.3-1.6,3.9-4.1,4-6.9c0.3-2.8-0.9-5.6-3-7.5c-1.1-0.9-2.1-1.5-3.5-2l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8
-                        c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5L28.1,11l-7.1-2.3c-2.1-0.6-4.3-0.4-6.2,0.4
-                        c-2,0.9-3.5,2.4-4.4,4.3C9.2,15.8,9,18.2,9.7,20.4z M12.3,22.7l24.2,7.8l-1.2,3.8c-1,3-3,5.4-5.8,6.9c-2.9,1.7-6.4,2.5-10.3,2.6
-                        l-0.4-0.1l-0.1,0c-2.7-2-4.8-4.4-6.3-7c-1.5-2.8-2.1-5.8-1.5-8.7l0,0c0.1-0.6,0.4-1.6,0.7-2.5c0.3-0.9,0.5-2,0.6-2.2L12.3,22.7z
-                         M13,14.3c1.6-2.6,4.5-3.8,7.5-2.8l16.7,5.4c2.2,1,3.5,2.7,3.9,5.1c0.3,2.4-0.5,4.4-2.3,5.9c-0.2,0.2-0.6,0.4-1.2,0.2l-24.5-7.9
-                        c-0.3-0.1-0.5-0.3-0.7-0.7l0,0C11.8,17.6,12,15.8,13,14.3z" /></svg>
+                  ${isInCookie(item.metaData.sid) ? renderActiveIcon() : renderInactiveIcon()}
                 <span class="u-heritage-teal">${isInCookie(item.metaData.sid) ? `Already in my favourites` : `Add to my favourites`}</span>
                 </${isInCookie(item.metaData.sid) ? `div` : `button`}>
             </div>
@@ -130,7 +140,6 @@
   */
   const getDaysAgo = (createdOn) => {
     const today = new Date();
-    //const createdOn = new Date(date);
     const msInDay = 24 * 60 * 60 * 1000;
 
     createdOn.setHours(0, 0, 0, 0);
