@@ -1,8 +1,9 @@
 (function () {
-  if (!stir.node("#coursefavsarea") && !stir.node("#coursesharedarea")) return;
+  if (!stir.node("#coursefavsarea") && !stir.node("#coursesharedarea") && !stir.node("#coursefavsbtn")) return;
 
   // NODES
   const NODES = {
+    coursefavsbtnArea: stir.node("#coursefavsbtn"),
     favsArea: stir.node("#coursefavsarea"),
     sharedArea: stir.node("#coursesharedarea"),
     sharedfavArea: stir.node("#coursesharedfavsarea"),
@@ -50,22 +51,38 @@
                     <div class="cell medium-4"><strong class="u-heritage-green">Delivery</strong><p class="u-text-sentence-case">${item.metaData.delivery}</p></div>
                 </div>
             </div>
+
             <div class="flex-container align-middle u-gap-8 u-mt-1">
-                <button class="u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${item.metaData.sid}">
-                ${renderActiveIcon()}
-                </button>
-                <span>Favourited ${getDaysAgo(new Date(item.dateSaved))}</span>
-                <button class="u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${item.metaData.sid}">
-               
-                <span class="u-heritage-teal u-underline">Remove from my favourites</span></button>
-                
+               ${renderRemoveBtn(item.metaData.sid, item.dateSaved)}
             </div>
         </div>`;
   });
 
-  const renderNoFavs = () => `<p>Nothing saved here yet. <a href="https://www.stir.ac.uk/courses/">View courses</a> and add them to your favourites. </p>`;
+  const renderRemoveBtn = (sid, dateSaved) => {
+    return ` 
+        <button class="u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${sid}">
+            ${renderActiveIcon()}
+        </button>
+        <span>Favourited ${getDaysAgo(new Date(dateSaved))}</span>
+        <button class="u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${sid}">
+            <span class="u-heritage-teal u-underline u-line-height-default">Remove from my favourites</span>
+        </button>`;
+  };
+
+  const renderAddBtn = (sid) => {
+    return ` 
+          <button
+              class="u-energy-teal u-cursor-pointer u-line-height-default flex-container u-gap-8 align-middle"
+              data-action="addtofavs" data-id="${sid}">
+              ${renderInactiveIcon()}
+              <span class="u-heritage-teal u-underline u-inline-block u-pb-1">Add
+                  to your favourites</span>
+          </button>`;
+  };
+
+  const renderNoFavs = () => `<p>Nothing saved here yet. <a href="/courses/">View courses</a> and add them to your favourites. </p>`;
   const renderNoShared = () => `<div class="cell"><p>No courses shared</p></div>`;
-  const renderLinkToFavs = () => `<hr><p class="text-sm u-arrow"><a href="https://www.stir.ac.uk/courses/favs/">View and manage my favourites</a></p>`;
+  const renderLinkToFavs = () => `<hr><p class="text-sm u-arrow"><a href="/courses/favourites/">Manage my favourites</a></p>`;
 
   const renderFavActionBtns = () => {
     return `
@@ -119,9 +136,11 @@
                   <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title}</a></strong>
                 </p>
                 <div class="u-mb-1">${item.metaData.c}</div>
-                <${isInCookie(item.metaData.sid) ? `div` : `button`}  class="u-w-full ${isInCookie(item.metaData.sid) ? `u-energy-teal--light` : `u-energy-teal u-cursor-pointer`}  u-border-solid u-p-1  u-mt-1 flex-container u-gap-8 align-middle align-center" data-action="${isInCookie(item.metaData.sid) ? `` : `addtofavs`}" data-id="${item.metaData.sid}">
+                <${isInCookie(item.metaData.sid) ? `div` : `button`}  class="u-w-full u-energy-teal ${isInCookie(item.metaData.sid) ? `` : `u-energy-teal u-cursor-pointer`}   u-mt-1 flex-container u-gap-8 align-middle " data-action="${isInCookie(item.metaData.sid) ? `` : `addtofavs`}" data-id="${item.metaData.sid}">
                   ${isInCookie(item.metaData.sid) ? renderActiveIcon() : renderInactiveIcon()}
-                <span class="u-heritage-teal">${isInCookie(item.metaData.sid) ? `Already in my favourites` : `Add to my favourites`}</span>
+                <span class="u-heritage-teal ${isInCookie(item.metaData.sid) ? "" : "u-underline u-line-height-default"}">
+                  ${isInCookie(item.metaData.sid) ? `Already in my favourites` : `Add to my favourites`}
+                </span>
                 </${isInCookie(item.metaData.sid) ? `div` : `button`}>
             </div>
         </div>`;
@@ -285,6 +304,20 @@
     return;
   };
 
+  const doCourseBtn = (courseBtnArea, data, cookieId) => {
+    if (!courseBtnArea.dataset.id) return;
+
+    const fav = getfavsCookie(cookieId).filter((item) => item.id === courseBtnArea.dataset.id);
+
+    if (fav.length) {
+      setDOMContent(courseBtnArea, renderRemoveBtn(fav[0].id, fav[0].date));
+      return;
+    }
+
+    setDOMContent(courseBtnArea, renderAddBtn(courseBtnArea.dataset.id));
+    return;
+  };
+
   /* 
     fetchData : Returns null 
   */
@@ -295,6 +328,7 @@
       // On Load
       nodes.sharedArea && doShared(nodes, data, cookieId);
       nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+      nodes.coursefavsbtnArea && doCourseBtn(nodes.coursefavsbtnArea, data, cookieId);
 
       /* EVENT LISTENERS */
       stir.node("main").addEventListener("click", (event) => {
@@ -309,6 +343,7 @@
 
           nodes.sharedArea && doShared(nodes, data, cookieId);
           nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+          nodes.coursefavsbtnArea && doCourseBtn(nodes.coursefavsbtnArea, data, cookieId);
         }
 
         /* ACTION: REMOVE a FAV */
@@ -320,6 +355,7 @@
             const favsCookie2 = favsCookie.filter((item) => item.id !== id);
             document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
             nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+            nodes.coursefavsbtnArea && doCourseBtn(nodes.coursefavsbtnArea, data, cookieId);
           }
         }
 

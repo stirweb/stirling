@@ -6132,10 +6132,11 @@ stir.Concierge.prototype.obj2param = function (obj) {
 })();
 */
 (function () {
-  if (!stir.node("#coursefavsarea") && !stir.node("#coursesharedarea")) return;
+  if (!stir.node("#coursefavsarea") && !stir.node("#coursesharedarea") && !stir.node("#coursefavsbtn")) return;
 
   // NODES
   var NODES = {
+    coursefavsbtnArea: stir.node("#coursefavsbtn"),
     favsArea: stir.node("#coursefavsarea"),
     sharedArea: stir.node("#coursesharedarea"),
     sharedfavArea: stir.node("#coursesharedfavsarea")
@@ -6155,16 +6156,22 @@ stir.Concierge.prototype.obj2param = function (obj) {
     return !item.metaData ? "" : "<p class=\"text-sm\">\n            <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n         </p>");
   };
   var renderFav = stir.curry(function (item) {
-    return !item.metaData ? "" : "\n        <div class=\"c-search-result\" data-rank=\"\" data-sid=\"".concat(item.metaData.sid, "\" data-result-type=\"course\">\n            <div class=\" c-search-result__tags\">\n                <span class=\"c-search-tag\">").concat(item.metaData.level, "</span>\n            </div>\n\n            <div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n                <p class=\"u-text-regular u-m-0\">\n                    <strong><a href=\"").concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n                </p>\n                <p class=\"u-m-0\">").concat(item.metaData.c, "</p>\n                \n                <div class=\"c-search-result__meta grid-x u-mt-1\">\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Start dates</strong><p>").concat(item.metaData.start, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Study modes</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.modes, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Delivery</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.delivery, "</p></div>\n                </div>\n            </div>\n            <div class=\"flex-container align-middle u-gap-8 u-mt-1\">\n                <button class=\"u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle\" data-action=\"removefav\" data-id=\"").concat(item.metaData.sid, "\">\n                ").concat(renderActiveIcon(), "\n                </button>\n                <span>Favourited ").concat(getDaysAgo(new Date(item.dateSaved)), "</span>\n                <button class=\"u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle\" data-action=\"removefav\" data-id=\"").concat(item.metaData.sid, "\">\n               \n                <span class=\"u-heritage-teal u-underline\">Remove from my favourites</span></button>\n                \n            </div>\n        </div>");
+    return !item.metaData ? "" : "\n        <div class=\"c-search-result\" data-rank=\"\" data-sid=\"".concat(item.metaData.sid, "\" data-result-type=\"course\">\n            <div class=\" c-search-result__tags\">\n                <span class=\"c-search-tag\">").concat(item.metaData.level, "</span>\n            </div>\n\n            <div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n                <p class=\"u-text-regular u-m-0\">\n                    <strong><a href=\"").concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n                </p>\n                <p class=\"u-m-0\">").concat(item.metaData.c, "</p>\n                \n                <div class=\"c-search-result__meta grid-x u-mt-1\">\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Start dates</strong><p>").concat(item.metaData.start, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Study modes</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.modes, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Delivery</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.delivery, "</p></div>\n                </div>\n            </div>\n\n            <div class=\"flex-container align-middle u-gap-8 u-mt-1\">\n               ").concat(renderRemoveBtn(item.metaData.sid, item.dateSaved), "\n            </div>\n        </div>");
   });
+  var renderRemoveBtn = function renderRemoveBtn(sid, dateSaved) {
+    return " \n        <button class=\"u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle\" data-action=\"removefav\" data-id=\"".concat(sid, "\">\n            ").concat(renderActiveIcon(), "\n        </button>\n        <span>Favourited ").concat(getDaysAgo(new Date(dateSaved)), "</span>\n        <button class=\"u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle\" data-action=\"removefav\" data-id=\"").concat(sid, "\">\n            <span class=\"u-heritage-teal u-underline u-line-height-default\">Remove from my favourites</span>\n        </button>");
+  };
+  var renderAddBtn = function renderAddBtn(sid) {
+    return " \n          <button\n              class=\"u-energy-teal u-cursor-pointer u-line-height-default flex-container u-gap-8 align-middle\"\n              data-action=\"addtofavs\" data-id=\"".concat(sid, "\">\n              ").concat(renderInactiveIcon(), "\n              <span class=\"u-heritage-teal u-underline u-inline-block u-pb-1\">Add\n                  to your favourites</span>\n          </button>");
+  };
   var renderNoFavs = function renderNoFavs() {
-    return "<p>Nothing saved here yet. <a href=\"https://www.stir.ac.uk/courses/\">View courses</a> and add them to your favourites. </p>";
+    return "<p>Nothing saved here yet. <a href=\"/courses/\">View courses</a> and add them to your favourites. </p>";
   };
   var renderNoShared = function renderNoShared() {
     return "<div class=\"cell\"><p>No courses shared</p></div>";
   };
   var renderLinkToFavs = function renderLinkToFavs() {
-    return "<hr><p class=\"text-sm u-arrow\"><a href=\"https://www.stir.ac.uk/courses/favs/\">View and manage my favourites</a></p>";
+    return "<hr><p class=\"text-sm u-arrow\"><a href=\"/courses/favourites/\">Manage my favourites</a></p>";
   };
   var renderFavActionBtns = function renderFavActionBtns() {
     return "\n        <div class=\" u-mb-3 \">\n          <button class=\"u-border-solid u-p-1  u-cursor-pointer u-mt-1 \" data-action=\"clearallfavs\">Clear favourites</button>\n          <button class=\"u-border-solid u-p-1 u-cursor-pointer u-mt-1 \" data-action=\"copysharelink\">Generate share link</button>\n        </div>";
@@ -6176,7 +6183,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
     return "<svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\"\n              xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 50 50\"\n              style=\"enable-background:new 0 0 50 50;width:24px; height: 24px;\" xml:space=\"preserve\">\n              <g id=\"Layer_1_00000157273399641228684280000005207056774539682203_\">\n                  <g id=\"icons\">\n                  </g>\n              </g>\n              <path d=\"M9.2,23.5c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9c0.6,0.5,2.4,2,3,2.4\n          c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.3-3.9L9.7,21.8L9.2,23.5z M41,15.8c-1.1-0.9-2.1-1.5-3.5-2\n          l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5\n          L28.1,11L21,8.7c-2.1-0.6-4.3-0.4-6.2,0.4c-2,0.9-3.5,2.4-4.4,4.3c-0.9,1.9-1.3,3.7-1,5.5l31.8,10.3c1.7-1.6,2.8-3.7,2.9-6\n          C44.3,20.5,43.1,17.7,41,15.8z\" />\n        </svg> ";
   };
   var renderShared = function renderShared(item) {
-    return !item.metaData ? "" : "<div class=\"cell small-6 \">\n            <div class=\" u-green-line-top u-margin-bottom\">\n                <p class=\"u-text-regular u-py-1\">\n                  <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "</a></strong>\n                </p>\n                <div class=\"u-mb-1\">").concat(item.metaData.c, "</div>\n                <").concat(isInCookie(item.metaData.sid) ? "div" : "button", "  class=\"u-w-full ").concat(isInCookie(item.metaData.sid) ? "u-energy-teal--light" : "u-energy-teal u-cursor-pointer", "  u-border-solid u-p-1  u-mt-1 flex-container u-gap-8 align-middle align-center\" data-action=\"").concat(isInCookie(item.metaData.sid) ? "" : "addtofavs", "\" data-id=\"").concat(item.metaData.sid, "\">\n                  ").concat(isInCookie(item.metaData.sid) ? renderActiveIcon() : renderInactiveIcon(), "\n                <span class=\"u-heritage-teal\">").concat(isInCookie(item.metaData.sid) ? "Already in my favourites" : "Add to my favourites", "</span>\n                </").concat(isInCookie(item.metaData.sid) ? "div" : "button", ">\n            </div>\n        </div>");
+    return !item.metaData ? "" : "<div class=\"cell small-6 \">\n            <div class=\" u-green-line-top u-margin-bottom\">\n                <p class=\"u-text-regular u-py-1\">\n                  <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "</a></strong>\n                </p>\n                <div class=\"u-mb-1\">").concat(item.metaData.c, "</div>\n                <").concat(isInCookie(item.metaData.sid) ? "div" : "button", "  class=\"u-w-full u-energy-teal ").concat(isInCookie(item.metaData.sid) ? "" : "u-energy-teal u-cursor-pointer", "   u-mt-1 flex-container u-gap-8 align-middle \" data-action=\"").concat(isInCookie(item.metaData.sid) ? "" : "addtofavs", "\" data-id=\"").concat(item.metaData.sid, "\">\n                  ").concat(isInCookie(item.metaData.sid) ? renderActiveIcon() : renderInactiveIcon(), "\n                <span class=\"u-heritage-teal ").concat(isInCookie(item.metaData.sid) ? "" : "u-underline u-line-height-default", "\">\n                  ").concat(isInCookie(item.metaData.sid) ? "Already in my favourites" : "Add to my favourites", "\n                </span>\n                </").concat(isInCookie(item.metaData.sid) ? "div" : "button", ">\n            </div>\n        </div>");
   };
   var renderSharedIntro = function renderSharedIntro(items) {
     return !items.length ? "" : "";
@@ -6325,6 +6332,18 @@ stir.Concierge.prototype.obj2param = function (obj) {
     setDOMContent(nodes.sharedfavArea, renderHeader("h2", "My favourites") + list.map(renderMiniFav).join("") + renderLinkToFavs());
     return;
   };
+  var doCourseBtn = function doCourseBtn(courseBtnArea, data, cookieId) {
+    if (!courseBtnArea.dataset.id) return;
+    var fav = getfavsCookie(cookieId).filter(function (item) {
+      return item.id === courseBtnArea.dataset.id;
+    });
+    if (fav.length) {
+      setDOMContent(courseBtnArea, renderRemoveBtn(fav[0].id, fav[0].date));
+      return;
+    }
+    setDOMContent(courseBtnArea, renderAddBtn(courseBtnArea.dataset.id));
+    return;
+  };
 
   /* 
     fetchData : Returns null 
@@ -6336,6 +6355,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
       // On Load
       nodes.sharedArea && doShared(nodes, data, cookieId);
       nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+      nodes.coursefavsbtnArea && doCourseBtn(nodes.coursefavsbtnArea, data, cookieId);
 
       /* EVENT LISTENERS */
       stir.node("main").addEventListener("click", function (event) {
@@ -6352,6 +6372,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
           }
           nodes.sharedArea && doShared(nodes, data, cookieId);
           nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+          nodes.coursefavsbtnArea && doCourseBtn(nodes.coursefavsbtnArea, data, cookieId);
         }
 
         /* ACTION: REMOVE a FAV */
@@ -6364,6 +6385,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
             });
             document.cookie = cookieId + JSON.stringify(_favsCookie) + getExpiryDate(30) + ";path=/";
             nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+            nodes.coursefavsbtnArea && doCourseBtn(nodes.coursefavsbtnArea, data, cookieId);
           }
         }
 
