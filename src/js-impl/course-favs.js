@@ -50,11 +50,15 @@
                     <div class="cell medium-4"><strong class="u-heritage-green">Delivery</strong><p class="u-text-sentence-case">${item.metaData.delivery}</p></div>
                 </div>
             </div>
-            <div class="flex-container align-middle u-gap u-mt-1">
-                <button class="u-energy-teal u-border-solid u-p-1 u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${item.metaData.sid}">
+            <div class="flex-container align-middle u-gap-8 u-mt-1">
+                <button class="u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${item.metaData.sid}">
                 ${renderActiveIcon()}
-                <span class="u-heritage-teal">Remove from my favourites</span></button>
+                </button>
                 <span>Favourited ${getDaysAgo(new Date(item.dateSaved))}</span>
+                <button class="u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${item.metaData.sid}">
+               
+                <span class="u-heritage-teal u-underline">Remove from my favourites</span></button>
+                
             </div>
         </div>`;
   });
@@ -165,6 +169,9 @@
   const getExpiryDate = (days) => {
     const d = new Date();
     d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+
+    //console.log(d);
+    //console.log(d.toUTCString());
     return ";expires=" + d.toUTCString();
   };
 
@@ -184,12 +191,9 @@
       isInCookie: Returns a boolean
   */
   const isInCookie = (courseId) => {
-    const favsCookie = getfavsCookie(cookieId);
-    const inCookie = favsCookie.map((item) => item.id === courseId);
-
-    if (!stir.any((item) => item, inCookie)) return false;
-
-    return true;
+    return getfavsCookie(cookieId)
+      .map((item) => item.id)
+      .includes(courseId);
   };
 
   /*
@@ -253,7 +257,7 @@
       return;
     }
 
-    setQueryParam(list);
+    //setQueryParam(list);
     setDOMContent(favsArea, renderFavActionBtns() + list.map(renderFav).join(""));
     return;
   };
@@ -294,14 +298,13 @@
 
       /* EVENT LISTENERS */
       stir.node("main").addEventListener("click", (event) => {
-        const target = event.target.nodeName === "BUTTON" ? event.target : event.target.parentElement;
+        const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
 
         /* ACTION: ADD a FAV */
         if (target.dataset && target.dataset.action === "addtofavs") {
-          console.log(target);
-          if (!isInCookie(event.target.dataset.id)) {
+          if (!isInCookie(target.dataset.id)) {
             const favsCookie2 = [...getfavsCookie(cookieId), { id: target.dataset.id, date: Date.now() }];
-            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
+            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(300) + ";path=/";
           }
 
           nodes.sharedArea && doShared(nodes, data, cookieId);
