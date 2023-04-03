@@ -305,18 +305,18 @@ img.objfitcover,
 }
 
 .objfit-container {
-	min-height: 27rem; /* 432px */
+  min-height: 27rem; /* 432px */
 }
 
 @media screen and (min-width: 640px) {
-	.objfit-container {
-		min-height: 30rem; /* 464px */
-	}
+  .objfit-container {
+    min-height: 30rem; /* 464px */
+  }
 }
 @media screen and (min-width: 1024px) {
-	.objfit-container {
-		min-height: 33rem; /* 580px */
-	}
+  .objfit-container {
+    min-height: 33rem; /* 580px */
+  }
 }
 
 .altmetric-embed a {
@@ -334,7 +334,7 @@ textarea:focus,
 select:focus,
 .c-search-ordered-filters button:focus,
 a:focus {
-  outline: 1px dotted $energy-green !important;
+  outline: 1px solid $heritage-green !important;
   outline-offset: 4px;
 }
 
@@ -345,7 +345,7 @@ a:focus {
   textarea:focus,
   select:focus,
   a:focus {
-    outline: 1px dotted #fff !important;
+    outline: 1px solid #fff !important;
     outline-offset: 4px;
   }
 }

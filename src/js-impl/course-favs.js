@@ -64,15 +64,15 @@
             ${renderActiveIcon()}
         </button>
         <span>Favourited ${getDaysAgo(new Date(dateSaved))}</span>
-        <button class="u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${sid}">
+        <!-- button class="u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${sid}">
             <span class="u-heritage-teal u-underline u-line-height-default">Remove from my favourites</span>
-        </button>`;
+        </!-->`;
   };
 
   const renderAddBtn = (sid) => {
     return ` 
           <button
-              class="u-energy-teal u-cursor-pointer u-line-height-default flex-container u-gap-8 align-middle"
+              class="u-energy-teal u-cursor-pointer u-line-height-default flex-container u-gap align-middle"
               data-action="addtofavs" data-id="${sid}">
               ${renderInactiveIcon()}
               <span class="u-heritage-teal u-underline u-inline-block u-pb-1">Add
@@ -95,7 +95,7 @@
   const renderInactiveIcon = () => {
     return `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
               xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;width:24px; height: 24px;" xml:space="preserve">
+                  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;width:28px; height: 28px;" xml:space="preserve">
               <g id="Layer_1_00000157273399641228684280000005207056774539682203_">
                 <g id="icons">
                 </g>
@@ -114,7 +114,7 @@
   const renderActiveIcon = () => {
     return `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
               xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
-              style="enable-background:new 0 0 50 50;width:24px; height: 24px;" xml:space="preserve">
+              style="enable-background:new 0 0 50 50;width:28px; height: 28px;" xml:space="preserve">
               <g id="Layer_1_00000157273399641228684280000005207056774539682203_">
                   <g id="icons">
                   </g>
