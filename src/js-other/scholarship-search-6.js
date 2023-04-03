@@ -178,7 +178,6 @@
   };
 
   const getRankValue = (scholVal, filterVal, startVal, weight) => {
-    //console.log(scholVal, filterVal);
     if (filterVal !== "" && scholVal.toLowerCase().includes(filterVal.toLowerCase())) {
       return calcRank(startVal, weight, getPos(scholVal, filterVal));
     }
@@ -196,8 +195,6 @@
     Return the final calculated rank value 
   */
   const getRank = (filters, schol) => {
-    console.log(schol);
-
     const initrank = getInitialRank(schol, filters);
 
     const rank = stir.isNumeric(parseInt(initrank)) ? initrank : "1000";
@@ -205,8 +202,6 @@
     const rank3 = isRegion(schol.nationality, filters.regions) ? calcRank(rank2, -100, 0) : rank2;
     const rank4 = getRankValue(schol.promotedSubject, filters.subject, rank3, -20000);
     const rank5 = getRankValue(schol.feeStatus, filters.feeStatus, rank4, -10);
-
-    //const rank5 = rank4; //getRankValue(schol.faculty, filters.faculty, rank4, -20000);
 
     return rank5;
   };
