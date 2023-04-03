@@ -111,10 +111,8 @@
     if (filterFeeStatus == "Any") return true;
 
     if (filterFeeStatus == "European") {
-      if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+      if (scholFeeStatus == "Any" || scholFeeStatus == "European" || scholFeeStatus == "International") return true;
     }
-
-    //console.log(scholFeeStatus, filterFeeStatus);
 
     return scholFeeStatus.includes(filterFeeStatus);
   };
@@ -136,9 +134,10 @@
   };
 
   const isRegion = (scholNation, filterRegions) => {
-    if (!filterRegions || filterRegions.length) return false;
+    if (!filterRegions || !filterRegions.length) return false;
 
     const hasRegion = filterRegions.map((item) => scholNation.includes(item));
+
     return stir.any((item) => item, hasRegion);
   };
 
@@ -153,8 +152,6 @@
   */
   const isMatch = (filters, schol, CONSTS) => {
     const matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, CONSTS.regions.ukroi)];
-
-    //console.log(matchFilter);
 
     return stir.all((b) => b, matchFilter);
   };
@@ -204,7 +201,7 @@
     const rank2 = getRankValue(schol.nationality, filters.nation, rank, -10000);
     const rank3 = isRegion(schol.nationality, filters.regions) ? calcRank(rank2, -100, 0) : rank2;
     const rank4 = getRankValue(schol.promotedSubject, filters.subject, rank3, -20000);
-    const rank5 = getRankValue(schol.faculty, filters.faculty, rank4, -20000);
+    const rank5 = rank4; //getRankValue(schol.faculty, filters.faculty, rank4, -20000);
 
     return rank5;
   };

@@ -108,11 +108,8 @@
 
     if (filterFeeStatus == "Any") return true;
     if (filterFeeStatus == "European") {
-      if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+      if (scholFeeStatus == "Any" || scholFeeStatus == "European" || scholFeeStatus == "International") return true;
     }
-
-    //console.log(scholFeeStatus, filterFeeStatus);
-
     return scholFeeStatus.includes(filterFeeStatus);
   };
   var matchSubject = function matchSubject(scholData, filterSubject) {
@@ -129,7 +126,7 @@
     return scholNation.includes("All international");
   };
   var isRegion = function isRegion(scholNation, filterRegions) {
-    if (!filterRegions || filterRegions.length) return false;
+    if (!filterRegions || !filterRegions.length) return false;
     var hasRegion = filterRegions.map(function (item) {
       return scholNation.includes(item);
     });
@@ -147,9 +144,6 @@
   */
   var isMatch = function isMatch(filters, schol, CONSTS) {
     var matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, CONSTS.regions.ukroi)];
-
-    //console.log(matchFilter);
-
     return stir.all(function (b) {
       return b;
     }, matchFilter);
@@ -196,7 +190,8 @@
     var rank2 = getRankValue(schol.nationality, filters.nation, rank, -10000);
     var rank3 = isRegion(schol.nationality, filters.regions) ? calcRank(rank2, -100, 0) : rank2;
     var rank4 = getRankValue(schol.promotedSubject, filters.subject, rank3, -20000);
-    var rank5 = getRankValue(schol.faculty, filters.faculty, rank4, -20000);
+    var rank5 = rank4; //getRankValue(schol.faculty, filters.faculty, rank4, -20000);
+
     return rank5;
   };
 
