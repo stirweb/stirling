@@ -153,7 +153,6 @@
     getRank() helpers
   */
   var getInitialRank = function getInitialRank(schol, filters) {
-    console.log(filters);
     if (!filters.sortBy || filters.sortBy === "") {
       if (schol.ugOrder !== "") return schol.ugOrder;
       if (schol.pgOrder !== "") return schol.pgOrder;
@@ -169,6 +168,7 @@
   };
 
   var getRankValue = function getRankValue(scholVal, filterVal, startVal, weight) {
+    //console.log(scholVal, filterVal);
     if (filterVal !== "" && scholVal.toLowerCase().includes(filterVal.toLowerCase())) {
       return calcRank(startVal, weight, getPos(scholVal, filterVal));
     }
@@ -188,12 +188,13 @@
   var getRank = function getRank(filters, schol) {
     console.log(schol);
     var initrank = getInitialRank(schol, filters);
-    console.log(initrank);
     var rank = stir.isNumeric(parseInt(initrank)) ? initrank : "1000";
     var rank2 = getRankValue(schol.nationality, filters.nation, rank, -10000);
     var rank3 = isRegion(schol.nationality, filters.regions) ? calcRank(rank2, -100, 0) : rank2;
     var rank4 = getRankValue(schol.promotedSubject, filters.subject, rank3, -20000);
-    var rank5 = rank4; //getRankValue(schol.faculty, filters.faculty, rank4, -20000);
+    var rank5 = getRankValue(schol.feeStatus, filters.feeStatus, rank4, -10);
+
+    //const rank5 = rank4; //getRankValue(schol.faculty, filters.faculty, rank4, -20000);
 
     return rank5;
   };
