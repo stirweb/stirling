@@ -153,7 +153,8 @@
     getRank() helpers
   */
   var getInitialRank = function getInitialRank(schol, filters) {
-    if (filters.sortBy === "") {
+    console.log(filters);
+    if (!filters.sortBy || filters.sortBy === "") {
       if (schol.ugOrder !== "") return schol.ugOrder;
       if (schol.pgOrder !== "") return schol.pgOrder;
     }
@@ -185,7 +186,9 @@
     Return the final calculated rank value 
   */
   var getRank = function getRank(filters, schol) {
+    console.log(schol);
     var initrank = getInitialRank(schol, filters);
+    console.log(initrank);
     var rank = stir.isNumeric(parseInt(initrank)) ? initrank : "1000";
     var rank2 = getRankValue(schol.nationality, filters.nation, rank, -10000);
     var rank3 = isRegion(schol.nationality, filters.regions) ? calcRank(rank2, -100, 0) : rank2;
