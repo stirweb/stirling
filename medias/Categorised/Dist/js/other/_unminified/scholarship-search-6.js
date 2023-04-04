@@ -108,7 +108,7 @@
 
     if (filterFeeStatus == "Any") return true;
     if (filterFeeStatus == "European") {
-      if (scholFeeStatus == "Any" || scholFeeStatus == "European" || scholFeeStatus == "International") return true;
+      if (scholFeeStatus == "European" || scholFeeStatus == "International") return true;
     }
     return scholFeeStatus.includes(filterFeeStatus);
   };
@@ -163,10 +163,17 @@
     if (filters.sortBy === "pgOrderFaculty") return schol.pgOrderFaculty;
     return "1000";
   };
+
+  /* 
+    getPos: Returns an int
+  */
   var getPos = function getPos(scholVal, filterVal) {
     return scholVal.toLowerCase().indexOf(filterVal.toLowerCase()); // TODO Work in String length
   };
 
+  /* 
+    getRankValue: Returns an int
+  */
   var getRankValue = function getRankValue(scholVal, filterVal, startVal, weight) {
     if (filterVal !== "" && scholVal.toLowerCase().includes(filterVal.toLowerCase())) {
       return calcRank(startVal, weight, getPos(scholVal, filterVal));
@@ -190,7 +197,7 @@
     var rank2 = getRankValue(schol.nationality, filters.nation, rank, -10000);
     var rank3 = isRegion(schol.nationality, filters.regions) ? calcRank(rank2, -100, 0) : rank2;
     var rank4 = getRankValue(schol.promotedSubject, filters.subject, rank3, -20000);
-    var rank5 = getRankValue(schol.feeStatus, filters.feeStatus, rank4, -10);
+    var rank5 = getRankValue(schol.feeStatus, filters.feeStatus, rank4, -1010);
     return rank5;
   };
 
