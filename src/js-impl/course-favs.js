@@ -60,29 +60,29 @@
 
   const renderRemoveBtn = (sid, dateSaved) => {
     return ` 
-        <button class="u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${sid}">
+        <button class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${sid}">
             ${renderActiveIcon()}
         </button>
         <span>Favourited ${getDaysAgo(new Date(dateSaved))}</span>
-        <!-- button class="u-energy-teal  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${sid}">
-            <span class="u-heritage-teal u-underline u-line-height-default">Remove from my favourites</span>
+        <!-- button class="u-energy-green  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${sid}">
+            <span class="u-heritage-green u-underline u-line-height-default">Remove from my favourites</span>
         </!-->`;
   };
 
   const renderAddBtn = (sid) => {
     return ` 
           <button
-              class="u-energy-teal u-cursor-pointer u-line-height-default flex-container u-gap align-middle"
+              class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap align-middle"
               data-action="addtofavs" data-id="${sid}">
               ${renderInactiveIcon()}
-              <span class="u-heritage-teal u-underline u-inline-block u-pb-1">Add
+              <span class="u-heritage-green u-underline u-inline-block u-pb-1">Add
                   to your favourites</span>
           </button>`;
   };
 
   const renderNoFavs = () => `<p>Nothing saved here yet. <a href="/courses/">View courses</a> and add them to your favourites. </p>`;
   const renderNoShared = () => `<div class="cell"><p>No courses shared</p></div>`;
-  const renderLinkToFavs = () => `<hr><p class="text-sm u-arrow"><a href="/courses/favourites/">Manage my favourites</a></p>`;
+  const renderLinkToFavs = () => `<hr><p class="text-sm u-arrow"><a href="/stirling/pages/search/course-favs/">Manage my favourites</a></p>`;
 
   const renderFavActionBtns = () => {
     return `
@@ -136,9 +136,9 @@
                   <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title}</a></strong>
                 </p>
                 <div class="u-mb-1">${item.metaData.c}</div>
-                <${isInCookie(item.metaData.sid) ? `div` : `button`}  class="u-w-full u-energy-teal ${isInCookie(item.metaData.sid) ? `` : `u-energy-teal u-cursor-pointer`}   u-mt-1 flex-container u-gap-8 align-middle " data-action="${isInCookie(item.metaData.sid) ? `` : `addtofavs`}" data-id="${item.metaData.sid}">
+                <${isInCookie(item.metaData.sid) ? `div` : `button`}  class="u-w-full u-heritage-green ${isInCookie(item.metaData.sid) ? `` : `u-heritage-green u-cursor-pointer`}   u-mt-1 flex-container u-gap-8 align-middle " data-action="${isInCookie(item.metaData.sid) ? `` : `addtofavs`}" data-id="${item.metaData.sid}">
                   ${isInCookie(item.metaData.sid) ? renderActiveIcon() : renderInactiveIcon()}
-                <span class="u-heritage-teal ${isInCookie(item.metaData.sid) ? "" : "u-underline u-line-height-default"}">
+                <span class="u-heritage-green ${isInCookie(item.metaData.sid) ? "" : "u-underline u-line-height-default"}">
                   ${isInCookie(item.metaData.sid) ? `Already in my favourites` : `Add to my favourites`}
                 </span>
                 </${isInCookie(item.metaData.sid) ? `div` : `button`}>
