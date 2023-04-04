@@ -6403,7 +6403,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
         /* ACTION: COPY SHARE LINK */
         if (target.dataset && target.dataset.action === "copysharelink") {
           var _favsCookie2 = getfavsCookie(cookieId);
-          var link = "https://www.stir.ac.uk/courses/favs/?shared=" + _favsCookie2.map(function (item) {
+          var link = "https://stirweb.github.io/stirling/pages/search/course-favs/shared/?shared=" + _favsCookie2.map(function (item) {
             return item.id;
           }).join(",");
           navigator.clipboard.writeText(link);

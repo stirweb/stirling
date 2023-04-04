@@ -374,7 +374,7 @@
         if (target.dataset && target.dataset.action === "copysharelink") {
           const favsCookie = getfavsCookie(cookieId);
 
-          const link = "https://www.stir.ac.uk/courses/favs/?shared=" + favsCookie.map((item) => item.id).join(",");
+          const link = "https://stirweb.github.io/stirling/pages/search/course-favs/shared/?shared=" + favsCookie.map((item) => item.id).join(",");
           navigator.clipboard.writeText(link);
 
           alert("The following share link has been copied to your clipboard: \n\n" + link);
