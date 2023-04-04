@@ -111,7 +111,7 @@
     if (filterFeeStatus == "Any") return true;
 
     if (filterFeeStatus == "European") {
-      if (scholFeeStatus == "Any" || scholFeeStatus == "European" || scholFeeStatus == "International") return true;
+      if (scholFeeStatus == "European" || scholFeeStatus == "International") return true;
     }
 
     return scholFeeStatus.includes(filterFeeStatus);
@@ -173,10 +173,16 @@
     return "1000";
   };
 
+  /* 
+    getPos: Returns an int
+  */
   const getPos = (scholVal, filterVal) => {
     return scholVal.toLowerCase().indexOf(filterVal.toLowerCase()); // TODO Work in String length
   };
 
+  /* 
+    getRankValue: Returns an int
+  */
   const getRankValue = (scholVal, filterVal, startVal, weight) => {
     if (filterVal !== "" && scholVal.toLowerCase().includes(filterVal.toLowerCase())) {
       return calcRank(startVal, weight, getPos(scholVal, filterVal));
@@ -201,7 +207,7 @@
     const rank2 = getRankValue(schol.nationality, filters.nation, rank, -10000);
     const rank3 = isRegion(schol.nationality, filters.regions) ? calcRank(rank2, -100, 0) : rank2;
     const rank4 = getRankValue(schol.promotedSubject, filters.subject, rank3, -20000);
-    const rank5 = getRankValue(schol.feeStatus, filters.feeStatus, rank4, -10);
+    const rank5 = getRankValue(schol.feeStatus, filters.feeStatus, rank4, -1010);
 
     return rank5;
   };
