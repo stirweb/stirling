@@ -110,9 +110,9 @@
 
     if (filterFeeStatus == "Any") return true;
 
-    if (filterFeeStatus == "European") {
-      if (scholFeeStatus == "European" || scholFeeStatus == "International") return true;
-    }
+    // if (filterFeeStatus == "European") {
+    //   if (scholFeeStatus == "European" || scholFeeStatus == "International") return true;
+    // }
 
     return scholFeeStatus.includes(filterFeeStatus);
   };
