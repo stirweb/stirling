@@ -19,6 +19,9 @@ stir.altmetric = {
 			return console.warn('[Altmetric] DOM container not found');
 		}
 		container.innerHTML = stir.altmetric.table(json);
+		const altscpt = document.createElement('script');
+		altscpt.src = 'https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js';
+		document.body.appendChild(altscpt);
 	}
 };
 
