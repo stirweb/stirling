@@ -5337,7 +5337,6 @@ var UoS_env = function () {
   var wc_path = "/media/dist/";
   switch (hostname) {
     case "localhost":
-    case "10.0.2.2":
       env_name = "dev";
       wc_path = "/medias/Categorised/Dist/";
       break;
@@ -5352,9 +5351,11 @@ var UoS_env = function () {
     case "stir.ac.uk":
       env_name = "pub";
       break;
-    case "www-stir.t4appdev.stir.ac.uk":
-      env_name = "dev-pub";
-      break;
+
+    //    case "www-stir.t4appdev.stir.ac.uk":
+    //      env_name = "dev-pub";
+    //      break;
+
     case "stirweb.github.io":
       env_name = "qa";
       wc_path = "/medias/Categorised/Dist/";
