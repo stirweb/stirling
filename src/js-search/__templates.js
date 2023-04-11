@@ -263,13 +263,13 @@ stir.templates.search = (() => {
 
 		const trail = userAuth(item.metaData.group) ? stir.templates.search.trailstring(crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" })).slice(0, -1)) : `<a href="https://www.stir.ac.uk/${crumbs.href[0]}/">${crumbs.text[0]}</a>`;
 
-		return `
-			<div class="c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""} data-access="${item.metaData.access}">
-				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-					<p class="c-search-result__breadcrumb">${trail}</p>
-					<p class="u-text-regular u-m-0"><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split(" | ")[0]}</a></p>
-					${internalSummary(item.summary, item.metaData.group)}
-				</div>
+      return `
+      <div class="c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""} data-access="${item.metaData.access}">
+			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
+			    <p class="c-search-result__breadcrumb">${trail}</p>
+			    <p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split(" | ")[0]}</a></strong></p>
+			    ${internalSummary(item.summary, item.metaData.group)}
+			  </div>
 			</div>`;
 		},
 

@@ -15,8 +15,8 @@
 
 (function () {
   /*
-     Vars
-   */
+       Vars
+     */
 
   var countryNodes = stir.nodes("[data-scholcountrylisting]");
   var subjectNodes = stir.nodes("[data-scholsubjectlisting]");
@@ -67,14 +67,14 @@
   };
 
   /*
-   
-    D A T A   P R O C E S S I N G
-   
-   */
+     
+      D A T A   P R O C E S S I N G
+     
+     */
 
   /*  
-    Find the results that match the filters and reorder 
-  */
+      Find the results that match the filters and reorder 
+    */
   var filterData = stir.curry(function (CONSTS, filters, schol) {
     if (schol.title) {
       if (isMatch(filters, schol, CONSTS)) {
@@ -84,8 +84,8 @@
   });
 
   /*  
-    Return the schol with a ranking 
-  */
+      Return the schol with a ranking 
+    */
   var mapRank = stir.curry(function (filters, schol) {
     var rank = getRank(filters, schol);
     return {
@@ -95,8 +95,8 @@
   });
 
   /* 
-    isMatch() helpers
-  */
+      isMatch() helpers
+    */
 
   var matchStudyLevel = function matchStudyLevel(scholStudyLevel, filterStudyLevel) {
     if (filterStudyLevel === "Any") return true;
@@ -107,10 +107,11 @@
     //if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
 
     if (filterFeeStatus == "Any") return true;
+    if (filterFeeStatus == "European") {
+      if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+    }
 
-    // if (filterFeeStatus == "European") {
-    //   if (scholFeeStatus == "European" || scholFeeStatus == "International") return true;
-    // }
+    //console.log(scholFeeStatus, filterFeeStatus);
 
     return scholFeeStatus.includes(filterFeeStatus);
   };
@@ -128,7 +129,7 @@
     return scholNation.includes("All international");
   };
   var isRegion = function isRegion(scholNation, filterRegions) {
-    if (!filterRegions || !filterRegions.length) return false;
+    if (!filterRegions || filterRegions.length) return false;
     var hasRegion = filterRegions.map(function (item) {
       return scholNation.includes(item);
     });
@@ -142,20 +143,23 @@
   };
 
   /*
-    Determine if a scholarship matches the filters
-  */
+      Determine if a scholarship matches the filters
+    */
   var isMatch = function isMatch(filters, schol, CONSTS) {
     var matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, CONSTS.regions.ukroi)];
+
+    //console.log(matchFilter);
+
     return stir.all(function (b) {
       return b;
     }, matchFilter);
   };
 
   /* 
-    getRank() helpers
-  */
+      getRank() helpers
+    */
   var getInitialRank = function getInitialRank(schol, filters) {
-    if (!filters.sortBy || filters.sortBy === "") {
+    if (filters.sortBy === "") {
       if (schol.ugOrder !== "") return schol.ugOrder;
       if (schol.pgOrder !== "") return schol.pgOrder;
     }
@@ -165,17 +169,10 @@
     if (filters.sortBy === "pgOrderFaculty") return schol.pgOrderFaculty;
     return "1000";
   };
-
-  /* 
-    getPos: Returns an int
-  */
   var getPos = function getPos(scholVal, filterVal) {
     return scholVal.toLowerCase().indexOf(filterVal.toLowerCase()); // TODO Work in String length
   };
 
-  /* 
-    getRankValue: Returns an int
-  */
   var getRankValue = function getRankValue(scholVal, filterVal, startVal, weight) {
     if (filterVal !== "" && scholVal.toLowerCase().includes(filterVal.toLowerCase())) {
       return calcRank(startVal, weight, getPos(scholVal, filterVal));
@@ -184,35 +181,35 @@
   };
 
   /* 
-    Determine the final weighting (position) 
-  */
+      Determine the final weighting (position) 
+    */
   var calcRank = function calcRank(initialVal, weight, stringPos) {
     return String(weight + parseInt(initialVal) + stringPos);
   };
 
   /* 
-    Return the final calculated rank value 
-  */
+      Return the final calculated rank value 
+    */
   var getRank = function getRank(filters, schol) {
     var initrank = getInitialRank(schol, filters);
     var rank = stir.isNumeric(parseInt(initrank)) ? initrank : "1000";
     var rank2 = getRankValue(schol.nationality, filters.nation, rank, -10000);
     var rank3 = isRegion(schol.nationality, filters.regions) ? calcRank(rank2, -100, 0) : rank2;
     var rank4 = getRankValue(schol.promotedSubject, filters.subject, rank3, -20000);
-    var rank5 = getRankValue(schol.feeStatus, filters.feeStatus, rank4, -1010);
+    var rank5 = getRankValue(schol.faculty, filters.faculty, rank4, -20000);
     return rank5;
   };
 
   /* 
-    Sorts a comma separated string. Returns an array
-  */
+      Sorts a comma separated string. Returns an array
+    */
   var getReorderedString = function getReorderedString(str, direction) {
     return direction !== "desc" ? str.split(", ").sort() : str.split(", ").sort().reverse();
   };
 
   /* 
-    Return Fee Status as an array of full strings 
-  */
+      Return Fee Status as an array of full strings 
+    */
   var getFeeStatusFullName = function getFeeStatusFullName(feeStatusesAll, feeStatus) {
     return feeStatus.split(", ").map(function (schol) {
       var matched = stir.filter(function (el) {
@@ -224,8 +221,8 @@
   };
 
   /* 
-    Return Fee Status as a full string 
-  */
+      Return Fee Status as a full string 
+    */
   var getFeeStatusText = function getFeeStatusText(feeStatus, consts, feeStatusFilter) {
     var feeStatuses = getFeeStatusFullName(consts.feeStatusesAll, feeStatus);
     var feeStatusFilterFull = getFeeStatusFullName(consts.feeStatusesAll, feeStatusFilter);
@@ -236,63 +233,63 @@
   };
 
   /*
-    
-     R E N D E R E R S
-    
-   */
+      
+       R E N D E R E R S
+      
+     */
 
   /* 
-    Form the html for the pagination  
-  */
+      Form the html for the pagination  
+    */
   var renderPagination = function renderPagination(_ref) {
     var currentPage = _ref.currentPage,
       totalPosts = _ref.totalPosts,
       last = _ref.last;
-    return last >= totalPosts ? "" : "<div class=\"cell text-center\">\n              <button class=\"button hollow tiny\" data-page=\"".concat(currentPage, "\">Load more results</button>\n        </div>");
+    return last >= totalPosts ? "" : "<div class=\"cell text-center\">\n                <button class=\"button hollow tiny\" data-page=\"".concat(currentPage, "\">Load more results</button>\n          </div>");
   };
 
   /* 
-    Form the HTML for all results 
-  */
+      Form the HTML for all results 
+    */
   var renderFormResults = stir.curry(function (consts, _meta, _data) {
-    return "\n        <p class=\"u-margin-bottom text-center\"> Displaying  ".concat(_meta.start + 1, " - ").concat(_meta.last, "  of  <strong>").concat(_meta.totalPosts, " results</strong> that match your criteria.</p>\n        ").concat(stir.map(function (schol) {
+    return "\n          <p class=\"u-margin-bottom text-center\"> Displaying  ".concat(_meta.start + 1, " - ").concat(_meta.last, "  of  <strong>").concat(_meta.totalPosts, " results</strong> that match your criteria.</p>\n          ").concat(stir.map(function (schol) {
       return renderItem(consts, _meta, schol);
-    }, _data).join(""), " \n        <div class=\"grid-x grid-padding-x \" id=\"pagination-box\">\n          ").concat(renderPagination(_meta), "\n        </div> ");
+    }, _data).join(""), " \n          <div class=\"grid-x grid-padding-x \" id=\"pagination-box\">\n            ").concat(renderPagination(_meta), "\n          </div> ");
   });
 
   /* 
-    Form the HTML for an individual result
-  */
+      Form the HTML for an individual result
+    */
   var renderItem = function renderItem(consts, _meta, schol) {
-    return "\n        <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n            <div class=\"u-absolute u-top--15\">\n            ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n                <div class=\"cell  u-mt-1\">\n                    <p class=\"u-heritage-green u-mb-2\">\n                      <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                    <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                </div>\n\n                ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                ").concat(renderDetail(getFeeStatusText(schol.scholarship.feeStatus, consts, _meta.feeStatusFilter) + " ", "Fee status", true), "\n              \n                ").concat(debug && schol ? renderDebug(schol) : "", "\n            </div>\n        </div>");
+    return "\n          <div class=\"u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative\">\n              <div class=\"u-absolute u-top--15\">\n              ".concat(getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join(""), "\n              </div>\n              <div class=\"grid-x grid-padding-x\">\n                  <div class=\"cell  u-mt-1\">\n                      <p class=\"u-heritage-green u-mb-2\">\n                        <strong><a href=\"").concat(schol.scholarship.url, "\">").concat(schol.scholarship.title, "</a></strong></p>\n                      <p class=\"u-mb-2\">").concat(schol.scholarship.teaser, "</p> \n                  </div>\n  \n                  ").concat(renderDetail(schol.scholarship.value, "Value", false), "\n                  ").concat(renderDetail(schol.scholarship.awards, "Number of awards", true), "\n                  ").concat(renderDetail(getFeeStatusText(schol.scholarship.feeStatus, consts, _meta.feeStatusFilter) + " ", "Fee status", true), "\n                \n                  ").concat(debug && schol ? renderDebug(schol) : "", "\n              </div>\n          </div>");
   };
   var renderTag = function renderTag(item) {
     return "<span class=\"u-bg-mint c-tag u-mr-1 \">".concat(item, "</span>");
   };
 
   /* 
-    Form the HTML for the details snippet 
-  */
+      Form the HTML for the details snippet 
+    */
   var renderDetail = function renderDetail(content, header, addDivider) {
-    return !content ? "" : "\n        <div class=\"cell small-12  large-4 ".concat(addDivider ? "u-grey-line-left u-no-border-medium" : "", " \">\n          <div class=\"u-mb-fixed-1 u-h-full\">\n            <p class=\"u-font-bold\">").concat(header, "</p>\n            <p class=\"u-m-0\">").concat(content, "</p>\n          </div>\n        </div> ");
+    return !content ? "" : "\n          <div class=\"cell small-12  large-4 ".concat(addDivider ? "u-grey-line-left u-no-border-medium" : "", " \">\n            <div class=\"u-mb-fixed-1 u-h-full\">\n              <p class=\"u-font-bold\">").concat(header, "</p>\n              <p class=\"u-m-0\">").concat(content, "</p>\n            </div>\n          </div> ");
   };
 
   /* 
-    Form the HTML for debugging info 
-  */
+      Form the HTML for debugging info 
+    */
   var renderDebug = function renderDebug(schol) {
-    return "\n        <div class=\"cell u-mt-2 u-p-2 u-border-solid \" >\n          <h3>Debugger</h3>\n          <b>Weighting: </b> ".concat(schol.rank, "\n          <br><b>Nationalities (M):</b> ").concat(schol.scholarship.nationality, "\n          <br><b>Fee Status (M):</b> ").concat(schol.scholarship.feeStatus, "\n          <br><b>Promoted (R):</b> ").concat(schol.scholarship.promotedSubject, "\n          <br><b>Other (Q):</b> ").concat(schol.scholarship.otherSubject, "\n          <br><b>Order (UG, PG):</b> ").concat(schol.scholarship.ugOrder, ", ").concat(schol.scholarship.pgOrder, "\n          <br><b>Faculty:</b> ").concat(schol.scholarship.faculty, "\n          <br><b>Faculty Order (UG, PG):</b> ").concat(schol.scholarship.ugOrderFaculty, " , ").concat(schol.scholarship.pgOrderFaculty, "</p>\n        </div> ");
+    return "\n          <div class=\"cell u-mt-2 u-p-2 u-border-solid \" >\n            <h3>Debugger</h3>\n            <b>Weighting: </b> ".concat(schol.rank, "\n            <br><b>Nationalities (M):</b> ").concat(schol.scholarship.nationality, "\n            <br><b>Fee Status (M):</b> ").concat(schol.scholarship.feeStatus, "\n            <br><b>Promoted (R):</b> ").concat(schol.scholarship.promotedSubject, "\n            <br><b>Other (Q):</b> ").concat(schol.scholarship.otherSubject, "\n            <br><b>Order (UG, PG):</b> ").concat(schol.scholarship.ugOrder, ", ").concat(schol.scholarship.pgOrder, "\n            <br><b>Faculty:</b> ").concat(schol.scholarship.faculty, "\n            <br><b>Faculty Order (UG, PG):</b> ").concat(schol.scholarship.ugOrderFaculty, " , ").concat(schol.scholarship.pgOrderFaculty, "</p>\n          </div> ");
   };
 
   /*
-    
-     EVENTS: OUTPUT (!!SIDE EFFECTS!!)
-    
-   */
+      
+       EVENTS: OUTPUT (!!SIDE EFFECTS!!)
+      
+     */
 
   /* 
-    Output the html content to the page 
-  */
+      Output the html content to the page 
+    */
   var setDOMContent = stir.curry(function (elem, html) {
     elem.innerHTML = html;
     return elem;
@@ -303,8 +300,8 @@
   });
 
   /* 
-    Populate selects with query params from url string e.g. ?level=ug  
-  */
+      Populate selects with query params from url string e.g. ?level=ug  
+    */
   var setFormValues = function setFormValues(nodes) {
     nodes.inputNation.value = QueryParams.get("nationality") || "Any";
     nodes.inputSubject.value = QueryParams.get("subject") || "!padrenullquery";
@@ -314,14 +311,14 @@
   };
 
   /*
-    
-     EVENTS: INPUT (!!SIDE EFFECTS!!)
-    
-   */
+      
+       EVENTS: INPUT (!!SIDE EFFECTS!!)
+      
+     */
 
   /* 
-    Filter Helper functions 
-  */
+      Filter Helper functions 
+    */
 
   var getRegionTags = stir.curry(function (scholNation, item) {
     if (item.data.includes(scholNation)) {
@@ -364,8 +361,8 @@
   //const getSubjectType = (value) => (value && value.length > 0 ? value : "");
 
   /* 
-    Extract filter vars from the form and reconfig them if nec 
-  */
+      Extract filter vars from the form and reconfig them if nec 
+    */
   var getFilterVars = function getFilterVars(nodes, regionmacros) {
     var subjectType = "Subject"; // getSubjectType(nodes.inputSubject.options[nodes.inputSubject.selectedIndex].parentNode.label);
 
@@ -383,8 +380,8 @@
   };
 
   /* 
-    Main controller function  
-  */
+      Main controller function  
+    */
   var main = function main(setFiltersFlag, page, CONSTS, initMeta, initData) {
     if (setFiltersFlag) setFormValues(CONSTS.nodes);
     var setDOMResults = page === 1 ? setDOMContent(CONSTS.nodes.resultsArea) : appendDOMContent(CONSTS.nodes.resultsArea);
@@ -413,18 +410,18 @@
   };
 
   /*
-    
-     FORM BASED VERSION
-     ie scholarship finder
-    
-   */
+      
+       FORM BASED VERSION
+       ie scholarship finder
+      
+     */
 
   if (searchForm && resultsArea) {
     var initialData = stir.jsonscholarships.scholarships || [];
     if (!initialData.length) return;
     /* 
-      EVENT: Submit form (Filtering form) 
-    */
+        EVENT: Submit form (Filtering form) 
+      */
     searchForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var page = 1;
@@ -442,8 +439,8 @@
     });
 
     /* 
-      Pagination click controller 
-    */
+        Pagination click controller 
+      */
     var doPageClick = function doPageClick(page) {
       var params = {
         page: page
@@ -455,8 +452,8 @@
     };
 
     /* 
-      EVENT: Pagination click events 
-    */
+        EVENT: Pagination click events 
+      */
     resultsArea.addEventListener("click", function (e) {
       if (e.target.matches("#pagination-box button")) {
         e.target.classList.add("hide");
@@ -480,8 +477,8 @@
     }, false);
 
     /* 
-      EVENT: Reset filters button click 
-    */
+        EVENT: Reset filters button click 
+      */
     if (searchClearBtn) {
       searchClearBtn.onclick = function (e) {
         var params = {
@@ -500,23 +497,23 @@
     }
 
     /*
-       EVENT: On load
-     */
+         EVENT: On load
+       */
 
     var page = stir.isNumeric(QueryParams.get("page")) ? QueryParams.get("page") : 1;
     main(true, page, CONSTANTS, initialMeta, initialData);
   }
 
   /*
-   
-    HARD CODED Listings
-    eg on the international Pages
-   
-   */
+     
+      HARD CODED Listings
+      eg on the international Pages
+     
+     */
 
   /* 
-    Form the html for the listing 
-  */
+      Form the html for the listing 
+    */
   var renderHardcodedResults = stir.curry(function (data) {
     return stir.map(function (el) {
       return "<li data-rank=\"".concat(el.rank, "\"><a href=\"").concat(el.scholarship.url, "\">").concat(el.scholarship.title, "</a> ").concat(debug ? el.rank : "", "</li>");
@@ -527,8 +524,8 @@
   });
 
   /* 
-    This version loads the data async so we need a url to the data
-  */
+      This version loads the data async so we need a url to the data
+    */
   var jsonurl = {
     dev: "data.json",
     qa: "data.json",
@@ -537,12 +534,12 @@
   };
 
   /*
-    Hard coded country listing
-  */
+      Hard coded country listing
+    */
 
   /* 
-    Extract the vars from the html element 
-  */
+      Extract the vars from the html element 
+    */
   var getCountryListingFilters = function getCountryListingFilters(el, country, regionmacros) {
     return {
       subject: "Any",
@@ -557,8 +554,8 @@
   };
 
   /* 
-    Loop the countries and get the matches for each
-  */
+      Loop the countries and get the matches for each
+    */
   var getCountriesData = function getCountriesData(CONSTS, element, allData) {
     return element.dataset.country.split(", ").map(function (country) {
       var filters = getCountryListingFilters(element, country, CONSTS.regionmacros);
@@ -572,8 +569,8 @@
   };
 
   /*
-    On load
-  */
+      On load
+    */
 
   if (countryNodes.length) {
     stir.getJSON(jsonurl[UoS_env.name], function (initialData2) {
@@ -589,12 +586,12 @@
   }
 
   /*
-    Hard coded subject listing
-  */
+      Hard coded subject listing
+    */
 
   /* 
-    Extract the vars from the html element 
-  */
+      Extract the vars from the html element 
+    */
   var getSubjectListingFilters = function getSubjectListingFilters(el) {
     return {
       subject: el.dataset.subject,
@@ -609,8 +606,8 @@
   };
 
   /*
-       On load
-  */
+         On load
+    */
 
   if (subjectNodes.length) {
     stir.getJSON(jsonurl[UoS_env.name], function (initialData) {

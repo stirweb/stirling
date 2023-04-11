@@ -1,5 +1,7 @@
 /**
- * Just a temp file to add new (or update) functionality of Stir.js etc.
+ * 2023-03-30 4.42 pm
+ * Just a temp file to test new search-facet JS without commiting to this branch.
+ * r.w.morrison@stir.ac.uk
  */
 
 /**
@@ -293,11 +295,7 @@ stir.templates.search = function () {
           href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/"
         };
       }).slice(0, -1)) : "<a href=\"https://www.stir.ac.uk/".concat(crumbs.href[0], "/\">").concat(crumbs.text[0], "</a>");
-<<<<<<< HEAD
       return "\n\t\t\t<div class=\"c-search-result".concat(authClass(item.metaData.group), "\" data-rank=").concat(item.rank).concat(item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : "", " data-access=\"").concat(item.metaData.access, "\">\n\t\t\t\t<div class=\"c-search-result__body u-mt-1 flex-container flex-dir-column u-gap\">\n\t\t\t\t\t<p class=\"c-search-result__breadcrumb\">").concat(trail, "</p>\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0], "</a></p>\n\t\t\t\t\t").concat(internalSummary(item.summary, item.metaData.group), "\n\t\t\t\t</div>\n\t\t\t</div>");
-=======
-      return "\n      <div class=\"c-search-result".concat(authClass(item.metaData.group), "\" data-rank=").concat(item.rank).concat(item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : "", " data-access=\"").concat(item.metaData.access, "\">\n\t\t\t  <div class=\"c-search-result__body u-mt-1 flex-container flex-dir-column u-gap\">\n\t\t\t    <p class=\"c-search-result__breadcrumb\">").concat(trail, "</p>\n\t\t\t    <p class=\"u-text-regular u-m-0\"><strong><a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0], "</a></strong></p>\n\t\t\t    ").concat(internalSummary(item.summary, item.metaData.group), "\n\t\t\t  </div>\n\t\t\t</div>");
->>>>>>> qa
     },
     combo: function combo(item) {
       var _item$codes;

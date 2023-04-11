@@ -15,8 +15,8 @@
 
 (function () {
   /*
-     Vars
-   */
+       Vars
+     */
 
   const countryNodes = stir.nodes("[data-scholcountrylisting]");
   const subjectNodes = stir.nodes("[data-scholsubjectlisting]");
@@ -70,14 +70,14 @@
   };
 
   /*
-   
-    D A T A   P R O C E S S I N G
-   
-   */
+     
+      D A T A   P R O C E S S I N G
+     
+     */
 
   /*  
-    Find the results that match the filters and reorder 
-  */
+      Find the results that match the filters and reorder 
+    */
   const filterData = stir.curry((CONSTS, filters, schol) => {
     if (schol.title) {
       if (isMatch(filters, schol, CONSTS)) {
@@ -87,16 +87,16 @@
   });
 
   /*  
-    Return the schol with a ranking 
-  */
+      Return the schol with a ranking 
+    */
   const mapRank = stir.curry((filters, schol) => {
     const rank = getRank(filters, schol);
     return { rank: rank, scholarship: schol };
   });
 
   /* 
-    isMatch() helpers
-  */
+      isMatch() helpers
+    */
 
   const matchStudyLevel = (scholStudyLevel, filterStudyLevel) => {
     if (filterStudyLevel === "Any") return true;
@@ -110,9 +110,11 @@
 
     if (filterFeeStatus == "Any") return true;
 
-    // if (filterFeeStatus == "European") {
-    //   if (scholFeeStatus == "European" || scholFeeStatus == "International") return true;
-    // }
+    if (filterFeeStatus == "European") {
+      if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
+    }
+
+    //console.log(scholFeeStatus, filterFeeStatus);
 
     return scholFeeStatus.includes(filterFeeStatus);
   };
@@ -134,10 +136,9 @@
   };
 
   const isRegion = (scholNation, filterRegions) => {
-    if (!filterRegions || !filterRegions.length) return false;
+    if (!filterRegions || filterRegions.length) return false;
 
     const hasRegion = filterRegions.map((item) => scholNation.includes(item));
-
     return stir.any((item) => item, hasRegion);
   };
 
@@ -148,19 +149,21 @@
   };
 
   /*
-    Determine if a scholarship matches the filters
-  */
+      Determine if a scholarship matches the filters
+    */
   const isMatch = (filters, schol, CONSTS) => {
     const matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, CONSTS.regions.ukroi)];
+
+    //console.log(matchFilter);
 
     return stir.all((b) => b, matchFilter);
   };
 
   /* 
-    getRank() helpers
-  */
+      getRank() helpers
+    */
   const getInitialRank = (schol, filters) => {
-    if (!filters.sortBy || filters.sortBy === "") {
+    if (filters.sortBy === "") {
       if (schol.ugOrder !== "") return schol.ugOrder;
       if (schol.pgOrder !== "") return schol.pgOrder;
     }
@@ -173,16 +176,10 @@
     return "1000";
   };
 
-  /* 
-    getPos: Returns an int
-  */
   const getPos = (scholVal, filterVal) => {
     return scholVal.toLowerCase().indexOf(filterVal.toLowerCase()); // TODO Work in String length
   };
 
-  /* 
-    getRankValue: Returns an int
-  */
   const getRankValue = (scholVal, filterVal, startVal, weight) => {
     if (filterVal !== "" && scholVal.toLowerCase().includes(filterVal.toLowerCase())) {
       return calcRank(startVal, weight, getPos(scholVal, filterVal));
@@ -191,15 +188,15 @@
   };
 
   /* 
-    Determine the final weighting (position) 
-  */
+      Determine the final weighting (position) 
+    */
   const calcRank = (initialVal, weight, stringPos) => {
     return String(weight + parseInt(initialVal) + stringPos);
   };
 
   /* 
-    Return the final calculated rank value 
-  */
+      Return the final calculated rank value 
+    */
   const getRank = (filters, schol) => {
     const initrank = getInitialRank(schol, filters);
 
@@ -207,21 +204,21 @@
     const rank2 = getRankValue(schol.nationality, filters.nation, rank, -10000);
     const rank3 = isRegion(schol.nationality, filters.regions) ? calcRank(rank2, -100, 0) : rank2;
     const rank4 = getRankValue(schol.promotedSubject, filters.subject, rank3, -20000);
-    const rank5 = getRankValue(schol.feeStatus, filters.feeStatus, rank4, -1010);
+    const rank5 = getRankValue(schol.faculty, filters.faculty, rank4, -20000);
 
     return rank5;
   };
 
   /* 
-    Sorts a comma separated string. Returns an array
-  */
+      Sorts a comma separated string. Returns an array
+    */
   const getReorderedString = (str, direction) => {
     return direction !== "desc" ? str.split(", ").sort() : str.split(", ").sort().reverse();
   };
 
   /* 
-    Return Fee Status as an array of full strings 
-  */
+      Return Fee Status as an array of full strings 
+    */
   const getFeeStatusFullName = (feeStatusesAll, feeStatus) => {
     return feeStatus.split(", ").map((schol) => {
       const matched = stir.filter((el) => {
@@ -234,8 +231,8 @@
   };
 
   /* 
-    Return Fee Status as a full string 
-  */
+      Return Fee Status as a full string 
+    */
   const getFeeStatusText = (feeStatus, consts, feeStatusFilter) => {
     const feeStatuses = getFeeStatusFullName(consts.feeStatusesAll, feeStatus);
     const feeStatusFilterFull = getFeeStatusFullName(consts.feeStatusesAll, feeStatusFilter);
@@ -247,103 +244,103 @@
   };
 
   /*
-    
-     R E N D E R E R S
-    
-   */
+      
+       R E N D E R E R S
+      
+     */
 
   /* 
-    Form the html for the pagination  
-  */
+      Form the html for the pagination  
+    */
   const renderPagination = ({ currentPage, totalPosts, last }) => {
     return last >= totalPosts
       ? ``
       : `<div class="cell text-center">
-              <button class="button hollow tiny" data-page="${currentPage}">Load more results</button>
-        </div>`;
+                <button class="button hollow tiny" data-page="${currentPage}">Load more results</button>
+          </div>`;
   };
 
   /* 
-    Form the HTML for all results 
-  */
+      Form the HTML for all results 
+    */
   const renderFormResults = stir.curry((consts, _meta, _data) => {
     return `
-        <p class="u-margin-bottom text-center"> Displaying  ${_meta.start + 1} - ${_meta.last}  of  <strong>${_meta.totalPosts} results</strong> that match your criteria.</p>
-        ${stir.map((schol) => renderItem(consts, _meta, schol), _data).join("")} 
-        <div class="grid-x grid-padding-x " id="pagination-box">
-          ${renderPagination(_meta)}
-        </div> `;
+          <p class="u-margin-bottom text-center"> Displaying  ${_meta.start + 1} - ${_meta.last}  of  <strong>${_meta.totalPosts} results</strong> that match your criteria.</p>
+          ${stir.map((schol) => renderItem(consts, _meta, schol), _data).join("")} 
+          <div class="grid-x grid-padding-x " id="pagination-box">
+            ${renderPagination(_meta)}
+          </div> `;
   });
 
   /* 
-    Form the HTML for an individual result
-  */
+      Form the HTML for an individual result
+    */
   const renderItem = (consts, _meta, schol) => {
     return `
-        <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative">
-            <div class="u-absolute u-top--15">
-            ${getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join("")}
-            </div>
-            <div class="grid-x grid-padding-x">
-                <div class="cell  u-mt-1">
-                    <p class="u-heritage-green u-mb-2">
-                      <strong><a href="${schol.scholarship.url}">${schol.scholarship.title}</a></strong></p>
-                    <p class="u-mb-2">${schol.scholarship.teaser}</p> 
-                </div>
-
-                ${renderDetail(schol.scholarship.value, "Value", false)}
-                ${renderDetail(schol.scholarship.awards, "Number of awards", true)}
-                ${renderDetail(getFeeStatusText(schol.scholarship.feeStatus, consts, _meta.feeStatusFilter) + " ", "Fee status", true)}
-              
-                ${debug && schol ? renderDebug(schol) : ""}
-            </div>
-        </div>`;
+          <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative">
+              <div class="u-absolute u-top--15">
+              ${getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join("")}
+              </div>
+              <div class="grid-x grid-padding-x">
+                  <div class="cell  u-mt-1">
+                      <p class="u-heritage-green u-mb-2">
+                        <strong><a href="${schol.scholarship.url}">${schol.scholarship.title}</a></strong></p>
+                      <p class="u-mb-2">${schol.scholarship.teaser}</p> 
+                  </div>
+  
+                  ${renderDetail(schol.scholarship.value, "Value", false)}
+                  ${renderDetail(schol.scholarship.awards, "Number of awards", true)}
+                  ${renderDetail(getFeeStatusText(schol.scholarship.feeStatus, consts, _meta.feeStatusFilter) + " ", "Fee status", true)}
+                
+                  ${debug && schol ? renderDebug(schol) : ""}
+              </div>
+          </div>`;
   };
 
   const renderTag = (item) => `<span class="u-bg-mint c-tag u-mr-1 ">${item}</span>`;
 
   /* 
-    Form the HTML for the details snippet 
-  */
+      Form the HTML for the details snippet 
+    */
   const renderDetail = (content, header, addDivider) => {
     return !content
       ? ``
       : `
-        <div class="cell small-12  large-4 ${addDivider ? `u-grey-line-left u-no-border-medium` : ``} ">
-          <div class="u-mb-fixed-1 u-h-full">
-            <p class="u-font-bold">${header}</p>
-            <p class="u-m-0">${content}</p>
-          </div>
-        </div> `;
+          <div class="cell small-12  large-4 ${addDivider ? `u-grey-line-left u-no-border-medium` : ``} ">
+            <div class="u-mb-fixed-1 u-h-full">
+              <p class="u-font-bold">${header}</p>
+              <p class="u-m-0">${content}</p>
+            </div>
+          </div> `;
   };
 
   /* 
-    Form the HTML for debugging info 
-  */
+      Form the HTML for debugging info 
+    */
   const renderDebug = (schol) => {
     return `
-        <div class="cell u-mt-2 u-p-2 u-border-solid " >
-          <h3>Debugger</h3>
-          <b>Weighting: </b> ${schol.rank}
-          <br><b>Nationalities (M):</b> ${schol.scholarship.nationality}
-          <br><b>Fee Status (M):</b> ${schol.scholarship.feeStatus}
-          <br><b>Promoted (R):</b> ${schol.scholarship.promotedSubject}
-          <br><b>Other (Q):</b> ${schol.scholarship.otherSubject}
-          <br><b>Order (UG, PG):</b> ${schol.scholarship.ugOrder}, ${schol.scholarship.pgOrder}
-          <br><b>Faculty:</b> ${schol.scholarship.faculty}
-          <br><b>Faculty Order (UG, PG):</b> ${schol.scholarship.ugOrderFaculty} , ${schol.scholarship.pgOrderFaculty}</p>
-        </div> `;
+          <div class="cell u-mt-2 u-p-2 u-border-solid " >
+            <h3>Debugger</h3>
+            <b>Weighting: </b> ${schol.rank}
+            <br><b>Nationalities (M):</b> ${schol.scholarship.nationality}
+            <br><b>Fee Status (M):</b> ${schol.scholarship.feeStatus}
+            <br><b>Promoted (R):</b> ${schol.scholarship.promotedSubject}
+            <br><b>Other (Q):</b> ${schol.scholarship.otherSubject}
+            <br><b>Order (UG, PG):</b> ${schol.scholarship.ugOrder}, ${schol.scholarship.pgOrder}
+            <br><b>Faculty:</b> ${schol.scholarship.faculty}
+            <br><b>Faculty Order (UG, PG):</b> ${schol.scholarship.ugOrderFaculty} , ${schol.scholarship.pgOrderFaculty}</p>
+          </div> `;
   };
 
   /*
-    
-     EVENTS: OUTPUT (!!SIDE EFFECTS!!)
-    
-   */
+      
+       EVENTS: OUTPUT (!!SIDE EFFECTS!!)
+      
+     */
 
   /* 
-    Output the html content to the page 
-  */
+      Output the html content to the page 
+    */
   const setDOMContent = stir.curry((elem, html) => {
     elem.innerHTML = html;
     return elem;
@@ -355,8 +352,8 @@
   });
 
   /* 
-    Populate selects with query params from url string e.g. ?level=ug  
-  */
+      Populate selects with query params from url string e.g. ?level=ug  
+    */
   const setFormValues = (nodes) => {
     nodes.inputNation.value = QueryParams.get("nationality") || "Any";
     nodes.inputSubject.value = QueryParams.get("subject") || "!padrenullquery";
@@ -367,14 +364,14 @@
   };
 
   /*
-    
-     EVENTS: INPUT (!!SIDE EFFECTS!!)
-    
-   */
+      
+       EVENTS: INPUT (!!SIDE EFFECTS!!)
+      
+     */
 
   /* 
-    Filter Helper functions 
-  */
+      Filter Helper functions 
+    */
 
   const getRegionTags = stir.curry((scholNation, item) => {
     if (item.data.includes(scholNation)) {
@@ -430,8 +427,8 @@
   //const getSubjectType = (value) => (value && value.length > 0 ? value : "");
 
   /* 
-    Extract filter vars from the form and reconfig them if nec 
-  */
+      Extract filter vars from the form and reconfig them if nec 
+    */
   const getFilterVars = (nodes, regionmacros) => {
     const subjectType = "Subject"; // getSubjectType(nodes.inputSubject.options[nodes.inputSubject.selectedIndex].parentNode.label);
 
@@ -450,8 +447,8 @@
   };
 
   /* 
-    Main controller function  
-  */
+      Main controller function  
+    */
   const main = (setFiltersFlag, page, CONSTS, initMeta, initData) => {
     if (setFiltersFlag) setFormValues(CONSTS.nodes);
 
@@ -480,19 +477,19 @@
   };
 
   /*
-    
-     FORM BASED VERSION
-     ie scholarship finder
-    
-   */
+      
+       FORM BASED VERSION
+       ie scholarship finder
+      
+     */
 
   if (searchForm && resultsArea) {
     const initialData = stir.jsonscholarships.scholarships || [];
 
     if (!initialData.length) return;
     /* 
-      EVENT: Submit form (Filtering form) 
-    */
+        EVENT: Submit form (Filtering form) 
+      */
     searchForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -513,8 +510,8 @@
     });
 
     /* 
-      Pagination click controller 
-    */
+        Pagination click controller 
+      */
     const doPageClick = (page) => {
       const params = { page: page };
       QueryParams.set(params);
@@ -525,8 +522,8 @@
     };
 
     /* 
-      EVENT: Pagination click events 
-    */
+        EVENT: Pagination click events 
+      */
     resultsArea.addEventListener(
       "click",
       (e) => {
@@ -554,8 +551,8 @@
     );
 
     /* 
-      EVENT: Reset filters button click 
-    */
+        EVENT: Reset filters button click 
+      */
     if (searchClearBtn) {
       searchClearBtn.onclick = (e) => {
         const params = {
@@ -577,23 +574,23 @@
     }
 
     /*
-       EVENT: On load
-     */
+         EVENT: On load
+       */
 
     const page = stir.isNumeric(QueryParams.get("page")) ? QueryParams.get("page") : 1;
     main(true, page, CONSTANTS, initialMeta, initialData);
   }
 
   /*
-   
-    HARD CODED Listings
-    eg on the international Pages
-   
-   */
+     
+      HARD CODED Listings
+      eg on the international Pages
+     
+     */
 
   /* 
-    Form the html for the listing 
-  */
+      Form the html for the listing 
+    */
   const renderHardcodedResults = stir.curry((data) => {
     return stir.map((el) => `<li data-rank="${el.rank}"><a href="${el.scholarship.url}">${el.scholarship.title}</a> ${debug ? el.rank : ""}</li>`, data);
   });
@@ -601,8 +598,8 @@
   const renderWrapper = stir.curry((data) => `<ul> ${data.join("\n")}</ul>`);
 
   /* 
-    This version loads the data async so we need a url to the data
-  */
+      This version loads the data async so we need a url to the data
+    */
   const jsonurl = {
     dev: "data.json",
     qa: "data.json",
@@ -611,12 +608,12 @@
   };
 
   /*
-    Hard coded country listing
-  */
+      Hard coded country listing
+    */
 
   /* 
-    Extract the vars from the html element 
-  */
+      Extract the vars from the html element 
+    */
   const getCountryListingFilters = (el, country, regionmacros) => {
     return {
       subject: "Any",
@@ -631,8 +628,8 @@
   };
 
   /* 
-    Loop the countries and get the matches for each
-  */
+      Loop the countries and get the matches for each
+    */
   const getCountriesData = (CONSTS, element, allData) => {
     return element.dataset.country.split(", ").map((country) => {
       const filters = getCountryListingFilters(element, country, CONSTS.regionmacros);
@@ -646,8 +643,8 @@
   };
 
   /*
-    On load
-  */
+      On load
+    */
 
   if (countryNodes.length) {
     stir.getJSON(jsonurl[UoS_env.name], (initialData2) => {
@@ -663,12 +660,12 @@
   }
 
   /*
-    Hard coded subject listing
-  */
+      Hard coded subject listing
+    */
 
   /* 
-    Extract the vars from the html element 
-  */
+      Extract the vars from the html element 
+    */
   const getSubjectListingFilters = (el) => {
     return {
       subject: el.dataset.subject,
@@ -683,8 +680,8 @@
   };
 
   /*
-       On load
-  */
+         On load
+    */
 
   if (subjectNodes.length) {
     stir.getJSON(jsonurl[UoS_env.name], (initialData) => {

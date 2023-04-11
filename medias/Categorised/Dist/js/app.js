@@ -5337,7 +5337,6 @@ var UoS_env = function () {
   var wc_path = "/media/dist/";
   switch (hostname) {
     case "localhost":
-    case "10.0.2.2":
       env_name = "dev";
       wc_path = "/medias/Categorised/Dist/";
       break;
@@ -5352,9 +5351,11 @@ var UoS_env = function () {
     case "stir.ac.uk":
       env_name = "pub";
       break;
-    case "www-stir.t4appdev.stir.ac.uk":
-      env_name = "dev-pub";
-      break;
+
+    //    case "www-stir.t4appdev.stir.ac.uk":
+    //      env_name = "dev-pub";
+    //      break;
+
     case "stirweb.github.io":
       env_name = "qa";
       wc_path = "/medias/Categorised/Dist/";
@@ -6132,10 +6133,11 @@ stir.Concierge.prototype.obj2param = function (obj) {
 })();
 */
 (function () {
-  if (!stir.node("#coursefavsarea") && !stir.node("#coursesharedarea")) return;
+  if (!stir.node("#coursefavsarea") && !stir.node("#coursesharedarea") && !stir.node("#coursefavsbtn")) return;
 
   // NODES
   var NODES = {
+    coursefavsbtnArea: stir.node("#coursefavsbtn"),
     favsArea: stir.node("#coursefavsarea"),
     sharedArea: stir.node("#coursesharedarea"),
     sharedfavArea: stir.node("#coursesharedfavsarea")
@@ -6155,23 +6157,34 @@ stir.Concierge.prototype.obj2param = function (obj) {
     return !item.metaData ? "" : "<p class=\"text-sm\">\n            <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n         </p>");
   };
   var renderFav = stir.curry(function (item) {
-    console.log(getDaysAgo(new Date(item.dateSaved)));
-    return !item.metaData ? "" : "\n        <div class=\"c-search-result\" data-rank=\"\" data-sid=\"".concat(item.metaData.sid, "\" data-result-type=\"course\">\n            <div class=\" c-search-result__tags\">\n                <span class=\"c-search-tag\">").concat(item.metaData.level, "</span>\n            </div>\n\n            <div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n                <p class=\"u-text-regular u-m-0\">\n                    <strong><a href=\"").concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n                </p>\n                <p class=\"u-m-0\">").concat(item.metaData.c, "</p>\n                \n                <div class=\"c-search-result__meta grid-x u-mt-1\">\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Start dates</strong><p>").concat(item.metaData.start, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Study modes</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.modes, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Delivery</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.delivery, "</p></div>\n                </div>\n            </div>\n            <div class=\"flex-container align-middle u-gap u-mt-1\">\n                <button class=\"u-energy-teal u-border-solid u-p-1 u-cursor-pointer flex-container u-gap-8 align-middle\" data-action=\"removefav\" data-id=\"").concat(item.metaData.sid, "\">\n                <svg version=\"1.1\" id=\"Layer_1\"\n                                xmlns=\"http://www.w3.org/2000/svg\" stroke=\"currentColorz\" stroke-width=\"1.5\"\n                                fill=\"#008996\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n                                viewBox=\"0 0 50 50\" style=\"enable-background:new 0 0 50 50; width:24px; height: 24px;\"\n                                xml:space=\"preserve\">\n                                <path d=\"M9.7,20.4c0.2,0.4,0.3,0.8,0.1,1.2l-0.6,1.9c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9\n                        c0.6,0.5,2.4,2,3,2.4c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.4-4.3c0.1-0.3,0.3-0.6,0.6-0.8\n                        c2.3-1.6,3.9-4.1,4-6.9c0.3-2.8-0.9-5.6-3-7.5c-1.1-0.9-2.1-1.5-3.5-2l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8\n                        c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5L28.1,11l-7.1-2.3c-2.1-0.6-4.3-0.4-6.2,0.4\n                        c-2,0.9-3.5,2.4-4.4,4.3C9.2,15.8,9,18.2,9.7,20.4z M12.3,22.7l24.2,7.8l-1.2,3.8c-1,3-3,5.4-5.8,6.9c-2.9,1.7-6.4,2.5-10.3,2.6\n                        l-0.4-0.1l-0.1,0c-2.7-2-4.8-4.4-6.3-7c-1.5-2.8-2.1-5.8-1.5-8.7l0,0c0.1-0.6,0.4-1.6,0.7-2.5c0.3-0.9,0.5-2,0.6-2.2L12.3,22.7z\n                         M13,14.3c1.6-2.6,4.5-3.8,7.5-2.8l16.7,5.4c2.2,1,3.5,2.7,3.9,5.1c0.3,2.4-0.5,4.4-2.3,5.9c-0.2,0.2-0.6,0.4-1.2,0.2l-24.5-7.9\n                        c-0.3-0.1-0.5-0.3-0.7-0.7l0,0C11.8,17.6,12,15.8,13,14.3z\" /></svg>\n                <span class=\"u-heritage-teal\">Remove from my favourites</span></button>\n                <span>Favourited ").concat(getDaysAgo(new Date(item.dateSaved)), "</span>\n            </div>\n        </div>");
+    return !item.metaData ? "" : "\n        <div class=\"c-search-result\" data-rank=\"\" data-sid=\"".concat(item.metaData.sid, "\" data-result-type=\"course\">\n            <div class=\" c-search-result__tags\">\n                <span class=\"c-search-tag\">").concat(item.metaData.level, "</span>\n            </div>\n\n            <div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n                <p class=\"u-text-regular u-m-0\">\n                    <strong><a href=\"").concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "</a></strong>\n                </p>\n                <p class=\"u-m-0\">").concat(item.metaData.c, "</p>\n                \n                <div class=\"c-search-result__meta grid-x u-mt-1\">\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Start dates</strong><p>").concat(item.metaData.start, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Study modes</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.modes, "</p></div>\n                    <div class=\"cell medium-4\"><strong class=\"u-heritage-green\">Delivery</strong><p class=\"u-text-sentence-case\">").concat(item.metaData.delivery, "</p></div>\n                </div>\n            </div>\n\n            <div class=\"flex-container align-middle u-gap-8 u-mt-1\">\n               ").concat(renderRemoveBtn(item.metaData.sid, item.dateSaved), "\n            </div>\n        </div>");
   });
+  var renderRemoveBtn = function renderRemoveBtn(sid, dateSaved) {
+    return " \n        <button class=\"u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle\" data-action=\"removefav\" data-id=\"".concat(sid, "\">\n            ").concat(renderActiveIcon(), "\n        </button>\n        <span>Favourited ").concat(getDaysAgo(new Date(dateSaved)), "</span>\n        <!-- button class=\"u-energy-green  u-cursor-pointer flex-container u-gap-8 align-middle\" data-action=\"removefav\" data-id=\"").concat(sid, "\">\n            <span class=\"u-heritage-green u-underline u-line-height-default\">Remove from my favourites</span>\n        </!-->");
+  };
+  var renderAddBtn = function renderAddBtn(sid) {
+    return " \n          <button\n              class=\"u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap align-middle\"\n              data-action=\"addtofavs\" data-id=\"".concat(sid, "\">\n              ").concat(renderInactiveIcon(), "\n              <span class=\"u-heritage-green u-underline u-inline-block u-pb-1\">Add\n                  to your favourites</span>\n          </button>");
+  };
   var renderNoFavs = function renderNoFavs() {
-    return "<p>Nothing saved here yet. <a href=\"https://www.stir.ac.uk/courses/\">View courses</a> and add them to your favourites. </p>";
+    return "<p>Nothing saved here yet. <a href=\"/courses/\">View courses</a> and add them to your favourites. </p>";
   };
   var renderNoShared = function renderNoShared() {
     return "<div class=\"cell\"><p>No courses shared</p></div>";
   };
   var renderLinkToFavs = function renderLinkToFavs() {
-    return "<hr><p class=\"text-sm u-arrow\"><a href=\"https://www.stir.ac.uk/courses/favs/\">View and manage my favourites</a></p>";
+    return "<hr><p class=\"text-sm u-arrow\"><a href=\"/stirling/pages/search/course-favs/\">Manage my favourites</a></p>";
   };
   var renderFavActionBtns = function renderFavActionBtns() {
     return "\n        <div class=\" u-mb-3 \">\n          <button class=\"u-border-solid u-p-1  u-cursor-pointer u-mt-1 \" data-action=\"clearallfavs\">Clear favourites</button>\n          <button class=\"u-border-solid u-p-1 u-cursor-pointer u-mt-1 \" data-action=\"copysharelink\">Generate share link</button>\n        </div>";
   };
+  var renderInactiveIcon = function renderInactiveIcon() {
+    return "<svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\"\n              xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n                  viewBox=\"0 0 50 50\" style=\"enable-background:new 0 0 50 50;width:28px; height: 28px;\" xml:space=\"preserve\">\n              <g id=\"Layer_1_00000157273399641228684280000005207056774539682203_\">\n                <g id=\"icons\">\n                </g>\n              </g>\n              <path d=\"M9.7,20.4c0.2,0.4,0.3,0.8,0.1,1.2l-0.6,1.9c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9\n                c0.6,0.5,2.4,2,3,2.4c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.4-4.3c0.1-0.3,0.3-0.6,0.6-0.8\n                c2.3-1.6,3.9-4.1,4-6.9c0.3-2.8-0.9-5.6-3-7.5c-1.1-0.9-2.1-1.5-3.5-2l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8\n                c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5L28.1,11l-7.1-2.3c-2.1-0.6-4.3-0.4-6.2,0.4\n                c-2,0.9-3.5,2.4-4.4,4.3C9.2,15.8,9,18.2,9.7,20.4z M12.3,22.7l24.2,7.8l-1.2,3.8c-1,3-3,5.4-5.8,6.9c-2.9,1.7-6.4,2.5-10.3,2.6\n                l-0.4-0.1l-0.1,0c-2.7-2-4.8-4.4-6.3-7c-1.5-2.8-2.1-5.8-1.5-8.7l0,0c0.1-0.6,0.4-1.6,0.7-2.5c0.3-0.9,0.5-2,0.6-2.2L12.3,22.7z\n                  M13,14.3c1.6-2.6,4.5-3.8,7.5-2.8l16.7,5.4c2.2,1,3.5,2.7,3.9,5.1c0.3,2.4-0.5,4.4-2.3,5.9c-0.2,0.2-0.6,0.4-1.2,0.2l-24.5-7.9\n                c-0.3-0.1-0.5-0.3-0.7-0.7l0,0C11.8,17.6,12,15.8,13,14.3z\"/>\n            </svg>";
+  };
+  var renderActiveIcon = function renderActiveIcon() {
+    return "<svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\"\n              xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 50 50\"\n              style=\"enable-background:new 0 0 50 50;width:28px; height: 28px;\" xml:space=\"preserve\">\n              <g id=\"Layer_1_00000157273399641228684280000005207056774539682203_\">\n                  <g id=\"icons\">\n                  </g>\n              </g>\n              <path d=\"M9.2,23.5c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9c0.6,0.5,2.4,2,3,2.4\n          c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.3-3.9L9.7,21.8L9.2,23.5z M41,15.8c-1.1-0.9-2.1-1.5-3.5-2\n          l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5\n          L28.1,11L21,8.7c-2.1-0.6-4.3-0.4-6.2,0.4c-2,0.9-3.5,2.4-4.4,4.3c-0.9,1.9-1.3,3.7-1,5.5l31.8,10.3c1.7-1.6,2.8-3.7,2.9-6\n          C44.3,20.5,43.1,17.7,41,15.8z\" />\n        </svg> ";
+  };
   var renderShared = function renderShared(item) {
-    return !item.metaData ? "" : "<div class=\"cell small-6 \">\n            <div class=\" u-green-line-top u-margin-bottom\">\n                <p class=\"u-text-regular u-py-1\">\n                  <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "</a></strong>\n                </p>\n                <div class=\"u-mb-1\">").concat(item.metaData.c, "</div>\n                <").concat(isInCookie(item.metaData.sid) ? "div" : "button", "  class=\"u-w-full ").concat(isInCookie(item.metaData.sid) ? "u-energy-teal--light" : "u-energy-teal u-cursor-pointer", "  u-border-solid u-p-1  u-mt-1 flex-container u-gap-8 align-middle align-center\" data-action=\"").concat(isInCookie(item.metaData.sid) ? "" : "addtofavs", "\" data-id=\"").concat(item.metaData.sid, "\">\n                <svg version=\"1.1\" id=\"Layer_1\"\n                                xmlns=\"http://www.w3.org/2000/svg\" stroke=\"currentColorz\" stroke-width=\"1.5\"\n                                fill=\" ").concat(isInCookie(item.metaData.sid) ? "#b3dce0" : "#008996", "\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\n                                viewBox=\"0 0 50 50\" style=\"enable-background:new 0 0 50 50; width:24px; height: 24px;\"\n                                xml:space=\"preserve\">\n                                <path d=\"M9.7,20.4c0.2,0.4,0.3,0.8,0.1,1.2l-0.6,1.9c-0.3,1-0.7,2.1-0.9,3.2c-0.6,2.5-0.4,5.4,0.6,8.3c1.1,3.3,3.2,6.2,6.3,9\n                        c0.6,0.5,2.4,2,3,2.4c0.7,0,3.1-0.1,3.8-0.1c3.7-0.5,6.8-1.4,9.4-3c3.1-1.9,5.4-4.6,6.6-8l1.4-4.3c0.1-0.3,0.3-0.6,0.6-0.8\n                        c2.3-1.6,3.9-4.1,4-6.9c0.3-2.8-0.9-5.6-3-7.5c-1.1-0.9-2.1-1.5-3.5-2l-6.7-2.2l0.2-0.5c0.8-2.5,0.5-4.7-0.9-6.8\n                        c-0.7-1.2-1.6-1.9-2.8-2.4l-0.9,2.7c0.9,0.5,1.6,1.2,2,2.2c0.5,1.2,0.4,2.3-0.1,3.5L28.1,11l-7.1-2.3c-2.1-0.6-4.3-0.4-6.2,0.4\n                        c-2,0.9-3.5,2.4-4.4,4.3C9.2,15.8,9,18.2,9.7,20.4z M12.3,22.7l24.2,7.8l-1.2,3.8c-1,3-3,5.4-5.8,6.9c-2.9,1.7-6.4,2.5-10.3,2.6\n                        l-0.4-0.1l-0.1,0c-2.7-2-4.8-4.4-6.3-7c-1.5-2.8-2.1-5.8-1.5-8.7l0,0c0.1-0.6,0.4-1.6,0.7-2.5c0.3-0.9,0.5-2,0.6-2.2L12.3,22.7z\n                         M13,14.3c1.6-2.6,4.5-3.8,7.5-2.8l16.7,5.4c2.2,1,3.5,2.7,3.9,5.1c0.3,2.4-0.5,4.4-2.3,5.9c-0.2,0.2-0.6,0.4-1.2,0.2l-24.5-7.9\n                        c-0.3-0.1-0.5-0.3-0.7-0.7l0,0C11.8,17.6,12,15.8,13,14.3z\" /></svg>\n                <span class=\"u-heritage-teal\">").concat(isInCookie(item.metaData.sid) ? "Already in my favourites" : "Add to my favourites", "</span>\n                </").concat(isInCookie(item.metaData.sid) ? "div" : "button", ">\n            </div>\n        </div>");
+    return !item.metaData ? "" : "<div class=\"cell small-6 \">\n            <div class=\" u-green-line-top u-margin-bottom\">\n                <p class=\"u-text-regular u-py-1\">\n                  <strong><a href=\"".concat(item.liveUrl, "\" title=\"").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "\">").concat(item.metaData.award ? item.metaData.award : "", " ").concat(item.title, "</a></strong>\n                </p>\n                <div class=\"u-mb-1\">").concat(item.metaData.c, "</div>\n                <").concat(isInCookie(item.metaData.sid) ? "div" : "button", "  class=\"u-w-full u-heritage-green ").concat(isInCookie(item.metaData.sid) ? "" : "u-heritage-green u-cursor-pointer", "   u-mt-1 flex-container u-gap-8 align-middle \" data-action=\"").concat(isInCookie(item.metaData.sid) ? "" : "addtofavs", "\" data-id=\"").concat(item.metaData.sid, "\">\n                  ").concat(isInCookie(item.metaData.sid) ? renderActiveIcon() : renderInactiveIcon(), "\n                <span class=\"u-heritage-green ").concat(isInCookie(item.metaData.sid) ? "" : "u-underline u-line-height-default", "\">\n                  ").concat(isInCookie(item.metaData.sid) ? "Already in my favourites" : "Add to my favourites", "\n                </span>\n                </").concat(isInCookie(item.metaData.sid) ? "div" : "button", ">\n            </div>\n        </div>");
   };
   var renderSharedIntro = function renderSharedIntro(items) {
     return !items.length ? "" : "";
@@ -6189,7 +6202,6 @@ stir.Concierge.prototype.obj2param = function (obj) {
   */
   var getDaysAgo = function getDaysAgo(createdOn) {
     var today = new Date();
-    //const createdOn = new Date(date);
     var msInDay = 24 * 60 * 60 * 1000;
     createdOn.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
@@ -6212,6 +6224,9 @@ stir.Concierge.prototype.obj2param = function (obj) {
   var getExpiryDate = function getExpiryDate(days) {
     var d = new Date();
     d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+
+    //console.log(d);
+    //console.log(d.toUTCString());
     return ";expires=" + d.toUTCString();
   };
 
@@ -6231,14 +6246,9 @@ stir.Concierge.prototype.obj2param = function (obj) {
       isInCookie: Returns a boolean
   */
   var isInCookie = function isInCookie(courseId) {
-    var favsCookie = getfavsCookie(cookieId);
-    var inCookie = favsCookie.map(function (item) {
-      return item.id === courseId;
-    });
-    if (!stir.any(function (item) {
-      return item;
-    }, inCookie)) return false;
-    return true;
+    return getfavsCookie(cookieId).map(function (item) {
+      return item.id;
+    }).includes(courseId);
   };
 
   /*
@@ -6299,7 +6309,8 @@ stir.Concierge.prototype.obj2param = function (obj) {
       setDOMContent(favsArea, renderNoFavs());
       return;
     }
-    setQueryParam(list);
+
+    //setQueryParam(list);
     setDOMContent(favsArea, renderFavActionBtns() + list.map(renderFav).join(""));
     return;
   };
@@ -6322,6 +6333,18 @@ stir.Concierge.prototype.obj2param = function (obj) {
     setDOMContent(nodes.sharedfavArea, renderHeader("h2", "My favourites") + list.map(renderMiniFav).join("") + renderLinkToFavs());
     return;
   };
+  var doCourseBtn = function doCourseBtn(courseBtnArea, data, cookieId) {
+    if (!courseBtnArea.dataset.id) return;
+    var fav = getfavsCookie(cookieId).filter(function (item) {
+      return item.id === courseBtnArea.dataset.id;
+    });
+    if (fav.length) {
+      setDOMContent(courseBtnArea, renderRemoveBtn(fav[0].id, fav[0].date));
+      return;
+    }
+    setDOMContent(courseBtnArea, renderAddBtn(courseBtnArea.dataset.id));
+    return;
+  };
 
   /* 
     fetchData : Returns null 
@@ -6333,23 +6356,24 @@ stir.Concierge.prototype.obj2param = function (obj) {
       // On Load
       nodes.sharedArea && doShared(nodes, data, cookieId);
       nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+      nodes.coursefavsbtnArea && doCourseBtn(nodes.coursefavsbtnArea, data, cookieId);
 
       /* EVENT LISTENERS */
       stir.node("main").addEventListener("click", function (event) {
-        var target = event.target.nodeName === "BUTTON" ? event.target : event.target.parentElement;
+        var target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
 
         /* ACTION: ADD a FAV */
         if (target.dataset && target.dataset.action === "addtofavs") {
-          console.log(target);
-          if (!isInCookie(event.target.dataset.id)) {
+          if (!isInCookie(target.dataset.id)) {
             var favsCookie2 = [].concat(_toConsumableArray(getfavsCookie(cookieId)), [{
               id: target.dataset.id,
               date: Date.now()
             }]);
-            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
+            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(300) + ";path=/";
           }
           nodes.sharedArea && doShared(nodes, data, cookieId);
           nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+          nodes.coursefavsbtnArea && doCourseBtn(nodes.coursefavsbtnArea, data, cookieId);
         }
 
         /* ACTION: REMOVE a FAV */
@@ -6362,6 +6386,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
             });
             document.cookie = cookieId + JSON.stringify(_favsCookie) + getExpiryDate(30) + ";path=/";
             nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
+            nodes.coursefavsbtnArea && doCourseBtn(nodes.coursefavsbtnArea, data, cookieId);
           }
         }
 
@@ -6379,7 +6404,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
         /* ACTION: COPY SHARE LINK */
         if (target.dataset && target.dataset.action === "copysharelink") {
           var _favsCookie2 = getfavsCookie(cookieId);
-          var link = "https://www.stir.ac.uk/courses/favs/?shared=" + _favsCookie2.map(function (item) {
+          var link = "https://stirweb.github.io/stirling/pages/search/course-favs/shared/?shared=" + _favsCookie2.map(function (item) {
             return item.id;
           }).join(",");
           navigator.clipboard.writeText(link);
