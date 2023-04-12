@@ -212,7 +212,7 @@ stir.templates.search = function () {
         currEnd = _data$response$result.currEnd,
         totalMatching = _data$response$result.totalMatching,
         currStart = _data$response$result.currStart;
-      var querySanitised = stir.String.stripHtml(data.question.originalQuery).replace(/^!padrenullquery$/, "").trim();
+      var querySanitised = stir.String.htmlEntities(data.question.originalQuery).replace(/^!padrenullquery$/, "").trim();
       var queryEcho = querySanitised.length > 1 ? " for <em>".concat(querySanitised, "</em>") : "";
       var message = totalMatching > 0 ? "\t<p class=\"text-sm\">There are <strong>".concat(totalMatching.toLocaleString("en"), " results</strong>").concat(queryEcho, ".</p>") : "<p id=\"search_summary_noresults\"><strong>There are no results".concat(queryEcho, "</strong>.</p>");
       var tokens = metaParamTokens(data.question.rawInputParameters);
