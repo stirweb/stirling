@@ -178,7 +178,7 @@ stir.templates.search = (() => {
 
     summary: (data) => {
       const { currEnd, totalMatching, currStart } = data.response.resultPacket.resultsSummary;
-      const querySanitised = stir.String.stripHtml(data.question.originalQuery).replace(/^!padrenullquery$/, "").trim();
+      const querySanitised = stir.String.htmlEntities(data.question.originalQuery).replace(/^!padrenullquery$/, "").trim();
       const queryEcho = querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
 	  const message = (totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`);
 	  const tokens = metaParamTokens(data.question.rawInputParameters);
