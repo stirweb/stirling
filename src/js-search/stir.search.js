@@ -10,8 +10,8 @@ stir.funnelback = (() => {
 
   //const hostname = 'stage-shared-15-24-search.clients.uk.funnelback.com';
   //const hostname = 'shared-15-24-search.clients.uk.funnelback.com';
-  const hostname = debug || UoS_env.name === "preview" ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
-  //const hostname = 'search.stir.ac.uk';
+  //const hostname = debug || UoS_env.name === "preview" ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
+  const hostname = "search.stir.ac.uk";
   const url = `https://${hostname}/s/`;
 
   const getJsonEndpoint = () => new URL("search.json", url);
@@ -175,7 +175,7 @@ stir.search = () => {
       news: {
         collection: "stir-www",
         meta_type: "News",
-		meta_v_not:"faculty-news",
+        meta_v_not: "faculty-news",
         sort: "date",
         fmo: "true",
         SF: "[c,d,h1,image,imagealt,tags]",
@@ -234,35 +234,35 @@ stir.search = () => {
         num_ranks: NUMRANKS,
       },
     },
-	// extra parameters for no-query searches
-	noquery: {
-		course: {
-			sort: "title"	// if no keywords supplied, sort courses 
-							// by title instead of "relevance"
-//		},
-//		person: {
-//			sort: "meta_surname"	//sort people by surname
-//		},
-//		event: {
-//			sort: "adate"	// sort events by date descending 
-		}
-	}
+    // extra parameters for no-query searches
+    noquery: {
+      course: {
+        sort: "title", // if no keywords supplied, sort courses
+        // by title instead of "relevance"
+        //		},
+        //		person: {
+        //			sort: "meta_surname"	//sort people by surname
+        //		},
+        //		event: {
+        //			sort: "adate"	// sort events by date descending
+      },
+    },
   };
 
   if (!constants.form || !constants.form.query) return;
   debug && console.info("[Search] initialised.");
 
-  const getQuery = type => constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
-  
-  const getNoQuery  = type => constants.form.query.value ? {} : constants.noquery[type];
+  const getQuery = (type) => constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
+
+  const getNoQuery = (type) => (constants.form.query.value ? {} : constants.noquery[type]);
 
   const setQuery = () => (constants.form.query.value ? QueryParams.set("query", constants.form.query.value) : QueryParams.remove("query"));
 
-  const getPage  = type => parseInt(QueryParams.get(type) || 1);
+  const getPage = (type) => parseInt(QueryParams.get(type) || 1);
 
-  const getType = element => element.getAttribute("data-type") || element.parentElement.getAttribute("data-type");
+  const getType = (element) => element.getAttribute("data-type") || element.parentElement.getAttribute("data-type");
 
-  const nextPage = type => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
+  const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
 
   const calcStart = (page, numRanks) => (page - 1) * numRanks + 1;
 
@@ -270,7 +270,7 @@ stir.search = () => {
 
   const calcProgress = (currEnd, fullyMatching) => (currEnd / fullyMatching) * 100;
 
-  const getStartRank = type => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
+  const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
 
   const resetPagination = () => Object.keys(constants.parameters).forEach((key) => QueryParams.remove(key));
 
@@ -362,7 +362,7 @@ stir.search = () => {
 
   const renderResultsWithPagination = stir.curry(
     (type, data) =>
-/*       (debug
+      /*       (debug
         ? `<details class=debug>
 			<summary>query debug data</summary>
 			<pre class=debug data-label="user query">${stir.String.htmlEntities(JSON.stringify(data.response.resultPacket.queryCleaned, null, "  "))}</pre>
@@ -399,18 +399,20 @@ stir.search = () => {
   const callSearchApi = stir.curry((type, callback) => {
     const getFBParameters = getParameters(constants.parameters[type]); // curry-in fixed params
     const parameters = getFBParameters(
-		stir.Object.extend({}, 
-		{// session params:
-			start_rank: getStartRank(type),
-			query: getQuery(type),							// get actual query, or fallback, etc
-			curator: getStartRank(type) > 1 ? false:true	// only show curator for initial searches
-		},
-		getNoQuery(type)									// get special "no query" parameters (sorting, etc.)
-		)
-	); 
+      stir.Object.extend(
+        {},
+        {
+          // session params:
+          start_rank: getStartRank(type),
+          query: getQuery(type), // get actual query, or fallback, etc
+          curator: getStartRank(type) > 1 ? false : true, // only show curator for initial searches
+        },
+        getNoQuery(type) // get special "no query" parameters (sorting, etc.)
+      )
+    );
     //TODO if type==course and query=='!padrenullquery' then sort=title
     const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
-	//debug && console.info('[Search] URL:');
+    //debug && console.info('[Search] URL:');
     debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
   });
 
@@ -435,7 +437,7 @@ stir.search = () => {
       const resultsWrapper = document.createElement("div");
       const buttonWrapper = document.createElement("div");
       const button = new LoaderButton();
-	  button.setAttribute('disabled',true);
+      button.setAttribute("disabled", true);
       button.addEventListener("click", (event) => getMoreResults(resultsWrapper, button));
       element.appendChild(resultsWrapper);
       element.appendChild(buttonWrapper);
@@ -575,14 +577,14 @@ stir.search = () => {
           event.target.parentElement.removeChild(event.target);
           initialSearch();
         } else {
-			const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
-			const select = document.querySelector(sel2);
-			if(select) {
-				select.selectedIndex = 0
-				event.target.parentElement.removeChild(event.target);
-				initialSearch();
-			}
-		}
+          const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
+          const select = document.querySelector(sel2);
+          if (select) {
+            select.selectedIndex = 0;
+            event.target.parentElement.removeChild(event.target);
+            initialSearch();
+          }
+        }
       }
     });
   });
