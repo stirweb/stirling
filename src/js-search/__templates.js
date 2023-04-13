@@ -427,7 +427,7 @@ stir.templates.search = (() => {
       const hasThumbnail = item.metaData?.image || item.metaData?.tags?.indexOf("Webinar") > -1;
       const title = item.title.split(" | ")[0];
 
-      ////if (item.indexUrl === "http://163695") return "";
+      if (item.indexUrl === "http://163695") return "";
 
       console.log(item);
       // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
