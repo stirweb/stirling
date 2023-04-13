@@ -429,7 +429,7 @@ stir.templates.search = (() => {
 
       ////if (item.indexUrl === "http://163695") return "";
 
-      //console.log(item);
+      console.log(item);
       // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
 
       return `
