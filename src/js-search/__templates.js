@@ -429,7 +429,11 @@ stir.templates.search = (() => {
 
       //if (item.indexUrl === "http://163695") return "";
 
-      //console.log(item);
+      const urls = item.metaData.image.split("|");
+      const hacklink = urls[1] ? urls[1] : "/events/";
+
+      //if (urls[1]) console.log(urls[1]);
+
       // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
 
       return `
@@ -440,7 +444,7 @@ stir.templates.search = (() => {
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
             <strong>
-              ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : anchor({ text: title, href: "/events/" })}
+              ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : anchor({ text: title, href: hacklink })}
 					  </strong>
           </p>
 					<div class="flex-container flex-dir-column u-gap-8">
@@ -459,7 +463,7 @@ stir.templates.search = (() => {
 					</div>
 					<p class="text-sm">${item.summary}</p>
 				</div>
-				${image(item.metaData.image, item.title.split(" | ")[0])}
+				${image(urls[0], item.title.split(" | ")[0])}
 				${item.metaData?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
 			</div>`;
     },
