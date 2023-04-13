@@ -329,8 +329,10 @@ stir.templates.search = function () {
       var _item$metaData3, _item$metaData4, _item$metaData4$tags, _item$metaData5, _item$metaData6, _item$metaData6$tags;
       var hasThumbnail = ((_item$metaData3 = item.metaData) === null || _item$metaData3 === void 0 ? void 0 : _item$metaData3.image) || ((_item$metaData4 = item.metaData) === null || _item$metaData4 === void 0 ? void 0 : (_item$metaData4$tags = _item$metaData4.tags) === null || _item$metaData4$tags === void 0 ? void 0 : _item$metaData4$tags.indexOf("Webinar")) > -1;
       var title = item.title.split(" | ")[0];
-      if (item.indexUrl === "http://163695") return "";
-      console.log(item);
+
+      //if (item.indexUrl === "http://163695") return "";
+
+      //console.log(item);
       // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
 
       return "\n\t\t\t<div class=\"c-search-result".concat(hasThumbnail ? " c-search-result__with-thumbnail" : "", "\" data-rank=").concat(item.rank, " data-result-type=event>\n\t\t\t\t<div class=\"c-search-result__tags\">\n\t\t\t\t\t").concat((_item$metaData5 = item.metaData) !== null && _item$metaData5 !== void 0 && _item$metaData5.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : "", "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n            <strong>\n              ").concat(item.metaData.register ? anchor({
