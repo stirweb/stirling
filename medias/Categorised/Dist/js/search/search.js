@@ -71,11 +71,11 @@ stir.templates.search = function () {
   };
 
   /**
-   * 
-   * @param {String} name 
-   * @param {String} value 
+   *
+   * @param {String} name
+   * @param {String} value
    * @returns Element
-   * 
+   *
    * For a given name and value, return the first matching HTML <input> or <option> element.
    */
   var metaParamElement = function metaParamElement(name, value) {
@@ -98,21 +98,21 @@ stir.templates.search = function () {
   //	};
 
   /**
-   * 
-   * @param {Object} tokens 
+   *
+   * @param {Object} tokens
    * @returns String (HTML)
-   * 
+   *
    * Create clickable text elements (i.e. "tokens") that represent the active search filters, to give the user the
    * option to dismiss each filter quickly (and a visual reminder of which filters are active).
-   * 
+   *
    * Becuase the search result data only contains the raw names/values of the filters, we need to derive the correct
    * text labels from the form inputs on the page. We also need to unbundle checkbox (multi-select) filters and deal
    * with any other unusual filters (such as Faculty and course Start Date).
-   * 
+   *
    */
   var metaParamTokens = function metaParamTokens(tokens) {
     var metas = Object.keys(tokens).filter(function (key) {
-      return key.indexOf('meta_') === 0 && tokens[key][0];
+      return key.indexOf("meta_") === 0 && tokens[key][0];
     });
     return metas.map(function (key) {
       // does the name and value match a DOM element?
@@ -129,7 +129,7 @@ stir.templates.search = function () {
           return tag(el.parentElement.innerText, key, value);
         }
         // We will just default to empty string if there is no matching element.
-        return '';
+        return "";
       }).join(" ");
     }).join(" ");
   };
@@ -216,7 +216,7 @@ stir.templates.search = function () {
       var queryEcho = querySanitised.length > 1 ? " for <em>".concat(querySanitised, "</em>") : "";
       var message = totalMatching > 0 ? "\t<p class=\"text-sm\">There are <strong>".concat(totalMatching.toLocaleString("en"), " results</strong>").concat(queryEcho, ".</p>") : "<p id=\"search_summary_noresults\"><strong>There are no results".concat(queryEcho, "</strong>.</p>");
       var tokens = metaParamTokens(data.question.rawInputParameters);
-      var spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : '';
+      var spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
       return "<div class=\"u-py-2\"> ".concat(message, " ").concat(tokens, " ").concat(spelling, " </div>");
     },
     pagination: function pagination(summary) {
@@ -329,10 +329,19 @@ stir.templates.search = function () {
       var _item$metaData3, _item$metaData4, _item$metaData4$tags, _item$metaData5, _item$metaData6, _item$metaData6$tags;
       var hasThumbnail = ((_item$metaData3 = item.metaData) === null || _item$metaData3 === void 0 ? void 0 : _item$metaData3.image) || ((_item$metaData4 = item.metaData) === null || _item$metaData4 === void 0 ? void 0 : (_item$metaData4$tags = _item$metaData4.tags) === null || _item$metaData4$tags === void 0 ? void 0 : _item$metaData4$tags.indexOf("Webinar")) > -1;
       var title = item.title.split(" | ")[0];
-      return "\n\t\t\t<div class=\"c-search-result".concat(hasThumbnail ? " c-search-result__with-thumbnail" : "", "\" data-rank=").concat(item.rank, " data-result-type=event>\n\t\t\t\t<div class=\"c-search-result__tags\">\n\t\t\t\t\t").concat((_item$metaData5 = item.metaData) !== null && _item$metaData5 !== void 0 && _item$metaData5.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : "", "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n            <strong>\n\t\t\t\t\t\t  ").concat(item.metaData.register ? anchor({
+
+      ////if (item.indexUrl === "http://163695") return "";
+
+      //console.log(item);
+      // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
+
+      return "\n\t\t\t<div class=\"c-search-result".concat(hasThumbnail ? " c-search-result__with-thumbnail" : "", "\" data-rank=").concat(item.rank, " data-result-type=event>\n\t\t\t\t<div class=\"c-search-result__tags\">\n\t\t\t\t\t").concat((_item$metaData5 = item.metaData) !== null && _item$metaData5 !== void 0 && _item$metaData5.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : "", "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n            <strong>\n              ").concat(item.metaData.register ? anchor({
         text: title,
         href: item.metaData.register
-      }) : title, "\n\t\t\t\t\t  </strong>\n          </p>\n\t\t\t\t\t<div class=\"flex-container flex-dir-column u-gap-8\">\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-calendar\"></span>\n\t\t\t\t\t\t\t<span>").concat(datespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"uos-clock u-icon h5\"></span>\n\t\t\t\t\t\t\t<span>").concat(timespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-").concat(item.metaData.online ? "web" : "location", "\"></span>\n\t\t\t\t\t\t\t<span>").concat(item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : "", "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<p class=\"text-sm\">").concat(item.summary, "</p>\n\t\t\t\t</div>\n\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0]), "\n\t\t\t\t").concat(((_item$metaData6 = item.metaData) === null || _item$metaData6 === void 0 ? void 0 : (_item$metaData6$tags = _item$metaData6.tags) === null || _item$metaData6$tags === void 0 ? void 0 : _item$metaData6$tags.indexOf("Webinar")) > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : "", "\n\t\t\t</div>");
+      }) : anchor({
+        text: title,
+        href: "/events/"
+      }), "\n\t\t\t\t\t  </strong>\n          </p>\n\t\t\t\t\t<div class=\"flex-container flex-dir-column u-gap-8\">\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-calendar\"></span>\n\t\t\t\t\t\t\t<span>").concat(datespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"uos-clock u-icon h5\"></span>\n\t\t\t\t\t\t\t<span>").concat(timespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-").concat(item.metaData.online ? "web" : "location", "\"></span>\n\t\t\t\t\t\t\t<span>").concat(item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : "", "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<p class=\"text-sm\">").concat(item.summary, "</p>\n\t\t\t\t</div>\n\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0]), "\n\t\t\t\t").concat(((_item$metaData6 = item.metaData) === null || _item$metaData6 === void 0 ? void 0 : (_item$metaData6$tags = _item$metaData6.tags) === null || _item$metaData6$tags === void 0 ? void 0 : _item$metaData6$tags.indexOf("Webinar")) > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : "", "\n\t\t\t</div>");
     },
     research: function research(item) {
       return "\n\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank).concat(item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : "", ">\n\t\t\t<div>\n\t\t\t\t<div class=\"c-search-result__tags\"><span class=\"c-search-tag\">").concat(item.title.split(" | ").slice(0, 1).toString(), "</span></div>\n\t\t\t\t<div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t<a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">\n\t\t\t\t\t\t\t").concat(item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title, "\n\t\t\t\t\t\t</a>\n\t\t\t\t\t</strong></p>\n\t\t\t\t\t").concat(stir.String.stripHtml(item.metaData.c || "") ? "<div class=\"text-sm\">" + stir.String.stripHtml(item.metaData.c || "") + "</div>" : "", "\n          ").concat(stir.funnelback.getTags(item.metaData.category) ? "<div class=c-search-result__footer>" + stir.funnelback.getTags(item.metaData.category) + "</div>" : "", "\n        </div>\n\t\t\t\t<!-- p>12344</ -->\n\t\t\t</div>\n\t\t</div>");
@@ -726,8 +735,8 @@ stir.funnelback = function () {
 
   //const hostname = 'stage-shared-15-24-search.clients.uk.funnelback.com';
   //const hostname = 'shared-15-24-search.clients.uk.funnelback.com';
-  var hostname = debug || UoS_env.name === "preview" ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
-  //const hostname = 'search.stir.ac.uk';
+  //const hostname = debug || UoS_env.name === "preview" ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
+  var hostname = "search.stir.ac.uk";
   var url = "https://".concat(hostname, "/s/");
   var getJsonEndpoint = function getJsonEndpoint() {
     return new URL("search.json", url);
@@ -975,14 +984,14 @@ stir.search = function () {
     // extra parameters for no-query searches
     noquery: {
       course: {
-        sort: "title" // if no keywords supplied, sort courses 
+        sort: "title" // if no keywords supplied, sort courses
         // by title instead of "relevance"
         //		},
         //		person: {
         //			sort: "meta_surname"	//sort people by surname
         //		},
         //		event: {
-        //			sort: "adate"	// sort events by date descending 
+        //			sort: "adate"	// sort events by date descending
       }
     }
   };
@@ -1123,15 +1132,15 @@ stir.search = function () {
   var renderResultsWithPagination = stir.curry(function (type, data) {
     return (
       /*       (debug
-              ? `<details class=debug>
-      			<summary>query debug data</summary>
-      			<pre class=debug data-label="user query">${stir.String.htmlEntities(JSON.stringify(data.response.resultPacket.queryCleaned, null, "  "))}</pre>
-      			<pre class=debug data-label="queryAsProcessed by FB">${JSON.stringify(data.response.resultPacket.queryAsProcessed, null, "  ")}</pre>
-      			<pre class=debug data-label=curator>${JSON.stringify(data?.response?.curator, null, "  ")}</pre>
-      			<pre class=debug data-label=metaParameters>${JSON.stringify(data.question.metaParameters, null, "  ")}</pre>
-      		</details></div>
-      		`
-              : "") + */
+        ? `<details class=debug>
+      <summary>query debug data</summary>
+      <pre class=debug data-label="user query">${stir.String.htmlEntities(JSON.stringify(data.response.resultPacket.queryCleaned, null, "  "))}</pre>
+      <pre class=debug data-label="queryAsProcessed by FB">${JSON.stringify(data.response.resultPacket.queryAsProcessed, null, "  ")}</pre>
+      <pre class=debug data-label=curator>${JSON.stringify(data?.response?.curator, null, "  ")}</pre>
+      <pre class=debug data-label=metaParameters>${JSON.stringify(data.question.metaParameters, null, "  ")}</pre>
+      </details></div>
+      `
+        : "") + */
       renderers["cura"](data.response.curator.exhibits) + renderers[type](data.response.resultPacket.results) + stir.templates.search.pagination({
         currEnd: data.response.resultPacket.resultsSummary.currEnd,
         totalMatching: data.response.resultPacket.resultsSummary.totalMatching,
@@ -1189,7 +1198,7 @@ stir.search = function () {
       var resultsWrapper = document.createElement("div");
       var buttonWrapper = document.createElement("div");
       var button = new LoaderButton();
-      button.setAttribute('disabled', true);
+      button.setAttribute("disabled", true);
       button.addEventListener("click", function (event) {
         return getMoreResults(resultsWrapper, button);
       });

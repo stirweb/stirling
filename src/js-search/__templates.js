@@ -46,66 +46,71 @@ stir.templates.search = (() => {
     return "";
   };
 
-	const checkSpelling = (suggestion) => (suggestion ? `<p>Did you mean <a href="#" data-suggest>${suggestion.text.split(" ")[0]}</a>?</p>` : "");
+  const checkSpelling = (suggestion) => (suggestion ? `<p>Did you mean <a href="#" data-suggest>${suggestion.text.split(" ")[0]}</a>?</p>` : "");
 
-	/**
-	 * 
-	 * @param {String} name 
-	 * @param {String} value 
-	 * @returns Element
-	 * 
-	 * For a given name and value, return the first matching HTML <input> or <option> element.
-	 */
-	const metaParamElement = (name, value) => document.querySelector( `input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]` );
+  /**
+   *
+   * @param {String} name
+   * @param {String} value
+   * @returns Element
+   *
+   * For a given name and value, return the first matching HTML <input> or <option> element.
+   */
+  const metaParamElement = (name, value) => document.querySelector(`input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]`);
 
-//	const metaParamToken = (name, values) => {
-//		if (name === "meta_type") return; // ignore `type`
-//		if (name === "meta_faculty") return; // ignore `faculty`
-//		if (values.charAt(0) == "-") return; // ignore negative parameters
-//		if (values.charAt(1) == ">") return; // ignore date-range parameters
-//		if (values.indexOf(" ") >= 1) {
-//			const tokenArr = values.split(" ");
-//			const el = metaParamElement(name, tokenArr[1]);
-//			if (el) {
-//				return tag(el.parentElement.innerText, tokenArr[0], tokenArr[1]);
-//			}
-//		}
-//		return;
-//	};
+  //	const metaParamToken = (name, values) => {
+  //		if (name === "meta_type") return; // ignore `type`
+  //		if (name === "meta_faculty") return; // ignore `faculty`
+  //		if (values.charAt(0) == "-") return; // ignore negative parameters
+  //		if (values.charAt(1) == ">") return; // ignore date-range parameters
+  //		if (values.indexOf(" ") >= 1) {
+  //			const tokenArr = values.split(" ");
+  //			const el = metaParamElement(name, tokenArr[1]);
+  //			if (el) {
+  //				return tag(el.parentElement.innerText, tokenArr[0], tokenArr[1]);
+  //			}
+  //		}
+  //		return;
+  //	};
 
-	/**
-	 * 
-	 * @param {Object} tokens 
-	 * @returns String (HTML)
-	 * 
-	 * Create clickable text elements (i.e. "tokens") that represent the active search filters, to give the user the
-	 * option to dismiss each filter quickly (and a visual reminder of which filters are active).
-	 * 
-	 * Becuase the search result data only contains the raw names/values of the filters, we need to derive the correct
-	 * text labels from the form inputs on the page. We also need to unbundle checkbox (multi-select) filters and deal
-	 * with any other unusual filters (such as Faculty and course Start Date).
-	 * 
-	 */
-	const metaParamTokens = (tokens) => {
-		const metas = Object.keys(tokens).filter(key=>key.indexOf('meta_')===0 && tokens[key][0]);
+  /**
+   *
+   * @param {Object} tokens
+   * @returns String (HTML)
+   *
+   * Create clickable text elements (i.e. "tokens") that represent the active search filters, to give the user the
+   * option to dismiss each filter quickly (and a visual reminder of which filters are active).
+   *
+   * Becuase the search result data only contains the raw names/values of the filters, we need to derive the correct
+   * text labels from the form inputs on the page. We also need to unbundle checkbox (multi-select) filters and deal
+   * with any other unusual filters (such as Faculty and course Start Date).
+   *
+   */
+  const metaParamTokens = (tokens) => {
+    const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
 
-		return metas.map(key=>{
+    return metas
+      .map((key) => {
+        // does the name and value match a DOM element?
+        const el = metaParamElement(key, tokens[key]);
+        if (el) return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
 
-			// does the name and value match a DOM element?
-			const el = metaParamElement(key,tokens[key]);
-			if(el) return tag(el.innerText||el.parentElement.innerText,key,tokens[key]);
-			
-			// if not, we might have a multi-select filter (e.g. checkbox)
-			const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
-			const values = tokens[key].toString().replace(tokenex,`$1`).split(/\s/); // values are space-separated
-			return values.map(value=>{
-				const el = metaParamElement(key,value);
-				// The innerText of the <input> element‘s <label> has the text we need
-				if(el) { return tag(el.parentElement.innerText,key,value); }
-				// We will just default to empty string if there is no matching element.
-				return '';
-			}).join(" ");
-		}).join(" ");
+        // if not, we might have a multi-select filter (e.g. checkbox)
+        const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
+        const values = tokens[key].toString().replace(tokenex, `$1`).split(/\s/); // values are space-separated
+        return values
+          .map((value) => {
+            const el = metaParamElement(key, value);
+            // The innerText of the <input> element‘s <label> has the text we need
+            if (el) {
+              return tag(el.parentElement.innerText, key, value);
+            }
+            // We will just default to empty string if there is no matching element.
+            return "";
+          })
+          .join(" ");
+      })
+      .join(" ");
   };
 
   const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
@@ -178,11 +183,13 @@ stir.templates.search = (() => {
 
     summary: (data) => {
       const { currEnd, totalMatching, currStart } = data.response.resultPacket.resultsSummary;
-      const querySanitised = stir.String.htmlEntities(data.question.originalQuery).replace(/^!padrenullquery$/, "").trim();
+      const querySanitised = stir.String.htmlEntities(data.question.originalQuery)
+        .replace(/^!padrenullquery$/, "")
+        .trim();
       const queryEcho = querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
-	  const message = (totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`);
-	  const tokens = metaParamTokens(data.question.rawInputParameters);
-	  const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : '';
+      const message = totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`;
+      const tokens = metaParamTokens(data.question.rawInputParameters);
+      const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
       return `<div class="u-py-2"> ${message} ${tokens} ${spelling} </div>`;
     },
     pagination: (summary) => {
@@ -419,6 +426,12 @@ stir.templates.search = (() => {
     event: (item) => {
       const hasThumbnail = item.metaData?.image || item.metaData?.tags?.indexOf("Webinar") > -1;
       const title = item.title.split(" | ")[0];
+
+      ////if (item.indexUrl === "http://163695") return "";
+
+      //console.log(item);
+      // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
+
       return `
 			<div class="c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
 				<div class="c-search-result__tags">
@@ -427,7 +440,7 @@ stir.templates.search = (() => {
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
             <strong>
-						  ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
+              ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : anchor({ text: title, href: "/events/" })}
 					  </strong>
           </p>
 					<div class="flex-container flex-dir-column u-gap-8">
