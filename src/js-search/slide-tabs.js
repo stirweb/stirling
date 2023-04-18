@@ -1,4 +1,4 @@
-var stir = stir || {};
+stir = stir || {};
 stir.searchUI = stir.searchUI || {};
 
 /*

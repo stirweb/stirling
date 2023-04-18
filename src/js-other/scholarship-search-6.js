@@ -18,6 +18,8 @@
      Vars
    */
 
+  console.log("No babel");
+
   const countryNodes = stir.nodes("[data-scholcountrylisting]");
   const subjectNodes = stir.nodes("[data-scholsubjectlisting]");
 
