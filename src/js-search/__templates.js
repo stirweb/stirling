@@ -164,6 +164,13 @@ stir.templates.search = (() => {
 
   const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
 
+  const renderFavsButton = (courseid) => {
+    return `<div class="flex-container u-gap" >
+              <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${courseid}"></div>
+              <a href="/stirling/pages/search/course-favs/" class="u-underline">View favourites</a>
+          </div>`;
+  };
+
   /**
    * PUBLIC members that can be called externally.
    * Principally for `stir.search` but could be reused elsewhere.
@@ -304,6 +311,8 @@ stir.templates.search = (() => {
     courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""),
 
     course: (item) => {
+      const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+
       const subject = item.metaData.subject ? item.metaData.subject.split(/,\s?/).slice(0, 1) : "";
       const subjectLink = stir.String.slug(subject);
       const isOnline = item.metaData.delivery && item.metaData.delivery.toLowerCase().indexOf("online") > -1 ? true : false;
@@ -331,8 +340,11 @@ stir.templates.search = (() => {
             ${stir.templates.search.courseFact("Study modes", item.metaData.modes, true)}
             ${stir.templates.search.courseFact("Delivery", item.metaData.delivery, true)}
           </div>
+          
           ${stir.templates.search.combos(item)}
           ${stir.templates.search.pathways(item)}
+
+          ${preview ? renderFavsButton(item.metaData.sid) : ""}
         </div>
 			</div>`;
     },
