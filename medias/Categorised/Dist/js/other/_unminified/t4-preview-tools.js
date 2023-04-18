@@ -1,10 +1,11 @@
 (function () {
   (function checkPageName() {
-    var title = document.querySelector('meta[name="t4name"]');
-    var action = createT4EditLink("edit name", "generalInfo");
+    const title = document.querySelector('meta[name="t4name"]');
+    const action = createT4EditLink("edit name", "generalInfo");
     if (!title) return;
     if (title.getAttribute("content").slice(-1) === " " || title.getAttribute("content").substring(0, 1) === " ") editorWarning("Spaces at the start and or end of the section name", action);
   })();
+
   (function checkPageHasDescription() {
     var description = document.querySelector('meta[name="description"]');
     var action = createT4EditLink("edit metadata", "metaData");
@@ -31,17 +32,20 @@
     container.innerHTML += html; // this will *not* destroy and replace any previous callouts
     makeSticky(container);
   }
+
   function createTopEdgeCalloutContainer() {
     var container = document.createElement("div");
     container.classList.add("top-edge-callouts-container");
     document.body.insertAdjacentElement("afterbegin", container);
     return container;
   }
+
   function makeSticky(container) {
     container.style.position = "sticky";
     container.style.top = 0;
     container.style.zIndex = 10;
   }
+
   function createT4EditLink(text, panel) {
     var panel = panel || "";
     var text = text || "Edit";
@@ -57,6 +61,7 @@
     }
     return "";
   }
+
   function editorWarning(message, action) {
     var action = action || "";
     createTopEdgeCallout('<p><span class="uos-pin"></span> Editor warning: ' + message + ". " + action + "</p>", "u-bg-energy-pink u-white--all");

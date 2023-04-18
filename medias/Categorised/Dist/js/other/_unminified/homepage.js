@@ -1,11 +1,12 @@
 (function () {
   var elem;
-  if (elem = document.querySelector("[data-videoId]")) {
+  if ((elem = document.querySelector("[data-videoId]"))) {
     elem.addEventListener("ended", function (e) {
       // check elem has a parent before trying to remove it from the DOM
       // just in case this gets called more than once!
       if (!elem.parentNode) return;
-      if (fallback = elem.getAttribute("data-fallback-html")) {
+
+      if ((fallback = elem.getAttribute("data-fallback-html"))) {
         //elem.style.display = 'none';
         /* var suoty = document.createElement('div');
                 var suotyH1 = document.createElement('h1');
@@ -20,7 +21,7 @@
                 suoty.appendChild(badge);
                 elem.insertAdjacentElement("beforebegin", suoty);*/
         //elem.parentNode.removeChild(elem);
-      } else if (fallback = elem.getAttribute("data-fallback-image")) {
+      } else if ((fallback = elem.getAttribute("data-fallback-image"))) {
         var image = new Image();
         (function (elem) {
           image.addEventListener("load", function (event) {
@@ -68,31 +69,16 @@
       this.setAttribute("data-aos", action);
       this.setAttribute("data-aos-duration", duration);
     };
-    var animatedDOMElements = [{
-      element: ".c-promo-area--homepage .c-promo-area__content",
-      action: right,
-      duration: fast
-    }, {
-      element: ".c-promo-area--homepage .c-promo-area__image",
-      action: left,
-      duration: fast
-    }, {
-      element: ".c-research-promo__wrapper",
-      action: up,
-      duration: slow
-    }, {
-      element: ".c-international-section .c-bleed-feature__text-container",
-      action: left,
-      duration: fast
-    }, {
-      element: ".c-international-section .c-bleed-feature__image",
-      action: right,
-      duration: fast
-    }, {
-      element: ".c-homepage-news-events",
-      action: up,
-      duration: slow
-    }];
+
+    var animatedDOMElements = [
+      { element: ".c-promo-area--homepage .c-promo-area__content", action: right, duration: fast },
+      { element: ".c-promo-area--homepage .c-promo-area__image", action: left, duration: fast },
+      { element: ".c-research-promo__wrapper", action: up, duration: slow },
+      { element: ".c-international-section .c-bleed-feature__text-container", action: left, duration: fast },
+      { element: ".c-international-section .c-bleed-feature__image", action: right, duration: fast },
+      { element: ".c-homepage-news-events", action: up, duration: slow },
+    ];
+
     for (var i = 0; i < animatedDOMElements.length; i++) {
       var element = document.querySelector(animatedDOMElements[i].element);
       var action = animatedDOMElements[i].action || left;
@@ -102,9 +88,8 @@
 
     // this must be run after attaching data-* attributes:
     AOS.init({
-      once: true,
-      // only animate once per page-load (i.e. not on every scroll-by)
-      disable: "phone" // disabled for phone breakpoint
+      once: true, // only animate once per page-load (i.e. not on every scroll-by)
+      disable: "phone", // disabled for phone breakpoint
     });
   }
 })();
@@ -161,16 +146,18 @@
    News and Events JSON Loader
  */
 var stir = stir || {};
+
 stir.loadingProgress = function (el, show) {
   //YOLO enable a queing system with references?
   if (el && show) {
-    return el.innerHTML = '<p class="cell" data-indicator="load">Loading…</p>';
+    return (el.innerHTML = '<p class="cell" data-indicator="load">Loading…</p>');
   }
   if (el && !show) {
     var load = el.querySelector('[data-indicator="load"]');
     load && el.removeChild(load);
   }
 };
+
 (function () {
   init(); // GO GO GO!
 
@@ -192,16 +179,22 @@ stir.loadingProgress = function (el, show) {
     var prefix = "https://www.stir.ac.uk/";
     var type = this.parentNode.getAttribute("data-promo-type");
     var isnews = type && type == "news";
-    this.insertAdjacentHTML("beforeend", renderNewsEventItem({
-      linktext: isnews ? "Read more" : "University events",
-      url: prefix + (isnews ? "news/" : "events/"),
-      title: isnews ? "University news centre" : "Events at the University of Stirling",
-      image: prefix + "/webcomponents/dist/images/homepage/default-" + (isnews ? "news" : "event") + ".jpg",
-      summary: isnews ? "Visit our news centre to find out more about our top stories." : "",
-      _uos: {
-        location: isnews ? "" : "Many events at the University are open to the public and free of charge. View more information on our public lectures, exhibitions and other events."
-      }
-    }, type));
+    this.insertAdjacentHTML(
+      "beforeend",
+      renderNewsEventItem(
+        {
+          linktext: isnews ? "Read more" : "University events",
+          url: prefix + (isnews ? "news/" : "events/"),
+          title: isnews ? "University news centre" : "Events at the University of Stirling",
+          image: prefix + "/webcomponents/dist/images/homepage/default-" + (isnews ? "news" : "event") + ".jpg",
+          summary: isnews ? "Visit our news centre to find out more about our top stories." : "",
+          _uos: {
+            location: isnews ? "" : "Many events at the University are open to the public and free of charge. View more information on our public lectures, exhibitions and other events.",
+          },
+        },
+        type
+      )
+    );
   }
 
   /**
@@ -210,10 +203,7 @@ stir.loadingProgress = function (el, show) {
   function init() {
     var newsContainer = document.querySelector('.promo-container[data-promo-type="news"]');
     var eventsContainer = document.querySelector('.promo-container[data-promo-type="events"]');
-    doFeeds({
-      news: newsContainer,
-      events: eventsContainer
-    });
+    doFeeds({ news: newsContainer, events: eventsContainer });
   }
 
   /**
@@ -225,6 +215,7 @@ stir.loadingProgress = function (el, show) {
 
     stir.loadingProgress(container["news"], true);
     stir.loadingProgress(container["events"], true);
+
     var url;
     var now = new Date();
     var cacheBuster = "?v=" + now.getTime(); // Who ya gonna call?
@@ -236,7 +227,7 @@ stir.loadingProgress = function (el, show) {
      * @param {DOM element} container the parent container in the DOM
      * @param {string} position "primary" or "secondary" priority for ordering on-page
      */
-    var processItems = function processItems(items, container, position) {
+    var processItems = function (items, container, position) {
       if (false === items instanceof Array) return;
       items.pop(); // discard the last element (it will be empty because of the t4 formatting issue);
 
@@ -250,37 +241,37 @@ stir.loadingProgress = function (el, show) {
       // primary items will be *pre*pended (so they appear first) and non-primary
       // items will be *ap*pended (so they appear last).
       container.insertAdjacentElement(position, scaffold);
+
       testNewsEventItem(items, scaffold);
     };
+
     switch (window.location.hostname) {
       case "localhost":
         url = "/pages/data/homepage/homepage.json";
         break;
       case "t4appdev.stir.ac.uk": // Dev Preview
-      case "stiracuk-cms01-production.terminalfour.net":
-        // Preview
+      case "stiracuk-cms01-production.terminalfour.net": // Preview
         url = stir.t4Globals.preview.homepagefeed;
         break;
-      case "www-stir.t4appdev.stir.ac.uk":
-        // Dev pre-transfer publish
+      case "www-stir.t4appdev.stir.ac.uk": // Dev pre-transfer publish
         url = stir.t4Globals.homepagefeed + cacheBuster;
         break;
       case "stirweb.github.io":
         url = "data/homepage/homepage.json";
         break;
-      default:
-        // live
-        url = stir.t4Globals.homepagefeed + cacheBuster;
-      // doodle-ooh-doo doo-doo
+      default: // live
+        url = stir.t4Globals.homepagefeed + cacheBuster; // doodle-ooh-doo doo-doo
     }
 
     stir.getJSON(url, function (data) {
       if (typeof data == "undefined" || !data.news) {
         return;
       }
+
       stir.loadingProgress(container["news"], false);
       container["news"] && data.news.primary && processItems(data.news.primary, container["news"], "afterbegin");
       container["news"] && data.news.secondary && processItems(data.news.secondary, container["news"], "beforeend");
+
       stir.loadingProgress(container["events"], false);
       container["events"] && data.events && processItems(data.events, container["events"], "afterbegin");
     });
@@ -305,6 +296,7 @@ stir.loadingProgress = function (el, show) {
     // Pop the first item off the list, leave the remainder (if any).
     // This will be done recursively so the array acts like a queue.
     var item = items.shift();
+
     stir.loadingProgress(el, true); // indicate to the user that loading is underway
 
     var request = new XMLHttpRequest();
@@ -343,6 +335,7 @@ stir.loadingProgress = function (el, show) {
     //var linktext = item.linktext || "Read more";
     var isnews = type == "news";
     var isevent = type == "events";
+
     item.image && html.push('<a href="' + item.url + '" ><img class="show-for-medium" src="' + item.image + '" alt="' + item.imagealt + '" loading="lazy"></a>');
     isevent && html.push('<h3 class="header-stripped u-my-1 u-font-normal u-compress-line-height"><a href="' + item.url + '" class="c-link u-inline">' + item.title + "</a></h3>" + '<div class="u-my-1">' + time + loc + "</div>");
     isnews && html.push('<h3 class="header-stripped u-my-1 u-font-normal u-compress-line-height"><a href="' + item.url + '" class="c-link u-inline">' + item.title + "</a></h3>");

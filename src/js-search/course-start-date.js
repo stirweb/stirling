@@ -39,7 +39,7 @@
   };
 
   const DateLabel = (name, value) => {
-    const input = new DateInput("radio", "meta_startval", `[1st ${value}]`);
+    const input = DateInput("radio", "meta_startval", `[1st ${value}]`);
     const label = document.createElement("label");
     label.appendChild(input);
     label.appendChild(document.createTextNode(name));
@@ -72,11 +72,11 @@
     thisyear
       .filter((date) => date.acyear === acyear && (date.date.indexOf("-01") > -1 || date.date.indexOf("-09") > -1))
       .map((date) => {
-        set.appendChild(new DateLabel(`${date.month} ${date.year}`, date.data));
+        set.appendChild(DateLabel(`${date.month} ${date.year}`, date.data));
       });
 
     // DOM: lastly show 'other' dates
-    if (other.length) set.appendChild(new DateLabel(`Other ${acyear}`, `${other}`));
+    if (other.length) set.appendChild(DateLabel(`Other ${acyear}`, `${other}`));
   });
 
   root.appendChild(picker);

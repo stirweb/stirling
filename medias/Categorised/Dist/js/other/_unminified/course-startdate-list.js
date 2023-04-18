@@ -11,16 +11,17 @@
   /*
    * DOM: Main elements
    */
-  var resultsArea = scope;
+  const resultsArea = scope;
 
   /*
    * GLOBAL CONSTANTS
    */
 
-  var constants = {
+  const constants = {
     applyLink: "https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=",
-    month: resultsArea.getAttribute("data-startmonth")
+    month: resultsArea.getAttribute("data-startmonth"),
   };
+
   Object.freeze(constants);
 
   /*
@@ -32,50 +33,71 @@
   /* ------------------------------------------------
    * Render the course table html
    * ------------------------------------------------ */
-  var renderTable = stir.curry(function (consts, data) {
-    var renderer = renderItem(consts);
-    return "\n        <table>\n            <caption>Courses starting in ".concat(consts.month, "</caption>\n            <thead>\n                <tr><td>Course</td><td>Application link</td><td>Year of entry</td></tr>\n            </thead>\n            <tbody>\n                ").concat(data.map(function (el) {
-      return renderer(el);
-    }).join(""), "\n            </tbody>\n        </table>");
+  const renderTable = stir.curry((consts, data) => {
+    const renderer = renderItem(consts);
+    return `
+        <table>
+            <caption>Courses starting in ${consts.month}</caption>
+            <thead>
+                <tr><td>Course</td><td>Application link</td><td>Year of entry</td></tr>
+            </thead>
+            <tbody>
+                ${data.map((el) => renderer(el)).join("")}
+            </tbody>
+        </table>`;
   });
 
   /* ------------------------------------------------
    * Render the html for each course as a table row
    * ------------------------------------------------ */
-  var renderItem = stir.curry(function (consts, item) {
-    var renderApply = renderApplyLink(consts);
-    return "\n        <tr>\n            <td>\n              ".concat(item.url ? "<a href=\"".concat(item.url, "\">") : "", "\n              ").concat(item.award, "  ").concat(item.title, "\n              ").concat(item.url ? "</a>" : "", "\n            </td>\n            <td>").concat(renderApply(item), "</td>\n            <td>").concat(getYears(item, consts.month), "</td>\n        </tr>");
+  const renderItem = stir.curry((consts, item) => {
+    const renderApply = renderApplyLink(consts);
+
+    return `
+        <tr>
+            <td>
+              ${item.url ? `<a href="${item.url}">` : ``}
+              ${item.award}  ${item.title}
+              ${item.url ? `</a>` : ``}
+            </td>
+            <td>${renderApply(item)}</td>
+            <td>${getYears(item, consts.month)}</td>
+        </tr>`;
   });
 
   /* ------------------------------------------------
    * Return the Apply Link HTML
    * ------------------------------------------------ */
-  var renderApplyLink = stir.curry(function (consts, item) {
+  const renderApplyLink = stir.curry((consts, item) => {
     // Helper function to form award text
-    var getAward = function getAward(code) {
+    const getAward = (code) => {
       if (code.includes("UDX12")) return " Apply for BA (Hons)";
       if (code.includes("UDX16")) return " Apply for BSc (Hons)";
       return "Apply";
     };
+
     if (item.portalapply && item.portalapply !== "") {
-      return item.portalapply.split(",").map(function (element) {
-        return '<a aria-label="' + getAward(element) + " " + item.title + '" href="' + consts.applyLink + element.trim() + '">' + getAward(element) + "</a>";
-      }).join(" / ");
+      return item.portalapply
+        .split(",")
+        .map((element) => '<a aria-label="' + getAward(element) + " " + item.title + '" href="' + consts.applyLink + element.trim() + '">' + getAward(element) + "</a>")
+        .join(" / ");
     }
+
     return "";
   });
 
   /* ------------------------------------------------
    * Return the years for this item as an html string
    * ------------------------------------------------ */
-  var getYears = function getYears(item, month) {
+  const getYears = (item, month) => {
     if (item.startdates) {
-      return stir.compose(stir.join(", "), stir.map(function (element) {
-        return element.split(" ")[1];
-      }), stir.filter(function (element) {
-        return element.includes(month);
-      }))(item.startdates.split(", "));
+      return stir.compose(
+        stir.join(", "),
+        stir.map((element) => element.split(" ")[1]),
+        stir.filter((element) => element.includes(month))
+      )(item.startdates.split(", "));
     }
+
     return "";
   };
 
@@ -86,7 +108,7 @@
   /* ------------------------------------------------
    * Outputs html content to the page
    * ------------------------------------------------ */
-  var setDOMContent = stir.curry(function (elem, html) {
+  const setDOMContent = stir.curry((elem, html) => {
     // !!SIDE EFFECTS!!
     elem.innerHTML = html;
     return elem;
@@ -96,22 +118,18 @@
    * EVENTS: INPUT (!!SIDE EFFECTS!!)
    */
 
-  var initialData = stir.t4Globals.ugstartdates || [];
+  const initialData = stir.t4Globals.ugstartdates || [];
+
   if (!initialData.length) return;
 
   // Helper and curried functions
-  var filterMonth = stir.filter(function (item) {
-    return item.startdates && item.startdates.includes(constants.month);
-  });
-  var filterApplyless = stir.filter(function (item) {
-    return item.portalapply;
-  });
-  var sortByTitle = stir.sort(function (a, b) {
-    return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
-  });
-  var setResult = setDOMContent(resultsArea);
-  var render = renderTable(constants);
+  const filterMonth = stir.filter((item) => item.startdates && item.startdates.includes(constants.month));
+  const filterApplyless = stir.filter((item) => item.portalapply);
+  const sortByTitle = stir.sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
+
+  const setResult = setDOMContent(resultsArea);
+  const render = renderTable(constants);
 
   // Run the data through the functions until it hits the page
-  var results = stir.compose(setResult, render, sortByTitle, filterApplyless, filterMonth, stir.clone)(initialData);
+  const results = stir.compose(setResult, render, sortByTitle, filterApplyless, filterMonth, stir.clone)(initialData);
 })(stir.node("#course-list"));

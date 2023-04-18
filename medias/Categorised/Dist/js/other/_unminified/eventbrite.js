@@ -1,20 +1,21 @@
 var stir = stir || {};
 stir.eventbrite = stir.eventbrite || {};
+
 (function () {
-  var DELAY = 5000;
+  const DELAY = 5000;
   /* 
     Callback  
   */
-  var orderCompleteCallback = function orderCompleteCallback() {
+  const orderCompleteCallback = () => {
     //console.log("Order complete!");
   };
 
   /* 
     Get the GA Client ID from the tracker
   */
-  var getClientId = function getClientId() {
+  const getClientId = () => {
     try {
-      var tracker = ga.getAll().filter(function (item) {
+      const tracker = ga.getAll().filter((item) => {
         if (item.get("trackingId") === "UA-340900-19") return item;
       });
       return tracker[0] ? tracker[0].get("clientId") : "";
@@ -26,44 +27,49 @@ stir.eventbrite = stir.eventbrite || {};
     Create the eventbrite widget and output
     Widget height in pixels. Defaults to a minimum of 425px if not provided
   */
-  var outputWidget = function outputWidget(node, clientID) {
+  const outputWidget = (node, clientID) => {
     window.EBWidgets.createWidget({
       // Required
       widgetType: "checkout",
       eventId: node.dataset.eventbriteid,
       iframeContainerId: "eventbrite-widget-container-" + node.dataset.eventbriteid,
+
       // Optional
       googleAnalyticsClientId: clientID,
       iframeContainerHeight: 425,
-      onOrderComplete: orderCompleteCallback
+      onOrderComplete: orderCompleteCallback,
     });
   };
 
   /*
     Helpers 
   */
-  var isWidget = function isWidget(elem) {
-    return elem.getAttribute("src") && elem.getAttribute("src").includes("eventbrite") ? true : false;
-  };
-  var renderLoader = function renderLoader() {
-    return "\n        <div>\n          <div class=\"c-search-loading__spinner\" ></div>\n          <p class=\"text-center u-mt-sm\">Loading Eventbrite widget</p>\n        </div>";
+  const isWidget = (elem) => (elem.getAttribute("src") && elem.getAttribute("src").includes("eventbrite") ? true : false);
+
+  const renderLoader = () => {
+    return `
+        <div>
+          <div class="c-search-loading__spinner" ></div>
+          <p class="text-center u-mt-sm">Loading Eventbrite widget</p>
+        </div>`;
   };
 
   /*
     Controller 
     Slight delay to make sure the tracker has loaded
   */
-  var loadEventbriteWidgets = function loadEventbriteWidgets(nodes, delay) {
+  const loadEventbriteWidgets = (nodes, delay) => {
     if (!nodes) return;
-    nodes.forEach(function (node) {
-      return stir.setHTML(node, renderLoader());
-    });
-    setTimeout(function () {
-      nodes.forEach(function (node) {
+
+    nodes.forEach((node) => stir.setHTML(node, renderLoader()));
+
+    setTimeout(() => {
+      nodes.forEach((node) => {
         stir.setHTML(node);
         outputWidget(node, getClientId());
       });
-      stir.nodes("iframe").forEach(function (element) {
+
+      stir.nodes("iframe").forEach((element) => {
         isWidget(element) && element.setAttribute("title", "Eventbrite widget");
       });
     }, delay);

@@ -1,4 +1,4 @@
-let stir = stir || {};
+var stir = stir || {};
 
 /* ------------------------------------------------
  * @author: Ryan Kaye
@@ -14,6 +14,11 @@ stir.funnelback = (() => {
 	//const hostname = 'search.stir.ac.uk';
 	const url = `https://${hostname}/s/`;
 
+  const getJsonEndpoint = () => new URL("search.json", url);
+  const getScaleEndpoint = () => new URL("scale", url);
+  const getHostname = () => hostname;
+  // DOM: lastly show 'other' dates
+  const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
 	const getJsonEndpoint = () => new URL("search.json", url);
 	const getScaleEndpoint = () => new URL("scale", url);
 	const getHostname = () => hostname;
@@ -252,17 +257,17 @@ stir.search = () => {
 	if (!constants.form || !constants.form.query) return;
 	debug && console.info("[Search] initialised.");
 
-	const getQuery = type => constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
+  const getQuery = (type) => constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
 
-	const getNoQuery = type => constants.form.query.value ? {} : constants.noquery[type];
+  const getNoQuery = (type) => (constants.form.query.value ? {} : constants.noquery[type]);
 
 	const setQuery = () => (constants.form.query.value ? QueryParams.set("query", constants.form.query.value) : QueryParams.remove("query"));
 
-	const getPage = type => parseInt(QueryParams.get(type) || 1);
+  const getPage = (type) => parseInt(QueryParams.get(type) || 1);
 
-	const getType = element => element.getAttribute("data-type") || element.parentElement.getAttribute("data-type");
+  const getType = (element) => element.getAttribute("data-type") || element.parentElement.getAttribute("data-type");
 
-	const nextPage = type => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
+  const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
 
 	const calcStart = (page, numRanks) => (page - 1) * numRanks + 1;
 
@@ -270,7 +275,7 @@ stir.search = () => {
 
 	const calcProgress = (currEnd, fullyMatching) => (currEnd / fullyMatching) * 100;
 
-	const getStartRank = type => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
+  const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
 
 	const resetPagination = () => Object.keys(constants.parameters).forEach((key) => QueryParams.remove(key));
 
@@ -451,7 +456,7 @@ stir.search = () => {
 		if (element.hasAttribute("data-infinite")) {
 			const resultsWrapper = document.createElement("div");
 			const buttonWrapper = document.createElement("div");
-			const button = new LoaderButton();
+			const button = LoaderButton();
 			button.setAttribute('disabled', true);
 			button.addEventListener("click", (event) => getMoreResults(resultsWrapper, button));
 			element.appendChild(resultsWrapper);
@@ -524,7 +529,10 @@ stir.search = () => {
 			//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
 			if (!data || data.error || !data.response || !data.response.resultPacket) return;
 			if (0 === data.response.resultPacket.resultsSummary.totalMatching && fallback(element)) return;
-			return composition(data);
+
+			const comp = composition(data);
+			new stir.Favs();
+			return comp;
 		};
 		resetPagination();
 
@@ -544,7 +552,13 @@ stir.search = () => {
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
-		const callback = (data) => (data && !data.error ? composition(data) : new Function());
+
+		const doData = (data) => {
+			composition(data);
+			new stir.Favs();
+		};
+
+		const callback = (data) => (data && !data.error ? doData(data) : new Function());
 		nextPage(type);
 		searchers[type](callback);
 	};

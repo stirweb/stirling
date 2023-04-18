@@ -3,12 +3,13 @@ var stir = stir || {};
 /**
  * Requires Civic CookieControl
  */
-stir.cookieControl = function cookieControl() {
+stir.cookieControl = (function cookieControl() {
   var _name = "Stir Cookie Control";
   var debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
   var widgets = [];
   var templates = Array.prototype.slice.call(document.querySelectorAll("script[data-optin]"));
   var placeholderText = "<p>Thirdparty media element - privacy opt-in</p>";
+
   templates.forEach(function (template, i) {
     var button = document.createElement("button");
     var placeholder = document.createElement("div");
@@ -21,9 +22,10 @@ stir.cookieControl = function cookieControl() {
     widgets.push({
       template: template,
       placeholder: placeholder,
-      button: button
+      button: button,
     });
   });
+
   function _magicButton() {
     var ccc = document.getElementById("ccc-icon");
     //var button = document.createElement("button");
@@ -44,17 +46,16 @@ stir.cookieControl = function cookieControl() {
 
     //button.addEventListener("click", stirOptInAll);
 
-    var moveButton = function moveButton() {
+    var moveButton = function () {
       console.log("clicked");
       var dismiss = document.getElementById("ccc-dismiss-button");
       if (dismiss) {
         var targetElement = document.getElementById("ccc-button-holder");
         targetElement && targetElement.appendChild(dismiss);
-        console.info("Move button", {
-          button: dismiss
-        });
+        console.info("Move button", { button: dismiss });
       }
     };
+
     ccc && moveButton();
     ccc && ccc.addEventListener("click", moveButton);
   }
@@ -78,28 +79,36 @@ stir.cookieControl = function cookieControl() {
       activateCategory(1);
     }
   }
+
   function appealCategoryConsent(category) {
-    var templates = Array.prototype.slice.call(document.querySelectorAll('script[data-optin-appeal][data-category="' + category + '"]'));
+    var templates = Array.prototype.slice.call(
+      document.querySelectorAll('script[data-optin-appeal][data-category="' + category + '"]')
+    );
     templates.forEach(function (template, i) {
       template.insertAdjacentHTML("afterend", template.innerHTML);
       template.remove();
     });
   }
   function activateCategory(category) {
-    var templates = Array.prototype.slice.call(document.querySelectorAll('script[data-optin-thanks][data-category="' + category + '"]'));
+    var templates = Array.prototype.slice.call(
+      document.querySelectorAll('script[data-optin-thanks][data-category="' + category + '"]')
+    );
     templates.forEach(function (template, i) {
       template.insertAdjacentHTML("afterend", template.innerHTML);
       template.remove();
     });
   }
+
   function optin() {
     CookieControl.changeCategory(2, true);
   }
+
   function deactivate() {
     widgets.forEach(function (widget, i) {
       widget.template.insertAdjacentElement("afterend", widget.placeholder);
     });
   }
+
   function activate() {
     // activate all widgets
     widgets.forEach(function (widget) {
@@ -107,6 +116,7 @@ stir.cookieControl = function cookieControl() {
       widget.template.insertAdjacentHTML("afterend", widget.template.innerHTML);
     });
   }
+
   function _accept() {
     debug && console.info("[" + _name + "] ACCEPTED");
     activate();
@@ -122,10 +132,11 @@ stir.cookieControl = function cookieControl() {
       window.location.reload();
     }
   }
+
   return {
     accept: _accept,
     revoke: _revoke,
     init: _init,
-    activateCategory: activateCategory
+    activateCategory: activateCategory,
   };
-}();
+})();

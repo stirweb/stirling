@@ -1,15 +1,3 @@
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 /*
  * @title: Course Combinations Listing
  * @author: Ryan Kaye
@@ -20,8 +8,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 (function (scope) {
   if (!scope) return;
-  var resultsArea = scope;
-  var applyUrl = "https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=";
+
+  const resultsArea = scope;
+  const applyUrl = "https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=";
 
   /*
    * STATE HELPERS
@@ -30,50 +19,47 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   /* ------------------------------------------------
    * Returns array of course objects (mapped from given array) with related combinations included
    * ------------------------------------------------ */
-  var getCoursesCombos = stir.curry(function (_combos, _courses) {
-    return stir.map(function (course) {
-      var courseCombos = {
-        combinations: getIndividualCourseCombos(_combos, course)
-      };
-      return _objectSpread(_objectSpread({}, course), courseCombos);
+  const getCoursesCombos = stir.curry((_combos, _courses) => {
+    return stir.map((course) => {
+      const courseCombos = { combinations: getIndividualCourseCombos(_combos, course) };
+      return { ...course, ...courseCombos };
     }, _courses);
   });
 
   /* ------------------------------------------------
    * Returns an array of combination course data (based on url) for a given parent course
    * ------------------------------------------------ */
-  var getIndividualCourseCombos = function getIndividualCourseCombos(_combos, parentCourse) {
+  const getIndividualCourseCombos = (_combos, parentCourse) => {
     /* Fn: Helper curry: Map the combos courses.url vals to an array */
-    var comboUrlFetcher = stir.map(function (parentCourse) {
-      return parentCourse.url;
-    });
+    const comboUrlFetcher = stir.map((parentCourse) => parentCourse.url);
 
     /* Fn: Helper curry: Match combos to parent based on url */
-    var matchData = stir.filter(function (combo) {
+    const matchData = stir.filter((combo) => {
       if (comboUrlFetcher(combo.courses).includes(parentCourse.url)) return combo;
     });
 
     /* Fn: Fugly! Returns a new reformated and cleaned up title String with parent course prepended */
-    var cleanTitle = function cleanTitle(comboTitle, parentTitle) {
-      var title = comboTitle.replace(parentTitle, "").replace(parentTitle + " and ", "").replace(" and " + parentTitle, "");
-      var titles = stir.filter(function (t) {
-        return t !== "";
-      }, title.split(" and ")); // Convert to array and remove empties
+    const cleanTitle = (comboTitle, parentTitle) => {
+      const title = comboTitle
+        .replace(parentTitle, "")
+        .replace(parentTitle + " and ", "")
+        .replace(" and " + parentTitle, "");
+
+      const titles = stir.filter((t) => t !== "", title.split(" and ")); // Convert to array and remove empties
 
       return (parentTitle + " and " + titles.join(" and ")).replace("and  with", "with");
     };
 
     /* Fn: Helper curry: Return required cleaned up combo data */
-    var cleanData = stir.map(function (combo) {
+    const cleanData = stir.map((combo) => {
       return {
         prefix: combo.prefix,
         title: cleanTitle(combo.title, parentCourse.title),
-        applycode: combo.codes.apply
+        applycode: combo.codes.apply,
       };
     });
-    var sortData = stir.sort(function (a, b) {
-      return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
-    });
+
+    const sortData = stir.sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
 
     // Run the data through the curry helper functions and return the result
     return stir.compose(sortData, cleanData, matchData)(_combos);
@@ -86,18 +72,40 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   /* ------------------------------------------------
    * Returns the html for a faculty section
    * ------------------------------------------------ */
-  var render = function render(data) {
-    var renderCourseItemCurry = renderCourseItem(data);
-    return "\n        <h2 class=\"u-margin-top\">".concat(data.faculty, "</h2>\n        ").concat(stir.map(renderCourseItemCurry, data.courses).join(""), " ");
+  const render = (data) => {
+    const renderCourseItemCurry = renderCourseItem(data);
+
+    return `
+        <h2 class="u-margin-top">${data.faculty}</h2>
+        ${stir.map(renderCourseItemCurry, data.courses).join("")} `;
   };
 
   /* ------------------------------------------------
    * Returns the html for a course + releated combos
    * ------------------------------------------------ */
-  var renderCourseItem = stir.curry(function (data, course) {
-    return "\n        <div data-behaviour=accordion>\n            <h3>".concat(course.prefix, " ").concat(course.title, "</h3>\n            <div>\n                <ul>\n                    <li>\n                        <a href=\"").concat(data.applyUrl).concat(course.applyCode.split(", ")[0], "\">\n                          ").concat(course.prefix, " ").concat(course.title, "\n                        </a>\n                    </li>\n                    ").concat(stir.map(function (combo) {
-      return "<li>\n                            <a href=\"".concat(data.applyUrl).concat(combo.applycode, "\">").concat(combo.prefix, " ").concat(combo.title, "</a>\n                          </li>");
-    }, course.combinations).join(""), " \n                </ul>\n              </div>\n          </div>");
+  const renderCourseItem = stir.curry((data, course) => {
+    return `
+        <div data-behaviour=accordion>
+            <h3>${course.prefix} ${course.title}</h3>
+            <div>
+                <ul>
+                    <li>
+                        <a href="${data.applyUrl}${course.applyCode.split(", ")[0]}">
+                          ${course.prefix} ${course.title}
+                        </a>
+                    </li>
+                    ${stir
+                      .map(
+                        (combo) =>
+                          `<li>
+                            <a href="${data.applyUrl}${combo.applycode}">${combo.prefix} ${combo.title}</a>
+                          </li>`,
+                        course.combinations
+                      )
+                      .join("")} 
+                </ul>
+              </div>
+          </div>`;
   });
 
   /*
@@ -107,7 +115,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   /* ------------------------------------------------
    * Output the html content to the page
    * ------------------------------------------------ */
-  var setDOMContent = stir.curry(function (elem, html) {
+  const setDOMContent = stir.curry((elem, html) => {
     elem.innerHTML = html;
     return elem;
   });
@@ -121,48 +129,61 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
    * ------------------------------------------------ */
 
   // Import the data
-  var initialCourses = stir.t4globals.courses || [];
-  var initialCombos = stir.t4globals.combos || [];
+  const initialCourses = stir.t4globals.courses || [];
+  const initialCombos = stir.t4globals.combos || [];
+
   if (!initialCourses.length || !initialCombos.length) return;
 
   // Helper curry functions for faculty array
-  var removeDuplicates = stir.reduce(function (unique, item) {
-    return unique.includes(item) ? unique : [].concat(_toConsumableArray(unique), [item]);
-  }, []);
-  var mapFaculty = stir.map(function (el) {
-    return el.faculty;
-  });
-  var filterEmpties = stir.filter(function (item) {
-    return item;
-  });
+  const removeDuplicates = stir.reduce(
+    (unique, item) => (unique.includes(item) ? unique : [...unique, item]),
+    []
+  );
+  const mapFaculty = stir.map((el) => el.faculty);
+  const filterEmpties = stir.filter((item) => item);
 
   // Form the faculty array
-  var faculties = stir.compose(stir.sort(null), filterEmpties, removeDuplicates, mapFaculty, stir.clone)(initialCourses);
+  const faculties = stir.compose(
+    stir.sort(null),
+    filterEmpties,
+    removeDuplicates,
+    mapFaculty,
+    stir.clone
+  )(initialCourses);
 
   // Courses data
-  var courses = stir.clone(initialCourses);
+  const courses = stir.clone(initialCourses);
 
   // Combos data - clean up
-  var combos = stir.compose(stir.filter(function (item) {
-    return item.title;
-  }), stir.clone)(initialCombos);
+  const combos = stir.compose(
+    stir.filter((item) => item.title),
+    stir.clone
+  )(initialCombos);
 
   // Pass in the combos data beforehand to clean things up
-  var getCombosCurry = getCoursesCombos(combos);
+  const getCombosCurry = getCoursesCombos(combos);
 
   // Group the data by faculty; send it off to be htmlifed; Output to the page
-  var results = setDOMContent(resultsArea, stir.map(function (faculty) {
-    return render({
-      applyUrl: applyUrl,
-      faculty: faculty,
-      courses: getCombosCurry(stir.filter(function (item) {
-        return item.faculty === faculty;
-      }, courses))
-    });
-  }, faculties).join(""));
+  const results = setDOMContent(
+    resultsArea,
+    stir
+      .map(
+        (faculty) =>
+          render({
+            applyUrl: applyUrl,
+            faculty: faculty,
+            courses: getCombosCurry(stir.filter((item) => item.faculty === faculty, courses)),
+          }),
+        faculties
+      )
+      .join("")
+  );
 
   // Finally get the accordions working
-  Array.prototype.forEach.call(resultsArea.querySelectorAll('[data-behaviour="accordion"]'), function (accordion) {
-    new stir.accord(accordion, false);
-  });
+  Array.prototype.forEach.call(
+    resultsArea.querySelectorAll('[data-behaviour="accordion"]'),
+    function (accordion) {
+      new stir.accord(accordion, false);
+    }
+  );
 })(stir.node(".courselisting"));

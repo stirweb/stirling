@@ -1,5 +1,6 @@
 var stir = stir || {};
-stir.portal = function () {
+
+stir.portal = (function () {
   var el = document.getElementById("portal-status");
   var sessionCookie = getCookie("psessv0");
 
@@ -15,17 +16,17 @@ stir.portal = function () {
 
   /* show status message 2017-05-02-15.33 rwm2 - not used yet 2017-09-26 */
   /* function getStatusMessage() {
-  var r = "";
-  if (sessionCookie != null && sessionCookie != "") {
-  	var cookieData = sessionCookie.split("|");
-  	var userName = cookieData[2].split("+").join(" ");
-  	var lastLogon = cookieData[3].split("_").join(" ");
-  	var logon = '<a href="https://portal.stir.ac.uk/my-portal.jsp">Continue to Portal</a>';
-  	var logoff = '<a href="https://portal.stir.ac.uk/security/logout.jsp">log off now</a>';
-  	r = "<p>Welcome back <strong>" + userName + "</strong>. You last logged on <time>" + lastLogon + "</time>. " + logon + " or " + logoff + ".</p>";
-  }
-  return r;
-  } */
+		var r = "";
+		if (sessionCookie != null && sessionCookie != "") {
+			var cookieData = sessionCookie.split("|");
+			var userName = cookieData[2].split("+").join(" ");
+			var lastLogon = cookieData[3].split("_").join(" ");
+			var logon = '<a href="https://portal.stir.ac.uk/my-portal.jsp">Continue to Portal</a>';
+			var logoff = '<a href="https://portal.stir.ac.uk/security/logout.jsp">log off now</a>';
+			r = "<p>Welcome back <strong>" + userName + "</strong>. You last logged on <time>" + lastLogon + "</time>. " + logon + " or " + logoff + ".</p>";
+		}
+		return r;
+	} */
 
   function getCookie(c_name) {
     if (document.cookie.length > 0) {
@@ -39,7 +40,8 @@ stir.portal = function () {
     }
     return "";
   }
+
   return {
-    check: check
+    check: check,
   };
-}();
+})();

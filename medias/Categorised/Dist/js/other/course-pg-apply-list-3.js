@@ -1,1 +1,10 @@
-!function(t){var n,i,c,o,r,s,a;t&&(t=t,n=function(t,n,c){t=i(t,n);return t.length?'\n      <h2 class="u-padding-top" id="'.concat(n.split(" ").join("_"),'">').concat(n,"</h2> \n      <ul>\n        ").concat(stir.map(function(t){return'<li>\n                <a href="'.concat(c[t.type]).concat(t.code,'">').concat(t.title," (").concat(t.code,")</a>\n              </li>")},t).join(""),"\n      </ul>"):""},i=function(t,n){return stir.filter(function(t){if(t.subject&&t.subject.includes(n))return t},t)},a=stir.curry(function(t,n){return t.innerHTML=n,t}),c=stir.t4Globals.subjects.subjects||[],o=stir.t4Globals.applycodes||[],c.length)&&o.length&&(c=stir.clone(c),c=stir.map(function(t){return t.value},c).sort(),o=stir.clone(o),a(t,((a=c).length?'\n      <ul class="anchorlist">\n          '.concat(stir.map(function(t){return'<li><a href="#'.concat(t.split(" ").join("_"),'">').concat(t,"</a></li>")},a).join(""),"\n      </ul>"):"").concat((r=o,s={taught:"https://portal.stir.ac.uk/student/course-application/pg/application.jsp?crsCode=",research:"https://portal.stir.ac.uk/student/course-application/pgr/application.jsp?crsCode="},"".concat(stir.map(function(t){return"".concat(n(r,t,s))},c).join(""))))))}(stir.node("#course-subject--listing"));
+!function(t){if(!t)return;const e=(t,s)=>stir.filter(t=>{if(t.subject&&t.subject.includes(s))return t},t);var s,i,r=stir.curry((t,s)=>(t.innerHTML=s,t)),l=stir.t4Globals.subjects.subjects||[],a=stir.t4Globals.applycodes||[];l.length&&a.length&&(l=stir.clone(l),l=stir.map(t=>t.value,l).sort(),a=stir.clone(a),r(t,((r=l).length?`
+      <ul class="anchorlist">
+          ${stir.map(t=>`<li><a href="#${t.split(" ").join("_")}">${t}</a></li>`,r).join("")}
+      </ul>`:"").concat((s=a,i={taught:"https://portal.stir.ac.uk/student/course-application/pg/application.jsp?crsCode=",research:"https://portal.stir.ac.uk/student/course-application/pgr/application.jsp?crsCode="},""+stir.map(t=>""+((t,s,i)=>{const r=e(t,s);return r.length?`
+      <h2 class="u-padding-top" id="${s.split(" ").join("_")}">${s}</h2> 
+      <ul>
+        ${stir.map(t=>`<li>
+                <a href="${i[t.type]}${t.code}">${t.title} (${t.code})</a>
+              </li>`,r).join("")}
+      </ul>`:""})(s,t,i),l).join("")))))}(stir.node("#course-subject--listing"));

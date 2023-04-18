@@ -10,14 +10,14 @@
    * CONFIG
    */
 
-  var POSTS_PER_PAGE = 20;
-  var NO_PAGE_LINKS = 9;
+  const POSTS_PER_PAGE = 20;
+  const NO_PAGE_LINKS = 9;
 
   /*
    * CONSTANTS
    */
 
-  var CONSTS = {
+  const CONSTS = {
     // DOM: Main elements
     resultsArea: scope,
     searchForm: stir.node("#staff-search__form"),
@@ -26,8 +26,9 @@
     // Search config
     postsPerPage: POSTS_PER_PAGE,
     noPageLinks: NO_PAGE_LINKS,
-    searchUrl: "https://www.stir.ac.uk/s/search.json?collection=stir-research-hub&meta_T_and=profile&fmo=true&SF=[c,I,faculty,role,firstname,lastname]&num_ranks=".concat(POSTS_PER_PAGE)
+    searchUrl: `https://www.stir.ac.uk/s/search.json?collection=stir-research-hub&meta_T_and=profile&fmo=true&SF=[c,I,faculty,role,firstname,lastname]&num_ranks=${POSTS_PER_PAGE}`,
   };
+
   Object.freeze(CONSTS);
 
   /*
@@ -39,23 +40,24 @@
   /* ------------------------------------------------
    *  Control data flow
    * ------------------------------------------------ */
-  var main = function main(facets, consts, initData) {
+  const main = (facets, consts, initData) => {
     // Helper curry function
-    var setDOMResults = setDOMContent(consts);
+    const setDOMResults = setDOMContent(consts);
 
     // Helper function
-    var gotFBData = function gotFBData(data) {
-      return data.response.resultPacket && data.response.resultPacket.results.length;
-    };
+    const gotFBData = (data) => data.response.resultPacket && data.response.resultPacket.results.length;
+
     if (initData.error) {
       return setDOMResults(stir.getMaintenanceMsg());
     }
+
     if (!gotFBData(initData)) {
       return setDOMResults(renderNoResults(facets.query));
     }
+
     if (gotFBData(initData)) {
       // Create a helper renderer then run the data through the functions
-      var renderer = renderResults(facets);
+      const renderer = renderResults(facets);
       return stir.compose(setDOMResults, renderer, stir.clone)(initData.response.resultPacket);
     }
   };
@@ -69,9 +71,8 @@
   /* ------------------------------------------------
    * Returns the FB search string
    * ------------------------------------------------ */
-  var formSearchUrl = function formSearchUrl(consts, facets) {
-    return consts.searchUrl + "&start_rank=" + facets.start + "&query=" + encodeURIComponent(facets.query);
-  };
+  const formSearchUrl = (consts, facets) =>
+    consts.searchUrl + "&start_rank=" + facets.start + "&query=" + encodeURIComponent(facets.query);
 
   /*
    *
@@ -82,38 +83,63 @@
   /* ------------------------------------------------
    * Form the html for all results
    * ------------------------------------------------ */
-  var renderResults = stir.curry(function (facets, data) {
-    return "\n          ".concat(renderSummary(data.resultsSummary), "\n          ").concat(stir.join("", stir.map(renderProfile, data.results)), "\n          ").concat(renderPagination(data.resultsSummary, facets));
+  const renderResults = stir.curry((facets, data) => {
+    return `
+          ${renderSummary(data.resultsSummary)}
+          ${stir.join("", stir.map(renderProfile, data.results))}
+          ${renderPagination(data.resultsSummary, facets)}`;
   });
 
   /* ------------------------------------------------
    * Form the html for an individual results
    * ------------------------------------------------ */
-  var renderProfile = function renderProfile(profile) {
-    return "\n          <div class=\"cell medium-10 c-search-result u-small-margin-top \">\n            <p class=\"c-search-result__link\">\n              <a href=\"".concat(profile.clickTrackingUrl, "\">").concat(profile.title.split(" | ")[0], "</a>\n            </p>\n            <p class=\"c-search-result__summary\">").concat(profile.summary, "</p>\n          </div>");
+  const renderProfile = (profile) => {
+    return `
+          <div class="cell medium-10 c-search-result u-small-margin-top ">
+            <p class="c-search-result__link">
+              <a href="${profile.clickTrackingUrl}">${profile.title.split(" | ")[0]}</a>
+            </p>
+            <p class="c-search-result__summary">${profile.summary}</p>
+          </div>`;
   };
 
   /* ------------------------------------------------
    * Form the html for the pagination
    * ------------------------------------------------ */
-  var renderPagination = function renderPagination(summary, facets) {
-    return "\n          <div class=\"cell \">\n            <div class=\"grid-container u-margin-y\">\n              <div class=\"grid-x grid-padding-x\" id=\"pagination-box\">\n                ".concat(StirSearchHelpers.formPaginationHTML(summary.fullyMatching, summary.numRanks, Math.floor(summary.currStart / summary.numRanks + 1),
-    // Current page
-    facets.noPageLinks), "\n              </div>\n            </div>\n          </div>");
+  const renderPagination = (summary, facets) => {
+    return `
+          <div class="cell ">
+            <div class="grid-container u-margin-y">
+              <div class="grid-x grid-padding-x" id="pagination-box">
+                ${StirSearchHelpers.formPaginationHTML(
+                  summary.fullyMatching,
+                  summary.numRanks,
+                  Math.floor(summary.currStart / summary.numRanks + 1), // Current page
+                  facets.noPageLinks
+                )}
+              </div>
+            </div>
+          </div>`;
   };
 
   /* ------------------------------------------------
    * Form the html for the search summary
    * ------------------------------------------------ */
-  var renderSummary = function renderSummary(summary) {
-    return "\n          <div class=\"cell medium-10\">\n            <p>Showing ".concat(summary.currStart, "-").concat(summary.currEnd, " of <strong>").concat(summary.fullyMatching, " results</strong></p>\n          </div>");
+  const renderSummary = (summary) => {
+    return `
+          <div class="cell medium-10">
+            <p>Showing ${summary.currStart}-${summary.currEnd} of <strong>${summary.fullyMatching} results</strong></p>
+          </div>`;
   };
 
   /* ------------------------------------------------
    * Form the html for the search summary
    * ------------------------------------------------ */
-  var renderNoResults = function renderNoResults(query) {
-    return "\n          <div class=\"cell medium-10\">\n            <p>No results found for search \"".concat(query, "\".</p>\n          </div>");
+  const renderNoResults = (query) => {
+    return `
+          <div class="cell medium-10">
+            <p>No results found for search "${query}".</p>
+          </div>`;
   };
 
   /*
@@ -125,10 +151,11 @@
   /* ------------------------------------------------
    * Output html content to the page
    * ------------------------------------------------ */
-  var setDOMContent = stir.curry(function (consts, html) {
+  const setDOMContent = stir.curry((consts, html) => {
     consts.searchLoading && (consts.searchLoading.style.display = "none");
     consts.resultsArea.innerHTML = html;
     stir.scrollToElement(consts.resultsArea, 30);
+
     return consts.resultsArea;
   });
 
@@ -141,55 +168,72 @@
   /* ------------------------------------------------
    *  Perform the search
    * ------------------------------------------------ */
-  var doSearch = function doSearch(page, query, consts) {
+  const doSearch = (page, query, consts) => {
     consts.searchLoading && (consts.searchLoading.style.display = "flex");
+
     QueryParams.set("page", page); // Already been type checked
     QueryParams.set("query", query);
+
     consts.searchInput.value = query;
-    var searchFacets = {
+
+    const searchFacets = {
       page: page,
       query: query,
       noPageLinks: consts.noPageLinks,
       postsPerPage: consts.postsPerPage,
-      start: (page - 1) * consts.postsPerPage + 1
+      start: (page - 1) * consts.postsPerPage + 1,
     };
-    stir.getJSON(formSearchUrl(consts, searchFacets), function (initialData) {
-      return main(searchFacets, consts, initialData);
-    });
+
+    stir.getJSON(formSearchUrl(consts, searchFacets), (initialData) =>
+      main(searchFacets, consts, initialData)
+    );
   };
 
   /* ------------------------------------------------
    * Pagination click events
    * ------------------------------------------------ */
-  CONSTS.resultsArea.addEventListener("click", function (e) {
-    var query = QueryParams.get("query") || "";
-    if (e.target.matches("#pagination-box a")) {
-      doSearch(e.target.getAttribute("data-page"), query, CONSTS);
-      e.preventDefault();
-    }
-    if (e.target.matches("#pagination-box a span")) {
-      doSearch(e.target.parentNode.getAttribute("data-page"), query, CONSTS);
-      e.preventDefault();
-    }
-    return;
-  }, false);
+  CONSTS.resultsArea.addEventListener(
+    "click",
+    (e) => {
+      const query = QueryParams.get("query") || "";
+
+      if (e.target.matches("#pagination-box a")) {
+        doSearch(e.target.getAttribute("data-page"), query, CONSTS);
+        e.preventDefault();
+      }
+
+      if (e.target.matches("#pagination-box a span")) {
+        doSearch(e.target.parentNode.getAttribute("data-page"), query, CONSTS);
+        e.preventDefault();
+      }
+
+      return;
+    },
+    false
+  );
 
   /* ------------------------------------------------
    *  Search Form submitted
    * ------------------------------------------------ */
-  CONSTS.searchForm && CONSTS.searchForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var query = CONSTS.searchInput.value || "";
-    var page = 1;
-    doSearch(page, query, CONSTS);
-    return;
-  }, false);
+  CONSTS.searchForm &&
+    CONSTS.searchForm.addEventListener(
+      "submit",
+      (e) => {
+        e.preventDefault();
+        const query = CONSTS.searchInput.value || "";
+        const page = 1;
+        doSearch(page, query, CONSTS);
+        return;
+      },
+      false
+    );
 
   /*
    * On load
    */
 
-  var QUERY = QueryParams.get("query") || "";
-  var PAGE = stir.isNumeric(QueryParams.get("page")) ? parseInt(QueryParams.get("page")) : 1;
+  const QUERY = QueryParams.get("query") || "";
+  const PAGE = stir.isNumeric(QueryParams.get("page")) ? parseInt(QueryParams.get("page")) : 1;
+
   doSearch(PAGE, QUERY, CONSTS);
 })(stir.node("#staff-search__results"));

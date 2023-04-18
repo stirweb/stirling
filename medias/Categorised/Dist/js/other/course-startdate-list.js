@@ -1,1 +1,19 @@
-!function(t){var n,r,i,a,o,e,c,s,u,l;t&&(n={applyLink:"https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=",month:(t=t).getAttribute("data-startmonth")},Object.freeze(n),r=stir.curry(function(t,n){var r=i(t);return"\n        <table>\n            <caption>Courses starting in ".concat(t.month,"</caption>\n            <thead>\n                <tr><td>Course</td><td>Application link</td><td>Year of entry</td></tr>\n            </thead>\n            <tbody>\n                ").concat(n.map(function(t){return r(t)}).join(""),"\n            </tbody>\n        </table>")}),i=stir.curry(function(t,n){var r=a(t);return"\n        <tr>\n            <td>\n              ".concat(n.url?'<a href="'.concat(n.url,'">'):"","\n              ").concat(n.award,"  ").concat(n.title,"\n              ").concat(n.url?"</a>":"","\n            </td>\n            <td>").concat(r(n),"</td>\n            <td>").concat(o(n,t.month),"</td>\n        </tr>")}),a=stir.curry(function(n,r){function i(t){return t.includes("UDX12")?" Apply for BA (Hons)":t.includes("UDX16")?" Apply for BSc (Hons)":"Apply"}return r.portalapply&&""!==r.portalapply?r.portalapply.split(",").map(function(t){return'<a aria-label="'+i(t)+" "+r.title+'" href="'+n.applyLink+t.trim()+'">'+i(t)+"</a>"}).join(" / "):""}),o=function(t,n){return t.startdates?stir.compose(stir.join(", "),stir.map(function(t){return t.split(" ")[1]}),stir.filter(function(t){return t.includes(n)}))(t.startdates.split(", ")):""},l=stir.curry(function(t,n){return t.innerHTML=n,t}),(e=stir.t4Globals.ugstartdates||[]).length)&&(c=stir.filter(function(t){return t.startdates&&t.startdates.includes(n.month)}),s=stir.filter(function(t){return t.portalapply}),u=stir.sort(function(t,n){return t.title<n.title?-1:t.title>n.title?1:0}),l=l(t),t=r(n),stir.compose(l,t,u,s,c,stir.clone)(e))}(stir.node("#course-list"));
+!function(t){if(!t)return;const r={applyLink:"https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=",month:t.getAttribute("data-startmonth")};Object.freeze(r);var i=stir.curry((t,r)=>{const i=s(t);return`
+        <table>
+            <caption>Courses starting in ${t.month}</caption>
+            <thead>
+                <tr><td>Course</td><td>Application link</td><td>Year of entry</td></tr>
+            </thead>
+            <tbody>
+                ${r.map(t=>i(t)).join("")}
+            </tbody>
+        </table>`});const s=stir.curry((t,r)=>{var i=a(t);return`
+        <tr>
+            <td>
+              ${r.url?`<a href="${r.url}">`:""}
+              ${r.award}  ${r.title}
+              ${r.url?"</a>":""}
+            </td>
+            <td>${i(r)}</td>
+            <td>${e(r,t.month)}</td>
+        </tr>`}),a=stir.curry((r,i)=>{const s=t=>t.includes("UDX12")?" Apply for BA (Hons)":t.includes("UDX16")?" Apply for BSc (Hons)":"Apply";return i.portalapply&&""!==i.portalapply?i.portalapply.split(",").map(t=>'<a aria-label="'+s(t)+" "+i.title+'" href="'+r.applyLink+t.trim()+'">'+s(t)+"</a>").join(" / "):""}),e=(t,r)=>t.startdates?stir.compose(stir.join(", "),stir.map(t=>t.split(" ")[1]),stir.filter(t=>t.includes(r)))(t.startdates.split(", ")):"";var l,o,n,p=stir.curry((t,r)=>(t.innerHTML=r,t)),d=stir.t4Globals.ugstartdates||[];d.length&&(l=stir.filter(t=>t.startdates&&t.startdates.includes(r.month)),o=stir.filter(t=>t.portalapply),n=stir.sort((t,r)=>t.title<r.title?-1:t.title>r.title?1:0),p=p(t),t=i(r),stir.compose(p,t,n,o,l,stir.clone)(d))}(stir.node("#course-list"));

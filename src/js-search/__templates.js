@@ -47,66 +47,71 @@ stir.templates.search = (() => {
 		return "";
 	};
 
-	const checkSpelling = (suggestion) => (suggestion ? `<p>Did you mean <a href="#" data-suggest>${suggestion.text.split(" ")[0]}</a>?</p>` : "");
+  const checkSpelling = (suggestion) => (suggestion ? `<p>Did you mean <a href="#" data-suggest>${suggestion.text.split(" ")[0]}</a>?</p>` : "");
 
-	/**
-	 * 
-	 * @param {String} name 
-	 * @param {String} value 
-	 * @returns Element
-	 * 
-	 * For a given name and value, return the first matching HTML <input> or <option> element.
-	 */
-	const metaParamElement = (name, value) => document.querySelector( `input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]` );
+  /**
+   *
+   * @param {String} name
+   * @param {String} value
+   * @returns Element
+   *
+   * For a given name and value, return the first matching HTML <input> or <option> element.
+   */
+  const metaParamElement = (name, value) => document.querySelector(`input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]`);
 
-//	const metaParamToken = (name, values) => {
-//		if (name === "meta_type") return; // ignore `type`
-//		if (name === "meta_faculty") return; // ignore `faculty`
-//		if (values.charAt(0) == "-") return; // ignore negative parameters
-//		if (values.charAt(1) == ">") return; // ignore date-range parameters
-//		if (values.indexOf(" ") >= 1) {
-//			const tokenArr = values.split(" ");
-//			const el = metaParamElement(name, tokenArr[1]);
-//			if (el) {
-//				return tag(el.parentElement.innerText, tokenArr[0], tokenArr[1]);
-//			}
-//		}
-//		return;
-//	};
+  //	const metaParamToken = (name, values) => {
+  //		if (name === "meta_type") return; // ignore `type`
+  //		if (name === "meta_faculty") return; // ignore `faculty`
+  //		if (values.charAt(0) == "-") return; // ignore negative parameters
+  //		if (values.charAt(1) == ">") return; // ignore date-range parameters
+  //		if (values.indexOf(" ") >= 1) {
+  //			const tokenArr = values.split(" ");
+  //			const el = metaParamElement(name, tokenArr[1]);
+  //			if (el) {
+  //				return tag(el.parentElement.innerText, tokenArr[0], tokenArr[1]);
+  //			}
+  //		}
+  //		return;
+  //	};
 
-	/**
-	 * 
-	 * @param {Object} tokens 
-	 * @returns String (HTML)
-	 * 
-	 * Create clickable text elements (i.e. "tokens") that represent the active search filters, to give the user the
-	 * option to dismiss each filter quickly (and a visual reminder of which filters are active).
-	 * 
-	 * Becuase the search result data only contains the raw names/values of the filters, we need to derive the correct
-	 * text labels from the form inputs on the page. We also need to unbundle checkbox (multi-select) filters and deal
-	 * with any other unusual filters (such as Faculty and course Start Date).
-	 * 
-	 */
-	const metaParamTokens = (tokens) => {
-		const metas = Object.keys(tokens).filter(key=>key.indexOf('meta_')===0 && tokens[key][0]);
+  /**
+   *
+   * @param {Object} tokens
+   * @returns String (HTML)
+   *
+   * Create clickable text elements (i.e. "tokens") that represent the active search filters, to give the user the
+   * option to dismiss each filter quickly (and a visual reminder of which filters are active).
+   *
+   * Becuase the search result data only contains the raw names/values of the filters, we need to derive the correct
+   * text labels from the form inputs on the page. We also need to unbundle checkbox (multi-select) filters and deal
+   * with any other unusual filters (such as Faculty and course Start Date).
+   *
+   */
+  const metaParamTokens = (tokens) => {
+    const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
 
-		return metas.map(key=>{
+    return metas
+      .map((key) => {
+        // does the name and value match a DOM element?
+        const el = metaParamElement(key, tokens[key]);
+        if (el) return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
 
-			// does the name and value match a DOM element?
-			const el = metaParamElement(key,tokens[key]);
-			if(el) return tag(el.innerText||el.parentElement.innerText,key,tokens[key]);
-			
-			// if not, we might have a multi-select filter (e.g. checkbox)
-			const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
-			const values = tokens[key].toString().replace(tokenex,`$1`).split(/\s/); // values are space-separated
-			return values.map(value=>{
-				const el = metaParamElement(key,value);
-				// The innerText of the <input> element‘s <label> has the text we need
-				if(el) { return tag(el.parentElement.innerText,key,value); }
-				// We will just default to empty string if there is no matching element.
-				return '';
-			}).join(" ");
-		}).join(" ");
+        // if not, we might have a multi-select filter (e.g. checkbox)
+        const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
+        const values = tokens[key].toString().replace(tokenex, `$1`).split(/\s/); // values are space-separated
+        return values
+          .map((value) => {
+            const el = metaParamElement(key, value);
+            // The innerText of the <input> element‘s <label> has the text we need
+            if (el) {
+              return tag(el.parentElement.innerText, key, value);
+            }
+            // We will just default to empty string if there is no matching element.
+            return "";
+          })
+          .join(" ");
+      })
+      .join(" ");
   };
 
 	const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
@@ -160,6 +165,13 @@ stir.templates.search = (() => {
 
 	const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
 
+  const renderFavsButton = (courseid) => {
+    return `<div class="flex-container u-gap" >
+              <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${courseid}"></div>
+              <a href="/stirling/pages/search/course-favs/" class="u-underline">View favourites</a>
+          </div>`;
+  };
+
 	const facetDisplayTypes = {
 		SINGLE_DRILL_DOWN: undefined,
 		CHECKBOX: 'checkbox',
@@ -198,26 +210,27 @@ stir.templates.search = (() => {
 		breadcrumb: (crumbs) => `<p class="u-m-0">${crumbs}</p>`,
 		trailstring: (trail) => (trail.length ? trail.map(anchor).join(" > ") : ""),
 
-		summary: (data) => {
-			console.info(data);
-		const { currEnd, totalMatching, currStart } = data.response.resultPacket.resultsSummary;
-		const querySanitised = stir.String.stripHtml(data.question.originalQuery).replace(/^!padrenullquery$/, "").trim();
-		const queryEcho = querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
-		const message = (totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`);
-		const tokens = metaParamTokens(data.question.rawInputParameters);
-		const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : '';
-		return `<div class="u-py-2"> ${message} ${tokens} ${spelling} </div>`;
-		},
-		pagination: (summary) => {
-		const { currEnd, totalMatching, progress } = summary;
-		return totalMatching === 0
-			? ""
-			: `
-				<div class="cell text-center u-margin-y">
-					<progress value="${progress}" max="100"></progress><br />
-					You have viewed ${totalMatching === currEnd ? "all" : currEnd + " of " + totalMatching} results
-				</div>`;
-		},
+    summary: (data) => {
+      const { currEnd, totalMatching, currStart } = data.response.resultPacket.resultsSummary;
+      const querySanitised = stir.String.htmlEntities(data.question.originalQuery)
+        .replace(/^!padrenullquery$/, "")
+        .trim();
+      const queryEcho = querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
+      const message = totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`;
+      const tokens = metaParamTokens(data.question.rawInputParameters);
+      const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
+      return `<div class="u-py-2"> ${message} ${tokens} ${spelling} </div>`;
+    },
+    pagination: (summary) => {
+      const { currEnd, totalMatching, progress } = summary;
+      return totalMatching === 0
+        ? ""
+        : `
+			<div class="cell text-center u-margin-y">
+				<progress value="${progress}" max="100"></progress><br />
+				You have viewed ${totalMatching === currEnd ? "all" : currEnd + " of " + totalMatching} results
+			</div>`;
+    },
 
 		suppressed: (reason) => `<!-- Suppressed search result: ${reason} -->`,
 
@@ -319,38 +332,44 @@ stir.templates.search = (() => {
 
 		courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""),
 
-		course: (item) => {
-			const subject = item.metaData.subject ? item.metaData.subject.split(/,\s?/).slice(0, 1) : "";
-			const subjectLink = stir.String.slug(subject);
-			const isOnline = item.metaData.delivery && item.metaData.delivery.toLowerCase().indexOf("online") > -1 ? true : false;
-			const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.metaData.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
-			item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.metaData.sid : item.liveUrl);
-			//item.combos = stir.courses.showCombosFor(item.metaData.sid); // this is for debugging t4 preview mode
-			return `
-				<div class="c-search-result" data-rank=${item.rank} data-sid=${item.metaData.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
-					<div class=" c-search-result__tags">
-						<span class="c-search-tag">${courseLabel(item.metaData.level || item.metaData.type || "")}</span>
-					</div>
-					<div class="flex-container flex-dir-column u-gap u-mt-1">
-					<p class="u-text-regular u-m-0">
-						<strong><a href="${link}" title="${item.liveUrl}">
-						${item.metaData.award || ""} ${item.title}
-						${item.metaData.ucas ? " - " + item.metaData.ucas : ""}
-						${item.metaData.code ? " - " + item.metaData.code : ""}
-						</a></strong>
-					</p>
-					<p class="u-m-0">${item.summary}</p>
-					${stir.templates.search.clearing(item) || ""}
-					<div class="c-search-result__meta grid-x">
-						${stir.templates.search.courseFact("Start dates", item.metaData.start, false)}
-						${stir.templates.search.courseFact("Study modes", item.metaData.modes, true)}
-						${stir.templates.search.courseFact("Delivery", item.metaData.delivery, true)}
-					</div>
-					${stir.templates.search.combos(item)}
-					${stir.templates.search.pathways(item)}
-					</div>
-				</div>`;
-		},
+    course: (item) => {
+      const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+
+      const subject = item.metaData.subject ? item.metaData.subject.split(/,\s?/).slice(0, 1) : "";
+      const subjectLink = stir.String.slug(subject);
+      const isOnline = item.metaData.delivery && item.metaData.delivery.toLowerCase().indexOf("online") > -1 ? true : false;
+      const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.metaData.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
+      item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.metaData.sid : item.liveUrl);
+      //item.combos = stir.courses.showCombosFor(item.metaData.sid); // this is for debugging t4 preview mode
+      return `
+			<div class="c-search-result" data-rank=${item.rank} data-sid=${item.metaData.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
+				<div class=" c-search-result__tags">
+					<span class="c-search-tag">${courseLabel(item.metaData.level || item.metaData.type || "")}</span>
+				</div>
+
+        <div class="flex-container flex-dir-column u-gap u-mt-1">
+          <p class="u-text-regular u-m-0">
+            <strong><a href="${link}" title="${item.liveUrl}">
+            ${item.metaData.award || ""} ${item.title}
+            ${item.metaData.ucas ? " - " + item.metaData.ucas : ""}
+            ${item.metaData.code ? " - " + item.metaData.code : ""}
+            </a></strong>
+          </p>
+          <p class="u-m-0">${item.summary}</p>
+          ${stir.templates.search.clearing(item) || ""}
+          <div class="c-search-result__meta grid-x">
+            ${stir.templates.search.courseFact("Start dates", item.metaData.start, false)}
+            ${stir.templates.search.courseFact("Study modes", item.metaData.modes, true)}
+            ${stir.templates.search.courseFact("Delivery", item.metaData.delivery, true)}
+          </div>
+          
+          ${stir.templates.search.combos(item)}
+          ${stir.templates.search.pathways(item)}
+
+          ${preview ? renderFavsButton(item.metaData.sid) : ""}
+        </div>
+			</div>`;
+    },
 
 		coursemini: (item) => `
 			<div>
@@ -435,40 +454,50 @@ stir.templates.search = (() => {
 				</div>`;
 		},
 
-		event: (item) => {
-			const hasThumbnail = item.metaData?.image || item.metaData?.tags?.indexOf("Webinar") > -1;
-			const title = item.title.split(" | ")[0];
-			return `
-				<div class="c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
-					<div class="c-search-result__tags">
-						${item.metaData?.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : ""}
-					</div>
-					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
-						<p class="u-text-regular u-m-0">
-				<strong>
-							${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
-						</strong>
-			</p>
-						<div class="flex-container flex-dir-column u-gap-8">
-							<div class="flex-container u-gap-16 align-middle">
-								<span class="u-icon h5 uos-calendar"></span>
-								<span>${datespan(item.metaData.startDate, item.metaData.d)}</span>
-							</div>
-							<div class="flex-container u-gap-16 align-middle">
-								<span class="uos-clock u-icon h5"></span>
-								<span>${timespan(item.metaData.startDate, item.metaData.d)}</span>
-							</div>
-							<div class="flex-container u-gap-16 align-middle">
-								<span class="u-icon h5 uos-${item.metaData.online ? "web" : "location"}"></span>
-								<span>${item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : ""}</span>
-							</div>
+    event: (item) => {
+      const hasThumbnail = item.metaData?.image || item.metaData?.tags?.indexOf("Webinar") > -1;
+      const title = item.title.split(" | ")[0];
+
+      //if (item.indexUrl === "http://163695") return "";
+
+      const urls = item.metaData.image.split("|");
+      const hacklink = urls[1] ? urls[1] : "/events/";
+
+      //if (urls[1]) console.log(urls[1]);
+
+      // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
+
+      return `
+			<div class="c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
+				<div class="c-search-result__tags">
+					${item.metaData?.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : ""}
+				</div>
+				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
+					<p class="u-text-regular u-m-0">
+            <strong>
+              ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : anchor({ text: title, href: hacklink })}
+					  </strong>
+          </p>
+					<div class="flex-container flex-dir-column u-gap-8">
+						<div class="flex-container u-gap-16 align-middle">
+							<span class="u-icon h5 uos-calendar"></span>
+							<span>${datespan(item.metaData.startDate, item.metaData.d)}</span>
 						</div>
-						<p class="text-sm">${item.summary}</p>
+						<div class="flex-container u-gap-16 align-middle">
+							<span class="uos-clock u-icon h5"></span>
+							<span>${timespan(item.metaData.startDate, item.metaData.d)}</span>
+						</div>
+						<div class="flex-container u-gap-16 align-middle">
+							<span class="u-icon h5 uos-${item.metaData.online ? "web" : "location"}"></span>
+							<span>${item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : ""}</span>
+						</div>
 					</div>
-					${image(item.metaData.image, item.title.split(" | ")[0])}
-					${item.metaData?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
-				</div>`;
-		},
+					<p class="text-sm">${item.summary}</p>
+				</div>
+				${image(urls[0], item.title.split(" | ")[0])}
+				${item.metaData?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
+			</div>`;
+    },
 
 		research: (item) => `
 			<div class="c-search-result" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""}>
