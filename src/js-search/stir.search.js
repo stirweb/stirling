@@ -508,7 +508,10 @@ stir.search = () => {
       //TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
       if (!data || data.error || !data.response || !data.response.resultPacket) return;
       if (0 === data.response.resultPacket.resultsSummary.totalMatching && fallback(element)) return;
-      return composition(data);
+
+      const comp = composition(data);
+      new stir.Favs();
+      return comp;
     };
     resetPagination();
 
@@ -528,7 +531,13 @@ stir.search = () => {
     const render = renderResultsWithPagination(type);
     const reflow = flow(element);
     const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
-    const callback = (data) => (data && !data.error ? composition(data) : new Function());
+
+    const doData = (data) => {
+      composition(data);
+      new stir.Favs();
+    };
+
+    const callback = (data) => (data && !data.error ? doData(data) : new Function());
     nextPage(type);
     searchers[type](callback);
   };
