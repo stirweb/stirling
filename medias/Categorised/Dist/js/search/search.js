@@ -980,11 +980,6 @@ stir.funnelback = (() => {
 	//const hostname = 'search.stir.ac.uk';
 	const url = `https://${hostname}/s/`;
 
-  const getJsonEndpoint = () => new URL("search.json", url);
-  const getScaleEndpoint = () => new URL("scale", url);
-  const getHostname = () => hostname;
-  // DOM: lastly show 'other' dates
-  const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
 	const getJsonEndpoint = () => new URL("search.json", url);
 	const getScaleEndpoint = () => new URL("scale", url);
 	const getHostname = () => hostname;
