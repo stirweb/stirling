@@ -1,1 +1,26 @@
-!function(){var n,t=stir.jsonscholarships.scholarships||[],o=stir.node("#report"),e=stir.node("#overdue");t.length&&o&&(n=Number((new Date).toISOString().split("T")[0].replaceAll("-","")),o.innerHTML=t.filter(function(t){return t.title}).map(function(t){return console.log(t),'\n          <div class="u-border-solid u-p-2 u-mt-2">\n              <p><strong>'.concat(t.title,"</strong></p>\n\n              <div><strong>Deadline:</strong> ").concat(t.deadlineFormatted||"N/A",' |  \n                  <a href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/page/content#edit/').concat(t.sid,"/").concat(t.cid,'" class="u-border-bottom-solid" target="_blank">Edit this scholarship</a> | \n                  <a href="').concat(t.url,'" class="u-border-bottom-solid">Preview page</a></div>\n              \n              <div class="u-mt-1"><strong>Last edited:</strong> ').concat(t.lastEditedFormatted," by ").concat(t.lastEditedBy,'</div>\n              <div class="u-mb-1"><strong>Owner:</strong> ').concat(t.owner,"</div>\n              \n              <div><strong>Metadata:</strong></div> \n              <div>").concat(t.metadata,"</div>\n              <div><strong>Teaser:</strong></div> \n              <div>").concat(t.teaser,'</div>\n\n              <div class="u-mt-1"><strong>Study Level (tag):</strong> ').concat(t.studyLevel,"</div>\n              <div><strong>Fee Status (tag):</strong> ").concat(t.feeStatus,"</div>\n              <div><strong>Nationalities (tag):</strong> ").concat(t.nationality,"</div>\n              <div><strong>Promoted Subjects (Tag):</strong> ").concat(t.promotedSubject,"</div>\n              <div><strong>Value:</strong> ").concat(t.value,"</div>\n              <div><strong>Awards:</strong> ").concat(t.awards,"</div>\n          </div>")}).join(""),e.innerHTML=t.filter(function(t){return t.title}).filter(function(t){if(t.deadline&&Number(t.deadline)<n)return t}).sort(function(t,n){return t.deadline-n.deadline}).map(function(t){return'\n        <div class="u-mb-1">\n          <strong>'.concat(t.title,"</strong>. (Deadline: ").concat(t.deadlineFormatted,'). <a class="u-border-bottom-solid" href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/page/section#edit/').concat(t.sid,'">Edit section</a>\n        </div>')}).join(""))}();
+!function(){var t=stir.jsonscholarships.scholarships||[],e=stir.node("#report"),i=stir.node("#overdue");if(t.length&&e){const r=Number((new Date).toISOString().split("T")[0].replaceAll("-",""));e.innerHTML=t.filter(t=>t.title).map(t=>(console.log(t),`
+          <div class="u-border-solid u-p-2 u-mt-2">
+              <p><strong>${t.title}</strong></p>
+
+              <div><strong>Deadline:</strong> ${t.deadlineFormatted||"N/A"} |  
+                  <a href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/page/content#edit/${t.sid}/${t.cid}" class="u-border-bottom-solid" target="_blank">Edit this scholarship</a> | 
+                  <a href="${t.url}" class="u-border-bottom-solid">Preview page</a></div>
+              
+              <div class="u-mt-1"><strong>Last edited:</strong> ${t.lastEditedFormatted} by ${t.lastEditedBy}</div>
+              <div class="u-mb-1"><strong>Owner:</strong> ${t.owner}</div>
+              
+              <div><strong>Metadata:</strong></div> 
+              <div>${t.metadata}</div>
+              <div><strong>Teaser:</strong></div> 
+              <div>${t.teaser}</div>
+
+              <div class="u-mt-1"><strong>Study Level (tag):</strong> ${t.studyLevel}</div>
+              <div><strong>Fee Status (tag):</strong> ${t.feeStatus}</div>
+              <div><strong>Nationalities (tag):</strong> ${t.nationality}</div>
+              <div><strong>Promoted Subjects (Tag):</strong> ${t.promotedSubject}</div>
+              <div><strong>Value:</strong> ${t.value}</div>
+              <div><strong>Awards:</strong> ${t.awards}</div>
+          </div>`)).join(""),i.innerHTML=t.filter(t=>t.title).filter(t=>{if(t.deadline&&Number(t.deadline)<r)return t}).sort((t,e)=>t.deadline-e.deadline).map(t=>`
+        <div class="u-mb-1">
+          <strong>${t.title}</strong>. (Deadline: ${t.deadlineFormatted}). <a class="u-border-bottom-solid" href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/page/section#edit/${t.sid}">Edit section</a>
+        </div>`).join("")}}();

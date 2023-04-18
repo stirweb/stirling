@@ -1,1 +1,23 @@
-function _slicedToArray(t,r){return _arrayWithHoles(t)||_iterableToArrayLimit(t,r)||_unsupportedIterableToArray(t,r)||_nonIterableRest()}function _nonIterableRest(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}function _unsupportedIterableToArray(t,r){var n;if(t)return"string"==typeof t?_arrayLikeToArray(t,r):"Map"===(n="Object"===(n=Object.prototype.toString.call(t).slice(8,-1))&&t.constructor?t.constructor.name:n)||"Set"===n?Array.from(t):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?_arrayLikeToArray(t,r):void 0}function _arrayLikeToArray(t,r){(null==r||r>t.length)&&(r=t.length);for(var n=0,e=new Array(r);n<r;n++)e[n]=t[n];return e}function _iterableToArrayLimit(t,r){var n=null==t?null:"undefined"!=typeof Symbol&&t[Symbol.iterator]||t["@@iterator"];if(null!=n){var e,a,o,i,u=[],c=!0,s=!1;try{if(o=(n=n.call(t)).next,0===r){if(Object(n)!==n)return;c=!1}else for(;!(c=(e=o.call(n)).done)&&(u.push(e.value),u.length!==r);c=!0);}catch(t){s=!0,a=t}finally{try{if(!c&&null!=n.return&&(i=n.return(),Object(i)!==i))return}finally{if(s)throw a}}return u}}function _arrayWithHoles(t){if(Array.isArray(t))return t}!function(n){var e,a,o,i,u,t,r;n&&n.dataset.subject&&(e=function(t){var t=stir.clone(t.response.resultPacket.results),r=stir.filter(function(t){return t.metaData.L.includes("Undergraduate")},t),t=stir.filter(function(t){return t.metaData.L.includes("Postgraduate")},t);return a("Undergraduate",r).concat(a("Postgraduate",t))},a=function(t,r){return r.length?"\n        <table>\n            <caption>".concat(t,' courses</caption>\n            <thead>\n                <tr>\n                    <th>Course</th>\n                    <th style="width: 30%">Start date</th>\n                </tr>\n            </thead>\n            <tbody>\n                ').concat(stir.map(o,r).join(""),"\n            </tbody>\n        </table>"):""},o=function(t){return'\n        <tr>\n            <td>\n                <a href="'.concat(t.displayUrl,'" data-mode="').concat(t.metaData.M,'">\n                  ').concat(t.metaData.B||""," ").concat(t.metaData.t,"\n                </a>\n            </td>\n            <td> \n                ").concat(t.metaData.sdt," \n            </td>\n        </tr>")},i=function(){return"<p>No courses found</p>"},(u=stir.curry(function(t,r){return t.innerHTML=r,t}))(n,"<p>Loading courses...</p>"),t="https://www.stir.ac.uk/s/search.json?collection=stir-courses&sort=title&query=!padrenullquery&start_rank=1&num_ranks=300&",r={meta_S_and:n.dataset.subject},t=t+stir.map(function(t){var t=_slicedToArray(t,2),r=t[0],t=t[1];return"".concat(r,"=").concat(t)},Object.entries(r)).join("&"),stir.getJSON(t,function(t){function r(t){return null!==t.response.resultPacket&&0<t.response.resultPacket.results.length}return t.error?u(n,stir.getMaintenanceMsg()):r(t)?r(t)?u(n,e(t)):void 0:u(n,i())}))}(stir.node("#course-subject-listing"));
+!function(r){if(!r||!r.dataset.subject)return;const s=(t,e)=>e.length?`
+        <table>
+            <caption>${t} courses</caption>
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th style="width: 30%">Start date</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${stir.map(a,e).join("")}
+            </tbody>
+        </table>`:"",a=t=>`
+        <tr>
+            <td>
+                <a href="${t.displayUrl}" data-mode="${t.metaData.M}">
+                  ${t.metaData.B||""} ${t.metaData.t}
+                </a>
+            </td>
+            <td> 
+                ${t.metaData.sdt} 
+            </td>
+        </tr>`;const n=stir.curry((t,e)=>(t.innerHTML=e,t));n(r,"<p>Loading courses...</p>");e="https://www.stir.ac.uk/s/search.json?collection=stir-courses&sort=title&query=!padrenullquery&start_rank=1&num_ranks=300&",t={meta_S_and:r.dataset.subject};var t,e=e+stir.map(([t,e])=>t+"="+e,Object.entries(t)).join("&");stir.getJSON(e,t=>{var e=t=>null!==t.response.resultPacket&&0<t.response.resultPacket.results.length;return t.error?n(r,stir.getMaintenanceMsg()):e(t)?e(t)?n(r,(t=>{const e=stir.clone(t.response.resultPacket.results),r=stir.filter(t=>t.metaData.L.includes("Undergraduate"),e),a=stir.filter(t=>t.metaData.L.includes("Postgraduate"),e);return s("Undergraduate",r).concat(s("Postgraduate",a))})(t)):void 0:n(r,"<p>No courses found</p>")})}(stir.node("#course-subject-listing"));

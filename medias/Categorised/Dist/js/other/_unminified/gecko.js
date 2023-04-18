@@ -42,12 +42,16 @@
 // })();
 
 (function () {
-  var utmTermValue = localStorage.getItem("_a_id");
-  var geckoScript = document.querySelector("#gecko-form-embed-script");
+  const utmTermValue = localStorage.getItem("_a_id");
+  const geckoScript = document.querySelector("#gecko-form-embed-script");
+
   if (!geckoScript) return;
-  var geckoScriptUrl = geckoScript.getAttribute("src") + "&utm_term=" + utmTermValue;
+
+  const geckoScriptUrl = geckoScript.getAttribute("src") + "&utm_term=" + utmTermValue;
   geckoScript.setAttribute("src", geckoScriptUrl);
-  var geckoFrame = document.querySelector("iframe[id*='gecko-form-iframe-embed']");
+
+  const geckoFrame = document.querySelector("iframe[id*='gecko-form-iframe-embed']");
+
   if (geckoFrame) {
     geckoFrame.setAttribute("src", geckoFrame.getAttribute("src") + "&utm_term=" + utmTermValue);
     geckoFrame.contentWindow.location.reload(true);

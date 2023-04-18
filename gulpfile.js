@@ -19,7 +19,7 @@
 const { src, dest, watch, series, parallel } = require("gulp");
 
 // Import Gulp plugins.
-const babel = require("gulp-babel");
+//const babel = require("gulp-babel");
 const browserSync = require("browser-sync").create();
 const autoprefixer = require("gulp-autoprefixer");
 const cleanCSS = require("gulp-clean-css");
@@ -66,24 +66,26 @@ function js() {
     "src/js/app.js",
     "src/js-impl/*.js",
   ];
-  return src(source)
-    .pipe(expect(source)) // ensure all files exist
-    .pipe(plumber())
-    .pipe(concat("app.js"))
-    .pipe(
-      babel({
-        presets: [
-          [
-            "@babel/env",
-            {
-              modules: false,
-            },
-          ],
-        ],
-      })
-    )
-    .pipe(dest("medias/Categorised/Dist/js"))
-    .pipe(browserSync.stream());
+  return (
+    src(source)
+      .pipe(expect(source)) // ensure all files exist
+      .pipe(plumber())
+      .pipe(concat("app.js"))
+      // .pipe(
+      //   babel({
+      //     presets: [
+      //       [
+      //         "@babel/env",
+      //         {
+      //           modules: false,
+      //         },
+      //       ],
+      //     ],
+      //   })
+      // )
+      .pipe(dest("medias/Categorised/Dist/js"))
+      .pipe(browserSync.stream())
+  );
 }
 
 // JS Production ready function
@@ -95,27 +97,29 @@ function jsProd() {
 // JS Course standalone script
 function jsCourses() {
   const source = ["node_modules/jquery/dist/jquery.js", "src/vendor/stirunimodules/js/stirunimodules.js", "src/js-course/*.js"];
-  return src(source)
-    .pipe(expect(source))
-    .pipe(plumber())
-    .pipe(
-      babel({
-        presets: [
-          [
-            "@babel/env",
-            {
-              modules: false,
-            },
-          ],
-        ],
-      })
-    )
-    .pipe(concat("course.js")) // combine js files unminified
-    .pipe(dest("medias/Categorised/Dist/js/other"))
-    .pipe(uglify())
-    .pipe(concat("course-min.js")) // combine js files
-    .pipe(dest("medias/Categorised/Dist/js/other"))
-    .pipe(browserSync.stream());
+  return (
+    src(source)
+      .pipe(expect(source))
+      .pipe(plumber())
+      // .pipe(
+      //   babel({
+      //     presets: [
+      //       [
+      //         "@babel/env",
+      //         {
+      //           modules: false,
+      //         },
+      //       ],
+      //     ],
+      //   })
+      // )
+      .pipe(concat("course.js")) // combine js files unminified
+      .pipe(dest("medias/Categorised/Dist/js/other"))
+      .pipe(uglify())
+      .pipe(concat("course-min.js")) // combine js files
+      .pipe(dest("medias/Categorised/Dist/js/other"))
+      .pipe(browserSync.stream())
+  );
 }
 
 // JS standalone scripts
@@ -124,18 +128,18 @@ function jsOther() {
   return (
     src(source)
       .pipe(plumber())
-      .pipe(
-        babel({
-          presets: [
-            [
-              "@babel/env",
-              {
-                modules: false,
-              },
-            ],
-          ],
-        })
-      )
+      // .pipe(
+      //   babel({
+      //     presets: [
+      //       [
+      //         "@babel/env",
+      //         {
+      //           modules: false,
+      //         },
+      //       ],
+      //     ],
+      //   })
+      // )
       .pipe(dest("medias/Categorised/Dist/js/other/_unminified")) // unminified version
       .pipe(uglify())
       //.pipe(rename({ extname: ".min.js" }))
@@ -147,53 +151,57 @@ function jsOther() {
 // JS search scripts
 function jsSearch() {
   const source = ["src/js-search/*.js"];
-  return src(source)
-    .pipe(expect(source))
-    .pipe(plumber())
-    .pipe(
-      babel({
-        presets: [
-          [
-            "@babel/env",
-            {
-              modules: false,
-            },
-          ],
-        ],
-      })
-    )
-    .pipe(concat("search.js")) // combine js files unminified
-    .pipe(dest("medias/Categorised/Dist/js/search"))
-    .pipe(uglify())
-    .pipe(concat("search-min.js")) // combine js files
-    .pipe(dest("medias/Categorised/Dist/js/search"))
-    .pipe(browserSync.stream());
+  return (
+    src(source)
+      .pipe(expect(source))
+      .pipe(plumber())
+      // .pipe(
+      //   babel({
+      //     presets: [
+      //       [
+      //         "@babel/env",
+      //         {
+      //           modules: false,
+      //         },
+      //       ],
+      //     ],
+      //   })
+      // )
+      .pipe(concat("search.js")) // combine js files unminified
+      .pipe(dest("medias/Categorised/Dist/js/search"))
+      .pipe(uglify())
+      .pipe(concat("search-min.js")) // combine js files
+      .pipe(dest("medias/Categorised/Dist/js/search"))
+      .pipe(browserSync.stream())
+  );
 }
 
 // JS Gallery files
 function jsGallery() {
   const source = ["node_modules/photoswipe/dist/photoswipe.js", "node_modules/photoswipe/dist/photoswipe-ui-default.js", "src/js-other/grid-gallery.js"];
-  return src(source)
-    .pipe(expect(source))
-    .pipe(plumber())
-    .pipe(
-      babel({
-        presets: [
-          [
-            "@babel/env",
-            {
-              modules: false,
-            },
-          ],
-        ],
-      })
-    )
-    .pipe(concat("gallery.js"))
-    .pipe(dest("medias/Categorised/Dist/js/other/_unminified"))
-    .pipe(concat("gallery.min.js")) // combine js files
-    .pipe(uglify())
-    .pipe(dest("medias/Categorised/Dist/js"))
-    .pipe(browserSync.stream());
+  return (
+    src(source)
+      .pipe(expect(source))
+      .pipe(plumber())
+      // .pipe(
+      //   babel({
+      //     presets: [
+      //       [
+      //         "@babel/env",
+      //         {
+      //           modules: false,
+      //         },
+      //       ],
+      //     ],
+      //   })
+      // )
+      .pipe(concat("gallery.js"))
+      .pipe(dest("medias/Categorised/Dist/js/other/_unminified"))
+      .pipe(concat("gallery.min.js")) // combine js files
+      .pipe(uglify())
+      .pipe(dest("medias/Categorised/Dist/js"))
+      .pipe(browserSync.stream())
+  );
 }
 
 /*

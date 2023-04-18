@@ -1,4 +1,4 @@
-let stir = stir || {};
+var stir = stir || {};
 
 /* ------------------------------------------------
  * @author: Ryan Kaye
@@ -17,7 +17,7 @@ stir.funnelback = (() => {
   const getJsonEndpoint = () => new URL("search.json", url);
   const getScaleEndpoint = () => new URL("scale", url);
   const getHostname = () => hostname;
-
+  // DOM: lastly show 'other' dates
   const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
 
   const resolveHref = (url, parameters) => {
@@ -436,7 +436,7 @@ stir.search = () => {
     if (element.hasAttribute("data-infinite")) {
       const resultsWrapper = document.createElement("div");
       const buttonWrapper = document.createElement("div");
-      const button = new LoaderButton();
+      const button = LoaderButton();
       button.setAttribute("disabled", true);
       button.addEventListener("click", (event) => getMoreResults(resultsWrapper, button));
       element.appendChild(resultsWrapper);

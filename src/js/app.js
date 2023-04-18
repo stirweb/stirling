@@ -37,9 +37,9 @@ var UoS_env = (function () {
       env_name = "pub";
       break;
 
-//    case "www-stir.t4appdev.stir.ac.uk":
-//      env_name = "dev-pub";
-//      break;
+    //    case "www-stir.t4appdev.stir.ac.uk":
+    //      env_name = "dev-pub";
+    //      break;
 
     case "stirweb.github.io":
       env_name = "qa";

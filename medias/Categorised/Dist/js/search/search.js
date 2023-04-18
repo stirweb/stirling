@@ -2,73 +2,68 @@
  * Just a temp file to add new (or update) functionality of Stir.js etc.
  */
 
+
 /**
  * JSON handling
  */
 
 //var stir = stir||{};
+
+
+
+
+
+
+  
 var stir = stir || {};
+
 stir.templates = stir.templates || {};
 stir.const = stir.const || {};
-stir.templates.search = function () {
+
+stir.templates.search = (() => {
   /**
    * Some private memebers to help with data processing.
    * They can also be referred to locally, instead of
    * invoking the absolute object stir.templates.blah.blah.blah
    * */
-  var debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-  var FB_BASE = function FB_BASE() {
-    return "https://" + stir.funnelback.getHostname();
-  };
-  var notice = function notice(text) {
-    return "<p class=\"u-heritage-berry u-border-solid u-p-1\"><span class=\"uos-lightbulb\"></span> ".concat(text, "</p>");
-  };
-  var summary = function summary(text) {
-    return "<p class=c-search-result__summary>".concat(text, "</p>");
-  };
+  const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+  const FB_BASE = () => "https://" + stir.funnelback.getHostname();
+  const notice = (text) => `<p class="u-heritage-berry u-border-solid u-p-1"><span class="uos-lightbulb"></span> ${text}</p>`;
+  const summary = (text) => `<p class=c-search-result__summary>${text}</p>`;
 
   // STAFF / STUDENT status checking
-  var groups = {
+  const groups = {
     staff: "University of Stirling staff",
-    students: "current students and staff"
+    students: "current students and staff",
   };
-  var entitlements = {
+  const entitlements = {
     staff: ["staff", "students"],
-    student: ["students"]
+    student: ["students"],
   };
-  var afce4eafce490574e288574b384ecd87 = window[["s", "e", "i", "k", "o", "o", "C"].reverse().join("")]; // Just a bit of mild fun to stop anyone text-searching for "Cookies"!
-  var isUser = afce4eafce490574e288574b384ecd87.get("psessv0") ? true : false; // Cookie could be spoofed, but we'll trust it. The Portal will enforce authenticattion anyway.
-  var userType = isUser ? afce4eafce490574e288574b384ecd87.get("psessv0").split("|")[0] : "EXTERNAL";
-  var userAuth = function userAuth(group) {
-    var _entitlements$userTyp;
-    return ((_entitlements$userTyp = entitlements[userType.toLowerCase()]) === null || _entitlements$userTyp === void 0 ? void 0 : _entitlements$userTyp.indexOf(group.toLowerCase())) > -1;
-  };
-  var authClass = function authClass(group) {
-    return userAuth(group) ? " c-internal-search-result" : " c-internal-locked-search-result";
-  };
-  var authMessage = function authMessage(group) {
-    return notice("This page is only available to ".concat(groups[group], ". You will be asked to log in before you can view it, but once you are logged in results will be shown automatically."));
-  };
-  var internalSummary = function internalSummary(text, group) {
-    return userAuth(group) ? summary(text) : authMessage(group);
-  };
+  const afce4eafce490574e288574b384ecd87 = window[["s", "e", "i", "k", "o", "o", "C"].reverse().join("")]; // Just a bit of mild fun to stop anyone text-searching for "Cookies"!
+  const isUser = afce4eafce490574e288574b384ecd87.get("psessv0") ? true : false; // Cookie could be spoofed, but we'll trust it. The Portal will enforce authenticattion anyway.
+  const userType = isUser ? afce4eafce490574e288574b384ecd87.get("psessv0").split("|")[0] : "EXTERNAL";
+  const userAuth = (group) => entitlements[userType.toLowerCase()]?.indexOf(group.toLowerCase()) > -1;
+  const authClass = (group) => (userAuth(group) ? " c-internal-search-result" : " c-internal-locked-search-result");
+  const authMessage = (group) => notice(`This page is only available to ${groups[group]}. You will be asked to log in before you can view it, but once you are logged in results will be shown automatically.`);
+  const internalSummary = (text, group) => (userAuth(group) ? summary(text) : authMessage(group));
 
   // Special handling for documents (PDF, DOC; as opposed to native web results)
-  var isDocUrl = function isDocUrl(url) {
-    var docUrlSlashDotSplit = url.toUpperCase().split("/").slice(-1).toString().split(".");
+  const isDocUrl = (url) => {
+    const docUrlSlashDotSplit = url.toUpperCase().split("/").slice(-1).toString().split(".");
     return docUrlSlashDotSplit.length > 1 && docUrlSlashDotSplit[1].match(/PDF|DOCX?/); // Other types can be added to this list if necessary
   };
 
-  var makeBreadcrumbs = function makeBreadcrumbs(trail, liveUrl, fileSize) {
+  const makeBreadcrumbs = (trail, liveUrl, fileSize) => {
     if (trail && trail.length > 0) {
       return stir.templates.search.breadcrumb(stir.templates.search.trailstring(trail));
     }
-    if (isDocUrl(liveUrl)) return "Document: ".concat(isDocUrl(liveUrl), " <small>").concat(stir.Math.fileSize(fileSize || 0, 0), "</small>");
+    if (isDocUrl(liveUrl)) return `Document: ${isDocUrl(liveUrl)} <small>${stir.Math.fileSize(fileSize || 0, 0)}</small>`;
+
     return "";
   };
-  var checkSpelling = function checkSpelling(suggestion) {
-    return suggestion ? "<p>Did you mean <a href=\"#\" data-suggest>".concat(suggestion.text.split(" ")[0], "</a>?</p>") : "";
-  };
+
+  const checkSpelling = (suggestion) => (suggestion ? `<p>Did you mean <a href="#" data-suggest>${suggestion.text.split(" ")[0]}</a>?</p>` : "");
 
   /**
    *
@@ -78,9 +73,7 @@ stir.templates.search = function () {
    *
    * For a given name and value, return the first matching HTML <input> or <option> element.
    */
-  var metaParamElement = function metaParamElement(name, value) {
-    return document.querySelector("input[name=\"".concat(name, "\"][value=\"").concat(value, "\"],select[name=\"").concat(name, "\"] option[value=\"").concat(value, "\"]"));
-  };
+  const metaParamElement = (name, value) => document.querySelector(`input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]`);
 
   //	const metaParamToken = (name, values) => {
   //		if (name === "meta_type") return; // ignore `type`
@@ -110,33 +103,36 @@ stir.templates.search = function () {
    * with any other unusual filters (such as Faculty and course Start Date).
    *
    */
-  var metaParamTokens = function metaParamTokens(tokens) {
-    var metas = Object.keys(tokens).filter(function (key) {
-      return key.indexOf("meta_") === 0 && tokens[key][0];
-    });
-    return metas.map(function (key) {
-      // does the name and value match a DOM element?
-      var el = metaParamElement(key, tokens[key]);
-      if (el) return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
+  const metaParamTokens = (tokens) => {
+    const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
 
-      // if not, we might have a multi-select filter (e.g. checkbox)
-      var tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
-      var values = tokens[key].toString().replace(tokenex, "$1").split(/\s/); // values are space-separated
-      return values.map(function (value) {
-        var el = metaParamElement(key, value);
-        // The innerText of the <input> element‘s <label> has the text we need
-        if (el) {
-          return tag(el.parentElement.innerText, key, value);
-        }
-        // We will just default to empty string if there is no matching element.
-        return "";
-      }).join(" ");
-    }).join(" ");
+    return metas
+      .map((key) => {
+        // does the name and value match a DOM element?
+        const el = metaParamElement(key, tokens[key]);
+        if (el) return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
+
+        // if not, we might have a multi-select filter (e.g. checkbox)
+        const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
+        const values = tokens[key].toString().replace(tokenex, `$1`).split(/\s/); // values are space-separated
+        return values
+          .map((value) => {
+            const el = metaParamElement(key, value);
+            // The innerText of the <input> element‘s <label> has the text we need
+            if (el) {
+              return tag(el.parentElement.innerText, key, value);
+            }
+            // We will just default to empty string if there is no matching element.
+            return "";
+          })
+          .join(" ");
+      })
+      .join(" ");
   };
-  var tag = function tag(_tag, name, value) {
-    return "<span class=c-tag data-name=\"".concat(name, "\" data-value=\"").concat(value, "\">\u2716\uFE0F ").concat(_tag, "</span>");
-  };
-  var courseLabel = function courseLabel(input) {
+
+  const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
+
+  const courseLabel = (input) => {
     switch (input) {
       case "module":
         return "CPD and short courses";
@@ -146,44 +142,44 @@ stir.templates.search = function () {
         return input;
     }
   };
-  var image = function image(_image, alt, width, height) {
-    if (!_image) return "";
-    var url = _image.indexOf("|") > -1 ? _image.split("|")[1] || _image.split("|")[0] : _image;
-    return "<div class=c-search-result__image>\n\t\t".concat(stir.funnelback.getCroppedImageElement({
+
+  const image = (image, alt, width, height) => {
+    if (!image) return "";
+
+    const url = image.indexOf("|") > -1 ? image.split("|")[1] || image.split("|")[0] : image;
+    return `<div class=c-search-result__image>
+		${stir.funnelback.getCroppedImageElement({
       url: url.trim(),
       alt: alt || "",
       width: width || 550,
-      height: height || 550
-    }), "\n\t\t</div>");
+      height: height || 550,
+    })}
+		</div>`;
   };
-  var flickrUrl = function flickrUrl(flickr) {
-    return flickr.id ? "https://farm".concat(flickr.farm, ".staticflickr.com/").concat(flickr.server, "/").concat(flickr.id, "_").concat(flickr.secret, "_c.jpg") : "";
-  };
-  var datespan = function datespan(start, end) {
+
+  const flickrUrl = (flickr) => (flickr.id ? `https://farm${flickr.farm}.staticflickr.com/${flickr.server}/${flickr.id}_${flickr.secret}_c.jpg` : "");
+
+  const datespan = (start, end) => {
     if (!start) return '<abbr title="To be confirmed">TBC</abbr>';
-    var s = new Date(start);
-    var startdate = stir.Date.newsDate(s);
-    var dts = stir.Date.timeElementDatetime(s);
-    if (!end) return "<time datetime=\"".concat(dts, "\">").concat(startdate, "</time>");
-    var e = end && new Date(end);
-    var enddate = e && stir.Date.newsDate(e);
-    var dte = e && stir.Date.timeElementDatetime(e);
-    if (startdate == enddate) return "<time datetime=\"".concat(dts, "\">").concat(startdate, "</time>");
+    const s = new Date(start);
+    const startdate = stir.Date.newsDate(s);
+    const dts = stir.Date.timeElementDatetime(s);
+
+    if (!end) return `<time datetime="${dts}">${startdate}</time>`;
+    const e = end && new Date(end);
+    const enddate = e && stir.Date.newsDate(e);
+    const dte = e && stir.Date.timeElementDatetime(e);
+
+    if (startdate == enddate) return `<time datetime="${dts}">${startdate}</time>`;
     // TODO: do we need to collapse short ranges e.g. "1–8 August 1986"?
-    return "<time datetime=\"".concat(dts, "\">").concat(startdate, "</time>\u2013<time datetime=\"").concat(dte, "\">").concat(enddate, "</time>");
+    return `<time datetime="${dts}">${startdate}</time>–<time datetime="${dte}">${enddate}</time>`;
   };
-  var timespan = function timespan(start, end) {
-    return (start ? "<time>".concat(stir.Date.time24(new Date(start)), "</time>") : "") + (end ? "\u2013<time>".concat(stir.Date.time24(new Date(end)), "</time>") : "");
-  };
-  var anchor = function anchor(crumb) {
-    return "<a href=\"".concat(crumb.href, "\">").concat(crumb.text, "</a>");
-  };
-  var t4preview = function t4preview(sid) {
-    return sid ? "/terminalfour/preview/1/en/".concat(sid) : "#";
-  };
-  var clearingTest = function clearingTest(item) {
-    return stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
-  };
+
+  const timespan = (start, end) => (start ? `<time>${stir.Date.time24(new Date(start))}</time>` : "") + (end ? `–<time>${stir.Date.time24(new Date(end))}</time>` : "");
+  const anchor = (crumb) => `<a href="${crumb.href}">${crumb.text}</a>`;
+  const t4preview = (sid) => (sid ? `/terminalfour/preview/1/en/${sid}` : "#");
+
+  const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
 
   /**
    * PUBLIC members that can be called externally.
@@ -193,43 +189,40 @@ stir.templates.search = function () {
    */
   return {
     tag: tag,
-    stag: function stag(tag) {
-      return tag ? "<span class=\"c-search-tag\">".concat(tag, "</span>") : "";
-    },
-    tagGroup: function tagGroup(_tagGroup) {
-      var gData = _tagGroup.split("=");
-      var list = gData[1] && gData[1].replace(/,([^\s])/gi, "__SPLIT__$&").split("__SPLIT__,");
+    stag: (tag) => (tag ? `<span class="c-search-tag">${tag}</span>` : ""),
+    tagGroup: (tagGroup) => {
+      const gData = tagGroup.split("=");
+      const list = gData[1] && gData[1].replace(/,([^\s])/gi, "__SPLIT__$&").split("__SPLIT__,");
       return list ? list.map(stir.templates.search.stag).join("") : "";
     },
-    breadcrumb: function breadcrumb(crumbs) {
-      return "<p class=\"u-m-0\">".concat(crumbs, "</p>");
+    breadcrumb: (crumbs) => `<p class="u-m-0">${crumbs}</p>`,
+    trailstring: (trail) => (trail.length ? trail.map(anchor).join(" > ") : ""),
+
+    summary: (data) => {
+      const { currEnd, totalMatching, currStart } = data.response.resultPacket.resultsSummary;
+      const querySanitised = stir.String.htmlEntities(data.question.originalQuery)
+        .replace(/^!padrenullquery$/, "")
+        .trim();
+      const queryEcho = querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
+      const message = totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`;
+      const tokens = metaParamTokens(data.question.rawInputParameters);
+      const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
+      return `<div class="u-py-2"> ${message} ${tokens} ${spelling} </div>`;
     },
-    trailstring: function trailstring(trail) {
-      return trail.length ? trail.map(anchor).join(" > ") : "";
+    pagination: (summary) => {
+      const { currEnd, totalMatching, progress } = summary;
+      return totalMatching === 0
+        ? ""
+        : `
+			<div class="cell text-center u-margin-y">
+				<progress value="${progress}" max="100"></progress><br />
+				You have viewed ${totalMatching === currEnd ? "all" : currEnd + " of " + totalMatching} results
+			</div>`;
     },
-    summary: function summary(data) {
-      var _data$response$result = data.response.resultPacket.resultsSummary,
-        currEnd = _data$response$result.currEnd,
-        totalMatching = _data$response$result.totalMatching,
-        currStart = _data$response$result.currStart;
-      var querySanitised = stir.String.htmlEntities(data.question.originalQuery).replace(/^!padrenullquery$/, "").trim();
-      var queryEcho = querySanitised.length > 1 ? " for <em>".concat(querySanitised, "</em>") : "";
-      var message = totalMatching > 0 ? "\t<p class=\"text-sm\">There are <strong>".concat(totalMatching.toLocaleString("en"), " results</strong>").concat(queryEcho, ".</p>") : "<p id=\"search_summary_noresults\"><strong>There are no results".concat(queryEcho, "</strong>.</p>");
-      var tokens = metaParamTokens(data.question.rawInputParameters);
-      var spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
-      return "<div class=\"u-py-2\"> ".concat(message, " ").concat(tokens, " ").concat(spelling, " </div>");
-    },
-    pagination: function pagination(summary) {
-      var currEnd = summary.currEnd,
-        totalMatching = summary.totalMatching,
-        progress = summary.progress;
-      return totalMatching === 0 ? "" : "\n\t\t\t<div class=\"cell text-center u-margin-y\">\n\t\t\t\t<progress value=\"".concat(progress, "\" max=\"100\"></progress><br />\n\t\t\t\tYou have viewed ").concat(totalMatching === currEnd ? "all" : currEnd + " of " + totalMatching, " results\n\t\t\t</div>");
-    },
-    suppressed: function suppressed(reason) {
-      return "<!-- Suppressed search result: ".concat(reason, " -->");
-    },
-    auto: function auto(item) {
-      var _item$metaData, _item$metaData$breadc;
+
+    suppressed: (reason) => `<!-- Suppressed search result: ${reason} -->`,
+
+    auto: (item) => {
       if (item.liveUrl === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
       if (item.metaData.type == "Course" || item.metaData.level) return stir.templates.search.course(item);
       if (item.metaData.type == "News") return stir.templates.search.news(item);
@@ -241,202 +234,377 @@ stir.templates.search = function () {
       if (item.metaData.type && item.metaData.type.indexOf("contract") > -1) return stir.templates.search.research(item);
       if (item.metaData.type && item.metaData.type.indexOf("profile") > -1) return stir.templates.search.person(item);
       if (item.liveUrl.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
-      var crumbs = {
-        text: ((_item$metaData = item.metaData) === null || _item$metaData === void 0 ? void 0 : (_item$metaData$breadc = _item$metaData.breadcrumbs) === null || _item$metaData$breadc === void 0 ? void 0 : _item$metaData$breadc.split(" > ").slice(1, -1)) || [],
-        href: new URL(item.liveUrl).pathname.split("/").slice(1, -1)
+
+      const crumbs = {
+        text: item.metaData?.breadcrumbs?.split(" > ").slice(1, -1) || [],
+        href: new URL(item.liveUrl).pathname.split("/").slice(1, -1),
       };
-      var trail = crumbs.text.map(function (text, index) {
-        return {
-          text: text,
-          href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/"
-        };
-      });
-      var label = item.liveUrl.indexOf("policyblog.stir") > -1 ? "<div class=\" c-search-result__tags\"><span class=\"c-search-tag\">Public Policy Blog</span></div>" : "";
+
+      const trail = crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" }));
+
+      const label = item.liveUrl.indexOf("policyblog.stir") > -1 ? `<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>` : "";
+
       if (item.metaData.type && item.metaData.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item, trail);
-      return "\n\t\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank).concat(item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : "").concat(item.metaData.access ? ' data-access="' + item.metaData.access + '"' : "", ">\n\t\t\t\t<div class=\"c-search-result__body u-mt-1 flex-container flex-dir-column u-gap\">\n\t\t\t\t\t").concat(label, "\n\t\t\t\t\t").concat(makeBreadcrumbs(trail, item.liveUrl, item.fileSize), "\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong><a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">").concat(item.title.split("|")[0].trim().replace(/\xA0/g, " "), "</a></strong></p>\n\t\t\t\t\t<p >").concat(item.summary.replace(/\xA0/g, " "), "</p>\n\t\t\t\t</div>\n\t\t\t</div>");
+
+      return `
+			<div class="c-search-result" data-rank=${item.rank}${item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : ""}${item.metaData.access ? ' data-access="' + item.metaData.access + '"' : ""}>
+				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
+					${label}
+					${makeBreadcrumbs(trail, item.liveUrl, item.fileSize)}
+					<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
+					<p >${item.summary.replace(/\xA0/g, " ")}</p>
+				</div>
+			</div>`;
     },
-    internal: function internal(item) {
-      var _item$metaData2, _item$metaData2$bread;
-      var crumbs = {
-        text: ((_item$metaData2 = item.metaData) === null || _item$metaData2 === void 0 ? void 0 : (_item$metaData2$bread = _item$metaData2.breadcrumbs) === null || _item$metaData2$bread === void 0 ? void 0 : _item$metaData2$bread.split(" > ")) || [],
-        href: new URL(item.liveUrl).pathname.split("/").filter(function (n) {
-          return n;
-        })
+    internal: (item) => {
+      const crumbs = {
+        text: item.metaData?.breadcrumbs?.split(" > ") || [],
+        href: new URL(item.liveUrl).pathname.split("/").filter((n) => n),
       };
-      var trail = userAuth(item.metaData.group) ? stir.templates.search.trailstring(crumbs.text.map(function (text, index) {
-        return {
-          text: text,
-          href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/"
-        };
-      }).slice(0, -1)) : "<a href=\"https://www.stir.ac.uk/".concat(crumbs.href[0], "/\">").concat(crumbs.text[0], "</a>");
-      return "\n      <div class=\"c-search-result".concat(authClass(item.metaData.group), "\" data-rank=").concat(item.rank).concat(item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : "", " data-access=\"").concat(item.metaData.access, "\">\n\t\t\t  <div class=\"c-search-result__body u-mt-1 flex-container flex-dir-column u-gap\">\n\t\t\t    <p class=\"c-search-result__breadcrumb\">").concat(trail, "</p>\n\t\t\t    <p class=\"u-text-regular u-m-0\"><strong><a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0], "</a></strong></p>\n\t\t\t    ").concat(internalSummary(item.summary, item.metaData.group), "\n\t\t\t  </div>\n\t\t\t</div>");
+
+      const trail = userAuth(item.metaData.group) ? stir.templates.search.trailstring(crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" })).slice(0, -1)) : `<a href="https://www.stir.ac.uk/${crumbs.href[0]}/">${crumbs.text[0]}</a>`;
+
+      return `
+      <div class="c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""} data-access="${item.metaData.access}">
+			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
+			    <p class="c-search-result__breadcrumb">${trail}</p>
+			    <p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split(" | ")[0]}</a></strong></p>
+			    ${internalSummary(item.summary, item.metaData.group)}
+			  </div>
+			</div>`;
     },
-    combo: function combo(item) {
-      var _item$codes;
-      return "<li title=\"".concat(item.prefix, " ").concat(item.title, "\">").concat(item.courses.map(stir.templates.search.comboCourse).join(" and ")).concat(item !== null && item !== void 0 && (_item$codes = item.codes) !== null && _item$codes !== void 0 && _item$codes.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : "").concat(clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : "", "</li>");
+
+    combo: (item) => {
+      return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboCourse).join(" and ")}${item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""}${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
     },
-    comboCourse: function comboCourse(item) {
-      return "<a href=\"".concat(item.url, "\">").concat(item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, ""), "</a>");
-    },
-    clearing: function clearing(item) {
+
+    comboCourse: (item) => `<a href="${item.url}">${item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, "")}</a>`,
+
+    clearing: (item) => {
       if (Object.keys && item.metaData && Object.keys(item.metaData).join().indexOf("clearing") >= 0) {
-        return "<p class=\"u-m-0\"><strong class=\"u-heritage-berry\">Clearing 2022: places may be available on this course.</strong></p>";
+        return `<p class="u-m-0"><strong class="u-heritage-berry">Clearing 2022: places may be available on this course.</strong></p>`;
       }
     },
-    combos: function combos(item) {
-      return item.combos.length === 0 ? "" : "\n\t\t\t<div class=\"combo-accordion\" data-behaviour=accordion>\n\t\t\t\t<accordion-summary>Course combinations</accordion-summary>\n\t\t\t\t<div>\n\t\t\t\t\t<p>".concat(item.title, " can be combined with:</p>\n\t\t\t\t\t<ul class=\"u-columns-2\">\n\t\t\t\t\t\t").concat(item.combos.map(stir.templates.search.combo).join(""), "\n\t\t\t\t\t</ul>\n\t\t\t\t\t").concat(item.combos.map(clearingTest).indexOf(true) >= 0 ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>' : "", "\n\t\t\t\t</div>\n\t\t\t</div>");
+    combos: (item) => {
+      return item.combos.length === 0
+        ? ""
+        : `
+			<div class="combo-accordion" data-behaviour=accordion>
+				<accordion-summary>Course combinations</accordion-summary>
+				<div>
+					<p>${item.title} can be combined with:</p>
+					<ul class="u-columns-2">
+						${item.combos.map(stir.templates.search.combo).join("")}
+					</ul>
+					${item.combos.map(clearingTest).indexOf(true) >= 0 ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>' : ""}
+				</div>
+			</div>`;
     },
-    pathways: function pathways(item) {
+
+    pathways: (item) => {
       if (!item.metaData.pathways) return "";
-      var paths = item.metaData.pathways.split("|");
-      return paths === 0 ? "" : "\n\t\t\t<div class=\"combo-accordion\" data-behaviour=accordion>\n\t\t\t\t<accordion-summary>Course pathways</accordion-summary>\n\t\t\t\t<div>\n\t\t\t\t\t<p>".concat(item.title, " has the following optional pathways:</p>\n\t\t\t\t\t<ul class=\"u-columns-2\">\n\t\t\t\t\t\t").concat(paths.map(function (path) {
-        return "<li>".concat(path, "</li>");
-      }).join("\n\t"), "\n\t\t\t\t\t</ul>\n\t\t\t\t</div>\n\t\t\t</div>");
+      const paths = item.metaData.pathways.split("|");
+      return paths === 0
+        ? ""
+        : `
+			<div class="combo-accordion" data-behaviour=accordion>
+				<accordion-summary>Course pathways</accordion-summary>
+				<div>
+					<p>${item.title} has the following optional pathways:</p>
+					<ul class="u-columns-2">
+						${paths.map((path) => `<li>${path}</li>`).join("\n\t")}
+					</ul>
+				</div>
+			</div>`;
     },
-    courseFact: function courseFact(head, body, sentenceCase) {
-      return head && body ? "<div class=\"cell medium-4\"><strong class=\"u-heritage-green\">".concat(head, "</strong><p").concat(sentenceCase ? " class=u-text-sentence-case" : "", ">").concat(body, "</p></div>") : "";
-    },
-    course: function course(item) {
-      var subject = item.metaData.subject ? item.metaData.subject.split(/,\s?/).slice(0, 1) : "";
-      var subjectLink = stir.String.slug(subject);
-      var isOnline = item.metaData.delivery && item.metaData.delivery.toLowerCase().indexOf("online") > -1 ? true : false;
-      var link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.metaData.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
+
+    courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""),
+
+    course: (item) => {
+      const subject = item.metaData.subject ? item.metaData.subject.split(/,\s?/).slice(0, 1) : "";
+      const subjectLink = stir.String.slug(subject);
+      const isOnline = item.metaData.delivery && item.metaData.delivery.toLowerCase().indexOf("online") > -1 ? true : false;
+      const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.metaData.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
       item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.metaData.sid : item.liveUrl);
       //item.combos = stir.courses.showCombosFor(item.metaData.sid); // this is for debugging t4 preview mode
-      return "\n\t\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank, " data-sid=").concat(item.metaData.sid, " data-result-type=course").concat(isOnline ? " data-delivery=online" : "", ">\n\t\t\t\t<div class=\" c-search-result__tags\">\n\t\t\t\t\t<span class=\"c-search-tag\">").concat(courseLabel(item.metaData.level || item.metaData.type || ""), "</span>\n\t\t\t\t</div>\n\n        <div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n          <p class=\"u-text-regular u-m-0\">\n            <strong><a href=\"").concat(link, "\" title=\"").concat(item.liveUrl, "\">\n            ").concat(item.metaData.award || "", " ").concat(item.title, "\n            ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", "\n            ").concat(item.metaData.code ? " - " + item.metaData.code : "", "\n            </a></strong>\n          </p>\n          <p class=\"u-m-0\">").concat(item.summary, "</p>\n          ").concat(stir.templates.search.clearing(item) || "", "\n          <div class=\"c-search-result__meta grid-x\">\n            ").concat(stir.templates.search.courseFact("Start dates", item.metaData.start, false), "\n            ").concat(stir.templates.search.courseFact("Study modes", item.metaData.modes, true), "\n            ").concat(stir.templates.search.courseFact("Delivery", item.metaData.delivery, true), "\n          </div>\n          ").concat(stir.templates.search.combos(item), "\n          ").concat(stir.templates.search.pathways(item), "\n        </div>\n\t\t\t</div>");
+      return `
+			<div class="c-search-result" data-rank=${item.rank} data-sid=${item.metaData.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
+				<div class=" c-search-result__tags">
+					<span class="c-search-tag">${courseLabel(item.metaData.level || item.metaData.type || "")}</span>
+				</div>
+
+        <div class="flex-container flex-dir-column u-gap u-mt-1">
+          <p class="u-text-regular u-m-0">
+            <strong><a href="${link}" title="${item.liveUrl}">
+            ${item.metaData.award || ""} ${item.title}
+            ${item.metaData.ucas ? " - " + item.metaData.ucas : ""}
+            ${item.metaData.code ? " - " + item.metaData.code : ""}
+            </a></strong>
+          </p>
+          <p class="u-m-0">${item.summary}</p>
+          ${stir.templates.search.clearing(item) || ""}
+          <div class="c-search-result__meta grid-x">
+            ${stir.templates.search.courseFact("Start dates", item.metaData.start, false)}
+            ${stir.templates.search.courseFact("Study modes", item.metaData.modes, true)}
+            ${stir.templates.search.courseFact("Delivery", item.metaData.delivery, true)}
+          </div>
+          ${stir.templates.search.combos(item)}
+          ${stir.templates.search.pathways(item)}
+        </div>
+			</div>`;
     },
-    coursemini: function coursemini(item) {
-      return "\n\t\t<div>\n\t\t\t<p><strong><a href=\"".concat(FB_BASE() + item.clickTrackingUrl, "\" title=\"").concat(item.liveUrl, "\" class=\"u-border-none\">\n\t\t\t\t").concat(item.metaData.award || "", " ").concat(item.title, " ").concat(item.metaData.ucas ? " - " + item.metaData.ucas : "", " ").concat(item.metaData.code ? " - " + item.metaData.code : "", "\n\t\t\t</a></strong></p>\n\t\t\t<p>").concat(item.summary, "</p>\n\t\t</div>");
+
+    coursemini: (item) => `
+		<div>
+			<p><strong><a href="${FB_BASE() + item.clickTrackingUrl}" title="${item.liveUrl}" class="u-border-none">
+				${item.metaData.award || ""} ${item.title} ${item.metaData.ucas ? " - " + item.metaData.ucas : ""} ${item.metaData.code ? " - " + item.metaData.code : ""}
+			</a></strong></p>
+			<p>${item.summary}</p>
+		</div>`,
+
+    person: (item) => {
+      return `
+			<div class=c-search-result data-result-type=person>
+				<div class=c-search-result__tags>
+					${stir.templates.search.stag(item.metaData.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.metaData.faculty) : "")}
+				</div>
+				<div class="flex-container flex-dir-column u-gap u-mt-1">
+					<p class="u-text-regular u-m-0"><strong>
+						<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
+					</strong></p>
+					<div>${item.metaData.role || "<!-- Job title -->"}<br>${item.metaData.faculty || ""}</div>
+					<!-- <p>${item.metaData.c ? (item.metaData.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
+				</div>
+				${image(item.metaData.image, item.title.split(" | ")[0].trim(), 400, 400)}
+				<div class=c-search-result__footer>
+					${stir.funnelback.getTags(item.metaData.category) ? "<p><strong>Research interests</strong></p>" : ""}
+					<p>${stir.funnelback.getTags(item.metaData.category) || ""}</p>
+				</div>
+			</div>`;
     },
-    person: function person(item) {
-      return "\n\t\t\t<div class=c-search-result data-result-type=person>\n\t\t\t\t<div class=c-search-result__tags>\n\t\t\t\t\t".concat(stir.templates.search.stag(item.metaData.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.metaData.faculty) : ""), "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0].trim(), "</a>\n\t\t\t\t\t</strong></p>\n\t\t\t\t\t<div>").concat(item.metaData.role || "<!-- Job title -->", "<br>").concat(item.metaData.faculty || "", "</div>\n\t\t\t\t\t<!-- <p>").concat(item.metaData.c ? (item.metaData.c + ".").replace(" at the University of Stirling", "") : "", "</p> -->\n\t\t\t\t</div>\n\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0].trim(), 400, 400), "\n\t\t\t\t<div class=c-search-result__footer>\n\t\t\t\t\t").concat(stir.funnelback.getTags(item.metaData.category) ? "<p><strong>Research interests</strong></p>" : "", "\n\t\t\t\t\t<p>").concat(stir.funnelback.getTags(item.metaData.category) || "", "</p>\n\t\t\t\t</div>\n\t\t\t</div>");
+
+    studentstory: (item, trail) => {
+      return `
+	  	<div class=c-search-result data-result-type=studentstory>
+	  		<div ><a href="${trail[0].href}">${trail[0].text}</a></div>
+		  	<div class="c-search-result__body flex-container flex-dir-column u-gap ">
+				<p class="u-text-regular u-m-0"><strong>
+				  	<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
+			  	</strong></p>
+			  	<p class="u-m-0">${item.metaData.profileCourse1}<br />
+			  	${item.metaData.profileCountry}</p>
+			  	<p>${item.metaData.c}</p>
+			</div>
+		  ${image("https://www.stir.ac.uk" + item.metaData.profileImage, item.title.split(" | ")[0].trim(), 400, 400)}
+	  	</div>`;
     },
-    studentstory: function studentstory(item, trail) {
-      return "\n\t  \t<div class=c-search-result data-result-type=studentstory>\n\t  \t\t<div ><a href=\"".concat(trail[0].href, "\">").concat(trail[0].text, "</a></div>\n\t\t  \t<div class=\"c-search-result__body flex-container flex-dir-column u-gap \">\n\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t  \t<a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.title.split(" | ")[0].trim(), "</a>\n\t\t\t  \t</strong></p>\n\t\t\t  \t<p class=\"u-m-0\">").concat(item.metaData.profileCourse1, "<br />\n\t\t\t  \t").concat(item.metaData.profileCountry, "</p>\n\t\t\t  \t<p>").concat(item.metaData.c, "</p>\n\t\t\t</div>\n\t\t  ").concat(image("https://www.stir.ac.uk" + item.metaData.profileImage, item.title.split(" | ")[0].trim(), 400, 400), "\n\t  \t</div>");
+
+    news: (item) => {
+      return `
+			<div class="c-search-result${item.metaData.image ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
+				
+				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
+					<p class="u-text-regular u-m-0">
+            <strong>
+						  <a href="${FB_BASE() + item.clickTrackingUrl}">${item.metaData.h1 || item.title.split(" | ")[0].trim()}</a>
+					  </strong>
+          </p>
+          <div >
+							${item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d)) : ""}
+					</div>
+					<p class="text-sm">${item.summary}</p>
+				</div>
+				${image(item.metaData.image, item.title.split(" | ")[0].trim())}
+			</div>`;
     },
-    news: function news(item) {
-      return "\n\t\t\t<div class=\"c-search-result".concat(item.metaData.image ? " c-search-result__with-thumbnail" : "", "\" data-rank=").concat(item.rank, " data-result-type=news>\n\t\t\t\t\n\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n            <strong>\n\t\t\t\t\t\t  <a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.metaData.h1 || item.title.split(" | ")[0].trim(), "</a>\n\t\t\t\t\t  </strong>\n          </p>\n          <div >\n\t\t\t\t\t\t\t").concat(item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d)) : "", "\n\t\t\t\t\t</div>\n\t\t\t\t\t<p class=\"text-sm\">").concat(item.summary, "</p>\n\t\t\t\t</div>\n\t\t\t\t").concat(image(item.metaData.image, item.title.split(" | ")[0].trim()), "\n\t\t\t</div>");
+
+    gallery: (item) => {
+      return `
+			<div class="c-search-result c-search-result__with-thumbnail" data-rank=${item.rank} data-result-type=news>
+				
+				<div class=c-search-result__body>
+					<p class="u-text-regular u-m-0"><strong>
+						<a href="${FB_BASE() + item.clickTrackingUrl}">${item.metaData.h1 || item.title.split(" | ")[0].trim()}</a>
+					</strong></p>
+					<p class="c-search-result__secondary">${stir.Date.newsDate(new Date(item.metaData.d))}</p>
+					<p >${item.summary}</p>	
+				</div>
+				<div class=c-search-result__image>
+					${stir.funnelback.getCroppedImageElement({
+            url: flickrUrl(JSON.parse(item.metaData.custom)),
+            alt: `Image of ${item.title.split(" | ")[0].trim()}`,
+            width: 550,
+            height: 550,
+          })}
+				</div>
+			</div>`;
     },
-    gallery: function gallery(item) {
-      return "\n\t\t\t<div class=\"c-search-result c-search-result__with-thumbnail\" data-rank=".concat(item.rank, " data-result-type=news>\n\t\t\t\t\n\t\t\t\t<div class=c-search-result__body>\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.clickTrackingUrl, "\">").concat(item.metaData.h1 || item.title.split(" | ")[0].trim(), "</a>\n\t\t\t\t\t</strong></p>\n\t\t\t\t\t<p class=\"c-search-result__secondary\">").concat(stir.Date.newsDate(new Date(item.metaData.d)), "</p>\n\t\t\t\t\t<p >").concat(item.summary, "</p>\t\n\t\t\t\t</div>\n\t\t\t\t<div class=c-search-result__image>\n\t\t\t\t\t").concat(stir.funnelback.getCroppedImageElement({
-        url: flickrUrl(JSON.parse(item.metaData.custom)),
-        alt: "Image of ".concat(item.title.split(" | ")[0].trim()),
-        width: 550,
-        height: 550
-      }), "\n\t\t\t\t</div>\n\t\t\t</div>");
-    },
-    event: function event(item) {
-      var _item$metaData3, _item$metaData4, _item$metaData4$tags, _item$metaData5, _item$metaData6, _item$metaData6$tags;
-      var hasThumbnail = ((_item$metaData3 = item.metaData) === null || _item$metaData3 === void 0 ? void 0 : _item$metaData3.image) || ((_item$metaData4 = item.metaData) === null || _item$metaData4 === void 0 ? void 0 : (_item$metaData4$tags = _item$metaData4.tags) === null || _item$metaData4$tags === void 0 ? void 0 : _item$metaData4$tags.indexOf("Webinar")) > -1;
-      var title = item.title.split(" | ")[0];
+
+    event: (item) => {
+      const hasThumbnail = item.metaData?.image || item.metaData?.tags?.indexOf("Webinar") > -1;
+      const title = item.title.split(" | ")[0];
 
       //if (item.indexUrl === "http://163695") return "";
 
-      var urls = item.metaData.image.split("|");
-      var hacklink = urls[1] ? urls[1] : "/events/";
+      const urls = item.metaData.image.split("|");
+      const hacklink = urls[1] ? urls[1] : "/events/";
 
       //if (urls[1]) console.log(urls[1]);
 
       // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
 
-      return "\n\t\t\t<div class=\"c-search-result".concat(hasThumbnail ? " c-search-result__with-thumbnail" : "", "\" data-rank=").concat(item.rank, " data-result-type=event>\n\t\t\t\t<div class=\"c-search-result__tags\">\n\t\t\t\t\t").concat((_item$metaData5 = item.metaData) !== null && _item$metaData5 !== void 0 && _item$metaData5.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : "", "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"c-search-result__body flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\">\n            <strong>\n              ").concat(item.metaData.register ? anchor({
-        text: title,
-        href: item.metaData.register
-      }) : anchor({
-        text: title,
-        href: hacklink
-      }), "\n\t\t\t\t\t  </strong>\n          </p>\n\t\t\t\t\t<div class=\"flex-container flex-dir-column u-gap-8\">\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-calendar\"></span>\n\t\t\t\t\t\t\t<span>").concat(datespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"uos-clock u-icon h5\"></span>\n\t\t\t\t\t\t\t<span>").concat(timespan(item.metaData.startDate, item.metaData.d), "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"flex-container u-gap-16 align-middle\">\n\t\t\t\t\t\t\t<span class=\"u-icon h5 uos-").concat(item.metaData.online ? "web" : "location", "\"></span>\n\t\t\t\t\t\t\t<span>").concat(item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : "", "</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<p class=\"text-sm\">").concat(item.summary, "</p>\n\t\t\t\t</div>\n\t\t\t\t").concat(image(urls[0], item.title.split(" | ")[0]), "\n\t\t\t\t").concat(((_item$metaData6 = item.metaData) === null || _item$metaData6 === void 0 ? void 0 : (_item$metaData6$tags = _item$metaData6.tags) === null || _item$metaData6$tags === void 0 ? void 0 : _item$metaData6$tags.indexOf("Webinar")) > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : "", "\n\t\t\t</div>");
+      return `
+			<div class="c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
+				<div class="c-search-result__tags">
+					${item.metaData?.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : ""}
+				</div>
+				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
+					<p class="u-text-regular u-m-0">
+            <strong>
+              ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : anchor({ text: title, href: hacklink })}
+					  </strong>
+          </p>
+					<div class="flex-container flex-dir-column u-gap-8">
+						<div class="flex-container u-gap-16 align-middle">
+							<span class="u-icon h5 uos-calendar"></span>
+							<span>${datespan(item.metaData.startDate, item.metaData.d)}</span>
+						</div>
+						<div class="flex-container u-gap-16 align-middle">
+							<span class="uos-clock u-icon h5"></span>
+							<span>${timespan(item.metaData.startDate, item.metaData.d)}</span>
+						</div>
+						<div class="flex-container u-gap-16 align-middle">
+							<span class="u-icon h5 uos-${item.metaData.online ? "web" : "location"}"></span>
+							<span>${item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : ""}</span>
+						</div>
+					</div>
+					<p class="text-sm">${item.summary}</p>
+				</div>
+				${image(urls[0], item.title.split(" | ")[0])}
+				${item.metaData?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
+			</div>`;
     },
-    research: function research(item) {
-      return "\n\t\t<div class=\"c-search-result\" data-rank=".concat(item.rank).concat(item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : "", ">\n\t\t\t<div>\n\t\t\t\t<div class=\"c-search-result__tags\"><span class=\"c-search-tag\">").concat(item.title.split(" | ").slice(0, 1).toString(), "</span></div>\n\t\t\t\t<div class=\"flex-container flex-dir-column u-gap u-mt-1\">\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t<a href=\"").concat(stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl, "\">\n\t\t\t\t\t\t\t").concat(item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title, "\n\t\t\t\t\t\t</a>\n\t\t\t\t\t</strong></p>\n\t\t\t\t\t").concat(stir.String.stripHtml(item.metaData.c || "") ? "<div class=\"text-sm\">" + stir.String.stripHtml(item.metaData.c || "") + "</div>" : "", "\n          ").concat(stir.funnelback.getTags(item.metaData.category) ? "<div class=c-search-result__footer>" + stir.funnelback.getTags(item.metaData.category) + "</div>" : "", "\n        </div>\n\t\t\t\t<!-- p>12344</ -->\n\t\t\t</div>\n\t\t</div>");
-    },
-    cura: function cura(item) {
-      return !item.messageHtml ? "<div class=\"c-search-result\" data-result-type=curated>\n\t\t\t\t<div class=c-search-result__body>\n\t\t\t\t\t<p class=\"c-search-result__breadcrumb\">".concat(item.displayUrl, "</p>\n\t\t\t\t\t<p class=\"u-text-regular u-m-0\"><strong>\n\t\t\t\t\t\t<a href=\"").concat(FB_BASE() + item.linkUrl, "\" title=\"").concat(item.displayUrl, "\">").concat(item.titleHtml, "</a>\n\t\t\t\t\t</strong></p>\n\t\t\t\t\t<p >").concat(item.descriptionHtml, "</p>\n\t\t\t\t\t<!-- <pre>").concat(JSON.stringify(item, null, "\t"), "</pre> -->\n\t\t\t\t</div>\n\t\t\t</div>") : "<div class=\"c-search-result-curated\" data-result-type=curated-message>\n\t\t\t\t".concat(item.messageHtml, "\n\t\t\t</div>");
-    }
+
+    research: (item) => `
+		<div class="c-search-result" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""}>
+			<div>
+				<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
+				<div class="flex-container flex-dir-column u-gap u-mt-1">
+					<p class="u-text-regular u-m-0"><strong>
+						<a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">
+							${item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title}
+						</a>
+					</strong></p>
+					${stir.String.stripHtml(item.metaData.c || "") ? `<div class="text-sm">` + stir.String.stripHtml(item.metaData.c || "") + `</div>` : ""}
+          ${stir.funnelback.getTags(item.metaData.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.metaData.category) + `</div>` : ""}
+        </div>
+				<!-- p>12344</ -->
+			</div>
+		</div>`,
+
+    cura: (item) =>
+      !item.messageHtml
+        ? `<div class="c-search-result" data-result-type=curated>
+				<div class=c-search-result__body>
+					<p class="c-search-result__breadcrumb">${item.displayUrl}</p>
+					<p class="u-text-regular u-m-0"><strong>
+						<a href="${FB_BASE() + item.linkUrl}" title="${item.displayUrl}">${item.titleHtml}</a>
+					</strong></p>
+					<p >${item.descriptionHtml}</p>
+					<!-- <pre>${JSON.stringify(item, null, "\t")}</pre> -->
+				</div>
+			</div>`
+        : `<div class="c-search-result-curated" data-result-type=curated-message>
+				${item.messageHtml}
+			</div>`,
   };
-}();
+})();
+
 (function () {
   //const debug   = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
   //const preview = UoS_env.name === "preview" ? true : false;
   //if(!(debug||preview)) return;
 
-  var date_elements = Array.prototype.slice.call(document.querySelectorAll("[name=meta_startval]"));
+  const date_elements = Array.prototype.slice.call(document.querySelectorAll("[name=meta_startval]"));
   if (!date_elements.length) return;
-  var months = [, "January",,,,,,,, "September",,,];
-  var regex = new RegExp(/\d\d\d\d/);
-  var ay = new RegExp(/AY\d\d\d\d\D\d\d/i);
-  var delim = new RegExp(/ay/i);
-  var dates = date_elements.map(function (date) {
+
+  const months = [, "January", , , , , , , , "September", , ,];
+
+  const regex = new RegExp(/\d\d\d\d/);
+  const ay = new RegExp(/AY\d\d\d\d\D\d\d/i);
+  const delim = new RegExp(/ay/i);
+  const dates = date_elements.map((date) => {
     return {
       data: date.value,
       date: date.value.replace(ay, ""),
       month: date.value.indexOf("-") > -1 ? months[parseInt(date.value.split("-")[1])] || "" : "",
       year: date.value.match(regex) ? date.value.match(regex).shift() : "",
-      acyear: date.value.match(ay) ? date.value.match(ay).shift().replace(delim, "") : ""
+      acyear: date.value.match(ay) ? date.value.match(ay).shift().replace(delim, "") : "",
     };
   });
-  var years = dates.map(function (date) {
-    return date.acyear.replace(delim, "");
-  }).filter(function (value, index, self) {
-    return self.indexOf(value) === index && value;
-  });
-  var root = date_elements[0].parentElement.parentElement.parentElement;
+  const years = dates.map((date) => date.acyear.replace(delim, "")).filter((value, index, self) => self.indexOf(value) === index && value);
+
+  const root = date_elements[0].parentElement.parentElement.parentElement;
 
   // remove checkboxes only if the years array is populated
   if (!years.length) return;
-  date_elements.forEach(function (el) {
+  date_elements.forEach((el) => {
     el.parentElement.parentElement.remove();
   });
-  var DateInput = function DateInput(type, name, value) {
-    var input = document.createElement("input");
+
+  const DateInput = (type, name, value) => {
+    const input = document.createElement("input");
     input.type = type;
     input.name = name;
     input.value = value;
     return input;
   };
-  var DateLabel = function DateLabel(name, value) {
-    var input = new DateInput("radio", "meta_startval", "[1st ".concat(value, "]"));
-    var label = document.createElement("label");
+
+  const DateLabel = (name, value) => {
+    const input = DateInput("radio", "meta_startval", `[1st ${value}]`);
+    const label = document.createElement("label");
     label.appendChild(input);
     label.appendChild(document.createTextNode(name));
     return label;
   };
-  var picker = document.createElement("li");
-  years.forEach(function (acyear) {
+
+  const picker = document.createElement("li");
+
+  years.forEach((acyear) => {
     // Array: get all dates relevant to this academic year
-    var thisyear = dates.filter(function (date) {
-      return date.acyear === acyear;
-    });
+    const thisyear = dates.filter((date) => date.acyear === acyear);
 
     // String: create a meta-search parameter of 'other' dates (i.e. neither Sept nor Jan)
-    var other = thisyear.filter(function (date) {
-      return date.date.indexOf("-01") === -1 && date.date.indexOf("-09") === -1;
-    }).map(function (date) {
-      return date.data;
-    }).join(" ");
+    const other = thisyear
+      .filter((date) => date.date.indexOf("-01") === -1 && date.date.indexOf("-09") === -1)
+      .map((date) => date.data)
+      .join(" ");
 
     // DOM: show heading
-    var set = document.createElement("fieldset");
-    var legend = document.createElement("legend");
+    const set = document.createElement("fieldset");
+    const legend = document.createElement("legend");
     legend.classList.add("u-my-1", "text-xsm");
+
     set.appendChild(legend);
     set.setAttribute("class", "c-search-filters-subgroup");
-    legend.innerText = "Academic year ".concat(acyear);
+    legend.innerText = `Academic year ${acyear}`;
     picker.appendChild(set);
 
     // DOM: show conventional start dates (Sept, Jan)
-    thisyear.filter(function (date) {
-      return date.acyear === acyear && (date.date.indexOf("-01") > -1 || date.date.indexOf("-09") > -1);
-    }).map(function (date) {
-      set.appendChild(new DateLabel("".concat(date.month, " ").concat(date.year), date.data));
-    });
+    thisyear
+      .filter((date) => date.acyear === acyear && (date.date.indexOf("-01") > -1 || date.date.indexOf("-09") > -1))
+      .map((date) => {
+        set.appendChild(DateLabel(`${date.month} ${date.year}`, date.data));
+      });
 
     // DOM: lastly show 'other' dates
-    if (other.length) set.appendChild(new DateLabel("Other ".concat(acyear), "".concat(other)));
+    if (other.length) set.appendChild(DateLabel(`Other ${acyear}`, `${other}`));
   });
+
   root.appendChild(picker);
 })();
-var stir = stir || {};
+
+stir = stir || {};
 stir.searchUI = stir.searchUI || {};
 
 /*
@@ -445,24 +613,29 @@ stir.searchUI = stir.searchUI || {};
   @version: 1.0
   @description: Transform an aside to an accordion (mobile folding)
 */
-stir.searchUI.asideAccordion = function (filterNode, index) {
+stir.searchUI.asideAccordion = (filterNode, index) => {
   console.log("hello");
-  var header = filterNode.querySelector("p.c-search-filters-header");
-  var body = filterNode.querySelector("div");
+  const header = filterNode.querySelector("p.c-search-filters-header");
+  const body = filterNode.querySelector("div");
+
   if (header && body) {
     filterNode.setAttribute("data-behaviour", "accordion");
-    var button = document.createElement("button");
+
+    const button = document.createElement("button");
     button.innerHTML = header.innerHTML;
     button.setAttribute("id", "filteraccordbtn_" + index);
     button.setAttribute("aria-controls", "filteraccordpanel_" + index);
     button.setAttribute("aria-expanded", "false");
+
     header.innerHTML = "";
     header.appendChild(button);
+
     body.setAttribute("id", "filteraccordpanel_" + index);
     body.setAttribute("aria-labelledby", "filteraccordbtn_" + index);
     body.setAttribute("role", "region");
     body.classList.add("hide");
-    button.addEventListener("click", function (e) {
+
+    button.addEventListener("click", (e) => {
       body.classList.toggle("hide");
       body.classList.contains("hide") ? button.setAttribute("aria-expanded", "false") : button.setAttribute("aria-expanded", "true");
     });
@@ -474,52 +647,62 @@ stir.searchUI.asideAccordion = function (filterNode, index) {
     @author: ryankaye
     @version: 1.0
 */
-stir.searchUI.verticalSlider = function (item, target) {
+stir.searchUI.verticalSlider = (item, target) => {
   /* buildNavDiv */
-  var buildNavDiv = function buildNavDiv() {
-    var div = document.createElement("div");
+  const buildNavDiv = () => {
+    const div = document.createElement("div");
+
     div.classList.add("tns-controls");
     div.setAttribute("aria-label", "Carousel Navigation");
     div.setAttribute("tabindex", "0");
+
     return div;
   };
 
   /* buildNavButton */
-  var buildNavButton = function buildNavButton(id, text, icon) {
-    var btn = document.createElement("button");
+  const buildNavButton = (id, text, icon) => {
+    const btn = document.createElement("button");
+
     btn.innerHTML = '<span class="uos-' + icon + ' icon--medium "></span>';
     btn.setAttribute("data-controls", text);
     btn.setAttribute("aria-label", text);
     btn.setAttribute("type", "button");
     btn.setAttribute("tabindex", "-1");
     btn.setAttribute("aria-controls", id);
+
     return btn;
   };
 
   /* Build the full Button + wrapper + listener */
-  var buildNavElement = function buildNavElement(containerId, text, icon) {
-    var div = buildNavDiv();
-    var btn = buildNavButton(containerId, text, icon);
+  const buildNavElement = (containerId, text, icon) => {
+    const div = buildNavDiv();
+    const btn = buildNavButton(containerId, text, icon);
+
     div.insertAdjacentElement("beforeend", btn);
-    btn.addEventListener("click", function (event) {
+
+    btn.addEventListener("click", (event) => {
       event.preventDefault();
       verticalSlider.goTo(text);
     });
+
     return div;
   };
 
   /* initSlider */
-  var initSlider = function initSlider(container) {
+  const initSlider = (container) => {
     if (!container) return;
-    var divPrev = buildNavElement(container.id, "prev", "chevron-up");
-    var divNext = buildNavElement(container.id, "next", "chevron-down");
+
+    const divPrev = buildNavElement(container.id, "prev", "chevron-up");
+    const divNext = buildNavElement(container.id, "next", "chevron-down");
+
     container.parentElement.parentElement.insertAdjacentElement("afterend", divNext);
     container.parentElement.parentElement.insertAdjacentElement("beforebegin", divPrev);
+
     target.parentElement.setAttribute("data-inittns", "");
   };
 
   /* Config */
-  var verticalSlider = tns({
+  const verticalSlider = tns({
     container: item,
     controls: false,
     loop: false,
@@ -529,8 +712,9 @@ stir.searchUI.verticalSlider = function (item, target) {
     autoHeight: false,
     touch: true,
     swipeAngle: 30,
-    speed: 400
+    speed: 400,
   });
+
   verticalSlider && initSlider(verticalSlider.getInfo().container);
 };
 
@@ -540,13 +724,16 @@ stir.searchUI.verticalSlider = function (item, target) {
   @version: 1.0
   @description: Add Aria Labels to a slider after its initialised 
 */
-stir.searchUI.sliderArias = function (node) {
+stir.searchUI.sliderArias = (node) => {
   if (!node) return;
-  setTimeout(function () {
-    var controlsPrevious = node.querySelector('[data-controls="prev"]');
-    var controlsNext = node.querySelector('[data-controls="next"]');
+
+  setTimeout(() => {
+    const controlsPrevious = node.querySelector('[data-controls="prev"]');
+    const controlsNext = node.querySelector('[data-controls="next"]');
+
     controlsPrevious && controlsPrevious.setAttribute("aria-label", "Previous");
     controlsNext && controlsNext.setAttribute("aria-label", "Next");
+
     return true;
   }, 100);
 };
@@ -556,20 +743,22 @@ stir.searchUI.sliderArias = function (node) {
    @author: ryankaye
    @version: 1.0
  */
-stir.searchUI.slideTab = function (scope) {
+stir.searchUI.slideTab = (scope) => {
   if (!scope) return;
-  var nodes = {
+
+  const nodes = {
     slideBox: scope,
     slideNavBox: scope.querySelector("[data-searchbtnstns]"),
     slideNavBtns: Array.prototype.slice.call(scope.querySelectorAll("[data-searchbtnstns] h2 button")),
     slideResultTabs: Array.prototype.slice.call(scope.querySelectorAll("#mySlider1 > div")),
-    accordions: Array.prototype.slice.call(scope.querySelectorAll("[data-behaviour=accordion]"))
+    accordions: Array.prototype.slice.call(scope.querySelectorAll("[data-behaviour=accordion]")),
   };
+
   if (!nodes.slideNavBox || !nodes.slideNavBtns || !nodes.slideResultTabs) return;
 
   /* initTabs */
-  var initTabs = function initTabs(nodes) {
-    var sliderNav = tns({
+  const initTabs = (nodes) => {
+    const sliderNav = tns({
       container: "#" + nodes.slideNavBox.id,
       items: calcItemsToShow(stir.MediaQuery.current),
       loop: false,
@@ -580,11 +769,13 @@ stir.searchUI.slideTab = function (scope) {
       swipeAngle: 30,
       navPosition: "top",
       autoHeight: true,
-      autoplay: false
+      autoplay: false,
     });
+
     nodes.slideNavBox.setAttribute("role", "tablist");
     stir.searchUI.sliderArias(nodes.slideBox);
-    nodes.slideNavBtns.forEach(function (item) {
+
+    nodes.slideNavBtns.forEach((item) => {
       item.closest("h2").style.width = "90px"; // item.offsetWidth + "px";
       //item.setAttribute("role", "tab");
       item.closest("div.tns-item").setAttribute("role", "tab");
@@ -593,15 +784,19 @@ stir.searchUI.slideTab = function (scope) {
       item.setAttribute("aria-controls", "search_results_panel_" + item.getAttribute("data-open"));
       item.setAttribute("id", "searchtab_" + item.getAttribute("data-open"));
     });
-    nodes.slideResultTabs.forEach(function (item) {
+
+    nodes.slideResultTabs.forEach((item) => {
       item.setAttribute("role", "tabpanel");
       item.setAttribute("tabindex", "0");
       item.setAttribute("id", "search_results_panel_" + item.getAttribute("data-panel"));
       item.setAttribute("aria-labelledby", "searchtab_" + item.getAttribute("data-panel"));
     });
-    var open = QueryParams.get("tab") ? QueryParams.get("tab") : "all";
-    var btnActive = scope.querySelector("button[data-open=" + open + "]");
+
+    const open = QueryParams.get("tab") ? QueryParams.get("tab") : "all";
+    const btnActive = scope.querySelector("button[data-open=" + open + "]");
+
     if (nodes.slideNavBox && nodes.slideNavBox.classList.contains("hide-no-js")) nodes.slideNavBox.classList.remove("hide-no-js");
+
     if (btnActive) {
       btnActive.click();
       if (nodes.slideNavBtns.indexOf(btnActive) >= calcItemsToShow(stir.MediaQuery.current)) sliderNav.goTo(nodes.slideNavBtns.indexOf(btnActive));
@@ -609,37 +804,46 @@ stir.searchUI.slideTab = function (scope) {
   };
 
   /* calcItemsToShow */
-  var calcItemsToShow = function calcItemsToShow(size) {
+  const calcItemsToShow = (size) => {
     if (size === "small") return 3;
     if (size === "medium") return 4;
+
     return nodes.slideNavBtns.length;
   };
 
   /* controlSticky */
-  var controlSticky = function controlSticky() {
-    var top = nodes.slideBox.getBoundingClientRect().top;
+  const controlSticky = () => {
+    const top = nodes.slideBox.getBoundingClientRect().top;
+
     top < 0.01 && nodes.slideBox.classList.add("stuck");
     top > 0 && nodes.slideBox.classList.remove("stuck");
   };
 
   /* handleTabClick */
-  var handleTabClick = function handleTabClick(e) {
-    var btn = e.target.closest("button[data-open]");
+  const handleTabClick = (e) => {
+    const btn = e.target.closest("button[data-open]");
+
     if (!btn) return;
-    var open = btn.getAttribute("data-open") || "null";
-    var panel = stir.node('[data-panel="' + open + '"]');
-    nodes.slideNavBtns.forEach(function (item) {
+
+    const open = btn.getAttribute("data-open") || "null";
+    const panel = stir.node('[data-panel="' + open + '"]');
+
+    nodes.slideNavBtns.forEach((item) => {
       item.parentElement.classList.remove("slide-tab--active");
     });
+
     btn.closest("h2").classList.add("slide-tab--active");
-    nodes.slideResultTabs.forEach(function (el) {
+
+    nodes.slideResultTabs.forEach((el) => {
       el.classList.add("hide");
       el.setAttribute("aria-hidden", "true");
+
       if (el.getAttribute("data-panel") === open) {
         el.classList.remove("hide");
         el.removeAttribute("aria-hidden");
       }
     });
+
     panel.classList.remove("hide");
     panel.removeAttribute("aria-hidden");
     stir.scrollToElement && stir.scrollToElement(nodes.slideBox, 0);
@@ -667,9 +871,7 @@ stir.searchUI.slideTab = function (scope) {
   */
   document.addEventListener("scroll", throttle(controlSticky, 200));
   nodes.slideNavBox.addEventListener("click", handleTabClick);
-  window.addEventListener("popstate", function (ev) {
-    return initTabs(nodes);
-  }); // reinit tabs on history navigation (back/forward)
+  window.addEventListener("popstate", (ev) => initTabs(nodes)); // reinit tabs on history navigation (back/forward)
 
   initTabs(nodes);
 };
@@ -688,13 +890,14 @@ stir.searchUI.slideTab = function (scope) {
     Find all vertical sliders 
     and initialte them
    */
-  var handleAccordionClick = function handleAccordionClick(e) {
+  const handleAccordionClick = (e) => {
     if (e.target.parentElement.dataset.containtns === "" && e.target.parentElement.dataset.inittns !== "") {
-      var item = e.target.parentElement.nextElementSibling.children[0];
+      const item = e.target.parentElement.nextElementSibling.children[0];
       if (item) stir.searchUI.verticalSlider(item, e.target);
     }
   };
-  stir.nodes('[data-containtns=""]').forEach(function (item) {
+
+  stir.nodes('[data-containtns=""]').forEach((item) => {
     item.children[0].addEventListener("click", handleAccordionClick);
   });
 
@@ -702,31 +905,23 @@ stir.searchUI.slideTab = function (scope) {
     Find all Slide Tabs Components 
     and initialise them
    */
-  var slideTabs = stir.nodes(".c-search-results-area");
-  if (slideTabs.length) slideTabs.forEach(function (item) {
-    return stir.searchUI.slideTab(item);
-  });
+  const slideTabs = stir.nodes(".c-search-results-area");
+
+  if (slideTabs.length) slideTabs.forEach((item) => stir.searchUI.slideTab(item));
 
   /*
     Find all mobile filter accordions 
     and initialise them 
    */
-  var filterNodes = stir.nodes(".c-search-results-filters");
+  const filterNodes = stir.nodes(".c-search-results-filters");
+
   if (stir.MediaQuery.current === "small" || stir.MediaQuery.current === "medium") {
     if (filterNodes.length) {
-      filterNodes.forEach(function (element, index) {
-        return stir.searchUI.asideAccordion(element, index);
-      });
+      filterNodes.forEach((element, index) => stir.searchUI.asideAccordion(element, index));
     }
   }
 })();
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
 var stir = stir || {};
 
 /* ------------------------------------------------
@@ -734,192 +929,172 @@ var stir = stir || {};
  * @version: 2 (Non jQuery. Non Searchbox. Non broken)
  * ------------------------------------------------ */
 
-stir.funnelback = function () {
-  var debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+stir.funnelback = (() => {
+  const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 
   //const hostname = 'stage-shared-15-24-search.clients.uk.funnelback.com';
   //const hostname = 'shared-15-24-search.clients.uk.funnelback.com';
   //const hostname = debug || UoS_env.name === "preview" ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
-  var hostname = "search.stir.ac.uk";
-  var url = "https://".concat(hostname, "/s/");
-  var getJsonEndpoint = function getJsonEndpoint() {
-    return new URL("search.json", url);
-  };
-  var getScaleEndpoint = function getScaleEndpoint() {
-    return new URL("scale", url);
-  };
-  var getHostname = function getHostname() {
-    return hostname;
-  };
-  var renderImgTag = function renderImgTag(image) {
-    return "<img src=\"".concat(image.src, "\" alt=\"").concat(image.alt, "\" height=\"").concat(image.height, "\" width=\"").concat(image.width, "\" loading=lazy data-original=").concat(image.original, ">");
-  };
-  var resolveHref = function resolveHref(url, parameters) {
+  const hostname = "search.stir.ac.uk";
+  const url = `https://${hostname}/s/`;
+
+  const getJsonEndpoint = () => new URL("search.json", url);
+  const getScaleEndpoint = () => new URL("scale", url);
+  const getHostname = () => hostname;
+  // DOM: lastly show 'other' dates
+  const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
+
+  const resolveHref = (url, parameters) => {
     url.search = new URLSearchParams(parameters);
     return url;
   };
   //const resolveHref = stir.curry((url, parameters) => {url.search = new URLSearchParams(parameters); return url});
   //const resolveImgHref = resolveHref(getScaleEndpoint)
 
-  var getCroppedImageElement = function getCroppedImageElement(parameters) {
+  const getCroppedImageElement = (parameters) => {
     if (!parameters.url) return "<!-- no image -->";
-    var url = resolveHref(getScaleEndpoint(), stir.Object.extend({}, parameters, {
-      type: "crop_center",
-      format: "jpeg"
-    }));
-    return renderImgTag({
-      src: url,
-      alt: parameters.alt,
-      width: Math.floor(parameters.width / 2),
-      height: Math.floor(parameters.height / 2),
-      original: parameters.url
-    });
+    const url = resolveHref(getScaleEndpoint(), stir.Object.extend({}, parameters, { type: "crop_center", format: "jpeg" }));
+    return renderImgTag({ src: url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
   };
-  var getTags = function getTags(tagMeta) {
-    var tagGroups = tagMeta && tagMeta.split(";");
+
+  const getTags = (tagMeta) => {
+    const tagGroups = tagMeta && tagMeta.split(";");
     return tagGroups && tagGroups.map(stir.templates.search.tagGroup).join("");
   };
-  var imgError = function imgError(error) {
+
+  const imgError = (error) => {
     //debug && console.error('[Search] There was an error loading a thumbnail image.', error.target.src);
     if (error.target.getAttribute("data-original") && error.target.getAttribute("src") != error.target.getAttribute("data-original")) {
       //debug && console.error('[Search] …reverting to original image: ', error.target.getAttribute('data-original'));
       error.target.src = error.target.getAttribute("data-original");
     } else {
-      var _error$target$parentE, _error$target$parentE2;
       //debug && console.error('[Search] …no alternative image available. It will be removed.');
-      (_error$target$parentE = error.target.parentElement.parentElement) === null || _error$target$parentE === void 0 ? void 0 : (_error$target$parentE2 = _error$target$parentE.classList) === null || _error$target$parentE2 === void 0 ? void 0 : _error$target$parentE2.remove("c-search-result__with-thumbnail");
+      error.target.parentElement.parentElement?.classList?.remove("c-search-result__with-thumbnail");
       error.target.parentElement.parentElement.removeChild(error.target.parentElement);
     }
   };
+
   return {
     getHostname: getHostname,
     getJsonEndpoint: getJsonEndpoint,
     getScaleEndpoint: getScaleEndpoint,
     getCroppedImageElement: getCroppedImageElement,
     getTags: getTags,
-    imgError: imgError
+    imgError: imgError,
   };
-}();
-stir.courses = function () {
-  var debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+})();
+
+stir.courses = (() => {
+  const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 
   /**
    * C L E A R I N G
    */
-  var CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
+  const CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
   /*
    **/
 
   return {
     clearing: CLEARING,
-    getCombos: function getCombos() {
-      var _stir$t4Globals, _stir$t4Globals$searc;
+    getCombos: () => {
       if (stir.courses.combos) return;
-      var urls = {
+
+      const urls = {
         dev: "combo.json",
         qa: "combo.json",
-        preview: (stir === null || stir === void 0 ? void 0 : (_stir$t4Globals = stir.t4Globals) === null || _stir$t4Globals === void 0 ? void 0 : (_stir$t4Globals$searc = _stir$t4Globals.search) === null || _stir$t4Globals$searc === void 0 ? void 0 : _stir$t4Globals$searc.combos) || "",
-        prod: "https://www.stir.ac.uk/media/stirling/feeds/combo.json"
+        preview: stir?.t4Globals?.search?.combos || "",
+        prod: "https://www.stir.ac.uk/media/stirling/feeds/combo.json",
       };
-      debug && console.info("[Search] Getting combo data for ".concat(UoS_env.name, " environment (").concat(urls[UoS_env.name], ")"));
-      return stir.getJSON(urls[UoS_env.name], function (data) {
-        return stir.courses.combos = data && !data.error ? data.slice(0, -1) : [];
-      });
+
+      debug && console.info(`[Search] Getting combo data for ${UoS_env.name} environment (${urls[UoS_env.name]})`);
+      return stir.getJSON(urls[UoS_env.name], (data) => (stir.courses.combos = data && !data.error ? data.slice(0, -1) : []));
     },
-    showCombosFor: function showCombosFor(url) {
+    showCombosFor: (url) => {
       if (!url || !stir.courses.combos) return [];
-      var pathname = isNaN(url) && new URL(url).pathname;
-      var combos = [];
+
+      let pathname = isNaN(url) && new URL(url).pathname;
+      let combos = [];
+
       for (var i = 0; i < stir.courses.combos.length; i++) {
         for (var j = 0; j < stir.courses.combos[i].courses.length; j++) {
-          if (pathname && pathname === stir.courses.combos[i].courses[j].url || stir.courses.combos[i].courses[j].url.split("/").slice(-1) == url) {
-            var combo = stir.clone(stir.courses.combos[i]);
+          if ((pathname && pathname === stir.courses.combos[i].courses[j].url) || stir.courses.combos[i].courses[j].url.split("/").slice(-1) == url) {
+            let combo = stir.clone(stir.courses.combos[i]);
             combo.courses.splice(j, 1); // remove matching entry
-            combo.courses = combo.courses.filter(function (item) {
-              return item.text;
-            }); // filter out empties
+            combo.courses = combo.courses.filter((item) => item.text); // filter out empties
             combos.push(combo);
             break;
           }
         }
       }
+
       return combos;
-    }
+    },
   };
-}();
-stir.search = function () {
+})();
+
+stir.search = () => {
   // abandon before anything breaks in IE
   if ("undefined" === typeof window.URLSearchParams) {
-    var el = document.querySelector(".c-search-results-area");
+    const el = document.querySelector(".c-search-results-area");
     el && el.parentElement.removeChild(el);
     return;
   }
-  var debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-  var NUMRANKS = "small" === stir.MediaQuery.current ? 5 : 10;
-  var MAXQUERY = 256;
-  var CLEARING = stir.courses.clearing; // Clearing is open?
+  const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+  const NUMRANKS = "small" === stir.MediaQuery.current ? 5 : 10;
+  const MAXQUERY = 256;
+  const CLEARING = stir.courses.clearing; // Clearing is open?
 
   debug && console.info("[Search] initialising…");
-  var buildUrl = stir.curry(function (url, parameters) {
+
+  const buildUrl = stir.curry((url, parameters) => {
     url.search = new URLSearchParams(parameters);
     return url;
   });
 
   /* this is really the default parameters for a given search type */
-  var getParameters = stir.curry(function (fixed, state) {
-    return stir.Object.extend({}, fixed, state);
-  });
+  const getParameters = stir.curry((fixed, state) => stir.Object.extend({}, fixed, state));
 
   /* this is for adding in the filters (e.g. courses, sorting) */
-  var addMoreParameters = function addMoreParameters(url, formData) {
-    var a = new URLSearchParams(formData);
-    var _iterator = _createForOfIteratorHelper(new URLSearchParams(url.search)),
-      _step;
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var _step$value = _slicedToArray(_step.value, 2),
-          key = _step$value[0],
-          value = _step$value[1];
-        a.set(key, value);
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
+  const addMoreParameters = (url, formData) => {
+    let a = new URLSearchParams(formData);
+    for (let [key, value] of new URLSearchParams(url.search)) {
+      a.set(key, value);
     }
     url.search = a;
     return url;
   };
-  var LoaderButton = function LoaderButton() {
-    var button = document.createElement("button");
+
+  const LoaderButton = () => {
+    const button = document.createElement("button");
     button.innerText = "Load more results";
     button.setAttribute("class", "button hollow tiny");
     return button;
   };
-  var meta = {
+
+  const meta = {
     main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tags", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage"],
     courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
-    clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : []
+    clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
   };
 
   //console.info("Clearing is " + (CLEARING ? "open" : "closed"));
   //console.info(meta.clearing);
 
-  var constants = {
+  const constants = {
     url: stir.funnelback.getJsonEndpoint(),
     form: document.querySelector("form.x-search-redevelopment"),
     input: document.querySelector('form.x-search-redevelopment input[name="query"]'),
     parameters: {
       any: {
         collection: "stir-main",
-        SF: "[".concat(meta.main.concat(meta.clearing).join(","), "]"),
+        SF: `[${meta.main.concat(meta.clearing).join(",")}]`,
         num_ranks: NUMRANKS,
         query: "",
         spelling: true,
         explain: true,
         sortall: true,
         sort: "score_ignoring_tiers",
-        "cool.21": 0.9
+        "cool.21": 0.9,
       },
       news: {
         collection: "stir-www",
@@ -929,7 +1104,7 @@ stir.search = function () {
         fmo: "true",
         SF: "[c,d,h1,image,imagealt,tags]",
         num_ranks: NUMRANKS,
-        SBL: 450
+        SBL: 450,
       },
       event: {
         collection: "stir-events",
@@ -939,7 +1114,7 @@ stir.search = function () {
         fmo: true,
         SF: "[c,d,image,imagealt,startDate,venue,online,tags,type,register]",
         query: "!padrenullquery",
-        num_ranks: NUMRANKS
+        num_ranks: NUMRANKS,
       },
       gallery: {
         collection: "stir-www",
@@ -947,23 +1122,23 @@ stir.search = function () {
         sort: "date",
         fmo: "true",
         SF: "[c,d,image]",
-        num_ranks: NUMRANKS
+        num_ranks: NUMRANKS,
       },
       course: {
         collection: "stir-courses",
-        SF: "[".concat(meta.courses.concat(meta.clearing).join(","), "]"),
+        SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
         fmo: "true",
         num_ranks: NUMRANKS,
         explain: true,
         query: "!padrenullquery",
-        timestamp: +new Date()
+        timestamp: +new Date(),
       },
       coursemini: {
         collection: "stir-courses",
         SF: "[c,award,code,delivery,faculty,image,level,modes,sid,start,subject,teaser,ucas]",
         num_ranks: 3,
         curator: "off",
-        query: "!padrenullquery"
+        query: "!padrenullquery",
       },
       person: {
         collection: "stir-research",
@@ -972,23 +1147,21 @@ stir.search = function () {
         /* sort: "metalastname", */
         SF: "[c,d,biogrgaphy,category,faculty,groups,image,imagealt,programme,role,themes]",
         SM: "meta",
-        MBL: 350,
-        // metadata buffer length
-        num_ranks: NUMRANKS
+        MBL: 350, // metadata buffer length
+        num_ranks: NUMRANKS,
       },
       research: {
         collection: "stir-research",
         SM: "meta",
         SF: "[c,d,category,groups,output,programme,themes,type]",
-        MBL: 450,
-        // metadata buffer length
-        num_ranks: NUMRANKS
-      }
+        MBL: 450, // metadata buffer length
+        num_ranks: NUMRANKS,
+      },
     },
     // extra parameters for no-query searches
     noquery: {
       course: {
-        sort: "title" // if no keywords supplied, sort courses
+        sort: "title", // if no keywords supplied, sort courses
         // by title instead of "relevance"
         //		},
         //		person: {
@@ -996,47 +1169,34 @@ stir.search = function () {
         //		},
         //		event: {
         //			sort: "adate"	// sort events by date descending
-      }
-    }
+      },
+    },
   };
 
   if (!constants.form || !constants.form.query) return;
   debug && console.info("[Search] initialised.");
-  var getQuery = function getQuery(type) {
-    return constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
-  };
-  var getNoQuery = function getNoQuery(type) {
-    return constants.form.query.value ? {} : constants.noquery[type];
-  };
-  var setQuery = function setQuery() {
-    return constants.form.query.value ? QueryParams.set("query", constants.form.query.value) : QueryParams.remove("query");
-  };
-  var getPage = function getPage(type) {
-    return parseInt(QueryParams.get(type) || 1);
-  };
-  var getType = function getType(element) {
-    return element.getAttribute("data-type") || element.parentElement.getAttribute("data-type");
-  };
-  var nextPage = function nextPage(type) {
-    return QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
-  };
-  var calcStart = function calcStart(page, numRanks) {
-    return (page - 1) * numRanks + 1;
-  };
-  var calcPage = function calcPage(currStart, numRanks) {
-    return Math.floor(currStart / numRanks + 1);
-  };
-  var calcProgress = function calcProgress(currEnd, fullyMatching) {
-    return currEnd / fullyMatching * 100;
-  };
-  var getStartRank = function getStartRank(type) {
-    return calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
-  };
-  var resetPagination = function resetPagination() {
-    return Object.keys(constants.parameters).forEach(function (key) {
-      return QueryParams.remove(key);
-    });
-  };
+
+  const getQuery = (type) => constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
+
+  const getNoQuery = (type) => (constants.form.query.value ? {} : constants.noquery[type]);
+
+  const setQuery = () => (constants.form.query.value ? QueryParams.set("query", constants.form.query.value) : QueryParams.remove("query"));
+
+  const getPage = (type) => parseInt(QueryParams.get(type) || 1);
+
+  const getType = (element) => element.getAttribute("data-type") || element.parentElement.getAttribute("data-type");
+
+  const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
+
+  const calcStart = (page, numRanks) => (page - 1) * numRanks + 1;
+
+  const calcPage = (currStart, numRanks) => Math.floor(currStart / numRanks + 1);
+
+  const calcProgress = (currEnd, fullyMatching) => (currEnd / fullyMatching) * 100;
+
+  const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
+
+  const resetPagination = () => Object.keys(constants.parameters).forEach((key) => QueryParams.remove(key));
 
   //	const getFormElementValues = type => {
   //		const form = document.querySelector('.c-search-results-area form[data-filters='+type+']');
@@ -1065,52 +1225,44 @@ stir.search = function () {
   //
   //	};
   /* if(filters.length>0){
-  filters.forEach((filter,i)=>{
-  a.append(filter,values[i].length===1?values[i]:`[${values[i].join(' ')}]`);
-  })
-  } */
+	filters.forEach((filter,i)=>{
+		a.append(filter,values[i].length===1?values[i]:`[${values[i].join(' ')}]`);
+	})
+} */
 
-  var getFormData = function getFormData(type) {
-    var form = document.querySelector(".c-search-results-area form[data-filters=" + type + "]");
-    var a = form ? new FormData(form) : new FormData();
-    var _iterator2 = _createForOfIteratorHelper(a.keys()),
-      _step2;
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var key = _step2.value;
-        a.getAll(key).length > 1 && a.set(key, "[" + a.getAll(key).join(" ") + "]");
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
+  const getFormData = (type) => {
+    const form = document.querySelector(".c-search-results-area form[data-filters=" + type + "]");
+    let a = form ? new FormData(form) : new FormData();
+
+    for (var key of a.keys()) {
+      a.getAll(key).length > 1 && a.set(key, "[" + a.getAll(key).join(" ") + "]");
     }
+
     return a;
   };
-  var getInboundQuery = function getInboundQuery() {
+
+  const getInboundQuery = () => {
     if (undefined !== QueryParams.get("query")) constants.form.query.value = QueryParams.get("query").substring(0, MAXQUERY);
-    var parameters = QueryParams.getAll();
-    for (var name in parameters) {
-      var _el = document.querySelector("input[name=\"".concat(encodeURIComponent(name), "\"][value=\"").concat(encodeURIComponent(parameters[name]), "\"]"));
-      if (_el) _el.checked = true;
+
+    const parameters = QueryParams.getAll();
+    for (const name in parameters) {
+      const el = document.querySelector(`input[name="${encodeURIComponent(name)}"][value="${encodeURIComponent(parameters[name])}"]`);
+      if (el) el.checked = true;
     }
   };
-  var setUrlToFilters = function setUrlToFilters(type) {
+
+  const setUrlToFilters = (type) => {
     //const {filters, values} = getFormElementValues(type);
     //debug && filters.forEach((filter,i)=>QueryParams.set(filter, values[i]));
     //TODO: un-set any URL params that have corresponding <input> elements that are NOT checked
     // (but ignore any params that aren't related to the filters)
   };
   // DOM modifiers:
-  var appendHtml = stir.curry(function (_element, html) {
-    return _element.insertAdjacentHTML("beforeend", html);
-  });
-  var replaceHtml = stir.curry(function (_element, html) {
-    return _element.innerHTML = html;
-  });
+  const appendHtml = stir.curry((_element, html) => _element.insertAdjacentHTML("beforeend", html));
+  const replaceHtml = stir.curry((_element, html) => (_element.innerHTML = html));
 
   // enable the "load more" button if there are more results that can be shown
-  var enableLoadMore = stir.curry(function (button, data) {
+  const enableLoadMore = stir.curry((button, data) => {
     if (!button) return data;
     if (data.response.resultPacket.resultsSummary.totalMatching > 0) button.removeAttribute("disabled");
     if (data.response.resultPacket.resultsSummary.currEnd === data.response.resultPacket.resultsSummary.totalMatching) button.setAttribute("disabled", true);
@@ -1118,66 +1270,72 @@ stir.search = function () {
   });
 
   // "reflow" events and handlers for dynamically added DOM elements
-  var flow = stir.curry(function (_element, data) {
-    Array.prototype.forEach.call(_element.querySelectorAll('[data-behaviour="accordion"]'), function (accordion) {
-      return new stir.accord(accordion, false);
-    });
-    Array.prototype.forEach.call(_element.querySelectorAll("img"), function (image) {
+  const flow = stir.curry((_element, data) => {
+    Array.prototype.forEach.call(_element.querySelectorAll('[data-behaviour="accordion"]'), (accordion) => new stir.accord(accordion, false));
+    Array.prototype.forEach.call(_element.querySelectorAll("img"), (image) => {
       image.addEventListener("error", stir.funnelback.imgError);
     });
   });
-  var updateStatus = stir.curry(function (element, data) {
+
+  const updateStatus = stir.curry((element, data) => {
     element.setAttribute("data-page", calcPage(data.response.resultPacket.resultsSummary.currStart, data.response.resultPacket.resultsSummary.numRanks));
-    var summary = element.parentElement.parentElement.querySelector(".c-search-results-summary");
+    const summary = element.parentElement.parentElement.querySelector(".c-search-results-summary");
     summary && (summary.innerHTML = stir.templates.search.summary(data));
     return data; // data pass-thru so we can compose() this function
   });
 
-  var renderResultsWithPagination = stir.curry(function (type, data) {
-    return (
+  const renderResultsWithPagination = stir.curry(
+    (type, data) =>
       /*       (debug
         ? `<details class=debug>
-      <summary>query debug data</summary>
-      <pre class=debug data-label="user query">${stir.String.htmlEntities(JSON.stringify(data.response.resultPacket.queryCleaned, null, "  "))}</pre>
-      <pre class=debug data-label="queryAsProcessed by FB">${JSON.stringify(data.response.resultPacket.queryAsProcessed, null, "  ")}</pre>
-      <pre class=debug data-label=curator>${JSON.stringify(data?.response?.curator, null, "  ")}</pre>
-      <pre class=debug data-label=metaParameters>${JSON.stringify(data.question.metaParameters, null, "  ")}</pre>
-      </details></div>
-      `
+			<summary>query debug data</summary>
+			<pre class=debug data-label="user query">${stir.String.htmlEntities(JSON.stringify(data.response.resultPacket.queryCleaned, null, "  "))}</pre>
+			<pre class=debug data-label="queryAsProcessed by FB">${JSON.stringify(data.response.resultPacket.queryAsProcessed, null, "  ")}</pre>
+			<pre class=debug data-label=curator>${JSON.stringify(data?.response?.curator, null, "  ")}</pre>
+			<pre class=debug data-label=metaParameters>${JSON.stringify(data.question.metaParameters, null, "  ")}</pre>
+		</details></div>
+		`
         : "") + */
-      renderers["cura"](data.response.curator.exhibits) + renderers[type](data.response.resultPacket.results) + stir.templates.search.pagination({
+      renderers["cura"](data.response.curator.exhibits) +
+      renderers[type](data.response.resultPacket.results) +
+      stir.templates.search.pagination({
         currEnd: data.response.resultPacket.resultsSummary.currEnd,
         totalMatching: data.response.resultPacket.resultsSummary.totalMatching,
-        progress: calcProgress(data.response.resultPacket.resultsSummary.currEnd, data.response.resultPacket.resultsSummary.totalMatching)
-      }) + (footers[type] ? footers[type]() : "")
-    );
-  });
+        progress: calcProgress(data.response.resultPacket.resultsSummary.currEnd, data.response.resultPacket.resultsSummary.totalMatching),
+      }) +
+      (footers[type] ? footers[type]() : "")
+  );
 
   /**
    * Custom behaviour in the event of no results
    **/
-  var fallback = function fallback(element) {
+  const fallback = (element) => {
     if (!element || !element.hasAttribute("data-fallback")) return false;
-    var template = document.getElementById(element.getAttribute("data-fallback"));
-    var html = template && (template.innerHTML || "");
+    const template = document.getElementById(element.getAttribute("data-fallback"));
+    const html = template && (template.innerHTML || "");
     element.innerHTML = html;
     return true;
   };
-  var setFBParameters = buildUrl(constants.url);
+
+  const setFBParameters = buildUrl(constants.url);
 
   // This is the core search function that talks to Funnelback
-  var callSearchApi = stir.curry(function (type, callback) {
-    var getFBParameters = getParameters(constants.parameters[type]); // curry-in fixed params
-    var parameters = getFBParameters(stir.Object.extend({}, {
-      // session params:
-      start_rank: getStartRank(type),
-      query: getQuery(type),
-      // get actual query, or fallback, etc
-      curator: getStartRank(type) > 1 ? false : true // only show curator for initial searches
-    }, getNoQuery(type) // get special "no query" parameters (sorting, etc.)
-    ));
+  const callSearchApi = stir.curry((type, callback) => {
+    const getFBParameters = getParameters(constants.parameters[type]); // curry-in fixed params
+    const parameters = getFBParameters(
+      stir.Object.extend(
+        {},
+        {
+          // session params:
+          start_rank: getStartRank(type),
+          query: getQuery(type), // get actual query, or fallback, etc
+          curator: getStartRank(type) > 1 ? false : true, // only show curator for initial searches
+        },
+        getNoQuery(type) // get special "no query" parameters (sorting, etc.)
+      )
+    );
     //TODO if type==course and query=='!padrenullquery' then sort=title
-    var url = addMoreParameters(setFBParameters(parameters), getFormData(type));
+    const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
     //debug && console.info('[Search] URL:');
     debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
   });
@@ -1185,27 +1343,26 @@ stir.search = function () {
   // A "Meta" version of search() i.e. a search without
   // a querysting, but with some metadata fields set:
   // used for the "Looking for…?" sidebar.
-  var callSearchApiMeta = stir.curry(function (type, callback) {
-    var query = getQuery(type).trim();
-    var getFBParameters = getParameters(constants.parameters[type]); // curry-in fixed params
+  const callSearchApiMeta = stir.curry((type, callback) => {
+    const query = getQuery(type).trim();
+    const getFBParameters = getParameters(constants.parameters[type]); // curry-in fixed params
     // TODO: consider passing in the meta fields?
-    var parameters = getFBParameters({
+    const parameters = getFBParameters({
       start_rank: getStartRank(type),
-      query: "[t:".concat(query, " c:").concat(query, " subject:").concat(query, "]")
+      query: `[t:${query} c:${query} subject:${query}]`,
     });
-    var url = addMoreParameters(setFBParameters(parameters), getFormData(type));
+    const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
     debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
   });
-  var search = function search(element) {
+
+  const search = (element) => {
     element.innerHTML = "";
     if (element.hasAttribute("data-infinite")) {
-      var resultsWrapper = document.createElement("div");
-      var buttonWrapper = document.createElement("div");
-      var button = new LoaderButton();
+      const resultsWrapper = document.createElement("div");
+      const buttonWrapper = document.createElement("div");
+      const button = LoaderButton();
       button.setAttribute("disabled", true);
-      button.addEventListener("click", function (event) {
-        return getMoreResults(resultsWrapper, button);
-      });
+      button.addEventListener("click", (event) => getMoreResults(resultsWrapper, button));
       element.appendChild(resultsWrapper);
       element.appendChild(buttonWrapper);
       buttonWrapper.appendChild(button);
@@ -1215,10 +1372,11 @@ stir.search = function () {
       getInitialResults(element);
     }
   };
-  var searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
+
+  const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
 
   // group the curried search functions so we can easily refer to them by `type`
-  var searchers = {
+  const searchers = {
     any: callSearchApi("any"),
     news: callSearchApi("news"),
     event: callSearchApi("event"),
@@ -1226,66 +1384,48 @@ stir.search = function () {
     course: callSearchApi("course"),
     coursemini: callSearchApiMeta("coursemini"),
     person: callSearchApi("person"),
-    research: callSearchApi("research")
+    research: callSearchApi("research"),
   };
 
   // group the renderer functions so we can get them easily by `type`
-  var renderers = {
-    any: function any(data) {
-      return data.map(stir.templates.search.auto).join("");
-    },
-    news: function news(data) {
-      return data.map(stir.templates.search.news).join("");
-    },
-    event: function event(data) {
-      return data.map(stir.templates.search.event).join("");
-    },
-    gallery: function gallery(data) {
-      return data.map(stir.templates.search.gallery).join("");
-    },
-    course: function course(data) {
-      return data.map(stir.templates.search.course).join("");
-    },
-    coursemini: function coursemini(data) {
-      return data.map(stir.templates.search.coursemini).join("");
-    },
-    person: function person(data) {
-      return data.map(stir.templates.search.person).join("");
-    },
-    research: function research(data) {
-      return data.map(stir.templates.search.research).join("");
-    },
-    cura: function cura(data) {
-      return data.map(stir.templates.search.cura).join("");
-    }
+  const renderers = {
+    any: (data) => data.map(stir.templates.search.auto).join(""),
+    news: (data) => data.map(stir.templates.search.news).join(""),
+    event: (data) => data.map(stir.templates.search.event).join(""),
+    gallery: (data) => data.map(stir.templates.search.gallery).join(""),
+    course: (data) => data.map(stir.templates.search.course).join(""),
+    coursemini: (data) => data.map(stir.templates.search.coursemini).join(""),
+    person: (data) => data.map(stir.templates.search.person).join(""),
+    research: (data) => data.map(stir.templates.search.research).join(""),
+    cura: (data) => data.map(stir.templates.search.cura).join(""),
   };
-  var footers = {
-    coursemini: function coursemini() {
-      return "<p class=\"text-center\"><a href=\"?tab=courses&query=".concat(getQuery("any"), "\">View all course results</a></p>");
-    }
+
+  const footers = {
+    coursemini: () => `<p class="text-center"><a href="?tab=courses&query=${getQuery("any")}">View all course results</a></p>`,
   };
-  var prefetch = {
-    course: function course(callback) {
-      var xmlHttpRequest = stir.courses.getCombos();
+
+  const prefetch = {
+    course: (callback) => {
+      let xmlHttpRequest = stir.courses.getCombos();
       if (xmlHttpRequest) {
         xmlHttpRequest.addEventListener("loadend", callback); // loadend should fire after load OR error
       } else {
         callback.call();
       }
-    }
+    },
   };
 
   // triggered automatically, and when the search results need re-initialised (filter change, query change etc).
-  var getInitialResults = function getInitialResults(element, button) {
-    var type = getType(element);
+  const getInitialResults = (element, button) => {
+    const type = getType(element);
     if (!searchers[type]) return;
-    var status = updateStatus(element);
-    var more = enableLoadMore(button);
-    var replace = replaceHtml(element);
-    var render = renderResultsWithPagination(type);
-    var reflow = flow(element);
-    var composition = stir.compose(reflow, replace, render, more, status);
-    var callback = function callback(data) {
+    const status = updateStatus(element);
+    const more = enableLoadMore(button);
+    const replace = replaceHtml(element);
+    const render = renderResultsWithPagination(type);
+    const reflow = flow(element);
+    const composition = stir.compose(reflow, replace, render, more, status);
+    const callback = (data) => {
       if (!element || !element.parentElement) {
         return debug && console.error("[Search] late callback, element no longer on DOM");
       }
@@ -1298,79 +1438,71 @@ stir.search = function () {
 
     // if necessary do a prefetch and then call-back to the search function.
     // E.g. Courses needs to prefetch the combinations data
-    if (prefetch[type]) return prefetch[type](function (event) {
-      return searchers[type](callback);
-    });
+    if (prefetch[type]) return prefetch[type]((event) => searchers[type](callback));
     // if no prefetch, just call the search function now:
     searchers[type](callback);
   };
 
   // triggered by the 'load more' buttons. Fetches new results and APPENDS them.
-  var getMoreResults = function getMoreResults(element, button) {
-    var type = getType(element);
+  const getMoreResults = (element, button) => {
+    const type = getType(element);
     if (!searchers[type]) return;
-    var status = updateStatus(element);
-    var append = appendHtml(element);
-    var render = renderResultsWithPagination(type);
-    var reflow = flow(element);
-    var composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
-    var callback = function callback(data) {
-      return data && !data.error ? composition(data) : new Function();
-    };
+    const status = updateStatus(element);
+    const append = appendHtml(element);
+    const render = renderResultsWithPagination(type);
+    const reflow = flow(element);
+    const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
+    const callback = (data) => (data && !data.error ? composition(data) : new Function());
     nextPage(type);
     searchers[type](callback);
   };
 
   // initialise all search types on the page (e.g. when the query keywords are changed byt the user):
-  var initialSearch = function initialSearch() {
-    return searches.forEach(search);
-  };
+  const initialSearch = () => searches.forEach(search);
 
   // CHANGE event handler for search filters.
   // Also handles the RESET event.
-  Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-area form[data-filters]"), function (form) {
-    var type = form.getAttribute("data-filters");
-    var element = document.querySelector(".c-search-results[data-type=\"".concat(type, "\"]"));
-    form.addEventListener("reset", function (event) {
+  Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-area form[data-filters]"), (form) => {
+    const type = form.getAttribute("data-filters");
+    const element = document.querySelector(`.c-search-results[data-type="${type}"]`);
+    form.addEventListener("reset", (event) => {
       // native RESET is async so we need to do it manually
       // to ensure it's done synchonosly instead…
-      Array.prototype.forEach.call(form.querySelectorAll("input"), function (input) {
-        return input.checked = false;
-      });
+      Array.prototype.forEach.call(form.querySelectorAll("input"), (input) => (input.checked = false));
       // Only *after* the form has been reset, we can re-run the
       // search function. (That's why native RESET is no good).
       search(element);
     });
-    form.addEventListener("change", function (event) {
+    form.addEventListener("change", (event) => {
       setUrlToFilters(getType(element));
       search(element);
     });
     // Just in case, we'll also catch any
     // SUBMIT events that might be triggered:
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", (event) => {
       search(element);
       event.preventDefault();
     });
   });
 
   // Click-delegate for status panel (e.g. misspellings, dismiss filters, etc.)
-  Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-summary"), function (statusPanel) {
-    statusPanel.addEventListener("click", function (event) {
+  Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-summary"), (statusPanel) => {
+    statusPanel.addEventListener("click", (event) => {
       if (event.target.hasAttribute("data-suggest")) {
         event.preventDefault();
         constants.input.value = event.target.innerText;
         setQuery();
         initialSearch();
       } else if (event.target.hasAttribute("data-value")) {
-        var selector = "input[name=\"".concat(event.target.getAttribute("data-name"), "\"][value=\"").concat(event.target.getAttribute("data-value"), "\"]");
-        var input = document.querySelector(selector);
+        const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
+        const input = document.querySelector(selector);
         if (input) {
           input.checked = !input.checked;
           event.target.parentElement.removeChild(event.target);
           initialSearch();
         } else {
-          var sel2 = "select[name=\"".concat(event.target.getAttribute("data-name"), "\"]");
-          var select = document.querySelector(sel2);
+          const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
+          const select = document.querySelector(sel2);
           if (select) {
             select.selectedIndex = 0;
             event.target.parentElement.removeChild(event.target);
@@ -1395,17 +1527,21 @@ stir.search = function () {
    * load more results on-demand
    */
 
-  var submit = function submit(event) {
+  const submit = (event) => {
     setQuery();
     initialSearch();
     event.preventDefault();
   };
-  var init = function init(event) {
+
+  const init = (event) => {
     getInboundQuery();
     constants.form.addEventListener("submit", submit);
     initialSearch();
   };
+
   init();
+
   window.addEventListener("popstate", init);
 };
+
 stir.search();
