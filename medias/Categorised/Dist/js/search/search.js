@@ -182,7 +182,7 @@ stir.templates.search = (() => {
   const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
 
   const renderFavsButton = (courseid) => {
-    return `<div class="flex-container u-gap">
+    return `<div class="flex-container u-gap" >
               <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${courseid}"></div>
               <a href="/stirling/pages/search/course-favs/" class="u-underline">View favourites</a>
           </div>`;

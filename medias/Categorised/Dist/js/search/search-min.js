@@ -63,7 +63,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
           ${stir.templates.search.combos(e)}
           ${stir.templates.search.pathways(e)}
 
-          ${t?`<div class="flex-container u-gap">
+          ${t?`<div class="flex-container u-gap" >
               <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${e.metaData.sid}"></div>
               <a href="/stirling/pages/search/course-favs/" class="u-underline">View favourites</a>
           </div>`:""}
