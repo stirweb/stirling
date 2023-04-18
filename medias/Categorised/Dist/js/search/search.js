@@ -924,6 +924,8 @@ stir.searchUI.slideTab = (scope) => {
 
 var stir = stir || {};
 
+let stir = stir || {};
+
 /* ------------------------------------------------
  * @author: Ryan Kaye
  * @version: 2 (Non jQuery. Non Searchbox. Non broken)
