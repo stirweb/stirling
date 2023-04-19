@@ -373,8 +373,7 @@ stir.Favs = function Favs() {
         /* ACTION: COPY SHARE LINK */
         if (target.dataset && target.dataset.action && target.dataset.action === "copysharelink") {
           const favsCookie = getfavsCookie(cookieId);
-
-          const link = "/courses/favourites/shared/?shared=" + favsCookie.map((item) => item.id).join(",");
+          const link = window.location.hostname + "/courses/favourites/shared/?shared=" + favsCookie.map((item) => item.id).join(",");
           navigator.clipboard.writeText(link);
 
           alert("The following share link has been copied to your clipboard: \n\n" + link);
