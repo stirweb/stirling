@@ -182,9 +182,9 @@ stir.templates.search = (() => {
   const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
 
   const renderFavsButton = (courseid) => {
-    return `<div class="flex-container u-gap" >
+    return `<div class="flex-container u-gap u-mb-1 text-xsm " >
               <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${courseid}"></div>
-              <a href="/stirling/pages/search/course-favs/" class="u-underline">View favourites</a>
+              <a href="/stirling/pages/search/course-favs/" >View favourites</a>
           </div>`;
   };
 
@@ -357,11 +357,11 @@ stir.templates.search = (() => {
             ${stir.templates.search.courseFact("Study modes", item.metaData.modes, true)}
             ${stir.templates.search.courseFact("Delivery", item.metaData.delivery, true)}
           </div>
+
+          ${preview ? renderFavsButton(item.metaData.sid) : ""}
           
           ${stir.templates.search.combos(item)}
           ${stir.templates.search.pathways(item)}
-
-          ${preview ? renderFavsButton(item.metaData.sid) : ""}
         </div>
 			</div>`;
     },
