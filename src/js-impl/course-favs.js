@@ -82,7 +82,7 @@ stir.Favs = function Favs() {
 
   const renderNoFavs = () => `<p>Nothing saved here yet. <a href="/courses/">View courses</a> and add them to your favourites. </p>`;
   const renderNoShared = () => `<div class="cell"><p>No courses shared</p></div>`;
-  const renderLinkToFavs = () => `<hr><p class="text-sm u-arrow"><a href="/stirling/pages/search/course-favs/">Manage my favourites</a></p>`;
+  const renderLinkToFavs = () => `<hr><p class="text-sm u-arrow"><a href="/courses/favourites/">Manage my favourites</a></p>`;
 
   const renderFavActionBtns = () => {
     return `
@@ -374,7 +374,7 @@ stir.Favs = function Favs() {
         if (target.dataset && target.dataset.action && target.dataset.action === "copysharelink") {
           const favsCookie = getfavsCookie(cookieId);
 
-          const link = "https://stirweb.github.io/stirling/pages/search/course-favs/shared/?shared=" + favsCookie.map((item) => item.id).join(",");
+          const link = "/courses/favourites/shared/?shared=" + favsCookie.map((item) => item.id).join(",");
           navigator.clipboard.writeText(link);
 
           alert("The following share link has been copied to your clipboard: \n\n" + link);
