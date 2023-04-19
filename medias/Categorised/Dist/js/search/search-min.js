@@ -62,7 +62,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 
           ${t?`<div class="flex-container u-gap u-mb-1 text-xsm " >
               <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${e.metaData.sid}"></div>
-              <a href="/stirling/pages/search/course-favs/" >View favourites</a>
+              <a href="/courses/favourites/" >View favourites</a>
           </div>`:""}
           
           ${stir.templates.search.combos(e)}
