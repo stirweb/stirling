@@ -3964,7 +3964,7 @@ stir.Favs = function Favs() {
 
   const renderFavActionBtns = () => {
     return `
-        <div class=" u-mb-3 ">
+        <div class="u-mb-3 ">
           <button class="u-border-solid u-p-1  u-cursor-pointer u-mt-1 " data-action="clearallfavs">Clear favourites</button>
           <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-action="copysharelink">Generate share link</button>
         </div>`;
@@ -4178,9 +4178,7 @@ stir.Favs = function Favs() {
     doCourseBtn : Returns null 
   */
   const doCourseBtn = (el, cookieId) => {
-    if (!el.dataset.id) return;
-
-    console.log(el);
+    if (!el || !el.dataset || !el.dataset.id) return;
 
     const fav = getfavsCookie(cookieId).filter((item) => item.id === el.dataset.id);
 
@@ -4220,10 +4218,10 @@ stir.Favs = function Favs() {
             const favsCookie2 = [...getfavsCookie(cookieId), { id: target.dataset.id, date: Date.now() }];
             document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(300) + ";path=/";
           }
-
+          //console.log(target);
           nodes.sharedArea && doShared(nodes, data, cookieId);
           nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
-          nodes.coursefavsbtns && doCourseBtn(target, cookieId);
+          nodes.coursefavsbtns && doCourseBtn(target.parentElement, cookieId);
         }
 
         /* ACTION: REMOVE a FAV */
@@ -4235,7 +4233,7 @@ stir.Favs = function Favs() {
             const favsCookie2 = favsCookie.filter((item) => item.id !== id);
             document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
             nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
-            nodes.coursefavsbtns && doCourseBtn(target, cookieId);
+            nodes.coursefavsbtns && doCourseBtn(target.parentElement, cookieId);
           }
         }
 
