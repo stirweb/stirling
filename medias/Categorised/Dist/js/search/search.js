@@ -182,9 +182,9 @@ stir.templates.search = (() => {
   const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
 
   const renderFavsButton = (courseid) => {
-    return `<div class="flex-container u-gap u-mb-1 text-xsm " >
+    return `<div class="flex-container u-gap u-mb-1 text-xsm">
               <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${courseid}"></div>
-              <a href="/courses/favourites/" >View favourites</a>
+              <a href="/courses/favourites/">View favourites</a>
           </div>`;
   };
 
@@ -231,6 +231,7 @@ stir.templates.search = (() => {
 
     auto: (item) => {
       if (item.liveUrl === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
+      if (item.metaData.type == "scholarship") return stir.templates.search.scholarship(item);
       if (item.metaData.type == "Course" || item.metaData.level) return stir.templates.search.course(item);
       if (item.metaData.type == "News") return stir.templates.search.news(item);
       if (item.metaData.type == "Gallery") return stir.templates.search.gallery(item);
@@ -325,7 +326,7 @@ stir.templates.search = (() => {
 			</div>`;
     },
 
-    courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""),
+    courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace('|',', ')}</p></div>` : ""),
 
     course: (item) => {
       const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
@@ -357,7 +358,7 @@ stir.templates.search = (() => {
             ${stir.templates.search.courseFact("Study modes", item.metaData.modes, true)}
             ${stir.templates.search.courseFact("Delivery", item.metaData.delivery, true)}
           </div>
-
+          
           ${preview ? renderFavsButton(item.metaData.sid) : ""}
           
           ${stir.templates.search.combos(item)}
@@ -394,6 +395,23 @@ stir.templates.search = (() => {
 				</div>
 			</div>`;
     },
+	scholarship: (item) => {
+		return `
+		<div class="c-search-result" data-result-type=scholarship data-rank=${item.rank}>
+			<div class=c-search-result__tags>
+				${stir.templates.search.stag(item.metaData.level ? item.metaData.level : "")}
+			</div>
+			<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
+				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
+				<p>${item.summary.replace(/\xA0/g, " ")}</p>
+				<div class="c-search-result__meta grid-x">
+					${stir.templates.search.courseFact("Value", item.metaData.value, false)}
+					${stir.templates.search.courseFact("Number of awards", item.metaData.number, false)}
+					${stir.templates.search.courseFact("Fee status", item.metaData.status, false)}
+				</div>
+			</div>
+		</div>`;
+	},
 
     studentstory: (item, trail) => {
       return `
@@ -946,8 +964,8 @@ stir.funnelback = (() => {
 
   //const hostname = 'stage-shared-15-24-search.clients.uk.funnelback.com';
   //const hostname = 'shared-15-24-search.clients.uk.funnelback.com';
-  //const hostname = debug || UoS_env.name === "preview" ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
-  const hostname = "search.stir.ac.uk";
+  const hostname = debug || UoS_env.name === "preview" ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
+  //const hostname = "search.stir.ac.uk";
   const url = `https://${hostname}/s/`;
 
   const getJsonEndpoint = () => new URL("search.json", url);
@@ -1087,6 +1105,7 @@ stir.search = () => {
     main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tags", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage"],
     courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
     clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
+	scholarships: ["value","status","number"]
   };
 
   //console.info("Clearing is " + (CLEARING ? "open" : "closed"));
@@ -1099,7 +1118,7 @@ stir.search = () => {
     parameters: {
       any: {
         collection: "stir-main",
-        SF: `[${meta.main.concat(meta.clearing).join(",")}]`,
+        SF: `[${meta.main.concat(meta.clearing,meta.scholarships).join(",")}]`,
         num_ranks: NUMRANKS,
         query: "",
         spelling: true,
