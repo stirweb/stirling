@@ -59,14 +59,14 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
             ${stir.templates.search.courseFact("Study modes",e.metaData.modes,!0)}
             ${stir.templates.search.courseFact("Delivery",e.metaData.delivery,!0)}
           </div>
+
+          ${t?`<div class="flex-container u-gap u-mb-1 text-xsm " >
+              <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${e.metaData.sid}"></div>
+              <a href="/stirling/pages/search/course-favs/" >View favourites</a>
+          </div>`:""}
           
           ${stir.templates.search.combos(e)}
           ${stir.templates.search.pathways(e)}
-
-          ${t?`<div class="flex-container u-gap" >
-              <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${e.metaData.sid}"></div>
-              <a href="/stirling/pages/search/course-favs/" class="u-underline">View favourites</a>
-          </div>`:""}
         </div>
 			</div>`},coursemini:e=>`
 		<div>
