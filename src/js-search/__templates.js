@@ -167,7 +167,7 @@ stir.templates.search = (() => {
   const renderFavsButton = (courseid) => {
     return `<div class="flex-container u-gap u-mb-1 text-xsm " >
               <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${courseid}"></div>
-              <a href="/stirling/pages/search/course-favs/" >View favourites</a>
+              <a href="/courses/favourites/" >View favourites</a>
           </div>`;
   };
 
