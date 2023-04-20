@@ -373,7 +373,7 @@ Courses Panel
 		<div>
 			<form data-filters=course action=null>
 			  
-				<fieldset>	
+				<fieldset data-facet=Level>	
 				  <legend class="show-for-sr">Filter by level</legend>
 				  <div class="stir-accordion--active" data-behaviour=accordion>
 					<accordion-summary>Level</accordion-summary>
@@ -393,7 +393,7 @@ Courses Panel
 				  </div>
 				</fieldset>
 				
-			  	<fieldset>
+			  	<fieldset data-facet=Subject>
 				  <legend class="show-for-sr">Filter by subject</legend>
 				  <div data-behaviour=accordion>
 					<accordion-summary data-containtns>Subject</accordion-summary>
@@ -475,39 +475,31 @@ Courses Panel
 				  </div>
 				</fieldset>
 			  
-				<fieldset>
-				  <legend class="show-for-sr">Filter by subject</legend>
+				<fieldset data-facet="Study mode">
+				  <legend class="show-for-sr">Filter by study mode</legend>
 				  <div data-behaviour=accordion>
 					<accordion-summary>Study mode</accordion-summary>
 					<div>
- 
 						<ul>
-							<li><label><input name=meta_modes type=checkbox
-										value="full">Full time</label></li>
-							<li><label><input name=meta_modes type=checkbox
-										value="part">Part time</label></li>
+							<li><label><input name=meta_modes type=checkbox value=full>Full time</label></li>
+							<li><label><input name=meta_modes type=checkbox value=part>Part time</label></li>
 						</ul>
-						
 					</div>
 				  </div>
 				</fieldset>
 			  	
-			  	<fieldset>
-				  <legend class="show-for-sr">Filter by delivery</legend>
-				  <div data-behaviour=accordion>
-					<accordion-summary>Delivery</accordion-summary>
-					<div>
-						<ul>
-							<li><label><input name=meta_delivery type=checkbox
-										value="campus">On campus</label></li>
-							<li><label><input name=meta_delivery type=checkbox
-										value="online">Online</label></li>
-							<li><label><input name=meta_delivery type=checkbox
-										value="hybrid">Hybrid</label></li>
-						</ul>
-						
+			  	<fieldset data-facet="Delivery mode">
+					<legend class="show-for-sr">Filter by delivery</legend>
+					<div data-behaviour=accordion>
+						<accordion-summary>Delivery</accordion-summary>
+						<div>
+							<ul>
+								<li><label><input name=meta_delivery type=checkbox value=campus>On campus</label></li>
+								<li><label><input name=meta_delivery type=checkbox value=online>Online</label></li>
+								<li><label><input name=meta_delivery type=checkbox value=hybrid>Hybrid</label></li>
+							</ul>
+						</div>
 					</div>
-				  </div>
 				</fieldset>
 				
 			  	<fieldset>
@@ -523,30 +515,29 @@ Courses Panel
 						<!-- <p><strong>2022/23</strong></p> -->
 					  
 						<ul>
-						  <li><label><input name="meta_startval" type="checkbox" value="2023-05AY2022-23">May 2023</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2023-06AY2023-24">June 2023</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2023-08AY2023-24">August 2023</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2023-09AY2023-24">September 2023</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2023-10AY2023-24">October 2023</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2024-01AY2023-24">January 2024</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2024-02AY2023-24">February 2024</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2024-05AY2023-24">May 2024</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2024-06AY2023-24">June 2024</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2023-05AY2022-23">May 2023</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2023-06AY2023-24">June 2023</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2023-08AY2023-24">August 2023</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2023-09AY2023-24">September 2023</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2023-10AY2023-24">October 2023</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2024-01AY2023-24">January 2024</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2024-02AY2023-24">February 2024</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2024-05AY2023-24">May 2024</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2024-06AY2023-24">June 2024</label></li>
 							<!-- <li><label><input name=meta_startval type=checkbox value="2022-08">August 2022</label></li>
 							<li><label><input name=meta_startval type=checkbox value="2022-09">September 2022</label></li>
 							<li><label><input name=meta_startval type=checkbox value="2022-10">October 2022</label></li>
 							<li><label><input name=meta_startval type=checkbox value="2023-01">January 2023</label></li>
 							<li><label><input name=meta_startval type=checkbox value="2023-02">February 2023</label></li>
 							<li><label><input name=meta_startval type=checkbox value="2023-05">May 2023</label></li>-->
-						 <li><label><input name=meta_startval type=checkbox                                                                    value="Other">Other</label></li>
-					
+							<li><label><input name=meta_startval type=checkbox value=Other>Other</label></li>
 						</ul>
 				
 					</div>
 				  </div>
 			  	</fieldset>
 				
-			  	<fieldset>
+			  	<fieldset data-facet=Faculty>
 				  <legend class="show-for-sr">Filter by faculty</legend>
 				  <div data-behaviour=accordion>
 					<accordion-summary>Faculty</accordion-summary>
