@@ -2183,6 +2183,9 @@ stir.Number = {
   },
 };
 
+/**
+ * Library functions for Strings
+ */
 stir.String = {
   rot: function rot(s, i) {
     // modified for general rot# from
@@ -2219,72 +2222,86 @@ stir.String = {
     }
     return this;
   },
-  fixHtml: (function () {
-    /**
-     * fixHtml() is intended to fix broken/partial HTML strings coming from the
-     * Degree Program Tables (SSoCI) and possibly other short snippets of HTML.
-     * As a side-effect it could be used to strip out non-text content such as
-     * <script> tags, for example. Relies on three internal helper functions,
-     * domify(), wrapRawNodes() and removeEmptyElements().
-     */
-
-    /**
-     * Use the browser's DOM parser to make sense of the HTMLString, but away from the
-     * main DOM so we can make further adjustments. Returns an HTMLDocument's body element.
-     */
-    function domify(HTMLString) {
-      return new DOMParser().parseFromString(HTMLString, "text/html").body;
-    }
-
-    /**
-     * Wrap any raw (i.e. text content) nodes into <p> tags. This is immediate
-     * children only, not recursive.
-     */
-    function wrapRawNodes(DomEl) {
-      if (!DomEl || !DomEl.childNodes) return;
-      Array.prototype.forEach.call(DomEl.childNodes, function (node) {
-        if (3 === node.nodeType || "A" === node.nodeName) {
-          var p = document.createElement("p");
-          node.parentNode.insertBefore(p, node);
-          p.appendChild(node);
-        }
-      });
-      return DomEl;
-    }
-
-    /**
-     * SSoCI entries tend to have mismatched </p> tags which leads to
-     * empty <p></p> tag pairs. We'll strip them out:
-     */
-    function removeEmptyElements(DomEl) {
-      if (!DomEl || !DomEl.childNodes) return;
-      Array.prototype.forEach.call(DomEl.childNodes, function (node) {
-        if (1 === node.nodeType && "" === node.innerText) {
-          DomEl.removeChild(node);
-        }
-      });
-      return DomEl;
-    }
-
-    /**
-     * This is the only exposed function within fixHTML.
-     * @param dirtyString {String} This is the input HTML in string format.
-     * @param returnDomFrag {Boolean} return a DOM fragment instead of a string. Defaults to string.
-     */
-    return function fixHtml(dirtyString, returnDomFrag) {
-      var domNodes = removeEmptyElements(wrapRawNodes(domify(dirtyString)));
-      var frag = document.createDocumentFragment();
-      while (domNodes.firstChild) {
-        frag.appendChild(domNodes.firstChild);
-      }
-
-      domify();
-
-      return returnDomFrag ? frag : frag.textContent;
-    };
-  })(),
+  domify: (HTMLString) => new DOMParser().parseFromString(HTMLString, "text/html").body,
 };
 
+/**
+ * Additional String function
+ * Created separately because it refers to other stir.String helper functions.
+ */
+stir.String.fixHtml = (function () {
+	/**
+	 * fixHtml() is intended to fix broken/partial HTML strings coming from the
+	 * Degree Program Tables (SSoCI) and possibly other short snippets of HTML.
+	 * As a side-effect it could be used to strip out non-text content such as
+	 * <script> tags, for example. Relies on three internal helper functions,
+	 * domify(), wrapRawNodes() and removeEmptyElements().
+	 */
+
+	/**
+	 * Use the browser's DOM parser to make sense of the HTMLString, but away from the
+	 * main DOM so we can make further adjustments. Returns an HTMLDocument's body element.
+	 */
+	const domify = stir.String.domify;
+
+	/**
+	 * Wrap any raw (i.e. text content) nodes into <p> tags. This is immediate
+	 * children only, not recursive.
+	 */
+	function wrapRawNodes(DomEl) {
+		if (!DomEl || !DomEl.childNodes) return;
+		Array.prototype.forEach.call(DomEl.childNodes, function (node) {
+			if (3 === node.nodeType || "A" === node.nodeName) {
+				var p = document.createElement("p");
+				node.parentNode.insertBefore(p, node);
+				p.appendChild(node);
+			}
+		});
+		return DomEl;
+	}
+
+	/**
+	 * SSoCI entries tend to have mismatched </p> tags which leads to
+	 * empty <p></p> tag pairs. We'll strip them out:
+	 */
+	function removeEmptyElements(DomEl) {
+		if (!DomEl || !DomEl.childNodes) return;
+		Array.prototype.forEach.call(DomEl.childNodes, function (node) {
+			if (1 === node.nodeType && "" === node.innerText) {
+				DomEl.removeChild(node);
+			}
+		});
+		return DomEl;
+	}
+
+	/**
+	 * This is the only exposed function within fixHTML.
+	 * @param dirtyString {String} This is the input HTML in string format.
+	 * @param returnDomFrag {Boolean} return a DOM fragment instead of a string. Defaults to string.
+	 */
+	return function fixHtml(dirtyString, returnDomFrag) {
+		var domNodes = removeEmptyElements(wrapRawNodes(domify(dirtyString)));
+		var frag = stir.DOM.frag(domNodes);
+		return returnDomFrag ? frag : frag.textContent;
+	};
+})();
+
+/**
+ * Library functions for working with the DOM
+ */
+stir.DOM = {
+	frag: (nodes) => {
+	  const frag = document.createDocumentFragment();
+	  while (nodes.firstChild) {
+		  frag.appendChild(nodes.firstChild);
+	  }
+	  return frag;
+	}
+};
+
+/**
+ * Library functions for working with Arrays
+ */
 stir.Array = {
   oxfordComma: function oxfordComma(items, oxford, adjoiner) {
     var nonEmptyItems = items.filter((item) => item);
@@ -2296,6 +2313,9 @@ stir.Array = {
   },
 };
 
+/**
+ * Library functions for working with Objects
+ */
 stir.Object = {
   extend: function extend(out) {
     out = out || {};
@@ -3966,7 +3986,7 @@ stir.Favs = function Favs() {
     return `
         <div class="u-mb-3 ">
           <button class="u-border-solid u-p-1  u-cursor-pointer u-mt-1 " data-action="clearallfavs">Clear favourites</button>
-          <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-action="copysharelink">Generate share link</button>
+          <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-opendialog="shareDialog" data-action="copysharelink">Generate share link</button>
         </div>`;
   };
 
@@ -4020,6 +4040,14 @@ stir.Favs = function Favs() {
 
   const renderSharedIntro = (items) => {
     return !items.length ? `` : ``;
+  };
+
+  const renderShareDialog = (link) => {
+    return !link
+      ? ``
+      : ` <p><strong>Share link</strong></p>  
+          <p>The following share link has been copied to your clipboard:</p>   
+          <p>${link}</p>`;
   };
 
   const renderHeader = (size, content) => `<${size} class="header-stripped h3 u-mb-2">${content}</${size}>`;
@@ -4112,7 +4140,8 @@ stir.Favs = function Favs() {
     Returns an array of course objects 
   */
   const getShareList = (data) => {
-    const sharedList = QueryParams.get("shared") || "";
+    const sharedListQuery = QueryParams.get("c") || "";
+    const sharedList = atob(sharedListQuery);
 
     if (!sharedList.length) return null;
 
@@ -4170,7 +4199,7 @@ stir.Favs = function Favs() {
       return;
     }
 
-    setDOMContent(nodes.sharedfavArea, renderHeader("h2", "My favourites") + list.map(renderMiniFav).join("") + renderLinkToFavs());
+    setDOMContent(nodes.sharedfavArea, list.map(renderMiniFav).join("") + renderLinkToFavs());
     return;
   };
 
@@ -4216,9 +4245,9 @@ stir.Favs = function Favs() {
         if (target.dataset && target.dataset.action && target.dataset.action === "addtofavs") {
           if (!isInCookie(target.dataset.id)) {
             const favsCookie2 = [...getfavsCookie(cookieId), { id: target.dataset.id, date: Date.now() }];
-            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(300) + ";path=/";
+            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(365) + ";path=/";
           }
-          //console.log(target);
+
           nodes.sharedArea && doShared(nodes, data, cookieId);
           nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
           nodes.coursefavsbtns && doCourseBtn(target.parentElement, cookieId);
@@ -4231,7 +4260,7 @@ stir.Favs = function Favs() {
           if (id && id.length) {
             const favsCookie = getfavsCookie(cookieId);
             const favsCookie2 = favsCookie.filter((item) => item.id !== id);
-            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
+            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(365) + ";path=/";
             nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
             nodes.coursefavsbtns && doCourseBtn(target.parentElement, cookieId);
           }
@@ -4243,18 +4272,20 @@ stir.Favs = function Favs() {
           nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
         }
 
-        // if (event.target.dataset && event.target.dataset.action === "clearshortlist") {
-        //   QueryParams.remove("shared");
-        //   nodes.sharedArea && doShared(nodes, data, cookieId);
-        // }
-
         /* ACTION: COPY SHARE LINK */
         if (target.dataset && target.dataset.action && target.dataset.action === "copysharelink") {
           const favsCookie = getfavsCookie(cookieId);
-          const link = "https://" + window.location.hostname + "/courses/favourites/shared/?shared=" + favsCookie.map((item) => item.id).join(",");
+
+          const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
+
+          const link = "https://" + window.location.hostname + "/share/" + base64Params;
           navigator.clipboard.writeText(link);
 
-          alert("The following share link has been copied to your clipboard: \n\n" + link);
+          const dialog = stir.t4Globals.dialogs.filter((item) => item.getId() === "shareDialog");
+
+          if (!dialog.length) return;
+          dialog[0].open();
+          dialog[0].setContent(renderShareDialog(link));
         }
       });
     });
@@ -5954,7 +5985,6 @@ stir.accord = (function () {
 var stir = stir || {};
 
 /*
-   Deprecated - Replace with html Dialog
    Replaces the Foundation reveal modal
    @author: Ryan Kaye
    Will find modals already in the html
@@ -6113,23 +6143,29 @@ stir.Modal = function Modal(el) {
 stir.Dialog = function Dialog(element_) {
   const close_ = () => element.close();
   const open_ = () => element.showModal();
+
+  /*
+    Getters
+  */
+
   const getOpenBtns_ = (id_) => stir.nodes('[data-opendialog="' + id_ + '"]');
   const getCloseBtn_ = () => element.querySelector("[data-closedialog]");
 
-  const setId_ = () => {
-    const ident = "dialog" + stir.Math.random(1000);
-    element.dataset.dialog = ident;
-    return ident;
-  };
-
-  const setContent_ = (html) => {
-    stir.setHTML(element, html + renderCloseBtn_());
-    initListeners();
-  };
+  /*
+    Renderers
+  */
 
   const renderCloseBtn_ = () => `<button data-closedialog class="close-button">&times;</button>`;
+  const renderOpenBtn_ = (text) => stir.stringToNode(`<button data-opendialog="${element.dataset.dialog}" class="button u-mt-sm">${text}</button>`);
 
-  const initListeners = (id_) => {
+  /*
+    Listeners
+  */
+
+  const initListeners = () => {
+    const id_ = element.dataset.dialog;
+
+    if (!id_) return;
     const closeBtn = getCloseBtn_();
 
     getOpenBtns_(id_).forEach((button) => {
@@ -6140,13 +6176,28 @@ stir.Dialog = function Dialog(element_) {
   };
 
   /*
+    Setters
+  */
+
+  const setId_ = (id) => {
+    element.dataset.dialog = id;
+    initListeners(id);
+  };
+
+  const setContent_ = (html) => {
+    stir.setHTML(element, html + renderCloseBtn_());
+    initListeners();
+  };
+
+  /*
     Initilaise
   */
 
   const element = element_ ? element_ : document.createElement("dialog");
-  const id = element.dataset.dialog ? element.dataset.dialog : setId_();
+  //const id = element.dataset.dialog ? element.dataset.dialog : null;
+
   !getCloseBtn_() && setContent_("");
-  initListeners(id);
+  initListeners();
 
   /*
     Public functions
@@ -6161,8 +6212,20 @@ stir.Dialog = function Dialog(element_) {
       return element;
     },
 
+    renderOpenBtn: function (text) {
+      return renderOpenBtn_(text);
+    },
+
+    setId: function (id) {
+      setId_(id);
+    },
+
     setContent: function (html) {
       setContent_(html);
+    },
+
+    listen: function () {
+      initListeners();
     },
 
     open: function () {
@@ -6209,6 +6272,10 @@ stir.Dialog = function Dialog(element_) {
       element.dataset.modalopen = element.dataset.opendialog;
     });
   };
+
+  /* 
+    ON LOAD   
+  */
 
   /* Dialog support??? */
   if (stir.node("dialog")) {

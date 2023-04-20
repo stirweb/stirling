@@ -1,7 +1,6 @@
 var stir = stir || {};
 
 /*
-   Deprecated - Replace with html Dialog
    Replaces the Foundation reveal modal
    @author: Ryan Kaye
    Will find modals already in the html
@@ -160,23 +159,29 @@ stir.Modal = function Modal(el) {
 stir.Dialog = function Dialog(element_) {
   const close_ = () => element.close();
   const open_ = () => element.showModal();
+
+  /*
+    Getters
+  */
+
   const getOpenBtns_ = (id_) => stir.nodes('[data-opendialog="' + id_ + '"]');
   const getCloseBtn_ = () => element.querySelector("[data-closedialog]");
 
-  const setId_ = () => {
-    const ident = "dialog" + stir.Math.random(1000);
-    element.dataset.dialog = ident;
-    return ident;
-  };
-
-  const setContent_ = (html) => {
-    stir.setHTML(element, html + renderCloseBtn_());
-    initListeners();
-  };
+  /*
+    Renderers
+  */
 
   const renderCloseBtn_ = () => `<button data-closedialog class="close-button">&times;</button>`;
+  const renderOpenBtn_ = (text) => stir.stringToNode(`<button data-opendialog="${element.dataset.dialog}" class="button u-mt-sm">${text}</button>`);
 
-  const initListeners = (id_) => {
+  /*
+    Listeners
+  */
+
+  const initListeners = () => {
+    const id_ = element.dataset.dialog;
+
+    if (!id_) return;
     const closeBtn = getCloseBtn_();
 
     getOpenBtns_(id_).forEach((button) => {
@@ -187,13 +192,28 @@ stir.Dialog = function Dialog(element_) {
   };
 
   /*
+    Setters
+  */
+
+  const setId_ = (id) => {
+    element.dataset.dialog = id;
+    initListeners(id);
+  };
+
+  const setContent_ = (html) => {
+    stir.setHTML(element, html + renderCloseBtn_());
+    initListeners();
+  };
+
+  /*
     Initilaise
   */
 
   const element = element_ ? element_ : document.createElement("dialog");
-  const id = element.dataset.dialog ? element.dataset.dialog : setId_();
+  //const id = element.dataset.dialog ? element.dataset.dialog : null;
+
   !getCloseBtn_() && setContent_("");
-  initListeners(id);
+  initListeners();
 
   /*
     Public functions
@@ -208,8 +228,20 @@ stir.Dialog = function Dialog(element_) {
       return element;
     },
 
+    renderOpenBtn: function (text) {
+      return renderOpenBtn_(text);
+    },
+
+    setId: function (id) {
+      setId_(id);
+    },
+
     setContent: function (html) {
       setContent_(html);
+    },
+
+    listen: function () {
+      initListeners();
     },
 
     open: function () {
@@ -256,6 +288,10 @@ stir.Dialog = function Dialog(element_) {
       element.dataset.modalopen = element.dataset.opendialog;
     });
   };
+
+  /* 
+    ON LOAD   
+  */
 
   /* Dialog support??? */
   if (stir.node("dialog")) {
