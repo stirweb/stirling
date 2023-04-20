@@ -566,15 +566,13 @@ stir.templates.search = (() => {
 					${item.messageHtml}
 				</div>`,
 		facet: (item) =>
-			`<fieldset>	
+			`<fieldset data-facet="${item.name}">
 				<legend class="show-for-sr">Filter by ${item.name}</legend>
-				<div class="stir-accordion--active" data-behaviour=accordion>
-				<accordion-summary>${item.name}</accordion-summary>
-				<div>
-				<ul>${item.allValues.map(batman=>`<li><label><input type=${facetDisplayTypes[item.guessedDisplayType]||'text'} name="${batman.queryStringParamName}" value="${batman.queryStringParamValue}" ${batman.selected?'checked':''}>${facetCategoryLabel(batman.label)} <span>${batman.count?batman.count:'0'}</span></label></li>`).join('')}
-				</ul>
-				
-				</div>
+				<div data-behaviour=accordion>
+					<accordion-summary>${item.name}</accordion-summary>
+					<div>
+						<ul>${item.allValues.map(batman=>`<li><label><input type=${facetDisplayTypes[item.guessedDisplayType]||'text'} name="${batman.queryStringParamName}" value="${batman.queryStringParamValue}" ${batman.selected?'checked':''}>${facetCategoryLabel(batman.label)} <span>${batman.count?batman.count:'0'}</span></label></li>`).join('')}</ul>
+					</div>
 				</div>
 			</fieldset>`
 	};
@@ -1338,7 +1336,7 @@ stir.search = () => {
 	const flow = stir.curry((_element, data) => {
 		if(!_element.closest) return;
 		const root = _element.closest('[data-panel]');
-		const cords = root.querySelectorAll('[data-behaviour="accordion"]');
+		const cords = root.querySelectorAll('[data-behaviour="accordion"]:not(.stir-accordion)');
 		const pics = root.querySelectorAll("img");
 		Array.prototype.forEach.call(cords, newAccordion);
 		Array.prototype.forEach.call(pics, imageErrorHandler);
@@ -1354,10 +1352,26 @@ stir.search = () => {
 	});
 
 	const updateFacets = stir.curry((type, data) => {
-		const form = document.querySelector(`form[data-filters="${type}"]`)
+		const form = document.querySelector(`form[data-filters="${type}"]`);
 		if(form) {
-			Array.prototype.slice.call(form.querySelectorAll('fieldset')).forEach(fieldset=>fieldset.parentElement.removeChild(fieldset));
-			data.response.facets.forEach(facet=>form.insertAdjacentHTML("afterbegin", stir.templates.search.facet(facet)));
+			//Array.prototype.slice.call(form.querySelectorAll('fieldset')).forEach(fieldset=>fieldset.parentElement.removeChild(fieldset));
+			data.response.facets.forEach(
+				(facet) => {
+					const active = 'stir-accordion--active';
+					const metaFilter = form.querySelector(`[data-facet="${facet.name}"]`);
+					const metaAccordion = metaFilter && metaFilter.querySelector('[data-behaviour=accordion]');
+					const open = metaAccordion && metaAccordion.getAttribute('class').indexOf(active)>-1;
+					const facetFilter = stir.DOM.frag(stir.String.domify(stir.templates.search.facet(facet)));
+					const facetAccordion = facetFilter.querySelector('[data-behaviour=accordion]');
+					open && facetAccordion && facetAccordion.setAttribute('class',active);
+					if(metaFilter) {
+						metaFilter.insertAdjacentElement("afterend", facetFilter.firstChild);
+						metaFilter.parentElement.removeChild(metaFilter);
+					} else {
+						form.insertAdjacentElement("afterbegin", facetFilter.firstChild);
+					}
+				}
+			);
 		}
 		return data; // data pass-thru so we can compose() this function
 	});

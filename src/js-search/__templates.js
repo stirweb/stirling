@@ -549,15 +549,13 @@ stir.templates.search = (() => {
 					${item.messageHtml}
 				</div>`,
 		facet: (item) =>
-			`<fieldset>	
+			`<fieldset data-facet="${item.name}">
 				<legend class="show-for-sr">Filter by ${item.name}</legend>
-				<div class="stir-accordion--active" data-behaviour=accordion>
-				<accordion-summary>${item.name}</accordion-summary>
-				<div>
-				<ul>${item.allValues.map(batman=>`<li><label><input type=${facetDisplayTypes[item.guessedDisplayType]||'text'} name="${batman.queryStringParamName}" value="${batman.queryStringParamValue}" ${batman.selected?'checked':''}>${facetCategoryLabel(batman.label)} <span>${batman.count?batman.count:'0'}</span></label></li>`).join('')}
-				</ul>
-				
-				</div>
+				<div data-behaviour=accordion>
+					<accordion-summary>${item.name}</accordion-summary>
+					<div>
+						<ul>${item.allValues.map(batman=>`<li><label><input type=${facetDisplayTypes[item.guessedDisplayType]||'text'} name="${batman.queryStringParamName}" value="${batman.queryStringParamValue}" ${batman.selected?'checked':''}>${facetCategoryLabel(batman.label)} <span>${batman.count?batman.count:'0'}</span></label></li>`).join('')}</ul>
+					</div>
 				</div>
 			</fieldset>`
 	};
