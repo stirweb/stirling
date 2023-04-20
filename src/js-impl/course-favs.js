@@ -380,7 +380,7 @@ stir.Favs = function Favs() {
 
           const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
 
-          const link = "https://" + window.location.hostname + "/share/" + base64Params;
+          const link = "https://www.stir.ac.uk/share/" + base64Params;
           navigator.clipboard.writeText(link);
 
           const dialog = stir.t4Globals.dialogs.filter((item) => item.getId() === "shareDialog");
