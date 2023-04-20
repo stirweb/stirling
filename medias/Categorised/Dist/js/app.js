@@ -4046,8 +4046,8 @@ stir.Favs = function Favs() {
     return !link
       ? ``
       : ` <p><strong>Share link</strong></p>  
-          <p>The following share link has been copied to your clipboard:</p>   
-          <p>${link}</p>`;
+          <p class="text-xsm">The following share link has been copied to your clipboard:</p>   
+          <p class="text-xsm">${link}</p>`;
   };
 
   const renderHeader = (size, content) => `<${size} class="header-stripped h3 u-mb-2">${content}</${size}>`;
