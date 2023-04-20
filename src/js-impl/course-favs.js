@@ -374,11 +374,6 @@ stir.Favs = function Favs() {
           nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
         }
 
-        // if (event.target.dataset && event.target.dataset.action === "clearshortlist") {
-        //   QueryParams.remove("shared");
-        //   nodes.sharedArea && doShared(nodes, data, cookieId);
-        // }
-
         /* ACTION: COPY SHARE LINK */
         if (target.dataset && target.dataset.action && target.dataset.action === "copysharelink") {
           const favsCookie = getfavsCookie(cookieId);
@@ -390,10 +385,9 @@ stir.Favs = function Favs() {
 
           const dialog = stir.t4Globals.dialogs.filter((item) => item.getId() === "shareDialog");
 
+          if (!dialog.length) return;
           dialog[0].open();
           dialog[0].setContent(renderShareDialog(link));
-          console.log(dialog);
-          //alert("The following share link has been copied to your clipboard: \n\n" + link);
         }
       });
     });
