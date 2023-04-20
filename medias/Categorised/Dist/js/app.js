@@ -3966,7 +3966,7 @@ stir.Favs = function Favs() {
     return `
         <div class="u-mb-3 ">
           <button class="u-border-solid u-p-1  u-cursor-pointer u-mt-1 " data-action="clearallfavs">Clear favourites</button>
-          <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-action="copysharelink">Generate share link</button>
+          <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-opendialog="shareDialog" data-action="copysharelink">Generate share link</button>
         </div>`;
   };
 
@@ -4020,6 +4020,14 @@ stir.Favs = function Favs() {
 
   const renderSharedIntro = (items) => {
     return !items.length ? `` : ``;
+  };
+
+  const renderShareDialog = (link) => {
+    return !link
+      ? ``
+      : ` <p><strong>Share link</strong></p>  
+          <p>The following share link has been copied to your clipboard:</p>   
+          <p>${link}</p>`;
   };
 
   const renderHeader = (size, content) => `<${size} class="header-stripped h3 u-mb-2">${content}</${size}>`;
@@ -4112,7 +4120,8 @@ stir.Favs = function Favs() {
     Returns an array of course objects 
   */
   const getShareList = (data) => {
-    const sharedList = QueryParams.get("shared") || "";
+    const sharedListQuery = QueryParams.get("c") || "";
+    const sharedList = atob(sharedListQuery);
 
     if (!sharedList.length) return null;
 
@@ -4170,7 +4179,7 @@ stir.Favs = function Favs() {
       return;
     }
 
-    setDOMContent(nodes.sharedfavArea, renderHeader("h2", "My favourites") + list.map(renderMiniFav).join("") + renderLinkToFavs());
+    setDOMContent(nodes.sharedfavArea, list.map(renderMiniFav).join("") + renderLinkToFavs());
     return;
   };
 
@@ -4216,9 +4225,9 @@ stir.Favs = function Favs() {
         if (target.dataset && target.dataset.action && target.dataset.action === "addtofavs") {
           if (!isInCookie(target.dataset.id)) {
             const favsCookie2 = [...getfavsCookie(cookieId), { id: target.dataset.id, date: Date.now() }];
-            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(300) + ";path=/";
+            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(365) + ";path=/";
           }
-          //console.log(target);
+
           nodes.sharedArea && doShared(nodes, data, cookieId);
           nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
           nodes.coursefavsbtns && doCourseBtn(target.parentElement, cookieId);
@@ -4231,7 +4240,7 @@ stir.Favs = function Favs() {
           if (id && id.length) {
             const favsCookie = getfavsCookie(cookieId);
             const favsCookie2 = favsCookie.filter((item) => item.id !== id);
-            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(30) + ";path=/";
+            document.cookie = cookieId + JSON.stringify(favsCookie2) + getExpiryDate(365) + ";path=/";
             nodes.favsArea && doFavs(nodes.favsArea, data, cookieId);
             nodes.coursefavsbtns && doCourseBtn(target.parentElement, cookieId);
           }
@@ -4251,10 +4260,18 @@ stir.Favs = function Favs() {
         /* ACTION: COPY SHARE LINK */
         if (target.dataset && target.dataset.action && target.dataset.action === "copysharelink") {
           const favsCookie = getfavsCookie(cookieId);
-          const link = "https://" + window.location.hostname + "/courses/favourites/shared/?shared=" + favsCookie.map((item) => item.id).join(",");
+
+          const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
+
+          const link = "https://" + window.location.hostname + "/share/" + base64Params;
           navigator.clipboard.writeText(link);
 
-          alert("The following share link has been copied to your clipboard: \n\n" + link);
+          const dialog = stir.t4Globals.dialogs.filter((item) => item.getId() === "shareDialog");
+
+          dialog[0].open();
+          dialog[0].setContent(renderShareDialog(link));
+          console.log(dialog);
+          //alert("The following share link has been copied to your clipboard: \n\n" + link);
         }
       });
     });
@@ -5954,7 +5971,6 @@ stir.accord = (function () {
 var stir = stir || {};
 
 /*
-   Deprecated - Replace with html Dialog
    Replaces the Foundation reveal modal
    @author: Ryan Kaye
    Will find modals already in the html
@@ -6110,17 +6126,11 @@ stir.Modal = function Modal(el) {
 
  */
 
-stir.Dialog = function Dialog(element_) {
+stir.Dialog = function Dialog(element) {
   const close_ = () => element.close();
   const open_ = () => element.showModal();
   const getOpenBtns_ = (id_) => stir.nodes('[data-opendialog="' + id_ + '"]');
   const getCloseBtn_ = () => element.querySelector("[data-closedialog]");
-
-  const setId_ = () => {
-    const ident = "dialog" + stir.Math.random(1000);
-    element.dataset.dialog = ident;
-    return ident;
-  };
 
   const setContent_ = (html) => {
     stir.setHTML(element, html + renderCloseBtn_());
@@ -6143,8 +6153,15 @@ stir.Dialog = function Dialog(element_) {
     Initilaise
   */
 
-  const element = element_ ? element_ : document.createElement("dialog");
-  const id = element.dataset.dialog ? element.dataset.dialog : setId_();
+  if (!element) return;
+
+  const id = element.dataset.dialog ? element.dataset.dialog : null;
+
+  if (!id) {
+    console.error("Dialog's require a data-dialog attribute");
+    return;
+  }
+
   !getCloseBtn_() && setContent_("");
   initListeners(id);
 
@@ -6209,6 +6226,10 @@ stir.Dialog = function Dialog(element_) {
       element.dataset.modalopen = element.dataset.opendialog;
     });
   };
+
+  /* 
+    ON LOAD   
+  */
 
   /* Dialog support??? */
   if (stir.node("dialog")) {
