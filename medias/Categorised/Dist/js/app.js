@@ -6277,8 +6277,10 @@ stir.Dialog = function Dialog(element_) {
     ON LOAD   
   */
 
-  /* Dialog support??? */
+  if (!modals_ && !dialogs) return;
+
   if (stir.node("dialog")) {
+    /* Dialog support??? */
     typeof HTMLDialogElement === "function" ? initDialogs(dialogs) : dialogFallback(dialogs);
   }
 
