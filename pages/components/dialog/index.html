@@ -345,10 +345,20 @@
             <div class="grid-x grid-padding-x">
                 <!-- Text with Heading -->
                 <div class="cell small-12 u-padding-y medium-10 large-10" id="d.en.38660">
-                    <h2>Thinking about studying at the University of Stirling?</h2>
-                    <p>Join one of our course specific webinars or general webinars to find out more about studying at
-                        the University of Stirling.&nbsp;Our course-specific and general webinars cover a range of
-                        topics, including:</p>
+                    <h2>Html Dialogs with foundation reveal fallback</h2>
+
+                    <ol>
+                        <li>Add a dialog element to the page with a data-dialog="myId" attribute.
+                        </li>
+
+                        <li>Add a button with attribute data-opendialog="myId".
+                        </li>
+                    </ol>
+                    <p>Content can also be chnaged on the fly with setContent() function. See footer JS (dialog 2).</p>
+
+                    <p>&nbsp;</p>
+
+
 
                     <dialog data-dialog="dialog1">
                         <h3>One</h3>
@@ -362,7 +372,8 @@
 
                     <dialog data-dialog="dialog2">
                         <h3>Two</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus sunt incidunt,
+                        <p>This one is being changed on the fly. Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Repellendus sunt incidunt,
                             temporibus soluta, ut modi placeat doloribus eveniet repellat ullam sit nemo laboriosam
                             beatae eos molestiae laudantium cupiditate explicabo autem?</p>
                         <p class="u-mb-sm"><a href="https://www.stir.ac.uk">A link</a></p>
@@ -370,9 +381,10 @@
                         <button data-closedialog class="close-button">&times;</button>
                     </dialog>
 
-                    <button class="button u-mt-sm" data-opendialog="dialog1">Open a native dialog 1</button>
-                    <button class="button u-mt-sm" data-opendialog="dialog2">Open a native dialog 2</button>
-                    <button class="button u-mt-sm" data-opendialog="dialog2">Open a native dialog 2</button>
+                    <div id="dialogBtns">
+                        <button class="button u-mt-sm" data-opendialog="dialog1">Open a native dialog 1</button>
+                        <button class="button u-mt-sm" data-opendialog="dialog2">Open a native dialog 2</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -382,16 +394,26 @@
     <script src="../../../medias/Categorised/Dist/js/other/unibuddy.js?v=201912101340"></script>
 
     <script>
-        // Tests
-        stir.t4Globals.dialogs[0].setContent("<p>Dynamically updating data!</p>");
+        // Update content of existing dialog on the fly
+        const dialog = stir.t4Globals.dialogs.filter((item) => item.getId() === "dialog2");
 
+        dialog.length && dialog[0].setContent("<p>Dynamically updating data!</p>");
+
+        // Create a new dialog on the fly
         const myDialog = stir.Dialog();
+        myDialog.setId('flyID');
+
+        myDialog.setContent('Hello from JS');
         stir.t4Globals.dialogs.push(myDialog);
 
-        const main = document.querySelector("main");
-        main.insertAdjacentElement("beforeend", myDialog.getDialog());
+        //const main = document.querySelector("main");
+        const btnArea = document.querySelector("#dialogBtns");
+        btnArea && btnArea.insertAdjacentElement("beforeend", myDialog.getDialog());
+        btnArea && btnArea.insertAdjacentElement("beforeend", myDialog.renderOpenBtn('Open dialog built in JS'));
 
-        console.log(stir.t4Globals.dialogs);
+        myDialog.listen();
+
+
     </script>
 </body>
 
