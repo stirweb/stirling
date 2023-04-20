@@ -42,7 +42,13 @@
 // })();
 
 (function () {
-  const utmTermValue = localStorage.getItem("_a_id");
+  const cookieId = "_a_id";
+  const utmTermArray = document.cookie.split(";").filter((item) => item.includes(cookieId));
+
+  if (!utmTermArray || !utmTermArray.length) return;
+
+  const utmTermValue = utmTermArray[0].replace(cookieId + "=", "");
+  //const utmTermValue = localStorage.getItem("_a_id");
   const geckoScript = document.querySelector("#gecko-form-embed-script");
 
   if (!geckoScript) return;

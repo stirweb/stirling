@@ -166,9 +166,9 @@ stir.templates.search = (() => {
 	const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
 
   const renderFavsButton = (courseid) => {
-    return `<div class="flex-container u-gap" >
+    return `<div class="flex-container u-gap u-mb-1 text-xsm">
               <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${courseid}"></div>
-              <a href="/stirling/pages/search/course-favs/" class="u-underline">View favourites</a>
+              <a href="/courses/favourites/">View favourites</a>
           </div>`;
   };
 
@@ -234,18 +234,19 @@ stir.templates.search = (() => {
 
 		suppressed: (reason) => `<!-- Suppressed search result: ${reason} -->`,
 
-		auto: (item) => {
-		if (item.liveUrl === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
-		if (item.metaData.type == "Course" || item.metaData.level) return stir.templates.search.course(item);
-		if (item.metaData.type == "News") return stir.templates.search.news(item);
-		if (item.metaData.type == "Gallery") return stir.templates.search.gallery(item);
-		if (item.metaData.type == "Event") return stir.templates.search.event(item);
-		if (item.collection == "stir-events") return stir.templates.search.event(item);
-		if (item.metaData.access) return stir.templates.search.internal(item);
-		if (item.metaData.type && item.metaData.type.indexOf("output") > -1) return stir.templates.search.research(item);
-		if (item.metaData.type && item.metaData.type.indexOf("contract") > -1) return stir.templates.search.research(item);
-		if (item.metaData.type && item.metaData.type.indexOf("profile") > -1) return stir.templates.search.person(item);
-		if (item.liveUrl.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
+    auto: (item) => {
+      if (item.liveUrl === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
+      if (item.metaData.type == "scholarship") return stir.templates.search.scholarship(item);
+      if (item.metaData.type == "Course" || item.metaData.level) return stir.templates.search.course(item);
+      if (item.metaData.type == "News") return stir.templates.search.news(item);
+      if (item.metaData.type == "Gallery") return stir.templates.search.gallery(item);
+      if (item.metaData.type == "Event") return stir.templates.search.event(item);
+      if (item.collection == "stir-events") return stir.templates.search.event(item);
+      if (item.metaData.access) return stir.templates.search.internal(item);
+      if (item.metaData.type && item.metaData.type.indexOf("output") > -1) return stir.templates.search.research(item);
+      if (item.metaData.type && item.metaData.type.indexOf("contract") > -1) return stir.templates.search.research(item);
+      if (item.metaData.type && item.metaData.type.indexOf("profile") > -1) return stir.templates.search.person(item);
+      if (item.liveUrl.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
 
 		const crumbs = {
 			text: item.metaData?.breadcrumbs?.split(" > ").slice(1, -1) || [],
@@ -330,7 +331,7 @@ stir.templates.search = (() => {
 				</div>`;
 		},
 
-		courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""),
+    courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace('|',', ')}</p></div>` : ""),
 
     course: (item) => {
       const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
@@ -363,10 +364,10 @@ stir.templates.search = (() => {
             ${stir.templates.search.courseFact("Delivery", item.metaData.delivery, true)}
           </div>
           
+          ${preview ? renderFavsButton(item.metaData.sid) : ""}
+          
           ${stir.templates.search.combos(item)}
           ${stir.templates.search.pathways(item)}
-
-          ${preview ? renderFavsButton(item.metaData.sid) : ""}
         </div>
 			</div>`;
     },
@@ -379,26 +380,43 @@ stir.templates.search = (() => {
 				<p>${item.summary}</p>
 			</div>`,
 
-		person: (item) => {
-			return `
-				<div class=c-search-result data-result-type=person>
-					<div class=c-search-result__tags>
-						${stir.templates.search.stag(item.metaData.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.metaData.faculty) : "")}
-					</div>
-					<div class="flex-container flex-dir-column u-gap u-mt-1">
-						<p class="u-text-regular u-m-0"><strong>
-							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
-						</strong></p>
-						<div>${item.metaData.role || "<!-- Job title -->"}<br>${item.metaData.faculty || ""}</div>
-						<!-- <p>${item.metaData.c ? (item.metaData.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
-					</div>
-					${image(item.metaData.image, item.title.split(" | ")[0].trim(), 400, 400)}
-					<div class=c-search-result__footer>
-						${stir.funnelback.getTags(item.metaData.category) ? "<p><strong>Research interests</strong></p>" : ""}
-						<p>${stir.funnelback.getTags(item.metaData.category) || ""}</p>
-					</div>
-				</div>`;
-		},
+    person: (item) => {
+      return `
+			<div class=c-search-result data-result-type=person>
+				<div class=c-search-result__tags>
+					${stir.templates.search.stag(item.metaData.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.metaData.faculty) : "")}
+				</div>
+				<div class="flex-container flex-dir-column u-gap u-mt-1">
+					<p class="u-text-regular u-m-0"><strong>
+						<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
+					</strong></p>
+					<div>${item.metaData.role || "<!-- Job title -->"}<br>${item.metaData.faculty || ""}</div>
+					<!-- <p>${item.metaData.c ? (item.metaData.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
+				</div>
+				${image(item.metaData.image, item.title.split(" | ")[0].trim(), 400, 400)}
+				<div class=c-search-result__footer>
+					${stir.funnelback.getTags(item.metaData.category) ? "<p><strong>Research interests</strong></p>" : ""}
+					<p>${stir.funnelback.getTags(item.metaData.category) || ""}</p>
+				</div>
+			</div>`;
+    },
+	scholarship: (item) => {
+		return `
+		<div class="c-search-result" data-result-type=scholarship data-rank=${item.rank}>
+			<div class=c-search-result__tags>
+				${stir.templates.search.stag(item.metaData.level ? item.metaData.level : "")}
+			</div>
+			<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
+				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
+				<p>${item.summary.replace(/\xA0/g, " ")}</p>
+				<div class="c-search-result__meta grid-x">
+					${stir.templates.search.courseFact("Value", item.metaData.value, false)}
+					${stir.templates.search.courseFact("Number of awards", item.metaData.number, false)}
+					${stir.templates.search.courseFact("Fee status", item.metaData.status, false)}
+				</div>
+			</div>
+		</div>`;
+	},
 
 		studentstory: (item, trail) => {
 			return `

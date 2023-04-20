@@ -8,11 +8,11 @@ var stir = stir || {};
 stir.funnelback = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 
-	//const hostname = 'stage-shared-15-24-search.clients.uk.funnelback.com';
-	//const hostname = 'shared-15-24-search.clients.uk.funnelback.com';
-	const hostname = debug || UoS_env.name === "preview" ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
-	//const hostname = 'search.stir.ac.uk';
-	const url = `https://${hostname}/s/`;
+  //const hostname = 'stage-shared-15-24-search.clients.uk.funnelback.com';
+  //const hostname = 'shared-15-24-search.clients.uk.funnelback.com';
+  const hostname = debug || UoS_env.name === "preview" ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
+  //const hostname = "search.stir.ac.uk";
+  const url = `https://${hostname}/s/`;
 
 	const getJsonEndpoint = () => new URL("search.json", url);
 	const getScaleEndpoint = () => new URL("scale", url);
@@ -147,107 +147,108 @@ stir.search = () => {
 		return button;
 	};
 
-	const meta = {
-		main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tags", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage"],
-		courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
-		clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
-	};
+  const meta = {
+    main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tags", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage"],
+    courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
+    clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
+	scholarships: ["value","status","number"]
+  };
 
 	//console.info("Clearing is " + (CLEARING ? "open" : "closed"));
 	//console.info(meta.clearing);
 
-	const constants = {
-		url: stir.funnelback.getJsonEndpoint(),
-		form: document.querySelector("form.x-search-redevelopment"),
-		input: document.querySelector('form.x-search-redevelopment input[name="query"]'),
-		parameters: {
-			any: {
-				collection: "stir-main",
-				SF: `[${meta.main.concat(meta.clearing).join(",")}]`,
-				num_ranks: NUMRANKS,
-				query: "",
-				spelling: true,
-				explain: true,
-				sortall: true,
-				sort: "score_ignoring_tiers",
-				"cool.21": 0.9,
-			},
-			news: {
-				collection: "stir-www",
-				meta_type: "News",
-				meta_v_not: "faculty-news",
-				sort: "date",
-				fmo: "true",
-				SF: "[c,d,h1,image,imagealt,tags]",
-				num_ranks: NUMRANKS,
-				SBL: 450,
-			},
-			event: {
-				collection: "stir-events",
-				/* meta_type: 'Event', */
-				/* sort: 'metastartDate', */
-				/* meta_d1: stir.Date.funnelbackDate(new Date()), */
-				fmo: true,
-				SF: "[c,d,image,imagealt,startDate,venue,online,tags,type,register]",
-				query: "!padrenullquery",
-				num_ranks: NUMRANKS,
-			},
-			gallery: {
-				collection: "stir-www",
-				meta_type: "Gallery",
-				sort: "date",
-				fmo: "true",
-				SF: "[c,d,image]",
-				num_ranks: NUMRANKS,
-			},
-			course: {
-				collection: "stir-courses",
-				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
-				fmo: "true",
-				num_ranks: NUMRANKS,
-				explain: true,
-				query: "!padrenullquery",
-				timestamp: +new Date(),
-			},
-			coursemini: {
-				collection: "stir-courses",
-				SF: "[c,award,code,delivery,faculty,image,level,modes,sid,start,subject,teaser,ucas]",
-				num_ranks: 3,
-				curator: "off",
-				query: "!padrenullquery",
-			},
-			person: {
-				collection: "stir-research",
-				meta_type: "profile",
-				fmo: "true",
-				/* sort: "metalastname", */
-				SF: "[c,d,biogrgaphy,category,faculty,groups,image,imagealt,programme,role,themes]",
-				SM: "meta",
-				MBL: 350, // metadata buffer length
-				num_ranks: NUMRANKS,
-			},
-			research: {
-				collection: "stir-research",
-				SM: "meta",
-				SF: "[c,d,category,groups,output,programme,themes,type]",
-				MBL: 450, // metadata buffer length
-				num_ranks: NUMRANKS,
-			},
-		},
-		// extra parameters for no-query searches
-		noquery: {
-			course: {
-				sort: "title"	// if no keywords supplied, sort courses 
-				// by title instead of "relevance"
-				//		},
-				//		person: {
-				//			sort: "meta_surname"	//sort people by surname
-				//		},
-				//		event: {
-				//			sort: "adate"	// sort events by date descending 
-			}
-		}
-	};
+  const constants = {
+    url: stir.funnelback.getJsonEndpoint(),
+    form: document.querySelector("form.x-search-redevelopment"),
+    input: document.querySelector('form.x-search-redevelopment input[name="query"]'),
+    parameters: {
+      any: {
+        collection: "stir-main",
+        SF: `[${meta.main.concat(meta.clearing,meta.scholarships).join(",")}]`,
+        num_ranks: NUMRANKS,
+        query: "",
+        spelling: true,
+        explain: true,
+        sortall: true,
+        sort: "score_ignoring_tiers",
+        "cool.21": 0.9,
+      },
+      news: {
+        collection: "stir-www",
+        meta_type: "News",
+        meta_v_not: "faculty-news",
+        sort: "date",
+        fmo: "true",
+        SF: "[c,d,h1,image,imagealt,tags]",
+        num_ranks: NUMRANKS,
+        SBL: 450,
+      },
+      event: {
+        collection: "stir-events",
+        /* meta_type: 'Event', */
+        /* sort: 'metastartDate', */
+        /* meta_d1: stir.Date.funnelbackDate(new Date()), */
+        fmo: true,
+        SF: "[c,d,image,imagealt,startDate,venue,online,tags,type,register]",
+        query: "!padrenullquery",
+        num_ranks: NUMRANKS,
+      },
+      gallery: {
+        collection: "stir-www",
+        meta_type: "Gallery",
+        sort: "date",
+        fmo: "true",
+        SF: "[c,d,image]",
+        num_ranks: NUMRANKS,
+      },
+      course: {
+        collection: "stir-courses",
+        SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
+        fmo: "true",
+        num_ranks: NUMRANKS,
+        explain: true,
+        query: "!padrenullquery",
+        timestamp: +new Date(),
+      },
+      coursemini: {
+        collection: "stir-courses",
+        SF: "[c,award,code,delivery,faculty,image,level,modes,sid,start,subject,teaser,ucas]",
+        num_ranks: 3,
+        curator: "off",
+        query: "!padrenullquery",
+      },
+      person: {
+        collection: "stir-research",
+        meta_type: "profile",
+        fmo: "true",
+        /* sort: "metalastname", */
+        SF: "[c,d,biogrgaphy,category,faculty,groups,image,imagealt,programme,role,themes]",
+        SM: "meta",
+        MBL: 350, // metadata buffer length
+        num_ranks: NUMRANKS,
+      },
+      research: {
+        collection: "stir-research",
+        SM: "meta",
+        SF: "[c,d,category,groups,output,programme,themes,type]",
+        MBL: 450, // metadata buffer length
+        num_ranks: NUMRANKS,
+      },
+    },
+    // extra parameters for no-query searches
+    noquery: {
+      course: {
+        sort: "title", // if no keywords supplied, sort courses
+        // by title instead of "relevance"
+        //		},
+        //		person: {
+        //			sort: "meta_surname"	//sort people by surname
+        //		},
+        //		event: {
+        //			sort: "adate"	// sort events by date descending
+      },
+    },
+  };
 
 	if (!constants.form || !constants.form.query) return;
 	debug && console.info("[Search] initialised.");
