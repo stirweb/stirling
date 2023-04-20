@@ -2183,6 +2183,9 @@ stir.Number = {
   },
 };
 
+/**
+ * Library functions for Strings
+ */
 stir.String = {
   rot: function rot(s, i) {
     // modified for general rot# from
@@ -2219,72 +2222,86 @@ stir.String = {
     }
     return this;
   },
-  fixHtml: (function () {
-    /**
-     * fixHtml() is intended to fix broken/partial HTML strings coming from the
-     * Degree Program Tables (SSoCI) and possibly other short snippets of HTML.
-     * As a side-effect it could be used to strip out non-text content such as
-     * <script> tags, for example. Relies on three internal helper functions,
-     * domify(), wrapRawNodes() and removeEmptyElements().
-     */
-
-    /**
-     * Use the browser's DOM parser to make sense of the HTMLString, but away from the
-     * main DOM so we can make further adjustments. Returns an HTMLDocument's body element.
-     */
-    function domify(HTMLString) {
-      return new DOMParser().parseFromString(HTMLString, "text/html").body;
-    }
-
-    /**
-     * Wrap any raw (i.e. text content) nodes into <p> tags. This is immediate
-     * children only, not recursive.
-     */
-    function wrapRawNodes(DomEl) {
-      if (!DomEl || !DomEl.childNodes) return;
-      Array.prototype.forEach.call(DomEl.childNodes, function (node) {
-        if (3 === node.nodeType || "A" === node.nodeName) {
-          var p = document.createElement("p");
-          node.parentNode.insertBefore(p, node);
-          p.appendChild(node);
-        }
-      });
-      return DomEl;
-    }
-
-    /**
-     * SSoCI entries tend to have mismatched </p> tags which leads to
-     * empty <p></p> tag pairs. We'll strip them out:
-     */
-    function removeEmptyElements(DomEl) {
-      if (!DomEl || !DomEl.childNodes) return;
-      Array.prototype.forEach.call(DomEl.childNodes, function (node) {
-        if (1 === node.nodeType && "" === node.innerText) {
-          DomEl.removeChild(node);
-        }
-      });
-      return DomEl;
-    }
-
-    /**
-     * This is the only exposed function within fixHTML.
-     * @param dirtyString {String} This is the input HTML in string format.
-     * @param returnDomFrag {Boolean} return a DOM fragment instead of a string. Defaults to string.
-     */
-    return function fixHtml(dirtyString, returnDomFrag) {
-      var domNodes = removeEmptyElements(wrapRawNodes(domify(dirtyString)));
-      var frag = document.createDocumentFragment();
-      while (domNodes.firstChild) {
-        frag.appendChild(domNodes.firstChild);
-      }
-
-      domify();
-
-      return returnDomFrag ? frag : frag.textContent;
-    };
-  })(),
+  domify: (HTMLString) => new DOMParser().parseFromString(HTMLString, "text/html").body,
 };
 
+/**
+ * Additional String function
+ * Created separately because it refers to other stir.String helper functions.
+ */
+stir.String.fixHtml = (function () {
+	/**
+	 * fixHtml() is intended to fix broken/partial HTML strings coming from the
+	 * Degree Program Tables (SSoCI) and possibly other short snippets of HTML.
+	 * As a side-effect it could be used to strip out non-text content such as
+	 * <script> tags, for example. Relies on three internal helper functions,
+	 * domify(), wrapRawNodes() and removeEmptyElements().
+	 */
+
+	/**
+	 * Use the browser's DOM parser to make sense of the HTMLString, but away from the
+	 * main DOM so we can make further adjustments. Returns an HTMLDocument's body element.
+	 */
+	const domify = stir.String.domify;
+
+	/**
+	 * Wrap any raw (i.e. text content) nodes into <p> tags. This is immediate
+	 * children only, not recursive.
+	 */
+	function wrapRawNodes(DomEl) {
+		if (!DomEl || !DomEl.childNodes) return;
+		Array.prototype.forEach.call(DomEl.childNodes, function (node) {
+			if (3 === node.nodeType || "A" === node.nodeName) {
+				var p = document.createElement("p");
+				node.parentNode.insertBefore(p, node);
+				p.appendChild(node);
+			}
+		});
+		return DomEl;
+	}
+
+	/**
+	 * SSoCI entries tend to have mismatched </p> tags which leads to
+	 * empty <p></p> tag pairs. We'll strip them out:
+	 */
+	function removeEmptyElements(DomEl) {
+		if (!DomEl || !DomEl.childNodes) return;
+		Array.prototype.forEach.call(DomEl.childNodes, function (node) {
+			if (1 === node.nodeType && "" === node.innerText) {
+				DomEl.removeChild(node);
+			}
+		});
+		return DomEl;
+	}
+
+	/**
+	 * This is the only exposed function within fixHTML.
+	 * @param dirtyString {String} This is the input HTML in string format.
+	 * @param returnDomFrag {Boolean} return a DOM fragment instead of a string. Defaults to string.
+	 */
+	return function fixHtml(dirtyString, returnDomFrag) {
+		var domNodes = removeEmptyElements(wrapRawNodes(domify(dirtyString)));
+		var frag = stir.DOM.frag(domNodes);
+		return returnDomFrag ? frag : frag.textContent;
+	};
+})();
+
+/**
+ * Library functions for working with the DOM
+ */
+stir.DOM = {
+	frag: (nodes) => {
+	  const frag = document.createDocumentFragment();
+	  while (nodes.firstChild) {
+		  frag.appendChild(nodes.firstChild);
+	  }
+	  return frag;
+	}
+};
+
+/**
+ * Library functions for working with Arrays
+ */
 stir.Array = {
   oxfordComma: function oxfordComma(items, oxford, adjoiner) {
     var nonEmptyItems = items.filter((item) => item);
@@ -2296,6 +2313,9 @@ stir.Array = {
   },
 };
 
+/**
+ * Library functions for working with Objects
+ */
 stir.Object = {
   extend: function extend(out) {
     out = out || {};
@@ -6257,8 +6277,10 @@ stir.Dialog = function Dialog(element_) {
     ON LOAD   
   */
 
-  /* Dialog support??? */
+  if (!modals_ && !dialogs) return;
+
   if (stir.node("dialog")) {
+    /* Dialog support??? */
     typeof HTMLDialogElement === "function" ? initDialogs(dialogs) : dialogFallback(dialogs);
   }
 
