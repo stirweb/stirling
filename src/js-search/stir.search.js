@@ -370,6 +370,7 @@ stir.search = () => {
 	});
 
 	const updateFacets = stir.curry((type, data) => {
+		if(!debug) return data;
 		const form = document.querySelector(`form[data-filters="${type}"]`);
 		if(form) {
 			//Array.prototype.slice.call(form.querySelectorAll('fieldset')).forEach(fieldset=>fieldset.parentElement.removeChild(fieldset));
