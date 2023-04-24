@@ -3988,9 +3988,8 @@ stir.Favs = function Favs() {
   };
 
   const renderInactiveIcon = () => {
-    return `<svg version="1.1" data-stiricon="heart-active" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;width:22px;height:22px;" xml:space="preserve">
+    return `<svg version="1.1" data-stiricon="heart-active" fill="currentColor"
+                  viewBox="0 0 50 50" style="width:22px;height:22px;" >
                <g id="Layer_1_00000157273399641228684280000005207056774539682203_">
                  <g id="icons">
                  </g>
@@ -4003,9 +4002,8 @@ stir.Favs = function Favs() {
   };
 
   const renderActiveIcon = () => {
-    return `<svg version="1.1" data-stiricon="heart-inactive" xmlns="http://www.w3.org/2000/svg" fill="currentColor" 
-              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
-              style="enable-background:new 0 0 50 50;width:22px;height:22px;" xml:space="preserve">
+    return `<svg version="1.1" data-stiricon="heart-inactive"  fill="currentColor" 
+               viewBox="0 0 50 50" style="width:22px;height:22px;" >
               <g id="Layer_1_00000157273399641228684280000005207056774539682203_">
                 <g id="icons">
                 </g>
