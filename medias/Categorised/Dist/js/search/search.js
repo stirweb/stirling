@@ -399,7 +399,7 @@ stir.templates.search = (() => {
 		return `
 		<div class="c-search-result" data-result-type=scholarship data-rank=${item.rank}>
 			<div class=c-search-result__tags>
-				${stir.templates.search.stag(item.metaData.level ? item.metaData.level : "")}
+				${stir.templates.search.stag(item.metaData.level ? `Scholarship: ${item.metaData.level.toLowerCase()}` : "")}
 			</div>
 			<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
