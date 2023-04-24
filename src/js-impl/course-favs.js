@@ -78,7 +78,7 @@ stir.Favs = function Favs() {
   };
 
   const renderNoFavs = () => `<p>Nothing saved here yet. <a href="/courses/">View courses</a> and add them to your favourites. </p>`;
-  const renderNoShared = () => `<div class="cell"><p>No courses shared</p></div>`;
+  const renderNoShared = () => `<div class="cell"><p>No courses have been shared with you.</p><p><a href="/courses/">Main course search</a></p></div>`;
   const renderLinkToFavs = () => `<hr><p class="text-sm u-arrow"><a href="/courses/favourites/">Manage my favourites</a></p>`;
 
   const renderFavActionBtns = () => {
