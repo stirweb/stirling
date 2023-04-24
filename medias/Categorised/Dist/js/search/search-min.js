@@ -94,7 +94,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 			</div>`,scholarship:e=>`
 		<div class="c-search-result" data-result-type=scholarship data-rank=${e.rank}>
 			<div class=c-search-result__tags>
-				${stir.templates.search.stag(e.metaData.level||"")}
+				${stir.templates.search.stag(e.metaData.level?"Scholarship: "+e.metaData.level.toLowerCase():"")}
 			</div>
 			<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin+e.clickTrackingUrl}">${e.title.split("|")[0].trim().replace(/\xA0/g," ")}</a></strong></p>

@@ -3958,7 +3958,7 @@ stir.Favs = function Favs() {
 
   const renderRemoveBtn = (sid, dateSaved) => {
     return ` 
-        <button class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" data-action="removefav" data-id="${sid}">
+        <button class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
             ${renderActiveIcon()}
         </button>
         <span>Favourited ${getDaysAgo(new Date(dateSaved))}</span>`;
@@ -3968,7 +3968,7 @@ stir.Favs = function Favs() {
     return ` 
           <button
               class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap align-middle"
-              data-action="addtofavs" data-id="${sid}">
+              data-action="addtofavs" aria-label="Add to favourites" data-id="${sid}">
               ${renderInactiveIcon()}
               <span class="u-heritage-green u-underline u-inline-block u-pb-1">Add
                   to your favourites</span>
@@ -3976,19 +3976,19 @@ stir.Favs = function Favs() {
   };
 
   const renderNoFavs = () => `<p>Nothing saved here yet. <a href="/courses/">View courses</a> and add them to your favourites. </p>`;
-  const renderNoShared = () => `<div class="cell"><p>No courses shared</p></div>`;
+  const renderNoShared = () => `<div class="cell"><p>No courses have been shared with you.</p><p><a href="/courses/">Main course search</a></p></div>`;
   const renderLinkToFavs = () => `<hr><p class="text-sm u-arrow"><a href="/courses/favourites/">Manage my favourites</a></p>`;
 
   const renderFavActionBtns = () => {
     return `
         <div class="u-mb-3 ">
-          <button class="u-border-solid u-p-1  u-cursor-pointer u-mt-1 " data-action="clearallfavs">Clear favourites</button>
-          <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-opendialog="shareDialog" data-action="copysharelink">Generate share link</button>
+          <button class="u-border-solid u-p-1  u-cursor-pointer u-mt-1 " aria-label="Clear favourites" data-action="clearallfavs">Clear favourites</button>
+          <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-opendialog="shareDialog" aria-label="Generate share link" data-action="copysharelink">Generate share link</button>
         </div>`;
   };
 
   const renderInactiveIcon = () => {
-    return `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+    return `<svg version="1.1" data-stiricon="heart-active" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
               xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                   viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;width:22px;height:22px;" xml:space="preserve">
                <g id="Layer_1_00000157273399641228684280000005207056774539682203_">
@@ -4003,7 +4003,7 @@ stir.Favs = function Favs() {
   };
 
   const renderActiveIcon = () => {
-    return `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" 
+    return `<svg version="1.1" data-stiricon="heart-inactive" xmlns="http://www.w3.org/2000/svg" fill="currentColor" 
               xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
               style="enable-background:new 0 0 50 50;width:22px;height:22px;" xml:space="preserve">
               <g id="Layer_1_00000157273399641228684280000005207056774539682203_">
