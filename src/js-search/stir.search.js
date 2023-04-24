@@ -251,7 +251,7 @@ stir.search = () => {
   };
 
 	if (!constants.form || !constants.form.query) return;
-	debug && console.info("[Search] initialised.");
+	debug && console.info("[Search] initialised with host:", constants.url.hostname);
 
   const getQuery = (type) => constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
 
@@ -444,7 +444,6 @@ stir.search = () => {
 		);
 		//TODO if type==course and query=='!padrenullquery' then sort=title
 		const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
-		debug && console.info('[Search] URL:', url);
 		debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
 	});
 

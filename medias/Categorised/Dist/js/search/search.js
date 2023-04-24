@@ -106,7 +106,6 @@ stir.templates.search = (() => {
    */
   const metaParamTokens = (tokens) => {
     const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
-
     return metas
       .map((key) => {
         // does the name and value match a DOM element?
@@ -130,6 +129,19 @@ stir.templates.search = (() => {
       })
       .join(" ");
   };
+
+  	/**
+	 * 
+	 * @param {Array} facets 
+	 * @returns {String} HTML click-to-dismiss "tokens"
+	 */
+  	const facetTokens = (facets) =>
+		facets.map((facet) => facet.selectedValues.map(value=>paramToken(value.queryStringParamName, value.queryStringParamValue)).join(' ')).join(' ');
+
+	const paramToken = (name, value) => {
+		const el = metaParamElement(name, value);
+		if (el) return tag(Array.prototype.slice.call((el.parentElement.childNodes)).map(node=>node.nodeType===3?node.textContent:'').join(''), name, value);
+	}
 
 	const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
 
@@ -234,7 +246,7 @@ stir.templates.search = (() => {
         .trim();
       const queryEcho = querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
       const message = totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`;
-      const tokens = metaParamTokens(data.question.rawInputParameters);
+      const tokens = [metaParamTokens(data.question.rawInputParameters),facetTokens(data.response.facets||[])].join(' ');
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
       return `<div class="u-py-2"> ${message} ${tokens} ${spelling} </div>`;
     },
@@ -1233,7 +1245,7 @@ stir.search = () => {
   };
 
 	if (!constants.form || !constants.form.query) return;
-	debug && console.info("[Search] initialised.");
+	debug && console.info("[Search] initialised with host:", constants.url.hostname);
 
   const getQuery = (type) => constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
 
@@ -1426,7 +1438,6 @@ stir.search = () => {
 		);
 		//TODO if type==course and query=='!padrenullquery' then sort=title
 		const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
-		debug && console.info('[Search] URL:', url);
 		debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
 	});
 
