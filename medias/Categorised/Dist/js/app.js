@@ -3938,7 +3938,7 @@ stir.Favs = function Favs() {
       : `
         <div class="c-search-result" data-rank="" data-sid="${item.metaData.sid}" data-result-type="course">
             <div class=" c-search-result__tags">
-                <span class="c-search-tag">${item.metaData.level.replace("module", "CPD module")}</span>
+                <span class="c-search-tag">${item.metaData.level.replace("module", "CPD and short courses")}</span>
             </div>
 
             <div class="flex-container flex-dir-column u-gap u-mt-1">
