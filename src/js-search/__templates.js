@@ -41,8 +41,9 @@ stir.templates.search = (() => {
     if (trail && trail.length > 0) {
       return stir.templates.search.breadcrumb(stir.templates.search.trailstring(trail));
     }
-    if (isDocUrl(liveUrl)) return `Document: ${isDocUrl(liveUrl)} <small>${stir.Math.fileSize(fileSize || 0, 0)}</small>`;
-
+    if (isDocUrl(liveUrl)) {
+      return `Document: ${isDocUrl(liveUrl)} <small>${stir.Math.fileSize(fileSize || 0, 0)}</small>`;
+    }
     return "";
   };
 
@@ -88,7 +89,6 @@ stir.templates.search = (() => {
    */
   const metaParamTokens = (tokens) => {
     const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
-
     return metas
       .map((key) => {
         // does the name and value match a DOM element?
@@ -113,6 +113,26 @@ stir.templates.search = (() => {
       .join(" ");
   };
 
+  /**
+   *
+   * @param {Array} facets
+   * @returns {String} HTML click-to-dismiss "tokens"
+   */
+  const facetTokens = (facets) => facets.map((facet) => facet.selectedValues.map((value) => paramToken(value.queryStringParamName, value.queryStringParamValue)).join(" ")).join(" ");
+
+  const paramToken = (name, value) => {
+    const el = metaParamElement(name, value);
+    if (el)
+      return tag(
+        Array.prototype.slice
+          .call(el.parentElement.childNodes)
+          .map((node) => (node.nodeType === 3 ? node.textContent : ""))
+          .join(""),
+        name,
+        value
+      );
+  };
+
   const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
 
   const courseLabel = (input) => {
@@ -131,13 +151,13 @@ stir.templates.search = (() => {
 
     const url = image.indexOf("|") > -1 ? image.split("|")[1] || image.split("|")[0] : image;
     return `<div class=c-search-result__image>
-		${stir.funnelback.getCroppedImageElement({
-      url: url.trim(),
-      alt: alt || "",
-      width: width || 550,
-      height: height || 550,
-    })}
-		</div>`;
+			${stir.funnelback.getCroppedImageElement({
+        url: url.trim(),
+        alt: alt || "",
+        width: width || 550,
+        height: height || 550,
+      })}
+			</div>`;
   };
 
   const flickrUrl = (flickr) => (flickr.id ? `https://farm${flickr.farm}.staticflickr.com/${flickr.server}/${flickr.id}_${flickr.secret}_c.jpg` : "");
@@ -171,6 +191,27 @@ stir.templates.search = (() => {
           </div>`;
   };
 
+  const facetDisplayTypes = {
+    SINGLE_DRILL_DOWN: undefined,
+    CHECKBOX: "checkbox",
+    RADIO_BUTTON: "radio",
+    TAB: undefined,
+    UNKNOWN: undefined,
+  };
+
+  const months = {
+    "01": "January",
+    "02": "February",
+    "05": "May",
+    "08": "August",
+    "09": "September",
+    10: "October",
+  };
+
+  const readableDate = (date) => months[date.split("-").pop()] + " " + date.split("-").shift();
+
+  const facetCategoryLabel = (label) => (label.indexOf("ay") === 7 ? readableDate(label.split("ay").shift()) : label);
+
   /**
    * PUBLIC members that can be called externally.
    * Principally for `stir.search` but could be reused elsewhere.
@@ -195,7 +236,7 @@ stir.templates.search = (() => {
         .trim();
       const queryEcho = querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
       const message = totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`;
-      const tokens = metaParamTokens(data.question.rawInputParameters);
+      const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
       return `<div class="u-py-2"> ${message} ${tokens} ${spelling} </div>`;
     },
@@ -238,14 +279,14 @@ stir.templates.search = (() => {
       if (item.metaData.type && item.metaData.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item, trail);
 
       return `
-			<div class="c-search-result" data-rank=${item.rank}${item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : ""}${item.metaData.access ? ' data-access="' + item.metaData.access + '"' : ""}>
-				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-					${label}
-					${makeBreadcrumbs(trail, item.liveUrl, item.fileSize)}
-					<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
-					<p >${item.summary.replace(/\xA0/g, " ")}</p>
-				</div>
-			</div>`;
+				<div class="c-search-result" data-rank=${item.rank}${item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : ""}${item.metaData.access ? ' data-access="' + item.metaData.access + '"' : ""}>
+					<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
+						${label}
+						${makeBreadcrumbs(trail, item.liveUrl, item.fileSize)}
+						<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
+						<p >${item.summary.replace(/\xA0/g, " ")}</p>
+					</div>
+				</div>`;
     },
     internal: (item) => {
       const crumbs = {
@@ -280,16 +321,16 @@ stir.templates.search = (() => {
       return item.combos.length === 0
         ? ""
         : `
-			<div class="combo-accordion" data-behaviour=accordion>
-				<accordion-summary>Course combinations</accordion-summary>
-				<div>
-					<p>${item.title} can be combined with:</p>
-					<ul class="u-columns-2">
-						${item.combos.map(stir.templates.search.combo).join("")}
-					</ul>
-					${item.combos.map(clearingTest).indexOf(true) >= 0 ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>' : ""}
-				</div>
-			</div>`;
+				<div class="combo-accordion" data-behaviour=accordion>
+					<accordion-summary>Course combinations</accordion-summary>
+					<div>
+						<p>${item.title} can be combined with:</p>
+						<ul class="u-columns-2">
+							${item.combos.map(stir.templates.search.combo).join("")}
+						</ul>
+						${item.combos.map(clearingTest).indexOf(true) >= 0 ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>' : ""}
+					</div>
+				</div>`;
     },
 
     pathways: (item) => {
@@ -298,18 +339,18 @@ stir.templates.search = (() => {
       return paths === 0
         ? ""
         : `
-			<div class="combo-accordion" data-behaviour=accordion>
-				<accordion-summary>Course pathways</accordion-summary>
-				<div>
-					<p>${item.title} has the following optional pathways:</p>
-					<ul class="u-columns-2">
-						${paths.map((path) => `<li>${path}</li>`).join("\n\t")}
-					</ul>
-				</div>
-			</div>`;
+				<div class="combo-accordion" data-behaviour=accordion>
+					<accordion-summary>Course pathways</accordion-summary>
+					<div>
+						<p>${item.title} has the following optional pathways:</p>
+						<ul class="u-columns-2">
+							${paths.map((path) => `<li>${path}</li>`).join("\n\t")}
+						</ul>
+					</div>
+				</div>`;
     },
 
-    courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace('|',', ')}</p></div>` : ""),
+    courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace("|", ", ")}</p></div>` : ""),
 
     course: (item) => {
       const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
@@ -326,7 +367,7 @@ stir.templates.search = (() => {
 					<span class="c-search-tag">${courseLabel(item.metaData.level || item.metaData.type || "")}</span>
 				</div>
 
-        <div class="flex-container flex-dir-column u-gap u-mt-1">
+        <div class="flex-container flex-dir-column u-gap u-mt-1 ">
           <p class="u-text-regular u-m-0">
             <strong><a href="${link}" title="${item.liveUrl}">
             ${item.metaData.award || ""} ${item.title}
@@ -342,7 +383,7 @@ stir.templates.search = (() => {
             ${stir.templates.search.courseFact("Delivery", item.metaData.delivery, true)}
           </div>
           
-          ${preview ? renderFavsButton(item.metaData.sid) : ""}
+          ${renderFavsButton(item.metaData.sid)}
           
           ${stir.templates.search.combos(item)}
           ${stir.templates.search.pathways(item)}
@@ -351,12 +392,12 @@ stir.templates.search = (() => {
     },
 
     coursemini: (item) => `
-		<div>
-			<p><strong><a href="${FB_BASE() + item.clickTrackingUrl}" title="${item.liveUrl}" class="u-border-none">
-				${item.metaData.award || ""} ${item.title} ${item.metaData.ucas ? " - " + item.metaData.ucas : ""} ${item.metaData.code ? " - " + item.metaData.code : ""}
-			</a></strong></p>
-			<p>${item.summary}</p>
-		</div>`,
+			<div>
+				<p><strong><a href="${FB_BASE() + item.clickTrackingUrl}" title="${item.liveUrl}" class="u-border-none">
+					${item.metaData.award || ""} ${item.title} ${item.metaData.ucas ? " - " + item.metaData.ucas : ""} ${item.metaData.code ? " - " + item.metaData.code : ""}
+				</a></strong></p>
+				<p>${item.summary}</p>
+			</div>`,
 
     person: (item) => {
       return `
@@ -378,8 +419,8 @@ stir.templates.search = (() => {
 				</div>
 			</div>`;
     },
-	scholarship: (item) => {
-		return `
+    scholarship: (item) => {
+      return `
 		<div class="c-search-result" data-result-type=scholarship data-rank=${item.rank}>
 			<div class=c-search-result__tags>
 				${stir.templates.search.stag(item.metaData.level ? `Scholarship: ${item.metaData.level.toLowerCase()}` : "")}
@@ -394,63 +435,60 @@ stir.templates.search = (() => {
 				</div>
 			</div>
 		</div>`;
-	},
+    },
 
     studentstory: (item, trail) => {
       return `
-	  	<div class=c-search-result data-result-type=studentstory>
-	  		<div ><a href="${trail[0].href}">${trail[0].text}</a></div>
-		  	<div class="c-search-result__body flex-container flex-dir-column u-gap ">
-				<p class="u-text-regular u-m-0"><strong>
-				  	<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
-			  	</strong></p>
-			  	<p class="u-m-0">${item.metaData.profileCourse1}<br />
-			  	${item.metaData.profileCountry}</p>
-			  	<p>${item.metaData.c}</p>
-			</div>
-		  ${image("https://www.stir.ac.uk" + item.metaData.profileImage, item.title.split(" | ")[0].trim(), 400, 400)}
-	  	</div>`;
+				<div class=c-search-result data-result-type=studentstory>
+					<div><a href="${trail[0].href}">${trail[0].text}</a></div>
+					<div class="c-search-result__body flex-container flex-dir-column u-gap ">
+						<p class="u-text-regular u-m-0"><strong>
+							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
+						</strong></p>
+						<p class="u-m-0">${item.metaData.profileCourse1}<br />
+						${item.metaData.profileCountry}</p>
+						<p>${item.metaData.c}</p>
+					</div>
+					${image("https://www.stir.ac.uk" + item.metaData.profileImage, item.title.split(" | ")[0].trim(), 400, 400)}
+				</div>`;
     },
 
     news: (item) => {
       return `
-			<div class="c-search-result${item.metaData.image ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
-				
-				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
-					<p class="u-text-regular u-m-0">
-            <strong>
-						  <a href="${FB_BASE() + item.clickTrackingUrl}">${item.metaData.h1 || item.title.split(" | ")[0].trim()}</a>
-					  </strong>
-          </p>
-          <div >
-							${item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d)) : ""}
+				<div class="c-search-result${item.metaData.image ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
+					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
+						<p class="u-text-regular u-m-0">
+							<strong>
+								<a href="${FB_BASE() + item.clickTrackingUrl}">${item.metaData.h1 || item.title.split(" | ")[0].trim()}</a>
+							</strong>
+						</p>
+						<div>${item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d)) : ""}</div>
+						<p class="text-sm">${item.summary}</p>
 					</div>
-					<p class="text-sm">${item.summary}</p>
-				</div>
-				${image(item.metaData.image, item.title.split(" | ")[0].trim())}
-			</div>`;
+					${image(item.metaData.image, item.title.split(" | ")[0].trim())}
+				</div>`;
     },
 
     gallery: (item) => {
       return `
-			<div class="c-search-result c-search-result__with-thumbnail" data-rank=${item.rank} data-result-type=news>
-				
-				<div class=c-search-result__body>
-					<p class="u-text-regular u-m-0"><strong>
-						<a href="${FB_BASE() + item.clickTrackingUrl}">${item.metaData.h1 || item.title.split(" | ")[0].trim()}</a>
-					</strong></p>
-					<p class="c-search-result__secondary">${stir.Date.newsDate(new Date(item.metaData.d))}</p>
-					<p >${item.summary}</p>	
-				</div>
-				<div class=c-search-result__image>
-					${stir.funnelback.getCroppedImageElement({
-            url: flickrUrl(JSON.parse(item.metaData.custom)),
-            alt: `Image of ${item.title.split(" | ")[0].trim()}`,
-            width: 550,
-            height: 550,
-          })}
-				</div>
-			</div>`;
+				<div class="c-search-result c-search-result__with-thumbnail" data-rank=${item.rank} data-result-type=news>
+					
+					<div class=c-search-result__body>
+						<p class="u-text-regular u-m-0"><strong>
+							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.metaData.h1 || item.title.split(" | ")[0].trim()}</a>
+						</strong></p>
+						<p class="c-search-result__secondary">${stir.Date.newsDate(new Date(item.metaData.d))}</p>
+						<p >${item.summary}</p>	
+					</div>
+					<div class=c-search-result__image>
+						${stir.funnelback.getCroppedImageElement({
+              url: flickrUrl(JSON.parse(item.metaData.custom)),
+              alt: `Image of ${item.title.split(" | ")[0].trim()}`,
+              width: 550,
+              height: 550,
+            })}
+					</div>
+				</div>`;
     },
 
     event: (item) => {
@@ -499,36 +537,45 @@ stir.templates.search = (() => {
     },
 
     research: (item) => `
-		<div class="c-search-result" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""}>
-			<div>
-				<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
-				<div class="flex-container flex-dir-column u-gap u-mt-1">
-					<p class="u-text-regular u-m-0"><strong>
-						<a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">
-							${item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title}
-						</a>
-					</strong></p>
-					${stir.String.stripHtml(item.metaData.c || "") ? `<div class="text-sm">` + stir.String.stripHtml(item.metaData.c || "") + `</div>` : ""}
-          ${stir.funnelback.getTags(item.metaData.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.metaData.category) + `</div>` : ""}
-        </div>
-				<!-- p>12344</ -->
-			</div>
-		</div>`,
+			<div class="c-search-result" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""}>
+				<div>
+					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
+					<div class="flex-container flex-dir-column u-gap u-mt-1">
+						<p class="u-text-regular u-m-0"><strong>
+							<a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">
+								${item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title}
+							</a>
+						</strong></p>
+						${stir.String.stripHtml(item.metaData.c || "") ? `<div class="text-sm">` + stir.String.stripHtml(item.metaData.c || "") + `</div>` : ""}
+						${stir.funnelback.getTags(item.metaData.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.metaData.category) + `</div>` : ""}
+					</div>
+				</div>
+			</div>`,
 
     cura: (item) =>
       !item.messageHtml
         ? `<div class="c-search-result" data-result-type=curated>
-				<div class=c-search-result__body>
-					<p class="c-search-result__breadcrumb">${item.displayUrl}</p>
-					<p class="u-text-regular u-m-0"><strong>
-						<a href="${FB_BASE() + item.linkUrl}" title="${item.displayUrl}">${item.titleHtml}</a>
-					</strong></p>
-					<p >${item.descriptionHtml}</p>
-					<!-- <pre>${JSON.stringify(item, null, "\t")}</pre> -->
-				</div>
-			</div>`
+					<div class=c-search-result__body>
+						<p class="c-search-result__breadcrumb">${item.displayUrl}</p>
+						<p class="u-text-regular u-m-0"><strong>
+							<a href="${FB_BASE() + item.linkUrl}" title="${item.displayUrl}">${item.titleHtml}</a>
+						</strong></p>
+						<p >${item.descriptionHtml}</p>
+						<!-- <pre>${JSON.stringify(item, null, "\t")}</pre> -->
+					</div>
+				</div>`
         : `<div class="c-search-result-curated" data-result-type=curated-message>
-				${item.messageHtml}
-			</div>`,
+					${item.messageHtml}
+				</div>`,
+    facet: (item) =>
+      `<fieldset data-facet="${item.name}">
+				<legend class="show-for-sr">Filter by ${item.name}</legend>
+				<div data-behaviour=accordion>
+					<accordion-summary>${item.name}</accordion-summary>
+					<div>
+						<ul>${item.allValues.map((batman) => `<li><label><input type=${facetDisplayTypes[item.guessedDisplayType] || "text"} name="${batman.queryStringParamName}" value="${batman.queryStringParamValue}" ${batman.selected ? "checked" : ""}>${facetCategoryLabel(batman.label)} <span>${batman.count ? batman.count : "0"}</span></label></li>`).join("")}</ul>
+					</div>
+				</div>
+			</fieldset>`,
   };
 })();

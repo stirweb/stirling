@@ -35,16 +35,18 @@
 	<link rel="manifest" href="/manifest.json">
 	<meta name="theme-color" content="#006938">
 
-	<link rel="preload" href="../../../medias/Categorised/Dist/fonts/fsmaja/FSMajaWeb-Regular.woff?v=1.0" as="font" type="font/woff" crossorigin>
-	<link rel="preload" href="../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Regular.ttf?v=1.0" as="font" type="font/ttf" crossorigin />
-	<link rel="preload" href="../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf?v=1.0" as="font" type="font/ttf" crossorigin />
-	<link rel="preload" href="../../../medias/Categorised/Dist/fonts/fonts.css?v=3.0" as="style"> 
-	<link rel="stylesheet" href="../../../medias/Categorised/Dist/fonts/fonts.css?v=3.0" type="text/css">
-	<link rel="preload" href="../../../medias/Categorised/Dist/css/app.min.css?v=5.0" as="style" />
-	<link rel="stylesheet" href="../../../medias/Categorised/Dist/css/app.min.css?v=5.0" type="text/css" />
+	
+		   <link rel="preload" href="/medias/Categorised/Dist/fonts/fsmaja/FSMajaWeb-Regular.woff?v=1.0" as="font" type="font/woff" crossorigin>
+	   <link rel="preload" href="/medias/Categorised/Dist/fonts/open-sans/OpenSans-Regular.ttf?v=1.0" as="font" type="font/ttf" crossorigin />
+	   <link rel="preload" href="/medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf?v=1.0" as="font" type="font/ttf" crossorigin />
+	<link rel="preload" href="/medias/Categorised/Dist/fonts/fonts.css?v=3.0" as="style"> 
+	<link rel="stylesheet" href="/medias/Categorised/Dist/fonts/fonts.css?v=3.0" type="text/css">
 
+	<link rel="preload"     href="/medias/Categorised/Dist/css/app.min.css?v=5.0" as="style" />
+<link rel="stylesheet" href="/medias/Categorised/Dist/css/app.min.css?v=5.0" type="text/css" />
+   
 
-
+	
 
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -54,7 +56,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 <style>
-	form[data-filters] label>span { 
+	form[data-filters] label>span:last-of-type { 
 		margin-left: auto;
 		background: #14315e;
 		color: white;
@@ -202,7 +204,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 				<div class="grid-container">
 				 <div class="grid-x grid-padding-x"> 
 					  <div class="cell large-4 medium-4 small-8" >
-	   <a href="/" title="University of Stirling"><img src="../../../medias/Categorised/Dist/css/images/logos/logo.svg?v=1.0"  alt="University of Stirling logo" class="c-site-logo" ></a>
+	   <a href="/" title="University of Stirling"><img src="/medias/Categorised/Dist/css/images/logos/logo.svg?v=1.0"  alt="University of Stirling logo" class="c-site-logo" ></a>
 </div>
 
 					  	<nav aria-label="primary" class="cell large-8 medium-8 small-4 flex-container align-right">
@@ -371,7 +373,7 @@ Courses Panel
 		<div>
 			<form data-filters=course action=null>
 			  
-				<fieldset>	
+				<fieldset data-facet=Level>	
 				  <legend class="show-for-sr">Filter by level</legend>
 				  <div class="stir-accordion--active" data-behaviour=accordion>
 					<accordion-summary>Level</accordion-summary>
@@ -391,7 +393,7 @@ Courses Panel
 				  </div>
 				</fieldset>
 				
-			  	<fieldset>
+			  	<fieldset data-facet=Subject>
 				  <legend class="show-for-sr">Filter by subject</legend>
 				  <div data-behaviour=accordion>
 					<accordion-summary data-containtns>Subject</accordion-summary>
@@ -473,39 +475,31 @@ Courses Panel
 				  </div>
 				</fieldset>
 			  
-				<fieldset>
-				  <legend class="show-for-sr">Filter by subject</legend>
+				<fieldset data-facet="Study mode">
+				  <legend class="show-for-sr">Filter by study mode</legend>
 				  <div data-behaviour=accordion>
 					<accordion-summary>Study mode</accordion-summary>
 					<div>
- 
 						<ul>
-							<li><label><input name=meta_modes type=checkbox
-										value="full">Full time</label></li>
-							<li><label><input name=meta_modes type=checkbox
-										value="part">Part time</label></li>
+							<li><label><input name=meta_modes type=checkbox value=full>Full time</label></li>
+							<li><label><input name=meta_modes type=checkbox value=part>Part time</label></li>
 						</ul>
-						
 					</div>
 				  </div>
 				</fieldset>
 			  	
-			  	<fieldset>
-				  <legend class="show-for-sr">Filter by delivery</legend>
-				  <div data-behaviour=accordion>
-					<accordion-summary>Delivery</accordion-summary>
-					<div>
-						<ul>
-							<li><label><input name=meta_delivery type=checkbox
-										value="campus">On campus</label></li>
-							<li><label><input name=meta_delivery type=checkbox
-										value="online">Online</label></li>
-							<li><label><input name=meta_delivery type=checkbox
-										value="hybrid">Hybrid</label></li>
-						</ul>
-						
+			  	<fieldset data-facet="Delivery mode">
+					<legend class="show-for-sr">Filter by delivery</legend>
+					<div data-behaviour=accordion>
+						<accordion-summary>Delivery</accordion-summary>
+						<div>
+							<ul>
+								<li><label><input name=meta_delivery type=checkbox value=campus>On campus</label></li>
+								<li><label><input name=meta_delivery type=checkbox value=online>Online</label></li>
+								<li><label><input name=meta_delivery type=checkbox value=hybrid>Hybrid</label></li>
+							</ul>
+						</div>
 					</div>
-				  </div>
 				</fieldset>
 				
 			  	<fieldset>
@@ -521,30 +515,29 @@ Courses Panel
 						<!-- <p><strong>2022/23</strong></p> -->
 					  
 						<ul>
-						  <li><label><input name="meta_startval" type="checkbox" value="2023-05AY2022-23">May 2023</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2023-06AY2023-24">June 2023</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2023-08AY2023-24">August 2023</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2023-09AY2023-24">September 2023</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2023-10AY2023-24">October 2023</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2024-01AY2023-24">January 2024</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2024-02AY2023-24">February 2024</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2024-05AY2023-24">May 2024</label></li>
-<li><label><input name="meta_startval" type="checkbox" value="2024-06AY2023-24">June 2024</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2023-05AY2022-23">May 2023</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2023-06AY2023-24">June 2023</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2023-08AY2023-24">August 2023</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2023-09AY2023-24">September 2023</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2023-10AY2023-24">October 2023</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2024-01AY2023-24">January 2024</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2024-02AY2023-24">February 2024</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2024-05AY2023-24">May 2024</label></li>
+							<li><label><input name="meta_startval" type="checkbox" value="2024-06AY2023-24">June 2024</label></li>
 							<!-- <li><label><input name=meta_startval type=checkbox value="2022-08">August 2022</label></li>
 							<li><label><input name=meta_startval type=checkbox value="2022-09">September 2022</label></li>
 							<li><label><input name=meta_startval type=checkbox value="2022-10">October 2022</label></li>
 							<li><label><input name=meta_startval type=checkbox value="2023-01">January 2023</label></li>
 							<li><label><input name=meta_startval type=checkbox value="2023-02">February 2023</label></li>
 							<li><label><input name=meta_startval type=checkbox value="2023-05">May 2023</label></li>-->
-						 <li><label><input name=meta_startval type=checkbox                                                                    value="Other">Other</label></li>
-					
+							<li><label><input name=meta_startval type=checkbox value=Other>Other</label></li>
 						</ul>
 				
 					</div>
 				  </div>
 			  	</fieldset>
 				
-			  	<fieldset>
+			  	<fieldset data-facet=Faculty>
 				  <legend class="show-for-sr">Filter by faculty</legend>
 				  <div data-behaviour=accordion>
 					<accordion-summary>Faculty</accordion-summary>
@@ -613,7 +606,7 @@ Courses Panel
 				</div>
 				<figure class="site-footer__map">
 					<a href="/about/getting-here/">
-						<img src="../../../medias/Categorised/Dist/css/images/maps/footer-map-scotland.svg?v=1.0" alt="Map of the UK with a marker indicating the location of the University of Stirling" loading=lazy>
+						<img src="/medias/Categorised/Dist/css/images/maps/footer-map-scotland.svg?v=1.0" alt="Map of the UK with a marker indicating the location of the University of Stirling" loading=lazy>
 					</a>
 					<figcaption class="show-for-sr">Map of the United Kingdom of Great Britain and Northern Ireland</figcaption>
 				</figure>
@@ -682,13 +675,13 @@ Courses Panel
 				</div>
 				<!-- Accreditations -->
 				<div class="site-footer__awards">
-					<a href="/news/news-archive/../2019/11/university-of-stirling-wins-the-uks-highest-academic-honour/"><img src="../../../medias/Categorised/Dist/images/accreditations/qap-2019.svg?v=1.0" alt="The Queen's Anniversary Prizes for Higher and Further Education 2019" loading=lazy></a>
+					<a href="/news/news-archive/../2019/11/university-of-stirling-wins-the-uks-highest-academic-honour/"><img src="/medias/Categorised/Dist/images/accreditations/qap-2019.svg?v=1.0" alt="The Queen's Anniversary Prizes for Higher and Further Education 2019" loading=lazy></a>
 				</div>
 				<div class="site-footer__accreditations">
-					<a href="/about/our-reputation/facts-and-figures/" aria-label="University facts and figures"><img src="../../../medias/Categorised/Dist/images/accreditations/accreditations-cluster.png?v=1.0" srcset="../../../medias/Categorised/Dist/images/accreditations/accreditations-cluster2x.png?v=1.0 2x" width="250" height="38" alt="UK QAA, Athena Swan Bronze Award, SCQF" loading=lazy></a>
+					<a href="/about/our-reputation/facts-and-figures/" aria-label="University facts and figures"><img src="/medias/Categorised/Dist/images/accreditations/accreditations-cluster.png?v=1.0" srcset="/medias/Categorised/Dist/images/accreditations/accreditations-cluster2x.png?v=1.0 2x" width="250" height="38" alt="UK QAA, Athena Swan Bronze Award, SCQF" loading=lazy></a>
 				</div>
 				<div class="site-footer__lockup">
-					<img src="../../../medias/Categorised/Dist/images/btd-strap-energy.svg?v=1.0" alt="Be the difference" loading=lazy>
+					<img src="/medias/Categorised/Dist/images/btd-strap-energy.svg?v=1.0" alt="Be the difference" loading=lazy>
 				</div>
 			</div>
 		</div>
@@ -707,16 +700,15 @@ Courses Panel
 			</footer>
 			<!--endnoindex-->
 
-		<!-- app.min.js --> <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=11.0"></script>
-<!-- unibuddy.min.js --><script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/unibuddy.min.js?v=1.0"></script>
+		<!-- app.min.js --> <script type="text/javascript" src="/medias/Categorised/Dist/js/app.min.js?v=11.0"></script>
+<!-- unibuddy.min.js --><script type="text/javascript" src="/medias/Categorised/Dist/js/other/unibuddy.min.js?v=1.0"></script>
 
 			
 	<script>
 		var stir = stir||{};stir.t4Globals=stir.t4Globals||{};
 		stir.t4Globals.search={combos:'/media/stirling/feeds/combo.json?v=3.0'};
 	</script>
-	<!-- <script type="text/javascript" src="../../../medias/Categorised/Dist/js/search/search-min.js?v=3.0"></script> -->
-	<script type="text/javascript" src="./search.js"></script>
+	<script type="text/javascript" src="/medias/Categorised/Dist/js/search/search.js?v=3.0"></script>
 
 	</body>
 </html>
