@@ -3928,6 +3928,10 @@ stir.Favs = function Favs() {
          </p>`;
   };
 
+  const getHeaderItem = (header, content, classes) => {
+    return !content ? `` : `<div class="cell medium-4"><strong class="u-heritage-green">${header}</strong><p class="${classes}">${content.split("|").join(", ")}</p></div>`;
+  };
+
   const renderFav = stir.curry((item) => {
     return !item.metaData
       ? ``
@@ -3944,10 +3948,10 @@ stir.Favs = function Favs() {
                 <p class="u-m-0">${item.metaData.c}</p>
                 
                 <div class="c-search-result__meta grid-x u-mt-1">
-                    <div class="cell medium-4"><strong class="u-heritage-green">Start dates</strong><p>${item.metaData.start}</p></div>
-                    <div class="cell medium-4"><strong class="u-heritage-green">Study modes</strong><p class="u-text-sentence-case">${item.metaData.modes}</p></div>
-                    <div class="cell medium-4"><strong class="u-heritage-green">Delivery</strong><p class="u-text-sentence-case">${item.metaData.delivery}</p></div>
-                </div>
+                    ${getHeaderItem("Start dates", item.metaData.start, "")}
+                    ${getHeaderItem("Study modes", item.metaData.modes, "u-sentence-case")}
+                    ${getHeaderItem("Delivery", item.metaData.delivery, "u-sentence-case")}
+               </div>
             </div>
 
             <div class="flex-container align-middle u-gap-8 u-mt-1">
