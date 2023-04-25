@@ -1,4 +1,4 @@
-var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},stir.templates.search=(()=>{"dev"!==UoS_env.name&&UoS_env.name;const s=()=>"https://"+stir.funnelback.getHostname(),a=e=>`<p class="u-heritage-berry u-border-solid u-p-1"><span class="uos-lightbulb"></span> ${e}</p>`,r={staff:"University of Stirling staff",students:"current students and staff"},t={staff:["staff","students"],student:["students"]};var e=window[["s","e","i","k","o","o","C"].reverse().join("")];const i=!!e.get("psessv0")?e.get("psessv0").split("|")[0]:"EXTERNAL",n=e=>-1<t[i.toLowerCase()]?.indexOf(e.toLowerCase()),l=(e,t)=>{return n(t)?`<p class=c-search-result__summary>${e}</p>`:(e=t,a(`This page is only available to ${r[e]}. You will be asked to log in before you can view it, but once you are logged in results will be shown automatically.`))},c=e=>{e=e.toUpperCase().split("/").slice(-1).toString().split(".");return 1<e.length&&e[1].match(/PDF|DOCX?/)},o=(e,t)=>document.querySelector(`input[name="${e}"][value="${t}"],select[name="${e}"] option[value="${t}"]`),u=e=>e.map(e=>e.selectedValues.map(e=>{{var t=e.queryStringParamName,a=(e=e.queryStringParamValue,o(t,e));if(a)return m(Array.prototype.slice.call(a.parentElement.childNodes).map(e=>3===e.nodeType?e.textContent:"").join(""),t,e)}}).join(" ")).join(" "),m=(e,t,a)=>`<span class=c-tag data-name="${t}" data-value="${a}">✖️ ${e}</span>`,d=(e,t,a,r)=>{return e?(e=-1<e.indexOf("|")?e.split("|")[1]||e.split("|")[0]:e,`<div class=c-search-result__image>
+var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},stir.templates.search=(()=>{"dev"!==UoS_env.name&&UoS_env.name;const r=()=>"https://"+stir.funnelback.getHostname(),a=e=>`<p class="u-heritage-berry u-border-solid u-p-1"><span class="uos-lightbulb"></span> ${e}</p>`,s={staff:"University of Stirling staff",students:"current students and staff"},t={staff:["staff","students"],student:["students"]};var e=window[["s","e","i","k","o","o","C"].reverse().join("")];const i=!!e.get("psessv0")?e.get("psessv0").split("|")[0]:"EXTERNAL",n=e=>-1<t[i.toLowerCase()]?.indexOf(e.toLowerCase()),l=(e,t)=>{return n(t)?`<p class=c-search-result__summary>${e}</p>`:(e=t,a(`This page is only available to ${s[e]}. You will be asked to log in before you can view it, but once you are logged in results will be shown automatically.`))},c=e=>{e=e.toUpperCase().split("/").slice(-1).toString().split(".");return 1<e.length&&e[1].match(/PDF|DOCX?/)},o=(e,t)=>document.querySelector(`input[name="${e}"][value="${t}"],select[name="${e}"] option[value="${t}"]`),u=e=>e.map(e=>e.selectedValues.map(e=>{{var t=e.queryStringParamName,a=(e=e.queryStringParamValue,o(t,e));if(a)return m(Array.prototype.slice.call(a.parentElement.childNodes).map(e=>3===e.nodeType?e.textContent:"").join(""),t,e)}}).join(" ")).join(" "),m=(e,t,a)=>`<span class=c-tag data-name="${t}" data-value="${a}">✖️ ${e}</span>`,d=(e,t,a,r)=>{return e?(e=-1<e.indexOf("|")?e.split("|")[1]||e.split("|")[0]:e,`<div class=c-search-result__image>
 			${stir.funnelback.getCroppedImageElement({url:e.trim(),alt:t||"",width:a||550,height:r||550})}
 			</div>`):""},p=e=>`<a href="${e.href}">${e.text}</a>`,h=e=>stir.courses&&stir.courses.clearing&&Object.values&&e.clearing&&0<=Object.values(e.clearing).join().indexOf("Yes"),g={SINGLE_DRILL_DOWN:void 0,CHECKBOX:"checkbox",RADIO_BUTTON:"radio",TAB:void 0,UNKNOWN:void 0},v={"01":"January","02":"February","05":"May","08":"August","09":"September",10:"October"},y=e=>{return 7===e.indexOf("ay")?(t=e.split("ay").shift(),v[t.split("-").pop()]+" "+t.split("-").shift()):e;var t};return{tag:m,stag:e=>e?`<span class="c-search-tag">${e}</span>`:"",tagGroup:e=>{e=e.split("="),e=e[1]&&e[1].replace(/,([^\s])/gi,"__SPLIT__$&").split("__SPLIT__,");return e?e.map(stir.templates.search.stag).join(""):""},breadcrumb:e=>`<p class="u-m-0">${e}</p>`,trailstring:e=>e.length?e.map(p).join(" > "):"",summary:e=>{var t,a=e.response.resultPacket.resultsSummary["totalMatching"],r=stir.String.htmlEntities(e.question.originalQuery).replace(/^!padrenullquery$/,"").trim(),s=1<r.length?` for <em>${r}</em>`:"";return`<div class="u-py-2"> ${0<a?`	<p class="text-sm">There are <strong>${a.toLocaleString("en")} results</strong>${s}.</p>`:`<p id="search_summary_noresults"><strong>There are no results${s}</strong>.</p>`} ${[(t=e.question.rawInputParameters,Object.keys(t).filter(e=>0===e.indexOf("meta_")&&t[e][0]).map(a=>{var e=o(a,t[a]);return e?m(e.innerText||e.parentElement.innerText,a,t[a]):(e=new RegExp(/\[([^\[^\]]+)\]/),t[a].toString().replace(e,"$1").split(/\s/).map(e=>{var t=o(a,e);return t?m(t.parentElement.innerText,a,e):""}).join(" "))}).join(" ")),u(e.response.facets||[])].join(" ")} ${r&&(a=e.response.resultPacket.spell)?`<p>Did you mean <a href="#" data-suggest>${a.text.split(" ")[0]}</a>?</p>`:""} </div>`},pagination:e=>{var{currEnd:e,totalMatching:t,progress:a}=e;return 0===t?"":`
 			<div class="cell text-center u-margin-y">
@@ -38,15 +38,15 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 							${t.map(e=>`<li>${e}</li>`).join("\n\t")}
 						</ul>
 					</div>
-				</div>`},courseFact:(e,t,a)=>e&&t?`<div class="cell medium-4"><strong class="u-heritage-green">${e}</strong><p${a?" class=u-text-sentence-case":""}>${t.replace("|",", ")}</p></div>`:"",course:e=>{var t="preview"===UoS_env.name||"dev"===UoS_env.name||"qa"===UoS_env.name,a=e.metaData.subject?e.metaData.subject.split(/,\s?/).slice(0,1):"",a=(stir.String.slug(a),!!(e.metaData.delivery&&-1<e.metaData.delivery.toLowerCase().indexOf("online"))),r=-1<UoS_env.name.indexOf("preview")?(r=e.metaData.sid)?"/terminalfour/preview/1/en/"+r:"#":s()+e.clickTrackingUrl;return e.combos=stir.courses.showCombosFor("preview"==UoS_env.name?e.metaData.sid:e.liveUrl),`
-			<div class="c-search-result" data-rank=${e.rank} data-sid=${e.metaData.sid} data-result-type=course${a?" data-delivery=online":""}>
+				</div>`},courseFact:(e,t,a)=>e&&t?`<div class="cell medium-4"><strong class="u-heritage-green">${e}</strong><p${a?" class=u-text-sentence-case":""}>${t.replace("|",", ")}</p></div>`:"",course:e=>{"preview"!==UoS_env.name&&"dev"!==UoS_env.name&&UoS_env.name;var t=e.metaData.subject?e.metaData.subject.split(/,\s?/).slice(0,1):"",t=(stir.String.slug(t),!!(e.metaData.delivery&&-1<e.metaData.delivery.toLowerCase().indexOf("online"))),a=-1<UoS_env.name.indexOf("preview")?(a=e.metaData.sid)?"/terminalfour/preview/1/en/"+a:"#":r()+e.clickTrackingUrl;return e.combos=stir.courses.showCombosFor("preview"==UoS_env.name?e.metaData.sid:e.liveUrl),`
+			<div class="c-search-result" data-rank=${e.rank} data-sid=${e.metaData.sid} data-result-type=course${t?" data-delivery=online":""}>
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${(e=>{switch(e){case"module":return"CPD and short courses";case"Postgraduate (taught)":return"Postgraduate";default:return e}})(e.metaData.level||e.metaData.type||"")}</span>
 				</div>
 
-        <div class="flex-container flex-dir-column u-gap u-mt-1">
+        <div class="flex-container flex-dir-column u-gap u-mt-1 ">
           <p class="u-text-regular u-m-0">
-            <strong><a href="${r}" title="${e.liveUrl}">
+            <strong><a href="${a}" title="${e.liveUrl}">
             ${e.metaData.award||""} ${e.title}
             ${e.metaData.ucas?" - "+e.metaData.ucas:""}
             ${e.metaData.code?" - "+e.metaData.code:""}
@@ -60,17 +60,17 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
             ${stir.templates.search.courseFact("Delivery",e.metaData.delivery,!0)}
           </div>
           
-          ${t?`<div class="flex-container u-gap u-mb-1 text-xsm">
+          ${`<div class="flex-container u-gap u-mb-1 text-xsm">
               <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${e.metaData.sid}"></div>
               <a href="/courses/favourites/">View favourites</a>
-          </div>`:""}
+          </div>`}
           
           ${stir.templates.search.combos(e)}
           ${stir.templates.search.pathways(e)}
         </div>
 			</div>`},coursemini:e=>`
 			<div>
-				<p><strong><a href="${s()+e.clickTrackingUrl}" title="${e.liveUrl}" class="u-border-none">
+				<p><strong><a href="${r()+e.clickTrackingUrl}" title="${e.liveUrl}" class="u-border-none">
 					${e.metaData.award||""} ${e.title} ${e.metaData.ucas?" - "+e.metaData.ucas:""} ${e.metaData.code?" - "+e.metaData.code:""}
 				</a></strong></p>
 				<p>${e.summary}</p>
@@ -81,7 +81,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 				</div>
 				<div class="flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0"><strong>
-						<a href="${s()+e.clickTrackingUrl}">${e.title.split(" | ")[0].trim()}</a>
+						<a href="${r()+e.clickTrackingUrl}">${e.title.split(" | ")[0].trim()}</a>
 					</strong></p>
 					<div>${e.metaData.role||"\x3c!-- Job title --\x3e"}<br>${e.metaData.faculty||""}</div>
 					<!-- <p>${e.metaData.c?(e.metaData.c+".").replace(" at the University of Stirling",""):""}</p> -->
@@ -110,7 +110,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 					<div><a href="${t[0].href}">${t[0].text}</a></div>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap ">
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${s()+e.clickTrackingUrl}">${e.title.split(" | ")[0].trim()}</a>
+							<a href="${r()+e.clickTrackingUrl}">${e.title.split(" | ")[0].trim()}</a>
 						</strong></p>
 						<p class="u-m-0">${e.metaData.profileCourse1}<br />
 						${e.metaData.profileCountry}</p>
@@ -122,7 +122,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 						<p class="u-text-regular u-m-0">
 							<strong>
-								<a href="${s()+e.clickTrackingUrl}">${e.metaData.h1||e.title.split(" | ")[0].trim()}</a>
+								<a href="${r()+e.clickTrackingUrl}">${e.metaData.h1||e.title.split(" | ")[0].trim()}</a>
 							</strong>
 						</p>
 						<div>${e.metaData.d?stir.Date.newsDate(new Date(e.metaData.d)):""}</div>
@@ -134,7 +134,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 					
 					<div class=c-search-result__body>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${s()+e.clickTrackingUrl}">${e.metaData.h1||e.title.split(" | ")[0].trim()}</a>
+							<a href="${r()+e.clickTrackingUrl}">${e.metaData.h1||e.title.split(" | ")[0].trim()}</a>
 						</strong></p>
 						<p class="c-search-result__secondary">${stir.Date.newsDate(new Date(e.metaData.d))}</p>
 						<p >${e.summary}</p>	
@@ -191,7 +191,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 					<div class=c-search-result__body>
 						<p class="c-search-result__breadcrumb">${e.displayUrl}</p>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${s()+e.linkUrl}" title="${e.displayUrl}">${e.titleHtml}</a>
+							<a href="${r()+e.linkUrl}" title="${e.displayUrl}">${e.titleHtml}</a>
 						</strong></p>
 						<p >${e.descriptionHtml}</p>
 						<!-- <pre>${JSON.stringify(e,null,"\t")}</pre> -->
