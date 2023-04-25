@@ -64,7 +64,7 @@
 }
 
 .c-course-title__buttons {
-  margin: 1rem 0 2rem 0;
+  margin: 1rem 0 1rem 0; // 1rem 0 2rem 0
   .button {
     margin-right: 2rem;
     &:last-child {
@@ -325,13 +325,12 @@
     padding: 0.333rem;
   }
   label {
-	font-size: 1rem;
+    font-size: 1rem;
 
-	select {
-		margin-top: 0.5rem; /* 8px */
-	}
+    select {
+      margin-top: 0.5rem; /* 8px */
+    }
   }
-
 }
 
 // Video testimonials
