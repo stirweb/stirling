@@ -367,7 +367,7 @@ stir.templates.search = (() => {
 				</div>`;
     },
 
-    courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace("|", ", ")}</p></div>` : ""),
+    courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace(/\|/g,', ')}</p></div>` : ""),
 
     course: (item) => {
       const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
