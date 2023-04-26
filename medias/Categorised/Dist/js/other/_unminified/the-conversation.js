@@ -1,5 +1,5 @@
 /**
- * This is the old version, currently (2023-04-25) still in use on the News landing
+ * This is the old version, currently (2023-04-25) in use on the News landing
  * page as well as the main Research page.
  */
 function conversation(data) {
