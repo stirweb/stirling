@@ -3962,7 +3962,7 @@ stir.Favs = function Favs() {
 
   const renderRemoveBtn = (sid, dateSaved) => {
     return ` 
-        <button class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
+        <button id="removefavbtn-${sid}" class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
             ${renderActiveIcon()}
         </button>
         <span>Favourited ${getDaysAgo(new Date(dateSaved))}</span>`;
@@ -3972,7 +3972,7 @@ stir.Favs = function Favs() {
     return ` 
           <button
               class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap align-middle"
-              data-action="addtofavs" aria-label="Add to favourites" data-id="${sid}">
+              data-action="addtofavs" aria-label="Add to favourites" data-id="${sid}" id="addfavbtn-${sid}">
               ${renderInactiveIcon()}
               <span class="u-heritage-green u-underline u-inline-block u-pb-1">Add
                   to your favourites</span>
