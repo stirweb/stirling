@@ -4,9 +4,7 @@
 
 .c-search-results-area {
   /*
-
       SLIDE TABS NAV
-
   */
   .slide-tabs-2 {
     padding: 5px 0 5px 0;
@@ -73,12 +71,6 @@
           > span.icon--medium {
             font-size: 25px;
           }
-
-          // .slide-tab--text {
-          //     //display: none;
-          //     opacity: 100%;
-          //     transition: opacity 0.3s;
-          // }
         }
 
         &.slide-tab--active {
@@ -137,13 +129,6 @@
   */
 
   .c-search-results-summary {
-    //font-size: 1rem; //1.125rem;
-    //margin-bottom: 2rem;
-
-    // p {
-    //   font-size: 1rem; //1.125rem;
-    // }
-
     .c-tag {
       padding: 0.3rem;
       border: 1px solid #ccc;
@@ -267,52 +252,6 @@
       position: absolute;
       top: -15px;
     }
-
-    //.c-search-result__link {
-    // margin-right: 0.8rem;
-    // font-size: 1.2rem !important;
-
-    // a {
-    //   border-bottom: 1px solid currentColor;
-    // }
-    //}
-
-    // .c-search-result__summary {
-    //   margin-bottom: 1rem;
-    //   font-size: 1rem;
-    // }
-
-    // .c-search-result__meta,
-    // .c-search-misc {
-    //   line-height: 1.7;
-    //   //margin-bottom: 1rem;
-
-    //   strong {
-    //     color: #006636;
-    //   }
-    // }
-
-    // .c-search-result__seasonal {
-    //   color: $heritage-berry;
-    // }
-
-    // .c-search-result__breadcrumb {
-    //   font-size: 0.875rem;
-    //   color: #78766e;
-    //   margin: 0.7rem 0;
-    //   /* margin-top: 2rem; */
-
-    //   a {
-    //     font-size: 0.875rem;
-    //     text-decoration: none;
-    //     border: 0;
-    //     margin: 0 3px;
-
-    //     &:first-of-type {
-    //       margin-left: 0;
-    //     }
-    //   }
-    // }
   }
 
   .c-search-result-curated {
@@ -336,43 +275,6 @@
     }
   }
 
-  //aside .c-search-looking-for-panel {
-  //background-color: #fff;
-  //padding: 1rem;
-
-  // p {
-  //   font-size: 1rem;
-  // }
-
-  // p a {
-  //   font-size: 1.188rem;
-  // }
-
-  // p.c-search-filters-header {
-  //   margin-bottom: 0;
-  //   padding-bottom: 20px;
-  //   font-size: 1.2rem;
-
-  //   span {
-  //     margin-right: 10px;
-  //     color: #006938;
-  //   }
-
-  //   &::after {
-  //     content: none;
-  //   }
-  // }
-
-  // hr {
-  //   margin-top: 30px;
-  // }
-
-  // .c-search-looking-for-panel__results > p {
-  //   font-size: 1rem;
-  //   margin: 0;
-  // }
-  //}
-
   /* 
 
      Aside Filters content panel
@@ -388,18 +290,6 @@
     .tns-nav {
       display: none;
     }
-
-    // input[type="reset"] {
-    //   margin-top: 10px;
-    //   font-size: 16px;
-    //   padding: 12px 26px;
-    //   background-color: #fff;
-    //   border: 1px solid #006938;
-
-    //   &:hover {
-    //     border: 1px solid rgba(0, 105, 56, 0.35);
-    //   }
-    // }
 
     .c-search-filters-header {
       margin-bottom: 0;
@@ -418,9 +308,6 @@
       }
     }
     fieldset.c-search-filters-subgroup {
-      // legend {
-      //     font-size: 1rem;
-      // }
       label:not(:last-child) input {
         margin-bottom: 0;
       }
@@ -483,20 +370,20 @@
         }
       }
     }
-	form[data-filters] label>span:last-of-type { 
-		/* number-of-results label for facets: */
-		margin-left: auto;
-		background: #14315e;
-		color: white;
-		text-align: center;
-		padding: 0.5rem;
-		font-size: 0.5rem;
-		border-radius: 50%;
-		min-width: 1.5rem;
-		height: 1.5rem;
-		line-height: 0.5rem;
-		font-weight: bold;
-	}
+    form[data-filters] label > span:last-of-type {
+      /* number-of-results label for facets: */
+      margin-left: auto;
+      background: #14315e;
+      color: white;
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 0.5rem;
+      border-radius: 50%;
+      min-width: 1.5rem;
+      height: 1.5rem;
+      line-height: 0.5rem;
+      font-weight: bold;
+    }
   }
 
   span.c-search-tag {
@@ -558,7 +445,6 @@
   /* 
        All results tab
   */
-
   .c-search-results-all {
     .c-search-result::before {
       font-family: "uos" !important;
@@ -612,30 +498,6 @@
     [data-result-type="document"]::before {
       content: "\e92a";
     }
-
-    /* Content box */
-    // .c-profile-result {
-    //   &::before {
-    //     content: "\e913";
-    //   }
-
-    //   > div {
-    //     gap: 30px;
-
-    //     > div:first-of-type {
-    //       .c-search-result__role {
-    //         margin-top: 1rem;
-    //         font-size: 1rem;
-    //       }
-    //     }
-
-    //     /* Image box */
-    //     > div:last-of-type {
-    //       min-width: 130px;
-    //       max-width: 130px;
-    //     }
-    //   }
-    // }
   }
 
   /* 
@@ -659,27 +521,7 @@
     .c-search-ordered-filters button {
       background-color: #e6eeea;
     }
-
-    // .c-search-result {
-    //   /* moveed */
-    // }
   }
-
-  /* 
-      Events panel results
-  */
-
-  // .c-search-result[data-result-type="event"] {
-  //   .c-events-box__detail-info:first-of-type {
-  //     margin-top: 30px;
-  //   }
-  // }
-
-  /* 
-      Research panel results
-  */
-
-  /* .c-search-results-research { .c-search-result { }  } */
 
   /* 
       Staff, Events, News panel results
@@ -688,18 +530,9 @@
   .c-search-result {
     &[data-result-type="news"],
     &[data-result-type="event"],
+    &[data-result-pin],
     &[data-result-type="studentstory"],
     &[data-result-type="person"] {
-      /*
-            > div {
-                .uos-web::before {
-                    content: "\e973";
-                    font-size: 10rem;
-                    color: #006636;
-                }
-            }
-            */
-
       > div {
         > div.c-icon-image {
           background: rgb(230, 230, 230);
@@ -716,20 +549,6 @@
       }
     }
   }
-
-  /* 
-      Misc stuff
-  */
-
-  // .c-search-results__loadmore {
-  //   display: flex;
-  //   justify-content: center;
-  //   margin: 2rem 0;
-
-  //   button {
-  //     margin: 0;
-  //   }
-  // }
 }
 
 //@media only screen and (min-width: 640px) {

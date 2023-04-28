@@ -81,3 +81,48 @@
   width: 36px;
   height: 36px;
 }
+
+/* 
+  Icon labels
+  Eg on search results 
+*/
+[data-label-icon]::before {
+  font-family: "uos" !important;
+  font-size: 1rem;
+  position: absolute;
+  left: -30px;
+  color: #fff;
+  background-color: #006938;
+  top: 0;
+  padding: 0.3rem 0;
+  text-align: center;
+  width: 30px; /* should match Foundation's grid-container gutter width */
+}
+
+[data-label-icon="pin"]::before {
+  content: "\e964";
+}
+
+[data-label-icon="course"]::before {
+  content: "\e9a1";
+}
+
+[data-label-icon="news"]::before {
+  content: "\e9a3";
+}
+
+[data-label-icon="event"]::before {
+  content: "\e9a2";
+}
+
+[data-label-icon*="output"]::before {
+  content: "\e9a4";
+}
+
+[data-label-icon*="person"]::before {
+  content: "\e9a5";
+}
+
+[data-label-icon="document"]::before {
+  content: "\e92a";
+}
