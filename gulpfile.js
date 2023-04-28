@@ -148,6 +148,32 @@ function jsOther() {
   );
 }
 
+// JS standalone scripts
+function jsOther2() {
+  const source = "src/js-other-2/*.js";
+  return (
+    src(source)
+      .pipe(plumber())
+      // .pipe(
+      //   babel({
+      //     presets: [
+      //       [
+      //         "@babel/env",
+      //         {
+      //           modules: false,
+      //         },
+      //       ],
+      //     ],
+      //   })
+      // )
+      .pipe(dest("medias/Categorised/Dist/js/other/_unminified")) // unminified version
+      .pipe(uglify())
+      //.pipe(rename({ extname: ".min.js" }))
+      .pipe(dest("medias/Categorised/Dist/js/other"))
+      .pipe(browserSync.stream())
+  );
+}
+
 // JS search scripts
 function jsSearch() {
   const source = ["src/js-search/*.js"];
@@ -287,6 +313,7 @@ function watchFiles() {
   watch("src/js-impl/*").on("change", js);
   watch("src/vendor/**/*.js").on("change", js);
   watch("src/js-other/*").on("change", jsOther);
+  watch("src/js-other-2/*").on("change", jsOther2);
   watch("src/js-search/*").on("change", jsSearch);
   watch("src/js-course/*").on("change", jsCourses);
   watch("src/js-other/grid-gallery.js").on("change", jsGallery);
@@ -308,4 +335,4 @@ function startBrowserSync() {
 
 // Tasks to define the execution of the functions simultaneously or in series
 exports.watch = parallel(watchFiles, startBrowserSync);
-exports.default = series(clear, parallel(js, jsProd, jsOther, jsCourses, jsSearch, jsGallery, scss, scssCampaigns, scssInfographs, scssGallery, img));
+exports.default = series(clear, parallel(js, jsProd, jsOther, jsOther2, jsCourses, jsSearch, jsGallery, scss, scssCampaigns, scssInfographs, scssGallery, img));

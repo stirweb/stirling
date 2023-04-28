@@ -3,106 +3,106 @@
  * General tabs above. Course tabs below
  */
 
- /* Mobile first: display as accordion  */
+/* Mobile first: display as accordion  */
 .stir-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
 
-    > {
-        .stir-tabs__tab {
-            width: 100%;
-            border-top: 1px solid #3a3c39;
-            font-family: "Open Sans", sans-serif;
-            margin-bottom: 0;
-            padding: 0;
+  > {
+    .stir-tabs__tab {
+      width: 100%;
+      border-top: 1px solid #3a3c39;
+      font-family: "Open Sans", sans-serif;
+      margin-bottom: 0;
+      padding: 0;
 
-            > a {
-                display: inline-block;
-                padding: 20px;
-                color: #75767a;
-                font-size: 1.375rem; // 22px;
-                font-weight: 700;
-                text-align: left;
-                position: relative;
-                border-bottom: 0;
-            }
+      > a {
+        display: inline-block;
+        padding: 20px;
+        color: #75767a;
+        font-size: 1.375rem; // 22px;
+        font-weight: 700;
+        text-align: left;
+        position: relative;
+        border-bottom: 0;
+      }
 
-            > button {
-                font-size: 1.375rem; // 22px;
-                font-weight: 700;
-				line-height: normal;
-                color: #75767a;
-                text-align: left;
-                padding: 20px;
-                cursor: pointer;
-            }
+      > button {
+        font-size: 1.375rem; // 22px;
+        font-weight: 700;
+        line-height: normal;
+        color: #75767a;
+        text-align: left;
+        padding: 20px;
+        cursor: pointer;
+      }
 
-            &:first-child {
-                margin-top: 0;
-            }
+      &:first-child {
+        margin-top: 0;
+      }
 
-            &:last-child {
-                margin-top: 0;
-                border-bottom: 1px solid #3a3c39;
-            }
+      &:last-child {
+        margin-top: 0;
+        border-bottom: 1px solid #3a3c39;
+      }
 
-            a:hover {
-                border-bottom: 0;
-            }
+      a:hover {
+        border-bottom: 0;
+      }
 
-            &::after {
-                content: none;
-            }
-        }
-
-        .stir-tabs__content {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 0px 20px;
-
-            p,
-            li,
-            td {
-                font-size: 1rem; // 16px;
-            }
-
-            h3, h3:first-of-type {
-                margin: 20px 0;
-                padding: 0;
-            }
-
-            h3::after {
-                content: none;
-            }
-
-            &:last-child {
-                border-bottom: 1px solid #3a3c39;
-            }
-
-            &.c-wysiwyg-content > :first-child {
-                margin-top: 10px; // was 50
-            }
-        }
-
-        .stir-tabs__tab {
-            &:before {
-                position: absolute;
-                top: 15px;
-                right: 1rem;
-                content: '+';
-                color: #75767a;
-                font-size: 1.25rem; // 20px;
-                font-weight: 800;
-            }
-
-            &.stir-tabs__tab--active:before {
-                content: '-';
-                font-size: 1.5rem; // 24px;
-                
-            }
-        }
+      &::after {
+        content: none;
+      }
     }
+
+    .stir-tabs__content {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0px 20px;
+
+      p,
+      li,
+      td {
+        font-size: 1rem; // 16px;
+      }
+
+      h3,
+      h3:first-of-type {
+        margin: 20px 0;
+        padding: 0;
+      }
+
+      h3::after {
+        content: none;
+      }
+
+      &:last-child {
+        border-bottom: 1px solid #3a3c39;
+      }
+
+      &.c-wysiwyg-content > :first-child {
+        margin-top: 10px; // was 50
+      }
+    }
+
+    .stir-tabs__tab {
+      &:before {
+        position: absolute;
+        top: 15px;
+        right: 1rem;
+        content: "+";
+        color: #75767a;
+        font-size: 1.25rem; // 20px;
+        font-weight: 800;
+      }
+
+      &.stir-tabs__tab--active:before {
+        content: "-";
+        font-size: 1.5rem; // 24px;
+      }
+    }
+  }
 }
 
 /* 
@@ -111,255 +111,248 @@
  */
 
 .c-course-tabs {
-    border-top: 0;
-    margin-bottom: 24px;
+  border-top: 0;
+  margin-bottom: 24px;
 
-    .stir-tabs {
-        margin-top: 0px;
-		margin-bottom: 0px;
+  .stir-tabs {
+    margin-top: 0px;
+    margin-bottom: 0px;
 
-            /* Button Area */ 
-            > .stir-tabs__tab {
-                //background-color: #373a36;
-                text-align: center;
-                //border-bottom: 3px solid #f6f5f4;
-                background-color: rgb(246, 245, 244);
-                margin-right: 0;
-                border-top: 5px solid #fff;
-                border-bottom: 5px solid rgb(246, 245, 244);
+    /* Button Area */
+    > .stir-tabs__tab {
+      //background-color: #373a36;
+      text-align: center;
+      //border-bottom: 3px solid #f6f5f4;
+      background-color: rgb(246, 245, 244);
+      margin-right: 0;
+      border-top: 5px solid #fff;
+      border-bottom: 5px solid rgb(246, 245, 244);
 
-                &:first-child {
-                    margin-left: 0px;
-                }
-                &::before {
-                    color: green;
-                }
+      &:first-child {
+        margin-left: 0px;
+      }
+      &::before {
+        color: green;
+      }
 
-                a {
-                    display: inline-block;
-                    //color: #c5bfb7;
-                    font-size:  1rem; // 16px;
-                    padding: 1px 20px 15px 20px;
-                    color: #006938;
-                    margin: 0 30px 0 30px;
-                }
+      a {
+        display: inline-block;
+        //color: #c5bfb7;
+        font-size: 1rem; // 16px;
+        padding: 1px 20px 15px 20px;
+        color: #006938;
+        margin: 0 30px 0 30px;
+      }
 
-                button {
-                    color: #006938;
-                    font-size:  1rem; // 16px;
-                    padding: 1px 20px 15px 20px;
-                }
+      button {
+        color: #006938;
+        font-size: 1rem; // 16px;
+        padding: 1px 20px 15px 20px;
+      }
 
-                &:before {
-                    top: 10px;
-                    //color: #c5bfb7;
-                    color: #006938;
-                }
-
-            }
-
-            &.stir-tabs__tab--active:before {
-                top: 13px;
-            }
-
-            > .stir-tabs__tab--active {
-                border-top: 5px solid rgba(118, 189, 34, 1);
-                border-bottom: 5px solid #ccc;
-            }
-
-            /* Content Area */ 
-            .stir-tabs__content {
-                background: #f6f5f4;
-                //padding: 0px 50px;
-                padding: 0 30px;
-                max-width: 86%;
-                margin: 0 auto;
-
-                h3 {
-                    margin: 20px 0;
-                    padding: 0
-                }
-
-                h3::after {
-                    content: none;
-                }
-
-                > *:first-child {
-                    margin-top: 40px;
-                }
-
-                &:last-child {
-                    border-bottom: 0;
-                }
-
-                > *:last-child {
-                    margin-bottom: 40px;
-                }
-
-                p,
-                li,
-                td {
-                    font-size: 1rem; // 16px;
-                }
-            }
-        
+      &:before {
+        top: 10px;
+        //color: #c5bfb7;
+        color: #006938;
+      }
     }
-}
 
+    &.stir-tabs__tab--active:before {
+      top: 13px;
+    }
+
+    > .stir-tabs__tab--active {
+      border-top: 5px solid rgba(118, 189, 34, 1);
+      border-bottom: 5px solid #ccc;
+    }
+
+    /* Content Area */
+    .stir-tabs__content {
+      background: #f6f5f4;
+      //padding: 0px 50px;
+      padding: 0 30px;
+      max-width: 86%;
+      margin: 0 auto;
+
+      h3 {
+        margin: 20px 0;
+        padding: 0;
+      }
+
+      h3::after {
+        content: none;
+      }
+
+      > *:first-child {
+        margin-top: 56px;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      > *:last-child {
+        margin-bottom: 40px;
+      }
+
+      p,
+      li,
+      td {
+        font-size: 1rem; // 16px;
+      }
+    }
+  }
+}
 
 /*  Large Up - As Tabs */
 @media screen and #{breakpoint(large up)} {
-    
-    .stir-tabs > {
+  .stir-tabs > {
+    .stir-tabs__tab {
+      order: -1;
+      width: auto;
+      margin-top: 0;
+      margin-right: 0.5rem;
+      margin-bottom: 0;
+      border: 0px;
+      padding: 0;
+      font-size: 2.25rem; /* 36px */
+      line-height: 1;
+
+      > button,
+      > a {
+        margin: 0 2.5rem 0 0;
+        padding: 0 0 2rem 0;
+        position: relative;
+      }
+
+      &.stir-tabs__tab--active a {
+        color: #006938;
+
+        &::after {
+          background: #76bd22;
+          top: 50px;
+          content: "";
+          height: 8px;
+          left: 0;
+          width: 60px;
+          position: absolute;
+        }
+      }
+
+      &.stir-tabs__tab--active button {
+        color: #006938;
+
+        &::after {
+          background: #76bd22;
+          bottom: 0px;
+          content: "";
+          height: 8px;
+          left: 0;
+          width: 60px;
+          position: absolute;
+        }
+      }
+
+      &:before,
+      &.stir-tabs__tab--active:before {
+        content: none;
+      }
+    }
+
+    .stir-tabs__content {
+      margin-top: 2rem;
+      padding: 0;
+
+      p,
+      li,
+      td {
+        font-size: 1.25rem; // 20px;
+      }
+
+      // > :first-child {
+      //     margin-top: 40px;
+      // }
+
+      //            &.c-wysiwyg-content > :first-child {
+      //            }
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  /* LARGE UP COURSE TAB OVER RIDES */
+  .c-course-tabs {
+    //border-top: 60px solid #373a36;
+
+    .stir-tabs {
+      position: relative;
+      top: -60px;
+      justify-content: center;
+      margin: 0 1rem;
+
+      > {
         .stir-tabs__tab {
-            order: -1;
-            width: auto;
-            margin-top: 0;
-            margin-right: 0.5rem;
-            margin-bottom: 0;
-            border: 0px;
-            padding: 0;
-            font-size: 2.25rem; /* 36px */
-            line-height: 1;
+          text-align: center;
+          padding: 7px 0 17px 0;
+          background-color: transparent;
+        }
 
-            > button, > a {
-                margin: 0 2.5rem 0 0;
-                padding: 0 0 2rem 0;
-				position: relative;
-            }
+        .stir-tabs__tab--active {
+          background: #f6f5f4;
+        }
 
-            &.stir-tabs__tab--active a  {
-                color: #006938;
+        .stir-tabs__tab {
+          a,
+          button {
+            margin: 0 0.625rem; //10px
+            font-size: 1rem; // 16px;
+            font-weight: 500;
+            color: #006938;
+          }
 
-                &::after {
-                    background: #76bd22;
-                    top: 50px;
-                    content: '';
-                    height: 8px;
-                    left: 0;
-                    width: 60px;
-                    position: absolute;
-                }
-            }
+          button:focus {
+            outline: 1px dotted #76bd22 !important;
+            outline-offset: 4px;
+          }
 
-            &.stir-tabs__tab--active button {
-                color: #006938;
-
-                &::after {
-                    background: #76bd22;
-                    bottom: 0px;
-                    content: '';
-                    height: 8px;
-                    left: 0;
-                    width: 60px;
-                    position: absolute;
-                }
-            }
-
-            &:before,
-            &.stir-tabs__tab--active:before {
+          &.stir-tabs__tab--active {
+            a,
+            button {
+              color: #373a36;
+              &::after {
                 content: none;
+              }
             }
+          }
         }
 
         .stir-tabs__content {
-			margin-top: 2rem;
-            padding: 0;
+          padding: 0px 180px;
+          max-width: 990px;
 
-            p,
-            li,
-            td {
-                font-size: 1.25rem; // 20px;
-            }
+          &.u-p-0 {
+            padding: 0px;
+          }
 
-            // > :first-child {
-            //     margin-top: 40px;
-            // }
-
-//            &.c-wysiwyg-content > :first-child {
-//            }
-
-            &:last-child {
-                border-bottom: 0;
-            }
+          p,
+          li,
+          td {
+            font-size: 1rem; // 16px;
+          }
         }
+      }
     }
-
-
-    /* LARGE UP COURSE TAB OVER RIDES */
-    .c-course-tabs {
-        //border-top: 60px solid #373a36;
-
-        .stir-tabs {
-            position: relative;
-            top: -60px;
-            justify-content: center;
-            margin: 0 1rem;
-
-            > {
-                .stir-tabs__tab {
-                    text-align: center;
-                    padding: 7px 0 17px 0;
-                    background-color: transparent;
-                }
-
-                .stir-tabs__tab--active {
-                    background: #f6f5f4;
-                }
-
-                .stir-tabs__tab {
-                    a,button {
-                        margin: 0 0.625rem; //10px
-                        font-size: 1rem; // 16px;
-                        font-weight: 500;
-                        color: #006938;
-                    }
-
-                    button:focus {
-						outline: 1px dotted #76bd22 !important;
-						outline-offset: 4px;
-					}
-
-					&.stir-tabs__tab--active {
-						a,button {
-							color: #373a36;
-							&::after {
-								content: none;
-							}
-						}
-					}
-                }
-                
-                .stir-tabs__content {
-                    padding: 0px 180px;
-                    max-width: 990px;
-
-                    p,li,td {
-                        font-size: 1rem; // 16px;
-                    }
-
-                }
-            }
-        }
-    }
+  }
 }
-
-
-
-
-
-
-
-
-
-
 
 /* Moved from _courses.scss (18 Sep 2020) - now combined above */
 
 // .c-course-tabs {
 // 	// border-top: 0;
 //     // margin-bottom: 24px;
-    
+
 // 	.stir-tabs {
 // 		// margin-top: 0px;
 // 		// margin-bottom: 0px;
@@ -393,8 +386,6 @@
 // 	}
 // }
 /* End Moved from _courses.scss (18 Sep 2020) */
-
-
 
 // OLD FOUNDATION TABS
 // light theme
@@ -582,6 +573,3 @@
     display: block;
 }
 */
-
-
-
