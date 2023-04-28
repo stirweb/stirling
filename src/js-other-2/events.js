@@ -1,8 +1,6 @@
 (function (scope) {
   if (!scope) return;
 
-  console.log(scope);
-
   /* 
     |
     |   RENDERERS : Return a string of Html Code
