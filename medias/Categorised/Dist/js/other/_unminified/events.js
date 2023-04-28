@@ -30,7 +30,7 @@
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
-                        <strong><a href="">${item.title}</a></strong>
+                        <strong><a href="${item.url}">${item.title}</a></strong>
                     </p>
                     <div class="flex-container flex-dir-column u-gap-8">
                         <div class="flex-container u-gap-16 align-middle">
@@ -53,6 +53,12 @@
             </div>`;
   };
 
+  const renderEventsPromo = (item) => {
+    return `<div class="u-bg-grey u-p-2" >
+                <p>${item.title}</p>
+            </div>`;
+  };
+
   /*
     |
     |   HELPERS
@@ -72,6 +78,8 @@
 
   const setDOMArchive = setDOMContent(eventsarchive);
 
+  const setDOMPromo = setDOMContent(eventspromo);
+
   const getNow = () => {
     let yourDate = new Date();
     return Number(yourDate.toISOString().split("T")[0].split("-").join(""));
@@ -88,6 +96,10 @@
   const isPassed = (item) => item.endInt < getNow();
 
   const isPassedFilter = stir.filter(isPassed);
+
+  const isPromo = (item) => item.promo;
+
+  const isPromoFilter = stir.filter(isPromo);
 
   const joiner = stir.join("");
 
@@ -209,7 +221,7 @@
   stir.compose(setDOMStaff, joiner, renderEventsMapper, stir.sort(sortByStartDate), isStaffFilter)(initData);
   stir.compose(setDOMArchive, joiner, renderEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
 
-  //console.log(initData);
+  stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), stir.sort(sortByStartDate), isPublicFilter, isPromoFilter)(initData);
 
   /*
     | 
