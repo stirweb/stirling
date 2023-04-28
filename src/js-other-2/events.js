@@ -26,7 +26,7 @@
 
   const renderEvent = (item) => {
     return `
-            <div class="c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin ? `data-label-icon="pin"` : ``} >
+            <div class="c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin < 0 ? `data-label-icon="pin"` : ``} >
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
@@ -95,7 +95,7 @@
 
   const sortByStartDateDesc = (a, b) => b.startInt - a.startInt;
 
-  const sortByPin = (a, b) => b.pin - a.pin;
+  const sortByPin = (a, b) => a.pin - b.pin;
 
   /* 
     | 
