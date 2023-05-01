@@ -54,9 +54,32 @@
   };
 
   const renderEventsPromo = (item) => {
-    return `<div class="u-bg-grey u-p-2" >
-                <p>${item.title}</p>
-            </div>`;
+    return `
+        <div class="c-search-result u-bg-grey u-p-2 ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
+            ${item.isSeries ? renderTab("Event series") : ``} 
+            <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                <p class="u-text-regular u-m-0">
+                    <strong><a href="${item.url}">${item.title}</a></strong>
+                </p>
+                <div class="flex-container flex-dir-column u-gap-8">
+                    <div class="flex-container u-gap-16 align-middle">
+                        <span class="u-icon h5 uos-calendar"></span>
+                        <span><time datetime="${item.start}">${item.stirStart}</time> – <time datetime="${item.end}">${item.stirEnd}</time></span>
+                    </div>
+                    <div class="flex-container u-gap-16 align-middle">
+                        <span class="uos-clock u-icon h5"></span>
+                        <span><time>12.00</time> – <time>18:00</time></span>
+                    </div>
+                    <div class="flex-container u-gap-16 align-middle">
+                        <span class="u-icon h5 uos-location"></span>
+                        <span>${item.location}</span>
+                    </div>
+                </div>
+                <p class="u-m-0">${item.summary}</p>
+                ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
+            </div>
+            ${item.image ? renderImage(item.image, item.title) : ``}  
+        </div>`;
   };
 
   /*
@@ -221,7 +244,7 @@
   stir.compose(setDOMStaff, joiner, renderEventsMapper, stir.sort(sortByStartDate), isStaffFilter)(initData);
   stir.compose(setDOMArchive, joiner, renderEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
 
-  stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), stir.sort(sortByStartDate), isPublicFilter, isPromoFilter)(initData);
+  stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), isPromoFilter, stir.sort(sortByStartDate))(initData);
 
   /*
     | 
