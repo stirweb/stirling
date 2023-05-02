@@ -95,9 +95,10 @@ stir.Concierge = function Concierge(popup) {
   const renderGenericItem = (text) => `<li class="c-header-search__item">${text}</li>`;
 
   const renderAllItem = (item) => {
+    const url = item.collection === "stir-events" ? "/events/" : funnelbackServer + item.clickTrackingUrl;
     return `
       <li class="c-header-search__item">
-        <a href="${funnelbackServer}${item.clickTrackingUrl}">
+        <a href="${url}">
         ${item.title.split(" | ")[0]} - ${item.title.split(" | ")[1] ? item.title.split(" | ")[1] : ""}</a>
       </li>`;
   };
