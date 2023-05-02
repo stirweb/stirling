@@ -95,7 +95,8 @@ stir.Concierge = function Concierge(popup) {
   const renderGenericItem = (text) => `<li class="c-header-search__item">${text}</li>`;
 
   const renderAllItem = (item) => {
-    const url = item.collection === "stir-events" ? "/events/" : funnelbackServer + item.clickTrackingUrl;
+    console.log(item);
+    const url = item.collection === "stir-events" ? item.metaData.page : funnelbackServer + item.clickTrackingUrl;
     return `
       <li class="c-header-search__item">
         <a href="${url}">
@@ -124,7 +125,7 @@ stir.Concierge = function Concierge(popup) {
   function getSeachParams(query_) {
     return obj2param({
       query: query_,
-      SF: "[c,d,access,award]",
+      SF: "[c,d,access,award,page]",
       collection: "stir-main",
       num_ranks: 25,
       "cool.21": 0.9,
