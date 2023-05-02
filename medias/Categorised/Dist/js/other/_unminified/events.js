@@ -151,6 +151,7 @@
     */
   const getDaysArray = (s, e) => {
     let a = [];
+
     for (d = new Date(s); d <= new Date(e); d.setDate(d.getDate() + 1)) {
       a.push(new Date(d).toISOString().split("T")[0]);
     }
@@ -158,48 +159,46 @@
   };
 
   /* 
-        getThisWeekDates : Returns an object with start & end dates eg 2023-07-24, 2023-07-30 
+        getThisWeekStartEnds : Returns an object with start & end dates eg 2023-07-24, 2023-07-30 
     */
-  const getThisWeekDates = () => {
-    let today = new Date();
-    let first = new Date(today.setDate(today.getDate() + ((0 + (0 - today.getDay())) % 7)));
-    let last = new Date();
-    last.setDate(first.getDate() + 6);
-
+  const getThisWeekStartEnds = () => {
+    const date = new Date();
+    const first = new Date(date.setDate(date.getDate() + ((0 + (0 - date.getDay())) % 7)));
+    const last = new Date(date.setDate(date.getDate() + 6));
+    //console.log(first, last);
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
   /* 
-        getNextWeekDates : Returns an object with start & end dates eg 2023-07-24, 2023-07-30
+        getNextWeekStartEnds : Returns an object with start & end dates eg 2023-07-24, 2023-07-30
     */
-  const getNextWeekDates = () => {
-    let today = new Date();
-    let first = new Date(today.setDate(today.getDate() + ((0 + (7 - today.getDay())) % 7)));
-    let last = new Date();
-    last.setDate(first.getDate() + 6);
-
-    return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
-  };
-
-  /* 
-        getThisMonthDates : Returns an object with start & end dates eg 2023-04-01, 2023-04-30 
-    */
-  const getThisMonthDates = () => {
+  const getNextWeekStartEnds = () => {
     let date = new Date();
-    let first = new Date(date.getFullYear(), date.getMonth(), 1);
-    let last = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
+    let first = new Date(date.setDate(date.getDate() + ((0 + (7 - date.getDay())) % 7)));
+    const last = new Date(date.setDate(date.getDate() + 6));
+    //console.log(first, last);
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
   /* 
-        getNextMonthDates : Returns an object with start & end dates eg 2023-04-01, 2023-04-30 
+        getThisMonthStartEnds : Returns an object with start & end dates eg 2023-04-01, 2023-04-30 
     */
-  const getNextMonthDates = () => {
+  const getThisMonthStartEnds = () => {
     let date = new Date();
-    let first = new Date(date.getFullYear(), date.getMonth() + 1, 1);
-    let last = new Date(date.getFullYear(), date.getMonth() + 2, 0);
+    let first = new Date(date.getFullYear(), date.getMonth(), 2);
+    let last = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+    //console.log(first, last);
+    return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
+  };
 
+  /* 
+        getNextMonthStartEnds : Returns an object with start & end dates eg 2023-04-01, 2023-04-30 
+    */
+  const getNextMonthStartEnds = () => {
+    let date = new Date();
+    let first = new Date(date.getFullYear(), date.getMonth() + 1, 2);
+    let last = new Date(date.getFullYear(), date.getMonth() + 2, 1);
+    //console.log(first, last);
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
@@ -207,13 +206,13 @@
         getFilterRange : Returns the correct array of dates [2023-07-24, 2023-07-24]
     */
   const getFilterRange = (rangeWanted) => {
-    if (rangeWanted === "thisweek") return getDaysArray(getThisWeekDates().start, getThisWeekDates().end);
+    if (rangeWanted === "thisweek") return getDaysArray(getThisWeekStartEnds().start, getThisWeekStartEnds().end);
 
-    if (rangeWanted === "nextweek") return getDaysArray(getNextWeekDates().start, getNextWeekDates().end);
+    if (rangeWanted === "nextweek") return getDaysArray(getNextWeekStartEnds().start, getNextWeekStartEnds().end);
 
-    if (rangeWanted === "thismonth") return getDaysArray(getThisMonthDates().start, getThisMonthDates().end);
+    if (rangeWanted === "thismonth") return getDaysArray(getThisMonthStartEnds().start, getThisMonthStartEnds().end);
 
-    if (rangeWanted === "nextmonth") return getDaysArray(getNextMonthDates().start, getNextMonthDates().end);
+    if (rangeWanted === "nextmonth") return getDaysArray(getNextMonthStartEnds().start, getNextMonthStartEnds().end);
 
     return null;
   };
@@ -233,6 +232,9 @@
     |  ON LOAD
     |
     */
+
+  const eventspublicfilters = stir.node("#eventspublicfilters");
+  const eventsstafffilters = stir.node("#eventsstafffilters");
 
   eventspublicfilters.querySelector("input[type=radio]").checked = true;
   eventsstafffilters.querySelector("input[type=radio]").checked = true;
@@ -256,6 +258,7 @@
     if (event.target.type === "radio") {
       const rangeWanted = event.target.value;
       const filterRange = getFilterRange(rangeWanted);
+      //console.log(filterRange);
 
       if (!filterRange) {
         const html1 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter)(initData);
@@ -273,8 +276,6 @@
     if (event.target.type === "radio") {
       const rangeWanted = event.target.value;
       const filterRange = getFilterRange(rangeWanted);
-
-      console.log(filterRange);
 
       if (!filterRange) {
         const html1 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter)(initData);

@@ -3974,7 +3974,7 @@ stir.Favs = function Favs() {
     return ` 
           <button
               class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap align-middle"
-              data-action="addtofavs" aria-label="Add to favourites" data-id="${sid}" id="addfavbtn-${sid}">
+              data-action="addtofavs" aria-label="Add to your favourites" data-id="${sid}" id="addfavbtn-${sid}">
               ${renderInactiveIcon()}
               <span class="u-heritage-green u-underline u-inline-block u-pb-1">Add
                   to your favourites</span>
