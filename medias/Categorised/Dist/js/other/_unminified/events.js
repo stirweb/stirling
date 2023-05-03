@@ -16,14 +16,15 @@ NODES
     |   RENDERERS : Return a string of Html Code
     |
     */
+
   const renderImage = (image, alt) => {
     return `<div class="c-search-result__image"><img src="${image}" width="275" height="275" alt="Image: ${alt}"></div>`;
   };
 
   const renderTab = (text) => {
     return `<div class="c-search-result__tags">
-                    <span class="c-search-tag">${text}</span>
-                </div>`;
+                <span class="c-search-tag">${text}</span>
+            </div>`;
   };
 
   const renderSeriesInfo = (series) => {
@@ -88,7 +89,7 @@ NODES
                 <p class="u-m-0 text-sm">${item.summary}</p>
                 ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
             </div>
-            ${item.image ? `<img src="${item.image}" width="300" height="300" alt="Image: ${item.title}" />` : ``}  
+            ${item.image ? `<div><img src="${item.image}" width="300" height="300" alt="Image: ${item.title}" /></div>` : ``}  
         </div>`;
   };
 
@@ -120,7 +121,7 @@ NODES
 
   const isPublic = (item) => item.isPublic === "Yes" && item.endInt >= getNow();
 
-  const isStaffStudent = (item) => item.isPublic !== "Yes";
+  const isStaffStudent = (item) => item.isPublic !== "Yes" && item.endInt >= getNow();
 
   const isPublicFilter = stir.filter(isPublic);
 
