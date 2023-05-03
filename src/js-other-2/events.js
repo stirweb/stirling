@@ -66,7 +66,7 @@ NODES
   const renderEventsPromo = (item) => {
     return `
         <div class=" u-bg-grey u-p-2 flex-container flex-dir-column medium-flex-dir-row u-gap u-mt-1 u-mb-2 u-flex1 "   >
-            <div >
+            <div>
             ${item.isSeries ? renderTab("Event series") : ``}
                 <p class="u-text-regular u-mb-2">
                     <strong><a href="${item.url}">${item.title}</a></strong>
@@ -85,10 +85,10 @@ NODES
                         <span>${item.location}</span>
                     </div>
                 </div>
-                <p class="u-m-0">${item.summary}</p>
+                <p class="u-m-0 text-sm">${item.summary}</p>
                 ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
             </div>
-            ${item.image ? renderImage(item.image, item.title) : ``}  
+            ${item.image ? `<img src="${item.image}" width="700" height="700" alt="Image: ${item.title}" />` : ``}  
         </div>`;
   };
 
