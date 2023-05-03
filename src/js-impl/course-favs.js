@@ -1,6 +1,6 @@
-stir.Favs = function Favs() {
-  if (!stir.node("#coursefavsarea") && !stir.node("#coursesharedarea") && !stir.nodes("#coursefavsbtn")) return;
+var stir = stir || {};
 
+stir.favs = (() => {
   // NODES
   const NODES = {
     coursefavsbtns: stir.nodes('[data-nodeid="coursefavsbtn"]'),
@@ -17,17 +17,17 @@ stir.Favs = function Favs() {
   const url = host + "/s/search.json?collection=stir-courses&query=!nullpadre&fmo=true&num_ranks=2000&SF=[" + sf.join(",") + "]&";
 
   /*
-  |
-  |   RENDERERS
-  |
-  */
+      |
+      |   RENDERERS
+      |
+      */
 
   const renderMiniFav = (item) => {
     return !item.metaData
       ? ``
       : `<p class="text-sm">
             <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title} ${item.metaData.ucas ? " - " + item.metaData.ucas : ""}</a></strong>
-         </p>`;
+           </p>`;
   };
 
   const getHeaderItem = (header, content, classes) => {
@@ -38,42 +38,42 @@ stir.Favs = function Favs() {
     return !item.metaData
       ? ``
       : `
-        <div class="c-search-result" data-rank="" data-sid="${item.metaData.sid}" data-result-type="course">
+          <div class="c-search-result" data-rank="" data-sid="${item.metaData.sid}" data-result-type="course">
             <div class=" c-search-result__tags">
-                <span class="c-search-tag">${item.metaData.level.replace("module", "CPD and short courses")}</span>
+              <span class="c-search-tag">${item.metaData.level.replace("module", "CPD and short courses")}</span>
             </div>
-
+      
             <div class="flex-container flex-dir-column u-gap u-mt-1">
-                <p class="u-text-regular u-m-0">
-                    <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title} ${item.metaData.ucas ? " - " + item.metaData.ucas : ""}</a></strong>
-                </p>
-                <p class="u-m-0">${item.metaData.c}</p>
-                
-                <div class="c-search-result__meta grid-x u-mt-1">
-                    ${getHeaderItem("Start dates", item.metaData.start, "")}
-                    ${getHeaderItem("Study modes", item.metaData.modes, "u-sentence-case")}
-                    ${getHeaderItem("Delivery", item.metaData.delivery, "u-sentence-case")}
-               </div>
+              <p class="u-text-regular u-m-0">
+                <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title} ${item.metaData.ucas ? " - " + item.metaData.ucas : ""}</a></strong>
+              </p>
+              <p class="u-m-0">${item.metaData.c}</p>
+              
+              <div class="c-search-result__meta grid-x u-mt-1">
+                ${getHeaderItem("Start dates", item.metaData.start, "")}
+                ${getHeaderItem("Study modes", item.metaData.modes, "u-sentence-case")}
+                ${getHeaderItem("Delivery", item.metaData.delivery, "u-sentence-case")}
+             </div>
             </div>
-
+      
             <div class="flex-container align-middle u-gap-8 u-mt-1">
-               ${renderRemoveBtn(item.metaData.sid, item.dateSaved)}
+             ${renderRemoveBtn(item.metaData.sid, item.dateSaved)}
             </div>
-        </div>`;
+          </div>`;
   });
 
   const renderRemoveBtn = (sid, dateSaved) => {
     return ` 
-        <button id="removefavbtn-${sid}" class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
+          <button id="removefavbtn-${sid}" class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
             ${renderActiveIcon()}
-        </button>
-        <span>Favourited ${getDaysAgo(new Date(dateSaved))}</span>`;
+          </button>
+          <span>Favourited ${getDaysAgo(new Date(dateSaved))}</span>`;
   };
 
   const renderAddBtn = (sid) => {
     return ` 
           <button
-              class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap align-middle"
+              class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap-8 align-middle"
               data-action="addtofavs" aria-label="Add to your favourites" data-id="${sid}" id="addfavbtn-${sid}">
               ${renderInactiveIcon()}
               <span class="u-heritage-green u-underline u-inline-block u-pb-1">Add
@@ -87,28 +87,28 @@ stir.Favs = function Favs() {
 
   const renderFavActionBtns = () => {
     return `
-        <div class="u-mb-3 ">
+          <div class="u-mb-3 ">
           <button class="u-border-solid u-p-1  u-cursor-pointer u-mt-1 " aria-label="Clear favourites" data-action="clearallfavs">Clear favourites</button>
           <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-opendialog="shareDialog" aria-label="Generate share link" data-action="copysharelink">Generate share link</button>
-        </div>`;
+          </div>`;
   };
 
   const renderInactiveIcon = () => {
     return `<svg version="1.1" data-stiricon="heart-active" fill="currentColor"
-                  viewBox="0 0 50 50" style="width:22px;height:22px;" >
-                <path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2c0,0-0.1,0-0.1,0c-3,0-5.8,1.2-7.9,3.4
-                 c-4.3,4.5-4.2,11.7,0.2,16l18.1,18.1c0.5,0.5,1.6,0.5,2.1,0l17.9-17.9c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
-                 C47.5,15,46.3,12.2,44.1,10.1z M42,24.2l-17,17l-17-17c-3.3-3.3-3.3-8.6,0-11.8c1.6-1.6,3.7-2.4,5.9-2.4c2.2-0.1,4.4,0.8,6,2.5
-                 l4.1,4.1c0.6,0.6,1.5,0.6,2.1,0l4.2-4.2c3.4-3.2,8.5-3.2,11.8,0C45.3,15.6,45.3,20.9,42,24.2z"/>
+              viewBox="0 0 50 50" style="width:22px;height:22px;" >
+              <path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2c0,0-0.1,0-0.1,0c-3,0-5.8,1.2-7.9,3.4
+               c-4.3,4.5-4.2,11.7,0.2,16l18.1,18.1c0.5,0.5,1.6,0.5,2.1,0l17.9-17.9c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+               C47.5,15,46.3,12.2,44.1,10.1z M42,24.2l-17,17l-17-17c-3.3-3.3-3.3-8.6,0-11.8c1.6-1.6,3.7-2.4,5.9-2.4c2.2-0.1,4.4,0.8,6,2.5
+               l4.1,4.1c0.6,0.6,1.5,0.6,2.1,0l4.2-4.2c3.4-3.2,8.5-3.2,11.8,0C45.3,15.6,45.3,20.9,42,24.2z"/>
             </svg>`;
   };
 
   const renderActiveIcon = () => {
     return `<svg version="1.1" data-stiricon="heart-inactive"  fill="currentColor" 
-               viewBox="0 0 50 50" style="width:22px;height:22px;" >
-              <path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4
-      c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
-      C47.5,15,46.3,12.2,44.1,10.1z"/>
+             viewBox="0 0 50 50" style="width:22px;height:22px;" >
+            <path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4
+        c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+        C47.5,15,46.3,12.2,44.1,10.1z"/>
            </svg> `;
   };
 
@@ -117,18 +117,18 @@ stir.Favs = function Favs() {
       ? ``
       : `<div class="cell small-6 ">
             <div class=" u-green-line-top u-margin-bottom">
-                <p class="u-text-regular u-py-1">
-                  <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title}</a></strong>
-                </p>
-                <div class="u-mb-1">${item.metaData.c}</div>
-                <${isInCookie(item.metaData.sid) ? `div` : `button`}  class="u-w-full u-heritage-green ${isInCookie(item.metaData.sid) ? `` : `u-heritage-green u-cursor-pointer`}   u-mt-1 flex-container u-gap-8 align-middle " data-action="${isInCookie(item.metaData.sid) ? `` : `addtofavs`}" data-id="${item.metaData.sid}">
-                  ${isInCookie(item.metaData.sid) ? renderActiveIcon() : renderInactiveIcon()}
-                <span class="u-heritage-green ${isInCookie(item.metaData.sid) ? "" : "u-underline u-line-height-default"}">
-                  ${isInCookie(item.metaData.sid) ? `Already in my favourites` : `Add to my favourites`}
-                </span>
-                </${isInCookie(item.metaData.sid) ? `div` : `button`}>
+              <p class="u-text-regular u-py-1">
+              <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title}</a></strong>
+              </p>
+              <div class="u-mb-1">${item.metaData.c}</div>
+              <${isInCookie(item.metaData.sid) ? `div` : `button`}  class="u-w-full u-heritage-green ${isInCookie(item.metaData.sid) ? `` : `u-heritage-green u-cursor-pointer`}   u-mt-1 flex-container u-gap-8 align-middle " data-action="${isInCookie(item.metaData.sid) ? `` : `addtofavs`}" data-id="${item.metaData.sid}">
+              ${isInCookie(item.metaData.sid) ? renderActiveIcon() : renderInactiveIcon()}
+              <span class="u-heritage-green ${isInCookie(item.metaData.sid) ? "" : "u-underline u-line-height-default"}">
+              ${isInCookie(item.metaData.sid) ? `Already in my favourites` : `Add to my favourites`}
+              </span>
+              </${isInCookie(item.metaData.sid) ? `div` : `button`}>
             </div>
-        </div>`;
+          </div>`;
   };
 
   const renderShareDialog = (link) => {
@@ -140,16 +140,16 @@ stir.Favs = function Favs() {
   };
 
   /*
-  |
-  |   HELPERS
-  |
-  */
+      |
+      |   HELPERS
+      |
+      */
 
   /* 
-  |
-  |    getDaysAgo : Returns a String  
-  |
-  */
+      |
+      |    getDaysAgo : Returns a String  
+      |
+      */
   const getDaysAgo = (createdOn) => {
     const today = new Date();
     const msInDay = 24 * 60 * 60 * 1000;
@@ -164,20 +164,20 @@ stir.Favs = function Favs() {
   };
 
   /* 
-  |
-  |   setDOMContent : Returns a Boolean  
-  |
-  */
+      |
+      |   setDOMContent : Returns a Boolean  
+      |
+      */
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
   });
 
   /* 
-  |
-  |    getExpiryDate: Returns a String (cookie expiry date)  
-  |
-  */
+      |
+      |    getExpiryDate: Returns a String (cookie expiry date)  
+      |
+      */
   const getExpiryDate = (days) => {
     const d = new Date();
     d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
@@ -186,10 +186,10 @@ stir.Favs = function Favs() {
   };
 
   /* 
-  |
-  |    getfavsCookie: Returns an array of course objects
-  |
-  */
+      |
+      |    getfavsCookie: Returns an array of course objects
+      |
+      */
   const getfavsCookie = (cookieId) => {
     const cookies = document.cookie.split(";");
 
@@ -200,10 +200,10 @@ stir.Favs = function Favs() {
   };
 
   /*
-  |
-  |     isInCookie: Returns a boolean
-  |
-  */
+      |
+      |     isInCookie: Returns a boolean
+      |
+      */
   const isInCookie = (courseId) => {
     return getfavsCookie(cookieId)
       .map((item) => item.id)
@@ -211,10 +211,10 @@ stir.Favs = function Favs() {
   };
 
   /*
-  |
-  |    getFavsList: Returns an array of course objects 
-  |
-  */
+      |
+      |    getFavsList: Returns an array of course objects 
+      |
+      */
   const getFavsList = (data, cookieId) => {
     const favsCookie = getfavsCookie(cookieId);
 
@@ -236,10 +236,10 @@ stir.Favs = function Favs() {
   };
 
   /* 
-  |
-  |   Returns an array of course objects 
-  |
-  */
+      |
+      |   Returns an array of course objects 
+      |
+      */
   const getShareList = (data) => {
     const sharedListQuery = QueryParams.get("c") || "";
     const sharedList = atob(sharedListQuery);
@@ -258,16 +258,16 @@ stir.Favs = function Favs() {
   };
 
   /*
-  |
-  |   CONTROLLERS
-  |
-  */
+      |
+      |   CONTROLLERS
+      |
+      */
 
   /* 
-  |
-  |   doFavs : Returns null 
-  |
-  */
+      |
+      |   doFavs : Returns null 
+      |
+      */
   const doFavs = (favsArea, data, cookieId) => {
     const list = getFavsList(data, cookieId);
 
@@ -281,10 +281,10 @@ stir.Favs = function Favs() {
   };
 
   /* 
-  |
-  |    doShared : Returns null 
-  |
-  */
+      |
+      |    doShared : Returns null 
+      |
+      */
   const doShared = (nodes, data, cookieId) => {
     const shareList = getShareList(data);
 
@@ -306,11 +306,14 @@ stir.Favs = function Favs() {
   };
 
   /* 
-  |
-  |   doCourseBtn : Returns null 
-  |
-  */
-  const doCourseBtn = (el, cookieId) => {
+      |
+      |   doCourseBtn : Returns null
+      |   [now using the private member `cookieId` instead of
+      |   a passed-in value to make it easier to reuse this
+      |   function from an external call.] 2023-05-02
+      |
+      */
+  const doCourseBtn = (el) => {
     if (!el || !el.dataset || !el.dataset.id) return;
 
     const fav = getfavsCookie(cookieId).filter((item) => item.id === el.dataset.id);
@@ -323,12 +326,23 @@ stir.Favs = function Favs() {
     setDOMContent(el, renderAddBtn(el.dataset.id));
     return;
   };
+  /*
+       |
+       |  createCourseBtnHTML : returns String (HTML)
+       | 
+       */
+  const createCourseBtnHTML = (sid) => {
+    const el = document.createElement("div"); // temporary element
+    el.setAttribute("data-id", sid); // attribute needed for doCourseBtn() validation
+    doCourseBtn(el); // generate the button
+    return el.innerHTML; // pass back to course template
+  };
 
   /* 
-  |
-  |   fetchData : Returns null 
-  |
-  */
+      |
+      |   fetchData : Returns null 
+      |
+      */
   const fetchData = (nodes, url, cookieId, cookieExpiryDays) => {
     stir.getJSON(url, (initialData) => {
       const data = initialData.response.resultPacket.results || []; // Full list of courses
@@ -398,13 +412,17 @@ stir.Favs = function Favs() {
   };
 
   /*
-  | 
-  |  ON LOAD
-  |
-  */
-  fetchData(NODES, url, cookieId, cookieExpiryDays);
-};
-
-(function () {
-  new stir.Favs();
+      | 
+      |  PUBLIC METHODS
+      |
+      */
+  return {
+    auto: () => fetchData(NODES, url, cookieId, cookieExpiryDays),
+    isFavourite: isInCookie,
+    createCourseBtnHTML: createCourseBtnHTML,
+  };
 })();
+
+if (stir.node("#coursefavsarea") || stir.node("#coursesharedarea") || stir.nodes("#coursefavsbtn")) {
+  stir.favs.auto(); // `.auto()` replaces `new stir.Favs()`
+}
