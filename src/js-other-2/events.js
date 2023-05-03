@@ -71,14 +71,14 @@ NODES
                 <p class="u-text-regular u-mb-2">
                     <strong><a href="${item.url}">${item.title}</a></strong>
                 </p>
-                <div class="flex-container flex-dir-column u-gap-8 u-mb-2">
+                <div class="flex-container flex-dir-column u-gap-8 u-mb-1">
                     <div class="flex-container u-gap-16 align-middle">
                         <span class="u-icon h5 uos-calendar"></span>
                         <span><time datetime="${item.start}">${item.stirStart}</time> – <time datetime="${item.end}">${item.stirEnd}</time></span>
                     </div>
                     <div class="flex-container u-gap-16 align-middle">
                         <span class="uos-clock u-icon h5"></span>
-                        <span><time>12.00</time> – <time>18:00</time></span>
+                        <span><time>${item.startTime}</time> – <time>${item.endTime}</time></span>
                     </div>
                     <div class="flex-container u-gap-16 align-middle">
                         <span class="u-icon h5 uos-location"></span>
