@@ -65,13 +65,13 @@ NODES
 
   const renderEventsPromo = (item) => {
     return `
-        <div class="c-search-result noline u-bg-grey u-p-2 ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
-            ${item.isSeries ? renderTab("Event series") : ``} 
-            <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
-                <p class="u-text-regular u-m-0">
+        <div class=" u-bg-grey u-p-2 flex-container flex-dir-column medium-flex-dir-row u-gap u-mt-1 u-mb-2 u-flex1 "   >
+            <div >
+            ${item.isSeries ? renderTab("Event series") : ``}
+                <p class="u-text-regular u-mb-2">
                     <strong><a href="${item.url}">${item.title}</a></strong>
                 </p>
-                <div class="flex-container flex-dir-column u-gap-8">
+                <div class="flex-container flex-dir-column u-gap-8 u-mb-2">
                     <div class="flex-container u-gap-16 align-middle">
                         <span class="u-icon h5 uos-calendar"></span>
                         <span><time datetime="${item.start}">${item.stirStart}</time> – <time datetime="${item.end}">${item.stirEnd}</time></span>
