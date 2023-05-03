@@ -372,7 +372,6 @@ stir.templates.search = (() => {
 //      const subjectLink = stir.String.slug(subject);
       const subject = item.metaData.subject ? item.metaData.subject.split(/,\s?/).slice(0, 1) : "";
       const isOnline = item.metaData.delivery && item.metaData.delivery.toLowerCase().indexOf("online") > -1 ? true : false;
-	  const isFavourite = stir.favs.isFavourite(item.metaData.sid);
       const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.metaData.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
       item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.metaData.sid : item.liveUrl);
       //item.combos = stir.courses.showCombosFor(item.metaData.sid); // this is for debugging t4 preview mode
