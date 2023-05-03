@@ -49,7 +49,7 @@ NODES
                         </div>
                         <div class="flex-container u-gap-16 align-middle">
                             <span class="uos-clock u-icon h5"></span>
-                            <span><time>12.00</time> – <time>18:00</time></span>
+                            <span><time>${item.startTime}</time> – <time>${item.endTime}</time></span>
                         </div>
                         <div class="flex-container u-gap-16 align-middle">
                             <span class="u-icon h5 uos-location"></span>
