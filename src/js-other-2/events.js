@@ -88,7 +88,7 @@ NODES
                 <p class="u-m-0 text-sm">${item.summary}</p>
                 ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
             </div>
-            ${item.image ? `<img src="${item.image}" width="700" height="700" alt="Image: ${item.title}" />` : ``}  
+            ${item.image ? `<img src="${item.image}" width="300" height="300" alt="Image: ${item.title}" />` : ``}  
         </div>`;
   };
 

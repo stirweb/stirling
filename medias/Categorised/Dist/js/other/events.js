@@ -49,5 +49,5 @@
                 <p class="u-m-0 text-sm">${t.summary}</p>
                 ${t.isSeriesChild?o(t.isSeriesChild):""}
             </div>
-            ${t.image?`<img src="${t.image}" width="700" height="700" alt="Image: ${t.title}" />`:""}  
+            ${t.image?`<img src="${t.image}" width="300" height="300" alt="Image: ${t.title}" />`:""}  
         </div>`),n,stir.sort($))(k),r.addEventListener("click",t=>{"radio"===t.target.type&&(t=t.target.value,(t=b(t))?(t=O(t),t=stir.filter(t,k),(t=stir.compose(f,p,stir.sort(S),stir.sort($),v)(t)).length?u(t):u(c())):(t=stir.compose(f,p,stir.sort(S),stir.sort($),v)(k)).length?u(t):u(c()))}),a.addEventListener("click",t=>{"radio"===t.target.type&&(t=t.target.value,(t=b(t))?(t=O(t),t=stir.filter(t,k),(t=stir.compose(f,p,stir.sort(S),stir.sort($),h)(t)).length?m(t):m(c())):(t=stir.compose(f,p,stir.sort(S),stir.sort($),h)(k)).length?m(t):m(c()))})}}();
