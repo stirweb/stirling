@@ -2,6 +2,16 @@
   if (!scope) return;
 
   /* 
+NODES
+  */
+  const eventspublic = stir.node("#eventspublic");
+  const eventsstaff = stir.node("#eventsstaff");
+  const eventsarchive = stir.node("#eventsarchive");
+  const eventspromo = stir.node("#eventspromo");
+  const eventspublicfilters = stir.node("#eventspublicfilters");
+  const eventsstafffilters = stir.node("#eventsstafffilters");
+
+  /* 
     |
     |   RENDERERS : Return a string of Html Code
     |
@@ -232,9 +242,6 @@
     |  ON LOAD
     |
     */
-
-  const eventspublicfilters = stir.node("#eventspublicfilters");
-  const eventsstafffilters = stir.node("#eventsstafffilters");
 
   eventspublicfilters.querySelector("input[type=radio]").checked = true;
   eventsstafffilters.querySelector("input[type=radio]").checked = true;
