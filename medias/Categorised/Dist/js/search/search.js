@@ -201,13 +201,6 @@ stir.templates.search = (() => {
 
   const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
 
-  const renderFavsButton = (courseid) => {
-    return `<div class="flex-container u-gap u-mb-1 text-xsm">
-              <div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${courseid}"></div>
-              <a href="/courses/favourites/">View favourites</a>
-          </div>`;
-  };
-
   const facetDisplayTypes = {
     SINGLE_DRILL_DOWN: undefined,
     CHECKBOX: "checkbox",
@@ -227,7 +220,12 @@ stir.templates.search = (() => {
 
   const readableDate = (date) => months[date.split("-").pop()] + " " + date.split("-").shift();
 
-  const facetCategoryLabel = (label) => (label.indexOf("ay") === 7 ? readableDate(label.split("ay").shift()) : label);
+  const correctCase = (function() {
+	if(!stir.t4Globals || !stir.t4Globals.search || !stir.t4Globals.search.facets) return (facet,label) => label;
+	return (facet,label) => stir.t4Globals.search.facets[facet]&&stir.t4Globals.search.facets[facet][stir.t4Globals.search.facets[facet].map(value=>value.toLowerCase()).findIndex(value=>value===label)] || label
+  })();
+
+  const facetCategoryLabel = (facet, label) => (label.indexOf("ay") === 7 ? readableDate(label.split("ay").shift()) : correctCase(facet,label));
 
   /**
    * PUBLIC members that can be called externally.
@@ -370,11 +368,11 @@ stir.templates.search = (() => {
     courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace(/\|/g,', ')}</p></div>` : ""),
 
     course: (item) => {
-      const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-
+//      const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+//      const subjectLink = stir.String.slug(subject);
       const subject = item.metaData.subject ? item.metaData.subject.split(/,\s?/).slice(0, 1) : "";
-      const subjectLink = stir.String.slug(subject);
       const isOnline = item.metaData.delivery && item.metaData.delivery.toLowerCase().indexOf("online") > -1 ? true : false;
+	  const isFavourite = stir.favs.isFavourite(item.metaData.sid);
       const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.metaData.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
       item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.metaData.sid : item.liveUrl);
       //item.combos = stir.courses.showCombosFor(item.metaData.sid); // this is for debugging t4 preview mode
@@ -400,7 +398,12 @@ stir.templates.search = (() => {
             ${stir.templates.search.courseFact("Delivery", item.metaData.delivery, true)}
           </div>
           
-          ${renderFavsButton(item.metaData.sid)}
+		<div class="flex-container u-gap u-mb-1 text-xsm">
+			<div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${item.metaData.sid}">
+				${stir.favs.createCourseBtnHTML(item.metaData.sid)}
+			</div>
+			<a href="/courses/favourites/">View favourites</a>
+		</div>
           
           ${stir.templates.search.combos(item)}
           ${stir.templates.search.pathways(item)}
@@ -590,7 +593,7 @@ stir.templates.search = (() => {
 				<div data-behaviour=accordion>
 					<accordion-summary>${item.name}</accordion-summary>
 					<div>
-						<ul>${item.allValues.map((batman) => `<li><label><input type=${facetDisplayTypes[item.guessedDisplayType] || "text"} name="${batman.queryStringParamName}" value="${batman.queryStringParamValue}" ${batman.selected ? "checked" : ""}>${facetCategoryLabel(batman.label)} <span>${batman.count ? batman.count : "0"}</span></label></li>`).join("")}</ul>
+						<ul>${item.allValues.map((batman) => `<li><label><input type=${facetDisplayTypes[item.guessedDisplayType] || "text"} name="${batman.queryStringParamName}" value="${batman.queryStringParamValue}" ${batman.selected ? "checked" : ""}>${facetCategoryLabel(item.name, batman.label)} <span>${batman.count ? batman.count : "0"}</span></label></li>`).join("")}</ul>
 					</div>
 				</div>
 			</fieldset>`,
@@ -1542,10 +1545,7 @@ stir.search = () => {
 			//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
 			if (!data || data.error || !data.response || !data.response.resultPacket) return;
 			if (0 === data.response.resultPacket.resultsSummary.totalMatching && fallback(element)) return;
-
-			const comp = composition(data);
-			new stir.Favs();
-			return comp;
+			return composition(data);
 		};
 		resetPagination();
 
@@ -1565,13 +1565,7 @@ stir.search = () => {
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
-
-		const doData = (data) => {
-			composition(data);
-			new stir.Favs();
-		};
-
-		const callback = (data) => (data && !data.error ? doData(data) : new Function());
+		const callback = (data) => (data && !data.error ? composition(data) : new Function());
 		nextPage(type);
 		searchers[type](callback);
 	};
