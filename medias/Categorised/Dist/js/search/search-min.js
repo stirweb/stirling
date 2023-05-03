@@ -60,12 +60,12 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
             ${stir.templates.search.courseFact("Delivery",e.metaData.delivery,!0)}
           </div>
           
-		<div class="flex-container u-gap u-mb-1 text-xsm">
-			<div data-nodeid="coursefavsbtn" class="flex-container u-gap" data-id="${e.metaData.sid}">
-				${stir.favs.createCourseBtnHTML(e.metaData.sid)}
-			</div>
-			<a href="/courses/favourites/">View favourites</a>
-		</div>
+          <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
+            <div data-nodeid="coursefavsbtn" class="flex-container u-gap-8" data-id="${e.metaData.sid}">
+              ${stir.favs.createCourseBtnHTML(e.metaData.sid)}
+            </div>
+            <span><a href="/courses/favourites/">View favourites</a></span>
+          </div>
           
           ${stir.templates.search.combos(e)}
           ${stir.templates.search.pathways(e)}
