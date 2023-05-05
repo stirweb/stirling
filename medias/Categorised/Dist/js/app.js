@@ -4323,9 +4323,9 @@ stir.favs = (() => {
   };
 })();
 
-if (stir.node("#coursefavsarea") || stir.node("#coursesharedarea") || stir.nodes("#coursefavsbtn").length) {
+//if (stir.node("#coursefavsarea") || stir.node("#coursesharedarea") || stir.nodes("#coursefavsbtn").length) {
   stir.favs.auto(); // `.auto()` replaces `new stir.Favs()`
-}
+//}
 
 // this will swap the native action for js-action. Useful for search
 // forms where we want non-js situations to be able to submit
