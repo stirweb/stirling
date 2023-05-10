@@ -514,6 +514,7 @@ stir.search = () => {
 
 	const prefetch = {
 		course: (callback) => {
+			stir.favs && stir.favs.attachEventHandlers();	// listen for Favs events
 			let xmlHttpRequest = stir.courses.getCombos();
 			if (xmlHttpRequest) {
 				xmlHttpRequest.addEventListener("loadend", callback); // loadend should fire after load OR error
