@@ -246,3 +246,12 @@ var KISWidgetCaller = function () {
     kisccordion && (kisccordion.style.display = "block");
   }
 })();
+
+/**
+ * Favourites buttons
+ * 2023-05-10
+ */
+if(stir.favs) {
+	stir.favs.attachEventHandlers();
+	document.querySelectorAll('[data-nodeid=coursefavsbtn]').forEach(stir.favs.doCourseBtn);
+}

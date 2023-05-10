@@ -8,7 +8,7 @@ stir.searchUI = stir.searchUI || {};
   @description: Transform an aside to an accordion (mobile folding)
 */
 stir.searchUI.asideAccordion = (filterNode, index) => {
-  console.log("hello");
+  //console.log("hello");
   const header = filterNode.querySelector("p.c-search-filters-header");
   const body = filterNode.querySelector("div");
 

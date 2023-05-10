@@ -4339,6 +4339,7 @@ stir.favs = (() => {
   return {
     auto: () => fetchData(),
     isFavourite: isInCookie,
+	doCourseBtn:doCourseBtn,
     createCourseBtnHTML: createCourseBtnHTML,
     attachEventHandlers:attachEventHandlers
   };
