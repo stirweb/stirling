@@ -87,6 +87,7 @@
 //			}
 		} 
 		if(url){
+			url += `?v=${new Date().getTime()}`; // autocachebuster
 			stir.getJSONp(url, handler.load, handler.error);
 		} else {
 			handler.error();
