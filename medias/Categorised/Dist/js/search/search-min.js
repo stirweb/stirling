@@ -1,6 +1,6 @@
 var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},stir.templates.search=(()=>{"dev"!==UoS_env.name&&UoS_env.name;const r=()=>"https://"+stir.funnelback.getHostname(),a=e=>`<p class="u-heritage-berry u-border-solid u-p-1"><span class="uos-lightbulb"></span> ${e}</p>`,s={staff:"University of Stirling staff",students:"current students and staff"},t={staff:["staff","students"],student:["students"]};var e=window[["s","e","i","k","o","o","C"].reverse().join("")];const i=!!e.get("psessv0")?e.get("psessv0").split("|")[0]:"EXTERNAL",l=e=>-1<t[i.toLowerCase()]?.indexOf(e.toLowerCase()),n=(e,t)=>{return l(t)?`<p class=c-search-result__summary>${e}</p>`:(e=t,a(`This page is only available to ${s[e]}. You will be asked to log in before you can view it, but once you are logged in results will be shown automatically.`))},c=e=>{e=e.toUpperCase().split("/").slice(-1).toString().split(".");return 1<e.length&&e[1].match(/PDF|DOCX?/)},o=(e,t)=>document.querySelector(`input[name="${e}"][value="${t}"],select[name="${e}"] option[value="${t}"]`),u=e=>e.map(e=>e.selectedValues.map(e=>{{var t=e.queryStringParamName,a=(e=e.queryStringParamValue,o(t,e));if(a)return m(Array.prototype.slice.call(a.parentElement.childNodes).map(e=>3===e.nodeType?e.textContent:"").join(""),t,e)}}).join(" ")).join(" "),m=(e,t,a)=>`<span class=c-tag data-name="${t}" data-value="${a}">✖️ ${e}</span>`,d=(e,t,a,r)=>{return e?(e=-1<e.indexOf("|")?e.split("|")[1]||e.split("|")[0]:e,`<div class=c-search-result__image>
 			${stir.funnelback.getCroppedImageElement({url:e.trim(),alt:t||"",width:a||550,height:r||550})}
-			</div>`):""},p=e=>`<a href="${e.href}">${e.text}</a>`,h=e=>stir.courses&&stir.courses.clearing&&Object.values&&e.clearing&&0<=Object.values(e.clearing).join().indexOf("Yes"),g={SINGLE_DRILL_DOWN:void 0,CHECKBOX:"checkbox",RADIO_BUTTON:"radio",TAB:void 0,UNKNOWN:void 0},v={"01":"January","02":"February","05":"May","08":"August","09":"September",10:"October"},y=stir.t4Globals&&stir.t4Globals.search&&stir.t4Globals.search.facets?(e,t)=>stir.t4Globals.search.facets[e]&&stir.t4Globals.search.facets[e][stir.t4Globals.search.facets[e].map(e=>e.toLowerCase()).findIndex(e=>e===t)]||t:(e,t)=>t,f=(e,t)=>{return 7===t.indexOf("ay")?(a=t.split("ay").shift(),v[a.split("-").pop()]+" "+a.split("-").shift()):y(e,t);var a};return{tag:m,stag:e=>e?`<span class="c-search-tag">${e}</span>`:"",tagGroup:e=>{e=e.split("="),e=e[1]&&e[1].replace(/,([^\s])/gi,"__SPLIT__$&").split("__SPLIT__,");return e?e.map(stir.templates.search.stag).join(""):""},breadcrumb:e=>`<p class="u-m-0">${e}</p>`,trailstring:e=>e.length?e.map(p).join(" > "):"",summary:e=>{var t,a=e.response.resultPacket.resultsSummary["totalMatching"],r=stir.String.htmlEntities(e.question.originalQuery).replace(/^!padrenullquery$/,"").trim(),s=1<r.length?` for <em>${r}</em>`:"";return`<div class="u-py-2"> ${0<a?`	<p class="text-sm">There are <strong>${a.toLocaleString("en")} results</strong>${s}.</p>`:`<p id="search_summary_noresults"><strong>There are no results${s}</strong>.</p>`} ${[(t=e.question.rawInputParameters,Object.keys(t).filter(e=>0===e.indexOf("meta_")&&t[e][0]).map(a=>{var e=o(a,t[a]);return e?m(e.innerText||e.parentElement.innerText,a,t[a]):(e=new RegExp(/\[([^\[^\]]+)\]/),t[a].toString().replace(e,"$1").split(/\s/).map(e=>{var t=o(a,e);return t?m(t.parentElement.innerText,a,e):""}).join(" "))}).join(" ")),u(e.response.facets||[])].join(" ")} ${r&&(a=e.response.resultPacket.spell)?`<p>Did you mean <a href="#" data-suggest>${a.text.split(" ")[0]}</a>?</p>`:""} </div>`},pagination:e=>{var{currEnd:e,totalMatching:t,progress:a}=e;return 0===t?"":`
+			</div>`):""},p=e=>`<a href="${e.href}">${e.text}</a>`,h=e=>stir.courses&&stir.courses.clearing&&Object.values&&e.clearing&&0<=Object.values(e.clearing).join().indexOf("Yes"),g={SINGLE_DRILL_DOWN:void 0,CHECKBOX:"checkbox",RADIO_BUTTON:"radio",TAB:void 0,UNKNOWN:void 0},v={"01":"January","02":"February","05":"May","08":"August","09":"September",10:"October"},y=stir.t4Globals&&stir.t4Globals.search&&stir.t4Globals.search.facets?(e,t)=>stir.t4Globals.search.facets[e]&&stir.t4Globals.search.facets[e][stir.t4Globals.search.facets[e].map(e=>e.toLowerCase()).findIndex(e=>e===t)]||t:(e,t)=>t,f=(e,t)=>{return 7===t.indexOf("ay")?(a=t.split("ay").shift(),v[a.split("-").pop()]+" "+a.split("-").shift()):y(e,t);var a};return{tag:m,stag:e=>e?`<span class="c-search-tag">${e}</span>`:"",tagGroup:e=>{e=e.split("="),e=e[1]&&e[1].replace(/,([^\s])/gi,"__SPLIT__$&").split("__SPLIT__,");return e?e.map(stir.templates.search.stag).join(""):""},breadcrumb:e=>`<p class="u-m-0">${e}</p>`,trailstring:e=>e.length?e.map(p).join(" > "):"",summary:e=>{var t,a=e.response.resultPacket.resultsSummary["totalMatching"],r=stir.String.htmlEntities(e.question.originalQuery).replace(/^!padrenullquery$/,"").trim(),s=1<r.length?` for <em>${r}</em>`:"";return`<div class="u-py-2"> ${0<a?`	<p class="text-sm">There are <strong>${a.toLocaleString("en")} results</strong>${s}.</p>`:`<p id="search_summary_noresults"><strong>There are no results${s}</strong>.</p>`} ${[(t=e.question.rawInputParameters,Object.keys(t).filter(e=>0===e.indexOf("meta_")&&t[e][0]).map(a=>{var e;return(el=o(a,t[a]))?"hidden"===el.type?void 0:m(el.innerText||el.parentElement.innerText,a,t[a]):(e=new RegExp(/\[([^\[^\]]+)\]/),t[a].toString().replace(e,"$1").split(/\s/).map(e=>{var t=o(a,e);return t?m(t.parentElement.innerText,a,e):""}).join(" "))}).join(" ")),u(e.response.facets||[])].join(" ")} ${r&&(a=e.response.resultPacket.spell)?`<p>Did you mean <a href="#" data-suggest>${a.text.split(" ")[0]}</a>?</p>`:""} </div>`},pagination:e=>{var{currEnd:e,totalMatching:t,progress:a}=e;return 0===t?"":`
 			<div class="cell text-center u-margin-y">
 				<progress value="${a}" max="100"></progress><br />
 				You have viewed ${t===e?"all":e+" of "+t} results
@@ -13,11 +13,11 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 						<p >${e.summary.replace(/\xA0/g," ")}</p>
 					</div>
 				</div>`},internal:e=>{const a={text:e.metaData?.breadcrumbs?.split(" > ")||[],href:new URL(e.liveUrl).pathname.split("/").filter(e=>e)};var t,r=l(e.metaData.group)?stir.templates.search.trailstring(a.text.map((e,t)=>({text:e,href:"/"+a.href.slice(0,t+1).join("/")+"/"})).slice(0,-1)):`<a href="https://www.stir.ac.uk/${a.href[0]}/">${a.text[0]}</a>`;return`
-      <div class="c-search-result${t=e.metaData.group,l(t)?" c-internal-search-result":" c-internal-locked-search-result"}" data-rank=${e.rank}${e.metaData.type?' data-result-type="'+e.metaData.type.toLowerCase()+'"':""} data-access="${e.metaData.access}">
+	  <div class="c-search-result${t=e.metaData.group,l(t)?" c-internal-search-result":" c-internal-locked-search-result"}" data-rank=${e.rank}${e.metaData.type?' data-result-type="'+e.metaData.type.toLowerCase()+'"':""} data-access="${e.metaData.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-			    <p class="c-search-result__breadcrumb">${r}</p>
-			    <p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin+e.clickTrackingUrl}">${e.title.replace(/Current S\S+ ?\| ?/,"").split(" | ")[0].trim()}</a></strong></p>
-			    ${n(e.summary,e.metaData.group)}
+				<p class="c-search-result__breadcrumb">${r}</p>
+				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin+e.clickTrackingUrl}">${e.title.replace(/Current S\S+ ?\| ?/,"").split(" | ")[0].trim()}</a></strong></p>
+				${n(e.summary,e.metaData.group)}
 			  </div>
 			</div>`},combo:e=>`<li title="${e.prefix} ${e.title}">${e.courses.map(stir.templates.search.comboCourse).join(" and ")}${e?.codes?.ucas?" <small>&hyphen; "+e.codes.ucas+"</small>":""}${h(e)?' <sup class="c-search-result__seasonal">*</sup>':""}</li>`,comboCourse:e=>`<a href="${e.url}">${e.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi,"")}</a>`,clearing:e=>{if(Object.keys&&e.metaData&&0<=Object.keys(e.metaData).join().indexOf("clearing"))return'<p class="u-m-0"><strong class="u-heritage-berry">Clearing 2022: places may be available on this course.</strong></p>'},combos:e=>0===e.combos.length?"":`
 				<div class="combo-accordion" data-behaviour=accordion>
@@ -44,32 +44,32 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 					<span class="c-search-tag">${(e=>{switch(e){case"module":return"CPD and short courses";case"Postgraduate (taught)":return"Postgraduate";default:return e}})(e.metaData.level||e.metaData.type||"")}</span>
 				</div>
 
-        <div class="flex-container flex-dir-column u-gap u-mt-1 ">
-          <p class="u-text-regular u-m-0">
-            <strong><a href="${a}" title="${e.liveUrl}">
-            ${e.metaData.award||""} ${e.title}
-            ${e.metaData.ucas?" - "+e.metaData.ucas:""}
-            ${e.metaData.code?" - "+e.metaData.code:""}
-            </a></strong>
-          </p>
-          <p class="u-m-0">${e.summary}</p>
-          ${stir.templates.search.clearing(e)||""}
-          <div class="c-search-result__meta grid-x">
-            ${stir.templates.search.courseFact("Start dates",e.metaData.start,!1)}
-            ${stir.templates.search.courseFact("Study modes",e.metaData.modes,!0)}
-            ${stir.templates.search.courseFact("Delivery",e.metaData.delivery,!0)}
-          </div>
-          
-          <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
-            <div data-nodeid="coursefavsbtn" class="flex-container u-gap-8" data-id="${e.metaData.sid}">
-              ${stir.favs.createCourseBtnHTML(e.metaData.sid)}
-            </div>
-            <span><a href="/courses/favourites/">View favourites</a></span>
-          </div>
-          
-          ${stir.templates.search.combos(e)}
-          ${stir.templates.search.pathways(e)}
-        </div>
+		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
+		  <p class="u-text-regular u-m-0">
+			<strong><a href="${a}" title="${e.liveUrl}">
+			${e.metaData.award||""} ${e.title}
+			${e.metaData.ucas?" - "+e.metaData.ucas:""}
+			${e.metaData.code?" - "+e.metaData.code:""}
+			</a></strong>
+		  </p>
+		  <p class="u-m-0">${e.summary}</p>
+		  ${stir.templates.search.clearing(e)||""}
+		  <div class="c-search-result__meta grid-x">
+			${stir.templates.search.courseFact("Start dates",e.metaData.start,!1)}
+			${stir.templates.search.courseFact("Study modes",e.metaData.modes,!0)}
+			${stir.templates.search.courseFact("Delivery",e.metaData.delivery,!0)}
+		  </div>
+		  
+		  <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
+			<div data-nodeid="coursefavsbtn" class="flex-container u-gap-8" data-id="${e.metaData.sid}">
+			  ${stir.favs.createCourseBtnHTML(e.metaData.sid)}
+			</div>
+			<span><a href="/courses/favourites/">View favourites</a></span>
+		  </div>
+		  
+		  ${stir.templates.search.combos(e)}
+		  ${stir.templates.search.pathways(e)}
+		</div>
 			</div>`},coursemini:e=>`
 			<div>
 				<p><strong><a href="${r()+e.clickTrackingUrl}" title="${e.liveUrl}" class="u-border-none">
@@ -151,10 +151,10 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
-            <strong>
-              ${e.metaData.register?p({text:r,href:e.metaData.register}):p({text:r,href:i})}
+			<strong>
+			  ${e.metaData.register?p({text:r,href:e.metaData.register}):p({text:r,href:i})}
 					  </strong>
-          </p>
+		  </p>
 					<div class="flex-container flex-dir-column u-gap-8">
 						<div class="flex-container u-gap-16 align-middle">
 							<span class="u-icon h5 uos-calendar"></span>
