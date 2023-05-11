@@ -1,10 +1,13 @@
 var stir = stir || {};
 
 /* ------------------------------------------------
- * @author: Ryan Kaye
- * @version: 2 (Non jQuery. Non Searchbox. Non broken)
+ * @author: Ryan Kaye, Robert Morrison
+ * @version: 3
  * ------------------------------------------------ */
 
+/**
+ * Search API helper
+ */
 stir.funnelback = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 
@@ -60,6 +63,9 @@ stir.funnelback = (() => {
 	};
 })();
 
+/**
+ * Course-specific search results helper
+ */
 stir.courses = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 
@@ -108,6 +114,11 @@ stir.courses = (() => {
 	};
 })();
 
+/**
+ * Stir Search
+ * Created for the Search Revamp project 2022/23
+ * @returns Object
+ */
 stir.search = () => {
 	// abandon before anything breaks in IE
 	if ("undefined" === typeof window.URLSearchParams) {

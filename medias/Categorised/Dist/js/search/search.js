@@ -315,7 +315,7 @@ stir.templates.search = (() => {
       <div class="c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""} data-access="${item.metaData.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 			    <p class="c-search-result__breadcrumb">${trail}</p>
-			    <p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split(" | ")[0]}</a></strong></p>
+			    <p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.replace("Current Staff |","").split(" | ")[0].trim()}</a></strong></p>
 			    ${internalSummary(item.summary, item.metaData.group)}
 			  </div>
 			</div>`;
@@ -693,7 +693,7 @@ stir.searchUI = stir.searchUI || {};
   @description: Transform an aside to an accordion (mobile folding)
 */
 stir.searchUI.asideAccordion = (filterNode, index) => {
-  console.log("hello");
+  //console.log("hello");
   const header = filterNode.querySelector("p.c-search-filters-header");
   const body = filterNode.querySelector("div");
 
@@ -1004,10 +1004,13 @@ stir.searchUI.slideTab = (scope) => {
 var stir = stir || {};
 
 /* ------------------------------------------------
- * @author: Ryan Kaye
- * @version: 2 (Non jQuery. Non Searchbox. Non broken)
+ * @author: Ryan Kaye, Robert Morrison
+ * @version: 3
  * ------------------------------------------------ */
 
+/**
+ * Search API helper
+ */
 stir.funnelback = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 
@@ -1063,6 +1066,9 @@ stir.funnelback = (() => {
 	};
 })();
 
+/**
+ * Course-specific search results helper
+ */
 stir.courses = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 
@@ -1111,6 +1117,11 @@ stir.courses = (() => {
 	};
 })();
 
+/**
+ * Stir Search
+ * Created for the Search Revamp project 2022/23
+ * @returns Object
+ */
 stir.search = () => {
 	// abandon before anything breaks in IE
 	if ("undefined" === typeof window.URLSearchParams) {
