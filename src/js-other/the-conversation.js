@@ -32,10 +32,15 @@ function conversation(data) {
  */
 
 var stir=stir||{};
+stir.t4Globals=stir.t4Globals||{};
+stir.t4Globals.conversation=stir.t4Globals.conversation||{};
 (function () {
 	const RSS_URL = `<t4 type="navigation" name="Helper: path to The Conversation feed" id="5194" />`;
+	const MAX = stir.t4Globals.conversation.max;
 	const el = document.querySelector('.u-article-summaries');
 	if (!el || !stir.Date.newsDate || !stir.Array.oxfordComma) return;
+
+	const limit = stir.curry((max,array) => array.slice(0,max||array.length))(MAX);
 
 	// Template for output
 	const article = article => `
@@ -54,5 +59,5 @@ var stir=stir||{};
 	fetch(RSS_URL)
 		.then(response => response.text())
 		.then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-		.then(data => el.insertAdjacentHTML("beforeend", Array.prototype.slice.call(data.querySelectorAll("entry")).map(article).join('')));
+		.then(data => el.insertAdjacentHTML("beforeend", limit(Array.prototype.slice.call(data.querySelectorAll("entry"))).map(article).join('')));
 })();
