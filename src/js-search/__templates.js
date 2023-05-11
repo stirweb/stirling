@@ -90,14 +90,16 @@ stir.templates.search = (() => {
 	const metaParamTokens = (tokens) => {
 		const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
 		return metas
-			.map((key) => {
-				// does the name and value match a DOM element?
+		.map((key) => {
+			// does the name and value exactly match a DOM element?
+			// i.e. an <input> element from which we can grab the text label
 				if(el = metaParamElement(key, tokens[key])) {
-					if ("hidden" === el.type) return;			// ignore hidden inputs
+					if ("hidden" === el.type) return;			// ignore hidden inputs (as they have no text!)
 					return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
 				}
-
-				// if not, we might have a multi-select filter (e.g. checkbox)
+				
+				// if not an exact match, we might have a multi-select filter (e.g. checkbox)
+				// we'll check the constituent values to find matching elements
 				const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
 				const values = tokens[key].toString().replace(tokenex, `$1`).split(/\s/); // values are space-separated
 				return values

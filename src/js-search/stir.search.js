@@ -323,8 +323,14 @@ stir.search = () => {
 		let a = form ? new FormData(form) : new FormData();
 
 		for (var key of a.keys()) {
-			if (key.indexOf('f.')===0) continue;
-			a.getAll(key).length > 1 && a.set(key, "[" + a.getAll(key).join(" ") + "]");
+			if (key.indexOf('f.')===0) continue;	//ignore any facets
+			if(a.getAll(key).length > 1) {
+				// merge values into one dysjunction operator
+				// as used in the Research type filter's "Other" option:
+				// "publication", "contract", "[tag theme programme group]"
+				// will become "[publication contract tag theme programme group]"
+				a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g,'') + "]");
+			}
 		}
 
 		return a;
