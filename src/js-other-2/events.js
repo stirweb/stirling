@@ -10,7 +10,7 @@ NODES
   const eventspromo = stir.node("#eventspromo");
   const eventspublicfilters = stir.node("#eventspublicfilters");
   const eventsstafffilters = stir.node("#eventsstafffilters");
-
+  const eventsarchivefilters = stir.node("#eventsarchivefilters");
   /* 
     |
     |   RENDERERS : Return a string of Html Code
@@ -93,6 +93,26 @@ NODES
         </div>`;
   };
 
+  const renderPastEvent = (item) => {
+    return ` <div class="c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
+                ${item.isSeries ? renderTab("Event series") : ``} 
+                <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                    <p class="u-text-regular u-m-0">
+                        <strong><a href="${item.url}">${item.title}</a></strong>
+                    </p>
+                    <div class="flex-container flex-dir-column u-gap-8">
+                        <div class="flex-container u-gap-16 align-middle">
+                            <span class="u-icon h5 uos-calendar"></span>
+                            <span><time datetime="${item.start}">${item.stirStart}</time> – <time datetime="${item.end}">${item.stirEnd}</time></span>
+                        </div>
+                    </div>
+                    <p class="u-m-0">${item.summary}</p>
+                    ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
+                </div>
+                ${item.image ? renderImage(item.image, item.title) : ``}  
+            </div>`;
+  };
+
   /*
     |
     |   HELPERS
@@ -100,6 +120,8 @@ NODES
     */
 
   const renderEventsMapper = stir.map(renderEvent);
+
+  const renderPastEventsMapper = stir.map(renderPastEvent);
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
@@ -119,9 +141,9 @@ NODES
     return Number(yourDate.toISOString().split("T")[0].split("-").join(""));
   };
 
-  const isPublic = (item) => item.isPublic === "Yes" && item.endInt >= getNow(); // TODO Break out past and future
+  const isPublic = (item) => item.isPublic === "Yes"; // TODO Break out past and future
 
-  const isStaffStudent = (item) => item.isPublic !== "Yes" && item.endInt >= getNow(); // TODO Break out past and future
+  const isStaffStudent = (item) => item.isPublic !== "Yes"; // TODO Break out past and future
 
   const isPublicFilter = stir.filter(isPublic);
 
@@ -130,6 +152,10 @@ NODES
   const isPassed = (item) => item.endInt < getNow();
 
   const isPassedFilter = stir.filter(isPassed);
+
+  const isUpcoming = (item) => item.endInt >= getNow();
+
+  const isUpcomingFilter = stir.filter(isUpcoming);
 
   const isPromo = (item) => item.promo;
 
@@ -142,6 +168,8 @@ NODES
   const sortByStartDateDesc = (a, b) => b.startInt - a.startInt;
 
   const sortByPin = (a, b) => a.pin - b.pin;
+
+  const hasRecording = stir.filter((item) => item.recording);
 
   /* 
     | 
@@ -246,13 +274,14 @@ NODES
 
   eventspublicfilters.querySelector("input[type=radio]").checked = true;
   eventsstafffilters.querySelector("input[type=radio]").checked = true;
+  eventsarchivefilters.querySelector("input[type=radio]").checked = true;
 
   const initData = stir.feeds.events.filter((item) => item.id);
 
   // Populate the 3 tabs
-  stir.compose(setDOMPublic, joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter)(initData);
-  stir.compose(setDOMStaff, joiner, renderEventsMapper, stir.sort(sortByStartDate), isStaffFilter)(initData);
-  stir.compose(setDOMArchive, joiner, renderEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
+  stir.compose(setDOMPublic, joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(initData);
+  stir.compose(setDOMStaff, joiner, renderEventsMapper, stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(initData);
+  stir.compose(setDOMArchive, joiner, renderPastEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
 
   stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), isPromoFilter, stir.sort(sortByStartDate))(initData);
 
@@ -269,12 +298,12 @@ NODES
       //console.log(filterRange);
 
       if (!filterRange) {
-        const html1 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter)(initData);
+        const html1 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(initData);
         html1.length ? setDOMPublic(html1) : setDOMPublic(renderNoData());
       } else {
         const inRangeCurry = inRange(filterRange);
         const dataDateFiltered = stir.filter(inRangeCurry, initData);
-        const html2 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter)(dataDateFiltered);
+        const html2 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilte, isUpcomingFilter)(dataDateFiltered);
         html2.length ? setDOMPublic(html2) : setDOMPublic(renderNoData());
       }
     }
@@ -286,13 +315,37 @@ NODES
       const filterRange = getFilterRange(rangeWanted);
 
       if (!filterRange) {
-        const html1 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter)(initData);
+        const html1 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(initData);
         html1.length ? setDOMStaff(html1) : setDOMStaff(renderNoData());
       } else {
         const inRangeCurry = inRange(filterRange);
         const dataDateFiltered = stir.filter(inRangeCurry, initData);
-        const html2 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter)(dataDateFiltered);
+        const html2 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(dataDateFiltered);
         html2.length ? setDOMStaff(html2) : setDOMStaff(renderNoData());
+      }
+    }
+  });
+
+  eventsarchivefilters.addEventListener("click", (event) => {
+    if (event.target.type === "radio") {
+      if (event.target.value === "all") {
+        const html = stir.compose(joiner, renderPastEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
+        html.length ? setDOMArchive(html) : setDOMArchive(renderNoData());
+      }
+
+      if (event.target.value === "recordings") {
+        const htmlRecordings = stir.compose(joiner, renderPastEventsMapper, stir.sort(sortByStartDateDesc), hasRecording, isPassedFilter)(initData);
+        htmlRecordings.length ? setDOMArchive(htmlRecordings) : setDOMArchive(renderNoData());
+      }
+
+      if (event.target.value === "public") {
+        const htmlPublic = stir.compose(joiner, renderPastEventsMapper, stir.sort(sortByStartDateDesc), isPublicFilter, isPassedFilter)(initData);
+        htmlPublic.length ? setDOMArchive(htmlPublic) : setDOMArchive(renderNoData());
+      }
+
+      if (event.target.value === "staffstudent") {
+        const htmlPublic = stir.compose(joiner, renderPastEventsMapper, stir.sort(sortByStartDateDesc), isStaffFilter, isPassedFilter)(initData);
+        htmlPublic.length ? setDOMArchive(htmlPublic) : setDOMArchive(renderNoData());
       }
     }
   });
