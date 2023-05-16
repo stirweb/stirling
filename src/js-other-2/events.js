@@ -119,9 +119,9 @@ NODES
     return Number(yourDate.toISOString().split("T")[0].split("-").join(""));
   };
 
-  const isPublic = (item) => item.isPublic === "Yes" && item.endInt >= getNow();
+  const isPublic = (item) => item.isPublic === "Yes" && item.endInt >= getNow(); // TODO Break out past and future
 
-  const isStaffStudent = (item) => item.isPublic !== "Yes" && item.endInt >= getNow();
+  const isStaffStudent = (item) => item.isPublic !== "Yes" && item.endInt >= getNow(); // TODO Break out past and future
 
   const isPublicFilter = stir.filter(isPublic);
 
