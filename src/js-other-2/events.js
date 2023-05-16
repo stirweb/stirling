@@ -66,9 +66,9 @@ NODES
 
   const renderEventsPromo = (item) => {
     return `
-        <div class=" u-bg-grey u-p-2 flex-container flex-dir-column medium-flex-dir-row u-gap u-mt-1 u-mb-2 u-flex1 "   >
-            <div>
-            ${item.isSeries ? renderTab("Event series") : ``}
+          <div class="grid-x grid-padding-x u-bg-grey u-p-2 u-mb-2">
+            <div class="cell small-12 ${item.image ? `medium-8` : ``} ">
+                ${item.isSeries ? renderTab("Event series") : ``}
                 <p class="u-text-regular u-mb-2">
                     <strong><a href="${item.url}">${item.title}</a></strong>
                 </p>
@@ -89,7 +89,7 @@ NODES
                 <p class="u-m-0 text-sm">${item.summary}</p>
                 ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
             </div>
-            ${item.image ? `<div><img src="${item.image}" width="300" height="300" alt="Image: ${item.title}" /></div>` : ``}  
+            ${item.image ? `<div class="cell medium-4"><img src="${item.image}" width="500" height="500" alt="Image: ${item.title}" /></div>` : ``}  
         </div>`;
   };
 
