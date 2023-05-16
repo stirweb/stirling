@@ -66,8 +66,8 @@ NODES
 
   const renderEventsPromo = (item) => {
     return `
-          <div class="grid-x grid-padding-x u-bg-grey u-p-2 u-mb-2">
-            <div class="cell small-12 ${item.image ? `medium-8` : ``} ">
+          <div class="grid-x u-bg-grey u-mb-2 ">
+            <div class="cell u-p-2 small-12 ${item.image ? `medium-8` : ``} ">
                 ${item.isSeries ? renderTab("Event series") : ``}
                 <p class="u-text-regular u-mb-2">
                     <strong><a href="${item.url}">${item.title}</a></strong>
