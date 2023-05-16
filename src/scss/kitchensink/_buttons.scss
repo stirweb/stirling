@@ -334,15 +334,15 @@ input:checked {
     /* The green sticky button classes may be applied to the <a> or a surrounding wrapper e.g. <div> */
     /* so the selectors here are a bit more specific to ensure the cascade/specificity */
     /* is correct and we get the right hover colours for wrapped sticky buttons (i.e. Clearing) */
-    color: #fff;
+    //color: #3a3c39;
     font-weight: bold;
     a {
       color: #fff;
     }
     &:hover {
-      color: $energy-green; //was set to #67a51e;
+      color: $heritage-green; // #67a51e; //was set to #67a51e;
       a {
-        color: $energy-green; // was set to #67a51e;
+        color: $heritage-green; // #67a51e; // was set to #67a51e;
       }
     }
   }
