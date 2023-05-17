@@ -68,6 +68,10 @@ h3:after {
   height: 8px;
 }
 
+.u-head-subtle-line::after {
+  background-color: rgba(255, 255, 255, 0.42);
+}
+
 /* Select h2's and h3's after a responsive video to lessen the space between. */
 .c-responsive-embed + h2,
 .c-responsive-embed + h3 {

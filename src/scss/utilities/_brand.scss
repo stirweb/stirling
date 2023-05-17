@@ -25,18 +25,32 @@
   height: 8px;
 }
 
+/* energy */
+.u-energy-line-top,
 .u-green-line-top {
   border-top: 3px solid $energy-green;
 }
 
+.u-energy-line-bottom,
 .u-green-line-bottom {
   border-bottom: 3px solid $energy-green;
 }
 
+.u-energy-line-left,
 .u-green-line-left {
   border-left: 5px solid $energy-green;
 }
 
+/* heritage */
+.u-heritage-line-bottom {
+  border-bottom: 3px solid $heritage-green;
+}
+
+.u-heritage-line-left {
+  border-left: 3px solid $heritage-green;
+}
+
+/* grey */
 .u-grey-line-bottom {
   border-bottom: 5px solid #f6f5f4;
 }
@@ -47,6 +61,35 @@
 
 .u-grey-line-left {
   border-left: 1px solid #eae9e8;
+}
+
+/*
+  General Borders
+*/
+
+.u-border {
+  border: 1px solid #ccc;
+}
+
+.u-border-none {
+  border: none;
+}
+
+.u-border-solid {
+  border: 1px solid currentColor;
+}
+
+.u-border-bottom-solid,
+.u-underline {
+  border-bottom: 1px solid currentColor;
+}
+
+.u-border-top-solid {
+  border-top: 1px solid currentColor;
+}
+
+.u-border-width-4 {
+  border-width: 4px;
 }
 
 /* Borders for medium down */
