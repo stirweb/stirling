@@ -93,8 +93,9 @@ NODES
         </div>`;
   };
 
-  const renderPastEvent = (item) => {
+  const renderArchiveEvent = (item) => {
     return ` <div class="c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
+                ${item.recording ? renderTab("Recording available") : ``} 
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
@@ -121,7 +122,7 @@ NODES
 
   const renderEventsMapper = stir.map(renderEvent);
 
-  const renderPastEventsMapper = stir.map(renderPastEvent);
+  const renderArchiveEventsMapper = stir.map(renderArchiveEvent);
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
@@ -279,9 +280,14 @@ NODES
   const initData = stir.feeds.events.filter((item) => item.id);
 
   // Populate the 3 tabs
-  stir.compose(setDOMPublic, joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(initData);
-  stir.compose(setDOMStaff, joiner, renderEventsMapper, stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(initData);
-  stir.compose(setDOMArchive, joiner, renderPastEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
+  const htmlPublic = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(initData);
+  htmlPublic.length ? setDOMPublic(htmlPublic) : setDOMPublic(renderNoData());
+
+  const htmlStaff = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(initData);
+  htmlStaff.length ? setDOMStaff(htmlStaff) : setDOMStaff(renderNoData());
+
+  const htmlArchive = stir.compose(joiner, renderArchiveEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
+  htmlArchive.length ? setDOMArchive(htmlArchive) : setDOMArchive(renderNoData());
 
   stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), isPromoFilter, stir.sort(sortByStartDate))(initData);
 
@@ -329,22 +335,22 @@ NODES
   eventsarchivefilters.addEventListener("click", (event) => {
     if (event.target.type === "radio") {
       if (event.target.value === "all") {
-        const html = stir.compose(joiner, renderPastEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
+        const html = stir.compose(joiner, renderArchiveEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
         html.length ? setDOMArchive(html) : setDOMArchive(renderNoData());
       }
 
       if (event.target.value === "recordings") {
-        const htmlRecordings = stir.compose(joiner, renderPastEventsMapper, stir.sort(sortByStartDateDesc), hasRecording, isPassedFilter)(initData);
+        const htmlRecordings = stir.compose(joiner, renderArchiveEventsMapper, stir.sort(sortByStartDateDesc), hasRecording, isPassedFilter)(initData);
         htmlRecordings.length ? setDOMArchive(htmlRecordings) : setDOMArchive(renderNoData());
       }
 
       if (event.target.value === "public") {
-        const htmlPublic = stir.compose(joiner, renderPastEventsMapper, stir.sort(sortByStartDateDesc), isPublicFilter, isPassedFilter)(initData);
+        const htmlPublic = stir.compose(joiner, renderArchiveEventsMapper, stir.sort(sortByStartDateDesc), isPublicFilter, isPassedFilter)(initData);
         htmlPublic.length ? setDOMArchive(htmlPublic) : setDOMArchive(renderNoData());
       }
 
       if (event.target.value === "staffstudent") {
-        const htmlPublic = stir.compose(joiner, renderPastEventsMapper, stir.sort(sortByStartDateDesc), isStaffFilter, isPassedFilter)(initData);
+        const htmlPublic = stir.compose(joiner, renderArchiveEventsMapper, stir.sort(sortByStartDateDesc), isStaffFilter, isPassedFilter)(initData);
         htmlPublic.length ? setDOMArchive(htmlPublic) : setDOMArchive(renderNoData());
       }
     }
