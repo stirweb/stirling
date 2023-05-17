@@ -25,7 +25,8 @@
                     ${t.isSeriesChild?p(t.isSeriesChild):""}
                 </div>
                 ${t.image?o(t.image,t.title):""}  
-            </div>`),g=stir.map(t=>` <div class="c-search-result ${t.image?"c-search-result__with-thumbnail":""}" data-result-type="event"  >
+            </div>`),g=stir.map(t=>`
+            <div class="c-search-result ${t.image?"c-search-result__with-thumbnail":""}" data-result-type="event"  >
                 ${t.recording?c("Recording available"):""} 
                 ${t.isSeries?c("Event series"):""} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">

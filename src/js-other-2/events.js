@@ -2,7 +2,7 @@
   if (!scope) return;
 
   /* 
-NODES
+    NODES
   */
   const eventspublic = stir.node("#eventspublic");
   const eventsstaff = stir.node("#eventsstaff");
@@ -11,6 +11,7 @@ NODES
   const eventspublicfilters = stir.node("#eventspublicfilters");
   const eventsstafffilters = stir.node("#eventsstafffilters");
   const eventsarchivefilters = stir.node("#eventsarchivefilters");
+
   /* 
     |
     |   RENDERERS : Return a string of Html Code
@@ -94,7 +95,8 @@ NODES
   };
 
   const renderArchiveEvent = (item) => {
-    return ` <div class="c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
+    return `
+            <div class="c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
                 ${item.recording ? renderTab("Recording available") : ``} 
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
