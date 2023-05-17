@@ -6,7 +6,7 @@
               <button class="button hollow tiny" data-page="${e}">Load more results</button>
         </div>`}
         </div> `;var s,a}),O=(e,t,r)=>{return`
-        <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-green-line-left u-relative">
+        <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-line-left u-relative">
             <div class="u-absolute u-top--15">
             ${s=r.scholarship.studyLevel,a="desc",("desc"!==a?s.split(", ").sort():s.split(", ").sort().reverse()).map(L).join("")}
             </div>
