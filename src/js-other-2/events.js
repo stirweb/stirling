@@ -142,9 +142,9 @@ NODES
     return Number(yourDate.toISOString().split("T")[0].split("-").join(""));
   };
 
-  const isPublic = (item) => item.isPublic === "Yes"; // TODO Break out past and future
+  const isPublic = (item) => item.isPublic === "Yes";
 
-  const isStaffStudent = (item) => item.isPublic !== "Yes"; // TODO Break out past and future
+  const isStaffStudent = (item) => item.isPublic !== "Yes";
 
   const isPublicFilter = stir.filter(isPublic);
 
@@ -205,7 +205,7 @@ NODES
     const date = new Date();
     const first = new Date(date.setDate(date.getDate() + ((0 + (0 - date.getDay())) % 7)));
     const last = new Date(date.setDate(date.getDate() + 6));
-    //console.log(first, last);
+
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
@@ -213,10 +213,10 @@ NODES
         getNextWeekStartEnds : Returns an object with start & end dates eg 2023-07-24, 2023-07-30
     */
   const getNextWeekStartEnds = () => {
-    let date = new Date();
-    let first = new Date(date.setDate(date.getDate() + ((0 + (7 - date.getDay())) % 7)));
+    const date = new Date();
+    const first = new Date(date.setDate(date.getDate() + ((0 + (7 - date.getDay())) % 7)));
     const last = new Date(date.setDate(date.getDate() + 6));
-    //console.log(first, last);
+
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
@@ -224,10 +224,10 @@ NODES
         getThisMonthStartEnds : Returns an object with start & end dates eg 2023-04-01, 2023-04-30 
     */
   const getThisMonthStartEnds = () => {
-    let date = new Date();
-    let first = new Date(date.getFullYear(), date.getMonth(), 2);
-    let last = new Date(date.getFullYear(), date.getMonth() + 1, 1);
-    //console.log(first, last);
+    const date = new Date();
+    const first = new Date(date.getFullYear(), date.getMonth(), 2);
+    const last = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
@@ -235,10 +235,10 @@ NODES
         getNextMonthStartEnds : Returns an object with start & end dates eg 2023-04-01, 2023-04-30 
     */
   const getNextMonthStartEnds = () => {
-    let date = new Date();
-    let first = new Date(date.getFullYear(), date.getMonth() + 1, 2);
-    let last = new Date(date.getFullYear(), date.getMonth() + 2, 1);
-    //console.log(first, last);
+    const date = new Date();
+    const first = new Date(date.getFullYear(), date.getMonth() + 1, 2);
+    const last = new Date(date.getFullYear(), date.getMonth() + 2, 1);
+
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
@@ -301,7 +301,6 @@ NODES
     if (event.target.type === "radio") {
       const rangeWanted = event.target.value;
       const filterRange = getFilterRange(rangeWanted);
-      //console.log(filterRange);
 
       if (!filterRange) {
         const html1 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(initData);
@@ -309,7 +308,7 @@ NODES
       } else {
         const inRangeCurry = inRange(filterRange);
         const dataDateFiltered = stir.filter(inRangeCurry, initData);
-        const html2 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilte, isUpcomingFilter)(dataDateFiltered);
+        const html2 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(dataDateFiltered);
         html2.length ? setDOMPublic(html2) : setDOMPublic(renderNoData());
       }
     }
