@@ -1,27 +1,4 @@
-/*
-  Borders
-*/
-
-.u-border {
-  border: 1px solid #ccc;
-}
-
-.u-border-none {
-  border: none;
-}
-
-.u-border-solid {
-  border: 1px solid currentColor;
-}
-
-.u-border-bottom-solid,
-.u-underline {
-  border-bottom: 1px solid currentColor;
-}
-
-.u-border-top-solid {
-  border-top: 1px solid currentColor;
-}
+/* Borders atre now in utilsies > brand */
 
 .objfit-container {
   .button,
