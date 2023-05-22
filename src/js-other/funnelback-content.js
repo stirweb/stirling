@@ -32,10 +32,15 @@ stir.funnelback = stir.funnelback || (() => {
 		image: (src,alt) => src&&alt?`<img class="show-for-medium" src="${src}" alt="${alt}">`:'',
 		link: (url,text) => url&&text?`<a href="${url}">${text}</a>`:''
 	};
-	const parameters = {
-		relatedCourses: '&sort=title&SF=[award]&num_ranks=25',
-		relatedNews:'&sort=date&SF=[c,d,h1,image,imagealt,tags]&num_ranks=3'
+	const max = {
+		relatedCourses: 25,
+		relatedNews: 3
 	};
+	const parameters = {
+		relatedCourses: `&sort=title&SF=[award]&num_ranks=${max['relatedCourses']+1}`,
+		relatedNews:`&sort=date&SF=[c,d,h1,image,imagealt,tags]&num_ranks=${max['relatedNews']+1}`
+	};
+	const noSelfLinks = result => result.liveUrl!==window.location.href;
 	document.querySelectorAll('[data-funnelback-inject]').forEach(el => {
 
 		if(!el)return;
@@ -56,7 +61,7 @@ stir.funnelback = stir.funnelback || (() => {
 		
 		const callback = data => {
 			if(!data||!data.response||!data.response.resultPacket||!data.response.resultPacket.results.length)return;
-			el.innerHTML = data.response.resultPacket.results.map(result => templates[type](result)).join('')||'';
+			el.innerHTML = data.response.resultPacket.results.filter(noSelfLinks).slice(0,max[type]).map(result => templates[type](result)).join('')||'';
 		};
 		
 		debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
