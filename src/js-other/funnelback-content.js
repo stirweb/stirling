@@ -19,11 +19,13 @@ stir.funnelback = stir.funnelback || (() => {
 	const templates = {
 		relatedCourses: result => `<li><a href="${result.liveUrl}">${result.metaData.award||""} ${result.title}</a></li>`,
 		relatedNews: result => `<article class="cell large-4 medium-6 small-12" aria-label="${result.title.split("|").shift().trim()}">
-		<a href="${result.liveUrl}"><img class="show-for-medium" src="${result.metaData.image.split("|").slice(1).shift()}" alt="${result.metaData.imagealt}"></a>
+		${templates.link(result.liveUrl,templates.image(result.metaData.image.split("|").slice(1).shift(),result.metaData.imagealt))}
 		<time class="u-block u-my-1 u-grey--dark">${stir.Date.newsDate(new Date(result.date))}</time>
 		<h3 class="header-stripped u-header--margin-stripped u-mt-1 u-font-normal u-compress-line-height"><a href="${result.liveUrl}" class="c-link u-inline">${result.title.split("|").shift().trim()}</a></h3>
 		<p class="text-sm">${result.summary}</p>
 	</article>`,
+		image: (src,alt) => src&&alt?`<img class="show-for-medium" src="${src}" alt="${alt}">`:'',
+		link: (url,text) => url&&text?`<a href="${url}">${text}</a>`:''
 	};
 	const parameters = {
 		relatedCourses: '&sort=title&SF=[award]&num_ranks=25',
@@ -36,7 +38,6 @@ stir.funnelback = stir.funnelback || (() => {
 		var metaName = el.getAttribute('data-meta-name');
 		var metaValue = el.getAttribute('data-meta-value');
 		var collection = el.getAttribute('data-collection');
-		if(!type||!metaName||!metaValue)return;
 		
 		if("subject"===metaName) {
 			// Subjects are comma separated and need to be wrapped with quotemarks
@@ -45,11 +46,12 @@ stir.funnelback = stir.funnelback || (() => {
 			metaValue = metaValue.split(', ').map(value=>`"${value}"`).join(" ");
 		}
 
-		const url = stir.funnelback.getJsonEndpoint().toString() + `?collection=${collection}&query=!padre&meta_${metaName}_orsand=${metaValue}${parameters[type]}`;
+		const fb_meta = (metaName&&metaValue) ? `&meta_${metaName}_orsand=${metaValue}`:'';
+		const url = stir.funnelback.getJsonEndpoint().toString() + `?collection=${collection}&query=!padre${fb_meta+parameters[type]}`;
 		
 		const callback = data => {
-			if(!data)return;
-			el.innerHTML = data?.response?.resultPacket?.results?.map(result => templates[type](result)).join('')||'';
+			if(!data||!data.response||!data.response.resultPacket||!data.response.resultPacket.results.length)return;
+			el.innerHTML = data.response.resultPacket.results.map(result => templates[type](result)).join('')||'';
 		};
 		
 		debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
