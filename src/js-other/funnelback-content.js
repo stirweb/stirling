@@ -22,7 +22,7 @@ stir.funnelback = stir.funnelback || (() => {
 		${templates.link(
 			result.liveUrl,
 			templates.image(result.metaData.image.split("|").slice(-1)[0],result.metaData.imagealt) || 
-			templates.image('https://www.stir.ac.uk/media/stirling/global-assets/landscape/og-airthrey-loch-1200x630.jpg', 'Airthrey Loch')
+			templates.image('https://www.stir.ac.uk/media/stirling/news/news-centre/generic/airthrey-related-news.jpg', 'Airthrey Loch')
 		)}
 		<time class="u-block u-my-1 u-grey--dark">${stir.Date.newsDate(new Date(result.date))}</time>
 		<h3 class="header-stripped u-header--margin-stripped u-mt-1 u-font-normal u-compress-line-height"><a href="${result.liveUrl}" class="c-link u-inline">${result.title.split("|").shift().trim()}</a></h3>
