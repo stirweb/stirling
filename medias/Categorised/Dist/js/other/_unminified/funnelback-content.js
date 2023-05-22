@@ -19,11 +19,16 @@ stir.funnelback = stir.funnelback || (() => {
 	const templates = {
 		relatedCourses: result => `<li><a href="${result.liveUrl}">${result.metaData.award||""} ${result.title}</a></li>`,
 		relatedNews: result => `<article class="cell large-4 medium-6 small-12" aria-label="${result.title.split("|").shift().trim()}">
-		${templates.link(result.liveUrl,templates.image(result.metaData.image.split("|").slice(1).shift(),result.metaData.imagealt))}
+		${templates.link(
+			result.liveUrl,
+			templates.image(result.metaData.image.split("|").slice(-1)[0],result.metaData.imagealt) || 
+			templates.image('https://www.stir.ac.uk/media/stirling/global-assets/landscape/og-airthrey-loch-1200x630.jpg', 'Airthrey Loch')
+		)}
 		<time class="u-block u-my-1 u-grey--dark">${stir.Date.newsDate(new Date(result.date))}</time>
 		<h3 class="header-stripped u-header--margin-stripped u-mt-1 u-font-normal u-compress-line-height"><a href="${result.liveUrl}" class="c-link u-inline">${result.title.split("|").shift().trim()}</a></h3>
 		<p class="text-sm">${result.summary}</p>
-	</article>`,
+		</article>`,
+		/* <p><pre>${result.metaData.image.split("|").join("\n")}</pre></p> */
 		image: (src,alt) => src&&alt?`<img class="show-for-medium" src="${src}" alt="${alt}">`:'',
 		link: (url,text) => url&&text?`<a href="${url}">${text}</a>`:''
 	};
