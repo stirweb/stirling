@@ -3905,6 +3905,7 @@ stir.favs = (() => {
   const NODES = {
     coursefavsbtns: stir.nodes('[data-nodeid="coursefavsbtn"]'),
     favsArea: stir.node("#coursefavsarea"),
+    favBtns: stir.node("#coursefavbtns"),
     sharedArea: stir.node("#coursesharedarea"),
     sharedfavArea: stir.node("#coursesharedfavsarea"),
   };
@@ -3987,10 +3988,24 @@ stir.favs = (() => {
 
   const renderFavActionBtns = () => {
     return `
-          <div class="u-mb-3 ">
-          <button class="u-border-solid u-p-1  u-cursor-pointer u-mt-1 " aria-label="Clear favourites" data-action="clearallfavs">Clear favourites</button>
-          <button class="u-border-solid u-p-1 u-cursor-pointer u-mt-1 " data-opendialog="shareDialog" aria-label="Generate share link" data-action="copysharelink">Generate share link</button>
-          </div>`;
+        <div class="u-mb-3 ">
+          <button class="button no-arrow button--left-align  expanded u-m-0 text-left  u-white--all u-mt-1" data-opendialog="shareDialog" aria-label="Generate share link" data-action="copysharelink" >
+              <div class="flex-container align-middle u-gap-16">
+                  <span class="u-flex1 text-sm">Generate share link</span>
+                  <span class="uos-chevron-right u-icon"></span>
+              </div>
+          </button>
+
+          <button class="button no-arrow button--left-align  expanded u-m-0 text-left u-bg-black u-white--all u-mt-1" aria-label="Clear favourites"  data-action="clearallfavs" >
+              <div class="flex-container align-middle u-gap-16">
+                  <span class="u-flex1 text-sm">Clear favourites</span>
+                  <span class="uos-chevron-right u-icon"></span>
+              </div>
+          </button>
+          <!--
+          <button class="u-p-1 u-cursor-pointer u-mt-1 button expanded heritage-green" data-opendialog="shareDialog" aria-label="Generate share link" data-action="copysharelink">Generate share link</button>
+          <button class="u-p-1  u-cursor-pointer u-mt-1 button expanded dark-mink" aria-label="Clear favourites" data-action="clearallfavs">Clear favourites</button>
+        </div> -->`;
   };
 
   const renderInactiveIcon = () => {
@@ -4035,7 +4050,7 @@ stir.favs = (() => {
     return !link
       ? ``
       : ` <p><strong>Share link</strong></p>  
-          ${navigator.clipboard?'<p class="text-xsm">The following share link has been copied to your clipboard:</p>':''}   
+          ${navigator.clipboard ? '<p class="text-xsm">The following share link has been copied to your clipboard:</p>' : ""}   
           <p class="text-xsm">${link}</p>`;
   };
 
@@ -4091,9 +4106,10 @@ stir.favs = (() => {
       |
       */
   const _getfavsCookie = (cookieId) => {
-    const favCookie = document.cookie.split(";")
-                      .filter((i) => i.includes(cookieId))
-                      .map(i=>i.replace(cookieId, ""));
+    const favCookie = document.cookie
+      .split(";")
+      .filter((i) => i.includes(cookieId))
+      .map((i) => i.replace(cookieId, ""));
     return favCookie.length ? JSON.parse(favCookie) : [];
   };
   const getfavsCookie = () => _getfavsCookie(cookieId);
@@ -4142,7 +4158,8 @@ stir.favs = (() => {
       */
   const getShareList = (data) => {
     const sharedListQuery = QueryParams.get("c") || "";
-    try {   // wrap in a try{} to catch any Base64 errors
+    try {
+      // wrap in a try{} to catch any Base64 errors
       const sharedList = atob(sharedListQuery);
       // Maintain ordering by merging FB result into cookie object
       return sharedList.split(",").map((item) => {
@@ -4153,8 +4170,9 @@ stir.favs = (() => {
           ...{ id: item },
         };
       });
+    } catch (e) {
+      /* URL param not Base64? */ return;
     }
-    catch (e) { /* URL param not Base64? */ return; }
   };
 
   /*
@@ -4169,14 +4187,16 @@ stir.favs = (() => {
       |
       */
   const doFavsCurry = stir.curry((nodes, data) => {
-    if(!nodes || !nodes.favsArea) return;
+    if (!nodes || !nodes.favsArea) return;
     const list = getFavsList(data);
 
     if (!list) {
       return !setDOMContent(nodes.favsArea, renderNoFavs());
     }
 
-    return setDOMContent(nodes.favsArea, renderFavActionBtns() + list.map(renderFav).join(""));
+    nodes.favBtns && setDOMContent(nodes.favBtns, renderFavActionBtns());
+
+    return setDOMContent(nodes.favsArea, list.map(renderFav).join(""));
   });
 
   const doFavs = doFavsCurry(NODES);
@@ -4187,11 +4207,11 @@ stir.favs = (() => {
       |
       */
   const doSharedCurry = stir.curry((nodes, data) => {
-    if(!nodes) return;
-  
-    if(nodes.sharedArea) {
+    if (!nodes) return;
+
+    if (nodes.sharedArea) {
       const shareList = getShareList(data);
-      
+
       if (!shareList) {
         setDOMContent(nodes.sharedArea, renderNoShared());
       } else {
@@ -4199,7 +4219,7 @@ stir.favs = (() => {
       }
     }
 
-    if(nodes.sharedfavArea) {
+    if (nodes.sharedfavArea) {
       const list = getFavsList(data);
       if (!list) {
         setDOMContent(nodes.sharedfavArea, renderNoFavs());
@@ -4242,11 +4262,12 @@ stir.favs = (() => {
     const el = document.createElement("div"); // temporary element
     el.setAttribute("data-id", sid); // attribute needed for doCourseBtn() validation
     doCourseBtn(el); // generate the button
+
     return el.innerHTML; // pass back to course template
   };
 
   /**
-   * 
+   *
    * Container for functions that will be defined after the data callback
    */
   const async = {};
@@ -4258,17 +4279,19 @@ stir.favs = (() => {
       */
   const _fetchData = (url) => {
     stir.getJSON(url, (data) => {
-
       /* Curry-in the course data now so that these functions can be called again later */
-      async.doFavs   = ()=>{doFavs(data.response.resultPacket.results || [])};
-      async.doShared = ()=>{doShared(data.response.resultPacket.results || [])};
+      async.doFavs = () => {
+        doFavs(data.response.resultPacket.results || []);
+      };
+      async.doShared = () => {
+        doShared(data.response.resultPacket.results || []);
+      };
 
       /* On Load */
       async.doShared();
       async.doFavs();
 
       attachEventHandlers();
-
     });
   };
 
@@ -4297,8 +4320,8 @@ stir.favs = (() => {
 
       if (id && id.length) {
         const favsCookie = JSON.stringify(getfavsCookie().filter((item) => item.id !== id));
-        document.cookie = cookieId + (favsCookie) + getExpiryDate(cookieExpiryDays) + ";path=/";
-        async.doFavs&&async.doFavs();
+        document.cookie = cookieId + favsCookie + getExpiryDate(cookieExpiryDays) + ";path=/";
+        async.doFavs && async.doFavs();
         doCourseBtn(target.parentElement);
       }
     }
@@ -4306,7 +4329,7 @@ stir.favs = (() => {
     /* ACTION: REMOVE ALL FAVS */
     if ("clearallfavs" === target.dataset.action) {
       document.cookie = cookieId + JSON.stringify([]) + getExpiryDate(0) + ";path=/";
-      async.doFavs&&async.doFavs();
+      async.doFavs && async.doFavs();
     }
 
     /* ACTION: COPY SHARE LINK */
@@ -4329,7 +4352,9 @@ stir.favs = (() => {
   /**
    * attachEventHandlers : public, returns null
    */
-    function attachEventHandlers() {stir.node("main").addEventListener("click", clickHandler)};
+  function attachEventHandlers() {
+    stir.node("main").addEventListener("click", clickHandler);
+  }
 
   /*
       | 
@@ -4339,9 +4364,9 @@ stir.favs = (() => {
   return {
     auto: () => fetchData(),
     isFavourite: isInCookie,
-	doCourseBtn:doCourseBtn,
+    doCourseBtn: doCourseBtn,
     createCourseBtnHTML: createCourseBtnHTML,
-    attachEventHandlers:attachEventHandlers
+    attachEventHandlers: attachEventHandlers,
   };
 })();
 
@@ -4351,6 +4376,7 @@ stir.favs = (() => {
 if (stir.node("#coursefavsarea") || stir.node("#coursesharedarea") || stir.nodes("#coursefavsbtn").length) {
   stir.favs.auto(); // `.auto()` replaces `new stir.Favs()`
 }
+
 
 // this will swap the native action for js-action. Useful for search
 // forms where we want non-js situations to be able to submit
