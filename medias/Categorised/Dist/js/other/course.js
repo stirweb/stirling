@@ -11685,7 +11685,6 @@ var KISWidgetCaller = function () {
  */
 if (stir.favs) {
   stir.favs.attachEventHandlers();
-  console.log("hello");
   document.querySelectorAll("[data-nodeid=coursefavsbtn]").forEach(stir.favs.doCourseBtn);
 }
 
