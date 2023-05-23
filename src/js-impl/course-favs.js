@@ -362,6 +362,7 @@ stir.favs = (() => {
     const el = document.createElement("div"); // temporary element
     el.setAttribute("data-id", sid); // attribute needed for doCourseBtn() validation
     doCourseBtn(el); // generate the button
+
     return el.innerHTML; // pass back to course template
   };
 

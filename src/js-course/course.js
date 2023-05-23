@@ -8,8 +8,7 @@ stir.components.discoveruni = stir.components.discoveruni || {};
 
 stir.components.unistats.widget = function (options) {
   var widget = document.createElement("iframe");
-  widget.src =
-    "https://widget.unistats.ac.uk/Widget/10007804/" + kiscode + "/responsive/small/en-GB/" + kismode;
+  widget.src = "https://widget.unistats.ac.uk/Widget/10007804/" + kiscode + "/responsive/small/en-GB/" + kismode;
   widget.setAttribute("title", "Unistats widget for " + kiscode + " (" + kismode + ")");
   widget.classList.add("c-course-unistats-widget");
   return widget;
@@ -170,7 +169,7 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
 
         for (var i = 0; i < widgets.length; i++) {
           widgets[i].classList.add("kis-widget");
-		  widgets[i].id = "kis-widget_" + (i + 1);
+          widgets[i].id = "kis-widget_" + (i + 1);
           new DiscoverUniWidget(widgets[i]);
         }
       });
@@ -251,7 +250,8 @@ var KISWidgetCaller = function () {
  * Favourites buttons
  * 2023-05-10
  */
-if(stir.favs) {
-	stir.favs.attachEventHandlers();
-	document.querySelectorAll('[data-nodeid=coursefavsbtn]').forEach(stir.favs.doCourseBtn);
+if (stir.favs) {
+  stir.favs.attachEventHandlers();
+  console.log("hello");
+  document.querySelectorAll("[data-nodeid=coursefavsbtn]").forEach(stir.favs.doCourseBtn);
 }
