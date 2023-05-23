@@ -1,3 +1,9 @@
+.c-icon-grid {
+  display: grid;
+  grid-template-columns: 20px auto;
+  gap: 8px 16px;
+}
+
 /*
     List with icons as bullets
     Now replaced by u-icon
