@@ -118,6 +118,12 @@
   }
 }
 
+.u-white--all .u-icon {
+  &::before {
+    color: $white;
+  }
+}
+
 .u-svg-icon-24 {
   width: 24px;
   height: 24px;
