@@ -6,7 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Dialog component | University of Stirling</title>
+    <title>Event revamp | University of Stirling</title>
 
     <meta property="og:site_name" content="University of Stirling" />
     <meta property="og:url" content="https://www.stir.ac.ukhttps://t4cms.stir.ac.uk/terminalfour/preview/1/en/13033" />
@@ -330,79 +330,127 @@
 
                 <!-- 
                 <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y"> 
-                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Promo test</h1>     		
+                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Test event 6</h1>     		
                 </div>
                  -->
-                <div class="cell small-12 medium-10 u-margin-top">
-                    <h1>Test promo</h1>
+                <div class="cell small-12 medium-10 u-padding-top">
+                    <h1>Test event six</h1>
                 </div>
 
-                <div class="cell small-12 medium-12  align-right flex-container u-gap-8">
-                    <a class="heritage-berry button u-p-1" href="">Book now</a>
-                    <button class="heritage-green button no-arrow u-p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                <div class="cell small-12 medium-12 align-right flex-container u-gap-8"><button
+                        data-opendialog="shareDialog" class="heritage-green button no-arrow u-p-1"><svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             style="width:22px; height: 22px;" stroke="#fff">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
-                        </svg>
-                    </button>
+                        </svg></button>
                 </div>
 
-                <div class="cell small-12  u-mb-2">
-                    <div class="u-bg-grey u-p-2 ">
-                        <div class=" flex-container  u-gap u-mt-1 ">
-                            <div class="flex-container flex-dir-column u-gap-8 u-flex1">
-                                <div class="flex-container u-gap-16 align-middle"><span
-                                        class="u-icon h5 uos-calendar"></span><span><time datetime="12 Apr 2024">12 Apr
-                                            2024</time> – <time datetime="30 Apr 2024">30 Apr 2024</time></span></div>
-                                <div class="flex-container u-gap-16 align-middle"><span
-                                        class="uos-clock u-icon h5"></span><span><time>2.57PM</time> –
-                                        <time>2.58PM</time></span></div>
-                                <div class="flex-container u-gap-16 align-middle"><span
-                                        class="u-icon h5 uos-discounts"></span><span>Location here 2</span></div>
+
+                <div class="u-w-full u-mb-2 u-bg-grey ">
+                    <div class="grid-x">
+
+                        <div class="cell small-12 medium-4">
+
+                            <div class="c-icon-grid u-p-2">
+                                <span class="u-icon h5 uos-calendar"></span><span><time datetime="30 May 2023">30
+                                        May 2023</time> – <time datetime="16 June 2023">16 June 2023</time></span>
+
+                                <span class="uos-clock u-icon h5"></span><span><time>14:57</time> –
+                                    <time>14:58</time></span>
+
+                                <span class="u-icon h5 uos-location"></span><span>Location here</span>
+                                <span class="u-icon h5 uos-discounts"></span><a href="">Booking required</a>
+                                <span class="u-icon h5 uos-money"></span><span>Free</span>
                             </div>
 
-                            <div><img src="" alt="Image: Test promo" width="275" height="275"></div>
                         </div>
 
+                        <div class="cell small-12 medium-4">
+                            <p class="u-mt-2"><strong>More dates</strong></p>
+
+                            <style>
+
+                            </style>
+
+                            <div class="c-icon-grid">
+                                <span class="u-icon h5 uos-calendar"></span>
+                                <span><time datetime="31 May 2023">31 May 2023</time> - <time datetime="31 May 2023">31
+                                        May 2023</time></span>
+
+                                <span class="uos-clock u-icon h5"></span>
+                                <span><time>11:45</time> – <time>13:45</time></span>
+
+                                <span></span>
+                                <span>More info goes here</span>
+                            </div>
+
+                            <!--
+                            <div>
+                                <div class="flex-container u-gap-16 align-middle">
+                                    <span class="u-icon h5 uos-calendar"></span>
+                                    <span><time datetime="31 May 2023">31 May 2023</time> - <time
+                                            datetime="31 May 2023">31 May 2023</time></span>
+
+
+                                </div>
+
+                                <div class="flex-container u-gap-16 align-middle">
+                                    <span class="uos-clock u-icon h5"></span>
+                                    <span><time>11:45</time> – <time>13:45</time></span>
+                                </div>
+
+                                <div class="flex-container u-gap-16 align-middle">
+                                    <span class=" h5 "></span>
+                                    <span>More info goes here</span>
+                                </div>
+                            </div>
+                            -->
+
+                        </div>
+                        <div class="cell small-12 medium-4"><img class="u-object-cover"
+                                src="https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=074adffe2f7e71c3e414940f8f7785497b47cfa2"
+                                alt="Image: Test event six" width="275" height="275"></div>
                     </div>
                 </div>
+
+                <dialog data-dialog="shareDialog">
+                    <p><strong>Share a link</strong></p>
+                    <button data-closedialog="" class="close-button">×</button>
+                </dialog>
 
                 <div class="cell large-10 medium-10 small-12 ">
-                    <h2 class="header-stripped">Speaker: Roberto Morrison</h2>
-                    <div class="c-wysiwyg-content">
-                        <p>Full description ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                        <p>Ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                            et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                            nisi ut aliquip ex ea commodo consequat.</p>
-                    </div>
+                    <p>Full description ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <p>Ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                        aliquip ex ea commodo consequat.</p>
+                </div>
+                <div class="cell large-10 medium-10 small-12 ">
+                    <h2 class="header-stripped">Speaker: Speaker name</h2>
+                    <p>Speaker ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
 
-                <!-- Related Events --><!--beginnoindex-->
-                <div class="cell small-12 u-margin-bottom">
-                    <h2 class="header-stripped">More upcoming events</h2><a data-type="event" data-section-id="32560"
+                <div class="cell large-10 medium-10 small-12 u-margin-bottom"><!--beginnoindex-->
+                    <h2 class="header-stripped">More upcoming events</h2><a data-type="event" data-section-id="32643"
                         class="button dark-mink expanded c-long-button"
-                        href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/32560">Spaces
-                        and Places: a reading with Nikita Parik and Shreyasi Sharma <span
-                            class="c-long-button__badge u-font-bold show-for-large"> 2 May 2023 to 2 May
-                            2023</span></a><a data-type="event" data-section-id="32403"
+                        href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/32643">Charity
+                        rounders match <span class="c-long-button__badge u-font-bold show-for-large"> 2 June
+                            2023</span></a><a data-type="event" data-section-id="32509"
                         class="button dark-mink expanded c-long-button"
-                        href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/32403">Russia's
-                        war against Ukraine: Roundtable event
-                        <span class="c-long-button__badge u-font-bold show-for-large"> 17 May 2023 to 17 May
-                            2023</span></a><a data-type="event" data-section-id="32605"
+                        href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/32509">STIR-UP
+                        Nurse Research! <span class="c-long-button__badge u-font-bold show-for-large"> 15 June 2023 to
+                            15 June 2023</span></a><a data-type="event" data-section-id="32534"
                         class="button dark-mink expanded c-long-button"
-                        href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/32605">Honorary
-                        Professor Cele Otnes visit <span class="c-long-button__badge u-font-bold show-for-large"> 15 May
-                            2023 to 18 May 2023</span></a>
+                        href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/32534">Graduation
+                        summer ball 2023 <span class="c-long-button__badge u-font-bold show-for-large"> 30 June 2023 to
+                            1 July 2023</span></a><!--endnoindex-->
                 </div>
-
-                <div class="grid-container">
-                    <div class="grid-x grid-padding-x">
-                    </div>
-                </div>
+            </div>
+        </div>
     </main>
 
     <!--beginnoindex-->
