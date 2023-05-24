@@ -90,7 +90,7 @@
                 <p class="u-m-0 text-sm">${item.summary}</p>
                 ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
             </div>
-            ${item.image ? `<div class="cell medium-4"><img src="${item.image}" width="500" height="500" alt="Image: ${item.title}" /></div>` : ``}  
+            ${item.image ? `<div class="cell medium-4"><img src="${item.image}" class="u-object-cover" width="800" height="800" alt="Image: ${item.title}" /></div>` : ``}  
         </div>`;
   };
 
