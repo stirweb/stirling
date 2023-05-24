@@ -82,7 +82,18 @@ stir.favs = (() => {
           </button>`;
   };
 
-  const renderNoFavs = () => `<p>Nothing saved here yet. <a href="/courses/">View courses</a> and add them to your favourites. </p>`;
+  const renderNoFavs = () => {
+    return `
+            <p><strong>Nothing saved here yet</strong></p>
+            <p>This might be because:</p>
+            <ul>
+                <li>you haven't selected any favourite <a href="/courses/">courses</a> yet,</li>
+                <li>you cleared all your favourites from the list,</li>
+                <li>or your web browser is automatically clearing the cookie which remembers your list of
+                    favourites.</li>
+            </ul>`;
+  };
+
   const renderNoShared = () => `<div class="cell"><p>No courses have been shared with you.</p><p><a href="/courses/">Main course search</a></p></div>`;
   const renderLinkToFavs = () => `<hr><p class="text-sm u-arrow"><a href="/courses/favourites/">Manage my favourites</a></p>`;
 
