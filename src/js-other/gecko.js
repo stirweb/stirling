@@ -47,7 +47,9 @@
 
   if (!utmTermArray || !utmTermArray.length) return;
 
-  const utmTermValue = utmTermArray[0].replace(cookieId + "=", "");
+  const utmTermValue = utmTermArray[0].replace(cookieId + "=", "").trim();
+
+  console.log("-" + utmTermValue + "-");
   //const utmTermValue = localStorage.getItem("_a_id");
   const geckoScript = document.querySelector("#gecko-form-embed-script");
 

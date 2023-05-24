@@ -88,7 +88,6 @@ stir.favs = (() => {
 
   const renderFavActionBtns = () => {
     return `
-  
           <button class="button no-arrow button--left-align  expanded u-m-0 text-left  u-white--all u-mt-1" data-opendialog="shareDialog" aria-label="Generate share link" data-action="copysharelink" >
               <div class="flex-container align-middle u-gap-16">
                   <span class="u-flex1 text-sm">Generate share link</span>
