@@ -3989,8 +3989,7 @@ stir.favs = (() => {
             <ul>
                 <li>you haven't selected any favourite <a href="/courses/">courses</a> yet,</li>
                 <li>you cleared all your favourites from the list,</li>
-                <li>or your web browser is automatically clearing the cookie which remembers your list of
-                    favourites.</li>
+                <li>or your web browser is automatically clearing the cookie which remembers your list of favourites.</li>
             </ul>`;
   };
 
