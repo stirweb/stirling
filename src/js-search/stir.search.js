@@ -111,6 +111,16 @@ stir.courses = (() => {
 
 			return combos;
 		},
+		favsUrl: (function() {
+			switch(UoS_env.name) {
+				case 'dev':	//local
+					return '/pages/search/course-favs/index.html'
+				case 'qa':	//repo
+					return '/stirling/pages/search/course-favs/'
+				default:	//cms
+					return '<t4 type="navigation" name="Helper: Path to Courses Favourites" id="5195" />';
+			}
+		})()
 	};
 })();
 
@@ -526,7 +536,7 @@ stir.search = () => {
 	};
 
 	const footers = {
-		coursemini: () => `<p class="text-center"><a href="?tab=courses&query=${getQuery("any")}">View all course results</a></p>`,
+		coursemini: () => stir.templates.search.courseminiFooter(getQuery("any")),
 	};
 
 	const prefetch = {
