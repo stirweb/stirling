@@ -711,6 +711,15 @@ Courses Panel
 
                                 <!-- ASIDE -->
                                 <aside class="c-search-results-asides">
+									<div class="u-p-2 u-bg-white u-mb-2">
+										<p class="u-font-bold flex-container u-justify-content-center u-align-items-center u-gap-8 u-m-0">
+											<svg class="u-icon" data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50">
+												<title>heart</title>
+												<path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2c0,0-0.1,0-0.1,0c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16l18.1,18.1c0.5,0.5,1.6,0.5,2.1,0l17.9-17.9c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9 C47.5,15,46.3,12.2,44.1,10.1z M42,24.2l-17,17l-17-17c-3.3-3.3-3.3-8.6,0-11.8c1.6-1.6,3.7-2.4,5.9-2.4c2.2-0.1,4.4,0.8,6,2.5 l4.1,4.1c0.6,0.6,1.5,0.6,2.1,0l4.2-4.2c3.4-3.2,8.5-3.2,11.8,0C45.3,15.6,45.3,20.9,42,24.2z" />
+											</svg>
+											<a href="#favs" class="text-sm" data-hack-mfc>My favourite courses</a>
+										</p>
+									</div>
                                     <div class="u-p-2 u-bg-white">
                                         <p class="u-text-regular u-font-bold flex-container u-gap-8 align-middle">
                                             <span class="uos-pin u-icon h5"></span> Recommended
@@ -1285,6 +1294,11 @@ Research Panel
         stir.t4Globals.search = { combos: '/media/stirling/feeds/combo.json' };
     </script>
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/search/search-min.js?v=10.1"></script>
+	<script data-this-is-just-a-quick-hack>
+		(function() {
+			const el = document.querySelector('[data-hack-mfc]').href = stir.courses.favsUrl;
+		})();
+	</script>
 
 
 </body>
