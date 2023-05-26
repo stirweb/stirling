@@ -56,7 +56,8 @@ button,
     &::after {
       border-right: 0px solid black;
       border-bottom: none;
-      background-image: url("../../images/campaigns/ug/ug-squiggle.svg");
+      //background-image: url("../../images/campaigns/ug/ug-squiggle.svg");
+      background-image: url('<t4 type="media" id="158151" formatter="path/*"/>');
       left: -15px;
       bottom: 12px;
       height: 72px;
@@ -167,7 +168,8 @@ button,
 /* Lines */
 [data-section="Row Wrapper Start Green"] {
   padding-bottom: 78px;
-  background-image: url("../../images/campaigns/ug/ug-lines.svg");
+  //background-image: url("../../images/campaigns/ug/ug-lines.svg");
+  background-image: url('<t4 type="media" id="158149" formatter="path/*"/>');
   background-repeat: repeat-x;
   background-position: bottom;
   background-size: 929px 78px;
@@ -177,7 +179,8 @@ button,
 /* Dots */
 [data-section="Row Wrapper Start Pink"] {
   padding-bottom: 101px;
-  background-image: url("../../images/campaigns/ug/ug-dots.svg");
+  //background-image: url("../../images/campaigns/ug/ug-dots.svg");
+  background-image: url('<t4 type="media" id="158148" formatter="path/*"/>');
   background-repeat: repeat-x;
   background-position: bottom;
   background-size: 1435px 101px;
@@ -212,7 +215,8 @@ h1 {
   &::after {
     content: "";
     display: block;
-    background-image: url("../../images/campaigns/ug/ug-squiggle.svg");
+    //background-image: url("../../images/campaigns/ug/ug-squiggle.svg");
+    background-image: url('<t4 type="media" id="158151" formatter="path/*"/>');
     left: 0;
     right: 0;
     top: auto;

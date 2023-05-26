@@ -37,6 +37,16 @@
   flex-wrap: wrap;
 }
 
+.u-flex1 {
+  flex: 1;
+}
+.u-align-items-center {
+	align-items: center;
+}
+.u-justify-content-center {
+  justify-content: center;
+}
+
 @media screen and #{breakpoint(medium up)} {
   .u-flex-medium-up {
     display: flex;
@@ -59,10 +69,6 @@
   .u-items-start-small {
     align-items: start;
   }
-}
-
-.u-flex1 {
-  flex: 1;
 }
 
 @media screen and #{breakpoint(large up)} {
@@ -215,6 +221,7 @@
 .u-trans-up {
   transform: translateY(-100%);
 }
+
 
 @media screen and #{breakpoint(medium up)} {
   .u-columns-2 {
