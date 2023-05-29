@@ -16,3 +16,17 @@
     }
   }
 })();
+
+(function () {
+  const shareInput = stir.node("#shareurl");
+
+  if (shareInput) shareInput.value = window.location.href;
+
+  const copyUrlBtn = stir.node("#copyurl");
+
+  const copyUrl = async () => {
+    await navigator.clipboard.writeText(window.location.href);
+  };
+
+  copyUrlBtn && copyUrlBtn.addEventListener("click", (event) => copyUrl());
+})();

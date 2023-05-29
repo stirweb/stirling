@@ -6225,7 +6225,9 @@ stir.Modal = function Modal(el) {
 
 stir.Dialog = function Dialog(element_) {
   const close_ = () => element.close();
-  const open_ = () => element.showModal();
+  const open_ = () => {
+    if (element.getAttribute("open") === null) element.showModal();
+  };
 
   /*
     Getters
