@@ -1,6 +1,8 @@
 (function (scope) {
   if (!scope) return;
 
+  const ITEMS_PER_PAGE = 4;
+
   /* 
     NODES
   */
@@ -11,6 +13,12 @@
   const eventspublicfilters = stir.node("#eventspublicfilters");
   const eventsstafffilters = stir.node("#eventsstafffilters");
   const eventsarchivefilters = stir.node("#eventsarchivefilters");
+
+  const eventsPublicTab = stir.node("#eventspublictab");
+  const eventsStaffTab = stir.node("#eventsstafftab");
+  const eventsArchiveTab = stir.node("#eventsarchivetab");
+
+  const stirTabs = stir.nodes(".stir-tabs__tab");
 
   /* 
     |
@@ -33,7 +41,7 @@
   };
 
   const renderNoData = () => {
-    return `<div class="u-bg-white u-p-3"><p>No events found</p></div>`;
+    return `<div class="u-bg-white u-p-2 u-mb-2"><p class="u-m-0">No more events found</p></div>`;
   };
 
   const renderEvent = (item) => {
@@ -116,6 +124,10 @@
             </div>`;
   };
 
+  const renderPaginationBtn = () => {
+    return `<div class="loadmorebtn flex-container align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
+  };
+
   /*
     |
     |   HELPERS
@@ -131,11 +143,10 @@
     return true;
   });
 
-  const setDOMPublic = setDOMContent(eventspublic);
-
-  const setDOMStaff = setDOMContent(eventsstaff);
-
-  const setDOMArchive = setDOMContent(eventsarchive);
+  const appendDOMContent = stir.curry((elem, html) => {
+    elem.insertAdjacentHTML("beforeend", html);
+    return elem;
+  });
 
   const setDOMPromo = setDOMContent(eventspromo);
 
@@ -173,6 +184,12 @@
   const sortByPin = (a, b) => a.pin - b.pin;
 
   const hasRecording = stir.filter((item) => item.recording);
+
+  const paginationFilter = stir.curry((page, index) => {
+    const start = ITEMS_PER_PAGE * (page - 1);
+    const end = start + ITEMS_PER_PAGE;
+    return index >= start && index < end;
+  });
 
   /* 
     | 
@@ -269,6 +286,86 @@
     return stir.any((item) => item, ranges);
   });
 
+  /* 
+  | 
+  |  CONTROLLERS
+  |
+  */
+  const doPublicEvents = (rangeWanted, initData) => {
+    const filterRange = getFilterRange(rangeWanted);
+    const page = Number(QueryParams.get("page")) || 1;
+    const setDOMPublic = page === 1 ? setDOMContent(eventspublic) : appendDOMContent(eventspublic);
+
+    const pageFilterCurry = stir.filter((item, index) => {
+      if (paginationFilter(page, index)) return item;
+    });
+
+    if (!filterRange) {
+      const html1 = stir.compose(joiner, renderEventsMapper, pageFilterCurry, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(initData);
+      html1.length ? setDOMPublic(html1 + renderPaginationBtn()) : setDOMPublic(renderNoData());
+    } else {
+      const inRangeCurry = inRange(filterRange);
+      const dataDateFiltered = stir.filter(inRangeCurry, initData);
+      const html2 = stir.compose(joiner, renderEventsMapper, pageFilterCurry, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(dataDateFiltered);
+      html2.length ? setDOMPublic(html2 + renderPaginationBtn()) : setDOMPublic(renderNoData());
+    }
+  };
+
+  /* 
+  |  doStaffEvents
+  */
+  const doStaffEvents = (rangeWanted, initData) => {
+    const filterRange = getFilterRange(rangeWanted);
+    const page = Number(QueryParams.get("page")) || 1;
+    const setDOMStaff = page === 1 ? setDOMContent(eventsstaff) : appendDOMContent(eventsstaff);
+
+    const pageFilterCurry = stir.filter((item, index) => {
+      if (paginationFilter(page, index)) return item;
+    });
+
+    if (!filterRange) {
+      const html1 = stir.compose(joiner, renderEventsMapper, pageFilterCurry, stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(initData);
+      html1.length ? setDOMStaff(html1 + renderPaginationBtn()) : setDOMStaff(renderNoData());
+    } else {
+      const inRangeCurry = inRange(filterRange);
+      const dataDateFiltered = stir.filter(inRangeCurry, initData);
+      const html2 = stir.compose(joiner, renderEventsMapper, pageFilterCurry, stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(dataDateFiltered);
+      html2.length ? setDOMStaff(html2 + renderPaginationBtn()) : setDOMStaff(renderNoData());
+    }
+  };
+
+  /* 
+  |  doArchiveEvents
+  */
+  const doArchiveEvents = (target, initData) => {
+    const page = Number(QueryParams.get("page")) || 1;
+    const setDOMArchive = page === 1 ? setDOMContent(eventsarchive) : appendDOMContent(eventsarchive);
+
+    const pageFilterCurry = stir.filter((item, index) => {
+      if (paginationFilter(page, index)) return item;
+    });
+
+    if (target === "all") {
+      const html = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
+      html.length ? setDOMArchive(html + renderPaginationBtn()) : setDOMArchive(renderNoData());
+    }
+
+    if (target === "recordings") {
+      const htmlRecordings = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry, stir.sort(sortByStartDateDesc), hasRecording, isPassedFilter)(initData);
+      htmlRecordings.length ? setDOMArchive(htmlRecordings + renderPaginationBtn()) : setDOMArchive(renderNoData());
+    }
+
+    if (target === "public") {
+      const htmlPublic = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry, stir.sort(sortByStartDateDesc), isPublicFilter, isPassedFilter)(initData);
+      htmlPublic.length ? setDOMArchive(htmlPublic + renderPaginationBtn()) : setDOMArchive(renderNoData());
+    }
+
+    if (target === "staffstudent") {
+      const htmlPublic = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry, stir.sort(sortByStartDateDesc), isStaffFilter, isPassedFilter)(initData);
+      htmlPublic.length ? setDOMArchive(htmlPublic + renderPaginationBtn()) : setDOMArchive(renderNoData());
+    }
+  };
+
   /*
     | 
     |  ON LOAD
@@ -280,80 +377,70 @@
   eventsarchivefilters.querySelector("input[type=radio]").checked = true;
 
   const initData = stir.feeds.events.filter((item) => item.id);
+  QueryParams.set("page", 1);
 
   // Populate the 3 tabs
-  const htmlPublic = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(initData);
-  htmlPublic.length ? setDOMPublic(htmlPublic) : setDOMPublic(renderNoData());
+  doPublicEvents("all", initData);
+  doStaffEvents("all", initData);
+  doArchiveEvents("all", initData);
 
-  const htmlStaff = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(initData);
-  htmlStaff.length ? setDOMStaff(htmlStaff) : setDOMStaff(renderNoData());
-
-  const htmlArchive = stir.compose(joiner, renderArchiveEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
-  htmlArchive.length ? setDOMArchive(htmlArchive) : setDOMArchive(renderNoData());
-
+  // Populate the Promo
   stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), isPromoFilter, stir.sort(sortByStartDate))(initData);
 
   /*
     | 
-    |  EVENTS
+    |  CLICK EVENTS LISTENERS
     |
     */
 
-  eventspublicfilters.addEventListener("click", (event) => {
-    if (event.target.type === "radio") {
-      const rangeWanted = event.target.value;
-      const filterRange = getFilterRange(rangeWanted);
+  stir.each((item) => {
+    item.addEventListener("click", (event) => {
+      QueryParams.set("page", 1);
+    });
+  }, stirTabs);
 
-      if (!filterRange) {
-        const html1 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(initData);
-        html1.length ? setDOMPublic(html1) : setDOMPublic(renderNoData());
-      } else {
-        const inRangeCurry = inRange(filterRange);
-        const dataDateFiltered = stir.filter(inRangeCurry, initData);
-        const html2 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(dataDateFiltered);
-        html2.length ? setDOMPublic(html2) : setDOMPublic(renderNoData());
-      }
+  eventsPublicTab.addEventListener("click", (event) => {
+    const page = Number(QueryParams.get("page")) || 1;
+
+    if (event.target.type === "radio") {
+      QueryParams.set("page", 1);
+      doPublicEvents(eventspublicfilters.querySelector("input:checked").value, initData);
+    }
+
+    if (event.target.type === "submit") {
+      setDOMContent(event.target.closest(".loadmorebtn"), "");
+      QueryParams.set("page", page + 1);
+      doPublicEvents(eventspublicfilters.querySelector("input:checked").value, initData);
     }
   });
 
-  eventsstafffilters.addEventListener("click", (event) => {
-    if (event.target.type === "radio") {
-      const rangeWanted = event.target.value;
-      const filterRange = getFilterRange(rangeWanted);
+  eventsStaffTab.addEventListener("click", (event) => {
+    const page = Number(QueryParams.get("page")) || 1;
 
-      if (!filterRange) {
-        const html1 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(initData);
-        html1.length ? setDOMStaff(html1) : setDOMStaff(renderNoData());
-      } else {
-        const inRangeCurry = inRange(filterRange);
-        const dataDateFiltered = stir.filter(inRangeCurry, initData);
-        const html2 = stir.compose(joiner, renderEventsMapper, stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(dataDateFiltered);
-        html2.length ? setDOMStaff(html2) : setDOMStaff(renderNoData());
-      }
+    if (event.target.type === "radio") {
+      QueryParams.set("page", 1);
+      doStaffEvents(eventsstafffilters.querySelector("input:checked").value, initData);
+    }
+
+    if (event.target.type === "submit") {
+      setDOMContent(event.target.closest(".loadmorebtn"), "");
+      QueryParams.set("page", page + 1);
+      doStaffEvents(eventsstafffilters.querySelector("input:checked").value, initData);
     }
   });
 
-  eventsarchivefilters.addEventListener("click", (event) => {
+  eventsArchiveTab.addEventListener("click", (event) => {
+    const page = Number(QueryParams.get("page")) || 1;
+
     if (event.target.type === "radio") {
-      if (event.target.value === "all") {
-        const html = stir.compose(joiner, renderArchiveEventsMapper, stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
-        html.length ? setDOMArchive(html) : setDOMArchive(renderNoData());
-      }
+      QueryParams.set("page", 1);
+      doArchiveEvents(eventsarchivefilters.querySelector("input:checked").value, initData);
+    }
 
-      if (event.target.value === "recordings") {
-        const htmlRecordings = stir.compose(joiner, renderArchiveEventsMapper, stir.sort(sortByStartDateDesc), hasRecording, isPassedFilter)(initData);
-        htmlRecordings.length ? setDOMArchive(htmlRecordings) : setDOMArchive(renderNoData());
-      }
-
-      if (event.target.value === "public") {
-        const htmlPublic = stir.compose(joiner, renderArchiveEventsMapper, stir.sort(sortByStartDateDesc), isPublicFilter, isPassedFilter)(initData);
-        htmlPublic.length ? setDOMArchive(htmlPublic) : setDOMArchive(renderNoData());
-      }
-
-      if (event.target.value === "staffstudent") {
-        const htmlPublic = stir.compose(joiner, renderArchiveEventsMapper, stir.sort(sortByStartDateDesc), isStaffFilter, isPassedFilter)(initData);
-        htmlPublic.length ? setDOMArchive(htmlPublic) : setDOMArchive(renderNoData());
-      }
+    if (event.target.type === "submit") {
+      setDOMContent(stir.node(".loadmorebtn"), "");
+      QueryParams.set("page", page + 1);
+      doArchiveEvents(eventsarchivefilters.querySelector("input:checked").value, initData);
     }
   });
 })(stir.node("#eventsrevamp"));
