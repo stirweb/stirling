@@ -129,7 +129,7 @@
   };
 
   const renderPageMeta = (start, end, noOfResults) => {
-    return start < 2 ? `` : `<div class="flex-container align-center u-mb-2">Showing ${start}-${end > noOfResults ? noOfResults : end} of ${noOfResults} results</div>`;
+    return start < 2 ? `` : `<div class="flex-container align-center u-mb-2">Showing ${start + 1}-${end > noOfResults ? noOfResults : end} of ${noOfResults} results</div>`;
   };
 
   /*
