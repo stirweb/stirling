@@ -6521,7 +6521,7 @@ stir.tabs = function (el, doDeepLink_) {
 
   const getClickedNode = (ev) => {
     if (ev.target.classList.contains("stir-tabs__tab")) return ev.target;
-    if ((ev.target.nodeName === "A" || ev.target.nodeName === "BUTTON") && ev.target.parentNode.classList.contains("stir-tabs__tab")) return ev.target.parentNode;
+    if ((ev.target.nodeName === "A" || ev.target.nodeName === "BUTTON") && ev.target.parentNode && ev.target.parentNode.classList.contains("stir-tabs__tab")) return ev.target.parentNode;
     return null;
   };
 
@@ -6547,38 +6547,38 @@ stir.tabs = function (el, doDeepLink_) {
     return true;
   };
 
-	/** 
-	* handle all clicks withing tab DOM 
-	**/
-	function handleClick(ev) {
-		const control = getClickedNode(ev);
+  /**
+   * handle all clicks withing tab DOM
+   **/
+  function handleClick(ev) {
+    const control = getClickedNode(ev);
 
-		if (control) {
-			getBehaviour(accordionify, browsersize) === "tabs" ? handleTabClick(control) : handleAccordionClick(control);
-			if (doDeepLink) {
-				const myhash = "#" + control.nextElementSibling.id;
-				if (history.replaceState) history.replaceState(null, null, myhash);
-				else location.hash = myhash;
-			}
+    if (control) {
+      getBehaviour(accordionify, browsersize) === "tabs" ? handleTabClick(control) : handleAccordionClick(control);
+      if (doDeepLink) {
+        const myhash = "#" + control.nextElementSibling.id;
+        if (history.replaceState) history.replaceState(null, null, myhash);
+        else location.hash = myhash;
+      }
 
-			/* Callbackify */
-			if (control.hasAttribute("data-tab-callback")) {
-				var chain = window;
-				var callback;
-				var callbackdata = control.getAttribute("data-tab-callback").split(".");
-				while (callbackdata.length > 0) {
-					var n = callbackdata.shift();
-					if ("function" === typeof chain[n]) {
-						callback = chain[n];
-					} else if ("undefined" !== typeof chain[n]) {
-						chain = chain[n];
-					}
-				}
-				callback && callback();
-			}
-			ev.preventDefault();
-		}
-	}
+      /* Callbackify */
+      if (control.hasAttribute("data-tab-callback")) {
+        var chain = window;
+        var callback;
+        var callbackdata = control.getAttribute("data-tab-callback").split(".");
+        while (callbackdata.length > 0) {
+          var n = callbackdata.shift();
+          if ("function" === typeof chain[n]) {
+            callback = chain[n];
+          } else if ("undefined" !== typeof chain[n]) {
+            chain = chain[n];
+          }
+        }
+        callback && callback();
+      }
+      ev.preventDefault();
+    }
+  }
 
   /*
      Reset the tabs to onload state
