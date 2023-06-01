@@ -45,6 +45,11 @@
 }
 
 /* heritage */
+
+.u-heritage-line-top {
+  border-top: 3px solid $heritage-green;
+}
+
 .u-heritage-line-bottom {
   border-bottom: 3px solid $heritage-green;
 }
@@ -119,9 +124,9 @@
 }
 
 svg.u-icon {
-	width: 1.125rem;
-	height: 1.125rem;
-	display: inline-block;
+  width: 1.125rem;
+  height: 1.125rem;
+  display: inline-block;
 }
 
 .u-white--all .u-icon {
