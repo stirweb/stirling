@@ -101,8 +101,11 @@
 
   const isSeriesChildFilter = stir.filter((item) => item.isSeriesChild === seriesId);
 
-  const getJSONUrl = () => {
-    return "index.json";
+  const getJSONUrl = (env) => {
+    if (env === "dev") return "index.json";
+    if (env === "preview") return `<t4 type="navigation" id="5213" />`;
+
+    return `/data/events/revamp/json/index.json`;
   };
 
   const setDOMContent = stir.curry((node, html) => {
@@ -116,7 +119,9 @@
     |
     */
 
-  const url = getJSONUrl();
+  console.log(UoS_env.name);
+
+  const url = getJSONUrl(UoS_env.name);
 
   stir.getJSON(url, (initialData) => {
     const seriesUpcomingData = stir.compose(joiner, renderEventsMapper, isUpcomingFilter, isSeriesChildFilter)(initialData);
