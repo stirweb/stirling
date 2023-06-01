@@ -116,6 +116,16 @@
 
  */
 
+.c-event-list {
+  display: grid;
+}
+
+@media screen and #{breakpoint(large up)} {
+  .c-event-list {
+    grid-template-columns: auto 3fr 1fr auto;
+  }
+}
+
 .c-events-calendar {
   ul:first-of-type {
     display: block;

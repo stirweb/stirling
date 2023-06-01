@@ -41,7 +41,7 @@
   flex: 1;
 }
 .u-align-items-center {
-	align-items: center;
+  align-items: center;
 }
 .u-justify-content-center {
   justify-content: center;
@@ -221,7 +221,6 @@
 .u-trans-up {
   transform: translateY(-100%);
 }
-
 
 @media screen and #{breakpoint(medium up)} {
   .u-columns-2 {
