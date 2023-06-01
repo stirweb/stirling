@@ -196,23 +196,32 @@ stir.templates.search = (() => {
 		UNKNOWN: undefined,
 	};
 
-	const months = {
-		"01": "January",
-		"02": "February",
-		"05": "May",
-		"08": "August",
-		"09": "September",
-		10: "October",
-	};
-
-	const readableDate = (date) => months[date.split("-").pop()] + " " + date.split("-").shift();
+//	const months = {
+//		"01": "January",
+//		"02": "February",
+//		"05": "May",
+//		"08": "August",
+//		"09": "September",
+//		"10": "October",
+//	};
 
 	const correctCase = (function () {
-		if (!stir.t4Globals || !stir.t4Globals.search || !stir.t4Globals.search.facets) return (facet, label) => label;
-		return (facet, label) => (stir.t4Globals.search.facets[facet] && stir.t4Globals.search.facets[facet][stir.t4Globals.search.facets[facet].map((value) => value.toLowerCase()).findIndex((value) => value === label)]) || label;
+		if (!stir.t4Globals || !stir.t4Globals.search || !stir.t4Globals.search.facets) {
+			return (facet, label) => label;
+		}
+		const facets = stir.t4Globals.search.facets;
+		return (facet, label) => {
+			if(!facets[facet]) return label;
+			const labels = facets[facet];
+			return labels[ labels.findIndex(val=>label===val.toLowerCase()) ];
+		}
 	})();
+	
+	const facetCategoryLabel = (facet, label) => correctCase(facet, label);
+	// date labels are handled by `src/js-search/course-start-date.js`
 
-	const facetCategoryLabel = (facet, label) => (label.indexOf("ay") === 7 ? readableDate(label.split("ay").shift()) : correctCase(facet, label));
+	//	{ return (label.indexOf("ay") === 7 ? readableDate(label.split("ay").shift()) : correctCase(facet, label)); };
+	//	const readableDate = (date) => months[date.split("-").pop()] + " " + date.split("-").shift();
 
 	/**
 	 * PUBLIC members that can be called externally.
@@ -472,11 +481,13 @@ stir.templates.search = (() => {
 						<p class="u-text-regular u-m-0"><strong>
 							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
 						</strong></p>
-						<p class="u-m-0">${item.metaData.profileCourse1}<br />
-						${item.metaData.profileCountry}</p>
-						<p>${item.metaData.c}</p>
+						<p class="u-m-0">
+						${item.metaData.profileCourse1?item.metaData.profileCourse1+'<br />':''}
+						${item.metaData.profileCountry?item.metaData.profileCountry:''}
+						</p>
+						<p>${item.metaData.profileSnippet?item.metaData.profileSnippet:'<!-- 28d3702e2064f72d5dfcba865e3cc5d5 -->'}</p>
 					</div>
-					${image("https://www.stir.ac.uk" + item.metaData.profileImage, item.title.split(" | ")[0].trim(), 400, 400)}
+					${item.metaData.profileImage? image("https://www.stir.ac.uk" + item.metaData.profileImage, item.title.split(" | ")[0].trim(), 400, 400):''}
 				</div>`;
 		},
 
