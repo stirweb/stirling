@@ -103,7 +103,7 @@
 
   const getJSONUrl = (env) => {
     if (env === "dev") return "index.json";
-    if (env === "preview") return `<t4 type="navigation" id="5213" />`;
+    if (env === "preview") return '<t4 type="navigation" id="5214" />';
 
     return `/data/events/revamp/json/index.json`;
   };
