@@ -13,7 +13,7 @@ var UoS_GettingAround = (function () {
     SPORT_FACILITES: "Sports",
     BUILDINGS: "Buildings",
     EATING: "Food and drink",
-    NEXTBIKE: "NextBike",
+    // NEXTBIKE: "NextBike",
     // BICYCLE_PARKING: "Bicycle parking",
     PARKING: "Car parking",
     DISABLED_PARKING: "Disabled parking",
@@ -443,13 +443,13 @@ var UoS_GettingAround = (function () {
       coords: "56.144384, -3.921226",
     },
     {
-      name: "NextBike Willow Café",
-      type: types.NEXTBIKE,
+      name: "Electric bike hire (Willow Café)",
+      type: types.ELECTRIC_BIKES,
       coords: "56.149110, -3.921319",
     },
     {
-      name: "NextBike Alexander Court",
-      type: types.NEXTBIKE,
+      name: "Electric bike hire (Alexander Court)",
+      type: types.ELECTRIC_BIKES,
       coords: "56.148906, -3.906572",
     },
     // {
@@ -459,9 +459,14 @@ var UoS_GettingAround = (function () {
     //
     // },
     {
-      name: "NextBike Cottrell Building",
-      type: types.NEXTBIKE,
-      coords: "56.144154, -3.922263",
+      name: "Electric bike hire (Logie Lecture Theatre)",
+      type: types.ELECTRIC_BIKES,
+      coords: "56.1440120196455, -3.9208456710246353",
+    },
+    {
+      name: "Electric bike hire (main entrance)",
+      type: types.ELECTRIC_BIKES,
+      coords: "56.14778780222907, -3.928491928458595",
     },
     {
       name: "Electric Car Charge Point",
@@ -531,9 +536,9 @@ var UoS_GettingAround = (function () {
         _markerData[i].icon = isDev ? iconRoot + "sports_facilities.png" : '<t4 type="media" id="158278" formatter="path/*" />';
         _markerData[i].usoIconClassName = "uos-runner";
         continue;
-      case types.NEXTBIKE:
-        _markerData[i].icon = isDev ? iconRoot + "nextbike.png" : '<t4 type="media" id="158272" formatter="path/*" />';
-        continue;
+      //case types.NEXTBIKE:
+      //  _markerData[i].icon = isDev ? iconRoot + "nextbike.png" : '<t4 type="media" id="158272" formatter="path/*" />';
+      //  continue;
       // case types.BICYCLE_PARKING:
       // 	_markerData[i].icon = '<t4 type="media" id="158264" formatter="path/*" />';
       // 	_markerData[i].usoIconClassName = "uos-cyclist";
