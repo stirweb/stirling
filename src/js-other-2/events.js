@@ -44,6 +44,10 @@
     return `<div class="u-bg-white u-p-2 u-mb-2"><p class="u-m-0">No more events found</p></div>`;
   };
 
+  const renderEndDate = (start, end, stirEnd) => {
+    return start === end ? `` : `– <time datetime="${end}">${stirEnd}</time>`;
+  };
+
   const renderEvent = (item) => {
     return `
             <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin < 0 ? `data-label-icon="pin"` : ``} >
@@ -55,7 +59,7 @@
                     <div class="flex-container flex-dir-column u-gap-8">
                         <div class="flex-container u-gap-16 align-middle">
                             <span class="u-icon h5 uos-calendar"></span>
-                            <span><time datetime="${item.start}">${item.stirStart}</time> – <time datetime="${item.end}">${item.stirEnd}</time></span>
+                            <span><time datetime="${item.start}">${item.stirStart}</time> ${renderEndDate(item.start, item.end, item.stirEnd)}</span>
                         </div>
                         <div class="flex-container u-gap-16 align-middle">
                             <span class="uos-clock u-icon h5"></span>
