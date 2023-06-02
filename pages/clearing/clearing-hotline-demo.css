@@ -1,0 +1,160 @@
+/*  .banner.stuck::after {
+    content: "Now adjust the hotline open/closed settings ↷";
+    background: rebeccapurple;
+    color: white;
+    padding: 1em;
+    border-radius: 20px 20px 0 20px;
+    position: absolute;
+    bottom: 0;
+    right: 1em;
+    transform: translateY(150%);
+    animation: bob2 1s linear;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    filter: drop-shadow(-2px 2px black);
+} */
+
+#scrollpropmter{
+    position: absolute;
+    top:0;
+    left: 50%;
+    background: #3d7dca; /* energy blue */
+    color: white;
+    border-radius: 10px 20px;
+    box-shadow: -3px 3px 1px rgba(0, 0, 0, 0.3);
+    z-index: 4;
+
+    animation: 1s bob ease-in-out;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+#scrollpropmter p {
+padding: 1em;
+margin: 0;
+}
+@keyframes bob {
+from {
+    transform: translate(-50%, 1%);
+}
+to {
+    transform: translate(-50%, 11%);
+}
+}
+@keyframes bob2 {
+from {
+    transform: translate(0%, 145%);
+}
+to {
+    transform: translate(0%, 155%);
+}
+}
+
+
+#demo {
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    left: 1em;
+    z-index: 100;
+
+    padding: 1em;
+    background: rebeccapurple;
+    filter: drop-shadow(-3px 3px 0 rgba(0,0,0,0.6));
+    border-radius: 5px;
+}
+
+#demo input:focus{
+	background-color: white;
+}
+#status p, #demo p, #demo label{
+    font-size: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+
+}
+#status p {
+    color: rebeccapurple;
+} #demo p, #demo label{
+    color: white;
+}
+
+#status {
+    display: none;
+    transform: scale(0.6);
+    transform-origin: bottom left;
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+    width: auto;
+    z-index: 100;
+
+    padding: 1em;
+    background: gold;
+    color: rebeccapurple;
+    filter: drop-shadow(-6px 6px 0 rebeccapurple);
+    border-radius: 5px;
+}
+#status > p {
+    text-align: center;
+}
+/* #status.timeshift::after {
+    content: "Chronotrigger activated. Flux capacitor online. Where we're going we don't need wheels. Time is the indefinite continued progress of existence and events in the past, present, and future regarded as a whole.";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: center;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    text-align: center;
+    animation: spin 1s ease-out;
+} */
+
+#status, #demo {
+    box-shadow: -7px 7px 7px rgba(0,0,0,0.3);
+}
+
+#status.timeshift table td {
+    filter: grayscale(1) blur(3px);
+}
+
+.timeshift [data-value^="hotline"]::after {
+	content: "timeshift active";
+	display: block;
+}
+
+#status p {
+    font-size: 1.5rem;
+}
+
+@media screen and (min-width: 30em){
+    #status {
+        display: block;
+    }
+    #demo {
+        left: auto;
+        width: 45vw;
+        max-width: 20em;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(-765deg);
+    }
+}
+
+[data-hotline] {
+	position: relative;
+}
+[data-hotline]::after {
+	content: "🇬🇧";
+	position: absolute;
+	top: 0;
+	right: 0;
+	transform: translate(50%,-50%);
+	filter: drop-shadow(-2px 2px 3px rgba(0,0,0,0.333));
+}
+[data-hotline][data-early]::after {
+	content: "🏴󠁧󠁢󠁳󠁣󠁴󠁿";
+}

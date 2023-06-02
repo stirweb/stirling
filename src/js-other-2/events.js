@@ -50,7 +50,7 @@
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
-                        <strong><a href="${item.url}">${item.title}</a></strong>
+                        <strong><a href="${item.url}">${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}</a></strong>
                     </p>
                     <div class="flex-container flex-dir-column u-gap-8">
                         <div class="flex-container u-gap-16 align-middle">
@@ -62,7 +62,7 @@
                             <span><time>${item.startTime}</time> – <time>${item.endTime}</time></span>
                         </div>
                         <div class="flex-container u-gap-16 align-middle">
-                            <span class="u-icon h5 uos-location"></span>
+                            <span class="u-icon h5 ${item.type === "Webinar" ? `uos-computer` : `uos-location`} "></span>
                             <span>${item.location}</span>
                         </div>
                     </div>

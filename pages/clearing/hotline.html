@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title> Clearing hotline test page</title>
+	<meta name="description" content="{{ DESCRIPTION }}" />
+
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet preload prefetch" as="style" type="text/css" crossorigin="anonymous">
+	<link href="../../medias/Categorised/Dist/fonts/fonts.css" rel="stylesheet preload prefetch" as="style" type="text/css" crossorigin="anonymous">
+	<link href="../../medias/Categorised/Dist/css/app.min.css?v=202105171910" rel="stylesheet preload prefetch" as="style" type="text/css">
+
+	<link href="./clearing-hotline-demo.css" rel="stylesheet">
+
+</head>
+
+<body class="external-pages">
+	<!--beginnoindex-->
+	<nav class="skip-nav-btn" aria-label="Skip to content navigation"><a href="#content">skip to main content</a></nav>
+
+	<!--
+         MOBILE NAV
+        -->
+	<nav id="mobile-menu" class="c-mobile-menu" aria-label="Mobile navigation">
+		<a href="#" id="close_mobile_menu" class="closebtn hide">&times;</a>
+		<span class="mobMenuLoading hide">Loading...</span>
+		<ul class="sitemenu">
+			<li><a href="/">Home</a>
+				<ul class="visible">
+					<li>
+						<a href="/study/" data-sectId="study" class="mobMenuBreadcrumb">Study</a>
+					</li>
+					<li>
+						<a href="/international/" data-sectId="international"
+							class="mobMenuBreadcrumb">International</a>
+					</li>
+					<li>
+						<a href="/research/" data-sectId="research" class="mobMenuBreadcrumb">Research</a>
+					</li>
+					<li>
+						<a href="/about/" data-sectId="about" class="mobMenuBreadcrumb">About</a>
+					</li>
+					<li>
+						<a href="/student-life/" data-sectId="student-life" class="mobMenuBreadcrumb">Student life</a>
+					</li>
+					<li>
+						<a href="/courses/" data-sectId="courses" class="mobMenuBreadcrumb">Find a course</a>
+					</li>
+					<li>
+						<a href="/clearing/" data-sectId="clearing" class="mobMenuBreadcrumb">Clearing</a>
+					</li>
+					<li>
+						<a href="/coronavirus/" data-sectId="coronavirus" class="mobMenuBreadcrumb">Coronavirus</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<ul class="slidemenu__other-links">
+			<li class="slidemenu__other-links-portal"><a href="https://portal.stir.ac.uk/my-portal.jsp"
+					rel="nofollow">My Portal</a></li>
+			<li class="slidemenu__other-links-contact"><a href="/about/contact-us/">Contact</a></li>
+			<li class="slidemenu__other-links-search"><a href="/search/">Search our site</a></li>
+			<li class="slidemenu__other-links-microsite"><a href="http://stirlinguni.cn/" data-microsite="cn">中文网</a>
+			</li>
+		</ul>
+	</nav>
+
+	<!--
+         MAIN HEADER
+        -->
+	<header class="c-header" id="layout-header" aria-label="Main header">
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+				<div class="cell large-4 medium-4 small-8">
+					<a href="/" title="University of Stirling"><img src="../../medias/Categorised/Dist/css/images/logos/logo.svg"
+							alt="University of Stirling logo" class="c-site-logo"></a>
+				</div>
+
+				<nav aria-label="primary-navigation" class="cell large-8 medium-8 small-4 flex-container align-right">
+					<div role="menu" class="c-header-nav flex-container flex-dir-column align-bottom align-center">
+						<ul role="menubar"
+							class="c-header-nav c-header-nav--secondary u-font-semibold flex-container align-middle">
+							<li class="c-header-nav__item show-for-medium" role="none">
+								<a href="http://stirlinguni.cn/" role="menuitem" class="c-header-nav__link"
+									data-microsite="cn">中文网</a>
+							</li>
+							<li class="c-header-nav__item show-for-large" role="none">
+								<a href="https://portal.stir.ac.uk/my-portal.jsp" rel="nofollow" role="menuitem"
+									class="c-header-nav__link" id="header-portal__button">My Portal</a>
+							</li>
+							<li class="c-header-nav__item" role="none">
+								<a role="menuitem" class="c-header-nav__link" id="header-search__button"
+									href="/search/">
+									<span class="show-for-medium">Site search</span>
+									<span class="c-header-nav__icon uos-magnifying-glass u-font-semibold"></span>
+								</a>
+							</li>
+						</ul>
+						<ul role="menubar" class="c-header-nav c-header-nav--primary u-font-bold show-for-xlarge">
+							<li class="c-header-nav__item">
+								<a class="c-header-nav__link" data-menu-id="mm__study" href="/study/"
+									role="menuitem">Study</a>
+							</li>
+							<li class="c-header-nav__item">
+								<a class="c-header-nav__link" data-menu-id="mm__international" href="/international/"
+									role="menuitem">International</a>
+							</li>
+							<li class="c-header-nav__item">
+								<a class="c-header-nav__link" data-menu-id="mm__research" href="/research/"
+									role="menuitem">Research</a>
+							</li>
+							<li class="c-header-nav__item">
+								<a class="c-header-nav__link" data-menu-id="mm__about" href="/about/"
+									role="menuitem">About</a>
+							</li>
+							<li class="c-header-nav__item">
+								<a class="c-header-nav__link" data-menu-id="mm__student-life" href="/student-life/"
+									role="menuitem">Student life</a>
+							</li>
+						</ul>
+					</div>
+					<div class="hide-for-xlarge flex-container align-middle align-center flex-dir-column">
+						<a href="#" id="open_mobile_menu" class="c-header-burger flex-container align-middle">
+							<span class="show-for-sr">Show/hide mobile menu</span>
+							<span class="c-header-burger__bun"></span>
+						</a>
+						<span>Menu</span>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<form id="header-search" class="c-header-search" aria-hidden="true" aria-label="Popup for site search field"
+			method="get" action="/s/search.html?collection=external" data-js-action="/search/">
+			<!--  <input type="hidden" name="collection" value="external">-->
+			<!-- <input type="hidden" name="meta_group_not" value="internal"> -->
+
+			<div class="overlay"></div>
+			<div class="content">
+				<div class="grid-container">
+					<div class="grid-x">
+						<div class="small-12 small-12 cell c-header-search__input-wrapper">
+
+							<label class="show-for-sr" for="header-search__query">Site search</label>
+							<input type="text" name="query" id="header-search__query" class="c-header-search__query"
+								autocomplete="off" placeholder="Site search">
+
+							<button class="button no-arrow" type="submit" aria-label="submit">
+								<span class="uos-magnifying-glass"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="u-bg-grey">
+					<div class="grid-container">
+						<div class="grid-x">
+							<div class="small-12 small-12 cell u-relative">
+
+								<div id="header-search__wrapper" class="c-header-search__wrapper hide-for-small-only"
+									aria-hidden="true">
+									<div id="header-search__results" class="grid-x c-header-search__results">
+										<div class="cell medium-4 c-header-search__column c-header-search__suggestions">
+											<h3 class="c-header-search__title header-stripped">Suggestions</h3>
+										</div>
+										<div class="cell medium-4 c-header-search__column c-header-search__courses">
+											<h3 class="c-header-search__title header-stripped">Courses</h3>
+										</div>
+										<div class="cell medium-4 c-header-search__column c-header-search__news">
+											<h3 class="c-header-search__title header-stripped">News</h3>
+										</div>
+									</div>
+									<div id="header-search__loading" class="c-search-loading">
+										<div class="c-search-loading__spinner"></div>
+										<span class="show-for-sr">Loading...</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<nav id="megamenu__container" aria-label="Primary navigation"></nav>
+	</header>
+
+	<!-- 
+				 BREADCRUMB 
+				-->
+
+
+	<nav aria-label="breadcrumb" class="breadcrumbs-container u-bg-grey show-for-large">
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+				<div class="cell">
+
+					<ul class="breadcrumbs">
+						<li><a href="/">Home</a></li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<!--endnoindex-->
+
+	<!-- 
+				 MAIN CONTENT 
+		-->
+	<main class="wrapper-content" aria-label="Main content" id="content">
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+
+
+				<!-- TEMPLATE BEGIN -->
+			</div>
+		</div>
+<!-- 		<section class="c-wrapper u-bg-energy-pink u-white--all " id="d.en.64563" aria-label="wrapper-64563" style="background-image: url(https://www.stir.ac.uk/media/dist/images/campaigns/ug/ug-squiggle.svg)">           
+			<div class="grid-container">
+				<div class="grid-x grid-padding-x"  >    
+					<div class="cell small-12  medium-10 large-6   " id="d.en.64576" >
+						<h1 class="">CLEARING.<br />ARE YOU IN?</h1>
+					</div>
+					<div class="cell small-12  medium-10 large-6" id="d.en.65022">
+						<div class="c-wysiwyg-content">
+							<p><strong>UCAS Clearing&nbsp;is open.</strong><strong>&nbsp;We have places available on many of our courses starting in September. Get a head start by registering your interest or call us now on&nbsp;01786 466166 to discuss your course options and entry requirements.</strong></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section> -->
+
+		<!--                  -->
+
+		<section class="c-wrapper u-bg-energy-pink u-white--all u-bleed bg-energy-pink u-white--all" id="d.en.167508" aria-label="wrapper-167508" data-section="Wrapper start" data-has-overlapper="up">
+			<div class="grid-container">
+				<div class="grid-x grid-padding-x c-svg-banner">
+					<div class="cell">
+						<div class="c-scaling-svg-container" style="padding-bottom: 36% /* 100% * 689/1920 */">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 458"><style>.st1{fill:#fff}</style><path fill="#e80068" d="M0 0h1600v458H0z"/><path d="M1532.5 166.3c-4.2-5.9-11.2-9.9-17.2-13.8-6.9-4.5-12.9-9.1-19.3-14.3-12.4-10.1-29.8-15.4-40.3-27.6h.1c-5-6.3 4.2-16.5 11.6-8.9 6.3 6.5 16.1 9.7 24.1 13.5 6.4 3.1 12.2 7 18 11-3.9-6.4-7.5-13.3-12-18.9-10.8-13.6-26.5-24.8-41.5-33.4-17.8-10.1-36.1-14.3-56.5-11.9-8.8 1-17.6 2.8-26 6-4.1 1.5-18.5 6-19.9 10.2-.3 1-1.4 1.7-2.4 1.8-.5 0-.9.1-1.4.1-2.6.2-4.2-3.2-2-4.8-.1-.2-.2-.5-.4-.7-.1-1.3.3-2.6 1.4-3.4 8.5-6 14.6-13.4 24.5-17.7 9.4-4.1 19.4-7 29.4-8.7 21.2-3.5 41.8 2.2 60.3 12.2 17.5 9.4 34.1 21.3 47.3 36.1 6.3 7 11.4 15.5 16.6 23.6-.3-3.3-.5-6.6-.6-9.9-.4-9.6-.5-19.1-1.3-28.7-.6-7.2-2.2-14.1 1-20.7l.1.1c.8-1.6 2.9-2.7 4.6-.7 9 10.8 7.9 32.5 9.1 46 1.6 17.4 2.4 37.7 8.7 54.1 3.7 9.8-9.7 18.2-16 9.4z" style="fill:#7bb729" id="graphis"/><g id="text"><path class="st1" d="M3.4 98.4c0-17.5 8.7-26.2 26.2-26.2s26.2 8.7 26.2 26.2v6.5H36.1v-9.2c0-4.4-2.2-6.5-6.5-6.5-4.4 0-6.5 2.2-6.5 6.5v47.1c0 4.4 2.2 6.5 6.5 6.5 4.4 0 6.5-2.2 6.5-6.5v-9.2h19.6v6.5c0 17.5-8.7 26.2-26.2 26.2s-26.2-8.7-26.2-26.2V98.4zM62.3 73.5h19.6v74.6h19.6v17H62.3V73.5zM153.9 73.5v17h-26.2v20.3h19.6v17h-19.6v20.3h26.2v17h-45.8V73.5h45.8zM177 155.3l-1.4 9.8H156l17.7-91.6h19.6l17.7 91.6h-19.6l-1.4-9.8h-13zm10.5-17-4-28.8-4.1 28.8h8.1zM232.5 127.8v37.3h-19.6V73.5H239c17.5 0 26.2 7.9 26.2 23.6v7.2c0 6.3-1.4 11.3-4.2 15.1 2.8 3.8 4.2 8.8 4.2 15.1v20.9c0 3.5.7 6.8 2 9.8h-19.6c-1.3-3.1-2-6.3-2-9.8v-20.9c0-4.4-2.2-6.5-6.5-6.5h-6.6zm6.5-17c4.4 0 6.5-2.2 6.5-6.5v-7.2c0-4.4-2.2-6.5-6.5-6.5h-6.5v20.3h6.5zM271.8 73.5h19.6v91.6h-19.6V73.5zM317.6 165.2H298V73.5h19.6l13.1 45.8V73.5h19.6v91.6h-19.6l-13.1-45.8v45.9zM409.2 98.4h-19.6v-2.6c0-4.4-2.2-6.5-6.5-6.5-4.4 0-6.5 2.2-6.5 6.5v47.1c0 4.4 2.2 6.5 6.5 6.5 4.4 0 6.5-2.2 6.5-6.5v-15.1h-5.9v-17h25.5v29.5c0 17.5-8.7 26.2-26.2 26.2s-26.2-8.7-26.2-26.2V98.4c0-17.5 8.7-26.2 26.2-26.2s26.2 8.7 26.2 26.2zM435.4 73.5H455v91.6h-19.6V73.5zM472.7 119.3c-7.4-6.5-11.1-13.5-11.1-20.9 0-17.5 8.7-26.2 26.2-26.2S514 80.9 514 98.4h-19.6c.4-5-1-8.2-4.3-9.5-3.3-1.3-6.2-.4-8.6 2.8-3.1 7.1 1.2 14.1 13 21.1 3.3 2.2 6.1 4.4 8.6 6.5 7.4 6.5 11.1 13.5 11.1 20.9 0 17.5-8.7 26.2-26.2 26.2s-26.2-8.7-26.2-26.2h19.6c-.4 5 1 8.2 4.3 9.5 3.3 1.3 6.2.4 8.6-2.8 3.1-7.1-1.2-14.1-13-21.1-3.3-2.1-6.2-4.3-8.6-6.5zM542.5 48.3c0-30.5 15.3-45.8 45.8-45.8 30.5 0 45.8 15.3 45.8 45.8v73.3c0 30.5-15.3 45.8-45.8 45.8-30.5 0-45.8-15.3-45.8-45.8V48.3zm34.4 77.9c0 7.6 3.8 11.5 11.5 11.5 7.6 0 11.5-3.8 11.5-11.5V43.7c0-7.6-3.8-11.5-11.5-11.5-7.6 0-11.5 3.8-11.5 11.5v82.5zM691.4 4.8c30.5 0 45.8 13.7 45.8 41.2v12.6c0 27.5-15.3 41.2-45.8 41.2H680v65.3h-34.4V4.8h45.8zM680 70.1h11.5c7.6 0 11.5-3.8 11.5-11.5V46c0-7.6-3.8-11.5-11.5-11.5H680v35.6zM828.9 4.8v29.8h-45.8v35.5h34.4v29.8h-34.4v35.5h45.8v29.8h-80.2V4.8h80.2zM874.7 165.2h-34.4V4.8h34.4L897.6 85V4.8H932v160.4h-34.4L874.7 85v80.2zM977.8 48.3c0-30.5 15.3-45.8 45.8-45.8 30.5 0 45.8 15.3 45.8 45.8v11.5H1035v-16c0-7.6-3.8-11.5-11.5-11.5-7.6 0-11.5 3.8-11.5 11.5v82.5c0 7.6 3.8 11.5 11.5 11.5 7.6 0 11.5-3.8 11.5-11.5v-16h34.4v11.5c0 30.5-15.3 45.8-45.8 45.8-30.5 0-45.8-15.3-45.8-45.8V48.3zM1109.8 148l-2.5 17.2h-34.4l30.9-160.4h34.4l30.9 160.4h-34.4l-2.4-17.2h-22.5zm18.4-29.8-7-50.4-7.2 50.4h14.2zM1172.6 4.8h34.4v130.6h34.4v29.8h-68.7V4.8zM1252.8 4.8h34.4v130.6h34.4v29.8h-68.7V4.8zM3.7 275.2c0-45.8 22.9-68.7 68.7-68.7 45.8 0 68.7 22.9 68.7 68.7v110c0 45.8-22.9 68.7-68.7 68.7-45.8 0-68.7-22.9-68.7-68.7v-110zM55.2 392c0 11.5 5.7 17.2 17.2 17.2s17.2-5.7 17.2-17.2V268.3c0-11.5-5.7-17.2-17.2-17.2s-17.2 5.7-17.2 17.2V392zM170.6 209.9h51.6v240.6h-51.6V271.8h-17.2v-44.7c11.4 0 17.2-5.7 17.2-17.2zM381.9 209.9 296 450.5h-56.7l73.2-195.9h-73.2v-44.7h142.6zM394 275.2c0-45.8 22.9-68.7 68.7-68.7 45.8 0 68.7 22.9 68.7 68.7 0 36.7-10.3 55-30.9 55 20.6 0 30.9 18.3 30.9 55 0 45.8-22.9 68.7-68.7 68.7-45.8 0-68.7-22.9-68.7-68.7 0-36.7 10.3-55 30.9-55-20.6 0-30.9-18.3-30.9-55zm68.7-24.1c-11.5 0-17.2 5.7-17.2 17.2v22.3c0 11.5 5.7 17.2 17.2 17.2s17.2-5.7 17.2-17.2v-22.3c0-11.4-5.7-17.2-17.2-17.2zm0 101.4c-11.5 0-17.2 5.7-17.2 17.2V392c0 11.5 5.7 17.2 17.2 17.2s17.2-5.7 17.2-17.2v-22.3c0-11.4-5.7-17.2-17.2-17.2zM686.1 385.2c0 45.8-22.9 68.7-68.7 68.7-45.8 0-68.7-22.9-68.7-68.7v-110c0-45.8 22.9-68.7 68.7-68.7 45.8 0 68.7 22.9 68.7 68.7v3.4h-51.6v-10.3c0-11.5-5.7-17.2-17.2-17.2s-17.2 5.7-17.2 17.2v46.4c0-7.9 11.5-11.9 34.4-12 34.4 0 51.6 16 51.6 48.1v34.4zm-85.9 6.8c0 11.5 5.7 17.2 17.2 17.2s17.2-5.7 17.2-17.2v-27.5c0-9.2-5.7-13.7-17.2-13.7s-17.2 4-17.2 12V392zM754.8 395.5l7.9-185.6h51.6l-7.9 140.9h24.1V209.9H882v140.9h10.3v44.7H882v55h-51.6v-55h-75.6zM1046.9 385.2c0 45.8-22.9 68.7-68.7 68.7-45.8 0-68.7-22.9-68.7-68.7v-110c0-45.8 22.9-68.7 68.7-68.7 45.8 0 68.7 22.9 68.7 68.7v3.4h-51.6v-10.3c0-11.5-5.7-17.2-17.2-17.2s-17.2 5.7-17.2 17.2v46.4c0-7.9 11.5-11.9 34.4-12 34.4 0 51.6 16 51.6 48.1v34.4zM961 392c0 11.5 5.7 17.2 17.2 17.2s17.2-5.7 17.2-17.2v-27.5c0-9.2-5.7-13.7-17.2-13.7s-17.2 4-17.2 12V392zM1201.6 385.2c0 45.8-22.9 68.7-68.7 68.7-45.8 0-68.7-22.9-68.7-68.7v-110c0-45.8 22.9-68.7 68.7-68.7 45.8 0 68.7 22.9 68.7 68.7v3.4H1150v-10.3c0-11.5-5.7-17.2-17.2-17.2s-17.2 5.7-17.2 17.2v46.4c0-7.9 11.5-11.9 34.4-12 34.4 0 51.6 16 51.6 48.1v34.4zm-85.9 6.8c0 11.5 5.7 17.2 17.2 17.2s17.2-5.7 17.2-17.2v-27.5c0-9.2-5.7-13.7-17.2-13.7s-17.2 4-17.2 12V392zM1236 209.9h51.6v240.6H1236V271.8h-17.2v-44.7c11.4 0 17.2-5.7 17.2-17.2zM1442.2 385.2c0 45.8-22.9 68.7-68.7 68.7-45.8 0-68.7-22.9-68.7-68.7v-110c0-45.8 22.9-68.7 68.7-68.7 45.8 0 68.7 22.9 68.7 68.7v3.4h-51.6v-10.3c0-11.5-5.7-17.2-17.2-17.2s-17.2 5.7-17.2 17.2v46.4c0-7.9 11.5-11.9 34.4-12 34.4 0 51.6 16 51.6 48.1v34.4zm-86 6.8c0 11.5 5.7 17.2 17.2 17.2s17.2-5.7 17.2-17.2v-27.5c0-9.2-5.7-13.7-17.2-13.7s-17.2 4-17.2 12V392zM1596.8 385.2c0 45.8-22.9 68.7-68.7 68.7-45.8 0-68.7-22.9-68.7-68.7v-110c0-45.8 22.9-68.7 68.7-68.7 45.8 0 68.7 22.9 68.7 68.7v3.4h-51.6v-10.3c0-11.5-5.7-17.2-17.2-17.2s-17.2 5.7-17.2 17.2v46.4c0-7.9 11.5-11.9 34.4-12 34.4 0 51.6 16 51.6 48.1v34.4zm-85.9 6.8c0 11.5 5.7 17.2 17.2 17.2s17.2-5.7 17.2-17.2v-27.5c0-9.2-5.7-13.7-17.2-13.7s-17.2 4-17.2 12V392z"/></g></svg>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!--                  -->
+		
+		<!-- <a class="button energy-green u-sticky" data-offset="up" data-hotline=open data-early aria-hidden data-observe="#d\.en\.64563" href="tel:+4401786466166">Call us now: 01786 466166</a> -->
+		<!-- <a class="button energy-green u-sticky" data-offset="up" data-hotline=closed data-early data-observe="#d\.en\.64563" href="https://myportal.stir.ac.uk/urd/sits.urd/run/siw_sso.go?QDQQ5XuJDKDbAL9WXNJXfwnYyHW5Yey48n7PB12ldl5MngEooR">Apply online for your Clearing course</a> -->
+		<div class="u-sticky button no-arrow energy-pink offsetup" data-offset="up">
+			<a class="u-arrow" href="https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/26379" data-hotline="closed">Request a Clearing call back</a>
+			<a class="u-arrow" href="tel:+441786466166" data-hotline="open" aria-hidden="">Clearing is open. Call now 01786 466166</a>
+		</div>
+
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+				<!-- Text with Heading -->
+				<div class="cell small-12 u-padding-top medium-10 large-10 " id="d.en.167510">
+					<div class="c-wysiwyg-content">
+						<p class="lead"><span>Clearing for 2023 is now open, and we're here to help you</span><span> find your university place.</span></p>
+						<p><span>Call us now on <a href="tel:00441786 466166">+44 (0)1786 466166</a>&nbsp;or use our live chat to discuss your Clearing course options and entry requirements.</span></p>
+					</div>
+				</div>
+				<!-- End Text with Heading -->
+			</div>
+		</div>
+
+
+
+		<!--                  -->
+
+
+
+
+
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+
+				<div class="cell small-12 medium-6">
+					<h2>rUK Clearing example</h2>
+					<a class="button energy-pink" data-hotline=open>Call us now: 01786 466166</a>
+					<a class="button energy-pink" data-hotline=closed>Register for Clearing</a>
+				</div>
+				<div class="cell small-12 medium-6">
+					<h2>SQA Clearing example</h2>
+					<a class="button heritage-purple" data-hotline=open data-early>Call us now: 01786 466166</a>
+					<a class="button heritage-purple" data-hotline=closed data-early>Register for Clearing</a>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- --->
+		
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+				<!-- Text with Heading -->
+				<div class="cell small-12 u-padding-top medium-10 large-10 " id="d.en.167510">
+					<div class="c-wysiwyg-content">
+						<p class="lead"><span>Clearing for 2023 is now open, and we're here to help you</span><span> find your university place.</span></p>
+						<p><span>Call us now on <a href="tel:00441786 466166">+44 (0)1786 466166</a>&nbsp;or use our live chat to discuss your Clearing course options and entry requirements.</span></p>
+					</div>
+				</div>
+				<!-- End Text with Heading -->
+			</div>
+		</div>
+
+		<!-- --->
+
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+
+
+				<div id="status">
+					<table>
+						<tr><th>Current time (user)</th><td data-value="current-time-local"></td></tr>
+						<tr><th>Current time (Stirling)</th><td data-value="current-time-stirling"></td></tr>
+						<tr><th>Current time (UTC)</th><td data-value="current-time-utc"></td></tr>
+					</table>
+					<p>Phonelines are: <span data-value="hotline-open"></span></p>
+					<p><label><input type="checkbox" name="early" id="allow-early"> SQA / Scotland 🏴󠁧󠁢󠁳󠁣󠁴󠁿</label></p>
+				</div>
+				<div id="demo">
+					<p>Use this to test the Clearing hotline 'out of hours' mode.</p>
+					<select name="out-of-hours">
+						<option value="-1">Auto (realtime)</option>
+						<option value="0">Out of hours</option>
+						<option value="1">Lines open</option>
+						<option value="2">Specified BST time below</option>
+					</select>
+					<hr>
+					<p><input type="date" name=date id=date></p>
+					<p><input type="time" name=time id=time></p>
+				</div>
+				
+				<!-- TEMPLATE END -->
+
+			</div>
+		</div>
+	</main>
+
+	<!--beginnoindex-->
+	<!-- 
+				 MAIN FOOTER 
+				-->
+	<footer aria-label="Main footer">
+		<div class="u-bg-black u-clip u-padding-top">
+			<div class="stir-grid site-footer" data-lazy-container>
+				<!-- Contact -->
+				<div class="site-footer__contact">
+					<h2><a href="/about/contact-us/">Contact us</a></h2>
+					<ul>
+						<li><a href="/coronavirus/changes-at-stirling/">COVID-19: <br />Changes at Stirling &#10217;</a>
+						</li>
+						<li><a href="https://portal.stir.ac.uk/student/enquiry/ask.jsp">Ask us a question &#10217;</a>
+						</li>
+						<li><a href="tel:+44(0)1786473171">Tel: +44 (0) 1786 473171</a></li>
+						<li class="site-footer__address u-font-bold"><span>University of Stirling</span>
+							<span>Stirling</span> <span>FK9 4LA</span> <span>Scotland UK</span></li>
+					</ul>
+				</div>
+				<figure class="site-footer__map">
+					<noscript data-load="lazy"><a href="/about/getting-here/">
+							<img src="../../medias/Categorised/Dist/css/images/maps/footer-map-scotland.svg"
+								alt="Map of the UK with a marker indicating the location of the University of Stirling"></a></noscript>
+					<figcaption class="show-for-sr">Map of the United Kingdom of Great Britain and Northern Ireland
+					</figcaption>
+				</figure>
+				<!-- Social -->
+				<div class="site-footer__follow">
+					<h2>Follow us</h2>
+					<ul>
+						<li>
+							<a href="https://www.facebook.com/universityofstirling/">
+								<span class="show-for-sr">Facebook</span>
+								<span class="uos-facebook"></span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.instagram.com/universityofstirling/">
+								<span class="show-for-sr">Instagram</span>
+								<span class="uos-instagram"></span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.twitter.com/StirUni">
+								<span class="show-for-sr">Twitter</span>
+								<span class="uos-twitter"></span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.youtube.com/user/UniversityOfStirling">
+								<span class="show-for-sr">YouTube</span>
+								<span class="uos-youtube-old"></span>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.linkedin.com/school/university-of-stirling/">
+								<span class="show-for-sr">LinkedIn</span>
+								<span class="uos-linkedin"></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- Popular links -->
+				<div class="site-footer__popular-links">
+					<h2>Popular links</h2>
+					<ul>
+						<li><a href="/about/faculties/">Faculties</a></li>
+						<li><a href="/about/professional-services/">Professional services</a></li>
+						<li><a href="/about/our-people/alumni/">Alumni</a></li>
+						<li><a href="/about/work-at-stirling/">Jobs at Stirling</a></li>
+						<li><a href="/about/getting-here/">Getting here</a></li>
+						<li><a href="/student-life/students-union/">Students’ Union</a></li>
+						<li><a href="https://shop.stir.ac.uk/">Online shop</a></li>
+						<li><a href="https://blog.stir.ac.uk/ ">Blog</a></li>
+						<li><a id="footer-link-students" rel="nofollow" href="/internal-students/">Current students</a>
+						</li>
+						<li><a id="footer-link-staff" rel="nofollow" href="/internal-staff/">Staff</a></li>
+					</ul>
+				</div>
+				<!-- Site information -->
+				<div class="site-footer__site-info">
+					<h2>Site information</h2>
+					<ul>
+						<li><a href="/about/policy-legal-and-cookies/">Policy, Legal and Cookies</a></li>
+						<li><a href="/about/accessibilty/">Accessibility statement</a></li>
+						<li><a href="/sitemap/">Sitemap</a></li>
+						<li><a href="/about/modern-slavery-statement/">Modern Slavery Statement</a></li>
+						<li><a href="/about/">Scottish Charity No SC011159</a></li>
+					</ul>
+				</div>
+				<!-- Accreditations -->
+				<div class="site-footer__awards">
+					<a href="/about/our-reputation/facts-and-figures/"
+						aria-label="University facts and figures"><noscript data-load="lazy"><img
+								src="../../medias/Categorised/Dist/images/accreditations/sport-accolade-times-gug.svg"
+								alt="Good University Guide 2020 Sports University of the Year"></noscript></a>
+					<a href="/about/our-reputation/facts-and-figures/"
+						aria-label="University facts and figures"><noscript data-load="lazy"><img
+								src="../../medias/Categorised/Dist/images/accreditations/qap-2019.svg"
+								alt="The Queen's Anniversary Prizes for Higher and Further Education 2019"></noscript></a>
+				</div>
+				<div class="site-footer__accreditations">
+					<a href="/about/our-reputation/facts-and-figures/"
+						aria-label="University facts and figures"><noscript data-load="lazy"><img
+								src="../../medias/Categorised/Dist/images/accreditations/accreditations-cluster.png"
+								srcset="../../medias/Categorised/Dist/images/accreditations/accreditations-cluster@2x.png 2x"
+								width="250" height="38"
+								alt="Accreditation logos for UK QAA, Athena Swan Bronze Award, and the Scottish Credit and Qualifications Framework (SCQF)" /></noscript></a>
+				</div>
+				<div class="site-footer__lockup">
+					<p>Be the difference</p>
+				</div>
+			</div>
+		</div>
+		<!-- Copyright Footer -->
+		<div class="c-copyright u-bg-black" aria-label="copyright">
+			<div class="grid-container">
+				<div class="grid-x grid-padding-x">
+					<div class="cell large-12 medium-12 small-12">
+						<p>&copy; University of Stirling</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Back to top button -->
+		<a href="#" id="c-scroll-to-top-button" class="c-scroll-to-top flex-container align-middle align-center"><span
+				class="show-for-sr">Scroll back to the top</span><span class="uos-arrows-up"></span></a>
+	</footer>
+	<!--endnoindex-->
+
+	<script src="../../medias/Categorised/Dist/js/app.min.js?v=202206231404"></script>
+	<script src="../../medias/Categorised/Dist/js/other/unibuddy.js?v=202206231404"></script>
+
+	<script src="../../src/js-other/clock.js"></script>
+	<script src="../../src/js-other/hotline.js"></script>
+
+
+
+</body>
+
+</html>

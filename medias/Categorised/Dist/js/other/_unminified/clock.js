@@ -46,7 +46,7 @@ var UoS_ClearingClock = (function () {
 	var proto = Object.create(UoS_Clock.prototype);
 
 	// extend the prototype by adding a new member function:
-	proto.clearingHotlineOpen = function clearingHotlineOpen(date, early) {
+	proto.clearingHotlineOpen = function clearingHotlineOpen(date, sqa) {
 		var date = !date ? this.time() : date;
 
 		var month = date.getUTCMonth();
@@ -55,24 +55,18 @@ var UoS_ClearingClock = (function () {
 		var dayOfWeek = date.getUTCDay();
 		var weekday = dayOfWeek > 0 && dayOfWeek < 6 ? true : false;
 
-		// Clearing is 8–24 August 2022
-		// Scottish results: 9 Aug
-		// A-Level results: 18 Aug
-		// No early opening this year as such BUT Scottish pages will use the 'early' tag.
-
-		// In 2021 lines were open early for some regions (from 5 July to 8 August)
-		// Set the `early` parameter TRUE to check the date against the early period AS WELL AS the normal period.
-		// Set the `early` parameter FALSE to check the date against ONLY the normal period.
-
+		// Clearing is 7–22 August 2023
+		// Scottish results: 8 Aug
+		// A-Level results: 17 Aug
 
 		// :: DATE HANDLING ::
 
-		if (2022 != date.getUTCFullYear()) return false;	// ignore any dates not in 2022
+		if (2023 != date.getUTCFullYear()) return false;	// ignore any dates not in 2023
 		if (7 != month) return false						// ignore any dates not in August
-		if (day <= 7) return false;							// no calls at all before 8 August
-		if (day <= 17 && !early) return false;				// Aug 8–17 only allowed for `early` region (Scot)
-															// …Aug 18–24 Clearing is open…
-		//if (day >= 25) return false; 						// no calls after 31 August (revised 2022-08-25)
+		if (day <= 6) return false;							// no calls at all before 7 August
+		if (day <= 16 && !sqa) return false;				// Aug 7–16 only allowed for Scotland region (SQA results)
+															// …Aug 17–22 Clearing is open…
+		if (day >= 23) return false; 						// no calls after 22 August (this got extended in 2022 to Aug 31)
 		
 		// :: TIME OF DAY HANDLING ::
 
@@ -82,21 +76,20 @@ var UoS_ClearingClock = (function () {
 		if (weekday && hour >= 8 && hour < 16) return true;
 
 		// Extended hours (August only)
-		// i.e. Weekends, or other times outwith 9–5
-		//if(7 == month) {
-		// August 9 & 18: 8am–7pm (7.00–18.00 UTC)
-		if ((9 == day || 18 == day) && hour >= 7 && hour < 18) {
+		// i.e. Weekends, or other times outwith 9–5…
+
+		// [Results day] August 8 & 17: 8am–7pm (7.00–18.00 UTC)
+		if ((8 == day || 17 == day) && hour >= 7 && hour < 18) {
 			return true;
 		}
-		// August 10 & 19: 9am-6pm (8.00–17.00 UTC)
-		if ((10 == day || 19 == day) && hour >= 8 && hour < 17) {
+		// [Results Boxing Day]August 9 & 18: 9am-6pm (8.00–17.00 UTC)
+		if ((9 == day || 18 == day) && hour >= 8 && hour < 17) {
 			return true;
 		}
-		// August 20: 9am-4pm (8.00–15.00 UTC)
-		if (20 == day && hour >= 8 && hour < 15) {
+		// [Saturday] August 19: 9am-4pm (8.00–15.00 UTC) 
+		if (19 == day && hour >= 8 && hour < 15) {
 			return true;
 		}
-		//}
 
 		// any other time, lines are closed:
 		return false;
