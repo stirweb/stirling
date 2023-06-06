@@ -43,7 +43,7 @@ main h2 {
 }
 
 .c-infographic__line1 {
-  font-family: "Anton", sans-serif !important;
+  font-family: "≈", sans-serif !important;
   text-transform: uppercase;
   font-size: 2.25rem !important; /* 36px */
   font-weight: 500 !important;
@@ -61,16 +61,16 @@ main .button {
     color: #fff;
   }
 
-  &.heritage-green {
-    background-color: #67a51e;
-    color: #fff;
+  // &.heritage-green {
+  //   background-color: #67a51e;
+  //   color: #fff;
 
-    &:hover {
-      border-color: #67a51e;
-      background-color: #fff;
-      color: #67a51e;
-    }
-  }
+  //   &:hover {
+  //     border-color: #67a51e;
+  //     background-color: #fff;
+  //     color: #67a51e;
+  //   }
+  // }
 }
 
 .button.energy-pink:hover {
