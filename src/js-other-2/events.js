@@ -1,7 +1,7 @@
 (function (scope) {
   if (!scope) return;
 
-  const ITEMS_PER_PAGE = 4;
+  const ITEMS_PER_PAGE = 10;
 
   /* 
     NODES
@@ -52,14 +52,21 @@
     return !val ? `` : `<span class="u-bg-heritage-berry u-white c-tag u-mr-1">${val}</span>`;
   };
 
+  const renderLink = (item) => {
+    if (!item.url) return `${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}`;
+
+    return ` <a href="${item.url}">${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}</a>`;
+  };
+
   const renderEvent = (item) => {
+    console.log(item);
     return `
             <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin < 0 ? `data-label-icon="pin"` : ``} >
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
-                      ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)}
-                        <strong><a href="${item.url}">${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}</a></strong>
+                      ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} 
+                        <strong>${renderLink(item)}</strong>
                     </p>
                     <div class="flex-container flex-dir-column u-gap-8">
                         <div class="flex-container u-gap-16 align-middle">
@@ -134,7 +141,7 @@
   };
 
   const renderPaginationBtn = (end, noOfResults) => {
-    return end > noOfResults ? `` : `<div class="loadmorebtn flex-container align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
+    return end >= noOfResults ? `` : `<div class="loadmorebtn flex-container align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
   };
 
   const renderPageMeta = (start, end, noOfResults) => {
