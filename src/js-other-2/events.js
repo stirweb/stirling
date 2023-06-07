@@ -48,12 +48,17 @@
     return start === end ? `` : `– <time datetime="${end}">${stirEnd}</time>`;
   };
 
+  const renderInfoTag = (val) => {
+    return !val ? `` : `<span class="u-bg-heritage-berry u-white c-tag u-mr-1">${val}</span>`;
+  };
+
   const renderEvent = (item) => {
     return `
             <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin < 0 ? `data-label-icon="pin"` : ``} >
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
+                      ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)}
                         <strong><a href="${item.url}">${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}</a></strong>
                     </p>
                     <div class="flex-container flex-dir-column u-gap-8">
