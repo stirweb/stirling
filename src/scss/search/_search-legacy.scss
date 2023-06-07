@@ -1,8 +1,10 @@
-/*
-    Legacy stuff still dotted around differnt UIs 
-    such as accommodation and news-archive
-*/
+.c-tag {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+}
 
+/*
 .c-tag-list {
   padding: 0;
   margin: 0;
@@ -25,12 +27,12 @@
     }
   }
 }
+*/
 
-.c-tag {
-  display: inline-block;
-  padding: 0.3rem 0.7rem;
-  font-size: 0.75rem;
-}
+/*
+    Legacy stuff still dotted around differnt UIs 
+    such as accommodation and news-archive
+*/
 
 /*  
     IN USE ACCOMMODATION FINDER ONLY  
