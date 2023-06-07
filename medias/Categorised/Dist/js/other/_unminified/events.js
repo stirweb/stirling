@@ -88,7 +88,7 @@
             <div class="cell u-p-2 small-12 ${item.image ? `medium-8` : ``} ">
                 ${item.isSeries ? renderTab("Event series") : ``}
                 <p class="u-text-regular u-mb-2">
-                    <strong><a href="${item.url}">${item.title}</a></strong>
+                ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} <strong><a href="${item.url}">${item.title}</a></strong>
                 </p>
                 <div class="flex-container flex-dir-column u-gap-8 u-mb-1">
                     <div class="flex-container u-gap-16 align-middle">
