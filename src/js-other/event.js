@@ -61,6 +61,10 @@
 
   const renderHeader = (text, classes) => (text ? `<h3 class="header-stripped ${classes}">${text}</h3>` : ``);
 
+  const renderAudience = (audience) => {
+    return !audience.trim ? `` : `<div><span class="u-inline-block u-mb-1"><strong>Audience</strong><br />${audience}</span></div>`;
+  };
+
   const renderEvent = (item, index) => {
     return `
         <div class="${index % 2 === 1 ? `` : `u-bg-grey`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : ``} u-p-1 c-event-list u-gap">
@@ -70,8 +74,8 @@
             <strong >Date:</strong> ${item.stirStart} <br />
             <strong>Time:</strong> ${item.startTime} - ${item.endTime}
           </div>
-          <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${item.summary} </div>
-          <div><span class="u-inline-block u-mb-1"><strong>Audience</strong><br />${item.isPublic ? `Public` : `Staff / students`} </div>
+          <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${item.summary} </span></div>
+          ${renderAudience(item.audience)}
           <div>${item.recording ? `<span class="u-inline-block u-mb-1"><strong>Recording</strong><br />Available` : ``} </div>
         </div>`;
   };
