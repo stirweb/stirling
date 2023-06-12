@@ -82,14 +82,21 @@
   };
 
   const renderDates = (item) => {
-    return `<option>${item.stirStart}</option>`;
+    return `<option value="${item.startInt}">${item.stirStart}</option>`;
   };
+
+  const renderOptionOne = () => `<option value="">Filter by date</option>`;
 
   /*
     |
     |   HELPERS
     |
     */
+
+  const dateUserFilter = stir.curry((d, item) => {
+    if (d === ``) return item;
+    if (item.startInt === Number(d)) return item;
+  });
 
   const dateMapper = (item) => {
     return { start: item.start, stirStart: item.stirStart, startInt: item.startInt };
@@ -144,28 +151,52 @@
 
   /*
     |
-    |   ONLOAD
+    |   CONTROLLERS
+    |
+    */
+
+  const doUpcoming = (date, initialData) => {
+    const dateUserFilterCurry = stir.filter(dateUserFilter(date));
+
+    const seriesUpcomingData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry, isUpcomingFilter, isSeriesChildFilter)(initialData);
+    const upcomingHtml = seriesUpcomingData.length ? renderHeader("Upcoming", "") + seriesUpcomingData : ``;
+
+    return upcomingHtml;
+  };
+
+  const doPast = (initialData) => {
+    const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), isPassedFilter, isSeriesChildFilter)(initialData);
+    return seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
+  };
+
+  const doDateFilter = (initialData) => {
+    const dates = stir.compose(stir.map(dateMapper), stir.sort(sortByStartDate), isUpcomingFilter, isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
+    const dates2 = removeDuplicateObjectFromArray(dates, "startInt");
+    return stir.compose(joiner, stir.map(renderDates))(dates2);
+  };
+
+  /*
+    |
+    |   ON LOAD
     |
     */
 
   const url = getJSONUrl(UoS_env.name);
 
+  /* Fetch the data */
   stir.getJSON(url, (initialData) => {
-    const seriesUpcomingData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), isUpcomingFilter, isSeriesChildFilter)(initialData);
-    const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), isPassedFilter, isSeriesChildFilter)(initialData);
-
-    const upcomingHtml = seriesUpcomingData.length ? renderHeader("Upcoming", "") + seriesUpcomingData : ``;
-    const pastHtml = seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
-
-    setDOMContent(seriesEventsArea, upcomingHtml + pastHtml);
+    const pastHtml = doPast(initialData);
+    setDOMContent(seriesEventsArea, doUpcoming("", initialData) + pastHtml);
 
     if (!seriesDateFilter) return;
 
     /* Series filter */
+    setDOMContent(seriesDateFilter, renderOptionOne() + doDateFilter(initialData));
 
-    const dates = stir.compose(stir.map(dateMapper), stir.sort(sortByStartDate), isUpcomingFilter, isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
-    const dates2 = removeDuplicateObjectFromArray(dates, "startInt");
-
-    stir.compose(setDOMContent(seriesDateFilter), stir.map(renderDates))(dates2);
+    /* Event Listener */
+    seriesDateFilter.addEventListener("change", (event) => {
+      const upcomingHtml = doUpcoming(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
+      setDOMContent(seriesEventsArea, upcomingHtml + pastHtml);
+    });
   });
 })(stir.node("#seriesevents"));
