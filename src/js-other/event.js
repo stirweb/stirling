@@ -52,6 +52,7 @@
 
   const seriesEventsArea = scope;
   const seriesId = seriesEventsArea.dataset && seriesEventsArea.dataset.seriesid ? seriesEventsArea.dataset.seriesid : null;
+  const seriesDateFilter = stir.node("#seriesdatefilter");
 
   /*
     |
@@ -62,7 +63,7 @@
   const renderHeader = (text, classes) => (text ? `<h3 class="header-stripped ${classes}">${text}</h3>` : ``);
 
   const renderAudience = (audience) => {
-    return !audience.trim ? `` : `<div><span class="u-inline-block u-mb-1"><strong>Audience</strong><br />${audience}</span></div>`;
+    return !audience.trim ? `` : `<strong>Audience</strong><br />${audience}`;
   };
 
   const renderEvent = (item, index) => {
@@ -75,9 +76,13 @@
             <strong>Time:</strong> ${item.startTime} - ${item.endTime}
           </div>
           <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${item.summary} </span></div>
-          ${renderAudience(item.audience)}
-          <div>${item.recording ? `<span class="u-inline-block u-mb-1"><strong>Recording</strong><br />Available` : ``} </div>
+          <div><span class="u-inline-block u-mb-1">${renderAudience(item.audience)}</span></div>
+          <div><span class="u-inline-block u-mb-1">${item.recording ? `<strong>Recording</strong><br />Available` : ``}</span></div>
         </div>`;
+  };
+
+  const renderDates = (item) => {
+    return `<option>${item.stirStart}</option>`;
   };
 
   /*
@@ -85,6 +90,24 @@
     |   HELPERS
     |
     */
+
+  const dateMapper = (item) => {
+    return { start: item.start, stirStart: item.stirStart, startInt: item.startInt };
+  };
+
+  const removeDuplicateObjectFromArray = (array, key) => {
+    let check = {};
+    let res = [];
+    for (let i = 0; i < array.length; i++) {
+      if (!check[array[i][key]]) {
+        check[array[i][key]] = true;
+        res.push(array[i]);
+      }
+    }
+    return res;
+  };
+
+  const filterEmpties = (item) => item.start;
 
   const renderEventsMapper = stir.map(renderEvent);
 
@@ -94,6 +117,8 @@
     let yourDate = new Date();
     return Number(yourDate.toISOString().split("T")[0].split("-").join(""));
   };
+
+  const sortByStartDate = (a, b) => a.startInt - b.startInt;
 
   const isUpcoming = (item) => item.endInt >= getNow();
 
@@ -123,17 +148,24 @@
     |
     */
 
-  console.log(UoS_env.name);
-
   const url = getJSONUrl(UoS_env.name);
 
   stir.getJSON(url, (initialData) => {
-    const seriesUpcomingData = stir.compose(joiner, renderEventsMapper, isUpcomingFilter, isSeriesChildFilter)(initialData);
-    const seriesPastData = stir.compose(joiner, renderEventsMapper, isPassedFilter, isSeriesChildFilter)(initialData);
+    const seriesUpcomingData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), isUpcomingFilter, isSeriesChildFilter)(initialData);
+    const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), isPassedFilter, isSeriesChildFilter)(initialData);
 
     const upcomingHtml = seriesUpcomingData.length ? renderHeader("Upcoming", "") + seriesUpcomingData : ``;
     const pastHtml = seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
 
     setDOMContent(seriesEventsArea, upcomingHtml + pastHtml);
+
+    if (!seriesDateFilter) return;
+
+    /* Series filter */
+
+    const dates = stir.compose(stir.map(dateMapper), stir.sort(sortByStartDate), isUpcomingFilter, isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
+    const dates2 = removeDuplicateObjectFromArray(dates, "startInt");
+
+    stir.compose(setDOMContent(seriesDateFilter), stir.map(renderDates))(dates2);
   });
 })(stir.node("#seriesevents"));
