@@ -174,9 +174,9 @@
     return Number(yourDate.toISOString().split("T")[0].split("-").join(""));
   };
 
-  const isPublic = (item) => item.isPublic === "Yes";
+  const isPublic = (item) => item.audience.includes("Public");
 
-  const isStaffStudent = (item) => item.isPublic !== "Yes";
+  const isStaffStudent = (item) => item.audience.includes("Staff") || item.audience.includes("Student");
 
   const isPublicFilter = stir.filter(isPublic);
 

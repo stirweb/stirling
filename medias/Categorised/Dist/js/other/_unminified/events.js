@@ -37,7 +37,7 @@
   };
 
   const renderSeriesInfo = (series) => {
-    return `<p>Part of the ${series} series.</p>`;
+    return `<p class="text-sm">Part of the ${series} series.</p>`;
   };
 
   const renderNoData = () => {
@@ -59,7 +59,6 @@
   };
 
   const renderEvent = (item) => {
-    console.log(item);
     return `
             <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin < 0 ? `data-label-icon="pin"` : ``} >
                 ${item.isSeries ? renderTab("Event series") : ``} 
@@ -175,9 +174,9 @@
     return Number(yourDate.toISOString().split("T")[0].split("-").join(""));
   };
 
-  const isPublic = (item) => item.isPublic === "Yes";
+  const isPublic = (item) => item.audience.includes("Public");
 
-  const isStaffStudent = (item) => item.isPublic !== "Yes";
+  const isStaffStudent = (item) => item.audience.includes("Staff") || item.audience.includes("Student");
 
   const isPublicFilter = stir.filter(isPublic);
 
