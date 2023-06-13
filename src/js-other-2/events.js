@@ -37,7 +37,7 @@
   };
 
   const renderSeriesInfo = (series) => {
-    return `<p>Part of the ${series} series.</p>`;
+    return `<p class="text-sm">Part of the ${series} series.</p>`;
   };
 
   const renderNoData = () => {
@@ -59,7 +59,6 @@
   };
 
   const renderEvent = (item) => {
-    console.log(item);
     return `
             <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin < 0 ? `data-label-icon="pin"` : ``} >
                 ${item.isSeries ? renderTab("Event series") : ``} 
