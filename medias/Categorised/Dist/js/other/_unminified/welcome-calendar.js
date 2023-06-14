@@ -2,12 +2,9 @@
   if (!scope) return;
 
   const filtersArea = stir.node("#welcomeeventfilters");
-<<<<<<< Updated upstream
   const resultsArea = scope;
 
   const ITEMS_PER_PAGE = 5;
-=======
->>>>>>> Stashed changes
 
   /*
       | 
@@ -16,10 +13,6 @@
       */
 
   const renderEvent = (item) => {
-<<<<<<< Updated upstream
-=======
-    console.log(item);
->>>>>>> Stashed changes
     return `<div class="grid-x u-bg-white u-mb-2 u-energy-line-left u-border-width-5">
                   <div class="cell u-p-2 small-12  ">
                       
@@ -39,7 +32,6 @@
                               <span class="u-icon h5 uos-location"></span>
                               <span>${item.location}</span>
                           </div>
-<<<<<<< Updated upstream
 
                           <div class="flex-container u-gap-16 align-middle">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:20px; height: 20px; color: #006938 ">
@@ -54,14 +46,6 @@
                       <p class="u-m-0 text-sm"><strong>Theme:</strong> ${item.theme} <br /><strong>Attendance:</strong> ${item.attendance}</p>
 
 
-=======
-                          
-                      <!-- div class="flex-container u-gap-16 align-middle">
-                              <span class="u-icon h5 uos-discounts"></span><a href="${item.link}">Booking required</a></ -->
-                      </div>
-                      <p class="text-sm">${item.description}</p>
-                      <p class="u-m-0 text-sm">Theme: ${item.theme} <br />Attendance: ${item.attendance}</p>
->>>>>>> Stashed changes
                   </div>
               </div>`;
   };
@@ -86,7 +70,6 @@
               </div>`;
   };
 
-<<<<<<< Updated upstream
   const renderPaginationBtn = (end, noOfResults) => {
     console.log(end, noOfResults);
     return end >= noOfResults ? `` : `<div class="loadmorebtn flex-container align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
@@ -96,8 +79,6 @@
     return start < 2 ? `` : `<div class="flex-container align-center u-mb-2">Showing ${start + 1}-${end > noOfResults ? noOfResults : end} of ${noOfResults} results</div>`;
   };
 
-=======
->>>>>>> Stashed changes
   /*
       | 
       |  HELPERS
@@ -109,14 +90,10 @@
     return true;
   });
 
-<<<<<<< Updated upstream
   const appendDOMContent = stir.curry((elem, html) => {
     elem.insertAdjacentHTML("beforeend", html);
     return elem;
   });
-=======
-  const setDOMEvents = setDOMContent(scope);
->>>>>>> Stashed changes
 
   const setDOMDateFilter = setDOMContent(filtersArea);
 
@@ -158,7 +135,6 @@
     return item.theme === theme;
   });
 
-<<<<<<< Updated upstream
   const isUpcoming = (item) => item.endInt >= getNow();
 
   const isUpcomingFilter = stir.filter(isUpcoming);
@@ -204,41 +180,25 @@
     |  ON LOAD
     |
     */
-=======
-  /*
-      | 
-      |  ON LOAD
-      |
-      */
->>>>>>> Stashed changes
 
   /* 
         Welcome Events 
      */
   const initData = stir.feeds.events.filter((item) => item.id);
 
-<<<<<<< Updated upstream
   QueryParams.set("page", 1);
-=======
-  console.log(initData);
->>>>>>> Stashed changes
 
   /* 
         Filters 
     */
   const removeDateDups = removeDuplicateObjectFromArray("startInt");
-<<<<<<< Updated upstream
   const datesHtml = stir.compose(joiner, stir.map(renderDateFilter), removeDateDups, stir.map(mapDates), stir.sort(sortByStartDate), isUpcomingFilter)(initData);
-=======
-  const datesHtml = stir.compose(joiner, stir.map(renderDateFilter), removeDateDups, stir.map(mapDates), stir.sort(sortByStartDate))(initData);
->>>>>>> Stashed changes
 
   const removeFilterDups = removeDuplicateObjectFromArray("theme");
   const themesHtml = stir.compose(joiner, stir.map(renderThemeFilter), removeFilterDups, stir.filter(filterThemeEmpties), stir.map(mapTheme))(initData);
 
   setDOMDateFilter(renderSelectFilter(datesHtml, "Filter by date") + renderSelectFilter(themesHtml, "Filter by theme"));
 
-<<<<<<< Updated upstream
   /* default list */
   doEventsFilter("", "", initData);
 
@@ -258,27 +218,10 @@
     }
   });
 
-=======
-  /* 
-        CONTROLLER 
-    */
-  const doEventsFilter = (date, theme, data) => {
-    const filterByDateCurry = filterByDate(date);
-    const filterByThemeCurry = filterByTheme(theme);
-
-    const html = stir.compose(joiner, stir.map(renderEvent), stir.filter(filterByThemeCurry), stir.filter(filterByDateCurry), stir.sort(sortByStartDate))(data);
-
-    html.length ? setDOMEvents(html) : setDOMEvents(renderNoEvents());
-  };
-
-  doEventsFilter("", "", initData);
-
-  /* 
-        EVENT LISTENER 
-    */
->>>>>>> Stashed changes
   filtersArea.addEventListener("click", (event) => {
     if (event.target.nodeName === "OPTION") {
+      QueryParams.set("page", 1);
+
       const dateFilter = stir.node("#filter-by-date");
       const themeFilter = stir.node("#filter-by-theme");
 
