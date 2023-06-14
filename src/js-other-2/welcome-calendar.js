@@ -105,7 +105,7 @@
   //const sortByStartDateDesc = (a, b) => b.startIntFull - a.startIntFull;
 
   const mapDates = (item) => {
-    return { startIntFull: item.startIntFull, stirStart: item.stirStart };
+    return { startIntFull: item.startInt, stirStart: item.stirStart };
   };
 
   const mapTheme = (item) => {
@@ -128,7 +128,7 @@
 
   const filterByDate = stir.curry((date, item) => {
     if (!date) return true;
-    return item.startIntFull === Number(date);
+    return item.startInt === Number(date);
   });
 
   const filterByTheme = stir.curry((theme, item) => {
