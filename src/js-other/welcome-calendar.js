@@ -124,6 +124,8 @@
    */
   const initData = stir.feeds.events.filter((item) => item.id);
 
+  console.log(initData);
+
   /* 
   	Filters 
   */
@@ -143,8 +145,6 @@
     const filterByThemeCurry = filterByTheme(theme);
 
     const html = stir.compose(joiner, stir.map(renderEvent), stir.filter(filterByThemeCurry), stir.filter(filterByDateCurry), stir.sort(sortByStartDate))(data);
-
-    console.log(html.length);
 
     html.length ? setDOMEvents(html) : setDOMEvents(renderNoEvents());
   };
