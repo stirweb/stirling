@@ -13,6 +13,7 @@
       */
 
   const renderEvent = (item) => {
+    console.log(item.endIntFull);
     return `<div class="grid-x u-bg-white u-mb-2 u-energy-line-left u-border-width-5">
                   <div class="cell u-p-2 small-12  ">
                       
@@ -51,7 +52,7 @@
   };
 
   const renderDateFilter = (item) => {
-    return `<option value="${item.startInt}">${item.stirStart}</option>`;
+    return `<option value="${item.startIntFull}">${item.stirStart}</option>`;
   };
 
   const renderThemeFilter = (item) => {
@@ -100,12 +101,12 @@
 
   const joiner = stir.join("");
 
-  const sortByStartDate = (a, b) => a.startInt - b.startInt;
+  const sortByStartDate = (a, b) => a.startIntFull - b.startIntFull;
 
-  //const sortByStartDateDesc = (a, b) => b.startInt - a.startInt;
+  //const sortByStartDateDesc = (a, b) => b.startIntFull - a.startIntFull;
 
   const mapDates = (item) => {
-    return { startInt: item.startInt, stirStart: item.stirStart };
+    return { startIntFull: item.startIntFull, stirStart: item.stirStart };
   };
 
   const mapTheme = (item) => {
@@ -128,7 +129,7 @@
 
   const filterByDate = stir.curry((date, item) => {
     if (!date) return true;
-    return item.startInt === Number(date);
+    return item.startIntFull === Number(date);
   });
 
   const filterByTheme = stir.curry((theme, item) => {
@@ -136,7 +137,7 @@
     return item.theme === theme;
   });
 
-  const isUpcoming = (item) => item.endInt >= getNow();
+  const isUpcoming = (item) => item.endIntFull >= getNow();
 
   const isUpcomingFilter = stir.filter(isUpcoming);
 
@@ -148,7 +149,7 @@
 
   const getNow = () => {
     let yourDate = new Date();
-    return Number(yourDate.toISOString().split("T")[0].split("-").join(""));
+    return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
   };
 
   /* 
@@ -195,7 +196,7 @@
   /* 
         Filters 
     */
-  const removeDateDups = removeDuplicateObjectFromArray("startInt");
+  const removeDateDups = removeDuplicateObjectFromArray("startIntFull");
   const datesHtml = stir.compose(joiner, stir.map(renderDateFilter), removeDateDups, stir.map(mapDates), stir.sort(sortByStartDate), isUpcomingFilter)(initData);
 
   const removeFilterDups = removeDuplicateObjectFromArray("theme");
