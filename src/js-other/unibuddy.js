@@ -50,22 +50,22 @@
 
     //POSTGRAD: Exact matches
     switch (path) {
-      case "https://www.stir.ac.uk/study/postgraduate/":
-      case "https://www.stir.ac.uk/study/postgraduate/choosing-a-course/":
-      case "https://www.stir.ac.uk/study/postgraduate/how-to-apply/":
-      case "https://www.stir.ac.uk/study/postgraduate/how-to-apply/what-makes-a-good-personal-statement/":
-      case " https://www.stir.ac.uk/study/postgraduate/flexible-learning/":
-      case "https://www.stir.ac.uk/study/postgraduate/into-university-of-stirling-postgraduate-progression-courses/":
-      case "https://www.stir.ac.uk/study/postgraduate/why-stirling-for-postgraduate-study/":
-      case "https://www.stir.ac.uk/study/postgraduate/why-stirling-for-postgraduate-study/redefine-your-career/":
-      case "https://www.stir.ac.uk/study/postgraduate/create-your-personalised-prospectus/":
-      case "https://www.stir.ac.uk/study/postgraduate/ask-an-expert/":
-      case "https://www.stir.ac.uk/study/postgraduate/ask-an-expert/ask-an-expert-banking-and-finance/":
-      case "https://www.stir.ac.uk/study/postgraduate/ask-an-expert/ask-an-expert-media-culture-and-communications/":
-      case "https://www.stir.ac.uk/study/postgraduate/ask-an-expert/ask-an-expert-tesol/":
-      case "https://www.stir.ac.uk/study/postgraduate/ask-an-expert/ask-an-expert-health-sciences-and-sport/":
-      case " https://www.stir.ac.uk/study/postgraduate/ask-an-expert/ask-an-expert-data-science-and-fintech/":
-      case "https://www.stir.ac.uk/study/postgraduate/ask-an-expert/ask-an-expert-psychology/":
+      case "/study/postgraduate/":
+      case "/study/postgraduate/choosing-a-course/":
+      case "/study/postgraduate/how-to-apply/":
+      case "/study/postgraduate/how-to-apply/what-makes-a-good-personal-statement/":
+      case "/study/postgraduate/flexible-learning/":
+      case "/study/postgraduate/into-university-of-stirling-postgraduate-progression-courses/":
+      case "/study/postgraduate/why-stirling-for-postgraduate-study/":
+      case "/study/postgraduate/why-stirling-for-postgraduate-study/redefine-your-career/":
+      case "/study/postgraduate/create-your-personalised-prospectus/":
+      case "/study/postgraduate/ask-an-expert/":
+      case "/study/postgraduate/ask-an-expert/ask-an-expert-banking-and-finance/":
+      case "/study/postgraduate/ask-an-expert/ask-an-expert-media-culture-and-communications/":
+      case "/study/postgraduate/ask-an-expert/ask-an-expert-tesol/":
+      case "/study/postgraduate/ask-an-expert/ask-an-expert-health-sciences-and-sport/":
+      case "/study/postgraduate/ask-an-expert/ask-an-expert-data-science-and-fintech/":
+      case "/study/postgraduate/ask-an-expert/ask-an-expert-psychology/":
         return initialiseUniBuddyPopCard("level", "Postgraduate");
     }
 
