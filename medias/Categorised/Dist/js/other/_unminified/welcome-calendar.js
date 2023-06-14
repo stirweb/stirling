@@ -220,6 +220,8 @@
 
   filtersArea.addEventListener("click", (event) => {
     if (event.target.nodeName === "OPTION") {
+      QueryParams.set("page", 1);
+
       const dateFilter = stir.node("#filter-by-date");
       const themeFilter = stir.node("#filter-by-theme");
 
