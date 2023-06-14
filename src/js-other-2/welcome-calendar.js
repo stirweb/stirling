@@ -73,7 +73,6 @@
   };
 
   const renderPaginationBtn = (end, noOfResults) => {
-    console.log(end, noOfResults);
     return end >= noOfResults ? `` : `<div class="loadmorebtn flex-container align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
   };
 
@@ -190,6 +189,9 @@
 
   QueryParams.set("page", 1);
 
+  /* default list */
+  doEventsFilter("", "", initData);
+
   /* 
         Filters 
     */
@@ -200,9 +202,6 @@
   const themesHtml = stir.compose(joiner, stir.map(renderThemeFilter), removeFilterDups, stir.filter(filterThemeEmpties), stir.map(mapTheme))(initData);
 
   setDOMDateFilter(renderSelectFilter(datesHtml, "Filter by date") + renderSelectFilter(themesHtml, "Filter by theme") + renderClearFiltersBtn());
-
-  /* default list */
-  doEventsFilter("", "", initData);
 
   /* 
         EVENT LISTENER 
@@ -235,7 +234,6 @@
 
     if (event.target.nodeName === "OPTION") {
       QueryParams.set("page", 1);
-
       doEventsFilter(dateFilter.options[dateFilter.selectedIndex].value, themeFilter.options[themeFilter.selectedIndex].value, initData);
     }
   });
