@@ -13,7 +13,6 @@
       */
 
   const renderEvent = (item) => {
-    console.log(item.endIntFull);
     return `<div class="grid-x u-bg-white u-mb-2 u-energy-line-left u-border-width-5">
                   <div class="cell u-p-2 small-12  ">
                       
