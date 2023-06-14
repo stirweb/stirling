@@ -62,6 +62,8 @@
     return `<select id="${title.toLowerCase().replaceAll(" ", "-")}"><option value="">${title}</option>${html}</select>`;
   };
 
+  const renderClearFiltersBtn = () => `<button id="clearfilters" class="button no-arrow tiny hollow expanded u-font-bold">Clear all filters</button>`;
+
   const renderNoEvents = () => {
     return `<div class="grid-x u-bg-white u-mb-2  u-border-width-5">
                   <div class="cell u-p-2 small-12  ">
@@ -197,7 +199,7 @@
   const removeFilterDups = removeDuplicateObjectFromArray("theme");
   const themesHtml = stir.compose(joiner, stir.map(renderThemeFilter), removeFilterDups, stir.filter(filterThemeEmpties), stir.map(mapTheme))(initData);
 
-  setDOMDateFilter(renderSelectFilter(datesHtml, "Filter by date") + renderSelectFilter(themesHtml, "Filter by theme"));
+  setDOMDateFilter(renderSelectFilter(datesHtml, "Filter by date") + renderSelectFilter(themesHtml, "Filter by theme") + renderClearFiltersBtn());
 
   /* default list */
   doEventsFilter("", "", initData);
@@ -219,11 +221,20 @@
   });
 
   filtersArea.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const dateFilter = stir.node("#filter-by-date");
+    const themeFilter = stir.node("#filter-by-theme");
+
+    if (event.target.nodeName === "BUTTON") {
+      QueryParams.set("page", 1);
+      dateFilter.value = "";
+      themeFilter.value = "";
+      doEventsFilter(dateFilter.options[dateFilter.selectedIndex].value, themeFilter.options[themeFilter.selectedIndex].value, initData);
+    }
+
     if (event.target.nodeName === "OPTION") {
       QueryParams.set("page", 1);
-
-      const dateFilter = stir.node("#filter-by-date");
-      const themeFilter = stir.node("#filter-by-theme");
 
       doEventsFilter(dateFilter.options[dateFilter.selectedIndex].value, themeFilter.options[themeFilter.selectedIndex].value, initData);
     }
