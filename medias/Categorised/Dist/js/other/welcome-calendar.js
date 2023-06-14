@@ -1,1 +1,31 @@
-!function(){var t=document.querySelector(".c-welcome-calendar");if(t){var e=["January","February","March","April","May","June","July","August","September","October","November","December"],a=t.getAttribute("data-start")?new Date(t.getAttribute("data-start")):null,n=t.getAttribute("data-end")?new Date(t.getAttribute("data-end")):null,r=["first","second","third","fourth"],l=t.getAttribute("data-audience"),o=Array.prototype.slice.call(t.querySelectorAll(".h-event")),i=Array.prototype.slice.call(t.querySelectorAll("time")),d=document.createElement("select"),c=document.createElement("select"),u=[],s=new Date(Date.now());s.setHours(0),s.setMinutes(0),s.setSeconds(0),s.setMilliseconds(0);if(o.forEach(e=>e.remove()),o.sort((e,t)=>e.getAttribute("data-date")<t.getAttribute("data-date")?-1:e.getAttribute("data-date")>t.getAttribute("data-date")?1:0).filter(e=>!a||new Date(e.getAttribute("data-date"))>a).filter(e=>!n||new Date(e.getAttribute("data-date"))<n).filter(e=>new Date(e.getAttribute("data-date"))>=s).forEach(e=>{u.push(e.getAttribute("data-date")),t.appendChild(e)}),u=u.filter(function(e,t,a){return a.indexOf(e)===t}),i.forEach(e=>e.innerText=e.innerText.replace(":00","")),1<u.length){(g=document.createElement("option")).value="",g.innerText="All dates",d.id="dateSelectElement",d.appendChild(g);for(var p=0;p<u.length;p++){var g=document.createElement("option"),b=new Date(u[p]);g.value=u[p],g.innerText=`${("0"+b.getUTCDate()).slice(-2)} ${e[b.getUTCMonth()]} `+b.getFullYear(),d.appendChild(g)}t.insertAdjacentElement("beforebegin",d),d.insertAdjacentHTML("beforebegin",'<label for="dateSelectElement">Filter events by date:</label>'),d.addEventListener("change",f)}if("pg"!=l&&1<r.length){(g=document.createElement("option")).value="",g.innerText="All year groups",c.id="groupSelectElement",c.appendChild(g);for(p=0;p<4;p++)(g=document.createElement("option")).innerText=r[p]+" year",g.value=p+1,c.appendChild(g);t.insertAdjacentElement("beforebegin",c),c.insertAdjacentHTML("beforebegin",'<label for="groupSelectElement">Filter events by year group:</label>'),c.addEventListener("change",f)}(1<r.length||1<u.length)&&((i=document.createElement("button")).type="reset",i.setAttribute("class","button"),i.textContent="Reset (show all events)",t.insertAdjacentElement("afterend",i),i.addEventListener("click",function(){m(),d.selectedIndex=c.selectedIndex=0,stir.scrollToElement(d,32)})),"pg"==l&&Array.prototype.forEach.call(t.querySelectorAll(".p-yeargroup"),function(e){e.parentNode.removeChild(e)})}function f(){var e;m(),e=d.options[d.selectedIndex],((e=(e&&e.value?`[data-date="${e.value}"]`:"")+((e=c.options[c.selectedIndex])&&e.value?`[data-group*="${e.value}"]`:""))?Array.prototype.slice.call(t.querySelectorAll(`.h-event:not(${e})`)):[]).forEach(function(e){e.classList&&e.classList.add("ejecta")})}function m(){o.forEach(function(e){e.classList&&e.classList.remove("ejecta")})}}();
+!function(t){if(t){var e=stir.node("#welcomeeventfilters");const a=t=>(console.log(t),`<div class="grid-x u-bg-white u-mb-2 u-energy-line-left u-border-width-5">
+                  <div class="cell u-p-2 small-12  ">
+                      
+                      <p class="u-text-regular u-mb-2">
+                      <strong>${t.title}</strong>
+                      </p>
+                      <div class="flex-container flex-dir-column u-gap-8 u-mb-1">
+                          <div class="flex-container u-gap-16 align-middle">
+                              <span class="u-icon h5 uos-calendar"></span>
+                              <span><time>${t.stirStart}</time></span>
+                          </div>
+                          <div class="flex-container u-gap-16 align-middle">
+                              <span class="uos-clock u-icon h5"></span>
+                              <span><time>${t.startTime}</time> – <time>${t.endTime}</time></span>
+                          </div>
+                          <div class="flex-container u-gap-16 align-middle">
+                              <span class="u-icon h5 uos-location"></span>
+                              <span>${t.location}</span>
+                          </div>
+                          
+                      <!-- div class="flex-container u-gap-16 align-middle">
+                              <span class="u-icon h5 uos-discounts"></span><a href="${t.link}">Booking required</a></ -->
+                      </div>
+                      <p class="text-sm">${t.description}</p>
+                      <p class="u-m-0 text-sm">Theme: ${t.theme} <br />Attendance: ${t.attendance}</p>
+                  </div>
+              </div>`);var s=(t,e)=>`<select id="${e.toLowerCase().replaceAll(" ","-")}"><option value="">${e}</option>${t}</select>`;var i=stir.curry((t,e)=>(stir.setHTML(t,e),!0));const n=i(t);t=i(e);const l=stir.join(""),o=(t,e)=>t.startInt-e.startInt;i=stir.curry((e,s)=>{var i={},r=[];for(let t=0;t<s.length;t++)i[s[t][e]]||(i[s[t][e]]=!0,r.push(s[t]));return r});const c=stir.curry((t,e)=>!t||e.startInt===Number(t)),d=stir.curry((t,e)=>!t||e.theme===t),p=stir.feeds.events.filter(t=>t.id);console.log(p);var r=i("startInt"),r=stir.compose(l,stir.map(t=>`<option value="${t.startInt}">${t.stirStart}</option>`),r,stir.map(t=>({startInt:t.startInt,stirStart:t.stirStart})),stir.sort(o))(p),i=i("theme"),i=stir.compose(l,stir.map(t=>`<option value="${t.theme}">${t.theme}</option>`),i,stir.filter(t=>t.theme),stir.map(t=>({theme:t.theme})))(p);t(s(r,"Filter by date")+s(i,"Filter by theme"));const m=(t,e,s)=>{t=c(t),e=d(e),e=stir.compose(l,stir.map(a),stir.filter(e),stir.filter(t),stir.sort(o))(s);e.length?n(e):n(`<div class="grid-x u-bg-white u-mb-2  u-border-width-5">
+                  <div class="cell u-p-2 small-12  ">
+                      <p>No events have been found for the criteria selected</p>
+                  </div>
+              </div>`)};m("","",p),e.addEventListener("click",t=>{var e;"OPTION"===t.target.nodeName&&(t=stir.node("#filter-by-date"),e=stir.node("#filter-by-theme"),m(t.options[t.selectedIndex].value,e.options[e.selectedIndex].value,p))})}}(stir.node("#welcomeevents"));
