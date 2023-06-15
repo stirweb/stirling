@@ -4,7 +4,7 @@
   const filtersArea = stir.node("#welcomeeventfilters");
   const resultsArea = scope;
 
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 9;
 
   /*
       | 
