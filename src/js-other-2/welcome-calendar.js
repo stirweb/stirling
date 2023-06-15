@@ -155,8 +155,6 @@
         CONTROLLERS
     */
   const doEventsFilter = (date, theme, data) => {
-    console.log(date);
-
     const page = Number(QueryParams.get("page")) || 1;
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
@@ -234,16 +232,19 @@
       themeFilter.value = "";
       doEventsFilter(dateFilter.options[dateFilter.selectedIndex].value, themeFilter.options[themeFilter.selectedIndex].value, initData);
     }
+  });
 
-    /* Select filters */
-    dateFilter.addEventListener("change", (event) => {
-      QueryParams.set("page", 1);
-      doEventsFilter(dateFilter.options[dateFilter.selectedIndex].value, themeFilter.options[themeFilter.selectedIndex].value, initData);
-    });
+  const dateFilter = stir.node("#filter-by-date");
+  const themeFilter = stir.node("#filter-by-theme");
 
-    themeFilter.addEventListener("change", (event) => {
-      QueryParams.set("page", 1);
-      doEventsFilter(dateFilter.options[dateFilter.selectedIndex].value, themeFilter.options[themeFilter.selectedIndex].value, initData);
-    });
+  /* Select filters */
+  dateFilter.addEventListener("change", (event) => {
+    QueryParams.set("page", 1);
+    doEventsFilter(dateFilter.options[dateFilter.selectedIndex].value, themeFilter.options[themeFilter.selectedIndex].value, initData);
+  });
+
+  themeFilter.addEventListener("change", (event) => {
+    QueryParams.set("page", 1);
+    doEventsFilter(dateFilter.options[dateFilter.selectedIndex].value, themeFilter.options[themeFilter.selectedIndex].value, initData);
   });
 })(stir.node("#welcomeevents"));
