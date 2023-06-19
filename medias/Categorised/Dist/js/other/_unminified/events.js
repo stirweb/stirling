@@ -440,7 +440,7 @@
   doArchiveEvents("all", initData);
 
   // Populate the Promo
-  stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), isPromoFilter, stir.sort(sortByStartDate))(initData);
+  stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), isPromoFilter, stir.sort(sortByStartDate), isUpcomingFilter)(initData);
 
   /*
     | 
