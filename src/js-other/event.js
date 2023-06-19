@@ -69,6 +69,7 @@
   const renderInfoTag = (info) => `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span>`;
 
   const renderEvent = (item, index) => {
+    console.log(item);
     return `
         <div class="${index % 2 === 1 ? `` : `u-bg-grey`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : ``} u-p-1 c-event-list u-gap">
           <div >
@@ -80,7 +81,7 @@
           </div>
           <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${item.summary} </span></div>
           <div><span class="u-inline-block u-mb-1">${renderAudience(item.audience)}</span></div>
-          <div><span class="u-inline-block u-mb-1">${item.recording ? `<strong>Recording</strong><br />Available` : ``}</span></div>
+          <div><span class="u-inline-block u-mb-1">${item.recording ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>` : ``}</span></div>
         </div>`;
   };
 
