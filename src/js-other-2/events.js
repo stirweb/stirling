@@ -118,7 +118,6 @@
   };
 
   const renderArchiveEvent = (item) => {
-    console.log(item);
     return `
             <div class="c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
                 ${item.recording ? renderTab("Recording available") : ``} 

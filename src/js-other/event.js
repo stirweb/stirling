@@ -66,10 +66,13 @@
     return !audience.trim ? `` : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
   };
 
+  const renderInfoTag = (info) => `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span>`;
+
   const renderEvent = (item, index) => {
     return `
         <div class="${index % 2 === 1 ? `` : `u-bg-grey`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : ``} u-p-1 c-event-list u-gap">
-          <div class="u-w-500">
+          <div >
+            ${item.cancelled ? renderInfoTag("Cancelled") : ``}${item.rescheduled ? renderInfoTag("Rescheduled") : ``}
             <span class="u-inline-block u-mb-1"><strong>Event</strong><br />
             <a href="${item.url}">${item.title}</a></span><br />
             <strong >Date:</strong> ${item.stirStart} <br />
