@@ -63,7 +63,7 @@
   const renderHeader = (text, classes) => (text ? `<h3 class="header-stripped ${classes}">${text}</h3>` : ``);
 
   const renderAudience = (audience) => {
-    return !audience.trim ? `` : `<strong>Audience</strong><br />${audience}`;
+    return !audience.trim ? `` : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
   };
 
   const renderEvent = (item, index) => {
