@@ -190,11 +190,15 @@
 
   const isUpcomingFilter = stir.filter(isUpcoming);
 
-  const isPromo = (item) => item.promo;
+  const isPromo = (item) => item.eventPromo;
 
   const isPromoFilter = stir.filter(isPromo);
 
   const joiner = stir.join("");
+
+  const limitToOne = stir.filter((item, index) => {
+    return index === 0;
+  });
 
   const sortByStartDate = (a, b) => Number(a.startInt) - Number(b.startInt);
 
@@ -441,7 +445,7 @@
   doArchiveEvents("all", initData);
 
   // Populate the Promo
-  stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), isPromoFilter, stir.sort(sortByStartDate), isUpcomingFilter)(initData);
+  stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), limitToOne, isPromoFilter, stir.sort(sortByStartDate), isUpcomingFilter)(initData);
 
   /*
     | 
