@@ -118,7 +118,6 @@
   };
 
   const renderArchiveEvent = (item) => {
-    console.log(item);
     return `
             <div class="c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
                 ${item.recording ? renderTab("Recording available") : ``} 
@@ -172,7 +171,7 @@
 
   const getNow = () => {
     let yourDate = new Date();
-    return Number(yourDate.toISOString().split("T")[0].split("-").join(""));
+    return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
   };
 
   const isPublic = (item) => item.audience.includes("Public");
@@ -183,11 +182,11 @@
 
   const isStaffFilter = stir.filter(isStaffStudent);
 
-  const isPassed = (item) => item.endInt < getNow() && item.archive.length;
+  const isPassed = (item) => Number(item.endInt) < getNow() && item.archive.length;
 
   const isPassedFilter = stir.filter(isPassed);
 
-  const isUpcoming = (item) => item.endInt >= getNow();
+  const isUpcoming = (item) => Number(item.endInt) >= getNow();
 
   const isUpcomingFilter = stir.filter(isUpcoming);
 
@@ -197,11 +196,11 @@
 
   const joiner = stir.join("");
 
-  const sortByStartDate = (a, b) => a.startInt - b.startInt;
+  const sortByStartDate = (a, b) => Number(a.startInt) - Number(b.startInt);
 
-  const sortByStartDateDesc = (a, b) => b.startInt - a.startInt;
+  const sortByStartDateDesc = (a, b) => Number(b.startInt) - Number(a.startInt);
 
-  const sortByPin = (a, b) => a.pin - b.pin;
+  const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
 
   const hasRecording = stir.filter((item) => item.recording);
 
@@ -433,6 +432,8 @@
 
   const initData = stir.feeds.events.filter((item) => item.id);
   QueryParams.set("page", 1);
+
+  console.log(initData);
 
   // Populate the 3 tabs
   doPublicEvents("all", initData);
