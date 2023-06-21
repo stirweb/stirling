@@ -59,6 +59,7 @@
   };
 
   const renderEvent = (item) => {
+    console.log(item);
     return `
             <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin < 0 ? `data-label-icon="pin"` : ``} >
                 ${item.isSeries ? renderTab("Event series") : ``} 
@@ -77,7 +78,7 @@
                             <span><time>${item.startTime}</time> – <time>${item.endTime}</time></span>
                         </div>
                         <div class="flex-container u-gap-16 align-middle">
-                            <span class="u-icon h5 ${item.type === "Webinar" ? `uos-computer` : `uos-location`} "></span>
+                            <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`} "></span>
                             <span>${item.location}</span>
                         </div>
                     </div>
@@ -106,7 +107,7 @@
                         <span><time>${item.startTime}</time> – <time>${item.endTime}</time></span>
                     </div>
                     <div class="flex-container u-gap-16 align-middle">
-                        <span class="u-icon h5 uos-location"></span>
+                        <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`}"></span>
                         <span>${item.location}</span>
                     </div>
                 </div>
@@ -437,7 +438,7 @@
   const initData = stir.feeds.events.filter((item) => item.id);
   QueryParams.set("page", 1);
 
-  console.log(initData);
+  //console.log(initData);
 
   // Populate the 3 tabs
   doPublicEvents("all", initData);
