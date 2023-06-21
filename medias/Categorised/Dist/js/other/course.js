@@ -11006,6 +11006,7 @@ var StirUniModules = (function () {
 				_showModuleError({"details": [moduleCode, semesterCode, occurrence, yearSession]});
 			}
 		});
+
 	}
 
 	function _showModule(data) {

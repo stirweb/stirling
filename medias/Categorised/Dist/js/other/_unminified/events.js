@@ -194,7 +194,7 @@
 
   const isPassedFilter = stir.filter(isPassed);
 
-  const isUpcoming = (item) => Number(item.endInt) >= getNow();
+  const isUpcoming = (item) => Number(item.endInt) >= getNow() && !item.hideFromFeed.length;
 
   const isUpcomingFilter = stir.filter(isUpcoming);
 
