@@ -58,10 +58,18 @@
     return ` <a href="${item.url}">${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}</a>`;
   };
 
+  const renderIconTag = (item) => {
+    if (item.pin < 1) return `data-label-icon="pin"`;
+
+    if (item.isSeries) return `data-label-icon="startdates"`;
+
+    return ``;
+  };
+
   const renderEvent = (item) => {
     console.log(item);
     return `
-            <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin < 1 ? `data-label-icon="pin"` : ``} >
+            <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${renderIconTag(item)}  >
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
