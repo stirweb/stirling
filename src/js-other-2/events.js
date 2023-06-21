@@ -61,7 +61,7 @@
   const renderEvent = (item) => {
     console.log(item);
     return `
-            <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin < 0 ? `data-label-icon="pin"` : ``} >
+            <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${item.pin < 1 ? `data-label-icon="pin"` : ``} >
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
@@ -447,6 +447,16 @@
 
   // Populate the Promo
   stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), limitToOne, isPromoFilter, stir.sort(sortByStartDate), isUpcomingFilter)(initData);
+
+  console.log(202404121457 / 1000000000000);
+
+  console.log(202303011457 / 1000000000000);
+
+  console.log(202301011457 / 1000000000000);
+
+  // console.log(150 / 10000);
+
+  // console.log(150 / 10000);
 
   /*
     | 
