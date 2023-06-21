@@ -166,6 +166,10 @@ svg.u-icon {
   content: "\e964";
 }
 
+[data-label-icon="startdates"]::before {
+  content: "\e99b";
+}
+
 [data-label-icon="course"]::before {
   content: "\e9a1";
 }
