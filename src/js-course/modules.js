@@ -362,9 +362,10 @@ StirUniModules.setShowModulesRenderer(function (data) {
   }
 
   // assign click-handlers to all the new module links:
-  Array.prototype.forEach.call(document.querySelectorAll('[data-modalopen="course__description"]'), function (el) {
-    el.addEventListener("click", modClickHandler);
-  });
+//  Array.prototype.forEach.call(document.querySelectorAll('[data-modalopen="course__description"]'), function (el) {
+//    el.addEventListener("click", modClickHandler);
+//  });
+
 });
 
 /*
