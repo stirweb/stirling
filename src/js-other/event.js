@@ -69,7 +69,6 @@
   const renderInfoTag = (info) => `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span>`;
 
   const renderEvent = (item, index) => {
-    console.log(item);
     return `
         <div class="${index % 2 === 1 ? `` : `u-bg-grey`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : ``} u-p-1 c-event-list u-gap">
           <div >
@@ -126,7 +125,7 @@
 
   const getNow = () => {
     let yourDate = new Date();
-    return Number(yourDate.toISOString().split("T")[0].split("-").join(""));
+    return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
   };
 
   const sortByStartDate = (a, b) => a.startInt - b.startInt;
