@@ -6,8 +6,6 @@
   const tagsNode = stir.node("[data-tags]") || "";
   const TAGS = tagsNode ? tagsNode.dataset.tags : "";
 
-  console.log(TAGS);
-
   /* 
     NODES
   */
