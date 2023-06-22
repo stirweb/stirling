@@ -3,6 +3,11 @@
 
   const ITEMS_PER_PAGE = 10;
 
+  const tagsNode = stir.node("[data-tags]") || "";
+  const TAGS = tagsNode ? tagsNode.dataset.tags : "";
+
+  console.log(TAGS);
+
   /* 
     NODES
   */
@@ -91,6 +96,8 @@
                     </div>
                     <p class="u-m-0">${item.summary}</p>
                     ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
+
+                    ${item.tags}
                 </div>
                 ${item.image ? renderImage(item.image, item.title) : ``}  
             </div>`;
@@ -318,6 +325,25 @@
   });
 
   /* 
+        tags : Returns a boolean
+    */
+  const filterByTag = stir.curry((tags_, item) => {
+    const isTrue = (bol) => bol;
+    const tags = tags_.split(", ");
+
+    if (!tags) return item;
+
+    const itemTags = item.tags.split(", ");
+    const matches = tags.map((ele) => itemTags.includes(ele));
+
+    //console.log(stir.all(isTrue, matches));
+
+    if (stir.all(isTrue, matches)) return item;
+  });
+
+  const filterByTagCurry = stir.filter(filterByTag(TAGS));
+
+  /* 
   | 
   |  CONTROLLERS
   |
@@ -335,7 +361,7 @@
     });
 
     if (!filterRange) {
-      const dataAll1 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(initData);
+      const dataAll1 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, filterByTagCurry, isUpcomingFilter)(initData);
       const dataAll1b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll1);
       const noOfResults = dataAll1.length;
 
@@ -344,7 +370,7 @@
       const inRangeCurry = inRange(filterRange);
       const dataDateFiltered = stir.filter(inRangeCurry, initData);
 
-      const dataAll2 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, isUpcomingFilter)(dataDateFiltered);
+      const dataAll2 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, filterByTagCurry, isUpcomingFilter)(dataDateFiltered);
       const dataAll2b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll2);
       const noOfResults = dataAll2.length;
 
@@ -368,7 +394,7 @@
     });
 
     if (!filterRange) {
-      const dataAll1 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(initData);
+      const dataAll1 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, filterByTagCurry, isUpcomingFilter)(initData);
       const dataAll1b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll1);
       const noOfResults = dataAll1.length;
 
@@ -377,7 +403,7 @@
       const inRangeCurry = inRange(filterRange);
       const dataDateFiltered = stir.filter(inRangeCurry, initData);
 
-      const dataAll2 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, isUpcomingFilter)(dataDateFiltered);
+      const dataAll2 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, filterByTagCurry, isUpcomingFilter)(dataDateFiltered);
       const dataAll2b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll2);
       const noOfResults = dataAll2.length;
 
@@ -400,7 +426,7 @@
     });
 
     if (target === "all") {
-      const dataAll = stir.compose(stir.sort(sortByStartDateDesc), isPassedFilter)(initData);
+      const dataAll = stir.compose(stir.sort(sortByStartDateDesc), filterByTagCurry, isPassedFilter)(initData);
       const dataAllb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(dataAll);
       const noOfResults = dataAll.length;
 
@@ -408,7 +434,7 @@
     }
 
     if (target === "recordings") {
-      const htmlRecordings = stir.compose(stir.sort(sortByStartDateDesc), hasRecording, isPassedFilter)(initData);
+      const htmlRecordings = stir.compose(stir.sort(sortByStartDateDesc), hasRecording, filterByTagCurry, isPassedFilter)(initData);
       const htmlRecordingsb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(htmlRecordings);
       const noOfResults = htmlRecordings.length;
 
@@ -416,7 +442,7 @@
     }
 
     if (target === "public") {
-      const htmlPublic = stir.compose(stir.sort(sortByStartDateDesc), isPublicFilter, isPassedFilter)(initData);
+      const htmlPublic = stir.compose(stir.sort(sortByStartDateDesc), isPublicFilter, filterByTagCurry, isPassedFilter)(initData);
       const htmlPublicb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(htmlPublic);
       const noOfResults = htmlPublic.length;
 
@@ -424,7 +450,7 @@
     }
 
     if (target === "staffstudent") {
-      const htmlStaff = stir.compose(stir.sort(sortByStartDateDesc), isStaffFilter, isPassedFilter)(initData);
+      const htmlStaff = stir.compose(stir.sort(sortByStartDateDesc), isStaffFilter, filterByTagCurry, isPassedFilter)(initData);
       const htmlStaffb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(htmlStaff);
       const noOfResults = htmlStaff.length;
 
@@ -445,7 +471,7 @@
   const initData = stir.feeds.events.filter((item) => item.id);
   QueryParams.set("page", 1);
 
-  //console.log(initData);
+  console.log(initData);
 
   // Populate the 3 tabs
   doPublicEvents("all", initData);
@@ -453,17 +479,7 @@
   doArchiveEvents("all", initData);
 
   // Populate the Promo
-  stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), limitToOne, isPromoFilter, stir.sort(sortByStartDate), isUpcomingFilter)(initData);
-
-  console.log(202404121457 / 1000000000000);
-
-  console.log(202303011457 / 1000000000000);
-
-  console.log(202301011457 / 1000000000000);
-
-  // console.log(150 / 10000);
-
-  // console.log(150 / 10000);
+  stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), limitToOne, isPromoFilter, stir.sort(sortByStartDate), filterByTagCurry, isUpcomingFilter)(initData);
 
   /*
     | 
