@@ -594,6 +594,60 @@
                     <div id="eventbrite-widget-container-617030142767" class="u-margin-y"
                         data-eventbriteID="617030142767"></div>
                 </div>
+
+                <style>
+                    #flickrgallery {
+                        display: grid;
+                        gap: 20px;
+                        grid-template-areas:
+                            "a a b d f g"
+                            "a a c e h h";
+                        grid-template-columns: repeat(6, 1fr);
+                        grid-template-rows: repeat(2, 1fr);
+
+                    }
+
+                    #flickrgallery>img {
+                        aspect-ratio: 1/1;
+                    }
+
+                    #flickrgallery>:nth-child(1) {
+                        grid-area: a;
+                    }
+
+                    #flickrgallery>:nth-child(2) {
+                        grid-area: b;
+                    }
+
+                    #flickrgallery>:nth-child(3) {
+                        grid-area: c;
+                    }
+
+                    #flickrgallery>:nth-child(4) {
+                        grid-area: d;
+                    }
+
+                    #flickrgallery>:nth-child(5) {
+                        grid-area: e;
+                    }
+
+                    #flickrgallery>:nth-child(6) {
+                        grid-area: f;
+                    }
+
+                    #flickrgallery>:nth-child(7) {
+                        grid-area: g;
+                    }
+
+                    #flickrgallery>:nth-child(8) {
+                        grid-area: h;
+                        display: grid;
+                        align-items: end;
+                        justify-items: center;
+                    }
+                </style>
+                <div id="flickrgallery" class="cell"></div>
+
                 <div class="cell large-10 medium-10 small-12 u-mt-2 c-wysiwyg-content ">
                     <p><a href="n_uFzLPYDd8" class="button heritage-berry">Event recording</a></p>
                 </div>
@@ -768,6 +822,14 @@
 
     <script src="../../../medias/Categorised/Dist/js/app.js"></script>
     <script src="../../../medias/Categorised/Dist/js/other/unibuddy.js?v=201912101340"></script>
+
+
+    <script>
+        var gallery = [{ "farm": "66", "server": "65535", "id": "48061491757", "secret": "56e2856405", "title": "", "o_width": "1400", "o_height": "2100" }, { "farm": "66", "server": "65535", "id": "48061440818", "secret": "ba4836cbc8", "title": "", "o_width": "2100", "o_height": "1400" }, { "farm": "66", "server": "65535", "id": "48061491607", "secret": "51f40b3a14", "title": "", "o_width": "2100", "o_height": "1400" }, { "farm": "66", "server": "65535", "id": "48061391966", "secret": "2367f8d25c", "title": "", "o_width": "2100", "o_height": "1400" }, { "farm": "66", "server": "65535", "id": "48061391946", "secret": "cc4542de34", "title": "", "o_width": "1400", "o_height": "2100" }, { "farm": "66", "server": "65535", "id": "48061440668", "secret": "2ff7122011", "title": "", "o_width": "2100", "o_height": "1400" }, { "farm": "66", "server": "65535", "id": "48061391886", "secret": "558b2e0ef7", "title": "", "o_width": "1400", "o_height": "2100" },
+        {}];
+        gallery.pop();
+    </script>
+
 
 
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/event.js?v=0.1"></script>
