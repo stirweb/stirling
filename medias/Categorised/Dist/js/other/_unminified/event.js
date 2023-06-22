@@ -212,7 +212,7 @@
 (function (scope) {
   if (!scope) return;
 
-  if (scope) console.log(gallery);
+  if (!gallery || !galleryId) return;
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
@@ -223,10 +223,9 @@
     return `<img alt="Stirling AMAM Golf Day 2019" class="u-object-cover"  src="https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}_c.jpg" width="${item.o_width}" height="${item.o_height}"></img>`;
   };
 
-  const renderCTA = () => {
+  const renderCTA = (galleryId) => {
     return `<div>
           <svg width="70px" height="70px" viewBox="0 -13 47 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-
               <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g id="Color-" transform="translate(-501.000000, -474.000000)">
                       <g id="Flickr" transform="translate(501.000000, 474.000000)">
@@ -240,9 +239,9 @@
                               </g>
                           </g>
             </svg>
-              <a href="" class="button expanded heritage-green">View the album on Flickr</a>
+              <a href="https://www.flickr.com/photos/79498756@N04/albums/${galleryId}" class="button expanded heritage-green">View the album on Flickr</a>
             </div>`;
   };
 
-  setDOMContent(scope, gallery.map(renderImage).join("") + renderCTA());
+  setDOMContent(scope, gallery.map(renderImage).join("") + renderCTA(galleryId));
 })(stir.node("#flickrgallery"));
