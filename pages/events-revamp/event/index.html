@@ -600,11 +600,37 @@
                         display: grid;
                         gap: 20px;
                         grid-template-areas:
-                            "a a b d f g"
-                            "a a c e h h";
-                        grid-template-columns: repeat(6, 1fr);
+                            "a b"
+                            "c d"
+                            "e f"
+                            "g h";
+                        grid-template-columns: repeat(2, 1fr);
                         grid-template-rows: repeat(2, 1fr);
 
+                    }
+
+                    @media screen and (min-width: 420px) {
+
+                        #flickrgallery {
+                            grid-template-areas:
+                                "a b c"
+                                "d e f"
+                                "g h h";
+                            grid-template-columns: repeat(3, 1fr);
+                            grid-template-rows: repeat(3, 1fr);
+                        }
+                    }
+
+                    @media screen and (min-width: 980px) {
+
+                        #flickrgallery {
+                            grid-template-areas:
+                                "a a b d f g"
+                                "a a c e h h";
+
+                            grid-template-columns: repeat(6, 1fr);
+                            grid-template-rows: repeat(2, 1fr);
+                        }
                     }
 
                     #flickrgallery>img {
@@ -825,6 +851,7 @@
 
 
     <script>
+        var galleryId = "72157709080313778";
         var gallery = [{ "farm": "66", "server": "65535", "id": "48061491757", "secret": "56e2856405", "title": "", "o_width": "1400", "o_height": "2100" }, { "farm": "66", "server": "65535", "id": "48061440818", "secret": "ba4836cbc8", "title": "", "o_width": "2100", "o_height": "1400" }, { "farm": "66", "server": "65535", "id": "48061491607", "secret": "51f40b3a14", "title": "", "o_width": "2100", "o_height": "1400" }, { "farm": "66", "server": "65535", "id": "48061391966", "secret": "2367f8d25c", "title": "", "o_width": "2100", "o_height": "1400" }, { "farm": "66", "server": "65535", "id": "48061391946", "secret": "cc4542de34", "title": "", "o_width": "1400", "o_height": "2100" }, { "farm": "66", "server": "65535", "id": "48061440668", "secret": "2ff7122011", "title": "", "o_width": "2100", "o_height": "1400" }, { "farm": "66", "server": "65535", "id": "48061391886", "secret": "558b2e0ef7", "title": "", "o_width": "1400", "o_height": "2100" },
         {}];
         gallery.pop();
