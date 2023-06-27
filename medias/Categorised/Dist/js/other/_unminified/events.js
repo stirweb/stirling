@@ -469,6 +469,8 @@
   const initData = stir.feeds.events.filter((item) => item.id);
   QueryParams.set("page", 1);
 
+  console.log(getNow());
+
   console.log(initData);
 
   // Populate the 3 tabs
