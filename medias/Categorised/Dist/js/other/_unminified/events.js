@@ -71,12 +71,12 @@
 
   const renderEvent = (item) => {
     return `
-            <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${renderIconTag(item)}  >
+            <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
                       ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} 
-                        <strong>${renderLink(item)}</strong>
+                        <strong>${renderLink(item)} </strong>
                     </p>
                     <div class="flex-container flex-dir-column u-gap-8">
                         <div class="flex-container u-gap-16 align-middle">
@@ -189,7 +189,12 @@
 
   const isPublic = (item) => item.audience.includes("Public");
 
-  const isStaffStudent = (item) => item.audience.includes("Staff") || item.audience.includes("Student");
+  const isStaffStudent = (item) => {
+    //console.log(item.title);
+    //console.log(item.audience.includes("Staff") || item.audience.includes("Student"));
+
+    return item.audience.includes("Staff") || item.audience.includes("Student");
+  };
 
   const isPublicFilter = stir.filter(isPublic);
 
@@ -199,7 +204,9 @@
 
   const isPassedFilter = stir.filter(isPassed);
 
-  const isUpcoming = (item) => Number(item.endInt) >= getNow() && !item.hideFromFeed.length;
+  const isUpcoming = (item) => {
+    return Number(item.endInt) >= getNow() && !item.hideFromFeed.length;
+  };
 
   const isUpcomingFilter = stir.filter(isUpcoming);
 
@@ -225,6 +232,18 @@
     const start = itemsPerPage * (page - 1);
     const end = start + itemsPerPage;
     return index >= start && index < end;
+  });
+
+  const removeDuplicateObjectFromArray = stir.curry((key, array) => {
+    let check = {};
+    let res = [];
+    for (let i = 0; i < array.length; i++) {
+      if (!check[array[i][key]]) {
+        check[array[i][key]] = true;
+        res.push(array[i]);
+      }
+    }
+    return res;
   });
 
   /* 
@@ -329,17 +348,18 @@
     const isTrue = (bol) => bol;
     const tags = tags_.split(", ");
 
-    if (!tags) return item;
+    if (!tags && !tags.length) return item;
+    if (tags.length === 1 && tags[0] === "") return item;
 
     const itemTags = item.tags.split(", ");
     const matches = tags.map((ele) => itemTags.includes(ele));
-
-    //console.log(stir.all(isTrue, matches));
 
     if (stir.all(isTrue, matches)) return item;
   });
 
   const filterByTagCurry = stir.filter(filterByTag(TAGS));
+
+  const removeDupsbyPerf = removeDuplicateObjectFromArray("perfId");
 
   /* 
   | 
@@ -359,7 +379,7 @@
     });
 
     if (!filterRange) {
-      const dataAll1 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, filterByTagCurry, isUpcomingFilter)(initData);
+      const dataAll1 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(initData);
       const dataAll1b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll1);
       const noOfResults = dataAll1.length;
 
@@ -368,7 +388,7 @@
       const inRangeCurry = inRange(filterRange);
       const dataDateFiltered = stir.filter(inRangeCurry, initData);
 
-      const dataAll2 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, filterByTagCurry, isUpcomingFilter)(dataDateFiltered);
+      const dataAll2 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(dataDateFiltered);
       const dataAll2b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll2);
       const noOfResults = dataAll2.length;
 
@@ -392,7 +412,7 @@
     });
 
     if (!filterRange) {
-      const dataAll1 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, filterByTagCurry, isUpcomingFilter)(initData);
+      const dataAll1 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(initData);
       const dataAll1b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll1);
       const noOfResults = dataAll1.length;
 
@@ -401,7 +421,7 @@
       const inRangeCurry = inRange(filterRange);
       const dataDateFiltered = stir.filter(inRangeCurry, initData);
 
-      const dataAll2 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, filterByTagCurry, isUpcomingFilter)(dataDateFiltered);
+      const dataAll2 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(dataDateFiltered);
       const dataAll2b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll2);
       const noOfResults = dataAll2.length;
 
