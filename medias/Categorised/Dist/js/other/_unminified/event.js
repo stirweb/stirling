@@ -105,7 +105,7 @@
     return { start: item.start, stirStart: item.stirStart, startInt: item.startInt };
   };
 
-  const removeDuplicateObjectFromArray = (array, key) => {
+  const removeDuplicateObjectFromArray = stir.curry((key, array) => {
     let check = {};
     let res = [];
     for (let i = 0; i < array.length; i++) {
@@ -115,7 +115,7 @@
       }
     }
     return res;
-  };
+  });
 
   const filterEmpties = (item) => item.start;
 
@@ -173,9 +173,8 @@
   };
 
   const doDateFilter = (initialData) => {
-    const dates = stir.compose(stir.map(dateMapper), stir.sort(sortByStartDate), isUpcomingFilter, isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
-    const dates2 = removeDuplicateObjectFromArray(dates, "startInt");
-    return stir.compose(joiner, stir.map(renderDates))(dates2);
+    const removeDupsByStart = removeDuplicateObjectFromArray("startInt");
+    return stir.compose(joiner, stir.map(renderDates), removeDupsByStart, stir.map(dateMapper), stir.sort(sortByStartDate), isUpcomingFilter, isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
   };
 
   /*
@@ -188,6 +187,7 @@
 
   /* Fetch the data */
   stir.getJSON(url, (initialData) => {
+    console.log(initialData);
     const pastHtml = doPast(initialData);
     setDOMContent(seriesEventsArea, doUpcoming("", initialData) + pastHtml);
 
