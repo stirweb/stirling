@@ -502,7 +502,7 @@ stir.templates.search = (() => {
 						${item.metaData.profileCourse1?item.metaData.profileCourse1+'<br />':''}
 						${item.metaData.profileCountry?item.metaData.profileCountry:''}
 						</p>
-						<p>${item.metaData.profileSnippet?item.metaData.profileSnippet:'<!-- 28d3702e2064f72d5dfcba865e3cc5d5 -->'}</p>
+						<p>${item.metaData.profileSnippet?'<q>'+item.metaData.profileSnippet+'</q>':'<!-- 28d3702e2064f72d5dfcba865e3cc5d5 -->'}</p>
 					</div>
 					${item.metaData.profileImage? image("https://www.stir.ac.uk" + item.metaData.profileImage, item.title.split(" | ")[0].trim(), 400, 400):''}
 				</div>`;

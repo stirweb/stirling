@@ -137,7 +137,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 						${e.metaData.profileCourse1?e.metaData.profileCourse1+"<br />":""}
 						${e.metaData.profileCountry||""}
 						</p>
-						<p>${e.metaData.profileSnippet||"\x3c!-- 28d3702e2064f72d5dfcba865e3cc5d5 --\x3e"}</p>
+						<p>${e.metaData.profileSnippet?"<q>"+e.metaData.profileSnippet+"</q>":"\x3c!-- 28d3702e2064f72d5dfcba865e3cc5d5 --\x3e"}</p>
 					</div>
 					${e.metaData.profileImage?p("https://www.stir.ac.uk"+e.metaData.profileImage,e.title.split(" | ")[0].trim(),400,400):""}
 				</div>`,news:e=>`
