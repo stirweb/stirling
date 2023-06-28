@@ -134,7 +134,7 @@
 
   const isUpcomingFilter = stir.filter(isUpcoming);
 
-  const isPassed = (item) => item.endInt < getNow();
+  const isPassed = (item) => Number(item.endInt) < getNow() && item.archive.length;
 
   const isPassedFilter = stir.filter(isPassed);
 
