@@ -190,9 +190,6 @@
   const isPublic = (item) => item.audience.includes("Public");
 
   const isStaffStudent = (item) => {
-    //console.log(item.title);
-    //console.log(item.audience.includes("Staff") || item.audience.includes("Student"));
-
     return item.audience.includes("Staff") || item.audience.includes("Student");
   };
 
