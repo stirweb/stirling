@@ -47,12 +47,13 @@
 |
 */
 
-(function (scope) {
-  if (!scope) return;
-
-  const seriesEventsArea = scope;
-  const seriesId = seriesEventsArea.dataset && seriesEventsArea.dataset.seriesid ? seriesEventsArea.dataset.seriesid : null;
+(function () {
+  const seriesEventsArea = stir.node("#seriesevents");
+  const seriesId = seriesEventsArea && seriesEventsArea.dataset && seriesEventsArea.dataset.seriesid ? seriesEventsArea.dataset.seriesid : null;
   const seriesDateFilter = stir.node("#seriesdatefilter");
+  const moreEventsArea = stir.node("#moreevents");
+
+  if (!seriesEventsArea && !moreEventsArea) return;
 
   /*
     |
@@ -90,11 +91,31 @@
 
   const renderOptionOne = () => `<option value="">Filter by date</option>`;
 
+  const renderEndDate = (item) => (item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`);
+
+  const renderMoreEvent = (item) => {
+    return ` <a href="#" class="u-border u-p-1 u-mb-1 flex-container  align-middle u-gap">
+                <span class="u-flex1"><strong>${item.title}</strong></span>
+                <span><strong>${item.stirStart} ${renderEndDate(item)}</strong></span>
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1080 800"
+                        stroke-width="1.5" stroke="none" style="width: 20px; height:20px">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M315.392 9.728c0 8.192 4.096 16.384 10.24 22.528l413.696 415.744-413.696 415.744c-12.288 12.288-12.288 32.768 0 47.104 12.288 12.288 32.768 12.288 47.104 0l438.272-438.272c12.288-12.288 12.288-34.816 0-47.104l-440.32-438.272c-12.288-12.288-32.768-12.288-47.104 0-6.144 6.144-8.192 14.336-8.192 22.528z" />
+                    </svg>
+                </span>
+            </a>`;
+  };
+
   /*
     |
     |   HELPERS
     |
     */
+
+  const renderMoreEventsMapper = stir.map(renderMoreEvent);
+
+  const limitTo3 = stir.filter((item, index) => index < 3);
 
   const dateUserFilter = stir.curry((d, item) => {
     if (d === ``) return item;
@@ -140,6 +161,8 @@
 
   const isSeriesChildFilter = stir.filter((item) => item.isSeriesChild === seriesId);
 
+  const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
+
   const getJSONUrl = (env) => {
     if (env === "dev") return "index.json";
     if (env === "preview") return '<t4 type="navigation" id="5214" />'; //5222
@@ -152,13 +175,29 @@
     return true;
   });
 
+  /* 
+        tags : Returns a boolean
+    */
+  const filterByTag = stir.curry((tags_, item) => {
+    const isTrue = (bol) => bol;
+    const tags = tags_.split(", ");
+
+    if (!tags && !tags.length) return item;
+    if (tags.length === 1 && tags[0] === "") return item;
+
+    const itemTags = item.tags.split(", ");
+    const matches = tags.map((ele) => itemTags.includes(ele));
+
+    if (stir.any(isTrue, matches)) return item;
+  });
+
   /*
     |
     |   CONTROLLERS
     |
     */
 
-  const doUpcoming = (date, initialData) => {
+  const doUpcomingSeries = (date, initialData) => {
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
     const seriesUpcomingData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry, isUpcomingFilter, isSeriesChildFilter)(initialData);
@@ -167,7 +206,7 @@
     return upcomingHtml;
   };
 
-  const doPast = (initialData) => {
+  const doPastSeries = (initialData) => {
     const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), isPassedFilter, isSeriesChildFilter)(initialData);
     return seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
   };
@@ -187,22 +226,44 @@
 
   /* Fetch the data */
   stir.getJSON(url, (initialData) => {
-    console.log(initialData);
-    const pastHtml = doPast(initialData);
-    setDOMContent(seriesEventsArea, doUpcoming("", initialData) + pastHtml);
+    if (initialData.error) return;
 
-    if (!seriesDateFilter) return;
+    if (seriesEventsArea && seriesDateFilter) {
+      const pastHtml = doPastSeries(initialData);
+      setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData) + pastHtml);
 
-    /* Series filter */
-    setDOMContent(seriesDateFilter, renderOptionOne() + doDateFilter(initialData));
+      /* Series filter */
+      setDOMContent(seriesDateFilter, renderOptionOne() + doDateFilter(initialData));
 
-    /* Event Listener */
-    seriesDateFilter.addEventListener("change", (event) => {
-      const upcomingHtml = doUpcoming(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
-      setDOMContent(seriesEventsArea, upcomingHtml + pastHtml);
-    });
+      /* Event Listener */
+      seriesDateFilter.addEventListener("change", (event) => {
+        const upcomingHtml = doUpcomingSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
+        setDOMContent(seriesEventsArea, upcomingHtml + pastHtml);
+      });
+    }
+
+    if (moreEventsArea) {
+      const removeDupsById = removeDuplicateObjectFromArray("id");
+
+      const currentId = moreEventsArea.dataset.currentid ? moreEventsArea.dataset.currentid : null;
+      const currents = currentId ? stir.filter((item) => item.id === Number(currentId), initialData) : null;
+      const current = currents.length ? currents[0] : null;
+
+      //Priority 1: events with same tag
+      const tags = current ? current.tags : null;
+      const filterByTagCurry = stir.filter(filterByTag(tags));
+      const filterCurrent = stir.filter((item) => item.id !== Number(currentId));
+      const tagItems = stir.compose(filterCurrent, filterByTagCurry, isUpcomingFilter)(initialData);
+
+      //Priority 2: pinned events then Priority 3: most imminent events
+      const items = stir.compose(filterCurrent, stir.sort(sortByPin), stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
+
+      const allItems = [...tagItems, ...items];
+
+      stir.compose(setDOMContent(moreEventsArea), joiner, limitTo3, renderMoreEventsMapper)(allItems);
+    }
   });
-})(stir.node("#seriesevents"));
+})();
 
 /*
 
