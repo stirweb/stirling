@@ -253,14 +253,13 @@
       const tags = current ? current.tags : null;
       const filterByTagCurry = stir.filter(filterByTag(tags));
       const filterCurrent = stir.filter((item) => item.id !== Number(currentId));
-      const tagItems = stir.compose(filterCurrent, filterByTagCurry, isUpcomingFilter)(initialData);
+      const tagItems = stir.compose(filterCurrent, filterByTagCurry, stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
 
       //Priority 2: pinned events then Priority 3: most imminent events
       const items = stir.compose(filterCurrent, stir.sort(sortByPin), stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
-
       const allItems = [...tagItems, ...items];
 
-      stir.compose(setDOMContent(moreEventsArea), joiner, limitTo3, renderMoreEventsMapper)(allItems);
+      stir.compose(setDOMContent(moreEventsArea), joiner, renderMoreEventsMapper, limitTo3, removeDupsById)(allItems);
     }
   });
 })();
