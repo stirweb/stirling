@@ -1,6 +1,7 @@
 /*
 
-*/
+  NO LONGER NEEDED AS ITS HANDLED BELOW
+
 (function () {
   // get a reference to the Section ID meta tag
   var pageSID = document.head.querySelector("[name=sid][content]");
@@ -18,6 +19,7 @@
     }
   }
 })();
+*/
 
 /*
 |
@@ -43,7 +45,7 @@
 
 /*
 |
-|   SERIES LISTING
+|   SERIES LISTING + MORE EVENTS LISTING
 |
 */
 
@@ -94,7 +96,7 @@
   const renderEndDate = (item) => (item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`);
 
   const renderMoreEvent = (item) => {
-    return ` <a href="#" class="u-border u-p-1 u-mb-1 flex-container  align-middle u-gap">
+    return `<a href="#" class="u-border u-p-1 u-mb-1 flex-container  align-middle u-gap">
                 <span class="u-flex1"><strong>${item.title}</strong></span>
                 <span><strong>${item.stirStart} ${renderEndDate(item)}</strong></span>
                 <span>
@@ -216,6 +218,27 @@
     return stir.compose(joiner, stir.map(renderDates), removeDupsByStart, stir.map(dateMapper), stir.sort(sortByStartDate), isUpcomingFilter, isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
   };
 
+  const doMoreEvents = (initialData) => {
+    const removeDupsById = removeDuplicateObjectFromArray("id");
+
+    const currentId = moreEventsArea.dataset.currentid ? moreEventsArea.dataset.currentid : null;
+    const currents = currentId ? stir.filter((item) => item.id === Number(currentId), initialData) : null;
+    const current = currents.length ? currents[0] : null;
+
+    //Priority 1: events with same tag
+    const tags = current ? current.tags : null;
+    const filterByTagCurry = stir.filter(filterByTag(tags));
+    const filterCurrent = stir.filter((item) => item.id !== Number(currentId));
+
+    const tagItems = stir.compose(filterCurrent, filterByTagCurry, stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
+
+    //Priority 2: pinned events then Priority 3: most imminent events
+    const items = stir.compose(filterCurrent, stir.sort(sortByPin), stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
+    const allItems = [...tagItems, ...items];
+
+    stir.compose(setDOMContent(moreEventsArea), joiner, renderMoreEventsMapper, limitTo3, removeDupsById)(allItems);
+  };
+
   /*
     |
     |   ON LOAD
@@ -243,23 +266,7 @@
     }
 
     if (moreEventsArea) {
-      const removeDupsById = removeDuplicateObjectFromArray("id");
-
-      const currentId = moreEventsArea.dataset.currentid ? moreEventsArea.dataset.currentid : null;
-      const currents = currentId ? stir.filter((item) => item.id === Number(currentId), initialData) : null;
-      const current = currents.length ? currents[0] : null;
-
-      //Priority 1: events with same tag
-      const tags = current ? current.tags : null;
-      const filterByTagCurry = stir.filter(filterByTag(tags));
-      const filterCurrent = stir.filter((item) => item.id !== Number(currentId));
-      const tagItems = stir.compose(filterCurrent, filterByTagCurry, stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
-
-      //Priority 2: pinned events then Priority 3: most imminent events
-      const items = stir.compose(filterCurrent, stir.sort(sortByPin), stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
-      const allItems = [...tagItems, ...items];
-
-      stir.compose(setDOMContent(moreEventsArea), joiner, renderMoreEventsMapper, limitTo3, removeDupsById)(allItems);
+      doMoreEvents(initialData);
     }
   });
 })();
