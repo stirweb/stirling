@@ -10,10 +10,7 @@ var stir = stir || {};
  */
 stir.funnelback = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-
-  //const hostname = 'stage-shared-15-24-search.clients.uk.funnelback.com';
-  //const hostname = 'shared-15-24-search.clients.uk.funnelback.com';
-  const hostname = debug || UoS_env.name === "preview" ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
+	const hostname = debug ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
   //const hostname = "search.stir.ac.uk";
   const url = `https://${hostname}/s/`;
 
@@ -137,6 +134,7 @@ stir.search = () => {
 		return;
 	}
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	const preview = debug || UoS_env.name === "preview" ? true : false;
 	const NUMRANKS = "small" === stir.MediaQuery.current ? 5 : 10;
 	const MAXQUERY = 256;
 	const CLEARING = stir.courses.clearing; // Clearing is open?
@@ -296,37 +294,20 @@ stir.search = () => {
 
 	const resetPagination = () => Object.keys(constants.parameters).forEach((key) => QueryParams.remove(key));
 
-	//	const getFormElementValues = type => {
-	//		const form = document.querySelector('.c-search-results-area form[data-filters='+type+']');
-	//		const filters = [];
-	//		const values = [];
-	//
-	//		if(form) {
-	//			Array.prototype.slice.call(form.elements).filter(element=>element.name).forEach(el=>{
-	//				console.info(el.name, el.type);
-	//			});
-	//			const elements = Array.prototype.slice.call(form.elements).filter(element=>element.name);
-	//			elements.forEach(
-	//				element => {
-	//					if((element.type==='checkbox'||element.type==='radio')&&element.checked)
-	//					if(filters.indexOf(element.name)===-1) {
-	//						filters.push(element.name);
-	//						values.push([element.value]);
-	//					} else {
-	//						values[filters.indexOf(element.name)].push(element.value);
-	//					}
-	//				}
-	//			);
-	//		}
-	//
-	//		return {filters: filters, values:values};
-	//
-	//	};
-	/* if(filters.length>0){
-	  filters.forEach((filter,i)=>{
-		  a.append(filter,values[i].length===1?values[i]:`[${values[i].join(' ')}]`);
-	  })
-  } */
+	const getQueryParameters = () => {
+		const parameters = QueryParams.getAll();
+		const output = {};
+		for (const parameter in parameters) {
+			const key = parameter.replace(/[^A-Z0-9\.\|\_]/gi, '');
+			const value = parameters[key] && parameters[key].replace(/[^A-Z0-9]/gi, '');
+		
+			if(metaToFacet[key]) {
+				output[key] = value.toLowerCase();
+			}
+		}
+		return output;
+	};
+
 
 	const getFormData = (type) => {
 		const form = document.querySelector(".c-search-results-area form[data-filters=" + type + "]");
@@ -348,7 +329,7 @@ stir.search = () => {
 
 	const getInboundQuery = () => {
 		if (undefined !== QueryParams.get("query")) constants.form.query.value = QueryParams.get("query").substring(0, MAXQUERY);
-
+		if(preview) return;
 		const parameters = QueryParams.getAll();
 		for (const name in parameters) {
 			const el = document.querySelector(`input[name="${encodeURIComponent(name)}"][value="${encodeURIComponent(parameters[name])}"]`);
@@ -396,20 +377,39 @@ stir.search = () => {
 		return data; // data pass-thru so we can compose() this function
 	});
 
+	// maintain compatibility with old meta_ search
+	// parameters with their equivalent facet:
+	const metaToFacet = {
+		  meta_level: 'f.Level|level',
+		meta_faculty: 'f.Faculty|faculty',
+		meta_subject: 'f.Subject|subject'
+	};
+
 	const updateFacets = stir.curry((type, data) => {
-		if(!debug) return data;
+		if(!preview) return data;
 		const form = document.querySelector(`form[data-filters="${type}"]`);
 		if(form) {
-			//Array.prototype.slice.call(form.querySelectorAll('fieldset')).forEach(fieldset=>fieldset.parentElement.removeChild(fieldset));
+			const parameters = QueryParams.getAll();
 			data.response.facets.forEach(
 				(facet) => {
 					const active = 'stir-accordion--active';
 					const metaFilter = form.querySelector(`[data-facet="${facet.name}"]`);
 					const metaAccordion = metaFilter && metaFilter.querySelector('[data-behaviour=accordion]');
 					const open = metaAccordion && metaAccordion.getAttribute('class').indexOf(active)>-1;
+
+					const facetName = facet.categories && facet.categories[0] && facet.categories[0].queryStringParamName;
+					const metaName  = facetName && Object.keys(metaToFacet)[Object.values(metaToFacet).indexOf(facetName)];
+					const metaValue = metaName && parameters[metaName];
+					const selector  = facetName && metaValue && `input[name="${facetName}"][value~="${metaValue.toLowerCase()}"]`;
 					const facetFilter = stir.DOM.frag(stir.String.domify(stir.templates.search.facet(facet)));
+					const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
+					facetFilterElements && facetFilterElements.forEach(el => {
+						el.checked=true;
+						QueryParams.remove(metaName);
+					});
+
 					const facetAccordion = facetFilter.querySelector('[data-behaviour=accordion]');
-					open && facetAccordion && facetAccordion.setAttribute('class',active);
+					(open||facetFilterElements) && facetAccordion && facetAccordion.setAttribute('class',active);
 					if(metaFilter) {
 						metaFilter.insertAdjacentElement("afterend", facetFilter.firstChild);
 						metaFilter.parentElement.removeChild(metaFilter);
@@ -424,16 +424,6 @@ stir.search = () => {
 
 	const renderResultsWithPagination = stir.curry(
 		(type, data) =>
-			/*       (debug
-					? `<details class=debug>
-						<summary>query debug data</summary>
-						<pre class=debug data-label="user query">${stir.String.htmlEntities(JSON.stringify(data.response.resultPacket.queryCleaned, null, "  "))}</pre>
-						<pre class=debug data-label="queryAsProcessed by FB">${JSON.stringify(data.response.resultPacket.queryAsProcessed, null, "  ")}</pre>
-						<pre class=debug data-label=curator>${JSON.stringify(data?.response?.curator, null, "  ")}</pre>
-						<pre class=debug data-label=metaParameters>${JSON.stringify(data.question.metaParameters, null, "  ")}</pre>
-					</details></div>
-					`
-					: "") + */
 			renderers["cura"](data.response.curator.exhibits) +
 			renderers[type](data.response.resultPacket.results) +
 			stir.templates.search.pagination({
@@ -467,9 +457,11 @@ stir.search = () => {
 					query: getQuery(type),							// get actual query, or fallback, etc
 					curator: getStartRank(type) > 1 ? false : true	// only show curator for initial searches
 				},
-				getNoQuery(type)									// get special "no query" parameters (sorting, etc.)
+				getNoQuery(type),									// get special "no query" parameters (sorting, etc.)
+				preview?getQueryParameters():{}
 			)
 		);
+
 		//TODO if type==course and query=='!padrenullquery' then sort=title
 		const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
 		debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
@@ -594,11 +586,11 @@ stir.search = () => {
 		searchers[type](callback);
 	};
 
-	// initialise all search types on the page (e.g. when the query keywords are changed byt the user):
+	// initialise all search types on the page (e.g. when the query keywords are changed by the user):
 	const initialSearch = () => searches.forEach(search);
 
-	// CHANGE event handler for search filters.
-	// Also handles the RESET event.
+	// onCHANGE event handler for search filters.
+	// Also handles the onRESET event.
 	Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-area form[data-filters]"), (form) => {
 		const type = form.getAttribute("data-filters");
 		const element = document.querySelector(`.c-search-results[data-type="${type}"]`);
