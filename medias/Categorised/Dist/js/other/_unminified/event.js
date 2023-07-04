@@ -96,7 +96,7 @@
   const renderEndDate = (item) => (item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`);
 
   const renderMoreEvent = (item) => {
-    return `<a href="#" class="u-border u-p-1 u-mb-1 flex-container  align-middle u-gap">
+    return `<a href="#" class="u-border u-p-1 u-mb-1 flex-container align-middle u-gap">
                 <span class="u-flex1"><strong>${item.title}</strong></span>
                 <span><strong>${item.stirStart} ${renderEndDate(item)}</strong></span>
                 <span>
