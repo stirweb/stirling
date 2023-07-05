@@ -1,370 +1,966 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
+
+    <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CPD Parents</title>
+
+    <title>Scholarships | Scholarships | University of Stirling</title>
+
+    <meta property="og:site_name" content="University of Stirling" />
+    <meta property="og:url" content="https://www.stir.ac.uk/scholarships/" />
+    <meta property="og:title" content="Scholarships | Scholarships | University of Stirling" />
+    <meta property="og:image"
+        content="https://www.stir.ac.uk/media/stirling/global-assets/landscape/og-airthrey-loch-1200x630.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description"
+        content="Find scholarships and studentships available at the University of Stirling." />
+
+    <meta name="description" content="Find scholarships and studentships available at the University of Stirling." />
+    <meta name="Page last modified" content="2023-01-25" />
+    <link rel="canonical" href="https://www.stir.ac.uk/scholarships/" />
+    <meta name="stir.breadcrumb" content="Home > Scholarships" />
+    <meta name="sid" content="747" />
+    <meta name="chid" content="1" />
+    <meta name="t4name" content="Scholarships" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@StirUni" />
+    <meta name="twitter:title" content="Scholarships | Scholarships | University of Stirling" />
+    <meta name="twitter:description"
+        content="Find scholarships and studentships available at the University of Stirling." />
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#006938">
+
+
+    <link rel="preload" href="../../../../medias/Categorised/Dist/fonts/fsmaja/FSMajaWeb-Regular.woff" as="font"
+        type="font/woff" crossorigin>
+    <link rel="preload" href="../../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Regular.ttf" as="font"
+        type="font/ttf" crossorigin />
+    <link rel="preload" href="../../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf" as="font"
+        type="font/ttf" crossorigin />
+    <link rel="preload" href="../../../../medias/Categorised/Dist/fonts/fonts.css" as="style">
+    <link rel="stylesheet" href="../../../../medias/Categorised/Dist/fonts/fonts.css" type="text/css">
+
+    <link rel="preload" href="../../../../medias/Categorised/Dist/css/app.min.css" as="style" />
+    <link rel="stylesheet" href="../../../../medias/Categorised/Dist/css/app.min.css" type="text/css" />
+
+
+
+
 </head>
 
-<body>
+<body class="external-pages">
+    <main class="wrapper-content" aria-label="Main content" id="content">
 
-    <h2>Parent course listing - "MSc Sport Performance Coaching (Online)"</h2>
-    <div id="parent-list"></div>
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x">
+                <div class="cell">
+                    <h2>Parent course listing </h2>
+                    <div id="parent-list"></div>
+
+                    <h2 class="u-mt-2">Related modules listing </h2>
+                    <div id="cpd-list"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
 
 
-    <h2>CPD associated listing - "Essentials of Mental Health Assessment &ndash; a multi-professional approach"</h2>
-    <div id="cpd-list"></div>
+    <!-- app.min.js -->
+    <script type="text/javascript" src="../../../../medias/Categorised/Dist/js/app.min.js"></script>
+    <!-- unibuddy.min.js -->
+    <script type="text/javascript" src="../../../../medias/Categorised/Dist/js/other/unibuddy.min.js"></script>
 
 </body>
 
 <script>
 
 
+
     const data = [
         {
-            "cid": 20640,
+            "id": 20640,
             "title": "Advanced Clinical Assessment and Examination (Advancing Practice)",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
-            "course": "MSc Advancing Practice"
+            "courses": "MSc Advancing Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+                    "course": "MSc Advancing Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 5110,
+            "id": 5110,
             "title": "Advanced Practice",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
-            "course": "MSc Advancing Practice"
+            "courses": "MSc Advancing Practice|BSc Professional Practice",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+                    "course": "MSc Advancing Practice"
+                },
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+                    "course": "BSc Professional Practice"
+                }
+            ]
         },
         {
-            "cid": 118100,
+            "id": 118100,
             "title": "An Integrated Approach to Frailty",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
-            "course": "MSc Advancing Practice"
+            "courses": "MSc Advancing Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+                    "course": "MSc Advancing Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 119017,
+            "id": 119017,
             "title": "Applied Exercise Physiology",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/884",
-            "course": "BSc (Hons) Sport and Exercise Science"
+            "courses": "BSc (Hons) Sport and Exercise Science|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/884",
+                    "course": "BSc (Hons) Sport and Exercise Science"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20299,
+            "id": 20299,
             "title": "Assessing and Managing Symptoms in Palliative Care",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
-            "course": "BSc Professional Practice"
+            "courses": "BSc Professional Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+                    "course": "BSc Professional Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 129444,
+            "id": 129444,
             "title": "Climate Change and Sustainable Business",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 111694,
+            "id": 111694,
             "title": "Coaching as Learning",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
-            "course": "MSc Sport Performance Coaching (Online)"
+            "courses": "MSc Sport Performance Coaching (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+                    "course": "MSc Sport Performance Coaching (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 111725,
+            "id": 111725,
             "title": "Coaching Concepts",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
-            "course": "MSc Sport Performance Coaching (Online)"
+            "courses": "MSc Sport Performance Coaching (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+                    "course": "MSc Sport Performance Coaching (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 118168,
+            "id": 118168,
             "title": "Contemporary Leadership in Early Years Practice",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/955",
-            "course": "MSc Early Years Practice Health Visiting"
+            "courses": "MSc Early Years Practice Health Visiting|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/955",
+                    "course": "MSc Early Years Practice Health Visiting"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 119013,
+            "id": 119013,
             "title": "Creating Engaging Practice",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
-            "course": "MSc Sport Performance Coaching (Online)"
+            "courses": "MSc Sport Performance Coaching (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+                    "course": "MSc Sport Performance Coaching (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 156874,
+            "id": 156874,
             "title": "Dementia, Space and Place",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20779,
+            "id": 20779,
             "title": "Diagnosis and Decision Making in Advanced Practice",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
-            "course": "MSc Advancing Practice"
+            "courses": "MSc Advancing Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+                    "course": "MSc Advancing Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 129111,
+            "id": 129111,
             "title": "Digital Business and Emergent Technologies",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 107921,
+            "id": 107921,
             "title": "Disaster Interventions from Green Social Work Perspectives",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/24813",
-            "course": "MSc Disaster Interventions and Humanitarian Aid"
+            "courses": "MSc Disaster Interventions and Humanitarian Aid|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/24813",
+                    "course": "MSc Disaster Interventions and Humanitarian Aid"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 47723,
+            "id": 47723,
             "title": "Essentials of Mental Health Assessment &ndash; a multi-professional approach",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
-            "course": "MSc Advancing Practice"
+            "courses": "MSc Advancing Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+                    "course": "MSc Advancing Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20744,
+            "id": 20744,
             "title": "Evidence Based Practice",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
-            "course": "MSc Advancing Practice"
+            "courses": "MSc Advancing Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+                    "course": "MSc Advancing Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 105935,
+            "id": 105935,
             "title": "Exploring the Theory and Practice of Psychological Trauma",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
-            "course": "MSc Advancing Practice"
+            "courses": "MSc Advancing Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+                    "course": "MSc Advancing Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 170707,
+            "id": 170707,
             "title": "Fish Health and Welfare",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20311,
+            "id": 20311,
             "title": "Gateway to Further Study",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
-            "course": "BSc Professional Practice"
+            "courses": "BSc Professional Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+                    "course": "BSc Professional Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 118166,
+            "id": 118166,
             "title": "GIRFEC: A Multi-Agency Approach to Practice",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/955",
-            "course": "MSc Early Years Practice Health Visiting"
+            "courses": "MSc Early Years Practice Health Visiting|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/955",
+                    "course": "MSc Early Years Practice Health Visiting"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 118498,
+            "id": 118498,
             "title": "Health and Wellbeing of People with Dementia",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
-            "course": "BSc Professional Practice"
+            "courses": "BSc Professional Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+                    "course": "BSc Professional Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 110876,
+            "id": 110876,
             "title": "Health Behaviours and Behaviour Change",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
-            "course": "MPH Public Health (Online)"
+            "courses": "MPH Public Health (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+                    "course": "MPH Public Health (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 132875,
+            "id": 132875,
             "title": "Health Visiting in Practice Conversion",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 163554,
+            "id": 163554,
             "title": "Human Aspect of Climate Transition",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 77110,
+            "id": 77110,
             "title": "Huntington&rsquo;s disease: an enabling approach to supporting families",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20383,
+            "id": 20383,
             "title": "Improving quality through work-based learning",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
-            "course": "BSc Professional Practice"
+            "courses": "BSc Professional Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+                    "course": "BSc Professional Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 111713,
+            "id": 111713,
             "title": "Introduction to Epidemiology",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
-            "course": "MPH Public Health (Online)"
+            "courses": "MPH Public Health (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+                    "course": "MPH Public Health (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20676,
+            "id": 20676,
             "title": "Living with Long Term Conditions: Care and Management",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
-            "course": "MSc Advancing Practice"
+            "courses": "MSc Advancing Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+                    "course": "MSc Advancing Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 110755,
+            "id": 110755,
             "title": "Machine Learning",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 118497,
+            "id": 118497,
             "title": "Mental Health, Everyone&rsquo;s Business",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
-            "course": "BSc Professional Practice"
+            "courses": "BSc Professional Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+                    "course": "BSc Professional Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 119011,
+            "id": 119011,
             "title": "Performance Analysis and Planning",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
-            "course": "MSc Sport Performance Coaching (Online)"
+            "courses": "MSc Sport Performance Coaching (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+                    "course": "MSc Sport Performance Coaching (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 119014,
+            "id": 119014,
             "title": "Physical Preparation for Performance",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
-            "course": "MSc Sport Performance Coaching (Online)"
+            "courses": "MSc Sport Performance Coaching (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+                    "course": "MSc Sport Performance Coaching (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 119015,
+            "id": 119015,
             "title": "Physiology of Sport and Exercise",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/884",
-            "course": "BSc (Hons) Sport and Exercise Science"
+            "courses": "BSc (Hons) Sport and Exercise Science|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/884",
+                    "course": "BSc (Hons) Sport and Exercise Science"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20351,
+            "id": 20351,
             "title": "Prescribing for Healthcare Professionals",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
-            "course": "BSc Professional Practice"
+            "courses": "BSc Professional Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+                    "course": "BSc Professional Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20750,
+            "id": 20750,
             "title": "Prescribing for Healthcare Professionals (Advancing Practice)",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
-            "course": "MSc Advancing Practice"
+            "courses": "MSc Advancing Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+                    "course": "MSc Advancing Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 114078,
+            "id": 114078,
             "title": "Project Management",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 113457,
+            "id": 113457,
             "title": "Public Health Policy",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
-            "course": "MPH Public Health (Online)"
+            "courses": "MPH Public Health (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+                    "course": "MPH Public Health (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 118023,
+            "id": 118023,
             "title": "Public Health Practice",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
-            "course": "MPH Public Health (Online)"
+            "courses": "MPH Public Health (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+                    "course": "MPH Public Health (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 113451,
+            "id": 113451,
             "title": "Public Health Research",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
-            "course": "MPH Public Health (Online)"
+            "courses": "MPH Public Health (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+                    "course": "MPH Public Health (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 164187,
+            "id": 164187,
             "title": "Python for Representing and Manipulating Data",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 21006,
+            "id": 21006,
             "title": "Qualitative Research and Analysis",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
-            "course": "MRes Health Research (Online)"
+            "courses": "MRes Health Research (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
+                    "course": "MRes Health Research (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 21326,
+            "id": 21326,
             "title": "Quantitative Research and Analysis",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
-            "course": "MRes Health Research (Online)"
+            "courses": "MRes Health Research (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
+                    "course": "MRes Health Research (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20855,
+            "id": 20855,
             "title": "Research Ethics and Governance",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
-            "course": "MRes Health Research (Online)"
+            "courses": "MRes Health Research (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
+                    "course": "MRes Health Research (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20872,
+            "id": 20872,
             "title": "Skills for Knowledge Enquiry",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
-            "course": "MRes Health Research (Online)"
+            "courses": "MRes Health Research (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
+                    "course": "MRes Health Research (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 107920,
+            "id": 107920,
             "title": "Social Dimensions of Disasters",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/24813",
-            "course": "MSc Disaster Interventions and Humanitarian Aid"
+            "courses": "MSc Disaster Interventions and Humanitarian Aid|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/24813",
+                    "course": "MSc Disaster Interventions and Humanitarian Aid"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 118024,
+            "id": 118024,
             "title": "Society and Health",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
-            "course": "MPH Public Health (Online)"
+            "courses": "MPH Public Health (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+                    "course": "MPH Public Health (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 119016,
+            "id": 119016,
             "title": "Sports Medicine, Health and Wellbeing",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/884",
-            "course": "BSc (Hons) Sport and Exercise Science"
+            "courses": "BSc (Hons) Sport and Exercise Science|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/884",
+                    "course": "BSc (Hons) Sport and Exercise Science"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20873,
+            "id": 20873,
             "title": "Study Design for Health Research",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
-            "course": "MRes Health Research (Online)"
+            "courses": "MRes Health Research (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
+                    "course": "MRes Health Research (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 119010,
+            "id": 119010,
             "title": "The Coaching Process",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
-            "course": "MSc Sport Performance Coaching (Online)"
+            "courses": "MSc Sport Performance Coaching (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+                    "course": "MSc Sport Performance Coaching (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 118167,
+            "id": 118167,
             "title": "The Principles and Practice of Child and Family Health and Wellbeing",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/955",
-            "course": "MSc Early Years Practice Health Visiting"
+            "courses": "MSc Early Years Practice Health Visiting|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/955",
+                    "course": "MSc Early Years Practice Health Visiting"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 20358,
+            "id": 20358,
             "title": "Understanding and Assessing Pain",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
-            "course": "BSc Professional Practice"
+            "courses": "BSc Professional Practice|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+                    "course": "BSc Professional Practice"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 119012,
+            "id": 119012,
             "title": "Understanding Performers: Psychological Perspectives",
-            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
-            "course": "MSc Sport Performance Coaching (Online)"
+            "courses": "MSc Sport Performance Coaching (Online)|Blah blah",
+            "courseData": [
+                {
+                    "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+                    "course": "MSc Sport Performance Coaching (Online)"
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {
-            "cid": 167802,
+            "id": 167802,
             "title": "What Everyone Needs to Know about Dementia: a Course Designed and Delivered with People with Dementia",
-            "url": "",
-            "course": ""
+            "courses": "|Blah blah",
+            "courseData": [
+                {
+                    "url": "",
+                    "course": ""
+                },
+                {
+                    "course": "Blah blah",
+                    "url": "/blah/blah/"
+                }
+            ]
         },
         {}
     ];
 
+
+
+
+
     const renderList = (item) => {
-        return `<p> ~ ${item.title}</p>`;
+        return !item ? `` : `
+                <div class="u-dark-grey u-border-solid u-mb-1 u-p-1">
+                    <strong>${item.title}</strong><br/><br/>
+                    ${item.courseData.map(el => `<a href="` + el.url + `">` + el.course + `</a><br/>`).join(``)}
+                </div>`;
+    };
+
+    const renderMetaParent = (title) => {
+        return `<div class=" u-mb-1 u-p-1">
+                    <p><strong>${title}</strong> </p>
+                </div>`;
+    };
+
+    const renderMetaCPD = (item) => {
+        return !item ? `` : `
+                <div class=" u-mb-1 u-p-1">
+                    <p><strong>${item.title}</strong> is included on courses: </p>
+                    <ul>
+                        ${item.courseData.map(el => `<a href="` + el.url + `">` + el.course + `</a><br/>`).join(``)}
+                    </ul>
+                </div>`;
+    };
+
+    const renderNothing = () => `<p>No matches found</p>`;
+
+
+    /* 
+    
+        By Parent 
+        
+    */
+    const doParent = (parentCourse, cleanedData) => {
+        const data = cleanedData.filter(item => item.courses.split("|").includes(parentCourse));
+        document.getElementById("parent-list").innerHTML = renderMetaParent(parentCourse) + (data.length ? data.map(renderList).join("") : renderNothing());
     };
 
 
-    /* By Parent */
-    const parentCourse = "MSc Sport Performance Coaching (Online)";
+    /*
+    
+        By Module 
+ 
+   */
+    const doModule = (cpdTitle, cleanedData) => {
+        const current = cleanedData.filter(item => item.title === cpdTitle);
 
-    const cleanedData = data.filter(item => item.cid);
-    const parentData = cleanedData.filter(item => item.course === parentCourse);
+        if (!current.length) return;
 
-    document.getElementById("parent-list").innerHTML = parentData.map(renderList).join("");
+        const currentModule = current[0];
+        const assocCpdData = cleanedData.filter(item => item.title !== currentModule.title).filter(item => {
+            const itemCourses = item.courses.split("|");
+            const matches = currentModule.courses.split("|").map(title => itemCourses.includes(title));
+            return matches.some(item => item);
+        });
+
+        document.getElementById("cpd-list").innerHTML = renderMetaCPD(currentModule) + (assocCpdData.length ? assocCpdData.map(renderList).join("") : renderNothing());
+    };
 
 
-    /* By Module */
-    const cpdCourse = "Essentials of Mental Health Assessment &ndash; a multi-professional approach";
+    /*
+    
+        On load 
+ 
+   */
 
-    //const cleanedData = data.filter(item => item.cid);
-    const cpdData = cleanedData.filter(item => item.title === cpdCourse);
-    const assocCpdData = cleanedData.filter(item => item.course === cpdData[0].course);
+    const cleanedData = data.filter(item => item.id);
 
-    document.getElementById("cpd-list").innerHTML = assocCpdData.map(renderList).join("")
+    const parentCourse = "MSc Advancing Practice";
+    doParent(parentCourse, cleanedData);
+
+    const cpdTitle = "Advanced Practice";
+    doModule(cpdTitle, cleanedData);
 
 
 </script>
