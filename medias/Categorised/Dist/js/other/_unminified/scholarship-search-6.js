@@ -23,7 +23,8 @@
   const countryNodes = stir.nodes("[data-scholcountrylisting]");
   const subjectNodes = stir.nodes("[data-scholsubjectlisting]");
 
-  const debug = stir.nodes("[data-debug]") ? true : false;
+  //const debug = stir.nodes("[data-debug]") ? true : false;
+  const debug = false;
 
   /* DOM elements for FORM version (found on the main scholarship page) */
 
