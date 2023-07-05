@@ -1,0 +1,372 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPD Parents</title>
+</head>
+
+<body>
+
+    <h2>Parent course listing - "MSc Sport Performance Coaching (Online)"</h2>
+    <div id="parent-list"></div>
+
+
+    <h2>CPD associated listing - "Essentials of Mental Health Assessment &ndash; a multi-professional approach"</h2>
+    <div id="cpd-list"></div>
+
+</body>
+
+<script>
+
+
+    const data = [
+        {
+            "cid": 20640,
+            "title": "Advanced Clinical Assessment and Examination (Advancing Practice)",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+            "course": "MSc Advancing Practice"
+        },
+        {
+            "cid": 5110,
+            "title": "Advanced Practice",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+            "course": "MSc Advancing Practice"
+        },
+        {
+            "cid": 118100,
+            "title": "An Integrated Approach to Frailty",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+            "course": "MSc Advancing Practice"
+        },
+        {
+            "cid": 119017,
+            "title": "Applied Exercise Physiology",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/884",
+            "course": "BSc (Hons) Sport and Exercise Science"
+        },
+        {
+            "cid": 20299,
+            "title": "Assessing and Managing Symptoms in Palliative Care",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+            "course": "BSc Professional Practice"
+        },
+        {
+            "cid": 129444,
+            "title": "Climate Change and Sustainable Business",
+            "url": "",
+            "course": ""
+        },
+        {
+            "cid": 111694,
+            "title": "Coaching as Learning",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+            "course": "MSc Sport Performance Coaching (Online)"
+        },
+        {
+            "cid": 111725,
+            "title": "Coaching Concepts",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+            "course": "MSc Sport Performance Coaching (Online)"
+        },
+        {
+            "cid": 118168,
+            "title": "Contemporary Leadership in Early Years Practice",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/955",
+            "course": "MSc Early Years Practice Health Visiting"
+        },
+        {
+            "cid": 119013,
+            "title": "Creating Engaging Practice",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+            "course": "MSc Sport Performance Coaching (Online)"
+        },
+        {
+            "cid": 156874,
+            "title": "Dementia, Space and Place",
+            "url": "",
+            "course": ""
+        },
+        {
+            "cid": 20779,
+            "title": "Diagnosis and Decision Making in Advanced Practice",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+            "course": "MSc Advancing Practice"
+        },
+        {
+            "cid": 129111,
+            "title": "Digital Business and Emergent Technologies",
+            "url": "",
+            "course": ""
+        },
+        {
+            "cid": 107921,
+            "title": "Disaster Interventions from Green Social Work Perspectives",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/24813",
+            "course": "MSc Disaster Interventions and Humanitarian Aid"
+        },
+        {
+            "cid": 47723,
+            "title": "Essentials of Mental Health Assessment &ndash; a multi-professional approach",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+            "course": "MSc Advancing Practice"
+        },
+        {
+            "cid": 20744,
+            "title": "Evidence Based Practice",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+            "course": "MSc Advancing Practice"
+        },
+        {
+            "cid": 105935,
+            "title": "Exploring the Theory and Practice of Psychological Trauma",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+            "course": "MSc Advancing Practice"
+        },
+        {
+            "cid": 170707,
+            "title": "Fish Health and Welfare",
+            "url": "",
+            "course": ""
+        },
+        {
+            "cid": 20311,
+            "title": "Gateway to Further Study",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+            "course": "BSc Professional Practice"
+        },
+        {
+            "cid": 118166,
+            "title": "GIRFEC: A Multi-Agency Approach to Practice",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/955",
+            "course": "MSc Early Years Practice Health Visiting"
+        },
+        {
+            "cid": 118498,
+            "title": "Health and Wellbeing of People with Dementia",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+            "course": "BSc Professional Practice"
+        },
+        {
+            "cid": 110876,
+            "title": "Health Behaviours and Behaviour Change",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+            "course": "MPH Public Health (Online)"
+        },
+        {
+            "cid": 132875,
+            "title": "Health Visiting in Practice Conversion",
+            "url": "",
+            "course": ""
+        },
+        {
+            "cid": 163554,
+            "title": "Human Aspect of Climate Transition",
+            "url": "",
+            "course": ""
+        },
+        {
+            "cid": 77110,
+            "title": "Huntington&rsquo;s disease: an enabling approach to supporting families",
+            "url": "",
+            "course": ""
+        },
+        {
+            "cid": 20383,
+            "title": "Improving quality through work-based learning",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+            "course": "BSc Professional Practice"
+        },
+        {
+            "cid": 111713,
+            "title": "Introduction to Epidemiology",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+            "course": "MPH Public Health (Online)"
+        },
+        {
+            "cid": 20676,
+            "title": "Living with Long Term Conditions: Care and Management",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+            "course": "MSc Advancing Practice"
+        },
+        {
+            "cid": 110755,
+            "title": "Machine Learning",
+            "url": "",
+            "course": ""
+        },
+        {
+            "cid": 118497,
+            "title": "Mental Health, Everyone&rsquo;s Business",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+            "course": "BSc Professional Practice"
+        },
+        {
+            "cid": 119011,
+            "title": "Performance Analysis and Planning",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+            "course": "MSc Sport Performance Coaching (Online)"
+        },
+        {
+            "cid": 119014,
+            "title": "Physical Preparation for Performance",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+            "course": "MSc Sport Performance Coaching (Online)"
+        },
+        {
+            "cid": 119015,
+            "title": "Physiology of Sport and Exercise",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/884",
+            "course": "BSc (Hons) Sport and Exercise Science"
+        },
+        {
+            "cid": 20351,
+            "title": "Prescribing for Healthcare Professionals",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+            "course": "BSc Professional Practice"
+        },
+        {
+            "cid": 20750,
+            "title": "Prescribing for Healthcare Professionals (Advancing Practice)",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953",
+            "course": "MSc Advancing Practice"
+        },
+        {
+            "cid": 114078,
+            "title": "Project Management",
+            "url": "",
+            "course": ""
+        },
+        {
+            "cid": 113457,
+            "title": "Public Health Policy",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+            "course": "MPH Public Health (Online)"
+        },
+        {
+            "cid": 118023,
+            "title": "Public Health Practice",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+            "course": "MPH Public Health (Online)"
+        },
+        {
+            "cid": 113451,
+            "title": "Public Health Research",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+            "course": "MPH Public Health (Online)"
+        },
+        {
+            "cid": 164187,
+            "title": "Python for Representing and Manipulating Data",
+            "url": "",
+            "course": ""
+        },
+        {
+            "cid": 21006,
+            "title": "Qualitative Research and Analysis",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
+            "course": "MRes Health Research (Online)"
+        },
+        {
+            "cid": 21326,
+            "title": "Quantitative Research and Analysis",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
+            "course": "MRes Health Research (Online)"
+        },
+        {
+            "cid": 20855,
+            "title": "Research Ethics and Governance",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
+            "course": "MRes Health Research (Online)"
+        },
+        {
+            "cid": 20872,
+            "title": "Skills for Knowledge Enquiry",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
+            "course": "MRes Health Research (Online)"
+        },
+        {
+            "cid": 107920,
+            "title": "Social Dimensions of Disasters",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/24813",
+            "course": "MSc Disaster Interventions and Humanitarian Aid"
+        },
+        {
+            "cid": 118024,
+            "title": "Society and Health",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958",
+            "course": "MPH Public Health (Online)"
+        },
+        {
+            "cid": 119016,
+            "title": "Sports Medicine, Health and Wellbeing",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/884",
+            "course": "BSc (Hons) Sport and Exercise Science"
+        },
+        {
+            "cid": 20873,
+            "title": "Study Design for Health Research",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/957",
+            "course": "MRes Health Research (Online)"
+        },
+        {
+            "cid": 119010,
+            "title": "The Coaching Process",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+            "course": "MSc Sport Performance Coaching (Online)"
+        },
+        {
+            "cid": 118167,
+            "title": "The Principles and Practice of Child and Family Health and Wellbeing",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/955",
+            "course": "MSc Early Years Practice Health Visiting"
+        },
+        {
+            "cid": 20358,
+            "title": "Understanding and Assessing Pain",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/30704",
+            "course": "BSc Professional Practice"
+        },
+        {
+            "cid": 119012,
+            "title": "Understanding Performers: Psychological Perspectives",
+            "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1021",
+            "course": "MSc Sport Performance Coaching (Online)"
+        },
+        {
+            "cid": 167802,
+            "title": "What Everyone Needs to Know about Dementia: a Course Designed and Delivered with People with Dementia",
+            "url": "",
+            "course": ""
+        },
+        {}
+    ];
+
+    const renderList = (item) => {
+        return `<p> ~ ${item.title}</p>`;
+    };
+
+
+    /* By Parent */
+    const parentCourse = "MSc Sport Performance Coaching (Online)";
+
+    const cleanedData = data.filter(item => item.cid);
+    const parentData = cleanedData.filter(item => item.course === parentCourse);
+
+    document.getElementById("parent-list").innerHTML = parentData.map(renderList).join("");
+
+
+    /* By Module */
+    const cpdCourse = "Essentials of Mental Health Assessment &ndash; a multi-professional approach";
+
+    //const cleanedData = data.filter(item => item.cid);
+    const cpdData = cleanedData.filter(item => item.title === cpdCourse);
+    const assocCpdData = cleanedData.filter(item => item.course === cpdData[0].course);
+
+    document.getElementById("cpd-list").innerHTML = assocCpdData.map(renderList).join("")
+
+
+</script>
+
+</html>
