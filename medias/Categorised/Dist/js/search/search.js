@@ -628,7 +628,16 @@ stir.templates.search = (() => {
 				<div data-behaviour=accordion>
 					<accordion-summary>${item.name}</accordion-summary>
 					<div>
-						<ul>${item.allValues.map((batman) => `<li><label><input type=${facetDisplayTypes[item.guessedDisplayType] || "text"} name="${batman.queryStringParamName}" value="${batman.queryStringParamValue}" ${batman.selected ? "checked" : ""}>${facetCategoryLabel(item.name, batman.label)} <span>${batman.count ? batman.count : "0"}</span></label></li>`).join("")}</ul>
+						<ul>${item.allValues.map(
+							(facetValue) => 
+								`<li>
+									<label>
+										<input type=${facetDisplayTypes[item.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
+										<span>${facetCategoryLabel(item.name, facetValue.label)}</span>
+										<span>${facetValue.count ? facetValue.count : "0"}</span>
+									</label>
+								</li>`
+						).join("")}</ul>
 					</div>
 				</div>
 			</fieldset>`,
