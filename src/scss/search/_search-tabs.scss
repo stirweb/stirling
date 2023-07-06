@@ -551,8 +551,14 @@
   }
 }
 
+/* Visual indicator for Clearing courses */
 .c-search-result__seasonal {
 	color: $heritage-berry;
+}
+
+/* Fix title case on delivery and study mode only */
+fieldset[data-facet*="mode"] span::first-letter {
+	text-transform:	capitalize;
 }
 
 //@media only screen and (min-width: 640px) {
