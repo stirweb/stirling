@@ -63,8 +63,9 @@ var UoS_ClearingClock = (function () {
 
 		if (2023 != date.getUTCFullYear()) return false;	// ignore any dates not in 2023
 		if (7 != month) return false						// ignore any dates not in August
-		if (day <= 6) return false;							// no calls at all before 7 August
-		if (day <= 16 && !sqa) return false;				// Aug 7–16 only allowed for Scotland region (SQA results)
+		if (day <= 7) return false;							// no calls at all before 8 August
+															// (Hotline is actually open from 7th but no web promo until 8th) [2023-07-06]
+		if (day <= 16 && !sqa) return false;				// Aug 8–16 only allowed for Scotland region (SQA results)
 															// …Aug 17–22 Clearing is open…
 		if (day >= 23) return false; 						// no calls after 22 August (this got extended in 2022 to Aug 31)
 		
