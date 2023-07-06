@@ -6,6 +6,8 @@
 
   const ITEMS_PER_PAGE = 9;
 
+  console.log("hi");
+
   /*
       | 
       |  RENDERERS
