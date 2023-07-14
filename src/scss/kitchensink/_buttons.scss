@@ -351,6 +351,16 @@ input:checked {
     }
   }
 
+  &.energy-turq {
+    background-color: $energy-turq;
+    color: #fff;
+
+    &:hover {
+      color: $energy-turq;
+      border: 2px solid $energy-turq;
+    }
+  }
+
   &.u-sticky__small {
     width: 77%;
   }
