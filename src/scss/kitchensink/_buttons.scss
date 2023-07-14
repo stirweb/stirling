@@ -356,6 +356,7 @@ input:checked {
     color: #fff;
 
     &:hover {
+      background-color: #fff !important;
       color: $energy-turq;
       border: 2px solid $energy-turq;
     }
