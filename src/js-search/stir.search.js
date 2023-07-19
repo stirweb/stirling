@@ -329,7 +329,7 @@ stir.search = () => {
 
 	const getInboundQuery = () => {
 		if (undefined !== QueryParams.get("query")) constants.form.query.value = QueryParams.get("query").substring(0, MAXQUERY);
-		if(preview) return;
+		//if(preview) return;
 		const parameters = QueryParams.getAll();
 		for (const name in parameters) {
 			const el = document.querySelector(`input[name="${encodeURIComponent(name)}"][value="${encodeURIComponent(parameters[name])}"]`);
@@ -386,7 +386,7 @@ stir.search = () => {
 	};
 
 	const updateFacets = stir.curry((type, data) => {
-		if(!preview) return data;
+		//if(!preview) return data;
 		const form = document.querySelector(`form[data-filters="${type}"]`);
 		if(form) {
 			const parameters = QueryParams.getAll();
@@ -457,8 +457,8 @@ stir.search = () => {
 					query: getQuery(type),							// get actual query, or fallback, etc
 					curator: getStartRank(type) > 1 ? false : true	// only show curator for initial searches
 				},
-				getNoQuery(type),									// get special "no query" parameters (sorting, etc.)
-				preview?getQueryParameters():{}
+				getNoQuery(type)									// get special "no query" parameters (sorting, etc.)
+				//,preview?getQueryParameters():{}
 			)
 		);
 
