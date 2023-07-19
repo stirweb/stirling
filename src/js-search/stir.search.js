@@ -11,8 +11,8 @@ var stir = stir || {};
 stir.funnelback = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 	const hostname = debug ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
-  //const hostname = "search.stir.ac.uk";
-  const url = `https://${hostname}/s/`;
+	//const hostname = "search.stir.ac.uk";
+	const url = `https://${hostname}/s/`;
 
 	const getJsonEndpoint = () => new URL("search.json", url);
 	const getScaleEndpoint = () => new URL("scale", url);
@@ -167,7 +167,7 @@ stir.search = () => {
 	};
 
   const meta = {
-    main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tags", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
+    main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tag", "tags", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
     courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
     clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
 	scholarships: ["value","status","number"]
@@ -198,7 +198,7 @@ stir.search = () => {
         meta_v_not: "faculty-news",
         sort: "date",
         fmo: "true",
-        SF: "[c,d,h1,image,imagealt,tags]",
+        SF: "[c,d,h1,image,imagealt,tags,tag]",
         num_ranks: NUMRANKS,
         SBL: 450,
       },
