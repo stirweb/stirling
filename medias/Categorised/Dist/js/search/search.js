@@ -107,30 +107,30 @@ stir.templates.search = (() => {
 	const metaParamTokens = (tokens) => {
 		const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
 		return metas
-		.map((key) => {
-			// does the name and value exactly match a DOM element?
-			// i.e. an <input> element from which we can grab the text label
-				if(el = metaParamElement(key, tokens[key])) {
-					if ("hidden" === el.type) return;			// ignore hidden inputs (as they have no text!)
-					return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
-				}
-				
-				// if not an exact match, we might have a multi-select filter (e.g. checkbox)
-				// we'll check the constituent values to find matching elements
-				const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
-				const values = tokens[key].toString().replace(tokenex, `$1`).split(/\s/); // values are space-separated
-				return values
-					.map((value) => {
-						const el = metaParamElement(key, value);
-						// The innerText of the <input> element‘s <label> has the text we need
-						if (el) {
-							return tag(el.parentElement.innerText, key, value);
-						}
-						// We will just default to empty string if there is no matching element.
-						return "";
-					})
-					.join(" ");
-			})
+			.map((key) => {
+				// does the name and value exactly match a DOM element?
+				// i.e. an <input> element from which we can grab the text label
+					if(el = metaParamElement(key, tokens[key])) {
+						if ("hidden" === el.type) return;			// ignore hidden inputs (as they have no text!)
+						return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
+					}
+					
+					// if not an exact match, we might have a multi-select filter (e.g. checkbox)
+					// we'll check the constituent values to find matching elements
+					const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
+					const values = tokens[key].toString().replace(tokenex, `$1`).split(/\s/); // values are space-separated
+					return values
+						.map((value) => {
+							const el = metaParamElement(key, value);
+							// The innerText of the <input> element‘s <label> has the text we need
+							if (el) {
+								return tag(el.parentElement.innerText, key, value);
+							}
+							// We will just default to empty string if there is no matching element.
+							return "";
+						})
+						.join(" ");
+				})
 			.join(" ");
 	};
 
@@ -139,7 +139,9 @@ stir.templates.search = (() => {
 	 * @param {Array} facets
 	 * @returns {String} HTML click-to-dismiss "tokens"
 	 */
-	const facetTokens = (facets) => facets.map((facet) => facet.selectedValues.map((value) => paramToken(value.queryStringParamName, value.queryStringParamValue)).join(" ")).join(" ");
+	const facetTokens = (facets) => facets.map(
+		(facet) => facet.selectedValues.map((value) => paramToken(value.queryStringParamName, value.queryStringParamValue)).join(" ")
+	).join(" ");
 
 	const paramToken = (name, value) => {
 		const el = metaParamElement(name, value);
@@ -147,7 +149,7 @@ stir.templates.search = (() => {
 			return tag(
 				Array.prototype.slice
 					.call(el.parentElement.childNodes)
-					.map((node) => (node.nodeType === 3 ? node.textContent : ""))
+					.map((node) => (node.nodeType === 3 ? node.textContent : ""))  // Type 3 is Node.TEXT_NODE
 					.join(""),
 				name,
 				value
@@ -230,7 +232,10 @@ stir.templates.search = (() => {
 		return (facet, label) => {
 			if(!facets[facet]) return label;
 			const labels = facets[facet];
-			return labels[ labels.findIndex(val=>label===val.toLowerCase()) ];
+			if(labels.findIndex) {
+				return labels[ labels.findIndex(val=>label===val.toLowerCase()) ];
+			} else if (labels[label]) return labels[label]
+			return label;// + ' [fallback]';
 		}
 	})();
 	
@@ -519,6 +524,10 @@ stir.templates.search = (() => {
 						</p>
 						<div>${item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d)) : ""}</div>
 						<p class="text-sm">${item.summary}</p>
+						<!-- <p>
+							${item.listMetadata && item.listMetadata.tag ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"></path></svg>`:''}
+							${item.listMetadata && item.listMetadata.tag && item.listMetadata.tag.map(tag=>`<span>${tag}</span>`).join(', ') || ''}
+						</p> -->
 					</div>
 					${image(item.metaData.image, item.title.split(" | ")[0].trim())}
 				</div>`;
@@ -554,8 +563,6 @@ stir.templates.search = (() => {
 
 			const urls = item.metaData.image.split("|");
 			const hacklink = urls[1] ? urls[1] : "/events/";
-
-			//if (urls[1]) console.log(urls[1]);
 
 			// ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
 
@@ -615,8 +622,7 @@ stir.templates.search = (() => {
 						<p class="u-text-regular u-m-0"><strong>
 							<a href="${FB_BASE() + item.linkUrl}" title="${item.displayUrl}">${item.titleHtml}</a>
 						</strong></p>
-						<p >${item.descriptionHtml}</p>
-						<!-- <pre>${JSON.stringify(item, null, "\t")}</pre> -->
+						<p>${item.descriptionHtml}</p>
 					</div>
 				</div>`
 				: `<div class="c-search-result-curated" data-result-type=curated-message>
@@ -633,8 +639,8 @@ stir.templates.search = (() => {
 								`<li>
 									<label>
 										<input type=${facetDisplayTypes[item.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
-										<span>${facetCategoryLabel(item.name, facetValue.label)}</span>
-										<span>${facetValue.count ? facetValue.count : "0"}</span>
+										${facetCategoryLabel(item.name, facetValue.label)}
+										<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
 									</label>
 								</li>`
 						).join("")}</ul>
@@ -1059,8 +1065,8 @@ var stir = stir || {};
 stir.funnelback = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 	const hostname = debug ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
-  //const hostname = "search.stir.ac.uk";
-  const url = `https://${hostname}/s/`;
+	//const hostname = "search.stir.ac.uk";
+	const url = `https://${hostname}/s/`;
 
 	const getJsonEndpoint = () => new URL("search.json", url);
 	const getScaleEndpoint = () => new URL("scale", url);
@@ -1215,7 +1221,7 @@ stir.search = () => {
 	};
 
   const meta = {
-    main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tags", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
+    main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tag", "tags", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
     courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
     clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
 	scholarships: ["value","status","number"]
@@ -1246,7 +1252,7 @@ stir.search = () => {
         meta_v_not: "faculty-news",
         sort: "date",
         fmo: "true",
-        SF: "[c,d,h1,image,imagealt,tags]",
+        SF: "[c,d,h1,image,imagealt,tags,tag]",
         num_ranks: NUMRANKS,
         SBL: 450,
       },
