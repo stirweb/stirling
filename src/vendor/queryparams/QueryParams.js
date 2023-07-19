@@ -18,6 +18,10 @@ var QueryParams = (function () {
     history.pushState(null, null, url);
   };
 
+  var _replaceStateHandler = function (url, state) {
+    history.replaceState(state, "", url);
+  };
+
   /**
    * To swap _pushStateHandler when running tests
    * @var {function} handler Handler for mocking(?) push state
@@ -171,14 +175,16 @@ var QueryParams = (function () {
   /**
    * Remove param by name
    * @param {string} name Name of param to update
-   * @param {boolean} reload
+   * @param {boolean} reload [Optional] Automatically reload the window after changing the URL
+   * @param {string} url [Optional] The URL to be acted upon
+   * @param {boolean} replace [Optional] Use replaceState instead of pushState
    */
   // TODO use document..search? instead of href
-  function _remove(name, reload, url) {
-    if (typeof url === "undefined") url = window.location.href;
+  function _remove(name, reload, url, replace) {
+    if (!url) url = window.location.href;
 
 	var newUrl = _removeURLParameter(url, name);
-    if(newUrl!==url) _pushStateHandler(newUrl);
+    if(newUrl!==url) replace ? _replaceStateHandler(newUrl): _pushStateHandler(newUrl);
 
     if (reload) {
       window.location.href = document.location.href;

@@ -380,7 +380,7 @@ stir.search = () => {
 	// maintain compatibility with old meta_ search
 	// parameters with their equivalent facet:
 	const metaToFacet = {
-		  meta_level: 'f.Level|level',
+		meta_level: 'f.Level|level',
 		meta_faculty: 'f.Faculty|faculty',
 		meta_subject: 'f.Subject|subject',
 		meta_delivery: 'f.Delivery mode|delivery',
@@ -407,7 +407,7 @@ stir.search = () => {
 					const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
 					facetFilterElements && facetFilterElements.forEach(el => {
 						el.checked=true;
-						QueryParams.remove(metaName);
+						QueryParams.remove(metaName,false,null,true); // don't reload window and use replaceState() instead of pushState()
 					});
 
 					const facetAccordion = facetFilter.querySelector('[data-behaviour=accordion]');
