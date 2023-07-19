@@ -382,7 +382,9 @@ stir.search = () => {
 	const metaToFacet = {
 		  meta_level: 'f.Level|level',
 		meta_faculty: 'f.Faculty|faculty',
-		meta_subject: 'f.Subject|subject'
+		meta_subject: 'f.Subject|subject',
+		meta_delivery: 'f.Delivery mode|delivery',
+		meta_modes: 'f.Study mode|modes'
 	};
 
 	const updateFacets = stir.curry((type, data) => {
@@ -614,6 +616,25 @@ stir.search = () => {
 		});
 	});
 
+	const tokenHandler = event => {
+		if(!event || !event.target) return;
+		const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
+		const input = document.querySelector(selector);
+		if (input) {
+			input.checked = !input.checked;
+			event.target.parentElement.removeChild(event.target);
+			initialSearch();
+		} else {
+			const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
+			const select = document.querySelector(sel2);
+			if (select) {
+				select.selectedIndex = 0
+				event.target.parentElement.removeChild(event.target);
+				initialSearch();
+			}
+		}
+	}
+
 	// Click-delegate for status panel (e.g. misspellings, dismiss filters, etc.)
 	Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-summary"), (statusPanel) => {
 		statusPanel.addEventListener("click", (event) => {
@@ -623,22 +644,14 @@ stir.search = () => {
 				setQuery();
 				initialSearch();
 			} else if (event.target.hasAttribute("data-value")) {
-				const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
-				const input = document.querySelector(selector);
-				if (input) {
-					input.checked = !input.checked;
-					event.target.parentElement.removeChild(event.target);
-					initialSearch();
-				} else {
-					const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
-					const select = document.querySelector(sel2);
-					if (select) {
-						select.selectedIndex = 0
-						event.target.parentElement.removeChild(event.target);
-						initialSearch();
-					}
-				}
+				tokenHandler(event);
 			}
+		});
+	});
+	Array.prototype.forEach.call(document.querySelectorAll(".c-search-results"), (resultsPanel) => {
+		resultsPanel.addEventListener("click", (event) => {
+			if (!event.target.hasAttribute("data-value")) return;
+			tokenHandler(event);
 		});
 	});
 
