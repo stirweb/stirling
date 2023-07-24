@@ -1,0 +1,8 @@
+!function(){const n=document.querySelector('[data-action="datazone"]'),a=document.createElement("div");n.appendChild(a);console.info("[News tagging report]");const s=t=>`
+    <div class=x-tag-report-result>
+        <h3 class="header-stripped u-header--margin-stripped"><small>${t.rank}</small> ${t.title.split("|")[0]}</h3>
+        <time><span class="u-icon h5 uos-calendar"></span> ${t.metaData.d?stir.Date.newsDate(new Date(t.metaData.d)):""}</time>
+        <p>${t.metaData.c?.split("|")[0]}</p>
+        <p>${t?.listMetadata?.tag?.map(t=>`<span class=tag>${t}</span>`)?.join("")}</p>
+    </div>
+    `,e=(t,e)=>{fetch(`https://stage-shared-15-24-search.clients.uk.funnelback.com/s/search.json?collection=stir-www&meta_tag=${t}&num_ranks=${e||255}&SF=[c,d,tag]&sort=date`).then(t=>t.text()).then(t=>JSON.parse(t)).then(t=>{return t=t.response.resultPacket.results,console.info(t),void(a.innerHTML=t.map(s).join(""))})},r=t=>{t&&t.target.hasAttribute("data-tag")&&(console.info(t.target.textContent),e(t.target.getAttribute("data-tag"),t.target.getAttribute("data-count")))};fetch("https://stage-shared-15-24-search.clients.uk.funnelback.com/s/search.json?collection=stir-www&query=!padrenullquery").then(t=>t.text()).then(t=>JSON.parse(t)).then(t=>{return t=t.response.facets[0],console.info(t),e=document.createElement("table"),(a=document.createElement("tbody")).insertAdjacentHTML("afterbegin",t.allValues.map(t=>`<tr><td data-tag="${t.label}" data-count="${t.count}">${t.label}</td><td>${t.count}</td></tr>`).join("")),e.insertAdjacentHTML("afterbegin","<thead><tr><td scope=column>Tag</th><th scope=column>Usage</th></tr></thead>"),e.appendChild(a),n.insertAdjacentElement("afterbegin",e),void e.addEventListener("click",r);var e,a})}();
