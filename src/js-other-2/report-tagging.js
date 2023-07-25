@@ -1,13 +1,15 @@
 (function() {
 
     const hostname = 'search.stir.ac.uk';
+    const RSS_URL = `https://${hostname}/s/search.json?collection=stir-www&query=!padrenullquery`
     const el = document.querySelector('[data-action="datazone"]');
     const results = document.createElement('div');
+    const labels = typeof _t4globals172244 !== "undefined" ? _t4globals172244 : {};
 	results.id = "results"
+	labels.Tags = labels.Tags || {};
     el.appendChild(results);
-    const RSS_URL = `https://${hostname}/s/search.json?collection=stir-www&query=!padrenullquery`
 
-	const tagLink = value => `<a href="#${results.id}"${tagData(value)}>${value.label}</a>`;
+    const tagLink = value => `<a href="#${results.id}"${tagData(value)}>${labels.Tags[value.label]||value.label}</a>`;
 	const tagData = value => ` data-tag="${value.label}" data-count="${value.count}"`;
 
     const tagsTable = data => {
