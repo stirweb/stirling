@@ -3,6 +3,6 @@
         <h3 class="header-stripped u-header--margin-stripped"><small>${t.rank}</small> ${t.title.split("|")[0]}</h3>
         <time><span class="u-icon h5 uos-calendar"></span> ${t.metaData.d?stir.Date.newsDate(new Date(t.metaData.d)):""}</time>
         <p>${t.metaData.c?.split("|")[0]}</p>
-        <p>${t?.listMetadata?.tag?.map(t=>`<span class=tag>${t}</span>`)?.join("")}</p>
+        <p>${t?.listMetadata?.tag?.map(t=>`<span class=tag>${r.Tags[t]||t}</span>`)?.join("")}</p>
     </div>
     `,d=(t,e)=>{t=`https://${a}/s/search.json?collection=stir-www&meta_tag=${t}&num_ranks=${e||255}&SF=[c,d,tag]&sort=date`;fetch(t).then(t=>t.text()).then(t=>JSON.parse(t)).then(t=>{return t=t.response.resultPacket.results,n.innerHTML=t.map(c).join(""),void stir.scrollToElement(n)})},i=t=>{t&&t.target.hasAttribute("data-tag")&&d(t.target.getAttribute("data-tag"),t.target.getAttribute("data-count"))};fetch("https://search.stir.ac.uk/s/search.json?collection=stir-www&query=!padrenullquery").then(t=>t.text()).then(t=>JSON.parse(t)).then(t=>e(t.response.facets[0]))}();

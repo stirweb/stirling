@@ -28,7 +28,7 @@
         <h3 class="header-stripped u-header--margin-stripped"><small>${result.rank}</small> ${result.title.split("|")[0]}</h3>
         <time><span class="u-icon h5 uos-calendar"></span> ${result.metaData.d ? stir.Date.newsDate(new Date(result.metaData.d)) : ""}</time>
         <p>${result.metaData["c"]?.split("|")[0]}</p>
-        <p>${result?.listMetadata?.tag?.map(tag=>`<span class=tag>${tag}</span>`)?.join('')}</p>
+        <p>${result?.listMetadata?.tag?.map(tag=>`<span class=tag>${labels.Tags[tag]||tag}</span>`)?.join('')}</p>
     </div>
     `;
 
