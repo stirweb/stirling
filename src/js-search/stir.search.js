@@ -11,8 +11,8 @@ var stir = stir || {};
 stir.funnelback = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 	const hostname = debug ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
-  //const hostname = "search.stir.ac.uk";
-  const url = `https://${hostname}/s/`;
+	//const hostname = "search.stir.ac.uk";
+	const url = `https://${hostname}/s/`;
 
 	const getJsonEndpoint = () => new URL("search.json", url);
 	const getScaleEndpoint = () => new URL("scale", url);
@@ -167,7 +167,7 @@ stir.search = () => {
 	};
 
   const meta = {
-    main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tags", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
+    main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tag", "tags", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
     courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
     clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
 	scholarships: ["value","status","number"]
@@ -198,7 +198,7 @@ stir.search = () => {
         meta_v_not: "faculty-news",
         sort: "date",
         fmo: "true",
-        SF: "[c,d,h1,image,imagealt,tags]",
+        SF: "[c,d,h1,image,imagealt,tags,tag]",
         num_ranks: NUMRANKS,
         SBL: 450,
       },
@@ -329,7 +329,7 @@ stir.search = () => {
 
 	const getInboundQuery = () => {
 		if (undefined !== QueryParams.get("query")) constants.form.query.value = QueryParams.get("query").substring(0, MAXQUERY);
-		if(preview) return;
+		//if(preview) return;
 		const parameters = QueryParams.getAll();
 		for (const name in parameters) {
 			const el = document.querySelector(`input[name="${encodeURIComponent(name)}"][value="${encodeURIComponent(parameters[name])}"]`);
@@ -380,13 +380,15 @@ stir.search = () => {
 	// maintain compatibility with old meta_ search
 	// parameters with their equivalent facet:
 	const metaToFacet = {
-		  meta_level: 'f.Level|level',
+		meta_level: 'f.Level|level',
 		meta_faculty: 'f.Faculty|faculty',
-		meta_subject: 'f.Subject|subject'
+		meta_subject: 'f.Subject|subject',
+		meta_delivery: 'f.Delivery mode|delivery',
+		meta_modes: 'f.Study mode|modes'
 	};
 
 	const updateFacets = stir.curry((type, data) => {
-		if(!preview) return data;
+		//if(!preview) return data;
 		const form = document.querySelector(`form[data-filters="${type}"]`);
 		if(form) {
 			const parameters = QueryParams.getAll();
@@ -405,7 +407,7 @@ stir.search = () => {
 					const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
 					facetFilterElements && facetFilterElements.forEach(el => {
 						el.checked=true;
-						QueryParams.remove(metaName);
+						QueryParams.remove(metaName,false,null,true); // don't reload window and use replaceState() instead of pushState()
 					});
 
 					const facetAccordion = facetFilter.querySelector('[data-behaviour=accordion]');
@@ -457,8 +459,8 @@ stir.search = () => {
 					query: getQuery(type),							// get actual query, or fallback, etc
 					curator: getStartRank(type) > 1 ? false : true	// only show curator for initial searches
 				},
-				getNoQuery(type),									// get special "no query" parameters (sorting, etc.)
-				preview?getQueryParameters():{}
+				getNoQuery(type)									// get special "no query" parameters (sorting, etc.)
+				//,preview?getQueryParameters():{}
 			)
 		);
 
@@ -614,6 +616,25 @@ stir.search = () => {
 		});
 	});
 
+	const tokenHandler = event => {
+		if(!event || !event.target) return;
+		const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
+		const input = document.querySelector(selector);
+		if (input) {
+			input.checked = !input.checked;
+			event.target.parentElement.removeChild(event.target);
+			initialSearch();
+		} else {
+			const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
+			const select = document.querySelector(sel2);
+			if (select) {
+				select.selectedIndex = 0
+				event.target.parentElement.removeChild(event.target);
+				initialSearch();
+			}
+		}
+	}
+
 	// Click-delegate for status panel (e.g. misspellings, dismiss filters, etc.)
 	Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-summary"), (statusPanel) => {
 		statusPanel.addEventListener("click", (event) => {
@@ -623,22 +644,14 @@ stir.search = () => {
 				setQuery();
 				initialSearch();
 			} else if (event.target.hasAttribute("data-value")) {
-				const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
-				const input = document.querySelector(selector);
-				if (input) {
-					input.checked = !input.checked;
-					event.target.parentElement.removeChild(event.target);
-					initialSearch();
-				} else {
-					const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
-					const select = document.querySelector(sel2);
-					if (select) {
-						select.selectedIndex = 0
-						event.target.parentElement.removeChild(event.target);
-						initialSearch();
-					}
-				}
+				tokenHandler(event);
 			}
+		});
+	});
+	Array.prototype.forEach.call(document.querySelectorAll(".c-search-results"), (resultsPanel) => {
+		resultsPanel.addEventListener("click", (event) => {
+			if (!event.target.hasAttribute("data-value")) return;
+			tokenHandler(event);
 		});
 	});
 
