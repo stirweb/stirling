@@ -63,10 +63,18 @@
 
   const renderIconTag = (item) => {
     if (item.pin < 1) return `data-label-icon="pin"`;
-
     if (item.isSeries) return `data-label-icon="startdates"`;
 
     return ``;
+  };
+
+  const renderTimes = (item) => {
+    return item.isSeries
+      ? ``
+      : `<div class="flex-container u-gap-16 align-middle">
+          <span class="uos-clock u-icon h5"></span>
+          <span><time>${item.startTime}</time> – <time>${item.endTime}</time></span>
+        </div>`;
   };
 
   const renderEvent = (item) => {
@@ -83,10 +91,7 @@
                             <span class="u-icon h5 uos-calendar"></span>
                             <span><time datetime="${item.start}">${item.stirStart}</time> ${renderEndDate(item.start, item.end, item.stirEnd)}</span>
                         </div>
-                        <div class="flex-container u-gap-16 align-middle">
-                            <span class="uos-clock u-icon h5"></span>
-                            <span><time>${item.startTime}</time> – <time>${item.endTime}</time></span>
-                        </div>
+                        ${renderTimes(item)}
                         <div class="flex-container u-gap-16 align-middle">
                             <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`} "></span>
                             <span>${item.location}</span>
@@ -114,10 +119,7 @@
                         <span class="u-icon h5 uos-calendar"></span>
                         <span><time datetime="${item.start}">${item.stirStart}</time> – <time datetime="${item.end}">${item.stirEnd}</time></span>
                     </div>
-                    <div class="flex-container u-gap-16 align-middle">
-                        <span class="uos-clock u-icon h5"></span>
-                        <span><time>${item.startTime}</time> – <time>${item.endTime}</time></span>
-                    </div>
+                    ${renderTimes(item)}
                     <div class="flex-container u-gap-16 align-middle">
                         <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`}"></span>
                         <span>${item.location}</span>
