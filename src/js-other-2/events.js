@@ -52,7 +52,7 @@
   };
 
   const renderInfoTag = (val) => {
-    return !val ? `` : `<span class="u-bg-heritage-berry u-white text-xsm u-p-tiny u-font-bold u-mr-1">${val}</span>`;
+    return !val ? `` : `<span class="u-bg-heritage-berry u-white text-xxsm u-p-tiny u-mr-1">${val}</span>`;
   };
 
   const renderLink = (item) => {
