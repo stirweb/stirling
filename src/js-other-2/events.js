@@ -52,7 +52,7 @@
   };
 
   const renderInfoTag = (val) => {
-    return !val ? `` : `<span class="u-bg-heritage-berry u-white c-tag u-mr-1">${val}</span>`;
+    return !val ? `` : `<span class="u-bg-heritage-berry u-white text-xsm u-p-tiny u-font-bold u-mr-1">${val}</span>`;
   };
 
   const renderLink = (item) => {
@@ -99,8 +99,6 @@
                     </div>
                     <p class="u-m-0">${item.summary}</p>
                     ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
-
-                    ${item.tags}
                 </div>
                 ${item.image ? renderImage(item.image, item.title) : ``}  
             </div>`;
