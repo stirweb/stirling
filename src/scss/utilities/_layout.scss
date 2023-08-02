@@ -125,16 +125,6 @@
   }
 }
 
-/* Flex basis (widths) */
-
-.u-basis-16 {
-  flex-basis: 16px;
-}
-
-.u-basis-32 {
-  flex-basis: 32px;
-}
-
 /* Positioning */
 
 .u-relative {
@@ -217,6 +207,16 @@
 }
 
 /* Widths / Heights */
+
+.u-width-16 {
+  width: 16px;
+  flex-basis: 16px;
+}
+
+.u-width-32 {
+  width: 32px;
+  flex-basis: 32px;
+}
 
 .u-w-full,
 .u-full-width {
