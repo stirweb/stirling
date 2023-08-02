@@ -212,6 +212,14 @@ p.smaller {
 }
 
 // Overwrite the Foundation class sizes at small as they are too small
+// .h1 {
+//   font-size: 4.5rem;
+// }
+
+// .h2 {
+//   font-size: 2.25rem;
+// }
+
 @media screen and #{breakpoint(small down)} {
   .h1 {
     font-size: 1.875rem;
@@ -238,6 +246,7 @@ p.smaller {
 .h6 {
   line-height: 1.5;
 }
+
 /*
     Exceptions for header when placed after classes beginning padding. u-padding-[x]
 */
