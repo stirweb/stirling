@@ -614,7 +614,7 @@
 
                         div.barchart-value {
                             position: absolute;
-                            background-color: teal;
+                            background-color: #00a5ac;
                             width: 2400px;
                             top: 0;
                             bottom: 0;
@@ -644,43 +644,48 @@
                     <div class="grid-x grid-padding-x u-my-2">
                         <div class="cell large-6">
                             <h3
-                                class="header-stripped u-bg-energy-teal--15 u-p-1 u-teal-line-left u-border-width-5 u-text-regular">
+                                class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">
                                 Engagement overview</h3>
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Contact hours</span>
-                                <div class="barchart" data-value="20"></div>
+                                <div class="barchart" data-value="20" data-unit=""></div>
                             </div>
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Self-study hours</span>
-                                <div class="barchart" data-value="80"></div>
+                                <div class="barchart" data-value="80" data-unit=""></div>
                             </div>
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Placement hours</span>
-                                <div class="barchart" data-value="50"></div>
+                                <div class="barchart" data-value="50" data-unit=""></div>
+                            </div>
+
+                            <div class="u-bg-energy-teal--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
+                                <strong class="u-flex1">Total workload</strong>
+                                <strong>250 hours</strong>
                             </div>
                         </div>
 
                         <div class="cell large-6">
                             <h3
-                                class="header-stripped u-bg-energy-teal--15 u-p-1 u-teal-line-left  u-border-width-5 u-text-regular">
+                                class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">
                                 Assessment overview</h3>
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Coursework</span>
-                                <div class="barchart" data-value="50"></div>
+                                <div class="barchart" data-value="50" data-unit="%"></div>
                             </div>
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Exam</span>
-                                <div class="barchart" data-value="25"></div>
+                                <div class="barchart" data-value="25" data-unit="%"></div>
                             </div>
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Practical skills assessment</span>
-                                <div class="barchart" data-value="25"></div>
+                                <div class="barchart" data-value="25" data-unit="%"></div>
                             </div>
 
                         </div>
@@ -926,6 +931,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const value = entry.target.dataset.value;
+                    const unit = entry.target.dataset.unit;
                     const valueInverted = 100 - Number(value);
                     const textPosition = (value / 2) - 2;
 
@@ -933,7 +939,7 @@
                     el.classList.add('barchart-value');
                     el.style.right = valueInverted + '%';
 
-                    entry.target.innerHTML = `<div class="barchart-text" style="left:${textPosition}%">${value}</div>`;
+                    entry.target.innerHTML = `<div class="barchart-text" style="left:${textPosition}%">${value}${unit}</div>`;
                     entry.target.appendChild(el);
                 }
                 else {
