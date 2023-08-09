@@ -98,7 +98,7 @@
   const renderMoreEvent = (item) => {
     return `<a href="#" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
                 <span class="u-flex1"><strong>${item.title}</strong></span>
-                <span class="flex-container align-middle u-gap">
+                <span class="flex-container align-middle u-gap u-grey--dark">
                     <strong>${item.stirStart} ${renderEndDate(item)}</strong>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1080 800"
                         stroke-width="1.5" stroke="none" style="width: 20px; height:20px">
