@@ -522,27 +522,90 @@
             </div>
         </div>
 
+        <style>
+            details summary {
+                list-style: none;
+            }
+
+            .u-open-close {
+                position: relative;
+            }
+
+            .u-open-close::after {
+                content: " ";
+                background-image: url(arrow-down.svg);
+                background-repeat: no-repeat;
+                background-position: center center;
+                position: absolute;
+                right: -10px;
+                width: 30px;
+                height: 30px;
+            }
+
+            [open] .u-open-close::after {
+                background: url(arrow-up.svg);
+            }
+
+            .c-sticky-nav a {
+                border-bottom: 3px solid #373a36 !important;
+            }
+
+            .c-sticky-nav a:hover,
+            .c-sticky-nav a.current {
+                border-bottom: 3px solid #76bd22 !important;
+            }
+
+            @media screen and (min-width: 1024px) {
+                .c-sticky-nav {
+                    gap: 16px;
+                    justify-content: space-evenly;
+                }
+            }
+        </style>
+
+
+
         <div class="u-bg-dark-mink u-white--all u-p-1 u-sticky-nav">
             <div class="grid-container ">
                 <div class="grid-x grid-padding-x">
                     <div class="cell">
-                        <nav class="flex-container  align-middle align-spaced">
-                            <a class="text-md u-font-bold">Content and aims</a>
-                            <a class="text-md u-font-bold">Teaching and assessment</a>
-                            <a class="text-md u-font-bold">Awards</a>
-                            <a class="text-md u-font-bold">Study requirements</a>
-                            <a class="text-md u-font-bold">Further details</a>
-                            <a href=""
-                                class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back">Back
-                                to
-                                course</a>
+                        <nav>
+                            <button
+                                class="u-bg-black text-md text-left u-font-bold  u-py-1 u-m-0 hide-for-large u-cursor-pointer u-w-full flex-container c-open-close"
+                                id="sticky-nav-btn">
+                                <span class="u-flex1">Jump to...</span>
+                                <span class="u-relative u-width-32 u-inline-block u-heritage-green c-open-close-btn"> +
+                                </span>
+                                <span
+                                    class="u-relative u-width-32 u-inline-block u-heritage-green hide c-open-close-btn">
+                                    -
+                                </span>
+                            </button>
+                            <div
+                                class="flex-container flex-dir-column large-flex-dir-row c-sticky-nav hide-for-small-only hide-for-medium-only ">
+                                <a href="#" class="text-md u-font-bold u-py-1 u-m-0 current">Content
+                                    and aims</a>
+                                <a href="#" class="text-md u-font-bold u-py-1 u-m-0 ">Teaching
+                                    and
+                                    assessment</a>
+                                <a href="#" class="text-md u-font-bold u-py-1 u-m-0 ">Awards</a>
+                                <a href="#" class="text-md u-font-bold u-py-1 u-m-0 ">Study
+                                    requirements</a>
+                                <a href="#" class="text-md u-font-bold u-py-1 u-m-0 u-border-hover-none ">Further
+                                    details</a>
+                                <a href="#"
+                                    class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none ">Back
+                                    to course</a>
+                            </div>
                         </nav>
-
                     </div>
-
                 </div>
             </div>
         </div>
+
+
+
+
 
         <div class="grid-container ">
             <div class="grid-x grid-padding-x u-margin-bottom">
@@ -568,8 +631,15 @@
                         downplay the subject's inherently social and societal role.</p>
 
 
+
+
                     <details class="u-bg-mint u-heritage-line-top u-border-width-5 u-mb-2 u-mt-2">
-                        <summary class="u-p-1 text-center u-text-regular u-cursor-pointer"><strong>Read more</strong>
+                        <summary class="u-p-1 text-center u-text-regular u-cursor-pointer">
+                            <strong>Read more</strong>
+                            <span class="u-relative u-width-32 u-inline-block u-heritage-green c-open-close-btn"> +
+                            </span>
+                            <span class="u-relative u-width-32 u-inline-block u-heritage-green hide c-open-close-btn"> -
+                            </span>
                         </summary>
                         <div class="u-p-1">
                             <p>Consequuntur earum pariatur dolorem repellat temporibus ducimus sunt suscipit repudiandae
@@ -578,6 +648,23 @@
 
                         </div>
                     </details>
+
+
+                    <script>
+
+                        const stickyNavBtn = document.querySelector("#sticky-nav-btn");
+                        const stickyNav = document.querySelector(".c-sticky-nav")
+
+                        stickyNavBtn.addEventListener("click", event => {
+                            stickyNav.classList.toggle("hide-for-small-only");
+                            stickyNav.classList.toggle("hide-for-medium-only");
+                            stickyNavBtn.toggleAttribute("open")
+                        });
+
+
+                    </script>
+
+
 
                     <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">
                         Learning outcomes
