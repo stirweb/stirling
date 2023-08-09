@@ -107,6 +107,10 @@
   border: none;
 }
 
+.u-border-hover-none:hover {
+  border: none !important;
+}
+
 .u-border-solid {
   border: 1px solid currentColor;
 }
@@ -118,6 +122,10 @@
 
 .u-border-top-solid {
   border-top: 1px solid currentColor;
+}
+
+.u-border-width-2 {
+  border-width: 2px;
 }
 
 .u-border-width-4 {
