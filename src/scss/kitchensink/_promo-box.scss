@@ -239,21 +239,21 @@ Promo Box - Plain
 
 /*
 IE10+ specific styles go here
-*/
 
 @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
   .c-promo-box__icon {
     margin-right: 20px;
   }
 }
+*/
 
 /*
   u-white--all overides
 */
 
-.u-white--all {
-  .c-promo-box .c-promo-box__content p a {
-    text-decoration: none;
-    border-color: #fff;
-  }
-}
+// .u-white--all {
+//   .c-promo-box .c-promo-box__content p a {
+//     text-decoration: none;
+//     border-color: #fff;
+//   }
+// }
