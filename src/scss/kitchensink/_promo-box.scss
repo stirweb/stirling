@@ -67,9 +67,9 @@ Promo Box Content
   p {
     font-size: 1rem; // 16px;
     margin-bottom: 0.5rem;
-	&.u-lead {
-		font-size: 1.25rem;
-	}
+    &.u-lead {
+      font-size: 1.25rem;
+    }
   }
 
   li {
@@ -221,15 +221,13 @@ Promo Box - Plain
   }
 }
 
-.c-promo-box {
-  [data-category="Research Spotlight"] {
+.c-promo-box_category {
+  &[data-category="Research Spotlight"] {
     background-color: $heritage-teal;
-    /* heritage teal */
   }
 
-  [data-category="Impact"] {
+  &[data-category="Impact"] {
     background-color: $heritage-berry;
-    /* heritage berry */
   }
 }
 
