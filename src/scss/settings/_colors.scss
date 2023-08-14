@@ -152,6 +152,12 @@ $bg-grey: tint($light-mink, 15%);
     &.button--back:before {
       background-color: transparent !important;
     }
+
+    &.c-link {
+      &:hover {
+        border-bottom: none;
+      }
+    }
   }
 }
 
