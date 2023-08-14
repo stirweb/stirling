@@ -37,7 +37,7 @@ main h1 {
   }
 }
 
-main h2 {
+main h2:not(.u-header--secondary-font) {
   font-family: "Anton", sans-serif !important;
   text-transform: uppercase;
 }
