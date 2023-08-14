@@ -18,7 +18,7 @@ var UoS_GettingAround = (function () {
     PARKING: "Car parking",
     DISABLED_PARKING: "Disabled parking",
     SHORT_STAY_PARKING: "Short stay car parking",
-    ELECTRIC_BIKES: "Electric bike hire",
+    ELECTRIC_BIKES: "Smart bike hire",
     CHARGING_POINT: "Electric car charging point",
     DROP_OFF: "Drop off point",
     PEDESTRIAN_AREA: "No vehicular access",
@@ -443,12 +443,12 @@ var UoS_GettingAround = (function () {
       coords: "56.144384, -3.921226",
     },
     {
-      name: "Electric bike hire (Willow Café)",
+      name: "Smart bike hire (Willow Café)",
       type: types.ELECTRIC_BIKES,
       coords: "56.149110, -3.921319",
     },
     {
-      name: "Electric bike hire (Alexander Court)",
+      name: "Smart bike hire (Alexander Court)",
       type: types.ELECTRIC_BIKES,
       coords: "56.148906, -3.906572",
     },
@@ -459,12 +459,12 @@ var UoS_GettingAround = (function () {
     //
     // },
     {
-      name: "Electric bike hire (Logie Lecture Theatre)",
+      name: "Smart bike hire (Logie Lecture Theatre)",
       type: types.ELECTRIC_BIKES,
       coords: "56.1440120196455, -3.9208456710246353",
     },
     {
-      name: "Electric bike hire (main entrance)",
+      name: "Smart bike hire (main entrance)",
       type: types.ELECTRIC_BIKES,
       coords: "56.14778780222907, -3.928491928458595",
     },
@@ -479,7 +479,7 @@ var UoS_GettingAround = (function () {
       coords: "56.149575, -3.925748",
     },
     {
-      name: "Electric Bikes",
+      name: "Smart bikes",
       type: types.ELECTRIC_BIKES,
       coords: "56.144053, -3.920842",
     },
