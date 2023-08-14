@@ -154,6 +154,8 @@ $bg-grey: tint($light-mink, 15%);
     }
 
     &.c-link {
+      border-bottom: none;
+
       &:hover {
         border-bottom: none;
       }
