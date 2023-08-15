@@ -39,10 +39,6 @@
             </div>`;
   };
 
-  const renderSeriesInfo = (series) => {
-    return `<p class="text-sm">Part of the ${series} series.</p>`;
-  };
-
   const renderNoData = () => {
     return `<div class="u-bg-white u-p-2 u-mb-2"><p class="u-m-0">No more events found</p></div>`;
   };
@@ -77,7 +73,14 @@
         </div>`;
   };
 
-  const renderEvent = (item) => {
+  const renderSeriesInfo = (series, seriesData) => {
+    const linkedSeries = seriesData.filter((item) => item.title === series);
+    const url = linkedSeries.length ? `<a href="${linkedSeries[0].url}">${linkedSeries[0].title}</a>` : series;
+
+    return `<p class="text-sm">Part of the ${url} series.</p>`;
+  };
+
+  const renderEvent = stir.curry((seriesData, item) => {
     return `
             <div class="c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
                 ${item.isSeries ? renderTab("Event series") : ``} 
@@ -98,13 +101,13 @@
                         </div>
                     </div>
                     <p class="u-m-0">${item.summary}</p>
-                    ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
+                    ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
                 </div>
                 ${item.image ? renderImage(item.image, item.title) : ``}  
             </div>`;
-  };
+  });
 
-  const renderEventsPromo = (item) => {
+  const renderEventsPromo = stir.curry((seriesData, item) => {
     return `
           <div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell u-p-2 small-12 ${item.image ? `medium-8` : ``} ">
@@ -124,13 +127,13 @@
                     </div>
                 </div>
                 <p class="u-m-0 text-sm">${item.summary}</p>
-                ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
+                ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
             </div>
             ${item.image ? `<div class="cell medium-4"><img src="${item.image}" class="u-object-cover" width="800" height="800" alt="Image: ${item.title}" /></div>` : ``}  
         </div>`;
-  };
+  });
 
-  const renderArchiveEvent = (item) => {
+  const renderArchiveEvent = stir.curry((seriesData, item) => {
     return `
             <div class="c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
                 ${item.recording ? renderTab("Recording available") : ``} 
@@ -146,11 +149,11 @@
                         </div>
                     </div>
                     <p class="u-m-0">${item.summary}</p>
-                    ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild) : ``}
+                    ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
                 </div>
                 ${item.image ? renderImage(item.image, item.title) : ``}  
             </div>`;
-  };
+  });
 
   const renderPaginationBtn = (end, noOfResults) => {
     return end >= noOfResults ? `` : `<div class="loadmorebtn flex-container align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
@@ -165,10 +168,6 @@
     |   HELPERS
     |
     */
-
-  const renderEventsMapper = stir.map(renderEvent);
-
-  const renderArchiveEventsMapper = stir.map(renderArchiveEvent);
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
@@ -224,6 +223,8 @@
   const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
 
   const hasRecording = stir.filter((item) => item.recording);
+
+  const isSeriesFilter = stir.filter((item) => item.isSeries.length);
 
   const paginationFilter = stir.curry((page, itemsPerPage, index) => {
     const start = itemsPerPage * (page - 1);
@@ -369,6 +370,9 @@
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
 
+    const seriesData = stir.compose(isSeriesFilter)(initData);
+    const renderEventsMapper = stir.map(renderEvent(seriesData));
+
     const setDOMPublic = page === 1 ? setDOMContent(eventspublic) : appendDOMContent(eventspublic);
 
     const pageFilterCurry = stir.filter((item, index) => {
@@ -402,6 +406,9 @@
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
 
+    const seriesData = stir.filter(isSeriesFilter, initData);
+    const renderEventsMapper = stir.map(renderEvent(seriesData));
+
     const setDOMStaff = page === 1 ? setDOMContent(eventsstaff) : appendDOMContent(eventsstaff);
 
     const pageFilterCurry = stir.filter((item, index) => {
@@ -433,6 +440,9 @@
     const page = Number(QueryParams.get("page")) || 1;
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
+
+    const seriesData = stir.filter(isSeriesFilter, initData);
+    const renderArchiveEventsMapper = stir.map(renderArchiveEvent(seriesData));
 
     const setDOMArchive = page === 1 ? setDOMContent(eventsarchive) : appendDOMContent(eventsarchive);
 
@@ -473,6 +483,13 @@
     }
   };
 
+  const doPromo = (initData) => {
+    const seriesData = stir.filter(isSeriesFilter, initData);
+    const renderEventsPromoCurry = renderEventsPromo(seriesData);
+
+    stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromoCurry), limitToOne, isPromoFilter, stir.sort(sortByStartDate), filterByTagCurry, isUpcomingFilter)(initData);
+  };
+
   /*
     | 
     |  ON LOAD
@@ -486,15 +503,11 @@
   const initData = stir.feeds.events.filter((item) => item.id);
   QueryParams.set("page", 1);
 
-  console.log(initData);
-
-  // Populate the 3 tabs
+  // Populate the 3 tabs + promo
   doPublicEvents("all", initData);
   doStaffEvents("all", initData);
   doArchiveEvents("all", initData);
-
-  // Populate the Promo
-  stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromo), limitToOne, isPromoFilter, stir.sort(sortByStartDate), filterByTagCurry, isUpcomingFilter)(initData);
+  doPromo(initData);
 
   /*
     | 

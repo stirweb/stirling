@@ -120,7 +120,6 @@
   const limitTo3 = stir.filter((item, index) => index < 3);
 
   const dateUserFilter = stir.curry((d, item) => {
-    console.log(item.start + " -- " + d);
     if (d === ``) return item;
     if (item.start === d) return item;
   });
@@ -218,9 +217,6 @@
 
   const doDateFilter = (initialData) => {
     const removeDupsByStart = removeDuplicateObjectFromArray("start");
-
-    console.log(stir.compose(removeDupsByStart, stir.map(dateMapper), stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData));
-
     return stir.compose(joiner, stir.map(renderDates), removeDupsByStart, stir.map(dateMapper), stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
   };
 
