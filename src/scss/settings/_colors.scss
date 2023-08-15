@@ -250,6 +250,10 @@ $bg-grey: tint($light-mink, 15%);
   }
 }
 
+a:has(img):hover {
+  border-bottom: none !important;
+}
+
 /*
     Extended palette colours - Backgrounds 
  */

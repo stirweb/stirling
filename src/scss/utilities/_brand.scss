@@ -27,10 +27,31 @@
 
 /* 
   Brand border lines 
+*/
+
+/* 
+  Used on promo boxes
+  in conjunction with u-relative u-overflow-hidden on the parent
+*/
+
+.u-energy-line-bottom-float:after {
+  content: "";
+  background-color: $energy-green;
+  height: 4px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  bottom: 0px;
+  width: 100%;
+}
+
+/*
+  Regular borders
   default 3px width but you can use u-border-width-4 / u-border-width-5 to overide
 */
 
-/* energy */
+/* energy green */
 .u-energy-line-top,
 .u-green-line-top {
   border-top: 3px solid $energy-green;
