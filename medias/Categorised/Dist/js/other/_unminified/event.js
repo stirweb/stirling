@@ -88,7 +88,7 @@
   };
 
   const renderDates = (item) => {
-    return `<option value="${item.startInt}">${item.stirStart}</option>`;
+    return `<option value="${item.start}">${item.stirStart}</option>`;
   };
 
   const renderOptionOne = () => `<option value="">Filter by date</option>`;
@@ -120,8 +120,9 @@
   const limitTo3 = stir.filter((item, index) => index < 3);
 
   const dateUserFilter = stir.curry((d, item) => {
+    console.log(item.start + " -- " + d);
     if (d === ``) return item;
-    if (item.startInt === Number(d)) return item;
+    if (item.start === d) return item;
   });
 
   const dateMapper = (item) => {
@@ -208,14 +209,19 @@
     return upcomingHtml;
   };
 
-  const doPastSeries = (initialData) => {
-    const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), isPassedFilter, isSeriesChildFilter)(initialData);
+  const doPastSeries = (date, initialData) => {
+    const dateUserFilterCurry = stir.filter(dateUserFilter(date));
+
+    const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry, isPassedFilter, isSeriesChildFilter)(initialData);
     return seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
   };
 
   const doDateFilter = (initialData) => {
-    const removeDupsByStart = removeDuplicateObjectFromArray("startInt");
-    return stir.compose(joiner, stir.map(renderDates), removeDupsByStart, stir.map(dateMapper), stir.sort(sortByStartDate), isUpcomingFilter, isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
+    const removeDupsByStart = removeDuplicateObjectFromArray("start");
+
+    console.log(stir.compose(removeDupsByStart, stir.map(dateMapper), stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData));
+
+    return stir.compose(joiner, stir.map(renderDates), removeDupsByStart, stir.map(dateMapper), stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
   };
 
   const doMoreEvents = (initialData) => {
@@ -252,7 +258,7 @@
     if (initialData.error) return;
 
     if (seriesEventsArea && seriesDateFilter) {
-      const pastHtml = doPastSeries(initialData);
+      const pastHtml = doPastSeries("", initialData);
       setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData) + pastHtml);
 
       /* Series filter */
@@ -261,6 +267,8 @@
       /* Event Listener */
       seriesDateFilter.addEventListener("change", (event) => {
         const upcomingHtml = doUpcomingSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
+        const pastHtml = doPastSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
+
         setDOMContent(seriesEventsArea, upcomingHtml + pastHtml);
       });
     }
