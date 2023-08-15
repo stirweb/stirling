@@ -188,9 +188,7 @@
 
   const isPublic = (item) => item.audience.includes("Public");
 
-  const isStaffStudent = (item) => {
-    return item.audience.includes("Staff") || item.audience.includes("Student");
-  };
+  const isStaffStudent = (item) => item.audience.includes("Staff") || item.audience.includes("Student");
 
   const isPublicFilter = stir.filter(isPublic);
 
