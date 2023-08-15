@@ -40,24 +40,31 @@ stir.funnelback = stir.funnelback || (() => {
 		relatedCourses: `&sort=title&SF=[award]&num_ranks=${max['relatedCourses']+1}`,
 		relatedNews:`&sort=date&SF=[c,d,h1,image,imagealt,tags]&num_ranks=${max['relatedNews']+1}`
 	};
+	const getMetaQueryParams = (metaName,metaValue) => (metaName&&metaValue) ? `&meta_${metaName}_orsand=${metaValue}`:'';
+	const getFacetsFromMetaTags = name => Array.prototype.slice.call(document.querySelectorAll(`meta[name="${name}"]`)).map(el=>el.content)
+	const getFacetQueryParams = (name,values) => name&&values.length ? values.map(value=>`&${name}=${value}`).join('') : '';
+
 	const noSelfLinks = result => result.liveUrl!==window.location.href;
 	document.querySelectorAll('[data-funnelback-inject]').forEach(el => {
 
 		if(!el)return;
-		var type = el.getAttribute('data-type');
-		var metaName = el.getAttribute('data-meta-name');
-		var metaValue = el.getAttribute('data-meta-value');
-		var collection = el.getAttribute('data-collection');
+		var type        = el.getAttribute('data-type');
+		var metaName    = el.getAttribute('data-meta-name');
+		var metaValue   = el.getAttribute('data-meta-value');
+		var facetName   = el.getAttribute('data-facet-name');
+		var collection  = el.getAttribute('data-collection');
+		var metaType    = el.getAttribute('data-meta-type');
+		var facetValues = getFacetsFromMetaTags(el.getAttribute('data-facet-tag'));
 		
 		if("subject"===metaName) {
-			// Subjects are comma separated and need to be wrapped with quotemarks
+			// [meta] Subjects are comma separated and need to be wrapped with quotemarks
 			// so that the query language is correct. (This avoids matching on words
 			// like "and" and so on that would otherwise ruin the results).
 			metaValue = metaValue.split(', ').map(value=>`"${value}"`).join(" ");
 		}
 
-		const fb_meta = (metaName&&metaValue) ? `&meta_${metaName}_orsand=${metaValue}`:'';
-		const url = stir.funnelback.getJsonEndpoint().toString() + `?collection=${collection}&query=!padre${fb_meta+parameters[type]}`;
+		const fb_meta = getMetaQueryParams(metaName,metaValue) + getFacetQueryParams(facetName,facetValues) + (metaType ? `&meta_type=${metaType}`:'');
+		const url = stir.funnelback.getJsonEndpoint().toString() + `?collection=${collection}&query=!padrenullquery${fb_meta+parameters[type]}`;
 		
 		const callback = data => {
 			if(!data||!data.response||!data.response.resultPacket||!data.response.resultPacket.results.length)return;
