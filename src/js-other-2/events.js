@@ -197,7 +197,7 @@
 
   const isStaffFilter = stir.filter(isStaffStudent);
 
-  const isPassed = (item) => Number(item.endInt) < getNow() && item.archive.length;
+  const isPassed = (item) => Number(item.endInt) < getNow() && item.archive.length && !item.hideFromFeed.length;
 
   const isPassedFilter = stir.filter(isPassed);
 
@@ -485,6 +485,8 @@
 
   const initData = stir.feeds.events.filter((item) => item.id);
   QueryParams.set("page", 1);
+
+  console.log(initData);
 
   // Populate the 3 tabs
   doPublicEvents("all", initData);
