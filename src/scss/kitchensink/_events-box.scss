@@ -1,4 +1,20 @@
 /*
+
+   eg Events revamp: series listing
+
+ */
+
+.c-event-list {
+  display: grid;
+}
+
+@media screen and #{breakpoint(large up)} {
+  .c-event-list {
+    grid-template-columns: 2fr 4fr 1fr 1fr;
+  }
+}
+
+/*
    Event Box listing
 
 
@@ -114,17 +130,9 @@
    https://www.stir.ac.uk/events/calendar-of-events/
    T4 Auto generated list 
 
+   DEPRECATED
+
  */
-
-.c-event-list {
-  display: grid;
-}
-
-@media screen and #{breakpoint(large up)} {
-  .c-event-list {
-    grid-template-columns: 2fr 4fr 1fr 1fr;
-  }
-}
 
 .c-events-calendar {
   ul:first-of-type {
