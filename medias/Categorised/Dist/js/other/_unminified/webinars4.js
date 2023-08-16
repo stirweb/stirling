@@ -148,20 +148,17 @@
   /* Form the HTML for an individual item   */
   const renderItem = (item) => {
     return `
-        <div class="cell small-12 c-promo-box large-4 medium-6 u-padding-bottom" >
-          <div>
-            <div class="c-promo-box__layout-container">
-              <div class="c-promo-box__content">
-                <div>
-                  <h3 class="c-promo-box__header header-stripped"><a href="${item.link}" class="c-link" >${item.title}</a></h3>
+        <div class="cell small-12 large-4 medium-6 u-my-2" >
+            <div class="u-energy-line-top">
+                  <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">
+                  <a href="${item.link}" class="c-link" >${item.title}</a></h3>
                   ${item.countries ? `<p>For students from: ${item.countries}</p>` : ``}
-                  <p><strong>${item.date}, ${item.time} (${item.zone})</strong></p>
-                  ${item.faculties ? `<p>${item.faculties}</p>` : ``}
-                  ${item.description}
+                  <div class="text-sm">
+                    <p><strong>${item.date}, ${item.time} (${item.zone})</strong></p>
+                    ${item.faculties ? `<p>${item.faculties}</p>` : ``}
+                    ${item.description}
                 </div>
               </div>
-            </div>
-          </div>
         </div> `;
   };
 
