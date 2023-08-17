@@ -200,7 +200,7 @@ var stir = stir || {};
   const renderItem = stir.curry((classes, node, item) => {
     return `
       <${node} class="small-12 cell ${classes}">
-        <a href="${item.url}"><img class="show-for-medium" src="${item.image}" alt="${item.imagealt}" loading="lazy"></a>
+        <div class="u-aspect-ratio-4-3 "><a href="${item.url}"><img class="show-for-medium u-object-cover" src="${item.image}" alt="${item.imagealt}" loading="lazy"></a></div>
         <h3 class="header-stripped u-my-1 u-font-normal u-compress-line-height">
         <a href="${item.url}" class="c-link u-inline">${item.title}</a>
       </h3>
