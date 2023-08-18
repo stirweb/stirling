@@ -151,7 +151,7 @@
     padding: 1.5rem;
     position: relative;
     margin: 0 0 3rem 0;
-    border-left: 3px solid $heritage-green;
+    //border-left: 3px solid $heritage-green;
 
     a {
       border-bottom: 1px solid $heritage-green;
@@ -567,7 +567,7 @@ fieldset[data-facet*="mode"] span::first-letter {
   .c-search-results-area {
     .c-search-result {
       padding: 2.25rem;
-      border-left: 5px solid $heritage-green;
+      //border-left: 5px solid $heritage-green;
 
       .c-search-result__meta > div {
         border-left: 1px solid #ede9e9;

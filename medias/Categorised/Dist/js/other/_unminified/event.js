@@ -253,6 +253,8 @@
   stir.getJSON(url, (initialData) => {
     if (initialData.error) return;
 
+    console.log(initialData);
+
     if (seriesEventsArea && seriesDateFilter) {
       const pastHtml = doPastSeries("", initialData);
       setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData) + pastHtml);
