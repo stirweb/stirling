@@ -3945,7 +3945,7 @@ stir.favs = (() => {
     return !item.metaData
       ? ``
       : `
-          <div class="c-search-result" data-rank="" data-sid="${item.metaData.sid}" data-result-type="course">
+          <div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank="" data-sid="${item.metaData.sid}" data-result-type="course">
             <div class=" c-search-result__tags">
               <span class="c-search-tag">${item.metaData.level.replace("module", "CPD and short courses")}</span>
             </div>
