@@ -293,7 +293,7 @@ stir.templates.search = (() => {
       if (item.metaData.type && item.metaData.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item, trail);
 
       return `
-				<div class="u-border-width-4 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : ""}${item.metaData.access ? ' data-access="' + item.metaData.access + '"' : ""}>
+				<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : ""}${item.metaData.access ? ' data-access="' + item.metaData.access + '"' : ""}>
 					<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 						${label}
 						${makeBreadcrumbs(trail, item.liveUrl, item.fileSize)}
@@ -311,7 +311,7 @@ stir.templates.search = (() => {
       const trail = userAuth(item.metaData.group) ? stir.templates.search.trailstring(crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" })).slice(0, -1)) : `<a href="https://www.stir.ac.uk/${crumbs.href[0]}/">${crumbs.text[0]}</a>`;
 
       return `
-	  <div class="u-border-width-4 u-heritage-line-left c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""} data-access="${item.metaData.access}">
+	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""} data-access="${item.metaData.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="c-search-result__breadcrumb">${trail}</p>
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
@@ -378,7 +378,7 @@ stir.templates.search = (() => {
       item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.metaData.sid : item.liveUrl);
       //item.combos = stir.courses.showCombosFor(item.metaData.sid); // this is for debugging t4 preview mode
       return `
-			<div class="c-search-result u-border-width-4 u-heritage-line-left" data-rank=${item.rank} data-sid=${item.metaData.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
+			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.rank} data-sid=${item.metaData.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${courseLabel(item.metaData.level || item.metaData.type || "")}</span>
 				</div>
@@ -445,7 +445,7 @@ stir.templates.search = (() => {
 
     person: (item) => {
       return `
-			<div class="c-search-result u-border-width-4 u-heritage-line-left" data-result-type=person>
+			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=person>
 				<div class=c-search-result__tags>
 					${stir.templates.search.stag(item.metaData.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.metaData.faculty) : "")}
 				</div>
@@ -465,7 +465,7 @@ stir.templates.search = (() => {
     },
     scholarship: (item) => {
       return `
-		<div class="c-search-result u-border-width-4 u-heritage-line-left" data-result-type=scholarship data-rank=${item.rank}>
+		<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=scholarship data-rank=${item.rank}>
 			<div class=c-search-result__tags>
 				${stir.templates.search.stag(item.metaData.level ? `Scholarship: ${item.metaData.level.toLowerCase()}` : "")}
 			</div>
@@ -483,7 +483,7 @@ stir.templates.search = (() => {
 
     studentstory: (item, trail) => {
       return `
-				<div class="c-search-result u-border-width-4 u-heritage-line-left" data-result-type=studentstory>
+				<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=studentstory>
 					<div><a href="${trail[0].href}">${trail[0].text}</a></div>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap ">
 						<p class="u-text-regular u-m-0"><strong>
@@ -501,7 +501,7 @@ stir.templates.search = (() => {
 
     news: (item) => {
       return `
-				<div class="u-border-width-4 u-heritage-line-left c-search-result${item.metaData.image ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
+				<div class="u-border-width-5 u-heritage-line-left c-search-result${item.metaData.image ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 						<p class="u-text-regular u-m-0">
 							<strong>
@@ -521,7 +521,7 @@ stir.templates.search = (() => {
 
     gallery: (item) => {
       return `
-				<div class="u-border-width-4 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${item.rank} data-result-type=news>
+				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${item.rank} data-result-type=news>
 					
 					<div class=c-search-result__body>
 						<p class="u-text-regular u-m-0"><strong>
@@ -553,7 +553,7 @@ stir.templates.search = (() => {
       // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
 
       return `
-			<div class="u-border-width-4 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
+			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
 				<div class="c-search-result__tags">
 					${item.metaData?.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : ""}
 				</div>
@@ -585,7 +585,7 @@ stir.templates.search = (() => {
     },
 
     research: (item) => `
-			<div class="u-border-width-4 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""}>
+			<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""}>
 				<div>
 					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
 					<div class="flex-container flex-dir-column u-gap u-mt-1">

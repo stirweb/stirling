@@ -5,7 +5,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 				<progress value="${a}" max="100"></progress><br />
 				You have viewed ${t===e?"all":e+" of "+t} results
 			</div>`},suppressed:e=>`<!-- Suppressed search result: ${e} -->`,auto:e=>{if("https://www.stir.ac.uk/"===e.liveUrl)return stir.templates.search.suppressed("homepage");if("scholarship"==e.metaData.type)return stir.templates.search.scholarship(e);if("Course"==e.metaData.type||e.metaData.level)return stir.templates.search.course(e);if("News"==e.metaData.type)return stir.templates.search.news(e);if("Gallery"==e.metaData.type)return stir.templates.search.gallery(e);if("Event"==e.metaData.type)return stir.templates.search.event(e);if("stir-events"==e.collection)return stir.templates.search.event(e);if(e.metaData.access)return stir.templates.search.internal(e);if(e.metaData.type&&-1<e.metaData.type.indexOf("output"))return stir.templates.search.research(e);if(e.metaData.type&&-1<e.metaData.type.indexOf("contract"))return stir.templates.search.research(e);if(e.metaData.type&&-1<e.metaData.type.indexOf("profile"))return stir.templates.search.person(e);if(0===e.liveUrl.indexOf("https://www.stir.ac.uk/news"))return stir.templates.search.news(e);const a={text:e.metaData?.breadcrumbs?.split(" > ").slice(1,-1)||[],href:new URL(e.liveUrl).pathname.split("/").slice(1,-1)};var t,r=a.text.map((e,t)=>({text:e,href:"/"+a.href.slice(0,t+1).join("/")+"/"})),s=-1<e.liveUrl.indexOf("policyblog.stir")?'<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>':"";return e.metaData.type&&-1<e.metaData.type.indexOf("studentstory")?stir.templates.search.studentstory(e,r):`
-				<div class="u-border-width-4 u-heritage-line-left c-search-result" data-rank=${e.rank}${e.metaData.type||c(e.liveUrl)?' data-result-type="'+(e.metaData.type||(c(e.liveUrl)?"document":"")).toLowerCase()+'"':""}${e.metaData.access?' data-access="'+e.metaData.access+'"':""}>
+				<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${e.rank}${e.metaData.type||c(e.liveUrl)?' data-result-type="'+(e.metaData.type||(c(e.liveUrl)?"document":"")).toLowerCase()+'"':""}${e.metaData.access?' data-access="'+e.metaData.access+'"':""}>
 					<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 						${s}
 						${s=r,r=e.liveUrl,t=e.fileSize,s&&0<s.length?stir.templates.search.breadcrumb(stir.templates.search.trailstring(s)):c(r)?`Document: ${c(r)} <small>${stir.Math.fileSize(t||0,0)}</small>`:""}
@@ -13,7 +13,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 						<p >${e.summary.replace(/\xA0/g," ")}</p>
 					</div>
 				</div>`},internal:e=>{const a={text:e.metaData?.breadcrumbs?.split(" > ")||[],href:new URL(e.liveUrl).pathname.split("/").filter(e=>e)};var t,r=l(e.metaData.group)?stir.templates.search.trailstring(a.text.map((e,t)=>({text:e,href:"/"+a.href.slice(0,t+1).join("/")+"/"})).slice(0,-1)):`<a href="https://www.stir.ac.uk/${a.href[0]}/">${a.text[0]}</a>`;return`
-	  <div class="u-border-width-4 u-heritage-line-left c-search-result${t=e.metaData.group,l(t)?" c-internal-search-result":" c-internal-locked-search-result"}" data-rank=${e.rank}${e.metaData.type?' data-result-type="'+e.metaData.type.toLowerCase()+'"':""} data-access="${e.metaData.access}">
+	  <div class="u-border-width-5 u-heritage-line-left c-search-result${t=e.metaData.group,l(t)?" c-internal-search-result":" c-internal-locked-search-result"}" data-rank=${e.rank}${e.metaData.type?' data-result-type="'+e.metaData.type.toLowerCase()+'"':""} data-access="${e.metaData.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="c-search-result__breadcrumb">${r}</p>
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin+e.clickTrackingUrl}">${e.title.replace(/Current S\S+ ?\| ?/,"").split(" | ")[0].trim()}</a></strong></p>
@@ -39,7 +39,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 						</ul>
 					</div>
 				</div>`},courseFact:(e,t,a)=>e&&t?`<div class="cell medium-4"><strong class="u-heritage-green">${e}</strong><p${a?" class=u-text-sentence-case":""}>${t.replace(/\|/g,", ")}</p></div>`:"",course:e=>{e.metaData.subject&&e.metaData.subject.split(/,\s?/).slice(0,1);var t=!!(e.metaData.delivery&&-1<e.metaData.delivery.toLowerCase().indexOf("online")),a=-1<UoS_env.name.indexOf("preview")?(a=e.metaData.sid)?"/terminalfour/preview/1/en/"+a:"#":r()+e.clickTrackingUrl;return e.combos=stir.courses.showCombosFor("preview"==UoS_env.name?e.metaData.sid:e.liveUrl),`
-			<div class="c-search-result u-border-width-4 u-heritage-line-left" data-rank=${e.rank} data-sid=${e.metaData.sid} data-result-type=course${t?" data-delivery=online":""}>
+			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${e.rank} data-sid=${e.metaData.sid} data-result-type=course${t?" data-delivery=online":""}>
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${(e=>{switch(e){case"module":return"CPD and short courses";case"Postgraduate (taught)":return"Postgraduate";default:return e}})(e.metaData.level||e.metaData.type||"")}</span>
 				</div>
@@ -95,7 +95,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 				</svg>
 				<a href="${stir.courses.favsUrl}">My favourite courses</a>
 			</p>`,person:e=>`
-			<div class="c-search-result u-border-width-4 u-heritage-line-left" data-result-type=person>
+			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=person>
 				<div class=c-search-result__tags>
 					${stir.templates.search.stag(e.metaData.faculty?stir.research.hub.getFacultyFromOrgUnitName(e.metaData.faculty):"")}
 				</div>
@@ -112,7 +112,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 					<p>${stir.funnelback.getTags(e.metaData.category)||""}</p>
 				</div>
 			</div>`,scholarship:e=>`
-		<div class="c-search-result u-border-width-4 u-heritage-line-left" data-result-type=scholarship data-rank=${e.rank}>
+		<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=scholarship data-rank=${e.rank}>
 			<div class=c-search-result__tags>
 				${stir.templates.search.stag(e.metaData.level?"Scholarship: "+e.metaData.level.toLowerCase():"")}
 			</div>
@@ -126,7 +126,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 				</div>
 			</div>
 		</div>`,studentstory:(e,t)=>`
-				<div class="c-search-result u-border-width-4 u-heritage-line-left" data-result-type=studentstory>
+				<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=studentstory>
 					<div><a href="${t[0].href}">${t[0].text}</a></div>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap ">
 						<p class="u-text-regular u-m-0"><strong>
@@ -140,7 +140,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 					</div>
 					${e.metaData.profileImage?m("https://www.stir.ac.uk"+e.metaData.profileImage,e.title.split(" | ")[0].trim(),400,400):""}
 				</div>`,news:e=>`
-				<div class="u-border-width-4 u-heritage-line-left c-search-result${e.metaData.image?" c-search-result__with-thumbnail":""}" data-rank=${e.rank} data-result-type=news>
+				<div class="u-border-width-5 u-heritage-line-left c-search-result${e.metaData.image?" c-search-result__with-thumbnail":""}" data-rank=${e.rank} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 						<p class="u-text-regular u-m-0">
 							<strong>
@@ -156,7 +156,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 					</div>
 					${m(e.metaData.image,e.title.split(" | ")[0].trim())}
 				</div>`,gallery:e=>{return`
-				<div class="u-border-width-4 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${e.rank} data-result-type=news>
+				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${e.rank} data-result-type=news>
 					
 					<div class=c-search-result__body>
 						<p class="u-text-regular u-m-0"><strong>
@@ -169,7 +169,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 						${stir.funnelback.getCroppedImageElement({url:(t=JSON.parse(e.metaData.custom),t.id?`https://farm${t.farm}.staticflickr.com/${t.server}/${t.id}_${t.secret}_c.jpg`:""),alt:"Image of "+e.title.split(" | ")[0].trim(),width:550,height:550})}
 					</div>
 				</div>`;var t},event:e=>{var t,a=e.metaData?.image||-1<e.metaData?.tags?.indexOf("Webinar"),r=e.title.split(" | ")[0],s=e.metaData.image.split("|"),i=s[1]||"/events/";return`
-			<div class="u-border-width-4 u-heritage-line-left c-search-result${a?" c-search-result__with-thumbnail":""}" data-rank=${e.rank} data-result-type=event>
+			<div class="u-border-width-5 u-heritage-line-left c-search-result${a?" c-search-result__with-thumbnail":""}" data-rank=${e.rank} data-result-type=event>
 				<div class="c-search-result__tags">
 					${e.metaData?.tags?e.metaData.tags.split(",").map(stir.templates.search.stag).join(""):""}
 				</div>
@@ -198,7 +198,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 				${m(s[0],e.title.split(" | ")[0])}
 				${-1<e.metaData?.tags?.indexOf("Webinar")?'<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>':""}
 			</div>`},research:e=>`
-			<div class="u-border-width-4 u-heritage-line-left c-search-result" data-rank=${e.rank}${e.metaData.type?' data-result-type="'+e.metaData.type.toLowerCase()+'"':""}>
+			<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${e.rank}${e.metaData.type?' data-result-type="'+e.metaData.type.toLowerCase()+'"':""}>
 				<div>
 					<div class="c-search-result__tags"><span class="c-search-tag">${e.title.split(" | ").slice(0,1).toString()}</span></div>
 					<div class="flex-container flex-dir-column u-gap u-mt-1">
