@@ -4,7 +4,7 @@
           <span class="uos-clock u-icon h5"></span>
           <span><time>${e.startTime}</time> – <time>${e.endTime}</time></span>
         </div>`,u=(t,e)=>{e=e.filter(e=>e.title===t);return`<p class="text-sm">Part of the ${e.length?`<a href="${e[0].url}">${e[0].title}</a>`:t} series.</p>`},g=stir.curry((e,t)=>{return`
-            <div class="u-border-width-4 u-heritage-line-left c-search-result  ${t.image?"c-search-result__with-thumbnail":""}" data-result-type="event" ${i=t,i.pin<1?'data-label-icon="pin"':i.isSeries?'data-label-icon="startdates"':""} data-perf="${t.perfId}" >
+            <div class="u-border-width-5 u-heritage-line-left c-search-result  ${t.image?"c-search-result__with-thumbnail":""}" data-result-type="event" ${i=t,i.pin<1?'data-label-icon="pin"':i.isSeries?'data-label-icon="startdates"':""} data-perf="${t.perfId}" >
                 ${t.isSeries?l("Event series"):""} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
@@ -49,7 +49,7 @@
             </div>
             ${t.image?`<div class="cell medium-4"><img src="${t.image}" class="u-object-cover" width="800" height="800" alt="Image: ${t.title}" /></div>`:""}  
         </div>`),z=stir.curry((e,t)=>`
-            <div class="u-border-width-4 u-heritage-line-left c-search-result ${t.image?"c-search-result__with-thumbnail":""}" data-result-type="event"  >
+            <div class="u-border-width-5 u-heritage-line-left c-search-result ${t.image?"c-search-result__with-thumbnail":""}" data-result-type="event"  >
                 ${t.recording?l("Recording available"):""} 
                 ${t.isSeries?l("Event series"):""} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">

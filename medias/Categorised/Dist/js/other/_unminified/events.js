@@ -82,7 +82,7 @@
 
   const renderEvent = stir.curry((seriesData, item) => {
     return `
-            <div class="u-border-width-4 u-heritage-line-left c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
+            <div class="u-border-width-5 u-heritage-line-left c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
@@ -135,7 +135,7 @@
 
   const renderArchiveEvent = stir.curry((seriesData, item) => {
     return `
-            <div class="u-border-width-4 u-heritage-line-left c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
+            <div class="u-border-width-5 u-heritage-line-left c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
                 ${item.recording ? renderTab("Recording available") : ``} 
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
