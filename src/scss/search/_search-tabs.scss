@@ -128,7 +128,8 @@
 
   */
 
-  .c-search-results-summary, .c-search-result__body {
+  .c-search-results-summary,
+  .c-search-result__body {
     .c-tag {
       padding: 0.3rem;
       border: 1px solid #ccc;
@@ -553,12 +554,12 @@
 
 /* Visual indicator for Clearing courses */
 .c-search-result__seasonal {
-	color: $heritage-berry;
+  color: $heritage-berry;
 }
 
 /* Fix title case on delivery and study mode only */
 fieldset[data-facet*="mode"] span::first-letter {
-	text-transform:	capitalize;
+  text-transform: capitalize;
 }
 
 //@media only screen and (min-width: 640px) {
