@@ -1,6 +1,6 @@
 /*
 Promo Box
-*/
+
 .c-promo-box {
   padding: 15px 0;
   position: relative;
@@ -30,10 +30,11 @@ Promo Box
   height: 100%;
   width: 100%;
 }
+*/
 
 /*
 Promo Box Heading 
-*/
+
 
 .c-promo-box__header {
   color: $black;
@@ -56,10 +57,10 @@ Promo Box Heading
     position: absolute;
   }
 }
-
+*/
 /*
 Promo Box Content 
-*/
+
 
 .c-promo-box__content {
   padding-top: 23px;
@@ -92,10 +93,10 @@ Promo Box Content
 .c-promo-box__link {
   margin-top: 16px;
 }
-
+*/
 /*
 Promo Box with Icon
-*/
+
 
 .c-promo-box__icon {
   padding-right: 20px;
@@ -109,13 +110,13 @@ Promo Box with Icon
 .c-promo-box__icon span[class^="uos-"] {
   color: $heritage-green;
   display: inline-block;
-  font-size: 1.5625rem; /* 25px */
+  font-size: 1.5625rem; /* 25px *
   //margin: 0 20px 0 0;
 }
-
+*/
 /*
 Promo Box with Image
-*/
+
 .c-promo-box--image {
   .c-promo-box__header {
     margin-top: 20px;
@@ -144,10 +145,10 @@ Promo Box with Image
     }
   }
 }
-
+*/
 /*
 Promo Box - Content
-*/
+
 
 .c-promo-box__content img {
   transition: transform 0.3s ease-in-out;
@@ -156,18 +157,18 @@ Promo Box - Content
     transform: scale(1.05);
   }
 }
-
+*/
 /*
 Promo Box - Pink Line
-*/
+
 
 .c-promo-box.c-promo-box--energy-pink:not(.c-promo-box--plain):not(.c-promo-box--image):after {
   background-color: $energy-pink;
 }
-
+*/
 /*
 Promo Box - Plain
-*/
+
 
 .c-promo-box--plain {
   .c-promo-box__content > div span:after {
@@ -185,7 +186,7 @@ Promo Box - Plain
     top: -20px;
   }
 }
-
+*/
 /* fix to normalise images - not tested 2019-07-25
 .c-promo-box__content img {
     min-width: 100%;
@@ -194,7 +195,7 @@ Promo Box - Plain
 
 /**
  * Promo box with category label
- */
+
 
 .c-promo-box_category {
   background-color: $heritage-green;
@@ -236,7 +237,7 @@ Promo Box - Plain
     width: calc(100% - 60px);
   }
 }
-
+ */
 /*
 IE10+ specific styles go here
 
