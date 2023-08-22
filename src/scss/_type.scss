@@ -313,6 +313,10 @@ p {
   word-wrap: break-word;
 }
 
+.u-p-last-mb-0 p:last-of-type {
+  margin-bottom: 0;
+}
+
 p,
 li,
 th,
