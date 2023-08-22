@@ -51,7 +51,10 @@
   default 3px width but you can use u-border-width-4 / u-border-width-5 to overide
 */
 
-/* energy green */
+/* 
+  Energy green 
+*/
+
 .u-energy-line-top,
 .u-green-line-top {
   border-top: 3px solid $energy-green;
@@ -65,7 +68,9 @@
   border-left: 3px solid $energy-green;
 }
 
-/* heritage */
+/* 
+  Heritage green
+*/
 
 .u-heritage-line-top {
   border-top: 3px solid $heritage-green;
@@ -79,25 +84,45 @@
   border-left: 3px solid $heritage-green;
 }
 
-/* turq */
+/* 
+  Energy Pink 
+*/
 
-// .u-teal-line-top {
-//   border-top: 3px solid $energy-teal;
+.u-energy-pink-line-top {
+  border-top: 3px solid $energy-pink;
+}
+
+// .u-energy-pink-line-bottom {
+//   border-bottom: 3px solid $energy-pink;
 // }
 
-// .u-teal-line-bottom {
-//   border-bottom: 3px solid $energy-teal;
+.u-energy-pink-line-left {
+  border-left: 3px solid $energy-pink;
+}
+
+/* 
+  Energy turq 
+*/
+
+.u-energy-turq-line-top {
+  border-top: 3px solid $energy-turq;
+}
+
+// .u-energy-turq-line-bottom {
+//   border-bottom: 3px solid $energy-turq;
 // }
 
 .u-energy-turq-line-left {
   border-left: 3px solid $energy-turq;
 }
 
-/* heritage purple */
+/* 
+  Heritage purple 
+*/
 
-// .u-heritage-purple-line-top {
-//   border-top: 3px solid $energy-purple;
-// }
+.u-heritage-purple-line-top {
+  border-top: 3px solid $energy-purple;
+}
 
 // .u-heritage-purple-line-bottom {
 //   border-bottom: 3px solid $energy-purple;
@@ -107,11 +132,13 @@
   border-left: 3px solid $heritage-purple;
 }
 
-/* heritage berry */
+/* 
+  Heritage berry 
+*/
 
-// .u-heritage-berry-line-top {
-//   border-top: 3px solid $energy-berry;
-// }
+.u-heritage-berry-line-top {
+  border-top: 3px solid $energy-berry;
+}
 
 // .u-heritage-berry-line-bottom {
 //   border-bottom: 3px solid $energy-berry;
@@ -121,7 +148,10 @@
   border-left: 3px solid $heritage-berry;
 }
 
-/* grey */
+/* 
+  Grey 
+*/
+
 .u-grey-line-bottom {
   border-bottom: 3px solid #f6f5f4;
 }
