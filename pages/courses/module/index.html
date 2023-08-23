@@ -570,18 +570,18 @@
 
 
         <div class="u-white--all u-sticky-nav ">
-            <div class="u-relative u-bg-dark-mink">
+            <nav class="u-relative u-bg-dark-mink" aria-label="Jump to section links">
                 <div class="grid-container u-py-1 hide-for-large">
                     <button class=" u-bg-black text-md text-left u-font-bold u-py-1 u-m-0 
-                            u-cursor-pointer u-w-full flex-container c-open-close" id="sticky-nav-btn">
+                            u-cursor-pointer u-w-full flex-container c-open-close" id="c-sticky-nav-btn">
                         <span class="u-flex1">Jump to...</span>
-                        <span class="u-relative u-width-32 u-inline-block u-heritage-green c-open-close-btn"> + </span>
-                        <span class="u-relative u-width-32 u-inline-block u-heritage-green hide c-open-close-btn"> -
+                        <span class="u-relative u-width-32 u-inline-block u-heritage-green c-open-close-icon"> + </span>
+                        <span class="u-relative u-width-32 u-inline-block u-heritage-green hide c-open-close-icon"> -
                         </span>
                     </button>
                 </div>
 
-                <nav
+                <div
                     class="u-absolute-medium-down u-bg-dark-mink hide-for-small-only hide-for-medium-only c-sticky-nav u-w-full">
                     <div class="grid-container u-py-1 u-pt-0-medium-down">
                         <div class="flex-container flex-dir-column large-flex-dir-row u-gap-x-8 ">
@@ -596,8 +596,8 @@
                         </div>
 
                     </div>
-                </nav>
-            </div>
+                </div>
+            </nav>
         </div>
 
 
@@ -606,21 +606,7 @@
 
 
 
-        <script>
 
-            const stickyNavBtn = document.querySelector("#sticky-nav-btn");
-            const stickyNav = document.querySelector(".c-sticky-nav")
-
-            stickyNavBtn.addEventListener("click", event => {
-                stickyNav.classList.toggle("hide-for-small-only");
-                stickyNav.classList.toggle("hide-for-medium-only");
-                stickyNavBtn.toggleAttribute("open")
-            });
-
-
-
-
-        </script>
 
 
 
@@ -653,11 +639,12 @@
 
 
                     <details class="u-bg-mint u-heritage-line-top u-border-width-5 u-mb-2 u-mt-2">
-                        <summary class="u-p-1 text-center u-text-regular u-cursor-pointer">
+                        <summary class="u-p-1 text-center u-text-regular u-cursor-pointer c-open-close">
                             <strong>Read more</strong>
-                            <span class="u-relative u-width-32 u-inline-block u-heritage-green c-open-close-btn"> +
+                            <span class="u-relative u-width-32 u-inline-block u-heritage-green c-open-close-icon"> +
                             </span>
-                            <span class="u-relative u-width-32 u-inline-block u-heritage-green hide c-open-close-btn"> -
+                            <span class="u-relative u-width-32 u-inline-block u-heritage-green hide c-open-close-icon">
+                                -
                             </span>
                         </summary>
                         <div class="u-p-1">
@@ -669,6 +656,28 @@
                     </details>
 
 
+
+
+                    <script>
+                        //const openCloseSelector = ".c-open-close";
+                        const openCloseBtns = document.querySelectorAll(".c-open-close");
+                        const stickyNav = document.querySelector(".c-sticky-nav");
+                        const stickyNavBtn = document.querySelector("#c-sticky-nav-btn");
+
+                        stickyNavBtn.addEventListener("click", event => {
+                            stickyNav.classList.toggle("hide-for-small-only");
+                            stickyNav.classList.toggle("hide-for-medium-only");
+                        });
+
+                        openCloseBtns.forEach(el => {
+                            el.addEventListener("click", event => {
+                                const btn = event.target.closest(".c-open-close");
+                                const openCloseIcons = btn.querySelectorAll(".c-open-close-icon");
+
+                                openCloseIcons.forEach(item => item.classList.toggle("hide"))
+                            });
+                        });
+                    </script>
 
 
 
