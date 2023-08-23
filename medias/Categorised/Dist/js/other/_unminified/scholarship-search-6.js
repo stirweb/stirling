@@ -282,7 +282,7 @@
   const renderItem = (consts, _meta, schol) => {
     return `
         <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-line-left u-border-width-5 u-relative">
-            <div class="u-absolute u-top--15">
+            <div class="u-absolute u-top--16">
             ${getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join("")}
             </div>
             <div class="grid-x grid-padding-x">
