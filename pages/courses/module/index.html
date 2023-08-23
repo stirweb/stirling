@@ -565,50 +565,69 @@
 
 
 
-        <div class="u-bg-dark-mink u-white--all u-p-1 u-sticky-nav">
-            <div class="grid-container ">
-                <div class="grid-x grid-padding-x">
-                    <div class="cell">
-                        <nav>
-                            <button
-                                class="u-bg-black text-md text-left u-font-bold  u-py-1 u-m-0 hide-for-large u-cursor-pointer u-w-full flex-container c-open-close"
-                                id="sticky-nav-btn">
-                                <span class="u-flex1">Jump to...</span>
-                                <span class="u-relative u-width-32 u-inline-block u-heritage-green c-open-close-btn"> +
-                                </span>
-                                <span
-                                    class="u-relative u-width-32 u-inline-block u-heritage-green hide c-open-close-btn">
-                                    -
-                                </span>
-                            </button>
-                            <div
-                                class="flex-container flex-dir-column large-flex-dir-row c-sticky-nav hide-for-small-only hide-for-medium-only ">
-                                <a href="#" class="text-md u-font-bold u-py-1 u-m-0 current">Content
-                                    and aims</a>
-                                <a href="#" class="text-md u-font-bold u-py-1 u-m-0 ">Teaching
-                                    and
-                                    assessment</a>
-                                <a href="#" class="text-md u-font-bold u-py-1 u-m-0 ">Awards</a>
-                                <a href="#" class="text-md u-font-bold u-py-1 u-m-0 ">Study
-                                    requirements</a>
-                                <a href="#" class="text-md u-font-bold u-py-1 u-m-0 u-border-hover-none ">Further
-                                    details</a>
-                                <a href="#"
-                                    class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none ">Back
-                                    to course</a>
-                            </div>
-                        </nav>
-                    </div>
-                </div>
+        <div class="u-white--all u-sticky-nav ">
+            <div class="u-relative  ">
+                <nav class=" u-absolute u-bg-dark-mink grid-x grid-padding-x" style="width: 100%;">
+                    <div class="grid-container ">
+                        <button class=" u-bg-black text-md text-left u-font-bold u-py-1 u-m-0 hide-for-large
+                            u-cursor-pointer u-w-full flex-container c-open-close" id="sticky-nav-btn">
+                            <span class="u-flex1">Jump to...</span>
+                            <span class="u-relative u-width-32 u-inline-block u-heritage-green c-open-close-btn">
+                                +
+                            </span>
+                            <span class="u-relative u-width-32 u-inline-block u-heritage-green hide c-open-close-btn">
+                                -
+                            </span>
+                        </button>
+
+                        <div
+                            class="flex-container flex-dir-column large-flex-dir-row c-sticky-nav hide-for-small-only hide-for-medium-only ">
+                            <a href="#" class="text-md u-font-bold u-py-1 u-m-0 current">Content
+                                and aims</a>
+                            <a href="#" class="text-md u-font-bold u-py-1 u-m-0 ">Teaching
+                                and
+                                assessment</a>
+                            <a href="#" class="text-md u-font-bold u-py-1 u-m-0 ">Awards</a>
+                            <a href="#" class="text-md u-font-bold u-py-1 u-m-0 ">Study
+                                requirements</a>
+                            <a href="#" class="text-md u-font-bold u-py-1 u-m-0 u-border-hover-none ">Further
+                                details</a>
+                            <a href="#"
+                                class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none ">Back
+                                to course</a>
+                        </div>
+                </nav>
             </div>
         </div>
+
+
+        </div>
+
+
+
+
+        <script>
+
+            const stickyNavBtn = document.querySelector("#sticky-nav-btn");
+            const stickyNav = document.querySelector(".c-sticky-nav")
+
+            stickyNavBtn.addEventListener("click", event => {
+                stickyNav.classList.toggle("hide-for-small-only");
+                stickyNav.classList.toggle("hide-for-medium-only");
+                stickyNavBtn.toggleAttribute("open")
+            });
+
+
+
+
+        </script>
 
 
 
 
 
         <div class="grid-container ">
-            <div class="grid-x grid-padding-x u-margin-bottom">
+            <div class="grid-x grid-padding-x">
 
                 <div class="cell bg-grey u-bleed u-p-2">
                     <p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're
@@ -650,21 +669,6 @@
                     </details>
 
 
-                    <script>
-
-                        const stickyNavBtn = document.querySelector("#sticky-nav-btn");
-                        const stickyNav = document.querySelector(".c-sticky-nav")
-
-                        stickyNavBtn.addEventListener("click", event => {
-                            stickyNav.classList.toggle("hide-for-small-only");
-                            stickyNav.classList.toggle("hide-for-medium-only");
-                            stickyNavBtn.toggleAttribute("open")
-                        });
-
-
-
-
-                    </script>
 
 
 
@@ -741,17 +745,17 @@
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Contact hours</span>
-                                <div class="barchart" data-value="20" data-unit=""></div>
+                                <div class="barchart" data-value="100" data-max="250" data-unit=""></div>
                             </div>
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Self-study hours</span>
-                                <div class="barchart" data-value="80" data-unit=""></div>
+                                <div class="barchart" data-value="100" data-max="250" data-unit=""></div>
                             </div>
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Placement hours</span>
-                                <div class="barchart" data-value="50" data-unit=""></div>
+                                <div class="barchart" data-value="50" data-max="250" data-unit=""></div>
                             </div>
 
                             <div class="u-bg-energy-teal--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
@@ -767,17 +771,17 @@
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Coursework</span>
-                                <div class="barchart" data-value="50" data-unit="%"></div>
+                                <div class="barchart" data-value="50" data-max="100" data-unit="%"></div>
                             </div>
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Exam</span>
-                                <div class="barchart" data-value="25" data-unit="%"></div>
+                                <div class="barchart" data-value="25" data-max="100" data-unit="%"></div>
                             </div>
 
                             <div>
                                 <span class="u-inline-block u-p-tiny u-px-1">Practical skills assessment</span>
-                                <div class="barchart" data-value="25" data-unit="%"></div>
+                                <div class="barchart" data-value="25" data-max="100" data-unit="%"></div>
                             </div>
 
                         </div>
@@ -1022,10 +1026,14 @@
         function onIntersection(entries, opts) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const value = entry.target.dataset.value;
+                    const value = Number(entry.target.dataset.value);
                     const unit = entry.target.dataset.unit;
-                    const valueInverted = 100 - Number(value);
-                    const textPosition = (value / 2) - 2;
+                    const max = Number(entry.target.dataset.max);
+
+                    const perc = (value / max) * 100;
+
+                    const valueInverted = 100 - perc;
+                    const textPosition = (perc / 2) - 2;
 
                     const el = document.createElement("div");
                     el.classList.add('barchart-value');
