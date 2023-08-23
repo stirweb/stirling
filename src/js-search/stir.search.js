@@ -69,7 +69,7 @@ stir.courses = (() => {
 	/**
 	 * C L E A R I N G
 	 */
-	const CLEARING = true; // set TRUE if Clearing is OPEN; otherwise FALSE
+	const CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
 	/*
 	 **/
 
@@ -401,7 +401,7 @@ stir.search = () => {
 
 					const facetName = facet.categories && facet.categories[0] && facet.categories[0].queryStringParamName;
 					const metaName  = facetName && Object.keys(metaToFacet)[Object.values(metaToFacet).indexOf(facetName)];
-					const metaValue = metaName && parameters[metaName];
+					const metaValue = (metaName && parameters[metaName]) || (parameters[facetName] && decodeURIComponent(parameters[facetName]));
 					const selector  = facetName && metaValue && `input[name="${facetName}"][value~="${metaValue.toLowerCase()}"]`;
 					const facetFilter = stir.DOM.frag(stir.String.domify(stir.templates.search.facet(facet)));
 					const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
