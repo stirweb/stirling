@@ -235,9 +235,6 @@
   .u-mb-1-small {
     margin-bottom: 16px;
   }
-  .u-pb-2-small {
-    padding-bottom: 32px;
-  }
 }
 
 /* Fixed Margins for all screen sizes */
@@ -473,5 +470,21 @@
   .u-py-5 {
     padding-top: 80px;
     padding-bottom: 80px;
+  }
+}
+
+/* Padding for small only */
+
+@media screen and #{breakpoint(small down)} {
+  // .u-p-0-small {
+  //   padding: 0;
+  // }
+  // .u-py-1-small {
+  //   padding-top: 16px;
+  //   padding-bottom: 16px;
+  // }
+
+  .u-pb-2-small {
+    padding-bottom: 32px;
   }
 }
