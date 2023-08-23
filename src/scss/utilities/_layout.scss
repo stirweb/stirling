@@ -40,12 +40,6 @@
 .u-flex1 {
   flex: 1;
 }
-.u-align-items-center {
-  align-items: center;
-}
-.u-justify-content-center {
-  justify-content: center;
-}
 
 @media screen and #{breakpoint(medium up)} {
   .u-flex-medium-up {
@@ -161,8 +155,7 @@
   top: 0;
 }
 
-.u-top--16,
-.u-top--15 {
+.u-top--16 {
   top: -16px;
 }
 
