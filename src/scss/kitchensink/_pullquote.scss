@@ -1,7 +1,7 @@
-/* NEW PULLQUOTE CODE - RK8 */
-
 /* 
+
   Small (by default) 
+
 */
 
 cite {
@@ -16,7 +16,7 @@ cite:before {
 }
 
 .pullquote {
-  margin: 24px 0;
+  margin: 16px 0;
   background-color: #f0efed; // slightly dif grey to avoid wrapper clashes
 }
 
@@ -48,7 +48,9 @@ cite:before {
 }
 
 /* 
+
   Medium up 
+
 */
 
 @media only screen and (min-width: 640px) {
@@ -161,7 +163,9 @@ cite:before {
 }
 
 /* 
+
   Large up 
+
 */
 
 @media only screen and (min-width: 1024px) {
@@ -258,7 +262,9 @@ cite:before {
 }
 
 /* 
+
   XLarge up 
+
 */
 
 @media only screen and (min-width: 1240px) {
