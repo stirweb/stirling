@@ -101,6 +101,10 @@
   gap: 8px;
 }
 
+.u-gap-x-8 {
+  gap: 0 8px;
+}
+
 .u-gap-16 {
   gap: 16px;
 }
@@ -143,6 +147,12 @@
 
 @media screen and #{breakpoint(large up)} {
   .u-absolute-large-up {
+    position: absolute;
+  }
+}
+
+@media screen and #{breakpoint(medium down)} {
+  .u-absolute-medium-down {
     position: absolute;
   }
 }
