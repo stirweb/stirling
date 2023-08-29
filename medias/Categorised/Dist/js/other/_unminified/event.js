@@ -166,7 +166,7 @@
   const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
 
   const getJSONUrl = (env) => {
-    if (env === "dev") return "index.json";
+    if (env === "dev") return "../index.json";
     if (env === "preview") return '<t4 type="navigation" id="5214" />'; //5222
 
     return `/data/events/revamp/json/index.json`;

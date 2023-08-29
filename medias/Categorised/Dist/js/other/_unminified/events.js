@@ -242,6 +242,13 @@
     return res;
   });
 
+  const getJSONUrl = (env) => {
+    if (env === "dev") return "../index.json";
+    if (env === "preview") return '<t4 type="navigation" id="5214" />'; //5222
+
+    return `/data/events/revamp/json/index.json`;
+  };
+
   /* 
     | 
     |    DATE HELPERS
@@ -498,69 +505,76 @@
   eventsstafffilters.querySelector("input[type=radio]").checked = true;
   eventsarchivefilters.querySelector("input[type=radio]").checked = true;
 
-  const initData = stir.feeds.events.filter((item) => item.id);
-  QueryParams.set("page", 1);
+  const url = getJSONUrl(UoS_env.name);
 
-  // Populate the 3 tabs + promo
-  doPublicEvents("all", initData);
-  doStaffEvents("all", initData);
-  doArchiveEvents("all", initData);
-  doPromo(initData);
+  /* Fetch the data */
+  stir.getJSON(url, (data) => {
+    if (data.error) return;
 
-  /*
+    const initData = data.filter((item) => item.id);
+    QueryParams.set("page", 1);
+
+    // Populate the 3 tabs + promo
+    doPublicEvents("all", initData);
+    doStaffEvents("all", initData);
+    doArchiveEvents("all", initData);
+    doPromo(initData);
+
+    /*
     | 
     |  CLICK EVENTS LISTENERS
     |
     */
 
-  stir.each((item) => {
-    item.addEventListener("click", (event) => {
-      QueryParams.set("page", 1);
+    stir.each((item) => {
+      item.addEventListener("click", (event) => {
+        QueryParams.set("page", 1);
+      });
+    }, stirTabs);
+
+    eventsPublicTab.addEventListener("click", (event) => {
+      const page = Number(QueryParams.get("page")) || 1;
+
+      if (event.target.type === "radio") {
+        QueryParams.set("page", 1);
+        doPublicEvents(eventspublicfilters.querySelector("input:checked").value, initData);
+      }
+
+      if (event.target.type === "submit") {
+        setDOMContent(event.target.closest(".loadmorebtn"), "");
+        QueryParams.set("page", page + 1);
+        doPublicEvents(eventspublicfilters.querySelector("input:checked").value, initData);
+      }
     });
-  }, stirTabs);
 
-  eventsPublicTab.addEventListener("click", (event) => {
-    const page = Number(QueryParams.get("page")) || 1;
+    eventsStaffTab.addEventListener("click", (event) => {
+      const page = Number(QueryParams.get("page")) || 1;
 
-    if (event.target.type === "radio") {
-      QueryParams.set("page", 1);
-      doPublicEvents(eventspublicfilters.querySelector("input:checked").value, initData);
-    }
+      if (event.target.type === "radio") {
+        QueryParams.set("page", 1);
+        doStaffEvents(eventsstafffilters.querySelector("input:checked").value, initData);
+      }
 
-    if (event.target.type === "submit") {
-      setDOMContent(event.target.closest(".loadmorebtn"), "");
-      QueryParams.set("page", page + 1);
-      doPublicEvents(eventspublicfilters.querySelector("input:checked").value, initData);
-    }
-  });
+      if (event.target.type === "submit") {
+        setDOMContent(event.target.closest(".loadmorebtn"), "");
+        QueryParams.set("page", page + 1);
+        doStaffEvents(eventsstafffilters.querySelector("input:checked").value, initData);
+      }
+    });
 
-  eventsStaffTab.addEventListener("click", (event) => {
-    const page = Number(QueryParams.get("page")) || 1;
+    eventsArchiveTab.addEventListener("click", (event) => {
+      const page = Number(QueryParams.get("page")) || 1;
 
-    if (event.target.type === "radio") {
-      QueryParams.set("page", 1);
-      doStaffEvents(eventsstafffilters.querySelector("input:checked").value, initData);
-    }
+      if (event.target.type === "radio") {
+        QueryParams.set("page", 1);
+        doArchiveEvents(eventsarchivefilters.querySelector("input:checked").value, initData);
+      }
 
-    if (event.target.type === "submit") {
-      setDOMContent(event.target.closest(".loadmorebtn"), "");
-      QueryParams.set("page", page + 1);
-      doStaffEvents(eventsstafffilters.querySelector("input:checked").value, initData);
-    }
-  });
-
-  eventsArchiveTab.addEventListener("click", (event) => {
-    const page = Number(QueryParams.get("page")) || 1;
-
-    if (event.target.type === "radio") {
-      QueryParams.set("page", 1);
-      doArchiveEvents(eventsarchivefilters.querySelector("input:checked").value, initData);
-    }
-
-    if (event.target.type === "submit") {
-      setDOMContent(event.target.closest(".loadmorebtn"), "");
-      QueryParams.set("page", page + 1);
-      doArchiveEvents(eventsarchivefilters.querySelector("input:checked").value, initData);
-    }
+      if (event.target.type === "submit") {
+        setDOMContent(event.target.closest(".loadmorebtn"), "");
+        QueryParams.set("page", page + 1);
+        doArchiveEvents(eventsarchivefilters.querySelector("input:checked").value, initData);
+      }
+    });
   });
 })(stir.node("#eventsrevamp"));
