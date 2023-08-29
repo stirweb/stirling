@@ -1,4 +1,4 @@
-!function(t){if(t){t&&(t.value=window.location.href);t=stir.node("#copyurl");t&&t.addEventListener("click",t=>(async()=>{await navigator.clipboard.writeText(window.location.href)})())}}(stir.node("#shareurl")),function(){const a=stir.node("#seriesevents"),r=a&&a.dataset&&a.dataset.seriesid?a.dataset.seriesid:null,l=stir.node("#seriesdatefilter"),o=stir.node("#moreevents");if(a||o){const e=(t,r)=>t?`<h3 class="header-stripped ${r}">${t}</h3>`:"",s=t=>`<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${t}</span>`;const d=t=>`<option value="${t.start}">${t.stirStart}</option>`;const c=stir.map(t=>{return`<a href="#" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
+!function(t){if(t){t&&(t.value=window.location.href);t=stir.node("#copyurl");t&&t.addEventListener("click",t=>(async()=>{await navigator.clipboard.writeText(window.location.href)})())}}(stir.node("#shareurl")),function(){const a=stir.node("#seriesevents"),r=a&&a.dataset&&a.dataset.seriesid?a.dataset.seriesid:null,l=stir.node("#seriesdatefilter"),o=stir.node("#moreevents");if(a||o){const e=(t,r)=>t?`<h3 class="header-stripped ${r}">${t}</h3>`:"",s=t=>`<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${t}</span><br/>`;const d=t=>`<option value="${t.start}">${t.stirStart}</option>`;const c=stir.map(t=>{return`<a href="#" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
                 <span class="u-flex1"><strong>${t.title}</strong></span>
                 <span class="flex-container align-middle u-gap u-grey--dark">
                     <strong>${t.stirStart} ${t=t,t.stirStart===t.stirEnd?"":"- "+t.stirEnd}</strong>
@@ -11,10 +11,10 @@
             </a>`}),u=stir.filter((t,r)=>r<3),i=stir.curry((t,r)=>""===t||r.start===t?r:void 0),g=t=>({start:t.start,stirStart:t.stirStart,startInt:t.startInt}),p=stir.curry((r,e)=>{var s={},i=[];for(let t=0;t<e.length;t++)s[e[t][r]]||(s[e[t][r]]=!0,i.push(e[t]));return i}),h=t=>t.start,n=stir.map((t,r)=>{return`
         <div class="${r%2==1?"":"u-bg-grey"} ${0===r?"u-heritage-line-top u-border-width-5":""} u-p-1 c-event-list u-gap">
           <div >
-            ${t.cancelled?s("Cancelled"):""}${t.rescheduled?s("Rescheduled"):""}
+            ${t.cancelled?s("Cancelled"):""}${t.rescheduled?s("Rescheduled"):""} 
             <span class="u-inline-block u-mb-1"><strong>Event</strong><br />
             <a href="${t.url}">${t.title}</a></span><br />
-            <strong >Date:</strong> ${t.stirStart} <br />
+            <strong >Date:</strong> ${t.stirStart} ${t.stirEnd!==t.stirStart?" - "+t.stirEnd:""} <br />
             <strong>Time:</strong> ${t.startTime} - ${t.endTime}
           </div>
           <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${t.summary} </span></div>
