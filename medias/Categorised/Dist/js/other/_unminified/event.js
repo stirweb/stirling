@@ -96,7 +96,7 @@
   const renderEndDate = (item) => (item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`);
 
   const renderMoreEvent = (item) => {
-    return `<a href="#" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
+    return `<a href="${item.url}" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
                 <span class="u-flex1"><strong>${item.title}</strong></span>
                 <span class="flex-container align-middle u-gap u-grey--dark">
                     <strong>${item.stirStart} ${renderEndDate(item)}</strong>
@@ -211,8 +211,6 @@
   const doPastSeries = (date, initialData) => {
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
-    console.log(stir.compose(isSeriesChildFilter)(initialData));
-
     const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry, isPassedFilter, isSeriesChildFilter)(initialData);
     return seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
   };
@@ -254,8 +252,6 @@
   /* Fetch the data */
   stir.getJSON(url, (initialData) => {
     if (initialData.error) return;
-
-    //console.log(initialData);
 
     if (seriesEventsArea && seriesDateFilter) {
       const pastHtml = doPastSeries("", initialData);
