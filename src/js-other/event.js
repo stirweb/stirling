@@ -167,7 +167,7 @@
 
   const getJSONUrl = (env) => {
     if (env === "dev") return "../index.json";
-    if (env === "preview") return '<t4 type="navigation" id="5214" />'; //5222
+    if (env === "preview") return '<t4 type="navigation" id="5214" />'; //5222 for limited archive
 
     return `/data/events/revamp/json/index.json`;
   };
@@ -211,6 +211,8 @@
   const doPastSeries = (date, initialData) => {
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
+    console.log(stir.compose(isSeriesChildFilter)(initialData));
+
     const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry, isPassedFilter, isSeriesChildFilter)(initialData);
     return seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
   };
@@ -253,7 +255,7 @@
   stir.getJSON(url, (initialData) => {
     if (initialData.error) return;
 
-    console.log(initialData);
+    //console.log(initialData);
 
     if (seriesEventsArea && seriesDateFilter) {
       const pastHtml = doPastSeries("", initialData);

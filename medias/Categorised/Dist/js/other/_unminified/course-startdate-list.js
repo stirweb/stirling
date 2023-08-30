@@ -25,50 +25,15 @@
   Object.freeze(constants);
 
   /*
-   *
-   * RENDERERS
-   *
+   
+    RENDERERS
+   
    */
 
-  /* ------------------------------------------------
-   * Render the course table html
-   * ------------------------------------------------ */
-  const renderTable = stir.curry((consts, data) => {
-    const renderer = renderItem(consts);
-    return `
-        <table>
-            <caption>Courses starting in ${consts.month}</caption>
-            <thead>
-                <tr><td>Course</td><td>Application link</td><td>Year of entry</td></tr>
-            </thead>
-            <tbody>
-                ${data.map((el) => renderer(el)).join("")}
-            </tbody>
-        </table>`;
-  });
-
-  /* ------------------------------------------------
-   * Render the html for each course as a table row
-   * ------------------------------------------------ */
-  const renderItem = stir.curry((consts, item) => {
-    const renderApply = renderApplyLink(consts);
-
-    return `
-        <tr>
-            <td>
-              ${item.url ? `<a href="${item.url}">` : ``}
-              ${item.award}  ${item.title}
-              ${item.url ? `</a>` : ``}
-            </td>
-            <td>${renderApply(item)}</td>
-            <td>${getYears(item, consts.month)}</td>
-        </tr>`;
-  });
-
-  /* ------------------------------------------------
-   * Return the Apply Link HTML
-   * ------------------------------------------------ */
-  const renderApplyLink = stir.curry((consts, item) => {
+  /*
+    Return the Apply Link HTML
+   */
+  const renderUGApplyLink = stir.curry((consts, item) => {
     // Helper function to form award text
     const getAward = (code) => {
       if (code.includes("UDX12")) return " Apply for BA (Hons)";
@@ -86,28 +51,61 @@
     return "";
   });
 
-  /* ------------------------------------------------
-   * Return the years for this item as an html string
-   * ------------------------------------------------ */
+  /* 
+      Render the html for each course as a table row
+   */
+  const renderItem = stir.curry((consts, item) => {
+    //const renderApply = renderApplyLink(consts);
+    return `
+        <tr>
+            <td>
+              ${item.url ? `<a href="${item.url}">` : ``}
+              ${item.prefix} ${item.title} 
+              ${item.url ? `</a>` : ``}
+            </td>
+            <td>${getYears(item, consts.month)}</td>
+        </tr>`;
+  });
+
+  /*
+      Render the course table html
+   */
+  const renderTable = stir.curry((consts, data) => {
+    const renderItemCurry = renderItem(consts);
+    return `
+          <table>
+              <caption>Courses starting in ${consts.month}</caption>
+              <thead>
+                  <tr><td>Course</td><td>Year of entry</td></tr>
+              </thead>
+              <tbody>
+                  ${data.map((el) => renderItemCurry(el)).join("")}
+              </tbody>
+          </table>`;
+  });
+
+  /*
+      Return the years for this item as an html string
+   */
   const getYears = (item, month) => {
-    if (item.startdates) {
+    if (item.starts) {
       return stir.compose(
         stir.join(", "),
         stir.map((element) => element.split(" ")[1]),
         stir.filter((element) => element.includes(month))
-      )(item.startdates.split(", "));
+      )(item.starts.split(", "));
     }
 
     return "";
   };
 
   /*
-   * EVENTS: OUTPUT (!!SIDE EFFECTS!!)
+      EVENTS: OUTPUT (!!SIDE EFFECTS!!)
    */
 
-  /* ------------------------------------------------
-   * Outputs html content to the page
-   * ------------------------------------------------ */
+  /*
+    Outputs html content to the page
+   */
   const setDOMContent = stir.curry((elem, html) => {
     // !!SIDE EFFECTS!!
     elem.innerHTML = html;
@@ -115,21 +113,21 @@
   });
 
   /*
-   * EVENTS: INPUT (!!SIDE EFFECTS!!)
+     EVENTS: INPUT (!!SIDE EFFECTS!!)
    */
 
-  const initialData = stir.t4Globals.ugstartdates || [];
+  const initialData = stir.feeds.data || [];
 
   if (!initialData.length) return;
 
-  // Helper and curried functions
-  const filterMonth = stir.filter((item) => item.startdates && item.startdates.includes(constants.month));
-  const filterApplyless = stir.filter((item) => item.portalapply);
+  // Helpers and curried functions
+  const filterMonth = stir.filter((item) => item.starts && item.starts.includes(constants.month));
+  const filterNoApplyCode = stir.filter((item) => item.portalapply);
   const sortByTitle = stir.sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
 
   const setResult = setDOMContent(resultsArea);
-  const render = renderTable(constants);
+  const renderTableCurry = renderTable(constants);
 
   // Run the data through the functions until it hits the page
-  const results = stir.compose(setResult, render, sortByTitle, filterApplyless, filterMonth, stir.clone)(initialData);
+  stir.compose(setResult, renderTableCurry, sortByTitle, sortByTitle, filterMonth, stir.clone)(initialData);
 })(stir.node("#course-list"));
