@@ -9,13 +9,12 @@
   if (!scope) return;
 
   /*
-    DOM: Main elements 
-  */
-  const resultsArea = scope;
 
-  /*
-     GLOBAL CONSTANTS
+     GLOBALS
+
    */
+
+  const resultsArea = scope;
 
   const constants = {
     applyLinkUG: "https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=",
@@ -98,12 +97,15 @@
   });
 
   /*
+      
       EVENTS: OUTPUT (!!SIDE EFFECTS!!)
+
    */
 
   /*
-    Outputs html content to the page
+    Output html content to the page
    */
+
   const setDOMContent = stir.curry((elem, html) => {
     // !!SIDE EFFECTS!!
     elem.innerHTML = html;
@@ -111,14 +113,19 @@
   });
 
   /*
+
      EVENTS: INPUT (!!SIDE EFFECTS!!)
-   */
+   
+  */
 
   const initialData = stir.feeds.data || [];
 
   if (!initialData.length) return;
 
-  // Helpers and curried functions
+  /* 
+    Curried functions 
+  */
+
   const filterMonth = stir.filter((item) => item.starts && item.starts.includes(constants.month));
   //const filterNoApplyCode = stir.filter((item) => item.portalapply);
   const sortByTitle = stir.sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
