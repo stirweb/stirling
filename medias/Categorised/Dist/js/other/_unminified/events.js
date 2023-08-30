@@ -244,7 +244,7 @@
 
   const getJSONUrl = (env) => {
     if (env === "dev") return "../index.json";
-    if (env === "preview") return '<t4 type="navigation" id="5214" />'; //5222
+    if (env === "preview") return '<t4 type="navigation" id="5214" />'; //5222 for limitrd archive
 
     return `/data/events/revamp/json/index.json`;
   };
