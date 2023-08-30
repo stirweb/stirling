@@ -87,9 +87,14 @@
         </div>`;
   };
 
-  const renderDates = (item) => {
-    return `<option value="${item.start}">${item.stirStart}</option>`;
+  const renderReadableDate = (date) => {
+    const d = new Date(date);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
   };
+
+  const renderDates = (item) => `<option value="${item}">${renderReadableDate(item)}</option>`;
 
   const renderOptionOne = () => `<option value="">Filter by date</option>`;
 
@@ -109,6 +114,8 @@
             </a>`;
   };
 
+  const renderNoEvents = () => "<p><strong>No events on date selected</strong></p>";
+
   /*
     |
     |   HELPERS
@@ -118,15 +125,18 @@
   const renderMoreEventsMapper = stir.map(renderMoreEvent);
 
   const limitTo3 = stir.filter((item, index) => index < 3);
+  const limitTo1 = stir.filter((item, index) => index < 1);
 
   const dateUserFilter = stir.curry((d, item) => {
     if (d === ``) return item;
-    if (item.start === d) return item;
+
+    const itemDays = getDaysArray(item.start, item.end);
+    if (inDateRange(itemDays, d)) return item;
   });
 
-  const dateMapper = (item) => {
-    return { start: item.start, stirStart: item.stirStart, startInt: item.startInt };
-  };
+  // const dateMapper = (item) => {
+  //   return { start: item.start, stirStart: item.stirStart, startInt: item.startInt };
+  // };
 
   const removeDuplicateObjectFromArray = stir.curry((key, array) => {
     let check = {};
@@ -152,6 +162,7 @@
   };
 
   const sortByStartDate = (a, b) => a.startInt - b.startInt;
+  const sortByEndDateDesc = (a, b) => b.endInt - a.endInt;
 
   const isUpcoming = (item) => item.endInt >= getNow();
 
@@ -193,6 +204,26 @@
     if (stir.any(isTrue, matches)) return item;
   });
 
+  /* 
+        inDateRange : Returns a boolean
+    */
+  const inDateRange = stir.curry((filterRange, date) => {
+    const matches = filterRange.filter((day) => day === date);
+    return matches.length ? true : false; // Only need one match
+  });
+
+  /* 
+      getDaysArray : Returns an array of date strings eg 2023-07-24
+  */
+  const getDaysArray = (s, e) => {
+    let a = [];
+
+    for (d = new Date(s); d <= new Date(e); d.setDate(d.getDate() + 1)) {
+      a.push(new Date(d).toISOString().split("T")[0]);
+    }
+    return a;
+  };
+
   /*
     |
     |   CONTROLLERS
@@ -216,8 +247,13 @@
   };
 
   const doDateFilter = (initialData) => {
-    const removeDupsByStart = removeDuplicateObjectFromArray("start");
-    return stir.compose(joiner, stir.map(renderDates), removeDupsByStart, stir.map(dateMapper), stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
+    // const removeDupsByStart = removeDuplicateObjectFromArray("start");
+
+    const start = stir.compose(limitTo1, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
+    const end = stir.compose(limitTo1, stir.sort(sortByEndDateDesc), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
+    const dates = getDaysArray(start[0].start, end[0].end);
+
+    return stir.compose(joiner, stir.map(renderDates))(dates);
   };
 
   const doMoreEvents = (initialData) => {
@@ -265,7 +301,9 @@
         const upcomingHtml = doUpcomingSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
         const pastHtml = doPastSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
 
-        setDOMContent(seriesEventsArea, upcomingHtml + pastHtml);
+        const html = upcomingHtml + pastHtml === "" ? renderNoEvents() : upcomingHtml + pastHtml;
+
+        setDOMContent(seriesEventsArea, upcomingHtml + html);
       });
     }
 
