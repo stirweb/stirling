@@ -9,16 +9,16 @@
   if (!scope) return;
 
   /*
-   * DOM: Main elements
-   */
+    DOM: Main elements 
+  */
   const resultsArea = scope;
 
   /*
-   * GLOBAL CONSTANTS
+     GLOBAL CONSTANTS
    */
 
   const constants = {
-    applyLink: "https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=",
+    applyLinkUG: "https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=",
     month: resultsArea.getAttribute("data-startmonth"),
   };
 
@@ -31,25 +31,38 @@
    */
 
   /*
-    Return the Apply Link HTML
+    Render the html for the UG Apply Link 
    */
-  const renderUGApplyLink = stir.curry((consts, item) => {
-    // Helper function to form award text
-    const getAward = (code) => {
-      if (code.includes("UDX12")) return " Apply for BA (Hons)";
-      if (code.includes("UDX16")) return " Apply for BSc (Hons)";
-      return "Apply";
-    };
+  // const renderUGApplyLink = stir.curry((consts, item) => {
+  //   // Helper function to form award text
+  //   const getAward = (code) => {
+  //     if (code.includes("UDX12")) return " Apply for BA (Hons)";
+  //     if (code.includes("UDX16")) return " Apply for BSc (Hons)";
+  //     return "Apply";
+  //   };
 
-    if (item.portalapply && item.portalapply !== "") {
-      return item.portalapply
-        .split(",")
-        .map((element) => '<a aria-label="' + getAward(element) + " " + item.title + '" href="' + consts.applyLink + element.trim() + '">' + getAward(element) + "</a>")
-        .join(" / ");
-    }
+  //   if (item.portalapply && item.portalapply !== "") {
+  //     return item.portalapply
+  //       .split(",")
+  //       .map((element) => '<a aria-label="' + getAward(element) + " " + item.title + '" href="' + consts.applyLinkUG + element.trim() + '">' + getAward(element) + "</a>")
+  //       .join(" / ");
+  //   }
 
-    return "";
-  });
+  //   return "";
+  // });
+
+  /*
+      Return the years for this item as an html string
+   */
+  const getYears = (item, month) => {
+    if (!item.starts) return ``;
+
+    return stir.compose(
+      stir.join(", "),
+      stir.map((element) => element.split(" ")[1]),
+      stir.filter((element) => element.includes(month))
+    )(item.starts.split(", "));
+  };
 
   /* 
       Render the html for each course as a table row
@@ -85,21 +98,6 @@
   });
 
   /*
-      Return the years for this item as an html string
-   */
-  const getYears = (item, month) => {
-    if (item.starts) {
-      return stir.compose(
-        stir.join(", "),
-        stir.map((element) => element.split(" ")[1]),
-        stir.filter((element) => element.includes(month))
-      )(item.starts.split(", "));
-    }
-
-    return "";
-  };
-
-  /*
       EVENTS: OUTPUT (!!SIDE EFFECTS!!)
    */
 
@@ -122,7 +120,7 @@
 
   // Helpers and curried functions
   const filterMonth = stir.filter((item) => item.starts && item.starts.includes(constants.month));
-  const filterNoApplyCode = stir.filter((item) => item.portalapply);
+  //const filterNoApplyCode = stir.filter((item) => item.portalapply);
   const sortByTitle = stir.sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
 
   const setResult = setDOMContent(resultsArea);
