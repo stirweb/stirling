@@ -73,7 +73,7 @@ $light-gray: #e6e6e6;
 $medium-gray: #cacaca;
 $dark-gray: #8a8a8a;
 $black: #3a3c39;
-$white: #fefefe;
+$white: #fff; //fefefe;
 
 $foundation-palette: (
   primary: #006938,
@@ -94,7 +94,7 @@ $uos-web-supplementary: (
   white: $white,
   dark-grey: #616361,
   // reinstated by Martyn
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
