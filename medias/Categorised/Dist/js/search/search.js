@@ -1466,7 +1466,8 @@ stir.search = () => {
 					const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
 					facetFilterElements && facetFilterElements.forEach(el => {
 						el.checked=true;
-						QueryParams.remove(metaName,false,null,true); // don't reload window and use replaceState() instead of pushState()
+						metaName && QueryParams.remove(metaName,false,null,true); // don't reload window and use replaceState() instead of pushState()
+						facetName && QueryParams.remove(facetName,false,null,true,true); // don't reload window and use replaceState() instead of pushState()
 					});
 
 					const facetAccordion = facetFilter.querySelector('[data-behaviour=accordion]');
