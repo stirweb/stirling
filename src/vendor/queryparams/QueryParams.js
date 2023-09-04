@@ -154,7 +154,8 @@ var QueryParams = (function () {
     //prefer to use l.search if you have a location/link object
     var urlparts = url.split("?");
     if (urlparts.length >= 2) {
-      var prefix = encodeURIComponent(name) + "=";
+//      var prefix = encodeURIComponent(name) + "=";
+		var prefix  = name + "=";
       var pars = urlparts[1].split(/[&;]/g);
 
       //reverse iteration as may be destructive
@@ -178,12 +179,13 @@ var QueryParams = (function () {
    * @param {boolean} reload [Optional] Automatically reload the window after changing the URL
    * @param {string} url [Optional] The URL to be acted upon
    * @param {boolean} replace [Optional] Use replaceState instead of pushState
+   * @param {boolean} noencode [Optional] Don't use encodeURIComponent on name parameter [default = false]
    */
   // TODO use document..search? instead of href
-  function _remove(name, reload, url, replace) {
+  function _remove(name, reload, url, replace, noencode) {
     if (!url) url = window.location.href;
 
-	var newUrl = _removeURLParameter(url, name);
+	var newUrl = _removeURLParameter(url, noencode? name : encodeURIComponent(name));
     if(newUrl!==url) replace ? _replaceStateHandler(newUrl): _pushStateHandler(newUrl);
 
     if (reload) {
