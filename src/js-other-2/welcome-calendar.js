@@ -61,9 +61,9 @@
     return `<option value="${item.startIntFull}">${item.stirStart}</option>`;
   };
 
-  const renderThemeFilter = (item) => {
-    return `<option value="${item.theme}">${item.theme}</option>`;
-  };
+  const renderThemeFilter = stir.curry((selected, item) => {
+    return `<option value="${item.theme}" ${selected === item.theme ? `selected` : ``}>${item.theme}</option>`;
+  });
 
   const renderSelectFilter = (html, title) => {
     return `<select id="${title.toLowerCase().replaceAll(" ", "-")}"><option value="">${title}</option>${html}</select>`;
@@ -192,12 +192,16 @@
   /* 
         Welcome Events 
      */
+
+  const theme = QueryParams.get("theme") || "";
   const initData = stir.feeds.events.filter((item) => item.id);
+
+  console.log(theme);
 
   QueryParams.set("page", 1);
 
   /* default list */
-  doEventsFilter("", "", initData);
+  doEventsFilter("", theme, initData);
 
   /* 
         Filters 
@@ -206,7 +210,11 @@
   const datesHtml = stir.compose(joiner, stir.map(renderDateFilter), removeDateDups, stir.map(mapDates), stir.sort(sortByStartDate), isUpcomingFilter)(initData);
 
   const removeFilterDups = removeDuplicateObjectFromArray("theme");
-  const themesHtml = stir.compose(joiner, stir.map(renderThemeFilter), removeFilterDups, stir.filter(filterThemeEmpties), stir.map(mapTheme))(initData);
+
+  const renderThemeFilterCurry = renderThemeFilter(theme);
+  //selected
+
+  const themesHtml = stir.compose(joiner, stir.map(renderThemeFilterCurry), removeFilterDups, stir.filter(filterThemeEmpties), stir.map(mapTheme))(initData);
 
   setDOMDateFilter(renderSelectFilter(datesHtml, "Filter by date") + renderSelectFilter(themesHtml, "Filter by theme") + renderClearFiltersBtn());
 
@@ -235,6 +243,7 @@
     /* Clear all */
     if (event.target.nodeName === "BUTTON") {
       QueryParams.set("page", 1);
+      QueryParams.remove("theme");
       dateFilter.value = "";
       themeFilter.value = "";
       doEventsFilter(dateFilter.options[dateFilter.selectedIndex].value, themeFilter.options[themeFilter.selectedIndex].value, initData);
@@ -252,6 +261,7 @@
 
   themeFilter.addEventListener("change", (event) => {
     QueryParams.set("page", 1);
+    QueryParams.set("theme", themeFilter.options[themeFilter.selectedIndex].value);
     doEventsFilter(dateFilter.options[dateFilter.selectedIndex].value, themeFilter.options[themeFilter.selectedIndex].value, initData);
   });
 })(stir.node("#welcomeevents"));
