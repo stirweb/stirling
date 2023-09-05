@@ -272,17 +272,17 @@ stir.search = () => {
 	if (!constants.form || !constants.form.query) return;
 	debug && console.info("[Search] initialised with host:", constants.url.hostname);
 
-  const getQuery = (type) => constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
+	const getQuery = (type) => constants.form.query.value || QueryParams.get("query") || constants.parameters[type].query || "University of Stirling";
 
-  const getNoQuery = (type) => (constants.form.query.value ? {} : constants.noquery[type]);
+	const getNoQuery = (type) => (constants.form.query.value ? {} : constants.noquery[type]);
 
 	const setQuery = () => (constants.form.query.value ? QueryParams.set("query", constants.form.query.value) : QueryParams.remove("query"));
 
-  const getPage = (type) => parseInt(QueryParams.get(type) || 1);
+	const getPage = (type) => parseInt(QueryParams.get(type) || 1);
 
-  const getType = (element) => element.getAttribute("data-type") || element.parentElement.getAttribute("data-type");
+	const getType = (element) => element.getAttribute("data-type") || element.parentElement.getAttribute("data-type");
 
-  const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
+	const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
 
 	const calcStart = (page, numRanks) => (page - 1) * numRanks + 1;
 
@@ -290,22 +290,13 @@ stir.search = () => {
 
 	const calcProgress = (currEnd, fullyMatching) => (currEnd / fullyMatching) * 100;
 
-  const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
+	const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
 
 	const resetPagination = () => Object.keys(constants.parameters).forEach((key) => QueryParams.remove(key));
 
 	const getQueryParameters = () => {
-		const parameters = QueryParams.getAll();
-		const output = {};
-		for (const parameter in parameters) {
-			const key = parameter.replace(/[^A-Z0-9\.\|\_]/gi, '');
-			const value = parameters[key] && parameters[key].replace(/[^A-Z0-9]/gi, '');
-		
-			if(metaToFacet[key]) {
-				output[key] = value.toLowerCase();
-			}
-		}
-		return output;
+		var parameters = QueryParams.getAll();
+		return Object.keys(parameters).filter(key => key.indexOf('f.')===0).reduce((obj,key)=>{ return {...obj, [key]: parameters[key]}; }, {});
 	};
 
 
@@ -334,6 +325,7 @@ stir.search = () => {
 		for (const name in parameters) {
 			const el = document.querySelector(`input[name="${encodeURIComponent(name)}"][value="${encodeURIComponent(parameters[name])}"]`);
 			if (el) el.checked = true;
+			//if(name.indexOf('|')>-1) { }
 		}
 	};
 
@@ -461,7 +453,7 @@ stir.search = () => {
 					curator: getStartRank(type) > 1 ? false : true	// only show curator for initial searches
 				},
 				getNoQuery(type)									// get special "no query" parameters (sorting, etc.)
-				//,preview?getQueryParameters():{}
+				,preview?getQueryParameters():{}
 			)
 		);
 
