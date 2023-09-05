@@ -31,13 +31,15 @@
     font-size: 2rem; /* 32px */
   }
 
-  .c-infographic__line2 {
-    margin: 0 0 30px 0;
-    font-size: 1rem; /* 16px */
-    line-height: 1.5;
-  }
+  // .c-infographic__line2 {
+  //   margin: 0 0 30px 0;
+  //   font-size: 1rem; /* 16px */
+  //   line-height: 1.5;
+  // }
 
-  /* Compact style */
+  /* 
+      Compact style 
+  */
   &.c-infographic-compact {
     .c-infographic__header {
       color: #005e63;
@@ -48,13 +50,13 @@
     .c-infographic__line1 {
       color: #3a3c39;
       margin: 0 0 15px 0;
-      font-size: 1.375rem; /* 22px */
+      font-size: 1.4375rem; /* 23px */
     }
 
-    .c-infographic__line2 {
-      font-size: 1rem; // 16px;
-      color: #3a3c39;
-    }
+    // .c-infographic__line2 {
+    //   font-size: 1rem; // 16px;
+    //   color: #3a3c39;
+    // }
   }
 
   &.u-padding-y {
@@ -81,6 +83,9 @@
       max-height: 200px;
     }
 
+    /* 
+      Compact style 
+    */
     &.c-infographic-compact .c-infographic__header,
     .c-infographic__header {
       font-size: 2.875rem; /* 46px */
@@ -105,6 +110,9 @@
       max-height: 150px;
     }
 
+    /* 
+      Compact style 
+    */
     &.c-infographic-compact .c-infographic__header,
     .c-infographic__header {
       font-size: 2.625rem;
@@ -129,6 +137,9 @@
       max-height: 130px;
     }
 
+    /* 
+      Compact style 
+    */
     &.c-infographic-compact .c-infographic__header,
     .c-infographic__header {
       font-size: 2.25rem; /* 36px */
