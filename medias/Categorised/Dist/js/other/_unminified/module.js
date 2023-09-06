@@ -425,5 +425,6 @@
   const queryparams = new URLSearchParams(document.location.search);
   const fetchUrl = url + [queryparams.get("code"), queryparams.get("session"), queryparams.get("semester")].join("/");
 
+  console.log(fetchUrl);
   getData(fetchUrl);
 })();
