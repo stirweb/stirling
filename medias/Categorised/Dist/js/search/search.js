@@ -1253,6 +1253,7 @@ stir.search = () => {
       },
       news: {
         collection: "stir-www",
+		query: "!padrenullquery",
         meta_type: "News",
         meta_v_not: "faculty-news",
         sort: "date",
