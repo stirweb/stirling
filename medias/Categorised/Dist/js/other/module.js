@@ -65,7 +65,7 @@
                                             </svg>
                                         </span>
                                         <span>
-                                            <strong>Delivery mode:</strong><br>${r.join("<br/>")}
+                                            <strong>Delivery mode:</strong><br>${r.filter(e=>""!==e.trim()).join("<br/>")}
                                         </span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
@@ -128,7 +128,7 @@
                 <ul>
                     ${t["learningOutcomes "].map(e=>`<li>${e}</li>`).join("")} 
                 </ul>
-            </div>`,c=({modulecredits:e,ectsmodulecredits:t,professionalAccreditation:r})=>`<div class="cell u-mt-2">
+            </div>`,c=({modulecredits:e,ectsmodulecredits:t,professionalAccreditation:r})=>{return`<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
 
                 <h3 class="header-stripped u-bg-heritage-purple--5 u-p-1 u-heritage-purple-line-left u-border-width-5 u-text-regular">Credits</h3>
@@ -153,9 +153,9 @@
                         <a href="#" class="u-heritage-purple">Assessment and award of credit for undergraduates</a></p>
                 </div>
 
-                <h3 class="header-stripped u-bg-heritage-purple--5 u-p-1 u-heritage-purple-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
-                <p>${r}</p>
-            </div>`,h=({modulerequisites:e})=>{return`<div class="cell u-mt-2">
+                ${e=r,e?`<h3 class="header-stripped u-bg-heritage-purple--5 u-p-1 u-heritage-purple-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
+          <p>${e}</p>`:""}
+            </div>`},h=({modulerequisites:e})=>{return`<div class="cell u-mt-2">
                 <h2 id="requirements">Study requirements</h2>
                 ${e=e,e?`<p>Pre-requisites: ${e}</p>`:""}
 
@@ -197,4 +197,4 @@
                   site</p>
         </div>`:""},m=()=>`<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
             information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
-            to change. <a href="#">See terms and conditions</a>.</p></div>`,v=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',f=()=>"</div></div>",b=()=>v()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+f(),w=e=>{var t=e.filter(e=>"total"===e.typekey),t=t.length?t[0].hours:null,r=s(t),t=Number(t),a=e.filter(e=>"total"!==e.typekey).map(e=>Number(e.hours)).reduce((e,t)=>e+t,0);return Number(t)!==a?"":e.map(r).join("")},y=e=>{e=((t,e)=>{let r={},a=[];return e.forEach(e=>{r[e[t]]||(r[e[t]]=!0,a.push(e))}),a})("match",e.map(e=>({...e,match:e.label+e.category+e.percent})));return 100!==e.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0)?"":e.map(t).join("")};var e=new URLSearchParams(document.location.search);!async function(e){var t,r,a,s,e=await fetch(e);try{var i=await e.json();t=i,s=stir.node("#content"),t.error?l(s,b()):(a=w(t.deliveries),r=y(t.assessments),a=d(t)+o()+v()+m()+u(t)+g(a,r)+c(t)+h(t)+p(t)+f(),l(s,a)),n()}catch(e){}}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[e.get("code"),e.get("session"),e.get("semester")].join("/"))}();
+            to change. <a href="#">See terms and conditions</a>.</p></div>`,v=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',f=()=>"</div></div>",b=()=>v()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+f(),w=e=>{var t=e.filter(e=>"total"===e.typekey),t=t.length?t[0].hours:null,r=s(t),t=Number(t),a=e.filter(e=>"total"!==e.typekey).map(e=>Number(e.hours)).reduce((e,t)=>e+t,0);return Number(t)!==a?"":e.map(r).join("")},y=e=>{e=((t,e)=>{let r={},a=[];return e.forEach(e=>{r[e[t]]||(r[e[t]]=!0,a.push(e))}),a})("match",e.map(e=>({...e,match:e.label+e.category+e.percent})));return 100!==e.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0)?"":e.map(t).join("")};var e=new URLSearchParams(document.location.search);!async function(e){var t,r,a,s,e=await fetch(e);try{var i=await e.json();t=i,s=stir.node("#content"),t.error?l(s,b()):(a=w(t.deliveries),r=y(t.assessments),a=d(t)+o()+v()+m()+u(t)+g(a,r)+c(t)+h(t)+p(t)+f(),l(s,a)),n()}catch(e){console.log(e.message)}}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[e.get("code"),e.get("session"),e.get("semester")].join("/"))}();

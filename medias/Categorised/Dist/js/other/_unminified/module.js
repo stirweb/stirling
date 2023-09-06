@@ -188,7 +188,7 @@
                                             </svg>
                                         </span>
                                         <span>
-                                            <strong>Delivery mode:</strong><br>${locationStudyMethods.join("<br/>")}
+                                            <strong>Delivery mode:</strong><br>${locationStudyMethods.filter((item) => item.trim() !== "").join("<br/>")}
                                         </span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
@@ -274,6 +274,13 @@
             </div>`;
   };
 
+  const renderAccreditation = (professionalAccreditation) => {
+    return !professionalAccreditation
+      ? ``
+      : `<h3 class="header-stripped u-bg-heritage-purple--5 u-p-1 u-heritage-purple-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
+          <p>${professionalAccreditation}</p>`;
+  };
+
   const renderAwards = ({ modulecredits, ectsmodulecredits, professionalAccreditation }) => {
     return `<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
@@ -300,8 +307,7 @@
                         <a href="#" class="u-heritage-purple">Assessment and award of credit for undergraduates</a></p>
                 </div>
 
-                <h3 class="header-stripped u-bg-heritage-purple--5 u-p-1 u-heritage-purple-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
-                <p>${professionalAccreditation}</p>
+                ${renderAccreditation(professionalAccreditation)}
             </div>`;
   };
 
@@ -472,7 +478,7 @@
       main(data);
       addEventListeners();
     } catch (error) {
-      //console.log(error.message);
+      console.log(error.message);
     }
   }
 
