@@ -5,6 +5,7 @@
 
   */
   function addEventListeners() {
+    // Sticky nav
     //const openCloseSelector = ".c-open-close";
     const openCloseBtns = document.querySelectorAll(".c-open-close");
     const stickyNav = document.querySelector(".c-sticky-nav");
@@ -25,19 +26,8 @@
       });
     });
 
-    // define observer instances
-    const observer = new IntersectionObserver(onIntersection, {
-      root: null,
-      threshold: 0.5,
-    });
-
-    const observer2 = new IntersectionObserver(onIntersection2, {
-      root: null,
-      threshold: 0.5,
-    });
-
     /*
-        SECTION SCROLL TRIGGER
+        BARCHART ANIMATION TRIGGER 
     */
     function onIntersection(entries, opts) {
       entries.forEach((entry) => {
@@ -63,8 +53,19 @@
       });
     }
 
+    // define observer instances
+    const observerBarcharts = new IntersectionObserver(onIntersection, {
+      root: null,
+      threshold: 0.5,
+    });
+
+    const barcharts = document.querySelectorAll(".barchart");
+    barcharts.forEach((el) => {
+      observerBarcharts.observe(el);
+    });
+
     /*
-        BARCHART ANIMATION TRIGGER
+        SECTION SCROLL TRIGGER
     */
     function onIntersection2(entries, opts) {
       entries.forEach((entry) => {
@@ -85,20 +86,21 @@
       });
     }
 
-    const h2s = document.querySelectorAll("main h2");
-    h2s.forEach((el) => {
-      observer2.observe(el);
+    const observerSections = new IntersectionObserver(onIntersection2, {
+      root: null,
+      threshold: 0.5,
     });
 
-    const els = document.querySelectorAll(".barchart");
-    els.forEach((el) => {
-      observer.observe(el);
+    const sections = document.querySelectorAll("main h2");
+    sections.forEach((el) => {
+      observerSections.observe(el);
     });
   }
 
   /* 
   
-  GET THE DATA CONTENT AND POPULATE THE PAGE
+      GET THE DATA CONTENT 
+      AND POPULATE THE PAGE
   
   */
   const url = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=";
@@ -338,25 +340,27 @@
                 </div>`;
   };
 
-  const renderDeliveries = (deliveries) => {
+  const renderDeliveries = (deliveries, width) => {
     return !deliveries
       ? ``
-      : `<div class="cell large-6">
+      : `<div class="cell large-${width}">
             <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
             ${deliveries}
         </div>`;
   };
 
-  const renderAssessment = (assessments) => {
+  const renderAssessment = (assessments, width) => {
     return !assessments
       ? ``
-      : `<div class="cell large-6">
-            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
+      : `<div class="cell large-${width}">
+            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Assessment overview</h3>
             ${assessments}
         </div>`;
   };
 
   const renderTeachingAssessment = (deliveries, assessments) => {
+    const width = !deliveries || !assessments ? `12` : `6`;
+
     return !deliveries && !assessments
       ? ``
       : `<div class="cell u-mt-2">
@@ -367,8 +371,8 @@
                   (e.g. lectures), assessments and self-study.</p>
 
               <div class="grid-x grid-padding-x u-my-2">
-                  ${renderDeliveries(deliveries)}
-                  ${renderAssessment(assessments)}
+                  ${renderDeliveries(deliveries, width)}
+                  ${renderAssessment(assessments, width)}
               </div>
 
               <p>Are you an incoming Stirling student? You'll typically receive timetables for module-level
