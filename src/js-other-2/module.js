@@ -251,35 +251,6 @@
         </div>`;
   };
 
-  const renderTeachingAssessment = (deliveries, assessments) => {
-    return `<div class="cell u-mt-2">
-                    <h2 id="teaching">Teaching and assessment</h2>
-
-                    <p>Here's an overview of the learning, teaching and assessment methods, and the recommended time you
-                        should dedicate to the study of this module. Most modules include a combination of activity
-                        (e.g. lectures), assessments and self-study.</p>
-
-                    <div class="grid-x grid-padding-x u-my-2">
-                        <div class="cell large-6">
-                            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
-                            ${deliveries}
-                        </div>
-                        
-                        <div class="cell large-6">
-                            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Assessment overview</h3>
-                            ${assessments}
-                        </div>
-                    </div>
-
-                    <p>Are you an incoming Stirling student? You'll typically receive timetables for module-level
-                        lectures one month prior
-                        - and select seminars two weeks prior - to the start of your first semester. Help with module
-                        registration can be provided by Student Services. More information can be found on our Welcome
-                        site</p>
-
-            </div>`;
-  };
-
   const renderContentAims = ({ moduleOverview, ...data }) => {
     return `<div class="cell u-p-2">
                 <h2 id="content">Content and aims</h2>
@@ -367,6 +338,47 @@
                 </div>`;
   };
 
+  const renderDeliveries = (deliveries) => {
+    return !deliveries
+      ? ``
+      : `<div class="cell large-6">
+            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
+            ${deliveries}
+        </div>`;
+  };
+
+  const renderAssessment = (assessments) => {
+    return !assessments
+      ? ``
+      : `<div class="cell large-6">
+            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
+            ${assessments}
+        </div>`;
+  };
+
+  const renderTeachingAssessment = (deliveries, assessments) => {
+    return !deliveries && !assessments
+      ? ``
+      : `<div class="cell u-mt-2">
+              <h2 id="teaching">Teaching and assessment</h2>
+
+              <p>Here's an overview of the learning, teaching and assessment methods, and the recommended time you
+                  should dedicate to the study of this module. Most modules include a combination of activity
+                  (e.g. lectures), assessments and self-study.</p>
+
+              <div class="grid-x grid-padding-x u-my-2">
+                  ${renderDeliveries(deliveries)}
+                  ${renderAssessment(assessments)}
+              </div>
+
+              <p>Are you an incoming Stirling student? You'll typically receive timetables for module-level
+                  lectures one month prior
+                  - and select seminars two weeks prior - to the start of your first semester. Help with module
+                  registration can be provided by Student Services. More information can be found on our Welcome
+                  site</p>
+        </div>`;
+  };
+
   const renderIntro = () => {
     return `<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
             information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
@@ -379,27 +391,69 @@
   const renderError = () => renderSectionStart() + `<div class="cell u-padding-y"><h1>Page not found</h1></div>` + renderSectionEnd();
 
   /*
-        Controllers
-    */
+        HELPERS
+  */
+  const removeDuplicateObjectFromArray = (key, array) => {
+    let check = {};
+    let res = [];
+    array.forEach((element) => {
+      if (!check[element[key]]) {
+        check[element[key]] = true;
+        res.push(element);
+      }
+    });
+    return res;
+  };
 
+  /*
+        CONTROLLERS
+  */
+
+  // Deliveries
   const doDeliveries = (deliveries) => {
     const deliveriesTotalItem = deliveries.filter((item) => item.typekey === "total");
     const deliveriesTotalValue = deliveriesTotalItem.length ? deliveriesTotalItem[0].hours : null;
     const renderDeliverablesCurry = renderDeliverables(deliveriesTotalValue);
 
-    return deliveries.map(renderDeliverablesCurry).join(``);
+    const total = Number(deliveriesTotalValue);
+    const sum = deliveries
+      .filter((item) => item.typekey !== "total")
+      .map((item) => Number(item.hours))
+      .reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+
+    return Number(total) !== sum ? `` : deliveries.map(renderDeliverablesCurry).join(``);
   };
 
+  // Assessments
+  const doAssessments = (assessments) => {
+    const mapped = assessments.map((item) => {
+      return { category: item.category, label: item.label, percent: item.percent, match: item.label + item.category + item.percent };
+    });
+
+    const filtered = removeDuplicateObjectFromArray("match", mapped);
+
+    const total = 100;
+    const sum = filtered
+      .map((item) => Number(item.percent))
+      .reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+
+    return total !== sum ? `` : filtered.map(renderAssessments).join(``);
+  };
+
+  // Main
   const main = (data) => {
     const contentArea = stir.node("#content");
 
     if (data.error) return setDOMContent(contentArea, renderError());
 
     const deliveries = doDeliveries(data.deliveries);
-    const assessments = data.assessments.map(renderAssessments).join(``);
+    const assessments = doAssessments(data.assessments);
 
     const html = renderHeader(data) + renderStickyNav() + renderSectionStart() + renderIntro() + renderContentAims(data) + renderTeachingAssessment(deliveries, assessments) + renderAwards(data) + renderStudyRequirements(data) + renderFurtherDetails(data) + renderSectionEnd();
-
     return setDOMContent(contentArea, html);
   };
 
@@ -414,7 +468,7 @@
       main(data);
       addEventListeners();
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
     }
   }
 
@@ -425,6 +479,6 @@
   const queryparams = new URLSearchParams(document.location.search);
   const fetchUrl = url + [queryparams.get("code"), queryparams.get("session"), queryparams.get("semester")].join("/");
 
-  console.log(fetchUrl);
+  //console.log(fetchUrl);
   getData(fetchUrl);
 })();
