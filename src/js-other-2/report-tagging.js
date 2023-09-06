@@ -16,10 +16,10 @@
         const table = document.createElement('table');
         const tbody = document.createElement('tbody');
         tbody.insertAdjacentHTML("afterbegin",data.allValues.map(value => `<tr><td>${tagLink(value)}</td$><td>${value.count}</td></tr>`).join(''));
-        table.insertAdjacentHTML("afterbegin",'<thead><tr><td scope=column>Tag</th><th scope=column>Usage</th></tr></thead>');
+        table.insertAdjacentHTML("afterbegin",`<thead><tr><th scope=column>${data.name}</th><th scope=column>Usage</th></tr></thead>`);
         table.appendChild(tbody);
         el.insertAdjacentElement("afterbegin",table);
-
+		table.insertAdjacentHTML("beforebegin", `<small style="opacity:0.5">${RSS_URL}</small>`);
         table.addEventListener('click', clickHandler);
     };
 
