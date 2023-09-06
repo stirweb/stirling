@@ -1,4 +1,4 @@
-!function(){function s(){var e=document.querySelectorAll(".c-open-close");const t=document.querySelector(".c-sticky-nav");var a=document.querySelector("#c-sticky-nav-btn");a&&a.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")}),e.forEach(e=>{e.addEventListener("click",e=>{e.target.closest(".c-open-close").querySelectorAll(".c-open-close-icon").forEach(e=>e.classList.toggle("hide"))})});const r=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,a,r,s,i;e.isIntersecting?(t=Number(e.target.dataset.value),a=e.target.dataset.unit,r=100-(s=t/Number(e.target.dataset.max)*100),s=s/2-2,(i=document.createElement("div")).classList.add("barchart-value"),i.style.right=r+"%",e.target.innerHTML=`<div class="barchart-text" style="left:${s}%">${t}${a}</div>`,e.target.appendChild(i)):e.target.innerHTML=""})},{root:null,threshold:.5}),s=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;document.querySelectorAll("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5});document.querySelectorAll("main h2").forEach(e=>{s.observe(e)}),document.querySelectorAll(".barchart").forEach(e=>{r.observe(e)})}const i=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),n=()=>`<div class="u-white--all u-sticky-nav ">
+!function(){function n(){var e=document.querySelectorAll(".c-open-close");const t=document.querySelector(".c-sticky-nav");var a=document.querySelector("#c-sticky-nav-btn");a&&a.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")}),e.forEach(e=>{e.addEventListener("click",e=>{e.target.closest(".c-open-close").querySelectorAll(".c-open-close-icon").forEach(e=>e.classList.toggle("hide"))})});const r=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,a,r,s,i;e.isIntersecting?(t=Number(e.target.dataset.value),a=e.target.dataset.unit,r=100-(s=t/Number(e.target.dataset.max)*100),s=s/2-2,(i=document.createElement("div")).classList.add("barchart-value"),i.style.right=r+"%",e.target.innerHTML=`<div class="barchart-text" style="left:${s}%">${t}${a}</div>`,e.target.appendChild(i)):e.target.innerHTML=""})},{root:null,threshold:.5}),s=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;document.querySelectorAll("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5});document.querySelectorAll("main h2").forEach(e=>{s.observe(e)}),document.querySelectorAll(".barchart").forEach(e=>{r.observe(e)})}const o=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),l=()=>`<div class="u-white--all u-sticky-nav ">
                     <nav class="u-relative u-bg-dark-mink" aria-label="Jump to section links">
                         <div class="grid-container u-py-1 hide-for-large">
                             <button class=" u-bg-black text-md text-left u-font-bold u-py-1 u-m-0 
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                     </nav>
-                </div>`,l=({moduletitle:e,modulecode:t,locationStudyMethods:a,modulelevel:r,modulecredits:s})=>`<div class="grid-container">
+                </div>`,d=({moduletitle:e,modulecode:t,locationStudyMethods:a,modulelevel:r,modulecredits:s})=>`<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
 
                         <div class="cell large-6  c-course-title u-padding-y">
@@ -100,18 +100,18 @@
                             </div>
                         </div>
                     </div>
-                </div>`,a=stir.curry((e,{label:t,hours:a,typekey:r})=>"total"===r?o(a):`
+                </div>`,a=stir.curry((e,{label:t,hours:a,typekey:r})=>"total"===r?s(a):`
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${t}</span>
             <div class="barchart" data-value="${a}" data-max="${e}" data-unit=""></div>
-        </div>`),o=e=>`<div class="u-bg-energy-teal--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
+        </div>`),s=e=>`<div class="u-bg-energy-teal--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
                 <strong class="u-flex1">Total workload</strong>
                 <strong>${e} hours</strong>
-            </div>`,d=({label:e,category:t,percent:a})=>"0"===a?"":`
+            </div>`,u=({label:e,category:t,percent:a})=>"0"===a?"":`
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${e} (${t})</span>
             <div class="barchart" data-value="${a}" data-max="100" data-unit="%"></div>
-        </div>`,u=(e,t)=>`<div class="cell u-mt-2">
+        </div>`,c=(e,t)=>`<div class="cell u-mt-2">
                     <h2 id="teaching">Teaching and assessment</h2>
 
                     <p>Here's an overview of the learning, teaching and assessment methods, and the recommended time you
@@ -136,7 +136,7 @@
                         registration can be provided by Student Services. More information can be found on our Welcome
                         site</p>
 
-            </div>`,c=({moduleOverview:e,...t})=>`<div class="cell u-p-2">
+            </div>`,h=({moduleOverview:e,...t})=>`<div class="cell u-p-2">
                 <h2 id="content">Content and aims</h2>
 
                 <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">
@@ -153,7 +153,7 @@
                 <ul>
                     ${t["learningOutcomes "].map(e=>`<li>${e}</li>`).join("")} 
                 </ul>
-            </div>`,h=({modulecredits:e,ectsmodulecredits:t,professionalAccreditation:a})=>`<div class="cell u-mt-2">
+            </div>`,p=({modulecredits:e,ectsmodulecredits:t,professionalAccreditation:a})=>`<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
 
                 <h3 class="header-stripped u-bg-heritage-purple--5 u-p-1 u-heritage-purple-line-left u-border-width-5 u-text-regular">Credits</h3>
@@ -180,12 +180,12 @@
 
                 <h3 class="header-stripped u-bg-heritage-purple--5 u-p-1 u-heritage-purple-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
                 <p>${a}</p>
-            </div>`,p=({modulerequisites:e})=>{return`<div class="cell u-mt-2">
+            </div>`,g=({modulerequisites:e})=>{return`<div class="cell u-mt-2">
                 <h2 id="requirements">Study requirements</h2>
                 ${e=e,e?`<p>Pre-requisites: ${e}</p>`:""}
 
                 <p>Co-requisites: This module must be studied in conjunction with: module name (code)</p>
-            </div>`},g=e=>`<div class="cell u-mt-2">
+            </div>`},m=e=>`<div class="cell u-mt-2">
                     <h2 id="further">Further details</h2>
                     
                     ${e.preparedotherinformation?`<h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3>
@@ -197,6 +197,6 @@
                     
                     <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
                     <p>${e["additionalCosts "]}</p>
-                </div>`,m=()=>`<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
+                </div>`,v=()=>`<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
             information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
-            to change. <a href="#">See terms and conditions</a>.</p></div>`,v=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',f=()=>"</div></div>",b=e=>{var t=e.filter(e=>"total"===e.typekey),t=t.length?t[0].hours:null,t=a(t);return e.map(t).join("")};var e=new URLSearchParams(document.location.search);!async function(e){var t,a,r;e=e=await(await fetch(e)).json(),t=stir.node("#content"),a=b(e.deliveries),r=e.assessments.map(d).join(""),a=l(e)+n()+v()+m()+c(e)+u(a,r)+h(e)+p(e)+g(e)+f(),i(t,a),s()}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[e.get("code"),e.get("session"),e.get("semester")].join("/"))}();
+            to change. <a href="#">See terms and conditions</a>.</p></div>`,f=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',b=()=>"</div></div>",w=()=>f()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+b(),x=e=>{var t=e.filter(e=>"total"===e.typekey),t=t.length?t[0].hours:null,t=a(t);return e.map(t).join("")};var e=new URLSearchParams(document.location.search);!async function(e){var t,a,r,s,e=await fetch(e);try{var i=await e.json();t=i,s=stir.node("#content"),t.error?o(s,w()):(r=x(t.deliveries),a=t.assessments.map(u).join(""),r=d(t)+l()+f()+v()+h(t)+c(r,a)+p(t)+g(t)+m(t)+b(),o(s,r)),n()}catch(e){console.log(e.message)}}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[e.get("code"),e.get("session"),e.get("semester")].join("/"))}();
