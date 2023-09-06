@@ -1,4 +1,4 @@
-!function(){function n(){var e=document.querySelectorAll(".c-open-close");const t=document.querySelector(".c-sticky-nav");var r=document.querySelector("#c-sticky-nav-btn");r&&r.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")}),e.forEach(e=>{e.addEventListener("click",e=>{e.target.closest(".c-open-close").querySelectorAll(".c-open-close-icon").forEach(e=>e.classList.toggle("hide"))})});const a=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a,s,i;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=100-(s=t/Number(e.target.dataset.max)*100),s=s/2-2,(i=document.createElement("div")).classList.add("barchart-value"),i.style.right=a+"%",e.target.innerHTML=`<div class="barchart-text" style="left:${s}%">${t}${r}</div>`,e.target.appendChild(i)):e.target.innerHTML=""})},{root:null,threshold:.5}),s=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;document.querySelectorAll("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5});document.querySelectorAll("main h2").forEach(e=>{s.observe(e)}),document.querySelectorAll(".barchart").forEach(e=>{a.observe(e)})}const l=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),o=()=>`<div class="u-white--all u-sticky-nav ">
+!function(){function n(){var e=document.querySelectorAll(".c-open-close");const t=document.querySelector(".c-sticky-nav");var r=document.querySelector("#c-sticky-nav-btn");r&&r.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")}),e.forEach(e=>{e.addEventListener("click",e=>{e.target.closest(".c-open-close").querySelectorAll(".c-open-close-icon").forEach(e=>e.classList.toggle("hide"))})});const a=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a,s,i;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=100-(s=t/Number(e.target.dataset.max)*100),s=s/2-2,(i=document.createElement("div")).classList.add("barchart-value"),i.style.right=a+"%",e.target.innerHTML=`<div class="barchart-text" style="left:${s}%">${t}${r}</div>`,e.target.appendChild(i)):e.target.innerHTML=""})},{root:null,threshold:.5});document.querySelectorAll(".barchart").forEach(e=>{a.observe(e)});const s=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;document.querySelectorAll("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5});document.querySelectorAll("main h2").forEach(e=>{s.observe(e)})}const l=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),o=()=>`<div class="u-white--all u-sticky-nav ">
                     <nav class="u-relative u-bg-dark-mink" aria-label="Jump to section links">
                         <div class="grid-container u-py-1 hide-for-large">
                             <button class=" u-bg-black text-md text-left u-font-bold u-py-1 u-m-0 
@@ -172,7 +172,7 @@
                     
                     <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
                     <p>${e["additionalCosts "]}</p>
-                </div>`,g=(e,t)=>{return e||t?`<div class="cell u-mt-2">
+                </div>`,g=(e,t)=>{var r,a=e&&t?"6":"12";return e||t?`<div class="cell u-mt-2">
               <h2 id="teaching">Teaching and assessment</h2>
 
               <p>Here's an overview of the learning, teaching and assessment methods, and the recommended time you
@@ -180,13 +180,13 @@
                   (e.g. lectures), assessments and self-study.</p>
 
               <div class="grid-x grid-padding-x u-my-2">
-                  ${e=e,e?`<div class="cell large-6">
+                  ${e=e,r=a,e?`<div class="cell large-${r}">
             <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
             ${e}
         </div>`:""}
-                  ${e=t,e?`<div class="cell large-6">
-            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
-            ${e}
+                  ${r=t,e=a,r?`<div class="cell large-${e}">
+            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Assessment overview</h3>
+            ${r}
         </div>`:""}
               </div>
 
