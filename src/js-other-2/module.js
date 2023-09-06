@@ -393,6 +393,7 @@
   /*
         HELPERS
   */
+
   const removeDuplicateObjectFromArray = (key, array) => {
     let check = {};
     let res = [];
@@ -429,19 +430,18 @@
   // Assessments
   const doAssessments = (assessments) => {
     const mapped = assessments.map((item) => {
-      return { category: item.category, label: item.label, percent: item.percent, match: item.label + item.category + item.percent };
+      return { ...item, match: item.label + item.category + item.percent };
     });
 
-    const filtered = removeDuplicateObjectFromArray("match", mapped);
-
-    const total = 100;
-    const sum = filtered
+    const filterDups = removeDuplicateObjectFromArray("match", mapped);
+    const totalPercent = 100;
+    const sum = filterDups
       .map((item) => Number(item.percent))
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
 
-    return total !== sum ? `` : filtered.map(renderAssessments).join(``);
+    return totalPercent !== sum ? `` : filterDups.map(renderAssessments).join(``);
   };
 
   // Main
