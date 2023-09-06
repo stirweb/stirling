@@ -376,6 +376,8 @@
   const renderSectionStart = () => `<div class="grid-container"><div class="grid-x grid-padding-x">`;
   const renderSectionEnd = () => `</div></div>`;
 
+  const renderError = () => renderSectionStart() + `<div class="cell u-padding-y"><h1>Page not found</h1></div>` + renderSectionEnd();
+
   /*
         Controllers
     */
@@ -391,12 +393,14 @@
   const main = (data) => {
     const contentArea = stir.node("#content");
 
+    if (data.error) return setDOMContent(contentArea, renderError());
+
     const deliveries = doDeliveries(data.deliveries);
     const assessments = data.assessments.map(renderAssessments).join(``);
 
     const html = renderHeader(data) + renderStickyNav() + renderSectionStart() + renderIntro() + renderContentAims(data) + renderTeachingAssessment(deliveries, assessments) + renderAwards(data) + renderStudyRequirements(data) + renderFurtherDetails(data) + renderSectionEnd();
 
-    setDOMContent(contentArea, html);
+    return setDOMContent(contentArea, html);
   };
 
   /*
@@ -404,9 +408,14 @@
   */
   async function getData(fetchUrl) {
     const response = await fetch(fetchUrl);
-    const data = await response.json();
-    main(data);
-    addEventListeners();
+
+    try {
+      const data = await response.json();
+      main(data);
+      addEventListeners();
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   /*
