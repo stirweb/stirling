@@ -1,4 +1,4 @@
-!function(){function n(){var e=document.querySelectorAll(".c-open-close");const t=document.querySelector(".c-sticky-nav");var r=document.querySelector("#c-sticky-nav-btn");r&&r.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")}),e.forEach(e=>{e.addEventListener("click",e=>{e.target.closest(".c-open-close").querySelectorAll(".c-open-close-icon").forEach(e=>e.classList.toggle("hide"))})});const a=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a,s,i;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=100-(s=t/Number(e.target.dataset.max)*100),s=s/2-2,(i=document.createElement("div")).classList.add("barchart-value"),i.style.right=a+"%",e.target.innerHTML=`<div class="barchart-text" style="left:${s}%">${t}${r}</div>`,e.target.appendChild(i)):e.target.innerHTML=""})},{root:null,threshold:.5});document.querySelectorAll(".barchart").forEach(e=>{a.observe(e)});const s=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;document.querySelectorAll("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5});document.querySelectorAll("main h2").forEach(e=>{s.observe(e)})}const l=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),o=()=>`<div class="u-white--all u-sticky-nav ">
+!function(){function n(){var e=document.querySelectorAll(".c-open-close");const t=document.querySelector(".c-sticky-nav");var r=document.querySelector("#c-sticky-nav-btn");r&&r.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")}),e.forEach(e=>{e.addEventListener("click",e=>{e.target.closest(".c-open-close").querySelectorAll(".c-open-close-icon").forEach(e=>e.classList.toggle("hide"))})});const a=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=t/Number(e.target.dataset.max)*100,a=stir.createDOMFragment(`<div class="barchart-value" style="right:${100-a}%"></div><div class="barchart-text" style="left:${a/2-2}%">${t}${r}</div>`),e.target.append(a)):e.target.innerHTML=""})},{root:null,threshold:.5});document.querySelectorAll(".barchart").forEach(e=>{a.observe(e)});const s=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;document.querySelectorAll("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5}),i=(document.querySelectorAll("main h2").forEach(e=>{s.observe(e)}),stir.nodes("[data-anchornav]"));i.forEach(e=>{e.addEventListener("click",e=>{setTimeout(()=>{i.forEach(e=>e.classList.remove("current")),e.target.classList.add("current")},500)})})}const o=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),l=()=>`<div class="u-white--all u-sticky-nav ">
                     <nav class="u-relative u-bg-dark-mink" aria-label="Jump to section links">
                         <div class="grid-container u-py-1 hide-for-large">
                             <button class=" u-bg-black text-md text-left u-font-bold u-py-1 u-m-0 
@@ -100,14 +100,14 @@
                             </div>
                         </div>
                     </div>
-                </div>`,s=stir.curry((e,{label:t,hours:r,typekey:a})=>"total"===a?i(r):`
+                </div>`,i=stir.curry((e,{label:t,hours:r,typekey:a})=>"total"===a?s(r):`
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${t}</span>
             <div class="barchart" data-value="${r}" data-max="${e}" data-unit=""></div>
-        </div>`),i=e=>`<div class="u-bg-energy-teal--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
+        </div>`),s=e=>`<div class="u-bg-energy-teal--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
                 <strong class="u-flex1">Total workload</strong>
                 <strong>${e} hours</strong>
-            </div>`,t=({label:e,category:t,percent:r})=>"0"===r?"":`
+            </div>`,r=({label:e,category:t,percent:r})=>"0"===r?"":`
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${e} (${t})</span>
             <div class="barchart" data-value="${r}" data-max="100" data-unit="%"></div>
@@ -155,12 +155,12 @@
 
                 ${e=r,e?`<h3 class="header-stripped u-bg-heritage-purple--5 u-p-1 u-heritage-purple-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
           <p>${e}</p>`:""}
-            </div>`},h=({modulerequisites:e})=>{return`<div class="cell u-mt-2">
+            </div>`},p=({modulerequisites:e})=>{return`<div class="cell u-mt-2">
                 <h2 id="requirements">Study requirements</h2>
                 ${e=e,e?`<p>Pre-requisites: ${e}</p>`:""}
 
                 <p>Co-requisites: This module must be studied in conjunction with: module name (code)</p>
-            </div>`},p=e=>`<div class="cell u-mt-2">
+            </div>`},h=e=>`<div class="cell u-mt-2">
                     <h2 id="further">Further details</h2>
                     
                     ${e.preparedotherinformation?`<h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3>
@@ -189,7 +189,6 @@
             ${r}
         </div>`:""}
               </div>
-
               <p>Are you an incoming Stirling student? You'll typically receive timetables for module-level
                   lectures one month prior
                   - and select seminars two weeks prior - to the start of your first semester. Help with module
@@ -197,4 +196,9 @@
                   site</p>
         </div>`:""},m=()=>`<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
             information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
-            to change. <a href="#">See terms and conditions</a>.</p></div>`,v=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',f=()=>"</div></div>",b=()=>v()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+f(),w=e=>{var t=e.filter(e=>"total"===e.typekey),t=t.length?t[0].hours:null,r=s(t),t=Number(t),a=e.filter(e=>"total"!==e.typekey).map(e=>Number(e.hours)).reduce((e,t)=>e+t,0);return Number(t)!==a?"":e.map(r).join("")},y=e=>{e=((t,e)=>{let r={},a=[];return e.forEach(e=>{r[e[t]]||(r[e[t]]=!0,a.push(e))}),a})("match",e.map(e=>({...e,match:e.label+e.category+e.percent})));return 100!==e.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0)?"":e.map(t).join("")};var e=new URLSearchParams(document.location.search);!async function(e){var t,r,a,s,e=await fetch(e);try{var i=await e.json();t=i,s=stir.node("#content"),t.error?l(s,b()):(a=w(t.deliveries),r=y(t.assessments),a=d(t)+o()+v()+m()+u(t)+g(a,r)+c(t)+h(t)+p(t)+f(),l(s,a)),n()}catch(e){console.log(e.message)}}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[e.get("code"),e.get("session"),e.get("semester")].join("/"))}();
+            to change. <a href="#">See terms and conditions</a>.</p></div>`,v=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',f=()=>"</div></div>",b=()=>v()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+f(),w=e=>e.category?e.label+" "+e.category+": "+e.percent+" %":e.label+": "+e.hours+" hours",y=(e,t,r,a)=>(console.log(a),`<div class="u-heritage-berry u-border-solid u-p-1">
+              <p><strong>Error with the data</strong></p>
+              <p>Reported total: ${e} ${r}<br>
+              Actual sum: ${t} ${r}</p>
+              ${a.map(w).join("<br>")} 
+            </div>`),x=e=>{var t=e.filter(e=>"total"===e.typekey),t=t.length?t[0].hours:null,r=i(t),a=e.filter(e=>"total"!==e.typekey),t=Number(t),s=e.filter(e=>"total"!==e.typekey).map(e=>Number(e.hours)).reduce((e,t)=>e+t,0);return Number(t)!==s?y(t,s,"hours",a):e.map(r).join("")},k=e=>{var t=e.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0);return 100!==t?y(100,t,"%",e):filterDups.map(r).join("")};var e=new URLSearchParams(document.location.search);!async function(e){var t,r,a,s,e=await fetch(e);try{var i=await e.json();t=i,s=stir.node("#content"),t.error?o(s,b()):(a=x(t.deliveries),r=k(t.assessments),a=d(t)+l()+v()+m()+u(t)+g(a,r)+c(t)+p(t)+h(t)+f(),o(s,a)),n()}catch(e){console.log(e.message)}}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[e.get("code"),e.get("session"),e.get("semester")].join("/"))}();
