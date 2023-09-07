@@ -41,12 +41,8 @@
           const valueInverted = 100 - perc;
           const textPosition = perc / 2 - 2;
 
-          const el = document.createElement("div");
-          el.classList.add("barchart-value");
-          el.style.right = valueInverted + "%";
-
-          entry.target.innerHTML = `<div class="barchart-text" style="left:${textPosition}%">${value}${unit}</div>`;
-          entry.target.appendChild(el);
+          const frag = stir.createDOMFragment(`<div class="barchart-value" style="right:${valueInverted}%"></div><div class="barchart-text" style="left:${textPosition}%">${value}${unit}</div>`);
+          entry.target.append(frag);
         } else {
           entry.target.innerHTML = ``;
         }
@@ -94,6 +90,19 @@
     const sections = document.querySelectorAll("main h2");
     sections.forEach((el) => {
       observerSections.observe(el);
+    });
+
+    /* 
+      Ensure correct anchor link is highlighted
+    */
+    const anchornavs = stir.nodes("[data-anchornav]");
+    anchornavs.forEach((item) => {
+      item.addEventListener("click", (event) => {
+        setTimeout(() => {
+          anchornavs.forEach((el) => el.classList.remove("current"));
+          event.target.classList.add("current");
+        }, 500);
+      });
     });
   }
 
@@ -380,7 +389,6 @@
                   ${renderDeliveries(deliveries, width)}
                   ${renderAssessment(assessments, width)}
               </div>
-
               <p>Are you an incoming Stirling student? You'll typically receive timetables for module-level
                   lectures one month prior
                   - and select seminars two weeks prior - to the start of your first semester. Help with module
@@ -400,21 +408,38 @@
 
   const renderError = () => renderSectionStart() + `<div class="cell u-padding-y"><h1>Page not found</h1></div>` + renderSectionEnd();
 
+  const renderDebugDataItem = (item) => {
+    if (item.category) {
+      return item.label + ` ` + item.category + `: ` + item.percent + ` %`;
+    }
+    return item.label + `: ` + item.hours + ` hours`;
+  };
+
+  const renderDebug = (total, sum, unit, data) => {
+    console.log(data);
+    return `<div class="u-heritage-berry u-border-solid u-p-1">
+              <p><strong>Error with the data</strong></p>
+              <p>Reported total: ${total} ${unit}<br>
+              Actual sum: ${sum} ${unit}</p>
+              ${data.map(renderDebugDataItem).join(`<br>`)} 
+            </div>`;
+  };
+
   /*
         HELPERS
   */
 
-  const removeDuplicateObjectFromArray = (key, array) => {
-    let check = {};
-    let res = [];
-    array.forEach((element) => {
-      if (!check[element[key]]) {
-        check[element[key]] = true;
-        res.push(element);
-      }
-    });
-    return res;
-  };
+  // const removeDuplicateObjectFromArray = (key, array) => {
+  //   let check = {};
+  //   let res = [];
+  //   array.forEach((element) => {
+  //     if (!check[element[key]]) {
+  //       check[element[key]] = true;
+  //       res.push(element);
+  //     }
+  //   });
+  //   return res;
+  // };
 
   /*
         CONTROLLERS
@@ -426,6 +451,8 @@
     const deliveriesTotalValue = deliveriesTotalItem.length ? deliveriesTotalItem[0].hours : null;
     const renderDeliverablesCurry = renderDeliverables(deliveriesTotalValue);
 
+    const deliveriesTotalFiltered = deliveries.filter((item) => item.typekey !== "total");
+
     const total = Number(deliveriesTotalValue);
     const sum = deliveries
       .filter((item) => item.typekey !== "total")
@@ -434,24 +461,24 @@
         return accumulator + currentValue;
       }, 0);
 
-    return Number(total) !== sum ? `` : deliveries.map(renderDeliverablesCurry).join(``);
+    return Number(total) !== sum ? renderDebug(total, sum, "hours", deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
   };
 
   // Assessments
   const doAssessments = (assessments) => {
-    const mapped = assessments.map((item) => {
-      return { ...item, match: item.label + item.category + item.percent };
-    });
+    // const mapped = assessments.map((item) => {
+    //   return { ...item, match: item.label + item.category + item.percent };
+    // });
 
-    const filterDups = removeDuplicateObjectFromArray("match", mapped);
+    // const filterDups = removeDuplicateObjectFromArray("match", mapped);
     const totalPercent = 100;
-    const sum = filterDups
+    const sum = assessments
       .map((item) => Number(item.percent))
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
 
-    return totalPercent !== sum ? `` : filterDups.map(renderAssessments).join(``);
+    return totalPercent !== sum ? renderDebug(totalPercent, sum, "%", assessments) : filterDups.map(renderAssessments).join(``);
   };
 
   // Main
