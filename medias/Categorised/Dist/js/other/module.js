@@ -1,4 +1,4 @@
-!function(){function s(){const t=document.querySelector(".c-sticky-nav");var e=document.querySelector("#c-sticky-nav-btn");e&&e.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")}),stir.nodes(".c-open-close").forEach(e=>{e.addEventListener("click",e=>{e.target.closest(".c-open-close").querySelectorAll(".c-open-close-icon").forEach(e=>e.classList.toggle("hide"))})});const r=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=t/Number(e.target.dataset.max)*100,a=stir.createDOMFragment(`<div class="barchart-value" style="right:${100-a}%"></div><div class="barchart-text" style="left:${a/2-2}%">${t}${r}</div>`),e.target.append(a)):e.target.innerHTML=""})},{root:null,threshold:.5});document.querySelectorAll(".barchart").forEach(e=>{r.observe(e)});const a=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;document.querySelectorAll("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.75}),s=(document.querySelectorAll("main h2").forEach(e=>{a.observe(e)}),stir.nodes("[data-anchornav]"));s.forEach(e=>{e.addEventListener("click",e=>{setTimeout(()=>{s.forEach(e=>e.classList.remove("current")),e.target.classList.add("current")},500)})})}const i=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),n=()=>`<div class="u-white--all u-sticky-nav ">
+!function(){function n(){var e=document.querySelectorAll(".c-open-close");const t=document.querySelector(".c-sticky-nav");var r=document.querySelector("#c-sticky-nav-btn");r&&r.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")}),e.forEach(e=>{e.addEventListener("click",e=>{e.target.closest(".c-open-close").querySelectorAll(".c-open-close-icon").forEach(e=>e.classList.toggle("hide"))})});const a=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a,s,i;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=100-(s=t/Number(e.target.dataset.max)*100),s=s/2-2,(i=document.createElement("div")).classList.add("barchart-value"),i.style.right=a+"%",e.target.innerHTML=`<div class="barchart-text" style="left:${s}%">${t}${r}</div>`,e.target.appendChild(i)):e.target.innerHTML=""})},{root:null,threshold:.5});document.querySelectorAll(".barchart").forEach(e=>{a.observe(e)});const s=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;document.querySelectorAll("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5});document.querySelectorAll("main h2").forEach(e=>{s.observe(e)})}const l=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),o=()=>`<div class="u-white--all u-sticky-nav ">
                     <nav class="u-relative u-bg-dark-mink" aria-label="Jump to section links">
                         <div class="grid-container u-py-1 hide-for-large">
                             <button class=" u-bg-black text-md text-left u-font-bold u-py-1 u-m-0 
@@ -14,7 +14,7 @@
                             class="u-absolute-medium-down u-bg-dark-mink hide-for-small-only hide-for-medium-only c-sticky-nav u-w-full">
                             <div class="grid-container u-py-1 u-pt-0-medium-down">
                                 <div class="flex-container flex-dir-column large-flex-dir-row u-gap-x-8 ">
-                                    <a href="#contentandaims" class="text-md u-font-bold u-p-1 u-m-0 current" data-anchornav>Content
+                                    <a href="#content" class="text-md u-font-bold u-p-1 u-m-0 current" data-anchornav>Content
                                         and aims</a>
                                     <a href="#teaching" class="text-md u-font-bold u-p-1 u-m-0 " data-anchornav>Teaching and
                                         assessment</a>
@@ -31,8 +31,9 @@
                             </div>
                         </div>
                     </nav>
-                </div>`,o=({moduletitle:e,modulecode:t,locationStudyMethods:r,modulelevel:a,modulecredits:s})=>`<div class="grid-container">
+                </div>`,d=({moduletitle:e,modulecode:t,locationStudyMethods:r,modulelevel:a,modulecredits:s})=>`<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
+
                         <div class="cell large-6  c-course-title u-padding-y">
                             <h1 class="u-header-smaller ">${e}</h1>
                         </div>
@@ -99,11 +100,11 @@
                             </div>
                         </div>
                     </div>
-                </div>`,l=stir.curry((e,{label:t,hours:r,typekey:a})=>"total"===a?d(r):`
+                </div>`,s=stir.curry((e,{label:t,hours:r,typekey:a})=>"total"===a?i(r):`
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${t}</span>
             <div class="barchart" data-value="${r}" data-max="${e}" data-unit=""></div>
-        </div>`),d=e=>`<div class="u-bg-energy-teal--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
+        </div>`),i=e=>`<div class="u-bg-energy-teal--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
                 <strong class="u-flex1">Total workload</strong>
                 <strong>${e} hours</strong>
             </div>`,t=({label:e,category:t,percent:r})=>"0"===r?"":`
@@ -111,7 +112,7 @@
             <span class="u-inline-block u-p-tiny u-px-1">${e} (${t})</span>
             <div class="barchart" data-value="${r}" data-max="100" data-unit="%"></div>
         </div>`,u=({moduleOverview:e,...t})=>`<div class="cell u-p-2">
-                <h2 id="contentandaims">Content and aims</h2>
+                <h2 id="content">Content and aims</h2>
 
                 <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">
                     Module overview
@@ -159,18 +160,18 @@
                 ${e=e,e?`<p>Pre-requisites: ${e}</p>`:""}
 
                 <p>Co-requisites: This module must be studied in conjunction with: module name (code)</p>
-            </div>`},p=({preparedotherinformation:e,...t})=>`<div class="cell u-mt-2">
+            </div>`},p=e=>`<div class="cell u-mt-2">
                     <h2 id="further">Further details</h2>
                     
-                    ${e?`<h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3>
-            <p>${e}</p>`:""}
+                    ${e.preparedotherinformation?`<h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3>
+            <p>${e.preparedotherinformation}</p>`:""}
                    
                     <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
-                    ${"Yes"===t["studyAbroad "]?`<p>This module is available to suitably-qualified undergraduate students studying elsewhere in the
+                    ${"Yes"===e["studyAbroad "]?`<p>This module is available to suitably-qualified undergraduate students studying elsewhere in the
                         world who wish to join Stirling for a semester or academic year. <a href="">Learn more</a></p>`:"<p>Not available</p>"}
                     
                     <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
-                    <p>${t["additionalCosts "]}</p>
+                    <p>${e["additionalCosts "]}</p>
                 </div>`,g=(e,t)=>{var r,a=e&&t?"6":"12";return e||t?`<div class="cell u-mt-2">
               <h2 id="teaching">Teaching and assessment</h2>
 
@@ -196,4 +197,4 @@
                   site</p>
         </div>`:""},m=()=>`<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
             information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
-            to change. <a href="#">See terms and conditions</a>.</p></div>`,v=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',f=()=>"</div></div>",b=()=>v()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+f(),w=e=>{var t=e.filter(e=>"total"===e.typekey),t=t.length?t[0].hours:null,r=l(t),t=Number(t),a=e.filter(e=>"total"!==e.typekey).map(e=>Number(e.hours)).reduce((e,t)=>e+t,0);return Number(t)!==a?"":e.map(r).join("")},y=e=>{e=((t,e)=>{let r={},a=[];return e.forEach(e=>{r[e[t]]||(r[e[t]]=!0,a.push(e))}),a})("match",e.map(e=>({...e,match:e.label+e.category+e.percent})));return 100!==e.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0)?"":e.map(t).join("")};var e=new URLSearchParams(document.location.search);!async function(e){fetch(e).then(e=>e.json()).then(e=>{var t,r,a;e=e,a=stir.node("#content"),e.error?i(a,b()):(r=w(e.deliveries),t=y(e.assessments),r=o(e)+n()+v()+m()+u(e)+g(r,t)+c(e)+h(e)+p(e)+f(),i(a,r)),s()}).catch(e=>{console.log(e.message)})}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[e.get("code"),e.get("session"),e.get("semester")].join("/"))}();
+            to change. <a href="#">See terms and conditions</a>.</p></div>`,v=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',f=()=>"</div></div>",b=()=>v()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+f(),w=e=>{var t=e.filter(e=>"total"===e.typekey),t=t.length?t[0].hours:null,r=s(t),t=Number(t),a=e.filter(e=>"total"!==e.typekey).map(e=>Number(e.hours)).reduce((e,t)=>e+t,0);return Number(t)!==a?"":e.map(r).join("")},y=e=>{e=((t,e)=>{let r={},a=[];return e.forEach(e=>{r[e[t]]||(r[e[t]]=!0,a.push(e))}),a})("match",e.map(e=>({...e,match:e.label+e.category+e.percent})));return 100!==e.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0)?"":e.map(t).join("")};var e=new URLSearchParams(document.location.search);!async function(e){var t,r,a,s,e=await fetch(e);try{var i=await e.json();t=i,s=stir.node("#content"),t.error?l(s,b()):(a=w(t.deliveries),r=y(t.assessments),a=d(t)+o()+v()+m()+u(t)+g(a,r)+c(t)+h(t)+p(t)+f(),l(s,a)),n()}catch(e){console.log(e.message)}}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[e.get("code"),e.get("session"),e.get("semester")].join("/"))}();

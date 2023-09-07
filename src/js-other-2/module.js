@@ -7,7 +7,7 @@
   function addEventListeners() {
     // Sticky nav
     //const openCloseSelector = ".c-open-close";
-
+    const openCloseBtns = document.querySelectorAll(".c-open-close");
     const stickyNav = document.querySelector(".c-sticky-nav");
     const stickyNavBtn = document.querySelector("#c-sticky-nav-btn");
 
@@ -17,7 +17,6 @@
         stickyNav.classList.toggle("hide-for-medium-only");
       });
 
-    const openCloseBtns = stir.nodes(".c-open-close");
     openCloseBtns.forEach((el) => {
       el.addEventListener("click", (event) => {
         const btn = event.target.closest(".c-open-close");
@@ -30,7 +29,7 @@
     /*
         BARCHART ANIMATION TRIGGER 
     */
-    function onIntersectionBarcharts(entries, opts) {
+    function onIntersection(entries, opts) {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const value = Number(entry.target.dataset.value);
@@ -42,9 +41,12 @@
           const valueInverted = 100 - perc;
           const textPosition = perc / 2 - 2;
 
-          const frag = stir.createDOMFragment(`<div class="barchart-value" style="right:${valueInverted}%"></div><div class="barchart-text" style="left:${textPosition}%">${value}${unit}</div>`);
+          const el = document.createElement("div");
+          el.classList.add("barchart-value");
+          el.style.right = valueInverted + "%";
 
-          entry.target.append(frag);
+          entry.target.innerHTML = `<div class="barchart-text" style="left:${textPosition}%">${value}${unit}</div>`;
+          entry.target.appendChild(el);
         } else {
           entry.target.innerHTML = ``;
         }
@@ -52,7 +54,7 @@
     }
 
     // define observer instances
-    const observerBarcharts = new IntersectionObserver(onIntersectionBarcharts, {
+    const observerBarcharts = new IntersectionObserver(onIntersection, {
       root: null,
       threshold: 0.5,
     });
@@ -65,7 +67,7 @@
     /*
         SECTION SCROLL TRIGGER
     */
-    function onIntersectionSections(entries, opts) {
+    function onIntersection2(entries, opts) {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const currentSection = entry.target.innerText;
@@ -84,29 +86,16 @@
       });
     }
 
-    const observerSections = new IntersectionObserver(onIntersectionSections, {
+    const observerSections = new IntersectionObserver(onIntersection2, {
       root: null,
-      threshold: 0.75,
+      threshold: 0.5,
     });
 
     const sections = document.querySelectorAll("main h2");
     sections.forEach((el) => {
       observerSections.observe(el);
     });
-
-    /* 
-      Ensure correct anchor link is highlighted
-    */
-    const anchornavs = stir.nodes("[data-anchornav]");
-    anchornavs.forEach((item) => {
-      item.addEventListener("click", (event) => {
-        setTimeout(() => {
-          anchornavs.forEach((el) => el.classList.remove("current"));
-          event.target.classList.add("current");
-        }, 500);
-      });
-    });
-  } // addListerners
+  }
 
   /* 
   
@@ -144,7 +133,7 @@
                             class="u-absolute-medium-down u-bg-dark-mink hide-for-small-only hide-for-medium-only c-sticky-nav u-w-full">
                             <div class="grid-container u-py-1 u-pt-0-medium-down">
                                 <div class="flex-container flex-dir-column large-flex-dir-row u-gap-x-8 ">
-                                    <a href="#contentandaims" class="text-md u-font-bold u-p-1 u-m-0 current" data-anchornav>Content
+                                    <a href="#content" class="text-md u-font-bold u-p-1 u-m-0 current" data-anchornav>Content
                                         and aims</a>
                                     <a href="#teaching" class="text-md u-font-bold u-p-1 u-m-0 " data-anchornav>Teaching and
                                         assessment</a>
@@ -167,6 +156,7 @@
   const renderHeader = ({ moduletitle, modulecode, locationStudyMethods, modulelevel, modulecredits }) => {
     return `<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
+
                         <div class="cell large-6  c-course-title u-padding-y">
                             <h1 class="u-header-smaller ">${moduletitle}</h1>
                         </div>
@@ -265,7 +255,7 @@
 
   const renderContentAims = ({ moduleOverview, ...data }) => {
     return `<div class="cell u-p-2">
-                <h2 id="contentandaims">Content and aims</h2>
+                <h2 id="content">Content and aims</h2>
 
                 <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">
                     Module overview
@@ -342,11 +332,11 @@
             <p>${preparedotherinformation}</p>`;
   };
 
-  const renderFurtherDetails = ({ preparedotherinformation, ...data }) => {
+  const renderFurtherDetails = (data) => {
     return `<div class="cell u-mt-2">
                     <h2 id="further">Further details</h2>
                     
-                    ${preparedotherinformation ? renderSupportingInfo(preparedotherinformation) : ``}
+                    ${data.preparedotherinformation ? renderSupportingInfo(data.preparedotherinformation) : ``}
                    
                     <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
                     ${data["studyAbroad "] === "Yes" ? renderStudyAbroad() : `<p>Not available</p>`}
@@ -481,17 +471,15 @@
         Init: Get the data and proceed
   */
   async function getData(fetchUrl) {
-    fetch(fetchUrl)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        main(data);
-        addEventListeners();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    const response = await fetch(fetchUrl);
+
+    try {
+      const data = await response.json();
+      main(data);
+      addEventListeners();
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   /*
@@ -501,5 +489,6 @@
   const queryparams = new URLSearchParams(document.location.search);
   const fetchUrl = url + [queryparams.get("code"), queryparams.get("session"), queryparams.get("semester")].join("/");
 
+  //console.log(fetchUrl);
   getData(fetchUrl);
 })();
