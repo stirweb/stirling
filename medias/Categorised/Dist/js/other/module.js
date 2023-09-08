@@ -1,4 +1,4 @@
-!function(){function n(){var e=document.querySelectorAll(".c-open-close");const t=document.querySelector(".c-sticky-nav");var r=document.querySelector("#c-sticky-nav-btn");r&&r.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")}),e.forEach(e=>{e.addEventListener("click",e=>{e.target.closest(".c-open-close").querySelectorAll(".c-open-close-icon").forEach(e=>e.classList.toggle("hide"))})});const a=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=t/Number(e.target.dataset.max)*100,a=stir.createDOMFragment(`<div class="barchart-value" style="right:${100-a}%"></div><div class="barchart-text" style="left:${a/2-2}%">${t}${r}</div>`),e.target.append(a)):e.target.innerHTML=""})},{root:null,threshold:.5});document.querySelectorAll(".barchart").forEach(e=>{a.observe(e)});const s=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;document.querySelectorAll("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5}),i=(document.querySelectorAll("main h2").forEach(e=>{s.observe(e)}),stir.nodes("[data-anchornav]"));i.forEach(e=>{e.addEventListener("click",e=>{setTimeout(()=>{i.forEach(e=>e.classList.remove("current")),e.target.classList.add("current")},500)})})}const o=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),l=()=>`<div class="u-white--all u-sticky-nav ">
+!function(){function n(){stir.nodes(".c-open-close").forEach(e=>{e.addEventListener("click",e=>{e=e.target.closest(".c-open-close");Array.prototype.slice.call(e.querySelectorAll(".c-open-close-icon")).forEach(e=>e.classList.toggle("hide"))})});const t=document.querySelector(".c-sticky-nav");var e=document.querySelector("#c-sticky-nav-btn");e&&e.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")});const r=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=t/Number(e.target.dataset.max)*100,a=stir.createDOMFragment(`<div class="barchart-value" style="right:${100-a}%"></div><div class="barchart-text" style="left:${a/2-2}%">${t}${r}</div>`),e.target.append(a)):e.target.innerHTML=""})},{root:null,threshold:.5});stir.nodes(".barchart").forEach(e=>{r.observe(e)});const a=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;stir.nodes("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5}),s=(stir.nodes("main h2").forEach(e=>{a.observe(e)}),stir.nodes("[data-anchornav]"));s.forEach(e=>{e.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only"),setTimeout(()=>{s.forEach(e=>e.classList.remove("current")),e.target.classList.add("current")},500)})})}const o=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),l=()=>`<div class="u-white--all u-sticky-nav ">
                     <nav class="u-relative u-bg-dark-mink" aria-label="Jump to section links">
                         <div class="grid-container u-py-1 hide-for-large">
                             <button class=" u-bg-black text-md text-left u-font-bold u-py-1 u-m-0 
@@ -14,7 +14,7 @@
                             class="u-absolute-medium-down u-bg-dark-mink hide-for-small-only hide-for-medium-only c-sticky-nav u-w-full">
                             <div class="grid-container u-py-1 u-pt-0-medium-down">
                                 <div class="flex-container flex-dir-column large-flex-dir-row u-gap-x-8 ">
-                                    <a href="#content" class="text-md u-font-bold u-p-1 u-m-0 current" data-anchornav>Content
+                                    <a href="#contentandaims" class="text-md u-font-bold u-p-1 u-m-0 current" data-anchornav>Content
                                         and aims</a>
                                     <a href="#teaching" class="text-md u-font-bold u-p-1 u-m-0 " data-anchornav>Teaching and
                                         assessment</a>
@@ -112,7 +112,7 @@
             <span class="u-inline-block u-p-tiny u-px-1">${e} (${t})</span>
             <div class="barchart" data-value="${r}" data-max="100" data-unit="%"></div>
         </div>`,u=({moduleOverview:e,...t})=>`<div class="cell u-p-2">
-                <h2 id="content">Content and aims</h2>
+                <h2 id="contentandaims">Content and aims</h2>
 
                 <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">
                     Module overview
