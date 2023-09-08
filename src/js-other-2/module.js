@@ -365,7 +365,7 @@
   const renderDeliveries = (deliveries, width) => {
     return !deliveries
       ? ``
-      : `<div class="cell large-${width}">
+      : `<div class="cell large-${width} u-mb-1">
             <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
             ${deliveries}
         </div>`;
@@ -374,7 +374,7 @@
   const renderAssessment = (assessments, width) => {
     return !assessments
       ? ``
-      : `<div class="cell large-${width}">
+      : `<div class="cell large-${width} u-mb-1">
             <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Assessment overview</h3>
             ${assessments}
         </div>`;
