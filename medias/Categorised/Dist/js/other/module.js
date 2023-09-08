@@ -180,11 +180,11 @@
                   (e.g. lectures), assessments and self-study.</p>
 
               <div class="grid-x grid-padding-x u-my-2">
-                  ${e=e,r=a,e?`<div class="cell large-${r}">
+                  ${e=e,r=a,e?`<div class="cell large-${r} u-mb-1">
             <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
             ${e}
         </div>`:""}
-                  ${r=t,e=a,r?`<div class="cell large-${e}">
+                  ${r=t,e=a,r?`<div class="cell large-${e} u-mb-1">
             <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Assessment overview</h3>
             ${r}
         </div>`:""}
