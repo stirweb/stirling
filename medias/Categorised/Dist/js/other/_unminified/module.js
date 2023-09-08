@@ -410,18 +410,18 @@
 
   const renderDebugDataItem = (item) => {
     if (item.category) {
-      return item.label + ` ` + item.category + `: ` + item.percent + ` %`;
+      return `<div class="flex-container u-border-bottom-solid u-p-tiny"><span class="u-flex1">${item.label} (${item.category})</span><span>${item.percent}%</span></div>`;
     }
-    return item.label + `: ` + item.hours + ` hours`;
+    return `<div class="flex-container u-border-bottom-solid u-p-tiny"><span class="u-flex1">${item.label} (hours)</span><span>${item.hours}</span></div>`;
   };
 
   const renderDebug = (total, sum, unit, data) => {
     console.log(data);
-    return `<div class="u-heritage-berry u-border-solid u-p-1">
+    return `<div class="u-border-solid u-p-1" style="color:#d51212">
               <p><strong>Error with the data</strong></p>
               <p>Reported total: ${total} ${unit}<br>
-              Actual sum: ${sum} ${unit}</p>
-              ${data.map(renderDebugDataItem).join(`<br>`)} 
+              Actual sum: ${sum} </p>
+              ${data.map(renderDebugDataItem).join(``)} 
             </div>`;
   };
 
@@ -461,7 +461,7 @@
         return accumulator + currentValue;
       }, 0);
 
-    return Number(total) !== sum ? renderDebug(total, sum, "hours", deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
+    return Number(total) !== sum ? renderDebug(total, sum, `Hours (Total Study Time)`, deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
   };
 
   // Assessments
@@ -478,7 +478,7 @@
         return accumulator + currentValue;
       }, 0);
 
-    return totalPercent !== sum ? renderDebug(totalPercent, sum, "%", assessments) : filterDups.map(renderAssessments).join(``);
+    return totalPercent !== sum ? renderDebug(totalPercent, sum, "(Percent)", assessments) : filterDups.map(renderAssessments).join(``);
   };
 
   // Main
