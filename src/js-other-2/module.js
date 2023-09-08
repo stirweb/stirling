@@ -5,9 +5,23 @@
 
   */
   function addEventListeners() {
-    // Sticky nav
     //const openCloseSelector = ".c-open-close";
-    const openCloseBtns = document.querySelectorAll(".c-open-close");
+
+    /*
+        Generic open close component
+    */
+    const openCloseBtns = stir.nodes(".c-open-close");
+    openCloseBtns.forEach((el) => {
+      el.addEventListener("click", (event) => {
+        const btn = event.target.closest(".c-open-close");
+        const openCloseIcons = Array.prototype.slice.call(btn.querySelectorAll(".c-open-close-icon"));
+        openCloseIcons.forEach((item) => item.classList.toggle("hide"));
+      });
+    });
+
+    /*
+        Sticky nav
+    */
     const stickyNav = document.querySelector(".c-sticky-nav");
     const stickyNavBtn = document.querySelector("#c-sticky-nav-btn");
 
@@ -16,15 +30,6 @@
         stickyNav.classList.toggle("hide-for-small-only");
         stickyNav.classList.toggle("hide-for-medium-only");
       });
-
-    openCloseBtns.forEach((el) => {
-      el.addEventListener("click", (event) => {
-        const btn = event.target.closest(".c-open-close");
-        const openCloseIcons = btn.querySelectorAll(".c-open-close-icon");
-
-        openCloseIcons.forEach((item) => item.classList.toggle("hide"));
-      });
-    });
 
     /*
         BARCHART ANIMATION TRIGGER 
@@ -37,7 +42,6 @@
           const max = Number(entry.target.dataset.max);
 
           const perc = (value / max) * 100;
-
           const valueInverted = 100 - perc;
           const textPosition = perc / 2 - 2;
 
@@ -55,7 +59,7 @@
       threshold: 0.5,
     });
 
-    const barcharts = document.querySelectorAll(".barchart");
+    const barcharts = stir.nodes(".barchart");
     barcharts.forEach((el) => {
       observerBarcharts.observe(el);
     });
@@ -67,7 +71,7 @@
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const currentSection = entry.target.innerText;
-          const navItems = document.querySelectorAll("[data-anchornav]");
+          const navItems = stir.nodes("[data-anchornav]");
           //console.log(currentSection);
 
           navItems.forEach((item) => {
@@ -87,7 +91,7 @@
       threshold: 0.5,
     });
 
-    const sections = document.querySelectorAll("main h2");
+    const sections = stir.nodes("main h2");
     sections.forEach((el) => {
       observerSections.observe(el);
     });
@@ -98,6 +102,9 @@
     const anchornavs = stir.nodes("[data-anchornav]");
     anchornavs.forEach((item) => {
       item.addEventListener("click", (event) => {
+        stickyNav.classList.toggle("hide-for-small-only");
+        stickyNav.classList.toggle("hide-for-medium-only");
+
         setTimeout(() => {
           anchornavs.forEach((el) => el.classList.remove("current"));
           event.target.classList.add("current");
@@ -142,7 +149,7 @@
                             class="u-absolute-medium-down u-bg-dark-mink hide-for-small-only hide-for-medium-only c-sticky-nav u-w-full">
                             <div class="grid-container u-py-1 u-pt-0-medium-down">
                                 <div class="flex-container flex-dir-column large-flex-dir-row u-gap-x-8 ">
-                                    <a href="#content" class="text-md u-font-bold u-p-1 u-m-0 current" data-anchornav>Content
+                                    <a href="#contentandaims" class="text-md u-font-bold u-p-1 u-m-0 current" data-anchornav>Content
                                         and aims</a>
                                     <a href="#teaching" class="text-md u-font-bold u-p-1 u-m-0 " data-anchornav>Teaching and
                                         assessment</a>
@@ -264,7 +271,7 @@
 
   const renderContentAims = ({ moduleOverview, ...data }) => {
     return `<div class="cell u-p-2">
-                <h2 id="content">Content and aims</h2>
+                <h2 id="contentandaims">Content and aims</h2>
 
                 <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">
                     Module overview
