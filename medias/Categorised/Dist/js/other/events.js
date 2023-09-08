@@ -36,7 +36,7 @@
                 <div class="flex-container flex-dir-column u-gap-8 u-mb-1">
                     <div class="flex-container u-gap-16 align-middle">
                         <span class="u-icon h5 uos-calendar"></span>
-                        <span><time datetime="${t.start}">${t.stirStart}</time> – <time datetime="${t.end}">${t.stirEnd}</time></span>
+                        <span><time datetime="${t.start}">${t.stirStart}</time> ${o(t.start,t.end,t.stirEnd)}</span>
                     </div>
                     ${u(t)}
                     <div class="flex-container u-gap-16 align-middle">
