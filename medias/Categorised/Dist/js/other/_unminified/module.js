@@ -485,7 +485,7 @@
         return accumulator + currentValue;
       }, 0);
 
-    return totalPercent !== sum ? renderDebug(totalPercent, sum, "(Percent)", assessments) : filterDups.map(renderAssessments).join(``);
+    return totalPercent !== sum ? renderDebug(totalPercent, sum, "(Percent)", assessments) : assessments.map(renderAssessments).join(``);
   };
 
   // Main
