@@ -612,12 +612,24 @@ stir.search = () => {
 
 	const tokenHandler = event => {
 		if(!event || !event.target) return;
+
+		/**
+		 * selector	the CSS selector for the <input> element we want to toggle
+		 * root: 	the "root" element to search within (the closest `data-panel`
+		 * 			should contain the search tokens, results and filters) in
+		 * 			other words only look among the filters for the current
+		 * 			search panel, and don't toggle any filters in other panels!
+		 * 			(Noticed this becuase `faculty` is common to courses and news)
+		 * input	the input element we want to toggle
+		 */
 		const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
-		const input = document.querySelector(selector);
+		const root = event.target.closest("[data-panel]") || document;
+		const input = root.querySelector(selector);
+
 		if (input) {
-			input.checked = !input.checked;
-			event.target.parentElement.removeChild(event.target);
-			initialSearch();
+			input.checked = !input.checked;	// toggle it
+			event.target.parentElement.removeChild(event.target); // remove the token
+			initialSearch();	// resubmit the search for fresh results
 		} else {
 			const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
 			const select = document.querySelector(sel2);

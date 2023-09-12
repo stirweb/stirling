@@ -233,7 +233,7 @@ stir.templates.search = (() => {
       if (labels.findIndex) {
         return labels[labels.findIndex((val) => label === val.toLowerCase())];
       } else if (labels[label]) return labels[label];
-      return label; // + ' [fallback]';
+      return label;
     };
   })();
 
@@ -637,21 +637,18 @@ stir.templates.search = (() => {
 				<div data-behaviour=accordion>
 					<accordion-summary>${item.name}</accordion-summary>
 					<div>
-						<ul>${item.allValues
-              .map(
-                (facetValue) =>
-                  `<li>
-									<label>
-										<input type=${facetDisplayTypes[item.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
-										${facetCategoryLabel(item.name, facetValue.label)}
-										<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
-									</label>
-								</li>`
-              )
-              .join("")}</ul>
+						<ul>${item.allValues.filter(facetValue=>facetCategoryLabel(item.name, facetValue.label)).map(stir.templates.search.labelledFacetItems(item)).join("")}</ul>
 					</div>
 				</div>
 			</fieldset>`,
+	labelledFacetItems: stir.curry((facet, facetValue) =>`
+	<li>
+		<label>
+			<input type=${facetDisplayTypes[facet.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
+			${facetCategoryLabel(facet.name, facetValue.label)}
+			<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
+		</label>
+	</li>`)
   };
 })();
 
@@ -1671,12 +1668,24 @@ stir.search = () => {
 
 	const tokenHandler = event => {
 		if(!event || !event.target) return;
+
+		/**
+		 * selector	the CSS selector for the <input> element we want to toggle
+		 * root: 	the "root" element to search within (the closest `data-panel`
+		 * 			should contain the search tokens, results and filters) in
+		 * 			other words only look among the filters for the current
+		 * 			search panel, and don't toggle any filters in other panels!
+		 * 			(Noticed this becuase `faculty` is common to courses and news)
+		 * input	the input element we want to toggle
+		 */
 		const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
-		const input = document.querySelector(selector);
+		const root = event.target.closest("[data-panel]") || document;
+		const input = root.querySelector(selector);
+
 		if (input) {
-			input.checked = !input.checked;
-			event.target.parentElement.removeChild(event.target);
-			initialSearch();
+			input.checked = !input.checked;	// toggle it
+			event.target.parentElement.removeChild(event.target); // remove the token
+			initialSearch();	// resubmit the search for fresh results
 		} else {
 			const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
 			const select = document.querySelector(sel2);

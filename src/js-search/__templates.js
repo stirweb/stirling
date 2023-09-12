@@ -216,7 +216,7 @@ stir.templates.search = (() => {
       if (labels.findIndex) {
         return labels[labels.findIndex((val) => label === val.toLowerCase())];
       } else if (labels[label]) return labels[label];
-      return label; // + ' [fallback]';
+      return label;
     };
   })();
 
@@ -620,20 +620,17 @@ stir.templates.search = (() => {
 				<div data-behaviour=accordion>
 					<accordion-summary>${item.name}</accordion-summary>
 					<div>
-						<ul>${item.allValues
-              .map(
-                (facetValue) =>
-                  `<li>
-									<label>
-										<input type=${facetDisplayTypes[item.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
-										${facetCategoryLabel(item.name, facetValue.label)}
-										<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
-									</label>
-								</li>`
-              )
-              .join("")}</ul>
+						<ul>${item.allValues.filter(facetValue=>facetCategoryLabel(item.name, facetValue.label)).map(stir.templates.search.labelledFacetItems(item)).join("")}</ul>
 					</div>
 				</div>
 			</fieldset>`,
+	labelledFacetItems: stir.curry((facet, facetValue) =>`
+	<li>
+		<label>
+			<input type=${facetDisplayTypes[facet.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
+			${facetCategoryLabel(facet.name, facetValue.label)}
+			<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
+		</label>
+	</li>`)
   };
 })();
