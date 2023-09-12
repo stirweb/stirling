@@ -131,7 +131,7 @@
             </div>`,c=({modulecredits:e,ectsmodulecredits:t,professionalAccreditation:r})=>{return`<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
 
-                <h3 class="header-stripped u-bg-heritage-purple--5 u-p-1 u-heritage-purple-line-left u-border-width-5 u-text-regular">Credits</h3>
+                <h3 class="header-stripped u-bg-energy-purple--5 u-p-1 u-energy-purple-line-left u-border-width-5 u-text-regular">Credits</h3>
 
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173616" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" />
                     This module is worth ${e} SCQF (Scottish Credit and Qualifications Framework) credits</p>
@@ -139,8 +139,8 @@
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173615" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" /> 
                     This equates to ${t} ECTS (The European Credit Transfer and Accumulation System) credits</p>
 
-                <div class="u-mb-2 u-bg-heritage-purple--5 flex-container align-stretch ">
-                    <span class="u-bg-heritage-purple u-white flex-container align-middle u-width-64 u-px-1 ">
+                <div class="u-mb-2 u-bg-energy-purple--5 flex-container align-stretch ">
+                    <span class="u-bg-energy-purple u-white flex-container align-middle u-width-64 u-px-1 ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="svg-icon">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -150,10 +150,10 @@
                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg></span>
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
-                        <a href="#" class="u-heritage-purple">Assessment and award of credit for undergraduates</a></p>
+                        <a href="#" class="u-energy-purple">Assessment and award of credit for undergraduates</a></p>
                 </div>
 
-                ${e=r,e?`<h3 class="header-stripped u-bg-heritage-purple--5 u-p-1 u-heritage-purple-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
+                ${e=r,e?`<h3 class="header-stripped u-bg-energy-purple--5 u-p-1 u-energy-purple-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
           <p>${e}</p>`:""}
             </div>`},p=({modulerequisites:e})=>{return`<div class="cell u-mt-2">
                 <h2 id="requirements">Study requirements</h2>
