@@ -40,12 +40,13 @@
           const value = Number(entry.target.dataset.value);
           const unit = entry.target.dataset.unit;
           const max = Number(entry.target.dataset.max);
+          const colour = entry.target.dataset.colour || "energy-turq";
 
           const perc = (value / max) * 100;
           const valueInverted = 100 - perc;
           const textPosition = perc / 2 - 2;
 
-          const frag = stir.createDOMFragment(`<div class="barchart-value" style="right:${valueInverted}%"></div><div class="barchart-text" style="left:${textPosition}%">${value}${unit}</div>`);
+          const frag = stir.createDOMFragment(`<div class="barchart-value u-bg-${colour}" style="right:${valueInverted}%"></div><div class="barchart-text" style="left:${textPosition}%">${value}${unit}</div>`);
           entry.target.append(frag);
         } else {
           entry.target.innerHTML = ``;
@@ -121,10 +122,10 @@
   */
   const url = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=";
 
-  const setDOMContent = stir.curry((node, html) => {
-    stir.setHTML(node, html);
-    return true;
-  });
+  const colours = [
+    { level: "UG", first: "heritage-green", second: "energy-turq", third: "energy-purple" },
+    { level: "PG", first: "heritage-purple", second: "heritage-purple", third: "heritage-green" },
+  ];
 
   /* 
 
@@ -242,43 +243,22 @@
                 </div>`;
   };
 
-  const renderDeliverables = stir.curry((total, { label, hours, typekey }) => {
-    return typekey === "total"
-      ? renderDeliverablesTotal(hours)
-      : `
-        <div>
-            <span class="u-inline-block u-p-tiny u-px-1">${label}</span>
-            <div class="barchart" data-value="${hours}" data-max="${total}" data-unit=""></div>
-        </div>`;
-  });
-
-  const renderDeliverablesTotal = (hours) => {
-    return `<div class="u-bg-energy-teal--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
-                <strong class="u-flex1">Total workload</strong>
-                <strong>${hours} hours</strong>
-            </div>`;
+  const renderIntro = () => {
+    return `<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
+            information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
+            to change. <a href="#">See terms and conditions</a>.</p></div>`;
   };
 
-  const renderAssessments = ({ label, category, percent }) => {
-    return percent === "0"
-      ? ``
-      : `
-        <div>
-            <span class="u-inline-block u-p-tiny u-px-1">${label} (${category})</span>
-            <div class="barchart" data-value="${percent}" data-max="100" data-unit="%"></div>
-        </div>`;
-  };
-
-  const renderContentAims = ({ moduleOverview, ...data }) => {
+  const renderContentAims = ({ moduleOverview, colourPack, ...data }) => {
     return `<div class="cell u-p-2">
                 <h2 id="contentandaims">Content and aims</h2>
 
-                <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">
+                <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1  u-border-width-5 u-text-regular">
                     Module overview
                 </h3>
                 ${moduleOverview}
 
-                <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">
+                <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1 u-border-width-5 u-text-regular">
                     Learning outcomes
                 </h3>
 
@@ -290,18 +270,18 @@
             </div>`;
   };
 
-  const renderAccreditation = (professionalAccreditation) => {
+  const renderAccreditation = (professionalAccreditation, colour) => {
     return !professionalAccreditation
       ? ``
-      : `<h3 class="header-stripped u-bg-energy-purple--5 u-p-1 u-energy-purple-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
+      : `<h3 class="header-stripped u-bg-${colour}--10 u-p-1 u-${colour}-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
           <p>${professionalAccreditation}</p>`;
   };
 
-  const renderAwards = ({ modulecredits, ectsmodulecredits, professionalAccreditation }) => {
+  const renderAwards = ({ modulecredits, ectsmodulecredits, professionalAccreditation, colourPack }) => {
     return `<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
 
-                <h3 class="header-stripped u-bg-energy-purple--5 u-p-1 u-energy-purple-line-left u-border-width-5 u-text-regular">Credits</h3>
+                <h3 class="header-stripped u-bg-${colourPack.third}--10 u-p-1 u-${colourPack.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
 
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173616" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" />
                     This module is worth ${modulecredits} SCQF (Scottish Credit and Qualifications Framework) credits</p>
@@ -309,8 +289,8 @@
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173615" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" /> 
                     This equates to ${ectsmodulecredits} ECTS (The European Credit Transfer and Accumulation System) credits</p>
 
-                <div class="u-mb-2 u-bg-energy-purple--5 flex-container align-stretch ">
-                    <span class="u-bg-energy-purple u-white flex-container align-middle u-width-64 u-px-1 ">
+                <div class="u-mb-2 u-bg-${colourPack.third}--10 flex-container align-stretch ">
+                    <span class="u-bg-${colourPack.third} u-white flex-container align-middle u-width-64 u-px-1 ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="svg-icon">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -320,10 +300,10 @@
                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg></span>
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
-                        <a href="#" class="u-energy-purple">Assessment and award of credit for undergraduates</a></p>
+                        <a href="#" class="u-${colourPack.third}">Assessment and award of credit for undergraduates</a></p>
                 </div>
 
-                ${renderAccreditation(professionalAccreditation)}
+                ${renderAccreditation(professionalAccreditation, colourPack.third)}
             </div>`;
   };
 
@@ -344,7 +324,7 @@
   };
 
   const renderSupportingInfo = (preparedotherinformation) => {
-    return `<h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3>
+    return `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3>
             <p>${preparedotherinformation}</p>`;
   };
 
@@ -354,33 +334,60 @@
                     
                     ${data.preparedotherinformation ? renderSupportingInfo(data.preparedotherinformation) : ``}
                    
-                    <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
+                    <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
                     ${data["studyAbroad "] === "Yes" ? renderStudyAbroad() : `<p>Not available</p>`}
                     
-                    <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
+                    <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
                     <p>${data["additionalCosts "]}</p>
                 </div>`;
   };
 
-  const renderDeliveries = (deliveries, width) => {
+  const renderDeliveries = (deliveries, width, colourPack) => {
     return !deliveries
       ? ``
       : `<div class="cell large-${width} u-mb-1">
-            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
+            <h3 class="header-stripped u-bg-${colourPack.second}--10 u-p-1 u-${colourPack.second}-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
             ${deliveries}
         </div>`;
   };
 
-  const renderAssessment = (assessments, width) => {
+  const renderAssessment = (assessments, width, colourPack) => {
     return !assessments
       ? ``
       : `<div class="cell large-${width} u-mb-1">
-            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Assessment overview</h3>
+            <h3 class="header-stripped u-bg-${colourPack.second}--10 u-p-1 u-${colourPack.second}-line-left u-border-width-5 u-text-regular">Assessment overview</h3>
             ${assessments}
         </div>`;
   };
 
-  const renderTeachingAssessment = (deliveries, assessments) => {
+  const renderDeliverablesTotal = (hours, colourPack) => {
+    return `<div class="u-bg-${colourPack.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
+                <strong class="u-flex1">Total workload</strong>
+                <strong>${hours} hours</strong>
+            </div>`;
+  };
+
+  const renderDeliverables = stir.curry((colourPack, total, { label, hours, typekey }) => {
+    return typekey === "total"
+      ? renderDeliverablesTotal(hours, colourPack)
+      : `
+        <div>
+            <span class="u-inline-block u-p-tiny u-px-1">${label}</span>
+            <div class="barchart" data-value="${hours}" data-max="${total}" data-unit="" data-colour="${colourPack.second}"></div>
+        </div>`;
+  });
+
+  const renderAssessments = stir.curry((colourPack, { label, category, percent }) => {
+    return percent === "0"
+      ? ``
+      : `
+        <div>
+            <span class="u-inline-block u-p-tiny u-px-1">${label} (${category})</span>
+            <div class="barchart" data-value="${percent}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
+        </div>`;
+  });
+
+  const renderTeachingAssessment = (deliveries, assessments, colourPack) => {
     const width = !deliveries || !assessments ? `12` : `6`;
 
     return !deliveries && !assessments
@@ -393,8 +400,8 @@
                   (e.g. lectures), assessments and self-study.</p>
 
               <div class="grid-x grid-padding-x u-my-2">
-                  ${renderDeliveries(deliveries, width)}
-                  ${renderAssessment(assessments, width)}
+                  ${renderDeliveries(deliveries, width, colourPack)}
+                  ${renderAssessment(assessments, width, colourPack)}
               </div>
               <p>Are you an incoming Stirling student? You'll typically receive timetables for module-level
                   lectures one month prior
@@ -402,12 +409,6 @@
                   registration can be provided by Student Services. More information can be found on our Welcome
                   site</p>
         </div>`;
-  };
-
-  const renderIntro = () => {
-    return `<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
-            information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
-            to change. <a href="#">See terms and conditions</a>.</p></div>`;
   };
 
   const renderSectionStart = () => `<div class="grid-container"><div class="grid-x grid-padding-x">`;
@@ -433,8 +434,23 @@
   };
 
   /*
-        HELPERS
+        INPUT / OUTPUT EVENTS (SIDE EFFECTS!!)
   */
+
+  const setDOMContent = stir.curry((node, html) => {
+    stir.setHTML(node, html);
+    return true;
+  });
+
+  /* 
+  
+      HELPERS
+
+  */
+
+  const getColourPack = (level, colours) => {
+    return colours.filter((item) => level.includes(item.level)).length ? colours.filter((item) => level.includes(item.level))[0] : colours[0];
+  };
 
   // const removeDuplicateObjectFromArray = (key, array) => {
   //   let check = {};
@@ -453,10 +469,11 @@
   */
 
   // Deliveries
-  const doDeliveries = (deliveries) => {
+  const doDeliveries = (deliveries, colourPack) => {
     const deliveriesTotalItem = deliveries.filter((item) => item.typekey === "total");
     const deliveriesTotalValue = deliveriesTotalItem.length ? deliveriesTotalItem[0].hours : null;
-    const renderDeliverablesCurry = renderDeliverables(deliveriesTotalValue);
+
+    const renderDeliverablesCurry = renderDeliverables(colourPack, deliveriesTotalValue);
 
     const deliveriesTotalFiltered = deliveries.filter((item) => item.typekey !== "total");
 
@@ -472,10 +489,12 @@
   };
 
   // Assessments
-  const doAssessments = (assessments) => {
+  const doAssessments = (assessments, colourPack) => {
     // const mapped = assessments.map((item) => {
     //   return { ...item, match: item.label + item.category + item.percent };
     // });
+
+    const renderAssessmentsCurry = renderAssessments(colourPack);
 
     // const filterDups = removeDuplicateObjectFromArray("match", mapped);
     const totalPercent = 100;
@@ -485,31 +504,34 @@
         return accumulator + currentValue;
       }, 0);
 
-    return totalPercent !== sum ? renderDebug(totalPercent, sum, "(Percent)", assessments) : assessments.map(renderAssessments).join(``);
+    return totalPercent !== sum ? renderDebug(totalPercent, sum, "(Percent)", assessments) : assessments.map(renderAssessmentsCurry).join(``);
   };
 
   // Main
-  const main = (data) => {
+  const main = (data, colours) => {
     const contentArea = stir.node("#content");
 
     if (data.error) return setDOMContent(contentArea, renderError());
 
-    const deliveries = doDeliveries(data.deliveries);
-    const assessments = doAssessments(data.assessments);
+    const colourPack = getColourPack(data.moduleLevelDescription, colours);
+    const data2 = { ...data, colourPack: colourPack };
 
-    const html = renderHeader(data) + renderStickyNav() + renderSectionStart() + renderIntro() + renderContentAims(data) + renderTeachingAssessment(deliveries, assessments) + renderAwards(data) + renderStudyRequirements(data) + renderFurtherDetails(data) + renderSectionEnd();
+    const deliveries = doDeliveries(data.deliveries, colourPack);
+    const assessments = doAssessments(data.assessments, colourPack);
+
+    const html = renderHeader(data2) + renderStickyNav() + renderSectionStart() + renderIntro() + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack) + renderAwards(data2) + renderStudyRequirements(data2) + renderFurtherDetails(data2) + renderSectionEnd();
     return setDOMContent(contentArea, html);
   };
 
   /*
         Init: Get the data and proceed
   */
-  async function getData(fetchUrl) {
+  async function getData(fetchUrl, colours) {
     const response = await fetch(fetchUrl);
 
     try {
       const data = await response.json();
-      main(data);
+      main(data, colours);
       addEventListeners();
     } catch (error) {
       console.log(error.message);
@@ -523,6 +545,5 @@
   const queryparams = new URLSearchParams(document.location.search);
   const fetchUrl = url + [queryparams.get("code"), queryparams.get("session"), queryparams.get("semester")].join("/");
 
-  //console.log(fetchUrl);
-  getData(fetchUrl);
+  getData(fetchUrl, colours);
 })();

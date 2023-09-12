@@ -72,15 +72,18 @@
   Heritage green
 */
 
-.u-heritage-line-top {
+.u-heritage-line-top,
+.u-heritage-green-line-top {
   border-top: 3px solid $heritage-green;
 }
 
-.u-heritage-line-bottom {
+.u-heritage-line-bottom,
+.u-heritage-green-line-bottom {
   border-bottom: 3px solid $heritage-green;
 }
 
-.u-heritage-line-left {
+.u-heritage-line-left,
+.u-heritage-green-line-left {
   border-left: 3px solid $heritage-green;
 }
 
@@ -130,6 +133,14 @@
 
 .u-energy-purple-line-left {
   border-left: 3px solid $energy-purple;
+}
+
+/* 
+  Heritage purple 
+*/
+
+.u-heritage-purple-line-left {
+  border-left: 3px solid $heritage-purple;
 }
 
 /* 

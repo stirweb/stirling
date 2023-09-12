@@ -508,8 +508,6 @@
 
   const url = getJSONUrl(UoS_env.name);
 
-  console.log(UoS_env.name);
-
   /* Fetch the data */
   stir.getJSON(url, (data) => {
     if (data.error) return;
