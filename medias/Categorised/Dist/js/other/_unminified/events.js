@@ -245,6 +245,7 @@
   const getJSONUrl = (env) => {
     if (env === "dev") return "../index.json";
     if (env === "preview") return '<t4 type="navigation" id="5214" />'; //5222 for limitrd archive
+    if (env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; //5222 for limitrd archive
 
     return `/data/events/revamp/json/index.json`;
   };
@@ -506,6 +507,8 @@
   eventsarchivefilters.querySelector("input[type=radio]").checked = true;
 
   const url = getJSONUrl(UoS_env.name);
+
+  console.log(UoS_env.name);
 
   /* Fetch the data */
   stir.getJSON(url, (data) => {

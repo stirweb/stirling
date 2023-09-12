@@ -72,21 +72,21 @@ $global-lineheight: 1.5;
 $light-gray: #e6e6e6;
 $medium-gray: #cacaca;
 $dark-gray: #8a8a8a;
-$black: #3a3c39;
+$black: #3a3c39; // Tertiary Colour
 $white: #fff; //fefefe;
 
 $foundation-palette: (
+  // heritage green
   primary: #006938,
-  // heritage green
   secondary: #767676,
-  success: #006938,
   // heritage green
+  success: #006938,
+  // heritage yellow
   warning: #ecaa00,
-  //heritage yellow
-  alert: #d10056,
   // wp red
+  alert: #d10056,
   black: $black,
-  white: $white,
+  white: $white
 );
 
 $uos-web-supplementary: (
@@ -94,39 +94,28 @@ $uos-web-supplementary: (
   white: $white,
   dark-grey: #616361,
   // reinstated by Martyn
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
   // Tertiary Colours
   light-mink: #c5bfb7,
-  medium-mink: #776e64,
+  medium-mink: #827f77,
   dark-mink: #373a36,
-
   // Energy Colours
   energy: #77bf22,
-  //76bd22,
-  // "Energy" is the correct name for this colour
   energy-green: #77bf22,
-  //76bd22,
-  // This is the synonym for "Energy" that's already in wide use.
   energy-light-green: #9bbeac,
-  // This is actually "Energy green" but has been established in CSS as energy-light-green
   energy-teal: #008996,
   energy-yellow: #f4c400,
   energy-orange: #ff6d00,
-  //ee7624,
   energy-light-blue: #5fb4e5,
   energy-blue: #3d7dca,
   energy-pink: #e80068,
-  //d41568
   energy-purple: #592c82,
   energy-turq: #00a5ac,
-
   // Heritage Colours
   heritage-green: #006938,
-  heritage-green-alt: #2b7051,
-  //Not in use? (Not AAA anyway) [RM 2020-08-14]
   heritage-teal: #005e63,
   heritage-yellow: #ecaa00,
   heritage-orange: #e14504,
@@ -142,17 +131,17 @@ $uos-button-palette: (
   success: map-get($foundation-palette, success),
   warning: map-get($foundation-palette, warning),
   alert: map-get($foundation-palette, alert),
+  // Energy
   energy-green: map-get($brand-palette, energy-green),
-  //67a51e,
-  // amended for accessibility
   energy: map-get($brand-palette, energy-green),
-  //67a51e,
-  // amended for accessibility
   energy-pink: map-get($brand-palette, energy-pink),
   energy-turq: map-get($brand-palette, energy-turq),
+  energy-purple: map-get($brand-palette, energy-purple),
+  // Heritage
   heritage-green: map-get($brand-palette, heritage-green),
   heritage-berry: map-get($brand-palette, heritage-berry),
   heritage-purple: map-get($brand-palette, heritage-purple),
+  // Misc
   dark-mink: map-get($brand-palette, dark-mink),
   info: map-get($brand-palette, heritage-blue),
 );
