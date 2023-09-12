@@ -258,21 +258,24 @@ a:has(img):hover {
     Extended palette colours - Backgrounds 
  */
 
-.u-bg-energy-purple--5 {
-  background-color: tint($energy-purple, 5%);
+.u-bg-energy-purple--10 {
+  background-color: tint($energy-purple, 10%);
 }
 
-.u-bg-energy-teal--10 {
-  background-color: tint($energy-teal, 10%) !important;
+.u-bg-energy-turq--10 {
+  background-color: tint($energy-turq, 10%) !important;
 }
 
 .u-bg-energy-teal--darker {
   background-color: #017e89;
 }
 
-.u-bg-heritage-green--10,
-.u-bg-mint {
+.u-bg-heritage-green--10 {
   background-color: tint($heritage-green, 10%) !important;
+}
+
+.u-bg-heritage-purple--10 {
+  background-color: tint($heritage-purple, 10%) !important;
 }
 
 .u-bg-grey--mid {

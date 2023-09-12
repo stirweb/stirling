@@ -1,4 +1,4 @@
-!function(){function n(){stir.nodes(".c-open-close").forEach(e=>{e.addEventListener("click",e=>{e=e.target.closest(".c-open-close");Array.prototype.slice.call(e.querySelectorAll(".c-open-close-icon")).forEach(e=>e.classList.toggle("hide"))})});const t=document.querySelector(".c-sticky-nav");var e=document.querySelector("#c-sticky-nav-btn");e&&e.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")});const r=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=t/Number(e.target.dataset.max)*100,a=stir.createDOMFragment(`<div class="barchart-value" style="right:${100-a}%"></div><div class="barchart-text" style="left:${a/2-2}%">${t}${r}</div>`),e.target.append(a)):e.target.innerHTML=""})},{root:null,threshold:.5});stir.nodes(".barchart").forEach(e=>{r.observe(e)});const a=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;stir.nodes("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5}),s=(stir.nodes("main h2").forEach(e=>{a.observe(e)}),stir.nodes("[data-anchornav]"));s.forEach(e=>{e.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only"),setTimeout(()=>{s.forEach(e=>e.classList.remove("current")),e.target.classList.add("current")},500)})})}const o=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),l=()=>`<div class="u-white--all u-sticky-nav ">
+!function(){function l(){stir.nodes(".c-open-close").forEach(e=>{e.addEventListener("click",e=>{e=e.target.closest(".c-open-close");Array.prototype.slice.call(e.querySelectorAll(".c-open-close-icon")).forEach(e=>e.classList.toggle("hide"))})});const t=document.querySelector(".c-sticky-nav");var e=document.querySelector("#c-sticky-nav-btn");e&&e.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only")});const r=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,s,a;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,s=Number(e.target.dataset.max),a=e.target.dataset.colour||"energy-turq",s=t/s*100,a=stir.createDOMFragment(`<div class="barchart-value u-bg-${a}" style="right:${100-s}%"></div><div class="barchart-text" style="left:${s/2-2}%">${t}${r}</div>`),e.target.append(a)):e.target.innerHTML=""})},{root:null,threshold:.5});stir.nodes(".barchart").forEach(e=>{r.observe(e)});const s=new IntersectionObserver(function(e,t){e.forEach(e=>{if(e.isIntersecting){const t=e.target.innerText;stir.nodes("[data-anchornav]").forEach(e=>{e.innerText==t?e.classList.add("current"):e.classList.remove("current")})}})},{root:null,threshold:.5}),a=(stir.nodes("main h2").forEach(e=>{s.observe(e)}),stir.nodes("[data-anchornav]"));a.forEach(e=>{e.addEventListener("click",e=>{t.classList.toggle("hide-for-small-only"),t.classList.toggle("hide-for-medium-only"),setTimeout(()=>{a.forEach(e=>e.classList.remove("current")),e.target.classList.add("current")},500)})})}const d=()=>`<div class="u-white--all u-sticky-nav ">
                     <nav class="u-relative u-bg-dark-mink" aria-label="Jump to section links">
                         <div class="grid-container u-py-1 hide-for-large">
                             <button class=" u-bg-black text-md text-left u-font-bold u-py-1 u-m-0 
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                     </nav>
-                </div>`,d=({moduletitle:e,modulecode:t,locationStudyMethods:r,modulelevel:a,modulecredits:s})=>`<div class="grid-container">
+                </div>`,u=({moduletitle:e,modulecode:t,locationStudyMethods:r,modulelevel:s,modulecredits:a})=>`<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
 
                         <div class="cell large-6  c-course-title u-padding-y">
@@ -78,7 +78,7 @@
                                             </svg>
                                         </span>
                                         <span>
-                                            <strong>SCQF level:</strong><br>${a}
+                                            <strong>SCQF level:</strong><br>${s}
                                         </span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
@@ -93,45 +93,36 @@
                                             </svg>
                                         </span>
                                         <span>
-                                            <strong>SCQF credits:</strong><br>${s}
+                                            <strong>SCQF credits:</strong><br>${a}
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>`,i=stir.curry((e,{label:t,hours:r,typekey:a})=>"total"===a?s(r):`
-        <div>
-            <span class="u-inline-block u-p-tiny u-px-1">${t}</span>
-            <div class="barchart" data-value="${r}" data-max="${e}" data-unit=""></div>
-        </div>`),s=e=>`<div class="u-bg-energy-teal--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
-                <strong class="u-flex1">Total workload</strong>
-                <strong>${e} hours</strong>
-            </div>`,r=({label:e,category:t,percent:r})=>"0"===r?"":`
-        <div>
-            <span class="u-inline-block u-p-tiny u-px-1">${e} (${t})</span>
-            <div class="barchart" data-value="${r}" data-max="100" data-unit="%"></div>
-        </div>`,u=({moduleOverview:e,...t})=>`<div class="cell u-p-2">
+                </div>`,c=()=>`<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
+            information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
+            to change. <a href="#">See terms and conditions</a>.</p></div>`,h=({moduleOverview:e,colourPack:t,...r})=>`<div class="cell u-p-2">
                 <h2 id="contentandaims">Content and aims</h2>
 
-                <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">
+                <h3 class="header-stripped u-bg-${t.first}--10 u-${t.first}-line-left u-p-1  u-border-width-5 u-text-regular">
                     Module overview
                 </h3>
                 ${e}
 
-                <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">
+                <h3 class="header-stripped u-bg-${t.first}--10 u-${t.first}-line-left u-p-1 u-border-width-5 u-text-regular">
                     Learning outcomes
                 </h3>
 
                 <p><strong>After successful completion of this module, you'll be able to:</strong></p>
                 
                 <ul>
-                    ${t["learningOutcomes "].map(e=>`<li>${e}</li>`).join("")} 
+                    ${r["learningOutcomes "].map(e=>`<li>${e}</li>`).join("")} 
                 </ul>
-            </div>`,c=({modulecredits:e,ectsmodulecredits:t,professionalAccreditation:r})=>{return`<div class="cell u-mt-2">
+            </div>`,p=({modulecredits:e,ectsmodulecredits:t,professionalAccreditation:r,colourPack:s})=>{return`<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
 
-                <h3 class="header-stripped u-bg-energy-purple--5 u-p-1 u-energy-purple-line-left u-border-width-5 u-text-regular">Credits</h3>
+                <h3 class="header-stripped u-bg-${s.third}--10 u-p-1 u-${s.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
 
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173616" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" />
                     This module is worth ${e} SCQF (Scottish Credit and Qualifications Framework) credits</p>
@@ -139,8 +130,8 @@
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173615" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" /> 
                     This equates to ${t} ECTS (The European Credit Transfer and Accumulation System) credits</p>
 
-                <div class="u-mb-2 u-bg-energy-purple--5 flex-container align-stretch ">
-                    <span class="u-bg-energy-purple u-white flex-container align-middle u-width-64 u-px-1 ">
+                <div class="u-mb-2 u-bg-${s.third}--10 flex-container align-stretch ">
+                    <span class="u-bg-${s.third} u-white flex-container align-middle u-width-64 u-px-1 ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="svg-icon">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -150,29 +141,40 @@
                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg></span>
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
-                        <a href="#" class="u-energy-purple">Assessment and award of credit for undergraduates</a></p>
+                        <a href="#" class="u-${s.third}">Assessment and award of credit for undergraduates</a></p>
                 </div>
 
-                ${e=r,e?`<h3 class="header-stripped u-bg-energy-purple--5 u-p-1 u-energy-purple-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
+                ${e=r,t=s.third,e?`<h3 class="header-stripped u-bg-${t}--10 u-p-1 u-${t}-line-left u-border-width-5 u-text-regular">Professional accreditation</h3>
           <p>${e}</p>`:""}
-            </div>`},p=({modulerequisites:e})=>{return`<div class="cell u-mt-2">
+            </div>`},g=({modulerequisites:e})=>{return`<div class="cell u-mt-2">
                 <h2 id="requirements">Study requirements</h2>
                 ${e=e,e?`<p>Pre-requisites: ${e}</p>`:""}
 
                 <p>Co-requisites: This module must be studied in conjunction with: module name (code)</p>
-            </div>`},h=e=>`<div class="cell u-mt-2">
+            </div>`},m=e=>`<div class="cell u-mt-2">
                     <h2 id="further">Further details</h2>
                     
-                    ${e.preparedotherinformation?`<h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3>
+                    ${e.preparedotherinformation?`<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3>
             <p>${e.preparedotherinformation}</p>`:""}
                    
-                    <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
+                    <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
                     ${"Yes"===e["studyAbroad "]?`<p>This module is available to suitably-qualified undergraduate students studying elsewhere in the
                         world who wish to join Stirling for a semester or academic year. <a href="">Learn more</a></p>`:"<p>Not available</p>"}
                     
-                    <h3 class="header-stripped u-bg-mint u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
+                    <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
                     <p>${e["additionalCosts "]}</p>
-                </div>`,g=(e,t)=>{var r,a=e&&t?"6":"12";return e||t?`<div class="cell u-mt-2">
+                </div>`,i=stir.curry((e,t,{label:r,hours:s,typekey:a})=>{return"total"===a?`<div class="u-bg-${e.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
+                <strong class="u-flex1">Total workload</strong>
+                <strong>${s} hours</strong>
+            </div>`:`
+        <div>
+            <span class="u-inline-block u-p-tiny u-px-1">${r}</span>
+            <div class="barchart" data-value="${s}" data-max="${t}" data-unit="" data-colour="${e.second}"></div>
+        </div>`}),s=stir.curry((e,{label:t,category:r,percent:s})=>"0"===s?"":`
+        <div>
+            <span class="u-inline-block u-p-tiny u-px-1">${t} (${r})</span>
+            <div class="barchart" data-value="${s}" data-max="100" data-unit="%" data-colour="${e.second}"></div>
+        </div>`),v=(e,t,r)=>{var s,a,i=e&&t?"6":"12";return e||t?`<div class="cell u-mt-2">
               <h2 id="teaching">Teaching and assessment</h2>
 
               <p>Here's an overview of the learning, teaching and assessment methods, and the recommended time you
@@ -180,13 +182,13 @@
                   (e.g. lectures), assessments and self-study.</p>
 
               <div class="grid-x grid-padding-x u-my-2">
-                  ${e=e,r=a,e?`<div class="cell large-${r} u-mb-1">
-            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
+                  ${e=e,s=i,a=r,e?`<div class="cell large-${s} u-mb-1">
+            <h3 class="header-stripped u-bg-${a.second}--10 u-p-1 u-${a.second}-line-left u-border-width-5 u-text-regular">Engagement overview</h3>
             ${e}
         </div>`:""}
-                  ${r=t,e=a,r?`<div class="cell large-${e} u-mb-1">
-            <h3 class="header-stripped u-bg-energy-teal--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular">Assessment overview</h3>
-            ${r}
+                  ${s=t,a=i,e=r,s?`<div class="cell large-${a} u-mb-1">
+            <h3 class="header-stripped u-bg-${e.second}--10 u-p-1 u-${e.second}-line-left u-border-width-5 u-text-regular">Assessment overview</h3>
+            ${s}
         </div>`:""}
               </div>
               <p>Are you an incoming Stirling student? You'll typically receive timetables for module-level
@@ -194,11 +196,9 @@
                   - and select seminars two weeks prior - to the start of your first semester. Help with module
                   registration can be provided by Student Services. More information can be found on our Welcome
                   site</p>
-        </div>`:""},m=()=>`<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
-            information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
-            to change. <a href="#">See terms and conditions</a>.</p></div>`,v=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',f=()=>"</div></div>",b=()=>v()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+f(),w=e=>e.category?`<div class="flex-container u-border-bottom-solid u-p-tiny"><span class="u-flex1">${e.label} (${e.category})</span><span>${e.percent}%</span></div>`:`<div class="flex-container u-border-bottom-solid u-p-tiny"><span class="u-flex1">${e.label} (hours)</span><span>${e.hours}</span></div>`,y=(e,t,r,a)=>(console.log(a),`<div class="u-border-solid u-p-1" style="color:#d51212">
+        </div>`:""},f=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',b=()=>"</div></div>",w=()=>f()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+b(),a=e=>e.category?`<div class="flex-container u-border-bottom-solid u-p-tiny"><span class="u-flex1">${e.label} (${e.category})</span><span>${e.percent}%</span></div>`:`<div class="flex-container u-border-bottom-solid u-p-tiny"><span class="u-flex1">${e.label} (hours)</span><span>${e.hours}</span></div>`,n=(e,t,r,s)=>(console.log(s),`<div class="u-border-solid u-p-1" style="color:#d51212">
               <p><strong>Error with the data</strong></p>
               <p>Reported total: ${e} ${r}<br>
               Actual sum: ${t} </p>
-              ${a.map(w).join("")} 
-            </div>`),x=e=>{var t=e.filter(e=>"total"===e.typekey),t=t.length?t[0].hours:null,r=i(t),a=e.filter(e=>"total"!==e.typekey),t=Number(t),s=e.filter(e=>"total"!==e.typekey).map(e=>Number(e.hours)).reduce((e,t)=>e+t,0);return Number(t)!==s?y(t,s,"Hours (Total Study Time)",a):e.map(r).join("")},k=e=>{var t=e.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0);return 100!==t?y(100,t,"(Percent)",e):e.map(r).join("")};var e=new URLSearchParams(document.location.search);!async function(e){var t,r,a,s,e=await fetch(e);try{var i=await e.json();t=i,s=stir.node("#content"),t.error?o(s,b()):(a=x(t.deliveries),r=k(t.assessments),a=d(t)+l()+v()+m()+u(t)+g(a,r)+c(t)+p(t)+h(t)+f(),o(s,a)),n()}catch(e){console.log(e.message)}}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[e.get("code"),e.get("session"),e.get("semester")].join("/"))}();
+              ${s.map(a).join("")} 
+            </div>`),y=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),x=(t,e)=>(e.filter(e=>t.includes(e.level)).length?e.filter(e=>t.includes(e.level)):e)[0],$=(e,t)=>{var r=e.filter(e=>"total"===e.typekey),r=r.length?r[0].hours:null,t=i(t,r),s=e.filter(e=>"total"!==e.typekey),r=Number(r),a=e.filter(e=>"total"!==e.typekey).map(e=>Number(e.hours)).reduce((e,t)=>e+t,0);return Number(r)!==a?n(r,a,"Hours (Total Study Time)",s):e.map(t).join("")},k=(e,t)=>{var t=s(t),r=e.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0);return 100!==r?n(100,r,"(Percent)",e):e.map(t).join("")};var e=new URLSearchParams(document.location.search);!async function(e,t){var r,s,a,i,n,e=await fetch(e);try{var o=await e.json();r=o,s=t,n=stir.node("#content"),r.error?y(n,w()):(s=x(r.moduleLevelDescription,s),a={...r,colourPack:s},i=$(r.deliveries,s),r=k(r.assessments,s),i=u(a)+d()+f()+c()+h(a)+v(i,r,s)+p(a)+g(a)+m(a)+b(),y(n,i)),l()}catch(e){console.log(e.message)}}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[e.get("code"),e.get("session"),e.get("semester")].join("/"),[{level:"UG",first:"heritage-green",second:"energy-turq",third:"energy-purple"},{level:"PG",first:"heritage-purple",second:"heritage-purple",third:"heritage-green"}])}();

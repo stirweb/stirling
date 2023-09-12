@@ -15,7 +15,7 @@
 
 (function () {
   /*
-     Vars
+     VARS
    */
 
   const countryNodes = stir.nodes("[data-scholcountrylisting]");
@@ -72,7 +72,7 @@
 
   /*
    
-    D A T A   P R O C E S S I N G
+    DATA PROCESSING
    
    */
 
@@ -249,7 +249,7 @@
 
   /*
     
-     R E N D E R E R S
+     RENDERERS
     
    */
 
@@ -301,7 +301,7 @@
         </div>`;
   };
 
-  const renderTag = (item) => `<span class="u-bg-mint c-tag u-mr-1 ">${item}</span>`;
+  const renderTag = (item) => `<span class="u-bg-heritage-green--10 c-tag u-mr-1 ">${item}</span>`;
 
   /* 
     Form the HTML for the details snippet 
