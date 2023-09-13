@@ -99,10 +99,17 @@
 
     /* 
       Ensure correct anchor link is highlighted
+      // Prevent deeplink which will break the back to course button
     */
     const anchornavs = stir.nodes("[data-anchornav]");
     anchornavs.forEach((item) => {
       item.addEventListener("click", (event) => {
+        // event.preventDefault();
+
+        // let urlParts = event.target.href ? event.target.href.split("#") : null;
+        // let nodeId = urlParts.length ? urlParts[urlParts.length - 1] : null;
+        // stir.node("#" + nodeId).scrollIntoView();
+
         stickyNav.classList.toggle("hide-for-small-only");
         stickyNav.classList.toggle("hide-for-medium-only");
 
@@ -123,8 +130,8 @@
   const url = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=";
 
   const colours = [
-    { level: "UG", first: "heritage-green", second: "energy-turq", third: "energy-purple" },
-    { level: "PG", first: "heritage-purple", second: "heritage-purple", third: "heritage-green" },
+    { level: "ug", first: "heritage-green", second: "energy-turq", third: "energy-purple" },
+    { level: "pg", first: "heritage-purple", second: "heritage-purple", third: "heritage-green" },
   ];
 
   /* 
@@ -133,7 +140,15 @@
 
     */
 
-  const renderStickyNav = () => {
+  const renderCourseBackBtn = (level) => {
+    let params = new URLSearchParams(document.location.search);
+    return !params.get("course")
+      ? ``
+      : `<a href="https://www.stir.ac.uk/courses/${level}/${params.get("course")}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none ">
+      Back to course</a>`;
+  };
+
+  const renderStickyNav = (level) => {
     return `<div class="u-white--all u-sticky-nav ">
                     <nav class="u-relative u-bg-dark-mink" aria-label="Jump to section links">
                         <div class="grid-container u-py-1 hide-for-large">
@@ -159,9 +174,7 @@
                                         requirements</a>
                                     <a href="#further" class="text-md u-font-bold u-p-1 u-m-0 u-border-hover-none "
                                         data-anchornav>Further details</a>
-                                    <a href="#"
-                                        class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none ">Back
-                                        to course</a>
+                                    ${renderCourseBackBtn(level)}
                                 </div>
 
                             </div>
@@ -243,8 +256,8 @@
                 </div>`;
   };
 
-  const renderIntro = () => {
-    return `<div class="cell bg-grey u-bleed u-p-2"><p class="u-m-0">We aim to present detailed, up-to-date module information - in fact, we're providing more 
+  const renderDisclaimer = () => {
+    return `<div class="cell bg-grey u-bleed u-p-2 "><p class="u-m-0 text-md">We aim to present detailed, up-to-date module information - in fact, we're providing more 
             information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
             to change. <a href="#">See terms and conditions</a>.</p></div>`;
   };
@@ -448,8 +461,14 @@
 
   */
 
+  const getStudyLevel = (level) => {
+    if (!level) return "ug";
+    if (level.toLowerCase().includes("p")) return "pg";
+    return "ug";
+  };
+
   const getColourPack = (level, colours) => {
-    return colours.filter((item) => level.includes(item.level)).length ? colours.filter((item) => level.includes(item.level))[0] : colours[0];
+    return colours.filter((item) => item.level === level).length ? colours.filter((item) => item.level === level)[0] : colours[0];
   };
 
   // const removeDuplicateObjectFromArray = (key, array) => {
@@ -474,7 +493,6 @@
     const deliveriesTotalValue = deliveriesTotalItem.length ? deliveriesTotalItem[0].hours : null;
 
     const renderDeliverablesCurry = renderDeliverables(colourPack, deliveriesTotalValue);
-
     const deliveriesTotalFiltered = deliveries.filter((item) => item.typekey !== "total");
 
     const total = Number(deliveriesTotalValue);
@@ -493,7 +511,6 @@
     // const mapped = assessments.map((item) => {
     //   return { ...item, match: item.label + item.category + item.percent };
     // });
-
     const renderAssessmentsCurry = renderAssessments(colourPack);
 
     // const filterDups = removeDuplicateObjectFromArray("match", mapped);
@@ -513,13 +530,14 @@
 
     if (data.error) return setDOMContent(contentArea, renderError());
 
-    const colourPack = getColourPack(data.moduleLevelDescription, colours);
+    const studyLevel = getStudyLevel(data.moduleLevelDescription);
+    const colourPack = getColourPack(studyLevel, colours);
     const data2 = { ...data, colourPack: colourPack };
 
     const deliveries = doDeliveries(data.deliveries, colourPack);
     const assessments = doAssessments(data.assessments, colourPack);
 
-    const html = renderHeader(data2) + renderStickyNav() + renderSectionStart() + renderIntro() + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack) + renderAwards(data2) + renderStudyRequirements(data2) + renderFurtherDetails(data2) + renderSectionEnd();
+    const html = renderHeader(data2) + renderStickyNav(studyLevel) + renderSectionStart() + renderDisclaimer() + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack) + renderAwards(data2) + renderStudyRequirements(data2) + renderFurtherDetails(data2) + renderSectionEnd();
     return setDOMContent(contentArea, html);
   };
 
@@ -542,8 +560,8 @@
         On Load
     */
 
-  const queryparams = new URLSearchParams(document.location.search);
-  const fetchUrl = url + [queryparams.get("code"), queryparams.get("session"), queryparams.get("semester")].join("/");
+  const params = new URLSearchParams(document.location.search);
+  const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
 
   getData(fetchUrl, colours);
 })();
