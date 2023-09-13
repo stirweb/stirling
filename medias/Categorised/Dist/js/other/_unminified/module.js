@@ -437,7 +437,6 @@
   };
 
   const renderDebug = (total, sum, unit, data) => {
-    console.log(data);
     return `<div class="u-border-solid u-p-1" style="color:#d51212">
               <p><strong>Error with the data</strong></p>
               <p>Reported total: ${total} ${unit}<br>
