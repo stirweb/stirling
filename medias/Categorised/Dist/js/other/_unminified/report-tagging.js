@@ -1,7 +1,7 @@
 (function() {
 
     const hostname = 'search.stir.ac.uk';
-    const RSS_URL = `https://${hostname}/s/search.json?collection=stir-www&query=!padrenullquery&meta_d3year=2020`
+    const RSS_URL = `https://${hostname}/s/search.json?collection=stir-www&query=!padrenullquery&meta_d3year=2020&profile=_default_preview`
     const el = document.querySelector('[data-action="datazone"]');
     const results = document.createElement('div');
     const labels = typeof _t4globals172244 !== "undefined" ? _t4globals172244 : {};
@@ -38,7 +38,7 @@
     }
 
     const getPages = (tag,ranks) => {
-        const fb = `https://${hostname}/s/search.json?collection=stir-www&meta_tag=${tag}&meta_d3year=2020&num_ranks=${ranks||255}&SF=[c,d,tag]&sort=date`;
+        const fb = `https://${hostname}/s/search.json?collection=stir-www&profile=_default_preview&meta_tag=${tag}&meta_d3year=2020&num_ranks=${ranks||255}&SF=[c,d,tag]&sort=date`;
         fetch(fb)
             .then(response => response.text())
             .then(str => JSON.parse(str))
