@@ -454,7 +454,8 @@ stir.search = () => {
 					curator: getStartRank(type) > 1 ? false : true	// only show curator for initial searches
 				},
 				getNoQuery(type)									// get special "no query" parameters (sorting, etc.)
-				,preview?getQueryParameters():{}
+				,preview?getQueryParameters():{}					// TEMP get facet parameters
+				,preview?{profile:'_default_preview'}:{}			// TEMP show unpublished facets
 			)
 		);
 
