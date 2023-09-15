@@ -219,6 +219,17 @@
           }
         }
       }
+      &.u-web-turq {
+        a {
+          border-color: $web-turq;
+          color: $web-turq;
+          > div {
+            > p:first-of-type {
+              border-color: $web-turq;
+            }
+          }
+        }
+      }
     }
     /* End POP UP result */
 
