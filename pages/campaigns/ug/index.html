@@ -694,15 +694,8 @@
         (function () {
             const brandElements = [stir.nodes("h1"), stir.nodes(".u-sticky"), stir.nodes("h2"), stir.nodes(".u-bg-web-turq button")];
 
-            const getBrandedText = (text) => {
-                return text.split(" ").map((item, index) => index === 0 ? `<b>${item.toLowerCase()}</b>` : item).join(" ");
-            };
-
-            const doBrandElement = (elements) => {
-                return elements.forEach(element => {
-                    element.innerHTML = getBrandedText(element.innerHTML);
-                });
-            };
+            const getBrandedText = (text) => text.split(" ").map((item, index) => index === 0 ? `<b>${item.toLowerCase()}</b>` : item).join(" ");
+            const doBrandElement = (elements) => elements.forEach(element => element.innerHTML = getBrandedText(element.innerHTML));
 
             brandElements.forEach(elements => doBrandElement(elements));
         })();
