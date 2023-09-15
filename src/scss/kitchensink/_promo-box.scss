@@ -195,8 +195,8 @@ Promo Box - Plain
 
 /**
  * Promo box with category label
-
-
+ * (still in use 2023-09-15)
+ */
 .c-promo-box_category {
   background-color: $heritage-green;
   color: white;
@@ -232,12 +232,12 @@ Promo Box - Plain
   }
 }
 
-@media screen and #{breakpoint(small down)} {
+/* @media screen and #{breakpoint(small down)} {
   .c-promo-box:not(.c-promo-box--plain, .c-promo-box--image):after {
     width: calc(100% - 60px);
   }
-}
- */
+} */
+ 
 /*
 IE10+ specific styles go here
 
