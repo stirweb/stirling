@@ -8,6 +8,7 @@ header nav .hide-for-xlarge,
 /*
     General Sans
 
+ */
 
 @font-face {
   font-family: "General Sans";
@@ -26,6 +27,7 @@ header nav .hide-for-xlarge,
 }
 
 main {
+  font-family: "General Sans", sans-serif !important;
   h1,
   h2,
   h2 strong:not(.u-header--secondary-font),
@@ -45,7 +47,7 @@ main {
 
   .u-sticky.button {
     font-weight: normal;
-    font-size: 3.25rem !important;
+    font-size: 2.25rem !important;
     padding: 0.75rem !important;
     font-family: "General Sans", sans-serif !important;
   }
@@ -69,4 +71,3 @@ main {
     color: #00a5ac !important;
   }
 }
- */
