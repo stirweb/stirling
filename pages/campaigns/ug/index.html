@@ -692,7 +692,7 @@
 
     <script>
         (function () {
-            const brandElements = [stir.nodes("h1"), stir.nodes(".u-sticky"), stir.nodes("h2"), stir.nodes(".u-bg-web-turq button")];
+            const brandElements = [stir.nodes("main h1"), stir.nodes("main .u-sticky"), stir.nodes("main h2"), stir.nodes("main .u-bg-web-turq button")];
 
             const getBrandedText = (text) => text.split(" ").map((item, index) => index === 0 ? `<b>${item.toLowerCase()}</b>` : item).join(" ");
             const doBrandElement = (elements) => elements.forEach(element => element.innerHTML = getBrandedText(element.innerHTML));
