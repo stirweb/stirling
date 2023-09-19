@@ -302,8 +302,7 @@
         const pastHtml = doPastSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
 
         const html = upcomingHtml + pastHtml === "" ? renderNoEvents() : upcomingHtml + pastHtml;
-
-        setDOMContent(seriesEventsArea, upcomingHtml + html);
+        setDOMContent(seriesEventsArea, html);
       });
     }
 
