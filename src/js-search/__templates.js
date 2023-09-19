@@ -545,12 +545,10 @@ stir.templates.search = (() => {
       const hasThumbnail = item.metaData?.image || item.metaData?.tags?.indexOf("Webinar") > -1;
       const title = item.title.split(" | ")[0];
 
-      //if (item.indexUrl === "http://163695") return "";
-
-      const urls = item.metaData.image.split("|");
-      const hacklink = urls[1] ? urls[1] : "/events/";
-
       // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
+//	  const urls = item.metaData.image.split("|");
+//      const hacklink = urls[1] ? urls[1] : "/events/";
+		const url = item.collection == "stir-events" ? (item.metaData.page ? item.metaData.page : "#") : (FB_BASE() + item.clickTrackingUrl)
 
       return `
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
@@ -560,7 +558,7 @@ stir.templates.search = (() => {
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
 			<strong>
-			  ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : anchor({ text: title, href: hacklink })}
+			  ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : anchor({ text: title, href: url })}
 					  </strong>
 		  </p>
 					<div class="flex-container flex-dir-column u-gap-8">
@@ -579,7 +577,7 @@ stir.templates.search = (() => {
 					</div>
 					<p class="text-sm">${item.summary}</p>
 				</div>
-				${image(urls[0], item.title.split(" | ")[0])}
+				${image((item.metaData.image&&item.metaData.image.split("|")[0]), item.title.split(" | ")[0])}
 				${item.metaData?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
 			</div>`;
     },
