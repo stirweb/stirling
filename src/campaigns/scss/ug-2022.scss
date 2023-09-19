@@ -7,7 +7,7 @@ header nav .hide-for-xlarge,
 
 /*
     General Sans
-   
+
 
 @font-face {
   font-family: "General Sans";
@@ -25,45 +25,48 @@ header nav .hide-for-xlarge,
   font-display: swap;
 }
 
-body,
-h1,
-h2,
-h2 strong,
-h3,
-h4,
-.c-course-search-widget__search-input::placeholder {
-  font-family: "General Sans", sans-serif !important;
-}
+main {
+  h1,
+  h2,
+  h2 strong:not(.u-header--secondary-font),
+  h3,
+  h4,
+  .c-course-search-widget__search-input::placeholder {
+    font-family: "General Sans", sans-serif !important;
+  }
 
-h1 {
-  font-size: 3.25rem;
-}
+  h1 {
+    font-size: 3.25rem;
+  }
 
-h2 strong {
-  font-weight: bold;
-}
+  h2 strong {
+    font-weight: bold;
+  }
 
-.u-sticky.button {
-  font-weight: normal;
-}
+  .u-sticky.button {
+    font-weight: normal;
+    font-size: 3.25rem !important;
+    padding: 0.75rem !important;
+    font-family: "General Sans", sans-serif !important;
+  }
 
-.u-bg-web-turq button {
-  background-color: #592c82 !important;
-  border-color: #592c82 !important;
-  font-weight: normal;
-}
+  .u-bg-web-turq button {
+    background-color: #592c82 !important;
+    border-color: #592c82 !important;
+    font-weight: normal;
+  }
 
-.c-course-search-widget__search-input {
-  background-image: none !important;
-}
+  .c-course-search-widget__search-input {
+    background-image: none !important;
+  }
 
-.c-course-search-widget__search-input:focus {
-  border-bottom: 5px solid #592c82 !important;
-}
+  .c-course-search-widget__search-input:focus {
+    border-bottom: 5px solid #592c82 !important;
+  }
 
-.c-course-search-widget__search-input::placeholder {
-  text-transform: lowercase;
-  color: #00a5ac !important;
+  .c-course-search-widget__search-input::placeholder {
+    text-transform: lowercase;
+    color: #00a5ac !important;
+  }
 }
-
  */
