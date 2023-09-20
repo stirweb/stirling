@@ -720,8 +720,10 @@ class MediaGuide extends MediaGuideBase {
         		$content = '<div class="vcard"><h1 class="fn">'.$row['Title'].' '.$row['name'].' '.$row['Surname'].'</h1>';
 //				$researchHubLink = $this->getResearchHubLink($row['email']);
 				$name = $row['Title'] . (empty($row['Title']) ? '' : ' ') . $row['name'] . ' ' . $row['Surname'];
+				$hubLabel = base64_encode($name);
 				$expertID = $row['expertID'];
 				$email = $this->getObfuscatedEmailLink($row['email']);
+				$hubID = base64_encode($row['email']);
 
 
 				$this->meta['pagetitle'] = "$name – Find an expert | University of Stirling";
@@ -759,7 +761,7 @@ class MediaGuide extends MediaGuideBase {
 					//return mysqli_error($GLOBALS['link']);
 				}
 
-				$content .= '<div data-fb-content data-hub-xref="'.$this->getResearchHubLink($row['email']).'"></div>';
+				$content .= '<div data-fb-content data-hub-xref="'. ( $hubID ).'" data-hub-label="'.$hubLabel.'"></div>';
 //				if(!empty($researchHubLink)) {
 //					$content .= "<p>View <a href=\"" . $researchHubLink . "\">$name's profile</a> on the Research Hub</p>";
 //				}

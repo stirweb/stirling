@@ -229,6 +229,29 @@
 
 	<script type="text/javascript" src="/media/dist/js/app.min.js"></script>
 	<?=$scripts?>
+	<script>
+		(function() {
+
+			var el    = document.querySelector("[data-fb-content][data-hub-xref]");
+			if(!el) return;
+
+			var id    = atob(el.getAttribute('data-hub-xref'));
+			var label = atob(el.getAttribute('data-hub-label'));
+
+			const linkTemplate = (text,href) => `<p>View <a href="${href}">${text}&rsquo;s profile page</a> on the Research Hub</p>`;
+			const apiUrl = `https://search.stir.ac.uk/s/search.json?collection=stir-research&query=[type:profile][email:${id}]&fmo=true`;
+
+            fetch(apiUrl)
+                .then((response) => response.json())
+                .then((data) => {
+                    if(data && data.response && data.response.resultPacket && data.response.resultPacket.results && data.response.resultPacket.results[0]) {
+						el.innerHTML = linkTemplate(label,data.response.resultPacket.results[0].liveUrl)
+					}
+                });
+
+
+		})();
+	</script>
 </body>
 
 </html>
