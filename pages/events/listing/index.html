@@ -348,22 +348,32 @@
     <!-- 
 				 MAIN CONTENT 
 		-->
+    <!-- 
+				 MAIN CONTENT 
+		-->
     <main class="wrapper-content" aria-label="Main content" id="content">
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
-                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
-                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Events</h1>
+
+                <!-- 
+
+                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y"> 
+                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Events</h1>     		
+                </div>
+                -->
+                <!-- Alternative Page Heading -->
+                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y ">
+                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">University events</h1>
                 </div>
 
-                <form class="u-pb-2 cell  " action="/search/" data-js-action="/search/" method="get">
+                <form class="u-pb-2 cell  u-mb-1" action="/search/?tab=events" data-js-action="/search/?tab=events"
+                    method="get">
                     <input type="hidden" value="events" name="tab" />
-                    <div class="grid-x grid-padding-x ">
+                    <div class="grid-x">
                         <div class="cell large-9 medium-8 small-12">
-
                             <label for="event-search-input" class="show-for-sr">Search events</label>
                             <input id="event-search-input" title="Search events" type="search" class="u-h-full"
                                 name="query" autocomplete="off" placeholder="Search events">
-
                         </div>
                         <div class="cell large-3 medium-4 small-12">
                             <button class="button u-m-0 heritage-green expanded show-for-medium"
@@ -377,29 +387,25 @@
 
                 <!-- CTAs -->
                 <div class="cell u-padding-bottom">
-                    <div class="grid-x grid-padding-x">
-                        <div class="cell small-12 medium-4">
-                            <a class="button expanded" href="#">Graduation</a>
-                        </div>
-                        <div class="cell small-12 medium-4">
-                            <a class="button expanded heritage-berry" href="#">Open Days</a>
-                        </div>
-                        <div class="cell small-12 medium-4">
-                            <a class="button expanded dark-mink" href="#">Webinars</a>
-                        </div>
+                    <div class="grid-x grid-padding-x align-center">
+                        <div class="cell small-12 medium-4"><a class="button expanded heritage-green"
+                                href="/student-life/welcome/events/">Welcome Week events</a></div>
+                        <div class="cell small-12 medium-4"><a class="button expanded heritage-berry"
+                                href="/events/23-24/be-connected/">Be Connected events</a></div>
+                        <div class="cell small-12 medium-4"><a class="button expanded dark-mink"
+                                href="/events/graduation/">Graduation</a></div>
                     </div>
                 </div>
 
-                <!-- Search results -->
-                <div class="small-12 c-course-tabs  " id="eventsrevamp" data-tags="">
+                <!-- Listing -->
+                <div class="small-12 c-course-tabs " id="eventsrevamp" data-tags="">
                     <div data-behaviour="tabs" aria-label="Label goes here">
+
                         <h2>Public events</h2>
                         <div class="u-p-0  u-bg-grey u-bleed bg-grey c-search-results-area grid-x grid-padding-x"
                             id="eventspublictab">
-                            <div id="eventspublic" class="cell large-8 small-12 c-search-results-events"></div>
-
-                            <aside class=" cell small-12 large-4 ">
-                                <div class="u-bg-white u-mt-3 u-p-2">
+                            <aside class=" cell small-12 large-4  large-order-2">
+                                <div class="u-bg-white u-p-2">
                                     <p class=" u-font-bold flex-container u-gap-16 align-middle"><span
                                             class="uos-shuffle u-heritage-green"></span>
                                         Filter events</p>
@@ -427,16 +433,16 @@
                                     </form>
                                 </div>
                             </aside>
+                            <div id="eventspublic"
+                                class="cell large-8 small-12 u-mt-3 c-search-results-events  large-order-1"></div>
                         </div>
 
                         <h2>Staff and student events</h2>
                         <div class="u-p-0  u-bg-grey u-bleed bg-grey c-search-results-area grid-x grid-padding-x"
                             id="eventsstafftab">
 
-                            <div id="eventsstaff" class="cell large-8  c-search-results-events"></div>
-
-                            <aside class=" cell small-12 large-4 ">
-                                <div class="u-bg-white u-mt-3 u-p-2">
+                            <aside class=" cell small-12 large-4  large-order-2">
+                                <div class="u-bg-white u-p-2">
                                     <p class=" u-font-bold flex-container u-gap-16 align-middle"><span
                                             class="uos-shuffle u-heritage-green"></span>
                                         Filter events</p>
@@ -464,14 +470,15 @@
                                     </form>
                                 </div>
                             </aside>
-
+                            <div id="eventsstaff" class="cell large-8 u-mt-3 c-search-results-events  large-order-1">
+                            </div>
                         </div>
 
                         <h2>Archive</h2>
                         <div class="u-p-0  u-bg-grey u-bleed bg-grey c-search-results-area grid-x grid-padding-x"
                             id="eventsarchivetab">
 
-                            <div class="cell">
+                            <div class="cell large-order-1">
                                 <div class="u-mb-2 u-bg-mint flex-container align-stretch ">
                                     <span
                                         class="u-bg-heritage-green u-white u-p-tiny u-px-1 flex-container align-middle">
@@ -489,9 +496,9 @@
                                 </div>
                             </div>
 
-                            <div id="eventsarchive" class="cell large-8  c-search-results-events"></div>
 
-                            <aside class=" cell small-12 large-4 " id="eventsarchivefilters">
+
+                            <aside class=" cell small-12 large-4 large-order-3" id="eventsarchivefilters">
                                 <div class="u-bg-white  u-p-2">
                                     <p class=" u-font-bold flex-container u-gap-16 align-middle"><span
                                             class="uos-shuffle u-heritage-green"></span>
@@ -516,11 +523,183 @@
                                     </form>
                                 </div>
                             </aside>
+
+                            <div id="eventsarchive"
+                                class="cell large-8 u-mt-3-small c-search-results-events large-order-2"></div>
+
                         </div>
+
+                    </div>
+                </div><!-- Wrapper Start -->
+                <div class="cell" id="d.en.173702">
+                    <div class="c-wrapper grid-x grid-padding-x u-bg-white u-bleed bg-white u-padding-y"
+                        data-ct="wrapper">
+                        <!-- Promo Box  -->
+                        <div class="cell small-12 medium-4 u-my-1 large-6 medium-6   " id="d.en.173701"
+                            data-component="promo-standard">
+                            <div class="u-energy-line-top u--line-top flex-container u-gap u-p-1 ">
+                                <div><span class="uos-wheelchair text-lg u-heritage-green"></span></div>
+                                <div>
+                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                        <div class="u-h-full">
+                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                <h2
+                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                    Special requirements </h2>
+                                                <div class="text-sm u-p-last-mb-0">
+                                                    <p>If you or one of your guests have mobility issues or other
+                                                        special requirements, <a href="/events/contact-us/">please let
+                                                            us know </a>as we will make the necessary
+                                                        arrangements.&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Promo Box --><!-- Promo Box  -->
+                        <div class="cell small-12 medium-4 u-my-1 large-6 medium-6   " id="d.en.173704"
+                            data-component="promo-standard">
+                            <div class="u-energy-line-top u--line-top flex-container u-gap u-p-1 ">
+                                <div><span class="uos-car text-lg u-heritage-green"></span></div>
+                                <div>
+                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                        <div class="u-h-full">
+                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                <h2
+                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                    Parking for visitors </h2>
+                                                <div class="text-sm u-p-last-mb-0">
+                                                    <p>Parking charges apply to all campus car parks and affect all who
+                                                        park on campus. <a href="/about/getting-here/parking/">Find out
+                                                            more about visitor parking</a>.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Promo Box --><!-- Promo Box  -->
+                        <div class="cell small-12 medium-4 u-my-1 large-6 medium-6   " id="d.en.173705"
+                            data-component="promo-standard">
+                            <div class="u-energy-line-top u--line-top flex-container u-gap u-p-1 ">
+                                <div><span class="uos-location text-lg u-heritage-green"></span></div>
+                                <div>
+                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                        <div class="u-h-full">
+                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                <h2
+                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                    Accommodation </h2>
+                                                <div class="text-sm u-p-last-mb-0">
+                                                    <p>Accommodation is available on campus at the <a
+                                                            title="Stirling Court Hotel"
+                                                            href="https://www.stirlingcourthotel.co.uk/">Stirling Court
+                                                            Hotel</a>.&nbsp;</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Promo Box --><!-- Promo Box  -->
+                        <div class="cell small-12 medium-4 u-my-1 large-6 medium-6   " id="d.en.173706"
+                            data-component="promo-standard">
+                            <div class="u-energy-line-top u--line-top flex-container u-gap u-p-1 ">
+                                <div><span class="uos-coffee text-lg u-heritage-green"></span></div>
+                                <div>
+                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                        <div class="u-h-full">
+                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                <h2
+                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                    Food and drink </h2>
+                                                <div class="text-sm u-p-last-mb-0">
+                                                    <p>Refresh and recharge at one of our many <a
+                                                            href="/student-life/campus-facilities/eating-drinking/">caf&eacute;s
+                                                            and restaurants</a>.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Promo Box -->
+                    </div>
+                </div>
+                <!-- Wrapper End -->
+
+            </div>
+        </div>
+
+        <!-- Block: Feature: Text over Full Width Bg Image -->
+        <section id="d.en.173700" class="c-image-text-block "
+            aria-label="Large image promo: Macrobert Arts Centre (173700)" data-objectfit="true">
+            <img src="/media/stirling/events/calendar-of-events/images/2023/Macrobert-Art-Centre-Performance-1920x689.jpg"
+                width="1920" height="689" alt="A group of performers singing on a stage" loading="lazy" />
+
+            <div class="grid-container  ">
+                <div class="c-image-text-block__content">
+                    <!-- HEADER -->
+                    <h2>Macrobert Arts Centre</h2>
+                    <!-- TEXT -->
+                    <div class="c-wysiwyg-content">
+                        <p>Discover movies, live theatre and much more at Stirling's cultural hub, right here on
+                            campus.&nbsp;</p>
+                        <p><sub>Image by Tommy Ga-Ken Wan</sub></p>
+                    </div>
+                    <div class="flex-container flex-dir-column u-gap">
+                        <a class="button" href="https://www.macrobertartscentre.org/">Macrobert Arts Centre</a>
 
 
                     </div>
                 </div>
+            </div>
+        </section>
+        <!-- END Block: Feature: Text over Full Width Bg Image -->
+
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x">
+
+                <!-- Contact Box -->
+                <div class="cell  u-padding-y" aria-label="Contact information (173707)">
+                    <div class="grid-x grid-padding-x  ">
+                        <div class="cell large-12 medium-12 small-12 text-center">
+                            <h2 class="header-stripped u-mb-2">
+                                <!-- Contact us --> Contact the Events team
+                            </h2>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="grid-x grid-padding-x align-center">
+                        <div class="cell large-5 small-12">
+                            <a class="button no-arrow x-large heritage-green expanded" href="tel:+44(0) 1786 466054">
+                                <span class="show-for-small-only">Call</span>
+                                <span class="show-for-medium">
+                                    <div class="flex-container align-middle align-center u-gap u-font-normal">
+                                        <span class="uos-telephone show-for-medium icon--medium"></span> +44(0) 1786
+                                        466054
+                                    </div>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="cell large-5 small-12">
+                            <a class="button no-arrow x-large heritage-green expanded" href="mailto:events@stir.ac.uk"
+                                data-component="genericemailbutton">
+                                <span class="show-for-small-only">Email</span>
+                                <span class="show-for-medium">
+                                    <div class="flex-container align-middle align-center u-gap u-font-normal">
+                                        <span class="uos-email show-for-medium icon--medium"></span> events@stir.ac.uk
+                                    </div>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Contact Box -->
             </div>
         </div>
     </main>

@@ -24,7 +24,7 @@
 
       > a {
         display: inline-block;
-        padding: 20px;
+        padding: 16px;
         color: #75767a;
         font-size: 1.375rem; // 22px;
         font-weight: 700;
@@ -39,7 +39,7 @@
         line-height: normal;
         color: #75767a;
         text-align: left;
-        padding: 20px;
+        padding: 16px;
         cursor: pointer;
       }
 
@@ -64,7 +64,7 @@
     .stir-tabs__content {
       width: 100%;
       box-sizing: border-box;
-      padding: 0px 20px;
+      padding: 0px 16px;
 
       p,
       li,
@@ -74,7 +74,7 @@
 
       h3,
       h3:first-of-type {
-        margin: 20px 0;
+        margin: 16px 0;
         padding: 0;
       }
 
@@ -87,14 +87,14 @@
       }
 
       &.c-wysiwyg-content > :first-child {
-        margin-top: 10px; // was 50
+        margin-top: 8px; // was 50
       }
     }
 
     .stir-tabs__tab {
       &:before {
         position: absolute;
-        top: 15px;
+        top: 16px;
         right: 1rem;
         content: "+";
         color: #75767a;
@@ -140,18 +140,18 @@
         color: $energy-green;
       }
 
-      a {
-        display: inline-block;
-        font-size: 1rem; // 16px;
-        padding: 1px 20px 15px 20px;
-        color: $heritage-green;
-        margin: 0 30px 0 30px;
-      }
+      // a {
+      //   display: inline-block;
+      //   font-size: 1rem; // 16px;
+      //   padding: 1px 24px 16px 24px;
+      //   color: $heritage-green;
+      //   margin: 0 30px 0 30px;
+      // }
 
       button {
         color: $heritage-green;
         font-size: 1rem; // 16px;
-        padding: 1px 20px 15px 20px;
+        padding: 1px 24px 16px 24px;
       }
 
       &:before {
@@ -160,9 +160,9 @@
       }
     }
 
-    &.stir-tabs__tab--active:before {
-      top: 13px;
-    }
+    // &.stir-tabs__tab--active:before {
+    //   top: 13px;
+    // }
 
     > .stir-tabs__tab--active {
       border-top: 5px solid rgba(118, 189, 34, 1);
@@ -172,12 +172,12 @@
     /* Content Area */
     .stir-tabs__content {
       background: #f6f5f4;
-      padding: 0 30px;
+      padding: 0 32px;
       max-width: 98%;
       margin: 0 auto;
 
       h3 {
-        margin: 20px 0;
+        margin: 16px 0;
         padding: 0;
       }
 
