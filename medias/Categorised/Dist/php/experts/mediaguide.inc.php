@@ -107,7 +107,7 @@ class MediaGuide extends MediaGuideBase {
 		$context = stream_context_create($contextOptions); */
 		$data = '';
 		$email = urlencode($email);
-		$url = "https://www.stir.ac.uk/s/search.json?collection=stir-research-hub&query=[T:profile][email:$email]&fmo=true";
+		$url = "https://search.stir.ac.uk/s/search.json?collection=stir-research&query=[type:profile][email:$email]&fmo=true";
 		//$data = file_get_contents($fb, false, $context);
 
 		//  Initiate curl
