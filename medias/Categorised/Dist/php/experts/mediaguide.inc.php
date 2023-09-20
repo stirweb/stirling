@@ -80,6 +80,8 @@ class MediaGuide extends MediaGuideBase {
     
     private $flag, $exactwords, $browser, $hitphrases, $partwords, $meta;
 
+	public $expert_name,$expert_in;
+
     public function __construct($browser) {
         $this->browser = $browser;
         $this->partwords = array();
@@ -716,7 +718,7 @@ class MediaGuide extends MediaGuideBase {
         		$row=mysqli_fetch_assoc($result); //no while loop because we only expect one result!
         
         		$content = '<div class="vcard"><h1 class="fn">'.$row['Title'].' '.$row['name'].' '.$row['Surname'].'</h1>';
-				$researchHubLink = $this->getResearchHubLink($row['email']);
+//				$researchHubLink = $this->getResearchHubLink($row['email']);
 				$name = $row['Title'] . (empty($row['Title']) ? '' : ' ') . $row['name'] . ' ' . $row['Surname'];
 				$expertID = $row['expertID'];
 				$email = $this->getObfuscatedEmailLink($row['email']);
@@ -725,10 +727,6 @@ class MediaGuide extends MediaGuideBase {
 				$this->meta['pagetitle'] = "$name – Find an expert | University of Stirling";
 				$this->meta['pagedescription'] = "$name, {$row['department']}, {$row['faculty']} at the University of Stirling.";
 
-				if(!empty($researchHubLink)) {
-					$content .= "<p><a href=\"" . $researchHubLink . "\" class=\"c-link\">View $name's profile on the Research Hub</a></p>";
-				}
-        		
         		if(!empty($row['Note'])){
         			$note = '<p><strong>Note:</strong> '.$row['Note'].'</p>';
 				} else { $note = ''; }
@@ -760,6 +758,11 @@ class MediaGuide extends MediaGuideBase {
 				else {
 					//return mysqli_error($GLOBALS['link']);
 				}
+
+				$content .= '<div data-fb-content data-hub-xref="'.$this->getResearchHubLink($row['email']).'"></div>'
+//				if(!empty($researchHubLink)) {
+//					$content .= "<p>View <a href=\"" . $researchHubLink . "\">$name's profile</a> on the Research Hub</p>";
+//				}
         	} else {
 				//return mysqli_error($GLOBALS['link']);
 			}
