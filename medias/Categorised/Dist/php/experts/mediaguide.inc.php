@@ -759,7 +759,7 @@ class MediaGuide extends MediaGuideBase {
 					//return mysqli_error($GLOBALS['link']);
 				}
 
-				$content .= '<div data-fb-content data-hub-xref="'.$this->getResearchHubLink($row['email']).'"></div>'
+				$content .= '<div data-fb-content data-hub-xref="'.$this->getResearchHubLink($row['email']).'"></div>';
 //				if(!empty($researchHubLink)) {
 //					$content .= "<p>View <a href=\"" . $researchHubLink . "\">$name's profile</a> on the Research Hub</p>";
 //				}
