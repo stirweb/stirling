@@ -221,6 +221,10 @@ $bg-grey: tint($light-mink, 15%);
       }
     }
   }
+
+  input[type="search"] {
+    color: $black !important;
+  }
 }
 
 /*
