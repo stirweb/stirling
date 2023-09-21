@@ -654,13 +654,9 @@
     stir.getJSON(jsonurl[UoS_env.name], (initialData2) => {
       if (!initialData2.length) return;
 
-      //console.log(initialData2);
-
       countryNodes.forEach((element) => {
         const setDOMResultsCurry = setDOMContent(element);
         const sortCurry = stir.sort((a, b) => (parseInt(a.rank) < parseInt(b.rank) ? -1 : parseInt(a.rank) > parseInt(b.rank) ? 1 : 0));
-
-        console.log(stir.compose(renderHardcodedResults, sortCurry)(stir.flatten(getCountriesData(CONSTANTS, element, initialData2))));
 
         return stir.compose(setDOMResultsCurry, renderWrapper, stir.removeDuplicates, renderHardcodedResults, sortCurry)(stir.flatten(getCountriesData(CONSTANTS, element, initialData2)));
       });
