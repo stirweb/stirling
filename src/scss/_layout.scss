@@ -117,6 +117,10 @@ textarea:focus {
   box-shadow: none;
 }
 
+::placeholder {
+  color: #737373;
+}
+
 table {
   margin: 30px 0 30px 0;
 }
