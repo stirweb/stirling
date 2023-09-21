@@ -596,7 +596,7 @@
     Form the html for the listing 
   */
   const renderHardcodedResults = stir.curry((data) => {
-    return stir.map((el) => `<li data-rank="${el.rank}"><a href="${el.scholarship.url}">${el.scholarship.title}</a> ${debug ? el.rank : ""}</li>`, data);
+    return stir.map((el) => `<li ><a href="${el.scholarship.url}">${el.scholarship.title}</a> ${debug ? el.rank : ""}</li>`, data);
   });
 
   const renderWrapper = stir.curry((data) => `<ul> ${data.join("\n")}</ul>`);
@@ -654,9 +654,13 @@
     stir.getJSON(jsonurl[UoS_env.name], (initialData2) => {
       if (!initialData2.length) return;
 
+      //console.log(initialData2);
+
       countryNodes.forEach((element) => {
         const setDOMResultsCurry = setDOMContent(element);
         const sortCurry = stir.sort((a, b) => (parseInt(a.rank) < parseInt(b.rank) ? -1 : parseInt(a.rank) > parseInt(b.rank) ? 1 : 0));
+
+        console.log(stir.compose(renderHardcodedResults, sortCurry)(stir.flatten(getCountriesData(CONSTANTS, element, initialData2))));
 
         return stir.compose(setDOMResultsCurry, renderWrapper, stir.removeDuplicates, renderHardcodedResults, sortCurry)(stir.flatten(getCountriesData(CONSTANTS, element, initialData2)));
       });
