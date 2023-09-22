@@ -1628,10 +1628,11 @@
         "id": 173613,
         "description": "module.js",
         "projectPath": "medias/Categorised/Dist/js/other/module.js"
+      },{
+        "id": 173925,
+        "description": "pg.css",
+        "projectPath": "medias/Categorised/Dist/css/campaigns/pg.css"
       }
-
-
-      
     ]
   }
 }
