@@ -224,6 +224,8 @@
     return a;
   };
 
+  const getEventDays = (item) => getDaysArray(item.start, item.end);
+
   /*
     |
     |   CONTROLLERS
@@ -249,11 +251,13 @@
   const doDateFilter = (initialData) => {
     // const removeDupsByStart = removeDuplicateObjectFromArray("start");
 
-    const start = stir.compose(limitTo1, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
-    const end = stir.compose(limitTo1, stir.sort(sortByEndDateDesc), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
-    const dates = getDaysArray(start[0].start, end[0].end);
+    //const start = stir.compose(limitTo1, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
+    //const end = stir.compose(limitTo1, stir.sort(sortByEndDateDesc), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
+    //const days = getDaysArray(start[0].start, end[0].end);
 
-    return stir.compose(joiner, stir.map(renderDates))(dates);
+    return stir.compose(joiner, stir.map(renderDates), stir.removeDuplicates, stir.flatten, stir.map(getEventDays), stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
+
+    //return stir.compose(joiner, stir.map(renderDates))(days);
   };
 
   const doMoreEvents = (initialData) => {
@@ -293,7 +297,7 @@
       const pastHtml = doPastSeries("", initialData);
       setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData) + pastHtml);
 
-      /* Series filter */
+      /* Add Series filter */
       setDOMContent(seriesDateFilter, renderOptionOne() + doDateFilter(initialData));
 
       /* Event Listener */
