@@ -1,27 +1,4 @@
 /*
-
-  NO LONGER NEEDED AS ITS HANDLED BELOW
-
-(function () {
-  // get a reference to the Section ID meta tag
-  var pageSID = document.head.querySelector("[name=sid][content]");
-
-  // only continue if the meta tag exists. if it didn't (and we
-  // don't check) a Reference Error would be thrown.
-  if (pageSID) {
-    // get all links that match our criteria…
-    var upcomingEventLinks = document.querySelectorAll('a[data-section-id="' + pageSID.getAttribute("content") + '"][data-type="event"]');
-
-    //…and loop thru to remove them all
-    for (var i = 0; i < upcomingEventLinks.length; i++) {
-      upcomingEventLinks[i].parentNode.removeChild(upcomingEventLinks[i]);
-      //upcomingEventLinks[i].style.display = "none"; // <- or just hide them if you want!
-    }
-  }
-})();
-*/
-
-/*
 |
 |   SHARE BUTTONS
 |
@@ -89,7 +66,7 @@
 
   const renderReadableDate = (date) => {
     const d = new Date(date);
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
   };
@@ -162,7 +139,7 @@
   };
 
   const sortByStartDate = (a, b) => a.startInt - b.startInt;
-  const sortByEndDateDesc = (a, b) => b.endInt - a.endInt;
+  //const sortByEndDateDesc = (a, b) => b.endInt - a.endInt;
 
   const isUpcoming = (item) => item.endInt >= getNow();
 
@@ -226,26 +203,36 @@
 
   const getEventDays = (item) => getDaysArray(item.start, item.end);
 
+  const getPastSeriesEvents = (events) => {
+    return stir.compose(isPassedFilter, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(events);
+  };
+
+  const getUpcomingSeriesEvents = (events) => {
+    return stir.compose(isUpcomingFilter, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(events);
+  };
+
   /*
     |
     |   CONTROLLERS
     |
     */
 
-  const doUpcomingSeries = (date, initialData) => {
-    const dateUserFilterCurry = stir.filter(dateUserFilter(date));
-
-    const seriesUpcomingData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry, isUpcomingFilter, isSeriesChildFilter)(initialData);
-    const upcomingHtml = seriesUpcomingData.length ? renderHeader("Upcoming", "") + seriesUpcomingData : ``;
-
-    return upcomingHtml;
-  };
-
   const doPastSeries = (date, initialData) => {
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
-    const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry, isPassedFilter, isSeriesChildFilter)(initialData);
+    const passedEvents = getPastSeriesEvents(initialData);
+    const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry)(passedEvents);
     return seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
+  };
+
+  const doUpcomingSeries = (date, initialData) => {
+    const dateUserFilterCurry = stir.filter(dateUserFilter(date));
+
+    const upcomingEvents = getUpcomingSeriesEvents(initialData);
+    const seriesUpcomingData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry)(upcomingEvents);
+    const upcomingHtml = seriesUpcomingData.length ? renderHeader("Upcoming", "") + seriesUpcomingData : ``;
+
+    return upcomingHtml;
   };
 
   const doDateFilter = (initialData) => {
@@ -254,10 +241,13 @@
     //const start = stir.compose(limitTo1, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
     //const end = stir.compose(limitTo1, stir.sort(sortByEndDateDesc), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
     //const days = getDaysArray(start[0].start, end[0].end);
-
-    return stir.compose(joiner, stir.map(renderDates), stir.removeDuplicates, stir.flatten, stir.map(getEventDays), stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
-
     //return stir.compose(joiner, stir.map(renderDates))(days);
+
+    const passedEvents = getPastSeriesEvents(initialData);
+    const upcomingEvents = getUpcomingSeriesEvents(initialData);
+    const allSeriesEvents = [...passedEvents, ...upcomingEvents];
+
+    return stir.compose(joiner, stir.map(renderDates), stir.removeDuplicates, stir.flatten, stir.map(getEventDays))(allSeriesEvents);
   };
 
   const doMoreEvents = (initialData) => {
