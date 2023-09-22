@@ -419,9 +419,9 @@
             scroll-behavior: smooth;
         }
 
-        details summary {
+        /* details summary {
             list-style: none;
-        }
+        } 
 
         .u-open-close {
             position: relative;
@@ -440,6 +440,18 @@
 
         [open] .u-open-close::after {
             background: url(arrow-up.svg);
+        }*/
+
+        #contentandaims::before,
+        #teaching::before,
+        #awards::before,
+        #further::before,
+        #requirements::before {
+            content: '';
+            display: block;
+            height: 90px;
+            margin-top: -90px;
+            visibility: hidden;
         }
 
         .c-sticky-nav a {
@@ -482,24 +494,10 @@
             z-index: 10;
             color: #fff;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
         }
 
-        #contentandaims::before,
-        #teaching::before,
-        #awards::before,
-        #further::before,
-        #requirements::before {
-            content: '';
-            display: block;
-            height: 90px;
-            margin-top: -90px;
-            visibility: hidden;
-        }
 
-        /* div.barchart-value {
-                            right: 80%;
-                        } */
 
         @keyframes in-out {
             0% {
