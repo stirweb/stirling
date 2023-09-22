@@ -187,8 +187,7 @@
                                 <div class="grid-x grid-padding-x ">
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
                                         <span class="u-heritage-green u-inline-block u-width-48">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 24 24"><path d="M1.1,11.99,9.422,3.942l4.57,4.57L21.659.845M17.756.75h3.99V4.88" transform="translate(0.579 5.573)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
-  
+                                          <t4 type="media" id="173865" formatter="inline/*"/>
                                         </span>
                                         <span>
 
@@ -196,7 +195,7 @@
                                         </span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-32">
+                                        <span class="u-heritage-green u-inline-block u-width-48">
                                         <t4 type="media" id="173868" formatter="inline/*"/> 
                                         </span>
                                         <span>
@@ -204,7 +203,7 @@
                                         </span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-32">
+                                        <span class="u-heritage-green u-inline-block u-width-48">
                                         <t4 type="media" id="173866" formatter="inline/*"/> 
                                         </span>
                                         <span>
@@ -212,7 +211,7 @@
                                         </span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-32">
+                                        <span class="u-heritage-green u-inline-block u-width-48">
                                         <t4 type="media" id="173867" formatter="inline/*"/> 
                                         </span>
                                         <span>
