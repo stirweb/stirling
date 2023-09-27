@@ -98,9 +98,16 @@
   transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
+/* Homepage search box */
+.u-focuswithin-dark {
+	background-color: black;
+}
 .hasfocus-dim {
-  transition: filter 0.15s ease;
+  /* transition: filter 0.15s ease; */
+  transition: opacity 0.15s ease;
 }
 :focus-within > .hasfocus-dim {
-  filter: brightness(70%) saturate(0.666);
+  /* note: do not use filter, there's bug in Safari 16 */
+  /* filter: brightness(70%) saturate(0.666); */ 
+  opacity: .7;
 }
