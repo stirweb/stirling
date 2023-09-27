@@ -414,11 +414,8 @@
 				 MAIN CONTENT 
 		-->
 
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
 
+    <style>
         /* details summary {
             list-style: none;
         } 
@@ -442,17 +439,6 @@
             background: url(arrow-up.svg);
         }*/
 
-        #contentandaims::before,
-        #teaching::before,
-        #awards::before,
-        #further::before,
-        #requirements::before {
-            content: '';
-            display: block;
-            height: 90px;
-            margin-top: -90px;
-            visibility: hidden;
-        }
 
         .c-sticky-nav a {
             border-bottom: 4px solid #373a36 !important;
@@ -470,20 +456,16 @@
             }
         }
 
-        div.barchart {
+        .barchart {
             height: 50px;
         }
 
-        div.barchart-value {
+        .barchart-value {
             width: 2400px;
             top: 0;
             bottom: 0;
             right: 100%;
             animation: 1s u-horz-slide-in-out forwards;
-        }
-
-        div.barchart div.barchart-text {
-            z-index: 10;
         }
     </style>
 
