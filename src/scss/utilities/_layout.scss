@@ -32,6 +32,10 @@
     - align-stretch
 */
 
+.u-flex {
+  display: flex;
+}
+
 .u-flex-wrap,
 .flex-wrap {
   flex-wrap: wrap;

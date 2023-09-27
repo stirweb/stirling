@@ -46,7 +46,8 @@
           const valueInverted = 100 - perc;
           const textPosition = perc / 2 - 2;
 
-          const frag = stir.createDOMFragment(`<div class="barchart-value u-bg-${colour}" style="right:${valueInverted}%"></div><div class="barchart-text" style="left:${textPosition}%">${value}${unit}</div>`);
+          const frag = stir.createDOMFragment(`<div class="barchart-value u-bg-${colour} u-absolute" style="right:${valueInverted}%"></div>
+                                                <div class="barchart-text u-relative u-white u-font-bold text-md" style="left:${textPosition}%">${value}${unit}</div>`);
           entry.target.append(frag);
         } else {
           entry.target.innerHTML = ``;
@@ -349,7 +350,7 @@
       : `
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${label}</span>
-            <div class="barchart" data-value="${hours}" data-max="${total}" data-unit="" data-colour="${colourPack.second}"></div>
+            <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${hours}" data-max="${total}" data-unit="" data-colour="${colourPack.second}"></div>
         </div>`;
   });
 
@@ -359,7 +360,7 @@
       : `
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${label} (${category})</span>
-            <div class="barchart" data-value="${percent}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
+            <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${percent}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
         </div>`;
   });
 
