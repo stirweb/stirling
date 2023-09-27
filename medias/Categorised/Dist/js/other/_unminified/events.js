@@ -74,7 +74,7 @@
   };
 
   const renderSeriesInfo = (series, seriesData) => {
-    const linkedSeries = seriesData.filter((item) => item.title === series);
+    const linkedSeries = seriesData.filter((item) => item.isSeries === series);
     const url = linkedSeries.length ? `<a href="${linkedSeries[0].url}">${linkedSeries[0].title}</a>` : series;
 
     return `<p class="text-sm">Part of the ${url} series.</p>`;
@@ -412,7 +412,7 @@
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
 
-    const seriesData = stir.filter(isSeriesFilter, initData);
+    const seriesData = stir.compose(isSeriesFilter)(initData);
     const renderEventsMapper = stir.map(renderEvent(seriesData));
 
     const setDOMStaff = page === 1 ? setDOMContent(eventsstaff) : appendDOMContent(eventsstaff);
@@ -447,7 +447,7 @@
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
 
-    const seriesData = stir.filter(isSeriesFilter, initData);
+    const seriesData = stir.compose(isSeriesFilter)(initData);
     const renderArchiveEventsMapper = stir.map(renderArchiveEvent(seriesData));
 
     const setDOMArchive = page === 1 ? setDOMContent(eventsarchive) : appendDOMContent(eventsarchive);
