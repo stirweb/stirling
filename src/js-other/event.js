@@ -201,7 +201,7 @@
     return a;
   };
 
-  const getEventDays = (item) => getDaysArray(item.start, item.end);
+  const getEventDays = (event) => getDaysArray(event.start, event.end);
 
   const getPastSeriesEvents = (events) => {
     return stir.compose(isPassedFilter, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(events);

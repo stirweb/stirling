@@ -10,6 +10,12 @@
   }
 }
 
+@keyframes u-horz-slide-in-out {
+  0% {
+    transform: translateX(-100%);
+  }
+}
+
 .animation__slidedown {
   /* display: initial; */
   transform-origin: top;
