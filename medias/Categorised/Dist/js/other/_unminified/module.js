@@ -47,7 +47,7 @@
           const textPosition = perc / 2 - 2;
 
           const frag = stir.createDOMFragment(`<div class="barchart-value u-bg-${colour} u-absolute" style="right:${valueInverted}%"></div>
-                                                <div class="barchart-text u-relative u-white u-font-bold text-md" style="left:${textPosition}%">${value}${unit}</div>`);
+                                                <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${textPosition}%">${value}${unit}</div>`);
           entry.target.append(frag);
         } else {
           entry.target.innerHTML = ``;
@@ -234,7 +234,7 @@
 
   const renderContentAims = ({ moduleOverview, colourPack, ...data }) => {
     return `<div class="cell u-p-2">
-                <h2 id="contentandaims">Content and aims</h2>
+                <h2 id="contentandaims" class="u-scroll-offset">Content and aims</h2>
 
                 <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1  u-border-width-5 u-text-regular">
                     Module overview
@@ -262,7 +262,7 @@
 
   const renderAwards = ({ modulecredits, ectsmodulecredits, professionalAccreditation, colourPack }) => {
     return `<div class="cell u-mt-2">
-                <h2 id="awards">Awards</h2>
+                <h2 id="awards" class="u-scroll-offset">Awards</h2>
 
                 <h3 class="header-stripped u-bg-${colourPack.third}--10 u-p-1 u-${colourPack.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
 
@@ -288,7 +288,7 @@
 
   const renderStudyRequirements = ({ modulerequisites }) => {
     return `<div class="cell u-mt-2">
-                <h2 id="requirements">Study requirements</h2>
+                <h2 id="requirements" class="u-scroll-offset">Study requirements</h2>
                 ${renderPrerequisites(modulerequisites)}
 
                 <p>Co-requisites: This module must be studied in conjunction with: module name (code)</p>
@@ -307,7 +307,7 @@
 
   const renderFurtherDetails = (data) => {
     return `<div class="cell u-mt-2">
-                    <h2 id="further">Further details</h2>
+                    <h2 id="further" class="u-scroll-offset">Further details</h2>
                     
                     ${data.preparedotherinformation ? renderSupportingInfo(data.preparedotherinformation) : ``}
                    
@@ -370,7 +370,7 @@
     return !deliveries && !assessments
       ? ``
       : `<div class="cell u-mt-2">
-              <h2 id="teaching">Teaching and assessment</h2>
+              <h2 id="teaching" class="u-scroll-offset">Teaching and assessment</h2>
 
               <p>Here's an overview of the learning, teaching and assessment methods, and the recommended time you
                   should dedicate to the study of this module. Most modules include a combination of activity

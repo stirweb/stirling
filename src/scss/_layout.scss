@@ -21,6 +21,10 @@
     SITE WIDE STYLES
 */
 
+html {
+  scroll-behavior: smooth;
+}
+
 body .grid-container {
   width: 77.5rem;
   max-width: 90%;
