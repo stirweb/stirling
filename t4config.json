@@ -1643,6 +1643,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/stir-tabs.js"
       },
       {
+        "id": 174054,
+        "description": "mobile-nav.js",
+        "projectPath": "medias/Categorised/Dist/js/other/mobile-nav.js"
+      },
+      {
         "id": 173925,
         "description": "pg.css",
         "projectPath": "medias/Categorised/Dist/css/campaigns/pg.css"
