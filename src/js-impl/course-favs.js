@@ -1,21 +1,23 @@
 (function () {
-  const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174052" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "course-favs.js";
+  stir.lazyJS(["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"], "course-favs.js", "174052");
 
-  const nodes = ["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"];
-  const nodesInUse = nodes.filter((item) => stir.node(item));
+  // const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174052" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "course-favs.js";
 
-  if (!nodesInUse.length) return;
+  // const nodes = ["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"];
+  // const nodesInUse = nodes.filter((item) => stir.node(item));
 
-  nodesInUse.forEach((item) => {
-    let observer = stir.createIntersectionObserver({
-      element: stir.node(item),
-      threshold: [0.001],
-      callback: function (entry) {
-        if (entry.isIntersecting) {
-          stir.addScript(scriptSrc);
-          observer && observer.observer.unobserve(this);
-        }
-      },
-    });
-  });
+  // if (!nodesInUse.length) return;
+
+  // nodesInUse.forEach((item) => {
+  //   let observer = stir.createIntersectionObserver({
+  //     element: stir.node(item),
+  //     threshold: [0.001],
+  //     callback: function (entry) {
+  //       if (entry.isIntersecting) {
+  //         stir.addScript(scriptSrc);
+  //         observer && observer.observer.unobserve(this);
+  //       }
+  //     },
+  //   });
+  // });
 })();

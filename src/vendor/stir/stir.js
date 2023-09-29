@@ -195,73 +195,73 @@ stir.String = {
  * Created separately because it refers to other stir.String helper functions.
  */
 stir.String.fixHtml = (function () {
-	/**
-	 * fixHtml() is intended to fix broken/partial HTML strings coming from the
-	 * Degree Program Tables (SSoCI) and possibly other short snippets of HTML.
-	 * As a side-effect it could be used to strip out non-text content such as
-	 * <script> tags, for example. Relies on three internal helper functions,
-	 * domify(), wrapRawNodes() and removeEmptyElements().
-	 */
+  /**
+   * fixHtml() is intended to fix broken/partial HTML strings coming from the
+   * Degree Program Tables (SSoCI) and possibly other short snippets of HTML.
+   * As a side-effect it could be used to strip out non-text content such as
+   * <script> tags, for example. Relies on three internal helper functions,
+   * domify(), wrapRawNodes() and removeEmptyElements().
+   */
 
-	/**
-	 * Use the browser's DOM parser to make sense of the HTMLString, but away from the
-	 * main DOM so we can make further adjustments. Returns an HTMLDocument's body element.
-	 */
-	const domify = stir.String.domify;
+  /**
+   * Use the browser's DOM parser to make sense of the HTMLString, but away from the
+   * main DOM so we can make further adjustments. Returns an HTMLDocument's body element.
+   */
+  const domify = stir.String.domify;
 
-	/**
-	 * Wrap any raw (i.e. text content) nodes into <p> tags. This is immediate
-	 * children only, not recursive.
-	 */
-	function wrapRawNodes(DomEl) {
-		if (!DomEl || !DomEl.childNodes) return;
-		Array.prototype.forEach.call(DomEl.childNodes, function (node) {
-			if (3 === node.nodeType || "A" === node.nodeName) {
-				var p = document.createElement("p");
-				node.parentNode.insertBefore(p, node);
-				p.appendChild(node);
-			}
-		});
-		return DomEl;
-	}
+  /**
+   * Wrap any raw (i.e. text content) nodes into <p> tags. This is immediate
+   * children only, not recursive.
+   */
+  function wrapRawNodes(DomEl) {
+    if (!DomEl || !DomEl.childNodes) return;
+    Array.prototype.forEach.call(DomEl.childNodes, function (node) {
+      if (3 === node.nodeType || "A" === node.nodeName) {
+        var p = document.createElement("p");
+        node.parentNode.insertBefore(p, node);
+        p.appendChild(node);
+      }
+    });
+    return DomEl;
+  }
 
-	/**
-	 * SSoCI entries tend to have mismatched </p> tags which leads to
-	 * empty <p></p> tag pairs. We'll strip them out:
-	 */
-	function removeEmptyElements(DomEl) {
-		if (!DomEl || !DomEl.childNodes) return;
-		Array.prototype.forEach.call(DomEl.childNodes, function (node) {
-			if (1 === node.nodeType && "" === node.innerText) {
-				DomEl.removeChild(node);
-			}
-		});
-		return DomEl;
-	}
+  /**
+   * SSoCI entries tend to have mismatched </p> tags which leads to
+   * empty <p></p> tag pairs. We'll strip them out:
+   */
+  function removeEmptyElements(DomEl) {
+    if (!DomEl || !DomEl.childNodes) return;
+    Array.prototype.forEach.call(DomEl.childNodes, function (node) {
+      if (1 === node.nodeType && "" === node.innerText) {
+        DomEl.removeChild(node);
+      }
+    });
+    return DomEl;
+  }
 
-	/**
-	 * This is the only exposed function within fixHTML.
-	 * @param dirtyString {String} This is the input HTML in string format.
-	 * @param returnDomFrag {Boolean} return a DOM fragment instead of a string. Defaults to string.
-	 */
-	return function fixHtml(dirtyString, returnDomFrag) {
-		var domNodes = removeEmptyElements(wrapRawNodes(domify(dirtyString)));
-		var frag = stir.DOM.frag(domNodes);
-		return returnDomFrag ? frag : frag.textContent;
-	};
+  /**
+   * This is the only exposed function within fixHTML.
+   * @param dirtyString {String} This is the input HTML in string format.
+   * @param returnDomFrag {Boolean} return a DOM fragment instead of a string. Defaults to string.
+   */
+  return function fixHtml(dirtyString, returnDomFrag) {
+    var domNodes = removeEmptyElements(wrapRawNodes(domify(dirtyString)));
+    var frag = stir.DOM.frag(domNodes);
+    return returnDomFrag ? frag : frag.textContent;
+  };
 })();
 
 /**
  * Library functions for working with the DOM
  */
 stir.DOM = {
-	frag: (nodes) => {
-	  const frag = document.createDocumentFragment();
-	  while (nodes.firstChild) {
-		  frag.appendChild(nodes.firstChild);
-	  }
-	  return frag;
-	}
+  frag: (nodes) => {
+    const frag = document.createDocumentFragment();
+    while (nodes.firstChild) {
+      frag.appendChild(nodes.firstChild);
+    }
+    return frag;
+  },
 };
 
 /**
@@ -513,6 +513,26 @@ stir.createIntersectionObserver = function (options) {
     setClassAdd: _setClassAdd,
     setClassRemove: _setClassRemove,
   };
+};
+
+stir.lazyJS = (nodes, file, t4MediaId) => {
+  const nodesInUse = nodes.filter((item) => stir.node(item));
+  if (!nodesInUse.length) return;
+
+  const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="${t4MediaId}" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + file;
+
+  nodesInUse.forEach((item) => {
+    let observer = stir.createIntersectionObserver({
+      element: stir.node(item),
+      threshold: [0.001],
+      callback: function (entry) {
+        if (entry.isIntersecting) {
+          stir.addScript(scriptSrc);
+          observer && observer.observer.unobserve(this);
+        }
+      },
+    });
+  });
 };
 
 stir.cardinal = (function () {
