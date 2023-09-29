@@ -1,21 +1,24 @@
 (function () {
-  const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174054" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "mobile-nav.js";
+  //const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174054" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "mobile-nav.js";
 
-  const nodes = ["#open_mobile_menu"];
-  const nodesInUse = nodes.filter((item) => stir.node(item));
+  //const nodes = ["#open_mobile_menu"];
 
-  if (!nodesInUse.length) return;
+  stir.lazyJS(["#open_mobile_menu"], "mobile-nav.js", "174054");
 
-  nodesInUse.forEach((item) => {
-    let observer = stir.createIntersectionObserver({
-      element: stir.node(item),
-      threshold: [0.001],
-      callback: function (entry) {
-        if (entry.isIntersecting) {
-          stir.addScript(scriptSrc);
-          observer && observer.observer.unobserve(this);
-        }
-      },
-    });
-  });
+  // const nodesInUse = nodes.filter((item) => stir.node(item));
+
+  // if (!nodesInUse.length) return;
+
+  // nodesInUse.forEach((item) => {
+  //   let observer = stir.createIntersectionObserver({
+  //     element: stir.node(item),
+  //     threshold: [0.001],
+  //     callback: function (entry) {
+  //       if (entry.isIntersecting) {
+  //         stir.addScript(scriptSrc);
+  //         observer && observer.observer.unobserve(this);
+  //       }
+  //     },
+  //   });
+  // });
 })();
