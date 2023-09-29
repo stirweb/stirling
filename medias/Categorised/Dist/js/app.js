@@ -2558,11 +2558,11 @@ stir.createIntersectionObserver = function (options) {
   };
 };
 
-stir.lazyJS = (nodes, file, t4MediaId) => {
+stir.lazyJS = (nodes, file, t4MediaId, env) => {
   const nodesInUse = nodes.filter((item) => stir.node(item));
   if (!nodesInUse.length) return;
 
-  const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="${t4MediaId}" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + file;
+  const scriptSrc = env.includes("preview") ? `<t4 type="media" id="${t4MediaId}" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + file;
 
   nodesInUse.forEach((item) => {
     let observer = stir.createIntersectionObserver({
@@ -3929,8 +3929,9 @@ stir.Concierge.prototype.obj2param = function (obj) {
     }
 })();
 */
+var stir = stir || {};
 (function () {
-  stir.lazyJS(["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"], "course-favs.js", "174052");
+  stir.lazyJS(["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"], "course-favs.js", "174052", UoS_env.name);
 
   // const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174052" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "course-favs.js";
 
@@ -4448,29 +4449,9 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
   }
 })();
 
+var stir = stir || {};
 (function () {
-  //const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174054" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "mobile-nav.js";
-
-  //const nodes = ["#open_mobile_menu"];
-
-  stir.lazyJS(["#open_mobile_menu"], "mobile-nav.js", "174054");
-
-  // const nodesInUse = nodes.filter((item) => stir.node(item));
-
-  // if (!nodesInUse.length) return;
-
-  // nodesInUse.forEach((item) => {
-  //   let observer = stir.createIntersectionObserver({
-  //     element: stir.node(item),
-  //     threshold: [0.001],
-  //     callback: function (entry) {
-  //       if (entry.isIntersecting) {
-  //         stir.addScript(scriptSrc);
-  //         observer && observer.observer.unobserve(this);
-  //       }
-  //     },
-  //   });
-  // });
+  stir.lazyJS(["#open_mobile_menu"], "mobile-nav.js", "174054", UoS_env.name);
 })();
 
 
@@ -5283,8 +5264,9 @@ stir.Dialog = function Dialog(element_) {
   });
 })(stir.nodes("[data-stirreveal]"), stir.nodes("dialog"));
 
+var stir = stir || {};
 (function () {
-  stir.lazyJS(['[data-behaviour="tabs"]'], "stir-tabs.js", "174053");
+  stir.lazyJS(['[data-behaviour="tabs"]'], "stir-tabs.js", "174053", UoS_env.name);
 })();
 
 var stir = stir || {};
