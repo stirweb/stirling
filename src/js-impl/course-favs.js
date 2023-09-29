@@ -1,6 +1,7 @@
 var stir = stir || {};
 (function () {
-  stir.lazyJS(["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"], "course-favs.js", "174052", UoS_env);
+  const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="174052" formatter="path/*" />' : UoS_env.wc_path + "js/other/course-favs..js";
+  stir.lazyJS(["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"], scriptSrc);
 
   // const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174052" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "course-favs.js";
 

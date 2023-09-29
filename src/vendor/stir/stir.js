@@ -515,11 +515,9 @@ stir.createIntersectionObserver = function (options) {
   };
 };
 
-stir.lazyJS = (nodes, file, t4MediaId, env) => {
+stir.lazyJS = (nodes, scriptSrc) => {
   const nodesInUse = nodes.filter((item) => stir.node(item));
   if (!nodesInUse.length) return;
-
-  const scriptSrc = env.name.includes("preview") ? `<t4 type="media" id="${t4MediaId}" formatter="path/*" />` : env.wc_path + "js/other/" + file;
 
   nodesInUse.forEach((item) => {
     let observer = stir.createIntersectionObserver({

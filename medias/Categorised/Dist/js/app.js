@@ -2558,11 +2558,9 @@ stir.createIntersectionObserver = function (options) {
   };
 };
 
-stir.lazyJS = (nodes, file, t4MediaId, env) => {
+stir.lazyJS = (nodes, scriptSrc) => {
   const nodesInUse = nodes.filter((item) => stir.node(item));
   if (!nodesInUse.length) return;
-
-  const scriptSrc = env.name.includes("preview") ? `<t4 type="media" id="${t4MediaId}" formatter="path/*" />` : env.wc_path + "js/other/" + file;
 
   nodesInUse.forEach((item) => {
     let observer = stir.createIntersectionObserver({
@@ -3931,7 +3929,8 @@ stir.Concierge.prototype.obj2param = function (obj) {
 */
 var stir = stir || {};
 (function () {
-  stir.lazyJS(["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"], "course-favs.js", "174052", UoS_env);
+  const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="174052" formatter="path/*" />' : UoS_env.wc_path + "js/other/course-favs..js";
+  stir.lazyJS(["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"], scriptSrc);
 
   // const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174052" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "course-favs.js";
 
@@ -4451,7 +4450,8 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
 
 var stir = stir || {};
 (function () {
-  stir.lazyJS(["#open_mobile_menu"], "mobile-nav.js", "174054", UoS_env);
+  const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="174054" formatter="path/*" />' : UoS_env.wc_path + "js/other/mobile-nav.js";
+  stir.lazyJS(["#open_mobile_menu"], scriptSrc);
 })();
 
 
@@ -5266,7 +5266,8 @@ stir.Dialog = function Dialog(element_) {
 
 var stir = stir || {};
 (function () {
-  stir.lazyJS(['[data-behaviour="tabs"]'], "stir-tabs.js", "174053", UoS_env);
+  const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="174053" formatter="path/*" />' : UoS_env.wc_path + "js/other/stir-tabs.js";
+  stir.lazyJS(['[data-behaviour="tabs"]'], scriptSrc);
 })();
 
 var stir = stir || {};
