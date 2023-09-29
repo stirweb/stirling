@@ -12,9 +12,7 @@
       threshold: [0.001],
       callback: function (entry) {
         if (entry.isIntersecting) {
-          let script = document.createElement("script");
-          script.src = scriptSrc;
-          document.body.append(script);
+          stir.addScript(scriptSrc);
           observer && observer.observer.unobserve(this);
         }
       },
