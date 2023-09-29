@@ -3912,7 +3912,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
 (function () {
   const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174052" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "course-favs.js";
 
-  const nodes = ["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn", '[data-nodeid="coursefavsbtn"]'];
+  const nodes = ["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"];
   const nodesInUse = nodes.filter((item) => stir.node(item));
 
   if (!nodesInUse.length) return;
