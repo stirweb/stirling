@@ -2562,7 +2562,7 @@ stir.lazyJS = (nodes, file, t4MediaId, env) => {
   const nodesInUse = nodes.filter((item) => stir.node(item));
   if (!nodesInUse.length) return;
 
-  const scriptSrc = env.includes("preview") ? `<t4 type="media" id="${t4MediaId}" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + file;
+  const scriptSrc = env.name.includes("preview") ? `<t4 type="media" id="${t4MediaId}" formatter="path/*" />` : env.wc_path + "js/other/" + file;
 
   nodesInUse.forEach((item) => {
     let observer = stir.createIntersectionObserver({
@@ -3931,7 +3931,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
 */
 var stir = stir || {};
 (function () {
-  stir.lazyJS(["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"], "course-favs.js", "174052", UoS_env.name);
+  stir.lazyJS(["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"], "course-favs.js", "174052", UoS_env);
 
   // const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174052" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "course-favs.js";
 
@@ -4451,7 +4451,7 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
 
 var stir = stir || {};
 (function () {
-  stir.lazyJS(["#open_mobile_menu"], "mobile-nav.js", "174054", UoS_env.name);
+  stir.lazyJS(["#open_mobile_menu"], "mobile-nav.js", "174054", UoS_env);
 })();
 
 
@@ -5266,7 +5266,7 @@ stir.Dialog = function Dialog(element_) {
 
 var stir = stir || {};
 (function () {
-  stir.lazyJS(['[data-behaviour="tabs"]'], "stir-tabs.js", "174053", UoS_env.name);
+  stir.lazyJS(['[data-behaviour="tabs"]'], "stir-tabs.js", "174053", UoS_env);
 })();
 
 var stir = stir || {};
