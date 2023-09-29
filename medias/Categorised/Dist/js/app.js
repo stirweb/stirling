@@ -3923,9 +3923,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
       threshold: [0.001],
       callback: function (entry) {
         if (entry.isIntersecting) {
-          let script = document.createElement("script");
-          script.src = scriptSrc;
-          document.body.append(script);
+          stir.addScript(scriptSrc);
           observer && observer.observer.unobserve(this);
         }
       },
@@ -4428,9 +4426,6 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
   }
 })();
 
-/*
-   MOBILE MENU 
- */
 (function () {
   const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174054" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "mobile-nav.js";
 
@@ -4445,9 +4440,7 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
       threshold: [0.001],
       callback: function (entry) {
         if (entry.isIntersecting) {
-          let script = document.createElement("script");
-          script.src = scriptSrc;
-          document.body.append(script);
+          stir.addScript(scriptSrc);
           observer && observer.observer.unobserve(this);
         }
       },
@@ -5738,10 +5731,6 @@ stir.Dialog = function Dialog(element_) {
   });
 })(stir.nodes("[data-stirreveal]"), stir.nodes("dialog"));
 
-/*
-   ON LOAD 
-   Set up any tabs found on the page
- */
 (function () {
   const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174053" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "stir-tabs.js";
 
@@ -5756,9 +5745,7 @@ stir.Dialog = function Dialog(element_) {
       threshold: [0.001],
       callback: function (entry) {
         if (entry.isIntersecting) {
-          let script = document.createElement("script");
-          script.src = scriptSrc;
-          document.body.append(script);
+          stir.addScript(scriptSrc);
           observer && observer.observer.unobserve(this);
         }
       },
