@@ -1638,6 +1638,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/course-favs.js"
       },
       {
+        "id": 174053,
+        "description": "stir-tabs.js ",
+        "projectPath": "medias/Categorised/Dist/js/other/stir-tabs.js"
+      },
+      {
         "id": 173925,
         "description": "pg.css",
         "projectPath": "medias/Categorised/Dist/css/campaigns/pg.css"

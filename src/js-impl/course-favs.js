@@ -9,13 +9,12 @@
   nodesInUse.forEach((item) => {
     let observer = stir.createIntersectionObserver({
       element: stir.node(item),
-      threshold: [0.1],
+      threshold: [0.001],
       callback: function (entry) {
         if (entry.isIntersecting) {
           let script = document.createElement("script");
           script.src = scriptSrc;
           document.body.append(script);
-          script.async = false;
           observer && observer.observer.unobserve(this);
         }
       },
