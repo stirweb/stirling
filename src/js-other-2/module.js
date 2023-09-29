@@ -512,6 +512,8 @@
 
     try {
       const data = await response.json();
+
+      console.log(data);
       main(data, colours);
       addEventListeners();
     } catch (error) {
@@ -526,5 +528,6 @@
   const params = new URLSearchParams(document.location.search);
   const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
 
+  console.log(fetchUrl);
   getData(fetchUrl, colours);
 })();

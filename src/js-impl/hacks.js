@@ -3,7 +3,7 @@
  * For browsers that dont support object fit
  * Will remove the image tag and instead add a inline background image style
  * @author: Ryan Kaye
- */
+ *
 
 (function () {
   var els = stir.nodes("[data-objectfit]");
@@ -24,7 +24,7 @@
 /*
  * Pullquote fixes for Old Edge and IE
  * @author: Ryan Kaye
- */
+ *
 
 (function () {
   if (navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Edge") != -1) {

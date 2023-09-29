@@ -4,13 +4,13 @@
  * @author: Ryan Kaye
  * @date: 2021-06-16
  * @version: 1
- */
+ *
 
 (function (accordLists) {
 
     /*
      * Away we go: Get all accordions on page then loop all accordion components
-     */
+     *
 
 	if(!accordLists) return;
 
@@ -20,7 +20,7 @@
 
     /*
      * Function: Config an accordion on load so its ready to use
-     */
+     *
     function buildAccordion(item, index) {
         var headingId = "accordlist-control-" + index;
         var contentId = "accordlist-panel-" + index;
@@ -49,7 +49,7 @@
     /*
      * Function: Deal with heading button click events
      * ie open or close the content box
-     */
+     *
     function accordionClick(e) {
         e.preventDefault();
         var heading = e.target;
@@ -62,7 +62,7 @@
 
     /*
      * Function: Updates accessibilty attributes for close state
-     */
+     *
     function setCloseAttributes(content, heading) {
         content.setAttribute("hidden", "true");
         heading.setAttribute("aria-expanded", "false");
@@ -70,10 +70,12 @@
 
     /*
      * Function: Updates accessibilty attributes for open state
-     */
+     *
     function setOpenAttributes(content, heading) {
         content.removeAttribute("hidden");
         heading.setAttribute("aria-expanded", "true");
     }
 
 })(document.querySelectorAll(".accordion-listing"));
+
+*/

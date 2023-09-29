@@ -907,11 +907,11 @@
         "description": "ug-squiggle.svg",
         "projectPath": "medias/Categorised/Dist/images/campaigns/ug/ug-squiggle.svg"
       },
-	  {
-		"id": 163749,
-		"description": "feed.php",
-		"projectPath": "medias/Categorised/Dist/php/conversation/feed.php"
-	  },
+      {
+        "id": 163749,
+        "description": "feed.php",
+        "projectPath": "medias/Categorised/Dist/php/conversation/feed.php"
+      },
       {
         "id": 158177,
         "description": "index.php",
@@ -1487,7 +1487,7 @@
         "description": "colour-percentages.svg",
         "projectPath": "medias/Categorised/Dist/css/images/misc/colour-percentages.svg"
       },
-	  {
+      {
         "id": 163750,
         "description": "website-escape.js",
         "projectPath": "medias/Categorised/Dist/js/other/website-escape.js"
@@ -1611,7 +1611,8 @@
         "id": 164549,
         "description": "getting-around.js",
         "projectPath": "medias/Categorised/Dist/js/other/_unminified/getting-around.js"
-      },      {
+      },
+      {
         "id": 166939,
         "description": "events.js",
         "projectPath": "medias/Categorised/Dist/js/other/events.js"
@@ -1620,15 +1621,23 @@
         "id": 164307,
         "description": "index.php",
         "projectPath": "medias/Categorised/Dist/php/experts/index.php"
-      },{
+      },
+      {
         "id": 172167,
         "description": "report-tagging.js",
         "projectPath": "medias/Categorised/Dist/js/other/report-tagging.js"
-      },{
+      },
+      {
         "id": 173613,
         "description": "module.js",
         "projectPath": "medias/Categorised/Dist/js/other/module.js"
-      },{
+      },
+      {
+        "id": 174052,
+        "description": "course-favs.js",
+        "projectPath": "medias/Categorised/Dist/js/other/course-favs.js"
+      },
+      {
         "id": 173925,
         "description": "pg.css",
         "projectPath": "medias/Categorised/Dist/css/campaigns/pg.css"
