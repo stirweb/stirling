@@ -1,0 +1,80 @@
+{
+  "additionalCosts": "There are no additional costs associated with this Module.",
+  "assessments": [
+    {
+      "tab": "On Campus, UK",
+      "tabAssessments": [
+        {
+          "outcomes": "3,2,1",
+          "label": "Class Test",
+          "category": "Coursework",
+          "percent": "50"
+        },
+        {
+          "outcomes": "3,2,1",
+          "label": "Class Test",
+          "category": "Coursework",
+          "percent": "50"
+        }
+      ]
+    },
+    {
+      "tab": "International",
+      "tabAssessments": [
+        {
+          "outcomes": "1,2,3",
+          "label": "Class Test",
+          "category": "Coursework",
+          "percent": "50"
+        },
+        {
+          "outcomes": "2,3,1",
+          "label": "Class Test",
+          "category": "Coursework",
+          "percent": "50"
+        }
+      ]
+    }
+  ],
+  "attendanceRequirements": "Your attendance at lectures, seminars and other events is extremely important. Likewise full engagement in your studies will enable you to get the most out of the course and help you perform at your best when it comes to assessment and exams. \r\n\r\nWe expect you to attend and engage with all aspects of this module and with your programme of study and we will monitor this throughout each semester to check that you are fully participating and that you coping well with your studies.\r\n\r\nIt is therefore essential that you:\r\n\r\n&bull; Attend all lectures and seminars outlined in the timetable of activity provided in this module descriptor\r\n\r\n&bull; Actively participate in classes and group work sessions\r\n\r\n&bull; Prepare in advance by undertaking the required reading and/or other forms of preparation\r\n\r\n&bull; Attend meetings with your personal tutor, module co-ordinator or programme director if requested\r\n\r\n&bull; Engage in extra-curricular events, groups and meetings where provided which are designed to support and inform your studies\r\n\r\n&bull; Submit coursework/assessment by the due time and date\r\n\r\n&bull; Attend class tests and examinations at the specified time and date\r\n\r\n&bull; Make your divisional office aware at the earliest opportunity if you experience problems which may impact on your attendance and engagement\r\n\r\n&bull; Inform the University of absence (planned or unplanned), e.g. illness, emergency as outlined at:http://www.stir.ac.uk/registry/studentinformation/absence\r\n",
+  "deliveries": [
+    {
+      "hours": "50",
+      "typekey": "gd",
+      "description": "Preparation for scheduled sessions, follow up work, wider reading and practice, completion of assessment tasks, revision, accessing webinars and other materials available on demand",
+      "label": "Directed Study",
+      "type": "guided independent study"
+    },
+    {
+      "hours": "150",
+      "typekey": "othind",
+      "description": "Independent activities required to complete the module",
+      "label": "Undirected Study",
+      "type": "other independent study activity"
+    },
+    {
+      "hours": "200",
+      "typekey": "total",
+      "description": "",
+      "label": "Total Study Time",
+      "type": "total"
+    }
+  ],
+  "deliveryperiodstartdesc": null,
+  "ectsmodulecredits": 10,
+  "learningOutcomes": ["acquire and apply the basic principles of management accounting;", "identify and categorise a range of information regarding a company's costs and profitability;", "calculate, analyse, and interpret the different types of costing used in various industry settings."],
+  "locationStudyMethods": ["Muscat College/International", "Muscat College", "Stirling"],
+  "modulecode": "ACCUMA2",
+  "moduleCoordinator": "Ou Lyu",
+  "modulecredits": 20,
+  "modulelevel": "SCQF LEVEL 8",
+  "moduleLevelDescription": "UG",
+  "moduleOverview": "<p>We have all heard of the term accounting. Most of us will have a view on what accounting is, or even what accounting should be. Why are there so many different names for the same thing? Well, there are always some clues in the name and management accounting is just one part of the whole idea of accounting (and finance) in business. &nbsp;</p>\r\n\r\n<p>As part of your introductory accounting studies, this module considers why a business needs different types of information in its management. &nbsp;</p>\r\n\r\n<p>In this module you will: &nbsp;</p>\r\n\r\n<ul>\r\n\t<li>learn the differences between management and other types of accounting;&nbsp;&nbsp;</li>\r\n\t<li>examine why management accounting is much more fluid in its approach to calculating information;&nbsp;&nbsp;</li>\r\n\t<li>consider some simple methods for calculating important day-to-day information.&nbsp;</li>\r\n</ul>\r\n<quillbot-extension-portal></quillbot-extension-portal>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><quillbot-extension-portal></quillbot-extension-portal></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n",
+  "moduletitle": "Introduction to Management Accounting",
+  "nonCreditBearing": false,
+  "owningfaculty": "Stirling Management School",
+  "preparedotherinformation": null,
+  "professionalAccreditation": "n/a",
+  "studyAbroad": "No",
+  "version": "8.0"
+}
