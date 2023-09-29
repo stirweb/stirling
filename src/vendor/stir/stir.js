@@ -519,7 +519,7 @@ stir.lazyJS = (nodes, file, t4MediaId, env) => {
   const nodesInUse = nodes.filter((item) => stir.node(item));
   if (!nodesInUse.length) return;
 
-  const scriptSrc = env.includes("preview") ? `<t4 type="media" id="${t4MediaId}" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + file;
+  const scriptSrc = env.name.includes("preview") ? `<t4 type="media" id="${t4MediaId}" formatter="path/*" />` : env.wc_path + "js/other/" + file;
 
   nodesInUse.forEach((item) => {
     let observer = stir.createIntersectionObserver({
