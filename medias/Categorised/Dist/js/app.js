@@ -3929,7 +3929,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
 */
 var stir = stir || {};
 (function () {
-  const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="174052" formatter="path/*" />' : UoS_env.wc_path + "js/other/course-favs..js";
+  const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="174052" formatter="path/*" />' : UoS_env.wc_path + "js/other/course-favs.js";
   stir.lazyJS(["#coursefavsarea", "#coursesharedarea", "#coursefavsbtn"], scriptSrc);
 
   // const scriptSrc = UoS_env.name.includes("preview") ? `<t4 type="media" id="174052" formatter="path/*" />` : UoS_env.wc_path + "js/other/" + "course-favs.js";
