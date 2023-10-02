@@ -80,22 +80,22 @@
                     </div>
                 </div>`,p=()=>`<div class="cell bg-grey u-bleed u-p-2 "><p class="u-m-0 text-md">We aim to present detailed, up-to-date module information - in fact, we're providing more 
             information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
-            to change. <a href="#">See terms and conditions</a>.</p></div>`,h=({moduleOverview:e,colourPack:t,...r})=>`<div class="cell u-p-2">
+            to change. <a href="#">See terms and conditions</a>.</p></div>`,h=({moduleOverview:e,learningOutcomes:t,colourPack:r})=>`<div class="cell u-p-2">
                 <h2 id="contentandaims" class="u-scroll-offset">Content and aims</h2>
 
-                <h3 class="header-stripped u-bg-${t.first}--10 u-${t.first}-line-left u-p-1  u-border-width-5 u-text-regular">
+                <h3 class="header-stripped u-bg-${r.first}--10 u-${r.first}-line-left u-p-1  u-border-width-5 u-text-regular">
                     Module overview
                 </h3>
                 ${e}
 
-                <h3 class="header-stripped u-bg-${t.first}--10 u-${t.first}-line-left u-p-1 u-border-width-5 u-text-regular">
+                <h3 class="header-stripped u-bg-${r.first}--10 u-${r.first}-line-left u-p-1 u-border-width-5 u-text-regular">
                     Learning outcomes
                 </h3>
 
                 <p><strong>After successful completion of this module, you'll be able to:</strong></p>
                 
                 <ul>
-                    ${r["learningOutcomes "].map(e=>`<li>${e}</li>`).join("")} 
+                    ${t.map(e=>`<li>${e}</li>`).join("")} 
                 </ul>
             </div>`,g=({modulecredits:e,ectsmodulecredits:t,professionalAccreditation:r,colourPack:a})=>{return`<div class="cell u-mt-2">
                 <h2 id="awards" class="u-scroll-offset">Awards</h2>
@@ -130,11 +130,11 @@
             <p>${e.preparedotherinformation}</p>`:""}
                    
                     <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
-                    ${"Yes"===e["studyAbroad "]?`<p>This module is available to suitably-qualified undergraduate students studying elsewhere in the
+                    ${"Yes"===e.studyAbroad?`<p>This module is available to suitably-qualified undergraduate students studying elsewhere in the
                         world who wish to join Stirling for a semester or academic year. <a href="">Learn more</a></p>`:"<p>Not available</p>"}
                     
                     <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
-                    <p>${e["additionalCosts "]}</p>
+                    <p>${e.additionalCosts}</p>
                 </div>`,i=stir.curry((e,t,{label:r,hours:a,typekey:s})=>{return"total"===s?`<div class="u-bg-${e.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container ">
                 <strong class="u-flex1">Total workload</strong>
                 <strong>${a} hours</strong>
