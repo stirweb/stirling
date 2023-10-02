@@ -232,7 +232,7 @@
             to change. <a href="#">See terms and conditions</a>.</p></div>`;
   };
 
-  const renderContentAims = ({ moduleOverview, colourPack, ...data }) => {
+  const renderContentAims = ({ moduleOverview, learningOutcomes, colourPack }) => {
     return `<div class="cell u-p-2">
                 <h2 id="contentandaims" class="u-scroll-offset">Content and aims</h2>
 
@@ -248,7 +248,7 @@
                 <p><strong>After successful completion of this module, you'll be able to:</strong></p>
                 
                 <ul>
-                    ${data["learningOutcomes "].map((item) => `<li>${item}</li>`).join("")} 
+                    ${learningOutcomes.map((item) => `<li>${item}</li>`).join("")} 
                 </ul>
             </div>`;
   };
@@ -312,10 +312,10 @@
                     ${data.preparedotherinformation ? renderSupportingInfo(data.preparedotherinformation) : ``}
                    
                     <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
-                    ${data["studyAbroad "] === "Yes" ? renderStudyAbroad() : `<p>Not available</p>`}
+                    ${data.studyAbroad === "Yes" ? renderStudyAbroad() : `<p>Not available</p>`}
                     
                     <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
-                    <p>${data["additionalCosts "]}</p>
+                    <p>${data.additionalCosts}</p>
                 </div>`;
   };
 
