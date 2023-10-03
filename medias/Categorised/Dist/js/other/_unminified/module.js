@@ -5,32 +5,6 @@
 
   */
   function addEventListeners() {
-    //const openCloseSelector = ".c-open-close";
-
-    /*
-        Generic open close component
-    */
-    const openCloseBtns = stir.nodes(".c-open-close");
-    openCloseBtns.forEach((el) => {
-      el.addEventListener("click", (event) => {
-        const btn = event.target.closest(".c-open-close");
-        const openCloseIcons = Array.prototype.slice.call(btn.querySelectorAll(".c-open-close-icon"));
-        openCloseIcons.forEach((item) => item.classList.toggle("hide"));
-      });
-    });
-
-    /*
-        Sticky nav
-    */
-    const stickyNav = document.querySelector(".c-sticky-nav");
-    const stickyNavBtn = document.querySelector("#c-sticky-nav-btn");
-
-    stickyNavBtn &&
-      stickyNavBtn.addEventListener("click", (event) => {
-        stickyNav.classList.toggle("hide-for-small-only");
-        stickyNav.classList.toggle("hide-for-medium-only");
-      });
-
     /*
         BARCHART ANIMATION TRIGGER 
     */
@@ -65,60 +39,7 @@
     barcharts.forEach((el) => {
       observerBarcharts.observe(el);
     });
-
-    /*
-        SECTION SCROLL TRIGGER
-    */
-    function onIntersection2(entries, opts) {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const currentSection = entry.target.innerText;
-          const navItems = stir.nodes("[data-anchornav]");
-
-          navItems.forEach((item) => {
-            if (item.innerText == currentSection) {
-              item.classList.add("current");
-            } else {
-              item.classList.remove("current");
-            }
-          });
-        }
-      });
-    }
-
-    const observerSections = new IntersectionObserver(onIntersection2, {
-      root: null,
-      threshold: 0.5,
-    });
-
-    const sections = stir.nodes("main h2");
-    sections.forEach((el) => {
-      observerSections.observe(el);
-    });
-
-    /* 
-      Ensure correct anchor link is highlighted
-    */
-    const anchornavs = stir.nodes("[data-anchornav]");
-    anchornavs.forEach((item) => {
-      item.addEventListener("click", (event) => {
-        stickyNav.classList.toggle("hide-for-small-only");
-        stickyNav.classList.toggle("hide-for-medium-only");
-
-        setTimeout(() => {
-          anchornavs.forEach((el) => el.classList.remove("current"));
-          event.target.classList.add("current");
-        }, 500);
-      });
-    });
   }
-
-  /* 
-  
-      GET THE DATA CONTENT 
-      AND POPULATE THE PAGE
-  
-  */
 
   /* 
 
@@ -130,43 +51,20 @@
     let params = new URLSearchParams(document.location.search);
     return !params.get("course")
       ? ``
-      : `<a href="https://www.stir.ac.uk/courses/${level}/${params.get("course")}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none ">
+      : `<a href="https://www.stir.ac.uk/courses/${level}/${params.get("course")}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">
       Back to course</a>`;
   };
 
-  const renderStickyNav = (level) => {
-    return `<div class="u-white--all u-sticky-nav ">
-                    <nav class="u-relative u-bg-dark-mink" aria-label="Jump to section links">
-                        <div class="grid-container u-py-1 hide-for-large">
-                            <button class=" u-bg-black text-md text-left u-font-bold u-py-1 u-m-0 
-                                    u-cursor-pointer u-w-full flex-container c-open-close" id="c-sticky-nav-btn">
-                                <span class="u-flex1">Jump to...</span>
-                                <span class="u-relative u-width-32 u-inline-block u-heritage-green c-open-close-icon"> + </span>
-                                <span class="u-relative u-width-32 u-inline-block u-heritage-green hide c-open-close-icon"> -
-                                </span>
-                            </button>
-                        </div>
-
-                        <div
-                            class="u-absolute-medium-down u-bg-dark-mink hide-for-small-only hide-for-medium-only c-sticky-nav u-w-full">
-                            <div class="grid-container u-py-1 u-pt-0-medium-down">
-                                <div class="flex-container flex-dir-column large-flex-dir-row u-gap-x-8 ">
-                                    <a href="#contentandaims" class="text-md u-font-bold u-p-1 u-m-0 current" data-anchornav>Content
-                                        and aims</a>
-                                    <a href="#teaching" class="text-md u-font-bold u-p-1 u-m-0 " data-anchornav>Teaching and
-                                        assessment</a>
-                                    <a href="#awards" class="text-md u-font-bold u-p-1 u-m-0 " data-anchornav>Awards</a>
-                                    <a href="#requirements" class="text-md u-font-bold u-p-1 u-m-0 " data-anchornav>Study
-                                        requirements</a>
-                                    <a href="#further" class="text-md u-font-bold u-p-1 u-m-0 u-border-hover-none "
-                                        data-anchornav>Further details</a>
-                                    ${renderCourseBackBtn(level)}
-                                </div>
-
-                            </div>
-                        </div>
-                    </nav>
-                </div>`;
+  const renderDisclaimer = (level) => {
+    return `<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
+              <p class="u-m-0 text-md">We aim to present detailed, up-to-date module information - in fact, we're providing more 
+              information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
+              to change. <a href="#">See terms and conditions</a>.</p>
+          </div>
+          <div class="cell medium-3 align-middle align-center u-flex">
+            ${renderCourseBackBtn(level)}
+          </div>
+          `;
   };
 
   const renderHeader = ({ moduletitle, modulecode, locationStudyMethods, modulelevel, modulecredits }) => {
@@ -220,17 +118,9 @@
                 </div>`;
   };
 
-  const renderDisclaimer = () => {
-    return `<div class="cell bg-grey u-bleed u-p-2 ">
-              <p class="u-m-0 text-md">We aim to present detailed, up-to-date module information - in fact, we're providing more 
-              information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
-              to change. <a href="#">See terms and conditions</a>.</p>
-          </div>`;
-  };
-
   const renderContentAims = ({ moduleOverview, learningOutcomes, colourPack }) => {
     return `<div class="cell u-p-2">
-                <h2 id="contentandaims" class="u-scroll-offset">Content and aims</h2>
+                <h2 id="contentandaims" >Content and aims</h2>
 
                 <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1  u-border-width-5 u-text-regular">
                     Module overview
@@ -255,7 +145,7 @@
 
   const renderAwards = ({ modulecredits, ectsmodulecredits, professionalAccreditation, colourPack }) => {
     return `<div class="cell u-mt-2">
-                <h2 id="awards" class="u-scroll-offset">Awards</h2>
+                <h2 id="awards" >Awards</h2>
 
                 <h3 class="header-stripped u-bg-${colourPack.third}--10 u-p-1 u-${colourPack.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
 
@@ -281,7 +171,7 @@
 
   const renderStudyRequirements = ({ modulerequisites }) => {
     return `<div class="cell u-mt-2">
-                <h2 id="requirements" class="u-scroll-offset">Study requirements</h2>
+                <h2 id="requirements" >Study requirements</h2>
                 ${renderPrerequisites(modulerequisites)}
                 <p>Co-requisites: This module must be studied in conjunction with: module name (code)</p>
             </div>`;
@@ -297,7 +187,7 @@
 
   const renderFurtherDetails = (data) => {
     return `<div class="cell u-mt-2">
-                <h2 id="further" class="u-scroll-offset">Further details</h2>
+                <h2 id="further">Further details</h2>
                 ${data.preparedotherinformation ? renderSupportingInfo(data.preparedotherinformation) : ``}
                 <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
                 ${data.studyAbroad === "Yes" ? renderStudyAbroad() : `<p>Not available</p>`}
@@ -344,7 +234,7 @@
 
   const renderAssessment = stir.curry((width, item) => (!item ? `` : `<div class="cell large-${width} u-mb-1">${item}</div>`));
 
-  const renderAssessmentFallback = () => `Engagament information isn't currently available to be displayed for this module. You'll be able to find out more when enrolling for your modules.`;
+  const renderAssessmentFallback = () => `Assessment information isn't currently available, but it will be made clear to you when you make your module selections.`;
 
   const renderTeachingAssessment = (deliveries, assessments, colourPack) => {
     const deliveriesHtml = !deliveries.length ? renderDeliveriesFallback() : renderDeliveries(`12`, deliveries);
@@ -353,8 +243,8 @@
     const renderAssessmentCurry = renderAssessment(assessmentWidth);
     const assessmentHtml = !assessments.length ? renderAssessmentFallback() : assessments.map(renderAssessmentCurry).join(``);
 
-    return `<div class="cell u-mt-2">
-              <h2 id="teaching" class="u-scroll-offset">Teaching and assessment</h2>
+    return `<div class="cell">
+              <h2 id="teaching" >Teaching and assessment</h2>
 
               <p>Here's an overview of the learning, teaching and assessment methods, and the recommended time you
                   should dedicate to the study of this module. Most modules include a combination of activity
@@ -495,7 +385,7 @@
     const deliveries = ""; //doDeliveries(data.deliveries, colourPack);
     const assessments = doAssessments(data.assessments, colourPack);
 
-    const html = renderHeader(data2) + renderStickyNav(studyLevel) + renderSectionStart() + renderDisclaimer() + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack) + renderAwards(data2) + renderStudyRequirements(data2) + renderFurtherDetails(data2) + renderSectionEnd();
+    const html = renderHeader(data2) + renderSectionStart() + renderDisclaimer(studyLevel) + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack) + renderAwards(data2) + renderFurtherDetails(data2) + renderSectionEnd();
     return setDOMContent(contentArea, html);
   };
 
