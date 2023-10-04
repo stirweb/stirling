@@ -124,7 +124,7 @@
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173616" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" />
                     This module is worth ${moduleCredits} SCQF (Scottish Credit and Qualifications Framework) credits</p>
 
-                <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173615" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" /> 
+                <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173615" formatter="path/*"/>" width="65" height="44" alt="EU flag" /> 
                     This equates to ${ectsModuleCredits} ECTS (The European Credit Transfer and Accumulation System) credits</p>
 
                 <div class="u-mb-2 u-bg-${colourPack.third}--10 flex-container align-stretch ">
@@ -325,8 +325,6 @@
     const sums = assessments.map(doAssessmentItem);
 
     const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
-
-    //console.log(sums);
 
     return sums.map((item) => {
       if (item.sum !== totalPercent) return ``;
