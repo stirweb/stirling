@@ -105,7 +105,7 @@
                 </h3>
                 ${moduleOverview}
 
-                <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1 u-border-width-5 u-text-regular">
+                <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1 u-border-width-5 u-text-regular u-mt-2">
                     Learning outcomes
                 </h3>
                 <p><strong>After successful completion of this module, you'll be able to:</strong></p>
@@ -194,9 +194,10 @@
         </div>`;
   });
 
-  const renderAssessments = stir.curry((colourPack, { tab, tabAssessments }) => {
+  const renderAssessments = stir.curry((colourPack, length, { tab, tabAssessments }) => {
     const renderAssessmentItemCurry = renderAssessmentItem(colourPack);
-    return `<h4>${tab}</h4><p>${tabAssessments.map(renderAssessmentItemCurry).join(``)}</p>`;
+    const header = length > 1 ? `<h4>${tab}</h4>` : ``;
+    return `${header}<p>${tabAssessments.map(renderAssessmentItemCurry).join(``)}</p>`;
   });
 
   const renderAssessment = stir.curry((width, item) => (!item ? `` : `<div class="cell large-${width} u-mb-1">${item}</div>`));
@@ -319,10 +320,13 @@
 
   // doAssessments
   const doAssessments = (assessments, colourPack) => {
-    const renderAssessmentsCurry = renderAssessments(colourPack);
     // const filterDups = removeDuplicateObjectFromArray("match", mapped);
     const totalPercent = 100;
     const sums = assessments.map(doAssessmentItem);
+
+    const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
+
+    //console.log(sums);
 
     return sums.map((item) => {
       if (item.sum !== totalPercent) return ``;

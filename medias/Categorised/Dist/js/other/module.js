@@ -41,7 +41,7 @@
                 </h3>
                 ${e}
 
-                <h3 class="header-stripped u-bg-${r.first}--10 u-${r.first}-line-left u-p-1 u-border-width-5 u-text-regular">
+                <h3 class="header-stripped u-bg-${r.first}--10 u-${r.first}-line-left u-p-1 u-border-width-5 u-text-regular u-mt-2">
                     Learning outcomes
                 </h3>
                 <p><strong>After successful completion of this module, you'll be able to:</strong></p>
@@ -70,7 +70,7 @@
                 ${"Yes"===e.studyAbroad?t.studyAbroad:"<p>Not available</p>"}
                 <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
                 <p>${e.additionalCosts}</p>
-            </div>`,a=(stir.curry((e,t,{type:r,hours:a,typekey:i})=>{return"total"===i?`<div class="u-bg-${e.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
+            </div>`,i=(stir.curry((e,t,{type:r,hours:a,typekey:i})=>{return"total"===i?`<div class="u-bg-${e.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
                 <strong class="u-flex1">Total workload</strong>
                 <strong>${a} hours</strong>
             </div>`:`
@@ -81,7 +81,7 @@
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${t} (${r})</span>
             <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${a}" data-max="100" data-unit="%" data-colour="${e.second}"></div>
-        </div>`)),i=stir.curry((e,{tab:t,tabAssessments:r})=>{e=a(e);return`<h4>${t}</h4><p>${r.map(e).join("")}</p>`}),s=stir.curry((e,t)=>t?`<div class="cell large-${e} u-mb-1">${t}</div>`:""),v=(e,t,r,a)=>{var i=e.length?(i="12",(e=e)?`<div class="cell large-${i} u-mb-1">${e}</div>`:""):`<p class="u-m-0">Engagement and teaching information isn't currently available, but it will be made clear to you when you make your module selections.</p>`,e=t.length<2?"12":"6",e=s(e),t=t.length?t.map(e).join(""):"Assessment information isn't currently available, but it will be made clear to you when you make your module selections.";return`<div class="cell">
+        </div>`)),a=stir.curry((e,t,{tab:r,tabAssessments:a})=>{e=i(e);return(1<t?`<h4>${r}</h4>`:"")+`<p>${a.map(e).join("")}</p>`}),s=stir.curry((e,t)=>t?`<div class="cell large-${e} u-mb-1">${t}</div>`:""),v=(e,t,r,a)=>{var i=e.length?(i="12",(e=e)?`<div class="cell large-${i} u-mb-1">${e}</div>`:""):`<p class="u-m-0">Engagement and teaching information isn't currently available, but it will be made clear to you when you make your module selections.</p>`,e=t.length<2?"12":"6",e=s(e),t=t.length?t.map(e).join(""):"Assessment information isn't currently available, but it will be made clear to you when you make your module selections.";return`<div class="cell">
               <h2 id="teaching" >Teaching and assessment</h2>
               ${a.teachingIntro}
               
@@ -93,4 +93,4 @@
                   ${t}
               </div>
               ${a.teachingTimetableInfo}
-        </div>`},b=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',f=()=>"</div></div>",$=()=>b()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+f(),w=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),y=e=>e&&e.toLowerCase().includes("p")?"pg":"ug",x=(t,e)=>(e.filter(e=>e.level===t).length?e.filter(e=>e.level===t):e)[0];const d=e=>{return{sum:e.tabAssessments.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0),assessment:e}},k=(e,t)=>{const r=i(t);return e.map(d).map(e=>100!==e.sum?"":r(e.assessment))};var e=stir.moduleTexts||{},t=new URLSearchParams(document.location.search);!async function(e,t,r){var a,i,s,d,l,n,e=await fetch(e);try{var u=await e.json();a=u,i=t,s=r,n=stir.node("#content"),a.error?w(n,$()):(l=y(a.moduleLevelDescription),i=x(l,i),d={...a,colourPack:i},a=k(a.assessments,i),l=g(d)+b()+c(l,s)+p(d)+v("",a,i,s)+h(d,s)+m(d,s)+f(),w(n,l)),o()}catch(e){w(contentArea,$())}}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[t.get("code"),t.get("session"),t.get("semester")].join("/"),[{level:"ug",first:"heritage-green",second:"energy-turq",third:"energy-purple"},{level:"pg",first:"heritage-purple",second:"heritage-purple",third:"heritage-green"}],e)}();
+        </div>`},b=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',f=()=>"</div></div>",$=()=>b()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+f(),w=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),y=e=>e&&e.toLowerCase().includes("p")?"pg":"ug",x=(t,e)=>(e.filter(e=>e.level===t).length?e.filter(e=>e.level===t):e)[0];const d=e=>{return{sum:e.tabAssessments.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0),assessment:e}},k=(e,t)=>{e=e.map(d);const r=a(t,e.length);return e.map(e=>100!==e.sum?"":r(e.assessment))};var e=stir.moduleTexts||{},t=new URLSearchParams(document.location.search);!async function(e,t,r){var a,i,s,d,l,n,e=await fetch(e);try{var u=await e.json();a=u,i=t,s=r,n=stir.node("#content"),a.error?w(n,$()):(l=y(a.moduleLevelDescription),i=x(l,i),d={...a,colourPack:i},a=k(a.assessments,i),l=g(d)+b()+c(l,s)+p(d)+v("",a,i,s)+h(d,s)+m(d,s)+f(),w(n,l)),o()}catch(e){w(contentArea,$())}}("https://www.stir.ac.uk/data/courses/akari/module/index.php?module="+[t.get("code"),t.get("session"),t.get("semester")].join("/"),[{level:"ug",first:"heritage-green",second:"energy-turq",third:"energy-purple"},{level:"pg",first:"heritage-purple",second:"heritage-purple",third:"heritage-green"}],e)}();
