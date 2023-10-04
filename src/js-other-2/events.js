@@ -80,11 +80,8 @@
   };
 
   const renderIconTag = (item) => {
-    console.log(item);
     if (item.pin < 1) return `data-label-icon="pin"`;
-
     if (item.type === "Webinar") return `data-label-icon="computer"`;
-
     if (item.isSeries) return `data-label-icon="startdates"`;
 
     return ``;
