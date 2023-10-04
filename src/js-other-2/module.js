@@ -55,11 +55,9 @@
       Back to course</a>`;
   };
 
-  const renderDisclaimer = (level) => {
+  const renderDisclaimer = (level, boilerplates) => {
     return `<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
-              <p class="u-m-0 text-md">We aim to present detailed, up-to-date module information - in fact, we're providing more 
-              information than ever. However, modules and courses are constantly being enhanced to boost your learning experience, and are therefore subject 
-              to change. <a href="#">See terms and conditions</a>.</p>
+              ${boilerplates.disclaimer ? boilerplates.disclaimer : ``}
           </div>
           <div class="cell medium-3 align-middle align-center u-flex">
             ${renderCourseBackBtn(level)}
@@ -70,46 +68,27 @@
   const renderHeader = ({ moduleTitle, moduleCode, locationStudyMethods, moduleLevel, moduleCredits }) => {
     return `<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
-
                         <div class="cell large-6  c-course-title u-padding-y">
                             <h1 class="u-header-smaller ">${moduleTitle}</h1>
                         </div>
-
                         <div class="cell large-6">
                             <div class="u-border u-border-width-5 flex-container  u-px-3 u-py-2">
                                 <div class="grid-x grid-padding-x ">
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48">
-                                          <t4 type="media" id="173865" formatter="inline/*"/>
-                                        </span>
-                                        <span>
-
-                                            <strong>Module code:</strong><br>${moduleCode}
-                                        </span>
+                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173865" formatter="inline/*"/></span>
+                                        <span><strong>Module code:</strong><br>${moduleCode}</span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48">
-                                        <t4 type="media" id="173868" formatter="inline/*"/> 
-                                        </span>
-                                        <span>
-                                            <strong>Delivery mode:</strong><br>${locationStudyMethods.filter((item) => item.trim() !== "").join("<br/>")}
-                                        </span>
+                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173868" formatter="inline/*"/></span>
+                                        <span><strong>Delivery mode:</strong><br>${locationStudyMethods.filter((item) => item.trim() !== "").join("<br/>")}</span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48">
-                                        <t4 type="media" id="173866" formatter="inline/*"/> 
-                                        </span>
-                                        <span>
-                                            <strong>SCQF level:</strong><br>${moduleLevel}
-                                        </span>
+                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173866" formatter="inline/*"/></span>
+                                        <span><strong>SCQF level:</strong><br>${moduleLevel}</span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48">
-                                        <t4 type="media" id="173867" formatter="inline/*"/> 
-                                        </span>
-                                        <span>
-                                            <strong>SCQF credits:</strong><br>${moduleCredits}
-                                        </span>
+                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173867" formatter="inline/*"/></span>
+                                        <span><strong>SCQF credits:</strong><br>${moduleCredits}</span>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +100,6 @@
   const renderContentAims = ({ moduleOverview, learningOutcomes, colourPack }) => {
     return `<div class="cell u-p-2">
                 <h2 id="contentandaims" >Content and aims</h2>
-
                 <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1  u-border-width-5 u-text-regular">
                     Module overview
                 </h3>
@@ -130,12 +108,8 @@
                 <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1 u-border-width-5 u-text-regular">
                     Learning outcomes
                 </h3>
-
                 <p><strong>After successful completion of this module, you'll be able to:</strong></p>
-                
-                <ul>
-                    ${learningOutcomes.map((item) => `<li>${item}</li>`).join("")} 
-                </ul>
+                <ul>${learningOutcomes.map((item) => `<li>${item}</li>`).join(``)}</ul>
             </div>`;
   };
 
@@ -143,12 +117,10 @@
     return !professionalAccreditation ? `` : `<h3 class="header-stripped u-bg-${colour}--10 u-p-1 u-${colour}-line-left u-border-width-5 u-text-regular">Professional accreditation</h3><p>${professionalAccreditation}</p>`;
   };
 
-  const renderAwards = ({ moduleCredits, ectsModuleCredits, professionalAccreditation, colourPack }) => {
+  const renderAwards = ({ moduleCredits, ectsModuleCredits, professionalAccreditation, colourPack }, boilerplates) => {
     return `<div class="cell u-mt-2">
-                <h2 id="awards" >Awards</h2>
-
+                <h2 id="awards">Awards</h2>
                 <h3 class="header-stripped u-bg-${colourPack.third}--10 u-p-1 u-${colourPack.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
-
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173616" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" />
                     This module is worth ${moduleCredits} SCQF (Scottish Credit and Qualifications Framework) credits</p>
 
@@ -160,37 +132,32 @@
                       <t4 type="media" id="173864" formatter="inline/*"/> 
                     </span>
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
-                        <a href="#" class="u-${colourPack.third}">Assessment and award of credit for undergraduates</a></p>
+                        <a href="${boilerplates.awardsCTA}" class="u-${colourPack.third}">Assessment and award of credit for undergraduates</a></p>
                 </div>
-
                 ${renderAccreditation(professionalAccreditation, colourPack.third)}
             </div>`;
   };
 
-  const renderPrerequisites = (moduleRequisites) => (!moduleRequisites ? `` : `<p>Pre-requisites: ${moduleRequisites}</p>`);
+  //const renderPrerequisites = (moduleRequisites) => (!moduleRequisites ? `` : `<p>Pre-requisites: ${moduleRequisites}</p>`);
 
-  const renderStudyRequirements = ({ moduleRequisites }) => {
-    return `<div class="cell u-mt-2">
-                <h2 id="requirements" >Study requirements</h2>
-                ${renderPrerequisites(moduleRequisites)}
-                <p>Co-requisites: This module must be studied in conjunction with: module name (code)</p>
-            </div>`;
-  };
-
-  const renderStudyAbroad = () => {
-    return `<p>This module is available to suitably-qualified students studying elsewhere in the world who wish to join Stirling for a semester or academic year. <a href="">Learn more</a></p>`;
-  };
+  // const renderStudyRequirements = ({ moduleRequisites }) => {
+  //   return `<div class="cell u-mt-2">
+  //               <h2 id="requirements" >Study requirements</h2>
+  //               ${renderPrerequisites(moduleRequisites)}
+  //               <p>Co-requisites: This module must be studied in conjunction with: module name (code)</p>
+  //           </div>`;
+  // };
 
   const renderSupportingInfo = (preparedotherinformation) => {
     return `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3><p>${preparedotherinformation}</p>`;
   };
 
-  const renderFurtherDetails = (data) => {
+  const renderFurtherDetails = (data, boilerplates) => {
     return `<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
                 ${data.preparedotherinformation ? renderSupportingInfo(data.preparedotherinformation) : ``}
                 <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
-                ${data.studyAbroad === "Yes" ? renderStudyAbroad() : `<p>Not available</p>`}
+                ${data.studyAbroad === "Yes" ? boilerplates.studyAbroad : `<p>Not available</p>`}
                 <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
                 <p>${data.additionalCosts}</p>
             </div>`;
@@ -236,7 +203,7 @@
 
   const renderAssessmentFallback = () => `Assessment information isn't currently available, but it will be made clear to you when you make your module selections.`;
 
-  const renderTeachingAssessment = (deliveries, assessments, colourPack) => {
+  const renderTeachingAssessment = (deliveries, assessments, colourPack, boilerplates) => {
     const deliveriesHtml = !deliveries.length ? renderDeliveriesFallback() : renderDeliveries(`12`, deliveries);
 
     const assessmentWidth = assessments.length < 2 ? `12` : `6`;
@@ -245,10 +212,7 @@
 
     return `<div class="cell">
               <h2 id="teaching" >Teaching and assessment</h2>
-
-              <p>Here's an overview of the learning, teaching and assessment methods, and the recommended time you
-                  should dedicate to the study of this module. Most modules include a combination of activity
-                  (e.g. lectures), assessments and self-study.</p>
+              ${boilerplates.teachingIntro}
               
               <h3 class="header-stripped u-bg-${colourPack.second}--10 u-p-1 u-${colourPack.second}-line-left u-border-width-5 u-text-regular u-mt-2">Engagement overview</h3>
               ${deliveriesHtml}
@@ -257,12 +221,7 @@
               <div class="grid-x grid-padding-x ">
                   ${assessmentHtml}
               </div>
-
-              <p>Are you an incoming Stirling student? You'll typically receive timetables for module-level
-                  lectures one month prior
-                  - and select seminars two weeks prior - to the start of your first semester. Help with module
-                  registration can be provided by Student Services. More information can be found on our Welcome
-                  site</p>
+              ${boilerplates.teachingTimetableInfo}
         </div>`;
   };
 
@@ -373,7 +332,7 @@
   };
 
   // Main
-  const main = (data, colours) => {
+  const main = (data, colours, boilerplates) => {
     const contentArea = stir.node("#content");
 
     if (data.error) return setDOMContent(contentArea, renderError());
@@ -385,19 +344,19 @@
     const deliveries = ""; //doDeliveries(data.deliveries, colourPack);
     const assessments = doAssessments(data.assessments, colourPack);
 
-    const html = renderHeader(data2) + renderSectionStart() + renderDisclaimer(studyLevel) + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack) + renderAwards(data2) + renderFurtherDetails(data2) + renderSectionEnd();
+    const html = renderHeader(data2) + renderSectionStart() + renderDisclaimer(studyLevel, boilerplates) + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack, boilerplates) + renderAwards(data2, boilerplates) + renderFurtherDetails(data2, boilerplates) + renderSectionEnd();
     return setDOMContent(contentArea, html);
   };
 
   /*
         Init: Get the data and proceed
   */
-  async function getData(fetchUrl, colours) {
+  async function getData(fetchUrl, colours, boilerplates) {
     const response = await fetch(fetchUrl);
 
     try {
       const data = await response.json();
-      main(data, colours);
+      main(data, colours, boilerplates);
       addEventListeners();
     } catch (error) {
       setDOMContent(contentArea, renderError());
@@ -409,6 +368,8 @@
         On Load
     */
 
+  const boilerplates = stir.moduleTexts || {};
+
   const url = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=";
 
   const colours = [
@@ -419,5 +380,5 @@
   const params = new URLSearchParams(document.location.search);
   const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
 
-  getData(fetchUrl, colours);
+  getData(fetchUrl, colours, boilerplates);
 })();
