@@ -4,7 +4,7 @@
           <span class="uos-clock u-icon h5"></span>
           <span><time>${e.startTime}</time> – <time>${e.endTime}</time></span>
         </div>`,g=(t,e)=>{e=e.filter(e=>e.isSeries===t);return`<p class="text-sm">Part of the ${e.length?`<a href="${e[0].url}">${e[0].title}</a>`:t} series.</p>`},v=stir.curry((e,t)=>{return`
-            <div class="u-border-width-5 u-heritage-line-left c-search-result  ${t.image?"c-search-result__with-thumbnail":""}" data-result-type="event" ${r=t,console.log(r),r.pin<1?'data-label-icon="pin"':"Webinar"===r.type?'data-label-icon="computer"':r.isSeries?'data-label-icon="startdates"':""} data-perf="${t.perfId}" >
+            <div class="u-border-width-5 u-heritage-line-left c-search-result  ${t.image?"c-search-result__with-thumbnail":""}" data-result-type="event" ${r=t,r.pin<1?'data-label-icon="pin"':"Webinar"===r.type?'data-label-icon="computer"':r.isSeries?'data-label-icon="startdates"':""} data-perf="${t.perfId}" >
                 ${r=t,"Webinar"===r.type?l("Webinar"):r.isSeries?l("Event series"):""} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
