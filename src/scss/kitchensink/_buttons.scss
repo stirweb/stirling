@@ -394,51 +394,11 @@ input:checked {
   }
 }
 
-// @include breakpoint(xlarge up) {
-//     .button.u-sticky {
-//         &.u-sticky__small {
-//             width: 33%;
-//         }
-
-//         &.u-sticky__small.u-sticky.stuck {
-//             width: 33%;
-//         }
-//     }
-// }
-
 @include breakpoint(xxlarge up) {
   .button.u-sticky {
     width: 76.5625rem; /* match grid containr i.e. 77.5rem-0.9375rem */
   }
 }
-
-/*
-    3 x Fat Buttons eg Study Routes
-
-
-.c-button-big3inline {
-  padding: 35px 20px;
-  margin: 10px 0;
-}
-
-@media screen and #{breakpoint(medium up)} {
-  .c-button-big3inline {
-    margin: 0;
-  }
-}
-
-@media screen and (min-width: 1024px) and (max-width: 1050px) {
-  .c-button-big3inline {
-    padding: 50px 20px;
-  }
-}
-
-@media screen and #{breakpoint(xlarge up)} {
-  .c-button-big3inline {
-    padding: 70px 20px;
-  }
-}
-*/
 
 .btn-global-search {
   border: 0;
