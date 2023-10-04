@@ -39,6 +39,12 @@
             </div>`;
   };
 
+  const renderLabelTab = (item) => {
+    if (item.type === "Webinar") return renderTab("Webinar");
+    if (item.isSeries) return renderTab("Event series");
+    return ``;
+  };
+
   const renderNoData = () => {
     return `<div class="u-bg-white u-p-2 u-mb-2"><p class="u-m-0">No more events found</p></div>`;
   };
@@ -57,13 +63,6 @@
     return ` <a href="${item.url}">${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}</a>`;
   };
 
-  const renderIconTag = (item) => {
-    if (item.pin < 1) return `data-label-icon="pin"`;
-    if (item.isSeries) return `data-label-icon="startdates"`;
-
-    return ``;
-  };
-
   const renderTimes = (item) => {
     return item.isSeries
       ? ``
@@ -80,10 +79,21 @@
     return `<p class="text-sm">Part of the ${url} series.</p>`;
   };
 
+  const renderIconTag = (item) => {
+    console.log(item);
+    if (item.pin < 1) return `data-label-icon="pin"`;
+
+    if (item.type === "Webinar") return `data-label-icon="computer"`;
+
+    if (item.isSeries) return `data-label-icon="startdates"`;
+
+    return ``;
+  };
+
   const renderEvent = stir.curry((seriesData, item) => {
     return `
             <div class="u-border-width-5 u-heritage-line-left c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
-                ${item.isSeries ? renderTab("Event series") : ``} 
+                ${renderLabelTab(item)} 
                 <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
                     <p class="u-text-regular u-m-0">
                       ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} 
