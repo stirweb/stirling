@@ -67,12 +67,12 @@
           `;
   };
 
-  const renderHeader = ({ moduletitle, modulecode, locationStudyMethods, modulelevel, modulecredits }) => {
+  const renderHeader = ({ moduleTitle, moduleCode, locationStudyMethods, moduleLevel, moduleCredits }) => {
     return `<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
 
                         <div class="cell large-6  c-course-title u-padding-y">
-                            <h1 class="u-header-smaller ">${moduletitle}</h1>
+                            <h1 class="u-header-smaller ">${moduleTitle}</h1>
                         </div>
 
                         <div class="cell large-6">
@@ -84,7 +84,7 @@
                                         </span>
                                         <span>
 
-                                            <strong>Module code:</strong><br>${modulecode}
+                                            <strong>Module code:</strong><br>${moduleCode}
                                         </span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
@@ -100,7 +100,7 @@
                                         <t4 type="media" id="173866" formatter="inline/*"/> 
                                         </span>
                                         <span>
-                                            <strong>SCQF level:</strong><br>${modulelevel}
+                                            <strong>SCQF level:</strong><br>${moduleLevel}
                                         </span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
@@ -108,7 +108,7 @@
                                         <t4 type="media" id="173867" formatter="inline/*"/> 
                                         </span>
                                         <span>
-                                            <strong>SCQF credits:</strong><br>${modulecredits}
+                                            <strong>SCQF credits:</strong><br>${moduleCredits}
                                         </span>
                                     </div>
                                 </div>
@@ -143,17 +143,17 @@
     return !professionalAccreditation ? `` : `<h3 class="header-stripped u-bg-${colour}--10 u-p-1 u-${colour}-line-left u-border-width-5 u-text-regular">Professional accreditation</h3><p>${professionalAccreditation}</p>`;
   };
 
-  const renderAwards = ({ modulecredits, ectsmodulecredits, professionalAccreditation, colourPack }) => {
+  const renderAwards = ({ moduleCredits, ectsModuleCredits, professionalAccreditation, colourPack }) => {
     return `<div class="cell u-mt-2">
                 <h2 id="awards" >Awards</h2>
 
                 <h3 class="header-stripped u-bg-${colourPack.third}--10 u-p-1 u-${colourPack.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
 
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173616" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" />
-                    This module is worth ${modulecredits} SCQF (Scottish Credit and Qualifications Framework) credits</p>
+                    This module is worth ${moduleCredits} SCQF (Scottish Credit and Qualifications Framework) credits</p>
 
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173615" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" /> 
-                    This equates to ${ectsmodulecredits} ECTS (The European Credit Transfer and Accumulation System) credits</p>
+                    This equates to ${ectsModuleCredits} ECTS (The European Credit Transfer and Accumulation System) credits</p>
 
                 <div class="u-mb-2 u-bg-${colourPack.third}--10 flex-container align-stretch ">
                     <span class="u-bg-${colourPack.third} u-white flex-container align-middle u-width-64 u-px-1 ">
@@ -167,12 +167,12 @@
             </div>`;
   };
 
-  const renderPrerequisites = (modulerequisites) => (!modulerequisites ? `` : `<p>Pre-requisites: ${modulerequisites}</p>`);
+  const renderPrerequisites = (moduleRequisites) => (!moduleRequisites ? `` : `<p>Pre-requisites: ${moduleRequisites}</p>`);
 
-  const renderStudyRequirements = ({ modulerequisites }) => {
+  const renderStudyRequirements = ({ moduleRequisites }) => {
     return `<div class="cell u-mt-2">
                 <h2 id="requirements" >Study requirements</h2>
-                ${renderPrerequisites(modulerequisites)}
+                ${renderPrerequisites(moduleRequisites)}
                 <p>Co-requisites: This module must be studied in conjunction with: module name (code)</p>
             </div>`;
   };

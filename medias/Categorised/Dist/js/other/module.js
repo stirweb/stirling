@@ -8,7 +8,7 @@
             ${e=e,t=new URLSearchParams(document.location.search),t.get("course")?`<a href="https://www.stir.ac.uk/courses/${e}/${t.get("course")}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">
       Back to course</a>`:""}
           </div>
-          `;var t},u=({moduletitle:e,modulecode:t,locationStudyMethods:r,modulelevel:a,modulecredits:i})=>`<div class="grid-container">
+          `;var t},u=({moduleTitle:e,moduleCode:t,locationStudyMethods:r,moduleLevel:a,moduleCredits:i})=>`<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
 
                         <div class="cell large-6  c-course-title u-padding-y">
@@ -72,7 +72,7 @@
                 <ul>
                     ${t.map(e=>`<li>${e}</li>`).join("")} 
                 </ul>
-            </div>`,g=({modulecredits:e,ectsmodulecredits:t,professionalAccreditation:r,colourPack:a})=>{return`<div class="cell u-mt-2">
+            </div>`,g=({moduleCredits:e,ectsModuleCredits:t,professionalAccreditation:r,colourPack:a})=>{return`<div class="cell u-mt-2">
                 <h2 id="awards" >Awards</h2>
 
                 <h3 class="header-stripped u-bg-${a.third}--10 u-p-1 u-${a.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
