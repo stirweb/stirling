@@ -49,20 +49,20 @@ function js() {
   const source = [
     "node_modules/what-input/dist/what-input.js",
     //"node_modules/foundation-sites/dist/js/foundation.js",
-    "node_modules/tiny-slider/dist/min/tiny-slider.js",
-    "node_modules/aos/dist/aos.js",
-    "node_modules/js-cookie/src/js.cookie.js",
-    "node_modules/imagesloaded/imagesloaded.pkgd.js",
+    //"node_modules/tiny-slider/dist/min/tiny-slider.js", // 32KB !!! - CSS scroll-snap-type?
+    "node_modules/aos/dist/aos.js", // 15KB !!!
+    "node_modules/js-cookie/src/js.cookie.js", // IN USE?
+    "node_modules/imagesloaded/imagesloaded.pkgd.js", // IN USE?
     "node_modules/@vimeo/player/dist/player.min.js",
     "src/js/jsExtensions.js",
     "src/vendor/avatarimage/AvatarImage.js", // TODO can this be replaced with svg one?
     "src/vendor/avatarimagesvg/AvatarImageSVG.js",
     "src/vendor/queryparams/QueryParams.js",
-    "src/vendor/serviceq/src/serviceq.js",
-    "src/vendor/awd/src/awd.js",
-    "src/vendor/utils/src/utils.js",
+    //"src/vendor/serviceq/src/serviceq.js",
+    //"src/vendor/awd/src/awd.js",
+    //"src/vendor/utils/src/utils.js",
     "src/vendor/stickywidget/stickywidget.js",
-    "src/vendor/stir/stir.js",
+    "src/vendor/stir/stir.js", // 31KB !!!
     "src/js/app.js",
     "src/js-impl/*.js",
   ];
