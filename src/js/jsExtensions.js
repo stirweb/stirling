@@ -1,12 +1,12 @@
 /*
- * JavaScript Polyfills
+    Polyfills
  */
 
 /*
- * element.closest()
- * For browsers that do not support Element.closest(),
- * but carry support for element.matches()
- * (or a prefixed equivalent, meaning IE9+)
+    element.closest()
+    For browsers that do not support Element.closest(),
+    but carry support for element.matches()
+    (or a prefixed equivalent, meaning IE9+)
  */
 
 if (!Element.prototype.matches) {
@@ -26,8 +26,8 @@ if (!Element.prototype.closest) {
 }
 
 /*
- * element.remove();
- * https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
+    element.remove();
+    https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
  */
 
 (function (arr) {
@@ -47,8 +47,8 @@ if (!Element.prototype.closest) {
 })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 
 /*
- * Array.includes()
- * https://github.com/kevlatus/polyfill-array-includes/blob/master/array-includes.js
+    Array.includes()
+    https://github.com/kevlatus/polyfill-array-includes/blob/master/array-includes.js
  */
 
 if (!Array.prototype.includes) {
@@ -87,8 +87,8 @@ if (!Array.prototype.includes) {
 }
 
 /*
- * String.includes()
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+    String.includes()
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
  */
 
 if (!String.prototype.includes) {
@@ -106,8 +106,8 @@ if (!String.prototype.includes) {
 }
 
 /*
- * Object.entries()
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+    Object.entries()
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
  */
 
 if (!Object.entries) {
@@ -122,7 +122,7 @@ if (!Object.entries) {
 }
 
 /*
- * Object.values()
+    Object.values()
  */
 
 if (!Object.values) {
@@ -133,82 +133,3 @@ if (!Object.values) {
     return vals;
   };
 }
-
-/**
- * Get a random value from an array [1,2,3,4] -> ?
- * return {mixed}
- */
-/* Array.prototype.getRandomVal = function () {
-    return this[Math.floor(Math.random() * this.length)];
-};
- */
-
-// String
-
-/**
- * trim a string down and add ... to the end if exceeds max
- * return {string}
- */
-/* String.prototype.trunc = String.prototype.trunc || function (maxChars, readMorePath) {
-    return (this.length > maxChars) ?
-        this.substr(0, maxChars - 1) + '&hellip; ' + ((readMorePath) ? ' <a href="' + readMorePath + '" class="more">Read more</a>' : '') :
-        this.toString();
-}; */
-
-/**
- * Convert string to slugified version e.g. "Hello world!" -> "hello-world"
- * return {string}
- */
-/* String.prototype.slugify = function () {
-    var str = this;
-
-    str = str.replace(/^\s+|\s+$/g, ''); // trim
-    str = str.toLowerCase();
-    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-        .replace(/\s+/g, '-') // collapse whitespace and replace by -
-        .replace(/-+/g, '-'); // collapse dashes
-    return str;
-}; */
-
-/**
- * Will split a string and take the first element
- * e.g. "Fish bambinos | About | UoS" -> "Fish bambinos"
- * param delmiter {string} e.g. , or | or something else
- * return {string}
- */
-/* String.prototype.getFirstFromSplit = function (delimiter) {
-    if (this.indexOf(delimiter) > -1) {
-        return this.split(delimiter)[0].trim();
-    }
-    return this;
-}; */
-
-/**
- * Remove html tags from a string
- * return {string}
- */
-/* String.prototype.stripTags = function () {
-    return this.replace(/(<([^>]+)>)/ig, "");
-}; */
-
-// Number
-
-/** global prototype formatMoney function
- * param c {integer} count numbers of digits after sign
- * param d {string} decimals sign separator
- * param t {string} miles sign separator
- *
- *	example:
- *		(123456789.12345).formatMoney(2, ',', '.');
- *			=> "123.456.789,12" Latinoamerican moneyFormat
- */
-/* Number.prototype.formatMoney = function (c, d, t) {
-    var n = this,
-        c = isNaN(c = Math.abs(c)) ? 2 : c,
-        d = d == undefined ? "." : d,
-        t = t == undefined ? "," : t,
-        s = n < 0 ? "-" : "",
-        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
-        j = (j = i.length) > 3 ? j % 3 : 0;
-    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-}; */

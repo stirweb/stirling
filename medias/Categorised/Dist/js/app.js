@@ -1161,14 +1161,14 @@ return ImagesLoaded;
 !function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e.Vimeo=e.Vimeo||{},e.Vimeo.Player=t())}(this,function(){"use strict";function r(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}var e="undefined"!=typeof global&&"[object global]"==={}.toString.call(global);function i(e,t){return 0===e.indexOf(t.toLowerCase())?e:"".concat(t.toLowerCase()).concat(e.substr(0,1).toUpperCase()).concat(e.substr(1))}function c(e){return/^(https?:)?\/\/((player|www)\.)?vimeo\.com(?=$|\/)/.test(e)}function u(){var e,t=0<arguments.length&&void 0!==arguments[0]?arguments[0]:{},n=t.id,r=t.url,o=n||r;if(!o)throw new Error("An id or url must be passed, either in an options object or as a data-vimeo-id or data-vimeo-url attribute.");if(e=o,!isNaN(parseFloat(e))&&isFinite(e)&&Math.floor(e)==e)return"https://vimeo.com/".concat(o);if(c(o))return o.replace("http:","https:");if(n)throw new TypeError("“".concat(n,"” is not a valid video id."));throw new TypeError("“".concat(o,"” is not a vimeo.com url."))}var t=void 0!==Array.prototype.indexOf,n="undefined"!=typeof window&&void 0!==window.postMessage;if(!(e||t&&n))throw new Error("Sorry, the Vimeo Player API is not available in this browser.");var o="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{};!function(e){if(!e.WeakMap){var n=Object.prototype.hasOwnProperty,o=function(e,t,n){Object.defineProperty?Object.defineProperty(e,t,{configurable:!0,writable:!0,value:n}):e[t]=n};e.WeakMap=function(){function e(){if(void 0===this)throw new TypeError("Constructor WeakMap requires 'new'");if(o(this,"_id","_WeakMap"+"_"+t()+"."+t()),0<arguments.length)throw new TypeError("WeakMap iterable is not supported")}function r(e,t){if(!i(e)||!n.call(e,"_id"))throw new TypeError(t+" method called on incompatible receiver "+typeof e)}function t(){return Math.random().toString().substring(2)}return o(e.prototype,"delete",function(e){if(r(this,"delete"),!i(e))return!1;var t=e[this._id];return!(!t||t[0]!==e)&&(delete e[this._id],!0)}),o(e.prototype,"get",function(e){if(r(this,"get"),i(e)){var t=e[this._id];return t&&t[0]===e?t[1]:void 0}}),o(e.prototype,"has",function(e){if(r(this,"has"),!i(e))return!1;var t=e[this._id];return!(!t||t[0]!==e)}),o(e.prototype,"set",function(e,t){if(r(this,"set"),!i(e))throw new TypeError("Invalid value used as weak map key");var n=e[this._id];return n&&n[0]===e?n[1]=t:o(e,this._id,[e,t]),this}),o(e,"_polyfill",!0),e}()}function i(e){return Object(e)===e}}("undefined"!=typeof self?self:"undefined"!=typeof window?window:o);var a,s=(function(e){var t,n,r;r=function(){var t,a,n,e=Object.prototype.toString,r="undefined"!=typeof setImmediate?function(e){return setImmediate(e)}:setTimeout;try{Object.defineProperty({},"x",{}),t=function(e,t,n,r){return Object.defineProperty(e,t,{value:n,writable:!0,configurable:!1!==r})}}catch(e){t=function(e,t,n){return e[t]=n,e}}function i(e,t){n.add(e,t),a||(a=r(n.drain))}function u(e){var t,n=typeof e;return null==e||"object"!=n&&"function"!=n||(t=e.then),"function"==typeof t&&t}function c(){for(var e=0;e<this.chain.length;e++)o(this,1===this.state?this.chain[e].success:this.chain[e].failure,this.chain[e]);this.chain.length=0}function o(e,t,n){var r,o;try{!1===t?n.reject(e.msg):(r=!0===t?e.msg:t.call(void 0,e.msg))===n.promise?n.reject(TypeError("Promise-chain cycle")):(o=u(r))?o.call(r,n.resolve,n.reject):n.resolve(r)}catch(e){n.reject(e)}}function s(e){var t=this;t.triggered||(t.triggered=!0,t.def&&(t=t.def),t.msg=e,t.state=2,0<t.chain.length&&i(c,t))}function l(e,n,r,o){for(var t=0;t<n.length;t++)!function(t){e.resolve(n[t]).then(function(e){r(t,e)},o)}(t)}function f(e){this.def=e,this.triggered=!1}function d(e){this.promise=e,this.state=0,this.triggered=!1,this.chain=[],this.msg=void 0}function h(e){if("function"!=typeof e)throw TypeError("Not a function");if(0!==this.__NPO__)throw TypeError("Not a promise");this.__NPO__=1;var r=new d(this);this.then=function(e,t){var n={success:"function"!=typeof e||e,failure:"function"==typeof t&&t};return n.promise=new this.constructor(function(e,t){if("function"!=typeof e||"function"!=typeof t)throw TypeError("Not a function");n.resolve=e,n.reject=t}),r.chain.push(n),0!==r.state&&i(c,r),n.promise},this.catch=function(e){return this.then(void 0,e)};try{e.call(void 0,function(e){(function e(n){var r,o=this;if(!o.triggered){o.triggered=!0,o.def&&(o=o.def);try{(r=u(n))?i(function(){var t=new f(o);try{r.call(n,function(){e.apply(t,arguments)},function(){s.apply(t,arguments)})}catch(e){s.call(t,e)}}):(o.msg=n,o.state=1,0<o.chain.length&&i(c,o))}catch(e){s.call(new f(o),e)}}}).call(r,e)},function(e){s.call(r,e)})}catch(e){s.call(r,e)}}n=function(){var n,r,o;function i(e,t){this.fn=e,this.self=t,this.next=void 0}return{add:function(e,t){o=new i(e,t),r?r.next=o:n=o,r=o,o=void 0},drain:function(){var e=n;for(n=r=a=void 0;e;)e.fn.call(e.self),e=e.next}}}();var v=t({},"constructor",h,!1);return t(h.prototype=v,"__NPO__",0,!1),t(h,"resolve",function(n){return n&&"object"==typeof n&&1===n.__NPO__?n:new this(function(e,t){if("function"!=typeof e||"function"!=typeof t)throw TypeError("Not a function");e(n)})}),t(h,"reject",function(n){return new this(function(e,t){if("function"!=typeof e||"function"!=typeof t)throw TypeError("Not a function");t(n)})}),t(h,"all",function(t){var a=this;return"[object Array]"!=e.call(t)?a.reject(TypeError("Not an array")):0===t.length?a.resolve([]):new a(function(n,e){if("function"!=typeof n||"function"!=typeof e)throw TypeError("Not a function");var r=t.length,o=Array(r),i=0;l(a,t,function(e,t){o[e]=t,++i===r&&n(o)},e)})}),t(h,"race",function(t){var r=this;return"[object Array]"!=e.call(t)?r.reject(TypeError("Not an array")):new r(function(n,e){if("function"!=typeof n||"function"!=typeof e)throw TypeError("Not a function");l(r,t,function(e,t){n(t)},e)})}),h},(n=o)[t="Promise"]=n[t]||r(),e.exports&&(e.exports=n[t])}(a={exports:{}},a.exports),a.exports),l=new WeakMap;function f(e,t,n){var r=l.get(e.element)||{};t in r||(r[t]=[]),r[t].push(n),l.set(e.element,r)}function d(e,t){return(l.get(e.element)||{})[t]||[]}function h(e,t,n){var r=l.get(e.element)||{};if(!r[t])return!0;if(!n)return r[t]=[],l.set(e.element,r),!0;var o=r[t].indexOf(n);return-1!==o&&r[t].splice(o,1),l.set(e.element,r),r[t]&&0===r[t].length}var v=["autopause","autoplay","background","byline","color","height","id","loop","maxheight","maxwidth","muted","playsinline","portrait","responsive","speed","title","transparent","url","width"];function p(r){var e=1<arguments.length&&void 0!==arguments[1]?arguments[1]:{};return v.reduce(function(e,t){var n=r.getAttribute("data-vimeo-".concat(t));return(n||""===n)&&(e[t]=""===n?1:n),e},e)}function m(e,t){var n=e.html;if(!t)throw new TypeError("An element must be provided");if(null!==t.getAttribute("data-vimeo-initialized"))return t.querySelector("iframe");var r=document.createElement("div");return r.innerHTML=n,t.appendChild(r.firstChild),t.setAttribute("data-vimeo-initialized","true"),t.querySelector("iframe")}function y(i){var a=1<arguments.length&&void 0!==arguments[1]?arguments[1]:{},u=2<arguments.length?arguments[2]:void 0;return new Promise(function(t,n){if(!c(i))throw new TypeError("“".concat(i,"” is not a vimeo.com url."));var e="https://vimeo.com/api/oembed.json?url=".concat(encodeURIComponent(i),"&domain=").concat(window.location.hostname);for(var r in a)a.hasOwnProperty(r)&&(e+="&".concat(r,"=").concat(encodeURIComponent(a[r])));var o="XDomainRequest"in window?new XDomainRequest:new XMLHttpRequest;o.open("GET",e,!0),o.onload=function(){if(404!==o.status)if(403!==o.status)try{var e=JSON.parse(o.responseText);if(403===e.domain_status_code)return m(e,u),void n(new Error("“".concat(i,"” is not embeddable.")));t(e)}catch(e){n(e)}else n(new Error("“".concat(i,"” is not embeddable.")));else n(new Error("“".concat(i,"” was not found.")))},o.onerror=function(){var e=o.status?" (".concat(o.status,")"):"";n(new Error("There was an error fetching the embed code from Vimeo".concat(e,".")))},o.send()})}function w(e){return"string"==typeof e&&(e=JSON.parse(e)),e}function g(e,t,n){if(e.element.contentWindow&&e.element.contentWindow.postMessage){var r={method:t};void 0!==n&&(r.value=n);var o=parseFloat(navigator.userAgent.toLowerCase().replace(/^.*msie (\d+).*$/,"$1"));8<=o&&o<10&&(r=JSON.stringify(r)),e.element.contentWindow.postMessage(r,e.origin)}}function b(n,r){var t,e=[];if((r=w(r)).event){if("error"===r.event)d(n,r.data.method).forEach(function(e){var t=new Error(r.data.message);t.name=r.data.name,e.reject(t),h(n,r.data.method,e)});e=d(n,"event:".concat(r.event)),t=r.data}else if(r.method){var o=function(e,t){var n=d(e,t);if(n.length<1)return!1;var r=n.shift();return h(e,t,r),r}(n,r.method);o&&(e.push(o),t=r.value)}e.forEach(function(e){try{if("function"==typeof e)return void e.call(n,t);e.resolve(t)}catch(e){}})}var E=new WeakMap,k=new WeakMap,Player=function(){function Player(i){var a=this,r=1<arguments.length&&void 0!==arguments[1]?arguments[1]:{};if(function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,Player),window.jQuery&&i instanceof jQuery&&(1<i.length&&window.console&&console.warn&&console.warn("A jQuery object with multiple elements was passed, using the first element."),i=i[0]),"undefined"!=typeof document&&"string"==typeof i&&(i=document.getElementById(i)),!(i instanceof window.HTMLElement))throw new TypeError("You must pass either a valid element or a valid id.");if("IFRAME"!==i.nodeName){var e=i.querySelector("iframe");e&&(i=e)}if("IFRAME"===i.nodeName&&!c(i.getAttribute("src")||""))throw new Error("The player element passed isn’t a Vimeo embed.");if(E.has(i))return E.get(i);this.element=i,this.origin="*";var t=new s(function(o,t){var e=function(e){if(c(e.origin)&&a.element.contentWindow===e.source){"*"===a.origin&&(a.origin=e.origin);var t=w(e.data),n="event"in t&&"ready"===t.event,r="method"in t&&"ping"===t.method;if(n||r)return a.element.setAttribute("data-ready","true"),void o();b(a,t)}};if(window.addEventListener?window.addEventListener("message",e,!1):window.attachEvent&&window.attachEvent("onmessage",e),"IFRAME"!==a.element.nodeName){var n=p(i,r);y(u(n),n,i).then(function(e){var t,n,r,o=m(e,i);return a.element=o,a._originalElement=i,t=i,n=o,r=l.get(t),l.set(n,r),l.delete(t),E.set(a.element,a),e}).catch(function(e){return t(e)})}});return k.set(this,t),E.set(this.element,this),"IFRAME"===this.element.nodeName&&g(this,"ping"),this}var e,t,n;return e=Player,(t=[{key:"callMethod",value:function(n){var r=this,o=1<arguments.length&&void 0!==arguments[1]?arguments[1]:{};return new s(function(e,t){return r.ready().then(function(){f(r,n,{resolve:e,reject:t}),g(r,n,o)}).catch(function(e){t(e)})})}},{key:"get",value:function(n){var r=this;return new s(function(e,t){return n=i(n,"get"),r.ready().then(function(){f(r,n,{resolve:e,reject:t}),g(r,n)})})}},{key:"set",value:function(r,e){var o=this;return s.resolve(e).then(function(n){if(r=i(r,"set"),null==n)throw new TypeError("There must be a value to set.");return o.ready().then(function(){return new s(function(e,t){f(o,r,{resolve:e,reject:t}),g(o,r,n)})})})}},{key:"on",value:function(e,t){if(!e)throw new TypeError("You must pass an event name.");if(!t)throw new TypeError("You must pass a callback function.");if("function"!=typeof t)throw new TypeError("The callback must be a function.");0===d(this,"event:".concat(e)).length&&this.callMethod("addEventListener",e).catch(function(){}),f(this,"event:".concat(e),t)}},{key:"off",value:function(e,t){if(!e)throw new TypeError("You must pass an event name.");if(t&&"function"!=typeof t)throw new TypeError("The callback must be a function.");h(this,"event:".concat(e),t)&&this.callMethod("removeEventListener",e).catch(function(e){})}},{key:"loadVideo",value:function(e){return this.callMethod("loadVideo",e)}},{key:"ready",value:function(){var e=k.get(this)||new s(function(e,t){t(new Error("Unknown player. Probably unloaded."))});return s.resolve(e)}},{key:"addCuePoint",value:function(e){var t=1<arguments.length&&void 0!==arguments[1]?arguments[1]:{};return this.callMethod("addCuePoint",{time:e,data:t})}},{key:"removeCuePoint",value:function(e){return this.callMethod("removeCuePoint",e)}},{key:"enableTextTrack",value:function(e,t){if(!e)throw new TypeError("You must pass a language.");return this.callMethod("enableTextTrack",{language:e,kind:t})}},{key:"disableTextTrack",value:function(){return this.callMethod("disableTextTrack")}},{key:"pause",value:function(){return this.callMethod("pause")}},{key:"play",value:function(){return this.callMethod("play")}},{key:"unload",value:function(){return this.callMethod("unload")}},{key:"destroy",value:function(){var t=this;return new s(function(e){k.delete(t),E.delete(t.element),t._originalElement&&(E.delete(t._originalElement),t._originalElement.removeAttribute("data-vimeo-initialized")),t.element&&"IFRAME"===t.element.nodeName&&t.element.parentNode&&t.element.parentNode.removeChild(t.element),e()})}},{key:"getAutopause",value:function(){return this.get("autopause")}},{key:"setAutopause",value:function(e){return this.set("autopause",e)}},{key:"getColor",value:function(){return this.get("color")}},{key:"setColor",value:function(e){return this.set("color",e)}},{key:"getCuePoints",value:function(){return this.get("cuePoints")}},{key:"getCurrentTime",value:function(){return this.get("currentTime")}},{key:"setCurrentTime",value:function(e){return this.set("currentTime",e)}},{key:"getDuration",value:function(){return this.get("duration")}},{key:"getEnded",value:function(){return this.get("ended")}},{key:"getLoop",value:function(){return this.get("loop")}},{key:"setLoop",value:function(e){return this.set("loop",e)}},{key:"getPaused",value:function(){return this.get("paused")}},{key:"getPlaybackRate",value:function(){return this.get("playbackRate")}},{key:"setPlaybackRate",value:function(e){return this.set("playbackRate",e)}},{key:"getTextTracks",value:function(){return this.get("textTracks")}},{key:"getVideoEmbedCode",value:function(){return this.get("videoEmbedCode")}},{key:"getVideoId",value:function(){return this.get("videoId")}},{key:"getVideoTitle",value:function(){return this.get("videoTitle")}},{key:"getVideoWidth",value:function(){return this.get("videoWidth")}},{key:"getVideoHeight",value:function(){return this.get("videoHeight")}},{key:"getVideoUrl",value:function(){return this.get("videoUrl")}},{key:"getVolume",value:function(){return this.get("volume")}},{key:"setVolume",value:function(e){return this.set("volume",e)}}])&&r(e.prototype,t),n&&r(e,n),Player}();return e||(function(){var e=0<arguments.length&&void 0!==arguments[0]?arguments[0]:document,t=[].slice.call(e.querySelectorAll("[data-vimeo-id], [data-vimeo-url]")),n=function(e){"console"in window&&console.error&&console.error("There was an error creating an embed: ".concat(e))};t.forEach(function(t){try{if(null!==t.getAttribute("data-vimeo-defer"))return;var e=p(t);y(u(e),e,t).then(function(e){return m(e,t)}).catch(n)}catch(e){n(e)}})}(),function(){var r=0<arguments.length&&void 0!==arguments[0]?arguments[0]:document;if(!window.VimeoPlayerResizeEmbeds_){window.VimeoPlayerResizeEmbeds_=!0;var e=function(e){if(c(e.origin)&&e.data&&"spacechange"===e.data.event)for(var t=r.querySelectorAll("iframe"),n=0;n<t.length;n++)if(t[n].contentWindow===e.source){t[n].parentElement.style.paddingBottom="".concat(e.data.data[0].bottom,"px");break}};window.addEventListener?window.addEventListener("message",e,!1):window.attachEvent&&window.attachEvent("onmessage",e)}}()),Player});
 
 /*
- * JavaScript Polyfills
+    Polyfills
  */
 
 /*
- * element.closest()
- * For browsers that do not support Element.closest(),
- * but carry support for element.matches()
- * (or a prefixed equivalent, meaning IE9+)
+    element.closest()
+    For browsers that do not support Element.closest(),
+    but carry support for element.matches()
+    (or a prefixed equivalent, meaning IE9+)
  */
 
 if (!Element.prototype.matches) {
@@ -1188,8 +1188,8 @@ if (!Element.prototype.closest) {
 }
 
 /*
- * element.remove();
- * https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
+    element.remove();
+    https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
  */
 
 (function (arr) {
@@ -1209,8 +1209,8 @@ if (!Element.prototype.closest) {
 })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 
 /*
- * Array.includes()
- * https://github.com/kevlatus/polyfill-array-includes/blob/master/array-includes.js
+    Array.includes()
+    https://github.com/kevlatus/polyfill-array-includes/blob/master/array-includes.js
  */
 
 if (!Array.prototype.includes) {
@@ -1249,8 +1249,8 @@ if (!Array.prototype.includes) {
 }
 
 /*
- * String.includes()
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+    String.includes()
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
  */
 
 if (!String.prototype.includes) {
@@ -1268,8 +1268,8 @@ if (!String.prototype.includes) {
 }
 
 /*
- * Object.entries()
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+    Object.entries()
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
  */
 
 if (!Object.entries) {
@@ -1284,7 +1284,7 @@ if (!Object.entries) {
 }
 
 /*
- * Object.values()
+    Object.values()
  */
 
 if (!Object.values) {
@@ -1295,85 +1295,6 @@ if (!Object.values) {
     return vals;
   };
 }
-
-/**
- * Get a random value from an array [1,2,3,4] -> ?
- * return {mixed}
- */
-/* Array.prototype.getRandomVal = function () {
-    return this[Math.floor(Math.random() * this.length)];
-};
- */
-
-// String
-
-/**
- * trim a string down and add ... to the end if exceeds max
- * return {string}
- */
-/* String.prototype.trunc = String.prototype.trunc || function (maxChars, readMorePath) {
-    return (this.length > maxChars) ?
-        this.substr(0, maxChars - 1) + '&hellip; ' + ((readMorePath) ? ' <a href="' + readMorePath + '" class="more">Read more</a>' : '') :
-        this.toString();
-}; */
-
-/**
- * Convert string to slugified version e.g. "Hello world!" -> "hello-world"
- * return {string}
- */
-/* String.prototype.slugify = function () {
-    var str = this;
-
-    str = str.replace(/^\s+|\s+$/g, ''); // trim
-    str = str.toLowerCase();
-    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-        .replace(/\s+/g, '-') // collapse whitespace and replace by -
-        .replace(/-+/g, '-'); // collapse dashes
-    return str;
-}; */
-
-/**
- * Will split a string and take the first element
- * e.g. "Fish bambinos | About | UoS" -> "Fish bambinos"
- * param delmiter {string} e.g. , or | or something else
- * return {string}
- */
-/* String.prototype.getFirstFromSplit = function (delimiter) {
-    if (this.indexOf(delimiter) > -1) {
-        return this.split(delimiter)[0].trim();
-    }
-    return this;
-}; */
-
-/**
- * Remove html tags from a string
- * return {string}
- */
-/* String.prototype.stripTags = function () {
-    return this.replace(/(<([^>]+)>)/ig, "");
-}; */
-
-// Number
-
-/** global prototype formatMoney function
- * param c {integer} count numbers of digits after sign
- * param d {string} decimals sign separator
- * param t {string} miles sign separator
- *
- *	example:
- *		(123456789.12345).formatMoney(2, ',', '.');
- *			=> "123.456.789,12" Latinoamerican moneyFormat
- */
-/* Number.prototype.formatMoney = function (c, d, t) {
-    var n = this,
-        c = isNaN(c = Math.abs(c)) ? 2 : c,
-        d = d == undefined ? "." : d,
-        t = t == undefined ? "," : t,
-        s = n < 0 ? "-" : "",
-        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
-        j = (j = i.length) > 3 ? j % 3 : 0;
-    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-}; */
 
 /**
  * Generate an avatar image from letters
@@ -2854,21 +2775,12 @@ stir.ga = (() => {
 })();
 
 /*
- * Initiate foundation
- */
-
-// jQuery(document).ready(function ($) {
-//     $(document).foundation();
-// });
-
-/*
    Environment object so we don't have to repeat switch commands with hostnames etc
  */
 
 var UoS_env = (function () {
   var hostname = window.location.hostname;
 
-  // env_name e.g. "dev"
   var env_name = "prod";
   var wc_path = "/media/dist/";
 
@@ -2892,23 +2804,11 @@ var UoS_env = (function () {
       env_name = "pub";
       break;
 
-    //    case "www-stir.t4appdev.stir.ac.uk":
-    //      env_name = "dev-pub";
-    //      break;
-
     case "stirweb.github.io":
       env_name = "qa";
       wc_path = "/medias/Categorised/Dist/";
       break;
   }
-
-  // webcomponents path e.g. "/webcomponents/"
-  //var wc_path = "/webcomponents/";
-  // switch (hostname) {
-  //   case "localhost":
-  //     wc_path = "/";
-  //     break;
-  // }
 
   return {
     //url: hostname,
@@ -2918,36 +2818,11 @@ var UoS_env = (function () {
 })();
 
 /*
- * This is our location service within ServiceQ. It is global so that it can be
- * used throughout the site
- */
-
-/* var UoS_locationService = new UoS_ServiceQ({
-    request: {
-        url: "https://api.ipdata.co?api-key=aaa04e0dafd37c535ca70f6e84dbe4fd98333cd2cb33701044c75279",
-        dataType: "jsonp",
-    },
-    getCacheData: function() {
-        return Cookies.getJSON('UoS_LocationService__ipdata-data');
-    },
-    setCacheData: function(data) {
-        Cookies.set('UoS_LocationService__ipdata-data', data);
-    }
-}); */
-
-// this is a map of country code/names - taken from http://country.io/names.json
-/* UoS_locationService.countryNames =
-{"BD": "Bangladesh", "BE": "Belgium", "BF": "Burkina Faso", "BG": "Bulgaria", "BA": "Bosnia and Herzegovina", "BB": "Barbados", "WF": "Wallis and Futuna", "BL": "Saint Barthelemy", "BM": "Bermuda", "BN": "Brunei", "BO": "Bolivia", "BH": "Bahrain", "BI": "Burundi", "BJ": "Benin", "BT": "Bhutan", "JM": "Jamaica", "BV": "Bouvet Island", "BW": "Botswana", "WS": "Samoa", "BQ": "Bonaire, Saint Eustatius and Saba ", "BR": "Brazil", "BS": "Bahamas", "JE": "Jersey", "BY": "Belarus", "BZ": "Belize", "RU": "Russia", "RW": "Rwanda", "RS": "Serbia", "TL": "East Timor", "RE": "Reunion", "TM": "Turkmenistan", "TJ": "Tajikistan", "RO": "Romania", "TK": "Tokelau", "GW": "Guinea-Bissau", "GU": "Guam", "GT": "Guatemala", "GS": "South Georgia and the South Sandwich Islands", "GR": "Greece", "GQ": "Equatorial Guinea", "GP": "Guadeloupe", "JP": "Japan", "GY": "Guyana", "GG": "Guernsey", "GF": "French Guiana", "GE": "Georgia", "GD": "Grenada", "GB": "United Kingdom", "GA": "Gabon", "SV": "El Salvador", "GN": "Guinea", "GM": "Gambia", "GL": "Greenland", "GI": "Gibraltar", "GH": "Ghana", "OM": "Oman", "TN": "Tunisia", "JO": "Jordan", "HR": "Croatia", "HT": "Haiti", "HU": "Hungary", "HK": "Hong Kong", "HN": "Honduras", "HM": "Heard Island and McDonald Islands", "VE": "Venezuela", "PR": "Puerto Rico", "PS": "Palestinian Territory", "PW": "Palau", "PT": "Portugal", "SJ": "Svalbard and Jan Mayen", "PY": "Paraguay", "IQ": "Iraq", "PA": "Panama", "PF": "French Polynesia", "PG": "Papua New Guinea", "PE": "Peru", "PK": "Pakistan", "PH": "Philippines", "PN": "Pitcairn", "PL": "Poland", "PM": "Saint Pierre and Miquelon", "ZM": "Zambia", "EH": "Western Sahara", "EE": "Estonia", "EG": "Egypt", "ZA": "South Africa", "EC": "Ecuador", "IT": "Italy", "VN": "Vietnam", "SB": "Solomon Islands", "ET": "Ethiopia", "SO": "Somalia", "ZW": "Zimbabwe", "SA": "Saudi Arabia", "ES": "Spain", "ER": "Eritrea", "ME": "Montenegro", "MD": "Moldova", "MG": "Madagascar", "MF": "Saint Martin", "MA": "Morocco", "MC": "Monaco", "UZ": "Uzbekistan", "MM": "Myanmar", "ML": "Mali", "MO": "Macao", "MN": "Mongolia", "MH": "Marshall Islands", "MK": "Macedonia", "MU": "Mauritius", "MT": "Malta", "MW": "Malawi", "MV": "Maldives", "MQ": "Martinique", "MP": "Northern Mariana Islands", "MS": "Montserrat", "MR": "Mauritania", "IM": "Isle of Man", "UG": "Uganda", "TZ": "Tanzania", "MY": "Malaysia", "MX": "Mexico", "IL": "Israel", "FR": "France", "IO": "British Indian Ocean Territory", "SH": "Saint Helena", "FI": "Finland", "FJ": "Fiji", "FK": "Falkland Islands", "FM": "Micronesia", "FO": "Faroe Islands", "NI": "Nicaragua", "NL": "Netherlands", "NO": "Norway", "NA": "Namibia", "VU": "Vanuatu", "NC": "New Caledonia", "NE": "Niger", "NF": "Norfolk Island", "NG": "Nigeria", "NZ": "New Zealand", "NP": "Nepal", "NR": "Nauru", "NU": "Niue", "CK": "Cook Islands", "XK": "Kosovo", "CI": "Ivory Coast", "CH": "Switzerland", "CO": "Colombia", "CN": "China", "CM": "Cameroon", "CL": "Chile", "CC": "Cocos Islands", "CA": "Canada", "CG": "Republic of the Congo", "CF": "Central African Republic", "CD": "Democratic Republic of the Congo", "CZ": "Czech Republic", "CY": "Cyprus", "CX": "Christmas Island", "CR": "Costa Rica", "CW": "Curacao", "CV": "Cape Verde", "CU": "Cuba", "SZ": "Swaziland", "SY": "Syria", "SX": "Sint Maarten", "KG": "Kyrgyzstan", "KE": "Kenya", "SS": "South Sudan", "SR": "Suriname", "KI": "Kiribati", "KH": "Cambodia", "KN": "Saint Kitts and Nevis", "KM": "Comoros", "ST": "Sao Tome and Principe", "SK": "Slovakia", "KR": "South Korea", "SI": "Slovenia", "KP": "North Korea", "KW": "Kuwait", "SN": "Senegal", "SM": "San Marino", "SL": "Sierra Leone", "SC": "Seychelles", "KZ": "Kazakhstan", "KY": "Cayman Islands", "SG": "Singapore", "SE": "Sweden", "SD": "Sudan", "DO": "Dominican Republic", "DM": "Dominica", "DJ": "Djibouti", "DK": "Denmark", "VG": "British Virgin Islands", "DE": "Germany", "YE": "Yemen", "DZ": "Algeria", "US": "United States", "UY": "Uruguay", "YT": "Mayotte", "UM": "United States Minor Outlying Islands", "LB": "Lebanon", "LC": "Saint Lucia", "LA": "Laos", "TV": "Tuvalu", "TW": "Taiwan", "TT": "Trinidad and Tobago", "TR": "Turkey", "LK": "Sri Lanka", "LI": "Liechtenstein", "LV": "Latvia", "TO": "Tonga", "LT": "Lithuania", "LU": "Luxembourg", "LR": "Liberia", "LS": "Lesotho", "TH": "Thailand", "TF": "French Southern Territories", "TG": "Togo", "TD": "Chad", "TC": "Turks and Caicos Islands", "LY": "Libya", "VA": "Vatican", "VC": "Saint Vincent and the Grenadines", "AE": "United Arab Emirates", "AD": "Andorra", "AG": "Antigua and Barbuda", "AF": "Afghanistan", "AI": "Anguilla", "VI": "U.S. Virgin Islands", "IS": "Iceland", "IR": "Iran", "AM": "Armenia", "AL": "Albania", "AO": "Angola", "AQ": "Antarctica", "AS": "American Samoa", "AR": "Argentina", "AU": "Australia", "AT": "Austria", "AW": "Aruba", "IN": "India", "AX": "Aland Islands", "AZ": "Azerbaijan", "IE": "Ireland", "ID": "Indonesia", "UA": "Ukraine", "QA": "Qatar", "MZ": "Mozambique"};
- */
-// list of other (not including uk) eu countries
-/* UoS_locationService.euCountryNames = ["Austria", "Belgium", "Bulgaria", "Croatia", "Republic of Cyprus", "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden"]; */
-
-/*
- * This is a function to called when opening a widget, and contains handlers
- * to close other widgets. So we don't have to go through the entire site adding
- * widget close instructions everywhere, we can do it with a single call and just
- * update here
- * @param exception {string} The name here of the widget to ignore, but close others
+  This is a function to called when opening a widget, and contains handlers
+  to close other widgets. So we don't have to go through the entire site adding
+  widget close instructions everywhere, we can do it with a single call and just
+  update here
+  @param exception {string} The name here of the widget to ignore, but close others
  */
 
 var UoS_closeAllWidgetsExcept = (function () {
@@ -3002,40 +2877,21 @@ var UoS_closeAllWidgetsExcept = (function () {
 document.body.addEventListener("click", UoS_closeAllWidgetsExcept);
 
 /*
- * Helper object to let us do adaptive page loading (e.g. megamenu, mobile menu)
- * UoS_AWD is framework agnostic, so we'll pass in values from Foundation here
+  Helper object to let us do adaptive page loading (e.g. megamenu, mobile menu)
+  UoS_AWD is framework agnostic, so we'll pass in values from Foundation here
  */
-/* (function () {
-
-    window.uos_awd = new UoS_AWD({
-
-        // as defined in scss e.g. ["small", "medium", "large", "xlarge", "xxlarge"]
-        breakpoints: (function(queries) {
-            var breakpoints = [];
-            for (var i = 0; i < queries.length; i++) {
-                breakpoints.push(queries[i]["name"]);
-            }
-            return breakpoints;
-        })(Foundation.MediaQuery.queries),
-
-        // method to get current breakpoint
-        getCurrent: function() {
-            return Foundation.MediaQuery.current;
-        },
-    });
-
-})(); */
-
 /*
- * Replaces the object from Foundation.util.MediaQuery.js
- * https://get.foundation/sites/docs/media-queries.html
- * eg Foundation.MediaQuery.current & Foundation.MediaQuery.get (not in use)
- * Just migrating what we use ie stir.MediaQuery.current and the dispatch event
+  Replaces the object from Foundation.util.MediaQuery.js
+  https://get.foundation/sites/docs/media-queries.html
+  eg Foundation.MediaQuery.current & Foundation.MediaQuery.get (not in use)
+  Just migrating what we use ie stir.MediaQuery.current and the dispatch event
  */
 
 var stir = stir || {};
+
 stir.MediaQuery = (function () {
   var MediaQueryChangeEvent;
+
   var breakpoints = {
     small: 640,
     medium: 1024,
@@ -3044,9 +2900,9 @@ stir.MediaQuery = (function () {
     xxlarge: Infinity,
   };
 
-  /**
-   * Get the current breakpoint eg "small", "medium" ...
-   **/
+  /*
+     Get the current breakpoint eg "small", "medium" ...
+   */
   function getCurrent() {
     var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
     for (var index in breakpoints) {
@@ -3055,9 +2911,8 @@ stir.MediaQuery = (function () {
     return index;
   }
 
-  /**
-   * Check viewport size and dispatch an event if it
-   * has changed since last time.
+  /*
+     Check viewport size and dispatch an event if it has changed since last time.
    */
   function checkCurrent() {
     var size = getCurrent();
@@ -3067,8 +2922,8 @@ stir.MediaQuery = (function () {
     }
   }
 
-  /**
-   * Set up custom event "MediaQueryChange".
+  /*
+     Set up custom event "MediaQueryChange".
    */
   if (typeof Event === "function") {
     MediaQueryChangeEvent = new Event("MediaQueryChange"); // Event API version
@@ -3077,15 +2932,11 @@ stir.MediaQuery = (function () {
     MediaQueryChangeEvent.initEvent("MediaQueryChange", true, true);
   }
 
-  /**
-   * Listen for (debounced) resize events and re-check the
-   * viewport against the named breakpoints.
-   **/
+  /*
+     Listen for (debounced) resize events and re-check the viewport against the named breakpoints.
+   */
   window.addEventListener("resize", stir.debounce(checkCurrent, 400));
 
-  /**
-   * On load: Configure global stir.MediaQuery.current
-   **/
   return {
     current: getCurrent(),
   };
@@ -4303,154 +4154,6 @@ var stir = stir || {};
     }
 
 })(document.querySelector(".c-scroll-to-top"));
-/*
- * @title: Search helpers
- * @description: To aid html generation
- * @author: Ryan Kaye
-
-
-var StirSearchHelpers = (function () {
-  /*
-      SEARCH SUMMARY
-   *
-
-  const _formSummary = function (total, start, end) {
-    return end === 0 ? `<p>No results found for this query</p>` : `<p>Showing ${start} - ${end} of <strong>${total} results</strong></p>`;
-  };
-
-  /*
-      PAGINATION
-   *
-
-  /* Control the page calculations / rendering of the pagination nav *
-const _formPagination = function (totalResults_, postsPerPage_, currentPage_, numOfLinks_) {
-  const current = parseInt(currentPage_);
-  const numOfLinks = getNumOfPages(parseInt(numOfLinks_));
-  const total = getTotalPages(parseInt(totalResults_), parseInt(postsPerPage_));
-  const start = getStartPage(current, numOfLinks);
-  const end = getEndPage(numOfLinks, current, total);
-
-  const values = {
-    numOfLinks: numOfLinks,
-    total: total,
-    current: current,
-    previous: current !== 1 ? current - 1 : 0,
-    next: current !== total ? current + 1 : 0,
-    range: getPageRange(start, end, numOfLinks, total, current),
-  };
-
-  return [renderPrevBtn(values), renderPageNav(values), renderNextBtn(values)].join("");
-};
-
-/*
-      HELPERS
-   *
-
-  const getNumOfPages = (numLinks) => (numLinks % 2 === 0 ? numLinks : numLinks - 1);
-
-  const getTotalPages = (totalResults, postsPerPage) => Math.ceil(totalResults / postsPerPage);
-
-  const getIdealPadVal = (numOfLinks) => numOfLinks / 2;
-
-  const getCurrentPadVal = (start, end) => end - start;
-
-  const getStartDifference = (numOfLinks, start, current) => getIdealPadVal(numOfLinks) - current + start;
-
-  const getEndDifference = (numOfLinks, end, current) => getIdealPadVal(numOfLinks) - (end - current);
-
-  const getAdjustedStart = (dif, start) => (start - dif < 1 ? 1 : start - dif);
-
-  const getAdjustedEnd = (dif, total, end) => (end + dif > total ? total : end + dif);
-
-  /* Returns an array with the page numbers for the nav eg [4,5,6,7,8,9,10] *
-  function getPageRange(start, end, numOfLinks, total, current) {
-    if (getCurrentPadVal(start, end) === numOfLinks) {
-      return stir.range(start, end, 1);
-    }
-
-    const endPadded = current - start !== getIdealPadVal(numOfLinks) ? getAdjustedEnd(getStartDifference(numOfLinks, start, current), total, end) : end;
-    const startPadded = endPadded - current !== getIdealPadVal(numOfLinks) ? getAdjustedStart(getEndDifference(numOfLinks, current, endPadded), start) : start;
-
-    return stir.range(startPadded, endPadded, 1);
-  }
-
-  /* Returns the start value for the pagination list *
-  function getStartPage(current, numOfLinks) {
-    const start = current > getIdealPadVal(numOfLinks) ? current - getIdealPadVal(numOfLinks) : 0;
-    return start < 1 ? 1 : start;
-  }
-
-  /* Returns a end value for the paginaion list *
-  function getEndPage(numOfLinks, current, total) {
-    const end = getIdealPadVal(numOfLinks) + current;
-    return end > total ? total : end;
-  }
-
-  /*
-      RENDERERS
-   *
-
-  function renderNextBtn(vals) {
-    return vals.current === vals.total
-      ? `<div class="small-3 medium-3 cell"></div>`
-      : `
-        <div class="small-3 medium-3 cell text-right">
-            <a href="#" class="button small no-arrow" aria-label="Next page" data-page="${vals.next}">
-              <span class="show-for-medium">Next <span class="show-for-sr">page</span></span>
-              <span class="uos-chevron-right"></span> 
-            </a>
-        </div> `;
-  }
-
-  function renderPrevBtn(vals) {
-    return vals.current === 1
-      ? '<div class="small-3 medium-3 cell"></div>'
-      : `
-        <div class="small-3 medium-3 cell">
-            <a href="#" class="button small no-arrow" aria-label="Previous page" data-page="${vals.previous}">
-              <span class="uos-chevron-left"></span> 
-              <span class="show-for-medium">Previous <span class="show-for-sr">page</span></span>
-            </a>
-        </div> `;
-  }
-
-  function renderPageNav(vals) {
-    return `
-        <nav class="small-6 medium-6 cell text-center u-font-bold" aria-label="Pagination">
-          <ul class="pagination show-for-large">
-              ${renderPageList(vals)}
-          </ul>
-          <p class="hide-for-large">Page ${vals.current} of ${vals.total}</p>
-        </nav>`;
-  }
-
-  function renderPageList(vals) {
-    return stir
-      .map((page) => {
-        return page === vals.current
-          ? `<li class="current">
-              <span class="show-for-sr">You're on page</span> ${page}
-            </li>`
-          : `<li>
-              <a href="#" aria-label="Page ${page}" data-page="${page}">${page}</a>
-            </li>`;
-      }, vals.range)
-      .join("");
-  }
-
-  /*
-     PUBLIC GET FUNCTIONS
-   *
-
-  return {
-    formSearchSummaryHTML: _formSummary,
-    renderSummary: _formSummary, // Nicer name
-    formPaginationHTML: _formPagination,
-    renderPagination: _formPagination, // Nicer name
-  };
-})();
-
-*/
 
 /*
 @author: Ryan Kaye
