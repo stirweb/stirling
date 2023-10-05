@@ -79,10 +79,6 @@
                                         <span><strong>Module code:</strong><br>${moduleCode}</span>
                                     </div>
                                     <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173868" formatter="inline/*"/></span>
-                                        <span><strong>Delivery mode:</strong><br>${locationStudyMethods.filter((item) => item.trim() !== "").join("<br/>")}</span>
-                                    </div>
-                                    <div class="cell medium-6 flex-container u-gap u-p-1">
                                         <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173866" formatter="inline/*"/></span>
                                         <span><strong>SCQF level:</strong><br>${moduleLevel}</span>
                                     </div>
@@ -97,7 +93,7 @@
                 </div>`;
   };
 
-  const renderContentAims = ({ moduleOverview, learningOutcomes, colourPack }) => {
+  const renderContentAims = ({ moduleOverview, learningOutcomes, colourPack, boilerplates }) => {
     return `<div class="cell u-p-2">
                 <h2 id="contentandaims" >Content and aims</h2>
                 <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1  u-border-width-5 u-text-regular">
@@ -108,13 +104,9 @@
                 <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1 u-border-width-5 u-text-regular u-mt-2">
                     Learning outcomes
                 </h3>
-                <p><strong>After successful completion of this module, you'll be able to:</strong></p>
+                <p><strong>${boilerplates.outcomesIntro}</strong></p>
                 <ul>${learningOutcomes.map((item) => `<li>${item}</li>`).join(``)}</ul>
             </div>`;
-  };
-
-  const renderAccreditation = (professionalAccreditation, colour) => {
-    return !professionalAccreditation ? `` : `<h3 class="header-stripped u-bg-${colour}--10 u-p-1 u-${colour}-line-left u-border-width-5 u-text-regular">Professional accreditation</h3><p>${professionalAccreditation}</p>`;
   };
 
   const renderAwards = ({ moduleCredits, ectsModuleCredits, professionalAccreditation, colourPack }, boilerplates) => {
@@ -134,7 +126,6 @@
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
                         <a href="${boilerplates.awardsCTA}" class="u-${colourPack.third}">Assessment and award of credit for undergraduates</a></p>
                 </div>
-                ${renderAccreditation(professionalAccreditation, colourPack.third)}
             </div>`;
   };
 
@@ -182,8 +173,6 @@
 
   const renderDeliveries = (width, deliveries) => (!deliveries ? `` : `<div class="cell large-${width} u-mb-1">${deliveries}</div>`);
 
-  const renderDeliveriesFallback = () => `<p class="u-m-0">Engagement and teaching information isn't currently available, but it will be made clear to you when you make your module selections.</p>`;
-
   const renderAssessmentItem = stir.curry((colourPack, { label, category, percent }) => {
     return percent === "0"
       ? ``
@@ -202,14 +191,12 @@
 
   const renderAssessment = stir.curry((width, item) => (!item ? `` : `<div class="cell large-${width} u-mb-1">${item}</div>`));
 
-  const renderAssessmentFallback = () => `Assessment information isn't currently available, but it will be made clear to you when you make your module selections.`;
-
   const renderTeachingAssessment = (deliveries, assessments, colourPack, boilerplates) => {
-    const deliveriesHtml = !deliveries.length ? renderDeliveriesFallback() : renderDeliveries(`12`, deliveries);
+    const deliveriesHtml = !deliveries.length ? boilerplates.deliveriesFallback : renderDeliveries(`12`, deliveries);
 
     const assessmentWidth = assessments.length < 2 ? `12` : `6`;
     const renderAssessmentCurry = renderAssessment(assessmentWidth);
-    const assessmentHtml = !assessments.length ? renderAssessmentFallback() : assessments.map(renderAssessmentCurry).join(``);
+    const assessmentHtml = !assessments.length ? boilerplates.assessmentFallback : assessments.map(renderAssessmentCurry).join(``);
 
     return `<div class="cell">
               <h2 id="teaching" >Teaching and assessment</h2>
@@ -341,7 +328,7 @@
 
     const studyLevel = getStudyLevel(data.moduleLevelDescription);
     const colourPack = getColourPack(studyLevel, colours);
-    const data2 = { ...data, colourPack: colourPack };
+    const data2 = { ...data, colourPack: colourPack, boilerplates: boilerplates };
 
     const deliveries = ""; //doDeliveries(data.deliveries, colourPack);
     const assessments = doAssessments(data.assessments, colourPack);
