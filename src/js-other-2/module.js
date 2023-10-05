@@ -149,7 +149,7 @@
                 ${data.preparedotherinformation ? renderSupportingInfo(data.preparedotherinformation) : ``}
                 <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
                 ${data.studyAbroad === "Yes" ? boilerplates.studyAbroad : `<p>Not available</p>`}
-                <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Additional costs</h3>
+                <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
                 <p>${data.additionalCosts}</p>
             </div>`;
   };
@@ -323,6 +323,7 @@
   // Main
   const main = (data, colours, boilerplates) => {
     const contentArea = stir.node("#content");
+    contentArea.classList.add("u-padding-bottom");
 
     if (data.error) return setDOMContent(contentArea, renderError());
 
