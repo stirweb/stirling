@@ -61,8 +61,7 @@
             </div>`,m=(e,t)=>`<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
                 ${e.preparedotherinformation?`<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3><p>${e.preparedotherinformation}</p>`:""}
-                <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
-                ${"Yes"===e.studyAbroad?t.studyAbroad:"<p>Not available</p>"}
+                ${"Yes"===e.studyAbroad?'<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>'+t.studyAbroad:""}
                 <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
                 <p>${e.additionalCosts}</p>
             </div>`,i=(stir.curry((e,t,{type:r,hours:a,typekey:i})=>{return"total"===i?`<div class="u-bg-${e.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
