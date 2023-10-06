@@ -201,6 +201,8 @@
     const renderAssessmentCurry = renderAssessment(assessmentWidth);
     const assessmentHtml = !assessments.length ? boilerplates.assessmentFallback : assessments.map(renderAssessmentCurry).join(``);
 
+    console.log(assessments.length + " -- ");
+
     return `<div class="cell">
               <h2 id="teaching" >Teaching and assessment</h2>
               ${boilerplates.teachingIntro}
@@ -209,7 +211,7 @@
               ${deliveriesHtml}
 
               <h3 class="header-stripped u-bg-${colourPack.second}--10 u-p-1 u-${colourPack.second}-line-left u-border-width-5 u-text-regular u-mt-3 ">Assessment overview</h3>
-              ${assessmentWidth > 1 ? boilerplates.multipleAssessments : ``}
+              ${assessments.length > 1 ? boilerplates.multipleAssessments : ``}
               
               <div class="grid-x grid-padding-x ">
                   ${assessmentHtml}
