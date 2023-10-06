@@ -188,7 +188,7 @@
 
   const renderAssessments = stir.curry((colourPack, length, { tab, tabAssessments }) => {
     const renderAssessmentItemCurry = renderAssessmentItem(colourPack);
-    const header = length > 1 ? `<h4>${tab}</h4>` : ``;
+    const header = length > 1 ? `<h4 class="u-mt-0">${tab}</h4>` : ``;
     return `${header}<p>${tabAssessments.map(renderAssessmentItemCurry).join(``)}</p>`;
   });
 
@@ -208,7 +208,9 @@
               <h3 class="header-stripped u-bg-${colourPack.second}--10 u-p-1 u-${colourPack.second}-line-left u-border-width-5 u-text-regular u-mt-2">Engagement overview</h3>
               ${deliveriesHtml}
 
-              <h3 class="header-stripped u-bg-${colourPack.second}--10 u-p-1 u-${colourPack.second}-line-left u-border-width-5 u-text-regular u-m-0 u-mt-3 u-mb-1">Assessment overview</h3>
+              <h3 class="header-stripped u-bg-${colourPack.second}--10 u-p-1 u-${colourPack.second}-line-left u-border-width-5 u-text-regular u-mt-3 ">Assessment overview</h3>
+              ${assessmentWidth > 1 ? boilerplates.multipleAssessments : ``}
+              
               <div class="grid-x grid-padding-x ">
                   ${assessmentHtml}
               </div>
