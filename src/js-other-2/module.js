@@ -52,7 +52,7 @@
 
     if (!params.get("course")) return ``;
 
-    let url = stir.isNumeric(document.location.search) ? `/courses/${level}/${params.get("course")}` : `/terminalfour/preview/1/en/${params.get("course")}`;
+    let url = stir.isNumeric(params.get("course")) ? `/terminalfour/preview/1/en/${params.get("course")}` : `/courses/${level}/${params.get("course")}`;
 
     return `<a href="${url}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">Back to course</a>`;
   };
@@ -202,8 +202,6 @@
     const assessmentWidth = assessments.length < 2 ? `12` : `6`;
     const renderAssessmentCurry = renderAssessment(assessmentWidth);
     const assessmentHtml = !assessments.length ? boilerplates.assessmentFallback : assessments.map(renderAssessmentCurry).join(``);
-
-    console.log(assessments.length + " -- ");
 
     return `<div class="cell">
               <h2 id="teaching" >Teaching and assessment</h2>
