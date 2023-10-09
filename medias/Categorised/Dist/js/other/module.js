@@ -3,7 +3,7 @@
               ${t.disclaimer||""}
           </div>
           <div class="cell medium-3 align-middle align-center u-flex">
-            ${t=e,e=new URLSearchParams(document.location.search),e.get("course")?`<a href="${stir.isNumeric(e.get("course"))?"/terminalfour/preview/1/en/"+e.get("course"):`/courses/${t}/`+e.get("course")}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">Back to course</a>`:""}
+            ${t=e,e=new URLSearchParams(document.location.search),e.get("course")?`<a href="${stir.isNumeric(e.get("course"))?"/terminalfour/preview/1/en/"+e.get("course"):`/courses/${t}/`+e.get("course")}#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">Back to course</a>`:""}
           </div>
           `},g=({moduleTitle:e,moduleCode:t,moduleLevel:r,moduleCredits:a})=>`<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
