@@ -3,7 +3,7 @@
               ${t.disclaimer||""}
           </div>
           <div class="cell medium-3 align-middle align-center u-flex">
-            ${t=e,e=new URLSearchParams(document.location.search),e.get("course")?`<a href="${stir.isNumeric(document.location.search)?`/courses/${t}/`+e.get("course"):"/terminalfour/preview/1/en/"+e.get("course")}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">Back to course</a>`:""}
+            ${t=e,e=new URLSearchParams(document.location.search),e.get("course")?`<a href="${stir.isNumeric(e.get("course"))?"/terminalfour/preview/1/en/"+e.get("course"):`/courses/${t}/`+e.get("course")}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">Back to course</a>`:""}
           </div>
           `},g=({moduleTitle:e,moduleCode:t,moduleLevel:r,moduleCredits:a})=>`<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
@@ -74,7 +74,7 @@
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${t} (${r})</span>
             <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${a}" data-max="100" data-unit="%" data-colour="${e.second}"></div>
-        </div>`)),a=stir.curry((e,t,{tab:r,tabAssessments:a})=>{e=i(e);return(1<t?`<h4 class="u-mt-0">${r}</h4>`:"")+`<p>${a.map(e).join("")}</p>`}),s=stir.curry((e,t)=>t?`<div class="cell large-${e} u-mb-1">${t}</div>`:""),v=(e,t,r,a)=>{var i=e.length?(i="12",(e=e)?`<div class="cell large-${i} u-mb-1">${e}</div>`:""):a.deliveriesFallback,e=t.length<2?"12":"6",e=s(e),e=t.length?t.map(e).join(""):a.assessmentFallback;return console.log(t.length+" -- "),`<div class="cell">
+        </div>`)),a=stir.curry((e,t,{tab:r,tabAssessments:a})=>{e=i(e);return(1<t?`<h4 class="u-mt-0">${r}</h4>`:"")+`<p>${a.map(e).join("")}</p>`}),s=stir.curry((e,t)=>t?`<div class="cell large-${e} u-mb-1">${t}</div>`:""),v=(e,t,r,a)=>{var i=e.length?(i="12",(e=e)?`<div class="cell large-${i} u-mb-1">${e}</div>`:""):a.deliveriesFallback,e=t.length<2?"12":"6",e=s(e),e=t.length?t.map(e).join(""):a.assessmentFallback;return`<div class="cell">
               <h2 id="teaching" >Teaching and assessment</h2>
               ${a.teachingIntro}
               
