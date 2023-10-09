@@ -49,10 +49,12 @@
 
   const renderCourseBackBtn = (level) => {
     let params = new URLSearchParams(document.location.search);
-    return !params.get("course")
-      ? ``
-      : `<a href="https://www.stir.ac.uk/courses/${level}/${params.get("course")}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">
-      Back to course</a>`;
+
+    if (!params.get("course")) return ``;
+
+    let url = stir.isNumeric(document.location.search) ? `/courses/${level}/${params.get("course")}` : `/terminalfour/preview/1/en/${params.get("course")}`;
+
+    return `<a href="${url}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">Back to course</a>`;
   };
 
   const renderDisclaimer = (level, boilerplates) => {
