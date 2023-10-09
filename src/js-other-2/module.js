@@ -54,7 +54,7 @@
 
     let url = stir.isNumeric(params.get("course")) ? `/terminalfour/preview/1/en/${params.get("course")}` : `/courses/${level}/${params.get("course")}`;
 
-    return `<a href="${url}/#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">Back to course</a>`;
+    return `<a href="${url}#panel_1_3" id="backtocourseBtn" class="text-md u-font-bold u-bg-heritage-green u-p-1 u-m-0 heritage-green button--back u-border-hover-none u-white">Back to course</a>`;
   };
 
   const renderDisclaimer = (level, boilerplates) => {
