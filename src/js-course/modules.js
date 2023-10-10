@@ -4,7 +4,7 @@
 
 StirUniModules.getAPIModuleLink = (code,session,semester,occurrence) => {
 
-	if("pub"===UoS_env.name) {
+	if("prod"===UoS_env.name) {
 		return StirUniModules.getDPTModuleLink(code);
 	}
 //	if(UoS_env.name.indexOf("preview")>-1){
