@@ -2,6 +2,17 @@
  * Stirling uni modules
  */
 
+StirUniModules.getAPIModuleLink = (code,session,semester,occurrence) => {
+
+	if("pub"===UoS_env.name) {
+		return StirUniModules.getDPTModuleLink(code);
+	}
+//	if(UoS_env.name.indexOf("preview")>-1){
+		const sid = document.querySelector('meta[name="sid"]') ? document.querySelector('meta[name="sid"]').getAttribute('content') : 'error_sid-not-found';
+		return `https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33273?code=${code}&session=${session}&semester=${semester}&occurrence=${occurrence}&course=${sid}`;
+//	}
+};
+
 /*
  * Function setShowRoutesRenderer
  */
@@ -241,7 +252,8 @@ StirUniModules.setShowModulesRenderer(function (data) {
 
             if (showModule || debug) {
               collectionlist_html.push("<tr" + (showModule ? "" : ' data-availability="false" data-modcode="' + module.modCode + '"') + ">");
-              collectionlist_html.push('    <td><a href="' + StirUniModules.getDPTModuleLink(module.modCode) + '" data-modalopen="course__description" data-module-code="' + module.modCode + '" data-semester-code="' + module.mavSemCode + '" data-occurrence="' + module.mavOccurrence + '" data-year-session="' + module.mavSemSession + '">' + module.modName + '</a> <span class="c-course-modules__module-code">(' + module.modCode + ")</span></td>");
+//              collectionlist_html.push('    <td><a href="' + StirUniModules.getDPTModuleLink(module.modCode) + '" data-modalopen="course__description" data-module-code="' + module.modCode + '" data-semester-code="' + module.mavSemCode + '" data-occurrence="' + module.mavOccurrence + '" data-year-session="' + module.mavSemSession + '">' + module.modName + '</a> <span class="c-course-modules__module-code">(' + module.modCode + ")</span></td>");
+              collectionlist_html.push('    <td><a href="' + StirUniModules.getAPIModuleLink(module.modCode,module.mavSemSession,module.mavSemCode,module.mavOccurrence) + '">' + module.modName + '</a> <span class="c-course-modules__module-code">(' + module.modCode + ")</span></td>");
               collectionlist_html.push("    <td>" + module.modCredit + " credits</td>");
               collectionlist_html.push("</tr>");
             }
