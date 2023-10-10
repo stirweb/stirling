@@ -10609,7 +10609,8 @@ var StirUniModules = (function () {
 	// These can be changed to https://portalqa or https://portal.dev for testing.
 	var calendarUrl = "https://portal.stir.ac.uk/servlet/CalendarServlet";
 	var ssocUrl = "https://portal.stir.ac.uk/api/ssoc";
-	var ver,debug;
+	var ver;
+	var debug = UoS_env.name !== 'prod';
 
 	var _options = {};
 
@@ -10706,7 +10707,6 @@ var StirUniModules = (function () {
 
 	function _init(options) {
 		// get, and set _options
-		debug = UoS_env.name !== 'prod';
 		var options = _getOptions(options);
 		var container = document.querySelector(options.container);
 		if(container) {
@@ -11823,7 +11823,7 @@ stir.t4Globals = stir.t4Globals || {};
 
 StirUniModules.getAPIModuleLink = (code,session,semester,occurrence) => {
 
-	if("pub"===UoS_env.name) {
+	if("prod"===UoS_env.name) {
 		return StirUniModules.getDPTModuleLink(code);
 	}
 //	if(UoS_env.name.indexOf("preview")>-1){
