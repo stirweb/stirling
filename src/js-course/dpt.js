@@ -12,10 +12,10 @@ stir.dpt = (function(){
 	const modulesEndpointParams = {
 		UG: "opt=runcode&ct=UG",
 		PG: "opt=runpgcode&ct=PG"
-	}
+	};
 
 	const urls = {
-		viewer: 'module-viewer.html',
+		viewer: 'https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33273',
 		calendar: "https://portal.stir.ac.uk/servlet/CalendarServlet",
 		route: {
 			UG: "?opt=menu&callback=stir.dpt.show.routes", //+ (ver?ver:'')
@@ -25,11 +25,11 @@ stir.dpt = (function(){
 		fees: (type, roucode) => `?opt=${type}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&callback=stir.dpt.show.fees`,
 		modules: (type, roucode, moa, occ) => `?${modulesEndpointParams[type.toUpperCase()]}&moa=${moa}&occ=${occ}&rouCode=${roucode}&callback=stir.dpt.show.modules`,
 		module: (mod,year,sem) => stir.akari.get.module([mod,year,sem].join('/'))
-	}
+	};
 
 	const getRoutes = type => {
 		stir.getJSONp(`${urls.calendar}${urls.route[type.toUpperCase()]}`);
-		user.type=type
+		user.type=type;
 	};
 	
 	const getOptions = (type,roucode,auto) => {
@@ -78,24 +78,26 @@ stir.dpt = (function(){
 
 	//////////////////////////////////////////////
 
-	const moduleLink = data => `${urls.viewer}?code=${data.modCode}&semester=${data.mavSemCode}&session=${data.mavSemSession}`
+	const moduleLink = data => {
+		const sid = document.querySelector('meta[name="sid"]') ? document.querySelector('meta[name="sid"]').getAttribute('content') : 'error_sid-not-found';
+		return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${sid}`;
+	}; 
 
 	const moduleTemplate = data => 
-		`<tr data-mav="${data.mavSemSession}/${data.mavSemCode}">
+		`<tr>
 			<td>
-				<a href="${moduleLink(data)}">${data.modName}</a>
-				<span class=c-course-modules__module-code>(${data.modCode})</span>
+				<a href="${moduleLink(data)}">${data.modName}</a> <span class=c-course-modules__module-code>(${data.modCode})</span>
 			</td>
 			<td>${data.modCredit} credits</td>
 		</tr>`;
 	
 	const moduleView = data => data.modName ? moduleTemplate(data) : "<tr><td colspan=2>------- no data</td></tr>";
 
-	const groupView = data => `<p> ${data.groupOptions.map(optionView).join('')}`;
+	const groupView = data => stir.templates.course.paths('some','this') + data.groupOptions.map(optionView).join('');
 
-	const optionView = data => `(Option <b>${data.optionId}</b>) ${data.semestersInOption.map(semesterView).join('')}`;
+	const optionView = (data,index,array) => (array.length?`<p>(Option <b>${data.optionId}</b>) `:'') + `${data.semestersInOption.map(semesterView).join('')}`;
 
-	const semesterView = data => `Group: <b>${data.overarchPdtCode}</b> Semester <b>${data.semesterCode}</b> ${data.collections.map(collectionView).join('')}`;
+	const semesterView = data => `Group: <b>${data.overarchPdtCode}</b> Semester <b>${data.semesterCode}</b></p> ${data.collections.map(collectionView).join('')}`;
 
 	const collectionView = data => `<p><b>${data.collectionNotes}</b></p><table class=c-course-modules__table>${data.mods.map(moduleView).join('')}</table>`;
 

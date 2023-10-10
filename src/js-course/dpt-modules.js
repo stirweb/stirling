@@ -1,3 +1,10 @@
+/**
+ * 
+ * This file will replace JS-COURSE/MODULES.JS
+ * 
+ */
+
+
 var stir = stir || {};
 stir.templates = stir.templates || {};
 
@@ -12,7 +19,8 @@ stir.templates.course = {
 		div.id = id; div.onclick = onclick;
 		console.info(div.id = id);
 		return div;
-	}
+	},
+	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`
 };
 
 
