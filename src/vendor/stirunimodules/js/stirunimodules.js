@@ -10,7 +10,8 @@ var StirUniModules = (function () {
 	// These can be changed to https://portalqa or https://portal.dev for testing.
 	var calendarUrl = "https://portal.stir.ac.uk/servlet/CalendarServlet";
 	var ssocUrl = "https://portal.stir.ac.uk/api/ssoc";
-	var ver,debug;
+	var ver;
+	var debug = UoS_env.name !== 'prod';
 
 	var _options = {};
 
@@ -107,7 +108,6 @@ var StirUniModules = (function () {
 
 	function _init(options) {
 		// get, and set _options
-		debug = UoS_env.name !== 'prod';
 		var options = _getOptions(options);
 		var container = document.querySelector(options.container);
 		if(container) {
