@@ -413,8 +413,6 @@
             margin: 0;
             padding: 0;
             scrollbar-width: none;
-            border-left: 1px solid #ccc;
-            border-right: 1px solid #ccc;
         }
 
         .carousel-slides::-webkit-scrollbar {
@@ -437,47 +435,64 @@
                 <div class="cell">
                     <p>Small </p>
 
+                    <!-- -->
                     <div class="u-flex align-center">
 
                         <nav class="u-flex u-gap align-center align-middle carousel">
-                            <button class="u-cursor-pointer slide-arrow-prev" id="slide-arrow-prev">
-                                <span class="uos-chevron-left icon--medium "></span>
+
+                            <button
+                                class="u-cursor-pointer slide-arrow-prev u-grey u-border-right-solid u-block u-h-full"
+                                data-controls="prev" tabindex="-1" aria-controls="nav-slider" aria-label="Previous">
+                                <span class="uos-chevron-left icon--medium u-black ">
+                                </span>
                             </button>
 
-                            <div class="carousel-slides" style="width: 318px;">
-                                <div id="nav-1" class="carousel-slide u-flex u-gap-8 align-center align-middle">
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button data-open="all">
+                            <div class="carousel-slides u-relative" style="width: 318px;">
+                                <div class="carousel-slide u-flex u-gap-8 align-center align-middle">
+                                    <h2
+                                        class="f header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+                                        <button class="u-cursor-pointer" data-open="all" tabindex="-1" type="button"
+                                            aria-controls="search_results_panel_all">
                                             <span class="uos-all-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">All</span>
                                         </button>
                                     </h2>
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button data-open="courses">
+                                    <h2
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center u-white u-bg-heritage-green">
+                                        <button class="u-cursor-pointer" data-open="courses" tabindex="-1" type="button"
+                                            aria-controls="search_results_panel_courses">
                                             <span class="uos-course-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">Courses</span>
                                         </button>
                                     </h2>
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button class="u-cursor-pointer" data-open="news">
+                                    <h2
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+                                        <button class="u-cursor-pointer" data-open="news" tabindex="-1" type="button"
+                                            aria-controls="search_results_panel_news">
                                             <span class="uos-news-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">News</span>
                                         </button>
                                     </h2>
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button class="u-cursor-pointer" data-open="events">
+                                    <h2
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+                                        <button class="u-cursor-pointer" data-open="events" tabindex="-1" type="button"
+                                            aria-controls="search_results_panel_events">
                                             <span class="uos-events-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">Events</span>
                                         </button>
                                     </h2>
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button data-open="staff">
+                                    <h2
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+                                        <button class="u-cursor-pointer" data-open="staff" tabindex="-1" type="button"
+                                            aria-controls="search_results_panel_staff">
                                             <span class="uos-staff-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">Academic Staff</span>
                                         </button>
                                     </h2>
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button data-open="research">
+                                    <h2
+                                        class="l header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+                                        <button class="u-cursor-pointer" data-open="research" tabindex="-1"
+                                            type="button" aria-controls="search_results_panel_research">
                                             <span class="uos-research-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">Research</span>
                                         </button>
@@ -485,8 +500,10 @@
                                 </div>
                             </div>
 
-                            <button class="u-cursor-pointer slide-arrow-next" id="slide-arrow-next">
-                                <span class="uos-chevron-right icon--medium "></span>
+                            <button
+                                class="u-cursor-pointer slide-arrow-next u-grey u-border-left-solid u-block u-h-full"
+                                type="button" data-controls="next" tabindex="-1" aria-controls="nav-slider">
+                                <span class="uos-chevron-right icon--medium u-black"></span>
                             </button>
                         </nav>
 
@@ -496,46 +513,53 @@
                 <div class="cell u-padding-y">
                     <div class="u-flex align-center">
 
-                        <nav class="u-flex u-gap align-center align-middle carousel">
-                            <button class="u-cursor-pointer slide-arrow-prev hide-for-medium" id="slide-arrow-prev">
+                        <!-- 
+                        <nav class="u-flex u-gap align-center align-middle carousel"
+                            aria-label="Search tabs navigation">
+                            <button class="u-cursor-pointer slide-arrow-prev hide-for-medium">
                                 <span class="uos-chevron-left icon--medium "></span>
                             </button>
 
-                            <div class="carousel-slides">
-                                <div id="nav-1" class="carousel-slide u-flex u-gap-8 align-middle">
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button data-open="all">
+                            <div class="carousel-slides  u-relative">
+                                <div class="carousel-slide u-flex u-gap-8 align-middle">
+                                    <h2
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+                                        <button class="u-cursor-pointer" data-open="all">
                                             <span class="uos-all-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">All</span>
                                         </button>
                                     </h2>
                                     <h2
-                                        class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center u-white u-bg-heritage-green">
-                                        <button data-open="courses">
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center u-white u-bg-heritage-green">
+                                        <button class="u-cursor-pointer" data-open="courses">
                                             <span class="uos-course-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">Courses</span>
                                         </button>
                                     </h2>
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button data-open="news">
+                                    <h2
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+                                        <button class="u-cursor-pointer" data-open="news">
                                             <span class="uos-news-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">News</span>
                                         </button>
                                     </h2>
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button data-open="events">
+                                    <h2
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+                                        <button class="u-cursor-pointer" data-open="events">
                                             <span class="uos-events-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">Events</span>
                                         </button>
                                     </h2>
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button data-open="staff">
+                                    <h2
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+                                        <button class="u-cursor-pointer" data-open="staff">
                                             <span class="uos-staff-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">Academic Staff</span>
                                         </button>
                                     </h2>
-                                    <h2 class="header-stripped u-header--secondary-font text-xsm u-m-0 text-center">
-                                        <button data-open="research">
+                                    <h2
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+                                        <button class="u-cursor-pointer" data-open="research">
                                             <span class="uos-research-tab icon--medium "></span>
                                             <span class="u-block u-p-tiny">Research</span>
                                         </button>
@@ -543,10 +567,11 @@
                                 </div>
                             </div>
 
-                            <button class="u-cursor-pointer slide-arrow-next hide-for-medium" id="slide-arrow-next">
+                            <button class="u-cursor-pointer slide-arrow-next hide-for-medium">
                                 <span class="uos-chevron-right icon--medium "></span>
                             </button>
                         </nav>
+                        -->
                     </div>
                 </div>
             </div>
@@ -568,26 +593,47 @@
     <!-- unibuddy.min.js -->
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
 
-
-
     <script>
         const doCarousel = (carousel) => {
             const slidesContainer = carousel.querySelector(".carousel-slides");
             const slide = carousel.querySelector(".carousel-slide");
 
+            const slideFirst = carousel.querySelector(".carousel-slide h2:first-of-type");
+            const slideLast = carousel.querySelector(".carousel-slide h2:last-of-type");
+
             const prevButton = carousel.querySelector(".slide-arrow-prev");
             const nextButton = carousel.querySelector(".slide-arrow-next");
-            const slideDist = 322; // Same as the carousel width
+            const slideDist = slidesContainer.clientWidth + 10;
 
-            nextButton.addEventListener("click", () => {
-                const slideWidth = slide.clientWidth;
-                slidesContainer.scrollLeft += slideDist;
-            });
+            const options = {
+                root: slidesContainer,
+                rootMargin: "0px",
+                threshold: 1,
+            };
 
-            prevButton.addEventListener("click", () => {
-                const slideWidth = slide.clientWidth;
-                slidesContainer.scrollLeft -= slideDist;
-            });
+            const disableBtnState = (btnContainer) => {
+                btnContainer.setAttribute("disabled", "disabled");
+                btnContainer.querySelector("span").classList.add("u-opacity-20");
+            };
+
+            const enableBtnState = (btnContainer) => {
+                btnContainer.removeAttribute("disabled");
+                btnContainer.querySelector("span").classList.remove("u-opacity-20");
+            };
+
+            const observerFirst = new IntersectionObserver((entries, observer) => entries.forEach((entry) => {
+                entry.isIntersecting ? disableBtnState(prevButton) : enableBtnState(prevButton);
+            }), options);
+
+            let observerLast = new IntersectionObserver((entries, observer) => entries.forEach((entry) => {
+                entry.isIntersecting ? disableBtnState(nextButton) : enableBtnState(nextButton);
+            }), options);
+
+            observerFirst.observe(slideFirst);
+            observerLast.observe(slideLast);
+
+            nextButton.addEventListener("click", () => slidesContainer.scrollLeft += slideDist);
+            prevButton.addEventListener("click", () => slidesContainer.scrollLeft -= slideDist);
         }
 
         const carousels = stir.nodes(".carousel");
