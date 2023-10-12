@@ -7,17 +7,18 @@
       SLIDE TABS NAV
   */
   .slide-tabs-2 {
-    padding: 5px 0 5px 0;
-    position: sticky;
-    top: 0;
-    z-index: 9;
+    //padding: 5px 0 5px 0;
+    //position: sticky;
+    //top: 0;
+    //z-index: 9;
     background: rgba(245, 245, 245, 1);
 
+    /*
     .tns-nav {
       display: none;
     }
 
-    /* Tab buttons */
+    /* Tab buttons *
     .tns-controls {
       position: relative;
 
@@ -45,7 +46,7 @@
       }
     }
 
-    /* Arrow buttons */
+    /* Arrow buttons
     .tns-item {
       text-align: center;
 
@@ -92,14 +93,14 @@
       background: rgba(245, 245, 245, 0.9);
     }
 
-    /* Tab buttons */
+    /* Tab buttons *
     .tns-controls {
       button {
         height: 60px;
       }
     }
 
-    /* Arrow buttons */
+    /* Arrow buttons *
     .tns-item {
       h2 {
         padding-bottom: 0;
@@ -119,6 +120,7 @@
         }
       }
     }
+     */
   }
 
   /* 
@@ -762,4 +764,24 @@ pre.debug {
 
 .c-search-results details.debug {
   margin-bottom: 3rem;
+}
+
+/* New carousel */
+
+.carousel-slides {
+  width: 100%;
+  display: flex;
+  overflow: scroll;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: none;
+}
+
+.carousel-slides::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-slide h2 {
+  width: 88px;
 }
