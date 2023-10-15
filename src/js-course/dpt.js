@@ -7,7 +7,8 @@ stir.dpt = (function(){
 		pg: "postgraduate"
 	};
 	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
-	const user = {};
+	let user = {};
+	let year = 1;
 
 	const modulesEndpointParams = {
 		UG: "opt=runcode&ct=UG",
@@ -91,21 +92,24 @@ stir.dpt = (function(){
 			<td>${data.modCredit} credits</td>
 		</tr>`;
 	
+	const template = {
+		collection: data => `<table class=c-course-modules__table>${data}</table>`
+	};
+	
 	const moduleView = data => data.modName ? moduleTemplate(data) : "<tr><td colspan=2>------- no data</td></tr>";
 
-	const groupView = data => stir.templates.course.paths('some','this') + data.groupOptions.map(optionView).join('');
+	const groupView = data => data.groupOptions.map(optionView).join('');
 
-	const optionView = (data,index,array) => (array.length?`<p>(Option <b>${data.optionId}</b>) `:'') + `${data.semestersInOption.map(semesterView).join('')}`;
+	const optionView = (data,index,array) => '<p>' + (array.length>1?`(Option ${index+1}) `:'') + `${data.semestersInOption.map(semesterView).join('')}`;
 
-	const semesterView = data => `Group: <b>${data.overarchPdtCode}</b> Semester <b>${data.semesterCode}</b></p> ${data.collections.map(collectionView).join('')}`;
+	const semesterView = data => `Year ${stir.cardinal(year)}: semester <b>${stir.cardinal(data.semesterCode)}</b></p> ${data.collections.map(collectionView).join('')}`; //Group: <b>${data.overarchPdtCode}</b>
 
-	const collectionView = data => `<p><b>${data.collectionNotes}</b></p><table class=c-course-modules__table>${data.mods.map(moduleView).join('')}</table>`;
+	const collectionView = data => `<p><b>${data.collectionNotes}</b></p>${ template.collection( data.mods.map(moduleView).join('') )}`;
 
 	const modulesOverview = data => {
-		console.info('[DPT] modulesOverview',data.semesterGroupBeans);
+		console.info('[DPT] modulesOverview',data); //data.semesterGroupBeans
 		let frag = document.createElement('div');
-		frag.insertAdjacentHTML("afterbegin",data.semesterGroupBeans.map(groupView));
-		console.info(frag)
+		frag.insertAdjacentHTML("afterbegin",data.semesterGroupBeans.map(groupView).join(''));
 		return frag;
 	};
 
