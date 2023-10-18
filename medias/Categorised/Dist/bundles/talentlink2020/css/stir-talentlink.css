@@ -80,6 +80,8 @@ h1.c-masthead__callout-text,
 .c-form textarea:focus,
 .c-form select:focus {
     border-radius: 0px;
+    outline: 1px solid #005a30 !important;
+    outline-offset: 4px !important;
 }
 
 .c-form [type="submit"]:not(.c-course-search__button) {
