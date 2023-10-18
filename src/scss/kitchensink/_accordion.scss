@@ -81,7 +81,7 @@ h3.c-tab-accord-group-head {
       }
 
       &:focus {
-        outline: 1px dotted #76bd22 !important;
+        outline: 1px solid $heritage-green !important;
         outline-offset: 4px;
       }
     }
@@ -205,7 +205,7 @@ h3.c-tab-accord-group-head {
     > p > button,
     h3 > button {
       &:focus {
-        outline: 1px dotted #fff !important;
+        outline: 1px solid #fff !important;
       }
     }
 
