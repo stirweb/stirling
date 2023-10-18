@@ -45,8 +45,8 @@
     return ``;
   };
 
-  const renderNoData = () => {
-    return `<div class="u-bg-white u-p-2 u-mb-2"><p class="u-m-0">No more events found</p></div>`;
+  const renderNoData = (text) => {
+    return `<div class="u-bg-white u-p-2 u-mb-2"><p class="u-m-0">${text}</p></div>`;
   };
 
   const renderEndDate = (start, end, stirEnd) => {
@@ -397,7 +397,7 @@
       const dataAll1b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll1);
       const noOfResults = dataAll1.length;
 
-      dataAll1.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll1b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData());
+      dataAll1.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll1b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
     } else {
       const inRangeCurry = inRange(filterRange);
       const dataDateFiltered = stir.filter(inRangeCurry, initData);
@@ -406,7 +406,7 @@
       const dataAll2b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll2);
       const noOfResults = dataAll2.length;
 
-      dataAll2.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll2b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData());
+      dataAll2.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll2b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
     }
   };
 
@@ -433,7 +433,7 @@
       const dataAll1b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll1);
       const noOfResults = dataAll1.length;
 
-      dataAll1.length ? setDOMStaff(renderPageMeta(start, end, noOfResults) + dataAll1b + renderPaginationBtn(end, noOfResults)) : setDOMStaff(renderNoData());
+      dataAll1.length ? setDOMStaff(renderPageMeta(start, end, noOfResults) + dataAll1b + renderPaginationBtn(end, noOfResults)) : setDOMStaff(renderNoData("No events found. Try the public events tab."));
     } else {
       const inRangeCurry = inRange(filterRange);
       const dataDateFiltered = stir.filter(inRangeCurry, initData);
@@ -442,7 +442,7 @@
       const dataAll2b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll2);
       const noOfResults = dataAll2.length;
 
-      dataAll2.length ? setDOMStaff(renderPageMeta(start, end, noOfResults) + dataAll2b + renderPaginationBtn(end, noOfResults)) : setDOMStaff(renderNoData());
+      dataAll2.length ? setDOMStaff(renderPageMeta(start, end, noOfResults) + dataAll2b + renderPaginationBtn(end, noOfResults)) : setDOMStaff(renderNoData("No events found. Try the public events tab."));
     }
   };
 
@@ -468,7 +468,7 @@
       const dataAllb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(dataAll);
       const noOfResults = dataAll.length;
 
-      dataAll.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + dataAllb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData());
+      dataAll.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + dataAllb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
     }
 
     if (target === "recordings") {
@@ -476,7 +476,7 @@
       const htmlRecordingsb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(htmlRecordings);
       const noOfResults = htmlRecordings.length;
 
-      htmlRecordings.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + htmlRecordingsb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData());
+      htmlRecordings.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + htmlRecordingsb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
     }
 
     if (target === "public") {
@@ -484,7 +484,7 @@
       const htmlPublicb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(htmlPublic);
       const noOfResults = htmlPublic.length;
 
-      htmlPublic.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + htmlPublicb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData());
+      htmlPublic.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + htmlPublicb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
     }
 
     if (target === "staffstudent") {
@@ -492,7 +492,7 @@
       const htmlStaffb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(htmlStaff);
       const noOfResults = htmlStaff.length;
 
-      htmlStaff.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + htmlStaffb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData());
+      htmlStaff.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + htmlStaffb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
     }
   };
 

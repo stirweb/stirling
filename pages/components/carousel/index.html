@@ -420,7 +420,7 @@
         }
 
         .carousel-slide h2 {
-            width: 100px;
+            width: 82px;
         }
     </style>
 
@@ -438,7 +438,7 @@
                     <!-- -->
                     <div class="u-flex align-center">
 
-                        <nav class="u-flex u-gap align-center align-middle carousel">
+                        <nav class="u-flex u-gap align-center align-middle carousel u-my-1">
 
                             <button
                                 class="u-cursor-pointer slide-arrow-prev u-grey u-border-right-solid u-block u-h-full"
@@ -447,7 +447,7 @@
                                 </span>
                             </button>
 
-                            <div class="carousel-slides u-relative" style="width: 318px;">
+                            <div class="carousel-slides u-relative" style="width: 288px;">
                                 <div class="carousel-slide u-flex u-gap-8 align-center align-middle">
                                     <h2
                                         class="f header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
@@ -458,7 +458,7 @@
                                         </button>
                                     </h2>
                                     <h2
-                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center u-white u-bg-heritage-green">
+                                        class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center ">
                                         <button class="u-cursor-pointer" data-open="courses" tabindex="-1" type="button"
                                             aria-controls="search_results_panel_courses">
                                             <span class="uos-course-tab icon--medium "></span>
@@ -508,6 +508,7 @@
                         </nav>
 
                     </div>
+
                 </div>
 
                 <div class="cell u-padding-y">
@@ -592,56 +593,145 @@
 
     <!-- unibuddy.min.js -->
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
-
     <script>
-        const doCarousel = (carousel) => {
-            const slidesContainer = carousel.querySelector(".carousel-slides");
-            const slide = carousel.querySelector(".carousel-slide");
+        (function () {
+            /*
+                initCarousel
+            */
+            const initCarousel = (carousel) => {
+                const slidesContainer = carousel.querySelector(".carousel-slides");
 
-            const slideFirst = carousel.querySelector(".carousel-slide h2:first-of-type");
-            const slideLast = carousel.querySelector(".carousel-slide h2:last-of-type");
+                const slideFirst = carousel.querySelector(".carousel-slide h2:first-of-type");
+                const slideLast = carousel.querySelector(".carousel-slide h2:last-of-type");
 
-            const prevButton = carousel.querySelector(".slide-arrow-prev");
-            const nextButton = carousel.querySelector(".slide-arrow-next");
-            const slideDist = slidesContainer.clientWidth + 10;
+                const prevButton = carousel.querySelector(".slide-arrow-prev");
+                const nextButton = carousel.querySelector(".slide-arrow-next");
+                const slideDist = slidesContainer.clientWidth + 10;
 
-            const options = {
-                root: slidesContainer,
-                rootMargin: "0px",
-                threshold: 1,
+                // if (stir.MediaQuery.current !== "small") {
+                //     const slidePanel = carousel.querySelector(".carousel-slide");
+
+                //     prevButton.classList.add("hide");
+                //     nextButton.classList.add("hide");
+                //     slidePanel.classList.remove("u-gap-8");
+                //     slidePanel.classList.add("u-gap");
+                //     slidesContainer.removeAttribute("style");
+                //     return;
+                // }
+
+                const options = {
+                    root: slidesContainer,
+                    rootMargin: "0px",
+                    threshold: 1,
+                };
+
+                const disableBtnState = (btnContainer) => {
+                    btnContainer.setAttribute("disabled", "disabled");
+                    btnContainer.querySelector("span").classList.add("u-opacity-20");
+                };
+
+                const enableBtnState = (btnContainer) => {
+                    btnContainer.removeAttribute("disabled");
+                    btnContainer.querySelector("span").classList.remove("u-opacity-20");
+                };
+
+                const observerFirst = new IntersectionObserver(
+                    (entries, observer) =>
+                        entries.forEach((entry) => {
+                            entry.isIntersecting ? disableBtnState(prevButton) : enableBtnState(prevButton);
+                        }),
+                    options
+                );
+
+                const observerLast = new IntersectionObserver(
+                    (entries, observer) =>
+                        entries.forEach((entry) => {
+                            entry.isIntersecting ? disableBtnState(nextButton) : enableBtnState(nextButton);
+                        }),
+                    options
+                );
+
+                observerFirst.observe(slideFirst);
+                observerLast.observe(slideLast);
+
+                nextButton.addEventListener("click", () => (slidesContainer.scrollLeft += slideDist));
+                prevButton.addEventListener("click", () => (slidesContainer.scrollLeft -= slideDist));
             };
 
-            const disableBtnState = (btnContainer) => {
-                btnContainer.setAttribute("disabled", "disabled");
-                btnContainer.querySelector("span").classList.add("u-opacity-20");
+            /*
+                doSearchTabs
+            */
+            const doSearchTabs = (tabsScope) => {
+                if (!tabsScope) return;
+                tabsScope.classList.remove("hide");
+
+                const buttons = tabsScope.querySelectorAll("button");
+                const tabs = tabsScope.querySelectorAll("#mySlider1 > div");
+
+                /* openTab */
+                const openTab = (open, tabs, buttons, tabsScope) => {
+                    tabs.forEach((tab) => {
+                        tab.setAttribute("aria-hidden", "true");
+                        tab.classList.add("hide");
+                    });
+
+                    buttons.forEach((button) => {
+                        button.closest("h2") ? button.closest("h2").classList.remove("u-white", "u-bg-heritage-green") : null;
+                    });
+
+                    const tabOpen = tabsScope.querySelector('[data-panel="' + open + '"]');
+                    tabOpen && tabOpen.classList.remove("hide");
+                    tabOpen && tabOpen.removeAttribute("aria-hidden");
+
+                    const btnOpen = tabsScope.querySelector('[data-open="' + open + '"]');
+                    btnOpen && btnOpen.closest("h2").classList.add("u-white", "u-bg-heritage-green");
+                };
+
+                /* Event Listener */
+                buttons.forEach((button) => {
+                    button.addEventListener("click", (event) => {
+                        const btn = event.target.closest("button[data-open]");
+                        if (!btn) return;
+
+                        const open = btn.getAttribute("data-open") || "all";
+                        openTab(open, tabs, buttons, tabsScope);
+                        stir.scrollToElement && stir.scrollToElement(tabsScope, 0);
+
+                        if (event.isTrusted) QueryParams.set("tab", open);
+                    });
+                });
+
+                /* Initialisation */
+
+                tabs.forEach((item) => {
+                    item.setAttribute("role", "tabpanel");
+                    item.setAttribute("tabindex", "0");
+                    item.setAttribute("id", "search_results_panel_" + item.getAttribute("data-panel"));
+                    item.setAttribute("aria-labelledby", "searchtab_" + item.getAttribute("data-panel"));
+                });
+
+                const open = QueryParams.get("tab") ? QueryParams.get("tab") : "all";
+                const btnOpen = tabsScope.querySelector('[data-open="' + open + '"]') || null;
+                btnOpen && btnOpen.click();
             };
 
-            const enableBtnState = (btnContainer) => {
-                btnContainer.removeAttribute("disabled");
-                btnContainer.querySelector("span").classList.remove("u-opacity-20");
-            };
+            /*
+          
+              ON LOAD
+              
+            */
 
-            const observerFirst = new IntersectionObserver((entries, observer) => entries.forEach((entry) => {
-                entry.isIntersecting ? disableBtnState(prevButton) : enableBtnState(prevButton);
-            }), options);
+            // IE Guard Clause
+            if ("undefined" === typeof window.URLSearchParams) return;
 
-            let observerLast = new IntersectionObserver((entries, observer) => entries.forEach((entry) => {
-                entry.isIntersecting ? disableBtnState(nextButton) : enableBtnState(nextButton);
-            }), options);
+            const searchTabs = stir.nodes(".c-search-results-area");
+            searchTabs.forEach((element) => doSearchTabs(element));
 
-            observerFirst.observe(slideFirst);
-            observerLast.observe(slideLast);
+            const carousels = stir.nodes(".carousel");
+            carousels.forEach((element) => initCarousel(element));
+        })();
 
-            nextButton.addEventListener("click", () => slidesContainer.scrollLeft += slideDist);
-            prevButton.addEventListener("click", () => slidesContainer.scrollLeft -= slideDist);
-        }
-
-        const carousels = stir.nodes(".carousel");
-        carousels.forEach(element => {
-            doCarousel(element);
-        });
     </script>
-
 </body>
 
 </html>

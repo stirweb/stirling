@@ -734,188 +734,116 @@ stir.templates.search = (() => {
   root.appendChild(picker);
 })();
 
-stir = stir || {};
-stir.searchUI = stir.searchUI || {};
+(function () {
+  /*
+        initCarousel
+    */
+  const initCarousel = (carousel) => {
+    const slidesContainer = carousel.querySelector(".carousel-slides");
 
-/*
-  Aside Accordion Transform Helper
-  @author: ryankaye
-  @version: 1.0
-  @description: Transform an aside to an accordion (mobile folding)
-*/
-stir.searchUI.asideAccordion = (filterNode, index) => {
-  //console.log("hello");
-  const header = filterNode.querySelector("p.c-search-filters-header");
-  const body = filterNode.querySelector("div");
+    const slideFirst = carousel.querySelector(".carousel-slide h2:first-of-type");
+    const slideLast = carousel.querySelector(".carousel-slide h2:last-of-type");
 
-  if (header && body) {
-    filterNode.setAttribute("data-behaviour", "accordion");
+    const prevButton = carousel.querySelector(".slide-arrow-prev");
+    const nextButton = carousel.querySelector(".slide-arrow-next");
+    const slideDist = slidesContainer.clientWidth + 10;
 
-    const button = document.createElement("button");
-    button.innerHTML = header.innerHTML;
-    button.setAttribute("id", "filteraccordbtn_" + index);
-    button.setAttribute("aria-controls", "filteraccordpanel_" + index);
-    button.setAttribute("aria-expanded", "false");
+    if (stir.MediaQuery.current !== "small") {
+      const slidePanel = carousel.querySelector(".carousel-slide");
 
-    header.innerHTML = "";
-    header.appendChild(button);
+      prevButton.classList.add("hide");
+      nextButton.classList.add("hide");
+      slidePanel.classList.remove("u-gap-8");
+      slidePanel.classList.add("u-gap");
+      slidesContainer.removeAttribute("style");
+      return;
+    }
 
-    body.setAttribute("id", "filteraccordpanel_" + index);
-    body.setAttribute("aria-labelledby", "filteraccordbtn_" + index);
-    body.setAttribute("role", "region");
-    body.classList.add("hide");
+    const options = {
+      root: slidesContainer,
+      rootMargin: "0px",
+      threshold: 1,
+    };
 
-    button.addEventListener("click", (e) => {
-      body.classList.toggle("hide");
-      body.classList.contains("hide") ? button.setAttribute("aria-expanded", "false") : button.setAttribute("aria-expanded", "true");
-    });
-  }
-};
+    const disableBtnState = (btnContainer) => {
+      btnContainer.setAttribute("disabled", "disabled");
+      btnContainer.querySelector("span").classList.add("u-opacity-20");
+    };
 
-/* 
-    Vertical Slider Component
-    @author: ryankaye
-    @version: 1.0
-*/
-stir.searchUI.verticalSlider = (item, target) => {
-  /* buildNavDiv */
-  const buildNavDiv = () => {
-    const div = document.createElement("div");
+    const enableBtnState = (btnContainer) => {
+      btnContainer.removeAttribute("disabled");
+      btnContainer.querySelector("span").classList.remove("u-opacity-20");
+    };
 
-    div.classList.add("tns-controls");
-    div.setAttribute("aria-label", "Carousel Navigation");
-    div.setAttribute("tabindex", "0");
+    const observerFirst = new IntersectionObserver(
+      (entries, observer) =>
+        entries.forEach((entry) => {
+          entry.isIntersecting ? disableBtnState(prevButton) : enableBtnState(prevButton);
+        }),
+      options
+    );
 
-    return div;
+    const observerLast = new IntersectionObserver(
+      (entries, observer) =>
+        entries.forEach((entry) => {
+          entry.isIntersecting ? disableBtnState(nextButton) : enableBtnState(nextButton);
+        }),
+      options
+    );
+
+    observerFirst.observe(slideFirst);
+    observerLast.observe(slideLast);
+
+    nextButton.addEventListener("click", () => (slidesContainer.scrollLeft += slideDist));
+    prevButton.addEventListener("click", () => (slidesContainer.scrollLeft -= slideDist));
   };
 
-  /* buildNavButton */
-  const buildNavButton = (id, text, icon) => {
-    const btn = document.createElement("button");
+  /*
+        doSearchTabs
+    */
+  const doSearchTabs = (tabsScope) => {
+    if (!tabsScope) return;
+    tabsScope.classList.remove("hide");
 
-    btn.innerHTML = '<span class="uos-' + icon + ' icon--medium "></span>';
-    btn.setAttribute("data-controls", text);
-    btn.setAttribute("aria-label", text);
-    btn.setAttribute("type", "button");
-    btn.setAttribute("tabindex", "-1");
-    btn.setAttribute("aria-controls", id);
+    const buttons = tabsScope.querySelectorAll("button");
+    const tabs = tabsScope.querySelectorAll("#mySlider1 > div");
 
-    return btn;
-  };
+    /* openTab */
+    const openTab = (open, tabs, buttons, tabsScope) => {
+      tabs.forEach((tab) => {
+        tab.setAttribute("aria-hidden", "true");
+        tab.classList.add("hide");
+      });
 
-  /* Build the full Button + wrapper + listener */
-  const buildNavElement = (containerId, text, icon) => {
-    const div = buildNavDiv();
-    const btn = buildNavButton(containerId, text, icon);
+      buttons.forEach((button) => {
+        button.closest("h2") ? button.closest("h2").classList.remove("u-white", "u-bg-heritage-green") : null;
+      });
 
-    div.insertAdjacentElement("beforeend", btn);
+      const tabOpen = tabsScope.querySelector('[data-panel="' + open + '"]');
+      tabOpen && tabOpen.classList.remove("hide");
+      tabOpen && tabOpen.removeAttribute("aria-hidden");
 
-    btn.addEventListener("click", (event) => {
-      event.preventDefault();
-      verticalSlider.goTo(text);
-    });
+      const btnOpen = tabsScope.querySelector('[data-open="' + open + '"]');
+      btnOpen && btnOpen.closest("h2").classList.add("u-white", "u-bg-heritage-green");
+    };
 
-    return div;
-  };
+    /* Event Listener */
+    buttons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const btn = event.target.closest("button[data-open]");
+        if (!btn) return;
 
-  /* initSlider */
-  const initSlider = (container) => {
-    if (!container) return;
+        const open = btn.getAttribute("data-open") || "all";
+        openTab(open, tabs, buttons, tabsScope);
+        stir.scrollToElement && stir.scrollToElement(tabsScope, 0);
 
-    const divPrev = buildNavElement(container.id, "prev", "chevron-up");
-    const divNext = buildNavElement(container.id, "next", "chevron-down");
-
-    container.parentElement.parentElement.insertAdjacentElement("afterend", divNext);
-    container.parentElement.parentElement.insertAdjacentElement("beforebegin", divPrev);
-
-    target.parentElement.setAttribute("data-inittns", "");
-  };
-
-  /* Config */
-  const verticalSlider = tns({
-    container: item,
-    controls: false,
-    loop: false,
-    slideBy: 7,
-    items: 7,
-    axis: "vertical",
-    autoHeight: false,
-    touch: true,
-    swipeAngle: 30,
-    speed: 400,
-  });
-
-  verticalSlider && initSlider(verticalSlider.getInfo().container);
-};
-
-/* 
-  Slider Aria Helper
-  @author: ryankaye
-  @version: 1.0
-  @description: Add Aria Labels to a slider after its initialised 
-*/
-stir.searchUI.sliderArias = (node) => {
-  if (!node) return;
-
-  setTimeout(() => {
-    const controlsPrevious = node.querySelector('[data-controls="prev"]');
-    const controlsNext = node.querySelector('[data-controls="next"]');
-
-    controlsPrevious && controlsPrevious.setAttribute("aria-label", "Previous");
-    controlsNext && controlsNext.setAttribute("aria-label", "Next");
-
-    return true;
-  }, 100);
-};
-
-/*
-   Slide Tab Component
-   @author: ryankaye
-   @version: 1.0
- */
-stir.searchUI.slideTab = (scope) => {
-  if (!scope) return;
-
-  const nodes = {
-    slideBox: scope,
-    slideNavBox: scope.querySelector("[data-searchbtnstns]"),
-    slideNavBtns: Array.prototype.slice.call(scope.querySelectorAll("[data-searchbtnstns] h2 button")),
-    slideResultTabs: Array.prototype.slice.call(scope.querySelectorAll("#mySlider1 > div")),
-    accordions: Array.prototype.slice.call(scope.querySelectorAll("[data-behaviour=accordion]")),
-  };
-
-  if (!nodes.slideNavBox || !nodes.slideNavBtns || !nodes.slideResultTabs) return;
-
-  /* initTabs */
-  const initTabs = (nodes) => {
-    const sliderNav = tns({
-      container: "#" + nodes.slideNavBox.id,
-      items: calcItemsToShow(stir.MediaQuery.current),
-      loop: false,
-      slideBy: "page",
-      controls: true,
-      controlsText: ['<span class="uos-chevron-left icon--medium "></span>', '<span class="uos-chevron-right icon--medium "></span>'],
-      touch: true,
-      swipeAngle: 30,
-      navPosition: "top",
-      autoHeight: true,
-      autoplay: false,
+        if (event.isTrusted) QueryParams.set("tab", open);
+      });
     });
 
-    nodes.slideNavBox.setAttribute("role", "tablist");
-    stir.searchUI.sliderArias(nodes.slideBox);
+    /* Initialisation */
 
-    nodes.slideNavBtns.forEach((item) => {
-      item.closest("h2").style.width = "90px"; // item.offsetWidth + "px";
-      //item.setAttribute("role", "tab");
-      item.closest("div.tns-item").setAttribute("role", "tab");
-      item.setAttribute("tabindex", "-1");
-      item.setAttribute("type", "button");
-      item.setAttribute("aria-controls", "search_results_panel_" + item.getAttribute("data-open"));
-      item.setAttribute("id", "searchtab_" + item.getAttribute("data-open"));
-    });
-
-    nodes.slideResultTabs.forEach((item) => {
+    tabs.forEach((item) => {
       item.setAttribute("role", "tabpanel");
       item.setAttribute("tabindex", "0");
       item.setAttribute("id", "search_results_panel_" + item.getAttribute("data-panel"));
@@ -923,134 +851,26 @@ stir.searchUI.slideTab = (scope) => {
     });
 
     const open = QueryParams.get("tab") ? QueryParams.get("tab") : "all";
-    const btnActive = scope.querySelector("button[data-open=" + open + "]");
-
-    if (nodes.slideNavBox && nodes.slideNavBox.classList.contains("hide-no-js")) nodes.slideNavBox.classList.remove("hide-no-js");
-
-    if (btnActive) {
-      btnActive.click();
-      if (nodes.slideNavBtns.indexOf(btnActive) >= calcItemsToShow(stir.MediaQuery.current)) sliderNav.goTo(nodes.slideNavBtns.indexOf(btnActive));
-    }
+    const btnOpen = tabsScope.querySelector('[data-open="' + open + '"]') || null;
+    btnOpen && btnOpen.click();
   };
-
-  /* calcItemsToShow */
-  const calcItemsToShow = (size) => {
-    if (size === "small") return 3;
-    if (size === "medium") return 4;
-
-    return nodes.slideNavBtns.length;
-  };
-
-  /* controlSticky */
-  const controlSticky = () => {
-    const top = nodes.slideBox.getBoundingClientRect().top;
-
-    top < 0.01 && nodes.slideBox.classList.add("stuck");
-    top > 0 && nodes.slideBox.classList.remove("stuck");
-  };
-
-  /* handleTabClick */
-  const handleTabClick = (e) => {
-    const btn = e.target.closest("button[data-open]");
-
-    if (!btn) return;
-
-    const open = btn.getAttribute("data-open") || "null";
-    const panel = stir.node('[data-panel="' + open + '"]');
-
-    nodes.slideNavBtns.forEach((item) => {
-      item.parentElement.classList.remove("slide-tab--active");
-    });
-
-    btn.closest("h2").classList.add("slide-tab--active");
-
-    nodes.slideResultTabs.forEach((el) => {
-      el.classList.add("hide");
-      el.setAttribute("aria-hidden", "true");
-
-      if (el.getAttribute("data-panel") === open) {
-        el.classList.remove("hide");
-        el.removeAttribute("aria-hidden");
-      }
-    });
-
-    panel.classList.remove("hide");
-    panel.removeAttribute("aria-hidden");
-    stir.scrollToElement && stir.scrollToElement(nodes.slideBox, 0);
-
-    // only set tab on user-clicks, not scripted ones
-    if (e.isTrusted) QueryParams.set("tab", open);
-  };
-
-  /* throttle */
-  function throttle(callback, limit) {
-    var wait = false;
-    return function () {
-      if (!wait) {
-        callback.call();
-        wait = true;
-        setTimeout(function () {
-          wait = false;
-        }, limit);
-      }
-    };
-  }
 
   /*
-    Event Listeners
-  */
-  document.addEventListener("scroll", throttle(controlSticky, 200));
-  nodes.slideNavBox.addEventListener("click", handleTabClick);
-  window.addEventListener("popstate", (ev) => initTabs(nodes)); // reinit tabs on history navigation (back/forward)
+  
+      ON LOAD
+      
+    */
 
-  initTabs(nodes);
-};
-
-/*
-    O N   L O A D   E V E N T S
- */
-
-(function () {
-  /* 
-    IE Guard Clause 
-  */
+  // IE Guard Clause
   if ("undefined" === typeof window.URLSearchParams) return;
 
-  /*
-    Find all vertical sliders 
-    and initialte them
-   */
-  const handleAccordionClick = (e) => {
-    if (e.target.parentElement.dataset.containtns === "" && e.target.parentElement.dataset.inittns !== "") {
-      const item = e.target.parentElement.nextElementSibling.children[0];
-      if (item) stir.searchUI.verticalSlider(item, e.target);
-    }
-  };
+  const searchTabs = stir.nodes(".c-search-results-area");
+  searchTabs.forEach((element) => doSearchTabs(element));
 
-  stir.nodes('[data-containtns=""]').forEach((item) => {
-    item.children[0].addEventListener("click", handleAccordionClick);
-  });
-
-  /*
-    Find all Slide Tabs Components 
-    and initialise them
-   */
-  const slideTabs = stir.nodes(".c-search-results-area");
-
-  if (slideTabs.length) slideTabs.forEach((item) => stir.searchUI.slideTab(item));
-
-  /*
-    Find all mobile filter accordions 
-    and initialise them 
-   */
-  const filterNodes = stir.nodes(".c-search-results-filters");
-
-  if (stir.MediaQuery.current === "small" || stir.MediaQuery.current === "medium") {
-    if (filterNodes.length) {
-      filterNodes.forEach((element, index) => stir.searchUI.asideAccordion(element, index));
-    }
-  }
+  const carousels = stir.nodes(".carousel");
+  carousels.forEach((element) => initCarousel(element));
 })();
+
 
 var stir = stir || {};
 
