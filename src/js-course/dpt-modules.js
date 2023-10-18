@@ -40,9 +40,16 @@ stir.course = (function() {
 		auto: true
 	};
 
+	// initialise any new accords just added to DOM
+	const reflow = () => {
+		Array.prototype.forEach.call(container.querySelectorAll(".stir-accordion"), function (accordion) {
+			new stir.accord(accordion, true);
+		});
+	};
+
 	const handle = {
 		options: frag => optionChooser.append(frag),
-		modules: frag => moduleBrowser.append(frag),
+		modules: frag => {moduleBrowser.append(frag);reflow()},
 	};
 
 	const reset = {

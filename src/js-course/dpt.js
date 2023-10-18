@@ -8,7 +8,8 @@ stir.dpt = (function(){
 	};
 	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
 	let user = {};
-	let year = 1;
+	let _year = 0;
+	const _semestersPerYear = 2;
 
 	const modulesEndpointParams = {
 		UG: "opt=runcode&ct=UG",
@@ -96,20 +97,52 @@ stir.dpt = (function(){
 		collection: data => `<table class=c-course-modules__table>${data}</table>`
 	};
 	
-	const moduleView = data => data.modName ? moduleTemplate(data) : "<tr><td colspan=2>------- no data</td></tr>";
+	const moduleView = data => data.modName ? moduleTemplate(data) : "<tr><td colspan=2> no data </td></tr>";
 
 	const groupView = data => data.groupOptions.map(optionView).join('');
 
-	const optionView = (data,index,array) => '<p>' + (array.length>1?`(Option ${index+1}) `:'') + `${data.semestersInOption.map(semesterView).join('')}`;
+	const optionView = (data,index,array) => {
+		++_year;
+		console.info(index,array);
+		return data.semestersInOption.map(semesterView((array.length>1?`(Option ${index+1}) `:''))).join('');
+	};
 
-	const semesterView = data => `Year ${stir.cardinal(year)}: semester <b>${stir.cardinal(data.semesterCode)}</b></p> ${data.collections.map(collectionView).join('')}`; //Group: <b>${data.overarchPdtCode}</b>
+	const getYear = semesterCode => {
+		if (user && user.type && user.type!=="PG")
+			return 'Year ' + stir.cardinal(Math.ceil(semesterCode / _semestersPerYear));
+		return 'Year ' + _year;
+	};
+
+	const getSemesterYearIndex = semesterCode => semesterCode%_semestersPerYear===0?_semestersPerYear:semesterCode%_semestersPerYear;
+
+	const getSemester = semester => (semester.semesterName ? semester.semesterName + " semester" : "semester " + stir.cardinal(getSemesterYearIndex(semester.semesterCode)));
+
+	const semesterView = stir.curry(
+		(prefix, data) => {
+			return `<div class=stir-accordion><h3>${prefix} ${getYear(data.semesterCode)}: ${getSemester({semesterName:data.semesterName,semesterCode:data.semesterCode})}</h3><div>${data.collections.map(collectionView).join('')}</div></div>`
+		}
+	); 
+	
+	//Group: <b>${data.overarchPdtCode}</b>
 
 	const collectionView = data => `<p><b>${data.collectionNotes}</b></p>${ template.collection( data.mods.map(moduleView).join('') )}`;
 
 	const modulesOverview = data => {
-		console.info('[DPT] modulesOverview',data); //data.semesterGroupBeans
-		let frag = document.createElement('div');
-		frag.insertAdjacentHTML("afterbegin",data.semesterGroupBeans.map(groupView).join(''));
+		let div = document.createElement('div');
+		//div.insertAdjacentHTML("afterbegin",data.semesterGroupBeans.map(groupView).join(''));
+		data.semesterGroupBeans.forEach((semesterGroup, group, array) => {
+			console.info(semesterGroup);
+			div.insertAdjacentHTML("beforeend",`<p>Group: ${group+1} of ${array.length}</p>`);
+			semesterGroup.groupOptions.forEach((option, optionIndex, array) => {
+				div.insertAdjacentHTML("beforeend",`<p>Option: ${optionIndex+1} of ${array.length} (of group ${group+1})</p>`);
+				option.semestersInOption.forEach((semester, index, array) => {
+					div.insertAdjacentHTML("beforeend",`<p>Semester: ${index+1} of ${array.length} (of group ${group+1}, option ${optionIndex+1})</p><p><b>${semester.semesterName}</b></p>`);
+				});
+			});
+			
+		});
+		let frag = document.createDocumentFragment();
+		frag.append(...div.childNodes)
 		return frag;
 	};
 
@@ -133,6 +166,7 @@ stir.dpt = (function(){
 			var moa = value[0];
 			var occ = value[2];
 
+			_year = 0;
 			stir.dpt.reset.modules();
 			getModules(user.type, user.rouCode, moa, occ);
 			// this will load and display the modules
