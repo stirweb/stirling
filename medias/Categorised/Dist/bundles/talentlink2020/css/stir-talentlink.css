@@ -141,3 +141,12 @@ h1 a.btn-lg{
     text-decoration: none !important;
 }
 
+.pagination-element li a{
+    border-bottom: none !important;
+}
+
+.pagination-element li a:focus{
+    outline: 1px solid #005a30 !important;
+    outline-offset: 4px;
+    color: #fff !important;
+}
