@@ -317,6 +317,10 @@ a:has(img):hover {
   color: $heritage-purple;
 }
 
+.u-grey {
+  color: #bebebe;
+}
+
 .u-grey--dark {
   color: #767169;
 }
@@ -340,4 +344,8 @@ a:has(img):hover {
 
 .u-energy-turq {
   color: $energy-turq;
+}
+
+.u-opacity-20 {
+  opacity: 20%;
 }

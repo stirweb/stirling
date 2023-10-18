@@ -168,7 +168,7 @@
 }
 
 .u-grey-line-left {
-  border-left: 1px solid #eae9e8;
+  border-left: 1px solid #f6f5f4;
 }
 
 /*
@@ -189,6 +189,14 @@
 
 .u-border-solid {
   border: 1px solid currentColor;
+}
+
+.u-border-left-solid {
+  border-left: 1px solid currentColor;
+}
+
+.u-border-right-solid {
+  border-right: 1px solid currentColor;
 }
 
 .u-border-bottom-solid,

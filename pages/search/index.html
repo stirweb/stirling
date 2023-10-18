@@ -374,48 +374,91 @@
 			</div>
 		</div>
 		<!-- Search  -->
-		<section class=" c-search-results-area" aria-label="Search results area">
-			<div class="slide-tabs-2">
+		<section class=" c-search-results-area hide" aria-label="Search results area">
+			<div class="slide-tabs-2  u-sticky-nav">
 				<div class="grid-container ">
 					<div class="grid-x ">
 						<div class="cell small-10 small-offset-1 large-8 large-offset-2">
-							<nav id="nav-slider" class="hide-no-js" data-searchbtnstns
-								aria-label="Search tabs navigation">
-								<div>
-									<h2><button data-open="all"><span
-												class="uos-all-tab icon--medium "></span><br><span>All</span></button>
-									</h2>
-								</div>
-								<div>
-									<h2><button data-open="courses"><span
-												class="uos-course-tab icon--medium "></span><br><span>Courses</span></button>
-									</h2>
-								</div>
-								<div>
-									<h2><button data-open="news"><span
-												class="uos-news-tab icon--medium "></span><br><span>News</span></button>
-									</h2>
-								</div>
-								<div>
-									<h2><button data-open="events"><span
-												class="uos-events-tab icon--medium "></span><br><span>Events</span></button>
-									</h2>
-								</div>
-								<div>
-									<h2><button data-open="staff"><span
-												class="uos-staff-tab icon--medium "></span><br><span>Academic
-												Staff</span></button></h2>
-								</div>
-								<div>
-									<h2><button data-open="research"><span
-												class="uos-research-tab icon--medium "></span><br><span>Research</span></button>
-									</h2>
-								</div>
-							</nav>
+
+							<div class="u-flex align-center">
+
+								<nav class="u-flex u-gap align-center align-middle carousel u-my-1">
+
+									<button
+										class="u-cursor-pointer slide-arrow-prev u-grey u-border-right-solid u-block u-h-full"
+										data-controls="prev" tabindex="-1" aria-controls="nav-slider"
+										aria-label="Previous">
+										<span class="uos-chevron-left icon--medium u-black ">
+										</span>
+									</button>
+
+									<div class="carousel-slides u-relative" style="width: 304px;">
+										<div class="carousel-slide u-flex u-gap-8 align-center align-middle">
+											<h2
+												class="f header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+												<button class="u-cursor-pointer" data-open="all" tabindex="-1"
+													type="button" aria-controls="search_results_panel_all">
+													<span class="uos-all-tab icon--medium "></span>
+													<span class="u-block u-p-tiny">All</span>
+												</button>
+											</h2>
+											<h2
+												class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center ">
+												<button class="u-cursor-pointer" data-open="courses" tabindex="-1"
+													type="button" aria-controls="search_results_panel_courses">
+													<span class="uos-course-tab icon--medium "></span>
+													<span class="u-block u-p-tiny">Courses</span>
+												</button>
+											</h2>
+											<h2
+												class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+												<button class="u-cursor-pointer" data-open="news" tabindex="-1"
+													type="button" aria-controls="search_results_panel_news">
+													<span class="uos-news-tab icon--medium "></span>
+													<span class="u-block u-p-tiny">News</span>
+												</button>
+											</h2>
+											<h2
+												class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+												<button class="u-cursor-pointer" data-open="events" tabindex="-1"
+													type="button" aria-controls="search_results_panel_events">
+													<span class="uos-events-tab icon--medium "></span>
+													<span class="u-block u-p-tiny">Events</span>
+												</button>
+											</h2>
+											<h2
+												class="header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+												<button class="u-cursor-pointer" data-open="staff" tabindex="-1"
+													type="button" aria-controls="search_results_panel_staff">
+													<span class="uos-staff-tab icon--medium "></span>
+													<span class="u-block u-p-tiny">Academic Staff</span>
+												</button>
+											</h2>
+											<h2
+												class="l header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">
+												<button class="u-cursor-pointer" data-open="research" tabindex="-1"
+													type="button" aria-controls="search_results_panel_research">
+													<span class="uos-research-tab icon--medium "></span>
+													<span class="u-block u-p-tiny">Research</span>
+												</button>
+											</h2>
+										</div>
+									</div>
+
+									<button
+										class="u-cursor-pointer slide-arrow-next u-grey u-border-left-solid u-block u-h-full"
+										type="button" data-controls="next" tabindex="-1" aria-controls="nav-slider">
+										<span class="uos-chevron-right icon--medium u-black"></span>
+									</button>
+								</nav>
+
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+
 			<div class="c-wrapper u-bg-grey u-padding-bottom">
 				<div class="grid-container">
 					<div class="grid-x ">
@@ -1392,9 +1435,7 @@ Research Panel
 		};
 		stir.t4Globals.search.facets["Delivery mode"]["hybrid"] = "Blended";
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"
-		integrity="sha512-j+F4W//4Pu39at5I8HC8q2l1BNz4OF3ju39HyWeqKQagW6ww3ZF9gFcu8rzUbyTDY7gEo/vqqzGte0UPpo65QQ=="
-		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 	<script type="text/javascript" src="../../../medias/Categorised/Dist/js/search/search-min.js?v=10.1"></script>
 	<script data-this-is-just-a-quick-hack>
 		(function () {
