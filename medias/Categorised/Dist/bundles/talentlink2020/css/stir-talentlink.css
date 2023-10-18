@@ -142,7 +142,11 @@ h1 a.btn-lg{
 }
 
 .pagination-element li a{
-    border-bottom: none !important;
+    border: none !important;
+}
+
+.pagination-element li a:hover{
+    color: #fff !important;
 }
 
 .pagination-element li a:focus{
