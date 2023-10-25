@@ -2362,6 +2362,7 @@ stir.MediaQuery = (function () {
 // this is the half n half
 (function () {
   if (!window.AOS) return;
+  console.log("AOS found");
   var containers, element;
   var left = "fade-left",
     right = "fade-right",
