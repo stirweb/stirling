@@ -41,7 +41,7 @@
                 </h3>
                 <p><strong>${a.outcomesIntro}</strong></p>
                 <ul>${t.map(e=>`<li>${e}</li>`).join("")}</ul>
-            </div>`,m=({moduleCredits:e,ectsModuleCredits:t,colourPack:r},a,s)=>(console.log(s),`<div class="cell u-mt-2">
+            </div>`,m=({moduleCredits:e,ectsModuleCredits:t,colourPack:r},a,s)=>`<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
                 <h3 class="header-stripped u-bg-${r.third}--10 u-p-1 u-${r.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173616" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" />
@@ -57,7 +57,7 @@
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
                         <a href="${"ug"===s?a.awardsCtaUG:a.awardsCtaPG}" class="u-${r.third}">Assessment and award of credit for ${"ug"===s?"undergraduates":"postgraduates"}</a></p>
                 </div>
-            </div>`),v=(e,t)=>`<div class="cell u-mt-2">
+            </div>`,v=(e,t)=>`<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
                 ${e.preparedotherinformation?`<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3><p>${e.preparedotherinformation}</p>`:""}
                 ${"Yes"===e.studyAbroad?'<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>'+t.studyAbroad:""}
