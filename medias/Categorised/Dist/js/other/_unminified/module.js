@@ -355,8 +355,8 @@
       main(data, colours, boilerplates);
       addEventListeners();
     } catch (error) {
-      setDOMContent(contentArea, renderError());
-      //console.log(error.message);
+      setDOMContent(stir.node("#content"), renderError());
+      console.log(error.message);
     }
   }
 

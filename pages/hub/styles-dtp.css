@@ -1,0 +1,274 @@
+.loading {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	padding: 0.3em 0;
+	margin: 1em 0;
+	border-bottom: 1px solid #006938;
+}
+.loading:before{
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	opacity: 0.1;
+	content: "";
+	left: -200px;
+	width: 200px;
+	background-color: #006938;
+	animation: loading 1.9s linear infinite;
+}
+
+.u-bg-dark-grey .loading {
+	color: white;	
+}
+@keyframes loading {
+	  from {left: -200px; width: 30%;}
+	  50% {width: 30%;}
+	  70% {width: 70%;}
+	  80% { left: 50%;}
+	  95% {left: 120%;}
+	  to {left: 100%;}
+}
+
+.c-staff-overview {
+	flex-direction: column;
+}
+
+div.c-staff-overview__image {
+	min-width: 158px;
+	max-width: 158px;
+}
+
+input.button.small.secondary{
+    height: 2.4375rem;
+    padding: 0 0.6em;
+    margin-bottom: 1rem;
+}
+
+.hcard .department span {
+	display: block;
+}
+
+.c-facts__fact-heading:after,
+.c-facts__fact-heading::after{
+	content: ": ";
+}
+
+.c-fbresults span[class^="uos-"] { 
+	font-size: 24px;
+	line-height: 1.6;
+	padding-right: 0.2em;
+}
+
+[data-type="Recognition"] div {
+	margin-bottom: 2em;
+}
+[data-type="Recognition"] div:last-child {
+	margin-bottom: 0;
+}
+
+.atoz-index-card {
+	margin-left: 0;
+}
+
+.c-search-letters__box a {
+	text-align: center;
+}
+
+.c-research-hub-tabs--listing{
+	display: inline-block;
+}
+
+.button.tiny {
+    padding: 0.2rem 1rem;
+}
+
+.c-research-outputs-overview {
+    margin: 2em 0;
+/*
+    padding-bottom: 1.5em;
+    border-bottom: 1px dashed #ccc
+*/;
+}
+
+.c-research-hub-tabs .c-tag-list {
+    margin: 2em 0 0 0;
+}
+
+.c-research-hub-tabs p {
+	margin-bottom: 1em;
+}
+
+.c-hook {
+    margin-bottom: 1em;
+}
+
+.c-icon-indent {
+	display: flex;
+}
+
+img.profilepic {
+	padding-left: 1em;
+}
+
+a.imglink {
+	border:0 !important;
+}
+
+.c-facts {
+	padding: 2em 0 1em;
+}
+
+.c-facts .c-link::after {
+	content: none;
+}
+
+.c-facts__facts {
+	flex-direction: row;
+}
+
+.c-facts__facts li {
+	width: max-content;
+	padding-left: 0;
+}
+
+/**
+Share Sheet
+**/
+.person__contact {
+	margin-bottom: 1em;
+}
+.person__contact li > a > span[class*="uos-"]::before {
+	font-size: 1.6rem;
+}
+button[data-open="shareSheet"]::after{
+	content: '';
+	margin: 0;
+}
+.copy-link-box .button::after {
+	content: '';
+	margin: 0;
+}
+.button svg.icon {
+	margin-left: 0.214285714em; /* 3px */
+}
+
+a.orcid {
+	font-family: 'Courier New', Courier, monospace;
+}
+a.icon, a.orcid {
+	border: 0;
+}
+
+.stir-tabs__content a:not(.button) {
+	color: #005C31; /* increase contrast against tabs' greyish background */
+}
+
+.stir-tabs__content .c-tag-list a {
+	color: white;
+}
+
+div.copy-link-box {
+	display: flex;
+	justify-content: space-between;
+	background-color: #e6e6e6;
+	padding: 0.3em 0.5em;
+	margin-bottom: 1em;
+}
+div.copy-link-box > p,
+div.copy-link-box > button {
+	margin: 0;
+}
+div.copy-link-box > p {
+	display: flex;
+	align-items: center;
+	margin-right: 1em;
+	font-size: 1rem;
+	font-family: 'Courier New', Courier, monospace;
+}
+ul.barnacles {
+	list-style: none;
+	display: flex;
+	justify-content: flex-start;
+	margin-left: 0;
+	padding-bottom: 1em;
+	border-bottom: 1px solid #cacaca;
+	margin-bottom: 1em;
+}
+ul.barnacles li {
+	display: inline-block;
+	margin-right: 3em;
+}
+.barnacles span[class*="uos-"] {
+    font-size: 2em;
+}
+.tooltip__link-copied {
+	position: absolute;
+	justify-content: center;
+	align-items: center;
+	display: none;
+	top:0;
+	right:0;
+	left:0;
+	bottom: 0;
+	background-color: #333;
+	color: #FFF;
+	text-align: center;
+}
+
+/** SVG **/
+svg#assets {
+    display: none;
+}
+svg.icon {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+}
+
+/* revert citation styles set by Foundation */
+cite {
+         color: inherit;
+       display: inline;
+     font-size: inherit;
+    font-style: italic;
+        margin: inherit;
+}
+
+#top10 .donut {
+	display: none;
+}
+
+@media screen and (min-width: 450px) {
+	.c-staff-overview {
+		flex-direction: row;
+	}
+	#top10 .donut {
+		display: table-cell;
+	}
+}
+
+@media screen and (max-width: 63.9375em) {
+	.c-icon-indent__body {
+		margin-top: 30px;
+		margin-left: 30px;
+	}
+}
+
+#debug pre {
+	font-size: 0.7rem;
+}
+
+.profilepic{
+	box-shadow: 3px 3px 0px 0px rgb(204,204,204);
+	padding-left: 0 !important;
+}
+
+.u-text-underline-energy-green{
+	text-decoration: #76bd22 underline;
+	text-decoration-thickness: 2px;
+	text-underline-offset: 5px;
+	border-bottom: none;
+
+}
