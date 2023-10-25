@@ -110,7 +110,8 @@
             </div>`;
   };
 
-  const renderAwards = ({ moduleCredits, ectsModuleCredits, professionalAccreditation, colourPack }, boilerplates) => {
+  const renderAwards = ({ moduleCredits, ectsModuleCredits, professionalAccreditation, colourPack }, boilerplates, studyLevel) => {
+    console.log(studyLevel);
     return `<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
                 <h3 class="header-stripped u-bg-${colourPack.third}--10 u-p-1 u-${colourPack.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
@@ -125,7 +126,7 @@
                       <t4 type="media" id="173864" formatter="inline/*"/> 
                     </span>
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
-                        <a href="${boilerplates.awardsCTA}" class="u-${colourPack.third}">Assessment and award of credit for undergraduates</a></p>
+                        <a href="${studyLevel === "ug" ? boilerplates.awardsCtaUG : boilerplates.awardsCtaPG}" class="u-${colourPack.third}">Assessment and award of credit for ${studyLevel === "ug" ? `undergraduates` : `postgraduates`}</a></p>
                 </div>
             </div>`;
   };
@@ -282,6 +283,7 @@
   */
 
   // Deliveries
+  /*
   const doDeliveries = (deliveries, colourPack) => {
     const deliveriesTotalItem = deliveries.filter((item) => item.typekey === "total");
     const deliveriesTotalValue = deliveriesTotalItem.length ? deliveriesTotalItem[0].hours : null;
@@ -299,7 +301,7 @@
 
     return Number(total) !== sum ? `` : deliveries.map(renderDeliverablesCurry).join(``);
     //return Number(total) !== sum ? renderDebug(total, sum, `Hours (Total Study Time)`, deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
-  };
+  }; */
 
   const doAssessmentItem = (item) => {
     const sum = item.tabAssessments
@@ -342,7 +344,7 @@
     const assessmentsData = data.assessments ? data.assessments : [];
     const assessments = doAssessments(assessmentsData, colourPack);
 
-    const html = renderHeader(data2) + renderSectionStart() + renderDisclaimer(studyLevel, boilerplates) + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack, boilerplates) + renderAwards(data2, boilerplates) + renderFurtherDetails(data2, boilerplates) + renderSectionEnd();
+    const html = renderHeader(data2) + renderSectionStart() + renderDisclaimer(studyLevel, boilerplates) + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack, boilerplates) + renderAwards(data2, boilerplates, studyLevel) + renderFurtherDetails(data2, boilerplates) + renderSectionEnd();
     return setDOMContent(contentArea, html);
   };
 
