@@ -198,11 +198,9 @@
   const renderTeachingAssessment = (deliveries, assessments, colourPack, boilerplates) => {
     const deliveriesHtml = !deliveries.length ? boilerplates.deliveriesFallback : renderDeliveries(`12`, deliveries);
 
-    console.log(assessments.length);
-
     const assessmentWidth = assessments.length < 2 ? `12` : `6`;
     const renderAssessmentCurry = renderAssessment(assessmentWidth);
-    const assessmentHtml = !assessments.length ? `<div class="cell">` + boilerplates.assessmentFallback + `</div>` : assessments.map(renderAssessmentCurry).join(``);
+    const assessmentHtml = !assessments.length ? `<div class="cell">${boilerplates.assessmentFallback}</div>` : assessments.map(renderAssessmentCurry).join(``);
 
     return `<div class="cell">
               <h2 id="teaching" >Teaching and assessment</h2>
@@ -358,7 +356,6 @@
       const data = await response.json();
       main(data, colours, boilerplates);
       addEventListeners();
-      //console.log(data);
     } catch (error) {
       setDOMContent(stir.node("#content"), renderError());
       console.log(error.message);
