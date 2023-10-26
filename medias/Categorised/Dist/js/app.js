@@ -2540,8 +2540,8 @@ stir.MediaQuery = (function () {
         if (entry.isIntersecting) {
           item.classList.remove("u-opacity-0");
           const divs = Array.prototype.slice.call(item.querySelectorAll("div"));
-          divs[0].classList.add("fadein-slide-right");
-          divs[1].classList.add("fadein-slide-left");
+          divs[0] && divs[0].classList.add("fadein-slide-right");
+          divs[1] && divs[1].classList.add("fadein-slide-left");
           observer && observer.observer.unobserve(this);
         }
       },
