@@ -16,6 +16,10 @@
   }
 }
 
+/* 
+  Mega Menu 
+*/
+
 .animation__slidedown {
   /* display: initial; */
   transform-origin: top;
@@ -73,7 +77,49 @@
   }
 }
 
-/* Replacement for the jQuery animation functions */
+/* 
+  Replacements for AOS half n half animations 
+*/
+
+.fadein-slide-left {
+  opacity: 1;
+  transform: translateX(0%);
+  animation: fadein-slide-left 1s ease-in-out;
+}
+
+.fadein-slide-right {
+  opacity: 1;
+  transform: translateX(0%);
+  animation: fadein-slide-right 1s ease-in-out;
+}
+
+@keyframes fadein-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadein-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 
+  Concierge 
+*/
 
 .stir__slideup,
 .stir__slidedown {
@@ -98,9 +144,12 @@
   transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
-/* Homepage search box */
+/* 
+  Homepage search box 
+*/
+
 .u-focuswithin-dark:focus-within {
-	background-color: black;
+  background-color: black;
 }
 .hasfocus-dim {
   /* transition: filter 0.15s ease; */
@@ -108,6 +157,6 @@
 }
 :focus-within > .hasfocus-dim {
   /* note: do not use filter, there's bug in Safari 16 */
-  /* filter: brightness(70%) saturate(0.666); */ 
-  opacity: .7;
+  /* filter: brightness(70%) saturate(0.666); */
+  opacity: 0.7;
 }

@@ -50,7 +50,7 @@ function js() {
     "node_modules/what-input/dist/what-input.js",
     //"node_modules/foundation-sites/dist/js/foundation.js",
     //"node_modules/tiny-slider/dist/min/tiny-slider.js", // 32KB !!! - CSS scroll-snap-type?
-    "node_modules/aos/dist/aos.js", // 15KB !!!
+    //"node_modules/aos/dist/aos.js", // 15KB !!!
     "node_modules/js-cookie/src/js.cookie.js", // IN USE?
     //"node_modules/imagesloaded/imagesloaded.pkgd.js", // IN USE?
     "node_modules/@vimeo/player/dist/player.min.js",

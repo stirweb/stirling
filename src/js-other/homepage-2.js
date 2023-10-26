@@ -45,6 +45,7 @@
   }
 
   // Animate on Scroll. This checks AOS is available before making changes to the DOM.
+  /*
   if (AOS) {
     var fast = 1000;
     var slow = 2000;
@@ -56,7 +57,7 @@
      * Helper function to set AOS attributes.
      * @param {string} action the name of an AOS animation
      * @param {number} duration the duration of the animation
-     */
+     *
     var applyAOS = function applyAOS(action, duration) {
       if (!this.setAttribute) return;
       this.setAttribute("data-aos", action);
@@ -85,6 +86,7 @@
       disable: "phone", // disabled for phone breakpoint
     });
   }
+  */
 })();
 
 /*
