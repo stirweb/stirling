@@ -351,6 +351,7 @@
         Init: Get the data and proceed
   */
   async function getData(fetchUrl, colours, boilerplates) {
+    console.log(fetchUrl);
     const response = await fetch(fetchUrl);
 
     try {
