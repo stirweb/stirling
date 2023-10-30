@@ -148,13 +148,20 @@
     return `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>` + content;
   };
 
+  const renderAdditionalCosts = (additionalCosts) => {
+    return !additionalCosts
+      ? ``
+      : `
+      <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
+      <p>${additionalCosts}</p>`;
+  };
+
   const renderFurtherDetails = (data, boilerplates) => {
     return `<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
                 ${data.preparedotherinformation ? renderSupportingInfo(data.preparedotherinformation) : ``}
                 ${data.studyAbroad === "Yes" ? renderStudyAbroad(boilerplates.studyAbroad) : ``}
-                <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
-                <p>${data.additionalCosts}</p>
+                ${renderAdditionalCosts(data.additionalCosts)}
             </div>`;
   };
 
@@ -380,6 +387,8 @@
 
   const params = new URLSearchParams(document.location.search);
   const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
+
+  //const fetchUrl = "sample.json"; // Testing
 
   getData(fetchUrl, colours, boilerplates);
 })();

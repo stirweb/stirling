@@ -1,8 +1,6 @@
 /*
 
-
   Video Banner
-
 
 */
 
@@ -91,9 +89,7 @@
 
 /*
 
-
    News and Events JSON Loader
-
    
  */
 
