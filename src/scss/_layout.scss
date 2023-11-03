@@ -347,7 +347,8 @@ a:focus {
   outline-offset: 4px;
 }
 
-.u-white--all {
+.u-white--all,
+.darkmode {
   .c-promo-box--image .c-promo-box__content > div span:focus-within,
   .button:focus,
   input:focus,

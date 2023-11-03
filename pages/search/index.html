@@ -373,6 +373,25 @@
 				</div>
 			</div>
 		</div>
+		<style>
+			.carousel-slides {
+				width: 100%;
+				display: flex;
+				overflow: scroll;
+				scroll-behavior: smooth;
+				margin: 0;
+				padding: 0;
+				scrollbar-width: none;
+			}
+
+			.carousel-slides::-webkit-scrollbar {
+				display: none;
+			}
+
+			.carousel-slide h2 {
+				width: 82px;
+			}
+		</style>
 		<!-- Search  -->
 		<section class=" c-search-results-area hide" aria-label="Search results area">
 			<div class="slide-tabs-2  u-sticky-nav">
@@ -382,17 +401,16 @@
 
 							<div class="u-flex align-center">
 
-								<nav class="u-flex u-gap align-center align-middle carousel u-my-1">
+								<nav id="nav-slider" class="u-flex u-gap align-center align-middle carousel u-my-1">
 
 									<button
 										class="u-cursor-pointer slide-arrow-prev u-grey u-border-right-solid u-block u-h-full"
 										data-controls="prev" tabindex="-1" aria-controls="nav-slider"
 										aria-label="Previous">
-										<span class="uos-chevron-left icon--medium u-black ">
-										</span>
+										<span class="uos-chevron-left icon--medium u-black "></span>
 									</button>
 
-									<div class="carousel-slides u-relative" style="width: 304px;">
+									<div class="carousel-slides u-relative" style="width: 288px;">
 										<div class="carousel-slide u-flex u-gap-8 align-center align-middle">
 											<h2
 												class="f header-stripped u-header--secondary-font text-xsm u-py-1 u-m-0 text-center">

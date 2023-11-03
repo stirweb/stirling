@@ -40,7 +40,7 @@
     font-size: inherit;
   }
   a:focus {
-    outline: 1px dotted #fff !important;
+    outline: 1px solid #fff !important;
   }
   a:hover {
     color: $energy-green;
@@ -49,6 +49,7 @@
   li {
     list-style: none;
     line-height: 1.8333;
+    padding: 6px 0;
   }
 
   [class*="uos-"] {

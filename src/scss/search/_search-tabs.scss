@@ -13,11 +13,11 @@
     z-index: 9;
     background: rgba(245, 245, 245, 1);
 
-    .tns-nav {
-      display: none;
-    }
+    // .tns-nav {
+    //   display: none;
+    // }
 
-    /* Tab buttons */
+    /* Tab buttons 
     .tns-controls {
       position: relative;
 
@@ -43,9 +43,9 @@
           opacity: 0.2;
         }
       }
-    }
+    }*/
 
-    /* Arrow buttons */
+    /* Arrow buttons 
     .tns-item {
       text-align: center;
 
@@ -80,9 +80,9 @@
           }
         }
       }
-    }
+    }*/
   }
-
+  /*
   &.stuck {
     padding-top: 0;
     padding-bottom: 0;
@@ -92,14 +92,14 @@
       background: rgba(245, 245, 245, 0.9);
     }
 
-    /* Tab buttons */
+    /* Tab buttons *
     .tns-controls {
       button {
         height: 60px;
       }
     }
 
-    /* Arrow buttons */
+    /* Arrow buttons *
     .tns-item {
       h2 {
         padding-bottom: 0;
@@ -120,6 +120,7 @@
       }
     }
   }
+  */
 
   /* 
 
@@ -272,9 +273,9 @@
       margin-bottom: 40px;
     }
 
-    .tns-nav {
-      display: none;
-    }
+    // .tns-nav {
+    //   display: none;
+    // }
 
     .c-search-filters-header {
       margin-bottom: 0;
@@ -306,15 +307,15 @@
         margin-bottom: 0;
       }
 
-      .tns-controls {
-        text-align: center;
-        position: relative;
-        top: -7px;
+      // .tns-controls {
+      //   text-align: center;
+      //   position: relative;
+      //   top: -7px;
 
-        button {
-          margin: 0 0.5rem;
-        }
-      }
+      //   button {
+      //     margin: 0 0.5rem;
+      //   }
+      // }
 
       ul li {
         margin: 0 0 1em 0;

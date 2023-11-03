@@ -110,7 +110,7 @@
             </div>`;
   };
 
-  const renderAwards = ({ moduleCredits, ectsModuleCredits, professionalAccreditation, colourPack }, boilerplates) => {
+  const renderAwards = ({ moduleCredits, ectsModuleCredits, professionalAccreditation, colourPack }, boilerplates, studyLevel) => {
     return `<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
                 <h3 class="header-stripped u-bg-${colourPack.third}--10 u-p-1 u-${colourPack.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
@@ -125,7 +125,7 @@
                       <t4 type="media" id="173864" formatter="inline/*"/> 
                     </span>
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
-                        <a href="${boilerplates.awardsCTA}" class="u-${colourPack.third}">Assessment and award of credit for undergraduates</a></p>
+                        <a href="${studyLevel === "ug" ? boilerplates.awardsCtaUG : boilerplates.awardsCtaPG}" class="u-${colourPack.third}">Assessment and award of credit for ${studyLevel === "ug" ? `undergraduates` : `postgraduates`}</a></p>
                 </div>
             </div>`;
   };
@@ -148,13 +148,20 @@
     return `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>` + content;
   };
 
+  const renderAdditionalCosts = (additionalCosts) => {
+    return !additionalCosts
+      ? ``
+      : `
+      <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
+      <p>${additionalCosts}</p>`;
+  };
+
   const renderFurtherDetails = (data, boilerplates) => {
     return `<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
                 ${data.preparedotherinformation ? renderSupportingInfo(data.preparedotherinformation) : ``}
                 ${data.studyAbroad === "Yes" ? renderStudyAbroad(boilerplates.studyAbroad) : ``}
-                <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
-                <p>${data.additionalCosts}</p>
+                ${renderAdditionalCosts(data.additionalCosts)}
             </div>`;
   };
 
@@ -200,7 +207,7 @@
 
     const assessmentWidth = assessments.length < 2 ? `12` : `6`;
     const renderAssessmentCurry = renderAssessment(assessmentWidth);
-    const assessmentHtml = !assessments.length ? boilerplates.assessmentFallback : assessments.map(renderAssessmentCurry).join(``);
+    const assessmentHtml = !assessments.length ? `<div class="cell">${boilerplates.assessmentFallback}</div>` : assessments.map(renderAssessmentCurry).join(``);
 
     return `<div class="cell">
               <h2 id="teaching" >Teaching and assessment</h2>
@@ -282,6 +289,7 @@
   */
 
   // Deliveries
+  /*
   const doDeliveries = (deliveries, colourPack) => {
     const deliveriesTotalItem = deliveries.filter((item) => item.typekey === "total");
     const deliveriesTotalValue = deliveriesTotalItem.length ? deliveriesTotalItem[0].hours : null;
@@ -299,7 +307,7 @@
 
     return Number(total) !== sum ? `` : deliveries.map(renderDeliverablesCurry).join(``);
     //return Number(total) !== sum ? renderDebug(total, sum, `Hours (Total Study Time)`, deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
-  };
+  }; */
 
   const doAssessmentItem = (item) => {
     const sum = item.tabAssessments
@@ -338,9 +346,11 @@
     const data2 = { ...data, colourPack: colourPack, boilerplates: boilerplates };
 
     const deliveries = ""; //doDeliveries(data.deliveries, colourPack);
-    const assessments = doAssessments(data.assessments, colourPack);
 
-    const html = renderHeader(data2) + renderSectionStart() + renderDisclaimer(studyLevel, boilerplates) + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack, boilerplates) + renderAwards(data2, boilerplates) + renderFurtherDetails(data2, boilerplates) + renderSectionEnd();
+    const assessmentsData = data.assessments ? data.assessments : [];
+    const assessments = doAssessments(assessmentsData, colourPack);
+
+    const html = renderHeader(data2) + renderSectionStart() + renderDisclaimer(studyLevel, boilerplates) + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack, boilerplates) + renderAwards(data2, boilerplates, studyLevel) + renderFurtherDetails(data2, boilerplates) + renderSectionEnd();
     return setDOMContent(contentArea, html);
   };
 
@@ -348,6 +358,7 @@
         Init: Get the data and proceed
   */
   async function getData(fetchUrl, colours, boilerplates) {
+    console.log(fetchUrl);
     const response = await fetch(fetchUrl);
 
     try {
@@ -355,8 +366,9 @@
       main(data, colours, boilerplates);
       addEventListeners();
     } catch (error) {
-      setDOMContent(contentArea, renderError());
-      //console.log(error.message);
+      setDOMContent(stir.node("#content"), renderError());
+      console.log(error.message);
+      console.log(fetchUrl);
     }
   }
 
@@ -375,6 +387,8 @@
 
   const params = new URLSearchParams(document.location.search);
   const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
+
+  //const fetchUrl = "sample.json"; // Testing
 
   getData(fetchUrl, colours, boilerplates);
 })();

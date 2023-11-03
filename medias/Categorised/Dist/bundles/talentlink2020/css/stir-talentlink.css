@@ -80,6 +80,8 @@ h1.c-masthead__callout-text,
 .c-form textarea:focus,
 .c-form select:focus {
     border-radius: 0px;
+    outline: 1px solid #005a30 !important;
+    outline-offset: 4px !important;
 }
 
 .c-form [type="submit"]:not(.c-course-search__button) {
@@ -141,3 +143,16 @@ h1 a.btn-lg{
     text-decoration: none !important;
 }
 
+.pagination-element li a{
+    border: none !important;
+}
+
+.pagination-element li a:hover{
+    color: #fff !important;
+}
+
+.pagination-element li a:focus{
+    outline: 1px solid #005a30 !important;
+    outline-offset: 4px;
+    color: #fff !important;
+}
