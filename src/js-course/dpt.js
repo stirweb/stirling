@@ -2,10 +2,10 @@ var stir = stir || {};
 
 stir.dpt = (function(){
 
-	const labels = {
-		ug: "undergraduate",
-		pg: "postgraduate"
-	};
+//	const labels = {
+//		ug: "undergraduate",
+//		pg: "postgraduate"
+//	};
 	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
 	const _semestersPerYear = 2;
 	const viewMoreModulesThreshold = 4;
@@ -71,19 +71,21 @@ stir.dpt = (function(){
 		return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${sid}`;
 	}; 
 
-	const moduleTemplate = data => 
+	const template = {
+		collection: (id,data) => `<table class=c-course-modules__table id="collection_${id}">${data}</table>`,
+		module: data => 
 		`<tr>
 			<td>
 				<a href="${moduleLink(data)}">${data.modName}</a> <span class=c-course-modules__module-code>(${data.modCode})</span>
 			</td>
 			<td>${data.modCredit} credits</td>
-		</tr>`;
-	
-	const template = {
-		collection: (id,data) => `<table class=c-course-modules__table id="collection_${id}">${data}</table>`
+		</tr>`,
+		nodata: `<tr><td colspan=2> no data </td></tr>`,
+		header: text => `<p class=c-course-modules__collection-header>${text}</p>`,
+		container: text => `<div class="c-wysiwyg-content ${config.css.truncateModuleCollection}" data-collection-container>${text}</div>`
 	};
 	
-	const moduleView = data => data.modName ? moduleTemplate(data) : `<tr><td colspan=2> no data </td></tr>`; //${JSON.stringify(data,null,"\t")}
+	const moduleView = data => data.modName ? template.module(data) : template.nodata; //${JSON.stringify(data,null,"\t")}
 
 	const getYear =  (data,group,option,semester) => {
 		if(!user || !user.type) return;
@@ -126,7 +128,7 @@ stir.dpt = (function(){
 
 	const collectionView = stir.curry((semesterID, collection, c) => {
 		let collectionId = [semesterID,c].join('');
-		let header = `<p class=c-course-modules__collection-header>${getCollectionHeader(collection.collectionStatusCode)}</p>`;
+		let header = template.header(getCollectionHeader(collection.collectionStatusCode));
 		let notes = collection.collectionType == "LIST" || collection.collectionType == "CHOICE" ? `<p class=c-course-modules__collection-notes>${collection.collectionNotes}</p>` : '';
 		let body = template.collection( collectionId, collection.mods.filter(availability).map(moduleView).join('') );
 
@@ -164,10 +166,6 @@ stir.dpt = (function(){
 		data.initialText && frag.append( paragraph(data.initialText) );
 		data.pdttRept && frag.append( paragraph(data.pdttRept) );
 		let paths = [], years = [];
-		let paths_text  = document.createElement('b');
-		let paths_p  = document.createElement('p');
-		paths_p.append(paths_text);
-		frag.append( paths_p );
 
 		data.semesterGroupBeans.forEach((group, g) => {
 			group.groupOptions.forEach((option, o, options) => {
@@ -181,16 +179,17 @@ stir.dpt = (function(){
 						years.push(year);
 						paths.push(`${stir.cardinal(options.length)} alternative paths in year ${year}`);
 					}
-					div.insertAdjacentHTML("beforeend", `<div class="c-wysiwyg-content ${config.css.truncateModuleCollection}" data-collection-container>${semester.collections.map(collectionView(semesterID)).join('')}</div>`);
+					div.insertAdjacentHTML("beforeend", template.container(semester.collections.map(collectionView(semesterID)).join('')));
 					frag.append(div);
 				});
 			});
 		});
 
 		if(paths.length>0) {
-			paths_text.textContent = `There are ${stir.Array.oxfordComma(paths, true)}. Please review all options carefully.`;
-			paths_p.classList.add('c-callout','info');
-			paths_p.insertAdjacentHTML("afterbegin",'<span class="uos-shuffle"></span> ');
+			let paths_p  = document.createElement('p');
+			paths_p.innerHTML = `<span class="uos-shuffle"></span> <strong>There are ${stir.Array.oxfordComma(paths, true)}. Please review all options carefully.</strong>`;
+			paths_p.classList.add('c-callout','info', 'rwm2testab1');
+			frag.prepend( paths_p );
 		}
 
 		// attach behaviour to `view more` links and bind them to the respective table element
