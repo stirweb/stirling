@@ -7,9 +7,21 @@ stir.dpt = (function(){
 		pg: "postgraduate"
 	};
 	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
+	const _semestersPerYear = 2;
+	const viewMoreModulesThreshold = 4;
+	const config = {
+		css: {
+			truncateModuleCollection:'c-course-modules__accordion-content--hide-rows'
+		},
+		text: {
+			fewer: "View fewer choices",
+			more: "View all _X_ choices"
+		}
+	};
 	let user = {};
 	let _year = 0;
-	const _semestersPerYear = 2;
+	let _semesterCache = [];
+	let routesCurry;
 
 	const modulesEndpointParams = {
 		UG: "opt=runcode&ct=UG",
@@ -29,9 +41,18 @@ stir.dpt = (function(){
 		module: (mod,year,sem) => stir.akari.get.module([mod,year,sem].join('/'))
 	};
 
-	const getRoutes = type => {
-		stir.getJSONp(`${urls.calendar}${urls.route[type.toUpperCase()]}`);
+//	const getAllRoutes = type => {
+//		stir.getJSONp(`${urls.calendar}${urls.route[type.toUpperCase()]}`);
+//		user.type=type;
+//	};
+
+	const spitCodes = csv => csv.replace(/\s/g, '').split(",");
+	
+	const getRoutes = (type,routesCSV,auto) => {
 		user.type=type;
+		user.auto=auto;
+		stir.dpt.show.routes = routesCurry(spitCodes(routesCSV));
+		stir.getJSONp(`${urls.calendar}${urls.route[type.toUpperCase()]}`);
 	};
 	
 	const getOptions = (type,roucode,auto) => {
@@ -42,41 +63,6 @@ stir.dpt = (function(){
 	};
 	
 	const getModules = (type, roucode, moa, occ) => stir.getJSONp(`${urls.calendar}${urls.modules(type.toLowerCase(),roucode,moa,occ)}`);
-
-	/* const makeSelector = (data,name) => {
-
-		const label = document.createElement('label');
-		label.appendChild(document.createTextNode('Select a course'));
-		label.setAttribute('for',name);
-		const select = document.createElement('select')
-		select.name = name;
-		select.id = name;
-		select.innerHTML = `<option value selected disabled> ~ ${labels[user.type]} courses ~ </option>` + data.sort(routeSort).map(makeOption).join('');
-
-		label.appendChild(select);
-		routeBrowser.appendChild(label);
-		select.addEventListener('change',event=>{
-			if(event.target.name==='rouCode') {
-				routeBrowser.innerHTML ='';
-				optionBrowser.innerHTML ='';
-				moduleBrowser.innerHTML ='';
-				routeBrowser.appendChild(label);
-				//stdout.textContent = select[select.selectedIndex].outerHTML;
-				user.rouCode = select[select.selectedIndex].value;
-				user.rouName = select[select.selectedIndex].textContent;
-				optionBrowser.insertAdjacentHTML("afterbegin", `<p>↳ <strong>${user.rouCode}</strong> selected</p>`);
-				getOptions(user.type,user.rouCode);
-			}
-			
-			if(event.target.name==='option') {
-				//stdout.textContent = event.target[event.target.selectedIndex].outerHTML;
-				moduleBrowser.innerHTML ='';
-				let opt = event.target[event.target.selectedIndex].value.split('|');
-				getModules(user.type, user.rouCode, opt[0], opt[2]);
-			}
-			
-		});
-	}; */
 
 	//////////////////////////////////////////////
 
@@ -94,157 +80,200 @@ stir.dpt = (function(){
 		</tr>`;
 	
 	const template = {
-		collection: data => `<table class=c-course-modules__table>${data}</table>`
+		collection: (id,data) => `<table class=c-course-modules__table id="collection_${id}">${data}</table>`
 	};
 	
-	const moduleView = data => data.modName ? moduleTemplate(data) : "<tr><td colspan=2> no data </td></tr>";
+	const moduleView = data => data.modName ? moduleTemplate(data) : `<tr><td colspan=2> no data </td></tr>`; //${JSON.stringify(data,null,"\t")}
 
-	const groupView = data => data.groupOptions.map(optionView).join('');
-
-	const optionView = (data,index,array) => {
-		++_year;
-		console.info(index,array);
-		return data.semestersInOption.map(semesterView((array.length>1?`(Option ${index+1}) `:''))).join('');
-	};
-
-	const getYear = semesterCode => {
-		if (user && user.type && user.type!=="PG")
-			return 'Year ' + stir.cardinal(Math.ceil(semesterCode / _semestersPerYear));
-		return 'Year ' + _year;
+	const getYear =  (data,group,option,semester) => {
+		if(!user || !user.type) return;
+		if (user.type==="UG")
+			return stir.cardinal(Math.ceil(data.semesterCode / _semestersPerYear));
+		if (user.type==="PG") {
+			if (group === 0 && option === 0 && semester === 0) {
+				//first group, first option, first semester
+				_year++;
+				_semesterCache.push(data.semesterName);
+			} else if (_semesterCache.indexOf(data.semesterName) === -1 && option === 0) {
+				//new semester and option 1
+				_semesterCache.push(data.semesterName);
+			} else if (option === 0) {
+				//else if repeated semester and still option 1 - only increment year on option 1
+				_semesterCache = []; //reset array of semesters
+				_semesterCache.push(data.semesterName);
+				_year++;
+			}
+			return stir.cardinal(_year);
+		}
+		return ' <!-- year not defined --> ';
 	};
 
 	const getSemesterYearIndex = semesterCode => semesterCode%_semestersPerYear===0?_semestersPerYear:semesterCode%_semestersPerYear;
 
 	const getSemester = semester => (semester.semesterName ? semester.semesterName + " semester" : "semester " + stir.cardinal(getSemesterYearIndex(semester.semesterCode)));
 
-	const semesterView = stir.curry(
-		(prefix, data) => {
-			return `<div class=stir-accordion><h3>${prefix} ${getYear(data.semesterCode)}: ${getSemester({semesterName:data.semesterName,semesterCode:data.semesterCode})}</h3><div>${data.collections.map(collectionView).join('')}</div></div>`
-		}
-	); 
-	
-	//Group: <b>${data.overarchPdtCode}</b>
+	const getOption = (option, options) => options.length>1?`(option ${stir.cardinal(option+1)})`:'';
 
-	const collectionView = data => `<p><b>${data.collectionNotes}</b></p>${ template.collection( data.mods.map(moduleView).join('') )}`;
-
-	const modulesOverview = data => {
-		let div = document.createElement('div');
-		//div.insertAdjacentHTML("afterbegin",data.semesterGroupBeans.map(groupView).join(''));
-		data.semesterGroupBeans.forEach((semesterGroup, group, array) => {
-			console.info(semesterGroup);
-			div.insertAdjacentHTML("beforeend",`<p>Group: ${group+1} of ${array.length}</p>`);
-			semesterGroup.groupOptions.forEach((option, optionIndex, array) => {
-				div.insertAdjacentHTML("beforeend",`<p>Option: ${optionIndex+1} of ${array.length} (of group ${group+1})</p>`);
-				option.semestersInOption.forEach((semester, index, array) => {
-					div.insertAdjacentHTML("beforeend",`<p>Semester: ${index+1} of ${array.length} (of group ${group+1}, option ${optionIndex+1})</p><p><b>${semester.semesterName}</b></p>`);
-				});
-			});
-			
-		});
-		let frag = document.createDocumentFragment();
-		frag.append(...div.childNodes)
-		return frag;
+	const getCollectionHeader = code => {
+		// this was taking from how the calendar JS displays titles
+		if (code.indexOf("E") > -1) return "Option module";
+		if (code === "D") return "Dissertation";
+		return "Compulsory module";
 	};
 
+	// hide the module if it's unavailable. (This condition was taken from calendar js). 
+	const availability = m => m.mavSemSemester !== null && m.mavSemSemester.length !== 0 && m.mavSemSemester !== "[n]" && m.mavSemSemester !== "Not Available";
+
+	const collectionView = stir.curry((semesterID, collection, c) => {
+		let collectionId = [semesterID,c].join('');
+		let header = `<p class=c-course-modules__collection-header>${getCollectionHeader(collection.collectionStatusCode)}</p>`;
+		let notes = collection.collectionType == "LIST" || collection.collectionType == "CHOICE" ? `<p class=c-course-modules__collection-notes>${collection.collectionNotes}</p>` : '';
+		let body = template.collection( collectionId, collection.mods.filter(availability).map(moduleView).join('') );
+
+		let footer = collection.collectionFootnote ? `<p class=c-course-modules__pdm-note>${collection.collectionFootnote}</p>`:'';
+		let more = collection.mods.length > viewMoreModulesThreshold ? `<p class="text-center c-course-modules__view-more-link">
+						<a href="#" data-choices="${collection.mods.length}" aria-expanded="false" aria-controls="collection_${collectionId}">${config.text.more.replace("_X_", collection.mods.length)}</a>
+					</p>`:'';
+		return header + notes + body + footer + more;
+	});
+
+	const paragraph = text => {
+		const p = document.createElement('p');
+		p.textContent = text;
+		return p;
+	};
+
+	//view more behaviour
+	function viewMore(e) {
+		if (!this.classList) return;
+	
+		if (this.classList.toggle(config.css.truncateModuleCollection)) {
+			stir.scrollToElement(this, 60); // return the user to the top of list
+			e.target.innerText = config.text.more.replace("_X_", e.target.getAttribute("data-choices"));
+			e.target.setAttribute('aria-expanded','false');
+		} else {
+			e.target.innerText = config.text.fewer;
+			e.target.setAttribute('aria-expanded','true');
+		}
+		e.preventDefault();
+	}
+
+
+	const modulesOverview = data => {
+		let frag = document.createDocumentFragment();
+		data.initialText && frag.append( paragraph(data.initialText) );
+		data.pdttRept && frag.append( paragraph(data.pdttRept) );
+		let paths = [], years = [];
+		let paths_text  = document.createElement('b');
+		let paths_p  = document.createElement('p');
+		paths_p.append(paths_text);
+		frag.append( paths_p );
+
+		data.semesterGroupBeans.forEach((group, g) => {
+			group.groupOptions.forEach((option, o, options) => {
+				option.semestersInOption.forEach((semester, s) => {
+					let div = document.createElement('div');
+					let semesterID = [g,o,s].join('');
+					let year = getYear(semester,g,o,s);
+					div.classList.add('stir-accordion');
+					div.insertAdjacentHTML("beforeend", `<h3>Year ${year}: ${getSemester(semester)} ${getOption(o,options)}</h3>`);
+					if(options.length>1 && years.indexOf(year)===-1) {
+						years.push(year);
+						paths.push(`${stir.cardinal(options.length)} alternative paths in year ${year}`);
+					}
+					div.insertAdjacentHTML("beforeend", `<div class="c-wysiwyg-content ${config.css.truncateModuleCollection}" data-collection-container>${semester.collections.map(collectionView(semesterID)).join('')}</div>`);
+					frag.append(div);
+				});
+			});
+		});
+
+		if(paths.length>0) {
+			paths_text.textContent = `There are ${stir.Array.oxfordComma(paths, true)}. Please review all options carefully.`;
+			paths_p.classList.add('c-callout','info');
+			paths_p.insertAdjacentHTML("afterbegin",'<span class="uos-shuffle"></span> ');
+		}
+
+		// attach behaviour to `view more` links and bind them to the respective table element
+		Array.prototype.forEach.call(frag.querySelectorAll("[data-collection-container]"), function (el) {
+			var a = el.querySelector(".c-course-modules__view-more-link a");
+			a && a.addEventListener("click", viewMore.bind(el));
+		});
+
+		return frag;
+	};
+	
 	///////////////////////////////////////
 	
 	const routeOptionView = data => `<option value="${data.join('|')}">Starting ${data[3]}, ${data[1].toLowerCase()} (${data[4]})</option>`;
 
 	const selectView = data => {
+		if(!data || data.length && data.length<2) {
+			return new Comment(data.map(routeOptionView).join(''));
+		}
 		const selector = document.createElement("select");
 		selector.id = "course-modules-container__routes-select";
 		selector.insertAdjacentHTML("afterbegin",data.map(routeOptionView).join(''));
-  
-//		rouList.insertAdjacentHTML("afterbegin", "<p>Please choose a course:</p>");
-//		rouList.appendChild(selector);
-//		optList.innerHTML = "<p>There are " + stir.cardinal(optionsData.length) + " options for this course:</p>";
-//		optList.appendChild(selector);
-
-		// set behaviour of each select
 		selector.addEventListener("change", function (e) {
 			var value = this.options[this.selectedIndex].value.split("|");
 			var moa = value[0];
 			var occ = value[2];
-
 			_year = 0;
 			stir.dpt.reset.modules();
 			getModules(user.type, user.rouCode, moa, occ);
-			// this will load and display the modules
 		});
-
 		return selector;
 	};
 
-//	const renderp = (html, css) => {
-//		const p = document.createElement('p');
-//		p.innerHTML = html;
-//		 css && p.classList.add(css);
-//		return p;
+//	const compare = (a, b) => {
+//		if (a < b) return -1;
+//		if (a > b) return 1;
+//		return 0; // a must be equal to b
 //	};
 
-//	const renderOptions = (element, data) => {
-//		data.map(optionView).forEach(option => element.appendChild(option));
-//	};
+//	const routeSort = (a, b) => compare(a.rouName, b.rouName);
 
-/* 	const renderModules = data => {
-		moduleBrowser.querySelector('.u-loading').remove();
-		const div = document.createElement('div');
-		div.innerHTML = data.map(moduleView).join("\n");
-		moduleBrowser.appendChild(div);
-	}; */
-	
-/* 	const compare = (a, b) => {
-		if (a < b) return -1;
-		if (a > b) return 1;
-		return 0; // a must be equal to b
-	}; */
+	const makeSelector = (data,name) => {
+		const label = document.createElement('label');
+		const select = document.createElement('select')
+		label.append(document.createTextNode('Select a course'));
+		label.setAttribute('for',name);
+		select.name = name;
+		select.id = name;
+//		select.innerHTML = `<option value selected disabled> ~ ${labels[user.type]} courses ~ </option>` + data.sort(routeSort).map(makeOption).join('');
+		label.append(select);
+		data.forEach && data.forEach(route => select.append(makeOption(route)) );
 
-	/* const routeSort = (a, b) => compare(a.rouName, b.rouName); */
+		const change = event=>{
+			stir.dpt.reset.modules();
+			user.rouCode = select[select.selectedIndex].value;
+			user.rouName = select[select.selectedIndex].textContent;
+			getOptions(user.type,user.rouCode,user.auto);
+		};
 
-	/* const makeOption = data => {
+		select.addEventListener('change',change);
+		change(); // auto load first option
+		return label;
+	};
+
+	const makeOption = (data,index) => {
 		const option = document.createElement('option');
 		if(data.rouName && data.rouCode) {
 			option.textContent = `${data.rouName}`;
 			option.value = data.rouCode
-			return option.outerHTML;
+			return option;
 		}
-		if(data[0] && data[2]) {
-			option.textContent = data.join('|');
-			option.value = data.join('|');
-		}
-		
-		option.textContent = JSON.stringify(data,null,"\t");
-		return option.outerHTML;
-	}; */
+		option.textContent = data; // fallback/debug 
+		return option;
+	};
 
-//	const extractModules = data => {
-//		var output = [];
-//		for (var g = 0; g < data.semesterGroupBeans.length; g++) {
-//			// groups loop
-//			for (var o = 0; o < data.semesterGroupBeans[g].groupOptions.length; o++) {
-//				// options in group
-//				for (var s = 0; s < data.semesterGroupBeans[g].groupOptions[o].semestersInOption.length; s++) {
-//					var semester = data.semesterGroupBeans[g].groupOptions[o].semestersInOption[s];
-//					var collections = semester.collections;
-//					for (var c = 0; c < collections.length; c++) {
-//						var collection = collections[c];
-//						for (var m = 0; m < collection.mods.length; m++) {
-//							var module = collection.mods[m];
-//							output.push(module);
-//						}
-//					}
-//				}
-//			}
-//		}
-//		return output;
-//	};
-	
+	///////////////////////////////////////
+
 	return {
 		show: {
 			fees: data => console.info(data),
 			options: new Function(),
 			modules: new Function(), //data => renderModules(extractModules(data)),
-			/* routes: data => makeSelector(data, 'rouCode'), */
+			routes: new Function(), //data => makeSelector(data, 'rouCode')
 			/* lookup: data => {
 				const frag = document.createElement('div');
 				const el = document.querySelector("#course-modules-container");
@@ -263,6 +292,7 @@ stir.dpt = (function(){
 		set: {
 			viewer: path => urls.viewer = path,
 			show: {
+				routes: callback => routesCurry = stir.curry((routes,data) => callback(makeSelector(data.filter(route=>routes.includes(route.rouCode)),"rouCode"))),
 				options: callback => stir.dpt.show.options = data => {
 					callback(selectView(data));
 					if(user.auto && user.type && user.rouCode) {
@@ -275,11 +305,5 @@ stir.dpt = (function(){
 				modules: callback => stir.dpt.reset.modules = callback
 			}
 		},
-
-
 	};
-
-
-
-
 })();
