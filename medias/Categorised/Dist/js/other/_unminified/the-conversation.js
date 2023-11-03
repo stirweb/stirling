@@ -46,7 +46,7 @@ stir.t4Globals.conversation=stir.t4Globals.conversation||{};
 	const article = article => `
 	<article id=${article.querySelector("id").textContent} class="cell small-12 medium-4 large-3 c-convo" aria-label="The Conversation: ${article.querySelector("title").textContent}">
 		<h3 class="header-stripped u-font-normal u-m-0">
-			<a href="${article.querySelector("link").getAttribute("href")}" target="_blank" rel="noopener" class=c-link>
+			<a href="${article.querySelector("link").getAttribute("href")}" class=c-link>
 			${article.querySelector("title").textContent}
 			</a>
 		</h3>
