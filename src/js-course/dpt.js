@@ -2,10 +2,6 @@ var stir = stir || {};
 
 stir.dpt = (function(){
 
-//	const labels = {
-//		ug: "undergraduate",
-//		pg: "postgraduate"
-//	};
 	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
 	const _semestersPerYear = 2;
 	const viewMoreModulesThreshold = 4;
@@ -72,20 +68,21 @@ stir.dpt = (function(){
 	}; 
 
 	const template = {
-		collection: (id,data) => `<table class=c-course-modules__table id="collection_${id}">${data}</table>`,
+		collection: {
+			table: (id,data) => `<table class=c-course-modules__table id="collection_${id}">${data}</table>`,
+			notes: text => `<p class=c-course-modules__collection-notes>${text}</p>`,
+			header: text => `<p class=c-course-modules__collection-header>${text}</p>`,
+			footer: text => `<p class=c-course-modules__pdm-note>${text}</p>`
+		},
 		module: data => 
-		`<tr>
-			<td>
-				<a href="${moduleLink(data)}">${data.modName}</a> <span class=c-course-modules__module-code>(${data.modCode})</span>
-			</td>
-			<td>${data.modCredit} credits</td>
-		</tr>`,
+			`<tr><td><a href="${moduleLink(data)}">${data.modName}</a>
+			<span class=c-course-modules__module-code>(${data.modCode})</span>
+			</td><td>${data.modCredit} credits</td></tr>`,
 		nodata: `<tr><td colspan=2> no data </td></tr>`,
-		header: text => `<p class=c-course-modules__collection-header>${text}</p>`,
 		container: text => `<div class="c-wysiwyg-content ${config.css.truncateModuleCollection}" data-collection-container>${text}</div>`
 	};
 	
-	const moduleView = data => data.modName ? template.module(data) : template.nodata; //${JSON.stringify(data,null,"\t")}
+	const moduleView = data => data.modName ? template.module(data) : template.nodata;
 
 	const getYear =  (data,group,option,semester) => {
 		if(!user || !user.type) return;
@@ -128,11 +125,11 @@ stir.dpt = (function(){
 
 	const collectionView = stir.curry((semesterID, collection, c) => {
 		let collectionId = [semesterID,c].join('');
-		let header = template.header(getCollectionHeader(collection.collectionStatusCode));
-		let notes = collection.collectionType == "LIST" || collection.collectionType == "CHOICE" ? `<p class=c-course-modules__collection-notes>${collection.collectionNotes}</p>` : '';
-		let body = template.collection( collectionId, collection.mods.filter(availability).map(moduleView).join('') );
+		let header = template.collection.header(getCollectionHeader(collection.collectionStatusCode));
+		let notes = collection.collectionType == "LIST" || collection.collectionType == "CHOICE" ? template.collection.notes(collection.collectionNotes) : '';
+		let body = template.collection.table( collectionId, collection.mods.filter(availability).map(moduleView).join('') );
 
-		let footer = collection.collectionFootnote ? `<p class=c-course-modules__pdm-note>${collection.collectionFootnote}</p>`:'';
+		let footer = collection.collectionFootnote ? template.collection.footer(collection.collectionFootnote):'';
 		let more = collection.mods.length > viewMoreModulesThreshold ? `<p class="text-center c-course-modules__view-more-link">
 						<a href="#" data-choices="${collection.mods.length}" aria-expanded="false" aria-controls="collection_${collectionId}">${config.text.more.replace("_X_", collection.mods.length)}</a>
 					</p>`:'';
@@ -238,11 +235,11 @@ stir.dpt = (function(){
 		label.setAttribute('for',name);
 		select.name = name;
 		select.id = name;
-//		select.innerHTML = `<option value selected disabled> ~ ${labels[user.type]} courses ~ </option>` + data.sort(routeSort).map(makeOption).join('');
 		label.append(select);
+
 		data.forEach && data.forEach(route => select.append(makeOption(route)) );
 
-		const change = event=>{
+		const change = event => {
 			stir.dpt.reset.modules();
 			user.rouCode = select[select.selectedIndex].value;
 			user.rouName = select[select.selectedIndex].textContent;
@@ -269,16 +266,10 @@ stir.dpt = (function(){
 
 	return {
 		show: {
-			fees: data => console.info(data),
+			fees: new Function(),
+			routes: new Function(),
 			options: new Function(),
-			modules: new Function(), //data => renderModules(extractModules(data)),
-			routes: new Function(), //data => makeSelector(data, 'rouCode')
-			/* lookup: data => {
-				const frag = document.createElement('div');
-				const el = document.querySelector("#course-modules-container");
-				frag.innerHTML = data;
-				el && el.appendChild(frag);
-			} */
+			modules: new Function(),
 		},
 		get: {
 			options: getOptions,
