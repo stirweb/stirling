@@ -44,10 +44,10 @@
             </div>`,m=({moduleCredits:e,ectsModuleCredits:t,colourPack:r},a,s)=>`<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
                 <h3 class="header-stripped u-bg-${r.third}--10 u-p-1 u-${r.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
-                <p class="flex-container u-gap align-middle"><img src="x" width="65" height="44" alt="Scotland flag" />
+                <p class="flex-container u-gap align-middle"><t4 type="media" id="173616" formatter="image/*"/>
                     This module is worth ${e} SCQF (Scottish Credit and Qualifications Framework) credits</p>
 
-                <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173615" formatter="path/*"/>" width="65" height="44" alt="EU flag" /> 
+                <p class="flex-container u-gap align-middle"><t4 type="media" id="173615" formatter="image/*"/> 
                     This equates to ${t} ECTS (The European Credit Transfer and Accumulation System) credits</p>
 
                 <div class="u-mb-2 u-bg-${r.third}--10 flex-container align-stretch ">
