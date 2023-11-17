@@ -1,5 +1,5 @@
 {
-  "additionalCosts": "sd",
+  "additionalCosts": "",
   "assessments": [
     {
       "tab": "On Campus, UK",
@@ -32,6 +32,6 @@
   "owningFaculty": "Faculty of Natural Science",
   "preparedOtherInformation": "",
   "professionalAccreditation": "",
-  "studyAbroad": "Yes",
+  "studyAbroad": "No",
   "version": "2.0"
 }
