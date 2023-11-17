@@ -157,7 +157,7 @@
   };
 
   const renderFurtherDetails = ({ preparedotherinformation, studyAbroad, additionalCosts }, boilerplates) => {
-    return !preparedotherinformation && !studyAbroad !== "Yes" && !additionalCosts
+    return !preparedotherinformation && studyAbroad !== "Yes" && !additionalCosts
       ? ``
       : `<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
