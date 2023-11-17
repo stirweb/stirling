@@ -157,7 +157,7 @@
   };
 
   const renderFurtherDetails = ({ preparedotherinformation, studyAbroad, additionalCosts }, boilerplates) => {
-    return !preparedotherinformation && !studyAbroad && !additionalCosts
+    return !preparedotherinformation && !studyAbroad !== "Yes" && !additionalCosts
       ? ``
       : `<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
@@ -388,10 +388,10 @@
   ];
 
   const params = new URLSearchParams(document.location.search);
-  const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
+  //const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
 
-  console.log(fetchUrl);
-  //const fetchUrl = "sample.json"; // Testing
+  //console.log(fetchUrl);
+  const fetchUrl = "sample.json"; // Testing
 
   getData(fetchUrl, colours, boilerplates);
 })();
