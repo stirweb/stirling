@@ -388,10 +388,10 @@
   ];
 
   const params = new URLSearchParams(document.location.search);
-  //const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
+  const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
 
   //console.log(fetchUrl);
-  const fetchUrl = "sample.json"; // Testing
+  //const fetchUrl = "sample.json"; // Testing
 
   getData(fetchUrl, colours, boilerplates);
 })();
