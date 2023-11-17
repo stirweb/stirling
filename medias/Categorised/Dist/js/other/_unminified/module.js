@@ -156,12 +156,14 @@
       <p>${additionalCosts}</p>`;
   };
 
-  const renderFurtherDetails = (data, boilerplates) => {
-    return `<div class="cell u-mt-2">
+  const renderFurtherDetails = ({ preparedotherinformation, studyAbroad, additionalCosts }, boilerplates) => {
+    return !preparedotherinformation && !studyAbroad && !additionalCosts
+      ? ``
+      : `<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
-                ${data.preparedotherinformation ? renderSupportingInfo(data.preparedotherinformation) : ``}
-                ${data.studyAbroad === "Yes" ? renderStudyAbroad(boilerplates.studyAbroad) : ``}
-                ${renderAdditionalCosts(data.additionalCosts)}
+                ${preparedotherinformation ? renderSupportingInfo(preparedotherinformation) : ``}
+                ${studyAbroad === "Yes" ? renderStudyAbroad(boilerplates.studyAbroad) : ``}
+                ${renderAdditionalCosts(additionalCosts)}
             </div>`;
   };
 

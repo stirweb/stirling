@@ -57,14 +57,14 @@
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
                         <a href="${"ug"===s?a.awardsCtaUG:a.awardsCtaPG}" class="u-${r.third}">Assessment and award of credit for ${"ug"===s?"undergraduates":"postgraduates"}</a></p>
                 </div>
-            </div>`,v=(e,t)=>{return`<div class="cell u-mt-2">
+            </div>`,v=({preparedotherinformation:e,studyAbroad:t,additionalCosts:r},a)=>{return e||t||r?`<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
-                ${e.preparedotherinformation?`<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3><p>${e.preparedotherinformation}</p>`:""}
-                ${"Yes"===e.studyAbroad?'<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>'+t.studyAbroad:""}
-                ${t=e.additionalCosts,t?`
+                ${e?`<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3><p>${e}</p>`:""}
+                ${"Yes"===t?'<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>'+a.studyAbroad:""}
+                ${e=r,e?`
       <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
-      <p>${t}</p>`:""}
-            </div>`};stir.curry((e,t,{type:r,hours:a,typekey:s})=>{return"total"===s?`<div class="u-bg-${e.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
+      <p>${e}</p>`:""}
+            </div>`:""};stir.curry((e,t,{type:r,hours:a,typekey:s})=>{return"total"===s?`<div class="u-bg-${e.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
                 <strong class="u-flex1">Total workload</strong>
                 <strong>${a} hours</strong>
             </div>`:`
