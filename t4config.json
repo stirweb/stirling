@@ -1639,7 +1639,7 @@
       },
       {
         "id": 174053,
-        "description": "stir-tabs.js ",
+        "description": "stir-tabs.js",
         "projectPath": "medias/Categorised/Dist/js/other/stir-tabs.js"
       },
       {
@@ -1651,6 +1651,31 @@
         "id": 173925,
         "description": "pg.css",
         "projectPath": "medias/Categorised/Dist/css/campaigns/pg.css"
+      },
+      {
+        "id": 174818,
+        "description": "postmark.svg",
+        "projectPath": "medias/Categorised/Dist/images/campaigns/christmas/postmark.svg"
+      },
+      {
+        "id": 174819,
+        "description": "paper.jpg",
+        "projectPath": "medias/Categorised/Dist/images/campaigns/christmas/paper.jpg"
+      },
+      {
+        "id": 174820,
+        "description": "postmark.css",
+        "projectPath": "medias/Categorised/Dist/css/campaigns/postmark.css"
+      },
+      {
+        "id": 174821,
+        "description": "merry-christmas.css",
+        "projectPath": "medias/Categorised/Dist/css/campaigns/merry-christmas.css"
+      },
+      {
+        "id": 174823,
+        "description": "snow.js",
+        "projectPath": "medias/Categorised/Dist/js/other/snow.js"
       }
     ]
   }
