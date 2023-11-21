@@ -418,7 +418,7 @@ stir.templates.search = (() => {
 		  
 		  <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
 			<div data-nodeid="coursefavsbtn" class="flex-container u-gap-8" data-id="${item.metaData.sid}">
-			  ${stir.favs.createCourseBtnHTML(item.metaData.sid)}
+			  ${stir.favs && stir.favs.createCourseBtnHTML(item.metaData.sid)}
 			</div>
 			<span><a href="/courses/favourites/">View favourites</a></span>
 		  </div>
@@ -1170,8 +1170,10 @@ stir.search = () => {
 	const resetPagination = () => Object.keys(constants.parameters).forEach((key) => QueryParams.remove(key));
 
 	const getQueryParameters = () => {
-		var parameters = QueryParams.getAll();
-		return Object.keys(parameters).filter(key => key.indexOf('f.')===0).reduce((obj,key)=>{ return {...obj, [key]: parameters[key]}; }, {});
+		let parameters = QueryParams.getAll();
+		let facetParameters = Object.keys(parameters).filter(key => key.indexOf('f.')===0).reduce((obj,key)=>{ return {...obj, [key]: parameters[key]}; }, {});
+		//debug && Object.keys(facetParameters).length && console.info('[facetParameters]', facetParameters,parameters);
+		return facetParameters;
 	};
 
 
@@ -1195,12 +1197,10 @@ stir.search = () => {
 
 	const getInboundQuery = () => {
 		if (undefined !== QueryParams.get("query")) constants.form.query.value = QueryParams.get("query").substring(0, MAXQUERY);
-		//if(preview) return;
 		const parameters = QueryParams.getAll();
 		for (const name in parameters) {
 			const el = document.querySelector(`input[name="${encodeURIComponent(name)}"][value="${encodeURIComponent(parameters[name])}"]`);
 			if (el) el.checked = true;
-			//if(name.indexOf('|')>-1) { }
 		}
 	};
 
@@ -1273,7 +1273,7 @@ stir.search = () => {
 					const facetFilter = stir.DOM.frag(stir.String.domify(stir.templates.search.facet(facet)));
 					const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
 					facetFilterElements && facetFilterElements.forEach(el => {
-						el.checked=true;
+						//el.checked=true;
 						metaName && QueryParams.remove(metaName,false,null,true); // don't reload window and use replaceState() instead of pushState()
 						facetName && QueryParams.remove(facetName,false,null,true,true); // don't reload window and use replaceState() instead of pushState()
 					});
@@ -1328,7 +1328,7 @@ stir.search = () => {
 					curator: getStartRank(type) > 1 ? false : true	// only show curator for initial searches
 				},
 				getNoQuery(type)									// get special "no query" parameters (sorting, etc.)
-				,preview?getQueryParameters():{}					// TEMP get facet parameters
+				,getQueryParameters()								// TEMP get facet parameters
 				,preview?{profile:'_default_preview'}:{}			// TEMP show unpublished facets
 			)
 		);

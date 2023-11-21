@@ -401,7 +401,7 @@ stir.templates.search = (() => {
 		  
 		  <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
 			<div data-nodeid="coursefavsbtn" class="flex-container u-gap-8" data-id="${item.metaData.sid}">
-			  ${stir.favs.createCourseBtnHTML(item.metaData.sid)}
+			  ${stir.favs && stir.favs.createCourseBtnHTML(item.metaData.sid)}
 			</div>
 			<span><a href="/courses/favourites/">View favourites</a></span>
 		  </div>
