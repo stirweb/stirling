@@ -501,7 +501,7 @@ stir.templates.search = (() => {
 
     news: (item) => {
       return `
-				<div class="u-border-width-5 u-heritage-line-left c-search-result${item.metaData.image ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
+				<div class="u-border-width-5 u-heritage-line-left c-search-result${item.metaData.thumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 						<p class="u-text-regular u-m-0">
 							<strong>
@@ -515,7 +515,9 @@ stir.templates.search = (() => {
 							${(item.listMetadata && item.listMetadata.tag && item.listMetadata.tag.map((tag) => `<span>${tag}</span>`).join(", ")) || ""}
 						</p> -->
 					</div>
-					${image(item.metaData.image, item.title.split(" | ")[0].trim())}
+					<div class=c-search-result__image>
+						<img src="https://www.stir.ac.uk${item.metaData.thumbnail}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
+					</div>
 				</div>`;
     },
 
