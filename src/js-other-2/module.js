@@ -369,7 +369,7 @@
     } catch (error) {
       setDOMContent(stir.node("#content"), renderError());
       console.log(error.message);
-      //console.log(fetchUrl);
+      console.log(fetchUrl);
     }
   }
 
