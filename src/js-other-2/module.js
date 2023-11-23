@@ -186,8 +186,8 @@
 
   const renderDeliveries = (width, deliveries) => (!deliveries ? `` : `<div class="cell large-${width} u-mb-1">${deliveries}</div>`);
 
-  const renderAssessmentItem = stir.curry((colourPack, { label, category, percent }) => {
-    return percent === "0"
+  const renderAssessmentItem = stir.curry((colourPack, { label, category, percent, mode }) => {
+    return mode === "Formative"
       ? ``
       : `
         <div>
@@ -360,7 +360,6 @@
         Init: Get the data and proceed
   */
   async function getData(fetchUrl, colours, boilerplates) {
-    console.log(fetchUrl);
     const response = await fetch(fetchUrl);
 
     try {
@@ -390,7 +389,6 @@
   const params = new URLSearchParams(document.location.search);
   const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
 
-  //console.log(fetchUrl);
   //const fetchUrl = "sample.json"; // Testing
 
   getData(fetchUrl, colours, boilerplates);
