@@ -60,11 +60,6 @@
 
         galleryEl.insertAdjacentElement("beforeend", item);
 	});
-	
-//    for (x=0; x<window[galleryID].length; x++){
-       
-    
-//    }
 
     function getFlickrDimensions(width, height, max) {
         var longestSide = width > height ? width : height;

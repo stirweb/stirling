@@ -5,6 +5,10 @@
 .c-half-n-half {
   margin: 0 0 40px 0;
 
+  .c-half-n-half__content {
+    background-color: $bg-grey;
+  }
+
   &.js-animation {
     overflow-x: hidden; /* prevent horizontal scroll (before animation is triggered) */
   }
@@ -42,9 +46,9 @@
 */
 
 .c-wrapper[class*="u-bg-"] .c-half-n-half {
-  // .c-half-n-half__content {
-  //   background-color: $white;
-  // }
+  .c-half-n-half__content {
+    background-color: $white;
+  }
 
   .c-half-n-half__header {
     color: $heritage-green !important;
@@ -63,9 +67,9 @@
   }
 }
 
-// .c-wrapper.u-bg-white .c-half-n-half .c-half-n-half__content {
-//   background-color: tint($light-mink, 15%);
-// }
+.c-wrapper.u-bg-white .c-half-n-half .c-half-n-half__content {
+  background-color: $bg-grey;
+}
 
 /*
     Medium up
