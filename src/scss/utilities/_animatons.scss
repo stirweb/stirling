@@ -20,30 +20,39 @@
   Mega Menu 
 */
 
-.animation__slidedown {
-  /* display: initial; */
+/* 2023-11-24 [RWM2] we've disable the animation, it seems *that* is what's
+	causing the issues in Safari. Zero-height is not sucessfully hiding the
+	element's contents when it's interacting with all the other stuff on the
+	page. 
+ */
+
+/* .animation__slidedown {
   transform-origin: top;
   animation: 0.66s slideDown ease-in;
   animation-fill-mode: forwards;
-}
+} */
 
 .animation-slide {
-  transform-origin: top;
+  /* transform-origin: top;
   animation-duration: 0s;
   animation-timing-function: linear;
-  animation-fill-mode: forwards;
+  animation-fill-mode: forwards; */
+  /* max-height: 0; */
+  /* transform: scaleY(0); */
   overflow-y: hidden;
-  max-height: 0;
+  display: none;
 }
 
 .animation-slide__down {
-  animation-name: slideDown;
-  animation-duration: 0.33s;
+  /* animation-name: slideDown;
+  animation-duration: 0.33s; */
+  display: block;
 }
 
 .animation-slide__up {
-  animation-name: slideUp;
-  animation-duration: 0.33s;
+  /* animation-name: slideUp;
+  animation-duration: 0.33s; */
+  display: none;
 }
 
 @keyframes slideDown {
@@ -157,6 +166,8 @@
 }
 :focus-within > .hasfocus-dim {
   /* note: do not use filter, there's bug in Safari 16 */
+  /* update 2023-11-24: appears this isn't the bug after all */
+  /* … to be reviewed!  */
   /* filter: brightness(70%) saturate(0.666); */
   opacity: 0.7;
 }
