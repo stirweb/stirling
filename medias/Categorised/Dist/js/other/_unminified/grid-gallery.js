@@ -19,10 +19,12 @@
 
     if( !(galleryID = "gallery" + galleryEl.getAttribute('data-gallery')) || !window[galleryID] ) return;
 
-    galleryEl.style.setProperty("--num-rows", Math.ceil(window[galleryID].length/3));        
-    for (x=0; x<window[galleryID].length; x++){
+	const max = stir.Number.clamp(parseInt(galleryEl.getAttribute("data-max"))||window[galleryID].length,1,window[galleryID].length); 
 
-        photo = window[galleryID][x];
+    galleryEl.style.setProperty("--num-rows", Math.ceil(max/3));
+	
+	window[galleryID].slice(0,max).forEach(photo => {
+		//photo = window[galleryID][x];
         var item = document.createElement('li');
         //var link = document.createElement('a');
         var dimensions = getFlickrDimensions(photo.o_width, photo.o_height, 1024);
@@ -57,8 +59,7 @@
         })();
 
         galleryEl.insertAdjacentElement("beforeend", item);
-    
-    }
+	});
 
     function getFlickrDimensions(width, height, max) {
         var longestSide = width > height ? width : height;
