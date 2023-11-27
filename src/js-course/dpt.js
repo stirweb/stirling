@@ -206,7 +206,11 @@ stir.dpt = (function(){
 		if(!data || data.length && data.length<2) {
 			return new Comment(data.map(routeOptionView).join(''));
 		}
+		const wrapper = document.createElement('div');
+		wrapper.id = 'course-modules-container__options-list';
+		wrapper.append(paragraph(`There are ${stir.cardinal(data.length)} options for this course in the current academic year:`));
 		const selector = document.createElement("select");
+		wrapper.append(selector);
 		selector.id = "course-modules-container__routes-select";
 		selector.insertAdjacentHTML("afterbegin",data.map(routeOptionView).join(''));
 		selector.addEventListener("change", function (e) {
@@ -217,7 +221,7 @@ stir.dpt = (function(){
 			stir.dpt.reset.modules();
 			getModules(user.type, user.rouCode, moa, occ);
 		});
-		return selector;
+		return wrapper;
 	};
 
 //	const compare = (a, b) => {
