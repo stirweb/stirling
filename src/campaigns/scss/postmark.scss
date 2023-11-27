@@ -1,0 +1,48 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: url('<t4 type="media" id="174819" formatter="path/*" />');
+	background-size: auto;
+	background-size: 225px 225px;
+}
+
+main {
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+
+	position: relative;
+	height: 52vw;
+	justify-content: center;
+	width: 90%;
+	margin: auto;
+	margin-top: auto;
+	box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.1);
+	border-radius: 2px;
+	max-width: 72vw;
+	margin-top: 5rem;
+	transform: rotate(-0.666deg);
+	background: white;
+
+	object {
+		width: 90vw;
+		max-width: 250px;
+		width: 18vw;
+		position: absolute;
+		filter: drop-shadow(-3px 0px 1px rgba(0, 0, 0, 0.1));
+		top: 2rem;
+		right: 2rem;
+	}
+
+	&::after {
+		content: "…";
+		color: #777;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-family: cursive;
+		filter: drop-shadow(1px 1px 1px #eee);
+		font-size: 1.333rem;
+	}
+}

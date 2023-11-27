@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 748 412">
+<title>University of Stirling novelty postmark</title>
+<defs>
+    <style type="text/css">
+        .pm circle, .pm path {
+            fill: none;
+            stroke: rgba(0,0,0,0.5);
+            stroke-width: 11px;
+        }
+        .pm textPath {
+            font-weight: bold;
+        }             
+        .pm text {
+            text-transform: uppercase;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 48px;
+            fill: rgba(0,0,0,0.5);
+        }
+        text#year{
+            font-size: 60px;
+        }
+        text#date {
+            font-size: 100px;
+            font-family: "Georgia", serif;
+        }
+    </style>
+    <path id="innercircle" d="M542,58c81.7,0,148,66.3,148,148s-66.3,148-148,148s-148-66.3-148-148S460.3,58,542,58z"/>
+    <path id="outercircle" d="M473.1,375.3c4.6-0.7,76,30.6,141.9-2.3"/>
+</defs>
+<g class="pm">
+	<circle cx="542" cy="206" r="200" fill="none"/>
+	<text transform="rotate(250 542 206)"><textPath xlink:href="#innercircle">University of Stirling</textPath></text>
+	<text id="date" x="542" y="206" text-anchor="middle" transform="translate(0 24)">25/12</text>
+	<text id="year"><textPath xlink:href="#outercircle">1967</textPath></text>
+	<path d="M5,141c0,0,31.8-63,149-10.5s163-37.2,163-37.2"/>
+	<path d="M8,186c0,0,31.8-63,149-10.5s163-37.2,163-37.2"/>
+	<path d="M8,233c0,0,31.8-63,149-10.5s163-37.2,163-37.2"/>
+	<path d="M11,278c0,0,31.8-63,149-10.5s163-37.2,163-37.2"/>
+	<path d="M11,325c0,0,31.8-63,149-10.5s163-37.2,163-37.2"/>
+	<path d="M19,367c0,0,31.8-63,149-10.5s163-37.2,163-37.2"/>
+</g>
+<script  type="text/ecmascript">
+	<![CDATA[
+        /**
+         * SVG text will default to 25/12 1967 (the University of Stirling's first
+         * Christmas!) as a fallback but JavaScript will update it to the current
+         * date. (Will not work if SVG is added to web page as an <img> tag use
+         * <object> instead).
+         */
+
+        var now = new Date(),
+            day = ("0" + now.getDate().toString()).substring(1),
+            month = ("0" + (now.getMonth()+1).toString()).substring(1),
+            year = now.getFullYear();
+        document.querySelector("#date").textContent = day + "/" + month;
+        document.querySelector("#year textPath").textContent = year;
+
+		]]>
+</script>
+</svg>

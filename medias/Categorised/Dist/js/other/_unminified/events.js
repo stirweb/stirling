@@ -509,6 +509,9 @@
     |
     */
 
+  setDOMContent(eventspublic, "");
+  setDOMContent(eventsstaff, "");
+
   eventspublicfilters.querySelector("input[type=radio]").checked = true;
   eventsstafffilters.querySelector("input[type=radio]").checked = true;
   eventsarchivefilters.querySelector("input[type=radio]").checked = true;
