@@ -229,6 +229,19 @@
   width: 100%;
 }
 
+.u-object-contain {
+  object-fit: contain;
+}
+.u-object-fill {
+  object-fit: fill;
+}
+.u-object-none {
+  object-fit: none;
+}
+.u-object-scale-down {
+  object-fit: scale-down;
+}
+
 /* Widths / Heights */
 
 .u-width-16 {
