@@ -364,9 +364,6 @@
 
     try {
       const data = await response.json();
-
-      console.log(data);
-
       main(data, colours, boilerplates);
       addEventListeners();
     } catch (error) {
