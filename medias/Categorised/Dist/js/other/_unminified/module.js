@@ -187,7 +187,7 @@
   const renderDeliveries = (width, deliveries) => (!deliveries ? `` : `<div class="cell large-${width} u-mb-1">${deliveries}</div>`);
 
   const renderAssessmentItem = stir.curry((colourPack, { label, category, percent, mode }) => {
-    return mode === "Formative"
+    return mode === "Formative" || percent === "0"
       ? ``
       : `
         <div>
@@ -364,6 +364,9 @@
 
     try {
       const data = await response.json();
+
+      console.log(data);
+
       main(data, colours, boilerplates);
       addEventListeners();
     } catch (error) {
