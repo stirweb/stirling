@@ -48,6 +48,11 @@
     &:last-child {
       font-weight: 700;
     }
+
+    a {
+      min-height: 24px;
+      display: inline-block;
+    }
   }
   > li:first-child {
     font-weight: bold;
