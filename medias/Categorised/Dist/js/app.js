@@ -2718,42 +2718,40 @@ stir.MediaQuery = (function () {
   }
 
   function applyCrumbClickListener(crumb, link) {
-    //console.log(crumb.children[0]);
-    //console.log(link);
+    crumb.children[0] &&
+      crumb.children[0].addEventListener("click", function (event) {
+        // Here we'll prevent the click event on the crumb (or any of its child elements) bubbling up.
+        // Elsewhere we've set a click handler (on the document body) which will trigger
+        // the menu (or any other widgets) to close. By trapping the clicks within the crumb
+        // it prevents the user accidentally closing the dropdown by e.g. clicking in the margin
+        // around the links.
+        event.stopPropagation();
 
-    crumb.addEventListener("click", function (event) {
-      // Here we'll prevent the click event on the crumb (or any of its child elements) bubbling up.
-      // Elsewhere we've set a click handler (on the document body) which will trigger
-      // the menu (or any other widgets) to close. By trapping the clicks within the crumb
-      // it prevents the user accidentally closing the dropdown by e.g. clicking in the margin
-      // around the links.
-      event.stopPropagation();
+        // Now we will deal specifically with click events on the crumb (<li> element, i.e. `this`)
+        // and the main breadcrumb link (<a> element, `link`), or any direct children of the <a>
+        // such as <span>. The links's default action will be prevented, but any other child elements
+        // of the <li> (such as submenu links) will not be affected. (We prevent default navigation
+        //so that we can use the main link to toggle the dropdown instead).
+        if (event.target === link || event.target.parentElement === link) {
+          event.preventDefault();
 
-      // Now we will deal specifically with click events on the crumb (<li> element, i.e. `this`)
-      // and the main breadcrumb link (<a> element, `link`), or any direct children of the <a>
-      // such as <span>. The links's default action will be prevented, but any other child elements
-      // of the <li> (such as submenu links) will not be affected. (We prevent default navigation
-      //so that we can use the main link to toggle the dropdown instead).
-      if (event.target === link || event.target.parentElement === link) {
-        event.preventDefault();
+          /**
+           * This will toggle the `is-active` class on/off.
+           * We can simplify this in the future and just use `classList.toggle()`
+           * …when we drop IE support.
+           */
+          var wasActive = trail.querySelector(".is-active");
+          if (crumb.classList.contains("is-active")) {
+            crumb.classList.remove("is-active");
+          } else {
+            crumb.classList.add("is-active");
+          }
+          wasActive && wasActive.classList.remove("is-active");
 
-        /**
-         * This will toggle the `is-active` class on/off.
-         * We can simplify this in the future and just use `classList.toggle()`
-         * …when we drop IE support.
-         */
-        var wasActive = trail.querySelector(".is-active");
-        if (this.classList.contains("is-active")) {
-          this.classList.remove("is-active");
-        } else {
-          this.classList.add("is-active");
+          // close all other on-screen widgets
+          if (self.UoS_closeAllWidgetsExcept) UoS_closeAllWidgetsExcept("breadcrumbs");
         }
-        wasActive && wasActive.classList.remove("is-active");
-
-        // close all other on-screen widgets
-        if (self.UoS_closeAllWidgetsExcept) UoS_closeAllWidgetsExcept("breadcrumbs");
-      }
-    });
+      });
   }
 })(
   document.querySelector(".breadcrumbs"), // {HTMLElement} DOM element to use
