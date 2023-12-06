@@ -2718,8 +2718,8 @@ stir.MediaQuery = (function () {
   }
 
   function applyCrumbClickListener(crumb, link) {
-    console.log(crumb.children[0]);
-    console.log(link);
+    //console.log(crumb.children[0]);
+    //console.log(link);
 
     crumb.addEventListener("click", function (event) {
       // Here we'll prevent the click event on the crumb (or any of its child elements) bubbling up.
