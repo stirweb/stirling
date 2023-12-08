@@ -37,9 +37,6 @@
   }
 }
 
-.wrapper-content .breadcrumbs li a {
-}
-
 /*
  * @group breadcrumbs top links (external only)
  */
@@ -138,6 +135,18 @@
   // top links in breadcrumbs
   > li {
     margin: 10px 30px 10px 0;
+
+    a {
+      min-height: 24px;
+      display: inline-block;
+      padding-right: 20px;
+      position: relative;
+      z-index: 2;
+
+      &:focus {
+        outline-color: #fff !important;
+      }
+    }
 
     &:first-child {
       font-weight: 400;
