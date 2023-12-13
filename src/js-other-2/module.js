@@ -382,7 +382,7 @@
 
   const boilerplates = stir.moduleTexts || {};
 
-  const url = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=";
+  const url = "https://www.stir.ac.uk/data/pd-api/?module=";
 
   const colours = [
     { level: "ug", first: "heritage-green", second: "energy-turq", third: "energy-purple" },
