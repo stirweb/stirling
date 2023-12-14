@@ -207,6 +207,8 @@
   const renderTeachingAssessment = (deliveries, assessments, colourPack, boilerplates) => {
     const deliveriesHtml = !deliveries.length ? boilerplates.deliveriesFallback : renderDeliveries(`12`, deliveries);
 
+    console.log(assessments);
+
     const assessmentWidth = assessments.length < 2 ? `12` : `6`;
     const renderAssessmentCurry = renderAssessment(assessmentWidth);
     const assessmentHtml = !assessments.length ? `<div class="cell">${boilerplates.assessmentFallback}</div>` : assessments.map(renderAssessmentCurry).join(``);
@@ -331,10 +333,12 @@
 
     const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
 
-    return sums.map((item) => {
-      if (item.sum !== totalPercent) return ``;
-      return renderAssessmentsCurry(item.assessment);
-    });
+    return sums
+      .map((item) => {
+        if (item.sum !== totalPercent) return ``;
+        return renderAssessmentsCurry(item.assessment);
+      })
+      .filter((item) => item !== ``);
     //return totalPercent !== sum ? renderDebug(totalPercent, sum, "(Percent)", assessments) : assessments[0].tabAssessments.map(renderAssessmentsCurry).join(``);
   };
 
