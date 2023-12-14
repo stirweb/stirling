@@ -312,6 +312,8 @@
   }; */
 
   const doAssessmentItem = (item) => {
+    if (item.tab === "International") return { sum: 0, assessment: item }; // Filter out International
+
     const sum = item.tabAssessments
       .map((item) => Number(item.percent))
       .reduce((accumulator, currentValue) => {
@@ -364,15 +366,11 @@
 
     try {
       const data = await response.json();
-
-      console.log(data);
-
       main(data, colours, boilerplates);
       addEventListeners();
     } catch (error) {
       setDOMContent(stir.node("#content"), renderError());
-      console.log(error.message);
-      console.log(fetchUrl);
+      //console.log(error.message);
     }
   }
 
