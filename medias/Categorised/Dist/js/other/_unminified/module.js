@@ -368,14 +368,14 @@
   async function getData(fetchUrl, colours, boilerplates) {
     const response = await fetch(fetchUrl);
 
-    try {
-      const data = await response.json();
-      main(data, colours, boilerplates);
-      addEventListeners();
-    } catch (error) {
-      setDOMContent(stir.node("#content"), renderError());
-      //console.log(error.message);
-    }
+    // try {
+    const data = await response.json();
+    main(data, colours, boilerplates);
+    addEventListeners();
+    //} catch (error) {
+    //setDOMContent(stir.node("#content"), renderError());
+    //console.log(error.message);
+    //}
   }
 
   /*

@@ -1,11 +1,11 @@
-!function(){function o(){const t=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a,s;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=Number(e.target.dataset.max),s=e.target.dataset.colour||"energy-turq",a=t/a*100,s=stir.createDOMFragment(`<div class="barchart-value u-bg-${s} u-absolute" style="right:${100-a}%"></div>
-                                                <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${a/2-2}%">${t}${r}</div>`),e.target.append(s)):e.target.innerHTML=""})},{root:null,threshold:.5});stir.nodes(".barchart").forEach(e=>{t.observe(e)})}const c=(e,t)=>{return`<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
+!function(){function d(){const t=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,r,a,s;e.isIntersecting?(t=Number(e.target.dataset.value),r=e.target.dataset.unit,a=Number(e.target.dataset.max),s=e.target.dataset.colour||"energy-turq",a=t/a*100,s=stir.createDOMFragment(`<div class="barchart-value u-bg-${s} u-absolute" style="right:${100-a}%"></div>
+                                                <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${a/2-2}%">${t}${r}</div>`),e.target.append(s)):e.target.innerHTML=""})},{root:null,threshold:.5});stir.nodes(".barchart").forEach(e=>{t.observe(e)})}const l=(e,t)=>{return`<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
               ${t.disclaimer||""}
           </div>
           <div class="cell medium-3 align-middle align-center u-flex">
             ${t=e,e=new URLSearchParams(document.location.search),e.get("course")?`<a href="${stir.isNumeric(e.get("course"))?"/terminalfour/preview/1/en/"+e.get("course"):`/courses/${t}/`+e.get("course")}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`:""}
           </div>
-          `},g=({moduleTitle:e,moduleCode:t,moduleLevel:r,moduleCredits:a})=>`<div class="grid-container">
+          `},n=({moduleTitle:e,moduleCode:t,moduleLevel:r,moduleCredits:a})=>`<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
                         <div class="cell large-6  c-course-title u-padding-y">
                             <h1 class="u-header-smaller ">${e}</h1>
@@ -29,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                </div>`,p=({moduleOverview:e,learningOutcomes:t,colourPack:r,boilerplates:a})=>`<div class="cell u-p-2">
+                </div>`,u=({moduleOverview:e,learningOutcomes:t,colourPack:r,boilerplates:a})=>`<div class="cell u-p-2">
                 <h2 id="contentandaims" >Content and aims</h2>
                 <h3 class="header-stripped u-bg-${r.first}--10 u-${r.first}-line-left u-p-1  u-border-width-5 u-text-regular">
                     Module overview
@@ -41,7 +41,7 @@
                 </h3>
                 <p><strong>${a.outcomesIntro}</strong></p>
                 <ul>${t.map(e=>`<li>${e}</li>`).join("")}</ul>
-            </div>`,h=({moduleCredits:e,ectsModuleCredits:t,colourPack:r},a,s)=>`<div class="cell u-mt-2">
+            </div>`,o=({moduleCredits:e,ectsModuleCredits:t,colourPack:r},a,s)=>`<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
                 <h3 class="header-stripped u-bg-${r.third}--10 u-p-1 u-${r.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173616" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" />
@@ -57,7 +57,7 @@
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
                         <a href="${"ug"===s?a.awardsCtaUG:a.awardsCtaPG}" class="u-${r.third}">Assessment and award of credit for ${"ug"===s?"undergraduates":"postgraduates"}</a></p>
                 </div>
-            </div>`,m=({preparedotherinformation:e,studyAbroad:t,additionalCosts:r},a)=>{return e||"Yes"===t||r?`<div class="cell u-mt-2">
+            </div>`,c=({preparedotherinformation:e,studyAbroad:t,additionalCosts:r},a)=>{return e||"Yes"===t||r?`<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
                 ${e?`<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3><p>${e}</p>`:""}
                 ${"Yes"===t?'<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>'+a.studyAbroad:""}
@@ -75,7 +75,7 @@
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${t} (${r})</span>
             <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${a}" data-max="100" data-unit="%" data-colour="${e.second}"></div>
-        </div>`),a=stir.curry((e,t,{tab:r,tabAssessments:a})=>{e=s(e);return(1<t?`<h4 class="u-mt-0">${r}</h4>`:"")+`<p>${a.map(e).join("")}</p>`}),i=stir.curry((e,t)=>t?`<div class="cell large-${e} u-mb-1">${t}</div>`:""),v=(e,t,r,a)=>{var s=e.length?(s="12",(e=e)?`<div class="cell large-${s} u-mb-1">${e}</div>`:""):a.deliveriesFallback,e=(console.log(t),t.length<2?"12":"6"),e=i(e),e=t.length?t.map(e).join(""):`<div class="cell">${a.assessmentFallback}</div>`;return`<div class="cell">
+        </div>`),a=stir.curry((e,t,{tab:r,tabAssessments:a})=>{e=s(e);return(1<t?`<h4 class="u-mt-0">${r}</h4>`:"")+`<p>${a.map(e).join("")}</p>`}),i=stir.curry((e,t)=>t?`<div class="cell large-${e} u-mb-1">${t}</div>`:""),g=(e,t,r,a)=>{var s=e.length?(s="12",(e=e)?`<div class="cell large-${s} u-mb-1">${e}</div>`:""):a.deliveriesFallback,e=(console.log(t),t.length<2?"12":"6"),e=i(e),e=t.length?t.map(e).join(""):`<div class="cell">${a.assessmentFallback}</div>`;return`<div class="cell">
               <h2 id="teaching" >Teaching and assessment</h2>
               ${a.teachingIntro}
               
@@ -89,4 +89,4 @@
                   ${e}
               </div>
               ${a.teachingTimetableInfo}
-        </div>`},b=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',$=()=>"</div></div>",f=()=>b()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+$(),w=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),x=e=>e&&e.toLowerCase().includes("p")?"pg":"ug",y=(t,e)=>(e.filter(e=>e.level===t).length?e.filter(e=>e.level===t):e)[0],d=e=>{return"International"===e.tab?{sum:0,assessment:e}:{sum:e.tabAssessments.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0),assessment:e}},k=(e,t)=>{e=e.map(d);const r=a(t,e.length);return e.map(e=>100!==e.sum?"":r(e.assessment)).filter(e=>""!==e)};var e=stir.moduleTexts||{},t=new URLSearchParams(document.location.search);!async function(e,t,r){var a,s,i,d,l,n,e=await fetch(e);try{var u=await e.json();a=u,s=t,i=r,(n=stir.node("#content")).classList.add("u-padding-bottom"),a.error?w(n,f()):(d=x(a.moduleLevelDescription),s=y(d,s),l={...a,colourPack:s,boilerplates:i},a=a.assessments||[],a=k(a,s),a=g(l)+b()+c(d,i)+p(l)+v("",a,s,i)+h(l,i,d)+m(l,i)+$(),w(n,a)),o()}catch(e){w(stir.node("#content"),f())}}("https://www.stir.ac.uk/data/pd-api/?module="+[t.get("code"),t.get("session"),t.get("semester")].join("/"),[{level:"ug",first:"heritage-green",second:"energy-turq",third:"energy-purple"},{level:"pg",first:"heritage-purple",second:"heritage-purple",third:"heritage-green"}],e)}();
+        </div>`},p=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',h=()=>"</div></div>",m=()=>p()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+h(),v=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),b=e=>e&&e.toLowerCase().includes("p")?"pg":"ug",$=(t,e)=>(e.filter(e=>e.level===t).length?e.filter(e=>e.level===t):e)[0],f=e=>{return"International"===e.tab?{sum:0,assessment:e}:{sum:e.tabAssessments.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0),assessment:e}},w=(e,t)=>{e=e.map(f);const r=a(t,e.length);return e.map(e=>100!==e.sum?"":r(e.assessment)).filter(e=>""!==e)};var e=stir.moduleTexts||{},t=new URLSearchParams(document.location.search);!async function(e,t,r){var a,s,i;e=e=await(await fetch(e)).json(),t=t,r=r,(i=stir.node("#content")).classList.add("u-padding-bottom"),e.error?v(i,m()):(a=b(e.moduleLevelDescription),t=$(a,t),s={...e,colourPack:t,boilerplates:r},e=e.assessments||[],e=w(e,t),e=n(s)+p()+l(a,r)+u(s)+g("",e,t,r)+o(s,r,a)+c(s,r)+h(),v(i,e)),d()}("https://www.stir.ac.uk/data/pd-api/?module="+[t.get("code"),t.get("session"),t.get("semester")].join("/"),[{level:"ug",first:"heritage-green",second:"energy-turq",third:"energy-purple"},{level:"pg",first:"heritage-purple",second:"heritage-purple",third:"heritage-green"}],e)}();
