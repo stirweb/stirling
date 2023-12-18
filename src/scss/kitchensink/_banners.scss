@@ -149,3 +149,24 @@
     /* increase bottom offset to allow for overlapping CTA button */
   }
 }
+
+.pg-brackets.u-object-cover {
+  position: relative;
+  overflow: hidden;
+}
+
+.pg-brackets.u-object-cover:before {
+  content: url("https://c1.thirdlight.com/file/24/Nh8oAdFNhGP-p_bNhO74NhFU8w0/bracket-top.svg");
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: -2px;
+}
+
+.pg-brackets.u-object-cover:after {
+  content: url("https://c1.thirdlight.com/file/24/bayWjCPbaAYZT.WbaKHDbJsF7_/bracket-bottom.svg");
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: -8px;
+}
