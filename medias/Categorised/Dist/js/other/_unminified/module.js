@@ -197,6 +197,7 @@
   });
 
   const renderAssessments = stir.curry((colourPack, length, { tab, tabAssessments }) => {
+    console.log(length);
     const renderAssessmentItemCurry = renderAssessmentItem(colourPack);
     const header = length > 1 ? `<h4 class="u-mt-0">${tab}</h4>` : ``;
     return `${header}<p>${tabAssessments.map(renderAssessmentItemCurry).join(``)}</p>`;
@@ -329,21 +330,21 @@
   const doAssessments = (assessments, colourPack) => {
     // const filterDups = removeDuplicateObjectFromArray("match", mapped);
     const totalPercent = 100;
-    const sums = assessments.map(doAssessmentItem);
+    const sums = assessments.map(doAssessmentItem).filter((item) => item.sum === totalPercent);
 
+    console.log(sums);
     const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
 
-    return sums
-      .map((item) => {
-        if (item.sum !== totalPercent) return ``;
-        return renderAssessmentsCurry(item.assessment);
-      })
-      .filter((item) => item !== ``);
+    return sums.map((item) => {
+      // if (item.sum !== totalPercent) return ``;
+      return renderAssessmentsCurry(item.assessment);
+    });
     //return totalPercent !== sum ? renderDebug(totalPercent, sum, "(Percent)", assessments) : assessments[0].tabAssessments.map(renderAssessmentsCurry).join(``);
   };
 
   // Main
   const main = (data, colours, boilerplates) => {
+    console.log(data);
     const contentArea = stir.node("#content");
     contentArea.classList.add("u-padding-bottom");
 
