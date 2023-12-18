@@ -197,7 +197,6 @@
   });
 
   const renderAssessments = stir.curry((colourPack, length, { tab, tabAssessments }) => {
-    console.log(length);
     const renderAssessmentItemCurry = renderAssessmentItem(colourPack);
     const header = length > 1 ? `<h4 class="u-mt-0">${tab}</h4>` : ``;
     return `${header}<p>${tabAssessments.map(renderAssessmentItemCurry).join(``)}</p>`;
@@ -207,8 +206,6 @@
 
   const renderTeachingAssessment = (deliveries, assessments, colourPack, boilerplates) => {
     const deliveriesHtml = !deliveries.length ? boilerplates.deliveriesFallback : renderDeliveries(`12`, deliveries);
-
-    console.log(assessments);
 
     const assessmentWidth = assessments.length < 2 ? `12` : `6`;
     const renderAssessmentCurry = renderAssessment(assessmentWidth);
@@ -332,7 +329,6 @@
     const totalPercent = 100;
     const sums = assessments.map(doAssessmentItem).filter((item) => item.sum === totalPercent);
 
-    console.log(sums);
     const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
 
     return sums.map((item) => {
@@ -344,7 +340,6 @@
 
   // Main
   const main = (data, colours, boilerplates) => {
-    console.log(data);
     const contentArea = stir.node("#content");
     contentArea.classList.add("u-padding-bottom");
 
