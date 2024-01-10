@@ -255,6 +255,10 @@ svg.u-icon {
   }
 }
 
+.svg-icon {
+  width: 100%; /* Safari fix */
+}
+
 .u-svg-icon-24 {
   width: 24px;
   height: 24px;
