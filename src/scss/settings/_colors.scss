@@ -271,10 +271,11 @@ a:has(img):hover {
 
 .u-bg-grey--mid {
   background-color: #eee;
+  background-color: #cacaca;
 }
 
 .u-bg-grey--lighter {
-  background-color: #f9f9f9;
+  background-color: $light-gray; // #f9f9f9; // DEPRECATED!!!
 }
 
 /*
