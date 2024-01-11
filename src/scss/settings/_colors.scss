@@ -269,12 +269,14 @@ a:has(img):hover {
   border-image-source: linear-gradient($dark-grey, $dark-grey);
 }
 
+.u-bg-medium-grey,
 .u-bg-grey--mid {
   background-color: #eee;
 }
 
+.u-bg-light-grey,
 .u-bg-grey--lighter {
-  background-color: #f9f9f9; // DEPRECATED!!!
+  background-color: #f9f9f9;
 }
 
 /*
