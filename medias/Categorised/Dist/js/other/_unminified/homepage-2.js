@@ -212,7 +212,7 @@ var stir = stir || {};
     if (!meta.startDate) return "";
 
     const endDate = meta.endDate === meta.startDate ? `` : ` until ${meta.endDate}`;
-    return `<time class="u-block u-my-1 u-grey--dark">${meta.startDate}${endDate}</time>`;
+    return `<time class="u-block u-my-1 u-dark-grey">${meta.startDate}${endDate}</time>`;
   };
 
   const render = (news, events) => `<div class="grid-x grid-padding-x c-news-event__news">${news}${events}</div>`;

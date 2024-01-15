@@ -269,13 +269,11 @@ a:has(img):hover {
   border-image-source: linear-gradient($dark-grey, $dark-grey);
 }
 
-.u-bg-medium-grey,
-.u-bg-grey--mid {
+.u-bg-medium-grey {
   background-color: #eee;
 }
 
-.u-bg-light-grey,
-.u-bg-grey--lighter {
+.u-bg-light-grey {
   background-color: #f9f9f9;
 }
 
@@ -291,8 +289,9 @@ a:has(img):hover {
   }
 }
 
+.u-energy-teal--40,
 .u-energy-teal--light {
-  color: #b3dce0;
+  color: tint($energy-teal, 40%);
 }
 
 .u-heritage-teal {
@@ -304,15 +303,17 @@ a:has(img):hover {
 }
 
 .u-grey {
-  color: #bebebe;
+  color: $grey;
 }
 
+.u-dark-grey,
 .u-grey--dark {
   color: $dark-grey; // #767169
 }
 
 /* [a11y] darker dark-grey text when on grey background */
 .bg-grey {
+  .u-dark-grey,
   .u-grey--dark {
     color: #726f65;
   }

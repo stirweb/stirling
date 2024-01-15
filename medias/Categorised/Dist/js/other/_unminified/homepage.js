@@ -330,8 +330,8 @@ stir.loadingProgress = function (el, show) {
 
     var html = [];
     var endDate = (item._uos.startDate !== item._uos.endDate ? " until " + item._uos.endDate : "") + "<br>";
-    var loc = item._uos.location ? '<span class="u-block u-my-1 u-grey--dark">' + item._uos.location + "</span>" : "";
-    var time = item._uos.startDate ? '<time class="u-block u-my-1 u-grey--dark>' + item._uos.startDate + endDate + "</time>" : "";
+    var loc = item._uos.location ? '<span class="u-block u-my-1 u-dark-grey">' + item._uos.location + "</span>" : "";
+    var time = item._uos.startDate ? '<time class="u-block u-my-1 u-dark-grey>' + item._uos.startDate + endDate + "</time>" : "";
     //var linktext = item.linktext || "Read more";
     var isnews = type == "news";
     var isevent = type == "events";
