@@ -10,7 +10,7 @@
   const renderItem = (item) => {
     return `<article class="cell large-4 medium-6 small-12" aria-label="${item.title}">
                 <a href="${item.url}" ><img class="show-for-medium" src="${item.image}" alt="${item.title}"></a>
-                <time class="u-block u-my-1 u-grey--dark">${stir.formatStirDate(new Date(item.date_published))}</time>
+                <time class="u-block u-my-1 u-dark-grey">${stir.formatStirDate(new Date(item.date_published))}</time>
                 <h3 class="header-stripped u-header--margin-stripped u-mt-1 u-font-normal u-compress-line-height"><a href="${item.url}" class="c-link u-inline" >${item.title}</a></h3>
                 <p class="text-sm">${item.summary}</p>
             </article>`;

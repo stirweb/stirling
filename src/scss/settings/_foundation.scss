@@ -72,7 +72,10 @@ $global-lineheight: 1.5;
 $light-gray: #e6e6e6;
 $medium-gray: #cacaca;
 $dark-gray: #8a8a8a;
+
 $dark-grey: #616361;
+$grey: #bebebe;
+
 $black: #3a3c39; // Tertiary Colour
 $white: #fff; //fefefe;
 
@@ -95,7 +98,7 @@ $uos-web-supplementary: (
   white: $white,
   dark-grey: $dark-grey,
   // reinstated by Martyn
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
