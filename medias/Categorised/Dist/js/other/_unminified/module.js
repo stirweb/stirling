@@ -186,20 +186,30 @@
 
   const renderDeliveries = (width, deliveries) => (!deliveries ? `` : `<div class="cell large-${width} u-mb-1">${deliveries}</div>`);
 
-  const renderAssessmentItem = stir.curry((colourPack, { label, category, percent, mode }) => {
-    return mode === "Formative" || percent === "0"
+  const renderAssessmentItem = stir.curry((colourPack, { name, value }) => {
+    console.log(name, value);
+    return Number(value) === 0
       ? ``
-      : `
-        <div>
-            <span class="u-inline-block u-p-tiny u-px-1">${label} (${category})</span>
-            <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${percent}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
-        </div>`;
+      : `<div>
+        <span class="u-inline-block u-p-tiny u-px-1">${name}</span>
+        <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${value}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
+    </div>`;
+
+    // return mode === "Formative" || percent === "0"
+    //   ? ``
+    //   : `
+    //     <div>
+    //         <span class="u-inline-block u-p-tiny u-px-1">${label} (${category})</span>
+    //         <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${percent}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
+    //     </div>`;
   });
 
-  const renderAssessments = stir.curry((colourPack, length, { tab, tabAssessments }) => {
+  const renderAssessments = stir.curry((colourPack, length, item) => {
     const renderAssessmentItemCurry = renderAssessmentItem(colourPack);
-    const header = length > 1 ? `<h4 class="u-mt-0">${tab}</h4>` : ``;
-    return `${header}<p>${tabAssessments.map(renderAssessmentItemCurry).join(``)}</p>`;
+    const header = length > 1 ? `<h4 class="u-mt-0">${item.tab}</h4>` : ``;
+
+    //return `${header}`;
+    return `${header}<p>${item.summary.map(renderAssessmentItemCurry).join(``)}</p>`;
   });
 
   const renderAssessment = stir.curry((width, item) => (!item ? `` : `<div class="cell large-${width} u-mb-1">${item}</div>`));
@@ -320,21 +330,49 @@
         return accumulator + currentValue;
       }, 0);
 
-    return { sum: sum, assessment: item };
+    const sumCoursework = item.tabAssessments
+      .map((item) => {
+        if (item.category === "Coursework") return Number(item.percent);
+        return 0;
+      })
+      .reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+
+    const sumExam = item.tabAssessments
+      .map((item) => {
+        if (item.category === "Examination") return Number(item.percent);
+        return 0;
+      })
+      .reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+
+    return {
+      sum: sum,
+      summary: [
+        { name: "Coursework", value: sumCoursework },
+        { name: "Examination", value: sumExam },
+      ],
+      tab: item.tab,
+      tabAssessments: item.tabAssessments,
+    };
   };
 
   // doAssessments
   const doAssessments = (assessments, colourPack) => {
+    console.log(assessments);
     // const filterDups = removeDuplicateObjectFromArray("match", mapped);
     const totalPercent = 100;
     const sums = assessments.map(doAssessmentItem).filter((item) => item.sum === totalPercent);
+    //console.log(sums);
 
     const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
 
     return sums.map((item) => {
-      // if (item.sum !== totalPercent) return ``;
-      return renderAssessmentsCurry(item.assessment);
+      return renderAssessmentsCurry(item);
     });
+
     //return totalPercent !== sum ? renderDebug(totalPercent, sum, "(Percent)", assessments) : assessments[0].tabAssessments.map(renderAssessmentsCurry).join(``);
   };
 
