@@ -47,6 +47,7 @@
 
     */
 
+  /* renderCourseBackBtn */
   const renderCourseBackBtn = (level) => {
     const params = new URLSearchParams(document.location.search);
 
@@ -56,6 +57,7 @@
     return `<a href="${url}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`;
   };
 
+  /* renderDisclaimer */
   const renderDisclaimer = (level, boilerplates) => {
     return `<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
               ${boilerplates.disclaimer ? boilerplates.disclaimer : ``}
@@ -66,6 +68,7 @@
           `;
   };
 
+  /* renderHeader */
   const renderHeader = ({ moduleTitle, moduleCode, locationStudyMethods, moduleLevel, moduleCredits }) => {
     return `<div class="grid-container">
                     <div class="grid-x grid-padding-x u-my-2 align-middle">
@@ -94,6 +97,7 @@
                 </div>`;
   };
 
+  /* renderContentAims */
   const renderContentAims = ({ moduleOverview, learningOutcomes, colourPack, boilerplates }) => {
     return `<div class="cell u-p-2">
                 <h2 id="contentandaims" >Content and aims</h2>
@@ -110,6 +114,7 @@
             </div>`;
   };
 
+  /* renderAwards */
   const renderAwards = ({ moduleCredits, ectsModuleCredits, professionalAccreditation, colourPack }, boilerplates, studyLevel) => {
     return `<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
@@ -140,22 +145,25 @@
   //           </div>`;
   // };
 
+  /* renderSupportingInfo */
   const renderSupportingInfo = (preparedotherinformation) => {
     return `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3><p>${preparedotherinformation}</p>`;
   };
 
+  /* renderStudyAbroad */
   const renderStudyAbroad = (content) => {
     return `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>` + content;
   };
 
+  /* renderAdditionalCosts */
   const renderAdditionalCosts = (additionalCosts) => {
     return !additionalCosts
       ? ``
-      : `
-      <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
-      <p>${additionalCosts}</p>`;
+      : `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
+          <p>${additionalCosts}</p>`;
   };
 
+  /* renderFurtherDetails */
   const renderFurtherDetails = ({ preparedotherinformation, studyAbroad, additionalCosts }, boilerplates) => {
     return !preparedotherinformation && studyAbroad !== "Yes" && !additionalCosts
       ? ``
@@ -164,9 +172,10 @@
                 ${preparedotherinformation ? renderSupportingInfo(preparedotherinformation) : ``}
                 ${studyAbroad === "Yes" ? renderStudyAbroad(boilerplates.studyAbroad) : ``}
                 ${renderAdditionalCosts(additionalCosts)}
-            </div>`;
+        </div>`;
   };
 
+  /* renderDeliverablesTotal */
   const renderDeliverablesTotal = (hours, colourPack) => {
     return `<div class="u-bg-${colourPack.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
                 <strong class="u-flex1">Total workload</strong>
@@ -174,6 +183,7 @@
             </div>`;
   };
 
+  /* renderDeliverables */
   const renderDeliverables = stir.curry((colourPack, total, { type, hours, typekey, label }) => {
     return typekey === "total"
       ? renderDeliverablesTotal(hours, colourPack)
@@ -184,36 +194,30 @@
         </div>`;
   });
 
+  /* renderDeliveries */
   const renderDeliveries = (width, deliveries) => (!deliveries ? `` : `<div class="cell large-${width} u-mb-1">${deliveries}</div>`);
 
+  /* renderAssessmentItem */
   const renderAssessmentItem = stir.curry((colourPack, { name, value }) => {
-    console.log(name, value);
     return Number(value) === 0
       ? ``
       : `<div>
-        <span class="u-inline-block u-p-tiny u-px-1">${name}</span>
-        <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${value}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
-    </div>`;
-
-    // return mode === "Formative" || percent === "0"
-    //   ? ``
-    //   : `
-    //     <div>
-    //         <span class="u-inline-block u-p-tiny u-px-1">${label} (${category})</span>
-    //         <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${percent}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
-    //     </div>`;
+          <span class="u-inline-block u-p-tiny u-px-1">${name}</span>
+          <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${value}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
+        </div>`;
   });
 
+  /* renderAssessments */
   const renderAssessments = stir.curry((colourPack, length, item) => {
     const renderAssessmentItemCurry = renderAssessmentItem(colourPack);
     const header = length > 1 ? `<h4 class="u-mt-0">${item.tab}</h4>` : ``;
 
-    //return `${header}`;
     return `${header}<p>${item.summary.map(renderAssessmentItemCurry).join(``)}</p>`;
   });
 
   const renderAssessment = stir.curry((width, item) => (!item ? `` : `<div class="cell large-${width} u-mb-1">${item}</div>`));
 
+  /* renderTeachingAssessment */
   const renderTeachingAssessment = (deliveries, assessments, colourPack, boilerplates) => {
     const deliveriesHtml = !deliveries.length ? boilerplates.deliveriesFallback : renderDeliveries(`12`, deliveries);
 
@@ -235,7 +239,7 @@
                   ${assessmentHtml}
               </div>
               ${boilerplates.teachingTimetableInfo}
-        </div>`;
+          </div>`;
   };
 
   const renderSectionStart = () => `<div class="grid-container"><div class="grid-x grid-padding-x">`;
@@ -284,23 +288,10 @@
     return colours.filter((item) => item.level === level).length ? colours.filter((item) => item.level === level)[0] : colours[0];
   };
 
-  // const removeDuplicateObjectFromArray = (key, array) => {
-  //   let check = {};
-  //   let res = [];
-  //   array.forEach((element) => {
-  //     if (!check[element[key]]) {
-  //       check[element[key]] = true;
-  //       res.push(element);
-  //     }
-  //   });
-  //   return res;
-  // };
-
   /*
-        CONTROLLERS
+      DATA PROCESSING
   */
 
-  // Deliveries
   /*
   const doDeliveries = (deliveries, colourPack) => {
     const deliveriesTotalItem = deliveries.filter((item) => item.typekey === "total");
@@ -321,8 +312,20 @@
     //return Number(total) !== sum ? renderDebug(total, sum, `Hours (Total Study Time)`, deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
   }; */
 
+  /* doAssessmentItem: Return a duplicate of item with aggregated values added */
   const doAssessmentItem = (item) => {
-    if (item.tab === "International") return { sum: 0, assessment: item }; // Filter out International
+    // Hide International by making all aggregated values 0 - Quick hack will do for now
+    if (item.tab === "International") {
+      return {
+        sum: 0,
+        summary: [
+          { name: "Coursework", value: 0 },
+          { name: "Examination", value: 0 },
+        ],
+        tab: item.tab,
+        tabAssessments: item.tabAssessments,
+      };
+    }
 
     const sum = item.tabAssessments
       .map((item) => Number(item.percent))
@@ -332,8 +335,7 @@
 
     const sumCoursework = item.tabAssessments
       .map((item) => {
-        if (item.category === "Coursework") return Number(item.percent);
-        return 0;
+        return item.category === "Coursework" ? Number(item.percent) : 0;
       })
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
@@ -341,8 +343,7 @@
 
     const sumExam = item.tabAssessments
       .map((item) => {
-        if (item.category === "Examination") return Number(item.percent);
-        return 0;
+        return item.category === "Examination" ? Number(item.percent) : 0;
       })
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
@@ -359,24 +360,24 @@
     };
   };
 
-  // doAssessments
+  /* doAssessments */
   const doAssessments = (assessments, colourPack) => {
     console.log(assessments);
-    // const filterDups = removeDuplicateObjectFromArray("match", mapped);
     const totalPercent = 100;
     const sums = assessments.map(doAssessmentItem).filter((item) => item.sum === totalPercent);
-    //console.log(sums);
 
     const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
 
     return sums.map((item) => {
       return renderAssessmentsCurry(item);
     });
-
-    //return totalPercent !== sum ? renderDebug(totalPercent, sum, "(Percent)", assessments) : assessments[0].tabAssessments.map(renderAssessmentsCurry).join(``);
   };
 
-  // Main
+  /*
+      CONTROLLERS
+  */
+
+  /* Main */
   const main = (data, colours, boilerplates) => {
     const contentArea = stir.node("#content");
     contentArea.classList.add("u-padding-bottom");
@@ -396,9 +397,7 @@
     return setDOMContent(contentArea, html);
   };
 
-  /*
-        Init: Get the data and proceed
-  */
+  /*  getData from the API Endpont  */
   async function getData(fetchUrl, colours, boilerplates) {
     const response = await fetch(fetchUrl);
 
@@ -413,9 +412,8 @@
   }
 
   /*
-        On Load
-    */
-
+      ON LOAD
+  */
   const boilerplates = stir.moduleTexts || {};
 
   const url = "https://www.stir.ac.uk/data/pd-api/?module=";
