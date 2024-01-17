@@ -1,13 +1,9 @@
 (function () {
   /*
-       
     EVENT LISTENERS AND ACTIONS
-
   */
   function addEventListeners() {
-    /*
-        BARCHART ANIMATION TRIGGER 
-    */
+    /*  Barchart animation trigger */
     function onIntersection(entries, opts) {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -61,40 +57,39 @@
   const renderDisclaimer = (level, boilerplates) => {
     return `<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
               ${boilerplates.disclaimer ? boilerplates.disclaimer : ``}
-          </div>
-          <div class="cell medium-3 align-middle align-center u-flex">
-            ${renderCourseBackBtn(level)}
-          </div>
-          `;
+            </div>
+            <div class="cell medium-3 align-middle align-center u-flex">
+              ${renderCourseBackBtn(level)}
+            </div> `;
   };
 
   /* renderHeader */
   const renderHeader = ({ moduleTitle, moduleCode, locationStudyMethods, moduleLevel, moduleCredits }) => {
     return `<div class="grid-container">
-                    <div class="grid-x grid-padding-x u-my-2 align-middle">
-                        <div class="cell large-6  c-course-title u-padding-y">
-                            <h1 class="u-header-smaller ">${moduleTitle}</h1>
-                        </div>
-                        <div class="cell large-6">
-                            <div class="u-border u-border-width-5 flex-container  u-px-3 u-py-2">
-                                <div class="grid-x grid-padding-x ">
-                                    <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173865" formatter="inline/*"/></span>
-                                        <span><strong>Module code:</strong><br>${moduleCode}</span>
-                                    </div>
-                                    <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173866" formatter="inline/*"/></span>
-                                        <span><strong>SCQF level:</strong><br>${moduleLevel}</span>
-                                    </div>
-                                    <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173867" formatter="inline/*"/></span>
-                                        <span><strong>SCQF credits:</strong><br>${moduleCredits}</span>
-                                    </div>
+                <div class="grid-x grid-padding-x u-my-2 align-middle">
+                    <div class="cell large-6  c-course-title u-padding-y">
+                        <h1 class="u-header-smaller ">${moduleTitle}</h1>
+                    </div>
+                    <div class="cell large-6">
+                        <div class="u-border u-border-width-5 flex-container  u-px-3 u-py-2">
+                            <div class="grid-x grid-padding-x ">
+                                <div class="cell medium-6 flex-container u-gap u-p-1">
+                                    <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173865" formatter="inline/*"/></span>
+                                    <span><strong>Module code:</strong><br>${moduleCode}</span>
+                                </div>
+                                <div class="cell medium-6 flex-container u-gap u-p-1">
+                                    <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173866" formatter="inline/*"/></span>
+                                    <span><strong>SCQF level:</strong><br>${moduleLevel}</span>
+                                </div>
+                                <div class="cell medium-6 flex-container u-gap u-p-1">
+                                    <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173867" formatter="inline/*"/></span>
+                                    <span><strong>SCQF credits:</strong><br>${moduleCredits}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>`;
+                </div>
+            </div>`;
   };
 
   /* renderContentAims */

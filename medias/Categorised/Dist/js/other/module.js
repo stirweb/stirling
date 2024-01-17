@@ -1,35 +1,34 @@
 !function(){function d(){const t=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,a,r,s;e.isIntersecting?(t=Number(e.target.dataset.value),a=e.target.dataset.unit,r=Number(e.target.dataset.max),s=e.target.dataset.colour||"energy-turq",r=t/r*100,s=stir.createDOMFragment(`<div class="barchart-value u-bg-${s} u-absolute" style="right:${100-r}%"></div>
                                                 <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${r/2-2}%">${t}${a}</div>`),e.target.append(s)):e.target.innerHTML=""})},{root:null,threshold:.5});stir.nodes(".barchart").forEach(e=>{t.observe(e)})}const l=(e,t)=>{return`<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
               ${t.disclaimer||""}
-          </div>
-          <div class="cell medium-3 align-middle align-center u-flex">
-            ${t=e,e=new URLSearchParams(document.location.search),e.get("course")?`<a href="${stir.isNumeric(e.get("course"))?"/terminalfour/preview/1/en/"+e.get("course"):`/courses/${t}/`+e.get("course")}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`:""}
-          </div>
-          `},n=({moduleTitle:e,moduleCode:t,moduleLevel:a,moduleCredits:r})=>`<div class="grid-container">
-                    <div class="grid-x grid-padding-x u-my-2 align-middle">
-                        <div class="cell large-6  c-course-title u-padding-y">
-                            <h1 class="u-header-smaller ">${e}</h1>
-                        </div>
-                        <div class="cell large-6">
-                            <div class="u-border u-border-width-5 flex-container  u-px-3 u-py-2">
-                                <div class="grid-x grid-padding-x ">
-                                    <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173865" formatter="inline/*"/></span>
-                                        <span><strong>Module code:</strong><br>${t}</span>
-                                    </div>
-                                    <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173866" formatter="inline/*"/></span>
-                                        <span><strong>SCQF level:</strong><br>${a}</span>
-                                    </div>
-                                    <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173867" formatter="inline/*"/></span>
-                                        <span><strong>SCQF credits:</strong><br>${r}</span>
-                                    </div>
+            </div>
+            <div class="cell medium-3 align-middle align-center u-flex">
+              ${t=e,e=new URLSearchParams(document.location.search),e.get("course")?`<a href="${stir.isNumeric(e.get("course"))?"/terminalfour/preview/1/en/"+e.get("course"):`/courses/${t}/`+e.get("course")}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`:""}
+            </div> `},n=({moduleTitle:e,moduleCode:t,moduleLevel:a,moduleCredits:r})=>`<div class="grid-container">
+                <div class="grid-x grid-padding-x u-my-2 align-middle">
+                    <div class="cell large-6  c-course-title u-padding-y">
+                        <h1 class="u-header-smaller ">${e}</h1>
+                    </div>
+                    <div class="cell large-6">
+                        <div class="u-border u-border-width-5 flex-container  u-px-3 u-py-2">
+                            <div class="grid-x grid-padding-x ">
+                                <div class="cell medium-6 flex-container u-gap u-p-1">
+                                    <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173865" formatter="inline/*"/></span>
+                                    <span><strong>Module code:</strong><br>${t}</span>
+                                </div>
+                                <div class="cell medium-6 flex-container u-gap u-p-1">
+                                    <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173866" formatter="inline/*"/></span>
+                                    <span><strong>SCQF level:</strong><br>${a}</span>
+                                </div>
+                                <div class="cell medium-6 flex-container u-gap u-p-1">
+                                    <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173867" formatter="inline/*"/></span>
+                                    <span><strong>SCQF credits:</strong><br>${r}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>`,u=({moduleOverview:e,learningOutcomes:t,colourPack:a,boilerplates:r})=>`<div class="cell u-p-2">
+                </div>
+            </div>`,u=({moduleOverview:e,learningOutcomes:t,colourPack:a,boilerplates:r})=>`<div class="cell u-p-2">
                 <h2 id="contentandaims" >Content and aims</h2>
                 <h3 class="header-stripped u-bg-${a.first}--10 u-${a.first}-line-left u-p-1  u-border-width-5 u-text-regular">
                     Module overview
