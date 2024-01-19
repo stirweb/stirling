@@ -418,12 +418,45 @@
                 <!-- 
 				     Images
 		            -->
-                <div class="cell medium-7 "><img src="pic.jpg" /></div>
+                <div class="cell large-7 ">
+                    <div>
+                        <img src="pic.jpg" />
+                    </div>
+
+
+                    <style>
+                        .c-thumb-gallery {
+                            grid-template-columns: repeat(10, 1fr);
+                        }
+
+                        .c-thumb-gallery img {
+                            aspect-ratio: 1 / 1;
+                            object-fit: cover;
+                            border-radius: 8px;
+                        }
+                    </style>
+
+                    <div class="u-grid u-gap-8 u-mt-1 c-thumb-gallery">
+                        <a href="#"><img src="pic.jpg" width="200" height="170" /></a>
+                        <a href="#"><img src="pic2.jpg" width="200" height="170" /></a>
+                        <a href="#"><img src="pic3.jpg" width="200" height="170" /></a>
+                        <a href="#"><img src="pic4.jpg" width="200" height="170" /></a>
+                        <a href="#"><img src="pic.jpg" width="200" height="170" /></a>
+                        <a href="#"><img src="pic2.jpg" width="200" height="170" /></a>
+                        <a href="#"><img src="pic3.jpg" width="200" height="170" /></a>
+                        <a href="#"><img src="pic4.jpg" width="200" height="170" /></a>
+                        <a href="#"><img src="pic.jpg" width="200" height="170" /></a>
+                        <a href="#"><img src="pic.jpg" width="200" height="170" /></a>
+
+                    </div>
+
+
+                </div>
 
                 <!-- 
 				     Essential Info
 		            -->
-                <div class="cell medium-5 text-sm">
+                <div class="cell large-5 text-sm">
                     <p><strong>Price</strong><br />
                         From £99.53 to £141.65 per week</p>
 
@@ -749,6 +782,16 @@
 
     <!-- unibuddy.min.js -->
     <script type="text/javascript" src="../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
+
+
+    <script>
+
+        const galleries = stir.nodes(".c-thumb-gallery");
+
+        //console.log(galleries);
+
+    </script>
+
 
 
     <script>
