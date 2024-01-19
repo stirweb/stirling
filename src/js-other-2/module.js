@@ -327,15 +327,15 @@
         return accumulator + currentValue;
       }, 0);
 
-    const categories = removeDuplicates(item.tabAssessments.map((el) => el.category));
+    const categories = removeDuplicates(item.tabAssessments.map((ass) => ass.category));
 
     // Summaries the assessments values
-    const summary = categories.map((el) => {
+    const summary = categories.map((cat) => {
       return {
-        name: el,
+        name: cat,
         value: item.tabAssessments
           .map((ass) => {
-            return ass.category === el ? Number(ass.percent) : 0;
+            return ass.category === cat ? Number(ass.percent) : 0;
           })
           .reduce((accumulator, currentValue) => {
             return accumulator + currentValue;
