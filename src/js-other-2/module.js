@@ -307,16 +307,15 @@
     //return Number(total) !== sum ? renderDebug(total, sum, `Hours (Total Study Time)`, deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
   }; */
 
+  const removeDuplicates = (arr) => arr.filter((item, index) => arr.indexOf(item) === index);
+
   /* doAssessmentItem: Return a duplicate of item with aggregated values added */
   const doAssessmentItem = (item) => {
     // Hide International by making all aggregated values 0 - Quick hack will do for now
     if (item.tab === "International") {
       return {
         sum: 0,
-        summary: [
-          { name: "Coursework", value: 0 },
-          { name: "Examination", value: 0 },
-        ],
+        summary: [],
         tab: item.tab,
         tabAssessments: item.tabAssessments,
       };
@@ -328,28 +327,25 @@
         return accumulator + currentValue;
       }, 0);
 
-    const sumCoursework = item.tabAssessments
-      .map((item) => {
-        return item.category === "Coursework" ? Number(item.percent) : 0;
-      })
-      .reduce((accumulator, currentValue) => {
-        return accumulator + currentValue;
-      }, 0);
+    const categories = removeDuplicates(item.tabAssessments.map((el) => el.category));
 
-    const sumExam = item.tabAssessments
-      .map((item) => {
-        return item.category === "Examination" ? Number(item.percent) : 0;
-      })
-      .reduce((accumulator, currentValue) => {
-        return accumulator + currentValue;
-      }, 0);
+    // Summaries the assessments values
+    const summary = categories.map((el) => {
+      return {
+        name: el,
+        value: item.tabAssessments
+          .map((ass) => {
+            return ass.category === el ? Number(ass.percent) : 0;
+          })
+          .reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+          }, 0),
+      };
+    });
 
     return {
       sum: sum,
-      summary: [
-        { name: "Coursework", value: sumCoursework },
-        { name: "Examination", value: sumExam },
-      ],
+      summary,
       tab: item.tab,
       tabAssessments: item.tabAssessments,
     };
@@ -360,7 +356,7 @@
     console.log(assessments);
     const totalPercent = 100;
     const sums = assessments.map(doAssessmentItem).filter((item) => item.sum === totalPercent);
-
+    console.log(sums);
     const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
 
     return sums.map((item) => {

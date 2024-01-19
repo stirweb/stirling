@@ -45,6 +45,10 @@
   flex: 1;
 }
 
+.u-grid {
+  display: grid;
+}
+
 @media screen and #{breakpoint(medium up)} {
   .u-flex-medium-up {
     display: flex;
