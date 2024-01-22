@@ -60,7 +60,7 @@
   const geckoFrame = document.querySelector("iframe[id*='gecko-form-iframe-embed']");
 
   if (geckoFrame) {
-    geckoFrame.setAttribute("src", geckoFrame.getAttribute("src") + "&utm_term=" + utmTermValue);
+    geckoFrame.setAttribute("src", geckoFrame.getAttribute("src") + "&chache=" + String(Date.now()) + "&utm_term=" + utmTermValue);
     geckoFrame.contentWindow.location.reload(true);
   }
 })();
