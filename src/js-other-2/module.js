@@ -329,7 +329,7 @@
 
     const categories = removeDuplicates(item.tabAssessments.map((ass) => ass.category));
 
-    // Summaries the assessments values
+    // Summarise the assessments values
     const summary = categories.map((cat) => {
       return {
         name: cat,
