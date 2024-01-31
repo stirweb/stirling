@@ -419,37 +419,40 @@
 				     Images
 		            -->
                 <div class="cell large-7 ">
-                    <div>
-                        <img src="pic.jpg" />
+
+                    <div class="c-thumb-gallery">
+                        <style>
+                            .c-thumb-gallery-icons {
+                                grid-template-columns: repeat(10, 1fr);
+                            }
+                        </style>
+
+                        <img src="pic.jpg" class="u-aspect-ratio-3-2 u-object-cover c-thumb-gallery-image u-fadein" />
+
+                        <div class="u-grid u-gap-8 u-mt-1 c-thumb-gallery-icons">
+                            <a href="pic.jpg"><img src="pic.jpg" width="200" height="170"
+                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
+                            <a href="pic2.jpg"><img src="pic2.jpg" width="200" height="170"
+                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
+                            <a href="pic3.jpg"><img src="pic3.jpg" width="200" height="170"
+                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
+                            <a href="#"><img src="pic4.jpg" width="200" height="170"
+                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
+                            <a href="#"><img src="pic.jpg" width="200" height="170"
+                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
+                            <a href="#"><img src="pic2.jpg" width="200" height="170"
+                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
+                            <a href="#"><img src="pic3.jpg" width="200" height="170"
+                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
+                            <a href="#"><img src="pic4.jpg" width="200" height="170"
+                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
+                            <a href="#"><img src="pic.jpg" width="200" height="170"
+                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
+                            <a href="#"><img src="pic.jpg" width="200" height="170"
+                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
+
+                        </div>
                     </div>
-
-
-                    <style>
-                        .c-thumb-gallery {
-                            grid-template-columns: repeat(10, 1fr);
-                        }
-
-                        .c-thumb-gallery img {
-                            aspect-ratio: 1 / 1;
-                            object-fit: cover;
-                            border-radius: 8px;
-                        }
-                    </style>
-
-                    <div class="u-grid u-gap-8 u-mt-1 c-thumb-gallery">
-                        <a href="#"><img src="pic.jpg" width="200" height="170" /></a>
-                        <a href="#"><img src="pic2.jpg" width="200" height="170" /></a>
-                        <a href="#"><img src="pic3.jpg" width="200" height="170" /></a>
-                        <a href="#"><img src="pic4.jpg" width="200" height="170" /></a>
-                        <a href="#"><img src="pic.jpg" width="200" height="170" /></a>
-                        <a href="#"><img src="pic2.jpg" width="200" height="170" /></a>
-                        <a href="#"><img src="pic3.jpg" width="200" height="170" /></a>
-                        <a href="#"><img src="pic4.jpg" width="200" height="170" /></a>
-                        <a href="#"><img src="pic.jpg" width="200" height="170" /></a>
-                        <a href="#"><img src="pic.jpg" width="200" height="170" /></a>
-
-                    </div>
-
 
                 </div>
 
@@ -473,6 +476,8 @@
                         New undergraduate<br />
                         Study abroad/exchange<br />
                         API Carolina Global students</p>
+
+                    <p>Add to favs?</p>
 
                     <button class="button no-arrow button--left-align  expanded u-m-0 text-left  u-white--all u-mt-2">
                         <div class="flex-container align-middle u-gap-16">
@@ -679,7 +684,7 @@
                                     </p>
 
                                     <div class="u-mt-2">
-                                        <strong>Show route for... </strong>
+                                        <strong class="u-block u-mb-1">Show route for... </strong>
                                         <select id="travelmode">
                                             <option value="WALKING" selected>Walking</option>
                                             <option value="BICYCLING">Bicycling</option>
@@ -840,6 +845,25 @@
                 calcRoute(e.currentTarget.value, start);
             });
         }
+
+
+        (function (scope) {
+            const images = Array.prototype.slice.call(scope.querySelectorAll(".c-thumb-gallery-icons > a"));
+            const galleryimage = scope.querySelector(".c-thumb-gallery-image");
+
+            images.forEach(img => {
+                img.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const clickedImage = event.currentTarget.querySelector("img");
+                    galleryimage.classList.remove("u-fadein");
+                    setTimeout(() => {
+                        galleryimage.src = clickedImage.src;
+                        galleryimage.classList.add("u-fadein");
+                    }, "100");
+                });
+            });
+        })(stir.node(".c-thumb-gallery"));
+
     </script>
 
     <script async defer

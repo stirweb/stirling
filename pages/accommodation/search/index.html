@@ -42,18 +42,18 @@
     <meta name="theme-color" content="#006938">
 
 
-    <link rel="preload" href="../../medias/Categorised/Dist/fonts/fsmaja/FSMajaWeb-Regular.woff?v=0.1" as="font"
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/fsmaja/FSMajaWeb-Regular.woff?v=0.1" as="font"
         type="font/woff" crossorigin>
-    <link rel="preload" href="../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Regular.ttf?v=0.1" as="font"
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Regular.ttf?v=0.1" as="font"
         type="font/ttf" crossorigin>
-    <link rel="preload" href="../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf?v=0.1" as="font"
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf?v=0.1" as="font"
         type="font/ttf" crossorigin>
-    <link rel="preload" href="../../medias/Categorised/Dist/fonts/fonts.css?v=3.1" as="style">
-    <link rel="stylesheet" href="../../medias/Categorised/Dist/fonts/fonts.css?v=3.1">
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/fonts.css?v=3.1" as="style">
+    <link rel="stylesheet" href="../../../medias/Categorised/Dist/fonts/fonts.css?v=3.1">
 
 
-    <link rel="preload" href="../../medias/Categorised/Dist/css/app.min.css?v=141.1" as="style">
-    <link rel="stylesheet" href="../../medias/Categorised/Dist/css/app.min.css?v=141.1">
+    <link rel="preload" href="../../../medias/Categorised/Dist/css/app.min.css?v=141.1" as="style">
+    <link rel="stylesheet" href="../../../medias/Categorised/Dist/css/app.min.css?v=141.1">
 
 
 
@@ -222,7 +222,7 @@
             <div class="grid-x grid-padding-x">
                 <div class="cell large-4 medium-4 small-8">
                     <a href="/" title="University of Stirling"><img
-                            src="../../medias/Categorised/Dist/css/images/logos/logo.svg"
+                            src="../../../medias/Categorised/Dist/css/images/logos/logo.svg"
                             alt="University of Stirling logo" class="c-site-logo"></a>
                 </div>
 
@@ -412,15 +412,72 @@
             <div class="grid-x grid-padding-x">
 
                 <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
-                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Accommodation search</h1>
+                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Search our accommodation </h1>
+
+
                 </div>
 
+                <div class="cell u-pb-2">
+                    <p><strong>Find the accommodation that best suits your needs</strong></p>
+                </div>
 
+                <div class="cell u-padding-bottom">
+                    <form class="grid-x grid-padding-x" id="search-form">
+
+                        <div class="cell u-flex flex-dir-column large-flex-dir-row u-gap-16 u-pb-2">
+                            <label class="show-for-sr" for="search-price">Price</label>
+                            <p class="u-m-0">Price per week (choose your maximum price)</p>
+                            <div class="u-flex1">
+                                <div class="u-flex u-gap">
+                                    <input type="range" id="search-price" min="0" max="300" value="300" step="10"
+                                        class="u-flex1" />
+                                    <span class="text-lg"><strong>£<span
+                                                id="search-price-value">300</span></strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cell medium-4">
+                            <label class="show-for-sr" for="search-student-type">Student Type</label>
+                            <select id="search-student-type">
+                                <option value="">Student Type</option>
+                                <option>New Undergraduate</option>
+                                <option>Returning Undergraduate</option>
+                                <option>Postgraduate</option>
+                                <option>Integrated Degree students</option>
+                                <option> Nursing students</option>
+                            </select>
+                        </div>
+
+                        <div class="cell medium-4">
+                            <label class="show-for-sr" for="search-location"></label>
+                            <select id="search-location">
+                                <option value="">Location</option>
+                                <option>All locations</option>
+                                <option>On campus</option>
+                                <option>Off campus</option>
+                            </select>
+                        </div>
+
+                        <div class="cell medium-4">
+                            <label class="show-for-sr" for="search-bathroom">Bathroom</label>
+                            <select id="search-bathroom">
+                                <option value="">Bathroom</option>
+                                <option value="">Ensuite or shared</option>
+                                <option value="ensuite">Ensuite only</option>
+                            </select>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="cell u-bg-grey u-bleed bg-grey u-padding-y">
+                    <div class=" grid-x grid-padding-x" id="search-results"></div>
+                </div>
 
             </div>
         </div>
-
-
 
 
     </main>
@@ -429,12 +486,68 @@
     <!--endnoindex-->
 
     <!-- app.min.js -->
-    <script type="text/javascript" src="../../medias/Categorised/Dist/js/app.min.js?v=89.1"></script>
+    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=89.1"></script>
 
     <!-- unibuddy.min.js -->
-    <script type="text/javascript" src="../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
+    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
+
+    <script>
+
+        var accommodationData = [
+            {
+                id: 1, name: "John Forty's Court", facilities: "facilities go here", location: "On campus", distance: "1 mile",
+                rooms: [
+                    { room: "Single standard room", cost: "99.53", contract: "30, 46 and 50 week", session: "2023/24", studType: "New Undergraduate,Returning Undergraduate", bathroom: "shared" },
+                    { room: "Single standard room", cost: "104.51", contract: "36 week", session: "2023/24", studType: "New Undergraduate,Returning Undergraduate", bathroom: "shared" },
+                    { room: "Single standard room", cost: "104.51", contract: "42 week", session: "2023/24", studType: "New Undergraduate,Returning Undergraduate", bathroom: "shared" },
+                    { room: "Single ensuite room", cost: "134.90", contract: "30, 46 and 50 week", session: "2023/24", studType: "New Undergraduate,Returning Undergraduate", bathroom: "ensuite" },
+                    { room: "Single ensuite room", cost: "141.65", contract: "36 week", session: "2023/24", studType: "New Undergraduate,Returning Undergraduate", bathroom: "ensuite" },
+                    { room: "Single ensuite room", cost: "141.65", contract: "42 week", session: "2023/24", studType: "New Undergraduate,Returning Undergraduate", bathroom: "ensuite" },
+                    { room: "Single ensuite room", cost: "141.65", contract: "49 week", session: "2023/24", studType: "New Undergraduate,Returning Undergraduate", bathroom: "ensuite" },
+                    { room: "Single standard room", cost: "104.51", contract: "49 week", session: "2023/24", studType: "New Undergraduate,Returning Undergraduate", bathroom: "shared" },
+
+                ]
+            },
+            {
+                id: 2, name: "Carters Yard", facilities: "facilities go here", location: "Off campus", distance: "20 miles",
+                rooms: [
+                    { room: "Single Premium Studio Room with private kitchen", cost: "209.00", contract: "51 week", session: "2023/24", studType: "Postgraduate,New Undergraduate,Returning Undergraduate, Nursing students,Integrated Degree students", bathroom: "ensuite" },
+                    { room: "Single Deluxe Studio Room with private kitchen", cost: "205.00", contract: "51 week", session: "2023/24", studType: "Postgraduate,New Undergraduate,Returning Undergraduate, Nursing students,Integrated Degree students", bathroom: "ensuite" },
+                    { room: "Single Premium Ensuite room in a 6 bed flat with a shared kitchen", cost: "185.00", contract: "51 week", session: "2023/24", studType: "Postgraduate,New Undergraduate,Returning Undergraduate, Nursing students,Integrated Degree students", bathroom: "ensuite" },
+                    { room: "Single Deluxe Garden Studio Room with private kitchen and a garden area", cost: "215.00", contract: "51 week", session: "2023/24", studType: "Postgraduate,New Undergraduate,Returning Undergraduate, Nursing students,Integrated Degree students", bathroom: "ensuite" },
+                ]
+            },
+            {
+                id: 3, name: "Alangrange", facilities: "facilities go here", location: "Off campus", distance: "4 miles",
+                rooms: [
+                    { room: "Single standard room", cost: "108.09", contract: "49 week", session: "2023/24", studType: "Postgraduate" },
+                    { room: "Double standard room", cost: "153.59", contract: "49 week", session: "2023/24", studType: "Postgraduate" },
+                ]
+            },
+            {
+                id: 4, name: "Riverside Quay", facilities: "facilities go here", location: "Off campus", distance: "20 miles",
+                rooms: [
+                    { room: "Single Bronze Ensuite room in a 2 bed flat", cost: "172.00", contract: "51 week", session: "2023/24", studType: "Postgraduate,New Undergraduate,Returning Undergraduate", bathroom: "ensuite" },
+                    { room: "Single Silver Ensuite room in a 2 bed flat", cost: "184.00", contract: "51 week", session: "2023/24", studType: "Postgraduate,New Undergraduate,Returning Undergraduate", bathroom: "ensuite" },
+                    { room: "Single Gold Ensuite room in a 2 bed flat", cost: "190.00", contract: "51 week", session: "2023/24", studType: "Postgraduate,New Undergraduate,Returning Undergraduate", bathroom: "ensuite" },
+                    { room: "Single Bronze Ensuite Studio room", cost: "192.00", contract: "51 week", session: "2023/24", studType: "Postgraduate" },
+                ]
+            },
+            {
+                id: 5, name: "Alexander Court standard flats", facilities: "facilities go here", location: "On campus", distance: "20 miles",
+                rooms: [
+                    { room: "Single standard room", cost: "112.41", contract: "36 week", session: "2023/24", studType: "New Undergraduate", bathroom: "shared" },
+                    { room: "Single standard room", cost: "126.46", contract: "15, 17 week", session: "2023/24", studType: "New Undergraduate", bathroom: "shared" },
+                ]
+            },
 
 
+        ];
+
+    </script>
+
+    <script src="../../../medias/Categorised/Dist/js/other/_unminified/favourites.js"></script>
+    <script src="../../../medias/Categorised/Dist/js/other/_unminified/accommodation-search-3.js"></script>
 
 
 
