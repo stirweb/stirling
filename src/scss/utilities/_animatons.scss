@@ -16,6 +16,22 @@
   }
 }
 
+.u-fadein {
+  opacity: 1;
+  transform: translateX(0%);
+  animation: fadein 1s ease-in-out;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 /* 
   Mega Menu 
 */
@@ -139,18 +155,6 @@
 
 .stir__slidedown {
   max-height: 3560px;
-}
-
-.stir__fadeIn {
-  visibility: visible !important;
-  opacity: 1 !important;
-  transition: opacity 0.25s linear;
-}
-
-.stir__fadeOut {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 /* 
