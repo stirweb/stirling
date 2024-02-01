@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="cell medium-6 flex-container u-gap u-p-1">
                                     <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173866" formatter="inline/*"/></span>
-                                    <span><strong>SCQF level:</strong><br>${a}</span>
+                                    <span><strong>SCQF level:</strong><br>${a.replace("SCQF LEVEL ","")}</span>
                                 </div>
                                 <div class="cell medium-6 flex-container u-gap u-p-1">
                                     <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173867" formatter="inline/*"/></span>
