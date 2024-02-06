@@ -1,9 +1,9 @@
 var stir = stir || {};
 
 stir.favourites = (() => {
-  // VARS
-  const cookieId = "favs=";
-  const cookieExpiryDays = 365;
+  // GLOBAL VARS
+  const COOKIE_ID = "favs=";
+  const COOKIE_EXPIRY_DAYS = 365;
 
   /*
 
@@ -11,28 +11,28 @@ stir.favourites = (() => {
 
   */
 
+  const renderUrlToFavs = (urlToFavs) => {
+    return !urlToFavs ? `` : `<span class="u-border-bottom-solid u-inline-block u-mx-1"><a href="${urlToFavs}">View favourites</a></span>`;
+  };
+
   /* renderRemoveBtn */
-  const renderRemoveBtn = (sid, dateSaved) => {
-    return `
-        <div class="flex-container align-middle u-gap-8 u-mt-1">
+  const renderRemoveBtn = (sid, dateSaved, urlToFavs) => {
+    return `<div class="flex-container align-middle u-gap-8">
             <button id="removefavbtn-${sid}" class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
             ${renderActiveIcon()}
           </button>
-          <span>Favourited ${calcDaysAgo(new Date(dateSaved))}</span>
+          <span>Favourited ${calcDaysAgo(new Date(dateSaved))}</span>${renderUrlToFavs(urlToFavs)}
         </div>`;
   };
 
   /* renderAddBtn */
-  const renderAddBtn = (sid) => {
-    return `
-        <div class="flex-container align-middle u-gap-8" >
-            <button
-              class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap-8 align-middle"
+  const renderAddBtn = (sid, urlToFavs) => {
+    return `<div class="flex-container align-middle u-gap-8" >
+            <button class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap-8 align-middle"
               data-action="addtofavs" aria-label="Add to your favourites" data-id="${sid}" id="addfavbtn-${sid}">
               ${renderInactiveIcon()}
               <span class="u-heritage-green u-underline u-inline-block u-pb-1">Add to your favourites</span>
-            </button>
-            <span class="u-border-bottom-solid u-inline-block u-mx-1"><a href="#">View favourites</a></span>
+            </button>${renderUrlToFavs(urlToFavs)}
         </div>`;
   };
 
@@ -86,9 +86,9 @@ stir.favourites = (() => {
 
   /* isFavourite: Returns a boolean */
   const isFavourite = (id) => {
-    return getfavsCookie(cookieId)
+    return getfavsCookie(COOKIE_ID)
       .map((item) => Number(item.id))
-      .includes(id);
+      .includes(Number(id));
   };
 
   /* getfavsCookie: Returns an array of objects */
@@ -101,10 +101,17 @@ stir.favourites = (() => {
     return favCookie.length ? JSON.parse(favCookie) : [];
   };
 
-  /* getFavsList: Returns an array of objects */
+  /* getFavsList: Returns an array of objects. PARAM: cookieType = accomm, course etc */
   const getFavsList = (cookieType) => {
-    const favsCookieAll = getfavsCookie(cookieId);
-    const favsCookie = favsCookieAll.filter((item) => item.type === cookieType); // filter by type - eg accomm, course (default)
+    const favsCookieAll2 = getfavsCookie(COOKIE_ID);
+
+    // Work around for courses which dont have type defined
+    const favsCookieAll = favsCookieAll2.map((item) => {
+      if (!item.type) item.type = "course";
+      return item;
+    });
+
+    const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
 
     if (!favsCookie.length || favsCookie.length < 1) return [];
 
@@ -112,11 +119,16 @@ stir.favourites = (() => {
     return favsCookieSorted;
   };
 
+  const getFav = (id, cookieType) => {
+    const cookies = stir.favourites.getFavsList(cookieType);
+    return cookies.filter((entry) => Number(entry.id) === Number(id));
+  };
+
   /* addToFavs */
   const addToFavs = (id, type) => {
     if (!isFavourite(Number(id))) {
-      const favsCookie2 = [...getfavsCookie(cookieId), { id: id, date: Date.now(), type: type }];
-      document.cookie = cookieId + JSON.stringify(favsCookie2) + calcExpiryDate(cookieExpiryDays) + ";path=/";
+      const favsCookie2 = [...getfavsCookie(COOKIE_ID), { id: id, date: Date.now(), type: type }];
+      document.cookie = COOKIE_ID + JSON.stringify(favsCookie2) + calcExpiryDate(COOKIE_EXPIRY_DAYS) + ";path=/";
       return true;
     }
     return false;
@@ -125,11 +137,18 @@ stir.favourites = (() => {
   /* removeFromFavs */
   const removeFromFavs = (id) => {
     if (id && id.length) {
-      const favsCookie = JSON.stringify(getfavsCookie(cookieId).filter((item) => Number(item.id) !== Number(id)));
-      document.cookie = cookieId + favsCookie + calcExpiryDate(cookieExpiryDays) + ";path=/";
+      const favsCookie = JSON.stringify(getfavsCookie(COOKIE_ID).filter((item) => Number(item.id) !== Number(id)));
+      document.cookie = COOKIE_ID + favsCookie + calcExpiryDate(COOKIE_EXPIRY_DAYS) + ";path=/";
       return true;
     }
     return false;
+  };
+
+  /* removeAll */
+  const removeType = (type) => {
+    const favsCookie = JSON.stringify(getfavsCookie(COOKIE_ID).filter((item) => item.type !== type));
+    document.cookie = COOKIE_ID + favsCookie + calcExpiryDate(COOKIE_EXPIRY_DAYS) + ";path=/";
+    return true;
   };
 
   /*
@@ -139,16 +158,13 @@ stir.favourites = (() => {
     */
 
   return {
+    getFav: (id, cookieType) => getFav(id, cookieType),
     getFavsList: (type) => getFavsList(type),
-    renderAddBtn: (sid) => renderAddBtn(sid),
-    renderRemoveBtn: (sid, dateSaved) => renderRemoveBtn(sid, dateSaved),
+    renderAddBtn: (sid, urlToFavs) => renderAddBtn(sid, urlToFavs),
+    renderRemoveBtn: (sid, dateSaved, urlToFavs) => renderRemoveBtn(sid, dateSaved, urlToFavs),
     addToFavs: (id, type) => addToFavs(id, type),
     removeFromFavs: (id) => removeFromFavs(id),
+    removeType: (type) => removeType(type),
     isFavourite: (id) => isFavourite(id),
-    //attachEventHandlers: attachEventHandlers,
-    //auto: () => fetchData(),
-    //isFavourite: isFavourite,
-    //doCourseBtn: doCourseBtn,
-    //getFavsList: getFavsList(),
   };
 })();
