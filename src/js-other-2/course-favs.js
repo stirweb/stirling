@@ -60,11 +60,9 @@ stir.coursefavs = (() => {
   });
 
   const renderNoFavs = () => stir.templates.renderNoFavs;
-
-  const renderNoShared = () => stir.templates.renderNoShared;
   const renderLinkToFavs = () => stir.templates.renderLinkToFavs;
-
   const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
+  const renderNoShared = () => stir.templates.renderNoShared;
 
   const renderShared = (item) => {
     return !item.metaData
@@ -124,10 +122,8 @@ stir.coursefavs = (() => {
 
   /*
       isInCookie: Returns a boolean
-    */
-  const isInCookie = (courseId) => {
-    return stir.favourites.isFavourite(courseId);
-  };
+  */
+  const isInCookie = (courseId) => stir.favourites.isFavourite(courseId);
 
   /*
       getFavsList: Returns an array of course objects 

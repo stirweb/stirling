@@ -11683,9 +11683,9 @@ var KISWidgetCaller = function () {
  * Favourites buttons
  * 2023-05-10
  */
-if (stir.coursefavs) {
-  stir.coursefavs.attachEventHandlers();
-  document.querySelectorAll("[data-nodeid=coursefavsbtn]").forEach(stir.coursefavs.doCourseBtn);
+if (stir.favs) {
+  stir.favs.attachEventHandlers();
+  document.querySelectorAll("[data-nodeid=coursefavsbtn]").forEach(stir.favs.doCourseBtn);
 }
 
 var stir = stir || {};
