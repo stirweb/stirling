@@ -81,8 +81,8 @@
             </div>`;
   });
 
-  /* renderNoItems */
-  const renderNoItems = (num) => `<div class="cell u-mb-3">Results based on filters - <strong>${num} properties</strong></div>`;
+  /* renderNumItems */
+  const renderNumItems = (num) => `<div class="cell u-mb-3">Results based on filters - <strong>${num} properties</strong></div>`;
 
   /*
       Data Processing
@@ -156,10 +156,10 @@
   });
 
   /*
-     Controller
+     Controllers
   */
 
-  const mainManage = (consts, data) => {
+  const doManage = (consts, data) => {
     const favs = stir.favourites.getFavsList(consts.cookieType);
     const mapItemCurry = stir.map(mapItem(data));
     const renderer = stir.map(renderAccom(consts));
@@ -168,7 +168,7 @@
     return stir.compose(setDOM, joiner, renderer, mapItemCurry)(favs);
   };
 
-  const mainSearch = (consts, filters, data) => {
+  const doSearch = (consts, filters, data) => {
     const renderer = stir.map(renderAccom(consts));
 
     const filterByPriceCurry = stir.map(filterByPrice(filters.price));
@@ -179,7 +179,7 @@
     const filteredData = stir.compose(filterEmpties, filterByBathroomCurry, filterByLocationCurry, filterByStudTypeCurry, filterByPriceCurry, stir.clone)(data);
     const html = stir.compose(joiner, renderer)(filteredData);
 
-    return setDOMContent(resultsArea, renderNoItems(filteredData.length) + html);
+    return setDOMContent(resultsArea, renderNumItems(filteredData.length) + html);
   };
 
   /*
@@ -193,7 +193,7 @@
 
   /* Manage Favs */
   if (CONSTS.activity === "managefavs") {
-    mainManage(CONSTS, initialData);
+    doManage(CONSTS, initialData);
   }
 
   /* Search */
@@ -205,7 +205,7 @@
       studentType: "",
     };
 
-    mainSearch(CONSTS, filters, initialData);
+    doSearch(CONSTS, filters, initialData);
 
     searchPrice.value = 300;
     searchLocation.value = "";
