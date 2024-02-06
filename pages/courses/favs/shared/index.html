@@ -395,15 +395,12 @@
 
     <script>
 
-        stir.templates.renderNoFavs = `<p><strong>Nothing saved here yet</strong></p>
-            <p>This might be because:</p>
-            <ul>
-                <li>you haven't selected any favourite <a href="/courses/">courses</a> yet,</li>
-                <li>you cleared all your favourites from the list,</li>
-                <li>or your web browser is automatically clearing the cookie which remembers your list of favourites.</li>
-            </ul>`;
 
+        var stir = stir || {};
+        stir.templates = stir.templates || {};
 
+        stir.templates.renderNoShared = `<div class="cell"><p>No courses have been shared with you.</p><p><a href="/courses/">Main course search</a></p></div>`;
+        stir.templates.renderLinkToFavs = `<hr><p class="text-sm u-arrow"><a href="/courses/favourites/">Manage my favourites</a></p>`;
 
     </script>
 

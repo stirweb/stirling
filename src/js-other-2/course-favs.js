@@ -61,8 +61,8 @@ stir.coursefavs = (() => {
 
   const renderNoFavs = () => stir.templates.renderNoFavs;
 
-  const renderNoShared = () => `<div class="cell"><p>No courses have been shared with you.</p><p><a href="/courses/">Main course search</a></p></div>`;
-  const renderLinkToFavs = () => `<hr><p class="text-sm u-arrow"><a href="/courses/favourites/">Manage my favourites</a></p>`;
+  const renderNoShared = () => stir.templates.renderNoShared;
+  const renderLinkToFavs = () => stir.templates.renderLinkToFavs;
 
   const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
 
@@ -156,6 +156,9 @@ stir.coursefavs = (() => {
   */
   const getShareList = (data) => {
     const sharedListQuery = QueryParams.get("c") || "";
+
+    if (!sharedListQuery) return null;
+
     try {
       // wrap in a try{} to catch any Base64 errors
       const sharedList = atob(sharedListQuery);
