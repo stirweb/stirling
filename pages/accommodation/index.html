@@ -477,8 +477,6 @@
                         Study abroad/exchange<br />
                         API Carolina Global students</p>
 
-                    <p>Add to favs?</p>
-
                     <button class="button no-arrow button--left-align  expanded u-m-0 text-left  u-white--all u-mt-2">
                         <div class="flex-container align-middle u-gap-16">
                             <span class="u-flex1 text-sm">Apply now</span>
@@ -494,6 +492,7 @@
                         </div>
                     </button>
 
+                    <div class="u-mt-2" id="favsBtn" data-sid="1" data-favsurl="#" data-activity=""></div>
                 </div>
 
 
@@ -789,15 +788,63 @@
     <script type="text/javascript" src="../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
 
 
+    <script src="../../../medias/Categorised/Dist/js/other/_unminified/favourites.js"></script>
+
     <script>
+        (function (scope) {
+            if (!scope) return;
 
-        const galleries = stir.nodes(".c-thumb-gallery");
+            const CONSTS = {
+                cookieType: "accom",
+                urlToFavs: scope.dataset.favsurl ? scope.dataset.favsurl : ``,
+                activity: scope.dataset.activity ? scope.dataset.activity : ``,
+            };
 
-        //console.log(galleries);
+            const setDOMContent = stir.curry((node, html) => {
+                stir.setHTML(node, html);
+                return true;
+            });
+
+            const sid = Number(scope.dataset.sid);
+
+            if (!sid) return;
+
+            const isFav = stir.favourites.isFavourite(sid);
+
+            if (isFav) {
+                const cookie = stir.favourites.getFav(sid, CONSTS.cookieType);
+                const html = stir.favourites.renderRemoveBtn(sid, cookie[0].date, CONSTS.urlToFavs);
+                setDOMContent(scope, html);
+            }
+            else {
+                const html = stir.favourites.renderAddBtn(sid, "");
+                setDOMContent(scope, html);
+            }
+
+            /* Actions: Cookie btn clicks  */
+            scope.addEventListener("click", (event) => {
+                const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
+
+                if (!target || !target.dataset || !target.dataset.action) return;
+
+                /* Add */
+                if (target.dataset.action === "addtofavs") {
+                    stir.favourites.addToFavs(target.dataset.id, CONSTS.cookieType);
+                    const cookie = stir.favourites.getFav(target.dataset.id, CONSTS.cookieType);
+                    setDOMContent(scope, stir.favourites.renderRemoveBtn(sid, cookie[0].date, CONSTS.urlToFavs));
+                }
+
+                /* Remove */
+                if (target.dataset.action === "removefav") {
+                    stir.favourites.removeFromFavs(target.dataset.id);
+                    setDOMContent(scope, stir.favourites.renderAddBtn(sid, ""));
+                }
+            });
+
+        })(stir.node("#favsBtn"));
+
 
     </script>
-
-
 
     <script>
         let map;
@@ -848,6 +895,9 @@
 
 
         (function (scope) {
+
+            if (!scope) return;
+
             const images = Array.prototype.slice.call(scope.querySelectorAll(".c-thumb-gallery-icons > a"));
             const galleryimage = scope.querySelector(".c-thumb-gallery-image");
 

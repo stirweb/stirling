@@ -1,5 +1,4 @@
-var stir=stir||{};stir.favourites=(()=>{const a="favs=",r=(e,t)=>`
-        <div class="flex-container align-middle u-gap-8 u-mt-1">
+var stir=stir||{};stir.favourites=(()=>{const r="favs=",a=e=>e?`<span class="u-border-bottom-solid u-inline-block u-mx-1"><a href="${e}">View favourites</a></span>`:"",i=(e,t,r)=>`<div class="flex-container align-middle u-gap-8">
             <button id="removefavbtn-${e}" class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${e}">
             <svg version="1.1" data-stiricon="heart-inactive"  fill="currentColor" 
              viewBox="0 0 50 50" style="width:22px;height:22px;" >
@@ -7,11 +6,9 @@ var stir=stir||{};stir.favourites=(()=>{const a="favs=",r=(e,t)=>`
         C47.5,15,46.3,12.2,44.1,10.1z"/>
            </svg> 
           </button>
-          <span>Favourited ${(e=>{const t=new Date,a=24*60*60*1e3,r=(e.setHours(0,0,0,0),t.setHours(0,0,0,0),Math.floor((+t-+e)/a)),i=r>1?`days`:`day`;return r===0?`today`:`${r} ${i} ago`})(new Date(t))}</span>
-        </div>`,i=e=>{var t=new Date;return t.setTime(t.getTime()+24*e*60*60*1e3),";expires="+t.toUTCString()},n=e=>o(a).map(e=>Number(e.id)).includes(e),o=t=>{var e=document.cookie.split(";").filter(e=>e.includes(t)).map(e=>e.replace(t,""));return e.length?JSON.parse(e):[]};return{getFavsList:e=>{return t=e,!(e=o(a).filter(e=>e.type===t)).length||e.length<1?[]:e.sort((e,t)=>t.date-e.date);var t},renderAddBtn:e=>{return`
-        <div class="flex-container align-middle u-gap-8" >
-            <button
-              class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap-8 align-middle"
+          <span>Favourited ${(e=>{const t=new Date,r=24*60*60*1e3,a=(e.setHours(0,0,0,0),t.setHours(0,0,0,0),Math.floor((+t-+e)/r)),i=a>1?`days`:`day`;return a===0?`today`:`${a} ${i} ago`})(new Date(t))}</span>${a(r)}
+        </div>`,n=e=>{var t=new Date;return t.setTime(t.getTime()+24*e*60*60*1e3),";expires="+t.toUTCString()},o=e=>s(r).map(e=>Number(e.id)).includes(Number(e)),s=t=>{var e=document.cookie.split(";").filter(e=>e.includes(t)).map(e=>e.replace(t,""));return e.length?JSON.parse(e):[]};return{getFav:(e,t)=>{return r=e,stir.favourites.getFavsList(t).filter(e=>Number(e.id)===Number(r));var r},getFavsList:e=>{return t=e,!(e=s(r).map(e=>(e.type||(e.type="course"),e)).filter(e=>e.type===t)).length||e.length<1?[]:e.sort((e,t)=>t.date-e.date);var t},renderAddBtn:(e,t)=>{return t=t,`<div class="flex-container align-middle u-gap-8" >
+            <button class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap-8 align-middle"
               data-action="addtofavs" aria-label="Add to your favourites" data-id="${e}" id="addfavbtn-${e}">
               <svg version="1.1" data-stiricon="heart-active" fill="currentColor"
               viewBox="0 0 50 50" style="width:22px;height:22px;" >
@@ -21,6 +18,5 @@ var stir=stir||{};stir.favourites=(()=>{const a="favs=",r=(e,t)=>`
                l4.1,4.1c0.6,0.6,1.5,0.6,2.1,0l4.2-4.2c3.4-3.2,8.5-3.2,11.8,0C45.3,15.6,45.3,20.9,42,24.2z"/>
             </svg>
               <span class="u-heritage-green u-underline u-inline-block u-pb-1">Add to your favourites</span>
-            </button>
-            <span class="u-border-bottom-solid u-inline-block u-mx-1"><a href="#">View favourites</a></span>
-        </div>`},renderRemoveBtn:(e,t)=>r(e,t),addToFavs:(e,t)=>{return e=e,t=t,!n(Number(e))&&(e=[...o(a),{id:e,date:Date.now(),type:t}],document.cookie=a+JSON.stringify(e)+i(365)+";path=/",!0)},removeFromFavs:e=>{return!(!(t=e)||!t.length||(e=JSON.stringify(o(a).filter(e=>Number(e.id)!==Number(t))),document.cookie=a+e+i(365)+";path=/",0));var t},isFavourite:e=>n(e)}})();
+            </button>${a(t)}
+        </div>`},renderRemoveBtn:(e,t,r)=>i(e,t,r),addToFavs:(e,t)=>{return e=e,t=t,!o(Number(e))&&(e=[...s(r),{id:e,date:Date.now(),type:t}],document.cookie=r+JSON.stringify(e)+n(365)+";path=/",!0)},removeFromFavs:e=>{return!(!(t=e)||!t.length||(e=JSON.stringify(s(r).filter(e=>Number(e.id)!==Number(t))),document.cookie=r+e+n(365)+";path=/",0));var t},removeType:e=>{return t=e,e=JSON.stringify(s(r).filter(e=>e.type!==t)),document.cookie=r+e+n(365)+";path=/",!0;var t},isFavourite:e=>o(e)}})();

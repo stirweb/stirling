@@ -6,10 +6,13 @@
 (function (scope) {
   if (!scope) return;
 
-  const cookieType = "accom";
+  const CONSTS = {
+    cookieType: "accom",
+    urlToFavs: scope.dataset.favsurl ? scope.dataset.favsurl : ``,
+    activity: scope.dataset.activity ? scope.dataset.activity : ``,
+  };
 
   const resultsArea = scope;
-
   const searchForm = stir.node("#search-form");
   const searchPrice = stir.node("#search-price");
   const searchLocation = stir.node("#search-location");
@@ -27,11 +30,8 @@
     const allPrices = rooms.map((item) => parseFloat(item.cost)).sort((a, b) => a - b);
     const matches = stir.removeDuplicates(rooms.map((item) => item.room));
 
-    return `<p>From £${allPrices[0].toFixed(2)} to £${allPrices[allPrices.length - 1].toFixed(2)}  per week</p>
-          <ul >
-            ${matches.map((item) => `<li>${item}</li>`).join(``)}
-          </ul>
-    `;
+    return `<p>From £${allPrices[0].toFixed(2)} to £${allPrices[allPrices.length - 1].toFixed(2)} per week</p>
+            <ul>${matches.map((item) => `<li>${item}</li>`).join(``)}</ul>`;
   };
 
   /* renderStudentType */
@@ -45,35 +45,37 @@
     return stir.removeDuplicates(allTypes).join("<br />");
   };
 
-  const renderFavBtns = (cookie, id) => {
-    return cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date) : stir.favourites.renderAddBtn(id);
+  const renderFavBtns = (urlToFavs, cookie, id) => {
+    return cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs);
   };
 
   /* renderAccom */
-  const renderAccom = stir.curry((cookies, item) => {
-    const cookie = cookies.filter((entry) => Number(entry.id) === Number(item.id));
-    return `<div class="cell u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
-              <div class="grid-x grid-padding-x u-p-2 ">
-                <div class="cell u-pt-2">
-                    <p class="u-text-regular u-mb-2 "><strong><a href="">${item.name}</a></strong></p>
-                  </div>
-                  <div class="cell large-5 text-sm">
-                    <p><strong>Price</strong></p> 
-                    ${renderPrice(item.rooms)}
-                  </div>
-                  <div class="cell large-4 text-sm">
-                      <p><strong>Facilities</strong></p>
-                      <p>${item.facilities}</p>
-                      <p><strong>Location</strong></p> 
-                      <p>${item.name}</p>
-                      <p><strong>Student type</strong></p>
-                      <p>${renderStudentType(item.rooms)}</p>
-                  </div>
-                  <div class="cell large-3 ">
-                      <div style="border:1px solid #ccc;">Image</div>
-                  </div>
-                  <div class="cell text-sm u-pt-2" id="favbtns${item.id}">
-                    ${renderFavBtns(cookie, item.id)}
+  const renderAccom = stir.curry((consts, item) => {
+    const cookie = stir.favourites.getFav(item.id, consts.cookieType);
+    return `<div class="cell" id="fav-${item.id}">
+              <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
+                <div class="grid-x grid-padding-x u-p-2 ">
+                  <div class="cell u-pt-2">
+                      <p class="u-text-regular u-mb-2 "><strong><a href="">${item.name}</a></strong></p>
+                    </div>
+                    <div class="cell large-5 text-sm">
+                      <p><strong>Price</strong></p> 
+                      ${renderPrice(item.rooms)}
+                    </div>
+                    <div class="cell large-4 text-sm">
+                        <p><strong>Facilities</strong></p>
+                        <p>${item.facilities}</p>
+                        <p><strong>Location</strong></p> 
+                        <p>${item.name}</p>
+                        <p><strong>Student type</strong></p>
+                        <p>${renderStudentType(item.rooms)}</p>
+                    </div>
+                    <div class="cell large-3 ">
+                        <div style="border:1px solid #ccc;">Image</div>
+                    </div>
+                    <div class="cell text-sm u-pt-2" id="favbtns${item.id}">
+                      ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
+                    </div>
                   </div>
               </div>
             </div>`;
@@ -139,14 +141,14 @@
   });
 
   /*
-      Actions
+      Helpers
     */
 
-  const addToFavs = () => {};
+  const joiner = stir.join(``);
 
-  /*
-      Helper
-    */
+  const mapItem = stir.curry((alldata, item) => {
+    return alldata.filter((entry) => Number(entry.id) === Number(item.id))[0];
+  });
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
@@ -157,17 +159,17 @@
      Controller
   */
 
-  const main = (filters, data) => {
-    // Curries
+  const mainManage = (consts, data) => {
+    const favs = stir.favourites.getFavsList(consts.cookieType);
+    const mapItemCurry = stir.map(mapItem(data));
+    const renderer = stir.map(renderAccom(consts));
+    const setDOM = setDOMContent(resultsArea);
 
-    //stir.favourites.setCookieType("accom");
-    const cookies = stir.favourites.getFavsList(cookieType);
+    return stir.compose(setDOM, joiner, renderer, mapItemCurry)(favs);
+  };
 
-    // console.log(cookies);
-
-    const renderer = stir.map(renderAccom(cookies));
-    //const setContent = setDOMContent(resultsArea);
-    const joiner = stir.join(``);
+  const mainSearch = (consts, filters, data) => {
+    const renderer = stir.map(renderAccom(consts));
 
     const filterByPriceCurry = stir.map(filterByPrice(filters.price));
     const filterByStudTypeCurry = stir.map(filterByStudType(filters.studentType));
@@ -185,37 +187,45 @@
    */
 
   const initialData = accommodationData;
-  const params = QueryParams.getAllArray();
+  //const params = QueryParams.getAllArray();
 
   if (!initialData.length) return;
 
-  const filters = {
-    price: "",
-    location: "",
-    bathroom: "",
-    studentType: "",
-  };
+  /* Manage Favs */
+  if (CONSTS.activity === "managefavs") {
+    mainManage(CONSTS, initialData);
+  }
 
-  main(filters, initialData);
+  /* Search */
+  if (CONSTS.activity === "search") {
+    const filters = {
+      price: "",
+      location: "",
+      bathroom: "",
+      studentType: "",
+    };
 
-  searchPrice.value = 300;
-  searchLocation.value = "";
-  searchStudentType.value = "";
-  searchBathroom.value = "";
+    mainSearch(CONSTS, filters, initialData);
 
-  /* Actions: Form changes */
-  searchForm &&
-    searchForm.addEventListener("change", (event) => {
-      const filters = {
-        price: searchPrice.value,
-        location: searchLocation.value,
-        bathroom: searchBathroom.value,
-        studentType: searchStudentType.value,
-      };
+    searchPrice.value = 300;
+    searchLocation.value = "";
+    searchStudentType.value = "";
+    searchBathroom.value = "";
 
-      setDOMContent(searchPriceValue, filters.price);
-      main(filters, initialData);
-    });
+    /* Actions: Form changes */
+    searchForm &&
+      searchForm.addEventListener("change", (event) => {
+        const filters = {
+          price: searchPrice.value,
+          location: searchLocation.value,
+          bathroom: searchBathroom.value,
+          studentType: searchStudentType.value,
+        };
+
+        setDOMContent(searchPriceValue, filters.price);
+        main(CONSTS, filters, initialData);
+      });
+  }
 
   /* Actions: Cookie btn clicks  */
   resultsArea.addEventListener("click", (event) => {
@@ -223,13 +233,31 @@
 
     if (!target || !target.dataset || !target.dataset.action) return;
 
+    /* Add */
     if (target.dataset.action === "addtofavs") {
-      stir.favourites.addToFavs(target.dataset.id, cookieType);
+      stir.favourites.addToFavs(target.dataset.id, CONSTS.cookieType);
+
+      const cookie = stir.favourites.getFav(target.dataset.id, CONSTS.cookieType);
+      const node = stir.node("#favbtns" + target.dataset.id);
+
+      if (node) setDOMContent(node, renderFavBtns(CONSTS.urlToFavs, cookie, target.dataset.id));
     }
 
+    /* Remove */
     if (target.dataset.action === "removefav") {
-      console.log(target.dataset.id);
       stir.favourites.removeFromFavs(target.dataset.id);
+
+      const cookie = stir.favourites.getFav(target.dataset.id, CONSTS.cookieType);
+
+      if (CONSTS.activity === "searchfavs") {
+        const node = stir.node("#favbtns" + target.dataset.id);
+        if (node) setDOMContent(node, renderFavBtns(CONSTS.urlToFavs, cookie, target.dataset.id));
+      }
+
+      if (CONSTS.activity === "managefavs") {
+        const node = stir.node("#fav-" + target.dataset.id);
+        if (node) setDOMContent(node, "");
+      }
     }
   });
 })(stir.node("#search-results"));
