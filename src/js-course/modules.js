@@ -87,3 +87,10 @@ stir.course = (function() {
 	};
 
 })();
+
+
+// TEMPORARY ONLY UNTIL T4 REPUBLISHES THE COURSE PAGES
+// 2024-02-07 r.w.morrison@stir.ac.uk
+ 
+var StirUniModules = StirUniModules || {};
+StirUniModules.initialisationRoutine = stir.course.auto;
