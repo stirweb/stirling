@@ -1,6 +1,6 @@
 !function(t){if(t){t&&(t.value=window.location.href);t=stir.node("#copyurl");t&&t.addEventListener("click",t=>(async()=>{await navigator.clipboard.writeText(window.location.href)})())}}(stir.node("#shareurl")),function(){const a=stir.node("#seriesevents"),r=a&&a.dataset&&a.dataset.seriesid?a.dataset.seriesid:null,l=stir.node("#seriesdatefilter"),o=stir.node("#moreevents");if(!a&&!o)return;const e=(t,r)=>t?`<h3 class="header-stripped ${r}">${t}</h3>`:"",s=t=>`<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${t}</span><br/>`;const i=t=>{t=new Date(t);return t.getDate()+" "+["January","February","March","April","May","June","July","August","September","October","November","December"][t.getMonth()]+" "+t.getFullYear()},c=t=>`<option value="${t}">${i(t)}</option>`;const u=stir.map(t=>{return`<a href="${t.url}" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
                 <span class="u-flex1"><strong>${t.title}</strong></span>
-                <span class="flex-container align-middle u-gap u-grey--dark">
+                <span class="flex-container align-middle u-gap u-dark-grey">
                     <strong>${t.stirStart} ${t=t,t.stirStart===t.stirEnd?"":"- "+t.stirEnd}</strong>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1080 800"
                         stroke-width="1.5" stroke="none" style="width: 20px; height:20px">

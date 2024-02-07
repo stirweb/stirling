@@ -93,34 +93,6 @@ $variations: (30, 50, 70);
 // this is an exception for the grey section backgrounds
 $bg-grey: tint($light-mink, 15%);
 
-.u-bg-grey {
-  background-color: $bg-grey !important;
-}
-
-.bg-grey {
-  border-image-source: linear-gradient($bg-grey, $bg-grey);
-}
-
-.u-bg-grey--dark {
-  background-color: shade($bg-grey, 95%) !important;
-}
-
-.bg-grey--dark {
-  border-image-source: linear-gradient(shade($bg-grey, 95%), shade($bg-grey, 95%));
-}
-
-.u-bg-grey--darker {
-  background-color: shade($bg-grey, 90%) !important;
-}
-
-.bg-grey--darker {
-  border-image-source: linear-gradient(shade($bg-grey, 90%), shade($bg-grey, 90%));
-}
-
-.bg-dark-grey {
-  border-image-source: linear-gradient(#616361, #616361);
-}
-
 // Used for full width wrappers
 .u-bleed {
   border-image-slice: 0 fill;
@@ -285,11 +257,23 @@ a:has(img):hover {
   background-color: tint($heritage-purple, 10%) !important;
 }
 
-.u-bg-grey--mid {
+.u-bg-grey {
+  background-color: $bg-grey !important;
+}
+
+.bg-grey {
+  border-image-source: linear-gradient($bg-grey, $bg-grey);
+}
+
+.bg-dark-grey {
+  border-image-source: linear-gradient($dark-grey, $dark-grey);
+}
+
+.u-bg-medium-grey {
   background-color: #eee;
 }
 
-.u-bg-grey--lighter {
+.u-bg-light-grey {
   background-color: #f9f9f9;
 }
 
@@ -305,8 +289,9 @@ a:has(img):hover {
   }
 }
 
+.u-energy-teal--40,
 .u-energy-teal--light {
-  color: #b3dce0;
+  color: tint($energy-teal, 40%);
 }
 
 .u-heritage-teal {
@@ -318,18 +303,22 @@ a:has(img):hover {
 }
 
 .u-grey {
-  color: #bebebe;
+  color: $grey;
 }
 
+.u-dark-grey,
 .u-grey--dark {
-  color: #767169;
+  color: $dark-grey; // #767169
 }
+
 /* [a11y] darker dark-grey text when on grey background */
 .bg-grey {
+  .u-dark-grey,
   .u-grey--dark {
     color: #726f65;
   }
 }
+
 .u-heritage-green {
   color: $heritage-green;
 }

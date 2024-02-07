@@ -1673,6 +1673,16 @@
         "projectPath": "medias/Categorised/Dist/css/campaigns/merry-christmas.css"
       },
       {
+        "id": 176763,
+        "description": "favourites.js",
+        "projectPath": "medias/Categorised/Dist/js/other/favourites.js"
+      },
+      {
+        "id": 176762,
+        "description": "accommodation-search-3.js",
+        "projectPath": "medias/Categorised/Dist/js/other/accommodation-search-3.js"
+      },
+      {
         "id": 174823,
         "description": "snow.js",
         "projectPath": "medias/Categorised/Dist/js/other/snow.js"

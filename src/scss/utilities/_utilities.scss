@@ -52,7 +52,17 @@
   top: 0;
   left: 0;
   margin: 0 auto;
-  z-index: 100;
+  z-index: z($z-index-elements, u-sticky-nav);
+}
+
+@media screen and #{breakpoint(large up)} {
+  .u-sticky-large-up {
+    position: sticky;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    z-index: z($z-index-elements, u-sticky-large-up);
+  }
 }
 
 /* Courses etc */

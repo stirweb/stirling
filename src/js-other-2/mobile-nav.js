@@ -34,7 +34,7 @@
 
   const renderLanding = (item) => {
     return item
-      ? `<li class="u-underline u-energy-teal--light ">
+      ? `<li class="u-underline u-energy-teal--40 ">
             <a class="button no-arrow button--left-align subtle expanded u-m-0 text-left " href="${item.p}" data-action="go">
               <div class="flex-container align-middle u-gap-16">  
                 <span class="u-flex1">${item.t} home</span>
@@ -51,7 +51,7 @@
     const link = item.u ? item.u : item.p;
     return item
       ? `
-        <li class="u-underline u-energy-teal--light flex-container align-middle">
+        <li class="u-underline u-energy-teal--40 flex-container align-middle">
             <a class="button no-arrow button--left-align clear expanded u-m-0 text-left" href="${link}">
               <div class="flex-container align-middle u-gap-16"> 
                 <span class="u-flex1">${item.t}</span>

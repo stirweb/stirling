@@ -1,13 +1,9 @@
 (function () {
   /*
-       
     EVENT LISTENERS AND ACTIONS
-
   */
   function addEventListeners() {
-    /*
-        BARCHART ANIMATION TRIGGER 
-    */
+    /*  Barchart animation trigger */
     function onIntersection(entries, opts) {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -47,6 +43,7 @@
 
     */
 
+  /* renderCourseBackBtn */
   const renderCourseBackBtn = (level) => {
     const params = new URLSearchParams(document.location.search);
 
@@ -56,44 +53,46 @@
     return `<a href="${url}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`;
   };
 
+  /* renderDisclaimer */
   const renderDisclaimer = (level, boilerplates) => {
     return `<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
               ${boilerplates.disclaimer ? boilerplates.disclaimer : ``}
-          </div>
-          <div class="cell medium-3 align-middle align-center u-flex">
-            ${renderCourseBackBtn(level)}
-          </div>
-          `;
+            </div>
+            <div class="cell medium-3 align-middle align-center u-flex">
+              ${renderCourseBackBtn(level)}
+            </div> `;
   };
 
+  /* renderHeader */
   const renderHeader = ({ moduleTitle, moduleCode, locationStudyMethods, moduleLevel, moduleCredits }) => {
     return `<div class="grid-container">
-                    <div class="grid-x grid-padding-x u-my-2 align-middle">
-                        <div class="cell large-6  c-course-title u-padding-y">
-                            <h1 class="u-header-smaller ">${moduleTitle}</h1>
-                        </div>
-                        <div class="cell large-6">
-                            <div class="u-border u-border-width-5 flex-container  u-px-3 u-py-2">
-                                <div class="grid-x grid-padding-x ">
-                                    <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173865" formatter="inline/*"/></span>
-                                        <span><strong>Module code:</strong><br>${moduleCode}</span>
-                                    </div>
-                                    <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173866" formatter="inline/*"/></span>
-                                        <span><strong>SCQF level:</strong><br>${moduleLevel}</span>
-                                    </div>
-                                    <div class="cell medium-6 flex-container u-gap u-p-1">
-                                        <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173867" formatter="inline/*"/></span>
-                                        <span><strong>SCQF credits:</strong><br>${moduleCredits}</span>
-                                    </div>
+                <div class="grid-x grid-padding-x u-my-2 align-middle">
+                    <div class="cell large-6  c-course-title u-padding-y">
+                        <h1 class="u-header-smaller ">${moduleTitle}</h1>
+                    </div>
+                    <div class="cell large-6">
+                        <div class="u-border u-border-width-5 flex-container  u-px-3 u-py-2">
+                            <div class="grid-x grid-padding-x ">
+                                <div class="cell medium-6 flex-container u-gap u-p-1">
+                                    <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173865" formatter="inline/*"/></span>
+                                    <span><strong>Module code:</strong><br>${moduleCode}</span>
+                                </div>
+                                <div class="cell medium-6 flex-container u-gap u-p-1">
+                                    <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173866" formatter="inline/*"/></span>
+                                    <span><strong>SCQF level:</strong><br>${moduleLevel.replace("SCQF LEVEL ", "")}</span>
+                                </div>
+                                <div class="cell medium-6 flex-container u-gap u-p-1">
+                                    <span class="u-heritage-green u-inline-block u-width-48"><t4 type="media" id="173867" formatter="inline/*"/></span>
+                                    <span><strong>SCQF credits:</strong><br>${moduleCredits}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>`;
+                </div>
+            </div>`;
   };
 
+  /* renderContentAims */
   const renderContentAims = ({ moduleOverview, learningOutcomes, colourPack, boilerplates }) => {
     return `<div class="cell u-p-2">
                 <h2 id="contentandaims" >Content and aims</h2>
@@ -110,6 +109,7 @@
             </div>`;
   };
 
+  /* renderAwards */
   const renderAwards = ({ moduleCredits, ectsModuleCredits, professionalAccreditation, colourPack }, boilerplates, studyLevel) => {
     return `<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
@@ -140,22 +140,25 @@
   //           </div>`;
   // };
 
+  /* renderSupportingInfo */
   const renderSupportingInfo = (preparedotherinformation) => {
     return `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3><p>${preparedotherinformation}</p>`;
   };
 
+  /* renderStudyAbroad */
   const renderStudyAbroad = (content) => {
     return `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>` + content;
   };
 
+  /* renderAdditionalCosts */
   const renderAdditionalCosts = (additionalCosts) => {
     return !additionalCosts
       ? ``
-      : `
-      <h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
-      <p>${additionalCosts}</p>`;
+      : `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular u-mt-2">Additional costs</h3>
+          <p>${additionalCosts}</p>`;
   };
 
+  /* renderFurtherDetails */
   const renderFurtherDetails = ({ preparedotherinformation, studyAbroad, additionalCosts }, boilerplates) => {
     return !preparedotherinformation && studyAbroad !== "Yes" && !additionalCosts
       ? ``
@@ -164,9 +167,10 @@
                 ${preparedotherinformation ? renderSupportingInfo(preparedotherinformation) : ``}
                 ${studyAbroad === "Yes" ? renderStudyAbroad(boilerplates.studyAbroad) : ``}
                 ${renderAdditionalCosts(additionalCosts)}
-            </div>`;
+        </div>`;
   };
 
+  /* renderDeliverablesTotal */
   const renderDeliverablesTotal = (hours, colourPack) => {
     return `<div class="u-bg-${colourPack.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
                 <strong class="u-flex1">Total workload</strong>
@@ -174,6 +178,7 @@
             </div>`;
   };
 
+  /* renderDeliverables */
   const renderDeliverables = stir.curry((colourPack, total, { type, hours, typekey, label }) => {
     return typekey === "total"
       ? renderDeliverablesTotal(hours, colourPack)
@@ -184,26 +189,30 @@
         </div>`;
   });
 
+  /* renderDeliveries */
   const renderDeliveries = (width, deliveries) => (!deliveries ? `` : `<div class="cell large-${width} u-mb-1">${deliveries}</div>`);
 
-  const renderAssessmentItem = stir.curry((colourPack, { label, category, percent, mode }) => {
-    return mode === "Formative"
+  /* renderAssessmentItem */
+  const renderAssessmentItem = stir.curry((colourPack, { name, value }) => {
+    return Number(value) === 0
       ? ``
-      : `
-        <div>
-            <span class="u-inline-block u-p-tiny u-px-1">${label} (${category})</span>
-            <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${percent}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
+      : `<div>
+          <span class="u-inline-block u-p-tiny u-px-1">${name}</span>
+          <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${value}" data-max="100" data-unit="%" data-colour="${colourPack.second}"></div>
         </div>`;
   });
 
-  const renderAssessments = stir.curry((colourPack, length, { tab, tabAssessments }) => {
+  /* renderAssessments */
+  const renderAssessments = stir.curry((colourPack, length, item) => {
     const renderAssessmentItemCurry = renderAssessmentItem(colourPack);
-    const header = length > 1 ? `<h4 class="u-mt-0">${tab}</h4>` : ``;
-    return `${header}<p>${tabAssessments.map(renderAssessmentItemCurry).join(``)}</p>`;
+    const header = length > 1 ? `<h4 class="u-mt-0">${item.tab}</h4>` : ``;
+
+    return `${header}<p>${item.summary.map(renderAssessmentItemCurry).join(``)}</p>`;
   });
 
   const renderAssessment = stir.curry((width, item) => (!item ? `` : `<div class="cell large-${width} u-mb-1">${item}</div>`));
 
+  /* renderTeachingAssessment */
   const renderTeachingAssessment = (deliveries, assessments, colourPack, boilerplates) => {
     const deliveriesHtml = !deliveries.length ? boilerplates.deliveriesFallback : renderDeliveries(`12`, deliveries);
 
@@ -225,7 +234,7 @@
                   ${assessmentHtml}
               </div>
               ${boilerplates.teachingTimetableInfo}
-        </div>`;
+          </div>`;
   };
 
   const renderSectionStart = () => `<div class="grid-container"><div class="grid-x grid-padding-x">`;
@@ -274,23 +283,10 @@
     return colours.filter((item) => item.level === level).length ? colours.filter((item) => item.level === level)[0] : colours[0];
   };
 
-  // const removeDuplicateObjectFromArray = (key, array) => {
-  //   let check = {};
-  //   let res = [];
-  //   array.forEach((element) => {
-  //     if (!check[element[key]]) {
-  //       check[element[key]] = true;
-  //       res.push(element);
-  //     }
-  //   });
-  //   return res;
-  // };
-
   /*
-        CONTROLLERS
+      DATA PROCESSING
   */
 
-  // Deliveries
   /*
   const doDeliveries = (deliveries, colourPack) => {
     const deliveriesTotalItem = deliveries.filter((item) => item.typekey === "total");
@@ -311,32 +307,68 @@
     //return Number(total) !== sum ? renderDebug(total, sum, `Hours (Total Study Time)`, deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
   }; */
 
+  const removeDuplicates = (arr) => arr.filter((item, index) => arr.indexOf(item) === index);
+
+  /* doAssessmentItem: Return a duplicate of item with aggregated values added */
   const doAssessmentItem = (item) => {
+    // Hide International by making all aggregated values 0 - Quick hack will do for now
+    if (item.tab === "International") {
+      return {
+        sum: 0,
+        summary: [],
+        tab: item.tab,
+        tabAssessments: item.tabAssessments,
+      };
+    }
+
     const sum = item.tabAssessments
       .map((item) => Number(item.percent))
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
 
-    return { sum: sum, assessment: item };
+    const categories = removeDuplicates(item.tabAssessments.map((ass) => ass.category));
+
+    // Summarise the assessments values
+    const summary = categories.map((cat) => {
+      return {
+        name: cat,
+        value: item.tabAssessments
+          .map((ass) => {
+            return ass.category === cat ? Number(ass.percent) : 0;
+          })
+          .reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+          }, 0),
+      };
+    });
+
+    return {
+      sum: sum,
+      summary,
+      tab: item.tab,
+      tabAssessments: item.tabAssessments,
+    };
   };
 
-  // doAssessments
+  /* doAssessments */
   const doAssessments = (assessments, colourPack) => {
-    // const filterDups = removeDuplicateObjectFromArray("match", mapped);
+    console.log(assessments);
     const totalPercent = 100;
-    const sums = assessments.map(doAssessmentItem);
-
+    const sums = assessments.map(doAssessmentItem).filter((item) => item.sum === totalPercent);
+    console.log(sums);
     const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
 
     return sums.map((item) => {
-      if (item.sum !== totalPercent) return ``;
-      return renderAssessmentsCurry(item.assessment);
+      return renderAssessmentsCurry(item);
     });
-    //return totalPercent !== sum ? renderDebug(totalPercent, sum, "(Percent)", assessments) : assessments[0].tabAssessments.map(renderAssessmentsCurry).join(``);
   };
 
-  // Main
+  /*
+      CONTROLLERS
+  */
+
+  /* Main */
   const main = (data, colours, boilerplates) => {
     const contentArea = stir.node("#content");
     contentArea.classList.add("u-padding-bottom");
@@ -356,30 +388,26 @@
     return setDOMContent(contentArea, html);
   };
 
-  /*
-        Init: Get the data and proceed
-  */
+  /*  getData from the API Endpont  */
   async function getData(fetchUrl, colours, boilerplates) {
     const response = await fetch(fetchUrl);
 
-    try {
-      const data = await response.json();
-      main(data, colours, boilerplates);
-      addEventListeners();
-    } catch (error) {
-      setDOMContent(stir.node("#content"), renderError());
-      console.log(error.message);
-      console.log(fetchUrl);
-    }
+    // try {
+    const data = await response.json();
+    main(data, colours, boilerplates);
+    addEventListeners();
+    //} catch (error) {
+    //setDOMContent(stir.node("#content"), renderError());
+    //console.log(error.message);
+    //}
   }
 
   /*
-        On Load
-    */
-
+      ON LOAD
+  */
   const boilerplates = stir.moduleTexts || {};
 
-  const url = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=";
+  const url = "https://www.stir.ac.uk/data/pd-api/?module=";
 
   const colours = [
     { level: "ug", first: "heritage-green", second: "energy-turq", third: "energy-purple" },

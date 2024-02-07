@@ -129,7 +129,7 @@ button {
 
 /* 
     Button component variation - long
- */
+
 
 .c-long-button {
   font-size: 1.25rem; // 20px;
@@ -149,6 +149,7 @@ button {
   right: 0;
   margin-right: 50px;
 }
+ */
 
 @include breakpoint(medium down) {
   .button {
@@ -244,6 +245,15 @@ button {
   &:focus {
     background-color: transparent;
   }
+}
+
+.u-white--all.button:hover {
+  background-color: $heritage-green;
+  opacity: 0.9;
+}
+
+.u-white--all.button.heritage-berry:hover {
+  background-color: $heritage-berry;
 }
 
 /* 
