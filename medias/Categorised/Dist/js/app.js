@@ -3812,8 +3812,19 @@ stir.accord = (function () {
 
     if (!element) return;
     this.element = element;
-    this.control = element.querySelector("[aria-controls]");
-    this.panel = element.querySelector('[role="region"]');
+    var _control = element.querySelector("[aria-controls]");
+    var _region = element.querySelector('[role="region"]');
+
+	if(_control && _region && _control.getAttribute('aria-controls') === _region.id) {
+		debug && console.info('[Accordion] legacy markup found')
+		this.control = _control;
+		this.panel = _region;
+	} else {
+		debug && console.info('[Accordion] legacy markup NOT found, creating unique ARIA objects')
+		this.control = null;
+		this.panel = null;
+	}
+
     this.init();
   };
 

@@ -96,7 +96,7 @@ function jsProd() {
 
 // JS Course standalone script
 function jsCourses() {
-  const source = ["node_modules/jquery/dist/jquery.js", "src/vendor/stirunimodules/js/stirunimodules.js", "src/js-course/*.js"];
+  const source = "src/js-course/*.js";
   return (
     src(source)
       .pipe(expect(source))
