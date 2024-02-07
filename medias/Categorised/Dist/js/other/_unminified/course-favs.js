@@ -74,7 +74,7 @@ stir.coursefavs = (() => {
               </p>
               <div class="u-mb-1">${item.metaData.c}</div>
               <div>
-                ${stir.favourites.isFavourite(item.metaData.sid) ? `<p class="text-sm">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.metaData.sid, "")}
+                ${stir.favourites.isFavourite(item.metaData.sid) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.metaData.sid, "")}
               </div>
             </div>
           </div>`;
