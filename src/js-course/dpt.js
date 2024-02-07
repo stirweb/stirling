@@ -24,9 +24,15 @@ stir.dpt = (function(){
 		PG: "opt=runpgcode&ct=PG"
 	};
 
+	const PORTAL = 'https://portal.stir.ac.uk';
+
 	const urls = {
-		viewer: 'https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33273',
-		calendar: "https://portal.stir.ac.uk/servlet/CalendarServlet",
+		// Akari module viewer:
+		viewer: window.location.hostname != "www.stir.ac.uk" ? 'https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33273':'/courses/module/',
+		// Portal web frontend:
+		calendar: `${PORTAL}/calendar/calendar`,
+		// Portal data endpoints:
+		servlet: `${PORTAL}/servlet/CalendarServlet`,
 		route: {
 			UG: "?opt=menu&callback=stir.dpt.show.routes", //+ (ver?ver:'')
 			PG: "?opt=pgmenu&ct=PG&callback=stir.dpt.show.routes" //+ (ver?ver:'')
@@ -38,7 +44,7 @@ stir.dpt = (function(){
 	};
 
 //	const getAllRoutes = type => {
-//		stir.getJSONp(`${urls.calendar}${urls.route[type.toUpperCase()]}`);
+//		stir.getJSONp(`${urls.servlet}${urls.route[type.toUpperCase()]}`);
 //		user.type=type;
 //	};
 
@@ -48,23 +54,27 @@ stir.dpt = (function(){
 		user.type=type;
 		user.auto=auto;
 		stir.dpt.show.routes = routesCurry(spitCodes(routesCSV));
-		stir.getJSONp(`${urls.calendar}${urls.route[type.toUpperCase()]}`);
+		stir.getJSONp(`${urls.servlet}${urls.route[type.toUpperCase()]}`);
 	};
 	
 	const getOptions = (type,roucode,auto) => {
 		user.type=type;
 		user.rouCode=roucode;
 		user.auto=auto;
-		stir.getJSONp(`${urls.calendar}${urls.option(type,roucode)}`);
+		stir.getJSONp(`${urls.servlet}${urls.option(type,roucode)}`);
 	};
 	
-	const getModules = (type, roucode, moa, occ) => stir.getJSONp(`${urls.calendar}${urls.modules(type.toLowerCase(),roucode,moa,occ)}`);
+	const getModules = (type, roucode, moa, occ) => stir.getJSONp(`${urls.servlet}${urls.modules(type.toLowerCase(),roucode,moa,occ)}`);
 
 	//////////////////////////////////////////////
 
 	const moduleLink = data => {
-		const sid = document.querySelector('meta[name="sid"]') ? document.querySelector('meta[name="sid"]').getAttribute('content') : 'error_sid-not-found';
-		return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${sid}`;
+		// LINK TO NEW AKARI MODULE PAGES
+		//const sid = document.querySelector('meta[name="sid"]') ? document.querySelector('meta[name="sid"]').getAttribute('content') : 'error_sid-not-found';
+		//return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${sid}`;
+
+		// LINK TO OLD DEGREE PROGRAM TABLES
+		return `${urls.calendar}${(user.type==="PG"?"-pg":"")}.jsp?modCode=${data.modCode}`;
 	}; 
 
 	const template = {
