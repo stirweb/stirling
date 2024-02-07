@@ -25,7 +25,7 @@ var stir=stir||{};stir.coursefavs=(()=>{var a={favsArea:stir.node("#coursefavsar
               </p>
               <div class="u-mb-1">${a.metaData.c}</div>
               <div>
-                ${stir.favourites.isFavourite(a.metaData.sid)?'<p class="text-sm">Already in my favourites</p>':stir.favourites.renderAddBtn(a.metaData.sid,"")}
+                ${stir.favourites.isFavourite(a.metaData.sid)?'<p class="text-sm u-heritage-green">Already in my favourites</p>':stir.favourites.renderAddBtn(a.metaData.sid,"")}
               </div>
             </div>
           </div>`:"",n=a=>a?` <p><strong>Share link</strong></p>  
