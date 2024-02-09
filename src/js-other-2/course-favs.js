@@ -70,12 +70,10 @@ stir.coursefavs = (() => {
       : `<div class="cell small-6">
             <div class="u-green-line-top u-margin-bottom">
               <p class="u-text-regular u-py-1">
-              <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title}</a></strong>
+                <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title}</a></strong>
               </p>
               <div class="u-mb-1">${item.metaData.c}</div>
-              <div>
-                ${stir.favourites.isFavourite(item.metaData.sid) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.metaData.sid, "")}
-              </div>
+              <div>${stir.favourites.isFavourite(item.metaData.sid) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.metaData.sid, "")}</div>
             </div>
           </div>`;
   };
