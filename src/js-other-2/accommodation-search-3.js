@@ -51,6 +51,8 @@
 
   /* renderAccom */
   const renderAccom = stir.curry((consts, item) => {
+    if (!item) return ``;
+
     const cookie = stir.favourites.getFav(item.id, consts.cookieType);
     return `<div class="cell" id="fav-${item.id}">
               <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
@@ -137,7 +139,7 @@
 
   /* filterEmpties */
   const filterEmpties = stir.filter((item) => {
-    if (item.title) return item;
+    if (item && item.title) return item;
   });
 
   /*
@@ -146,8 +148,10 @@
 
   const joiner = stir.join(``);
 
-  const mapItem = stir.curry((alldata, item) => {
-    return alldata.filter((entry) => Number(entry.id) === Number(item.id))[0];
+  const mapItem = stir.curry((alldata, fav) => {
+    if (!fav) return [];
+
+    return alldata.filter((entry) => Number(entry.id) === Number(fav.id))[0];
   });
 
   const setDOMContent = stir.curry((node, html) => {
@@ -159,13 +163,19 @@
      Controllers
   */
 
-  const doManage = (consts, data) => {
+  const doFavourites = (consts, data) => {
     const favs = stir.favourites.getFavsList(consts.cookieType);
+
+    console.log(favs);
+
     const mapItemCurry = stir.map(mapItem(data));
     const renderer = stir.map(renderAccom(consts));
     const setDOM = setDOMContent(resultsArea);
 
-    return stir.compose(setDOM, joiner, renderer, mapItemCurry)(favs);
+    const filteredData = stir.compose(filterEmpties, mapItemCurry)(favs);
+    const html = stir.compose(joiner, renderer)(filteredData);
+
+    return html ? setDOM(html) : setDOM(stir.templates.renderNoFavs);
   };
 
   const doSearch = (consts, filters, data) => {
@@ -177,7 +187,6 @@
     const filterByLocationCurry = stir.filter(filterByLocation(filters.location));
 
     const filteredData = stir.compose(filterEmpties, filterByBathroomCurry, filterByLocationCurry, filterByStudTypeCurry, filterByPriceCurry, stir.clone)(data);
-
     const html = stir.compose(joiner, renderer)(filteredData);
 
     return setDOMContent(resultsArea, renderNumItems(filteredData.length) + html);
@@ -187,8 +196,10 @@
      On load
    */
 
-  const initialData = accommodationData;
+  const initialData = accommodationData.filter((item) => item.id && item.id.length);
   //const params = QueryParams.getAllArray();
+
+  //console.log(initialData);
 
   if (!initialData.length) return;
 
@@ -196,7 +207,7 @@
     Page : Manage Favs 
   */
   if (CONSTS.activity === "managefavs") {
-    doManage(CONSTS, initialData);
+    doFavourites(CONSTS, initialData);
   }
 
   /* 
