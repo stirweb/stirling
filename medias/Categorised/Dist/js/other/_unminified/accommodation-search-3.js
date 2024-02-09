@@ -58,7 +58,7 @@
               <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
                 <div class="grid-x grid-padding-x u-p-2 ">
                   <div class="cell u-pt-2">
-                      <p class="u-text-regular u-mb-2 "><strong><a href="">${item.title}</a></strong></p>
+                      <p class="u-text-regular u-mb-2 "><strong><a href="${item.url}">${item.title}</a></strong></p>
                     </div>
                     <div class="cell large-5 text-sm">
                       <p><strong>Price</strong></p> 
