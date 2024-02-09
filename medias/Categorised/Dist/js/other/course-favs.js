@@ -21,12 +21,10 @@ var stir=stir||{};stir.coursefavs=(()=>{var a={favsArea:stir.node("#coursefavsar
           </div>`:""),d=()=>stir.templates.renderNoFavs,o=a=>a.metaData?`<div class="cell small-6">
             <div class="u-green-line-top u-margin-bottom">
               <p class="u-text-regular u-py-1">
-              <strong><a href="${a.liveUrl}" title="${a.metaData.award||""} ${a.title}">${a.metaData.award||""} ${a.title}</a></strong>
+                <strong><a href="${a.liveUrl}" title="${a.metaData.award||""} ${a.title}">${a.metaData.award||""} ${a.title}</a></strong>
               </p>
               <div class="u-mb-1">${a.metaData.c}</div>
-              <div>
-                ${stir.favourites.isFavourite(a.metaData.sid)?'<p class="text-sm u-heritage-green">Already in my favourites</p>':stir.favourites.renderAddBtn(a.metaData.sid,"")}
-              </div>
+              <div>${stir.favourites.isFavourite(a.metaData.sid)?'<p class="text-sm u-heritage-green">Already in my favourites</p>':stir.favourites.renderAddBtn(a.metaData.sid,"")}</div>
             </div>
           </div>`:"",n=a=>a?` <p><strong>Share link</strong></p>  
           ${navigator.clipboard?'<p class="text-xsm">The following share link has been copied to your clipboard:</p>':""}   

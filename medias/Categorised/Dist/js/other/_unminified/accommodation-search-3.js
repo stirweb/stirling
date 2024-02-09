@@ -191,12 +191,16 @@
 
   if (!initialData.length) return;
 
-  /* Manage Favs */
+  /* 
+    Page : Manage Favs 
+  */
   if (CONSTS.activity === "managefavs") {
     doManage(CONSTS, initialData);
   }
 
-  /* Search */
+  /* 
+    Page : Search 
+  */
   if (CONSTS.activity === "search") {
     const filters = {
       price: "",
@@ -223,7 +227,7 @@
         };
 
         setDOMContent(searchPriceValue, filters.price);
-        main(CONSTS, filters, initialData);
+        doSearch(CONSTS, filters, initialData);
       });
   }
 
