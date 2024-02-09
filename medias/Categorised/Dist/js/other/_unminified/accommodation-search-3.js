@@ -28,7 +28,7 @@
   const renderPrice = (rooms) => {
     if (!rooms) return ``;
     const allPrices = rooms.map((item) => parseFloat(item.cost)).sort((a, b) => a - b);
-    const matches = stir.removeDuplicates(rooms.map((item) => item.room));
+    const matches = stir.removeDuplicates(rooms.map((item) => item.title));
 
     return `<p>From £${allPrices[0].toFixed(2)} to £${allPrices[allPrices.length - 1].toFixed(2)} per week</p>
             <ul>${matches.map((item) => `<li>${item}</li>`).join(``)}</ul>`;
@@ -56,7 +56,7 @@
               <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
                 <div class="grid-x grid-padding-x u-p-2 ">
                   <div class="cell u-pt-2">
-                      <p class="u-text-regular u-mb-2 "><strong><a href="">${item.name}</a></strong></p>
+                      <p class="u-text-regular u-mb-2 "><strong><a href="">${item.title}</a></strong></p>
                     </div>
                     <div class="cell large-5 text-sm">
                       <p><strong>Price</strong></p> 
@@ -66,7 +66,7 @@
                         <p><strong>Facilities</strong></p>
                         <p>${item.facilities}</p>
                         <p><strong>Location</strong></p> 
-                        <p>${item.name}</p>
+                        <p>${item.location}</p>
                         <p><strong>Student type</strong></p>
                         <p>${renderStudentType(item.rooms)}</p>
                     </div>
@@ -137,7 +137,7 @@
 
   /* filterEmpties */
   const filterEmpties = stir.filter((item) => {
-    if (item.name) return item;
+    if (item.title) return item;
   });
 
   /*
@@ -177,6 +177,7 @@
     const filterByLocationCurry = stir.filter(filterByLocation(filters.location));
 
     const filteredData = stir.compose(filterEmpties, filterByBathroomCurry, filterByLocationCurry, filterByStudTypeCurry, filterByPriceCurry, stir.clone)(data);
+
     const html = stir.compose(joiner, renderer)(filteredData);
 
     return setDOMContent(resultsArea, renderNumItems(filteredData.length) + html);
