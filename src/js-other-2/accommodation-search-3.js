@@ -73,7 +73,7 @@
                         <p>${renderStudentType(item.rooms)}</p>
                     </div>
                     <div class="cell large-3 ">
-                        <div style="border:1px solid #ccc;">Image</div>
+                        <div ><img src="${item.img}" width="760" height="470" alt="Image of ${item.title}" /></div>
                     </div>
                     <div class="cell text-sm u-pt-2" id="favbtns${item.id}">
                       ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
