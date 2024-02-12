@@ -59,7 +59,7 @@
               ${boilerplates.disclaimer ? boilerplates.disclaimer : ``}
             </div>
             <div class="cell medium-3 align-middle align-center u-flex">
-            ${renderCourseBackBtn(level)} 
+            
             </div> `;
   };
 
