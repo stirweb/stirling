@@ -592,7 +592,12 @@ stir.dpt = (function () {
   const modulesOverview = (data) => {
     let frag = document.createDocumentFragment();
     data.initialText && frag.append(paragraph(data.initialText));
-    data.pdttRept && frag.append(paragraph(data.pdttRept));
+
+    if (data.pdttRept) {
+      let tempNode = document.createElement("p");
+      tempNode.innerHTML = data.pdttRept;
+      data.pdttRept && frag.append(tempNode);
+    }
     let paths = [],
       years = [];
 
