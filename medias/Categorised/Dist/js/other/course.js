@@ -481,9 +481,6 @@ stir.dpt = (function () {
   const getCurrentUri = () => {
     const urlBits = document.querySelector("link[rel='canonical']").getAttribute("href") ? document.querySelector("link[rel='canonical']").getAttribute("href").split("/") : [];
 
-    //console.log(urlBits);
-    //console.log(UoS_env.name);
-
     if (!urlBits.length || urlBits.length < 3) return ``;
 
     if (UoS_env.name === "preview") return urlBits[urlBits.length - 1];

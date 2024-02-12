@@ -53,13 +53,13 @@
     return `<a href="${url}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`;
   };
 
-  /* renderDisclaimer   ${renderCourseBackBtn(level)} */
+  /* renderDisclaimer    */
   const renderDisclaimer = (level, boilerplates) => {
     return `<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
               ${boilerplates.disclaimer ? boilerplates.disclaimer : ``}
             </div>
             <div class="cell medium-3 align-middle align-center u-flex">
-            
+            ${renderCourseBackBtn(level)}
             </div> `;
   };
 
@@ -94,6 +94,7 @@
 
   /* renderContentAims */
   const renderContentAims = ({ moduleOverview, learningOutcomes, colourPack, boilerplates }) => {
+    //const str = moduleOverview.replace(/¿/g, "'");
     return `<div class="cell u-p-2">
                 <h2 id="contentandaims" >Content and aims</h2>
                 <h3 class="header-stripped u-bg-${colourPack.first}--10 u-${colourPack.first}-line-left u-p-1  u-border-width-5 u-text-regular">
@@ -353,10 +354,10 @@
 
   /* doAssessments */
   const doAssessments = (assessments, colourPack) => {
-    console.log(assessments);
+    //console.log(assessments);
     const totalPercent = 100;
     const sums = assessments.map(doAssessmentItem).filter((item) => item.sum === totalPercent);
-    console.log(sums);
+    //console.log(sums);
     const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
 
     return sums.map((item) => {
@@ -418,6 +419,8 @@
   const fetchUrl = url + [params.get("code"), params.get("session"), params.get("semester")].join("/");
 
   //const fetchUrl = "sample.json"; // Testing
+
+  //console.log(fetchUrl);
 
   getData(fetchUrl, colours, boilerplates);
 })();
