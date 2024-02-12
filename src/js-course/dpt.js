@@ -184,7 +184,7 @@ stir.dpt = (function () {
 
     if (data.pdttRept) {
       let tempNode = document.createElement("p");
-      tempNode.innerHTML = data.pdttRept;
+      tempNode.appendChild(stir.createDOMFragment(data.pdttRept));
       data.pdttRept && frag.append(tempNode);
     }
     let paths = [],
