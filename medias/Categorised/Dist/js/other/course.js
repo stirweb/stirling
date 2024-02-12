@@ -484,7 +484,7 @@ stir.dpt = (function () {
     return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${sid}`;
 
     // LINK TO OLD DEGREE PROGRAM TABLES
-    //return `${urls.calendar}${(user.type==="PG"?"-pg":"")}.jsp?modCode=${data.modCode}`;
+    return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
   };
 
   const template = {
