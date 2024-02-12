@@ -49,7 +49,7 @@
 
     if (!params.get("course")) return ``;
 
-    const url = stir.isNumeric(params.get("course")) ? `/terminalfour/preview/1/en/${params.get("course")}` : `/courses/${level}/${params.get("course")}`;
+    const url = stir.isNumeric(params.get("course")) ? `/terminalfour/preview/1/en/${params.get("course")}` : `/courses/${level.replace("pg", "pg-taught")}/${params.get("course")}`;
     return `<a href="${url}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`;
   };
 
