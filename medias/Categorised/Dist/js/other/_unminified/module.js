@@ -53,13 +53,13 @@
     return `<a href="${url}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`;
   };
 
-  /* renderDisclaimer */
+  /* renderDisclaimer   ${renderCourseBackBtn(level)} */
   const renderDisclaimer = (level, boilerplates) => {
     return `<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
               ${boilerplates.disclaimer ? boilerplates.disclaimer : ``}
             </div>
             <div class="cell medium-3 align-middle align-center u-flex">
-              ${renderCourseBackBtn(level)}
+            
             </div> `;
   };
 
