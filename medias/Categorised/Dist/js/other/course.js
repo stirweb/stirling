@@ -478,25 +478,20 @@ stir.dpt = (function () {
 
   //////////////////////////////////////////////
 
-  const getCurrentUrl = () => {
+  const getCurrentUri = () => {
     const urlBits = document.querySelector("link[rel='canonical']").getAttribute("href") ? document.querySelector("link[rel='canonical']").getAttribute("href").split("/") : [];
+
+    console.log(urlBits);
 
     if (!urlBits.length || urlBits.length < 3) return ``;
 
-    if (UoS_env.name === "preview") {
-      return urlBits[urlBits.length[-1]];
-    }
-
+    if (UoS_env.name === "preview") return urlBits[urlBits.length[-1]];
     return urlBits[urlBits.length - 2];
   };
 
   const moduleLink = (data) => {
     // LINK TO NEW AKARI MODULE PAGES
-
-    const url = getCurrentUrl();
-
-    console.log(url);
-
+    const url = getCurrentUri();
     //const sid = document.querySelector('meta[name="sid"]') ? document.querySelector('meta[name="sid"]').getAttribute("content") : "error_sid-not-found";
     return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${url}`;
 
