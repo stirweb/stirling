@@ -68,18 +68,26 @@ stir.dpt = (function () {
   //////////////////////////////////////////////
 
   const getCurrentUrl = () => {
-    console.log(document.querySelector("link[rel='canonical']").getAttribute("href").split("/"));
+    const urlBits = document.querySelector("link[rel='canonical']").getAttribute("href") ? document.querySelector("link[rel='canonical']").getAttribute("href").split("/") : [];
+
+    if (!urlBits.length || urlBits.length < 3) return ``;
+
+    if (UoS_env.name === "preview") {
+      return urlBits[urlBits.length[-1]];
+    }
+
+    return urlBits[urlBits.length - 2];
   };
 
   const moduleLink = (data) => {
     // LINK TO NEW AKARI MODULE PAGES
 
-    const urlBits = document.querySelector("link[rel='canonical']").getAttribute("href") ? document.querySelector("link[rel='canonical']").getAttribute("href") : ``;
+    const url = getCurrentUrl();
 
-    console.log(urlBits.split("/"));
+    console.log(url);
 
-    const sid = document.querySelector('meta[name="sid"]') ? document.querySelector('meta[name="sid"]').getAttribute("content") : "error_sid-not-found";
-    return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${sid}`;
+    //const sid = document.querySelector('meta[name="sid"]') ? document.querySelector('meta[name="sid"]').getAttribute("content") : "error_sid-not-found";
+    return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${url}`;
 
     // LINK TO OLD DEGREE PROGRAM TABLES
     return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
