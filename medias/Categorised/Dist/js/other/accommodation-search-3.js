@@ -18,7 +18,7 @@
                         <p>${i=e.rooms,i?(i=i.map(t=>t.studType).join(",").split(","),stir.removeDuplicates(i).join("<br />")):""}</p>
                     </div>
                     <div class="cell large-3 ">
-                        <div ><img src="${e.img}" width="760" height="470" alt="Image of ${e.title}" class="u-aspect-ratio-3-2 u-object-cover" /></div>
+                        <div ><img src="${e.img}" width="760" height="470" alt="Image of ${e.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
                     </div>
                     <div class="cell text-sm u-pt-2" id="favbtns${e.id}">
                       ${u(t.urlToFavs,r,e.id)}
