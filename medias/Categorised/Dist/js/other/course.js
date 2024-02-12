@@ -478,8 +478,17 @@ stir.dpt = (function () {
 
   //////////////////////////////////////////////
 
+  const getCurrentUrl = () => {
+    console.log(document.querySelector("link[rel='canonical']").getAttribute("href").split("/"));
+  };
+
   const moduleLink = (data) => {
     // LINK TO NEW AKARI MODULE PAGES
+
+    const urlBits = document.querySelector("link[rel='canonical']").getAttribute("href") ? document.querySelector("link[rel='canonical']").getAttribute("href") : ``;
+
+    console.log(urlBits.split("/"));
+
     const sid = document.querySelector('meta[name="sid"]') ? document.querySelector('meta[name="sid"]').getAttribute("content") : "error_sid-not-found";
     return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${sid}`;
 
