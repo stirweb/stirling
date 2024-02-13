@@ -247,6 +247,18 @@ p.smaller {
   line-height: 1.5;
 }
 
+@media screen and #{breakpoint(medium up)} {
+  .h1 {
+    font-size: 3.625rem;
+  }
+}
+
+@media screen and #{breakpoint(large up)} {
+  .h1 {
+    font-size: 4.5rem;
+  }
+}
+
 /*
     Exceptions for header when placed after classes beginning padding. u-padding-[x]
 */
