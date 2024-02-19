@@ -399,7 +399,7 @@ stir.search = () => {
 					const facetFilter = stir.DOM.frag(stir.String.domify(stir.templates.search.facet(facet)));
 					const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
 					facetFilterElements && facetFilterElements.forEach(el => {
-						//el.checked=true;
+						el.checked=true;
 						metaName && QueryParams.remove(metaName,false,null,true); // don't reload window and use replaceState() instead of pushState()
 						facetName && QueryParams.remove(facetName,false,null,true,true); // don't reload window and use replaceState() instead of pushState()
 					});
