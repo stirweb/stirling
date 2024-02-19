@@ -1,6 +1,9 @@
 var stir = stir || {};
 
 stir.coursefavs = (() => {
+
+  if(!stir.favourites) return console.error('[Course Favourites] stir.favourites library not loaded');
+
   // NODES
   const NODES = {
     favsArea: stir.node("#coursefavsarea"),
@@ -358,5 +361,5 @@ stir.favs = stir.coursefavs;
  *
  */
 if (stir.node("#coursefavsarea") || stir.node("#coursesharedarea") || stir.nodes("#coursefavsbtn").length) {
-  stir.coursefavs.auto(); // `.auto()` replaces `new stir.Favs()`
+  stir.coursefavs.auto();
 }
