@@ -418,7 +418,7 @@ stir.templates.search = (() => {
 		  
 		  <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
 			<div data-nodeid="coursefavsbtn" class="flex-container u-gap-8" data-id="${item.metaData.sid}">
-			  ${stir.favs && stir.favs.createCourseBtnHTML(item.metaData.sid)}
+			  ${stir.coursefavs && stir.coursefavs.createCourseBtnHTML(item.metaData.sid)}
 			</div>
 			<span><a href="/courses/favourites/">View favourites</a></span>
 		  </div>
@@ -1406,7 +1406,7 @@ stir.search = () => {
 
 	const prefetch = {
 		course: (callback) => {
-			stir.favs && stir.favs.attachEventHandlers();	// listen for Favs events
+			stir.coursefavs && stir.coursefavs.attachEventHandlers();	// listen for Favs events
 			let xmlHttpRequest = stir.courses.getCombos();
 			if (xmlHttpRequest) {
 				xmlHttpRequest.addEventListener("loadend", callback); // loadend should fire after load OR error
