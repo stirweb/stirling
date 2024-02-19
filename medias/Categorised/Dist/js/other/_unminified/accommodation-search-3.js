@@ -84,7 +84,7 @@
   });
 
   /* renderNumItems */
-  const renderNumItems = (num) => `<div class="cell u-mb-3">Results based on filters - <strong>${num} properties</strong></div>`;
+  const renderNumItems = (num) => `<div class="cell u-mb-3">Results based on filters - <strong>${num} ${num === 1 ? `property` : `properties`}</strong></div>`;
 
   /*
       Data Processing
