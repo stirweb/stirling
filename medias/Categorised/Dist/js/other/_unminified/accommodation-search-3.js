@@ -68,7 +68,7 @@
                         <p><strong>Facilities</strong></p>
                         <p>${item.facilities
                           .split(",")
-                          .map((entry) => entry + `<br />`)
+                          .map((entry) => entry + `<br /> `)
                           .join("")}</p>
                         <p><strong>Location</strong></p> 
                         <p>${item.location}</p>

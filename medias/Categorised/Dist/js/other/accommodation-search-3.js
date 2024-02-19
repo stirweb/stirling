@@ -11,7 +11,7 @@
                     </div>
                     <div class="cell large-4 text-sm">
                         <p><strong>Facilities</strong></p>
-                        <p>${e.facilities.split(",").map(t=>t+"<br />").join("")}</p>
+                        <p>${e.facilities.split(",").map(t=>t+"<br /> ").join("")}</p>
                         <p><strong>Location</strong></p> 
                         <p>${e.location}</p>
                         <p><strong>Student type</strong></p>
