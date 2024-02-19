@@ -918,6 +918,24 @@
 
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1UNnY29BxIeFG4lq_-NTGEF1SUHNdQP8&callback=initMap"></script>
+
+
+
+
+    <script>
+
+
+        let img = `<img src="https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&amp;fnno=60&amp;ceid=6992a0f893f5bcfc9bce54343a51410599704f36" width="760" height="470" alt="Student accommodation communal area" loading="lazy">`;
+        let imgBits = img.split(" ");
+        let imgClasses = 'class="u-aspect-ratio-3-2 u-object-cover c-thumb-gallery-image u-fadein"';
+
+        imgBits.splice(2, 0, imgClasses);
+
+        console.log(imgBits.join(" "));
+
+
+
+    </script>
 </body>
 
 </html>
