@@ -34,13 +34,15 @@
             <ul>${matches.map((item) => `<li>${item}</li>`).join(``)}</ul>`;
   };
 
-  /* renderStudentType */
-  const renderStudentType = (rooms) => {
+  /* renderStudentTypes */
+  const renderStudentTypes = (rooms) => {
     if (!rooms) return ``;
+
     const allTypes = rooms
       .map((item) => item.studType)
       .join(",")
-      .split(",");
+      .split(",")
+      .map((item) => item.trim());
 
     return stir.removeDuplicates(allTypes).join("<br />");
   };
@@ -73,7 +75,7 @@
                         <p><strong>Location</strong></p> 
                         <p>${item.location}</p>
                         <p><strong>Student type</strong></p>
-                        <p>${renderStudentType(item.rooms)}</p>
+                        <p>${renderStudentTypes(item.rooms)}</p>
                     </div>
                     <div class="cell large-3 ">
                         <div ><img src="${item.img}" width="760" height="470" alt="Image of ${item.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
@@ -169,8 +171,6 @@
   const doFavourites = (consts, data) => {
     const favs = stir.favourites.getFavsList(consts.cookieType);
 
-    console.log(favs);
-
     const mapItemCurry = stir.map(mapItem(data));
     const renderer = stir.map(renderAccom(consts));
     const setDOM = setDOMContent(resultsArea);
@@ -201,8 +201,6 @@
 
   const initialData = accommodationData.filter((item) => item.id && item.id.length);
   //const params = QueryParams.getAllArray();
-
-  //console.log(initialData);
 
   if (!initialData.length) return;
 

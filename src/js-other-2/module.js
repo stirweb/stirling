@@ -420,7 +420,5 @@
 
   //const fetchUrl = "sample.json"; // Testing
 
-  //console.log(fetchUrl);
-
   getData(fetchUrl, colours, boilerplates);
 })();
