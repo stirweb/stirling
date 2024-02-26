@@ -44,7 +44,7 @@
       .split(",")
       .map((item) => item.trim());
 
-    return stir.removeDuplicates(allTypes).join("<br />");
+    return stir.removeDuplicates(allTypes).sort().join("<br />");
   };
 
   const renderFavBtns = (urlToFavs, cookie, id) => {
