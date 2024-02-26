@@ -73,7 +73,93 @@
 
     <!-- DC TAGS-->
 
+    <style>
+        input[type="range"] {
+            -webkit-appearance: none;
+            margin-right: 15px;
+            width: 200px;
+            height: 7px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 5px;
+            background-image: linear-gradient(#ccc, #ccc);
+            background-repeat: no-repeat;
+        }
 
+        [dir="rtl"] input[type="range"] {
+            background: #006938;
+            background-image: linear-gradient(#fff, #fff);
+            background-size: 30% 100%;
+            background-repeat: no-repeat;
+        }
+
+        /* Input Thumb */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #006938;
+            cursor: ew-resize;
+            box-shadow: 0 0 2px 0 #555;
+            transition: background .3s ease-in-out;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #006938;
+            cursor: ew-resize;
+            box-shadow: 0 0 2px 0 #555;
+            transition: background .3s ease-in-out;
+        }
+
+        input[type="range"]::-ms-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #006938;
+            cursor: ew-resize;
+            box-shadow: 0 0 2px 0 #555;
+            transition: background .3s ease-in-out;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: #006938;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            background: #006938;
+        }
+
+        input[type="range"]::-ms-thumb:hover {
+            background: #006938;
+        }
+
+        /* Input Track */
+        input[type=range]::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+        }
+
+        input[type=range]::-moz-range-track {
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+        }
+
+        input[type="range"]::-ms-track {
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+        }
+    </style>
 
 
 
@@ -439,10 +525,8 @@
                             <p class="u-m-0">Price per week (choose your maximum price)</p>
                             <div class="u-flex1">
                                 <div class="u-flex u-gap">
-                                    <input type="range" id="search-price" min="0" max="300" value="300" step="10"
-                                        class="u-flex1" />
-                                    <span class="text-lg"><strong>£<span
-                                                id="search-price-value">300</span></strong></span>
+                                    <input type="range" id="search-price" min="0" max="300" step="10" class="u-flex1" />
+                                    <span class="text-lg"><strong>£<span id="search-price-value"></span></strong></span>
                                 </div>
                             </div>
                         </div>
@@ -648,7 +732,7 @@
 
 
     <script>
-        var accommodationData = [{ "id": "33911", "title": "Alangrange", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33911", "img": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=b98178d148beeb08199f15c4e6bfca5ad130ad7e", "facilities": "", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single standard room", "cost": "108.09", "contract": "49 week", "bathroom": "Shared", "studType": "Postgraduate", "accessible": "", "session": "2024/25" }, { "title": "Double standard room", "cost": "153.59", "contract": "49 week", "bathroom": "Shared", "studType": "Postgraduate", "accessible": "", "session": "2024/25" }] }, { "id": "33912", "title": "John Forty's Court", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33912", "img": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=28eff5097c812d4d06785c6a66dbc2bd7a4826dc", "facilities": "", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single standard room", "cost": "99.53", "contract": "30, 46 and 50 week contract for Nursing and Paramedic Science students", "bathroom": "Shared", "studType": "Nursing students", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "104.51", "contract": "36 week contract for most undergraduate students", "bathroom": "Shared", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "104.51", "contract": "42 week contract for Forth Valley College (Integrated Degree) students", "bathroom": "Shared", "studType": "Integrated Degree students", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "104.51", "contract": "49 week contract for postgraduate students", "bathroom": "Ensuite", "studType": "Postgraduate", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "134.90", "contract": "30, 46 and 50 week contract for Nursing and Paramedic Science students", "bathroom": "Ensuite", "studType": "Nursing students", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "141.65", "contract": "36 week contract for most undergraduate students", "bathroom": "Ensuite", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "141.65", "contract": "42 week for Forth Valley (Integrated Degree) students", "bathroom": "Ensuite", "studType": "Integrated Degree students", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "141.65", "contract": "49 week contract for postgraduate students", "bathroom": "Ensuite", "studType": "Postgraduate", "accessible": "", "session": "2024/25" }] }, { "id": "33913", "title": "Carters Yard", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33913", "img": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=6992a0f893f5bcfc9bce54343a51410599704f36", "facilities": "Single room with shared bathroom, Single room with ensuite bathroom, Share with up to x flatmates", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single Premium Studio Room with private kitchen", "cost": "209.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Deluxe Studio Room with private kitchen", "cost": "205.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Premium Ensuite room in a 6 bed flat with a shared kitchen", "cost": "185.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Deluxe Garden Studio Room with private kitchen and a garden area", "cost": "215.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Premium Studio Room with private kitchen", "cost": "225.26", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2025/26" }] }, { "id": "33914", "title": "Riverside Quay", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33914", "img": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=18f92528357af6e7eeaf77cd5928d81c61daa026", "facilities": "", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single Bronze Ensuite room in a 2 bed flat", "cost": "172.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Silver Ensuite room in a 2 bed flat", "cost": "184.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Gold Ensuite room in a 2 bed flat", "cost": "190.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Bronze Ensuite Studio room", "cost": "192.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Silver Ensuite Studio room", "cost": "197.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2023/24" }, { "title": "Single Gold Ensuite Studio room", "cost": "207.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2023/24" }] }, { "id": "33915", "title": "Alexander Court standard flats", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33915", "img": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=bf221fbf2f645c896ab240e4fdb3ff1d0b1147a9", "facilities": "", "location": "On campus", "distance": "1 mile", "rooms": [{ "title": "Single standard room", "cost": "112.41", "contract": "36 week", "bathroom": "Shared", "studType": "Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "126.46", "contract": "15, 17 week", "bathroom": "Shared", "studType": "Undergraduate", "accessible": "", "session": "2024/25" }] }, {}
+        var accommodationData = [{ "id": "33911", "title": "Alangrange", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33911", "img": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=b98178d148beeb08199f15c4e6bfca5ad130ad7e", "facilities": "", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single standard room", "cost": "108.09", "contract": "49 week", "bathroom": "Shared", "studType": "Postgraduate", "accessible": "", "session": "2024/25" }, { "title": "Double standard room", "cost": "153.59", "contract": "49 week", "bathroom": "Shared", "studType": "Postgraduate", "accessible": "", "session": "2024/25" }] }, { "id": "33912", "title": "John Forty's Court", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33912", "img": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=28eff5097c812d4d06785c6a66dbc2bd7a4826dc", "facilities": "", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single standard room", "cost": "107.53", "contract": "30, 46 and 50 week contract for Nursing and Paramedic Science students", "bathroom": "Shared", "studType": "Nursing students", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "104.51", "contract": "36 week contract for most undergraduate students", "bathroom": "Shared", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "104.51", "contract": "42 week contract for Forth Valley College (Integrated Degree) students", "bathroom": "Shared", "studType": "Integrated Degree students", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "104.51", "contract": "49 week contract for postgraduate students", "bathroom": "Ensuite", "studType": "Postgraduate", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "134.90", "contract": "30, 46 and 50 week contract for Nursing and Paramedic Science students", "bathroom": "Ensuite", "studType": "Nursing students", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "141.65", "contract": "36 week contract for most undergraduate students", "bathroom": "Ensuite", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "141.65", "contract": "42 week for Forth Valley (Integrated Degree) students", "bathroom": "Ensuite", "studType": "Integrated Degree students", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "141.65", "contract": "49 week contract for postgraduate students", "bathroom": "Ensuite", "studType": "Postgraduate", "accessible": "", "session": "2024/25" }] }, { "id": "33913", "title": "Carters Yard", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33913", "img": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=6992a0f893f5bcfc9bce54343a51410599704f36", "facilities": "Single room with shared bathroom, Single room with ensuite bathroom, Share with up to x flatmates", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single Premium Studio Room with private kitchen", "cost": "209.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Deluxe Studio Room with private kitchen", "cost": "205.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Premium Ensuite room in a 6 bed flat with a shared kitchen", "cost": "185.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Deluxe Garden Studio Room with private kitchen and a garden area", "cost": "215.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Premium Studio Room with private kitchen", "cost": "225.26", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2025/26" }] }, { "id": "33914", "title": "Riverside Quay", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33914", "img": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=18f92528357af6e7eeaf77cd5928d81c61daa026", "facilities": "", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single Bronze Ensuite room in a 2 bed flat", "cost": "172.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Silver Ensuite room in a 2 bed flat", "cost": "184.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Gold Ensuite room in a 2 bed flat", "cost": "190.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Bronze Ensuite Studio room", "cost": "192.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Silver Ensuite Studio room", "cost": "197.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2023/24" }, { "title": "Single Gold Ensuite Studio room", "cost": "207.00", "contract": "51 week contract", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2023/24" }] }, { "id": "33915", "title": "Alexander Court standard flats", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33915", "img": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&fnno=60&ceid=bf221fbf2f645c896ab240e4fdb3ff1d0b1147a9", "facilities": "", "location": "On campus", "distance": "1 mile", "rooms": [{ "title": "Single standard room", "cost": "112.41", "contract": "36 week", "bathroom": "Shared", "studType": "Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "126.46", "contract": "15, 17 week", "bathroom": "Shared", "studType": "Undergraduate", "accessible": "", "session": "2024/25" }] }, {}
         ];    
     </script>
 

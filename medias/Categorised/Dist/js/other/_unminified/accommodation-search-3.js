@@ -215,6 +215,14 @@
     Page : Search 
   */
   if (CONSTS.activity === "search") {
+    const allRooms = stir.flatten(initialData.map((item) => item.rooms));
+    const prices = allRooms.map((item) => Number(item.cost)).sort((a, b) => a - b);
+
+    const min = Math.ceil(prices[0]);
+    const roundedMin = Math.ceil(min / 10) * 10;
+    const max = Math.ceil(prices[prices.length - 1]);
+    const roundedMax = Math.ceil(max / 10) * 10;
+
     const filters = {
       price: "",
       location: "",
@@ -224,12 +232,25 @@
 
     doSearch(CONSTS, filters, initialData);
 
-    searchPrice.value = 300;
+    searchPrice.min = roundedMin;
+    searchPrice.max = roundedMax;
+    searchPrice.value = roundedMax;
+
+    setDOMContent(searchPriceValue, roundedMax);
+
     searchLocation.value = "";
     searchStudentType.value = "";
     searchBathroom.value = "";
 
     /* Actions: Form changes */
+    searchForm &&
+      searchForm.addEventListener("input", (event) => {
+        const filters = {
+          price: searchPrice.value,
+        };
+        setDOMContent(searchPriceValue, filters.price);
+      });
+
     searchForm &&
       searchForm.addEventListener("change", (event) => {
         const filters = {
@@ -238,8 +259,6 @@
           bathroom: searchBathroom.value,
           studentType: searchStudentType.value,
         };
-
-        setDOMContent(searchPriceValue, filters.price);
         doSearch(CONSTS, filters, initialData);
       });
   }
