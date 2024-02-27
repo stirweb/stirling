@@ -254,6 +254,11 @@ stir.search = () => {
         MBL: 450, // metadata buffer length
         num_ranks: NUMRANKS,
       },
+	  internal: {
+		collection: "stir-internal",
+		SF: "[c,access,breadcrumbs,group]",
+		query: "!padrenullquery"
+	  }
     },
     // extra parameters for no-query searches
     noquery: {
@@ -509,6 +514,7 @@ stir.search = () => {
 		coursemini: callSearchApiMeta("coursemini"),
 		person: callSearchApi("person"),
 		research: callSearchApi("research"),
+		internal: callSearchApi("internal")
 	};
 
 	// group the renderer functions so we can get them easily by `type`
@@ -522,6 +528,7 @@ stir.search = () => {
 		person: (data) => data.map(stir.templates.search.person).join(""),
 		research: (data) => data.map(stir.templates.search.research).join(""),
 		cura: (data) => data.map(stir.templates.search.cura).join(""),
+		internal: (data) => data.map(stir.templates.search.auto).join(""),
 	};
 
 	const footers = {
