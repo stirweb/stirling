@@ -1686,6 +1686,11 @@
         "id": 174823,
         "description": "snow.js",
         "projectPath": "medias/Categorised/Dist/js/other/snow.js"
+      },
+      {
+        "id": 175102,
+        "description": "Smart_404.php",
+        "projectPath": "medias/Categorised/Dist/php/smart-404/Smart_404.php"
       }
     ]
   }
