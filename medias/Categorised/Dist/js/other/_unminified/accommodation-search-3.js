@@ -18,7 +18,7 @@
   const searchLocation = stir.node("#search-location");
   const searchStudentType = stir.node("#search-student-type");
   const searchBathroom = stir.node("#search-bathroom");
-  const searchPriceValue = stir.node("#search-price-value");
+  const searchPriceNode = stir.node("#search-price-value");
 
   /*
      Renderers
@@ -47,6 +47,7 @@
     return stir.removeDuplicates(allTypes).sort().join("<br />");
   };
 
+  /* renderFavBtns */
   const renderFavBtns = (urlToFavs, cookie, id) => {
     return cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs);
   };
@@ -138,7 +139,6 @@
       item.rooms = matches2;
       return item;
     }
-
     return {};
   });
 
@@ -155,7 +155,6 @@
 
   const mapItem = stir.curry((alldata, fav) => {
     if (!fav) return [];
-
     return alldata.filter((entry) => Number(entry.id) === Number(fav.id))[0];
   });
 
@@ -182,6 +181,8 @@
   };
 
   const doSearch = (consts, filters, data) => {
+    console.log(filters);
+
     const renderer = stir.map(renderAccom(consts));
 
     const filterByPriceCurry = stir.map(filterByPrice(filters.price));
@@ -190,6 +191,9 @@
     const filterByLocationCurry = stir.filter(filterByLocation(filters.location));
 
     const filteredData = stir.compose(filterEmpties, filterByBathroomCurry, filterByLocationCurry, filterByStudTypeCurry, filterByPriceCurry, stir.clone)(data);
+
+    console.log(stir.compose(filterByStudTypeCurry, filterByPriceCurry, stir.clone)(data));
+
     const html = stir.compose(joiner, renderer)(filteredData);
 
     return setDOMContent(resultsArea, renderNumItems(filteredData.length) + html);
@@ -200,7 +204,6 @@
    */
 
   const initialData = accommodationData.filter((item) => item.id && item.id.length);
-  //const params = QueryParams.getAllArray();
 
   if (!initialData.length) return;
 
@@ -215,6 +218,7 @@
     Page : Search 
   */
   if (CONSTS.activity === "search") {
+    // Min and max prices for the range slider
     const allRooms = stir.flatten(initialData.map((item) => item.rooms));
     const prices = allRooms.map((item) => Number(item.cost)).sort((a, b) => a - b);
 
@@ -223,24 +227,25 @@
     const max = Math.ceil(prices[prices.length - 1]);
     const roundedMax = Math.ceil(max / 10) * 10;
 
-    const filters = {
-      price: "",
-      location: "",
-      bathroom: "",
-      studentType: "",
-    };
-
-    doSearch(CONSTS, filters, initialData);
-
     searchPrice.min = roundedMin;
     searchPrice.max = roundedMax;
     searchPrice.value = roundedMax;
 
-    setDOMContent(searchPriceValue, roundedMax);
+    searchPrice.value = QueryParams.get("price");
+    searchLocation.value = QueryParams.get("location");
+    searchStudentType.value = QueryParams.get("student");
+    searchBathroom.value = QueryParams.get("bathroom");
 
-    searchLocation.value = "";
-    searchStudentType.value = "";
-    searchBathroom.value = "";
+    setDOMContent(searchPriceNode, searchPrice.value);
+
+    const filters = {
+      price: searchPrice.value,
+      location: searchLocation.value,
+      studentType: searchStudentType.value,
+      bathroom: searchBathroom.value,
+    };
+
+    doSearch(CONSTS, filters, initialData);
 
     /* Actions: Form changes */
     searchForm &&
@@ -248,22 +253,27 @@
         const filters = {
           price: searchPrice.value,
         };
-        setDOMContent(searchPriceValue, filters.price);
+        setDOMContent(searchPriceNode, filters.price);
       });
 
     searchForm &&
       searchForm.addEventListener("change", (event) => {
+        QueryParams.set("price", searchPrice.value);
+        QueryParams.set("location", searchLocation.value);
+        QueryParams.set("student", searchStudentType.value);
+        QueryParams.set("bathroom", searchBathroom.value);
+
         const filters = {
           price: searchPrice.value,
           location: searchLocation.value,
-          bathroom: searchBathroom.value,
           studentType: searchStudentType.value,
+          bathroom: searchBathroom.value,
         };
         doSearch(CONSTS, filters, initialData);
       });
   }
 
-  /* Actions: Cookie btn clicks  */
+  /* Actions: Cookie favs btn clicks  */
   resultsArea.addEventListener("click", (event) => {
     const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
 
