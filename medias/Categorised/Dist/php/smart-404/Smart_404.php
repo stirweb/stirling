@@ -245,7 +245,7 @@ class Core
                 if (strpos($redirect_target, '://') !== false) {
                     header("Location: " . $redirect_target);
                 } else {
-                    header("Location: http://" . $_SERVER['HTTP_HOST'] . $redirect_target);
+                    header("Location: https://" . $_SERVER['HTTP_HOST'] . $redirect_target);
                 }
                 header("Connection: close");
                 return $best_percent;
@@ -278,7 +278,7 @@ class Core
         $best_percent = self::run($element_filename, $element_exactmatch, $element_ignorequery);
         if (!($best_percent > 85)) {
             $_GET['e'] = 404; //Set the variable for the error code
-            header("Location: http://" . $_SERVER['HTTP_HOST'] . $redirectPath);
+            header("Location: https://" . $_SERVER['HTTP_HOST'] . $redirectPath);
         }
         return $best_percent;
     }

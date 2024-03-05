@@ -68,11 +68,7 @@
                       ${renderPrice(item.rooms)}
                     </div>
                     <div class="cell large-4 text-sm">
-                        <p><strong>Facilities</strong></p>
-                        <p>${item.facilities
-                          .split(",")
-                          .map((entry) => entry + `<br /> `)
-                          .join("")}</p>
+ 
                         <p><strong>Location</strong></p> 
                         <p>${item.location}</p>
                         <p><strong>Student type</strong></p>
