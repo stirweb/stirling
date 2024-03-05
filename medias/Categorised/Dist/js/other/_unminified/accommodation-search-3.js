@@ -181,8 +181,6 @@
   };
 
   const doSearch = (consts, filters, data) => {
-    console.log(filters);
-
     const renderer = stir.map(renderAccom(consts));
 
     const filterByPriceCurry = stir.map(filterByPrice(filters.price));
@@ -191,8 +189,6 @@
     const filterByLocationCurry = stir.filter(filterByLocation(filters.location));
 
     const filteredData = stir.compose(filterEmpties, filterByBathroomCurry, filterByLocationCurry, filterByStudTypeCurry, filterByPriceCurry, stir.clone)(data);
-
-    console.log(stir.compose(filterByStudTypeCurry, filterByPriceCurry, stir.clone)(data));
 
     const html = stir.compose(joiner, renderer)(filteredData);
 
@@ -229,12 +225,11 @@
 
     searchPrice.min = roundedMin;
     searchPrice.max = roundedMax;
-    searchPrice.value = roundedMax;
 
-    searchPrice.value = QueryParams.get("price");
-    searchLocation.value = QueryParams.get("location");
-    searchStudentType.value = QueryParams.get("student");
-    searchBathroom.value = QueryParams.get("bathroom");
+    searchPrice.value = QueryParams.get("price") ? QueryParams.get("price") : roundedMax;
+    searchLocation.value = QueryParams.get("location") ? QueryParams.get("location") : "";
+    searchStudentType.value = QueryParams.get("student") ? QueryParams.get("student") : "";
+    searchBathroom.value = QueryParams.get("bathroom") ? QueryParams.get("bathroom") : "";
 
     setDOMContent(searchPriceNode, searchPrice.value);
 
