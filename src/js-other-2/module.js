@@ -54,9 +54,9 @@
   };
 
   /* renderDisclaimer    */
-  const renderDisclaimer = (level, boilerplates) => {
+  const renderDisclaimer = (level, url, startDate) => {
     return `<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
-              ${boilerplates.disclaimer ? boilerplates.disclaimer : ``}
+                <p>The module information below is for the ${startDate.split(",")[0]} intake and may be subject to change, including in response to student feedback and continuous innovation development. See our <a href="${url}">terms and conditions</a> for more information.</p>
             </div>
             <div class="cell medium-3 align-middle align-center u-flex">
             ${renderCourseBackBtn(level)}
@@ -385,7 +385,7 @@
     const assessmentsData = data.assessments ? data.assessments : [];
     const assessments = doAssessments(assessmentsData, colourPack);
 
-    const html = renderHeader(data2) + renderSectionStart() + renderDisclaimer(studyLevel, boilerplates) + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack, boilerplates) + renderAwards(data2, boilerplates, studyLevel) + renderFurtherDetails(data2, boilerplates) + renderSectionEnd();
+    const html = renderHeader(data2) + renderSectionStart() + renderDisclaimer(studyLevel, boilerplates.disclaimerUrl, data.deliveryPeriodStartDesc) + renderContentAims(data2) + renderTeachingAssessment(deliveries, assessments, colourPack, boilerplates) + renderAwards(data2, boilerplates, studyLevel) + renderFurtherDetails(data2, boilerplates) + renderSectionEnd();
     return setDOMContent(contentArea, html);
   };
 
@@ -395,6 +395,7 @@
 
     // try {
     const data = await response.json();
+
     main(data, colours, boilerplates);
     addEventListeners();
     //} catch (error) {
