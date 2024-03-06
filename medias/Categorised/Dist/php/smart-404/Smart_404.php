@@ -134,7 +134,8 @@ class Core
 
 
             $pregRequest = $request;
-            $request = rtrim($request, '/');
+            //$request = rtrim($request, '/');
+            $request = rtrim($request);
 
             // prepare to read the redirects file
             $filename = $element_filename;
@@ -168,8 +169,10 @@ class Core
                         continue;
                     }
 
-                    $fromURL = rtrim($fromURL, '/');
-                    $toURL = rtrim($toURL, '/');
+                    //$fromURL = rtrim($fromURL, '/');
+                    //$toURL = rtrim($toURL, '/');
+                    $fromURL = rtrim($fromURL);
+                    $toURL = rtrim($toURL);
 
                     if (strpos($fromURL, '*') !== false || strpos($toURL, '*') !== false) {
                         if (strpos($fromURL, '*') !== false) {
@@ -200,12 +203,14 @@ class Core
                                     }
                                 }
                                 $redirect_target = preg_replace('/^'.$pregFromURL.'/', $pregToURL, $pregRequest);
-                                $redirect_target = rtrim($redirect_target, '/');
+                                //$redirect_target = rtrim($redirect_target, '/');
+                                $redirect_target = rtrim($redirect_target);
                                 $best_percent = 100;
                                 break;
                             } else {
                                 $redirect_target = $toURL;
-                                $redirect_target = rtrim($redirect_target, '/');
+                                //$redirect_target = rtrim($redirect_target, '/');
+                                $redirect_target = rtrim($redirect_target);
                                 $best_percent = 100;
                                 break;
                             }
