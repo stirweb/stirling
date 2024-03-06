@@ -1,10 +1,10 @@
-!function(){function d(){const t=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,a,r,s;e.isIntersecting?(t=Number(e.target.dataset.value),a=e.target.dataset.unit,r=Number(e.target.dataset.max),s=e.target.dataset.colour||"energy-turq",r=t/r*100,s=stir.createDOMFragment(`<div class="barchart-value u-bg-${s} u-absolute" style="right:${100-r}%"></div>
-                                                <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${r/2-2}%">${t}${a}</div>`),e.target.append(s)):e.target.innerHTML=""})},{root:null,threshold:.5});stir.nodes(".barchart").forEach(e=>{t.observe(e)})}const l=(e,t)=>{return`<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
-              ${t.disclaimer||""}
+!function(){function n(){const t=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,a,r,s;e.isIntersecting?(t=Number(e.target.dataset.value),a=e.target.dataset.unit,r=Number(e.target.dataset.max),s=e.target.dataset.colour||"energy-turq",r=t/r*100,s=stir.createDOMFragment(`<div class="barchart-value u-bg-${s} u-absolute" style="right:${100-r}%"></div>
+                                                <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${r/2-2}%">${t}${a}</div>`),e.target.append(s)):e.target.innerHTML=""})},{root:null,threshold:.5});stir.nodes(".barchart").forEach(e=>{t.observe(e)})}const l=(e,t,a)=>{return`<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
+                <p>The module information below is for the ${a.split(",")[0]} intake and may be subject to change, including in response to student feedback and continuous innovation development. See our <a href="${t}">terms and conditions</a> for more information.</p>
             </div>
             <div class="cell medium-3 align-middle align-center u-flex">
-            ${t=e,e=new URLSearchParams(document.location.search),e.get("course")?`<a href="${stir.isNumeric(e.get("course"))?"/terminalfour/preview/1/en/"+e.get("course"):`/courses/${t.replace("pg","pg-taught")}/`+e.get("course")}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`:""}
-            </div> `},n=({moduleTitle:e,moduleCode:t,moduleLevel:a,moduleCredits:r})=>`<div class="grid-container">
+            ${a=e,t=new URLSearchParams(document.location.search),t.get("course")?`<a href="${stir.isNumeric(t.get("course"))?"/terminalfour/preview/1/en/"+t.get("course"):`/courses/${a.replace("pg","pg-taught")}/`+t.get("course")}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`:""}
+            </div> `},u=({moduleTitle:e,moduleCode:t,moduleLevel:a,moduleCredits:r})=>`<div class="grid-container">
                 <div class="grid-x grid-padding-x u-my-2 align-middle">
                     <div class="cell large-6  c-course-title u-padding-y">
                         <h1 class="u-header-smaller ">${e}</h1>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </div>
-            </div>`,u=({moduleOverview:e,learningOutcomes:t,colourPack:a,boilerplates:r})=>`<div class="cell u-p-2">
+            </div>`,o=({moduleOverview:e,learningOutcomes:t,colourPack:a,boilerplates:r})=>`<div class="cell u-p-2">
                 <h2 id="contentandaims" >Content and aims</h2>
                 <h3 class="header-stripped u-bg-${a.first}--10 u-${a.first}-line-left u-p-1  u-border-width-5 u-text-regular">
                     Module overview
@@ -40,7 +40,7 @@
                 </h3>
                 <p><strong>${r.outcomesIntro}</strong></p>
                 <ul>${t.map(e=>`<li>${e}</li>`).join("")}</ul>
-            </div>`,o=({moduleCredits:e,ectsModuleCredits:t,colourPack:a},r,s)=>`<div class="cell u-mt-2">
+            </div>`,c=({moduleCredits:e,ectsModuleCredits:t,colourPack:a},r,s)=>`<div class="cell u-mt-2">
                 <h2 id="awards">Awards</h2>
                 <h3 class="header-stripped u-bg-${a.third}--10 u-p-1 u-${a.third}-line-left u-border-width-5 u-text-regular">Credits</h3>
                 <p class="flex-container u-gap align-middle"><img src="<t4 type="media" id="173616" formatter="path/*"/>" width="65" height="44" alt="Scotland flag" />
@@ -56,7 +56,7 @@
                     <p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> 
                         <a href="${"ug"===s?r.awardsCtaUG:r.awardsCtaPG}" class="u-${a.third}">Assessment and award of credit for ${"ug"===s?"undergraduates":"postgraduates"}</a></p>
                 </div>
-            </div>`,c=({preparedotherinformation:e,studyAbroad:t,additionalCosts:a},r)=>{return e||"Yes"===t||a?`<div class="cell u-mt-2">
+            </div>`,g=({preparedotherinformation:e,studyAbroad:t,additionalCosts:a},r)=>{return e||"Yes"===t||a?`<div class="cell u-mt-2">
                 <h2 id="further">Further details</h2>
                 ${e?`<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Supporting notes</h3><p>${e}</p>`:""}
                 ${"Yes"===t?'<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>'+r.studyAbroad:""}
@@ -72,7 +72,7 @@
         </div>`});const r=stir.curry((e,{name:t,value:a})=>0===Number(a)?"":`<div>
           <span class="u-inline-block u-p-tiny u-px-1">${t}</span>
           <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${a}" data-max="100" data-unit="%" data-colour="${e.second}"></div>
-        </div>`),s=stir.curry((e,t,a)=>{e=r(e);return(1<t?`<h4 class="u-mt-0">${a.tab}</h4>`:"")+`<p>${a.summary.map(e).join("")}</p>`}),i=stir.curry((e,t)=>t?`<div class="cell large-${e} u-mb-1">${t}</div>`:""),g=(e,t,a,r)=>{var s=e.length?(s="12",(e=e)?`<div class="cell large-${s} u-mb-1">${e}</div>`:""):r.deliveriesFallback,e=t.length<2?"12":"6",e=i(e),e=t.length?t.map(e).join(""):`<div class="cell">${r.assessmentFallback}</div>`;return`<div class="cell">
+        </div>`),s=stir.curry((e,t,a)=>{e=r(e);return(1<t?`<h4 class="u-mt-0">${a.tab}</h4>`:"")+`<p>${a.summary.map(e).join("")}</p>`}),i=stir.curry((e,t)=>t?`<div class="cell large-${e} u-mb-1">${t}</div>`:""),p=(e,t,a,r)=>{var s=e.length?(s="12",(e=e)?`<div class="cell large-${s} u-mb-1">${e}</div>`:""):r.deliveriesFallback,e=t.length<2?"12":"6",e=i(e),e=t.length?t.map(e).join(""):`<div class="cell">${r.assessmentFallback}</div>`;return`<div class="cell">
               <h2 id="teaching" >Teaching and assessment</h2>
               ${r.teachingIntro}
               
@@ -86,4 +86,4 @@
                   ${e}
               </div>
               ${r.teachingTimetableInfo}
-          </div>`},p=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',h=()=>"</div></div>",m=()=>p()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+h(),v=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),b=e=>e&&e.toLowerCase().includes("p")?"pg":"ug",f=(t,e)=>(e.filter(e=>e.level===t).length?e.filter(e=>e.level===t):e)[0],$=e=>{var a;return"International"===e.tab?{sum:0,summary:[],tab:e.tab,tabAssessments:e.tabAssessments}:{sum:e.tabAssessments.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0),summary:(a=e.tabAssessments.map(e=>e.category)).filter((e,t)=>a.indexOf(e)===t).map(t=>({name:t,value:e.tabAssessments.map(e=>e.category===t?Number(e.percent):0).reduce((e,t)=>e+t,0)})),tab:e.tab,tabAssessments:e.tabAssessments}},w=(e,t)=>{e=e.map($).filter(e=>100===e.sum);const a=s(t,e.length);return e.map(e=>a(e))};var e=stir.moduleTexts||{},t=new URLSearchParams(document.location.search);!async function(e,t,a){var r,s,i;e=e=await(await fetch(e)).json(),t=t,a=a,(i=stir.node("#content")).classList.add("u-padding-bottom"),e.error?v(i,m()):(r=b(e.moduleLevelDescription),t=f(r,t),s={...e,colourPack:t,boilerplates:a},e=e.assessments||[],e=w(e,t),e=n(s)+p()+l(r,a)+u(s)+g("",e,t,a)+o(s,a,r)+c(s,a)+h(),v(i,e)),d()}("https://www.stir.ac.uk/data/pd-api/?module="+[t.get("code"),t.get("session"),t.get("semester")].join("/"),[{level:"ug",first:"heritage-green",second:"energy-turq",third:"energy-purple"},{level:"pg",first:"heritage-purple",second:"heritage-purple",third:"heritage-green"}],e)}();
+          </div>`},m=()=>'<div class="grid-container"><div class="grid-x grid-padding-x">',h=()=>"</div></div>",v=()=>m()+'<div class="cell u-padding-y"><h1>Page not found</h1></div>'+h(),b=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),f=e=>e&&e.toLowerCase().includes("p")?"pg":"ug",$=(t,e)=>(e.filter(e=>e.level===t).length?e.filter(e=>e.level===t):e)[0],d=e=>{var a;return"International"===e.tab?{sum:0,summary:[],tab:e.tab,tabAssessments:e.tabAssessments}:{sum:e.tabAssessments.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0),summary:(a=e.tabAssessments.map(e=>e.category)).filter((e,t)=>a.indexOf(e)===t).map(t=>({name:t,value:e.tabAssessments.map(e=>e.category===t?Number(e.percent):0).reduce((e,t)=>e+t,0)})),tab:e.tab,tabAssessments:e.tabAssessments}},w=(e,t)=>{e=e.map(d).filter(e=>100===e.sum);const a=s(t,e.length);return e.map(e=>a(e))};var e=stir.moduleTexts||{},t=new URLSearchParams(document.location.search);!async function(e,t,a){var r,s,i,d;e=e=await(await fetch(e)).json(),t=t,a=a,(d=stir.node("#content")).classList.add("u-padding-bottom"),e.error?b(d,v()):(r=f(e.moduleLevelDescription),t=$(r,t),s={...e,colourPack:t,boilerplates:a},i=e.assessments||[],i=w(i,t),e=u(s)+m()+l(r,a.disclaimerUrl,e.deliveryPeriodStartDesc)+o(s)+p("",i,t,a)+c(s,a,r)+g(s,a)+h(),b(d,e)),n()}("https://www.stir.ac.uk/data/pd-api/?module="+[t.get("code"),t.get("session"),t.get("semester")].join("/"),[{level:"ug",first:"heritage-green",second:"energy-turq",third:"energy-purple"},{level:"pg",first:"heritage-purple",second:"heritage-purple",third:"heritage-green"}],e)}();

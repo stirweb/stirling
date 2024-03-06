@@ -512,10 +512,10 @@
 /* Padding for small only */
 
 @media screen and #{breakpoint(small down)} {
-  // .u-py-0-small {
-  //   padding-top: 0px;
-  //   padding-bottom: 0px;
-  // }
+  .u-px-0-small {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 
   .u-pb-2-small {
     padding-bottom: 32px;
