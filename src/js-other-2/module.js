@@ -55,8 +55,10 @@
 
   /* renderDisclaimer    */
   const renderDisclaimer = (level, url, startDate) => {
+    const params = new URLSearchParams(document.location.search);
+    const date = params.get("session") ? params.get("session") : "current year";
     return `<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
-                <p>The module information below is for the ${startDate.split(",")[0]} intake and may be subject to change, including in response to student feedback and continuous innovation development. See our <a href="${url}">terms and conditions</a> for more information.</p>
+                <p>The module information below is for the ${date} intake and may be subject to change, including in response to student feedback and continuous innovation development. See our <a href="${url}">terms and conditions</a> for more information.</p>
             </div>
             <div class="cell medium-3 align-middle align-center u-flex">
             ${renderCourseBackBtn(level)}
