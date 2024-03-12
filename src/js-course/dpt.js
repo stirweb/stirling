@@ -36,6 +36,10 @@ stir.dpt = (function () {
       UG: "?opt=menu&callback=stir.dpt.show.routes", //+ (ver?ver:'')
       PG: "?opt=pgmenu&ct=PG&callback=stir.dpt.show.routes", //+ (ver?ver:'')
     },
+    version: {
+      UG:"?opt=version-menu&callback=stir.dpt.show.version",
+      PG:"?opt=version-menu&ct=PG&callback=stir.dpt.show.version"
+    },
     option: (type, roucode) => `?opt=${type.toLowerCase()}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&callback=stir.dpt.show.options`,
     fees: (type, roucode) => `?opt=${type}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&callback=stir.dpt.show.fees`,
     modules: (type, roucode, moa, occ) => `?${modulesEndpointParams[type.toUpperCase()]}&moa=${moa}&occ=${occ}&rouCode=${roucode}&callback=stir.dpt.show.modules`,
@@ -48,6 +52,10 @@ stir.dpt = (function () {
   //	};
 
   const spitCodes = (csv) => csv.replace(/\s/g, "").split(",");
+
+  const getVersion = (type) => {
+    stir.getJSONp(`${urls.servlet}${urls.version[type]}`);
+  };
 
   const getRoutes = (type, routesCSV, auto) => {
     user.type = type;
@@ -178,6 +186,24 @@ stir.dpt = (function () {
     e.preventDefault();
   }
 
+  const versionToSession = (data) => {
+    if(!data || !data.length) return;
+    if(debug) {
+      try {
+        return data.filter(v=>v.versionActive==="Y").sort(compareVersions).pop().versionName;
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+    return;
+  };
+
+  const compareVersions = (a, b) => {
+    		if (a.versionId < b.versionId) return -1;
+    		if (a.versionId > b.versionId) return 1;
+    		return 0;
+  };
+
   const modulesOverview = (data) => {
     let frag = document.createDocumentFragment();
     data.initialText && frag.append(paragraph(data.initialText));
@@ -300,11 +326,13 @@ stir.dpt = (function () {
       routes: new Function(),
       options: new Function(),
       modules: new Function(),
+      version: new Function()
     },
     get: {
       options: getOptions,
       routes: getRoutes,
       viewer: () => urls.viewer,
+      version: getVersion
     },
     reset: {
       modules: new Function(),
@@ -329,10 +357,16 @@ stir.dpt = (function () {
             }
           }),
         modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data))),
+        version: (callback) => (stir.dpt.show.version = (data) => callback(versionToSession(data)))
       },
       reset: {
         modules: (callback) => (stir.dpt.reset.modules = callback),
       },
     },
+    debug: {
+      version: (data) => {
+        console.info(data);
+      }
+    }
   };
 })();
