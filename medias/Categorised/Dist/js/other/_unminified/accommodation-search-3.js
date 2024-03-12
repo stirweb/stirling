@@ -6,6 +6,9 @@
 (function (scope) {
   if (!scope) return;
 
+  // VARS
+  const COOKIE_TYPE = "accom";
+
   const CONSTS = {
     cookieType: "accom",
     urlToFavs: scope.dataset.favsurl ? scope.dataset.favsurl : ``,
@@ -19,6 +22,10 @@
   const searchStudentType = stir.node("#search-student-type");
   const searchBathroom = stir.node("#search-bathroom");
   const searchPriceNode = stir.node("#search-price-value");
+
+  const favBtnsNode = stir.node("#accomfavbtns");
+  const sharedArea = stir.node("[data-activity=shared]");
+  const sharedfavArea = stir.node("#accomsharedfavsarea");
 
   /*
      Renderers
@@ -85,12 +92,73 @@
             </div>`;
   });
 
+  /* renderMiniFav - used on the share page */
+  const renderMiniFav = (item) => {
+    return !item.id
+      ? ``
+      : `<p class="text-sm">
+              <strong><a href="${item.url}" >${item.title} </a></strong>
+          </p>`;
+  };
+
+  const renderShareDialog = (link) => {
+    return !link
+      ? ``
+      : ` <p><strong>Share link</strong></p>  
+          ${navigator.clipboard ? '<p class="text-xsm">The following share link has been copied to your clipboard:</p>' : ""}   
+          <p class="text-xsm">${link}</p>`;
+  };
+
+  const renderShared = (item) => {
+    console.log(item);
+    return !item.id
+      ? ``
+      : `<div class="cell small-6">
+            <div class="u-green-line-top u-margin-bottom">
+              <p class="u-text-regular u-py-1">
+                <strong><a href="${item.url}" >${item.title}</a></strong>
+              </p>
+              <div class="u-mb-1">${item.location} accommodation.</div>
+              <div>${stir.favourites.isFavourite(item.id) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.id, "")}</div>
+            </div>
+          </div>`;
+  };
+
   /* renderNumItems */
   const renderNumItems = (num) => `<div class="cell u-mb-3">Results based on filters - <strong>${num} ${num === 1 ? `property` : `properties`}</strong></div>`;
+
+  const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
+  const renderNoFavs = () => stir.templates.renderNoFavs;
+  const renderLinkToFavs = () => stir.templates.renderLinkToFavs;
+  const renderNoShared = () => stir.templates.renderNoShared;
 
   /*
       Data Processing
     */
+
+  const getfavsCookie = () => stir.favourites.getFavsList(COOKIE_TYPE);
+
+  /*
+      getFavsList: Returns an array of course objects 
+  */
+  const getFavsList = (data) => {
+    const favsCookie = getfavsCookie();
+
+    if (!favsCookie.length || favsCookie.length < 1) {
+      return null;
+    }
+
+    const favsCookieSorted = favsCookie.sort((a, b) => b.date - a.date);
+    // Maintain ordering by merging FB result into cookie object
+    return favsCookieSorted.map((item) => {
+      return {
+        ...data.filter((element) => {
+          if (item.id === element.id) return element;
+        })[0],
+        ...{ id: item.id, dateSaved: item.date },
+      };
+    });
+  };
 
   /* filterByBathroom */
   const filterByBathroom = stir.curry((filterValue, item) => {
@@ -142,6 +210,31 @@
   const filterEmpties = stir.filter((item) => {
     if (item && item.title) return item;
   });
+
+  const getShareList = (data) => {
+    const sharedListQuery = QueryParams.get("a") || "";
+
+    if (!sharedListQuery) return null;
+
+    try {
+      // wrap in a try{} to catch any Base64 errors
+      const sharedList = atob(sharedListQuery);
+
+      console.log(sharedList);
+
+      // Maintain ordering by merging FB result into cookie object
+      return sharedList.split(",").map((item) => {
+        return {
+          ...data.filter((element) => {
+            if (item === element.id) return element;
+          })[0],
+          ...{ id: item },
+        };
+      });
+    } catch (e) {
+      /* URL param not Base64? */ return;
+    }
+  };
 
   /*
       Helpers
@@ -195,15 +288,47 @@
      On load
    */
 
-  const initialData = accommodationData.filter((item) => item.id && item.id.length);
+  const initialData = accommodationData ? accommodationData.filter((item) => item.id && item.id.length) : [];
 
-  if (!initialData.length) return;
+  //if (!initialData.length) return;
 
   /* 
     Page : Manage Favs 
   */
   if (CONSTS.activity === "managefavs") {
     doFavourites(CONSTS, initialData);
+  }
+
+  /* 
+    Page : Shared 
+  */
+  const doShared = (sharedArea, sharedfavArea, data) => {
+    if (sharedArea) {
+      const shareList = getShareList(data);
+
+      console.log(shareList);
+
+      if (!shareList) {
+        setDOMContent(sharedArea, renderNoShared());
+      } else {
+        setDOMContent(sharedArea, shareList.map(renderShared).join(""));
+      }
+    }
+
+    if (sharedfavArea) {
+      const list = getFavsList(data);
+
+      if (!list) {
+        setDOMContent(sharedfavArea, renderNoFavs());
+      } else {
+        setDOMContent(sharedfavArea, list.map(renderMiniFav).join("") + renderLinkToFavs());
+      }
+    }
+    return;
+  };
+
+  if (CONSTS.activity === "shared") {
+    doShared(sharedArea, sharedfavArea, initialData);
   }
 
   /* 
@@ -264,6 +389,37 @@
       });
   }
 
+  if (favBtnsNode) {
+    stir.node("main").addEventListener("click", (event) => {
+      const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
+
+      /* ACTION: REMOVE ALL FAVS */
+      if ("clearallfavs" === target.dataset.action) {
+        stir.favourites.removeType(COOKIE_TYPE);
+        doFavourites(CONSTS, initialData);
+      }
+
+      /* ACTION: COPY SHARE LINK */
+      if ("copysharelink" === target.dataset.action) {
+        console.log("click");
+
+        const favsCookie = getfavsCookie();
+        const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
+
+        const link = "https://www.stir.ac.uk/share/" + base64Params;
+        navigator.clipboard && navigator.clipboard.writeText(link);
+
+        const dialog = stir.t4Globals.dialogs.filter((item) => item.getId() === "shareDialog");
+
+        if (!dialog.length) return;
+        dialog[0].open();
+        dialog[0].setContent(renderShareDialog(link));
+      }
+    });
+
+    setDOMContent(favBtnsNode, renderFavActionBtns());
+  }
+
   /* Actions: Cookie favs btn clicks  */
   resultsArea.addEventListener("click", (event) => {
     const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
@@ -297,4 +453,4 @@
       }
     }
   });
-})(stir.node("#search-results"));
+})(stir.node("#acccomfinder"));
