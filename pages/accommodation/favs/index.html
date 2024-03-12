@@ -74,32 +74,6 @@
     <!-- DC TAGS-->
 
 
-    <style>
-        body {
-            background-color: #ccc;
-        }
-
-        .c-header {
-            background-color: #ccc;
-        }
-
-        .breadcrumbs-container {
-            background-color: #ccc !important;
-        }
-
-        main {
-            background-color: #ccc !important;
-        }
-
-        .bg-grey,
-        .u-bg-grey {
-            background-color: #ccc !important;
-        }
-
-        .u-bg-white {
-            background-color: #eee !important;
-        }
-    </style>
 
 
 
@@ -438,13 +412,23 @@
 
                 <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
                     <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">My favourite accommodation</h1>
-
                 </div>
 
+                <div class="cell large-8 u-bg-grey u-bleed bg-grey u-padding-y">
+                    <div class=" grid-x grid-padding-x" id="acccomfinder" data-activity="managefavs"></div>
+                </div>
 
+                <div class="cell small-12 large-4 u-padding-y">
+                    <aside class="c-wysiwyg-content u-bg-white u-p-2 text-sm">
+                        <p>Accommodation you have selected as a favourite will appear on this page.</p>
+                        <p>Once you have saved your favourite accommodation, you can share your list with someone else.
+                            Send them a link created with the <strong>Generate share link</strong> button below.</p>
+                        <p>Remove individual accommodation by clicking on the heart or use the <strong>Clear
+                                favourites</strong> button to remove them all.</p>
 
-                <div class="cell u-bg-grey u-bleed bg-grey u-padding-y">
-                    <div class=" grid-x grid-padding-x" id="search-results" data-activity="managefavs"></div>
+                        <div id="accomfavbtns" class="u-pt-tiny"></div>
+                        <dialog data-dialog="shareDialog"></dialog>
+                    </aside>
                 </div>
 
             </div>
@@ -474,6 +458,20 @@
                 <li>you cleared all your favourites from the list,</li>
                 <li>or your web browser is automatically clearing the cookie which remembers your list of favourites.</li>
             </ul></div>`;
+
+        stir.templates.renderFavActionBtns = `
+          <button class="button no-arrow button--left-align  expanded u-m-0 text-left  u-white--all u-mt-1" data-opendialog="shareDialog" aria-label="Generate share link" data-action="copysharelink" >
+              <div class="flex-container align-middle u-gap-16">
+                  <span class="u-flex1 text-sm">Generate share link</span>
+                  <span class="uos-chevron-right u-icon"></span>
+              </div>
+          </button>
+          <button class="button no-arrow button--left-align  expanded u-m-0 text-left u-bg-black u-white--all u-mt-1" aria-label="Clear favourites"  data-action="clearallfavs" >
+              <div class="flex-container align-middle u-gap-16">
+                  <span class="u-flex1 text-sm">Clear favourites</span>
+                  <span class="uos-chevron-right u-icon"></span>
+              </div>
+          </button>`;
 
 
         var accommodationData = [{ "id": "33911", "title": "Alangrange", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33911", "facilities": "Facilities go here", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single standard room", "cost": "108.09", "contract": "49 week", "bathroom": "Shared", "studType": "Postgraduate", "accessible": "", "session": "2024/25" }, { "title": "Double standard room", "cost": "153.59", "contract": "49 week", "bathroom": "Shared", "studType": "Postgraduate", "accessible": "", "session": "2024/25" }] }, { "id": "33912", "title": "John Forty's Court", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33912", "facilities": "Facilities go here", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single standard room", "cost": "99.53", "contract": "30, 46 and 50 week", "bathroom": "Shared", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "104.51", "contract": "36 week", "bathroom": "Shared", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "104.51", "contract": "42 week", "bathroom": "Shared", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "104.51", "contract": "49 week", "bathroom": "Ensuite", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "134.90", "contract": "30, 46 and 50 week", "bathroom": "Ensuite", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "141.65", "contract": "36 week", "bathroom": "Ensuite", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "141.65", "contract": "42 week", "bathroom": "Ensuite", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single ensuite room", "cost": "141.65", "contract": "49 week", "bathroom": "Ensuite", "studType": "Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }] }, { "id": "33913", "title": "Carters Yard", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33913", "facilities": "Facilities go here", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single Premium Studio Room with private kitchen", "cost": "209.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Deluxe Studio Room with private kitchen", "cost": "205.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Premium Ensuite room in a 6 bed flat with a shared kitchen", "cost": "185.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Deluxe Garden Studio Room with private kitchen and a garden area", "cost": "215.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Integrated Degree students, Nursing students, Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }] }, { "id": "33914", "title": "Riverside Quay", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33914", "facilities": "Facilities go here", "location": "Off campus", "distance": "1 mile", "rooms": [{ "title": "Single Bronze Ensuite room in a 2 bed flat", "cost": "172.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Silver Ensuite room in a 2 bed flat", "cost": "184.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Gold Ensuite room in a 2 bed flat", "cost": "190.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single Bronze Ensuite Studio room", "cost": "192.00", "contract": "51 week", "bathroom": "Ensuite", "studType": "Postgraduate, Returning undergraduate, Undergraduate", "accessible": "", "session": "2024/25" }] }, { "id": "33915", "title": "Alexander Court standard flats", "url": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33915", "facilities": "Facilities go here", "location": "On campus", "distance": "1 mile", "rooms": [{ "title": "Single standard room", "cost": "112.41", "contract": "36 week", "bathroom": "Shared", "studType": "Undergraduate", "accessible": "", "session": "2024/25" }, { "title": "Single standard room", "cost": "126.46", "contract": "15, 17 week", "bathroom": "Shared", "studType": "Undergraduate", "accessible": "", "session": "2024/25" }] }, {}
