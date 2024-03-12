@@ -1693,6 +1693,12 @@
         "projectPath": "medias/Categorised/Dist/php/smart-404/Smart_404.php"
       },
       {
+        "id": 178106,
+        "description": "accommodation.js",
+        "projectPath": "medias/Categorised/Dist/js/other/accommodation.js"
+      },
+
+      {
         "id": 163769,
         "description": "sprite-sheet.svg",
         "projectPath": "medias/Categorised/Dist/bundles/virtual-tour/img/sprite-sheet.svg"
