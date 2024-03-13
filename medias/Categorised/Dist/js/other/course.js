@@ -966,12 +966,7 @@ stir.course = (function() {
 		routes: frag => routeChooser.append(frag),
 		options: frag => optionChooser.append(frag),
 		modules: frag => {moduleBrowser.append(frag);reflow()},
-		version: frag => {
-			if(version && frag) {
-				console.info(frag);
-				version.textContent = frag;
-			}
-		}
+		version: frag => version && frag && (version.textContent = frag)
 	};
 
 	const reset = {
