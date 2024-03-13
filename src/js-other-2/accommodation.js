@@ -22,9 +22,10 @@
     const cookie = stir.favourites.getFav(sid, CONSTS.cookieType);
     const html = stir.favourites.renderRemoveBtn(sid, cookie[0].date, CONSTS.urlToFavs);
     setDOMContent(scope, html);
-  } else {
-    const html = stir.favourites.renderAddBtn(sid, CONSTS.urlToFavs);
+  }
 
+  if (!isFav) {
+    const html = stir.favourites.renderAddBtn(sid, CONSTS.urlToFavs);
     setDOMContent(scope, html);
   }
 
@@ -44,7 +45,7 @@
     /* Remove */
     if (target.dataset.action === "removefav") {
       stir.favourites.removeFromFavs(target.dataset.id);
-      setDOMContent(scope, stir.favourites.renderAddBtn(sid, ""));
+      setDOMContent(scope, stir.favourites.renderAddBtn(sid, CONSTS.urlToFavs));
     }
   });
 })(stir.node("#favsBtn"));
