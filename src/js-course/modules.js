@@ -32,6 +32,7 @@ stir.course = (function() {
 	const routeChooser = stir.templates.course.div('optionBrowser');
 	const optionChooser = stir.templates.course.div('optionBrowser');
 	const moduleBrowser = stir.templates.course.div('moduleBrowser');
+	const version = document.querySelector('time[data-sits]');
 
 	let initialised = false;
 
@@ -52,6 +53,7 @@ stir.course = (function() {
 		routes: frag => routeChooser.append(frag),
 		options: frag => optionChooser.append(frag),
 		modules: frag => {moduleBrowser.append(frag);reflow()},
+		version: frag => version && frag && (version.textContent = frag)
 	};
 
 	const reset = {
@@ -65,11 +67,13 @@ stir.course = (function() {
 	stir.dpt.set.show.routes( handle.routes );
 	stir.dpt.set.show.options( handle.options );
 	stir.dpt.set.show.modules( handle.modules );
+	stir.dpt.set.show.version( handle.version );
 	stir.dpt.set.reset.modules( reset.modules );
 
 	const _auto = () => {
 		if(!initialised) {
 			initialised = true;
+			version && stir.dpt.get.version(parameter.level);
 			if(parameter.route.indexOf(',')>=0) {
 				stir.dpt.get.routes(parameter.level, parameter.route, parameter.auto);
 			} else {
