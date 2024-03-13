@@ -75,14 +75,13 @@
                       ${renderPrice(item.rooms)}
                     </div>
                     <div class="cell large-4 text-sm">
- 
                         <p><strong>Location</strong></p> 
                         <p>${item.location}</p>
                         <p><strong>Student type</strong></p>
                         <p>${renderStudentTypes(item.rooms)}</p>
                     </div>
                     <div class="cell large-3 ">
-                        <div ><img src="${item.img}" width="760" height="470" alt="Image of ${item.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
+                        <div><img src="${item.img}" width="760" height="470" alt="Image of ${item.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
                     </div>
                     <div class="cell text-sm u-pt-2" id="favbtns${item.id}">
                       ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
@@ -112,9 +111,7 @@
       ? ``
       : `<div class="cell small-6">
             <div class="u-green-line-top u-margin-bottom">
-              <p class="u-text-regular u-py-1">
-                <strong><a href="${item.url}" >${item.title}</a></strong>
-              </p>
+              <p class="u-text-regular u-py-1"><strong><a href="${item.url}" >${item.title}</a></strong></p>
               <div class="u-mb-1">${item.location} accommodation.</div>
               <div>${stir.favourites.isFavourite(item.id) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.id, "")}</div>
             </div>

@@ -10,14 +10,13 @@
             <ul>${r.map(t=>`<li>${t}</li>`).join("")}</ul>`):""}
                     </div>
                     <div class="cell large-4 text-sm">
- 
                         <p><strong>Location</strong></p> 
                         <p>${e.location}</p>
                         <p><strong>Student type</strong></p>
                         <p>${s=e.rooms,s?(s=s.map(t=>t.studType).join(",").split(",").map(t=>t.trim()),stir.removeDuplicates(s).sort().join("<br />")):""}</p>
                     </div>
                     <div class="cell large-3 ">
-                        <div ><img src="${e.img}" width="760" height="470" alt="Image of ${e.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
+                        <div><img src="${e.img}" width="760" height="470" alt="Image of ${e.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
                     </div>
                     <div class="cell text-sm u-pt-2" id="favbtns${e.id}">
                       ${m(t.urlToFavs,a,e.id)}
@@ -26,9 +25,7 @@
               </div>
             </div>`):""}),g=t=>t.id?`<p class="text-sm"><strong><a href="${t.url}" >${t.title} </a></strong></p>`:"",h=t=>t.id?`<div class="cell small-6">
             <div class="u-green-line-top u-margin-bottom">
-              <p class="u-text-regular u-py-1">
-                <strong><a href="${t.url}" >${t.title}</a></strong>
-              </p>
+              <p class="u-text-regular u-py-1"><strong><a href="${t.url}" >${t.title}</a></strong></p>
               <div class="u-mb-1">${t.location} accommodation.</div>
               <div>${stir.favourites.isFavourite(t.id)?'<p class="text-sm u-heritage-green">Already in my favourites</p>':stir.favourites.renderAddBtn(t.id,"")}</div>
             </div>
