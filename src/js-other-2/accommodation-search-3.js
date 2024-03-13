@@ -94,13 +94,10 @@
 
   /* renderMiniFav - used on the share page */
   const renderMiniFav = (item) => {
-    return !item.id
-      ? ``
-      : `<p class="text-sm">
-              <strong><a href="${item.url}" >${item.title} </a></strong>
-          </p>`;
+    return !item.id ? `` : `<p class="text-sm"><strong><a href="${item.url}" >${item.title} </a></strong></p>`;
   };
 
+  /* renderShareDialog */
   const renderShareDialog = (link) => {
     return !link
       ? ``
@@ -109,8 +106,8 @@
           <p class="text-xsm">${link}</p>`;
   };
 
+  /* renderShared */
   const renderShared = (item) => {
-    console.log(item);
     return !item.id
       ? ``
       : `<div class="cell small-6">
@@ -138,9 +135,7 @@
 
   const getfavsCookie = () => stir.favourites.getFavsList(COOKIE_TYPE);
 
-  /*
-      getFavsList: Returns an array of course objects 
-  */
+  /* getFavsList: Returns an array of course objects */
   const getFavsList = (data) => {
     const favsCookie = getfavsCookie();
 
@@ -149,7 +144,7 @@
     }
 
     const favsCookieSorted = favsCookie.sort((a, b) => b.date - a.date);
-    // Maintain ordering by merging FB result into cookie object
+    // Maintain ordering by merging data into cookie object
     return favsCookieSorted.map((item) => {
       return {
         ...data.filter((element) => {
@@ -165,7 +160,6 @@
     if (filterValue === "" || !item.rooms) return item;
 
     const matches2 = stir.filter((entry) => entry.bathroom === filterValue, item.rooms);
-
     if (matches2.length) {
       item.rooms = matches2;
       return item;
@@ -176,7 +170,6 @@
   /* filterByLocation */
   const filterByLocation = stir.curry((filterValue, item) => {
     if (filterValue === "" || !item.location) return item;
-
     if (filterValue === item.location) return item;
   });
 
@@ -185,7 +178,6 @@
     if (filterValue === "" || !item.rooms) return item;
 
     const matches2 = stir.filter((entry) => entry.studType.includes(filterValue), item.rooms);
-
     if (matches2.length) {
       item.rooms = matches2;
       return item;
@@ -198,7 +190,6 @@
     if (filterValue === "" || !item.rooms) return item;
 
     const matches2 = stir.filter((entry) => parseFloat(filterValue) > parseFloat(entry.cost), item.rooms);
-
     if (matches2.length) {
       item.rooms = matches2;
       return item;
@@ -211,6 +202,7 @@
     if (item && item.title) return item;
   });
 
+  /* getShareList */
   const getShareList = (data) => {
     const sharedListQuery = QueryParams.get("a") || "";
 
@@ -219,8 +211,6 @@
     try {
       // wrap in a try{} to catch any Base64 errors
       const sharedList = atob(sharedListQuery);
-
-      console.log(sharedList);
 
       // Maintain ordering by merging FB result into cookie object
       return sharedList.split(",").map((item) => {
@@ -256,6 +246,7 @@
      Controllers
   */
 
+  /* doFavourites */
   const doFavourites = (consts, data) => {
     const favs = stir.favourites.getFavsList(consts.cookieType);
 
@@ -269,6 +260,7 @@
     return html ? setDOM(html) : setDOM(stir.templates.renderNoFavs);
   };
 
+  /* doSearch */
   const doSearch = (consts, filters, data) => {
     const renderer = stir.map(renderAccom(consts));
 
@@ -278,36 +270,15 @@
     const filterByLocationCurry = stir.filter(filterByLocation(filters.location));
 
     const filteredData = stir.compose(filterEmpties, filterByBathroomCurry, filterByLocationCurry, filterByStudTypeCurry, filterByPriceCurry, stir.clone)(data);
-
     const html = stir.compose(joiner, renderer)(filteredData);
 
     return setDOMContent(resultsArea, renderNumItems(filteredData.length) + html);
   };
 
-  /*
-     On load
-   */
-
-  const initialData = accommodationData ? accommodationData.filter((item) => item.id && item.id.length) : [];
-
-  //if (!initialData.length) return;
-
-  /* 
-    Page : Manage Favs 
-  */
-  if (CONSTS.activity === "managefavs") {
-    doFavourites(CONSTS, initialData);
-  }
-
-  /* 
-    Page : Shared 
-  */
+  /* doShared */
   const doShared = (sharedArea, sharedfavArea, data) => {
     if (sharedArea) {
       const shareList = getShareList(data);
-
-      console.log(shareList);
-
       if (!shareList) {
         setDOMContent(sharedArea, renderNoShared());
       } else {
@@ -317,7 +288,6 @@
 
     if (sharedfavArea) {
       const list = getFavsList(data);
-
       if (!list) {
         setDOMContent(sharedfavArea, renderNoFavs());
       } else {
@@ -327,13 +297,23 @@
     return;
   };
 
+  /*
+     On load
+   */
+
+  const initialData = accommodationData ? accommodationData.filter((item) => item.id && item.id.length) : [];
+
+  /*  Init Page Manage Favs */
+  if (CONSTS.activity === "managefavs") {
+    doFavourites(CONSTS, initialData);
+  }
+
+  /*  Init Page Shared */
   if (CONSTS.activity === "shared") {
     doShared(sharedArea, sharedfavArea, initialData);
   }
 
-  /* 
-    Page : Search 
-  */
+  /*  Init Page Search */
   if (CONSTS.activity === "search") {
     // Min and max prices for the range slider
     const allRooms = stir.flatten(initialData.map((item) => item.rooms));
@@ -363,7 +343,9 @@
 
     doSearch(CONSTS, filters, initialData);
 
-    /* Actions: Form changes */
+    /* 
+      Actions: Form changes 
+    */
     searchForm &&
       searchForm.addEventListener("input", (event) => {
         const filters = {
@@ -389,6 +371,9 @@
       });
   }
 
+  /* 
+    ACTIONS: FAVS ASIDE
+   */
   if (favBtnsNode) {
     stir.node("main").addEventListener("click", (event) => {
       const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
@@ -401,8 +386,6 @@
 
       /* ACTION: COPY SHARE LINK */
       if ("copysharelink" === target.dataset.action) {
-        console.log("click");
-
         const favsCookie = getfavsCookie();
         const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
 
@@ -420,7 +403,9 @@
     setDOMContent(favBtnsNode, renderFavActionBtns());
   }
 
-  /* Actions: Cookie favs btn clicks  */
+  /* 
+    ACTIONS: Search result fav btn clicks  
+  */
   resultsArea.addEventListener("click", (event) => {
     const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
 
