@@ -36,15 +36,16 @@ stir.dpt = (function () {
       UG: "?opt=menu&callback=stir.dpt.show.routes", //+ (ver?ver:'')
       PG: "?opt=pgmenu&ct=PG&callback=stir.dpt.show.routes", //+ (ver?ver:'')
     },
-    version: {
-      UG:"?opt=version-menu&callback=stir.dpt.show.version",
-      PG:"?opt=version-menu&ct=PG&callback=stir.dpt.show.version"
-    },
     option: (type, roucode) => `?opt=${type.toLowerCase()}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&callback=stir.dpt.show.options`,
     fees: (type, roucode) => `?opt=${type}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&callback=stir.dpt.show.fees`,
     modules: (type, roucode, moa, occ) => `?${modulesEndpointParams[type.toUpperCase()]}&moa=${moa}&occ=${occ}&rouCode=${roucode}&callback=stir.dpt.show.modules`,
     module: (mod, year, sem) => stir.akari.get.module([mod, year, sem].join("/")),
   };
+
+  urls.version = {
+	  UG: UoS_env.t4_tags ? '<t4 type="media" id="178111" formatter="path/*" />': urls.servlet + "?opt=version-menu&callback=stir.dpt.show.version",
+	  PG: UoS_env.t4_tags ? '<t4 type="media" id="178112" formatter="path/*" />': urls.servlet + "?opt=version-menu&ct=PG&callback=stir.dpt.show.version"
+  }
 
   //	const getAllRoutes = type => {
   //		stir.getJSONp(`${urls.servlet}${urls.route[type.toUpperCase()]}`);
@@ -53,9 +54,7 @@ stir.dpt = (function () {
 
   const spitCodes = (csv) => csv.replace(/\s/g, "").split(",");
 
-  const getVersion = (type) => {
-    stir.getJSONp(`${urls.servlet}${urls.version[type]}`);
-  };
+  const getVersion = (type) => stir.getJSONp(`${urls.version[type]}`);
 
   const getRoutes = (type, routesCSV, auto) => {
     user.type = type;

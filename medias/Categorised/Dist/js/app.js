@@ -2284,6 +2284,7 @@ var UoS_env = (function () {
 
   var env_name = "prod";
   var wc_path = "/media/dist/";
+  var t4_tags = false;
 
   switch (hostname) {
     case "localhost":
@@ -2294,11 +2295,13 @@ var UoS_env = (function () {
     case "stiracuk-cms01-production.terminalfour.net":
       env_name = "preview";
       wc_path = "";
+      t4_tags = true;
       break;
-
+      
     case "stiracuk-cms01-test.terminalfour.net":
       env_name = "appdev-preview";
       wc_path = "";
+      t4_tags = true;
       break;
 
     case "stir.ac.uk":
@@ -2310,11 +2313,19 @@ var UoS_env = (function () {
       wc_path = "/medias/Categorised/Dist/";
       break;
   }
+  
+  switch(window.location.port) {
+    case '3000':
+    case '8000':
+      env_name = "dev"
+      wc_path = "/medias/Categorised/Dist/";
+    }
 
   return {
     //url: hostname,
     name: env_name,
     wc_path: wc_path,
+    t4_tags: t4_tags
   };
 })();
 
@@ -3435,20 +3446,19 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
       url = "/pages/data/awd/megamenu.html";
       break;
 
-    case "app-preview":
-      url = "https://t4appdev.stir.ac.uk/terminalfour/preview/1/en/2834";
-      break;
-
-    case "appdev-preview":
-      url = "https://t4appdev.stir.ac.uk/terminalfour/preview/1/en/2834";
-      break;
-
     case "qa":
       url = "/stirling/pages/data/awd/megamenu.html";
       break;
 
     case "preview":
+    case "production":
       url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2834";
+      break;
+
+    case "app-preview":
+    case "appdev-preview":
+    case "test":
+      url = "https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/2834";
       break;
 
     default: // live

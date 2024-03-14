@@ -18,20 +18,19 @@
       url = "/pages/data/awd/megamenu.html";
       break;
 
-    case "app-preview":
-      url = "https://t4appdev.stir.ac.uk/terminalfour/preview/1/en/2834";
-      break;
-
-    case "appdev-preview":
-      url = "https://t4appdev.stir.ac.uk/terminalfour/preview/1/en/2834";
-      break;
-
     case "qa":
       url = "/stirling/pages/data/awd/megamenu.html";
       break;
 
     case "preview":
+    case "production":
       url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2834";
+      break;
+
+    case "app-preview":
+    case "appdev-preview":
+    case "test":
+      url = "https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/2834";
       break;
 
     default: // live
