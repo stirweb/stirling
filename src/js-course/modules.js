@@ -23,12 +23,15 @@ stir.templates.course = {
 
 
 stir.course = (function() {
-	if(!stir.dpt) return;
+
+	const na = {auto: new Function()};
+
+	if(!stir.dpt) return na;
 
 	const container = document.getElementById('course-modules-container');
 	const el = document.querySelector("[data-modules-route-code][data-modules-course-type]");
-    if(!el) return;
-	if(!container) return
+	if(!container || !el) return na;
+	
 	const routeChooser = stir.templates.course.div('optionBrowser');
 	const optionChooser = stir.templates.course.div('optionBrowser');
 	const moduleBrowser = stir.templates.course.div('moduleBrowser');
