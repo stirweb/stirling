@@ -604,9 +604,9 @@ stir.templates.search = (() => {
       !item.messageHtml
         ? `<div class="c-search-result" data-result-type=curated>
 					<div class=c-search-result__body>
-						<p class="c-search-result__breadcrumb">${item.displayUrl}</p>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${FB_BASE() + item.linkUrl}" title="${item.displayUrl}">${item.titleHtml}</a>
+							<a href="${FB_BASE() + item.linkUrl}" title="${item.displayUrl}">${item.titleHtml}</a><br>
+							<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
 						</strong></p>
 						<p>${item.descriptionHtml}</p>
 					</div>

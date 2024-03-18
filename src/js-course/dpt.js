@@ -187,6 +187,7 @@ stir.dpt = (function () {
 
   const versionToSession = (data) => {
     if(!data || !data.length) return;
+	// [2024-03-14] rwm2 -- remove DEBUG test to make it live --
     if(debug) {
       try {
         return data.filter(v=>v.versionActive==="Y").sort(compareVersions).pop().versionName;
