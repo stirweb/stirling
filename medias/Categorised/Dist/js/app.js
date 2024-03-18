@@ -2319,7 +2319,7 @@ var UoS_env = (function () {
     case '8000':
       env_name = "dev"
       wc_path = "/medias/Categorised/Dist/";
-    }
+  }
 
   return {
     //url: hostname,
