@@ -621,9 +621,9 @@ stir.templates.search = (() => {
       !item.messageHtml
         ? `<div class="c-search-result" data-result-type=curated>
 					<div class=c-search-result__body>
-						<p class="c-search-result__breadcrumb">${item.displayUrl}</p>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${FB_BASE() + item.linkUrl}" title="${item.displayUrl}">${item.titleHtml}</a>
+							<a href="${FB_BASE() + item.linkUrl}" title="${item.displayUrl}">${item.titleHtml}</a><br>
+							<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
 						</strong></p>
 						<p>${item.descriptionHtml}</p>
 					</div>
@@ -1046,7 +1046,8 @@ stir.search = () => {
     main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "page", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tag", "tags", "thumbnail", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
     courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
     clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
-	scholarships: ["value","status","number"]
+	scholarships: ["value","status","number"],
+	news: ["c","d","h1","image","imagealt","tags","tag","thumbnail"]
   };
 
 	//console.info("Clearing is " + (CLEARING ? "open" : "closed"));
@@ -1075,7 +1076,7 @@ stir.search = () => {
         meta_v_not: "faculty-news",
         sort: "date",
         fmo: "true",
-        SF: "[c,d,h1,image,imagealt,tags,tag,thumbnail]",
+        SF: `[${meta.news.join(",")}]`,
         num_ranks: NUMRANKS,
         SBL: 450,
       },
@@ -1134,6 +1135,11 @@ stir.search = () => {
 		collection: "stir-internal",
 		SF: "[c,access,breadcrumbs,group]",
 		query: "!padrenullquery"
+	  },
+	  clearing:{
+		collection: "stir-courses-combos",
+		query: "!padrenullquery",
+		sort: "title"
 	  }
     },
     // extra parameters for no-query searches
@@ -1390,7 +1396,8 @@ stir.search = () => {
 		coursemini: callSearchApiMeta("coursemini"),
 		person: callSearchApi("person"),
 		research: callSearchApi("research"),
-		internal: callSearchApi("internal")
+		internal: callSearchApi("internal"),
+		clearing: callSearchApi("clearing")
 	};
 
 	// group the renderer functions so we can get them easily by `type`
@@ -1405,6 +1412,7 @@ stir.search = () => {
 		research: (data) => data.map(stir.templates.search.research).join(""),
 		cura: (data) => data.map(stir.templates.search.cura).join(""),
 		internal: (data) => data.map(stir.templates.search.auto).join(""),
+		clearing: (data) => data.map(stir.templates.search.auto).join(""),
 	};
 
 	const footers = {
