@@ -1,0 +1,15 @@
+!function(){function e(){const t=new IntersectionObserver(function(e,t){e.forEach(e=>{var t,s,a,r;e.isIntersecting?(t=Number(e.target.dataset.value),s=e.target.dataset.unit,a=Number(e.target.dataset.max),r=e.target.dataset.colour||"energy-turq",a=t/a*100,r=stir.createDOMFragment(`<div class="barchart-value u-bg-${r} u-absolute" style="right:${100-a}%"></div>
+                                                <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${a/2-2}%">${t}${s}</div>`),e.target.append(r)):e.target.innerHTML=""})},{root:null,threshold:.5});stir.nodes(".barchart").forEach(e=>{t.observe(e)})}stir.curry((e,t,{type:s,hours:a,typekey:r})=>{return"total"===r?`<div class="u-bg-${e.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
+                <strong class="u-flex1">Total workload</strong>
+                <strong>${a} hours</strong>
+            </div>`:`
+        <div>
+            <span class="u-inline-block u-p-tiny u-px-1">${s}</span>
+            <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${a}" data-max="${t}" data-unit="" data-colour="${e.second}"></div>
+        </div>`});const t=(e,t)=>t?`<div class="cell large-${e} u-mb-1">${t}</div>`:"",a=stir.curry((e,{name:t,value:s})=>0===Number(s)?"":`<div>
+          <span class="u-inline-block u-p-tiny u-px-1">${t}</span>
+          <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${s}" data-max="100" data-unit="%" data-colour="${e[0].second}"></div>
+        </div>`),r=stir.curry((e,t,s)=>{e=a(e);return(1<t?`<h4 class="u-mt-0">${s.tab}</h4>`:"")+`<p>${s.summary.map(e).join("")}</p>`}),s=stir.curry((e,t)=>t?`<div class="cell large-${e} u-mb-1">${t}</div>`:""),n=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),i=e=>{var s;return"International"===e.tab?{sum:0,summary:[],tab:e.tab,tabAssessments:e.tabAssessments}:{sum:e.tabAssessments.map(e=>Number(e.percent)).reduce((e,t)=>e+t,0),summary:(s=e.tabAssessments.map(e=>e.category)).filter((e,t)=>s.indexOf(e)===t).map(t=>({name:t,value:e.tabAssessments.map(e=>e.category===t?Number(e.percent):0).reduce((e,t)=>e+t,0)})),tab:e.tab,tabAssessments:e.tabAssessments}};var l,u,d,o,c,m;l=JSON.parse(colours),u=JSON.parse(assessments),JSON.parse(deliveries),d=multipleAssessmentsText,o=assessmentsFallbackText,c=deliveriesFallbackText,(m=stir.node("#content"))&&m.classList.add("u-padding-bottom"),n(stir.node("#deliveries"),(m=c,(c="")+(c.length?t("12",c):m))),m=((e,t)=>{e=e.map(i).filter(e=>100===e.sum);const s=r(t,e.length);return e.map(e=>s(e))})(c=u||[],l),n(stir.node("#assessments"),(u=d,c=o,d=(l=m).length<2?"12":"6",d=s(d),d=l.length?l.map(d).join(""):`<div class="cell">${c}</div>`,`${1<l.length?u:""}
+              <div class="grid-x grid-padding-x ">
+                  ${d}
+              </div>`)),e(),console.log("done")}();
