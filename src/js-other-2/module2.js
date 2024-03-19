@@ -99,10 +99,7 @@
     const renderAssessmentCurry = renderAssessment(assessmentWidth);
     const assessmentHtml = !assessments.length ? `<div class="cell">${assessmentFallback}</div>` : assessments.map(renderAssessmentCurry).join(``);
 
-    return `${assessments.length > 1 ? multipleAssessments : ``}
-              <div class="grid-x grid-padding-x ">
-                  ${assessmentHtml}
-              </div>`;
+    return `${assessments.length > 1 ? multipleAssessments : ``} ${assessmentHtml}`;
   };
 
   // const renderDebugDataItem = (item) => {
