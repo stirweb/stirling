@@ -10,7 +10,8 @@ stir.dpt = (function(){
 	const routeBrowser = document.getElementById('routeBrowser');
 	const optionBrowser = document.getElementById('optionBrowser');
 	const moduleBrowser = document.getElementById('moduleBrowser');
-	const user = {};
+	const feeBrowser = document.getElementById('feeBrowser');
+	const user = {action:"module"};
 
 	const modulesEndpointParams = {
 		UG: "opt=runcode&ct=UG",
@@ -60,12 +61,19 @@ stir.dpt = (function(){
 				routeBrowser.innerHTML ='';
 				optionBrowser.innerHTML ='';
 				moduleBrowser.innerHTML ='';
+				feeBrowser.innerHTML ='';
 				routeBrowser.appendChild(label);
 				//stdout.textContent = select[select.selectedIndex].outerHTML;
 				user.rouCode = select[select.selectedIndex].value;
 				user.rouName = select[select.selectedIndex].textContent;
-				optionBrowser.insertAdjacentHTML("afterbegin", `<p>↳ <strong>${user.rouCode}</strong> selected</p>`);
-				getOptions(user.type,user.rouCode);
+				if(user.action==="module"){
+					optionBrowser.insertAdjacentHTML("afterbegin", `<p>↳ <strong>${user.rouCode}</strong> selected</p>`);
+					getOptions(user.type,user.rouCode);
+				}
+				if(user.action==="fee"){
+					feeBrowser.textContent = user.rouCode;
+					stir.akari.fee.get(user.rouCode, data=>feeBrowser.append(stir.akari.fee.tabulate(data)));
+				}
 			}
 			
 			if(event.target.name==='option') {
@@ -205,7 +213,8 @@ stir.dpt = (function(){
 			viewer: ()=>urls.viewer
 		},
 		set: {
-			viewer: path => urls.viewer = path
+			viewer: path => urls.viewer = path,
+			action: action => user.action = action
 		},
 
 	};
