@@ -69,8 +69,7 @@
   /* renderTeachingDeliveriess */
   const renderTeachingDeliveries = (deliveries, deliveriesFallback) => {
     const deliveriesHtml = !deliveries.length ? deliveriesFallback : renderDeliveries(`12`, deliveries);
-
-    return `${deliveriesHtml}`;
+    return `<div class="cell">${deliveriesHtml}</div>`;
   };
 
   /* renderAssessmentItem */
