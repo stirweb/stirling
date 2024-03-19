@@ -10,7 +10,8 @@ stir.dpt = (function(){
 	const routeBrowser = document.getElementById('routeBrowser');
 	const optionBrowser = document.getElementById('optionBrowser');
 	const moduleBrowser = document.getElementById('moduleBrowser');
-	const user = {};
+	const feeBrowser = document.getElementById('feeBrowser');
+	const user = {action:"module"};
 
 	const modulesEndpointParams = {
 		UG: "opt=runcode&ct=UG",
@@ -48,7 +49,9 @@ stir.dpt = (function(){
 		const label = document.createElement('label');
 		label.appendChild(document.createTextNode('Select a course'));
 		label.setAttribute('for',name);
-		const select = document.createElement('select')
+		const select = document.createElement('select');
+		const spinner = new stir.Spinner();
+		spinner.show();	// won't actually be shown until it's been appended to DOM
 		select.name = name;
 		select.id = name;
 		select.innerHTML = `<option value selected disabled> ~ ${labels[user.type]} courses ~ </option>` + data.sort(routeSort).map(makeOption).join('');
@@ -60,12 +63,23 @@ stir.dpt = (function(){
 				routeBrowser.innerHTML ='';
 				optionBrowser.innerHTML ='';
 				moduleBrowser.innerHTML ='';
+				feeBrowser.innerHTML ='';
 				routeBrowser.appendChild(label);
 				//stdout.textContent = select[select.selectedIndex].outerHTML;
 				user.rouCode = select[select.selectedIndex].value;
 				user.rouName = select[select.selectedIndex].textContent;
-				optionBrowser.insertAdjacentHTML("afterbegin", `<p>↳ <strong>${user.rouCode}</strong> selected</p>`);
-				getOptions(user.type,user.rouCode);
+				if(user.action==="module"){
+					optionBrowser.insertAdjacentHTML("afterbegin", `<p>↳ <strong>${user.rouCode}</strong> selected</p>`);
+					getOptions(user.type,user.rouCode);
+				}
+				if(user.action==="fee"){
+					feeBrowser.textContent = `Loading data, please wait… ${user.rouCode}`;
+					feeBrowser.append(spinner.element);
+					stir.akari.fee.get(user.rouCode, data=>{
+						feeBrowser.innerHTML = '';
+						feeBrowser.append(stir.akari.fee.tabulate(data)||document.createTextNode(`Fee data unavailable for ${user.rouCode}`) );
+					});
+				}
 			}
 			
 			if(event.target.name==='option') {
@@ -205,7 +219,8 @@ stir.dpt = (function(){
 			viewer: ()=>urls.viewer
 		},
 		set: {
-			viewer: path => urls.viewer = path
+			viewer: path => urls.viewer = path,
+			action: action => user.action = action
 		},
 
 	};
