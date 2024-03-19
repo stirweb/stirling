@@ -1702,6 +1702,11 @@
         "id": 163769,
         "description": "sprite-sheet.svg",
         "projectPath": "medias/Categorised/Dist/bundles/virtual-tour/img/sprite-sheet.svg"
+      },
+	  {
+        "id": 178201,
+        "description": "fee.js",
+        "projectPath": "medias/Categorised/Dist/js/other/fee.js"
       }
     ]
   }
