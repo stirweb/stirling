@@ -49,7 +49,9 @@ stir.dpt = (function(){
 		const label = document.createElement('label');
 		label.appendChild(document.createTextNode('Select a course'));
 		label.setAttribute('for',name);
-		const select = document.createElement('select')
+		const select = document.createElement('select');
+		const spinner = new stir.Spinner();
+		spinner.show();	// won't actually be shown until it's been appended to DOM
 		select.name = name;
 		select.id = name;
 		select.innerHTML = `<option value selected disabled> ~ ${labels[user.type]} courses ~ </option>` + data.sort(routeSort).map(makeOption).join('');
@@ -71,8 +73,12 @@ stir.dpt = (function(){
 					getOptions(user.type,user.rouCode);
 				}
 				if(user.action==="fee"){
-					feeBrowser.textContent = user.rouCode;
-					stir.akari.fee.get(user.rouCode, data=>feeBrowser.append(stir.akari.fee.tabulate(data)));
+					feeBrowser.textContent = `Loading data, please wait… ${user.rouCode}`;
+					feeBrowser.append(spinner.element);
+					stir.akari.fee.get(user.rouCode, data=>{
+						feeBrowser.innerHTML = '';
+						feeBrowser.append(stir.akari.fee.tabulate(data)||document.createTextNode(`Fee data unavailable for ${user.rouCode}`) );
+					});
 				}
 			}
 			
