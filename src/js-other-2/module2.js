@@ -234,8 +234,6 @@
     setDOMContent(stir.node("#assessments"), renderTeachingAssessments(assessments, multipleAssessmentsText, assessmentsFallbackText));
 
     addEventListeners();
-
-    console.log("done");
   };
 
   /*
