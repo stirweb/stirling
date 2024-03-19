@@ -51,7 +51,7 @@
       .split(",")
       .map((item) => item.trim());
 
-    return stir.removeDuplicates(allTypes).sort().join("<br />");
+    return stir.removeDuplicates(allTypes).join("<br />");
   };
 
   /* renderFavBtns */

@@ -13,7 +13,7 @@
                         <p><strong>Location</strong></p> 
                         <p>${e.location}</p>
                         <p><strong>Student type</strong></p>
-                        <p>${s=e.rooms,s?(s=s.map(t=>t.studType).join(",").split(",").map(t=>t.trim()),stir.removeDuplicates(s).sort().join("<br />")):""}</p>
+                        <p>${s=e.rooms,s?(s=s.map(t=>t.studType).join(",").split(",").map(t=>t.trim()),stir.removeDuplicates(s).join("<br />")):""}</p>
                     </div>
                     <div class="cell large-3 ">
                         <div><img src="${e.img}" width="760" height="470" alt="Image of ${e.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
