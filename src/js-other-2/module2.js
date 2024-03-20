@@ -75,10 +75,9 @@
   /* renderDeliveries */
   const renderDeliveries = (width, deliveries) => (!deliveries ? `` : `<div class="cell large-${width} u-mb-1">${deliveries}</div>`);
 
-  /* renderTeachingDeliveriess */
+  /* renderTeachingDeliveries */
   const renderTeachingDeliveries = (deliveries, deliveriesFallback) => {
-    const deliveriesHtml = !deliveries.length ? deliveriesFallback : renderDeliveries(`12`, deliveries);
-
+    const deliveriesHtml = !deliveries.length ? `<div class="cell ">${deliveriesFallback}</div>` : renderDeliveries(`12`, deliveries);
     return `${deliveriesHtml}`;
   };
 
