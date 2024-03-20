@@ -44,6 +44,15 @@
 
     */
 
+  /* renderCourseBackBtn */
+  const renderCourseBackBtn = (level) => {
+    const params = new URLSearchParams(document.location.search);
+    if (!params.get("course")) return ``;
+
+    const url = stir.isNumeric(params.get("course")) ? `/terminalfour/preview/1/en/${params.get("course")}` : `/courses/${level.replace("pg", "pg-taught")}/${params.get("course")}`;
+    return `<a href="${url}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`;
+  };
+
   /* renderDeliverablesTotal */
   const renderDeliverablesTotal = (hours, colourPack) => {
     return `<div class="u-bg-${colourPack.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
@@ -69,7 +78,8 @@
   /* renderTeachingDeliveriess */
   const renderTeachingDeliveries = (deliveries, deliveriesFallback) => {
     const deliveriesHtml = !deliveries.length ? deliveriesFallback : renderDeliveries(`12`, deliveries);
-    return `<div class="cell">${deliveriesHtml}</div>`;
+
+    return `${deliveriesHtml}`;
   };
 
   /* renderAssessmentItem */
@@ -226,8 +236,10 @@
 
     const assessmentsData = dataAssessments ? dataAssessments : [];
     const assessments = doAssessments(assessmentsData, colourPack);
-
     setDOMContent(stir.node("#assessments"), renderTeachingAssessments(assessments, multipleAssessmentsText, assessmentsFallbackText));
+
+    const level = colourPack[0].level;
+    setDOMContent(stir.node("#backbutton"), renderCourseBackBtn(level));
 
     addEventListeners();
   };
