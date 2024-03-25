@@ -156,7 +156,7 @@
   const filterByBathroom = stir.curry((filterValue, item) => {
     if (filterValue === "" || !item.rooms) return item;
 
-    const matches2 = stir.filter((entry) => entry.bathroom === filterValue, item.rooms);
+    const matches2 = stir.filter((entry) => entry.bathroom.toLowerCase().includes(filterValue.toLowerCase()), item.rooms);
     if (matches2.length) {
       item.rooms = matches2;
       return item;
