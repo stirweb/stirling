@@ -843,7 +843,7 @@
         function initMap() {
 
             function calcRoute(mode, start) {
-                const end = "FK9 4AE";
+                const end = "56.145922,-3.920283";
                 const request = {
                     origin: start,
                     destination: end,
@@ -873,7 +873,7 @@
             if (!elMap) return;
             if (elMode) elMode.value = 'WALKING';
 
-            const start = elMap.dataset.start;
+            const start = "56.150993,-3.929349"; //elMap.dataset.start;
             const map = new google.maps.Map(document.getElementById('map'), mapOptions);
             directionsRenderer.setMap(map);
 
