@@ -1,3 +1,7 @@
+/* 
+  FAVS 
+*/
+
 (function (scope) {
   if (!scope) return;
 
@@ -49,3 +53,101 @@
     }
   });
 })(stir.node("#favsBtn"));
+
+/* 
+  MAP 
+*/
+
+let map;
+
+function initMap() {
+  const renderDistance = (time, distance) => {
+    return `<p>Time to campus: ${time} <br />
+            Distance to campus:${distance}</p>`;
+  };
+
+  const outputDistance = (response, status) => {
+    console.log(status);
+    console.log(response.rows[0].elements[0].distance.text);
+
+    if (status === "OK") {
+      const html = renderDistance(response.rows[0].elements[0].duration.text, response.rows[0].elements[0].distance.text);
+      stir.node("#traveldurations").innerHTML = html;
+    }
+  };
+
+  function calcRoute(mode, start, end) {
+    const request = {
+      origin: start,
+      destination: end,
+      travelMode: mode,
+    };
+    directionsService.route(request, function (result, status) {
+      if (status == "OK") {
+        directionsRenderer.setDirections(result);
+      }
+    });
+
+    var service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+        origins: [start],
+        destinations: [end],
+        travelMode: mode,
+        unitSystem: google.maps.UnitSystem.METRIC,
+      },
+      outputDistance
+    );
+  }
+
+  const elMap = document.getElementById("map");
+  const elMode = document.getElementById("travelmode");
+  const start = elMap.dataset.start; // eg "56.150993,-3.929349";
+  const end = "56.145922,-3.920283"; // Campus Central Coordinates
+
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer();
+
+  const accomm = new google.maps.LatLng(start);
+  const cottrell = new google.maps.LatLng(end);
+
+  const mapOptions = {
+    zoom: 14,
+    center: cottrell,
+  };
+
+  if (!elMap) return;
+  if (elMode) elMode.value = "WALKING";
+
+  const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  directionsRenderer.setMap(map);
+  calcRoute("WALKING", start, end);
+
+  elMode &&
+    elMode.addEventListener("click", (e) => {
+      calcRoute(e.currentTarget.value, start, end);
+    });
+}
+
+/* 
+  GALLERY 
+*/
+
+(function (scope) {
+  if (!scope) return;
+
+  const images = Array.prototype.slice.call(scope.querySelectorAll(".c-thumb-gallery-icons > a"));
+  const galleryimage = scope.querySelector(".c-thumb-gallery-image");
+
+  images.forEach((img) => {
+    img.addEventListener("click", (event) => {
+      event.preventDefault();
+      const clickedImage = event.currentTarget.querySelector("img");
+      galleryimage.classList.remove("u-fadein");
+      setTimeout(() => {
+        galleryimage.src = clickedImage.src;
+        galleryimage.classList.add("u-fadein");
+      }, "100");
+    });
+  });
+})(stir.node(".c-thumb-gallery"));
