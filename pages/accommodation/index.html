@@ -716,15 +716,6 @@
                                     <div class="cell medium-5">
                                         <p><strong>Travelling to campus</strong></p>
 
-                                        <p>This hall is approximately 0.8 miles from the centre of campus.</p>
-                                        <p><strong>16-minute walk</strong>: via Oxford Road and Whitworth Park.</p>
-                                        <p><strong>5-minute cycle</strong>: Oxford Road offers protected cycle routes.
-                                        </p>
-                                        <p><strong>13-minute bus journey</strong>: you can ride the 147 bus for free
-                                            with
-                                            your student card.
-                                        </p>
-
                                         <div class="u-mt-2">
                                             <strong class="u-block u-mb-1">Show route for... </strong>
                                             <select id="travelmode">
@@ -734,9 +725,12 @@
                                                 <option value="DRIVING">Driving</option>
                                             </select>
                                         </div>
+
+                                        <div id="traveldurations"></div>
+
                                     </div>
                                     <div class="cell medium-7">
-                                        <div id="map" data-start="FK9 5AL" style="height: 500px;"></div>
+                                        <div id="map" data-start="56.150993,-3.929349" style="height: 500px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -837,96 +831,13 @@
     <script src="../../../medias/Categorised/Dist/js/other/_unminified/accommodation.js"></script>
 
 
-    <script>
-        let map;
-
-        function initMap() {
-
-            function calcRoute(mode, start) {
-                const end = "56.145922,-3.920283";
-                const request = {
-                    origin: start,
-                    destination: end,
-                    travelMode: mode
-                };
-                directionsService.route(request, function (result, status) {
-                    if (status == 'OK') {
-                        directionsRenderer.setDirections(result);
-                    }
-                });
-            }
-
-            const directionsService = new google.maps.DirectionsService();
-            const directionsRenderer = new google.maps.DirectionsRenderer();
-
-            const cottrell = new google.maps.LatLng(56.14643094488868, -3.918399958166454);
-            const accomm = new google.maps.LatLng(56.129741, -3.934522);
-
-            const mapOptions = {
-                zoom: 14,
-                center: cottrell
-            }
-
-            const elMap = document.getElementById('map');
-            const elMode = document.getElementById('travelmode');
-
-            if (!elMap) return;
-            if (elMode) elMode.value = 'WALKING';
-
-            const start = "56.150993,-3.929349"; //elMap.dataset.start;
-            const map = new google.maps.Map(document.getElementById('map'), mapOptions);
-            directionsRenderer.setMap(map);
-
-            calcRoute('WALKING', start);
-
-            elMode && elMode.addEventListener("click", (e) => {
-                calcRoute(e.currentTarget.value, start);
-            });
-        }
-
-
-        (function (scope) {
-
-            if (!scope) return;
-
-            const images = Array.prototype.slice.call(scope.querySelectorAll(".c-thumb-gallery-icons > a"));
-            const galleryimage = scope.querySelector(".c-thumb-gallery-image");
-
-            images.forEach(img => {
-                img.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    const clickedImage = event.currentTarget.querySelector("img");
-                    galleryimage.classList.remove("u-fadein");
-                    setTimeout(() => {
-                        galleryimage.src = clickedImage.src;
-                        galleryimage.classList.add("u-fadein");
-                    }, "100");
-                });
-            });
-        })(stir.node(".c-thumb-gallery"));
-
-    </script>
-
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1UNnY29BxIeFG4lq_-NTGEF1SUHNdQP8&callback=initMap"></script>
 
 
 
 
-    <script>
 
-
-        let img = `<img src="https://stiracuk-cms01-production.terminalfour.net/terminalfour/SiteManager?ctfn=download&amp;fnno=60&amp;ceid=6992a0f893f5bcfc9bce54343a51410599704f36" width="760" height="470" alt="Student accommodation communal area" loading="lazy">`;
-        let imgBits = img.split(" ");
-        let imgClasses = 'class="u-aspect-ratio-3-2 u-object-cover c-thumb-gallery-image u-fadein"';
-
-        imgBits.splice(2, 0, imgClasses);
-
-        imgBits.join(" ");
-
-
-
-    </script>
 </body>
 
 </html>
