@@ -100,10 +100,31 @@ async function initMap() {
   const elMap = document.getElementById("map");
   const elMode = document.getElementById("travelmode");
   const start = elMap.dataset.start;
-  const end = "56.145922,-3.920283";
-  const endBits = end.split(",");
+  const campusCentralEnd = "56.145922,-3.920283";
+  const intoEnd = "56.14463111249244,-3.9212629038270252";
 
-  const centre = { lat: Number(endBits[0]), lng: Number(endBits[1]) }; // Campus Central Coordinates
+  // into 56.14463111249244, -3.9212629038270252
+  // riverside = 56.12181976527503, -3.933368031507604
+  //  Alangrange = 56.150993,-3.929349
+
+  //const end = "56.14463111249244, -3.9212629038270252";
+  const endBits = campusCentralEnd.split(",");
+  const startBits = start.split(",");
+
+  //console.log(Number(endBits[1]));
+  //console.log(Number(startBits[1]));
+
+  // if (Number(endBits[1]) > Number(startBits[1])) {
+  //   console.log("Start is south");
+  // }
+
+  const startIsSouth = Number(endBits[1]) > Number(startBits[1]) ? true : false;
+
+  console.log(startIsSouth);
+
+  const end = startIsSouth ? intoEnd : campusCentralEnd;
+
+  const centre = { lat: Number(endBits[0]), lng: Number(endBits[1]) }; // Uni Coordinates
 
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
