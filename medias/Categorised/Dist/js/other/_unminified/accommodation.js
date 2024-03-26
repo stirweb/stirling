@@ -60,7 +60,7 @@
 
 let map;
 
-function initMap() {
+async function initMap() {
   const renderDistance = (time, distance) => {
     return `<p>Time to campus: ${time} <br />
             Distance to campus: ${distance}</p>`;
@@ -99,18 +99,18 @@ function initMap() {
 
   const elMap = document.getElementById("map");
   const elMode = document.getElementById("travelmode");
-  const start = elMap.dataset.start; // eg "56.150993,-3.929349";
-  const end = "56.145922,-3.920283"; // Campus Central Coordinates
+  const start = elMap.dataset.start;
+  const end = "56.145922,-3.920283";
+  const endBits = end.split(",");
+
+  const centre = { lat: Number(endBits[0]), lng: Number(endBits[1]) }; // Campus Central Coordinates
 
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
 
-  const accomm = new google.maps.LatLng(start);
-  const cottrell = new google.maps.LatLng(end);
-
   const mapOptions = {
     zoom: 14,
-    center: cottrell,
+    center: centre,
   };
 
   if (!elMap) return;
