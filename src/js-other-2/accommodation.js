@@ -63,13 +63,10 @@ let map;
 function initMap() {
   const renderDistance = (time, distance) => {
     return `<p>Time to campus: ${time} <br />
-            Distance to campus:${distance}</p>`;
+            Distance to campus: ${distance}</p>`;
   };
 
   const outputDistance = (response, status) => {
-    console.log(status);
-    console.log(response.rows[0].elements[0].distance.text);
-
     if (status === "OK") {
       const html = renderDistance(response.rows[0].elements[0].duration.text, response.rows[0].elements[0].distance.text);
       stir.node("#traveldurations").innerHTML = html;
