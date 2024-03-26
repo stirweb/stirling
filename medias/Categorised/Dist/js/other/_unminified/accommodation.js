@@ -105,20 +105,22 @@ async function initMap() {
 
   // into 56.14463111249244, -3.9212629038270252
   // riverside = 56.12181976527503, -3.933368031507604
-  //  Alangrange = 56.150993,-3.929349
+  // Alangrange = 56.150993,-3.929349
 
   //const end = "56.14463111249244, -3.9212629038270252";
   const endBits = campusCentralEnd.split(",");
   const startBits = start.split(",");
 
-  //console.log(Number(endBits[1]));
-  //console.log(Number(startBits[1]));
+  console.log(Number(endBits[1]));
+  console.log(Number(startBits[1]));
 
-  // if (Number(endBits[1]) > Number(startBits[1])) {
-  //   console.log("Start is south");
-  // }
+  if (Number(endBits[0]) > Number(startBits[0])) {
+    console.log("Start is south");
+  } else {
+    console.log("Start is north");
+  }
 
-  const startIsSouth = Number(endBits[1]) > Number(startBits[1]) ? true : false;
+  const startIsSouth = Number(endBits[0]) > Number(startBits[0]) ? true : false;
 
   console.log(startIsSouth);
 
