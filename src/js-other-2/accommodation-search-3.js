@@ -37,6 +37,10 @@
     const allPrices = rooms.map((item) => parseFloat(item.cost)).sort((a, b) => a - b);
     const matches = stir.removeDuplicates(rooms.map((item) => item.title));
 
+    if (allPrices[0].toFixed(2) === allPrices[allPrices.length - 1].toFixed(2)) {
+      return `<p>${allPrices[0].toFixed(2)} per week</p>`;
+    }
+
     return `<p>From £${allPrices[0].toFixed(2)} to £${allPrices[allPrices.length - 1].toFixed(2)} per week</p>
             <ul>${matches.map((item) => `<li>${item}</li>`).join(``)}</ul>`;
   };
