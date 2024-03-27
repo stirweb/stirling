@@ -6,7 +6,7 @@
                     </div>
                     <div class="cell large-5 text-sm">
                       <p><strong>Price</strong></p> 
-                      ${r=e.rooms,r?(s=r.map(t=>parseFloat(t.cost)).sort((t,e)=>t-e),r=stir.removeDuplicates(r.map(t=>t.title)),s[0].toFixed(2)===s[s.length-1].toFixed(2)?`<p>${s[0].toFixed(2)} per week</p>`:`<p>From £${s[0].toFixed(2)} to £${s[s.length-1].toFixed(2)} per week</p>
+                      ${r=e.rooms,r?(s=r.map(t=>parseFloat(t.cost)).sort((t,e)=>t-e),r=stir.removeDuplicates(r.map(t=>t.title)),s[0].toFixed(2)===s[s.length-1].toFixed(2)?`<p>£${s[0].toFixed(2)} per week</p>`:`<p>From £${s[0].toFixed(2)} to £${s[s.length-1].toFixed(2)} per week</p>
             <ul>${r.map(t=>`<li>${t}</li>`).join("")}</ul>`):""}
                     </div>
                     <div class="cell large-4 text-sm">
