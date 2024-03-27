@@ -111,21 +111,20 @@ async function initMap() {
   const endBits = campusCentralEnd.split(",");
   const startBits = start.split(",");
 
-  console.log(Number(endBits[1]));
-  console.log(Number(startBits[1]));
+  // console.log(Number(endBits[1]));
+  // console.log(Number(startBits[1]));
 
-  if (Number(endBits[0]) > Number(startBits[0])) {
-    console.log("Start is south");
-  } else {
-    console.log("Start is north");
-  }
+  // if (Number(endBits[0]) > Number(startBits[0])) {
+  //   console.log("Start is south");
+  // } else {
+  //   console.log("Start is north");
+  // }
 
   const startIsSouth = Number(endBits[0]) > Number(startBits[0]) ? true : false;
 
-  console.log(startIsSouth);
+  //console.log(startIsSouth);
 
   const end = startIsSouth ? intoEnd : campusCentralEnd;
-
   const centre = { lat: Number(endBits[0]), lng: Number(endBits[1]) }; // Uni Coordinates
 
   const directionsService = new google.maps.DirectionsService();
