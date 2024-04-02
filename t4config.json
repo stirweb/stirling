@@ -1708,10 +1708,15 @@
         "description": "sprite-sheet.svg",
         "projectPath": "medias/Categorised/Dist/bundles/virtual-tour/img/sprite-sheet.svg"
       },
-	  {
+      {
         "id": 178201,
         "description": "fee.js",
         "projectPath": "medias/Categorised/Dist/js/other/fee.js"
+      },
+      {
+        "id": 175961,
+        "description": "redirects.csv",
+        "projectPath": "medias/Categorised/Dist/php/smart-404/redirects.csv"
       }
     ]
   }
