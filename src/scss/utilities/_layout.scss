@@ -147,13 +147,21 @@
   position: absolute;
 }
 
-@media screen and #{breakpoint(large up)} {
-  .u-relative-large-up {
+@media screen and #{breakpoint(medium up)} {
+  .u-relative-medium-up {
     position: relative;
+  }
+
+  .u-absolute-medium-up {
+    position: absolute;
   }
 }
 
 @media screen and #{breakpoint(large up)} {
+  .u-relative-large-up {
+    position: relative;
+  }
+
   .u-absolute-large-up {
     position: absolute;
   }
