@@ -154,6 +154,7 @@
   const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
 
   const getJSONUrl = (env) => {
+    console.log(env);
     if (env === "dev") return "../index.json";
     if (env === "preview" || env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; //5222 for limited archive
 
