@@ -49,7 +49,7 @@ stir.tabs = function (el, doDeepLink_) {
   let browsersize = stir.MediaQuery.current;
 
   const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
-  const accordionify = ["small", "medium"];
+  const sizes = ["small", "medium"];
 
   const childElements = Array.prototype.slice.call(el.children);
 
@@ -65,6 +65,7 @@ stir.tabs = function (el, doDeepLink_) {
     var tabId = 0;
 
     getHeeders(childElements).forEach((control, index) => {
+		console.info("control",control);
       const panel = control.nextElementSibling.nodeName === "DIV" ? control.nextElementSibling : null;
       const id = "_" + tabGroupId + "_" + ++tabId;
       const button = document.createElement("button");
@@ -77,7 +78,7 @@ stir.tabs = function (el, doDeepLink_) {
         });
 
         initComponent(button, control, panel, id);
-        initState(control, index);
+        initState(button, index);
       }
     });
     el.addEventListener("click", handleClick);
@@ -88,10 +89,10 @@ stir.tabs = function (el, doDeepLink_) {
   */
   const initComponent = (button, control, panel, id) => {
     // Classes
-    control.classList.add("stir-tabs__tab");
+    button.classList.add("stir-tabs__tab");
     panel.classList.add("stir-tabs__content");
     // Attributes
-    control.setAttribute("role", "tab");
+    button.setAttribute("role", "tab");
     panel.setAttribute("data-tab-content", "");
     panel.setAttribute("role", "tabpanel");
     panel.setAttribute("tabindex", "0");
@@ -105,7 +106,9 @@ stir.tabs = function (el, doDeepLink_) {
     button.setAttribute("aria-controls", panel.id);
     panel.setAttribute("aria-labelledby", button.id);
 
-    control.appendChild(button);
+    //control.appendChild(button);
+	control.insertAdjacentElement("afterend",button);
+	control.remove();
   };
 
   /*
@@ -115,16 +118,16 @@ stir.tabs = function (el, doDeepLink_) {
 
   const open = (control) => {
     control.classList.add("stir-tabs__tab--active"); // h2
-    control.children[0].setAttribute("aria-selected", "true"); // btn
-    control.children[0].setAttribute("tabindex", "-1"); // btn
+    control.setAttribute("aria-selected", "true"); // btn
+    control.setAttribute("tabindex", "-1"); // btn
     control.nextElementSibling.removeAttribute("aria-hidden"); //panel
     control.nextElementSibling.classList.remove("hide"); //panel
   };
 
   const close = (control) => {
     control.classList.remove("stir-tabs__tab--active");
-    control.children[0].setAttribute("aria-selected", "false");
-    control.children[0].setAttribute("tabindex", "0");
+    control.setAttribute("aria-selected", "false");
+    control.setAttribute("tabindex", "0");
     control.nextElementSibling.setAttribute("aria-hidden", "true");
     control.nextElementSibling.classList.add("hide");
   };
@@ -132,19 +135,13 @@ stir.tabs = function (el, doDeepLink_) {
   /*
     Helpers
   */
-  const getBehaviour = (accordionify, browsersize) => {
-    return accordionify.includes(browsersize) ? "accordion" : "tabs";
-  };
+  const getBehaviour = () => sizes.includes(stir.MediaQuery.current) ? "accordion" : "tabs";
 
-  const getHeeders = (childElements) => {
-    return childElements.filter((item) => {
-      if (item.matches("h2,h3,h4")) return item;
-    });
-  };
+  const getHeeders = elements => elements.filter((el) => el.matches("h2,h3,h4"));
 
   const getClickedNode = (ev) => {
     if (ev.target.classList.contains("stir-tabs__tab")) return ev.target;
-    if ((ev.target.nodeName === "A" || ev.target.nodeName === "BUTTON") && ev.target.parentNode && ev.target.parentNode.classList.contains("stir-tabs__tab")) return ev.target.parentNode;
+    //if ((ev.target.nodeName === "A" || ev.target.nodeName === "BUTTON") && ev.target.parentNode && ev.target.parentNode.classList.contains("stir-tabs__tab")) return ev.target.parentNode;
     return null;
   };
 
@@ -177,7 +174,7 @@ stir.tabs = function (el, doDeepLink_) {
     const control = getClickedNode(ev);
 
     if (control) {
-      getBehaviour(accordionify, browsersize) === "tabs" ? handleTabClick(control) : handleAccordionClick(control);
+      getBehaviour() === "tabs" ? handleTabClick(control) : handleAccordionClick(control);
       if (doDeepLink) {
         const myhash = "#" + control.nextElementSibling.id;
         if (history.replaceState) history.replaceState(null, null, myhash);
@@ -240,7 +237,7 @@ stir.tabs = function (el, doDeepLink_) {
   window.addEventListener("MediaQueryChange", () => {
     if (stir.MediaQuery.current !== browsersize) {
       browsersize = stir.MediaQuery.current;
-      getBehaviour(accordionify, browsersize);
+      getBehaviour();
       reset(childElements);
       doDeepLink && deepLink();
     }
@@ -249,7 +246,7 @@ stir.tabs = function (el, doDeepLink_) {
   /* 
     Initial set up
   */
-  init(childElements, browsersize, accordionify);
+  init(childElements, browsersize, sizes);
   doDeepLink && deepLink();
 
   /*  
