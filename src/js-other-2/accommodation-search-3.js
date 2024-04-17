@@ -429,7 +429,9 @@
 
       const cookie = stir.favourites.getFav(target.dataset.id, CONSTS.cookieType);
 
-      if (CONSTS.activity === "searchfavs") {
+      //console.log(CONSTS.activity);
+
+      if (CONSTS.activity === "search") {
         const node = stir.node("#favbtns" + target.dataset.id);
         if (node) setDOMContent(node, renderFavBtns(CONSTS.urlToFavs, cookie, target.dataset.id));
       }

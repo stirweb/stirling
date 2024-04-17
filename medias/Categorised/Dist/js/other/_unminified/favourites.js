@@ -12,26 +12,26 @@ stir.favourites = (() => {
   */
 
   const renderUrlToFavs = (urlToFavs) => {
-    return !urlToFavs ? `` : `<span class="u-border-bottom-solid u-inline-block u-mx-1"><a href="${urlToFavs}">View favourites</a></span>`;
+    return !urlToFavs ? `` : `<span class=" u-inline-block u-mt-1"><a href="${urlToFavs}" class="u-border-bottom-solid">View favourites</a></span>`;
   };
 
   /* renderRemoveBtn */
   const renderRemoveBtn = (sid, dateSaved, urlToFavs) => {
-    return `<div class="flex-container align-middle u-gap-8">
-            <button id="removefavbtn-${sid}" class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
-            ${renderActiveIcon()}
-          </button>
-          <span>Favourited ${calcDaysAgo(new Date(dateSaved))}</span>${renderUrlToFavs(urlToFavs)}
-        </div>`;
+    return `<div class="u-flex-medium-up  align-middle u-gap">
+              <button id="removefavbtn-${sid}" class="u-heritage-green u-mt-1 u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
+                ${renderActiveIcon()}
+                <span class="u-heritage-green u-underline u-block u-pb-1">Favourited ${calcDaysAgo(new Date(dateSaved))}</span>
+            </button>${renderUrlToFavs(urlToFavs)}
+          </div>`;
   };
 
   /* renderAddBtn */
   const renderAddBtn = (sid, urlToFavs) => {
-    return `<div class="flex-container align-middle u-gap-8" >
-            <button class="u-heritage-green u-cursor-pointer u-line-height-default flex-container u-gap-8 align-middle"
+    return `<div class="u-flex-medium-up  align-middle u-gap" >
+            <button class="u-heritage-green u-mt-1 u-cursor-pointer u-line-height-default flex-container u-gap-8 align-middle"
               data-action="addtofavs" aria-label="Add to your favourites" data-id="${sid}" id="addfavbtn-${sid}">
               ${renderInactiveIcon()}
-              <span class="u-heritage-green u-underline u-inline-block u-pb-1">Add to your favourites</span>
+              <span class="u-heritage-green u-underline u-block u-pb-1">Add to your favourites</span>
             </button>${renderUrlToFavs(urlToFavs)}
         </div>`;
   };
