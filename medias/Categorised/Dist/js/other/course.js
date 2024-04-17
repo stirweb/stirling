@@ -496,9 +496,16 @@ stir.dpt = (function () {
 
   const moduleLink = (data) => {
     // LINK TO NEW AKARI MODULE PAGES
+<<<<<<< Updated upstream
     const url = `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
 	return availability(data) ? `<a href="${url}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
 	
+=======
+    const url = getCurrentUri();
+    //const sid = document.querySelector('meta[name="sid"]') ? document.querySelector('meta[name="sid"]').getAttribute("content") : "error_sid-not-found";
+    return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${url}`;
+
+>>>>>>> Stashed changes
     // LINK TO OLD DEGREE PROGRAM TABLES
     //return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
   };
@@ -511,7 +518,11 @@ stir.dpt = (function () {
       footer: (text) => `<p class=c-course-modules__pdm-note>${text}</p>`,
     },
     module: (data) =>
+<<<<<<< Updated upstream
       `<tr><td>${moduleLink(data)}
+=======
+      `<tr><td><a href="${moduleLink(data)}">${data.modName}</a>
+>>>>>>> Stashed changes
 			<span class=c-course-modules__module-code>(${data.modCode})</span>
 			</td><td>${data.modCredit} credits</td></tr>`,
     nodata: `<tr><td colspan=2> no data </td></tr>`,
@@ -562,7 +573,11 @@ stir.dpt = (function () {
     let collectionId = [semesterID, c].join("");
     let header = template.collection.header(getCollectionHeader(collection.collectionStatusCode));
     let notes = collection.collectionType == "LIST" || collection.collectionType == "CHOICE" ? template.collection.notes(collection.collectionNotes) : "";
+<<<<<<< Updated upstream
     let body = template.collection.table(collectionId, collection.mods.map(moduleView).join(""));
+=======
+    let body = template.collection.table(collectionId, collection.mods.filter(availability).map(moduleView).join(""));
+>>>>>>> Stashed changes
 
     let footer = collection.collectionFootnote ? template.collection.footer(collection.collectionFootnote) : "";
     let more =
