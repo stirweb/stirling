@@ -1,8 +1,7 @@
 var stir = stir || {};
 
 stir.coursefavs = (() => {
-
-  if(!stir.favourites) return console.error('[Course Favourites] stir.favourites library not loaded');
+  if (!stir.favourites) return console.error("[Course Favourites] stir.favourites library not loaded");
 
   // NODES
   const NODES = {
@@ -98,9 +97,12 @@ stir.coursefavs = (() => {
   /*
      createCourseBtnHTML : returns String (HTML)
    */
-  const createCourseBtnHTML = (sid) => {
+  const createCourseBtnHTML = (sid, url) => {
     const el = document.createElement("div"); // temporary element
+
     el.setAttribute("data-id", sid); // attribute needed for doCourseBtn() validation
+    el.setAttribute("data-favsurl", url);
+
     doCourseBtn(el); // generate the button
 
     return el.innerHTML; // pass back to course template
@@ -234,7 +236,7 @@ stir.coursefavs = (() => {
       |
   */
   const doCourseBtn = (el) => {
-    const container = el.closest("[data-id]");
+    const container = el.closest("[data-nodeid=coursefavsbtn]") ? el.closest("[data-nodeid=coursefavsbtn]") : el;
 
     if (!container) return;
 
