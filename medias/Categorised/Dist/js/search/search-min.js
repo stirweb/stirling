@@ -61,10 +61,9 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 		  </div>
 		  
 		  <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
-			<div data-nodeid="coursefavsbtn" class="flex-container u-gap-8" data-id="${e.metaData.sid}">
-			  ${stir.coursefavs&&stir.coursefavs.createCourseBtnHTML(e.metaData.sid)}
+			<div data-nodeid="coursefavsbtn" class="flex-container u-gap-8" >
+			  ${stir.coursefavs&&stir.coursefavs.createCourseBtnHTML(e.metaData.sid,"/courses/favourites/")}
 			</div>
-			<span><a href="/courses/favourites/">View favourites</a></span>
 		  </div>
 		  
 		  ${stir.templates.search.combos(e)}

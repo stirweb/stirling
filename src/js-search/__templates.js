@@ -400,10 +400,9 @@ stir.templates.search = (() => {
 		  </div>
 		  
 		  <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
-			<div data-nodeid="coursefavsbtn" class="flex-container u-gap-8" data-id="${item.metaData.sid}">
-			  ${stir.coursefavs && stir.coursefavs.createCourseBtnHTML(item.metaData.sid)}
+			<div data-nodeid="coursefavsbtn" class="flex-container u-gap-8" >
+			  ${stir.coursefavs && stir.coursefavs.createCourseBtnHTML(item.metaData.sid, "/courses/favourites/")}
 			</div>
-			<span><a href="/courses/favourites/">View favourites</a></span>
 		  </div>
 		  
 		  ${stir.templates.search.combos(item)}
@@ -548,9 +547,9 @@ stir.templates.search = (() => {
       const title = item.title.split(" | ")[0];
 
       // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
-//	  const urls = item.metaData.image.split("|");
-//      const hacklink = urls[1] ? urls[1] : "/events/";
-		const url = item.collection == "stir-events" ? (item.metaData.page ? item.metaData.page : "#") : (FB_BASE() + item.clickTrackingUrl)
+      //	  const urls = item.metaData.image.split("|");
+      //      const hacklink = urls[1] ? urls[1] : "/events/";
+      const url = item.collection == "stir-events" ? (item.metaData.page ? item.metaData.page : "#") : FB_BASE() + item.clickTrackingUrl;
 
       return `
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
@@ -579,7 +578,7 @@ stir.templates.search = (() => {
 					</div>
 					<p class="text-sm">${item.summary}</p>
 				</div>
-				${image((item.metaData.image&&item.metaData.image.split("|")[0]), item.title.split(" | ")[0])}
+				${image(item.metaData.image && item.metaData.image.split("|")[0], item.title.split(" | ")[0])}
 				${item.metaData?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
 			</div>`;
     },
@@ -620,17 +619,22 @@ stir.templates.search = (() => {
 				<div data-behaviour=accordion>
 					<accordion-summary>${item.name}</accordion-summary>
 					<div>
-						<ul>${item.allValues.filter(facetValue=>facetCategoryLabel(item.name, facetValue.label)).map(stir.templates.search.labelledFacetItems(item)).join("")}</ul>
+						<ul>${item.allValues
+              .filter((facetValue) => facetCategoryLabel(item.name, facetValue.label))
+              .map(stir.templates.search.labelledFacetItems(item))
+              .join("")}</ul>
 					</div>
 				</div>
 			</fieldset>`,
-	labelledFacetItems: stir.curry((facet, facetValue) =>`
+    labelledFacetItems: stir.curry(
+      (facet, facetValue) => `
 	<li>
 		<label>
 			<input type=${facetDisplayTypes[facet.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
 			${facetCategoryLabel(facet.name, facetValue.label)}
 			<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
 		</label>
-	</li>`)
+	</li>`
+    ),
   };
 })();
