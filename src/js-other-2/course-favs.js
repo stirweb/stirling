@@ -102,7 +102,6 @@ stir.coursefavs = (() => {
 
     el.setAttribute("data-id", sid); // attribute needed for doCourseBtn() validation
     el.setAttribute("data-favsurl", url);
-
     doCourseBtn(el); // generate the button
 
     return el.innerHTML; // pass back to course template
