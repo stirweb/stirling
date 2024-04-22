@@ -1129,7 +1129,11 @@
             const subject3 = data.get('subject_area_3');
 
             if (studyYear) {
-                element.disabled = false;
+                selects.forEach((element) => {
+                    element.disabled = false;
+                });
+
+
                 //console.log("load");
             }
 
@@ -1192,6 +1196,8 @@
         /* createPdf */
         async function createPdf(data) {
 
+            console.log(data);
+
             const firstName = data.get('first_name');
             const subject1 = data.get('subject_area_1');
             const subject2 = data.get('subject_area_2');
@@ -1212,6 +1218,10 @@
             const url1 = subject1.replaceAll(",", "") + '.pdf';
             const url2 = subject2.replaceAll(",", "") + '.pdf';
             const url3 = subject3.replaceAll(",", "") + '.pdf';
+
+
+            console.log(url1);
+
 
             // Font
             const fonturl = '../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf';
