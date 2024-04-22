@@ -63,7 +63,7 @@ stir.dpt = (function(){
 				routeBrowser.innerHTML ='';
 				optionBrowser.innerHTML ='';
 				moduleBrowser.innerHTML ='';
-				feeBrowser.innerHTML ='';
+				feeBrowser&&(feeBrowser.innerHTML ='');
 				routeBrowser.appendChild(label);
 				//stdout.textContent = select[select.selectedIndex].outerHTML;
 				user.rouCode = select[select.selectedIndex].value;
@@ -76,7 +76,7 @@ stir.dpt = (function(){
 					feeBrowser.textContent = `Loading data, please wait… ${user.rouCode}`;
 					feeBrowser.append(spinner.element);
 					stir.akari.fee.get(user.rouCode, data=>{
-						feeBrowser.innerHTML = '';
+						feeBrowser&&(feeBrowser.innerHTML = '');
 						feeBrowser.append(stir.akari.fee.tabulate(data)||document.createTextNode(`Fee data unavailable for ${user.rouCode}`) );
 					});
 				}
