@@ -1274,27 +1274,32 @@
             }
 
             // Main Merge 2
-            const doc2PdfBytes = await fetch(url2).then(res => res.arrayBuffer());
-            const doc2PdfDoc = await PDFLib.PDFDocument.load(doc2PdfBytes);
 
-            const pages2 = doc2PdfDoc.getPages();
-            var i = 0;
-            while (i < pages2.length) {
-                let [p] = await pdfDoc.copyPages(doc2PdfDoc, [i]);
-                pdfDoc.addPage(p);
-                i++;
+            if (url2 !== '.pdf') {
+                const doc2PdfBytes = await fetch(url2).then(res => res.arrayBuffer());
+                const doc2PdfDoc = await PDFLib.PDFDocument.load(doc2PdfBytes);
+
+                const pages2 = doc2PdfDoc.getPages();
+                var i = 0;
+                while (i < pages2.length) {
+                    let [p] = await pdfDoc.copyPages(doc2PdfDoc, [i]);
+                    pdfDoc.addPage(p);
+                    i++;
+                }
             }
 
             // Main Merge 3
-            const doc3PdfBytes = await fetch(url3).then(res => res.arrayBuffer());
-            const doc3PdfDoc = await PDFLib.PDFDocument.load(doc3PdfBytes);
+            if (url3 !== '.pdf') {
+                const doc3PdfBytes = await fetch(url3).then(res => res.arrayBuffer());
+                const doc3PdfDoc = await PDFLib.PDFDocument.load(doc3PdfBytes);
 
-            const pages3 = doc3PdfDoc.getPages();
-            var i = 0;
-            while (i < pages3.length) {
-                let [p] = await pdfDoc.copyPages(doc3PdfDoc, [i]);
-                pdfDoc.addPage(p);
-                i++;
+                const pages3 = doc3PdfDoc.getPages();
+                var i = 0;
+                while (i < pages3.length) {
+                    let [p] = await pdfDoc.copyPages(doc3PdfDoc, [i]);
+                    pdfDoc.addPage(p);
+                    i++;
+                }
             }
 
 
