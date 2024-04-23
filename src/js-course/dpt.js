@@ -13,11 +13,13 @@ stir.dpt = (function () {
       more: "View all _X_ choices",
     },
   };
-  let user = {};
-  let _year = 0;
-  let _semesterCache = [];
+  let user = {}, _year=0, _semesterCache=[];
   let routesCurry;
-
+  
+  function resetGlobals() {
+    _year = 0;
+    _semesterCache = [];
+  }
   const modulesEndpointParams = {
     UG: "opt=runcode&ct=UG",
     PG: "opt=runpgcode&ct=PG",
@@ -268,7 +270,7 @@ stir.dpt = (function () {
       var value = this.options[this.selectedIndex].value.split("|");
       var moa = value[0];
       var occ = value[2];
-      _year = 0;
+      resetGlobals();
       stir.dpt.reset.modules();
       getModules(user.type, user.rouCode, moa, occ);
     });
@@ -295,6 +297,7 @@ stir.dpt = (function () {
     data.forEach && data.forEach((route) => select.append(makeOption(route)));
 
     const change = (event) => {
+      resetGlobals();
       stir.dpt.reset.modules();
       user.rouCode = select[select.selectedIndex].value;
       user.rouName = select[select.selectedIndex].textContent;

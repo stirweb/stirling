@@ -81,11 +81,11 @@
 
                 <div class="cell small-12    u-padding-y u-margin-top u-bg-grey u-bleed bg-grey">
                     <form id="generatePDFForm">
-                        <h2>Your Details </h2>
+                        <h2>Your details </h2>
 
                         <div>
                             <label class="block" for="first_name">
-                                First Name
+                                First name
                                 <span class="u-heritage-berry ">*</span>
                             </label>
 
@@ -94,7 +94,7 @@
 
                         <div>
                             <label class="block" for="last_name">
-                                Last Name
+                                Last name
                                 <span class="u-heritage-berry ">*</span>
                             </label>
 
@@ -112,13 +112,11 @@
 
                         <div>
                             <label class="block" for="country_of_origin">
-                                Country of Origin
+                                Country of origin
                                 <span class="u-heritage-berry ">*</span>
                             </label>
 
-                            <select id="country_of_origin"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                name="country_of_origin">
+                            <select id="country_of_origin" name="country_of_origin">
                                 <option value="">Select an option</option>
                                 <option value="AFG">Afghanistan</option>
                                 <option value="ALA">Aland Islands</option>
@@ -383,7 +381,7 @@
 
                         <div>
                             <label class="block" for="country_of_residence">
-                                Country of Residence
+                                Country of residence
                                 <span class="u-heritage-berry ">*</span>
                             </label>
 
@@ -651,10 +649,11 @@
                         </div>
 
                         <h2 class="u-mt-2">
-                            Personalise Your Prospectus
+                            Personalise your prospectus
                         </h2>
 
-
+                        <p>First select a start date then choose up to three subject areas you are
+                            interested in</p>
                         <div>
                             <div>
                                 <label class="block" for="study_year">
@@ -680,32 +679,32 @@
 
                             </div>
 
-                            <div class="">
-                                <div>
-                                    <label for="subject_area_1">Subject Area 1 <span
+                            <div>
+                                <div class="hide subject_area_1">
+                                    <label for="subject_area_1">Subject area 1 <span
                                             class="u-heritage-berry ">*</span></label>
                                     <select id="subject_area_1" name="subject_area_1" required="true"
-                                        class="subjectnode">
+                                        class="subjectSelect">
                                         <option value="">Select an option</option>
                                     </select>
                                     <div id="subject_area_1_courses" class="u-columns-2 u-mx-1"></div>
                                 </div>
 
 
-                                <div class="">
+                                <div class="hide subject_area_2">
                                     <div>
-                                        <label for="subject_area_2">Subject Area 2</label>
-                                        <select id="subject_area_2" name="subject_area_2" class="subjectnode">
+                                        <label for="subject_area_2">Subject area 2</label>
+                                        <select id="subject_area_2" name="subject_area_2" class="subjectSelect">
                                             <option value="">Select an option</option>
                                         </select>
                                     </div>
                                     <div id="subject_area_2_courses" class="u-columns-2  u-mx-1"></div>
                                 </div>
 
-                                <div class="">
+                                <div class="hide subject_area_3">
                                     <div>
-                                        <label for="subject_area_3">Subject Area 3</label>
-                                        <select id="subject_area_3" name="subject_area_3" class="subjectnode">
+                                        <label for="subject_area_3">Subject area 3</label>
+                                        <select id="subject_area_3" name="subject_area_3" class="subjectSelect">
                                             <option value="">Select an option</option>
                                         </select>
                                     </div>
@@ -720,11 +719,8 @@
 
                             <div>
                                 <label for="full_prospectus" class="flex items-center">
-                                    <input id="full_prospectus"
-                                        class="rounded border-gray-300 text-page shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                        type="checkbox" name="full_prospectus" value="1"
-                                        wire:model.defer="data.full_prospectus">
-                                    <span class="ml-2">Check this box to receive the full, non-personalised
+                                    <input id="full_prospectus" type="checkbox" name="full_prospectus" value="1">
+                                    <span>Check this box to receive the full, non-personalised
                                         prospectus</span>
                                 </label>
 
@@ -739,10 +735,8 @@
                             <div>
                                 <div>
                                     <label for="area_interest.research" class="flex items-center">
-                                        <input id="area_interest.research"
-                                            class="rounded border-gray-300 text-page shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                            type="checkbox" name="area_interest.research" value="research"
-                                            wire:model.defer="data.area_interest.research">
+                                        <input id="area_interest.research" type="checkbox" name="area_interest.research"
+                                            value="research">
                                         <span class="ml-2">Research</span>
                                     </label>
 
@@ -750,33 +744,26 @@
 
                                 <div>
                                     <label for="area_interest.international_students" class="flex items-center">
-                                        <input id="area_interest.international_students"
-                                            class="rounded border-gray-300 text-page shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                            type="checkbox" name="area_interest.international_students"
-                                            value="international_students"
-                                            wire:model.defer="data.area_interest.international_students">
-                                        <span class="ml-2">International Students</span>
+                                        <input id="area_interest.international_students" type="checkbox"
+                                            name="area_interest.international_students" value="international_students">
+                                        <span>International Students</span>
                                     </label>
 
                                 </div>
 
                                 <div>
                                     <label for="area_interest.accommodation" class="flex items-center">
-                                        <input id="area_interest.accommodation"
-                                            class="rounded border-gray-300 text-page shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                            type="checkbox" name="area_interest.accommodation" value="accommodation"
-                                            wire:model.defer="data.area_interest.accommodation">
-                                        <span class="ml-2">Accommodation</span>
+                                        <input id="area_interest.accommodation" type="checkbox"
+                                            name="area_interest.accommodation" value="accommodation">
+                                        <span>Accommodation</span>
                                     </label>
 
                                 </div>
 
                                 <div>
                                     <label for="area_interest.students_union" class="flex items-center">
-                                        <input id="area_interest.students_union"
-                                            class="rounded border-gray-300 text-page shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                            type="checkbox" name="area_interest.students_union" value="students_union"
-                                            wire:model.defer="data.area_interest.students_union">
+                                        <input id="area_interest.students_union" type="checkbox"
+                                            name="area_interest.students_union" value="students_union">
                                         <span class="ml-2">Students' Union</span>
                                     </label>
 
@@ -784,10 +771,8 @@
 
                                 <div>
                                     <label for="area_interest.sport" class="flex items-center">
-                                        <input id="area_interest.sport"
-                                            class="rounded border-gray-300 text-page shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                            type="checkbox" name="area_interest.sport" value="sport"
-                                            wire:model.defer="data.area_interest.sport">
+                                        <input id="area_interest.sport" type="checkbox" name="area_interest.sport"
+                                            value="sport">
                                         <span class="ml-2">Sport</span>
                                     </label>
 
@@ -939,17 +924,9 @@
         </div>
     </main>
 
-
-
     <!-- iframe id="pdf" style="width: 100%; height: 10%;"></iframe -->
 
-
-
-
-
-
     <script src="../../../medias/Categorised/Dist/js/app.js"></script>
-
 
     <script>
 
@@ -1063,9 +1040,9 @@
                     "MRes Criminological Research",
                     "MSc Applied Professional Studies ",
                     "MSc Applied Social Research",
-                    " MSc Criminology",
+                    "MSc Criminology",
                     "MSc Dementia Studies (ONLINE)",
-                    " MSc Disaster Interventions and Humanitarian Aid",
+                    "MSc Disaster Interventions and Humanitarian Aid",
                     "MSc Gerontology and Global Ageing ",
                     "MSc Housing Studies (part-time)",
                     "MSc Housing Studies (with internship)",
@@ -1084,29 +1061,13 @@
             }
         ];
 
-
-        /*  
-            ON LOAD
-        */
-        const generatePDFBtn = stir.node("#generatePDFBtn");
-        const generatePDFForm = stir.node("#generatePDFForm");
-
-        const initSubjects = subjectsData.map(item => `<option>` + item.subject + `</option>`).join(``);
-
-        const selects = stir.nodes(".subjectnode");
-        selects.forEach((element) => {
-            element.insertAdjacentHTML("beforeend", initSubjects);
-        });
-
-
-
         /* 
             HELPERS
         */
 
+        const renderSubjectSelectItems = (subs) => subs.map(item => `<option>` + item.subject + `</option>`).join(``);
 
-
-        const renderSubjectOptions = (subject, index, data) => {
+        const renderSubjectCoursesOptions = (subject, index, data) => {
             const subjectSelected = data.filter(item => item.subject === subject);
 
             return subjectSelected[0].courses.map(item => {
@@ -1115,53 +1076,6 @@
             }
             ).join(``);
         };
-
-        /* 
-            ACTION: Form change events 
-        */
-        generatePDFForm && generatePDFForm.addEventListener("change", function (e) {
-            e.preventDefault();
-
-            const data = new FormData(generatePDFForm);
-            const studyYear = data.get('study_year');
-            const subject1 = data.get('subject_area_1');
-            const subject2 = data.get('subject_area_2');
-            const subject3 = data.get('subject_area_3');
-
-            if (studyYear) {
-                selects.forEach((element) => {
-                    element.disabled = false;
-                });
-
-
-                //console.log("load");
-            }
-
-            if (e.target.id === "subject_area_1" && subject1) {
-                stir.node("#subject_area_1_courses").innerHTML = renderSubjectOptions(subject1, "1", subjectsData);
-            }
-
-            if (e.target.id === "subject_area_2" && subject2) {
-                stir.node("#subject_area_2_courses").innerHTML = renderSubjectOptions(subject2, "2", subjectsData);
-            }
-
-            if (e.target.id === "subject_area_3" && subject3) {
-                stir.node("#subject_area_3_courses").innerHTML = renderSubjectOptions(subject3, "3", subjectsData);
-            }
-
-
-        });
-
-
-        /* 
-            ACTION: Form submit event 
-        */
-        generatePDFBtn && generatePDFBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            const data = new FormData(generatePDFForm);
-            createPdf(data);
-        });
-
 
         /* 
             createPdf 
@@ -1195,33 +1109,25 @@
 
         /* createPdf */
         async function createPdf(data) {
-
             console.log(data);
+
+            const fullPdf = data.get('full_prospectus');
 
             const firstName = data.get('first_name');
             const subject1 = data.get('subject_area_1');
             const subject2 = data.get('subject_area_2');
             const subject3 = data.get('subject_area_3');
 
-
-
-
-
             const pdfDoc = await PDFLib.PDFDocument.create();
 
+            const urlFull = 'full-non-personalised.pdf';
             const urlFront = 'Front.pdf';
             const urlIntro = 'Intro.pdf';
-            // const url1 = 'Computing Data science and Mathematics.pdf';
-            //const url2 = 'History Heritage and Politics.pdf';
             const urlBack = 'Back.pdf';
 
             const url1 = subject1.replaceAll(",", "") + '.pdf';
             const url2 = subject2.replaceAll(",", "") + '.pdf';
             const url3 = subject3.replaceAll(",", "") + '.pdf';
-
-
-            console.log(url1);
-
 
             // Font
             const fonturl = '../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf';
@@ -1231,6 +1137,25 @@
             const customFont = await pdfDoc.embedFont(fontBytes)
             // const helveticaFont = await frontPdf.embedFont(PDFLib.StandardFonts.Helvetica);
 
+            // Full PDF
+            if (fullPdf === '1') {
+                const fullPdfBytes = await fetch(urlFull).then(res => res.arrayBuffer());
+                const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
+
+                const pagesFull = fullPdfDoc.getPages();
+                var i = 0;
+                while (i < pagesFull.length) {
+                    let [p] = await pdfDoc.copyPages(fullPdfDoc, [i]);
+                    pdfDoc.addPage(p);
+                    i++;
+                }
+
+                // Generate as Base 64 and download
+                const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+                downloadPDF(pdfDataUri);
+
+                return;
+            }
 
             // Front Page Doc
             const frontPdfBytes = await fetch(urlFront).then(res => res.arrayBuffer());
@@ -1249,7 +1174,7 @@
 
             pdfDoc.addPage(firstPageCopy);
 
-            // Intro Doc Merge
+            // Intro merge
             const introPdfBytes = await fetch(urlIntro).then(res => res.arrayBuffer());
             const introPdfDoc = await PDFLib.PDFDocument.load(introPdfBytes);
 
@@ -1261,7 +1186,7 @@
                 i++;
             }
 
-            // Main Merge
+            // Main merge
             const doc1PdfBytes = await fetch(url1).then(res => res.arrayBuffer());
             const doc1PdfDoc = await PDFLib.PDFDocument.load(doc1PdfBytes);
 
@@ -1273,8 +1198,7 @@
                 i++;
             }
 
-            // Main Merge 2
-
+            // Merge 2
             if (url2 !== '.pdf') {
                 const doc2PdfBytes = await fetch(url2).then(res => res.arrayBuffer());
                 const doc2PdfDoc = await PDFLib.PDFDocument.load(doc2PdfBytes);
@@ -1288,7 +1212,7 @@
                 }
             }
 
-            // Main Merge 3
+            // Merge 3
             if (url3 !== '.pdf') {
                 const doc3PdfBytes = await fetch(url3).then(res => res.arrayBuffer());
                 const doc3PdfDoc = await PDFLib.PDFDocument.load(doc3PdfBytes);
@@ -1302,8 +1226,7 @@
                 }
             }
 
-
-            // Back Merge
+            // Back page merge
             const backPdfBytes = await fetch(urlBack).then(res => res.arrayBuffer());
             const backPdfDoc = await PDFLib.PDFDocument.load(backPdfBytes);
 
@@ -1318,9 +1241,74 @@
             // Generate as Base 64 and download
             const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
             downloadPDF(pdfDataUri);
-
-
         }
+
+
+        /*  
+            ON LOAD
+        */
+        const generatePDFBtn = stir.node("#generatePDFBtn");
+        const generatePDFForm = stir.node("#generatePDFForm");
+
+        const selects = stir.nodes("select");
+        selects.forEach((element) => element.value = '');
+
+        const subjectSelect = stir.nodes(".subjectSelect");
+        subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
+
+        // selects.forEach((element) => {
+        //     element.insertAdjacentHTML("beforeend", initSubjects);
+        // });
+
+        /* 
+           ACTION: Form change events 
+       */
+        generatePDFForm && generatePDFForm.addEventListener("change", function (e) {
+            e.preventDefault();
+
+            const data = new FormData(generatePDFForm);
+
+
+            const studyYear = data.get('study_year');
+            const subject1 = data.get('subject_area_1');
+            const subject2 = data.get('subject_area_2');
+            const subject3 = data.get('subject_area_3');
+
+            if (studyYear) {
+                stir.node(".subject_area_1").classList.remove("hide");
+            }
+
+            if (e.target.id === "subject_area_1" && subject1) {
+                stir.node("#subject_area_1_courses").innerHTML = renderSubjectCoursesOptions(subject1, "1", subjectsData);
+                stir.node(".subject_area_2").classList.remove("hide");
+
+                const subjectsData1 = subjectsData.filter(item => item.subject !== subject1);
+                subjectSelect[1].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData1));
+            }
+
+            if (e.target.id === "subject_area_2" && subject2) {
+                stir.node("#subject_area_2_courses").innerHTML = renderSubjectCoursesOptions(subject2, "2", subjectsData);
+                stir.node(".subject_area_3").classList.remove("hide");
+
+                const subjectsData2 = subjectsData.filter(item => item.subject !== subject2 && item.subject !== subject1);
+                subjectSelect[2].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData2));
+            }
+
+            if (e.target.id === "subject_area_3" && subject3) {
+                stir.node("#subject_area_3_courses").innerHTML = renderSubjectCoursesOptions(subject3, "3", subjectsData);
+            }
+
+        });
+
+
+        /* 
+            ACTION: Form submit event 
+        */
+        generatePDFBtn && generatePDFBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            const data = new FormData(generatePDFForm);
+            createPdf(data);
+        });
     </script>
 
 </body>
