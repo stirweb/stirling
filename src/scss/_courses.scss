@@ -441,20 +441,6 @@
 	}
 } */
 
-/* @media screen and (max-width: 39.9375em) {
-	.c-whats-next {
-		padding: 0;
-	}
-
-	.c-course-whats-next__link {
-		display: block;
-	}
-
-	.c-course-tabs__tabs > .accordion-item div.accordion-content {
-		padding: 15px;
-	}
-} */
-
 svg.icon {
   width: 1.5em;
   height: 1.5em;
@@ -802,33 +788,6 @@ a[data-mode*="Online"] {
 @media screen and (min-width: 1024px) {
   .course-sticky-close-btn {
     right: 2rem;
-  }
-  .c-course-tabs {
-    /* Set absolute max width (i.e. for XL screens) to be same as Foundation */
-    width: 90%;
-    max-width: 77.5rem;
-    margin: 0 auto;
-    margin-bottom: 40px;
-  }
-  .c-course-tabs .stir-tabs {
-    top: -5px;
-    justify-content: left;
-  }
-
-  .c-course-tabs .stir-tabs > .stir-tabs__content {
-    padding: 0 80px;
-    max-width: none;
-  }
-
-  .c-course-tabs .stir-tabs > .stir-tabs__tab {
-    background-color: transparent;
-    border-top: 5px solid transparent;
-    border-bottom: 0;
-  }
-
-  .c-course-tabs .stir-tabs > .stir-tabs__tab--active {
-    background-color: rgb(246, 245, 244);
-    border-top: 5px solid rgb(118, 189, 34);
   }
 
   .c-whats-next nav a,
