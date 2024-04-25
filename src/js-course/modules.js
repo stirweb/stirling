@@ -14,7 +14,7 @@ stir.templates.course = {
 	option: option => `Starting ${option[3]}, ${option[1].toLowerCase()} (${option[4]})`,
 	div: (id,onclick) => {
 		const div = document.createElement('div');
-		div.id = id; div.onclick = onclick;
+		id&&(div.id = id); div.onclick = onclick;
 		return div;
 	},
 	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,
@@ -32,10 +32,13 @@ stir.course = (function() {
 	const el = document.querySelector("[data-modules-route-code][data-modules-course-type]");
 	if(!container || !el) return na;
 	
+	const explorer = stir.templates.course.div();
 	const routeChooser = stir.templates.course.div('optionBrowser');
 	const optionChooser = stir.templates.course.div('optionBrowser');
 	const moduleBrowser = stir.templates.course.div('moduleBrowser');
 	const version = document.querySelector('time[data-sits]');
+
+	moduleBrowser.classList.add('u-heritage-line-bottom');
 
 	let initialised = false;
 
@@ -64,7 +67,10 @@ stir.course = (function() {
 	};
 	
 	// Set up the DOM
-	container.append( routeChooser, optionChooser, moduleBrowser );
+	explorer.classList.add('u-bg-heritage-green','u-white--all','u-px-1');
+	explorer.innerHTML = '<h2 class=header-stripped style="padding:0;margin:0;">Module explorer</h2>';
+	explorer.append(optionChooser);
+	container.append( routeChooser, explorer, moduleBrowser );
 	
 	// Set up data callback/handlers
 	stir.dpt.set.show.routes( handle.routes );

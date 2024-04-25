@@ -96,7 +96,7 @@ stir.dpt = (function () {
 
   const template = {
     collection: {
-      table: (id, data) => `<table class=c-course-modules__table id="collection_${id}">${data}</table>`,
+      table: (id, data, truncated) => `<table class=c-course-modules__table id="collection_${id}"${truncated?' data-truncated-list':''}>${data}</table>`,
       notes: (text) => `<p class=c-course-modules__collection-notes>${text}</p>`,
       header: (text) => `<p class=c-course-modules__collection-header>${text}</p>`,
       footer: (text) => `<p class=c-course-modules__pdm-note>${text}</p>`,
@@ -151,14 +151,14 @@ stir.dpt = (function () {
 
   const collectionView = stir.curry((semesterID, collection, c) => {
     let collectionId = [semesterID, c].join("");
+    let truncated = collection.mods.length > viewMoreModulesThreshold;
     let header = template.collection.header(getCollectionHeader(collection.collectionStatusCode));
     let notes = collection.collectionType == "LIST" || collection.collectionType == "CHOICE" ? template.collection.notes(collection.collectionNotes) : "";
-    let body = template.collection.table(collectionId, collection.mods.map(moduleView).join(""));
+    let body = template.collection.table(collectionId, collection.mods.map(moduleView).join(""), truncated);
 
     let footer = collection.collectionFootnote ? template.collection.footer(collection.collectionFootnote) : "";
-    let more =
-      collection.mods.length > viewMoreModulesThreshold
-        ? `<p class="text-center c-course-modules__view-more-link">
+    let more = truncated ? 
+          `<p class="text-center c-course-modules__view-more-link">
 						<a href="#" data-choices="${collection.mods.length}" aria-expanded="false" aria-controls="collection_${collectionId}">${config.text.more.replace("_X_", collection.mods.length)}</a>
 					</p>`
         : "";
@@ -205,15 +205,24 @@ stir.dpt = (function () {
     		return 0;
   };
 
+  const MenuOption = (id, label) => {
+    const option = document.createElement('option');
+    option.value = id;
+    option.textContent = label;
+    return option;
+  };
+
   const modulesOverview = (data) => {
     let frag = document.createDocumentFragment();
-    data.initialText && frag.append(paragraph(data.initialText));
 
-    if (data.pdttRept) {
-      let tempNode = document.createElement("p");
-      tempNode.appendChild(stir.createDOMFragment(data.pdttRept));
-      data.pdttRept && frag.append(tempNode);
-    }
+    let semesterMenu = document.createElement('select');
+    const semesterReset = (event)=>{
+      document.querySelectorAll('div[data-semester]').forEach(semester=>semester.style.display='none');
+      document.querySelectorAll('div[data-semester="'+semesterMenu.options[semesterMenu.selectedIndex].value+'"]').forEach(semester=>semester.style.display='block');
+    };
+    semesterMenu.classList.add('c-viewer');
+    semesterMenu.addEventListener("change",semesterReset);
+
     let paths = [],
       years = [];
 
@@ -223,8 +232,8 @@ stir.dpt = (function () {
           let div = document.createElement("div");
           let semesterID = [g, o, s].join("");
           let year = getYear(semester, g, o, s);
-          div.classList.add("stir-accordion");
-          div.insertAdjacentHTML("beforeend", `<h3>Year ${year}: ${getSemester(semester)} ${getOption(o, options)}</h3>`);
+          div.setAttribute('data-semester',semesterID);
+          semesterMenu.append(MenuOption(semesterID,`Year ${year}: ${getSemester(semester)} ${getOption(o, options)}`));
           if (options.length > 1 && years.indexOf(year) === -1) {
             years.push(year);
             paths.push(`${stir.cardinal(options.length)} alternative paths in year ${year}`);
@@ -235,11 +244,29 @@ stir.dpt = (function () {
       });
     });
 
+    frag.prepend(semesterMenu);
+
+    let div = stir.templates.course.div();
+    div.classList.add('u-bg-heritage-green','u-white--all','u-px-1');
+    div.style.paddingBottom = "1rem";
     if (paths.length > 0) {
       let paths_p = document.createElement("p");
       paths_p.innerHTML = `<span class="uos-shuffle"></span> <strong>There are ${stir.Array.oxfordComma(paths, true)}. Please review all options carefully.</strong>`;
-      paths_p.classList.add("c-callout", "info", "rwm2testab1");
-      frag.prepend(paths_p);
+      paths_p.classList.add("c-callout", "info");
+      paths_p.style.margin = "0";
+      div.append(paths_p);
+    }
+    
+    data.initialText && div.prepend(paragraph("initialText: " + data.initialText));
+    
+    if (data.pdttRept) {
+      let tempNode = document.createElement("p");
+      tempNode.appendChild(stir.createDOMFragment(data.pdttRept));
+      data.pdttRept && div.prepend(tempNode);
+    }
+    
+    if(paths.length||data.initialText||data.pdttRept) {
+      frag.prepend(div);
     }
 
     // attach behaviour to `view more` links and bind them to the respective table element
@@ -247,7 +274,7 @@ stir.dpt = (function () {
       var a = el.querySelector(".c-course-modules__view-more-link a");
       a && a.addEventListener("click", viewMore.bind(el));
     });
-
+    frag.querySelectorAll('div[data-semester]:not([data-semester="'+semesterMenu.options[semesterMenu.selectedIndex].value+'"])').forEach(el=>el.style.display='none');
     return frag;
   };
 
