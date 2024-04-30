@@ -716,7 +716,7 @@
                             <p class="u-mt-2">Not sure what you want to study?</p>
 
                             <div>
-                                <label for="full_prospectus" class="flex items-center">
+                                <label for="full_prospectus">
                                     <input id="full_prospectus" type="checkbox" name="full_prospectus" value="1">
                                     <span>Check this box to receive the full, non-personalised
                                         prospectus</span>
@@ -732,16 +732,16 @@
 
                             <div>
                                 <div>
-                                    <label for="area_interest.research" class="flex items-center">
+                                    <label for="area_interest.research">
                                         <input id="area_interest.research" type="checkbox" name="area_interest.research"
                                             value="research">
-                                        <span class="ml-2">Research</span>
+                                        <span>Research</span>
                                     </label>
 
                                 </div>
 
                                 <div>
-                                    <label for="area_interest.international_students" class="flex items-center">
+                                    <label for="area_interest.international_students">
                                         <input id="area_interest.international_students" type="checkbox"
                                             name="area_interest.international_students" value="international_students">
                                         <span>International Students</span>
@@ -750,7 +750,7 @@
                                 </div>
 
                                 <div>
-                                    <label for="area_interest.accommodation" class="flex items-center">
+                                    <label for="area_interest.accommodation">
                                         <input id="area_interest.accommodation" type="checkbox"
                                             name="area_interest.accommodation" value="accommodation">
                                         <span>Accommodation</span>
@@ -759,19 +759,19 @@
                                 </div>
 
                                 <div>
-                                    <label for="area_interest.students_union" class="flex items-center">
+                                    <label for="area_interest.students_union">
                                         <input id="area_interest.students_union" type="checkbox"
                                             name="area_interest.students_union" value="students_union">
-                                        <span class="ml-2">Students' Union</span>
+                                        <span>Students' Union</span>
                                     </label>
 
                                 </div>
 
                                 <div>
-                                    <label for="area_interest.sport" class="flex items-center">
+                                    <label for="area_interest.sport">
                                         <input id="area_interest.sport" type="checkbox" name="area_interest.sport"
                                             value="sport">
-                                        <span class="ml-2">Sport</span>
+                                        <span>Sport</span>
                                     </label>
 
                                 </div>
@@ -784,7 +784,7 @@
                         </h2>
 
                         <div>
-                            <p class="text-sm text-gray-700">
+                            <p class="text-sm ">
                                 The personal information you provide above will be used to build your
                                 personalised digital postgraduate prospectus. We’ll only contact you about the
                                 prospectus itself unless you select to receive more information.
@@ -801,9 +801,7 @@
 
                             <div>
                                 <label>
-                                    <input type="checkbox" name="data_agreement" value="1"
-                                        wire:model.defer="data.data_agreement"
-                                        class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50">
+                                    <input type="checkbox" name="data_agreement" value="1">
                                     Please confirm that you agree to your information being used in this way.
                                     <span class="u-heritage-berry ">*</span>
                                 </label>
@@ -819,9 +817,7 @@
 
                                 <select
                                     id="wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    name="wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses"
-                                    wire:model.defer="data.wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses">
+                                    name="wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses">
                                     <option value="">Select an option</option>
                                     <option value="yes">Yes, keep me up to date with everything I need to know
                                         about Stirling</option>
@@ -845,9 +841,7 @@
                                     Opt in for email
                                 </label>
 
-                                <select id="opt_in_for_email"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    name="opt_in_for_email" wire:model.defer="data.opt_in_for_email">
+                                <select id="opt_in_for_email" name="opt_in_for_email">
                                     <option value="">Select an option</option>
                                     <option value="yes">Yes please</option>
                                     <option value="no">No thanks</option>
@@ -860,9 +854,7 @@
                                     Opt in for phone
                                 </label>
 
-                                <select id="opt_in_for_phone"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    name="opt_in_for_phone" wire:model.defer="data.opt_in_for_phone">
+                                <select id="opt_in_for_phone" name="opt_in_for_phone">
                                     <option value="">Select an option</option>
                                     <option value="yes">Yes please</option>
                                     <option value="no">No thanks</option>
@@ -875,9 +867,7 @@
                                     Opt in for sms
                                 </label>
 
-                                <select id="opt_in_for_sms"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    name="opt_in_for_sms" wire:model.defer="data.opt_in_for_sms">
+                                <select id="opt_in_for_sms" name="opt_in_for_sms">
                                     <option value="">Select an option</option>
                                     <option value="yes">Yes please</option>
                                     <option value="no">No thanks</option>
@@ -891,9 +881,7 @@
                                 </label>
 
                                 <select id="social_media_advertising_or_digital_advertising"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                    name="social_media_advertising_or_digital_advertising"
-                                    wire:model.defer="data.social_media_advertising_or_digital_advertising">
+                                    name="social_media_advertising_or_digital_advertising">
                                     <option value="">Select an option</option>
                                     <option value="yes">Yes please</option>
                                     <option value="no">No thanks</option>
@@ -907,11 +895,6 @@
                                 You can unsubscribe at any time by emailing: <a href="mailto:study.stirling@stir.ac.uk"
                                     class="underline">study.stirling@stir.ac.uk</a>
                             </p>
-
-
-
-
-
 
                             <button id="generatePDFBtn" class="button">Generate</button>
 
