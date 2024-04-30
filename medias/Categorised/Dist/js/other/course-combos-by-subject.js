@@ -1,10 +1,9 @@
-!function(t){if(!t)return;const r=t,l={"UDX16-PSY":"BSc (Hons) Psychology","UDX12-PSY":"BA (Hons) Psychology"};var t=stir.curry((r,t)=>stir.map(t=>({...t,combinations:i(r,t)}),t)),e=stir.curry((t,r)=>stir.filter(courseMatchesSubject(r),t));const i=(t,r)=>t.filter(t=>t.courses&&t.courses.filter(t=>t.url===r.url).length),o=t=>`	<div data-behaviour=accordion>
-		<h3>${[t.prefix,t.title].join(" ").trim()}</h3>
-		<div> <p>Apply now for:</p>
-			<ul>
-				${s(t)}
-				${a(t.combinations)}
-			</ul>
-			</div>
-		</div>
-`,n=stir.curry((t,r,e)=>r?`<a href="${t+r}">${e}</a>`:e)("https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode="),s=i=>i.applyCode&&i.applyCode.split(", ").map((t,r,e)=>t?`<li>${n(t.trim(),l[t.trim()]||[i.prefix,i.title].join(" ").trim())} <small>${1<e.length?" ("+t+")":""}</small></li>`:`<!-- ${i.title} -->`).join("\n"),a=t=>t?t.map(t=>`<li>${n(t.codes.apply,[t.prefix,t.title].join(" ").trim())}</li>`).join("\n"):null;var c=stir.t4globals.courses||[],p=stir.t4globals.combos||[];if(c.length&&p.length){var u,d=stir.reduce((t,r)=>t.includes(r)?t:[...t,r],[]),m=stir.map(t=>t.subject&&t.subject.split(/,\s+/g)),h=stir.filter(t=>t),h=stir.compose(stir.sort(null),h,d,t=>[].concat.apply([],t),m,stir.clone)(c),d=stir.filter(t=>!!t.applyCode,c);const f=t(stir.filter(t=>t.title,p)),y=e(d);r.innerHTML=stir.map(t=>{return r=t,(t=f(y(t))).length?`<h2 class="u-margin-top">${r}</h2> `+t.map(o).join(""):null;var r},h).join(""),m=Array.prototype.slice.call(r.querySelectorAll("h2")),u=document.createElement("nav"),r.insertAdjacentElement("afterbegin",u),m.forEach(t=>{var r=document.createElement("a");u.appendChild(r),r.innerText=t.innerText,r.href="#"+(t.id=t.innerText.replace(/[^a-zA-Z]/g,"-").toLowerCase())}),Array.prototype.forEach.call(r.querySelectorAll('[data-behaviour="accordion"]'),function(t){new stir.accord(t,!1)})}}(stir.node(".courselisting"));
+!function(i){if(!i)return;const o={"UDX16-PSY":"BSc (Hons) Psychology","UDX12-PSY":"BA (Hons) Psychology"};const t=i=>`<div data-behaviour=accordion>
+              <h3>${[i.prefix,i.title].join(" ").trim()}</h3>
+              <div><p>Apply now for:</p>
+                <ul>
+                  ${r(i)}
+                  ${s(i.combinations)}
+                </ul>
+              </div>
+            </div>`,l=stir.curry((i,r,t)=>r?`<a href="${i+r}">${t}</a>`:t)("https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode="),r=s=>s.applyCode&&s.applyCode.split(", ").map((i,r,t)=>i?`<li>${l(i.trim(),o[i.trim()]||[s.prefix,s.title].join(" ").trim())} <small>${1<t.length?" ("+i+")":""}</small></li>`:`<!-- ${s.title} -->`).join("\n"),s=i=>i?i.map(i=>`<li>${l(i.codes.apply,[i.prefix,i.title].join(" ").trim())}</li>`).join("\n"):null,e=i=>i.replace(/[^a-zA-Z]/g,"-").toLowerCase();var a=stir.curry((r,i)=>stir.map(i=>({...i,combinations:p(r,i)}),i));const n=stir.curry((i,r)=>-1!==r.subject.indexOf(i));var c=stir.curry((i,r)=>stir.filter(n(r),i));const p=(i,r)=>i.filter(i=>i.courses&&i.courses.filter(i=>i.url===r.url).length);var u=stir.reduce((i,r)=>i.includes(r)?i:[...i,r],[]),d=stir.map(i=>i.subject&&i.subject.split(/,\s+/g)),y=stir.filter(i=>i),m=stir.curry((i,r)=>(stir.setHTML(i,r),!0)),f=stir.t4globals.courses||[],g=stir.t4globals.combos||[],y=stir.compose(stir.sort(null),y,u,i=>[].concat.apply([],i),d,stir.clone)(f),u=stir.filter(i=>!!i.applyCode,f);const b=a(stir.filter(i=>i.title,g)),h=c(u);d=stir.map(i=>{return r=i,(i=b(h(i))).length?`<h2 id="${e(r)}" class="u-margin-top">${r}</h2>`+i.map(t).join(""):"";var r},y).join("");m(i,`<nav class="u-columns-2 u-bg-grey u-bleed bg-grey u-padding-y">${stir.map(i=>`<a href="#${e(i)}" class="u-inline-block u-pb-tiny">${i}</a>`,y).join("")}</nav>`+d),Array.prototype.forEach.call(i.querySelectorAll('[data-behaviour="accordion"]'),function(i){new stir.accord(i,!1)})}(stir.node(".courselisting"));
