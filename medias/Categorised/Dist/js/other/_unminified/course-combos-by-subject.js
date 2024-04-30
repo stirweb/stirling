@@ -25,7 +25,7 @@
    */
 
   const renderJumpLinkNav = (links) => {
-    return `<nav class="u-columns-2 u-bg-grey u-bleed bg-grey u-padding-y ">${links}</nav>`;
+    return `<nav class="u-columns-2 u-bg-grey u-bleed bg-grey u-padding-y">${links}</nav>`;
   };
 
   const renderJumpLink = (item) => {
