@@ -29,7 +29,7 @@
   };
 
   const renderJumpLink = (item) => {
-    return `<a href="#${renderJumpURI(item)}" class="u-inline-block u-pb-tiny">${item}</a>`;
+    return `<a href="#${renderJumpURI(item)}" class="u-inline-block u-mb-1">${item}</a>`;
   };
 
   const renderCourse = (course) => {
