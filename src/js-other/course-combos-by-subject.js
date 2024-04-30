@@ -19,10 +19,10 @@
   };
 
   /*
-
-     RENDERERS
-
-   */
+    
+         RENDERERS
+    
+       */
 
   const renderJumpLinkNav = (links) => {
     return `<nav class="u-columns-2 u-bg-grey u-bleed bg-grey u-padding-y">${links}</nav>`;
@@ -34,14 +34,14 @@
 
   const renderCourse = (course) => {
     return `<div data-behaviour=accordion>
-              <h3>${[course.prefix, course.title].join(" ").trim()}</h3>
-              <div><p>Apply now for:</p>
-                <ul>
-                  ${singleApplyLinksList(course)}
-                  ${comboApplyLinksList(course.combinations)}
-                </ul>
-              </div>
-            </div>`;
+                  <h3>${[course.prefix, course.title].join(" ").trim()}</h3>
+                  <div><p>Apply now for:</p>
+                    <ul>
+                      ${singleApplyLinksList(course)}
+                      ${comboApplyLinksList(course.combinations)}
+                    </ul>
+                  </div>
+                </div>`;
   };
 
   /*  Returns the html for a group of courses (unless the group is empty) */
@@ -68,10 +68,10 @@
   const renderJumpURI = (text) => text.replace(/[^a-zA-Z]/g, "-").toLowerCase();
 
   /*
-
-    HELPERS
-
-   */
+    
+        HELPERS
+    
+       */
 
   /* Returns an array of course objects with their respective combinations appended */
   const getCoursesCombos = stir.curry((_combos, _courses) =>
@@ -103,10 +103,10 @@
   });
 
   /* 
-
-    ON LOAD
-
-   */
+    
+        ON LOAD
+    
+       */
 
   const initialCourses = stir.t4globals.courses || [];
   const initialCombos = stir.t4globals.combos || [];
@@ -139,8 +139,8 @@
   setDOMContent(resultsArea, jumpLinksHtml + html);
 
   /* 
-      Finally get the accordions working
-   */
+          Finally get the accordions working
+       */
   Array.prototype.forEach.call(resultsArea.querySelectorAll('[data-behaviour="accordion"]'), function (accordion) {
     new stir.accord(accordion, false);
   });
