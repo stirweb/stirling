@@ -30,7 +30,9 @@
 		));
 
 
-	const courseMatchesSubject = stir.curry((_subject, _course) => _course.subject.indexOf(_subject) !== -1 );
+  const renderJumpLinkNav = (links) => {
+    return `<nav class="u-columns-2 u-bg-grey u-bleed bg-grey u-padding-y ">${links}</nav>`;
+  };
 
 	const filterBySubject = stir.curry(
 		(_courses, _subject) => stir.filter( courseMatchesSubject(_subject), _courses )
