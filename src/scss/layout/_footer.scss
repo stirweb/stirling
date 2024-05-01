@@ -29,6 +29,7 @@
     }
     a {
       border: 0;
+      padding: 8px 0;
     }
   }
   a {
@@ -86,6 +87,11 @@ p a.t4Edit-page {
 
 .site-footer__map {
   color: $white;
+
+  a {
+    min-height: 64px;
+    display: inline-block;
+  }
   img {
     max-height: 12em;
   }
