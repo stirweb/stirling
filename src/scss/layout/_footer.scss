@@ -20,7 +20,7 @@
     color: $white;
     font-family: $body-font-family;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.313rem;
     margin: 0 0 1em 0;
     padding: 0;
     white-space: nowrap;
@@ -72,8 +72,7 @@
 
   a {
     padding: 8px 0;
-    display: inline-block;
-    min-width: 60px;
+    display: block;
   }
 }
 
