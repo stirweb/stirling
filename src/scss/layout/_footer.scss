@@ -89,10 +89,9 @@ p a.t4Edit-page {
 .site-footer__map {
   color: $white;
 
-  // a {
-  //   min-height: 64px;
-  //   display: inline-block;
-  // }
+  a {
+    display: block;
+  }
   img {
     max-height: 12em;
   }
