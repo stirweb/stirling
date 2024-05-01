@@ -73,6 +73,7 @@
   a {
     padding: 8px 0;
     display: inline-block;
+    min-width: 60px;
   }
 }
 
@@ -88,10 +89,10 @@ p a.t4Edit-page {
 .site-footer__map {
   color: $white;
 
-  a {
-    min-height: 64px;
-    display: inline-block;
-  }
+  // a {
+  //   min-height: 64px;
+  //   display: inline-block;
+  // }
   img {
     max-height: 12em;
   }
