@@ -3,16 +3,16 @@
 	const week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 	const swimTimetableFormatter = data => {
-		if(!data.StartDate) return'';
-		const date = new Date(data.StartDate);
+		if(!data.startDate) return'';
+		const date = new Date(data.startDate);
 		return `
 			<tr>
-				<th data-day=${data.Day}>${stir.Date.swimTimetable(date)}</th>
-				<td><strong>Time</strong>: ${data.StartTime}–${data.EndTime}</td>
-				<td><strong>Activity</strong>: ${data.Description?data.Description.replace(' Pool', ''):''}</td>
-				<td><strong>No. of Lanes</strong>: ${data.NoOfProducts}</td>
-				<td><strong>Depth</strong>: ${data.WebComments?data.WebComments.replace(/Depth /g, '').replace("\n", '<br>'):''}</td>
-				<!-- <td><a href="${data.DeepLink}" class="button tiny energy-pink">Book&nbsp;now</a></td> -->
+				<th data-day=${data.day}>${stir.Date.swimTimetable(date)}</th>
+				<td><strong>Time</strong>: ${data.startTime}–${data.endTime}</td>
+				<td><strong>Activity</strong>: ${data.description?data.description.replace(' Pool', ''):''}</td>
+				<td><strong>No. of Lanes</strong>: ${data.noOfProducts}</td>
+				<td><strong>Depth</strong>: ${data.comments?data.comments.replace(/Depth /g, '').replace("\n", '<br>'):''}</td>
+				<!-- <td><a href="${data.deepLink}" class="button tiny energy-pink">Book&nbsp;now</a></td> -->
 			</tr>
 		`
 	};
@@ -38,7 +38,6 @@
 		const table = document.createElement('table');
 		table.setAttribute('class', 'c-activity-timetable alt')
 		table.innerHTML = `<caption>${text}</caption>` + data.map(swimTimetableFormatter).join("\n");
-
 		el.appendChild( mergeDayHeaders(table) );
 	};
 
