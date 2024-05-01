@@ -11,7 +11,7 @@
 				<td><strong>Time</strong>: ${data.startTime}–${data.endTime}</td>
 				<td><strong>Activity</strong>: ${data.description?data.description.replace(' Pool', ''):''}</td>
 				<td><strong>No. of Lanes</strong>: ${data.noOfProducts}</td>
-				<td><strong>Depth</strong>: ${data.webComments?data.webComments.replace(/Depth /g, '').replace("\n", '<br>'):''}</td>
+				<td><strong>Depth</strong>: ${data.comments?data.comments.replace(/Depth /g, '').replace("\n", '<br>'):''}</td>
 				<!-- <td><a href="${data.deepLink}" class="button tiny energy-pink">Book&nbsp;now</a></td> -->
 			</tr>
 		`
