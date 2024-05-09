@@ -54,6 +54,10 @@
 
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
     <link rel="stylesheet" href="../../../../medias/Categorised/Dist/css/campaigns/clearing.css?v=202106041327">
+
+    <link rel="stylesheet" href="../../../../medias/Categorised/Dist/bundles/lottie/lottie.css">
+
+
     <!-- ROBOTS -->
     <meta name="robots" content="noindex">
     <meta name="robots" content="nofollow">
@@ -381,11 +385,12 @@
 
             </div>
         </div>
-        <section class="c-wrapper u-bg-energy-green u-bleed bg-energy-green u-padding-y  u-white--all" id="d.en.167506"
+        <div id="lottie"></div>
+        <!-- <section class="c-wrapper u-bg-energy-green u-bleed bg-energy-green u-padding-y  u-white--all" id="d.en.167506"
             aria-label="wrapper-167506" data-section="Wrapper start">
             <div class="grid-container">
                 <div class="grid-x grid-padding-x c-svg-banner">
-                    <div class="cell  ">
+                    <div class="cell">
                         <div class="c-scaling-svg-container" style="padding-bottom: 36% /* 100% * 689/1920 */">
                             <object data="/media/stirling/global-assets/graphics/desktop-clearing-belong.svg"
                                 onload="this.insertAdjacentElement('beforebegin',(this.contentDocument.body||this.contentDocument).childNodes[0]);this.parentNode.removeChild(this);"></object>
@@ -393,7 +398,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
         <div class="grid-container">
             <div class="grid-x grid-padding-x"> </div>
         </div>
@@ -859,7 +864,19 @@
 
     <script src="../../../../medias/Categorised/Dist/js/other/clock.js"></script>
     <script src="../../../../medias/Categorised/Dist/js/other/hotline.js"></script>
-
+    <script src="../../../../medias/Categorised/Dist/bundles/lottie/lottie.js"></script>
+    <script src="../../../../medias/Categorised/Dist/bundles/lottie/clearing-anim.js"></script>
+    <script>
+        var params = {
+            container: document.getElementById('lottie'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            animationData: animationData
+        };
+        var anim;
+        anim = lottie.loadAnimation(params);
+    </script>
 
 
 </body>
