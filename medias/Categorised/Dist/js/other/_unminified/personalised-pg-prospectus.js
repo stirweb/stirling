@@ -1,5 +1,13 @@
 /* 
 
+    CONFIG 
+
+*/
+
+const path = UoS_env.env_name === `prod` ? "/research/hub/test/" : "";
+
+/* 
+
     RENDERERS 
 
 */
@@ -113,8 +121,10 @@ async function createPdf(data, path) {
   const fileName = firstName + lastName + String(Date.now()) + String(Math.floor(Math.random() * 100));
 
   // Font
-  const fonturl = "GeneralSans-Semibold.otf"; //'OpenSans-Bold.ttf';
+  //const fonturl = "GeneralSans-Semibold.otf"; //'OpenSans-Bold.ttf';
   //const fonturl = '<t4 type="media" id="179150" formatter="path/*"/>';
+  const fonturl = UoS_env.env_name === `prod` ? '<t4 type="media" id="179150" formatter="path/*"/>' : "GeneralSans-Semibold.otf";
+
   const fontBytes = await fetch(fonturl).then((res) => res.arrayBuffer());
 
   pdfDoc.registerFontkit(fontkit);
