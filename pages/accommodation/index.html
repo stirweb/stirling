@@ -75,6 +75,15 @@
 
 
 
+    <style>
+        .c-thumb-gallery-icons {
+            grid-template-columns: repeat(10, 1fr);
+        }
+
+        .stir-tabs__content:focus-visible {
+            outline: white;
+        }
+    </style>
 
 
 
@@ -407,437 +416,710 @@
     <!-- 
 				 MAIN CONTENT 
 		-->
-    <main class="wrapper-content" aria-label="Main content" id="content">
-        <div class="grid-container">
-            <div class="grid-x grid-padding-x">
 
-                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
-                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">John Forty's Court</h1>
+    <body class="external-pages">
+        <!--beginnoindex-->
+        <nav class="skip-nav-btn" aria-label="Skip to content navigation"><a href="#content">skip to main content</a>
+        </nav>
+
+        <!--
+           MOBILE NAV
+        -->
+        <nav id="mobile-menu-2" class="c-mobile-menu u-bg-grey " aria-label="Mobile navigation">
+            <a href="#" id="close_mobile_menu" class="closebtn" title="Close mobile menu">&times;</a>
+            <ul class="sitemenu-2 no-bullet u-bg-white">
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/" class="button no-arrow button--left-align clear expanded u-m-0 text-left"
+                        data-action="go">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">Home</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/courses/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">
+                                Find a course</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/subjects/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">University courses by subject</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/study/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">Study</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/international/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">International</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/research/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">Research</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/about/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">About</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/student-life/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">Student life</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/clearing/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">
+                                Clearing</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/scholarships/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">
+                                Scholarships</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/news/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">
+                                News</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="u-underline u-energy-teal--light">
+                    <a href="/events/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
+                        <div class="flex-container align-middle u-gap-16">
+                            <span class="u-flex1">
+                                Events</span>
+                            <span class="uos-chevron-right u-icon"></span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="slidemenu__other-links no-bullet u-p-3 flex-container flex-dir-column u-gap-16">
+                <li class="slidemenu__other-links-portal text-sm"><a href="https://portal.stir.ac.uk/my-portal.jsp"
+                        rel="nofollow">My Portal</a></li>
+                <li class="slidemenu__other-links-contact text-sm"><a href="/about/contact-us/">Contact</a></li>
+                <li class="slidemenu__other-links-search text-sm"><a href="/search/">Search our site</a></li>
+                <li class="slidemenu__other-links-microsite text-sm"><a href="http://stirlinguni.cn/"
+                        data-microsite="cn">中文网</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!--
+           MAIN HEADER
+          -->
+        <header class="c-header" id="layout-header" aria-label="Main header">
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x">
+                    <div class="cell large-4 medium-4 small-8">
+                        <a href="/" title="University of Stirling"><img src="/media/dist/css/images/logos/logo.svg"
+                                alt="University of Stirling logo" class="c-site-logo"></a>
+                    </div>
+
+                    <nav aria-label="primary" class="cell large-8 medium-8 small-4 flex-container align-right">
+                        <div class="c-header-nav flex-container flex-dir-column align-bottom align-center">
+                            <ul
+                                class="c-header-nav c-header-nav--secondary u-font-semibold flex-container align-middle">
+                                <li class="c-header-nav__item show-for-medium">
+                                    <a href="https://stirlinguni.cn/" class="c-header-nav__link"
+                                        data-microsite="cn">中文网</a>
+                                </li>
+                                <li class="c-header-nav__item show-for-large">
+                                    <a href="https://portal.stir.ac.uk/my-portal.jsp" rel="nofollow"
+                                        class="c-header-nav__link" id="header-portal__button">My Portal</a>
+                                </li>
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" id="header-search__button" href="/search/">
+                                        <span class="show-for-medium">Site search</span>
+                                        <span class="c-header-nav__icon uos-magnifying-glass u-font-semibold"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="c-header-nav c-header-nav--primary u-font-bold show-for-xlarge">
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" data-menu-id="mm__study" aria-controls=mm__study
+                                        href="/study/">Study</a>
+                                </li>
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" data-menu-id="mm__international"
+                                        aria-controls=mm__international href="/international/">International</a>
+                                </li>
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" data-menu-id="mm__research" aria-controls=mm__research
+                                        href="/research/">Research</a>
+                                </li>
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" data-menu-id="mm__about" aria-controls=mm__about
+                                        href="/about/">About</a>
+                                </li>
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" data-menu-id="mm__student-life"
+                                        aria-controls=mm__student-life href="/student-life/">Student life</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="hide-for-xlarge flex-container align-middle align-center flex-dir-column">
+                            <a href="#" id="open_mobile_menu" class="c-header-burger flex-container align-middle">
+                                <span class="show-for-sr">Show/hide mobile menu</span>
+                                <span class="c-header-burger__bun"></span>
+                            </a>
+                            <span>Menu</span>
+                        </div>
+                    </nav>
+
                 </div>
+            </div>
+            <form id="header-search" class="c-header-search" aria-hidden="true" aria-label="Popup for site search field"
+                method="get" action="https://search.stir.ac.uk/s/search.html?collection=stir-main"
+                data-js-action="/search/">
+                <!--  <input type="hidden" name="collection" value="external">-->
+                <!-- <input type="hidden" name="meta_group_not" value="internal"> -->
 
-                <!-- 
-				     Images
-		            -->
-                <div class="cell large-7 ">
+                <div class="overlay"></div>
+                <div class="content">
+                    <div class="grid-container">
+                        <div class="grid-x">
+                            <div class="small-12 small-12 cell c-header-search__input-wrapper">
 
-                    <div class="c-thumb-gallery">
-                        <style>
-                            .c-thumb-gallery-icons {
-                                grid-template-columns: repeat(10, 1fr);
-                            }
-                        </style>
+                                <label class="show-for-sr" for="header-search__query">Site search</label>
+                                <input type="search" name="query" id="header-search__query"
+                                    class="c-header-search__query" autocomplete="off" placeholder="Site search"
+                                    tabindex="-1">
 
-                        <img src="pic.jpg" class="u-aspect-ratio-3-2 u-object-cover c-thumb-gallery-image u-fadein" />
-
-                        <div class="u-grid u-gap-8 u-mt-1 c-thumb-gallery-icons">
-                            <a href="pic.jpg"><img src="pic.jpg" width="200" height="170"
-                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
-                            <a href="pic2.jpg"><img src="pic2.jpg" width="200" height="170"
-                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
-                            <a href="pic3.jpg"><img src="pic3.jpg" width="200" height="170"
-                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
-                            <a href="#"><img src="pic4.jpg" width="200" height="170"
-                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
-                            <a href="#"><img src="pic.jpg" width="200" height="170"
-                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
-                            <a href="#"><img src="pic2.jpg" width="200" height="170"
-                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
-                            <a href="#"><img src="pic3.jpg" width="200" height="170"
-                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
-                            <a href="#"><img src="pic4.jpg" width="200" height="170"
-                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
-                            <a href="#"><img src="pic.jpg" width="200" height="170"
-                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
-                            <a href="#"><img src="pic.jpg" width="200" height="170"
-                                    class="u-aspect-ratio-1-1 u-object-cover" /></a>
-
+                                <button class="button no-arrow" type="submit" title="submit search term"
+                                    aria-label="submit" tabindex="-1">
+                                    <span class="uos-magnifying-glass"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                </div>
+                    <div class="u-bg-grey">
+                        <div class="grid-container">
+                            <div class="grid-x">
+                                <div class="small-12 small-12 cell u-relative">
 
-                <!-- 
-				     Essential Info
-		            -->
-                <div class="cell large-5 text-sm">
-                    <p><strong>Price</strong><br />
-                        From £99.53 to £141.65 per week</p>
-
-                    <p><strong>Facilities</strong><br />
-                        Single rooms with shared bathrooms</p>
-
-                    <p><strong>Single ensuite rooms</strong><br />
-                        Share with up to 6 flatmates</p>
-
-                    <p><strong>Location</strong><br />
-                        On campus - 2.3 miles from campus 28 min walking, 14 min cycling, 10 min by bus</p>
-
-                    <p><strong>Student type</strong><br />
-                        New undergraduate<br />
-                        Study abroad/exchange<br />
-                        API Carolina Global students</p>
-
-                    <button class="button no-arrow button--left-align  expanded u-m-0 text-left  u-white--all u-mt-2">
-                        <div class="flex-container align-middle u-gap-16">
-                            <span class="u-flex1 text-sm">Apply now</span>
-                            <span class="uos-chevron-right u-icon"></span>
-                        </div>
-                    </button>
-
-                    <button
-                        class="button no-arrow button--left-align  expanded u-m-0 text-left heritage-berry u-white--all u-mt-1">
-                        <div class="flex-container align-middle u-gap-16">
-                            <span class="u-flex1 text-sm">View 360 virtual tour</span>
-                            <span class="uos-chevron-right u-icon"></span>
-                        </div>
-                    </button>
-
-                    <div class="u-mt-2" id="favsBtn" data-sid="1" data-favsurl="#" data-activity=""></div>
-                </div>
-
-
-                <!-- 
-                    Key features  section 
-                 -->
-                <div class="cell u-margin-top ">
-                    <div class="c-wrapper grid-x grid-padding-x u-bg-grey u-bleed bg-grey u-padding-y"
-                        data-ct="wrapper">
-                        <div class="cell small-12 medium-12 large-12  ">
-                            <h2>Key features of Riverside Quay</h2>
-                        </div>
-                        <div class="cell small-12 medium-6 large-3 u-my-1" data-component="promo-standard">
-                            <div class="u-energy-line-top flex-container u-gap u-p-1 ">
-                                <div>
-                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
-                                        <div class="u-h-full">
-                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
-                                                <div class="flex-container u-gap align-middle">
-
-
-                                                    <div class="u-width-32 u-heritage-green u-flex align-middle"><svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="1.5" class="svg-icon">
-                                                            <path
-                                                                d="M2.606,20.463H15.549a1.858,1.858,0,0,0,1.856-1.857v-16A1.857,1.857,0,0,0,15.549.75H2.606A1.856,1.856,0,0,0,.75,2.607v16A1.857,1.857,0,0,0,2.606,20.463ZM.754,6.189H16.845M3.58,3.552h2m2.8,0h2M13.2,13.267A4.133,4.133,0,1,1,9.069,9.134,4.134,4.134,0,0,1,13.2,13.267Zm-8.193.727a1.916,1.916,0,0,0,1.157-.31,1.5,1.5,0,0,1,2.012-.252,1.484,1.484,0,0,0,1.811.1,1.385,1.385,0,0,1,1.727-.1,1.8,1.8,0,0,0,1.194.372"
-                                                                transform="translate(2.922 1.393)"
-                                                                stroke-linecap="round" stroke-linejoin="round"></path>
-                                                        </svg></div>
-                                                    <p
-                                                        class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
-                                                        Laundry on-site</p>
-                                                </div>
-                                                <div class="flex-container u-gap align-middle">
-                                                    <div class="u-width-32 u-heritage-green u-flex align-middle"><svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="1.3" class="svg-icon">
-                                                            <path
-                                                                d="M7.979,9.245A3.615,3.615,0,1,1,4.365,5.631,3.615,3.615,0,0,1,7.979,9.245Zm13.315,0A3.615,3.615,0,1,1,17.68,5.631,3.615,3.615,0,0,1,21.294,9.245ZM4.25,9.05h6.757L7.641,2.574Zm13.582-.108L14.466,2.466l-3.39,6.476M6.628,1.689h2.04m5.091-.016h3.349V.749m-5.935,9.429V8.138m-.51,2.8h1.02"
-                                                                transform="translate(0.978 4.751)"
-                                                                stroke-linecap="round" stroke-linejoin="round"></path>
-                                                        </svg></div>
-                                                    <p
-                                                        class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
-                                                        Bike storage </p>
-                                                </div>
-                                                <div class="flex-container u-gap align-middle">
-                                                    <div class="u-width-32 u-heritage-green u-flex align-middle"><svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="1.5" class="svg-icon">
-                                                            <path
-                                                                d="M12.4,7.943V4.628a3.978,3.978,0,0,0-7.955,0V7.943M3.041,19.4H13.729A2.291,2.291,0,0,0,16.02,17.1V10.233a2.291,2.291,0,0,0-2.291-2.29H3.041A2.291,2.291,0,0,0,.75,10.233V17.1A2.291,2.291,0,0,0,3.041,19.4Zm8.042-7.474h4.071m-4.071,3.162h4.071M7.58,13.452a1.9,1.9,0,1,1-1.9-1.9A1.9,1.9,0,0,1,7.58,13.452Z"
-                                                                transform="translate(4 2)" stroke-linecap="round"
-                                                                stroke-linejoin="round"></path>
-                                                        </svg></div>
-                                                    <p
-                                                        class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
-                                                        Secure entry</p>
-                                                </div>
-                                                <div class="flex-container u-gap align-middle ">
-                                                    <div class="u-width-32 u-heritage-green u-flex align-middle "><svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                            stroke-width="1.5" class="svg-icon">
-                                                            <g id="b" clip-path="url(#c)">
-                                                                <g transform="translate(1.505 2.81)"
-                                                                    clip-path="url(#a)">
-                                                                    <path
-                                                                        d="M17.675,7.138l-.851-4.531C16.565,1.465,15.994.75,14.968.75H5.994c-1.025,0-1.617.809-1.856,1.857L3.288,7.28m16.951,7.692V9.178a1.857,1.857,0,0,0-1.856-1.857H2.606A1.858,1.858,0,0,0,.75,9.178v5.793Zm-4.27,2.658V15.266m-.8,2.352V15.254m1.62,2.358V15.248m.845,2.373V15.257M4.2,17.63V15.266m-.8,2.352V15.254m1.621,2.358V15.248m.844,2.373V15.257m.54-8.147a1.9,1.9,0,1,1,3.726-.516,1.936,1.936,0,0,1-.038.383M5.708,11.025a.744.744,0,1,1-.744-.744A.744.744,0,0,1,5.708,11.025Zm11.1,0a.743.743,0,1,1-.743-.744A.743.743,0,0,1,16.813,11.025Zm-8.589,0h4.529"
-                                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                                    </path>
-                                                                </g>
-                                                            </g>
-                                                        </svg></div>
-                                                    <p
-                                                        class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
-                                                        Car parking (terms and conditions apply)</p>
-                                                </div>
-
-
+                                    <div id="header-search__wrapper"
+                                        class="c-header-search__wrapper hide-for-small-only" aria-hidden="true">
+                                        <div id="header-search__results" class="grid-x c-header-search__results">
+                                            <div
+                                                class="cell medium-4 c-header-search__column c-header-search__suggestions">
                                             </div>
+
+                                            <div class="cell medium-4 c-header-search__column c-header-search__news">
+                                            </div>
+
+                                            <div class="cell medium-4 c-header-search__column c-header-search__courses">
+                                            </div>
+                                        </div>
+                                        <div id="header-search__loading" class="c-search-loading">
+                                            <div class="c-search-loading__spinner"></div>
+                                            <span class="show-for-sr">Loading...</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="cell small-12 medium-6 large-3 u-my-1 u-padding-bottom"
-                            data-component="promo-standard">
-                            <div class=" u-energy-line-top flex-container u-gap u-p-1 ">
-                                <div class="u-width-32 u-heritage-green"><svg xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="1.5" class="svg-icon">
-                                        <g id="a" clip-path="url(#b)">
+                    </div>
+                </div>
+            </form>
+            <nav id="megamenu__container" aria-label="primary navigation submenu"></nav>
+        </header>
+
+        <!-- 
+                   BREADCRUMB 
+                  -->
+
+
+        <nav aria-label="breadcrumb" class="breadcrumbs-container u-bg-grey show-for-large">
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x">
+                    <div class="cell">
+
+                        <ul class="breadcrumbs">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/student-life/">Student life</a>
+                                <ul>
+                                    <li><a href="/student-life/campus-facilities/">Campus facilities</a></li>
+                                    <li><a href="/student-life/accommodation/">Accommodation</a></li>
+                                    <li><a href="/student-life/support-wellbeing/">Student Services Hub</a></li>
+                                    <li><a href="/student-life/sport-at-stirling/">Sport and wellbeing</a></li>
+                                    <li><a href="/student-life/students-union/">Students' Union</a></li>
+                                    <li><a href="/student-life/welcome/">Welcome</a></li>
+                                    <li><a href="/student-life/careers/">Careers</a></li>
+                                    <li><a href="/student-life/city-of-stirling/">City of Stirling</a></li>
+                                    <li><a href="/student-life/explore-scotland/">Explore Scotland</a></li>
+                                    <li><a href="/student-life/chat-to-us/">Chat to us</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/student-life/accommodation/">Accommodation</a>
+                                <ul>
+                                    <li><a href="/student-life/accommodation/find-your-residence/">Find your
+                                            residence</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/why-stay-in-university-managed-accommodation/">Why
+                                            stay in University-managed accommodation</a></li>
+                                    <li><a href="/student-life/accommodation/how-to-apply/">How to apply</a></li>
+                                    <li><a href="/student-life/accommodation/accommodation-life/">Accommodation life</a>
+                                    </li>
+                                    <li><a href="/student-life/accommodation/how-to-pay/">How to pay your accommodation
+                                            fees</a></li>
+                                    <li><a href="/student-life/accommodation/private-rental-accommodation/">Private
+                                            rental accommodation</a></li>
+                                    <li><a href="/student-life/accommodation/muirhead-house-refurbishment/">Muirhead
+                                            House refurbishment</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/student-life/accommodation/find-your-residence/">Find your residence</a>
+                                <ul>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/accommodation-virtual-tours/">Accommodation
+                                            virtual tours</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/alangrange/">Alangrange</a>
+                                    </li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/alexander-court-family-flats/">Alexander
+                                            Court family flats</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/alexander-court-standard-flats/">Alexander
+                                            Court standard flats</a></li>
+                                    <li><span class="currentsection">Alexander Court Townhouses</span></li>
+                                    <li><a href="/student-life/accommodation/find-your-residence/andrew-stewart-hall/">Andrew
+                                            Stewart Hall</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/beech-court-standard-flats/">Beech
+                                            Court standard flats</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/beech-court-studio-flats/">Beech
+                                            Court studio flats</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/fraser-of-allander-house/">Fraser
+                                            of Allander House</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/friarscroft/">Friarscroft</a>
+                                    </li>
+                                    <li><a href="/student-life/accommodation/find-your-residence/john-fortys-court/">John
+                                            Forty's Court</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/juniper-court-standard-flats/">Juniper
+                                            Court standard flats</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/juniper-court-studio-flat/">Juniper
+                                            Court studio flat</a></li>
+                                    <li><a href="/student-life/accommodation/find-your-residence/lyon-crescent/">Lyon
+                                            Crescent</a></li>
+                                    <li><a href="/student-life/accommodation/find-your-residence/pendreich-way/">Pendreich
+                                            Way</a></li>
+                                    <li><a href="/student-life/accommodation/find-your-residence/polwarth-house/">Polwarth
+                                            House</a></li>
+                                    <li><a href="/student-life/accommodation/find-your-residence/spittal-hill/">Spittal
+                                            Hill</a></li>
+                                    <li><a href="/student-life/accommodation/find-your-residence/thistle-chambers/">Thistle
+                                            Chambers</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/union-street-development/">Union
+                                            Street Development</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/willow-court-standard-flats/">Willow
+                                            Court standard flats</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/willow-court-studio-flats/">Willow
+                                            Court studio flats</a></li>
+                                    <li><a
+                                            href="/student-life/accommodation/find-your-residence/my-favourite-accommodation/">My
+                                            favourite accommodation</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/student-life/accommodation/find-your-residence/alexander-court-townhouses/">Alexander
+                                    Court Townhouses</a></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!--endnoindex-->
+
+        <!-- 
+                   MAIN CONTENT 
+          -->
+        <main class="wrapper-content" aria-label="Main content" id="content">
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x">
+
+                    <!-- 
+                  <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y"> 
+                      <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Alexander Court Townhouses</h1>     		
+                  </div>
+                  -->
+                    <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
+                        <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Alexander Court townhouses
+                        </h1>
+                    </div>
+                    <div class="cell large-7 ">
+                        <div class="c-thumb-gallery"><img src="pic.jpg"
+                                class="u-aspect-ratio-3-2 u-object-cover c-thumb-gallery-image u-fadein" width="760"
+                                height="470" alt="alexander court townhouses external 2" loading="lazy" />
+                            <div class="u-grid u-gap-8 u-mt-1 c-thumb-gallery-icons">
+                                <a
+                                    href="/media/stirling/global-assets/campus-life/medium/alexander-court-family-external-760x470.jpg"><img
+                                        src="pic.jpg"
+                                        class="u-aspect-ratio-3-2 u-object-cover c-thumb-gallery-image u-fadein"
+                                        width="760" height="470" alt="alexander court townhouses external 2"
+                                        loading="lazy" /></a><a
+                                    href="/media/stirling/global-assets/accommodation/alexander-court-townhouses/full-size/alexander-court-townhouses-bedroom-760x470.jpg"><img
+                                        src="pic2.jpg" width="200" height="170"
+                                        class="u-aspect-ratio-1-1 u-object-cover"
+                                        alt="alexander court townhouses bedroom" /></a><a
+                                    href="/media/stirling/global-assets/accommodation/alexander-court-townhouses/full-size/alexander-court-townhouses-living-area-760x470.jpg"><img
+                                        src="pic3.jpg" width="200" height="170"
+                                        class="u-aspect-ratio-1-1 u-object-cover"
+                                        alt="alexander court townhouses living area" /></a><a
+                                    href="/media/stirling/global-assets/accommodation/alexander-court-family-flats/full-size/alexander-court-townhouses-shower-room-760x470.jpg"><img
+                                        src="pic4.jpg" width="200" height="170"
+                                        class="u-aspect-ratio-1-1 u-object-cover"
+                                        alt="alexander court townhouses shower room" /></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cell large-5 text-sm">
+                        <p class="u-mt-3-small"><strong>Price</strong><br />From £181.98 to £191.07 per week</p>
+                        <p><strong>Room type</strong><br />Single room with shared shower room<br />Single room with
+                            ensuite shower room<br /></p>
+                        <p><strong>Location</strong><br />On-campus &ndash; 16 minute walk to Campus Central</p>
+                        <p><strong>Student type</strong><br /> New undergraduate</p><a
+                            href="/student-life/accommodation/how-to-apply/"
+                            class="button heritage-green no-arrow button--left-align  expanded u-m-0 text-left  u-white--all u-mt-2">
+                            <div class="flex-container align-middle u-gap-16"><span class="u-flex1 text-sm">Apply
+                                    now</span><span class="uos-chevron-right u-icon"></span></div>
+                        </a><a
+                            href="https://kuula.co/share/collection/79CbL?logo=-1&amp;card=1&amp;info=0&amp;fs=1&amp;vr=1&amp;zoom=1&amp;autorotate=0.02&amp;thumbs=2&amp;margin=25&amp;alpha=0.71"
+                            class="button no-arrow button--left-align  expanded u-m-0 text-left heritage-berry u-white--all u-mt-1">
+                            <div class="flex-container align-middle u-gap-16"><span class="u-flex1 text-sm">View 360
+                                    virtual tour</span><span class="uos-chevron-right u-icon"></span></div>
+                        </a>
+                        <div class="u-mt-2" id="favsBtn" data-sid="5747"
+                            data-favsurl="/student-life/accommodation/find-your-residence/my-favourite-accommodation/"
+                            data-activity=""></div>
+                    </div>
+                    <div class="cell u-margin-top ">
+                        <div class="c-wrapper grid-x grid-padding-x u-bg-grey u-bleed bg-grey u-padding-y"
+                            data-ct="wrapper">
+                            <div class="cell small-12 medium-12 large-12  ">
+                                <h2>Key features of Alexander Court townhouses</h2>
+                            </div>
+                            <div class="cell small-12 medium-6 large-3 u-my-1" data-component="promo-standard">
+                                <div class="u-energy-line-top flex-container u-gap u-p-1 ">
+                                    <div>
+                                        <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                            <div class="u-h-full">
+                                                <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                    <div class="flex-container u-gap align-top">
+                                                        <div class="u-width-32 u-heritage-green u-flex align-middle">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                                stroke-width="1.3" class="svg-icon">
+                                                                <path
+                                                                    d="M2.606,20.463H15.549a1.858,1.858,0,0,0,1.856-1.857v-16A1.857,1.857,0,0,0,15.549.75H2.606A1.856,1.856,0,0,0,.75,2.607v16A1.857,1.857,0,0,0,2.606,20.463ZM.754,6.189H16.845M3.58,3.552h2m2.8,0h2M13.2,13.267A4.133,4.133,0,1,1,9.069,9.134,4.134,4.134,0,0,1,13.2,13.267Zm-8.193.727a1.916,1.916,0,0,0,1.157-.31,1.5,1.5,0,0,1,2.012-.252,1.484,1.484,0,0,0,1.811.1,1.385,1.385,0,0,1,1.727-.1,1.8,1.8,0,0,0,1.194.372"
+                                                                    transform="translate(2.922 1.393)"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                            </svg>
+                                                        </div>
+                                                        <p
+                                                            class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                            Laundry on-site</p>
+                                                    </div>
+                                                    <div class="flex-container u-gap align-top">
+                                                        <div class="u-width-32 u-heritage-green u-flex align-middle">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                                stroke-width="1.3" class="svg-icon">
+                                                                <path
+                                                                    d="M12.4,7.943V4.628a3.978,3.978,0,0,0-7.955,0V7.943M3.041,19.4H13.729A2.291,2.291,0,0,0,16.02,17.1V10.233a2.291,2.291,0,0,0-2.291-2.29H3.041A2.291,2.291,0,0,0,.75,10.233V17.1A2.291,2.291,0,0,0,3.041,19.4Zm8.042-7.474h4.071m-4.071,3.162h4.071M7.58,13.452a1.9,1.9,0,1,1-1.9-1.9A1.9,1.9,0,0,1,7.58,13.452Z"
+                                                                    transform="translate(4 2)" stroke-linecap="round"
+                                                                    stroke-linejoin="round" />
+                                                            </svg>
+                                                        </div>
+                                                        <p
+                                                            class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                            Secure entry</p>
+                                                    </div>
+                                                    <div class="flex-container u-gap align-top">
+                                                        <div class="u-width-32 u-heritage-green u-flex align-middle">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                                stroke-width="1.3" class="svg-icon">
+                                                                <path
+                                                                    d="M7.168,2.615A1.865,1.865,0,1,1,5.3.75,1.865,1.865,0,0,1,7.168,2.615ZM13,17.309A7.049,7.049,0,1,1,3.061,7.332m2.41-2.807.73,7.341h5.835l4.131,5.044,1.093-.772M6.174,6.752H9.943"
+                                                                    transform="translate(3 1.826)"
+                                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                            </svg>
+                                                        </div>
+                                                        <p
+                                                            class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                            Accessible rooms</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cell small-12 medium-6 large-3 u-my-1 u-padding-bottom"
+                                data-component="promo-standard">
+                                <div class=" u-energy-line-top flex-container u-gap u-p-1 ">
+                                    <div class="u-width-32 u-heritage-green"><svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.3" class="svg-icon">
+                                            <g id="a" clip-path="url(#b)">
+                                                <path
+                                                    d="M17.675,7.139V2.607A1.858,1.858,0,0,0,15.819.75H5.144A1.857,1.857,0,0,0,3.288,2.607V7.28m16.951,7.693V9.179a1.856,1.856,0,0,0-1.856-1.857H2.606A1.856,1.856,0,0,0,.75,9.179v5.793Zm-17,1.984V15.24m14.3,1.717V15.24M10.436,7.076V6.183A1.662,1.662,0,0,0,8.775,4.521H7.415a1.661,1.661,0,0,0-1.66,1.662V7.2m9.385-.126V6.183a1.661,1.661,0,0,0-1.66-1.662H12.12a1.662,1.662,0,0,0-1.661,1.662v.736"
+                                                    transform="translate(1.505 3.147)" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </g>
+                                        </svg></div>
+                                    <div>
+                                        <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                            <div class="u-h-full">
+                                                <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                    <h3
+                                                        class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                        Your bedroom </h3>
+                                                    <div class="text-sm u-p-last-mb-0">
+                                                        <p>Small double bed</p>
+                                                        <p>Study desk and chair</p>
+                                                        <p>Drawers and wardrobe</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cell small-12 medium-6 large-3 u-my-1 u-padding-bottom"
+                                data-component="promo-standard">
+                                <div class=" u-energy-line-top flex-container u-gap u-p-1 ">
+                                    <div class="u-width-32 u-heritage-green"><svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.3" class="svg-icon">
                                             <path
-                                                d="M17.675,7.139V2.607A1.858,1.858,0,0,0,15.819.75H5.144A1.857,1.857,0,0,0,3.288,2.607V7.28m16.951,7.693V9.179a1.856,1.856,0,0,0-1.856-1.857H2.606A1.856,1.856,0,0,0,.75,9.179v5.793Zm-17,1.984V15.24m14.3,1.717V15.24M10.436,7.076V6.183A1.662,1.662,0,0,0,8.775,4.521H7.415a1.661,1.661,0,0,0-1.66,1.662V7.2m9.385-.126V6.183a1.661,1.661,0,0,0-1.66-1.662H12.12a1.662,1.662,0,0,0-1.661,1.662v.736"
-                                                transform="translate(1.505 3.147)" stroke-linecap="round"
-                                                stroke-linejoin="round"></path>
-                                        </g>
-                                    </svg></div>
-                                <div>
-                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
-                                        <div class="u-h-full">
-                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
-                                                <h3
-                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
-                                                    Your bedroom </h3>
-                                                <div class="text-sm u-p-last-mb-0">
-                                                    <p>Double bed</p>
+                                                d="M18.4,19.1a9.327,9.327,0,0,0,3.837-.491,3.077,3.077,0,0,0-4.8-2.79M18.4,19.1v.032a6.018,6.018,0,0,1-.038.683,12.324,12.324,0,0,1-12.232,0A6.218,6.218,0,0,1,6.1,19.1m12.308,0a6.124,6.124,0,0,0-.965-3.279m0,0a6.156,6.156,0,0,0-10.377,0m0,0a3.077,3.077,0,0,0-4.8,2.79A9.217,9.217,0,0,0,6.1,19.1m.964-3.279A6.124,6.124,0,0,0,6.1,19.1m9.23-12.276A3.077,3.077,0,1,1,12.25,3.75a3.077,3.077,0,0,1,3.077,3.077ZM21.481,9.9A2.308,2.308,0,1,1,19.173,7.6,2.308,2.308,0,0,1,21.481,9.9ZM7.635,9.9A2.308,2.308,0,1,1,5.327,7.6,2.308,2.308,0,0,1,7.635,9.9Z"
+                                                transform="translate(-0.251 -0.596)" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg></div>
+                                    <div>
+                                        <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                            <div class="u-h-full">
+                                                <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                    <h3
+                                                        class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                        Social spaces </h3>
+                                                    <div class="text-sm u-p-last-mb-0">
+                                                        <p>Shared kitchen equipped with a cooker, fridge, freezer,
+                                                            microwave and kettle</p>
+                                                        <p>Living/dining space</p>
+                                                        <p>Communal television</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="cell small-12 medium-6 large-3 u-my-1 u-padding-bottom"
-                            data-component="promo-standard">
-                            <div class=" u-energy-line-top flex-container u-gap u-p-1 ">
-                                <div class="u-width-32 u-heritage-green"><svg xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="1.5" class="svg-icon">
-                                        <path
-                                            d="M18.4,19.1a9.327,9.327,0,0,0,3.837-.491,3.077,3.077,0,0,0-4.8-2.79M18.4,19.1v.032a6.018,6.018,0,0,1-.038.683,12.324,12.324,0,0,1-12.232,0A6.218,6.218,0,0,1,6.1,19.1m12.308,0a6.124,6.124,0,0,0-.965-3.279m0,0a6.156,6.156,0,0,0-10.377,0m0,0a3.077,3.077,0,0,0-4.8,2.79A9.217,9.217,0,0,0,6.1,19.1m.964-3.279A6.124,6.124,0,0,0,6.1,19.1m9.23-12.276A3.077,3.077,0,1,1,12.25,3.75a3.077,3.077,0,0,1,3.077,3.077ZM21.481,9.9A2.308,2.308,0,1,1,19.173,7.6,2.308,2.308,0,0,1,21.481,9.9ZM7.635,9.9A2.308,2.308,0,1,1,5.327,7.6,2.308,2.308,0,0,1,7.635,9.9Z"
-                                            transform="translate(-0.251 -0.596)" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                    </svg></div>
-                                <div>
-                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
-                                        <div class="u-h-full">
-                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
-                                                <h3
-                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
-                                                    Shared social spaces </h3>
-                                                <div class="text-sm u-p-last-mb-0">
-                                                    <p>Games room</p>
+                            <div class="cell small-12 medium-6 large-3 u-my-1 u-padding-bottom "
+                                data-component="promo-standard">
+                                <div class=" u-energy-line-top flex-container u-gap u-p-1">
+                                    <div class="u-width-32 u-heritage-green"><svg xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.3" class="svg-icon">
+                                            <path
+                                                d="M11.876,3.59V2.163A1.514,1.514,0,0,0,10.364.65h-8.2A1.514,1.514,0,0,0,.65,2.163V18.112M6.359,8.106h-.48A1.294,1.294,0,0,0,4.589,9.4V9.324a1.294,1.294,0,0,0,1.29,1.29H17.67a1.3,1.3,0,0,0,1.291-1.29V9.4a1.294,1.294,0,0,0-1.291-1.29Zm10.832-.058c0-2.427-2.408-4.394-5.378-4.394S6.435,5.621,6.435,8.048m1.327,4.915v-.011m0,2.34v-.011m2.729-2.318v-.011m0,2.34v-.011m2.824-2.318v-.011m0,2.34v-.011m2.729-2.318v-.011m0,2.34v-.011M7.762,17.515V17.5m2.729.011V17.5m2.824.011V17.5m2.729.011V17.5"
+                                                transform="translate(2.35 2.65)" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg></div>
+                                    <div>
+                                        <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                            <div class="u-h-full">
+                                                <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                    <h3
+                                                        class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                        Your shower room</h3>
+                                                    <div class="text-sm u-p-last-mb-0">
+                                                        <p>Shared shower room with toilet, hand basin and shower</p>
+                                                        <p>Ensuite shower room with toilet, hand basin and shower</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="cell small-12 medium-6 large-3 u-my-1 u-padding-bottom "
-                            data-component="promo-standard">
-                            <div class=" u-energy-line-top flex-container u-gap u-p-1">
-                                <div class="u-width-32 u-heritage-green"><svg xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="1.5" class="svg-icon">
-                                        <path
-                                            d="M6.787,21.3V19.312M12.325,21.3V19.312m-9.5-5.465h-.49m13.885,0h.589a1.589,1.589,0,0,0,1.584-1.584v.088a1.588,1.588,0,0,0-1.584-1.583H2.333A1.587,1.587,0,0,0,.75,12.351v-.088a1.588,1.588,0,0,0,1.583,1.584m.589.07c0,2.979,2.955,5.4,6.6,5.4s6.6-2.416,6.6-5.4M11.232,3.868v-1.5A1.623,1.623,0,0,0,9.613.75H9.4a1.624,1.624,0,0,0-1.62,1.619v8.148M6.364,6.868H7.419M5.326,7.886V5.775m5.9.566V6.33m0,2.056V8.375"
-                                            transform="translate(2.43 0.977)" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                    </svg></div>
-                                <div>
-                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
-                                        <div class="u-h-full">
-                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
-                                                <h3
-                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
-                                                    Your bathroom</h3>
-                                                <div class="text-sm u-p-last-mb-0">
-                                                    <p>Ensuite bathroom with toilet, hand basin and shower</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="cell u-mt-1"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <!-- 
-            More information tabs 
-        -->
             <section class="c-course-tabs c-course-tabs-white u-relative u-top--70"
                 aria-label="More information section">
-
                 <div class="grid-x ">
                     <div class="small-12">
-
                         <div data-behaviour="tabs" aria-label="More information tabs">
-
                             <h2>Overview</h2>
-                            <div class="c-wysiwyg-content u-bg-white u-p-0 ">
-                                <p>John Forty's Court is located off campus next to the historic Stirling Bridge. It's
-                                    on
-                                    the
-                                    main bus route to Stirling town centre and the University. John Forty's Court is a
-                                    popular
-                                    development offering 287 single bedrooms. Each flat within John Forty's Court sleeps
-                                    seven
-                                    students and offers a spacious open plan kitchen, dining and sitting area. Your room
-                                    will
-                                    include a 3ft single bed, study desk and chair, wardrobe and drawers.</p>
-
-                                <p><strong>What's included</strong></p>
+                            <div class="c-wysiwyg-content u-bg-white u-p-0">
+                                <p>Alexander Court townhouses are located on the north side of the University campus.
+                                    Each of these nine bedroom townhouses is split over three levels. The ground floor
+                                    has a large kitchen/living room with television, WC and an ensuite bedroom. The
+                                    first and second floors both have four bedrooms and two shower rooms each.</p>
+                                <h3>What's included</h3>
                                 <p>The following amenities are included as standard with this accommodation:</p>
                                 <ul>
-                                    <li>Heating, lighting and electricity</li>
+                                    <li>Heating, lighting and electricity </li>
+                                    <li>Housekeeping assistance (except in Alexander Court Family Flats) </li>
                                     <li>WiFi</li>
-
-                                    <li>Housekeeping assistance</li>
+                                    <li>Television licence (for communal TV)</li>
                                     <li>Room and contents insurance</li>
                                 </ul>
                             </div>
-
                             <h2>Location</h2>
-                            <div class="c-wysiwyg-content u-bg-white u-p-0 ">
-
+                            <div class="c-wysiwyg-content u-bg-white u-p-0">
                                 <div class="grid-x grid-padding-x ">
                                     <div class="cell medium-5">
-                                        <p><strong>Travelling to campus</strong></p>
-
-                                        <div class="u-mt-2">
-                                            <strong class="u-block u-mb-1">Show route for... </strong>
-                                            <select id="travelmode">
+                                        <h3>Travelling to campus</h3>
+                                        <p>Alexander Court townhouses are located on-campus. Choose a route to see how
+                                            long it takes to get to Campus Central via walking or cycling.</p>
+                                        <div class="u-mt-2"><strong class="u-block u-mb-1">Show route for...
+                                            </strong><select id="travelmode">
                                                 <option value="WALKING" selected>Walking</option>
-                                                <option value="BICYCLING">Bicycling</option>
-                                                <option value="TRANSIT">Bus</option>
-                                                <option value="DRIVING">Driving</option>
+                                                <option value="BICYCLING">Cycling</option>
                                             </select>
+                                            <div id="traveldurations"></div>
                                         </div>
-
-                                        <div id="traveldurations"></div>
-
                                     </div>
                                     <div class="cell medium-7">
-                                        <div id="map" data-start="56.150993,-3.929349" style="height: 500px;"></div>
+                                        <div id="map" data-start="56.148804077063645, -3.9074167891797913"
+                                            style="height: 500px;"></div>
                                     </div>
                                 </div>
                             </div>
-
                             <h2>Prices and contract length</h2>
                             <div class="c-wysiwyg-content u-bg-white u-p-0 ">
-                                <p>3b Modi laboriosam non, aliquid expedita dolor illum blanditiis dignissimos mollitia,
-                                    corrupti! Tempore, sint molestias! Explicabo dignissimos modi laboriosam nulla
-                                    corporis eaque ratione ea deserunt, minima dolores praesentium amet tempora at
-                                    laborum repellat quasi asperiores quae voluptatum fuga atque maxime nostrum
-                                    doloribus optio earum? Numquam, tempore enim! Libero, natus!</p>
-
+                                <p>Rent for this property for session 2024/25 is:</p>
+                                <ul class="no-bullet">
+                                    <li class="u-pb-tiny"><strong>&pound;181.98 per week</strong>: Single standard room
+                                        (37 week, 49 week and 52 week contracts)</li>
+                                    <li class="u-pb-tiny"><strong>&pound;191.07 per week</strong>: Single ensuite room
+                                        (37 week, 49 week and 52 week contracts)</li>
+                                </ul>
                             </div>
-
                             <h2>How to apply for accommodation</h2>
                             <div class="c-wysiwyg-content u-bg-white u-p-0 ">
-                                <p>2b Ut assumenda dolorem, veritatis accusamus eaque dicta, cupiditate, perferendis
-                                    nemo corporis minima tenetur laboriosam iste impedit delectus quod. Qui facere
-                                    ducimus soluta hic consequatur repellendus nostrum dolores animi architecto, cum
-                                    vitae perferendis sunt quibusdam tempore veniam. Eaque rem deserunt earum ex odio
-                                    soluta iste harum suscipit totam a.</p>
-                                <a href="#" class="button heritage-green u-mt-1">Apply now</a>
+                                <p>We make it easy to apply for accommodation through our online application portal.
+                                    Regardless of whether you're an undergraduate, postgraduate or visiting student, the
+                                    portal allows you to select and prioritise the places you'd most like to live. If
+                                    you're a new or visiting student, you'll be sent login details for the portal after
+                                    accepting your offer to study at Stirling.</p><a
+                                    href="/student-life/accommodation/how-to-apply/"
+                                    class="button heritage-green u-mt-1">Apply now</a>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </section>
-
             <div class="grid-container">
                 <div class="grid-x grid-padding-x u-padding-bottom  align-center">
-
-                    <div class="cell small-12 medium-6">
-                        <div class="responsive-embed widescreen" data-lazy-container="" data-videoschema="">
-                            <iframe title="Vimeo: Be the Difference at Stirling"
-                                src="https://player.vimeo.com/video/488515749" width="640" height="564" frameborder="0"
-                                allow="autoplay; fullscreen" allowfullscreen="" loading="lazy"></iframe>
-                        </div>
+                    <div class="cell small-12">
+                        <h2 class="header-stripped text-center ">Contact us</h2>
                     </div>
-
-                    <div class="cell small-12 medium-6">
-                        <div class="responsive-embed widescreen" data-lazy-container="" data-videoschema="">
-                            <iframe title="Vimeo: Be the Difference at Stirling"
-                                src="https://player.vimeo.com/video/488515749" width="640" height="564" frameborder="0"
-                                allow="autoplay; fullscreen" allowfullscreen="" loading="lazy"></iframe>
-                        </div>
-                    </div>
-
-                    <div class="cell small-12 u-padding-top">
-                        <h2 class="header-stripped text-center">Contact us</h2>
-                    </div>
-
-                    <div class="cell large-5 small-12">
-                        <a class="button no-arrow x-large heritage-green expanded"
-                            href="mailto:accommodation@stir.ac.uk" data-component="genericemailbutton">
-                            <span class="show-for-small-only">Email</span>
-                            <span class="show-for-medium">
-                                <div class="flex-container align-middle align-center u-gap u-font-normal">
-                                    <span class="uos-email show-for-medium icon--medium"></span>
-                                    accommodation@stir.ac.uk
+                    <div class="cell large-5 small-12"><a class="button no-arrow x-large heritage-green expanded"
+                            href="mailto:accommodation@stir.ac.uk" data-component="genericemailbutton"><span
+                                class="show-for-small-only">Email</span><span class="show-for-medium">
+                                <div class="flex-container align-middle align-center u-gap u-font-normal"><span
+                                        class="uos-email show-for-medium icon--medium"></span> accommodation@stir.ac.uk
                                 </div>
-                            </span>
-                        </a>
-                    </div>
-
-                    <div class="cell large-5 small-12">
-                        <a class="button no-arrow x-large heritage-green expanded" href="tel:+44 01786 467060">
-                            <span class="show-for-small-only">Call</span>
-                            <span class="show-for-medium">
-                                <div class="flex-container align-middle align-center u-gap u-font-normal">
-                                    <span class="uos-telephone show-for-medium icon--medium"></span> +44 01786 467060
+                            </span></a></div>
+                    <div class="cell large-5 small-12"><a class="button no-arrow x-large heritage-green expanded"
+                            href="tel:+44 01786 467060"><span class="show-for-small-only">Call</span><span
+                                class="show-for-medium">
+                                <div class="flex-container align-middle align-center u-gap u-font-normal"><span
+                                        class="uos-telephone show-for-medium icon--medium"></span> +44 01786 467060
                                 </div>
-                            </span>
-                        </a>
-                    </div>
-
+                            </span></a></div>
                 </div>
             </div>
+        </main>
 
 
+        <!--endnoindex-->
+
+        <!-- app.min.js -->
+        <script type="text/javascript" src="../../medias/Categorised/Dist/js/app.min.js?v=89.1"></script>
+
+        <!-- unibuddy.min.js -->
+        <script type="text/javascript" src="../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
 
 
-    </main>
+        <script src="../../../medias/Categorised/Dist/js/other/_unminified/favourites.js"></script>
+
+        <script src="../../../medias/Categorised/Dist/js/other/_unminified/accommodation.js"></script>
 
 
-    <!--endnoindex-->
-
-    <!-- app.min.js -->
-    <script type="text/javascript" src="../../medias/Categorised/Dist/js/app.min.js?v=89.1"></script>
-
-    <!-- unibuddy.min.js -->
-    <script type="text/javascript" src="../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
-
-
-    <script src="../../../medias/Categorised/Dist/js/other/_unminified/favourites.js"></script>
-
-    <script src="../../../medias/Categorised/Dist/js/other/_unminified/accommodation.js"></script>
-
-
-    <script defer async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1UNnY29BxIeFG4lq_-NTGEF1SUHNdQP8&loading=async&callback=initMap"></script>
+        <script defer async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1UNnY29BxIeFG4lq_-NTGEF1SUHNdQP8&loading=async&callback=initMap"></script>
 
 
 
 
 
-</body>
+    </body>
 
 </html>
