@@ -125,8 +125,7 @@ async function createPdf(data, path) {
   //const fonturl = '<t4 type="media" id="179150" formatter="path/*"/>';
   const fonturl = UoS_env.env_name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
 
-  console.log(UoS_env.name);
-  console.log(fonturl);
+  console.log(urlFront);
 
   const fontBytes = await fetch(fonturl).then((res) => res.arrayBuffer());
 
