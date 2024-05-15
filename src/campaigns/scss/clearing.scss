@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "General Sans";
+  src: url('<t4 type="media" id="179150" formatter="path/*" />') format(opentype), url("../../fonts/general-sans/GeneralSans-Semibold.otf") format(opentype);
+  font-weight: 700;
+  font-style: bold;
+  font-display: swap;
+}
+
+.c-course-search-widget__form .c-course-search-widget__search-input::placeholder {
+  font-family: "General Sans";
+}
+
+.c-wysiwyg-content li::marker {
+  color: #67a51e;
+}
+
 .c-svg-banner > .cell {
   margin: 30px 0 0 0;
 }
@@ -15,7 +31,8 @@
 }
 
 main h1 {
-  font-family: "Anton", sans-serif !important;
+  font-family: "General Sans", sans-serif !important;
+  font-weight: 600; /* semibold */
   padding-top: 80px;
 }
 
@@ -38,24 +55,23 @@ main h1 {
 }
 
 main h2:not(.u-header--secondary-font) {
-  font-family: "Anton", sans-serif !important;
-  text-transform: uppercase;
+  font-family: "General Sans", sans-serif !important;
+  font-weight: 600; /* semibold */
 }
 
 .c-infographic__line1 {
-  font-family: "Anton", sans-serif !important;
+  font-family: "General Sans", sans-serif !important;
+  font-weight: 600; /* semibold */
   text-transform: uppercase;
   font-size: 2.25rem !important; /* 36px */
-  font-weight: 500 !important;
   line-height: 1.17 !important; // 42px
   margin: 10px 0 10px 0 !important;
 }
 
 main .button {
-  font-family: "Anton", sans-serif !important;
-  text-transform: uppercase;
+  font-family: "General Sans", sans-serif !important;
   font-size: 1.75rem !important; /* 28px */
-  font-weight: normal !important; /* fix for IE's blurry text rendering */
+  font-weight: 600;
 
   &.energy-green {
     color: #fff;
