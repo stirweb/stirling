@@ -4,7 +4,7 @@
 
 */
 
-const path = UoS_env.env_name === `prod` ? "/research/hub/test/" : "";
+const path = UoS_env.name === `prod` ? "/research/hub/test/" : "";
 
 /* 
 
@@ -125,7 +125,7 @@ async function createPdf(data, path) {
   //const fonturl = '<t4 type="media" id="179150" formatter="path/*"/>';
   const fonturl = UoS_env.env_name === `prod` ? '<t4 type="media" id="179150" formatter="path/*"/>' : "GeneralSans-Semibold.otf";
 
-  console.log(UoS_env.env_name);
+  console.log(UoS_env.name);
   console.log(fonturl);
 
   const fontBytes = await fetch(fonturl).then((res) => res.arrayBuffer());
