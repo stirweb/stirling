@@ -96,10 +96,12 @@
   }
 }
 
+/* removed 2024-05-15 for Clearing
 @include breakpoint(medium up) {
   .u-sticky.stuck a {
     border: 1px solid currentColor;
   }
 }
+*/
 
 @import "animatons";
