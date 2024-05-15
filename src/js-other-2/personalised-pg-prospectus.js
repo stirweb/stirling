@@ -123,7 +123,7 @@ async function createPdf(data, path) {
   // Font
   //const fonturl = "GeneralSans-Semibold.otf"; //'OpenSans-Bold.ttf';
   //const fonturl = '<t4 type="media" id="179150" formatter="path/*"/>';
-  const fonturl = UoS_env.env_name === `prod` ? '<t4 type="media" id="179150" formatter="path/*"/>' : "GeneralSans-Semibold.otf";
+  const fonturl = UoS_env.env_name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
 
   console.log(UoS_env.name);
   console.log(fonturl);
