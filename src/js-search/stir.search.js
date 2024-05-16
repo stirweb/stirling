@@ -169,7 +169,7 @@ stir.search = () => {
   const meta = {
     main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "page", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tag", "tags", "thumbnail", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
     courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
-    clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
+    clearing: CLEARING ? ["clearing"] : [],
 	scholarships: ["value","status","number"],
 	news: ["c","d","h1","image","imagealt","tags","tag","thumbnail"]
   };
@@ -263,7 +263,14 @@ stir.search = () => {
 	  clearing:{
 		collection: "stir-courses-combos",
 		query: "!padrenullquery",
-		sort: "title"
+		sort: "title",
+		meta_clearing: "[scotland simd rukroi international eu]",
+		SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
+        fmo: "true",
+        num_ranks: NUMRANKS,
+        /* explain: true,
+        query: "!padrenullquery",
+        timestamp: +new Date(), */
 	  }
     },
     // extra parameters for no-query searches

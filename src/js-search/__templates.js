@@ -214,7 +214,7 @@ stir.templates.search = (() => {
       if (!facets[facet]) return label;
       const labels = facets[facet];
       if (labels.findIndex) {
-        return labels[labels.findIndex((val) => label === val.toLowerCase())];
+        return labels[labels.findIndex((val) => label === val.toLowerCase())]||label;
       } else if (labels[label]) return labels[label];
       return label;
     };
@@ -331,7 +331,7 @@ stir.templates.search = (() => {
 
     clearing: (item) => {
       if (Object.keys && item.metaData && Object.keys(item.metaData).join().indexOf("clearing") >= 0) {
-        return `<p class="u-m-0"><strong class="u-heritage-berry">Clearing 2023: places may be available on this course.</strong></p>`;
+        return `<p class="u-m-0"><strong class="u-heritage-berry">Clearing 2024: places may be available on this course.</strong></p>`;
       }
     },
     combos: (item) => {
@@ -620,9 +620,9 @@ stir.templates.search = (() => {
 					<accordion-summary>${item.name}</accordion-summary>
 					<div>
 						<ul>${item.allValues
-              .filter((facetValue) => facetCategoryLabel(item.name, facetValue.label))
-              .map(stir.templates.search.labelledFacetItems(item))
-              .join("")}</ul>
+							.filter((facetValue) => facetCategoryLabel(item.name, facetValue.label))
+							.map(stir.templates.search.labelledFacetItems(item))
+							.join("")}</ul>
 					</div>
 				</div>
 			</fieldset>`,
