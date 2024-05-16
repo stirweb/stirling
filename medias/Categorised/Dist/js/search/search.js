@@ -231,7 +231,7 @@ stir.templates.search = (() => {
       if (!facets[facet]) return label;
       const labels = facets[facet];
       if (labels.findIndex) {
-        return labels[labels.findIndex((val) => label === val.toLowerCase())];
+        return labels[labels.findIndex((val) => label === val.toLowerCase())]||label;
       } else if (labels[label]) return labels[label];
       return label;
     };
@@ -348,7 +348,7 @@ stir.templates.search = (() => {
 
     clearing: (item) => {
       if (Object.keys && item.metaData && Object.keys(item.metaData).join().indexOf("clearing") >= 0) {
-        return `<p class="u-m-0"><strong class="u-heritage-berry">Clearing 2023: places may be available on this course.</strong></p>`;
+        return `<p class="u-m-0"><strong class="u-heritage-berry">Clearing 2024: places may be available on this course.</strong></p>`;
       }
     },
     combos: (item) => {
@@ -637,9 +637,9 @@ stir.templates.search = (() => {
 					<accordion-summary>${item.name}</accordion-summary>
 					<div>
 						<ul>${item.allValues
-              .filter((facetValue) => facetCategoryLabel(item.name, facetValue.label))
-              .map(stir.templates.search.labelledFacetItems(item))
-              .join("")}</ul>
+							.filter((facetValue) => facetCategoryLabel(item.name, facetValue.label))
+							.map(stir.templates.search.labelledFacetItems(item))
+							.join("")}</ul>
 					</div>
 				</div>
 			</fieldset>`,
@@ -1049,7 +1049,7 @@ stir.search = () => {
   const meta = {
     main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "page", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tag", "tags", "thumbnail", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
     courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
-    clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
+    clearing: CLEARING ? ["clearing"] : [],
 	scholarships: ["value","status","number"],
 	news: ["c","d","h1","image","imagealt","tags","tag","thumbnail"]
   };
@@ -1143,7 +1143,14 @@ stir.search = () => {
 	  clearing:{
 		collection: "stir-courses-combos",
 		query: "!padrenullquery",
-		sort: "title"
+		sort: "title",
+		meta_clearing: "[scotland simd rukroi international eu]",
+		SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
+        fmo: "true",
+        num_ranks: NUMRANKS,
+        /* explain: true,
+        query: "!padrenullquery",
+        timestamp: +new Date(), */
 	  }
     },
     // extra parameters for no-query searches
