@@ -38,7 +38,7 @@ main h1 {
 
 @media screen and (min-width: 40em) {
   main h1 {
-    font-size: 6.875rem !important; // 110px
+    font-size: 4.375rem !important; // 110px
   }
 }
 
@@ -131,8 +131,8 @@ background-size: 290%;
 /* Header CTA Button */
 
 .button[id^="cta-"]:first-of-type {
-  background: #67a51e;
-  border: 1px solid #67a51e;
+  background: #006938;
+  border: 1px solid #006938;
   color: #fff !important;
 }
 
