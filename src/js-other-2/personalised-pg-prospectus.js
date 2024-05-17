@@ -24,8 +24,8 @@ const renderSubjectCoursesOptions = (subject, index, data) => {
     .join(``);
 };
 
-const renderLink = (fileName, path) => {
-  return `<p><a href="${path + fileName}.pdf">View and download your personalised PDF</a></p>`;
+const renderLink = (filePath) => {
+  return `<p><a href="${filePath}">View and download your personalised PDF</a></p>`;
 };
 
 /* 
@@ -42,25 +42,25 @@ const setDOMContent = stir.curry((node, html) => {
 /* 
     downloadPDF 
 
-function downloadPDF(pdf) {
+function storePDF2(pdf, fileName2, path) {
     const linkSource = `${pdf}`;
     const fileName = "YourPersonalisedPGPerspectus.pdf";
     const fileURL = linkSource;
 
     if (!window.ActiveXObject) {
-        var save = document.createElement('a');
+        var save = document.createElement("a");
         save.href = fileURL;
-        save.target = '_blank';
-        var filename = fileURL.substring(fileURL.lastIndexOf('/') + 1);
+        save.target = "_blank";
+        var filename = fileURL.substring(fileURL.lastIndexOf("/") + 1);
         save.download = fileName || filename;
         if (navigator.userAgent.toLowerCase().match(/(ipad|iphone|safari)/) && navigator.userAgent.search("Chrome") < 0) {
             document.location = save.href;
             // window event not working here
         } else {
-            var evt = new MouseEvent('click', {
-                'view': window,
-                'bubbles': true,
-                'cancelable': false
+            var evt = new MouseEvent("click", {
+                view: window,
+                bubbles: true,
+                cancelable: false,
             });
             save.dispatchEvent(evt);
             (window.URL || window.webkitURL).revokeObjectURL(save.href);
@@ -70,24 +70,65 @@ function downloadPDF(pdf) {
 */
 
 /* 
+    b64toBlob 
+ */
+function b64toBlob(b64Data, contentType, sliceSize) {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, {
+    type: contentType,
+  });
+
+  return blob;
+}
+
+/* 
     storePDF 
  */
 async function storePDF(pdf, fileName, path) {
-  const formData = new FormData();
+  //const formData = new FormData();
+  //formData.append("pdf", pdf);
+  //formData.append("file_name", fileName);
 
-  formData.append("pdf", pdf);
-  formData.append("file_name", fileName);
+  const fileNameFull = fileName + ".pdf";
 
-  try {
-    const response = await fetch(path + "app2.php", {
-      method: "POST",
-      // Set the FormData instance as the request body
-      body: formData,
-    });
-    console.log(await response.json());
-  } catch (e) {
-    console.error(e);
+  const SUPABASE_URL = "https://scezmsgewfitcalrkauq.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjZXptc2dld2ZpdGNhbHJrYXVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU3NzY4ODQsImV4cCI6MjAzMTM1Mjg4NH0.-WZyB91qB-6PinAYDKT1ziWK3hNRB6GNZTTnVfvHDts";
+
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const pdfBlob = b64toBlob(pdf, "application/pdf", 512);
+
+  const { data, error } = await _supabase.storage.from("pdfs").upload(fileNameFull, pdfBlob, {
+    cacheControl: "3600",
+    upsert: false,
+  });
+
+  if (data) {
+    return data;
   }
+  // try {
+  //     const response = await fetch(path + "app2.php", {
+  //         method: "POST",
+  //         // Set the FormData instance as the request body
+  //         body: formData,
+  //     });
+  //     console.log(await response.json());
+  // } catch (e) {
+  //     console.error(e);
+  // }
 }
 
 /* 
@@ -96,7 +137,7 @@ async function storePDF(pdf, fileName, path) {
     
 */
 async function createPdf(data, path) {
-  console.log(data);
+  // console.log(data);
 
   const fullPdf = data.get("full_prospectus");
 
@@ -121,12 +162,7 @@ async function createPdf(data, path) {
   const fileName = firstName + lastName + String(Date.now()) + String(Math.floor(Math.random() * 100));
 
   // Font
-  //const fonturl = "GeneralSans-Semibold.otf"; //'OpenSans-Bold.ttf';
-  //const fonturl = '<t4 type="media" id="179150" formatter="path/*"/>';
-  const fonturl = UoS_env.env_name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
-
-  console.log(urlFront);
-
+  const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
   const fontBytes = await fetch(fonturl).then((res) => res.arrayBuffer());
 
   pdfDoc.registerFontkit(fontkit);
@@ -134,8 +170,8 @@ async function createPdf(data, path) {
   // const helveticaFont = await frontPdf.embedFont(PDFLib.StandardFonts.Helvetica);
 
   /* 
-                    Full unpersonalised PDF 
-                */
+        Full unpersonalised PDF 
+   */
   if (fullPdf === "1") {
     const fullPdfBytes = await fetch(urlFull).then((res) => res.arrayBuffer());
     const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
@@ -159,8 +195,8 @@ async function createPdf(data, path) {
   }
 
   /* 
-                    Personalised PDF 
-                */
+    Personalised PDF 
+  */
   const frontPdfBytes = await fetch(urlFront).then((res) => res.arrayBuffer());
   const frontPdf = await PDFLib.PDFDocument.load(frontPdfBytes);
   const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
@@ -272,15 +308,17 @@ async function createPdf(data, path) {
     dataUri: false,
   });
 
-  storePDF(pdfDataUri, fileName, path);
-  setDOMContent(stir.node("#resultBox"), renderLink(fileName, path));
+  const response = await storePDF(pdfDataUri, fileName, path);
+  const fullpath = "https://scezmsgewfitcalrkauq.supabase.co/storage/v1/object/public/" + response.fullPath;
+
+  setDOMContent(stir.node("#resultBox"), renderLink(fullpath));
 }
 
 /*  
     
-                ON LOAD
+    ON LOAD
             
-            */
+*/
 
 const generatePDFBtn = stir.node("#generatePDFBtn");
 const generatePDFForm = stir.node("#generatePDFForm");
@@ -296,8 +334,8 @@ subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjec
 // });
 
 /* 
-               ACTION: Form change events 
-           */
+    ACTION: Form change events 
+*/
 generatePDFForm &&
   generatePDFForm.addEventListener("change", function (e) {
     e.preventDefault();
@@ -335,8 +373,8 @@ generatePDFForm &&
   });
 
 /* 
-                ACTION: Form submit event 
-            */
+    ACTION: Form submit event 
+*/
 generatePDFBtn &&
   generatePDFBtn.addEventListener("click", function (e) {
     e.preventDefault();
