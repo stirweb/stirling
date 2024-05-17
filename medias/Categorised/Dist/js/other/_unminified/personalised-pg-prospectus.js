@@ -99,10 +99,6 @@ function b64toBlob(b64Data, contentType, sliceSize) {
     storePDF 
  */
 async function storePDF(pdf, fileName, path) {
-  //const formData = new FormData();
-  //formData.append("pdf", pdf);
-  //formData.append("file_name", fileName);
-
   const fileNameFull = fileName + ".pdf";
 
   const SUPABASE_URL = "https://scezmsgewfitcalrkauq.supabase.co";
@@ -119,6 +115,11 @@ async function storePDF(pdf, fileName, path) {
   if (data) {
     return data;
   }
+
+  //const formData = new FormData();
+  //formData.append("pdf", pdf);
+  //formData.append("file_name", fileName);
+
   // try {
   //     const response = await fetch(path + "app2.php", {
   //         method: "POST",
@@ -162,7 +163,7 @@ async function createPdf(data, path) {
   const fileName = firstName + lastName + String(Date.now()) + String(Math.floor(Math.random() * 100));
 
   // Font
-  const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
+  const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.ttf" : '<t4 type="media" id="179627" formatter="path/*"/>';
   const fontBytes = await fetch(fonturl).then((res) => res.arrayBuffer());
 
   pdfDoc.registerFontkit(fontkit);
