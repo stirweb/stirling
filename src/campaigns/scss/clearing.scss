@@ -18,7 +18,7 @@
   .c-course-search-widget__form{
     display: grid;
     grid-template-columns: 3fr 1fr;
-    grid-template-rows: 2fr 1fr;
+    grid-template-rows: auto auto;
     gap: 1rem;
   }
   .c-course-search-widget__form button {
@@ -80,8 +80,8 @@ main h2:not(.u-header--secondary-font) {
 }
 
 main .button {
-  font-family: "General Sans", sans-serif !important;
-  font-size: 1.75rem !important; /* 28px */
+  font-family: "General Sans", sans-serif;
+  font-size: 1.375rem; /* 22px */
   font-weight: 600;
 
   &.energy-green {
@@ -102,6 +102,12 @@ main .button {
 
 .button.energy-pink:hover {
   background-color: #e80068 !important;
+}
+
+@media screen and (min-width: 65rem) {
+  main .button {
+    font-size: 1.75rem; /* 28px */
+  }
 }
 
 .c-footer__header {
