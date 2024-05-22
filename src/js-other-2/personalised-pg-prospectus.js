@@ -324,7 +324,7 @@ async function emailUser(firstName, email, pdfPath, path) {
       // Set the FormData instance as the request body
       body: formData,
     });
-    console.log(await response.json());
+    console.log(await response.text());
   } catch (e) {
     console.error(e);
   }
