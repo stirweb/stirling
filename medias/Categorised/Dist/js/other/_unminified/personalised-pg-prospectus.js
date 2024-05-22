@@ -25,7 +25,7 @@ const renderSubjectCoursesOptions = (subject, index, data) => {
 };
 
 const renderLink = (filePath) => {
-  return `<p><a href="${filePath}">View and download your personalised PDF</a></p>`;
+  return `<p class="u-bg-energy-purple--10 u-p-3 text-center"><a href="${filePath}">View and download your personalised PDF</a></p>`;
 };
 
 /* 
