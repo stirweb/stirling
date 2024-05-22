@@ -4,7 +4,7 @@
 
 */
 
-const path = UoS_env.name === `prod` ? "/research/hub/test/" : "";
+const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
 
 /* 
 
