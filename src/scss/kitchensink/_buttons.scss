@@ -381,6 +381,22 @@ input:checked {
       }
     }
   }
+  &.energy-purple {
+    background-color: $energy-purple;
+    color: #fff;
+    a {
+      color: #fff;
+    }
+
+    &:hover {
+      background-color: #fff !important;
+      color: $energy-purple;
+      border: 2px solid $energy-purple;
+      a {
+        color: $energy-purple;
+      }
+    }
+  }
 
   &.u-sticky__small {
     width: 77%;
