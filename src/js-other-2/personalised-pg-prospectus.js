@@ -4,7 +4,7 @@
 
 */
 
-const path = UoS_env.name === `prod` ? "/research/hub/test/" : "";
+const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
 
 /* 
 
@@ -116,20 +116,7 @@ async function storePDF(pdf, fileName, path) {
     return data;
   }
 
-  //const formData = new FormData();
-  //formData.append("pdf", pdf);
-  //formData.append("file_name", fileName);
-
-  // try {
-  //     const response = await fetch(path + "app2.php", {
-  //         method: "POST",
-  //         // Set the FormData instance as the request body
-  //         body: formData,
-  //     });
-  //     console.log(await response.json());
-  // } catch (e) {
-  //     console.error(e);
-  // }
+  return null;
 }
 
 /* 
@@ -140,10 +127,14 @@ async function storePDF(pdf, fileName, path) {
 async function createPdf(data, path) {
   // console.log(data);
 
+  setDOMContent(stir.node("#resultBox"), `<p class="u-bg-energy-purple--10 u-p-3 text-center">Building your pdf...</p>`);
+
   const fullPdf = data.get("full_prospectus");
 
   const firstName = data.get("first_name") || "";
   const lastName = data.get("last_name") || "";
+  const email = data.get("email") || "";
+
   const subject1 = data.get("subject_area_1") || "";
   const subject2 = data.get("subject_area_2") || "";
   const subject3 = data.get("subject_area_3") || "";
@@ -163,7 +154,7 @@ async function createPdf(data, path) {
   const fileName = firstName + lastName + String(Date.now()) + String(Math.floor(Math.random() * 100));
 
   // Font
-  const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.ttf" : '<t4 type="media" id="179627" formatter="path/*"/>';
+  const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
   const fontBytes = await fetch(fonturl).then((res) => res.arrayBuffer());
 
   pdfDoc.registerFontkit(fontkit);
@@ -172,7 +163,7 @@ async function createPdf(data, path) {
 
   /* 
         Full unpersonalised PDF 
-   */
+     */
   if (fullPdf === "1") {
     const fullPdfBytes = await fetch(urlFull).then((res) => res.arrayBuffer());
     const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
@@ -196,8 +187,8 @@ async function createPdf(data, path) {
   }
 
   /* 
-    Personalised PDF 
-  */
+        Personalised PDF 
+     */
   const frontPdfBytes = await fetch(urlFront).then((res) => res.arrayBuffer());
   const frontPdf = await PDFLib.PDFDocument.load(frontPdfBytes);
   const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
@@ -310,9 +301,33 @@ async function createPdf(data, path) {
   });
 
   const response = await storePDF(pdfDataUri, fileName, path);
-  const fullpath = "https://scezmsgewfitcalrkauq.supabase.co/storage/v1/object/public/" + response.fullPath;
+  const pdfPath = "https://scezmsgewfitcalrkauq.supabase.co/storage/v1/object/public/" + response.fullPath;
 
-  setDOMContent(stir.node("#resultBox"), renderLink(fullpath));
+  setDOMContent(stir.node("#resultBox"), renderLink(pdfPath));
+
+  emailUser(firstName, email, pdfPath, path);
+}
+
+/*
+    emailUser
+*/
+async function emailUser(firstName, email, pdfPath, path) {
+  const formData = new FormData();
+
+  formData.append("pdfPath", pdfPath);
+  formData.append("firstName", firstName);
+  formData.append("email", email);
+
+  try {
+    const response = await fetch(path + "app2.php", {
+      method: "POST",
+      // Set the FormData instance as the request body
+      body: formData,
+    });
+    console.log(await response.json());
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 /*  
@@ -335,7 +350,7 @@ subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjec
 // });
 
 /* 
-    ACTION: Form change events 
+               ACTION: Form change events 
 */
 generatePDFForm &&
   generatePDFForm.addEventListener("change", function (e) {
@@ -374,8 +389,8 @@ generatePDFForm &&
   });
 
 /* 
-    ACTION: Form submit event 
-*/
+                ACTION: Form submit event 
+            */
 generatePDFBtn &&
   generatePDFBtn.addEventListener("click", function (e) {
     e.preventDefault();
