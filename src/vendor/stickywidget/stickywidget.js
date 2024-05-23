@@ -45,7 +45,7 @@ var UoS_StickyWidget = (function() {
             // temporarily make sure element is displayed:
             element.style.display = 'block';
             // get the height value
-            height = Number(element.clientHeight);
+            height = Number(element.offsetHeight);
             // reset the style
             element.style.display = display;
             return height;
@@ -62,9 +62,11 @@ var UoS_StickyWidget = (function() {
 			// set margins top and bottom to balance the overlap with the
 			// button's actual height (except on mobile, no margin):
 			if(window.stir && stir.MediaQuery && stir.MediaQuery.current!=="small") {
-				element.style.marginTop = element.style.marginBottom = (0 - height/2) + "px";
+				element.style.marginTop = (0 - height/2) + "px"; /* = element.style.marginBottom  */
+				/* element.nextElementSibling.style.setProperty("--offsetup",(height/2)+"px"); */
 			} else {
-				element.style.marginTop = element.style.marginBottom = 0;
+				element.style.marginTop = null; /* = element.style.marginBottom  */
+				/* element.nextElementSibling.style.setProperty("--offsetup",null); */
 			}
 		}
 
@@ -111,7 +113,7 @@ var UoS_StickyWidget = (function() {
             trigger = document.querySelector(observe);
         }
         trigger = trigger || this.element.previousElementSibling;
-        if(trigger.clientHeight == 0) {
+        if(trigger.offsetHeight == 0) {
             // if the previous sibling has zero height, use the previous-previous one instead.
             trigger = trigger.previousElementSibling;
         }

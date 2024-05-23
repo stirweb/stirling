@@ -91,9 +91,9 @@
 	} */
   /* &[data-sticky-polyfill] {} */
 
-  &.offsetup + .grid-container {
-    margin-top: 2rem;
-  }
+  /* &.offsetup + .grid-container {
+	  margin-top: var(--offsetup);
+  } */
 }
 
 /* removed 2024-05-15 for Clearing
