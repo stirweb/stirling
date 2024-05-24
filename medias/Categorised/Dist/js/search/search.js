@@ -890,7 +890,7 @@ var stir = stir || {};
  */
 stir.funnelback = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	const hostname = debug ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
+	const hostname = debug ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "shared-15-24-search.clients.uk.funnelback.com";
 	//const hostname = "search.stir.ac.uk";
 	const url = `https://${hostname}/s/`;
 
