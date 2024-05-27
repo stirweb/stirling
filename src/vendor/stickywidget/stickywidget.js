@@ -128,7 +128,7 @@ var UoS_StickyWidget = (function() {
 		this.element.previousElementSibling.insertAdjacentElement("beforebegin",wrapper)
 		wrapper.append(this.element.previousElementSibling)
 		wrapper.append(this.element)
-		wrapper.classList.add(this.element.getAttribute("data-bg") || "");
+		wrapper.classList.add(this.element.getAttribute("data-bg").trim());
     }
 
     return StickyWidget;
