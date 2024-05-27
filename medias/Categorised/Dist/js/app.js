@@ -1126,7 +1126,7 @@ var UoS_StickyWidget = (function() {
         
         if(!element) return;
         this.element  = element;
-        this.offset  = element.getAttribute("data-offset");        
+        this.offset  = element.getAttribute("data-offset");
         this.trigger = this.setTrigger( element.getAttribute( 'data-observe' ) );
         this.offsetRatio = 0;
         this.controls = {
@@ -1215,8 +1215,9 @@ var UoS_StickyWidget = (function() {
                 this.hideyslidey();
             }
 
-            element.setAttribute("data-initialised", true);
+			this.element.hasAttribute("data-bg") && this.setBGWrapper();
 
+            element.setAttribute("data-initialised", true);
 			window.addEventListener("resize", stir.debounce(recentreOffset, 400));
         
         }
@@ -1241,6 +1242,15 @@ var UoS_StickyWidget = (function() {
         }
         this.offset && trigger.setAttribute('data-has-overlapper', this.offset);
         return trigger;
+
+    }
+
+	StickyWidget.prototype.setBGWrapper = function setBGWrapper() {
+		var wrapper = document.createElement('div');
+		this.element.previousElementSibling.insertAdjacentElement("beforebegin",wrapper)
+		wrapper.append(this.element.previousElementSibling)
+		wrapper.append(this.element)
+		wrapper.classList.add(this.element.getAttribute("data-bg") || "");
     }
 
     return StickyWidget;
