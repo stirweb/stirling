@@ -341,7 +341,7 @@ input:checked {
       color: #fff;
     }
     &:hover {
-      background-color: #fff !important;
+      background-color: #fff;
       color: $energy-pink;
       a {
         color: $energy-pink;
@@ -373,7 +373,7 @@ input:checked {
     }
 
     &:hover {
-      background-color: #fff !important;
+      background-color: #fff;
       color: $energy-turq;
       border: 2px solid $energy-turq;
       a {
@@ -389,11 +389,27 @@ input:checked {
     }
 
     &:hover {
-      background-color: #fff !important;
+      background-color: #fff;
       color: $energy-purple;
-      border: 2px solid $energy-purple;
+      border-color: $energy-purple;
       a {
         color: $energy-purple;
+      }
+    }
+  }
+  &.heritage-purple {
+    background-color: $heritage-purple;
+    color: #fff;
+    a {
+      color: #fff;
+    }
+
+    &:hover {
+      background-color: #fff;
+      color: $heritage-purple;
+      border-color: $heritage-purple;
+      a {
+        color: $heritage-purple;
       }
     }
   }
