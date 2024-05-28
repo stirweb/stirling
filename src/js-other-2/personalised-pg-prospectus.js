@@ -1,9 +1,3 @@
-/* 
-
-    CONFIG 
-
-*/
-
 const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
 
 /* 
@@ -141,6 +135,13 @@ async function storePDF(pdf, fileName, path) {
 */
 async function createPdf(data, path) {
   // console.log(data);
+
+  /*
+
+        Data checks
+
+    */
+
   const resultsNode = stir.node("#resultBox");
 
   setDOMContent(resultsNode, renderGenerating());
@@ -182,23 +183,7 @@ async function createPdf(data, path) {
         Full unpersonalised PDF 
      */
   if (fullPdf === "1") {
-    //const fullPdfBytes = await fetch(urlFull).then((res) => res.arrayBuffer());
-    // const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
-
-    // const pagesFull = fullPdfDoc.getPages();
-    // var i = 0;
-    // while (i < pagesFull.length) {
-    //     let [p] = await pdfDoc.copyPages(fullPdfDoc, [i]);
-    //     pdfDoc.addPage(p);
-    //     i++;
-    // }
-
-    // // Generate as Base 64 and download
-    // const pdfDataUri = await pdfDoc.saveAsBase64({
-    //     dataUri: false,
-    // });
-
-    //storePDF(pdfDataUri, fileName, path);
+    emailUser(firstName, email, pdfPath, path);
 
     const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
     setDOMContent(resultsNode, renderLink(fileNameFull));
@@ -213,10 +198,15 @@ async function createPdf(data, path) {
   const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
   //const { width, height } = firstPageCopy.getSize();
 
+  const largeFontSize = 66;
+  const secondaryFontSize = 40;
+
+  const fontSize = firstName.length > 11 ? secondaryFontSize : largeFontSize;
+
   firstPageCopy.drawText(firstName.toUpperCase(), {
     x: 93,
     y: 530,
-    size: 66,
+    size: fontSize,
     font: customFont,
     color: PDFLib.rgb(0.99, 0.99, 0.99),
     rotate: PDFLib.degrees(0),
@@ -233,7 +223,7 @@ async function createPdf(data, path) {
   introInsertPageCopy.drawText(firstName.toUpperCase(), {
     x: 45,
     y: 767,
-    size: 40,
+    size: secondaryFontSize,
     font: customFont,
     color: PDFLib.rgb(0.0, 0.4, 0.21),
     rotate: PDFLib.degrees(0),
@@ -408,24 +398,29 @@ generatePDFForm &&
   });
 
 /* 
-                ACTION: Form submit event 
-            */
+    ACTION: Form submit event 
+ */
 generatePDFBtn &&
   generatePDFBtn.addEventListener("click", function (e) {
     e.preventDefault();
     const data = new FormData(generatePDFForm);
+
+    const required = stir.nodes("[data-required]");
+    const empties = required.filter((elem) => elem.value === "");
+
+    if (empties.length) {
+      const empties2 = empties.map((item) => item.name);
+
+      empties2.forEach((item) => {
+        stir.node("[data-alertlabel=" + item + "]").append(" This field is required");
+      });
+
+      setDOMContent(stir.node("#formErrors"), `<p class="u-p-2 u-heritage-berry text-center u-heritage-berry u-border-solid u-bg-white" >Please ensure you have completed all required fields</p>`);
+      stir.node("#formErrors").scrollIntoView();
+
+      return;
+    }
+
     createPdf(data, path);
+    return;
   });
-
-// function onClick(e) {
-//     e.preventDefault();
-//     grecaptcha.ready(function() {
-//         grecaptcha.execute('reCAPTCHA_site_key', {
-//             action: 'submit'
-//         }).then(function(token) {
-//             // Add your logic to submit to your backend server here.
-
-//             console.log();
-//         });
-//     });
-// }
