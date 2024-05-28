@@ -183,6 +183,24 @@ async function createPdf(data, path) {
         Full unpersonalised PDF 
      */
   if (fullPdf === "1") {
+    //const fullPdfBytes = await fetch(urlFull).then((res) => res.arrayBuffer());
+    // const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
+
+    // const pagesFull = fullPdfDoc.getPages();
+    // var i = 0;
+    // while (i < pagesFull.length) {
+    //     let [p] = await pdfDoc.copyPages(fullPdfDoc, [i]);
+    //     pdfDoc.addPage(p);
+    //     i++;
+    // }
+
+    // // Generate as Base 64 and download
+    // const pdfDataUri = await pdfDoc.saveAsBase64({
+    //     dataUri: false,
+    // });
+
+    //storePDF(pdfDataUri, fileName, path);
+
     emailUser(firstName, email, pdfPath, path);
 
     const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
@@ -406,13 +424,19 @@ generatePDFBtn &&
     const data = new FormData(generatePDFForm);
 
     const required = stir.nodes("[data-required]");
+    const required2 = required.map((item) => item.name);
+
+    required2.forEach((item) => {
+      stir.node("[data-alertlabel=" + item + "]").innerText = " *";
+    });
+
     const empties = required.filter((elem) => elem.value === "");
 
     if (empties.length) {
       const empties2 = empties.map((item) => item.name);
 
       empties2.forEach((item) => {
-        stir.node("[data-alertlabel=" + item + "]").append(" This field is required");
+        stir.node("[data-alertlabel=" + item + "]").innerText = " * This field is required";
       });
 
       setDOMContent(stir.node("#formErrors"), `<p class="u-p-2 u-heritage-berry text-center u-heritage-berry u-border-solid u-bg-white" >Please ensure you have completed all required fields</p>`);
