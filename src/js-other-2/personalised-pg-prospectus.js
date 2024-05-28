@@ -25,7 +25,22 @@ const renderSubjectCoursesOptions = (subject, index, data) => {
 };
 
 const renderLink = (filePath) => {
-  return `<p class="u-bg-energy-purple--10 u-p-3 text-center"><a href="${filePath}">View and download your personalised PDF</a></p>`;
+  return `<div class="u-bg-energy-purple--10 u-p-3 u-mt-2">
+                    <h3>Download your prospectus</h3>
+                    <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width:22px;height:22px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+                    Your prospectus has been successfully generated</p>
+                    <p><a href="${filePath}" class="button heritage-green u-inline-block u-mt-2">Download your prospectus</a></p>
+            </div>`;
+};
+
+const renderGenerating = () => {
+  return `<div class="u-bg-energy-purple--10 u-p-3 u-mt-2">
+                <h3>Download your prospectus</h3>
+                <p>Building your pdf...</p>
+            </div>`;
 };
 
 /* 
@@ -126,8 +141,10 @@ async function storePDF(pdf, fileName, path) {
 */
 async function createPdf(data, path) {
   // console.log(data);
+  const resultsNode = stir.node("#resultBox");
 
-  setDOMContent(stir.node("#resultBox"), `<p class="u-bg-energy-purple--10 u-p-3 text-center">Building your pdf...</p>`);
+  setDOMContent(resultsNode, renderGenerating());
+  resultsNode.scrollIntoView();
 
   const fullPdf = data.get("full_prospectus");
 
@@ -166,23 +183,25 @@ async function createPdf(data, path) {
      */
   if (fullPdf === "1") {
     const fullPdfBytes = await fetch(urlFull).then((res) => res.arrayBuffer());
-    const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
+    // const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
 
-    const pagesFull = fullPdfDoc.getPages();
-    var i = 0;
-    while (i < pagesFull.length) {
-      let [p] = await pdfDoc.copyPages(fullPdfDoc, [i]);
-      pdfDoc.addPage(p);
-      i++;
-    }
+    // const pagesFull = fullPdfDoc.getPages();
+    // var i = 0;
+    // while (i < pagesFull.length) {
+    //     let [p] = await pdfDoc.copyPages(fullPdfDoc, [i]);
+    //     pdfDoc.addPage(p);
+    //     i++;
+    // }
 
-    // Generate as Base 64 and download
-    const pdfDataUri = await pdfDoc.saveAsBase64({
-      dataUri: false,
-    });
+    // // Generate as Base 64 and download
+    // const pdfDataUri = await pdfDoc.saveAsBase64({
+    //     dataUri: false,
+    // });
 
-    storePDF(pdfDataUri, fileName, path);
-    setDOMContent(stir.node("#resultBox"), renderLink(fileName, path));
+    //storePDF(pdfDataUri, fileName, path);
+
+    const fileNameFull = "rawpdfs/full-non-personalised.pdf";
+    setDOMContent(resultsNode, renderLink(fileNameFull, path));
     return;
   }
 
@@ -303,7 +322,7 @@ async function createPdf(data, path) {
   const response = await storePDF(pdfDataUri, fileName, path);
   const pdfPath = "https://scezmsgewfitcalrkauq.supabase.co/storage/v1/object/public/" + response.fullPath;
 
-  setDOMContent(stir.node("#resultBox"), renderLink(pdfPath));
+  setDOMContent(resultsNode, renderLink(pdfPath));
 
   emailUser(firstName, email, pdfPath, path);
 }
@@ -324,7 +343,7 @@ async function emailUser(firstName, email, pdfPath, path) {
       // Set the FormData instance as the request body
       body: formData,
     });
-    console.log(await response.text());
+    console.log(await response.json());
   } catch (e) {
     console.error(e);
   }
@@ -397,3 +416,16 @@ generatePDFBtn &&
     const data = new FormData(generatePDFForm);
     createPdf(data, path);
   });
+
+// function onClick(e) {
+//     e.preventDefault();
+//     grecaptcha.ready(function() {
+//         grecaptcha.execute('reCAPTCHA_site_key', {
+//             action: 'submit'
+//         }).then(function(token) {
+//             // Add your logic to submit to your backend server here.
+
+//             console.log();
+//         });
+//     });
+// }

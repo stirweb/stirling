@@ -4,7 +4,7 @@ var UoS_StickyWidget = (function() {
         
         if(!element) return;
         this.element  = element;
-        this.offset  = element.getAttribute("data-offset");        
+        this.offset  = element.getAttribute("data-offset");
         this.trigger = this.setTrigger( element.getAttribute( 'data-observe' ) );
         this.offsetRatio = 0;
         this.controls = {
@@ -45,7 +45,7 @@ var UoS_StickyWidget = (function() {
             // temporarily make sure element is displayed:
             element.style.display = 'block';
             // get the height value
-            height = Number(element.clientHeight);
+            height = Number(element.offsetHeight);
             // reset the style
             element.style.display = display;
             return height;
@@ -62,9 +62,11 @@ var UoS_StickyWidget = (function() {
 			// set margins top and bottom to balance the overlap with the
 			// button's actual height (except on mobile, no margin):
 			if(window.stir && stir.MediaQuery && stir.MediaQuery.current!=="small") {
-				element.style.marginTop = element.style.marginBottom = (0 - height/2) + "px";
+				element.style.marginTop = (0 - height/2) + "px"; /* = element.style.marginBottom  */
+				/* element.nextElementSibling.style.setProperty("--offsetup",(height/2)+"px"); */
 			} else {
-				element.style.marginTop = element.style.marginBottom = 0;
+				element.style.marginTop = null; /* = element.style.marginBottom  */
+				/* element.nextElementSibling.style.setProperty("--offsetup",null); */
 			}
 		}
 
@@ -91,8 +93,9 @@ var UoS_StickyWidget = (function() {
                 this.hideyslidey();
             }
 
-            element.setAttribute("data-initialised", true);
+			this.element.hasAttribute("data-bg") && this.setBGWrapper();
 
+            element.setAttribute("data-initialised", true);
 			window.addEventListener("resize", stir.debounce(recentreOffset, 400));
         
         }
@@ -111,12 +114,21 @@ var UoS_StickyWidget = (function() {
             trigger = document.querySelector(observe);
         }
         trigger = trigger || this.element.previousElementSibling;
-        if(trigger.clientHeight == 0) {
+        if(trigger.offsetHeight == 0) {
             // if the previous sibling has zero height, use the previous-previous one instead.
             trigger = trigger.previousElementSibling;
         }
         this.offset && trigger.setAttribute('data-has-overlapper', this.offset);
         return trigger;
+
+    }
+
+	StickyWidget.prototype.setBGWrapper = function setBGWrapper() {
+		var wrapper = document.createElement('div');
+		this.element.previousElementSibling.insertAdjacentElement("beforebegin",wrapper)
+		wrapper.append(this.element.previousElementSibling)
+		wrapper.append(this.element)
+		wrapper.classList.add(this.element.getAttribute("data-bg").trim());
     }
 
     return StickyWidget;
