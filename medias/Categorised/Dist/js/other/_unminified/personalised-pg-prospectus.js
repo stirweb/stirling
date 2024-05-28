@@ -182,7 +182,7 @@ async function createPdf(data, path) {
         Full unpersonalised PDF 
      */
   if (fullPdf === "1") {
-    const fullPdfBytes = await fetch(urlFull).then((res) => res.arrayBuffer());
+    //const fullPdfBytes = await fetch(urlFull).then((res) => res.arrayBuffer());
     // const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
 
     // const pagesFull = fullPdfDoc.getPages();
@@ -200,8 +200,8 @@ async function createPdf(data, path) {
 
     //storePDF(pdfDataUri, fileName, path);
 
-    const fileNameFull = "rawpdfs/full-non-personalised.pdf";
-    setDOMContent(resultsNode, renderLink(fileNameFull, path));
+    const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
+    setDOMContent(resultsNode, renderLink(fileNameFull));
     return;
   }
 
