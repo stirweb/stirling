@@ -1,3 +1,9 @@
+/* 
+
+    CONFIG 
+
+*/
+
 const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
 
 /* 
@@ -21,11 +27,11 @@ const renderSubjectCoursesOptions = (subject, index, data) => {
 const renderLink = (filePath) => {
   return `<div class="u-bg-energy-purple--10 u-p-3 u-mt-2">
                     <h3>Download your prospectus</h3>
-                    <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width:22px;height:22px;">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                    </svg>
-                    Your prospectus has been successfully generated</p>
+                    <p class="u-flex u-gap-8 align-middle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width:22px;height:22px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+                        Your prospectus has been successfully generated</p>
                     <p><a href="${filePath}" class="button heritage-green u-inline-block u-mt-2">Download your prospectus</a></p>
             </div>`;
 };
@@ -35,6 +41,10 @@ const renderGenerating = () => {
                 <h3>Download your prospectus</h3>
                 <p>Building your pdf...</p>
             </div>`;
+};
+
+const renderRequiredError = () => {
+  return `<p class="u-p-2 u-heritage-berry text-center u-heritage-berry u-border-solid u-bg-white" >Please ensure you have completed all required fields</p>`;
 };
 
 /* 
@@ -121,9 +131,7 @@ async function storePDF(pdf, fileName, path) {
     upsert: false,
   });
 
-  if (data) {
-    return data;
-  }
+  if (data) return data;
 
   return null;
 }
@@ -439,7 +447,7 @@ generatePDFBtn &&
         stir.node("[data-alertlabel=" + item + "]").innerText = " * This field is required";
       });
 
-      setDOMContent(stir.node("#formErrors"), `<p class="u-p-2 u-heritage-berry text-center u-heritage-berry u-border-solid u-bg-white" >Please ensure you have completed all required fields</p>`);
+      setDOMContent(stir.node("#formErrors"), renderRequiredError());
       stir.node("#formErrors").scrollIntoView();
 
       return;
