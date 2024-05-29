@@ -169,7 +169,7 @@ async function createPdf(data, path) {
   const url2 = path + "rawpdfs/" + subject2.replaceAll(",", "") + ".pdf";
   const url3 = path + "rawpdfs/" + subject3.replaceAll(",", "") + ".pdf";
 
-  const fileName = firstName + lastName + String(Date.now()) + String(Math.floor(Math.random() * 100));
+  const fileName = String(Date.now() + "--" + firstName + lastName + String(Math.floor(Math.random() * 100)));
 
   // Font
   const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
