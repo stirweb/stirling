@@ -26,21 +26,21 @@ const renderSubjectCoursesOptions = (subject, index, data) => {
 
 const renderLink = (filePath) => {
   return `<div class="u-bg-energy-purple--10 u-p-3 u-mt-2">
-                    <h3>Download your prospectus</h3>
-                    <p class="u-flex u-gap-8 align-middle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width:22px;height:22px;">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                        </svg>
-                        Your prospectus has been successfully generated</p>
-                    <p><a href="${filePath}" class="button heritage-green u-inline-block u-mt-2">Download your prospectus</a></p>
-            </div>`;
+            <h3>Download your prospectus</h3>
+            <p class="u-flex u-gap-8 align-middle">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width:24px;height:24px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+                Your prospectus has been successfully generated</p>
+            <p><a href="${filePath}" class="button heritage-green u-inline-block u-mt-2">Download your prospectus</a></p>
+          </div>`;
 };
 
 const renderGenerating = () => {
   return `<div class="u-bg-energy-purple--10 u-p-3 u-mt-2">
-                <h3>Download your prospectus</h3>
-                <p>Building your pdf...</p>
-            </div>`;
+            <h3>Download your prospectus</h3>
+            <p>Building your pdf...</p>
+          </div>`;
 };
 
 const renderRequiredError = () => {
@@ -142,14 +142,6 @@ async function storePDF(pdf, fileName, path) {
     
 */
 async function createPdf(data, path) {
-  // console.log(data);
-
-  /*
-
-        Data checks
-
-    */
-
   const resultsNode = stir.node("#resultBox");
 
   setDOMContent(resultsNode, renderGenerating());
@@ -188,8 +180,8 @@ async function createPdf(data, path) {
   // const helveticaFont = await frontPdf.embedFont(PDFLib.StandardFonts.Helvetica);
 
   /* 
-        Full unpersonalised PDF 
-     */
+          Full unpersonalised PDF 
+       */
   if (fullPdf === "1") {
     //const fullPdfBytes = await fetch(urlFull).then((res) => res.arrayBuffer());
     // const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
@@ -209,16 +201,16 @@ async function createPdf(data, path) {
 
     //storePDF(pdfDataUri, fileName, path);
 
-    emailUser(firstName, email, pdfPath, path);
-
     const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
     setDOMContent(resultsNode, renderLink(fileNameFull));
+    emailUser(firstName, email, pdfPath, path);
+
     return;
   }
 
   /* 
-        Personalised PDF 
-     */
+          Personalised PDF 
+       */
   const frontPdfBytes = await fetch(urlFront).then((res) => res.arrayBuffer());
   const frontPdf = await PDFLib.PDFDocument.load(frontPdfBytes);
   const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
@@ -339,7 +331,6 @@ async function createPdf(data, path) {
   const pdfPath = "https://scezmsgewfitcalrkauq.supabase.co/storage/v1/object/public/" + response.fullPath;
 
   setDOMContent(resultsNode, renderLink(pdfPath));
-
   emailUser(firstName, email, pdfPath, path);
 }
 
