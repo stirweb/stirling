@@ -57,13 +57,13 @@ var UoS_ClearingClock = (function () {
 
     // :: DATE HANDLING ::
 
-    if (2023 != date.getUTCFullYear()) return false; // ignore any dates not in 2023
+    if (2024 != date.getUTCFullYear()) return false; // ignore any dates not in 2023
     if (7 != month) return false; // ignore any dates not in August
-    if (day <= 7) return false; // no calls at all before 8 August
+    if (day <= 5) return false; // no calls at all before 6 August
     // (Hotline is actually open from 7th but no web promo until 8th) [2023-07-06]
-    if (day <= 16 && !sqa) return false; // Aug 8–16 only allowed for Scotland region (SQA results)
+    if (day <= 14 && !sqa) return false; // Aug 6–14 only allowed for Scotland region (SQA results)
     // …Aug 17–22 Clearing is open…
-    if (day >= 23) return false; // no calls after 22 August (this got extended in 2022 to Aug 31)
+    if (day >= 21) return false; // no calls after 22 August (this got extended in 2022 to Aug 31)
 
     // :: TIME OF DAY HANDLING ::
 
@@ -75,16 +75,20 @@ var UoS_ClearingClock = (function () {
     // Extended hours (August only)
     // i.e. Weekends, or other times outwith 9–5…
 
-    // [Results day] August 8 & 17: 8am–7pm (7.00–18.00 UTC)
-    if ((8 == day || 17 == day) && hour >= 7 && hour < 18) {
+    // [Results day] August 6: 9am–7pm (8.00–18.00 UTC)
+    if (6==day && hour>=8 && hour<18) {
+		return true;
+    }
+	// [Results day] August 15: 8am–7pm (7.00–18.00 UTC)
+    if (15==day && hour>=7 && hour<18) {
       return true;
     }
-    // [Results Boxing Day]August 9 & 18: 9am-6pm (8.00–17.00 UTC)
-    if ((9 == day || 18 == day) && hour >= 8 && hour < 17) {
+    // [Results Boxing Days] August 7 & 16: 9am-6pm (8.00–17.00 UTC)
+    if ((7 == day || 16 == day) && hour >= 8 && hour < 17) {
       return true;
     }
-    // [Saturday] August 19: 9am-4pm (8.00–15.00 UTC)
-    if (19 == day && hour >= 8 && hour < 15) {
+    // [Saturday] August 17: 10am-2pm (9.00–13.00 UTC)
+    if (17 == day && hour >= 9 && hour < 13) {
       return true;
     }
 
