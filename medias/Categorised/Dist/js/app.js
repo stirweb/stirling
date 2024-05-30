@@ -1129,6 +1129,7 @@ var UoS_StickyWidget = (function() {
         this.offset  = element.getAttribute("data-offset");
         this.trigger = this.setTrigger( element.getAttribute( 'data-observe' ) );
         this.offsetRatio = 0;
+		this.wrapper = document.createElement('div');
         this.controls = {
             close: element.querySelectorAll('[data-close]')
         };
@@ -1181,14 +1182,14 @@ var UoS_StickyWidget = (function() {
 				that.offsetRatio = (height/2)/height
 			}
 
-			// set margins top and bottom to balance the overlap with the
-			// button's actual height (except on mobile, no margin):
+			// set top and bottom margins to balance the overlap with
+			// the button's actual height (except on mobile, which has
+			// a fixed margin):
 			if(window.stir && stir.MediaQuery && stir.MediaQuery.current!=="small") {
-				element.style.marginTop = (0 - height/2) + "px"; /* = element.style.marginBottom  */
-				/* element.nextElementSibling.style.setProperty("--offsetup",(height/2)+"px"); */
+				element.style.marginTop = (0-height-1) + "px";			// -1 to avoid rounding-error pixel gap
+				that.wrapper.style.paddingBottom = (height/2) + "px";
 			} else {
-				element.style.marginTop = null; /* = element.style.marginBottom  */
-				/* element.nextElementSibling.style.setProperty("--offsetup",null); */
+				that.wrapper.style.paddingBottom = element.style.marginTop = null; 
 			}
 		}
 
@@ -1246,11 +1247,9 @@ var UoS_StickyWidget = (function() {
     }
 
 	StickyWidget.prototype.setBGWrapper = function setBGWrapper() {
-		var wrapper = document.createElement('div');
-		this.element.previousElementSibling.insertAdjacentElement("beforebegin",wrapper)
-		wrapper.append(this.element.previousElementSibling)
-		wrapper.append(this.element)
-		wrapper.classList.add(this.element.getAttribute("data-bg").trim());
+		this.element.previousElementSibling.insertAdjacentElement("beforebegin",this.wrapper)
+		this.wrapper.append(this.element.previousElementSibling)
+		this.wrapper.classList.add(this.element.getAttribute("data-bg").trim());
     }
 
     return StickyWidget;
