@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../../../medias/Categorised/Dist/fonts/fonts.css">
     <link rel="stylesheet" href="../../../medias/Categorised/Dist/css/app.css" />
 
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://unpkg.com/pdf-lib"></script>
     <script src=" https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js "></script>
 </head>
@@ -663,19 +663,20 @@
 
                                 <select id="study_year" name="study_year">
                                     <option value="">Select an option</option>
-                                    <option value="jan-24">January 2024</option>
-                                    <option value="may-24">May 2024</option>
-                                    <option value="sep-24">September 2024</option>
-                                    <option value="jan-25">January 2025</option>
-                                    <option value="may-25">May 2025</option>
-                                    <option value="sep-25">September 2025</option>
-                                    <option value="jan-26">January 2026</option>
-                                    <option value="sep-26">September 2026</option>
-                                    <option value="jan-27">January 2027</option>
-                                    <option value="sep-27">September 2027</option>
-                                    <option value="jan-28">January 2028</option>
-                                    <option value="sep-28">September 2028</option>
+                                    <option value="jan-24">Jan-24</option>
+                                    <option value="may-24">May-24</option>
+                                    <option value="sep-24">Sep-24</option>
+                                    <option value="jan-25">Jan-25</option>
+                                    <option value="may-25">May-25</option>
+                                    <option value="sep-25">Sep-25</option>
+                                    <option value="jan-26">Jan-26</option>
+                                    <option value="sep-26">Sep-26</option>
+                                    <option value="jan-27">Jan-27</option>
+                                    <option value="sep-27">Sep-27</option>
+                                    <option value="jan-28">Jan-28</option>
+                                    <option value="sep-28">Sep-28</option>
                                 </select>
+
                             </div>
 
                             <div>
@@ -688,6 +689,7 @@
                                     </select>
                                     <div id="subject_area_1_courses" class="u-columns-2 u-mx-1"></div>
                                 </div>
+
 
                                 <div class="hide subject_area_2">
                                     <div>
@@ -916,6 +918,8 @@
                             <button id="generatePDFBtn" class="button">Generate</button>
 
                     </form>
+
+                    <div id="resultBox"></div>
                 </div>
 
             </div>
@@ -1059,255 +1063,9 @@
             }
         ];
 
-        /* 
-            HELPERS
-        */
 
-        const renderSubjectSelectItems = (subs) => subs.map(item => `<option>` + item.subject + `</option>`).join(``);
-
-        const renderSubjectCoursesOptions = (subject, index, data) => {
-            const subjectSelected = data.filter(item => item.subject === subject);
-
-            return subjectSelected[0].courses.map(item => {
-                const ident = item.replaceAll(" ", "-").toLowerCase();
-                return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="` + ident + `" name="courses_` + index + `" value="` + ident + `"><label for="` + ident + `">` + item + `</label></div>`
-            }
-            ).join(``);
-        };
-
-        /* 
-            createPdf 
-        */
-        function downloadPDF(pdf) {
-            const linkSource = `${pdf}`;
-            const fileName = "YourPersonalisedPGPerspectus.pdf";
-            const fileURL = linkSource;
-
-            if (!window.ActiveXObject) {
-                var save = document.createElement('a');
-                save.href = fileURL;
-                save.target = '_blank';
-                var filename = fileURL.substring(fileURL.lastIndexOf('/') + 1);
-                save.download = fileName || filename;
-                if (navigator.userAgent.toLowerCase().match(/(ipad|iphone|safari)/) && navigator.userAgent.search("Chrome") < 0) {
-                    document.location = save.href;
-                    // window event not working here
-                } else {
-                    var evt = new MouseEvent('click', {
-                        'view': window,
-                        'bubbles': true,
-                        'cancelable': false
-                    });
-                    save.dispatchEvent(evt);
-                    (window.URL || window.webkitURL).revokeObjectURL(save.href);
-                }
-            }
-        }
-
-
-        /* createPdf */
-        async function createPdf(data) {
-            console.log(data);
-
-            const fullPdf = data.get('full_prospectus');
-
-            const firstName = data.get('first_name');
-            const subject1 = data.get('subject_area_1');
-            const subject2 = data.get('subject_area_2');
-            const subject3 = data.get('subject_area_3');
-
-            const pdfDoc = await PDFLib.PDFDocument.create();
-
-            const urlFull = 'full-non-personalised.pdf';
-            const urlFront = 'Front.pdf';
-            const urlIntro = 'Intro.pdf';
-            const urlBack = 'Back.pdf';
-
-            const url1 = subject1.replaceAll(",", "") + '.pdf';
-            const url2 = subject2.replaceAll(",", "") + '.pdf';
-            const url3 = subject3.replaceAll(",", "") + '.pdf';
-
-            // Font
-            const fonturl = '../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf';
-            const fontBytes = await fetch(fonturl).then(res => res.arrayBuffer())
-
-            pdfDoc.registerFontkit(fontkit)
-            const customFont = await pdfDoc.embedFont(fontBytes)
-            // const helveticaFont = await frontPdf.embedFont(PDFLib.StandardFonts.Helvetica);
-
-            // Full PDF
-            if (fullPdf === '1') {
-                const fullPdfBytes = await fetch(urlFull).then(res => res.arrayBuffer());
-                const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
-
-                const pagesFull = fullPdfDoc.getPages();
-                var i = 0;
-                while (i < pagesFull.length) {
-                    let [p] = await pdfDoc.copyPages(fullPdfDoc, [i]);
-                    pdfDoc.addPage(p);
-                    i++;
-                }
-
-                // Generate as Base 64 and download
-                const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-                downloadPDF(pdfDataUri);
-
-                return;
-            }
-
-            // Front Page Doc
-            const frontPdfBytes = await fetch(urlFront).then(res => res.arrayBuffer());
-            const frontPdf = await PDFLib.PDFDocument.load(frontPdfBytes);
-            const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
-            //const { width, height } = firstPageCopy.getSize();
-
-            firstPageCopy.drawText(firstName.toUpperCase(), {
-                x: 93,
-                y: 530,
-                size: 70,
-                font: customFont,
-                color: PDFLib.rgb(0.99, 0.99, 0.99),
-                rotate: PDFLib.degrees(0),
-            });
-
-            pdfDoc.addPage(firstPageCopy);
-
-            // Intro merge
-            const introPdfBytes = await fetch(urlIntro).then(res => res.arrayBuffer());
-            const introPdfDoc = await PDFLib.PDFDocument.load(introPdfBytes);
-
-            const pagesIntro = introPdfDoc.getPages();
-            var i = 0;
-            while (i < pagesIntro.length) {
-                let [p] = await pdfDoc.copyPages(introPdfDoc, [i]);
-                pdfDoc.addPage(p);
-                i++;
-            }
-
-            // Main merge
-            const doc1PdfBytes = await fetch(url1).then(res => res.arrayBuffer());
-            const doc1PdfDoc = await PDFLib.PDFDocument.load(doc1PdfBytes);
-
-            const pages1 = doc1PdfDoc.getPages();
-            var i = 0;
-            while (i < pages1.length) {
-                let [p] = await pdfDoc.copyPages(doc1PdfDoc, [i]);
-                pdfDoc.addPage(p);
-                i++;
-            }
-
-            // Merge 2
-            if (url2 !== '.pdf') {
-                const doc2PdfBytes = await fetch(url2).then(res => res.arrayBuffer());
-                const doc2PdfDoc = await PDFLib.PDFDocument.load(doc2PdfBytes);
-
-                const pages2 = doc2PdfDoc.getPages();
-                var i = 0;
-                while (i < pages2.length) {
-                    let [p] = await pdfDoc.copyPages(doc2PdfDoc, [i]);
-                    pdfDoc.addPage(p);
-                    i++;
-                }
-            }
-
-            // Merge 3
-            if (url3 !== '.pdf') {
-                const doc3PdfBytes = await fetch(url3).then(res => res.arrayBuffer());
-                const doc3PdfDoc = await PDFLib.PDFDocument.load(doc3PdfBytes);
-
-                const pages3 = doc3PdfDoc.getPages();
-                var i = 0;
-                while (i < pages3.length) {
-                    let [p] = await pdfDoc.copyPages(doc3PdfDoc, [i]);
-                    pdfDoc.addPage(p);
-                    i++;
-                }
-            }
-
-            // Back page merge
-            const backPdfBytes = await fetch(urlBack).then(res => res.arrayBuffer());
-            const backPdfDoc = await PDFLib.PDFDocument.load(backPdfBytes);
-
-            const pagesBack = backPdfDoc.getPages();
-            var i = 0;
-            while (i < pagesBack.length) {
-                let [p] = await pdfDoc.copyPages(backPdfDoc, [i]);
-                pdfDoc.addPage(p);
-                i++;
-            }
-
-            // Generate as Base 64 and download
-            const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-            downloadPDF(pdfDataUri);
-        }
-
-
-        /*  
-            ON LOAD
-        */
-        const generatePDFBtn = stir.node("#generatePDFBtn");
-        const generatePDFForm = stir.node("#generatePDFForm");
-
-        const selects = stir.nodes("select");
-        selects.forEach((element) => element.value = '');
-
-        const subjectSelect = stir.nodes(".subjectSelect");
-        subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
-
-        // selects.forEach((element) => {
-        //     element.insertAdjacentHTML("beforeend", initSubjects);
-        // });
-
-        /* 
-           ACTION: Form change events 
-       */
-        generatePDFForm && generatePDFForm.addEventListener("change", function (e) {
-            e.preventDefault();
-
-            const data = new FormData(generatePDFForm);
-
-
-            const studyYear = data.get('study_year');
-            const subject1 = data.get('subject_area_1');
-            const subject2 = data.get('subject_area_2');
-            const subject3 = data.get('subject_area_3');
-
-            if (studyYear) {
-                stir.node(".subject_area_1").classList.remove("hide");
-            }
-
-            if (e.target.id === "subject_area_1" && subject1) {
-                stir.node("#subject_area_1_courses").innerHTML = renderSubjectCoursesOptions(subject1, "1", subjectsData);
-                stir.node(".subject_area_2").classList.remove("hide");
-
-                const subjectsData1 = subjectsData.filter(item => item.subject !== subject1);
-                subjectSelect[1].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData1));
-            }
-
-            if (e.target.id === "subject_area_2" && subject2) {
-                stir.node("#subject_area_2_courses").innerHTML = renderSubjectCoursesOptions(subject2, "2", subjectsData);
-                stir.node(".subject_area_3").classList.remove("hide");
-
-                const subjectsData2 = subjectsData.filter(item => item.subject !== subject2 && item.subject !== subject1);
-                subjectSelect[2].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData2));
-            }
-
-            if (e.target.id === "subject_area_3" && subject3) {
-                stir.node("#subject_area_3_courses").innerHTML = renderSubjectCoursesOptions(subject3, "3", subjectsData);
-            }
-
-        });
-
-
-        /* 
-            ACTION: Form submit event 
-        */
-        generatePDFBtn && generatePDFBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            const data = new FormData(generatePDFForm);
-            createPdf(data);
-        });
     </script>
+    <script src="../../../medias/Categorised/Dist/js/other/personalised-pg-prospectus.js"></script>
 
 </body>
 

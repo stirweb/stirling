@@ -147,3 +147,132 @@
     }
   }
 }
+
+/* "123" added for Clearing 2024*/
+.c-123 {
+  grid-template-columns: auto;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 640px) {
+  .u-grid.c-123 {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+@media screen and (min-width: 975px) {
+  .u-grid.c-123 {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr auto;
+  }
+
+  .u-grid.c-123 a {
+    grid-row: 1;
+  }
+}
+
+.c-123>a {
+  display: block;
+  padding: 2rem;
+  text-align: center;
+  font-family: "General Sans";
+}
+
+.c-123>a p {
+  font-size: 1.75rem;
+}
+
+.c-123 p {
+  margin: 0;
+}
+
+.c-123 svg {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.c-123 a {
+
+  border: 2px solid transparent;
+  transition: .2s color, .2s background-color;
+
+  &.energy-pink {
+    color: #fff;
+    background-color: $energy-pink;
+    &:hover {
+      background-color: #fff !important;
+      color: $energy-pink;
+      border-color: $energy-pink;
+      svg path {
+        fill: $energy-pink !important;
+      }
+    }
+  }
+
+  &.energy-green {
+    &:hover {
+      color: $heritage-green; // #67a51e; //was set to #67a51e;
+    }
+  }
+
+  &.heritage-green {
+    background-color: $heritage-green;
+    color: #fff;
+    &:hover {
+      background-color: #fff !important;
+      color: $heritage-green;
+      border-color: $heritage-green;
+      svg path {
+        fill: $heritage-green !important;
+      }
+    }
+  }
+  &.energy-turq {
+    background-color: $energy-turq;
+    color: #fff;
+    &:hover {
+      background-color: #fff !important;
+      color: $energy-turq;
+      border-color: $energy-turq;
+      svg path {
+        fill: $energy-turq !important;
+      }
+    }
+  }
+  &.web-turq {
+    background-color: $web-turq;
+    color: #fff;
+    &:hover {
+      background-color: #fff !important;
+      color: $web-turq;
+      border-color: $web-turq;
+      svg path {
+        fill: $web-turq !important;
+      }
+    }
+  }
+  &.energy-purple {
+    background-color: $energy-purple;
+    color: #fff;
+    &:hover {
+      background-color: #fff !important;
+      color: $energy-purple;
+      border-color: $energy-purple;
+      svg path {
+        fill: $energy-purple !important;
+      }
+    }
+  }
+  &.heritage-purple {
+    background-color: $heritage-purple;
+    color: #fff;
+    &:hover {
+      background-color: #fff !important;
+      color: $heritage-purple;
+      border-color: $heritage-purple;
+      svg path {
+        fill: $heritage-purple !important;
+      }
+    }
+  }
+}

@@ -573,6 +573,8 @@ svg.icon {
 
       &:hover {
         text-decoration: underline;
+        text-underline-offset: 5px;
+        border: none;
       }
     }
 

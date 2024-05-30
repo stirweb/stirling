@@ -13,6 +13,7 @@
     cookieType: "accom",
     urlToFavs: scope.dataset.favsurl ? scope.dataset.favsurl : ``,
     activity: scope.dataset.activity ? scope.dataset.activity : ``,
+    view: stir.templates && stir.templates.view ? stir.templates.view : ``,
   };
 
   const resultsArea = scope;
@@ -111,7 +112,7 @@
   };
 
   /* renderShared */
-  const renderShared = (item) => {
+  const renderShared = stir.curry((item) => {
     return !item.id
       ? ``
       : `<div class="cell small-6">
@@ -121,7 +122,23 @@
               <div>${stir.favourites.isFavourite(item.id) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.id, "")}</div>
             </div>
           </div>`;
-  };
+  });
+
+  /* renderMicro */
+  const renderMicro = stir.curry((consts, item) => {
+    if (!item) return ``;
+
+    const cookie = stir.favourites.getFav(item.id, consts.cookieType);
+    return !item.id
+      ? ``
+      : `<div class="cell small-4">
+              <div class="u-green-line-top u-margin-bottom">
+                <p class="u-text-regular u-py-1"><strong><a href="${item.url}" >${item.title}</a></strong></p>
+                <div class="u-mb-1">${item.location} accommodation.</div>
+                <div>${renderFavBtns(consts.urlToFavs, cookie, item.id)}</div>
+              </div>
+            </div>`;
+  });
 
   /* renderNumItems */
   const renderNumItems = (num) => `<div class="cell u-mb-3">Results based on filters - <strong>${num} ${num === 1 ? `property` : `properties`}</strong></div>`;
@@ -253,7 +270,8 @@
     const favs = stir.favourites.getFavsList(consts.cookieType);
 
     const mapItemCurry = stir.map(mapItem(data));
-    const renderer = stir.map(renderAccom(consts));
+    //const renderer = stir.map(renderAccom(consts));
+    const renderer = consts.view === `micro` ? stir.map(renderMicro(consts)) : stir.map(renderAccom(consts));
     const setDOM = setDOMContent(resultsArea);
 
     const filteredData = stir.compose(filterEmpties, mapItemCurry)(favs);

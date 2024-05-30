@@ -20,7 +20,7 @@ var UoS_env = (function () {
       wc_path = "";
       t4_tags = true;
       break;
-      
+
     case "stiracuk-cms01-test.terminalfour.net":
       env_name = "appdev-preview";
       wc_path = "";
@@ -36,11 +36,11 @@ var UoS_env = (function () {
       wc_path = "/medias/Categorised/Dist/";
       break;
   }
-  
-  switch(window.location.port) {
-    case '3000':
-    case '8000':
-      env_name = "dev"
+
+  switch (window.location.port) {
+    case "3000":
+    case "8000":
+      env_name = "dev";
       wc_path = "/medias/Categorised/Dist/";
   }
 
@@ -48,7 +48,7 @@ var UoS_env = (function () {
     //url: hostname,
     name: env_name,
     wc_path: wc_path,
-    t4_tags: t4_tags
+    t4_tags: t4_tags,
   };
 })();
 

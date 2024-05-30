@@ -1,10 +1,9 @@
-!function(t){if(!t)return;const r=t,l={"UDX16-PSY":"BSc (Hons) Psychology","UDX12-PSY":"BA (Hons) Psychology"};t=stir.curry((r,t)=>stir.map(t=>({...t,combinations:o(r,t)}),t));const i=stir.curry((t,r)=>-1!==r.subject.indexOf(t));var e=stir.curry((t,r)=>stir.filter(i(r),t));const o=(t,r)=>t.filter(t=>t.courses&&t.courses.filter(t=>t.url===r.url).length),n=t=>`	<div data-behaviour=accordion>
-		<h3>${[t.prefix,t.title].join(" ").trim()}</h3>
-		<div> <p>Apply now for:</p>
-			<ul>
-				${a(t)}
-				${c(t.combinations)}
-			</ul>
-			</div>
-		</div>
-`,s=stir.curry((t,r,i)=>r?`<a href="${t+r}">${i}</a>`:i)("https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode="),a=e=>e.applyCode&&e.applyCode.split(", ").map((t,r,i)=>t?`<li>${s(t.trim(),l[t.trim()]||[e.prefix,e.title].join(" ").trim())} <small>${1<i.length?" ("+t+")":""}</small></li>`:`<!-- ${e.title} -->`).join("\n"),c=t=>t?t.map(t=>`<li>${s(t.codes.apply,[t.prefix,t.title].join(" ").trim())}</li>`).join("\n"):null;var p=stir.t4globals.courses||[],u=stir.t4globals.combos||[];if(p.length&&u.length){var d,m=stir.reduce((t,r)=>t.includes(r)?t:[...t,r],[]),f=stir.map(t=>t.subject&&t.subject.split(/,\s+/g)),h=stir.filter(t=>t),h=stir.compose(stir.sort(null),h,m,t=>[].concat.apply([],t),f,stir.clone)(p),m=stir.filter(t=>!!t.applyCode,p);const y=t(stir.filter(t=>t.title,u)),g=e(m);r.innerHTML=stir.map(t=>{return r=t,(t=y(g(t))).length?`<h2 class="u-margin-top">${r}</h2> `+t.map(n).join(""):null;var r},h).join(""),f=Array.prototype.slice.call(r.querySelectorAll("h2")),d=document.createElement("nav"),r.insertAdjacentElement("afterbegin",d),f.forEach(t=>{var r=document.createElement("a");d.appendChild(r),r.innerText=t.innerText,r.href="#"+(t.id=t.innerText.replace(/[^a-zA-Z]/g,"-").toLowerCase())}),Array.prototype.forEach.call(r.querySelectorAll('[data-behaviour="accordion"]'),function(t){new stir.accord(t,!1)})}}(stir.node(".courselisting"));
+!function(r){if(!r)return;const o={"UDX16-PSY":"BSc (Hons) Psychology","UDX12-PSY":"BA (Hons) Psychology"};const i=r=>`<div data-behaviour=accordion>
+                  <h3>${[r.prefix,r.title].join(" ").trim()}</h3>
+                  <div><p>Apply now for:</p>
+                    <ul>
+                      ${t(r)}
+                      ${s(r.combinations)}
+                    </ul>
+                  </div>
+                </div>`,l=stir.curry((r,t,i)=>t?`<a href="${r+t}">${i}</a>`:i)("https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode="),t=s=>s.applyCode&&s.applyCode.split(", ").map((r,t,i)=>r?`<li>${l(r.trim(),o[r.trim()]||[s.prefix,s.title].join(" ").trim())} <small>${1<i.length?" ("+r+")":""}</small></li>`:`<!-- ${s.title} -->`).join("\n"),s=r=>r?r.map(r=>`<li>${l(r.codes.apply,[r.prefix,r.title].join(" ").trim())}</li>`).join("\n"):null,e=r=>r.replace(/[^a-zA-Z]/g,"-").toLowerCase();var a=stir.curry((t,r)=>stir.map(r=>({...r,combinations:p(t,r)}),r));const c=stir.curry((r,t)=>-1!==t.subject.indexOf(r));var n=stir.curry((r,t)=>stir.filter(c(t),r));const p=(r,t)=>r.filter(r=>r.courses&&r.courses.filter(r=>r.url===t.url).length);var u=stir.reduce((r,t)=>r.includes(t)?r:[...r,t],[]),d=stir.map(r=>r.subject&&r.subject.split(/,\s+/g)),y=stir.filter(r=>r),m=stir.curry((r,t)=>(stir.setHTML(r,t),!0)),f=stir.t4globals.courses||[],g=stir.t4globals.combos||[],y=stir.compose(stir.sort(null),y,u,r=>[].concat.apply([],r),d,stir.clone)(f),u=stir.filter(r=>!!r.applyCode,f);const h=a(stir.filter(r=>r.title,g)),b=n(u);d=stir.map(r=>{return t=r,(r=h(b(r))).length?`<h2 id="${e(t)}" class="u-margin-top">${t}</h2>`+r.map(i).join(""):"";var t},y).join("");m(r,`<nav class="u-columns-2 u-bg-grey u-bleed bg-grey u-padding-y">${stir.map(r=>`<a href="#${e(r)}" class="u-block u-py-tiny">${r}</a>`,y).join("")}</nav>`+d),Array.prototype.forEach.call(r.querySelectorAll('[data-behaviour="accordion"]'),function(r){new stir.accord(r,!1)})}(stir.node(".courselisting"));

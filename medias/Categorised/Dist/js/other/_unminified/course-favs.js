@@ -61,6 +61,25 @@ stir.coursefavs = (() => {
           </div>`;
   });
 
+  const renderMicro = stir.curry((item) => {
+    return !item.metaData
+      ? ``
+      : `<div class="cell large-4  "  data-sid="${item.metaData.sid}" > 
+            <div class="u-green-line-top">
+                 
+                  <div class="flex-container flex-dir-column u-gap u-mt-1">
+                    <p class=" u-m-0">
+                      <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title} ${item.metaData.ucas ? " - " + item.metaData.ucas : ""}</a></strong>
+                    </p>
+                    <p class="u-m-0 text-sm">${item.metaData.c}</p>
+                  </div>
+                  <div class="flex-container align-middle u-gap-8 u-mt-1">
+                  ${stir.favourites.renderRemoveBtn(item.metaData.sid, item.dateSaved, "")}
+                  </div>
+            </div>
+          </div>`;
+  });
+
   const renderNoFavs = () => stir.templates.renderNoFavs;
   const renderLinkToFavs = () => stir.templates.renderLinkToFavs;
   const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
@@ -187,12 +206,17 @@ stir.coursefavs = (() => {
     if (!nodes || !nodes.favsArea) return;
     const list = getFavsList(data);
 
+    const view = stir.templates && stir.templates.view ? stir.templates.view : ``;
+    const renderer = view === `micro` ? renderMicro : renderFav;
+
+    console.log(view);
+
     if (!list) {
       return !setDOMContent(nodes.favsArea, renderNoFavs());
     }
 
     nodes.favBtns && setDOMContent(nodes.favBtns, renderFavActionBtns());
-    return setDOMContent(nodes.favsArea, list.map(renderFav).join(""));
+    return setDOMContent(nodes.favsArea, list.map(renderer).join(""));
   });
 
   const doFavs = doFavsCurry(NODES);
