@@ -1186,7 +1186,11 @@ var UoS_StickyWidget = (function() {
 			// the button's actual height (except on mobile, which has
 			// a fixed margin):
 			if(window.stir && stir.MediaQuery && stir.MediaQuery.current!=="small") {
-				element.style.marginTop = (0-height-1) + "px";			// -1 to avoid rounding-error pixel gap
+				if(element.hasAttribute("data-bg")){
+					element.style.marginTop = (0-height-1) + "px";			// -1 to avoid rounding-error pixel gap
+				} else {
+					element.style.marginTop = (0-height/2) + "px";
+				}
 				that.wrapper.style.paddingBottom = (height/2) + "px";
 			} else {
 				that.wrapper.style.paddingBottom = element.style.marginTop = null; 
