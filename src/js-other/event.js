@@ -73,7 +73,7 @@
 
   const renderDates = (item) => `<option value="${item}">${renderReadableDate(item)}</option>`;
 
-  const renderOptionOne = () => `<option value="">Filter by date</option>`;
+  const renderOptionOne = () => `<option value="">Filter by upcoming date</option>`;
 
   const renderEndDate = (item) => (item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`);
 
@@ -247,7 +247,7 @@
     const upcomingEvents = getUpcomingSeriesEvents(initialData);
     const allSeriesEvents = [...passedEvents, ...upcomingEvents];
 
-    return stir.compose(joiner, stir.map(renderDates), stir.removeDuplicates, stir.flatten, stir.map(getEventDays))(allSeriesEvents);
+    return stir.compose(joiner, stir.map(renderDates), stir.removeDuplicates, stir.flatten, stir.map(getEventDays))(upcomingEvents);
   };
 
   const doMoreEvents = (initialData) => {
