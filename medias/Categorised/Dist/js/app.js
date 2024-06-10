@@ -3477,7 +3477,7 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
       break;
 
     default: // live
-      url = "/developer-components/includes/template-external/mega-menu/";
+      url = "https://www.stir.ac.uk/developer-components/includes/template-external/mega-menu/";
       break;
   }
 
