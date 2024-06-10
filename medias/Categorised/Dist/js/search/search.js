@@ -524,7 +524,7 @@ stir.templates.search = (() => {
 								<a href="${FB_BASE() + item.clickTrackingUrl}">${item.metaData.h1 || item.title.split(" | ")[0].trim()}</a>
 							</strong>
 						</p>
-						<div>${item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d)) : ""}</div>
+						<div>${item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d.split("|")[0])) : ""}</div>
 						<p class="text-sm">${item.summary}</p>
 						<!-- <p>
 							${item.listMetadata && item.listMetadata.tag ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"></path></svg>` : ""}
@@ -570,15 +570,13 @@ stir.templates.search = (() => {
 
       return `
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
-				<div class="c-search-result__tags">
+				<div class=c-search-result__tags>
 					${item.metaData?.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : ""}
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
-			<strong>
-			  ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : anchor({ text: title, href: url })}
-					  </strong>
-		  </p>
+						<strong>${anchor({ text: title, href: url })}</strong>
+					</p>
 					<div class="flex-container flex-dir-column u-gap-8">
 						<div class="flex-container u-gap-16 align-middle">
 							<span class="u-icon h5 uos-calendar"></span>
@@ -593,7 +591,8 @@ stir.templates.search = (() => {
 							<span>${item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : ""}</span>
 						</div>
 					</div>
-					<p class="text-sm">${item.summary}</p>
+					<p class=text-sm>${item.summary}</p>
+					${item.metaData.register ? `<p class="u-m-0 text-sm"><a href="${item.metaData.register}" class="u-m-0 button hollow tiny">Register now</a></p>` : ''}
 				</div>
 				${image(item.metaData.image && item.metaData.image.split("|")[0], item.title.split(" | ")[0])}
 				${item.metaData?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}

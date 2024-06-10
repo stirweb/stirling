@@ -146,7 +146,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 								<a href="${i()+e.clickTrackingUrl}">${e.metaData.h1||e.title.split(" | ")[0].trim()}</a>
 							</strong>
 						</p>
-						<div>${e.metaData.d?stir.Date.newsDate(new Date(e.metaData.d)):""}</div>
+						<div>${e.metaData.d?stir.Date.newsDate(new Date(e.metaData.d.split("|")[0])):""}</div>
 						<p class="text-sm">${e.summary}</p>
 						<!-- <p>
 							${e.listMetadata&&e.listMetadata.tag?'<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"></path></svg>':""}
@@ -171,15 +171,13 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 					</div>
 				</div>`;var t},event:e=>{var t,a=e.metaData?.image||-1<e.metaData?.tags?.indexOf("Webinar"),r=e.title.split(" | ")[0],s="stir-events"==e.collection?e.metaData.page||"#":i()+e.clickTrackingUrl;return`
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${a?" c-search-result__with-thumbnail":""}" data-rank=${e.rank} data-result-type=event>
-				<div class="c-search-result__tags">
+				<div class=c-search-result__tags>
 					${e.metaData?.tags?e.metaData.tags.split(",").map(stir.templates.search.stag).join(""):""}
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
-			<strong>
-			  ${e.metaData.register?p({text:r,href:e.metaData.register}):p({text:r,href:s})}
-					  </strong>
-		  </p>
+						<strong>${p({text:r,href:s})}</strong>
+					</p>
 					<div class="flex-container flex-dir-column u-gap-8">
 						<div class="flex-container u-gap-16 align-middle">
 							<span class="u-icon h5 uos-calendar"></span>
@@ -194,7 +192,8 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.const=stir.const||{},st
 							<span>${e.metaData.online?"Online":e.metaData.venue||""}</span>
 						</div>
 					</div>
-					<p class="text-sm">${e.summary}</p>
+					<p class=text-sm>${e.summary}</p>
+					${e.metaData.register?`<p class="u-m-0 text-sm"><a href="${e.metaData.register}" class="u-m-0 button hollow tiny">Register now</a></p>`:""}
 				</div>
 				${d(e.metaData.image&&e.metaData.image.split("|")[0],e.title.split(" | ")[0])}
 				${-1<e.metaData?.tags?.indexOf("Webinar")?'<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>':""}
