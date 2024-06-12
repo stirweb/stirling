@@ -1,6 +1,6 @@
 <?php
 
-include '../../git-ignore/stir-template/header.php';
+include '../../stir-template/header.php';
 
 /*
     
@@ -307,4 +307,4 @@ $init_boilerplates = array(
 
 main($init_data, $init_colours, $init_boilerplates);
 
-include '../../git-ignore/stir-template/footer.php';
+include '../../stir-template/footer.php';
