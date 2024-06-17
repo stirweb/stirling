@@ -7,7 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Undergraduate | Study | University of Stirling</title>
+    <title>PHP Tests | University of Stirling</title>
 
     <meta property="og:site_name" content="University of Stirling">
     <meta property="og:url" content="https://www.stir.ac.uk/study/undergraduate/">
@@ -37,17 +37,14 @@
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#006938">
 
-
     <link rel="preload" href="../../../../medias/Categorised/Dist/fonts/fsmaja/FSMajaWeb-Regular.woff?v=0.1" as="font" type="font/woff" crossorigin>
     <link rel="preload" href="../../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Regular.ttf?v=0.1" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="../../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf?v=0.1" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="../../../../medias/Categorised/Dist/fonts/fonts.css?v=3.1" as="style">
     <link rel="stylesheet" href="../../../../medias/Categorised/Dist/fonts/fonts.css?v=3.1">
 
-
     <link rel="preload" href="../../../../medias/Categorised/Dist/css/app.min.css" as="style">
     <link rel="stylesheet" href="../../../../medias/Categorised/Dist/css/app.min.css?v=154.1">
-
 
 
     <!-- Localized versions -->
@@ -60,10 +57,6 @@
 
     <!-- ADDITIONAL TWITTER CARD TAGS -->
     <meta name="twitter:card" content="summary_large_image" />
-
-
-
-
 
 
 

@@ -12,14 +12,15 @@ const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
 
 */
 
-const renderSubjectSelectItems = (subs) => subs.map((item) => `<option>` + item.subject + `</option>`).join(``);
+const renderSubjectSelectItems = (subs) => subs.map((item) => `<option value="` + item.id + `">` + item.subject + `</option>`).join(``);
 
 const renderSubjectCoursesOptions = (subject, index, data) => {
-  const subjectSelected = data.filter((item) => item.subject === subject);
+  const subjectSelected = data.filter((item) => item.id === Number(subject));
+
   return subjectSelected[0].courses
     .map((item) => {
-      const ident = item.replaceAll(" ", "-").toLowerCase();
-      return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="` + ident + `" name="courses_` + index + `" value="` + ident + `"><label for="` + ident + `">` + item + `</label></div>`;
+      const ident = item.name.replaceAll(" ", "-").toLowerCase();
+      return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="` + ident + `" name="courses_` + index + `" value="` + item.id + `"><label for="` + ident + `">` + item.name + `</label></div>`;
     })
     .join(``);
 };
