@@ -125,3 +125,17 @@ $c-course-search-widget__button-min-width: 219px;
     }
   }
 }
+
+/*
+    New GRID version
+*/
+@media screen and (min-width: 40rem) {
+	.c-course-search-widget__form[class*="u-grid"]{
+		grid-template-columns: 3fr 1fr;
+		gap: 1rem;
+
+    button {
+      grid-row: span 2;
+    }
+	}
+}
