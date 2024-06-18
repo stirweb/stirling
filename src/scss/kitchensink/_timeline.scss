@@ -3,7 +3,7 @@ ol.timeline {
 	list-style: none;
 	counter-reset: timeline;
 
-	li {
+	> li {
 		position: relative;
 		margin-bottom: 0;
 		border-left: 2px solid currentColor;
