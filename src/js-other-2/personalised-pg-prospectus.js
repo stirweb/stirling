@@ -138,17 +138,42 @@ async function storePDF(pdf, fileName, path) {
   return null;
 }
 
+/*
+    submitData
+    ** 1 SEND data to QS **
+    ** 2 SEND data to MailChimp **
+*/
+async function submitData(firstName, email, pdfPath, path) {
+  const formData = new FormData();
+
+  formData.append("pdfPath", pdfPath);
+  formData.append("firstName", firstName);
+  formData.append("email", email);
+
+  try {
+    const response = await fetch(path + "app2.php", {
+      method: "POST",
+      // Set the FormData instance as the request body
+      body: formData,
+    });
+    console.log(await response.json());
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 /* 
     
     CONTROLLER
     
 */
-async function createPdf(data, path) {
+async function doPdf(data, path) {
   const resultsNode = stir.node("#resultBox");
 
   setDOMContent(resultsNode, renderGenerating());
   resultsNode.scrollIntoView();
 
+  // Build PDF
   const fullPdf = data.get("full_prospectus");
 
   const firstName = data.get("first_name") || "";
@@ -185,27 +210,9 @@ async function createPdf(data, path) {
           Full unpersonalised PDF 
        */
   if (fullPdf === "1") {
-    //const fullPdfBytes = await fetch(urlFull).then((res) => res.arrayBuffer());
-    // const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
-
-    // const pagesFull = fullPdfDoc.getPages();
-    // var i = 0;
-    // while (i < pagesFull.length) {
-    //     let [p] = await pdfDoc.copyPages(fullPdfDoc, [i]);
-    //     pdfDoc.addPage(p);
-    //     i++;
-    // }
-
-    // // Generate as Base 64 and download
-    // const pdfDataUri = await pdfDoc.saveAsBase64({
-    //     dataUri: false,
-    // });
-
-    //storePDF(pdfDataUri, fileName, path);
-
     const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
     setDOMContent(resultsNode, renderLink(fileNameFull));
-    emailUser(firstName, email, pdfPath, path);
+    submitData(firstName, email, pdfPath, path);
 
     return;
   }
@@ -333,29 +340,7 @@ async function createPdf(data, path) {
   const pdfPath = "https://scezmsgewfitcalrkauq.supabase.co/storage/v1/object/public/" + response.fullPath;
 
   setDOMContent(resultsNode, renderLink(pdfPath));
-  emailUser(firstName, email, pdfPath, path);
-}
-
-/*
-    emailUser
-*/
-async function emailUser(firstName, email, pdfPath, path) {
-  const formData = new FormData();
-
-  formData.append("pdfPath", pdfPath);
-  formData.append("firstName", firstName);
-  formData.append("email", email);
-
-  try {
-    const response = await fetch(path + "app2.php", {
-      method: "POST",
-      // Set the FormData instance as the request body
-      body: formData,
-    });
-    console.log(await response.json());
-  } catch (e) {
-    console.error(e);
-  }
+  submitData(firstName, email, pdfPath, path);
 }
 
 /*  
@@ -373,12 +358,8 @@ selects.forEach((element) => (element.value = ""));
 const subjectSelect = stir.nodes(".subjectSelect");
 subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
 
-// selects.forEach((element) => {
-//     element.insertAdjacentHTML("beforeend", initSubjects);
-// });
-
 /* 
-               ACTION: Form change events 
+   ACTION: Form change events 
 */
 generatePDFForm &&
   generatePDFForm.addEventListener("change", function (e) {
@@ -446,6 +427,6 @@ generatePDFBtn &&
       return;
     }
 
-    createPdf(data, path);
+    doPdf(data, path);
     return;
   });
