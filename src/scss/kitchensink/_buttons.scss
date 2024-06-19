@@ -13,6 +13,10 @@ button {
   padding: map-get($button-padding-list, default);
   font-weight: bold;
 
+  a{
+	color: $white;
+  }
+
   // Padding
   @each $size, $value in map-remove($button-padding-list, default) {
     &.#{$size} {
@@ -333,6 +337,14 @@ input:checked {
   }
   &.stuck {
     width: 100%;
+  }
+  &:hover {
+	background-color: $white;
+	border-color: $heritage-green;
+	color: $heritage-green;
+	a {
+		color: $heritage-green;
+	}
   }
   &.energy-pink {
     color: #fff;
