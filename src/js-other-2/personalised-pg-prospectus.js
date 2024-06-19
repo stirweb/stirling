@@ -54,6 +54,14 @@ const renderRequiredError = () => {
 
 */
 
+/* getSubjectFileName - returns the name of the raw pdf */
+const getSubjectFileName = (id, subsData) => {
+  const obj = subsData.filter((item) => item.id === Number(id));
+
+  if (!obj.length) return ``;
+  return obj[0].subject.replaceAll(",", "");
+};
+
 const setDOMContent = stir.curry((node, html) => {
   stir.setHTML(node, html);
   return true;
@@ -161,14 +169,6 @@ async function submitData(firstName, email, pdfPath, path) {
   }
 }
 
-/* Helper - getSubjectFileName */
-const getSubjectFileName = (id, subsData) => {
-  const obj = subsData.filter((item) => item.id === Number(id));
-
-  if (!obj.length) return ``;
-  return obj[0].subject.replaceAll(",", "");
-};
-
 /* 
     
     CONTROLLER
@@ -213,9 +213,7 @@ async function doPdf(subsData, data, path) {
   const customFont = await pdfDoc.embedFont(fontBytes);
   // const helveticaFont = await frontPdf.embedFont(PDFLib.StandardFonts.Helvetica);
 
-  /* 
-          Full unpersonalised PDF 
-  */
+  /*  Full unpersonalised PDF */
   if (fullPdf === "1") {
     const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
     setDOMContent(resultsNode, renderLink(fileNameFull));
@@ -224,9 +222,7 @@ async function doPdf(subsData, data, path) {
     return;
   }
 
-  /* 
-          Personalised PDF 
-       */
+  /* Personalised PDF */
   const frontPdfBytes = await fetch(urlFront).then((res) => res.arrayBuffer());
   const frontPdf = await PDFLib.PDFDocument.load(frontPdfBytes);
   const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
@@ -338,7 +334,7 @@ async function doPdf(subsData, data, path) {
     i++;
   }
 
-  // Generate as Base 64 and download
+  // Generate as Base 64
   const pdfDataUri = await pdfDoc.saveAsBase64({
     dataUri: false,
   });
@@ -348,6 +344,11 @@ async function doPdf(subsData, data, path) {
 
   setDOMContent(resultsNode, renderLink(pdfPath));
   submitData(firstName, email, pdfPath, path);
+}
+
+function onSubmit(token) {
+  console.log(token);
+  //document.getElementById("generatePDFBtn").submit();
 }
 
 /*  
@@ -360,13 +361,17 @@ const generatePDFBtn = stir.node("#generatePDFBtn");
 const generatePDFForm = stir.node("#generatePDFForm");
 
 const selects = stir.nodes("select");
-selects.forEach((element) => (element.value = ""));
+selects.forEach((element) => (element.value = "")); // reset on load
 
 const subjectSelect = stir.nodes(".subjectSelect");
 subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
 
+doPdf(subjectsData, data, path);
+
 /* 
+
    ACTION: Form change events 
+
 */
 generatePDFForm &&
   generatePDFForm.addEventListener("change", function (e) {
@@ -402,6 +407,7 @@ generatePDFForm &&
     if (e.target.id === "subject_area_3" && subject3) {
       stir.node("#subject_area_3_courses").innerHTML = renderSubjectCoursesOptions(subject3, "3", subjectsData);
     }
+    return;
   });
 
 /* 
@@ -430,10 +436,8 @@ generatePDFBtn &&
 
       setDOMContent(stir.node("#formErrors"), renderRequiredError());
       stir.node("#formErrors").scrollIntoView();
-
       return;
     }
 
-    doPdf(subjectsData, data, path);
     return;
   });
