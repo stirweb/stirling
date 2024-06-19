@@ -112,7 +112,7 @@ h6 {
   margin: 20px 0 10px 0;
 }
 
-.c-wysiwyg-content ol > li {
+.c-wysiwyg-content ol:not(.timeline) > li {
   margin-bottom: 1em;
 }
 

@@ -15,7 +15,6 @@ const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
 const renderSubjectSelectItems = (subs) => subs.map((item) => `<option value="` + item.id + `">` + item.subject + `</option>`).join(``);
 
 const renderSubjectCoursesOptions = (subject, index, data) => {
-  console.log(index);
   const subjectSelected = data.filter((item) => item.id === Number(subject));
 
   return subjectSelected[0].courses
@@ -162,12 +161,20 @@ async function submitData(firstName, email, pdfPath, path) {
   }
 }
 
+/* Helper - getSubjectFileName */
+const getSubjectFileName = (id, subsData) => {
+  const obj = subsData.filter((item) => item.id === Number(id));
+
+  if (!obj.length) return ``;
+  return obj[0].subject.replaceAll(",", "");
+};
+
 /* 
     
     CONTROLLER
     
 */
-async function doPdf(data, path) {
+async function doPdf(subsData, data, path) {
   const resultsNode = stir.node("#resultBox");
 
   setDOMContent(resultsNode, renderGenerating());
@@ -180,9 +187,9 @@ async function doPdf(data, path) {
   const lastName = data.get("last_name") || "";
   const email = data.get("email") || "";
 
-  const subject1 = data.get("subject_area_1") || "";
-  const subject2 = data.get("subject_area_2") || "";
-  const subject3 = data.get("subject_area_3") || "";
+  const subject1 = getSubjectFileName(data.get("subject_area_1"), subsData);
+  const subject2 = getSubjectFileName(data.get("subject_area_2"), subsData);
+  const subject3 = getSubjectFileName(data.get("subject_area_3"), subsData); // data.get("subject_area_3") || "";
 
   const pdfDoc = await PDFLib.PDFDocument.create();
 
@@ -208,7 +215,7 @@ async function doPdf(data, path) {
 
   /* 
           Full unpersonalised PDF 
-       */
+  */
   if (fullPdf === "1") {
     const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
     setDOMContent(resultsNode, renderLink(fileNameFull));
@@ -380,7 +387,7 @@ generatePDFForm &&
       stir.node("#subject_area_1_courses").innerHTML = renderSubjectCoursesOptions(subject1, "1", subjectsData);
       stir.node(".subject_area_2").classList.remove("hide");
 
-      const subjectsData1 = subjectsData.filter((item) => item.subject !== subject1);
+      const subjectsData1 = subjectsData.filter((item) => item.id !== Number(subject1));
       subjectSelect[1].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData1));
     }
 
@@ -388,7 +395,7 @@ generatePDFForm &&
       stir.node("#subject_area_2_courses").innerHTML = renderSubjectCoursesOptions(subject2, "2", subjectsData);
       stir.node(".subject_area_3").classList.remove("hide");
 
-      const subjectsData2 = subjectsData.filter((item) => item.subject !== subject2 && item.subject !== subject1);
+      const subjectsData2 = subjectsData.filter((item) => item.id !== Number(subject2) && item.id !== Number(subject1));
       subjectSelect[2].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData2));
     }
 
@@ -427,6 +434,6 @@ generatePDFBtn &&
       return;
     }
 
-    doPdf(data, path);
+    doPdf(subjectsData, data, path);
     return;
   });
