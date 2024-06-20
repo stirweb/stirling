@@ -352,10 +352,11 @@ async function doPdf(subsData, data, path) {
   return;
 }
 
-function onSubmit(token) {
-  console.log(token);
-  //document.getElementById("generatePDFBtn").submit();
-}
+// var onSubmit = function (response) {
+//   document.getElementById("simpleForm").submit(); // send response to your backend service
+// };
+
+//document.getElementById("test").addEventListener("click", onClick);
 
 /*  
     
@@ -371,8 +372,6 @@ selects.forEach((element) => (element.value = "")); // reset on load
 
 const subjectSelect = stir.nodes(".subjectSelect");
 subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
-
-doPdf(subjectsData, data, path);
 
 /* 
 
@@ -447,6 +446,8 @@ generatePDFBtn &&
       stir.node("#formErrors").scrollIntoView();
       return;
     }
+
+    doPdf(subjectsData, data, path);
 
     return;
   });
