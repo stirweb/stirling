@@ -343,7 +343,7 @@ async function doPdf(subsData, data, path) {
   const pdfPath = response ? SUPABASE_URL + "/storage/v1/object/public/" + response.fullPath : "";
 
   if (!pdfPath) {
-    console.log("Error uploading to Supabase :(");
+    console.log("Error uploading to Supabase!");
     return;
   }
 
