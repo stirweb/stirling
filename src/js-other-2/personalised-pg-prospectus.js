@@ -5,6 +5,7 @@
 */
 
 const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
+const SUPABASE_URL = "https://yaqrzxtrpwodltpeeluu.supabase.co";
 
 /* 
 
@@ -128,9 +129,7 @@ function b64toBlob(b64Data, contentType, sliceSize) {
  */
 async function storePDF(pdf, fileName, path) {
   const fileNameFull = fileName + ".pdf";
-
-  const SUPABASE_URL = "https://scezmsgewfitcalrkauq.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjZXptc2dld2ZpdGNhbHJrYXVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU3NzY4ODQsImV4cCI6MjAzMTM1Mjg4NH0.-WZyB91qB-6PinAYDKT1ziWK3hNRB6GNZTTnVfvHDts";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlhcXJ6eHRycHdvZGx0cGVlbHV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg4Nzc5ODYsImV4cCI6MjAzNDQ1Mzk4Nn0.x-gvmdcPeuEOwkp6JYEQvXoCM9mViTmTFNJnf4btkU8";
 
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   const pdfBlob = b64toBlob(pdf, "application/pdf", 512);
@@ -340,16 +339,24 @@ async function doPdf(subsData, data, path) {
   });
 
   const response = await storePDF(pdfDataUri, fileName, path);
-  const pdfPath = "https://scezmsgewfitcalrkauq.supabase.co/storage/v1/object/public/" + response.fullPath;
+
+  const pdfPath = response ? SUPABASE_URL + "/storage/v1/object/public/" + response.fullPath : "";
+
+  if (!pdfPath) {
+    console.log("Error uploading to Supabase :(");
+    return;
+  }
 
   setDOMContent(resultsNode, renderLink(pdfPath));
   submitData(firstName, email, pdfPath, path);
+  return;
 }
 
-function onSubmit(token) {
-  console.log(token);
-  //document.getElementById("generatePDFBtn").submit();
-}
+// var onSubmit = function (response) {
+//   document.getElementById("simpleForm").submit(); // send response to your backend service
+// };
+
+//document.getElementById("test").addEventListener("click", onClick);
 
 /*  
     
@@ -365,8 +372,6 @@ selects.forEach((element) => (element.value = "")); // reset on load
 
 const subjectSelect = stir.nodes(".subjectSelect");
 subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
-
-doPdf(subjectsData, data, path);
 
 /* 
 
@@ -416,6 +421,9 @@ generatePDFForm &&
 generatePDFBtn &&
   generatePDFBtn.addEventListener("click", function (e) {
     e.preventDefault();
+
+    //grecaptcha.execute();
+
     const data = new FormData(generatePDFForm);
 
     const required = stir.nodes("[data-required]");
@@ -438,6 +446,8 @@ generatePDFBtn &&
       stir.node("#formErrors").scrollIntoView();
       return;
     }
+
+    doPdf(subjectsData, data, path);
 
     return;
   });
