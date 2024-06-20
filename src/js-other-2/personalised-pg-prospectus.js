@@ -5,7 +5,7 @@
 */
 
 const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
-const SUPABASE_URL = "https://yaqrzxtrpwodltpeeluu.supabase.co";
+const SUPABASE_URL = "https://kkiqupbzfaghcmmacixr.supabase.co";
 
 /* 
 
@@ -129,7 +129,7 @@ function b64toBlob(b64Data, contentType, sliceSize) {
  */
 async function storePDF(pdf, fileName, path) {
   const fileNameFull = fileName + ".pdf";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlhcXJ6eHRycHdvZGx0cGVlbHV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg4Nzc5ODYsImV4cCI6MjAzNDQ1Mzk4Nn0.x-gvmdcPeuEOwkp6JYEQvXoCM9mViTmTFNJnf4btkU8";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtraXF1cGJ6ZmFnaGNtbWFjaXhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg5MDEwNjEsImV4cCI6MjAzNDQ3NzA2MX0.qvfBzihxwwWTzsS6BV2CDVcW2nfEGxGUqMjdrQbYnlA";
 
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   const pdfBlob = b64toBlob(pdf, "application/pdf", 512);
@@ -343,7 +343,7 @@ async function doPdf(subsData, data, path) {
   const pdfPath = response ? SUPABASE_URL + "/storage/v1/object/public/" + response.fullPath : "";
 
   if (!pdfPath) {
-    console.log("Error uploading to Supabase :(");
+    console.log("Error uploading to Supabase!");
     return;
   }
 
