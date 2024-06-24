@@ -126,6 +126,7 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 
 /* 
     storePDF 
+    * SEND the pdf file to Supabase and get the link url back *
  */
 async function storePDF(pdf, fileName, path) {
   const fileNameFull = fileName + ".pdf";
@@ -146,7 +147,7 @@ async function storePDF(pdf, fileName, path) {
 
 /*
     submitData
-    ** SEND data (formData) to QS and MailChimp via PHP **
+    * SEND data (formData) to QS and MailChimp via PHP *
 */
 async function submitData(pdfPath, path, formData) {
   formData.append("pdfPath", pdfPath);
@@ -156,7 +157,7 @@ async function submitData(pdfPath, path, formData) {
       method: "POST",
       body: formData,
     });
-    console.log(await response.text());
+    console.log(await response.json());
   } catch (e) {
     console.error(e);
   }
