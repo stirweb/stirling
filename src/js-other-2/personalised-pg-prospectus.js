@@ -146,23 +146,17 @@ async function storePDF(pdf, fileName, path) {
 
 /*
     submitData
-    ** 1 SEND data to QS **
-    ** 2 SEND data to MailChimp **
+    ** SEND data (formData) to QS and MailChimp via PHP **
 */
-async function submitData(firstName, email, pdfPath, path) {
-  const formData = new FormData();
-
+async function submitData(pdfPath, path, formData) {
   formData.append("pdfPath", pdfPath);
-  formData.append("firstName", firstName);
-  formData.append("email", email);
 
   try {
     const response = await fetch(path + "app2.php", {
       method: "POST",
-      // Set the FormData instance as the request body
       body: formData,
     });
-    console.log(await response.json());
+    console.log(await response.text());
   } catch (e) {
     console.error(e);
   }
@@ -184,7 +178,7 @@ async function doPdf(subsData, data, path) {
 
   const firstName = data.get("first_name") || "";
   const lastName = data.get("last_name") || "";
-  const email = data.get("email") || "";
+  //const email = data.get("email") || "";
 
   const subject1 = getSubjectFileName(data.get("subject_area_1"), subsData);
   const subject2 = getSubjectFileName(data.get("subject_area_2"), subsData);
@@ -192,7 +186,7 @@ async function doPdf(subsData, data, path) {
 
   const pdfDoc = await PDFLib.PDFDocument.create();
 
-  const urlFull = path + "rawpdfs/full-non-personalised.pdf";
+  //const urlFull = path + "rawpdfs/full-non-personalised.pdf";
   const urlFront = path + "rawpdfs/Front.pdf";
   const urlIntro = path + "rawpdfs/Intro.pdf";
   const urlIntroInsert = path + "rawpdfs/IntroInsert.pdf";
@@ -216,7 +210,7 @@ async function doPdf(subsData, data, path) {
   if (fullPdf === "1") {
     const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
     setDOMContent(resultsNode, renderLink(fileNameFull));
-    submitData(firstName, email, pdfPath, path);
+    submitData(pdfPath, path, data);
 
     return;
   }
@@ -348,7 +342,7 @@ async function doPdf(subsData, data, path) {
   }
 
   setDOMContent(resultsNode, renderLink(pdfPath));
-  submitData(firstName, email, pdfPath, path);
+  submitData(pdfPath, path, data);
   return;
 }
 
