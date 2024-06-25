@@ -165,7 +165,7 @@ async function submitData(pdfPath, path, formData) {
 
 /* 
     
-    CONTROLLER
+    CONTROLLERS
     
 */
 async function doPdf(subsData, data, path) {
@@ -347,11 +347,55 @@ async function doPdf(subsData, data, path) {
   return;
 }
 
-// var onSubmit = function (response) {
-//   document.getElementById("simpleForm").submit(); // send response to your backend service
-// };
+/* doCaptcha Spam check */
+async function doCaptcha(token, data) {
+  data.append("token", token);
 
-//document.getElementById("test").addEventListener("click", onClick);
+  try {
+    const response = await fetch(path + "verify.php", {
+      method: "POST",
+      body: data,
+    });
+
+    const result = await response.json();
+
+    if (result.success === true) {
+      // Exectue the PDF Stuff
+      const required = stir.nodes("[data-required]");
+      const required2 = required.map((item) => item.name);
+
+      required2.forEach((item) => {
+        stir.node("[data-alertlabel=" + item + "]").innerText = " *";
+      });
+
+      const empties = required.filter((elem) => elem.value === "");
+
+      if (empties.length) {
+        const empties2 = empties.map((item) => item.name);
+
+        empties2.forEach((item) => {
+          stir.node("[data-alertlabel=" + item + "]").innerText = " * This field is required";
+        });
+
+        setDOMContent(stir.node("#formErrors"), renderRequiredError());
+        stir.node("#formErrors").scrollIntoView();
+        return;
+      }
+
+      doPdf(subjectsData, data, path);
+
+      return true;
+    } else {
+      // DONT Exectue the PDF Stuff
+      console.log("Not good - spam 1");
+      return false;
+    }
+  } catch (e) {
+    console.log("Not good - spam 2");
+    console.log(e);
+    return false;
+  }
+}
 
 /*  
     
@@ -414,35 +458,13 @@ generatePDFForm &&
     ACTION: Form submit event 
  */
 generatePDFBtn &&
-  generatePDFBtn.addEventListener("click", function (e) {
+  generatePDFBtn.addEventListener("click", async function (e) {
     e.preventDefault();
-
-    //grecaptcha.execute();
 
     const data = new FormData(generatePDFForm);
 
-    const required = stir.nodes("[data-required]");
-    const required2 = required.map((item) => item.name);
-
-    required2.forEach((item) => {
-      stir.node("[data-alertlabel=" + item + "]").innerText = " *";
-    });
-
-    const empties = required.filter((elem) => elem.value === "");
-
-    if (empties.length) {
-      const empties2 = empties.map((item) => item.name);
-
-      empties2.forEach((item) => {
-        stir.node("[data-alertlabel=" + item + "]").innerText = " * This field is required";
-      });
-
-      setDOMContent(stir.node("#formErrors"), renderRequiredError());
-      stir.node("#formErrors").scrollIntoView();
+    grecaptcha.execute("6LeLc_wpAAAAAK9XBEY5HhZcsYEgTTi1wukDL685", { action: "register" }).then(function (token) {
+      doCaptcha(token, data);
       return;
-    }
-
-    doPdf(subjectsData, data, path);
-
-    return;
+    });
   });
