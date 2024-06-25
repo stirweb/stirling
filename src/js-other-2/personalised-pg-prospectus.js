@@ -359,7 +359,7 @@ async function doCaptcha(token, data) {
 
     const result = await response.json();
 
-    if (result.success === true) {
+    if (result.success === "true") {
       // Exectue the PDF Stuff
       const required = stir.nodes("[data-required]");
       const required2 = required.map((item) => item.name);
@@ -387,12 +387,12 @@ async function doCaptcha(token, data) {
       return true;
     } else {
       // DONT Exectue the PDF Stuff
-      console.log("Not good - spam 1");
+      console.log("Captcha - suspected spam");
       return false;
     }
   } catch (e) {
-    console.log("Not good - spam 2");
-    console.log(e);
+    console.log("Error with captcha check");
+    //console.log(e);
     return false;
   }
 }
@@ -458,7 +458,7 @@ generatePDFForm &&
     ACTION: Form submit event 
  */
 generatePDFBtn &&
-  generatePDFBtn.addEventListener("click", async function (e) {
+  generatePDFBtn.addEventListener("click", function (e) {
     e.preventDefault();
 
     const data = new FormData(generatePDFForm);
