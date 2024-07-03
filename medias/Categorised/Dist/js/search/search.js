@@ -269,7 +269,8 @@ stir.templates.search = (() => {
       const message = totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`;
       const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
-      return `<div class="u-py-2"> ${message} ${tokens} ${spelling} </div>`;
+	  const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : '';
+      return `<div class="u-py-2"> ${hostinfo} ${message} ${tokens} ${spelling} </div>`;
     },
     pagination: (summary) => {
       const { currEnd, totalMatching, progress } = summary;
@@ -348,7 +349,7 @@ stir.templates.search = (() => {
 
     clearing: (item) => {
       if (Object.keys && item.metaData && Object.keys(item.metaData).join().indexOf("clearing") >= 0) {
-        return `<p class="u-m-0"><strong class="u-heritage-berry">Clearing 2024: places may be available on this course.</strong></p>`;
+        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2024: places may be available on this course.</strong></p>`;
       }
     },
     combos: (item) => {
