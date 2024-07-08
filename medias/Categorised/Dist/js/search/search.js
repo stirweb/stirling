@@ -265,11 +265,11 @@ stir.templates.search = (() => {
       const querySanitised = stir.String.htmlEntities(data.question.originalQuery)
         .replace(/^!padrenullquery$/, "")
         .trim();
-      const queryEcho = querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
+      const queryEcho = ''; //querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
       const message = totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`;
       const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
-	  const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : '';
+	    const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : '';
       return `<div class="u-py-2"> ${hostinfo} ${message} ${tokens} ${spelling} </div>`;
     },
     pagination: (summary) => {
