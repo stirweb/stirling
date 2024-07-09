@@ -5,6 +5,7 @@
 */
 
 const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
+const SUPABASE_URL = "https://kkiqupbzfaghcmmacixr.supabase.co";
 
 /* 
 
@@ -12,14 +13,15 @@ const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
 
 */
 
-const renderSubjectSelectItems = (subs) => subs.map((item) => `<option>` + item.subject + `</option>`).join(``);
+const renderSubjectSelectItems = (subs) => subs.map((item) => `<option value="` + item.id + `">` + item.subject + `</option>`).join(``);
 
 const renderSubjectCoursesOptions = (subject, index, data) => {
-  const subjectSelected = data.filter((item) => item.subject === subject);
+  const subjectSelected = data.filter((item) => item.id === Number(subject));
+
   return subjectSelected[0].courses
     .map((item) => {
-      const ident = item.replaceAll(" ", "-").toLowerCase();
-      return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="` + ident + `" name="courses_` + index + `" value="` + ident + `"><label for="` + ident + `">` + item + `</label></div>`;
+      const ident = item.name.replaceAll(" ", "-").toLowerCase();
+      return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="${ident}" name="courses_${index}" value="${item.id}" data-id="subject_course_${index}.${item.id}"><label for="${ident}">${item.name}</label></div>`;
     })
     .join(``);
 };
@@ -52,6 +54,14 @@ const renderRequiredError = () => {
    HELPERS
 
 */
+
+/* getSubjectFileName - returns the name of the raw pdf */
+const getSubjectFileName = (id, subsData) => {
+  const obj = subsData.filter((item) => item.id === Number(id));
+
+  if (!obj.length) return ``;
+  return obj[0].subject.replaceAll(",", "");
+};
 
 const setDOMContent = stir.curry((node, html) => {
   stir.setHTML(node, html);
@@ -116,12 +126,11 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 
 /* 
     storePDF 
+    * SEND the pdf file to Supabase and get the link url back *
  */
 async function storePDF(pdf, fileName, path) {
   const fileNameFull = fileName + ".pdf";
-
-  const SUPABASE_URL = "https://scezmsgewfitcalrkauq.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjZXptc2dld2ZpdGNhbHJrYXVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU3NzY4ODQsImV4cCI6MjAzMTM1Mjg4NH0.-WZyB91qB-6PinAYDKT1ziWK3hNRB6GNZTTnVfvHDts";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtraXF1cGJ6ZmFnaGNtbWFjaXhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg5MDEwNjEsImV4cCI6MjAzNDQ3NzA2MX0.qvfBzihxwwWTzsS6BV2CDVcW2nfEGxGUqMjdrQbYnlA";
 
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   const pdfBlob = b64toBlob(pdf, "application/pdf", 512);
@@ -136,30 +145,49 @@ async function storePDF(pdf, fileName, path) {
   return null;
 }
 
+/*
+    submitData
+    * SEND data (formData) to QS and MailChimp via PHP *
+*/
+async function submitData(pdfPath, path, formData) {
+  formData.append("pdfPath", pdfPath);
+
+  try {
+    const response = await fetch(path + "app2.php", {
+      method: "POST",
+      body: formData,
+    });
+    console.log(await response.json());
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 /* 
     
-    CONTROLLER
+    CONTROLLERS
     
 */
-async function createPdf(data, path) {
+async function doPdf(subsData, data, path) {
   const resultsNode = stir.node("#resultBox");
 
   setDOMContent(resultsNode, renderGenerating());
   resultsNode.scrollIntoView();
 
+  // Build PDF
   const fullPdf = data.get("full_prospectus");
 
   const firstName = data.get("first_name") || "";
   const lastName = data.get("last_name") || "";
-  const email = data.get("email") || "";
+  //const email = data.get("email") || "";
 
-  const subject1 = data.get("subject_area_1") || "";
-  const subject2 = data.get("subject_area_2") || "";
-  const subject3 = data.get("subject_area_3") || "";
+  const subject1 = getSubjectFileName(data.get("subject_area_1"), subsData);
+  const subject2 = getSubjectFileName(data.get("subject_area_2"), subsData);
+  const subject3 = getSubjectFileName(data.get("subject_area_3"), subsData); // data.get("subject_area_3") || "";
 
   const pdfDoc = await PDFLib.PDFDocument.create();
 
-  const urlFull = path + "rawpdfs/full-non-personalised.pdf";
+  //const urlFull = path + "rawpdfs/full-non-personalised.pdf";
   const urlFront = path + "rawpdfs/Front.pdf";
   const urlIntro = path + "rawpdfs/Intro.pdf";
   const urlIntroInsert = path + "rawpdfs/IntroInsert.pdf";
@@ -179,38 +207,16 @@ async function createPdf(data, path) {
   const customFont = await pdfDoc.embedFont(fontBytes);
   // const helveticaFont = await frontPdf.embedFont(PDFLib.StandardFonts.Helvetica);
 
-  /* 
-          Full unpersonalised PDF 
-       */
+  /*  Full unpersonalised PDF */
   if (fullPdf === "1") {
-    //const fullPdfBytes = await fetch(urlFull).then((res) => res.arrayBuffer());
-    // const fullPdfDoc = await PDFLib.PDFDocument.load(fullPdfBytes);
-
-    // const pagesFull = fullPdfDoc.getPages();
-    // var i = 0;
-    // while (i < pagesFull.length) {
-    //     let [p] = await pdfDoc.copyPages(fullPdfDoc, [i]);
-    //     pdfDoc.addPage(p);
-    //     i++;
-    // }
-
-    // // Generate as Base 64 and download
-    // const pdfDataUri = await pdfDoc.saveAsBase64({
-    //     dataUri: false,
-    // });
-
-    //storePDF(pdfDataUri, fileName, path);
-
     const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
     setDOMContent(resultsNode, renderLink(fileNameFull));
-    emailUser(firstName, email, pdfPath, path);
+    submitData(pdfPath, path, data);
 
     return;
   }
 
-  /* 
-          Personalised PDF 
-       */
+  /* Personalised PDF */
   const frontPdfBytes = await fetch(urlFront).then((res) => res.arrayBuffer());
   const frontPdf = await PDFLib.PDFDocument.load(frontPdfBytes);
   const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
@@ -322,37 +328,72 @@ async function createPdf(data, path) {
     i++;
   }
 
-  // Generate as Base 64 and download
+  // Generate as Base 64
   const pdfDataUri = await pdfDoc.saveAsBase64({
     dataUri: false,
   });
 
   const response = await storePDF(pdfDataUri, fileName, path);
-  const pdfPath = "https://scezmsgewfitcalrkauq.supabase.co/storage/v1/object/public/" + response.fullPath;
+
+  const pdfPath = response ? SUPABASE_URL + "/storage/v1/object/public/" + response.fullPath : "";
+
+  if (!pdfPath) {
+    console.log("Error uploading to Supabase!");
+    return;
+  }
 
   setDOMContent(resultsNode, renderLink(pdfPath));
-  emailUser(firstName, email, pdfPath, path);
+  submitData(pdfPath, path, data);
+  return;
 }
 
-/*
-    emailUser
-*/
-async function emailUser(firstName, email, pdfPath, path) {
-  const formData = new FormData();
-
-  formData.append("pdfPath", pdfPath);
-  formData.append("firstName", firstName);
-  formData.append("email", email);
+/* doCaptcha Spam check */
+async function doCaptcha(token, data) {
+  data.append("token", token);
 
   try {
-    const response = await fetch(path + "app2.php", {
+    const response = await fetch(path + "verify.php", {
       method: "POST",
-      // Set the FormData instance as the request body
-      body: formData,
+      body: data,
     });
-    console.log(await response.json());
+
+    const result = await response.json();
+
+    if (result.success === "true") {
+      // Exectue the PDF Stuff
+      const required = stir.nodes("[data-required]");
+      const required2 = required.map((item) => item.name);
+
+      required2.forEach((item) => {
+        stir.node("[data-alertlabel=" + item + "]").innerText = " *";
+      });
+
+      const empties = required.filter((elem) => elem.value === "");
+
+      if (empties.length) {
+        const empties2 = empties.map((item) => item.name);
+
+        empties2.forEach((item) => {
+          stir.node("[data-alertlabel=" + item + "]").innerText = " * This field is required";
+        });
+
+        setDOMContent(stir.node("#formErrors"), renderRequiredError());
+        stir.node("#formErrors").scrollIntoView();
+        return;
+      }
+
+      doPdf(subjectsData, data, path);
+
+      return true;
+    } else {
+      // DONT Exectue the PDF Stuff
+      console.log("Captcha - suspected spam");
+      return false;
+    }
   } catch (e) {
-    console.error(e);
+    console.log("Error with captcha check");
+    //console.log(e);
+    return false;
   }
 }
 
@@ -366,17 +407,15 @@ const generatePDFBtn = stir.node("#generatePDFBtn");
 const generatePDFForm = stir.node("#generatePDFForm");
 
 const selects = stir.nodes("select");
-selects.forEach((element) => (element.value = ""));
+selects.forEach((element) => (element.value = "")); // reset on load
 
 const subjectSelect = stir.nodes(".subjectSelect");
 subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
 
-// selects.forEach((element) => {
-//     element.insertAdjacentHTML("beforeend", initSubjects);
-// });
-
 /* 
-               ACTION: Form change events 
+
+   ACTION: Form change events 
+
 */
 generatePDFForm &&
   generatePDFForm.addEventListener("change", function (e) {
@@ -397,7 +436,7 @@ generatePDFForm &&
       stir.node("#subject_area_1_courses").innerHTML = renderSubjectCoursesOptions(subject1, "1", subjectsData);
       stir.node(".subject_area_2").classList.remove("hide");
 
-      const subjectsData1 = subjectsData.filter((item) => item.subject !== subject1);
+      const subjectsData1 = subjectsData.filter((item) => item.id !== Number(subject1));
       subjectSelect[1].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData1));
     }
 
@@ -405,13 +444,14 @@ generatePDFForm &&
       stir.node("#subject_area_2_courses").innerHTML = renderSubjectCoursesOptions(subject2, "2", subjectsData);
       stir.node(".subject_area_3").classList.remove("hide");
 
-      const subjectsData2 = subjectsData.filter((item) => item.subject !== subject2 && item.subject !== subject1);
+      const subjectsData2 = subjectsData.filter((item) => item.id !== Number(subject2) && item.id !== Number(subject1));
       subjectSelect[2].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData2));
     }
 
     if (e.target.id === "subject_area_3" && subject3) {
       stir.node("#subject_area_3_courses").innerHTML = renderSubjectCoursesOptions(subject3, "3", subjectsData);
     }
+    return;
   });
 
 /* 
@@ -420,30 +460,11 @@ generatePDFForm &&
 generatePDFBtn &&
   generatePDFBtn.addEventListener("click", function (e) {
     e.preventDefault();
+
     const data = new FormData(generatePDFForm);
 
-    const required = stir.nodes("[data-required]");
-    const required2 = required.map((item) => item.name);
-
-    required2.forEach((item) => {
-      stir.node("[data-alertlabel=" + item + "]").innerText = " *";
-    });
-
-    const empties = required.filter((elem) => elem.value === "");
-
-    if (empties.length) {
-      const empties2 = empties.map((item) => item.name);
-
-      empties2.forEach((item) => {
-        stir.node("[data-alertlabel=" + item + "]").innerText = " * This field is required";
-      });
-
-      setDOMContent(stir.node("#formErrors"), renderRequiredError());
-      stir.node("#formErrors").scrollIntoView();
-
+    grecaptcha.execute("6LeLc_wpAAAAAK9XBEY5HhZcsYEgTTi1wukDL685", { action: "register" }).then(function (token) {
+      doCaptcha(token, data);
       return;
-    }
-
-    createPdf(data, path);
-    return;
+    });
   });
