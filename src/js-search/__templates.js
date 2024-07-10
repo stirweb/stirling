@@ -57,7 +57,7 @@ stir.templates.search = (() => {
    *
    * For a given name and value, return the first matching HTML <input> or <option> element.
    */
-  const metaParamElement = (name, value) => document.querySelector(`input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]`);
+  const metaParamElement = (name, value) => document.querySelector(`form[data-filters] input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]`);
 
   //	const metaParamToken = (name, values) => {
   //		if (name === "meta_type") return; // ignore `type`
