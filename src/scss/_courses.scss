@@ -609,12 +609,20 @@ svg.icon {
     justify-content: center;
     gap: 20px;
 
-    a {
+	a.button {
+		margin-bottom: 0;
+	}
+
+    a:not(.button) {
       font-size: 1.125rem; //1.25rem; /* 20px */
       width: 90%;
       text-align: center;
       line-height: 3;
       border: 1px solid #fff;
+
+	  &:hover {
+		border-color: rgba(255, 255, 255, 0.7);
+	  }
 
       span {
         display: inline-block;
@@ -639,18 +647,14 @@ svg.icon {
       }
     }
 
-    a:hover {
-      border: 1px solid rgba(255, 255, 255, 0.7);
-    }
-
-    a:hover span::before {
+   /*  a:hover span::before {
       width: 100%;
-    }
+    } */
   }
 }
 
 @media screen and (min-width: 640px) {
-  .c-course-ctas nav a {
+  .c-course-ctas nav a:not(.button) {
     width: 80%;
 
     svg.icon {
@@ -793,7 +797,7 @@ a[data-mode*="Online"] {
   }
 
   .c-whats-next nav a,
-  .c-course-ctas nav a {
+  .c-course-ctas nav a:not(.button) {
     width: 30%;
     min-width: max-content;
     text-align: center;
@@ -801,8 +805,7 @@ a[data-mode*="Online"] {
 
   .c-course-ctas {
     padding: 40px 0;
-
-    nav a {
+    nav a:not(.button) {
       line-height: 1;
       margin: 0;
     }

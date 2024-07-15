@@ -21,7 +21,7 @@ const renderSubjectCoursesOptions = (subject, index, data) => {
   return subjectSelected[0].courses
     .map((item) => {
       const ident = item.name.replaceAll(" ", "-").toLowerCase();
-      return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="${ident}" name="courses_${index}" value="${item.id}" data-id="subject_course_${index}.${item.id}"><label for="${ident}">${item.name}</label></div>`;
+      return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}_${item.id}" value="${item.id}" data-id="subject_course_${index}.${item.id}"><label for="${ident}">${item.name}</label></div>`;
     })
     .join(``);
 };
@@ -153,11 +153,12 @@ async function submitData(pdfPath, path, formData) {
   formData.append("pdfPath", pdfPath);
 
   try {
-    const response = await fetch(path + "app2.php", {
+    //const response = await fetch(path + "app2.php", {
+    const response = await fetch(path + "qs.php", {
       method: "POST",
       body: formData,
     });
-    console.log(await response.json());
+    console.log(await response.text());
   } catch (e) {
     console.error(e);
   }

@@ -74,7 +74,7 @@ stir.templates.search = (() => {
    *
    * For a given name and value, return the first matching HTML <input> or <option> element.
    */
-  const metaParamElement = (name, value) => document.querySelector(`input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]`);
+  const metaParamElement = (name, value) => document.querySelector(`form[data-filters] input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]`);
 
   //	const metaParamToken = (name, values) => {
   //		if (name === "meta_type") return; // ignore `type`
@@ -265,11 +265,12 @@ stir.templates.search = (() => {
       const querySanitised = stir.String.htmlEntities(data.question.originalQuery)
         .replace(/^!padrenullquery$/, "")
         .trim();
-      const queryEcho = querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
+      const queryEcho = ''; //querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
       const message = totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`;
       const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
-      return `<div class="u-py-2"> ${message} ${tokens} ${spelling} </div>`;
+	    const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : '';
+      return `<div class="u-py-2"> ${hostinfo} ${message} ${tokens} ${spelling} </div>`;
     },
     pagination: (summary) => {
       const { currEnd, totalMatching, progress } = summary;
@@ -348,7 +349,7 @@ stir.templates.search = (() => {
 
     clearing: (item) => {
       if (Object.keys && item.metaData && Object.keys(item.metaData).join().indexOf("clearing") >= 0) {
-        return `<p class="u-m-0"><strong class="u-heritage-berry">Clearing 2024: places may be available on this course.</strong></p>`;
+        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2024: places may be available on this course.</strong></p>`;
       }
     },
     combos: (item) => {
@@ -949,7 +950,7 @@ stir.courses = (() => {
 	/**
 	 * C L E A R I N G
 	 */
-	const CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
+	const CLEARING = true; // set TRUE if Clearing is OPEN; otherwise FALSE
 	/*
 	 **/
 
@@ -1195,8 +1196,8 @@ stir.search = () => {
 
 	const getQueryParameters = () => {
 		let parameters = QueryParams.getAll();
-		let facetParameters = Object.keys(parameters).filter(key => key.indexOf('f.')===0).reduce((obj,key)=>{ return {...obj, [key]: parameters[key]}; }, {});
-		//debug && Object.keys(facetParameters).length && console.info('[facetParameters]', facetParameters,parameters);
+		let facetParameters = Object.keys(parameters).filter(key => key.indexOf('f.')===0).reduce((obj,key)=>{ return {...obj, [key]: rwm2.string.urlDecode(parameters[key])}; }, {});
+		//debug && Object.keys(facetParameters).length && console.info('[Search] facetParameters:',facetParameters);
 		return facetParameters;
 	};
 
@@ -1278,28 +1279,37 @@ stir.search = () => {
 		meta_modes: 'f.Study mode|modes'
 	};
 
+	// TEMP - please move to stir.String when convenient to do so!
+	const rwm2 = {
+		string: {
+					urlDecode: (str) => decodeURIComponent(str.replace(/\+/g, ' '))
+				}
+		};
+
 	const updateFacets = stir.curry((type, data) => {
 		//if(!preview) return data;
 		const form = document.querySelector(`form[data-filters="${type}"]`);
 		if(form) {
 			const parameters = QueryParams.getAll();
+			const active = 'stir-accordion--active';
+
 			data.response.facets.forEach(
 				(facet) => {
-					const active = 'stir-accordion--active';
+
 					const metaFilter = form.querySelector(`[data-facet="${facet.name}"]`);
 					const metaAccordion = metaFilter && metaFilter.querySelector('[data-behaviour=accordion]');
 					const open = metaAccordion && metaAccordion.getAttribute('class').indexOf(active)>-1;
 
 					const facetName = facet.categories && facet.categories[0] && facet.categories[0].queryStringParamName;
 					const metaName  = facetName && Object.keys(metaToFacet)[Object.values(metaToFacet).indexOf(facetName)];
-					const metaValue = (metaName && parameters[metaName]) || (parameters[facetName] && decodeURIComponent(parameters[facetName]));
-					const selector  = facetName && metaValue && `input[name="${facetName}"][value~="${metaValue.toLowerCase()}"]`;
+					const metaValue = (metaName && parameters[metaName]) || (parameters[facetName] && rwm2.string.urlDecode(parameters[facetName]));
+					const selector  = facetName && metaValue && `input[name="${facetName}"][value="${metaValue.toLowerCase()}"]`;
 					const facetFilter = stir.DOM.frag(stir.String.domify(stir.templates.search.facet(facet)));
 					const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
 					facetFilterElements && facetFilterElements.forEach(el => {
 						el.checked=true;
 						metaName && QueryParams.remove(metaName,false,null,true); // don't reload window and use replaceState() instead of pushState()
-						facetName && QueryParams.remove(facetName,false,null,true,true); // don't reload window and use replaceState() instead of pushState()
+						facetName && QueryParams.remove(facetName,false,null,true,false); // don't reload window and use replaceState() instead of pushState()
 					});
 
 					const facetAccordion = facetFilter.querySelector('[data-behaviour=accordion]');
