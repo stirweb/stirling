@@ -13,11 +13,13 @@ stir.dpt = (function () {
       more: "View all _X_ choices",
     },
   };
-  let user = {};
-  let _year = 0;
-  let _semesterCache = [];
+  let user = {}, _year=0, _semesterCache=[];
   let routesCurry;
-
+  
+  function resetGlobals() {
+    _year = 0;
+    _semesterCache = [];
+  }
   const modulesEndpointParams = {
     UG: "opt=runcode&ct=UG",
     PG: "opt=runpgcode&ct=PG",
@@ -85,10 +87,9 @@ stir.dpt = (function () {
 
   const moduleLink = (data) => {
     // LINK TO NEW AKARI MODULE PAGES
-    const url = getCurrentUri();
-    //const sid = document.querySelector('meta[name="sid"]') ? document.querySelector('meta[name="sid"]').getAttribute("content") : "error_sid-not-found";
-    return `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${url}`;
-
+    const url = `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
+	return availability(data) ? `<a href="${url}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
+	
     // LINK TO OLD DEGREE PROGRAM TABLES
     //return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
   };
@@ -101,7 +102,7 @@ stir.dpt = (function () {
       footer: (text) => `<p class=c-course-modules__pdm-note>${text}</p>`,
     },
     module: (data) =>
-      `<tr><td><a href="${moduleLink(data)}">${data.modName}</a>
+      `<tr><td>${moduleLink(data)}
 			<span class=c-course-modules__module-code>(${data.modCode})</span>
 			</td><td>${data.modCredit} credits</td></tr>`,
     nodata: `<tr><td colspan=2> no data </td></tr>`,
@@ -152,7 +153,7 @@ stir.dpt = (function () {
     let collectionId = [semesterID, c].join("");
     let header = template.collection.header(getCollectionHeader(collection.collectionStatusCode));
     let notes = collection.collectionType == "LIST" || collection.collectionType == "CHOICE" ? template.collection.notes(collection.collectionNotes) : "";
-    let body = template.collection.table(collectionId, collection.mods.filter(availability).map(moduleView).join(""));
+    let body = template.collection.table(collectionId, collection.mods.map(moduleView).join(""));
 
     let footer = collection.collectionFootnote ? template.collection.footer(collection.collectionFootnote) : "";
     let more =
@@ -269,7 +270,7 @@ stir.dpt = (function () {
       var value = this.options[this.selectedIndex].value.split("|");
       var moa = value[0];
       var occ = value[2];
-      _year = 0;
+      resetGlobals();
       stir.dpt.reset.modules();
       getModules(user.type, user.rouCode, moa, occ);
     });
@@ -296,6 +297,7 @@ stir.dpt = (function () {
     data.forEach && data.forEach((route) => select.append(makeOption(route)));
 
     const change = (event) => {
+      resetGlobals();
       stir.dpt.reset.modules();
       user.rouCode = select[select.selectedIndex].value;
       user.rouName = select[select.selectedIndex].textContent;

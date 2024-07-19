@@ -177,7 +177,7 @@
       margin: 0 auto;
 
       h3 {
-        margin: 16px 0;
+        margin: 24px 0;
         padding: 0;
       }
 
@@ -293,24 +293,28 @@
   
   */
   .c-course-tabs {
+    width: 90%;
+    max-width: 77.5rem;
+    margin: 0 auto;
+    margin-bottom: 40px;
+
     .stir-tabs {
       position: relative;
-      top: -60px;
-      justify-content: center;
+      /* top: -60px;
+      justify-content: center; */
+      top: -5px;
+      justify-content: left;
       margin: 0 1rem;
 
       > {
         .stir-tabs__tab {
           text-align: center;
           padding: 8px 0 16px 0;
+          /* background-color: transparent; */
+
           background-color: transparent;
-        }
-
-        .stir-tabs__tab--active {
-          background: #f6f5f4;
-        }
-
-        .stir-tabs__tab {
+          border-top: 5px solid transparent;
+          border-bottom: 0;
           a,
           button {
             margin: 0 0.625rem; //10px
@@ -335,9 +339,16 @@
           }
         }
 
+        .stir-tabs__tab--active {
+          background: #f6f5f4;
+          border-top: 5px solid $energy-green;
+        }
+
         .stir-tabs__content {
-          padding: 0px 180px;
-          max-width: 990px;
+          /* padding: 0px 180px;
+          max-width: 990px; */
+          padding: 0 80px;
+          max-width: none;
 
           &.u-p-0 {
             padding: 0px;

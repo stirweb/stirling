@@ -185,8 +185,20 @@ var QueryParams = (function () {
   function _remove(name, reload, url, replace, noencode) {
     if (!url) url = window.location.href;
 
-	var newUrl = _removeURLParameter(url, noencode? name : encodeURIComponent(name));
-    if(newUrl!==url) replace ? _replaceStateHandler(newUrl): _pushStateHandler(newUrl);
+	/* old code here */
+	// var newUrl = _removeURLParameter(url, noencode? name : encodeURIComponent(name));
+	/* old code end */
+	
+	/* new code here */
+	var newUrl = url;
+	if(url.indexOf(name)>-1) {
+		newUrl = _removeURLParameter(url, name);
+	} else if (url.indexOf(encodeURIComponent(name))>-1) {
+		newUrl = _removeURLParameter(url, encodeURIComponent(name));
+	}
+	/* new code end */
+
+	if(newUrl!==url) replace ? _replaceStateHandler(newUrl): _pushStateHandler(newUrl);
 
     if (reload) {
       window.location.href = document.location.href;

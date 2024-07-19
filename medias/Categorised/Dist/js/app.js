@@ -1102,8 +1102,20 @@ var QueryParams = (function () {
   function _remove(name, reload, url, replace, noencode) {
     if (!url) url = window.location.href;
 
-	var newUrl = _removeURLParameter(url, noencode? name : encodeURIComponent(name));
-    if(newUrl!==url) replace ? _replaceStateHandler(newUrl): _pushStateHandler(newUrl);
+	/* old code here */
+	// var newUrl = _removeURLParameter(url, noencode? name : encodeURIComponent(name));
+	/* old code end */
+	
+	/* new code here */
+	var newUrl = url;
+	if(url.indexOf(name)>-1) {
+		newUrl = _removeURLParameter(url, name);
+	} else if (url.indexOf(encodeURIComponent(name))>-1) {
+		newUrl = _removeURLParameter(url, encodeURIComponent(name));
+	}
+	/* new code end */
+
+	if(newUrl!==url) replace ? _replaceStateHandler(newUrl): _pushStateHandler(newUrl);
 
     if (reload) {
       window.location.href = document.location.href;
@@ -1126,9 +1138,10 @@ var UoS_StickyWidget = (function() {
         
         if(!element) return;
         this.element  = element;
-        this.offset  = element.getAttribute("data-offset");        
+        this.offset  = element.getAttribute("data-offset");
         this.trigger = this.setTrigger( element.getAttribute( 'data-observe' ) );
         this.offsetRatio = 0;
+		this.wrapper = document.createElement('div');
         this.controls = {
             close: element.querySelectorAll('[data-close]')
         };
@@ -1167,7 +1180,7 @@ var UoS_StickyWidget = (function() {
             // temporarily make sure element is displayed:
             element.style.display = 'block';
             // get the height value
-            height = Number(element.clientHeight);
+            height = Number(element.offsetHeight);
             // reset the style
             element.style.display = display;
             return height;
@@ -1181,12 +1194,18 @@ var UoS_StickyWidget = (function() {
 				that.offsetRatio = (height/2)/height
 			}
 
-			// set margins top and bottom to balance the overlap with the
-			// button's actual height (except on mobile, no margin):
+			// set top and bottom margins to balance the overlap with
+			// the button's actual height (except on mobile, which has
+			// a fixed margin):
 			if(window.stir && stir.MediaQuery && stir.MediaQuery.current!=="small") {
-				element.style.marginTop = element.style.marginBottom = (0 - height/2) + "px";
+				if(element.hasAttribute("data-bg")){
+					element.style.marginTop = (0-height-1) + "px";			// -1 to avoid rounding-error pixel gap
+				} else {
+					element.style.marginTop = (0-height/2) + "px";
+				}
+				that.wrapper.style.paddingBottom = (height/2) + "px";
 			} else {
-				element.style.marginTop = element.style.marginBottom = 0;
+				that.wrapper.style.paddingBottom = element.style.marginTop = null; 
 			}
 		}
 
@@ -1213,8 +1232,9 @@ var UoS_StickyWidget = (function() {
                 this.hideyslidey();
             }
 
-            element.setAttribute("data-initialised", true);
+			this.element.hasAttribute("data-bg") && this.setBGWrapper();
 
+            element.setAttribute("data-initialised", true);
 			window.addEventListener("resize", stir.debounce(recentreOffset, 400));
         
         }
@@ -1233,12 +1253,19 @@ var UoS_StickyWidget = (function() {
             trigger = document.querySelector(observe);
         }
         trigger = trigger || this.element.previousElementSibling;
-        if(trigger.clientHeight == 0) {
+        if(trigger.offsetHeight == 0) {
             // if the previous sibling has zero height, use the previous-previous one instead.
             trigger = trigger.previousElementSibling;
         }
         this.offset && trigger.setAttribute('data-has-overlapper', this.offset);
         return trigger;
+
+    }
+
+	StickyWidget.prototype.setBGWrapper = function setBGWrapper() {
+		this.element.previousElementSibling.insertAdjacentElement("beforebegin",this.wrapper)
+		this.wrapper.append(this.element.previousElementSibling)
+		this.wrapper.classList.add(this.element.getAttribute("data-bg").trim());
     }
 
     return StickyWidget;
@@ -2297,7 +2324,7 @@ var UoS_env = (function () {
       wc_path = "";
       t4_tags = true;
       break;
-      
+
     case "stiracuk-cms01-test.terminalfour.net":
       env_name = "appdev-preview";
       wc_path = "";
@@ -2313,11 +2340,11 @@ var UoS_env = (function () {
       wc_path = "/medias/Categorised/Dist/";
       break;
   }
-  
-  switch(window.location.port) {
-    case '3000':
-    case '8000':
-      env_name = "dev"
+
+  switch (window.location.port) {
+    case "3000":
+    case "8000":
+      env_name = "dev";
       wc_path = "/medias/Categorised/Dist/";
   }
 
@@ -2325,7 +2352,7 @@ var UoS_env = (function () {
     //url: hostname,
     name: env_name,
     wc_path: wc_path,
-    t4_tags: t4_tags
+    t4_tags: t4_tags,
   };
 })();
 

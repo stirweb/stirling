@@ -441,20 +441,6 @@
 	}
 } */
 
-/* @media screen and (max-width: 39.9375em) {
-	.c-whats-next {
-		padding: 0;
-	}
-
-	.c-course-whats-next__link {
-		display: block;
-	}
-
-	.c-course-tabs__tabs > .accordion-item div.accordion-content {
-		padding: 15px;
-	}
-} */
-
 svg.icon {
   width: 1.5em;
   height: 1.5em;
@@ -587,6 +573,8 @@ svg.icon {
 
       &:hover {
         text-decoration: underline;
+        text-underline-offset: 5px;
+        border: none;
       }
     }
 
@@ -621,12 +609,20 @@ svg.icon {
     justify-content: center;
     gap: 20px;
 
-    a {
+	a.button {
+		margin-bottom: 0;
+	}
+
+    a:not(.button) {
       font-size: 1.125rem; //1.25rem; /* 20px */
       width: 90%;
       text-align: center;
       line-height: 3;
       border: 1px solid #fff;
+
+	  &:hover {
+		border-color: rgba(255, 255, 255, 0.7);
+	  }
 
       span {
         display: inline-block;
@@ -651,18 +647,14 @@ svg.icon {
       }
     }
 
-    a:hover {
-      border: 1px solid rgba(255, 255, 255, 0.7);
-    }
-
-    a:hover span::before {
+   /*  a:hover span::before {
       width: 100%;
-    }
+    } */
   }
 }
 
 @media screen and (min-width: 640px) {
-  .c-course-ctas nav a {
+  .c-course-ctas nav a:not(.button) {
     width: 80%;
 
     svg.icon {
@@ -803,36 +795,9 @@ a[data-mode*="Online"] {
   .course-sticky-close-btn {
     right: 2rem;
   }
-  .c-course-tabs {
-    /* Set absolute max width (i.e. for XL screens) to be same as Foundation */
-    width: 90%;
-    max-width: 77.5rem;
-    margin: 0 auto;
-    margin-bottom: 40px;
-  }
-  .c-course-tabs .stir-tabs {
-    top: -5px;
-    justify-content: left;
-  }
-
-  .c-course-tabs .stir-tabs > .stir-tabs__content {
-    padding: 0 80px;
-    max-width: none;
-  }
-
-  .c-course-tabs .stir-tabs > .stir-tabs__tab {
-    background-color: transparent;
-    border-top: 5px solid transparent;
-    border-bottom: 0;
-  }
-
-  .c-course-tabs .stir-tabs > .stir-tabs__tab--active {
-    background-color: rgb(246, 245, 244);
-    border-top: 5px solid rgb(118, 189, 34);
-  }
 
   .c-whats-next nav a,
-  .c-course-ctas nav a {
+  .c-course-ctas nav a:not(.button) {
     width: 30%;
     min-width: max-content;
     text-align: center;
@@ -840,8 +805,7 @@ a[data-mode*="Online"] {
 
   .c-course-ctas {
     padding: 40px 0;
-
-    nav a {
+    nav a:not(.button) {
       line-height: 1;
       margin: 0;
     }

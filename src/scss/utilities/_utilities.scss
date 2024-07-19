@@ -81,9 +81,9 @@
     position: sticky; /* for modern browsers */
     box-shadow: 0 5px 1px rgba(0, 0, 0, 0.2);
 
-    a {
+    /* a {
       padding: 13px 20px;
-    }
+    } */
   }
 
   /* &.flush {
@@ -91,15 +91,17 @@
 	} */
   /* &[data-sticky-polyfill] {} */
 
-  &.offsetup + .grid-container {
-    margin-top: 2rem;
-  }
+  /* &.offsetup + .grid-container {
+	  margin-top: var(--offsetup);
+  } */
 }
 
+/* removed 2024-05-15 for Clearing
 @include breakpoint(medium up) {
   .u-sticky.stuck a {
     border: 1px solid currentColor;
   }
 }
+*/
 
 @import "animatons";

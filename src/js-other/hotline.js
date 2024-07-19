@@ -45,6 +45,8 @@
       }
     });
   }
+  
+  window.timewarp = timewarp;
 
   function delorean() {
     var value = Number(fluxCapacitor.value);

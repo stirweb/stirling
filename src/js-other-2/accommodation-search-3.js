@@ -13,6 +13,7 @@
     cookieType: "accom",
     urlToFavs: scope.dataset.favsurl ? scope.dataset.favsurl : ``,
     activity: scope.dataset.activity ? scope.dataset.activity : ``,
+    view: stir.templates && stir.templates.view ? stir.templates.view : ``,
   };
 
   const resultsArea = scope;
@@ -35,7 +36,7 @@
   const renderPrice = (rooms) => {
     if (!rooms) return ``;
     const allPrices = rooms.map((item) => parseFloat(item.cost)).sort((a, b) => a - b);
-    const matches = stir.removeDuplicates(rooms.map((item) => item.title));
+    const matches = stir.removeDuplicates(rooms.map((item) => item.type));
 
     if (allPrices[0].toFixed(2) === allPrices[allPrices.length - 1].toFixed(2)) {
       return `<p>£${allPrices[0].toFixed(2)} per week</p>
@@ -111,7 +112,7 @@
   };
 
   /* renderShared */
-  const renderShared = (item) => {
+  const renderShared = stir.curry((item) => {
     return !item.id
       ? ``
       : `<div class="cell small-6">
@@ -121,7 +122,23 @@
               <div>${stir.favourites.isFavourite(item.id) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.id, "")}</div>
             </div>
           </div>`;
-  };
+  });
+
+  /* renderMicro */
+  const renderMicro = stir.curry((consts, item) => {
+    if (!item) return ``;
+
+    const cookie = stir.favourites.getFav(item.id, consts.cookieType);
+    return !item.id
+      ? ``
+      : `<div class="cell small-4">
+              <div class="u-green-line-top u-margin-bottom">
+                <p class="u-text-regular u-py-1"><strong><a href="${item.url}" >${item.title}</a></strong></p>
+                <div class="u-mb-1">${item.location} accommodation.</div>
+                <div>${renderFavBtns(consts.urlToFavs, cookie, item.id)}</div>
+              </div>
+            </div>`;
+  });
 
   /* renderNumItems */
   const renderNumItems = (num) => `<div class="cell u-mb-3">Results based on filters - <strong>${num} ${num === 1 ? `property` : `properties`}</strong></div>`;
@@ -253,7 +270,8 @@
     const favs = stir.favourites.getFavsList(consts.cookieType);
 
     const mapItemCurry = stir.map(mapItem(data));
-    const renderer = stir.map(renderAccom(consts));
+    //const renderer = stir.map(renderAccom(consts));
+    const renderer = consts.view === `micro` ? stir.map(renderMicro(consts)) : stir.map(renderAccom(consts));
     const setDOM = setDOMContent(resultsArea);
 
     const filteredData = stir.compose(filterEmpties, mapItemCurry)(favs);
@@ -391,7 +409,7 @@
         const favsCookie = getfavsCookie();
         const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
 
-        const link = "https://www.stir.ac.uk/share/" + base64Params;
+        const link = "https://www.stir.ac.uk/shareaccommodation/" + base64Params;
         navigator.clipboard && navigator.clipboard.writeText(link);
 
         const dialog = stir.t4Globals.dialogs.filter((item) => item.getId() === "shareDialog");
@@ -429,7 +447,9 @@
 
       const cookie = stir.favourites.getFav(target.dataset.id, CONSTS.cookieType);
 
-      if (CONSTS.activity === "searchfavs") {
+      //console.log(CONSTS.activity);
+
+      if (CONSTS.activity === "search") {
         const node = stir.node("#favbtns" + target.dataset.id);
         if (node) setDOMContent(node, renderFavBtns(CONSTS.urlToFavs, cookie, target.dataset.id));
       }

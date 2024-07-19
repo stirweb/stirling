@@ -49,6 +49,10 @@
   display: grid;
 }
 
+.u-justify-content-center {
+	justify-content: center;
+}
+
 @media screen and #{breakpoint(medium up)} {
   .u-flex-medium-up {
     display: flex;

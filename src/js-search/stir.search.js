@@ -11,8 +11,9 @@ var stir = stir || {};
 stir.funnelback = (() => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 	const hostname = debug ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
-	//const hostname = "search.stir.ac.uk";
 	const url = `https://${hostname}/s/`;
+	
+	// alternative public hostname: `shared-15-24-search.clients.uk.funnelback.com`
 
 	const getJsonEndpoint = () => new URL("search.json", url);
 	const getScaleEndpoint = () => new URL("scale", url);
@@ -69,7 +70,7 @@ stir.courses = (() => {
 	/**
 	 * C L E A R I N G
 	 */
-	const CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
+	const CLEARING = true; // set TRUE if Clearing is OPEN; otherwise FALSE
 	/*
 	 **/
 
@@ -169,7 +170,7 @@ stir.search = () => {
   const meta = {
     main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "page", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tag", "tags", "thumbnail", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
     courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
-    clearing: CLEARING ? ["clearingEU", "clearingInternational", "clearingRUK", "clearingScotland", "clearingSIMD"] : [],
+    clearing: CLEARING ? ["clearing"] : [],
 	scholarships: ["value","status","number"],
 	news: ["c","d","h1","image","imagealt","tags","tag","thumbnail"]
   };
@@ -263,7 +264,14 @@ stir.search = () => {
 	  clearing:{
 		collection: "stir-courses-combos",
 		query: "!padrenullquery",
-		sort: "title"
+		sort: "title",
+		meta_clearing: "[scotland simd rukroi international eu]",
+		SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
+        fmo: "true",
+        num_ranks: NUMRANKS,
+        /* explain: true,
+        query: "!padrenullquery",
+        timestamp: +new Date(), */
 	  }
     },
     // extra parameters for no-query searches
@@ -308,8 +316,8 @@ stir.search = () => {
 
 	const getQueryParameters = () => {
 		let parameters = QueryParams.getAll();
-		let facetParameters = Object.keys(parameters).filter(key => key.indexOf('f.')===0).reduce((obj,key)=>{ return {...obj, [key]: parameters[key]}; }, {});
-		//debug && Object.keys(facetParameters).length && console.info('[facetParameters]', facetParameters,parameters);
+		let facetParameters = Object.keys(parameters).filter(key => key.indexOf('f.')===0).reduce((obj,key)=>{ return {...obj, [key]: rwm2.string.urlDecode(parameters[key])}; }, {});
+		//debug && Object.keys(facetParameters).length && console.info('[Search] facetParameters:',facetParameters);
 		return facetParameters;
 	};
 
@@ -391,28 +399,37 @@ stir.search = () => {
 		meta_modes: 'f.Study mode|modes'
 	};
 
+	// TEMP - please move to stir.String when convenient to do so!
+	const rwm2 = {
+		string: {
+					urlDecode: (str) => decodeURIComponent(str.replace(/\+/g, ' '))
+				}
+		};
+
 	const updateFacets = stir.curry((type, data) => {
 		//if(!preview) return data;
 		const form = document.querySelector(`form[data-filters="${type}"]`);
 		if(form) {
 			const parameters = QueryParams.getAll();
+			const active = 'stir-accordion--active';
+
 			data.response.facets.forEach(
 				(facet) => {
-					const active = 'stir-accordion--active';
+
 					const metaFilter = form.querySelector(`[data-facet="${facet.name}"]`);
 					const metaAccordion = metaFilter && metaFilter.querySelector('[data-behaviour=accordion]');
 					const open = metaAccordion && metaAccordion.getAttribute('class').indexOf(active)>-1;
 
 					const facetName = facet.categories && facet.categories[0] && facet.categories[0].queryStringParamName;
 					const metaName  = facetName && Object.keys(metaToFacet)[Object.values(metaToFacet).indexOf(facetName)];
-					const metaValue = (metaName && parameters[metaName]) || (parameters[facetName] && decodeURIComponent(parameters[facetName]));
-					const selector  = facetName && metaValue && `input[name="${facetName}"][value~="${metaValue.toLowerCase()}"]`;
+					const metaValue = (metaName && parameters[metaName]) || (parameters[facetName] && rwm2.string.urlDecode(parameters[facetName]));
+					const selector  = facetName && metaValue && `input[name="${facetName}"][value="${metaValue.toLowerCase()}"]`;
 					const facetFilter = stir.DOM.frag(stir.String.domify(stir.templates.search.facet(facet)));
 					const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
 					facetFilterElements && facetFilterElements.forEach(el => {
 						el.checked=true;
 						metaName && QueryParams.remove(metaName,false,null,true); // don't reload window and use replaceState() instead of pushState()
-						facetName && QueryParams.remove(facetName,false,null,true,true); // don't reload window and use replaceState() instead of pushState()
+						facetName && QueryParams.remove(facetName,false,null,true,false); // don't reload window and use replaceState() instead of pushState()
 					});
 
 					const facetAccordion = facetFilter.querySelector('[data-behaviour=accordion]');
