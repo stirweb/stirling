@@ -1,366 +1,119 @@
-/* 
- * NEW TABS RK8 
- * General tabs above. Course tabs below
- */
-
-/* 
-
-  GENERAL TABS
-  Mobile first: display as accordion  
-
-*/
 .stir-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
+	[role="tablist"]{
+		display: none;
+	}
 
-  > {
-    .stir-tabs__tab {
-      width: 100%;
-      border-top: 1px solid #3a3c39;
-      font-family: "Open Sans", sans-serif;
-      margin-bottom: 0;
-      padding: 0;
+	[role="tab"] {
+		text-align: center;
+		border-width: 5px 0;
+		border-style: solid;
+		border-color: transparent;
+		color: $heritage-green;
+		cursor: pointer;
 
-      > a {
-        display: inline-block;
-        padding: 16px;
-        color: #75767a;
-        font-size: 1.375rem; // 22px;
-        font-weight: 700;
-        text-align: left;
-        position: relative;
-        border-bottom: 0;
-      }
+		&[aria-selected="true"] {
+			color: $black;
+			border-top-color:$energy-green;
+			border-bottom-color:#ccc;
+			background-color: #f6f5f4;
+		}
+	}
 
-      > button {
-        font-size: 1.375rem; // 22px;
-        font-weight: 700;
-        line-height: normal;
-        color: #75767a;
-        text-align: left;
-        padding: 16px;
-        cursor: pointer;
-      }
+	details {
+		border-bottom: 5px solid transparent;
+		
+		summary {
+			border: 5px solid transparent;
+			border-width: 5px 0;
+			text-align: center;
+			color: $heritage-green;
+			background-color: #f6f5f4;
+			padding-left: 2rem;
+			
+			font-size: 1.25rem;
+			font-weight: 700;
+			line-height: 1.5;
+			
+			padding: 20px 35px 20px 0;
+			cursor: pointer;
 
-      &:first-child {
-        margin-top: 0;
-      }
+			&::after {
+				content: "+";
+				float: right;
+				margin-right: 1rem;
+			}
 
-      &:last-child {
-        margin-top: 0;
-        border-bottom: 1px solid $black;
-      }
+			&::marker {
+				content: none;
 
-      a:hover {
-        border-bottom: 0;
-      }
+			}
+		}
+		&[open] {
+			summary {
+				border-top-color: $energy-green;
+				border-bottom-color: #CCC;
+				&::after {
+					content: "–";
+				}
+			}
+		}
 
-      &::after {
-        content: none;
-      }
-    }
+	}
 
-    .stir-tabs__content {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 0px 16px;
+	[role="tabpanel"]{
+		background: #f6f5f4;
+		/* margin: 0 auto;
+		padding: 0 2rem; */
 
-      p,
-      li,
-      td {
-        font-size: 1rem; // 16px;
-      }
+		[data-behaviour="accordion"] h3 {
+			padding: 0;
+		}
+		h2:first-of-type {
+			padding-top: 1rem;
+			margin-bottom: 0;
+		}
+		p {
+			font-size: 1rem;
+		}
+	}
 
-      h3,
-      h3:first-of-type {
-        margin: 16px 0;
-        padding: 0;
-      }
-
-      h3::after {
-        content: none;
-      }
-
-      &:last-child {
-        border-bottom: 1px solid $black;
-      }
-
-      &.c-wysiwyg-content > :first-child {
-        margin-top: 8px; // was 50
-      }
-    }
-
-    .stir-tabs__tab {
-      &:before {
-        position: absolute;
-        top: 16px;
-        right: 1rem;
-        content: "+";
-        color: #75767a;
-        font-size: 1.25rem; // 20px;
-        font-weight: 800;
-      }
-
-      &.stir-tabs__tab--active:before {
-        content: "-";
-        font-size: 1.5rem; // 24px;
-      }
-    }
-  }
 }
 
-/* 
+@media screen and (min-width: 64em) {
+	/* tabs outer wrapper */
+	.c-course-tabs {
+		width: 90%;
+		max-width: 77.5rem;
+		margin: 0 auto;
+		margin-bottom: 0px;
+		margin-bottom: 40px;
+	}
 
-    COURSE TAB OVER RIDES 
-    Mobile first: display as accordion 
-  
-  */
+	.stir-tabs {
+		[role="tablist"]{
+			display: flex;
+			flex-direction: row;
+		}
+	
+		[role=tab]{
+			padding: 1.5rem 2rem;
+		}
+		[role=tab][aria-selected] {
+			border-bottom-width: 0;
+		}
 
-.c-course-tabs {
-  border-top: 0;
-  margin-bottom: 24px;
+		[role="tabpanel"]{
+			padding: 0 5rem;
+			&[aria-hidden="true"] {
+				display: none;
+			}
+		}
 
-  .stir-tabs {
-    margin-top: 0px;
-    margin-bottom: 0px;
-
-    /* Button Area */
-    > .stir-tabs__tab {
-      text-align: center;
-      background-color: rgb(246, 245, 244);
-      margin-right: 0;
-      border-top: 5px solid #fff;
-      border-bottom: 5px solid rgb(246, 245, 244);
-
-      &:first-child {
-        margin-left: 0px;
-      }
-      &::before {
-        color: $energy-green;
-      }
-
-      // a {
-      //   display: inline-block;
-      //   font-size: 1rem; // 16px;
-      //   padding: 1px 24px 16px 24px;
-      //   color: $heritage-green;
-      //   margin: 0 30px 0 30px;
-      // }
-
-      button {
-        color: $heritage-green;
-        font-size: 1rem; // 16px;
-        padding: 1px 24px 16px 24px;
-      }
-
-      &:before {
-        top: 10px;
-        color: $heritage-green;
-      }
-    }
-
-    // &.stir-tabs__tab--active:before {
-    //   top: 13px;
-    // }
-
-    > .stir-tabs__tab--active {
-      border-top: 5px solid rgba(118, 189, 34, 1);
-      border-bottom: 5px solid #ccc;
-    }
-
-    /* Content Area */
-    .stir-tabs__content {
-      background: #f6f5f4;
-      padding: 0 32px;
-      max-width: 98%;
-      margin: 0 auto;
-
-      h3 {
-        margin: 24px 0;
-        padding: 0;
-      }
-
-      h3::after {
-        content: none;
-      }
-
-      > *:first-child {
-        margin-top: 56px;
-      }
-
-      &:last-child {
-        border-bottom: 0;
-      }
-
-      > *:last-child {
-        margin-bottom: 40px;
-      }
-
-      p,
-      li,
-      td {
-        font-size: 1rem; // 16px;
-      }
-    }
-  }
-}
-
-.c-course-tabs-white .stir-tabs__tab--active {
-  background-color: #fff !important;
-}
-
-/*  
-
-  GENERAL TABS
-  Large Up: Display as Tabs 
-  
-*/
-@media screen and #{breakpoint(large up)} {
-  .stir-tabs > {
-    .stir-tabs__tab {
-      order: -1;
-      width: auto;
-      margin-top: 0;
-      margin-right: 0.5rem;
-      margin-bottom: 0;
-      border: 0px;
-      padding: 0;
-      font-size: 2.25rem; /* 36px */
-      line-height: 1;
-
-      > button,
-      > a {
-        margin: 0 2.5rem 0 0;
-        padding: 0 0 2rem 0;
-        position: relative;
-      }
-
-      &.stir-tabs__tab--active a {
-        color: $heritage-green;
-
-        &::after {
-          background: $energy-green;
-          top: 50px;
-          content: "";
-          height: 8px;
-          left: 0;
-          width: 60px;
-          position: absolute;
-        }
-      }
-
-      &.stir-tabs__tab--active button {
-        color: $heritage-green;
-
-        &::after {
-          background: $energy-green;
-          bottom: 0px;
-          content: "";
-          height: 8px;
-          left: 0;
-          width: 60px;
-          position: absolute;
-        }
-      }
-
-      &:before,
-      &.stir-tabs__tab--active:before {
-        content: none;
-      }
-    }
-
-    .stir-tabs__content {
-      margin-top: 2rem;
-      padding: 0;
-
-      p,
-      li,
-      td {
-        font-size: 1.25rem; // 20px;
-      }
-
-      &:last-child {
-        border-bottom: 0;
-      }
-    }
-  }
-
-  /* 
-
-    COURSE TAB OVER RIDES 
-    Large up : Display as tabs
-  
-  */
-  .c-course-tabs {
-    width: 90%;
-    max-width: 77.5rem;
-    margin: 0 auto;
-    margin-bottom: 40px;
-
-    .stir-tabs {
-      position: relative;
-      /* top: -60px;
-      justify-content: center; */
-      top: -5px;
-      justify-content: left;
-      margin: 0 1rem;
-
-      > {
-        .stir-tabs__tab {
-          text-align: center;
-          padding: 8px 0 16px 0;
-          /* background-color: transparent; */
-
-          background-color: transparent;
-          border-top: 5px solid transparent;
-          border-bottom: 0;
-          a,
-          button {
-            margin: 0 0.625rem; //10px
-            font-size: 1rem; // 16px;
-            font-weight: 500;
-            color: $heritage-green;
-          }
-
-          button:focus {
-            outline: 1px solid $heritage-green !important;
-            outline-offset: 4px;
-          }
-
-          &.stir-tabs__tab--active {
-            a,
-            button {
-              color: $black;
-              &::after {
-                content: none;
-              }
-            }
-          }
-        }
-
-        .stir-tabs__tab--active {
-          background: #f6f5f4;
-          border-top: 5px solid $energy-green;
-        }
-
-        .stir-tabs__content {
-          /* padding: 0px 180px;
-          max-width: 990px; */
-          padding: 0 80px;
-          max-width: none;
-
-          &.u-p-0 {
-            padding: 0px;
-          }
-
-          p,
-          li,
-          td {
-            font-size: 1rem; // 16px;
-          }
-        }
-      }
-    }
-  }
+		> details {
+			border: 0;
+			summary {
+				display: none;
+			}
+		}
+	}
 }
