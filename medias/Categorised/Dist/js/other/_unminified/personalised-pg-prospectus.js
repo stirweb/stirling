@@ -13,15 +13,16 @@ const SUPABASE_URL = "https://kkiqupbzfaghcmmacixr.supabase.co";
 
 */
 
-const renderSubjectSelectItems = (subs) => subs.map((item) => `<option value="` + item.id + `">` + item.subject + `</option>`).join(``);
+const renderSubjectSelectItems = (subs) => subs.map((item) => `<option value="` + item.subject + `">` + item.subject + `</option>`).join(``);
 
 const renderSubjectCoursesOptions = (subject, index, data) => {
-  const subjectSelected = data.filter((item) => item.id === Number(subject));
+  const subjectSelected = data.filter((item) => item.subject === subject);
 
   return subjectSelected[0].courses
+    .filter((item) => item.value)
     .map((item) => {
       const ident = item.name.replaceAll(" ", "-").toLowerCase();
-      return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}_${item.id}" value="${item.id}" data-id="subject_course_${index}.${item.id}"><label for="${ident}">${item.name}</label></div>`;
+      return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}_${item.id}" value="${item.value}" data-id="subject_course_${index}.${item.id}" data-type="subject_course"><label for="${ident}">${item.name}</label></div>`;
     })
     .join(``);
 };
@@ -145,20 +146,49 @@ async function storePDF(pdf, fileName, path) {
   return null;
 }
 
+/* getSubjects */
+const getSelectedSubjects = () => {
+  const subjectSelects = stir.nodes(".subjectSelect");
+  const selectedSubjects = [];
+
+  subjectSelects.forEach((elem) => {
+    for (const option of elem.options) {
+      if (option.selected) {
+        selectedSubjects.push(option.value);
+      }
+    }
+  });
+
+  return selectedSubjects
+    .filter((item) => item)
+    .map((item) => {
+      return { StudyLevel: "Postgraduate", Faculty: item, Course: "" };
+    });
+};
+
+/* getSelectedCourses */
+const getSelectedCourses = () => {
+  return stir.nodes('input[data-type="subject_course"]:checked').map((elem) => {
+    return { StudyLevel: "Postgraduate", Faculty: "", Course: elem.value };
+  });
+};
+
 /*
     submitData
     * SEND data (formData) to QS and MailChimp via PHP *
 */
-async function submitData(pdfPath, path, formData) {
+async function submitData(pdfPath, serverPath, formData) {
   formData.append("pdfPath", pdfPath);
 
+  const courses = [...getSelectedCourses(), ...getSelectedSubjects()];
+  formData.append("courses", JSON.stringify(courses));
+
   try {
-    //const response = await fetch(path + "app2.php", {
-    const response = await fetch(path + "qs.php", {
+    const response = await fetch(path + "app2.php", {
       method: "POST",
       body: formData,
     });
-    console.log(await response.text());
+    console.log(await response.json());
   } catch (e) {
     console.error(e);
   }
@@ -212,8 +242,7 @@ async function doPdf(subsData, data, path) {
   if (fullPdf === "1") {
     const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
     setDOMContent(resultsNode, renderLink(fileNameFull));
-    submitData(pdfPath, path, data);
-
+    submitData(fileNameFull, path, data);
     return;
   }
 
@@ -433,11 +462,14 @@ generatePDFForm &&
       stir.node(".subject_area_1").classList.remove("hide");
     }
 
+    //console.log(e.target.id);
+
     if (e.target.id === "subject_area_1" && subject1) {
+      // Populate the list
       stir.node("#subject_area_1_courses").innerHTML = renderSubjectCoursesOptions(subject1, "1", subjectsData);
       stir.node(".subject_area_2").classList.remove("hide");
-
-      const subjectsData1 = subjectsData.filter((item) => item.id !== Number(subject1));
+      // Remove the selected item from the subject list
+      const subjectsData1 = subjectsData.filter((item) => item.subject !== subject1);
       subjectSelect[1].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData1));
     }
 
@@ -445,7 +477,7 @@ generatePDFForm &&
       stir.node("#subject_area_2_courses").innerHTML = renderSubjectCoursesOptions(subject2, "2", subjectsData);
       stir.node(".subject_area_3").classList.remove("hide");
 
-      const subjectsData2 = subjectsData.filter((item) => item.id !== Number(subject2) && item.id !== Number(subject1));
+      const subjectsData2 = subjectsData.filter((item) => item.subject !== subject2 && item.subject !== subject1);
       subjectSelect[2].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData2));
     }
 
