@@ -146,7 +146,9 @@ async function storePDF(pdf, fileName, path) {
   return null;
 }
 
-/* getSubjects */
+/* 
+  getSelectedSubjects 
+*/
 const getSelectedSubjects = () => {
   const subjectSelects = stir.nodes(".subjectSelect");
   const selectedSubjects = [];
@@ -166,7 +168,9 @@ const getSelectedSubjects = () => {
     });
 };
 
-/* getSelectedCourses */
+/* 
+  getSelectedCourses 
+*/
 const getSelectedCourses = () => {
   return stir.nodes('input[data-type="subject_course"]:checked').map((elem) => {
     return { StudyLevel: "Postgraduate", Faculty: "", Course: elem.value };
@@ -174,8 +178,7 @@ const getSelectedCourses = () => {
 };
 
 /*
-    submitData
-    * SEND data (formData) to QS and MailChimp via PHP *
+    submitData: Send data (formData) to the backend to be processed (MC QS)
 */
 async function submitData(pdfPath, serverPath, formData) {
   formData.append("pdfPath", pdfPath);
@@ -184,7 +187,7 @@ async function submitData(pdfPath, serverPath, formData) {
   formData.append("courses", JSON.stringify(courses));
 
   try {
-    const response = await fetch(path + "app.php", {
+    const response = await fetch(serverPath + "app.php", {
       method: "POST",
       body: formData,
     });
