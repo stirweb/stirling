@@ -4,7 +4,7 @@
 
 */
 
-const path = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
+const serverPath = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
 const SUPABASE_URL = "https://kkiqupbzfaghcmmacixr.supabase.co";
 
 /* 
@@ -72,7 +72,7 @@ const setDOMContent = stir.curry((node, html) => {
 /* 
     downloadPDF 
 
-function storePDF2(pdf, fileName2, path) {
+function storePDF2(pdf, fileName2, serverPath) {
     const linkSource = `${pdf}`;
     const fileName = "YourPersonalisedPGPerspectus.pdf";
     const fileURL = linkSource;
@@ -126,27 +126,8 @@ function b64toBlob(b64Data, contentType, sliceSize) {
 }
 
 /* 
-    storePDF 
-    * SEND the pdf file to Supabase and get the link url back *
- */
-async function storePDF(pdf, fileName, path) {
-  const fileNameFull = fileName + ".pdf";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtraXF1cGJ6ZmFnaGNtbWFjaXhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg5MDEwNjEsImV4cCI6MjAzNDQ3NzA2MX0.qvfBzihxwwWTzsS6BV2CDVcW2nfEGxGUqMjdrQbYnlA";
-
-  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const pdfBlob = b64toBlob(pdf, "application/pdf", 512);
-
-  const { data, error } = await _supabase.storage.from("pdfs").upload(fileNameFull, pdfBlob, {
-    cacheControl: "3600",
-    upsert: false,
-  });
-
-  if (data) return data;
-
-  return null;
-}
-
-/* getSubjects */
+  getSelectedSubjects 
+*/
 const getSelectedSubjects = () => {
   const subjectSelects = stir.nodes(".subjectSelect");
   const selectedSubjects = [];
@@ -166,7 +147,9 @@ const getSelectedSubjects = () => {
     });
 };
 
-/* getSelectedCourses */
+/* 
+  getSelectedCourses 
+*/
 const getSelectedCourses = () => {
   return stir.nodes('input[data-type="subject_course"]:checked').map((elem) => {
     return { StudyLevel: "Postgraduate", Faculty: "", Course: elem.value };
@@ -174,8 +157,31 @@ const getSelectedCourses = () => {
 };
 
 /*
-    submitData
-    * SEND data (formData) to QS and MailChimp via PHP *
+    CONTROLLERS
+*/
+
+/* 
+    storePDF: SEND the pdf file to Supabase and get the link url back *
+ */
+async function storePDF(pdf, fileName, serverPath) {
+  const fileNameFull = fileName + ".pdf";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtraXF1cGJ6ZmFnaGNtbWFjaXhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg5MDEwNjEsImV4cCI6MjAzNDQ3NzA2MX0.qvfBzihxwwWTzsS6BV2CDVcW2nfEGxGUqMjdrQbYnlA";
+
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const pdfBlob = b64toBlob(pdf, "application/pdf", 512);
+
+  const { data, error } = await _supabase.storage.from("pdfs").upload(fileNameFull, pdfBlob, {
+    cacheControl: "3600",
+    upsert: false,
+  });
+
+  if (data) return data;
+
+  return null;
+}
+
+/*
+    CONTROLLER: submitData: Send data (formData) to the backend to be processed (MC QS)
 */
 async function submitData(pdfPath, serverPath, formData) {
   formData.append("pdfPath", pdfPath);
@@ -184,7 +190,7 @@ async function submitData(pdfPath, serverPath, formData) {
   formData.append("courses", JSON.stringify(courses));
 
   try {
-    const response = await fetch(path + "app.php", {
+    const response = await fetch(serverPath + "app.php", {
       method: "POST",
       body: formData,
     });
@@ -195,11 +201,9 @@ async function submitData(pdfPath, serverPath, formData) {
 }
 
 /* 
-    
-    CONTROLLERS
-    
+    CONTROLLER: Build the pdf
 */
-async function doPdf(subsData, data, path) {
+async function doPdf(subsData, data, serverPath) {
   const resultsNode = stir.node("#resultBox");
 
   setDOMContent(resultsNode, renderGenerating());
@@ -218,15 +222,15 @@ async function doPdf(subsData, data, path) {
 
   const pdfDoc = await PDFLib.PDFDocument.create();
 
-  //const urlFull = path + "rawpdfs/full-non-personalised.pdf";
-  const urlFront = path + "rawpdfs/Front.pdf";
-  const urlIntro = path + "rawpdfs/Intro.pdf";
-  const urlIntroInsert = path + "rawpdfs/IntroInsert.pdf";
-  const urlBack = path + "rawpdfs/Back.pdf";
+  //const urlFull = serverPath + "rawpdfs/full-non-personalised.pdf";
+  const urlFront = serverPath + "rawpdfs/Front.pdf";
+  const urlIntro = serverPath + "rawpdfs/Intro.pdf";
+  const urlIntroInsert = serverPath + "rawpdfs/IntroInsert.pdf";
+  const urlBack = serverPath + "rawpdfs/Back.pdf";
 
-  const url1 = path + "rawpdfs/" + subject1.replaceAll(",", "") + ".pdf";
-  const url2 = path + "rawpdfs/" + subject2.replaceAll(",", "") + ".pdf";
-  const url3 = path + "rawpdfs/" + subject3.replaceAll(",", "") + ".pdf";
+  const url1 = serverPath + "rawpdfs/" + subject1.replaceAll(",", "") + ".pdf";
+  const url2 = serverPath + "rawpdfs/" + subject2.replaceAll(",", "") + ".pdf";
+  const url3 = serverPath + "rawpdfs/" + subject3.replaceAll(",", "") + ".pdf";
 
   const fileName = String(Date.now() + "--" + firstName + lastName + String(Math.floor(Math.random() * 100)));
 
@@ -240,9 +244,9 @@ async function doPdf(subsData, data, path) {
 
   /*  Full unpersonalised PDF */
   if (fullPdf === "1") {
-    const fileNameFull = path + "rawpdfs/full-non-personalised.pdf";
+    const fileNameFull = serverPath + "rawpdfs/full-non-personalised.pdf";
     setDOMContent(resultsNode, renderLink(fileNameFull));
-    submitData(fileNameFull, path, data);
+    submitData(fileNameFull, serverPath, data);
     return;
   }
 
@@ -302,7 +306,7 @@ async function doPdf(subsData, data, path) {
     i++;
   }
 
-  const errorUrl = path + "rawpdfs/.pdf";
+  const errorUrl = serverPath + "rawpdfs/.pdf";
 
   // Main merge
   if (url1 !== errorUrl) {
@@ -363,7 +367,7 @@ async function doPdf(subsData, data, path) {
     dataUri: false,
   });
 
-  const response = await storePDF(pdfDataUri, fileName, path);
+  const response = await storePDF(pdfDataUri, fileName, serverPath);
 
   const pdfPath = response ? SUPABASE_URL + "/storage/v1/object/public/" + response.fullPath : "";
 
@@ -373,16 +377,18 @@ async function doPdf(subsData, data, path) {
   }
 
   setDOMContent(resultsNode, renderLink(pdfPath));
-  submitData(pdfPath, path, data);
+  submitData(pdfPath, serverPath, data);
   return;
 }
 
-/* doCaptcha Spam check */
+/* 
+  doCaptcha Spam check 
+*/
 async function doCaptcha(token, data) {
   data.append("token", token);
 
   try {
-    const response = await fetch(path + "verify.php", {
+    const response = await fetch(serverPath + "verify.php", {
       method: "POST",
       body: data,
     });
@@ -412,7 +418,7 @@ async function doCaptcha(token, data) {
         return;
       }
 
-      doPdf(subjectsData, data, path);
+      doPdf(subjectsData, data, serverPath);
 
       return true;
     } else {
@@ -428,9 +434,7 @@ async function doCaptcha(token, data) {
 }
 
 /*  
-    
-    ON LOAD
-            
+    ON LOAD      
 */
 
 const generatePDFBtn = stir.node("#generatePDFBtn");
@@ -443,9 +447,7 @@ const subjectSelect = stir.nodes(".subjectSelect");
 subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
 
 /* 
-
    ACTION: Form change events 
-
 */
 generatePDFForm &&
   generatePDFForm.addEventListener("change", function (e) {
@@ -461,8 +463,6 @@ generatePDFForm &&
     if (studyYear) {
       stir.node(".subject_area_1").classList.remove("hide");
     }
-
-    //console.log(e.target.id);
 
     if (e.target.id === "subject_area_1" && subject1) {
       // Populate the list
