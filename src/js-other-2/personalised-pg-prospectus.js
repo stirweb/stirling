@@ -184,7 +184,7 @@ async function submitData(pdfPath, serverPath, formData) {
   formData.append("courses", JSON.stringify(courses));
 
   try {
-    const response = await fetch(path + "app2.php", {
+    const response = await fetch(path + "app.php", {
       method: "POST",
       body: formData,
     });
