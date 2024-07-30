@@ -8,24 +8,21 @@ require("app-qs/qs-api.php");
 $api_url = "https://integration-emea.qses-uat.com/crms/api/";
 
 
-
 /* 
 
-  ENVIRONMENTAL VARS: Add ability to store vars in .env
+  ENVIRONMENTAL VARS: Load vars from .env
 
 */
 
-$env = file_get_contents(dirname(__DIR__, 3) . "/.env");
-$lines = explode("\n", $env);
+$env = parse_ini_file(dirname(__DIR__, 3) . '/' . '.env');
 
-foreach ($lines as $line) {
-    preg_match("/([^#]+)\=(.*)/", $line, $matches);
-    if (isset($matches[2])) {
-        putenv(trim($line));
-    }
+if (!$env) {
+    echo json_encode([["process" => "Data", "outcome" => "Fail"], ["process" => "Mail", "outcome" => "Fail"]]);
+    exit();
+} else {
+    foreach ($env as $k => $v) putenv(trim("$k=$v"));
 }
 
-//echo getenv('ENV_TEST');
 
 /* 
 
