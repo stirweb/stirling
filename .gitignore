@@ -3,6 +3,6 @@ node_modules
 npm-debug.log
 git-ignore
 .env
-lib
-vendor
 composer.lock
+pages/PHP/**/lib
+pages/PHP/**/vendor
