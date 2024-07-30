@@ -2,20 +2,35 @@
 
 /*
 
-	On load : recapture
+	ENVIRONMENTAL VARS: Add ability to store vars in .env
 
 */
 
-$env = file_get_contents(dirname(__DIR__, 3) . "/.env");
-$lines = explode("\n", $env);
+// $env = file_get_contents(dirname(__DIR__, 3) . "/.env");
+// $lines = explode("\n", $env);
 
-foreach ($lines as $line) {
-    preg_match("/([^#]+)\=(.*)/", $line, $matches);
-    if (isset($matches[2])) {
-        putenv(trim($line));
-    }
+// foreach ($lines as $line) {
+//     preg_match("/([^#]+)\=(.*)/", $line, $matches);
+//     if (isset($matches[2])) {
+//         putenv(trim($line));
+//     }
+// }
+
+$env = parse_ini_file(dirname(__DIR__, 3) . '/' . '.env');
+
+if (!$env) {
+    echo '{"success":"true"}';     // Continue on without recapture
+    exit();
+} else {
+    foreach ($env as $k => $v) putenv(trim("$k=$v"));
 }
 
+
+/*
+
+	Init: recapture
+
+*/
 
 // Get the IP address of the origin of the submission
 $ip = $_SERVER['REMOTE_ADDR'];
@@ -33,16 +48,11 @@ $response = file_get_contents($url);
 $responseKeys = json_decode($response, true);
 
 
-
 if ($responseKeys["success"]) {
     if ($responseKeys["score"] >= $g_recaptcha_allowable_score) {
-        //echo $response;
         echo '{"success":"true"}';
     } else {
         // failed spam test
         echo '{"success":"false"}';
     }
 }
-
-// Send the outcome back the Frontend
-//echo $response;
