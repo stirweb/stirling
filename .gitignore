@@ -2,3 +2,7 @@
 node_modules
 npm-debug.log
 git-ignore
+.env
+lib
+vendor
+composer.lock
