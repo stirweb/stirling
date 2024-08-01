@@ -96,8 +96,16 @@ function run($message)
 */
 
 if (!isset($_POST['email'])) {
+    echo json_encode([["process" => "Data", "outcome" => "Fail"], ["process" => "Mail", "outcome" => "Fail"]]);
     exit();
 }
+
+
+if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    echo json_encode([["process" => "Data", "outcome" => "Fail"], ["process" => "Mail", "outcome" => "Fail"]]);
+    exit();
+}
+
 
 /*
 
