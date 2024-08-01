@@ -17,12 +17,10 @@ const renderSubjectSelectItems = (subs) => subs.map((item) => `<option value="` 
 
 const renderSubjectCoursesOptions = (subject, index, data) => {
   const subjectSelected = data.filter((item) => item.subject === subject);
-
   return subjectSelected[0].courses
-    .filter((item) => item.value)
     .map((item) => {
       const ident = item.name.replaceAll(" ", "-").toLowerCase();
-      return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}_${item.id}" value="${item.value}" data-id="subject_course_${index}.${item.id}" data-type="subject_course"><label for="${ident}">${item.name}</label></div>`;
+      return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}" value="${item.name}" data-id="subject_course_${index}" data-type="subject_course"><label for="${ident}">${item.name}</label></div>`;
     })
     .join(``);
 };
@@ -466,6 +464,9 @@ generatePDFForm &&
 
     if (e.target.id === "subject_area_1" && subject1) {
       // Populate the list
+
+      console.log(subject1) + "-";
+
       stir.node("#subject_area_1_courses").innerHTML = renderSubjectCoursesOptions(subject1, "1", subjectsData);
       stir.node(".subject_area_2").classList.remove("hide");
       // Remove the selected item from the subject list
