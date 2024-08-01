@@ -5,7 +5,6 @@
 */
 
 const serverPath = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
-const SUPABASE_URL = "https://kkiqupbzfaghcmmacixr.supabase.co";
 
 /* 
 
@@ -163,9 +162,8 @@ const getSelectedCourses = () => {
  */
 async function storePDF(pdf, fileName, serverPath) {
   const fileNameFull = fileName + ".pdf";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtraXF1cGJ6ZmFnaGNtbWFjaXhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg5MDEwNjEsImV4cCI6MjAzNDQ3NzA2MX0.qvfBzihxwwWTzsS6BV2CDVcW2nfEGxGUqMjdrQbYnlA";
 
-  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ID);
   const pdfBlob = b64toBlob(pdf, "application/pdf", 512);
 
   const { data, error } = await _supabase.storage.from("pdfs").upload(fileNameFull, pdfBlob, {
@@ -453,22 +451,20 @@ generatePDFForm &&
 
     const data = new FormData(generatePDFForm);
 
-    const studyYear = data.get("study_year");
+    //const studyYear = data.get("study_year");
     const subject1 = data.get("subject_area_1");
     const subject2 = data.get("subject_area_2");
     const subject3 = data.get("subject_area_3");
 
-    if (studyYear) {
-      stir.node(".subject_area_1").classList.remove("hide");
-    }
+    // if (studyYear) {
+    //   stir.node(".subject_area_1").classList.remove("hide");
+    // }
 
     if (e.target.id === "subject_area_1" && subject1) {
       // Populate the list
 
-      console.log(subject1) + "-";
-
       stir.node("#subject_area_1_courses").innerHTML = renderSubjectCoursesOptions(subject1, "1", subjectsData);
-      stir.node(".subject_area_2").classList.remove("hide");
+      //stir.node(".subject_area_2").classList.remove("hide");
       // Remove the selected item from the subject list
       const subjectsData1 = subjectsData.filter((item) => item.subject !== subject1);
       subjectSelect[1].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData1));
@@ -476,7 +472,7 @@ generatePDFForm &&
 
     if (e.target.id === "subject_area_2" && subject2) {
       stir.node("#subject_area_2_courses").innerHTML = renderSubjectCoursesOptions(subject2, "2", subjectsData);
-      stir.node(".subject_area_3").classList.remove("hide");
+      //stir.node(".subject_area_3").classList.remove("hide");
 
       const subjectsData2 = subjectsData.filter((item) => item.subject !== subject2 && item.subject !== subject1);
       subjectSelect[2].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData2));
