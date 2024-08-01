@@ -497,7 +497,7 @@ generatePDFBtn &&
 
     const data = new FormData(generatePDFForm);
 
-    grecaptcha.execute("6LeLc_wpAAAAAK9XBEY5HhZcsYEgTTi1wukDL685", { action: "register" }).then(function (token) {
+    grecaptcha.execute(CAPTCHA, { action: "register" }).then(function (token) {
       doCaptcha(token, data);
       return;
     });
