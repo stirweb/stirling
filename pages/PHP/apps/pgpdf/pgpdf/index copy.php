@@ -124,7 +124,7 @@
                                 <span class="u-heritage-berry " data-alertlabel="email">*</span>
                             </label>
 
-                            <input id="email" type="email" name="email" data-required>
+                            <input id="email" type="text" name="email" data-required>
                         </div>
 
 
@@ -935,26 +935,34 @@
                 "subject": "Accounting, Finance, Banking and Economics",
                 "id": 432,
                 "courses": [{
-                        "name": "MSc Digital Banking and Finance"
+                        "name": "MSc Digital Banking and Finance",
+                        "value": "Digital Banking and Finance (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Finance"
+                        "name": "MSc Finance",
+                        "value": "Finance (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Finance and Data Analytics"
-
+                        "name": "MSc Finance and Data Analytics",
+                        "value": "Finance and Data Analytics (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Finance and Risk Management"
-
+                        "name": "MSc Finance and Risk Management",
+                        "value": "Finance and Risk Management (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc International Accounting and Finance"
-
+                        "name": "MSc International Accounting and Finance",
+                        "value": "International Accounting and Finance (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Investment Analysis"
-
+                        "name": "MSc Investment Analysis",
+                        "value": "Investment Analysis (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -962,13 +970,19 @@
                 "subject": "Aquaculture",
                 "id": 433,
                 "courses": [{
-                        "name": "MSc Aquatic Pathobiology"
+                        "name": "MSc Aquatic Pathobiology",
+                        "value": "Aquatic Pathobiology (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Aquatic Veterinary Studies"
+                        "name": "MSc Aquatic Veterinary Studies",
+                        "value": "Aquatic Veterinary Studies (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Sustainable Aquaculture"
+                        "name": "MSc Sustainable Aquaculture",
+                        "value": "Sustainable Aquaculture (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -976,36 +990,58 @@
                 "subject": "Business and Management",
                 "id": 434,
                 "courses": [{
-                        "name": "Master of Business Administration (MBA)"
+                        "name": "Master of Business Administration (MBA)",
+                        "value": "Master of Business Administration (MBA)",
+                        "id": ""
                     },
                     {
-                        "name": "MRes Business and Management"
+                        "name": "MRes Business and Management",
+                        "value": "Business and Management (MRes) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Behavioural Science"
+                        "name": "MSc Behavioural Science",
+                        "value": "Behavioural Science (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Business Analytics"
+                        "name": "MSc Business Analytics",
+                        "value": "Business Analytics (Online) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Business and Management"
+                        "name": "MSc Business and Management",
+                        "value": "Business and Management (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Data Science for Business"
+                        "name": "MSc Data Science for Business",
+                        "value": "Data Science for Business (Online) (PG)",
+                        "id": ""
                     }, {
-                        "name": "MSc Human Resource Management"
+                        "name": "MSc Human Resource Management",
+                        "value": "Human Resource Management (UG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc International Business"
+                        "name": "MSc International Business",
+                        "value": "International Business (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Marketing"
+                        "name": "MSc Marketing",
+                        "value": "Marketing (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Marketing Analytics"
+                        "name": "MSc Marketing Analytics",
+                        "value": "Marketing Analytics (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Marketing and Brand Management"
+                        "name": "MSc Marketing and Brand Management",
+                        "value": "Digital Marketing and Brand Management (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -1013,28 +1049,44 @@
                 "subject": "Communications, Media and Culture",
                 "id": 435,
                 "courses": [{
-                        "name": "MLitt / MSc Gender Studies"
+                        "name": "MLitt / MSc Gender Studies",
+                        "value": "Gender Studies (Applied) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MRes Media Research"
+                        "name": "MRes Media Research",
+                        "value": "Media Research (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Digital Media and Communication"
+                        "name": "MSc Digital Media and Communication",
+                        "value": "Digital Media and Communication (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc International Journalism"
+                        "name": "MSc International Journalism",
+                        "value": "International Journalism (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Media Management"
+                        "name": "MSc Media Management",
+                        "value": "Media Management (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Public Relations and Strategic Communication"
+                        "name": "MSc Public Relations and Strategic Communication",
+                        "value": "Public Relations and Strategic Communication (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Public Relations and Strategic Communication (ONLINE)"
+                        "name": "MSc Public Relations and Strategic Communication (ONLINE)",
+                        "value": "Public Relations and Strategic Communication (Online) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Strategic Communication and Public Relations (PFU)"
+                        "name": "MSc Strategic Communication and Public Relations (PFU)",
+                        "value": "Strategic Communication and Public Relations (Joint Degree) (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -1042,19 +1094,29 @@
                 "subject": "Computing, Data Science and Mathematics",
                 "id": 436,
                 "courses": [{
-                        "name": "MSc Artificial Intelligence"
+                        "name": "MSc Artificial Intelligence",
+                        "value": "Artificial Intelligence (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Big Data"
+                        "name": "MSc Big Data",
+                        "value": "Big Data (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Big Data (ONLINE)"
+                        "name": "MSc Big Data (ONLINE)",
+                        "value": "Big Data (Online) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Financial Technology"
+                        "name": "MSc Financial Technology",
+                        "value": "Financial Technology (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Mathematics and Data Science"
+                        "name": "MSc Mathematics and Data Science",
+                        "value": "Mathematics and Data Science (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -1062,31 +1124,49 @@
                 "subject": "Education",
                 "id": 437,
                 "courses": [{
-                        "name": "MRes Educational Research"
+                        "name": "MRes Educational Research",
+                        "value": "Educational Research (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Education"
+                        "name": "MSc Education",
+                        "value": "Education (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Educational Leadership (Specialist Qual for Headship)"
+                        "name": "MSc Educational Leadership (Specialist Qual for Headship)",
+                        "value": "Educational Leadership (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc English Language Teaching and Management"
+                        "name": "MSc English Language Teaching and Management",
+                        "value": "English Language Teaching and Management (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Professional Education and Leadership"
+                        "name": "MSc Professional Education and Leadership",
+                        "value": "Professional Education and Leadership (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Teaching English to Speakers of Other Languages"
+                        "name": "MSc Teaching English to Speakers of Other Languages",
+                        "value": "Teaching English to Speakers of Other Languages (TESOL) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Teaching English to Speakers of Other Languages (ONLINE)"
+                        "name": "MSc Teaching English to Speakers of Other Languages (ONLINE)",
+                        "value": "Teaching English to Speakers of Other Languages (TESOL) (online) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "PG Cert Teaching Qualification in Further Education (In-service)"
+                        "name": "PG Cert Teaching Qualification in Further Education (In-service)",
+                        "value": "",
+                        "id": ""
                     },
                     {
-                        "name": "PG Dip Teaching Qualification in Further Education (Pre-service)"
+                        "name": "PG Dip Teaching Qualification in Further Education (Pre-service)",
+                        "value": "Tertiary Education with Teaching Qualification (Further Education) (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -1094,10 +1174,14 @@
                 "subject": "Environmental Sciences",
                 "id": 438,
                 "courses": [{
-                        "name": "MSc Environmental Management"
+                        "name": "MSc Environmental Management",
+                        "value": "Environmental Management (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Environmental Remote Sensing and Geospatial Sciences"
+                        "name": "MSc Environmental Remote Sensing and Geospatial Sciences",
+                        "value": "Environmental Remote Sensing and Geospatial Sciences (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -1105,16 +1189,24 @@
                 "subject": "Health Sciences",
                 "id": 439,
                 "courses": [{
-                        "name": "MPH Public Health (ONLINE)"
+                        "name": "MPH Public Health (ONLINE)",
+                        "value": "Public Health (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MRes Health Research (ONLINE)"
+                        "name": "MRes Health Research (ONLINE)",
+                        "value": "Health Research (online) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Advancing Practice"
+                        "name": "MSc Advancing Practice",
+                        "value": "Advancing Practice (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Early Years Practice Health Visiting"
+                        "name": "MSc Early Years Practice Health Visiting",
+                        "value": "",
+                        "id": ""
                     }
                 ]
             },
@@ -1122,19 +1214,29 @@
                 "subject": "History, Heritage and Politics",
                 "id": 440,
                 "courses": [{
-                        "name": "MPP Public Policy"
+                        "name": "MPP Public Policy",
+                        "value": "Public Policy (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MRes Historical Research"
+                        "name": "MRes Historical Research",
+                        "value": "Historical Research (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Heritage"
+                        "name": "MSc Heritage",
+                        "value": "Heritage (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Historical Research"
+                        "name": "MSc Historical Research",
+                        "value": "Historical Research (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc International Conflict and Cooperation"
+                        "name": "MSc International Conflict and Cooperation",
+                        "value": "International Conflict and Cooperation (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -1142,13 +1244,19 @@
                 "subject": "Law and Philosophy",
                 "id": 441,
                 "courses": [{
-                        "name": "LLM International Energy and Environmental"
+                        "name": "LLM International Energy and Environmental",
+                        "value": "",
+                        "id": ""
                     },
                     {
-                        "name": "MLitt Philosophy"
+                        "name": "MLitt Philosophy",
+                        "value": "Philosophy (Mlitt) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Human Rights and Diplomacy Law"
+                        "name": "MSc Human Rights and Diplomacy Law",
+                        "value": "Human Rights and Diplomacy (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -1156,19 +1264,29 @@
                 "subject": "Literature and Languages",
                 "id": 442,
                 "courses": [{
-                        "name": "MLitt Creative Writing"
+                        "name": "MLitt Creative Writing",
+                        "value": "Creative Writing (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MLitt English Language and Linguistics"
+                        "name": "MLitt English Language and Linguistics",
+                        "value": "English Language and Linguistics (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MLitt Publishing Studies"
+                        "name": "MLitt Publishing Studies",
+                        "value": "Publishing Studies (MLitt) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MRes Humanities"
+                        "name": "MRes Humanities",
+                        "value": "Humanities (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MRes Publishing Studies"
+                        "name": "MRes Publishing Studies",
+                        "value": "Publishing Studies (MRes) (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -1176,19 +1294,29 @@
                 "subject": "Psychology",
                 "id": 443,
                 "courses": [{
-                        "name": "MSc / MA Human Animal Interaction"
+                        "name": "MSc / MA Human Animal Interaction",
+                        "value": "Human Animal Interaction (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Autism Research"
+                        "name": "MSc Autism Research",
+                        "value": "Autism Research (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Health Psychology"
+                        "name": "MSc Health Psychology",
+                        "value": "Health Psychology (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Psychological Research Methods"
+                        "name": "MSc Psychological Research Methods",
+                        "value": "Psychological Research Methods (General)  (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Psychology (accredited conversion course)"
+                        "name": "MSc Psychology (accredited conversion course)",
+                        "value": "Psychology (conversion course) (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -1196,37 +1324,59 @@
                 "subject": "Social Sciences",
                 "id": 444,
                 "courses": [{
-                        "name": "MRes Criminological Research"
+                        "name": "MRes Criminological Research",
+                        "value": "Criminological Research (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Applied Professional Studies"
+                        "name": "MSc Applied Professional Studies",
+                        "value": "Applied Professional Studies (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Applied Social Research"
+                        "name": "MSc Applied Social Research",
+                        "value": "Applied Social Research (MSc) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Criminology"
+                        "name": "MSc Criminology",
+                        "value": "Criminology (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Dementia Studies (ONLINE)"
+                        "name": "MSc Dementia Studies (ONLINE)",
+                        "value": "Dementia Studies (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Gerontology and Global Ageing"
+                        "name": "MSc Gerontology and Global Ageing",
+                        "value": "Gerontology and Global Ageing (Online) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Housing Studies (part-time)"
+                        "name": "MSc Housing Studies (part-time)",
+                        "value": "Housing Studies (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Housing Studies (with internship)"
+                        "name": "MSc Housing Studies (with internship)",
+                        "value": "Housing Studies with Internship (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Social Statistics and Social Research"
+                        "name": "MSc Social Statistics and Social Research",
+                        "value": "Applied Social Research (Social Statistics and Social Research) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Social Work Studies"
+                        "name": "MSc Social Work Studies",
+                        "value": "Social Work Studies (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Substance Use (ONLINE)"
+                        "name": "MSc Substance Use (ONLINE)",
+                        "value": "Substance Use (PG)",
+                        "id": ""
                     }
                 ]
             },
@@ -1234,16 +1384,24 @@
                 "subject": "Sport",
                 "id": 445,
                 "courses": [{
-                        "name": "MSc Psychology of Sport"
+                        "name": "MSc Psychology of Sport",
+                        "value": "Psychology of Sport (Accredited) (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Sport Management"
+                        "name": "MSc Sport Management",
+                        "value": "Sport Management (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Sport Nutrition"
+                        "name": "MSc Sport Nutrition",
+                        "value": "Sport Nutrition (PG)",
+                        "id": ""
                     },
                     {
-                        "name": "MSc Sport Performance Coaching (ONLINE)"
+                        "name": "MSc Sport Performance Coaching (ONLINE)",
+                        "value": "Sport Performance Coaching (PG)",
+                        "id": ""
                     }
                 ]
             }
