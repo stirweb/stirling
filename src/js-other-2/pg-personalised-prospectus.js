@@ -71,6 +71,7 @@ const getSubjectID = stir.curry((subsData, name) => {
   return obj[0].id;
 });
 
+/* getSubjectFromID */
 const getSubjectFromID = stir.curry((data, id) => {
   const sub = data.filter((item) => item.id === Number(id));
   return !sub.length ? `` : sub[0].subject;
@@ -111,9 +112,7 @@ function storePDF2(pdf, fileName2, serverPath) {
 }
 */
 
-/* 
-    b64toBlob 
-   */
+/*  b64toBlob */
 function b64toBlob(b64Data, contentType, sliceSize) {
   const byteCharacters = atob(b64Data);
   const byteArrays = [];
@@ -137,9 +136,7 @@ function b64toBlob(b64Data, contentType, sliceSize) {
   return blob;
 }
 
-/* 
-  getSelectedSubjects 
-*/
+/*  getSelectedSubjects */
 const getSelectedSubjects = () => {
   const subjectSelects = stir.nodes(".subjectSelect");
   const selectedSubjects = [];
@@ -159,14 +156,15 @@ const getSelectedSubjects = () => {
     });
 };
 
-/* 
-  getSelectedCourses 
-*/
+/*  getSelectedCourses */
 const getSelectedCourses = () => {
   return stir.nodes('input[data-type="subject_course"]:checked').map((elem) => {
     return { StudyLevel: "Postgraduate", Faculty: "", Course: elem.value };
   });
 };
+
+/* cleanse */
+const cleanse = (string) => string.replaceAll("script>", "").replaceAll("script%3E", "").replaceAll("<", "");
 
 /*
     CONTROLLERS
@@ -465,7 +463,7 @@ if (generatePDFForm) {
   subjectSelect[0] && subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
 
   /* 
-   ACTION: Form change events 
+    ACTION: Form change events 
   */
   generatePDFForm &&
     generatePDFForm.addEventListener("change", function (e) {
@@ -520,8 +518,6 @@ if (generatePDFForm) {
       });
     });
 }
-
-const cleanse = (string) => string.replaceAll("script>", "").replaceAll("script%3E", "").replaceAll("<", "");
 
 /*
   ON LOAD - RETRIEVE LATER VERSION
