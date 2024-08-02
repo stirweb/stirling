@@ -392,6 +392,9 @@ async function doPdf(subsData, data, serverPath) {
     submitData(pdfPath, serverPath, data);
   }
 
+  const personalisedMessageNode = stir.node("#pgstudent");
+  personalisedMessageNode && setDOMContent(personalisedMessageNode, data.get("first_name"));
+
   setDOMContent(resultsNode, renderLinkBox(pdfBlobUrl));
 
   //const response = await storePDF(pdfDataUri, fileName, serverPath);
