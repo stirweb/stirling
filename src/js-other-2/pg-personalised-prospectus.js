@@ -468,68 +468,70 @@ async function doCaptcha(token, data) {
 const generatePDFBtn = stir.node("#generatePDFBtn");
 const generatePDFForm = stir.node("#generatePDFForm");
 
-const selects = stir.nodes("select");
-selects.forEach((element) => (element.value = "")); // reset on load
+if (generatePDFForm) {
+  const selects = stir.nodes("select");
+  selects.forEach((element) => (element.value = "")); // reset on load
 
-const subjectSelect = stir.nodes(".subjectSelect");
-subjectSelect[0] && subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
+  const subjectSelect = stir.nodes(".subjectSelect");
+  subjectSelect[0] && subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
 
-/* 
+  /* 
    ACTION: Form change events 
 */
-generatePDFForm &&
-  generatePDFForm.addEventListener("change", function (e) {
-    e.preventDefault();
+  generatePDFForm &&
+    generatePDFForm.addEventListener("change", function (e) {
+      e.preventDefault();
 
-    const data = new FormData(generatePDFForm);
+      const data = new FormData(generatePDFForm);
 
-    //const studyYear = data.get("study_year");
-    const subject1 = data.get("subject_area_1");
-    const subject2 = data.get("subject_area_2");
-    const subject3 = data.get("subject_area_3");
+      //const studyYear = data.get("study_year");
+      const subject1 = data.get("subject_area_1");
+      const subject2 = data.get("subject_area_2");
+      const subject3 = data.get("subject_area_3");
 
-    // if (studyYear) {
-    //   stir.node(".subject_area_1").classList.remove("hide");
-    // }
+      // if (studyYear) {
+      //   stir.node(".subject_area_1").classList.remove("hide");
+      // }
 
-    if (e.target.id === "subject_area_1" && subject1) {
-      // Populate the list
+      if (e.target.id === "subject_area_1" && subject1) {
+        // Populate the list
 
-      stir.node("#subject_area_1_courses").innerHTML = renderSubjectCoursesOptions(subject1, "1", subjectsData);
-      //stir.node(".subject_area_2").classList.remove("hide");
-      // Remove the selected item from the subject list
-      const subjectsData1 = subjectsData.filter((item) => item.subject !== subject1);
-      subjectSelect[1].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData1));
-    }
+        stir.node("#subject_area_1_courses").innerHTML = renderSubjectCoursesOptions(subject1, "1", subjectsData);
+        //stir.node(".subject_area_2").classList.remove("hide");
+        // Remove the selected item from the subject list
+        const subjectsData1 = subjectsData.filter((item) => item.subject !== subject1);
+        subjectSelect[1].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData1));
+      }
 
-    if (e.target.id === "subject_area_2" && subject2) {
-      stir.node("#subject_area_2_courses").innerHTML = renderSubjectCoursesOptions(subject2, "2", subjectsData);
-      //stir.node(".subject_area_3").classList.remove("hide");
+      if (e.target.id === "subject_area_2" && subject2) {
+        stir.node("#subject_area_2_courses").innerHTML = renderSubjectCoursesOptions(subject2, "2", subjectsData);
+        //stir.node(".subject_area_3").classList.remove("hide");
 
-      const subjectsData2 = subjectsData.filter((item) => item.subject !== subject2 && item.subject !== subject1);
-      subjectSelect[2].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData2));
-    }
+        const subjectsData2 = subjectsData.filter((item) => item.subject !== subject2 && item.subject !== subject1);
+        subjectSelect[2].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData2));
+      }
 
-    if (e.target.id === "subject_area_3" && subject3) {
-      stir.node("#subject_area_3_courses").innerHTML = renderSubjectCoursesOptions(subject3, "3", subjectsData);
-    }
-    return;
-  });
-
-/* 
-    ACTION: Form submit event 
- */
-generatePDFBtn &&
-  generatePDFBtn.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    const data = new FormData(generatePDFForm);
-
-    grecaptcha.execute(CAPTCHA, { action: "register" }).then(function (token) {
-      doCaptcha(token, data);
+      if (e.target.id === "subject_area_3" && subject3) {
+        stir.node("#subject_area_3_courses").innerHTML = renderSubjectCoursesOptions(subject3, "3", subjectsData);
+      }
       return;
     });
-  });
+
+  /* 
+    ACTION: Form submit event 
+ */
+  generatePDFBtn &&
+    generatePDFBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const data = new FormData(generatePDFForm);
+
+      grecaptcha.execute(CAPTCHA, { action: "register" }).then(function (token) {
+        doCaptcha(token, data);
+        return;
+      });
+    });
+}
 
 const cleanse = (string) => {
   return string.replaceAll("script>").replaceAll("script%3E");
@@ -539,11 +541,17 @@ const cleanse = (string) => {
   Stored version
   */
 
-const doStoredPDF = stir.node("#doStoredPDF");
+//const doStoredPDF = stir.node("#doStoredPDF");
 
-if (doStoredPDF) {
-  console.log(window.btoa("Ryan"));
-  const name = cleanse(window.atob(QueryParams.get("n") ? QueryParams.get("n") : ""));
+if (stir.node("#doStoredPDF")) {
+  let nameRaw = "";
+  try {
+    nameRaw = window.atob(QueryParams.get("n") ? QueryParams.get("n") : "");
+  } catch (e) {
+    nameRaw = "";
+  }
+
+  const name = cleanse(nameRaw);
   const sects = cleanse(QueryParams.get("s") ? QueryParams.get("s") : "");
   const full = cleanse(QueryParams.get("f") ? QueryParams.get("f") : "");
 
