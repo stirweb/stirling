@@ -78,7 +78,7 @@ const getSubjectFromID = stir.curry((data, id) => {
 
 /* 
     downloadPDF 
-*/
+
 function storePDF2(pdf, fileName2, serverPath) {
   const linkSource = `${pdf}`;
   const fileName = "YourPersonalisedPGPerspectus.pdf";
@@ -109,6 +109,7 @@ function storePDF2(pdf, fileName2, serverPath) {
     }
   }
 }
+*/
 
 /* 
     b64toBlob 
@@ -385,7 +386,6 @@ async function doPdf(subsData, data, serverPath) {
   const pdfBlobUrl = URL.createObjectURL(pdfBlob);
 
   const userSubjects = [getSubjectID(subsData, subject1), getSubjectID(subsData, subject2), getSubjectID(subsData, subject3)].filter((item) => Number(item));
-
   const pdfPath = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&f=0&s=${userSubjects.join(",")}`;
 
   email && submitData(pdfPath, serverPath, data);
@@ -451,7 +451,7 @@ async function doCaptcha(token, data) {
 }
 
 /*  
-    ON LOAD      
+    ON LOAD - FORM VERSION   
 */
 
 const generatePDFBtn = stir.node("#generatePDFBtn");
@@ -466,7 +466,7 @@ if (generatePDFForm) {
 
   /* 
    ACTION: Form change events 
-*/
+  */
   generatePDFForm &&
     generatePDFForm.addEventListener("change", function (e) {
       e.preventDefault();
@@ -512,7 +512,6 @@ if (generatePDFForm) {
   generatePDFBtn &&
     generatePDFBtn.addEventListener("click", function (e) {
       e.preventDefault();
-
       const data = new FormData(generatePDFForm);
 
       grecaptcha.execute(CAPTCHA, { action: "register" }).then(function (token) {
@@ -525,10 +524,8 @@ if (generatePDFForm) {
 const cleanse = (string) => string.replaceAll("script>", "").replaceAll("script%3E", "").replaceAll("<", "");
 
 /*
-  Stored version
-  */
-
-//const doStoredPDF = stir.node("#doStoredPDF");
+  ON LOAD - RETRIEVE LATER VERSION
+*/
 
 if (stir.node("#doStoredPDF")) {
   let nameRaw = "";
