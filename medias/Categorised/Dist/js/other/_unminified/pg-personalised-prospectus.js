@@ -25,6 +25,11 @@ const renderSubjectCoursesOptions = (subject, index, data) => {
 };
 
 const renderLink = (filePath) => {
+  if (filePath === ``) return `Your file has downloaded. Please check your downloads folder`;
+  return `<a href="${filePath}" target="_blank" class="button heritage-green u-inline-block u-mt-2">Download your prospectus</a>`;
+};
+
+const renderLinkBox = (filePath) => {
   return `<div class="u-bg-energy-purple--10 u-p-3 u-mt-2">
             <h3>Download your prospectus</h3>
             <p class="u-flex u-gap-8 align-middle">
@@ -32,7 +37,7 @@ const renderLink = (filePath) => {
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                 </svg>
                 Your prospectus has been successfully generated</p>
-            <p><a href="${filePath}" class="button heritage-green u-inline-block u-mt-2">Download your prospectus</a></p>
+                <p>${renderLink(filePath)}</p>
           </div>`;
 };
 
@@ -53,52 +58,61 @@ const renderRequiredError = () => {
 
 */
 
-/* getSubjectFileName - returns the name of the raw pdf */
-const getSubjectFileName = (id, subsData) => {
-  const obj = subsData.filter((item) => item.id === Number(id));
-
-  if (!obj.length) return ``;
-  return obj[0].subject.replaceAll(",", "");
-};
-
 const setDOMContent = stir.curry((node, html) => {
   stir.setHTML(node, html);
   return true;
 });
 
+/* getSubjectID */
+const getSubjectID = stir.curry((subsData, name) => {
+  const obj = subsData.filter((item) => item.subject === name);
+
+  if (!obj.length) return ``;
+  return obj[0].id;
+});
+
+const getSubjectFromID = stir.curry((data, id) => {
+  const sub = data.filter((item) => item.id === Number(id));
+  return !sub.length ? `` : sub[0].subject;
+});
+
 /* 
     downloadPDF 
-
-function storePDF2(pdf, fileName2, serverPath) {
-    const linkSource = `${pdf}`;
-    const fileName = "YourPersonalisedPGPerspectus.pdf";
-    const fileURL = linkSource;
-
-    if (!window.ActiveXObject) {
-        var save = document.createElement("a");
-        save.href = fileURL;
-        save.target = "_blank";
-        var filename = fileURL.substring(fileURL.lastIndexOf("/") + 1);
-        save.download = fileName || filename;
-        if (navigator.userAgent.toLowerCase().match(/(ipad|iphone|safari)/) && navigator.userAgent.search("Chrome") < 0) {
-            document.location = save.href;
-            // window event not working here
-        } else {
-            var evt = new MouseEvent("click", {
-                view: window,
-                bubbles: true,
-                cancelable: false,
-            });
-            save.dispatchEvent(evt);
-            (window.URL || window.webkitURL).revokeObjectURL(save.href);
-        }
-    }
-}
 */
+function storePDF2(pdf, fileName2, serverPath) {
+  const linkSource = `${pdf}`;
+  const fileName = "YourPersonalisedPGPerspectus.pdf";
+  const fileURL = linkSource;
+
+  if (!window.ActiveXObject) {
+    var save = document.createElement("a");
+    save.href = fileURL;
+    save.target = "_blank";
+    var filename = fileURL.substring(fileURL.lastIndexOf("/") + 1);
+    save.download = fileName || filename;
+
+    if (navigator.userAgent.toLowerCase().match(/(ipad|iphone|safari)/) && navigator.userAgent.search("Chrome") < 0) {
+      console.log("Safari");
+      return save;
+      //document.location = save.href;
+      // window event not working here
+    } else {
+      var evt = new MouseEvent("click", {
+        view: window,
+        bubbles: true,
+        cancelable: false,
+      });
+      save.dispatchEvent(evt);
+      (window.URL || window.webkitURL).revokeObjectURL(save.href);
+
+      return ``;
+    }
+  }
+}
 
 /* 
     b64toBlob 
- */
+   */
 function b64toBlob(b64Data, contentType, sliceSize) {
   const byteCharacters = atob(b64Data);
   const byteArrays = [];
@@ -159,7 +173,7 @@ const getSelectedCourses = () => {
 
 /* 
     storePDF: SEND the pdf file to Supabase and get the link url back *
- */
+
 async function storePDF(pdf, fileName, serverPath) {
   const fileNameFull = fileName + ".pdf";
 
@@ -175,6 +189,7 @@ async function storePDF(pdf, fileName, serverPath) {
 
   return null;
 }
+ */
 
 /*
     CONTROLLER: submitData: Send data (formData) to the backend to be processed (MC QS)
@@ -200,6 +215,7 @@ async function submitData(pdfPath, serverPath, formData) {
     CONTROLLER: Build the pdf
 */
 async function doPdf(subsData, data, serverPath) {
+  const retrieveUrl = `https://www.stir.ac.uk/study/postgraduate/create-your-personalised-prospectus/welcome-back/`;
   const resultsNode = stir.node("#resultBox");
 
   setDOMContent(resultsNode, renderGenerating());
@@ -209,12 +225,12 @@ async function doPdf(subsData, data, serverPath) {
   const fullPdf = data.get("full_prospectus");
 
   const firstName = data.get("first_name") || "";
-  const lastName = data.get("last_name") || "";
-  //const email = data.get("email") || "";
+  //const lastName = data.get("last_name") || "";
+  const email = data.get("email") || "";
 
-  const subject1 = getSubjectFileName(data.get("subject_area_1"), subsData);
-  const subject2 = getSubjectFileName(data.get("subject_area_2"), subsData);
-  const subject3 = getSubjectFileName(data.get("subject_area_3"), subsData); // data.get("subject_area_3") || "";
+  const subject1 = data.get("subject_area_1");
+  const subject2 = data.get("subject_area_2");
+  const subject3 = data.get("subject_area_3");
 
   const pdfDoc = await PDFLib.PDFDocument.create();
 
@@ -228,7 +244,7 @@ async function doPdf(subsData, data, serverPath) {
   const url2 = serverPath + "rawpdfs/" + subject2.replaceAll(",", "") + ".pdf";
   const url3 = serverPath + "rawpdfs/" + subject3.replaceAll(",", "") + ".pdf";
 
-  const fileName = String(Date.now() + "--" + firstName + lastName + String(Math.floor(Math.random() * 100)));
+  //const fileName = String(Date.now() + "--" + firstName + lastName + String(Math.floor(Math.random() * 100)));
 
   // Font
   const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
@@ -240,9 +256,11 @@ async function doPdf(subsData, data, serverPath) {
 
   /*  Full unpersonalised PDF */
   if (fullPdf === "1") {
+    const pdfPathFull = retrieveUrl + `?n=${data.get("first_name")}&s=&f=1}`;
+    submitData(pdfPathFull, serverPath, data);
+
     const fileNameFull = serverPath + "rawpdfs/full-non-personalised.pdf";
-    setDOMContent(resultsNode, renderLink(fileNameFull));
-    submitData(fileNameFull, serverPath, data);
+    setDOMContent(resultsNode, renderLinkBox(fileNameFull));
     return;
   }
 
@@ -363,17 +381,28 @@ async function doPdf(subsData, data, serverPath) {
     dataUri: false,
   });
 
-  const response = await storePDF(pdfDataUri, fileName, serverPath);
+  const pdfBlob = b64toBlob(pdfDataUri, "application/pdf", 512);
+  const pdfBlobUrl = URL.createObjectURL(pdfBlob);
 
-  const pdfPath = response ? SUPABASE_URL + "/storage/v1/object/public/" + response.fullPath : "";
+  const userSubjects = [getSubjectID(subsData, subject1), getSubjectID(subsData, subject2), getSubjectID(subsData, subject3)].filter((item) => Number(item));
 
-  if (!pdfPath) {
-    console.log("Error uploading to Supabase!");
-    return;
+  const pdfPath = retrieveUrl + `?n=${data.get("first_name")}&f=0&s=${userSubjects.join(",")}`;
+
+  if (email) {
+    submitData(pdfPath, serverPath, data);
   }
 
-  setDOMContent(resultsNode, renderLink(pdfPath));
-  submitData(pdfPath, serverPath, data);
+  setDOMContent(resultsNode, renderLinkBox(pdfBlobUrl));
+
+  //const response = await storePDF(pdfDataUri, fileName, serverPath);
+  //const link = storePDF2(pdfDataUri);
+  //   const pdfPath = response ? SUPABASE_URL + "/storage/v1/object/public/" + response.fullPath : "";
+
+  //   if (!pdfPath) {
+  //     console.log("Error uploading to Supabase!");
+  //     return;
+  //   }
+  //   submitData(pdfPath, serverPath, data);
   return;
 }
 
@@ -440,7 +469,7 @@ const selects = stir.nodes("select");
 selects.forEach((element) => (element.value = "")); // reset on load
 
 const subjectSelect = stir.nodes(".subjectSelect");
-subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
+subjectSelect[0] && subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
 
 /* 
    ACTION: Form change events 
@@ -498,3 +527,26 @@ generatePDFBtn &&
       return;
     });
   });
+
+/*
+  Stored version
+  */
+const doStoredPDF = stir.node("#doStoredPDF");
+
+if (doStoredPDF) {
+  const name = QueryParams.get("n") ? QueryParams.get("n") : "";
+  const sects = QueryParams.get("s") ? QueryParams.get("s") : "";
+  const full = QueryParams.get("f") ? QueryParams.get("f") : "";
+
+  const getSubjectFromIDCurry = getSubjectFromID(subjectsData);
+  const selectedSects = sects.split(",").map((item) => getSubjectFromIDCurry(item));
+
+  const data = new FormData(doStoredPDF);
+  data.append("first_name", name);
+  data.append("full_prospectus", full);
+  data.append("subject_area_1", selectedSects[0] ? selectedSects[0] : ``);
+  data.append("subject_area_2", selectedSects[1] ? selectedSects[1] : ``);
+  data.append("subject_area_3", selectedSects[2] ? selectedSects[2] : ``);
+
+  doPdf(subjectsData, data, serverPath);
+}
