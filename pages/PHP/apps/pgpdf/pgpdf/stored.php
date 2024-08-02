@@ -35,32 +35,29 @@
     <main class="wrapper-content" aria-label="Main content" id="content">
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
-                <!-- 
 
-                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y"> 
-                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Create your personalised prospectus</h1>     		
+                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
+                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Welcome back</h1>
                 </div>
-                -->
-                <!-- Alternative Page Heading -->
-            </div>
-        </div> <!-- Banner -->
-        <!-- End Banner -->
-        <div class="grid-container">
-            <div class="grid-x grid-padding-x">
-                <!-- Text with Heading -->
-                <div class="cell small-12  medium-10 large-10  u-padding-top" id="d.en.121060">
-                    <div class="c-wysiwyg-content">
-                        <p><strong>Build your bespoke postgraduate prospectus in a few simple steps and start your
-                                Masters journey with Stirling today.&nbsp;</strong></p>
-                    </div>
-                </div>
-                <!-- End Text with Heading -->
 
-                <div class="cell small-12    u-padding-y u-margin-top u-bg-grey u-bleed bg-grey">
+                <div class="cell medium-10 large-10">
+                    <p><strong>Good to see you again <span id="pgstudent"></span>!</strong></p>
+                    <p>In a matter of moments, you'll be able to download your personalised postgraduate prospectus containing just the information you want to read.</p>
+                </div>
+
+                <div class="cell small-12 u-padding-bottom ">
                     <form id="doStoredPDF"></form>
                     <div id="resultBox"></div>
+
                 </div>
 
+                <div class="cell u-margin-bottom medium-10 large-10">
+                    <p>We've tried to make our prospectus ordering process green, convenient and designed around you, which is how we like to do everything at Stirling, all the time.</p>
+
+                    <p>We look forward to welcoming you on campus soon, but if you've got any questions then please contact us at <a href="mailto:study@stir.ac.uk">study@stir.ac.uk</a>.</p>
+                    <p>Best Wishes,<br />
+                        The University of Stirling</p>
+                </div>
             </div>
         </div>
     </main>
