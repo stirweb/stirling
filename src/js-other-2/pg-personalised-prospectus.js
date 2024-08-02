@@ -256,7 +256,7 @@ async function doPdf(subsData, data, serverPath) {
 
   /*  Full unpersonalised PDF */
   if (fullPdf === "1") {
-    const pdfPathFull = retrieveUrl + `?n=${data.get("first_name")}&s=&f=1}`;
+    const pdfPathFull = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&s=&f=1}`;
     submitData(pdfPathFull, serverPath, data);
 
     const fileNameFull = serverPath + "rawpdfs/full-non-personalised.pdf";
@@ -386,7 +386,7 @@ async function doPdf(subsData, data, serverPath) {
 
   const userSubjects = [getSubjectID(subsData, subject1), getSubjectID(subsData, subject2), getSubjectID(subsData, subject3)].filter((item) => Number(item));
 
-  const pdfPath = retrieveUrl + `?n=${data.get("first_name")}&f=0&s=${userSubjects.join(",")}`;
+  const pdfPath = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&f=0&s=${userSubjects.join(",")}`;
 
   if (email) {
     submitData(pdfPath, serverPath, data);
@@ -531,21 +531,27 @@ generatePDFBtn &&
     });
   });
 
+const cleanse = (string) => {
+  return string.replaceAll("script>").replaceAll("script%3E");
+};
+
 /*
   Stored version
   */
+
 const doStoredPDF = stir.node("#doStoredPDF");
 
 if (doStoredPDF) {
-  const name = QueryParams.get("n") ? QueryParams.get("n") : "";
-  const sects = QueryParams.get("s") ? QueryParams.get("s") : "";
-  const full = QueryParams.get("f") ? QueryParams.get("f") : "";
+  console.log(window.btoa("Ryan"));
+  const name = cleanse(window.atob(QueryParams.get("n") ? QueryParams.get("n") : ""));
+  const sects = cleanse(QueryParams.get("s") ? QueryParams.get("s") : "");
+  const full = cleanse(QueryParams.get("f") ? QueryParams.get("f") : "");
 
   const getSubjectFromIDCurry = getSubjectFromID(subjectsData);
   const selectedSects = sects.split(",").map((item) => getSubjectFromIDCurry(item));
 
   const data = new FormData(doStoredPDF);
-  data.append("first_name", name);
+  data.append("first_name", cleanse(name));
   data.append("full_prospectus", full);
   data.append("subject_area_1", selectedSects[0] ? selectedSects[0] : ``);
   data.append("subject_area_2", selectedSects[1] ? selectedSects[1] : ``);
