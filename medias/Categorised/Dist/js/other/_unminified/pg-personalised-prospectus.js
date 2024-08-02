@@ -257,9 +257,9 @@ async function doPdf(subsData, data, serverPath) {
   /*  Full unpersonalised PDF */
   if (fullPdf === "1") {
     const pdfPathFull = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&s=&f=1}`;
-    submitData(pdfPathFull, serverPath, data);
-
     const fileNameFull = serverPath + "rawpdfs/full-non-personalised.pdf";
+
+    email && submitData(pdfPathFull, serverPath, data);
     setDOMContent(resultsNode, renderLinkBox(fileNameFull));
     return;
   }
@@ -388,24 +388,13 @@ async function doPdf(subsData, data, serverPath) {
 
   const pdfPath = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&f=0&s=${userSubjects.join(",")}`;
 
-  if (email) {
-    submitData(pdfPath, serverPath, data);
-  }
+  email && submitData(pdfPath, serverPath, data);
 
   const personalisedMessageNode = stir.node("#pgstudent");
   personalisedMessageNode && setDOMContent(personalisedMessageNode, data.get("first_name"));
 
   setDOMContent(resultsNode, renderLinkBox(pdfBlobUrl));
 
-  //const response = await storePDF(pdfDataUri, fileName, serverPath);
-  //const link = storePDF2(pdfDataUri);
-  //   const pdfPath = response ? SUPABASE_URL + "/storage/v1/object/public/" + response.fullPath : "";
-
-  //   if (!pdfPath) {
-  //     console.log("Error uploading to Supabase!");
-  //     return;
-  //   }
-  //   submitData(pdfPath, serverPath, data);
   return;
 }
 
@@ -555,12 +544,17 @@ if (stir.node("#doStoredPDF")) {
   const sects = cleanse(QueryParams.get("s") ? QueryParams.get("s") : "");
   const full = cleanse(QueryParams.get("f") ? QueryParams.get("f") : "");
 
-  const getSubjectFromIDCurry = getSubjectFromID(subjectsData);
-  const selectedSects = sects.split(",").map((item) => getSubjectFromIDCurry(item));
+  const getSubjectFromIDCurry = getSubjectFromID(subjectsData); // Curry
+  const selectedSects = sects
+    .split(",")
+    .map((item) => getSubjectFromIDCurry(item))
+    .filter((item) => item);
+
+  const fullProspectus = !name.length && !selectedSects.length ? "1" : full;
 
   const data = new FormData(doStoredPDF);
-  data.append("first_name", cleanse(name));
-  data.append("full_prospectus", full);
+  data.append("first_name", name);
+  data.append("full_prospectus", fullProspectus);
   data.append("subject_area_1", selectedSects[0] ? selectedSects[0] : ``);
   data.append("subject_area_2", selectedSects[1] ? selectedSects[1] : ``);
   data.append("subject_area_3", selectedSects[2] ? selectedSects[2] : ``);
