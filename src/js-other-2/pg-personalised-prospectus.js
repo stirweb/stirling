@@ -522,9 +522,7 @@ if (generatePDFForm) {
     });
 }
 
-const cleanse = (string) => {
-  return string.replaceAll("script>").replaceAll("script%3E");
-};
+const cleanse = (string) => string.replaceAll("script>", "").replaceAll("script%3E", "");
 
 /*
   Stored version
