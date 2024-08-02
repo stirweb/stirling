@@ -522,7 +522,7 @@ if (generatePDFForm) {
     });
 }
 
-const cleanse = (string) => string.replaceAll("script>", "").replaceAll("script%3E", "");
+const cleanse = (string) => string.replaceAll("script>", "").replaceAll("script%3E", "").replaceAll("<", "");
 
 /*
   Stored version
