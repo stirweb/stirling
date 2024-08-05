@@ -51,18 +51,16 @@ var UoS_ClearingClock = (function () {
     var dayOfWeek = date.getUTCDay();
     var weekday = dayOfWeek > 0 && dayOfWeek < 6 ? true : false;
 
-    // Clearing is 7–22 August 2023
-    // Scottish results: 8 Aug
-    // A-Level results: 17 Aug
+    // Hotline is available 6–22 August 2024
+    // Scottish results day: 6 Aug
+    // A-Level results day: 15 Aug
 
     // :: DATE HANDLING ::
 
     if (2024 != date.getUTCFullYear()) return false; // ignore any dates not in 2023
     if (7 != month) return false; // ignore any dates not in August
     if (day <= 5) return false; // no calls at all before 6 August
-    // (Hotline is actually open from 7th but no web promo until 8th) [2023-07-06]
     if (day <= 14 && !sqa) return false; // Aug 6–14 only allowed for Scotland region (SQA results)
-    // …Aug 17–22 Clearing is open…
     if (day >= 21) return false; // no calls after 22 August (this got extended in 2022 to Aug 31)
 
     // :: TIME OF DAY HANDLING ::
@@ -72,17 +70,19 @@ var UoS_ClearingClock = (function () {
     // further rules are needed, we can return TRUE now.
     if (weekday && hour >= 8 && hour < 16) return true;
 
-    // Extended hours (August only)
+    // ::  E X T E N D E D   H O U R S  ::
     // i.e. Weekends, or other times outwith 9–5…
 
-    // [Results day] August 6: 9am–7pm (8.00–18.00 UTC)
+    // [SQA Results day] August 6: 9am–7pm (8.00–18.00 UTC)
     if (6==day && hour>=8 && hour<18) {
 		return true;
     }
-	// [Results day] August 15: 8am–7pm (7.00–18.00 UTC)
+
+	  // [A-Levels Results day] August 15: 8am–7pm (7.00–18.00 UTC)
     if (15==day && hour>=7 && hour<18) {
       return true;
     }
+
     // [Results Boxing Days] August 7 & 16: 9am-6pm (8.00–17.00 UTC)
     if ((7 == day || 16 == day) && hour >= 8 && hour < 17) {
       return true;
