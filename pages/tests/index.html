@@ -1,0 +1,129 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+
+</body>
+
+
+
+<script>
+
+    // const searchForm = stir.node("#search-form");
+
+    // searchForm &&
+    //   searchForm.addEventListener("change", (e) => {
+    //     const searchStudentType = stir.node("#search-student-type");
+    //     const searchRegion = stir.node("#search-region");
+    //     const searchCategory = stir.node("#search-category");
+
+    //     console.log(searchStudentType.value);
+    //   });
+
+    const enquiryUrlStart = "enquiryUrlStart";
+
+    let buildButton = (button, colour) => {
+
+        //console.log(button);
+        var attr = ' id="cta-pg-' + button.id + '"' + ' class="button ' + (colour || '') + '"';
+        return '<a href="' + button.href + '"' + attr + '>' + '<span>' + button.text + '</span></a>';
+        //`<svg class="icon"><use xlink:href="#` + button.icon + `"></use></svg>` +
+    };
+
+    /*
+     * BUTTON CONFIG OBJECT
+     */
+    let icons = {
+        funding: 'currency-sterling',
+        webinar: 'web',
+        openday: 'writer',
+        virtualtour: 'web',
+        registerupdates: 'email',
+        createprospectus: 'cursor',
+        chat: 'computer-blog',
+        enquiry: 'speech',
+    };
+
+    let colours = ["heritage-purple", "heritage-green", "heritage-berry"];
+
+    let buttons = {
+        openday: {
+            id: 'openday',
+            icon: icons.openday,
+            href: "2461",
+            text: "Book for Open Day"
+        },
+        virtualtour: {
+            id: 'tour',
+            icon: icons.virtualtour,
+            href: "2541",
+            text: "Take a virtual tour"
+        },
+        registerupdates: {
+            id: 'registerupdates',
+            icon: icons.registerupdates,
+            href: "3101",
+            text: "Register for updates"
+        },
+        createprospectus: {
+            id: 'createprospectus',
+            icon: icons.createprospectus,
+            href: "4361",
+            text: "Create your prospectus"
+        },
+        chat: {
+            id: 'chat',
+            icon: icons.chat,
+            href: "3545",
+            text: "Chat to our students"
+        },
+        enquiry: {
+            id: 'enquire',
+            icon: icons.enquiry,
+            href: enquiryUrlStart + ("Enquiry Code"),
+            text: "Enquire now"
+        }
+    };
+
+
+    // let ctasPage = {
+    //     id: "scholarship",
+    //     headline: "DataLab scholarships",
+    //     link: "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/10448",
+    //     type: "funding",
+    //     text: "Enquire now",
+    //     icon: icons.enquiry,
+    // };
+
+
+
+
+    let ctasPage = [{ "headline": "DataLab scholarships", "link": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/10448", "type": "funding", "text": "DataLab scholarships", "icon": "funding", "id": "funding" }, { "headline": "Join our webinar", "link": "https://www.bigmarker.com/student-support/MSc-Artificial-Intelligence-and-MSc-Big-Data-Webinar-at-the-University-of-Stirling?show_live_page=true", "type": "webinar", "text": "Join our webinar", "icon": "webinar", "id": "webinar" }];
+
+
+
+
+    const max = 3;
+
+    const data = [
+        {
+            "id": "scholarship",
+            "headline": "DataLab scholarships",
+            "link": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/10448",
+            "type": "funding"
+        },
+        "chat",
+        "createprospectus",
+        "registerupdates"
+    ].slice(0, max).map((item, index) => typeof item === "string" ? buttons[item] : item).map((item, index) => buildButton(item, colours[index % 3]));
+
+    //console.log(data);
+
+
+</script>
+
+</html>
