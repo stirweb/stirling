@@ -19,64 +19,82 @@
 		}
 	}
 
-	details {
-		border-bottom: 5px solid transparent;
-		
-		summary {
-			border: 5px solid transparent;
-			border-width: 5px 0;
-			text-align: center;
-			color: $heritage-green;
-			background-color: #f6f5f4;
-			padding-left: 2rem;
-			
-			font-size: 1.25rem;
-			font-weight: 700;
-			line-height: 1.5;
-			
-			padding: 20px 35px 20px 0;
-			cursor: pointer;
-
-			&::after {
-				content: "+";
-				float: right;
-				margin-right: 1rem;
-			}
-
-			&::marker {
-				content: none;
-
-			}
-		}
-		&[open] {
-			summary {
-				border-top-color: $energy-green;
-				border-bottom-color: #CCC;
-				&::after {
-					content: "–";
-				}
-			}
-		}
-
-	}
-
 	[role="tabpanel"]{
-		background: #f6f5f4;
 		/* margin: 0 auto;
 		padding: 0 2rem; */
 
+		&:focus {
+			outline: 2px solid $heritage-green;
+		}
 		[data-behaviour="accordion"] h3 {
 			padding: 0;
 		}
-		h2:first-of-type {
-			padding-top: 1rem;
+		&> h2:first-of-type {
+			font-family: "Open Sans", Arial, Helvetica, sans-serif;
+			padding: 1rem 0;
 			margin-bottom: 0;
+			&::after {
+				content: none;
+			}
 		}
-		p {
+
+	}
+	[role="region"] {
+		padding: 1rem;
+	}
+
+	[role="tabpanel"],[role="region"] {
+		background: #f6f5f4;
+		p,li,td {
 			font-size: 1rem;
+		}
+		[data-behaviour="accordion"] > h3 {
+			padding: 0;
+			margin: 0;
 		}
 	}
 
+	/* accordion trigger */
+	.pseudotab[aria-expanded] {
+		cursor: pointer;
+		font-size: 1rem;
+		padding: 1rem;
+		text-align: center;
+		display: block;
+		width: 100%;
+		font-weight: 700;
+		background-color: rgb(246, 245, 244);
+      border-top: 5px solid #fff;
+      border-bottom: 5px solid rgb(246, 245, 244);
+		
+		&::after {
+			content: "+";
+			float: right;
+		}
+	}
+	.pseudotab[aria-expanded="true"],
+	.pseudotab[aria-expanded]:hover,
+	.pseudotab[aria-expanded]:focus-visible {
+		border-top: 5px solid $energy-green;
+		border-bottom: 5px solid #ccc;
+	}
+	.pseudotab[aria-expanded="true"] {
+		::after {
+			content: "–";
+		}
+	}
+	
+}
+
+@media screen and (max-width: 63.999em) {
+	.stir-tabs > div > h2 {
+		margin: 0;
+		padding: 0;
+		font-family: "Open Sans", sans-serif;
+		&::after{
+			content: none;
+		}
+	}
 }
 
 @media screen and (min-width: 64em) {
@@ -103,7 +121,7 @@
 		}
 
 		[role="tabpanel"]{
-			padding: 0 5rem;
+			padding: 1rem 5rem 0;
 			&[aria-hidden="true"] {
 				display: none;
 			}

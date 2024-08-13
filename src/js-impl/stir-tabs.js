@@ -38,6 +38,8 @@ stir.tabhelper = (function () {
 stir.tabs = function (el, doDeepLink_) {
   if (!el) return;
 
+  const instance = {};
+
   /* The data-deeplink param will override the supplied param */
   const doDeepLink = el.dataset.deeplink && el.dataset.deeplink === "false" ? false : doDeepLink_;
 
@@ -51,93 +53,160 @@ stir.tabs = function (el, doDeepLink_) {
   const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
   const sizes = ["small", "medium"];
 
-  //const childElements = Array.prototype.slice.call(el.children);
-
   /*
 	 Set up tabs and Listen for clicks
    */
   function init() {
-	el.classList.add("stir-tabs");
+		var tabGroupId = stir.tabhelper.getId();
+		var tabId = 0;
+		var tablist = document.createElement('div'); 
+		// tablist is an a11y wrapper for tab elements
+		// only and must NOT contain tabpanels.
+		
+		el.classList.add("stir-tabs");
+		el.insertAdjacentElement("afterbegin",tablist);
+		tablist.setAttribute("role", "tablist");
 
+		instance.tabs = [];
 
-	var tabGroupId = stir.tabhelper.getId();
-	var tabId = 0;
+		getHeeders().forEach(header => {
+			const id = "_" + tabGroupId + "_" + ++tabId;
+			const tab = document.createElement("button");
+			const content = header.nextElementSibling.nodeName === "DIV" ? header.nextElementSibling : null;
+			
+			if (content) {
+				tablist.appendChild(tab);
+				instance.tabs.push(
+					initComponent(id, header, content, tab)
+				);
+			}
+		});
 
-	var tablist = document.createElement('div'); // a11y wrapper for tab elements only
-	tablist.setAttribute("role", "tablist");
-	el.insertAdjacentElement("afterbegin",tablist);
-
-
-	getHeeders().forEach((header, index) => {
-	  const panel = header.nextElementSibling.nodeName === "DIV" ? header.nextElementSibling : null;
-	  const id = "_" + tabGroupId + "_" + ++tabId;
-	  const button = document.createElement("button");
-
-	  if (panel && 0 === header.children.length) {
-		initComponent(button, header, panel, id);
-		//initState(button, index);
-		tablist.appendChild(button);
-	  }
-	});
-	el.addEventListener("click", handleClick);
+		tablist.addEventListener("click", handleClick);
+		tablist.addEventListener("keyup", handleKeyboard, true);
+		reset();
   }
 
   /*
 	initComponent
   */
-  const initComponent = (button, header, panel, id) => {
+  const initComponent = (id, header, content, tab) => {
+	const accordion = document.createElement("button");
+	const panel = document.createElement('div');
+	const label = header.textContent;
+	header.insertAdjacentElement("beforebegin",panel);
+	panel.append(header);
+	panel.append(content);
 
-	// Classes
-	button.classList.add("stir-tabs__tab");
-	panel.classList.add("stir-tabs__content");
-	// Attributes 
-	button.setAttribute("role", "tab");
-	//panel.setAttribute("data-tab-content", "");
-	panel.setAttribute("role", "tabpanel");
-	//panel.setAttribute("tabindex", "0");
+	if(header.hasAttribute("data-tab-callback")){
+		tab.setAttribute("data-tab-callback",header.getAttribute("data-tab-callback"))
+	}
 
 	// Text
-	button.textContent = header.textContent;
-	var details = document.createElement('details');
-	var summary = document.createElement('summary');
-	details.open="true";
-	summary.textContent = header.textContent;
-	details.append(summary)
-	panel.insertAdjacentElement("beforebegin",details); // h2
-	details.append(panel);
-	panel.prepend(header);
+	tab.textContent = label;
+	accordion.textContent = label;
 
-
-	// Mutual ARIA/ID references
+	// Unique IDs for ARIA references later
 	panel.id = panel.id || "panel" + id;
-	button.id = button.id || "tab" + id;
-	button.setAttribute("aria-controls", panel.id);
-	panel.setAttribute("aria-labelledby", button.id);
-  };
+	tab.id = tab.id || "tab" + id;
+	accordion.id = accordion.id || "accordion" + id;
+	content.id = content.id || "content" + id;
+
+	accordion.setAttribute("type","button");
+	accordion.classList.add('pseudotab');
+	accordion.addEventListener("click",squeezebox);
+	
+	return {
+		id:id,
+		label:label,
+		header:header,
+		content:content,
+		tab:tab,
+		panel:panel,
+		accordion:accordion
+	}
+	
+};
+
+function goGoGadgetTabbordian() {
+	
+	const tabs = ("tabs"===getBehaviour());
+	const accordion = ("accordion"===getBehaviour());
+
+	if(tabs) {
+		instance.tabs.forEach((tab,index)=>{
+			tab.panel.setAttribute("tabindex","0"); // needed for a11y
+			tab.panel.setAttribute("role", "tabpanel");
+			tab.tab.setAttribute("role", "tab");
+			// Mutual ARIA/ID references
+			tab.panel.setAttribute("aria-labelledby", tab.tab.id);
+			tab.tab.setAttribute("aria-controls", tab.panel.id);
+			// Autoselect first tab
+			tab.tab.setAttribute("aria-selected", !index);
+			(0!==index) && tab.panel.setAttribute("hidden","");
+		});
+		instance.tabActive = instance.tabs[0].tab
+	} else {
+		instance.tabs.forEach(tab=>{
+			tab.panel.removeAttribute("tabindex");
+			tab.panel.removeAttribute("role");
+			tab.panel.removeAttribute("hidden");
+			tab.tab.removeAttribute("role");
+			// Mutual ARIA/ID references
+			tab.panel.removeAttribute("aria-labelledby");
+			tab.tab.removeAttribute("aria-controls");
+		});
+	}
+
+	if(accordion){
+		instance.tabs.forEach(tab => {
+			tab.content.setAttribute("role","region");
+			tab.header.textContent = '';
+			tab.header.append(tab.accordion);
+			tab.accordion.setAttribute("aria-expanded","false");
+			tab.accordion.setAttribute("aria-controls",tab.content.id);
+			tab.content.setAttribute("aria-labelledby",tab.accordion.id);
+			tab.content.setAttribute("hidden","");
+		});
+		//instance.tabs[0].accordion.click();
+		
+	} else {
+		instance.tabs.forEach(tab => {
+			tab.accordion.remove();
+			tab.header.textContent = tab.label;
+			tab.content.removeAttribute("role");			
+			tab.content.removeAttribute("aria-labelledby");
+			tab.content.removeAttribute("hidden");
+		});
+	}
+
+	deepLink();
+
+  }
 
   /*
 	State
   */
-  //const initState = (control, index) => (index === 0 ? open(control) : close(control));
 
-  const open = (control) => {
-	control.classList.add("stir-tabs__tab--active"); // h2
-	control.setAttribute("aria-selected", "true"); // btn
-	//control.setAttribute("tabindex", "-1"); // btn
+  const open = control => {
+	control.setAttribute("aria-selected", "true");
+	// There's no need explicitly to set tabindex to zero for <button>
+	control.removeAttribute("tabindex");
+	instance.tabActive = control;
 	var panel = document.getElementById(control.getAttribute('aria-controls'));
-	if(!panel)return;
-	panel.removeAttribute("aria-hidden"); //panel
-	//panel.classList.remove("hide"); //panel
+	if(panel) {
+		panel.removeAttribute("hidden"); //panel
+	}
   };
 
   const close = (control) => {
-	control.classList.remove("stir-tabs__tab--active");
 	control.setAttribute("aria-selected", "false");
-	//control.setAttribute("tabindex", "0");
+	control.setAttribute("tabindex", "-1");
+	// Inactive tabs should not be tabbable (use cursor keys instead)
 	var panel = document.getElementById(control.getAttribute('aria-controls'));
-	if(!panel)return;
-	panel.setAttribute("aria-hidden", "true");
-	//panel.classList.add("hide");
+	if(panel) {
+		panel.setAttribute("hidden","");
+	}
   };
 
   /*
@@ -147,11 +216,7 @@ stir.tabs = function (el, doDeepLink_) {
 
   const getHeeders = () => Array.prototype.slice.call(el.children).filter((el) => el.matches("h2,h3,h4"));
 
-  const getClickedNode = (ev) => {
-	if (ev.target.classList.contains("stir-tabs__tab")) return ev.target;
-	//if ((ev.target.nodeName === "A" || ev.target.nodeName === "BUTTON") && ev.target.parentNode && ev.target.parentNode.classList.contains("stir-tabs__tab")) return ev.target.parentNode;
-	return null;
-  };
+  const getClickedNode = ev => ev.target.getAttribute("role")==="tab" ? ev.target : null;
 
   /*
 	 Events
@@ -159,9 +224,7 @@ stir.tabs = function (el, doDeepLink_) {
 
   const handleTabClick = (control) => {
 	// Close all tabs
-	Array.prototype.slice.call(control.parentElement.children).forEach((element) => {
-	  if (element.classList.contains("stir-tabs__tab")) close(element);
-	});
+	instance.tabs.forEach(tab => close(tab.tab));
 
 	open(control);
 	return true;
@@ -175,13 +238,31 @@ stir.tabs = function (el, doDeepLink_) {
 	//return true;
   };
 
+  function squeezebox(event) {
+	const controller = event.target;
+	const id = controller.getAttribute("aria-controls");
+	if(!controller||!id) return;
+	const expander = document.getElementById(id);
+	const myhash = "#" + id.replace('content','panel');
+	
+	if(expander.hidden) {
+		if (history.replaceState) history.replaceState(null, null, myhash);
+		expander.removeAttribute("hidden");
+		controller.setAttribute("aria-expanded","true");
+	} else {
+		expander.setAttribute("hidden","");
+		controller.setAttribute("aria-expanded","false");
+	}
+  };
+
   /**
-   * handle all clicks withing tab DOM
+   * Tablist click delegate
    **/
-  function handleClick(ev) {
-	const control = getClickedNode(ev);
+  function handleClick(event) {
+	const control = getClickedNode(event);
 
 	if (control) {
+	  control.focus();
 	  getBehaviour() === "tabs" ? handleTabClick(control) : handleAccordionClick(control);
 	  if (doDeepLink) {
 		const myhash = "#" + control.getAttribute('aria-controls');
@@ -191,9 +272,10 @@ stir.tabs = function (el, doDeepLink_) {
 
 	  /* Callbackify */
 	  if (control.hasAttribute("data-tab-callback")) {
-		var chain = window;
-		var callback;
-		var callbackdata = control.getAttribute("data-tab-callback").split(".");
+		  var chain = window;
+		  var callback;
+		  var callbackdata = control.getAttribute("data-tab-callback").split(".");
+		  debug && console.info('[Tabs] callback',callbackdata.join('.'));
 		while (callbackdata.length > 0) {
 		  var n = callbackdata.shift();
 		  if ("function" === typeof chain[n]) {
@@ -204,38 +286,82 @@ stir.tabs = function (el, doDeepLink_) {
 		}
 		callback && callback();
 	  }
-	  ev.preventDefault();
+	  event.preventDefault();
+	}
+  }
+
+  function handleKeyboard(event) {
+	if("ArrowRight"===event.code) {
+		//next tab
+		if(instance.tabActive.nextElementSibling) {
+			instance.tabActive.nextElementSibling.click();
+		} else {
+			// wrap around to first tab:
+			instance.tabs[0].tab.click();
+		}
+		
+	} else if ("ArrowLeft"===event.code) {
+		//previous tab
+		if(instance.tabActive.previousElementSibling) {
+			instance.tabActive.previousElementSibling.click();
+	 	} else {
+			// wrap around to last tab:
+			instance.tabs[instance.tabs.length-1].tab.click();
+		}
+
+	} else if("Home"===event.code){
+		//first tab
+		instance.tabs[0].tab.click();
+		event.preventDefault();
+
+	} else if("End"===event.code){
+		//last tab
+		instance.tabs[instance.tabs.length-1].tab.click();
+		event.preventDefault();
 	}
   }
 
   /*
-	 Reset the tabs to onload state
+	 Reset the tabs to onload state:
+	 0th tab open, the rest closed.
    */
-  function reset(childElements) {
-	if (!el || !childElements) return;
-
-//	getHeeders().forEach((control, index) => {
-//	  initState(control, index);
-//	});
+  function reset() {
+	debug && console.info('[Tabs] reset');
+	if (!el) return;
+	goGoGadgetTabbordian();
   }
 
   /*
-	 Open correct tab panel if a deeplink is found
+	 Open respective tab panel if a deeplink is found, otherwise open the first 
    */
   function deepLink() {
+	if(!doDeepLink) return;
 	var fragId, controller;
 	if ((fragId = window.location.hash.slice(1))) {
-	  if ((controller = el.querySelector('[aria-controls="' + fragId + '"]'))) {
-		deeplinked = true;
+		console.info('[Tabs] deeplink',fragId);
+		// TABS
+		if ((controller = el.querySelector('[aria-controls="' + fragId + '"]'))) {
+			console.info('[Tabs] deeplink', controller);
+			deeplinked = true;
 
-		// Close all by default
-		getHeeders().forEach((control) => {
-		  if (control.classList.contains("stir-tabs__tab--active")) control.click();
-		});
+			// Close all by default
+//			instance.tabs.forEach((tab) => {
+//				if ("true"===tab.tab.getAttribute("aria-selected")) tab.tab.click();
+//			});
 
-		// Open the required one
-		if (controller.getAttribute("aria-selected") !== "true") controller.click();
-	  }
+			// Open the required one (if not already open)
+			if ("true"!==controller.getAttribute("aria-selected")) controller.click();
+
+		}
+		// ACCORDION
+		else if ((controller = el.querySelector('[aria-controls="' + fragId.replace('panel','content') + '"]'))) {
+			instance.tabs.forEach((tab) => {
+				if ("true"===tab.accordion.getAttribute("aria-expanded")) tab.accordion.click();
+			});
+			controller.click();
+		}
+	} else {
+
 	}
   }
 
@@ -247,15 +373,12 @@ stir.tabs = function (el, doDeepLink_) {
 	  browsersize = stir.MediaQuery.current;
 	  var behaviour = getBehaviour();
 	  reset();
-	  doDeepLink && deepLink();
 
-	  console.info('[Tabs] resize!',getBehaviour());
+	  if(debug) console.info('[Tabs] resize!',getBehaviour());
 
-	  console.info(document.querySelectorAll('.stir-tabs details'));
-
-	  document.querySelectorAll('.stir-tabs details').forEach(
-		panel=>panel.open=behaviour==="tabs"
-	  );
+//	  document.querySelectorAll('.stir-tabs details').forEach(
+//		panel=>panel.open=behaviour==="tabs"
+//	  );
 
 	}
   });
@@ -264,7 +387,6 @@ stir.tabs = function (el, doDeepLink_) {
 	Initial set up
   */
   init();
-  doDeepLink && deepLink();
 
   /*  
 	Public get and set Functions 
@@ -290,8 +412,6 @@ stir.tabs = function (el, doDeepLink_) {
 (function () {
   const tabNodes = stir.nodes('.stir-tabs,[data-behaviour="tabs"]');
   const doDeepLink = true;
-  //const foo = "";
-
   if (!tabNodes) return;
 
   const tabs = tabNodes.map((tab) => {
