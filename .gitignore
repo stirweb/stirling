@@ -2,3 +2,8 @@
 node_modules
 npm-debug.log
 git-ignore
+.env
+composer.lock
+pages/PHP/**/lib
+pages/PHP/**/vendor
+pages/PHP/apps/pgpdf/pgpdf/form.php
