@@ -170,7 +170,7 @@ stir.MediaQuery = (function () {
   /*
      Listen for (debounced) resize events and re-check the viewport against the named breakpoints.
    */
-  window.addEventListener("resize", stir.debounce(checkCurrent, 400));
+  window.addEventListener("resize", stir.debounce(checkCurrent, 150));
 
   return {
     current: getCurrent(),

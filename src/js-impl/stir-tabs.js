@@ -100,6 +100,7 @@ stir.tabs = function (el, doDeepLink_) {
 
 	if(header.hasAttribute("data-tab-callback")){
 		tab.setAttribute("data-tab-callback",header.getAttribute("data-tab-callback"))
+		accordion.setAttribute("data-tab-callback",header.getAttribute("data-tab-callback"))
 	}
 
 	// Text
@@ -114,7 +115,7 @@ stir.tabs = function (el, doDeepLink_) {
 
 	accordion.setAttribute("type","button");
 	accordion.classList.add('pseudotab');
-	accordion.addEventListener("click",squeezebox);
+	accordion.addEventListener("click",handleAccordionClick);
 	
 	return {
 		id:id,
@@ -128,6 +129,11 @@ stir.tabs = function (el, doDeepLink_) {
 	
 };
 
+/**
+ * Handle the DOM transformation to implement either
+ * Tabbed or Accordion behaviours. Called on
+ * initialisation and on (debounced) browser resizing.
+ */
 function goGoGadgetTabbordian() {
 	
 	const tabs = ("tabs"===getBehaviour());
@@ -138,7 +144,6 @@ function goGoGadgetTabbordian() {
 			tab.panel.setAttribute("tabindex","0"); // needed for a11y
 			tab.panel.setAttribute("role", "tabpanel");
 			tab.tab.setAttribute("role", "tab");
-			// Mutual ARIA/ID references
 			tab.panel.setAttribute("aria-labelledby", tab.tab.id);
 			tab.tab.setAttribute("aria-controls", tab.panel.id);
 			// Autoselect first tab
@@ -152,7 +157,6 @@ function goGoGadgetTabbordian() {
 			tab.panel.removeAttribute("role");
 			tab.panel.removeAttribute("hidden");
 			tab.tab.removeAttribute("role");
-			// Mutual ARIA/ID references
 			tab.panel.removeAttribute("aria-labelledby");
 			tab.tab.removeAttribute("aria-controls");
 		});
@@ -168,7 +172,6 @@ function goGoGadgetTabbordian() {
 			tab.content.setAttribute("aria-labelledby",tab.accordion.id);
 			tab.content.setAttribute("hidden","");
 		});
-		//instance.tabs[0].accordion.click();
 		
 	} else {
 		instance.tabs.forEach(tab => {
@@ -202,7 +205,7 @@ function goGoGadgetTabbordian() {
   const close = (control) => {
 	control.setAttribute("aria-selected", "false");
 	control.setAttribute("tabindex", "-1");
-	// Inactive tabs should not be tabbable (use cursor keys instead)
+	// Non-selected tabs should not be keyboard-tabbable (use cursor keys instead)
 	var panel = document.getElementById(control.getAttribute('aria-controls'));
 	if(panel) {
 		panel.setAttribute("hidden","");
@@ -230,15 +233,8 @@ function goGoGadgetTabbordian() {
 	return true;
   };
 
-  /* 
-	handleAccordionClick 
-  */
-  const handleAccordionClick = (control) => {
-	//control.nextElementSibling.getAttribute("aria-hidden") === "true" ? open(control) : close(control);
-	//return true;
-  };
 
-  function squeezebox(event) {
+  function handleAccordionClick(event) {
 	const controller = event.target;
 	const id = controller.getAttribute("aria-controls");
 	if(!controller||!id) return;
@@ -249,46 +245,35 @@ function goGoGadgetTabbordian() {
 		if (history.replaceState) history.replaceState(null, null, myhash);
 		expander.removeAttribute("hidden");
 		controller.setAttribute("aria-expanded","true");
+		stir.callback.enqueue(controller.getAttribute("data-tab-callback"));
 	} else {
 		expander.setAttribute("hidden","");
 		controller.setAttribute("aria-expanded","false");
 	}
   };
 
-  /**
-   * Tablist click delegate
-   **/
-  function handleClick(event) {
-	const control = getClickedNode(event);
+	/**
+	 * Tablist click delegate
+	 **/
+	function handleClick(event) {
+		const control = getClickedNode(event);
 
-	if (control) {
-	  control.focus();
-	  getBehaviour() === "tabs" ? handleTabClick(control) : handleAccordionClick(control);
-	  if (doDeepLink) {
-		const myhash = "#" + control.getAttribute('aria-controls');
-		if (history.replaceState) history.replaceState(null, null, myhash);
-		else location.hash = myhash;
-	  }
+		if (control) {
+			control.focus();
+			handleTabClick(control)
+			//getBehaviour() === "tabs" ? handleTabClick(control) : handleAccordionClick(control);
 
-	  /* Callbackify */
-	  if (control.hasAttribute("data-tab-callback")) {
-		  var chain = window;
-		  var callback;
-		  var callbackdata = control.getAttribute("data-tab-callback").split(".");
-		  debug && console.info('[Tabs] callback',callbackdata.join('.'));
-		while (callbackdata.length > 0) {
-		  var n = callbackdata.shift();
-		  if ("function" === typeof chain[n]) {
-			callback = chain[n];
-		  } else if ("undefined" !== typeof chain[n]) {
-			chain = chain[n];
-		  }
+			if (doDeepLink) {
+				const myhash = "#" + control.getAttribute('aria-controls');
+				if (history.replaceState) history.replaceState(null, null, myhash);
+				else location.hash = myhash;
+			}
+
+			/* Callbackify */
+			stir.callback.enqueue(control.getAttribute("data-tab-callback"));
+			event.preventDefault();
 		}
-		callback && callback();
-	  }
-	  event.preventDefault();
 	}
-  }
 
   function handleKeyboard(event) {
 	if("ArrowRight"===event.code) {
@@ -326,7 +311,6 @@ function goGoGadgetTabbordian() {
 	 0th tab open, the rest closed.
    */
   function reset() {
-	debug && console.info('[Tabs] reset');
 	if (!el) return;
 	goGoGadgetTabbordian();
   }
@@ -338,10 +322,8 @@ function goGoGadgetTabbordian() {
 	if(!doDeepLink) return;
 	var fragId, controller;
 	if ((fragId = window.location.hash.slice(1))) {
-		console.info('[Tabs] deeplink',fragId);
 		// TABS
 		if ((controller = el.querySelector('[aria-controls="' + fragId + '"]'))) {
-			console.info('[Tabs] deeplink', controller);
 			deeplinked = true;
 
 			// Close all by default
@@ -371,15 +353,7 @@ function goGoGadgetTabbordian() {
   window.addEventListener("MediaQueryChange", () => {
 	if (stir.MediaQuery.current !== browsersize) {
 	  browsersize = stir.MediaQuery.current;
-	  var behaviour = getBehaviour();
 	  reset();
-
-	  if(debug) console.info('[Tabs] resize!',getBehaviour());
-
-//	  document.querySelectorAll('.stir-tabs details').forEach(
-//		panel=>panel.open=behaviour==="tabs"
-//	  );
-
 	}
   });
 

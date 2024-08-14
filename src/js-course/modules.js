@@ -86,8 +86,16 @@ stir.course = (function() {
 	};
 
 	// STIR TABS AWARE
-	const panel = container.closest && container.closest('.stir-tabs__content');
-	if(panel && window.location.hash.indexOf(panel.id)===1) _auto();
+	//const panel = container.closest && container.closest('[role=tabpanel]');
+	//if(panel && window.location.hash.indexOf(panel.id)===1) _auto();
+
+	// STIR ACCORDION
+	//const accordion = container.closest && container.closest('[role=dave]');
+	//if(accordion && !accordion.hidden) _auto();
+
+	// CALLBACK QUEUE - replaces the DOM checking above
+	if(stir.callback && stir.callback.queue && stir.callback.queue.indexOf("stir.course.auto")>-1) _auto();
+	// todo: empty the queue?
 
 	return {
 		auto: _auto
