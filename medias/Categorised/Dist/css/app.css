@@ -879,7 +879,6 @@ select {
 
 button {
   padding: 0;
-  -webkit-appearance: none;
   appearance: none;
   border: 0;
   border-radius: 0;
@@ -3717,7 +3716,6 @@ textarea {
   line-height: 1.5;
   color: #3a3c39;
   transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
-  -webkit-appearance: none;
   appearance: none; }
   [type='text']:focus, [type='password']:focus, [type='date']:focus, [type='datetime']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='week']:focus, [type='email']:focus, [type='number']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='url']:focus, [type='color']:focus,
   textarea:focus {
@@ -3740,7 +3738,6 @@ textarea[readonly] {
 
 [type='submit'],
 [type='button'] {
-  -webkit-appearance: none;
   appearance: none;
   border-radius: 0; }
 
@@ -3868,7 +3865,6 @@ select {
   height: 2.4375rem;
   margin: 0 0 1rem;
   padding: 0.5rem;
-  -webkit-appearance: none;
   appearance: none;
   border: 1px solid #cacaca;
   border-radius: 0;
@@ -4636,7 +4632,6 @@ html.is-reveal-open {
 
 .reveal {
   z-index: 1006;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   display: none;
   padding: 1rem;
@@ -4923,7 +4918,6 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
   transition-timing-function: linear;
   transform: translateY(-100%);
   transition-property: transform, opacity;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden; }
 
 .slide-in-down.mui-enter.mui-enter-active {
@@ -4934,7 +4928,6 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
   transition-timing-function: linear;
   transform: translateX(-100%);
   transition-property: transform, opacity;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden; }
 
 .slide-in-left.mui-enter.mui-enter-active {
@@ -4945,7 +4938,6 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
   transition-timing-function: linear;
   transform: translateY(100%);
   transition-property: transform, opacity;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden; }
 
 .slide-in-up.mui-enter.mui-enter-active {
@@ -4956,7 +4948,6 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
   transition-timing-function: linear;
   transform: translateX(100%);
   transition-property: transform, opacity;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden; }
 
 .slide-in-right.mui-enter.mui-enter-active {
@@ -4967,7 +4958,6 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
   transition-timing-function: linear;
   transform: translateY(0);
   transition-property: transform, opacity;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden; }
 
 .slide-out-down.mui-leave.mui-leave-active {
@@ -4978,7 +4968,6 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
   transition-timing-function: linear;
   transform: translateX(0);
   transition-property: transform, opacity;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden; }
 
 .slide-out-right.mui-leave.mui-leave-active {
@@ -4989,7 +4978,6 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
   transition-timing-function: linear;
   transform: translateY(0);
   transition-property: transform, opacity;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden; }
 
 .slide-out-up.mui-leave.mui-leave-active {
@@ -5000,7 +4988,6 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
   transition-timing-function: linear;
   transform: translateX(0);
   transition-property: transform, opacity;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden; }
 
 .slide-out-left.mui-leave.mui-leave-active {
@@ -6094,14 +6081,14 @@ Bleed Feature Image
     font-size: 1rem; }
   .breadcrumbs > li:last-child > a {
     font-weight: 700; }
-  .breadcrumbs > li::after {
+  .breadcrumbs > li > a::after {
     font-family: "uos";
     color: currentColor;
     font-size: 12px;
     content: " \e97b"; }
-  .breadcrumbs > li.breadcrumbs__item--has-submenu::after {
+  .breadcrumbs > li.breadcrumbs__item--has-submenu > a::after {
     content: " "; }
-  .breadcrumbs > li.is-active::after {
+  .breadcrumbs > li.is-active > a::after {
     content: " "; }
   .breadcrumbs > li ul {
     display: none;
@@ -6120,7 +6107,7 @@ Bleed Feature Image
       line-height: 2; }
   .breadcrumbs > li.is-active ul {
     display: block; }
-  .breadcrumbs > li:not(.breadcrumbs__item--has-submenu):last-child::after {
+  .breadcrumbs > li:not(.breadcrumbs__item--has-submenu):last-child > a::after {
     content: none; }
 
 .breadcrumbs--internal {
@@ -9178,7 +9165,6 @@ table td {
   Progress bar eg used on search
 */
 progress[value] {
-  -webkit-appearance: none;
   appearance: none;
   width: 250px;
   height: 20px;
@@ -13998,7 +13984,6 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
  * flip-left, flip-right, flip-up, flip-down
  */
 [data-aos^='flip'][data-aos^='flip'] {
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transition-property: transform; }
 

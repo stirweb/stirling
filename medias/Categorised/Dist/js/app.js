@@ -2658,9 +2658,13 @@ stir.MediaQuery = (function () {
  */
 (function (trail, useSchemaDotOrg, collapse) {
   if (!trail) return; // just bail out now if there is no breadcrumb trail
+
+  // [2024-08-15] set this to FALSE to revert to old behaviour! [rwm2]
+  const compact = "small"===stir.MediaQuery.current;
+
   var schemaData = [];
   var hierarchyLevel = 0; // track the depth as we move through the hierarchy
-  var hierarchyMax = trail.getAttribute("data-hierarchy-max") || 4;
+  var hierarchyMax = trail.getAttribute("data-hierarchy-max") || (compact?1:4);
   var TRUNC_THRESHOLD = 25;
   // Max level befor collapsing kicks in. Default to 4 levels, but can be
   // changed by setting the data-* attribute in the HTML/template.
@@ -2756,11 +2760,18 @@ stir.MediaQuery = (function () {
       applyCrumbClickListener(ellipsis, ellipsisLink);
     }
 
-    // Truncate the remaining links, except the first (home) and last (current page):
-    Array.prototype.slice.call(trail.querySelectorAll("li[data-hierarchy-level] > a"), 1, -1).forEach(function (link) {
-      if (link.innerText.length > TRUNC_THRESHOLD) {
-        link.setAttribute("title", link.innerText);
-        link.innerHTML = stir.String.truncate.apply(link.innerText, [TRUNC_THRESHOLD, true]);
+    // Truncate the remaining links…
+	const remaining = Array.prototype.slice.call(trail.querySelectorAll("li[data-hierarchy-level] > a"));
+	
+	// Just set this to -1 to NOT truncate the last item
+	// otherwise this will truncate it on small screens
+	const truncateLastItem = compact?remaining.length:-1;
+
+    remaining.slice(1,truncateLastItem).forEach(function (link) {
+      if (link.textContent.length > TRUNC_THRESHOLD) {
+        link.setAttribute("title", link.textContent);
+        link.innerHTML = stir.String.truncate.apply(link.textContent, [TRUNC_THRESHOLD, true]);
+		// must use innerHTML to properly encode the ellipsis!
       }
     });
   }
