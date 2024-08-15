@@ -9,7 +9,7 @@
   const menuOpenBtn = stir.node("#open_mobile_menu");
   const menuCloseBtn = stir.node("#close_mobile_menu");
   const menu = stir.node("ul.sitemenu-2");
-  const hideNodes = ["main", "footer", "#layout-header", '[aria-label="breadcrumb"]'];
+  const hideNodes = ["main", "footer", "#layout-header", ".breadcrumbs-container"];
 
   /* On load */
   const menusCache = { default: menu.innerHTML };

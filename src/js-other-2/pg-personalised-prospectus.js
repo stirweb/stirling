@@ -410,6 +410,7 @@ async function storePDF(pdf, fileName, serverPath) {
       });
 
       const result = await response.json();
+      //const result = { success: "true" };
 
       if (result.success === "true") {
         // Exectue the PDF Stuff

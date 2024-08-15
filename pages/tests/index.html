@@ -2,9 +2,12 @@
 
 <head>
 
+
 </head>
 
 <body>
+
+
 
 
 </body>
@@ -104,7 +107,10 @@
 
     let ctasPage = [{ "headline": "DataLab scholarships", "link": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/10448", "type": "funding", "text": "DataLab scholarships", "icon": "funding", "id": "funding" }, { "headline": "Join our webinar", "link": "https://www.bigmarker.com/student-support/MSc-Artificial-Intelligence-and-MSc-Big-Data-Webinar-at-the-University-of-Stirling?show_live_page=true", "type": "webinar", "text": "Join our webinar", "icon": "webinar", "id": "webinar" }];
 
+    let ctasBranch = ["chat", "createprospectus", "registerupdates"];
 
+
+    let ctasBranch2 = ctasBranch.map(item => buttons[item]);
 
 
     const max = 3;
@@ -121,7 +127,7 @@
         "registerupdates"
     ].slice(0, max).map((item, index) => typeof item === "string" ? buttons[item] : item).map((item, index) => buildButton(item, colours[index % 3]));
 
-    //console.log(data);
+    console.log(ctasBranch2.concat(ctasPage));
 
 
 </script>

@@ -408,14 +408,15 @@
 
 
                 <div class="cell u-padding-top">
-                    <form class="grid-x grid-padding-x u-bg-grey u-bleed bg-grey u-py-2" id="search-form">
+                    <form class="grid-x grid-padding-x u-bg-grey u-bleed bg-grey u-py-2" id="webinarfilters">
 
                         <div class="cell medium-4">
                             <label class="u-font-bold text-md" for="search-student-type">Student type</label>
                             <select id="search-student-type">
                                 <option value="">All student types</option>
                                 <option>Undergraduate</option>
-                                <option value="Postgraduate (taught)">Postgraduate</option>
+                                <option value="Postgraduate (taught)">Postgraduate taught</option>
+                                <option value="Postgraduate (research)">Postgraduate research</option>
                             </select>
                         </div>
 
@@ -435,10 +436,9 @@
                             <select id="search-category">
                                 <option value="">All topics</option>
                                 <option>Course information</option>
-                                <option>Student support</option>
+                                <option>Student support and experience</option>
                             </select>
                         </div>
-
                     </form>
 
                 </div>
@@ -447,27 +447,13 @@
                 <div class="cell" id="d.en.39447">
                     <div class="c-wrapper grid-x grid-padding-x u-bg-white u-bleed bg-white u-padding-y"
                         data-ct="wrapper">
-                        <div class="cell" data-webinardisclaimer=""></div>
 
-                        <div class="cell" data-webinar="113800"></div>
-                        <script>
-                            var stir = stir || {}; stir.t4Globals = stir.t4Globals || {}; stir.t4Globals.webinarSectionData = stir.t4Globals.webinarSectionData || {};
-                            stir.t4Globals.webinarSectionData[113800] = { "id": 113800, "head": "", "intro": "", "params": { "series": "", "countries": "", "subjects": "", "studylevels": "", "faculties": "", "categories": "" } };
-                        </script>
+                        <div class="cell" id="webinarresults" data-webinar></div>
+
 
                     </div>
                 </div>
                 <!-- Wrapper End -->
-
-                <!-- Wrapper Start -->
-                <div class="cell" id="d.en.58580">
-                    <div class="c-wrapper grid-x grid-padding-x u-bg-white u-bleed bg-white " data-ct="wrapper">
-
-                    </div>
-                </div>
-                <!-- Wrapper End -->
-
-
 
 
             </div>
@@ -519,8 +505,198 @@
         stir.t4Globals = stir.t4Globals || {};
         stir.t4Globals.webinars = [
             {
+                "id": 181650,
+                "title": "International introduction to Stirling",
+                "description": "<p>Meet our International Recruitment Team to find out more about the University of Stirling, and get some advice about how to submit your application.</p>",
+                "datetimestir": "2 Sep 2024, 22:00 (BST)",
+                "datetime": "20240902220031",
+                "date": "2 Sep 2024",
+                "zone": "BST",
+                "time": "10:00",
+                "link": "https://www.bigmarker.com/student-support/Introduction-to-Stirling-Webinar-at-the-University-of-Stirling?show_live_page=true",
+                "countries": "All nationalities",
+                "subjects": "",
+                "studylevels": "Postgraduate (taught), Undergraduate",
+                "faculties": "",
+                "series": "Country Specific Webinars, International Student Webinars",
+                "categories": "Student support and experience",
+                "ondemand": "",
+                "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/34423"
+            },
+            {
+                "id": 181652,
+                "title": "International introduction to Stirling",
+                "description": "<p>Meet our International Recruitment Team to find out more about the University of Stirling, and get some advice about how to submit your application.</p>",
+                "datetimestir": "30 Sep 2024, 22:00 (BST)",
+                "datetime": "20240930220000",
+                "date": "30 Sep 2024",
+                "zone": "BST",
+                "time": "10:00",
+                "link": "https://www.bigmarker.com/student-support/Introduction-to-Stirling-Webinar-at-the-University-of-Stirling-904a5c28dc56d35511d2dceb?show_live_page=true",
+                "countries": "All nationalities",
+                "subjects": "",
+                "studylevels": "Postgraduate (taught), Undergraduate",
+                "faculties": "",
+                "series": "Country Specific Webinars, International Student Webinars",
+                "categories": "Student support and experience",
+                "ondemand": "",
+                "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/34423"
+            },
+            {
+                "id": 181536,
+                "title": "MSc Artificial Intelligence and MSc Big Data",
+                "description": "<p>Join us to find out more about our Artificial Intelligence and Big Data courses, and get answers to any questions you might have about studying at Stirling.</p>",
+                "datetimestir": "1 Oct 2024, 14:00 (BST)",
+                "datetime": "20241001140000",
+                "date": "1 Oct 2024",
+                "zone": "BST",
+                "time": "14:00",
+                "link": "https://www.bigmarker.com/student-support/MSc-Artificial-Intelligence-and-MSc-Big-Data-Webinar-at-the-University-of-Stirling?show_live_page=true",
+                "countries": "All nationalities",
+                "subjects": "Computer science and software engineering, Data science and data analytics",
+                "studylevels": "Postgraduate (taught)",
+                "faculties": "Faculty of Natural Sciences",
+                "series": "Postgraduate Study",
+                "categories": "Course information",
+                "ondemand": "",
+                "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/19675"
+            },
+            {
+                "id": 181564,
+                "title": "MSc Environmental Management",
+                "description": "<p>Join us to find out more about our MSc Environmental Management and get answers to any questions you might have about studying at Stirling.</p>",
+                "datetimestir": "3 Oct 2024, 14:00 (BST)",
+                "datetime": "20241003140010",
+                "date": "3 Oct 2024",
+                "zone": "BST",
+                "time": "14:00",
+                "link": "https://www.bigmarker.com/student-support/MSc-Environmental-Management-Webinar-at-the-University-of-Stirling-79e1d614a2b605f42973f327?show_live_page=true",
+                "countries": "All nationalities",
+                "subjects": "Environmental science",
+                "studylevels": "Postgraduate (taught)",
+                "faculties": "Faculty of Natural Sciences",
+                "series": "Postgraduate Study",
+                "categories": "Course information",
+                "ondemand": "",
+                "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/929"
+            },
+            {
+                "id": 181549,
+                "title": "MSc Advancing Practice",
+                "description": "<p>Join us to find out more about our MSc Advancing Practice and get answers to any questions you might have about studying at Stirling.</p>",
+                "datetimestir": "7 Oct 2024, 14:00 (BST)",
+                "datetime": "20241007140055",
+                "date": "7 Oct 2024",
+                "zone": "BST",
+                "time": "14:00",
+                "link": "https://www.bigmarker.com/student-support/MSc-Advancing-Practice-Webinar-at-the-University-of-Stirling-59ed08e66a7a3235448d1028?show_live_page=true",
+                "countries": "All nationalities",
+                "subjects": "Health and allied subjects",
+                "studylevels": "Postgraduate (taught)",
+                "faculties": "Faculty of Health Sciences and Sport",
+                "series": "Postgraduate Study",
+                "categories": "Course information",
+                "ondemand": "",
+                "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/953"
+            },
+            {
+                "id": 181537,
+                "title": "MPH Public Health (Online)",
+                "description": "<p>Join us to find out more about our MPH Public Health (Online) and get answers to any questions you might have about studying at Stirling.</p>",
+                "datetimestir": "8 Oct 2024, 16:00 (BST)",
+                "datetime": "20241008160000",
+                "date": "8 Oct 2024",
+                "zone": "BST",
+                "time": "16:00",
+                "link": "https://www.bigmarker.com/student-support/MPH-Public-Health-Online-Webinar-at-the-University-of-Stirling?show_live_page=true",
+                "countries": "All nationalities",
+                "subjects": "Health and allied subjects",
+                "studylevels": "Postgraduate (taught)",
+                "faculties": "Faculty of Health Sciences and Sport",
+                "series": "Postgraduate Study",
+                "categories": "Course information",
+                "ondemand": "",
+                "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/958"
+            },
+            {
+                "id": 181556,
+                "title": "MSc Mathematics and Data Science",
+                "description": "<p>Join us to find out more about our MSc Mathematics and Data Science and get answers to any questions you might have about studying at Stirling.</p>",
+                "datetimestir": "9 Oct 2024, 10:00 (BST)",
+                "datetime": "20241009100032",
+                "date": "9 Oct 2024",
+                "zone": "BST",
+                "time": "10:00",
+                "link": "https://www.bigmarker.com/student-support/MSc-Mathematics-and-Data-Science-Webinar-at-the-University-of-Stirling-e4faf61d0d398a4748aa3b79?show_live_page=true",
+                "countries": "All nationalities",
+                "subjects": "Data science and data analytics, Mathematics",
+                "studylevels": "Postgraduate (taught)",
+                "faculties": "Faculty of Natural Sciences",
+                "series": "Postgraduate Study",
+                "categories": "Course information",
+                "ondemand": "",
+                "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/5614"
+            },
+            {
+                "id": 181557,
+                "title": "MSc Digital Banking and Finance",
+                "description": "<p>Join us to find out more about our MSc Digital Banking and Finance and get answers to any questions you might have about studying at Stirling.</p>",
+                "datetimestir": "9 Oct 2024, 14:00 (BST)",
+                "datetime": "20241009140000",
+                "date": "9 Oct 2024",
+                "zone": "BST",
+                "time": "14:00",
+                "link": "https://www.bigmarker.com/student-support/MSc-Digital-Banking-and-Finance-Webinar-at-the-University-of-Stirling?show_live_page=true",
+                "countries": "All nationalities",
+                "subjects": "Accounting and finance, Data science and data analytics",
+                "studylevels": "Postgraduate (taught)",
+                "faculties": "Faculty of Natural Sciences",
+                "series": "Postgraduate Study",
+                "categories": "Course information",
+                "ondemand": "",
+                "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/966"
+            },
+            {
+                "id": 181558,
+                "title": "MSc Financial Technology (FinTech)",
+                "description": "<p>Join us to find out more about our MSc Financial Technology (FinTech) and get answers to any questions you might have about studying at Stirling.</p>",
+                "datetimestir": "10 Oct 2024, 14:00 (BST)",
+                "datetime": "20241010140038",
+                "date": "10 Oct 2024",
+                "zone": "BST",
+                "time": "14:00",
+                "link": "https://www.bigmarker.com/student-support/MSc-Financial-Technology-Webinar-at-the-University-of-Stirling-ce1a76a4a67e7f55b254b834?show_live_page=true",
+                "countries": "All nationalities",
+                "subjects": "Accounting and finance, Data science and data analytics",
+                "studylevels": "Postgraduate (taught)",
+                "faculties": "Faculty of Natural Sciences",
+                "series": "Postgraduate Study",
+                "categories": "Course information",
+                "ondemand": "",
+                "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/5640"
+            },
+            {
+                "id": 181653,
+                "title": "MSc Dementia Studies",
+                "description": "<p>Join us to find out more about our MSc Dementia Studies and get answers to any questions you have about studying at Stirling.</p>",
+                "datetimestir": "14 Oct 2024, 14:00 (BST)",
+                "datetime": "20241014140000",
+                "date": "14 Oct 2024",
+                "zone": "BST",
+                "time": "14:00",
+                "link": "https://www.bigmarker.com/student-support/MSc-Dementia-Studies-Webinar-at-the-University-of-Stirling?show_live_page=true",
+                "countries": "All nationalities",
+                "subjects": "Health and allied subjects",
+                "studylevels": "Postgraduate (taught)",
+                "faculties": "Faculty of Social Sciences",
+                "series": "Postgraduate Study",
+                "categories": "Course information",
+                "ondemand": "",
+                "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/1004"
+            },
+            {
                 "id": 181532,
-                "title": "Test category",
+                "title": "Test category (dev test)",
                 "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet porta ipsum, ac varius ipsum. Phasellus blandit dui in volutpat accumsan. Nunc nec libero id lorem ornare consectetur. Nullam semper turpis in varius commodo. Nunc mollis volutpat metus, sit amet ornare ante luctus at.</p>",
                 "datetimestir": "14 Nov 2024, 09:59 (GMT)",
                 "datetime": "20241114095900",
@@ -530,16 +706,16 @@
                 "link": "https://www.stir.ac.uk/reports-12731273/courses/pg-courses-for-qs/",
                 "countries": "England, Wales, Northern Ireland",
                 "subjects": "",
-                "studylevels": "",
+                "studylevels": "Undergraduate",
                 "faculties": "",
                 "series": "",
-                "category": "Student support",
+                "categories": "Student support and experience, asdasdsa",
                 "ondemand": "",
                 "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/34414"
             },
             {
                 "id": 181530,
-                "title": "North America Webinar",
+                "title": "North America Webinar (dev test)",
                 "description": "<p>Enquiries and Applicants September 2022</p>",
                 "datetimestir": "5 Dec 2024, 18:00 (GMT)",
                 "datetime": "20241205180000",
@@ -549,16 +725,16 @@
                 "link": "https://www.bigmarker.com/student-support/North-America-Webinar-at-the-University-of-Stirling-Apr22?show_live_page=true",
                 "countries": "Canada, USA",
                 "subjects": "",
-                "studylevels": "",
+                "studylevels": "Undergraduate",
                 "faculties": "",
-                "series": "",
-                "category": "",
+                "series": "Country Specific Webinars",
+                "categories": "",
                 "ondemand": "",
                 "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/34414"
             },
             {
                 "id": 181531,
-                "title": "French",
+                "title": "French (dev test)",
                 "description": "",
                 "datetimestir": "18 Dec 2024, 17:00 (GMT)",
                 "datetime": "20241218170000",
@@ -571,13 +747,13 @@
                 "studylevels": "",
                 "faculties": "",
                 "series": "Undergraduate Academic Taster Sessions",
-                "category": "",
+                "categories": "",
                 "ondemand": "Yes",
                 "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/34414"
             },
             {
                 "id": 181529,
-                "title": "Africa Webinar",
+                "title": "Africa Webinar (dev test)",
                 "description": "",
                 "datetimestir": "25 Dec 2024, 15:00 (GMT)",
                 "datetime": "20241225150000",
@@ -590,13 +766,13 @@
                 "studylevels": "",
                 "faculties": "",
                 "series": "Country Specific Webinars",
-                "category": "",
+                "categories": "",
                 "ondemand": "",
                 "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/34414"
             },
             {
                 "id": 181535,
-                "title": "Postgraduate Study and Employability",
+                "title": "UG Taster (dev test)",
                 "description": "<p>Learn about how a postgraduate qualification can boost your employability. Staff from the Careers Service, Student Recruitment Team, and a current student ambassador will be on hand to provide further information.</p>",
                 "datetimestir": "3 Jul 2025, 16:00 (BST)",
                 "datetime": "20250703160000",
@@ -608,18 +784,17 @@
                 "subjects": "",
                 "studylevels": "Postgraduate (research), Postgraduate (taught)",
                 "faculties": "",
-                "series": "",
-                "category": "Course information",
+                "series": "Undergraduate Academic Taster Sessions",
+                "categories": "Course information",
                 "ondemand": "",
                 "breadcrumb": "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/34414"
             },
             {}
-        ];   </script>
+        ]; </script>
 
 
 
-
-    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/webinars4.js?v=3.1"></script>
+    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/_unminified/webinars5.js"></script>
 
 
 

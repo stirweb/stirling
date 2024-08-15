@@ -48,7 +48,6 @@ function QS_Post($url, $params = null, $body = null, $json = null)
 	$code = curl_getinfo($ch);
 
 	//print_r($code);
-
 	curl_close($ch);
 	if (false !== $response) {
 		return json_decode($response);
@@ -58,7 +57,7 @@ function QS_Post($url, $params = null, $body = null, $json = null)
 /*
 	Function: Perform a GET request to pull data from QS
 */
-function QS_Get($url)
+function QS_Get($url, $params)
 {
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
@@ -74,6 +73,7 @@ function QS_Get($url)
 	$code = curl_getinfo($ch);
 
 	//print_r($code);
+	//print_r(json_decode($response));
 
 	curl_close($ch);
 	if (false !== $response) {
