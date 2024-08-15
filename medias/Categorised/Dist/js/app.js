@@ -2659,8 +2659,10 @@ stir.MediaQuery = (function () {
 (function (trail, useSchemaDotOrg, collapse) {
   if (!trail) return; // just bail out now if there is no breadcrumb trail
 
+
   // [2024-08-15] set this to FALSE to revert to old behaviour! [rwm2]
   const compact = "small"===stir.MediaQuery.current;
+
 
   var schemaData = [];
   var hierarchyLevel = 0; // track the depth as we move through the hierarchy
