@@ -30,17 +30,17 @@
 			font-weight: 700;
 		}
 
-		&::after {
+		> a::after {
 			font-family: "uos";
 			color: currentColor;
 			font-size: 12px;
 			content: " \e97b"; // chevron-right
 		}
 
-		&.breadcrumbs__item--has-submenu::after {
+		&.breadcrumbs__item--has-submenu > a::after {
 			content: " \e981"	// plus
 		}
-		&.is-active::after {
+		&.is-active > a::after {
 			  content: " \e979" // downron
 		}
 
@@ -68,7 +68,7 @@
 			display: block;
 		}
 
-		&:not(.breadcrumbs__item--has-submenu):last-child::after {
+		&:not(.breadcrumbs__item--has-submenu):last-child > a::after {
 			content: none;
 		}
 	}
