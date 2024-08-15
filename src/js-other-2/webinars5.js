@@ -117,6 +117,19 @@
       .join(", ");
   };
 
+  /* Helper:    */
+  const isUpcoming = (itemdatetime) => {
+    const isoDateString = new Date().toISOString();
+    const now = Number(isoDateString.split(".")[0].replaceAll(":", "").replaceAll("-", "").replaceAll("T", ""));
+    return Number(itemdatetime) > now;
+  };
+
+  /* Helper:   */
+  const filterOld = (item) => {
+    if (item.ondemand === "Yes") return true;
+    return isUpcoming(item.datetime);
+  };
+
   /*
 
         RENDERERS
@@ -152,8 +165,8 @@
                       ${item.faculties ? `<p>${item.faculties}</p>` : ``}
                       ${item.description}
 
-                    ${item.ondemand ? `<span class="u-bg-energy-teal--darker u-inline-block u-white u-p-tiny text-xxsm  ">On demand</span>` : ""}
-
+                      ${item.ondemand ? `<span class="u-bg-heritage-purple u-inline-block u-white u-p-tiny text-xxsm  ">Watch on-demand</span>` : ""}
+                      ${isUpcoming(item.datetime) ? `<span class="u-bg-heritage-green u-inline-block u-white u-p-tiny text-xxsm  ">Live event</span>` : ""}
                   </div>
                 </div>
           </div> `;
@@ -180,15 +193,6 @@
     stir.setHTML(elem, html);
     return elem;
   });
-
-  /* Helper:  */
-  const filterOld = (item) => {
-    if (item.ondemand === "Yes") return true;
-
-    const isoDateString = new Date().toISOString();
-    const now = Number(isoDateString.split(".")[0].replaceAll(":", "").replaceAll("-", "").replaceAll("T", ""));
-    return Number(item.datetime) > now;
-  };
 
   /*
 
