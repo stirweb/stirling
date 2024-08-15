@@ -257,6 +257,10 @@ a:has(img):hover {
   background-color: tint($heritage-purple, 10%) !important;
 }
 
+.u-bg-heritage-purple {
+  background-color: $heritage-purple !important;
+}
+
 .u-bg-grey {
   background-color: $bg-grey !important;
 }
