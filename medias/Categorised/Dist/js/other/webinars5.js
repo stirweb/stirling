@@ -9,7 +9,7 @@
                       ${e.faculties?`<p>${e.faculties}</p>`:""}
                       ${e.description}
 
-                      ${e.ondemand?'<span class="u-bg-heritage-purple u-inline-block u-white u-p-tiny text-xxsm  ">Watch on-demand</span>':""}
+                      ${e.ondemand?'<span class="u-bg-energy-pink u-inline-block u-white u-p-tiny text-xxsm  ">Watch on-demand</span>':""}
                       ${u(e.datetime)?'<span class="u-bg-heritage-green u-inline-block u-white u-p-tiny text-xxsm  ">Live event</span>':""}
                   </div>
                 </div>

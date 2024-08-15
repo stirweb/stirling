@@ -166,7 +166,7 @@
                       ${item.faculties ? `<p>${item.faculties}</p>` : ``}
                       ${item.description}
 
-                      ${item.ondemand ? `<span class="u-bg-heritage-purple u-inline-block u-white u-p-tiny text-xxsm  ">Watch on-demand</span>` : ""}
+                      ${item.ondemand ? `<span class="u-bg-energy-pink u-inline-block u-white u-p-tiny text-xxsm  ">Watch on-demand</span>` : ""}
                       ${isUpcoming(item.datetime) ? `<span class="u-bg-heritage-green u-inline-block u-white u-p-tiny text-xxsm  ">Live event</span>` : ""}
                   </div>
                 </div>
