@@ -28,45 +28,17 @@ if (!$env) {
 
 /* 
 
-  FUNCTION: Helper for QS Consent 
-
-*/
-
-function check_consent($val, $super_val)
-{
-    if ($super_val === "false")
-        return false;
-
-    if ($val === 'true')
-        return true;
-
-    return false;
-}
-
-/* 
-
   FUNCTION: Controller for QS
 
 */
+
 function qs_init($api_url)
 {
     // Check if there is a record already for this person
-    $api_geturl = $api_url . "/contacts?emailAddress=" .  $_POST['email'];
+    $api_geturl = "https://integration-emea.qses-uat.com/crms/api/contacts?emailAddress=" .  $_POST['email'];
     $get_data = QS_GET($api_geturl, null);
 
     $courses = json_decode($_POST['courses']);
-
-    // Whole form as a String
-    $postData = $_POST;
-
-    unset($postData["token"]);
-    unset($postData["g-recaptcha-response"]);
-    unset($postData["courses"]); // its already encoded so remove it to stop encoding twice
-
-    $postData["courses"] = $courses;
-    //$contact_payload["communicationcontent"] = "Test: data"; //json_encode(array($postData));
-
-    $superConsent = $_POST['wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses'];
 
     $contact_payload = [
         "Name" => $_POST['first_name'],
@@ -76,9 +48,9 @@ function qs_init($api_url)
         "CountryOfResidence" => $_POST['country_of_residence'],
         //"Intake" => $_POST['study_year'],
         //"ContactStatus" => "Enquiry",
-        "SubscribedToDirectEmails" => (check_consent($_POST['opt_in_for_email'], $superConsent)),
-        "SubscribedToDirectPhoneCalls" => (check_consent($_POST['opt_in_for_phone'], $superConsent)),
-        "SubscribedToDirectSms" => (check_consent($_POST['opt_in_for_sms'], $superConsent)),
+        "SubscribedToDirectEmails" => ($_POST['opt_in_for_email'] === "true"  ? true : false),
+        "SubscribedToDirectPhoneCalls" => ($_POST['opt_in_for_phone'] === "true"  ? true : false),
+        "SubscribedToDirectSms" => ($_POST['opt_in_for_sms'] === "true"  ? true : false),
         "Courses" => $courses,
         "SubChannel" => "WebEnquiry",
         "CreateTask" => true,
@@ -98,38 +70,30 @@ function qs_init($api_url)
                 "Subject" => "Stirling Webform Prospectus Form Requested",
                 //"Code" => "sample string 5",
                 //"Effectiveness" => "sample string 6",
-                "FromEmailAddress" => $_POST['email'],
+                //"FromEmailAddress" => "sample string 7",
                 //"ToEmailAddress" => "sample string 8",
                 "SendExternal" => false,
                 "Source" => "Prospectus Form Requested",
-                "ReferralSource" => "Test content",
+                //"ReferralSource" => "sample string 10",
                 //"DateCreated" => "2024-08-13T19:28:31.8108045+10:00"
             ],
         ],
         "Consents" => [
             [
                 "Type" => "Would you like to keep receiving emails from us?",
-                "Consent" => (check_consent($superConsent, $superConsent))
+                "Consent" => ($_POST['wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses'] ? true : false)
             ]
         ],
-
-        "ContactNoteContent" => "Other interests: " . ($_POST['area_interest_research'] ?? '') . ' ' . ($_POST['area_interest_international_students'] ?? '') . ' ' . ($_POST['area_interest_accommodation'] ?? '') . ' ' . ($_POST['area_interest_students_union'] ?? '') . ' ' . ($_POST['area_interest_sport'] ?? ''),
-        //"ContactNoteType" => "Communication",
+        "ContactNoteContent" => ($_POST['area_interest_research'] ?? '') . ' ' . ($_POST['area_interest_international_students'] ?? '') . ' ' . ($_POST['area_interest_accommodation'] ?? '') . ' ' . ($_POST['area_interest_students_union'] ?? '') . ' ' . ($_POST['area_interest_sport'] ?? ''),
         "EmailAddress" => $_POST['email']
     ];
 
     // New record so add additional stuff
-    if (!isset($get_data->Data[0]->id)) {
+    if (!isset($get_data->Data[0])) {
         $contact_payload["Intake"] = $_POST['study_year'];
         $contact_payload["ContactStatus"] = "Enquiry";
-    } else {
-        // Existing record fix id just to be safe
-        $contact_payload["CrmNumber"] = $get_data->Data[0]->id;
     }
 
-    //$contact_payload["CommunicationContent"] = "Test Communication";
-
-    // POST data to QS
     $url = $api_url . "processes/upsertcontact";
 
     $params = [
@@ -140,7 +104,7 @@ function qs_init($api_url)
 
     $result = QS_Post($url, $params, null, $contact_payload);
 
-    return ["process" => "Data", "outcome" => "Success", "result" => $result];
+    return ["process" => "Data", "outcome" => "Success"];
 }
 
 
@@ -157,9 +121,9 @@ function run($message)
         $mailchimp->setApiKey(getenv('MAIL'));
 
         $response = $mailchimp->messages->sendTemplate($message);
-        return ["process" => "Mail", "outcome" => "Success", "result" => ""];
+        return ["process" => "Mail", "outcome" => "Success"];
     } catch (Error $e) {
-        return  ["process" => "Mail", "outcome" => "Fail", "result" => ""];;
+        return  ["process" => "Mail", "outcome" => "Fail"];;
     }
 }
 
@@ -170,12 +134,13 @@ function run($message)
 */
 
 if (!isset($_POST['email'])) {
-    echo json_encode([["process" => "Data", "outcome" => "Fail", "result" => ""], ["process" => "Mail", "outcome" => "Fail", "result" => ""]]);
+    echo json_encode([["process" => "Data", "outcome" => "Fail"], ["process" => "Mail", "outcome" => "Fail"]]);
     exit();
 }
 
+
 if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-    echo json_encode([["process" => "Data", "outcome" => "Fail", "result" => ""], ["process" => "Mail", "outcome" => "Fail", "result" => ""]]);
+    echo json_encode([["process" => "Data", "outcome" => "Fail"], ["process" => "Mail", "outcome" => "Fail"]]);
     exit();
 }
 
@@ -188,20 +153,43 @@ if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 
 $_SESSION["token"] = QS_get_token($api_url);
 
-
-
 if (isset($_POST['email'])) {
     $qs_outcome = qs_init($api_url);
 } else {
-    $qs_outcome = ["process" => "Data", "outcome" => "Fail", "result" => ""];
+    $qs_outcome = ["process" => "Data", "outcome" => "Fail"];
 }
+
+
+
+$courses = json_decode($_POST["courses"]);
+
+
+$func = function ($item) {
+    return $item->Course;
+};
+
+
+$courses2 = array_map($func, $courses);
+
+$postData = $_POST;
+
+unset($postData["token"]);
+unset($postData["g-recaptcha-response"]);
+unset($postData["courses"]);
+
+
+$postData["courses"] = $courses;
+
+
+
+print_r(json_encode($postData));
 
 
 /*
 
 	ON LOAD: MailChimp
 
-*/
+
 
 $from = "study@stir.ac.uk";
 $subject = "Your Personalised Prospectus is ready";
@@ -236,10 +224,11 @@ $message = [
 
 if (isset($_POST['email'])) {
     //$mail_outcome = run($message);
-    $mail_outcome = ["process" => "Mail", "outcome" => "Success", "result" => ""];
+    $mail_outcome = ["process" => "Mail", "outcome" => "Success"];
 } else {
-    $mail_outcome = ["process" => "Mail", "outcome" => "Fail", "result" => ""];
+    $mail_outcome = ["process" => "Mail", "outcome" => "Fail"];
 }
 
 
 echo json_encode([$mail_outcome, $qs_outcome]);
+*/
