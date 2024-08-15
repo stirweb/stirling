@@ -47,7 +47,7 @@
     //console.log(webinar);
 
     const keys = stir.filter((x) => consts.safeList.includes(x), Object.keys(filters));
-    console.log(keys);
+    //console.log(keys);
 
     const tempMatches = stir.map((key) => {
       if (webinar[key]) {
@@ -59,17 +59,17 @@
         return stir.any((x) => x === true, matches);
       }
       if (filters[key] !== "") {
-        console.log("NOT defaulting " + key);
+        //console.log("NOT defaulting " + key);
         return false;
       }
-      console.log("Defaulting " + key);
+      //console.log("Defaulting " + key);
       return true;
     }, keys);
 
-    if (stir.all((x) => x === true, tempMatches)) {
-      console.log(tempMatches);
-    }
-    console.log("----");
+    // if (stir.all((x) => x === true, tempMatches)) {
+    //   console.log(tempMatches);
+    // }
+    // console.log("----");
     return stir.all((x) => x === true, tempMatches);
   });
 
@@ -206,8 +206,21 @@
   const webinarResultsArea = stir.node("#webinarresults");
 
   if (webinarResultsArea) {
-    const filters = { params: { series: "", countries: "England, Wales, Northern Ireland", subjects: "", studylevels: "Undergraduate", faculties: "", categories: "Student support and experience" } };
+    const filters = { params: { series: "", countries: "", subjects: "", studylevels: "", faculties: "", categories: "" } };
     main(CONSTS, webinarResultsArea, dataWebinars, filters);
+
+    const formfilters = stir.nodes("#webinarfilters select");
+
+    formfilters.forEach((el) => {
+      el.addEventListener("change", (e) => {
+        const studentTypeValue = stir.node("#search-student-type").value;
+        const studentRegionValue = stir.node("#search-region").value;
+        const studentCategoryValue = stir.node("#search-category").value;
+
+        const filters = { params: { series: "", countries: studentRegionValue, subjects: "", studylevels: studentTypeValue, faculties: "", categories: studentCategoryValue } };
+        main(CONSTS, webinarResultsArea, dataWebinars, filters);
+      });
+    });
   }
 
   /* Dynamic Sections */
