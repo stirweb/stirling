@@ -121,14 +121,15 @@
   const isUpcoming = (itemdatetime) => {
     const isoDateString = new Date().toISOString();
     const now = Number(isoDateString.split(".")[0].replaceAll(":", "").replaceAll("-", "").replaceAll("T", ""));
+
     return Number(itemdatetime) > now;
   };
 
   /* Helper:   */
-  const filterOld = (item) => {
+  const filterOld = stir.curry((item) => {
     if (item.ondemand === "Yes") return true;
     return isUpcoming(item.datetime);
-  };
+  });
 
   /*
 
@@ -200,18 +201,16 @@
     */
 
   /* Initialise curry functions then run the data through them using composition */
-  const main = (consts, node, webinarsAll, filters) => {
-    const webinars = webinarsAll.filter(filterOld);
-
-    console.log(webinars);
+  const main = (consts, node, webinars, filters) => {
     const cleanCurry = stir.filter((el) => el.title);
     const filterCurry = stir.filter(filterer(consts, filters.params));
+    const filterOldCurry = stir.filter(filterOld);
     const sortCurry = stir.sort((a, b) => (parseInt(a.datetime) > parseInt(b.datetime) ? 1 : parseInt(b.datetime) > parseInt(a.datetime) ? -1 : 0));
 
     const setDOMResults = setDOMContent(node);
     const renderCurry = renderAllItems(filters);
 
-    return stir.compose(setDOMResults, renderCurry, sortCurry, filterCurry, cleanCurry)(webinars);
+    return stir.compose(setDOMResults, renderCurry, sortCurry, filterCurry, filterOldCurry, cleanCurry)(webinars);
   };
 
   /* 
