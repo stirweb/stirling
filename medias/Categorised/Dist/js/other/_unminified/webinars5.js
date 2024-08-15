@@ -140,7 +140,7 @@
 
   /* Form the HTML for an individual item   */
   const renderItem = (item) => {
-    console.log(item);
+    //console.log(item);
     return `
           <div class="cell small-12 large-4 medium-6 u-my-2" >
               <div class="u-energy-line-top">
@@ -152,7 +152,8 @@
                       ${item.faculties ? `<p>${item.faculties}</p>` : ``}
                       ${item.description}
 
-                      ${item.series}
+                    ${item.ondemand ? `<span class="u-bg-energy-teal--darker u-inline-block u-white u-p-tiny text-xxsm  ">On demand</span>` : ""}
+
                   </div>
                 </div>
           </div> `;
@@ -180,13 +181,25 @@
     return elem;
   });
 
+  /* Helper:  */
+  const filterOld = (item) => {
+    if (item.ondemand === "Yes") return true;
+
+    const isoDateString = new Date().toISOString();
+    const now = Number(isoDateString.split(".")[0].replaceAll(":", "").replaceAll("-", "").replaceAll("T", ""));
+    return Number(item.datetime) > now;
+  };
+
   /*
 
         CONTROLLERS
     */
 
   /* Initialise curry functions then run the data through them using composition */
-  const main = (consts, node, webinars, filters) => {
+  const main = (consts, node, webinarsAll, filters) => {
+    const webinars = webinarsAll.filter(filterOld);
+
+    console.log(webinars);
     const cleanCurry = stir.filter((el) => el.title);
     const filterCurry = stir.filter(filterer(consts, filters.params));
     const sortCurry = stir.sort((a, b) => (parseInt(a.datetime) > parseInt(b.datetime) ? 1 : parseInt(b.datetime) > parseInt(a.datetime) ? -1 : 0));
