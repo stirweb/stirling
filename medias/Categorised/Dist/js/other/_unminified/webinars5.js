@@ -13,7 +13,6 @@
     VARS    
  */
 
-  const webinarSections = stir.nodes("[data-webinarSects]");
   const dataWebinars = stir.t4Globals.webinars || [];
   const dataWebinarFilters = stir.t4Globals.webinarSectionData || {};
 
@@ -212,7 +211,6 @@
     Build the HTML to wrap all items   
   */
   const renderAllItems = stir.curry((section, items) => {
-    console.log(section);
     if (!items.length && !section.noItems) return;
     return `
             <div class="grid-x grid-padding-x" >
@@ -235,6 +233,8 @@
     stir.setHTML(elem, html);
     return elem;
   });
+
+  const cleanse = (string) => string.replaceAll("script>", "").replaceAll("script%3E", "").replaceAll("<", "");
 
   /*
 
@@ -274,18 +274,32 @@
   const webinarResultsArea = stir.node("#webinarresults");
 
   if (webinarResultsArea) {
-    const filters = { params: { series: "", countries: "", subjects: "", studylevels: "", faculties: "", categories: "" }, divider: "no" };
+    const params = {
+      category: QueryParams.get("category") ? cleanse(QueryParams.get("category")) : ``,
+      studylevel: QueryParams.get("studylevel") ? cleanse(QueryParams.get("studylevel")) : ``,
+      region: QueryParams.get("region") ? cleanse(QueryParams.get("region")) : ``,
+    };
+
+    const filters = { params: { series: "", countries: params.region, subjects: "", studylevels: params.studylevel, faculties: "", categories: params.category }, divider: "no" };
     main(CONSTS, webinarResultsArea, dataWebinars, filters);
 
-    const formfilters = stir.nodes("#webinarfilters select");
-    formfilters.forEach((el) => {
-      el.addEventListener("change", (e) => {
-        const studentTypeValue = stir.node("#search-student-type").value;
-        const studentRegionValue = stir.node("#search-region").value;
-        const studentCategoryValue = stir.node("#search-category").value;
+    if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars found</p>");
 
-        const filters = { params: { series: "", countries: studentRegionValue, subjects: "", studylevels: studentTypeValue, faculties: "", categories: studentCategoryValue } };
+    // Form changes
+    stir.nodes("#webinarfilters select").forEach((select) => {
+      select.value = params[select.name];
+      select.addEventListener("change", (e) => {
+        const formData = new FormData(stir.node("#webinarfilters"));
+        const formDataObject = Object.fromEntries(formData.entries());
+
+        for (let key in formDataObject) {
+          QueryParams.set(key, formDataObject[key]);
+        }
+
+        const filters = { params: { series: "", countries: formDataObject.region, subjects: "", studylevels: formDataObject.studylevel, faculties: "", categories: formDataObject.category } };
         main(CONSTS, webinarResultsArea, dataWebinars, filters);
+
+        if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars found</p>");
       });
     });
   }
@@ -293,13 +307,14 @@
   /* 
     Dynamic Sections 
   */
+  const webinarSections = stir.nodes("[data-webinarSects]");
 
   webinarSections.forEach((element) => {
     main(CONSTS, element, dataWebinars, dataWebinarFilters[element.dataset.webinarsects]);
   });
 
   /* 
-    Check we have content somewhere - if not ouput a disclaimer 
+    Check we have content somewhere - if not output a disclaimer 
   */
 
   if (disclaimerArea) {
