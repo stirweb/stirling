@@ -117,18 +117,25 @@
       .join(", ");
   };
 
-  /* Helper:    */
-  const isUpcoming = (itemdatetime) => {
+  /* Helper: isPast  */
+  const isPast = stir.curry((item) => {
     const isoDateString = new Date().toISOString();
     const now = Number(isoDateString.split(".")[0].replaceAll(":", "").replaceAll("-", "").replaceAll("T", ""));
 
-    return Number(itemdatetime) > now;
-  };
+    return Number(item.datetime) < now;
+  });
 
-  /* Helper:   */
-  const filterOld = stir.curry((item) => {
-    if (item.ondemand === "Yes") return true;
-    return isUpcoming(item.datetime);
+  /* Helper: isUpcoming  */
+  const isUpcoming = stir.curry((item) => {
+    const isoDateString = new Date().toISOString();
+    const now = Number(isoDateString.split(".")[0].replaceAll(":", "").replaceAll("-", "").replaceAll("T", ""));
+
+    return Number(item.datetime) > now;
+  });
+
+  /* Helper: isOnDemand  */
+  const isOnDemand = stir.curry((item) => {
+    return item.ondemand === "Yes";
   });
 
   /*
@@ -160,8 +167,8 @@
               <div class="u-energy-line-top">
 
               <div class="u-mt-1">
-                ${item.ondemand && !isUpcoming(item.datetime) ? `<span class="u-bg-energy-purple--10 u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : ""}
-                ${isUpcoming(item.datetime) ? `<span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ""}
+                ${item.ondemand && !isUpcoming(item) ? `<span class="u-bg-energy-purple--10 u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : ""}
+                ${isUpcoming(item) ? `<span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ""}
             </div>
 
                     <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">
@@ -210,13 +217,20 @@
   const main = (consts, node, webinars, filters) => {
     const cleanCurry = stir.filter((el) => el.title);
     const filterCurry = stir.filter(filterer(consts, filters.params));
-    const filterOldCurry = stir.filter(filterOld);
-    const sortCurry = stir.sort((a, b) => (parseInt(a.datetime) > parseInt(b.datetime) ? 1 : parseInt(b.datetime) > parseInt(a.datetime) ? -1 : 0));
+    const isUpcomingCurry = stir.filter(isUpcoming);
+    const isPastCurry = stir.filter(isPast);
+    const isOnDemandCurry = stir.filter(isOnDemand);
+
+    const sortCurryAsc = stir.sort((a, b) => (parseInt(a.datetime) > parseInt(b.datetime) ? 1 : parseInt(b.datetime) > parseInt(a.datetime) ? -1 : 0));
+    const sortCurryDesc = stir.sort((a, b) => (parseInt(a.datetime) < parseInt(b.datetime) ? 1 : parseInt(b.datetime) < parseInt(a.datetime) ? -1 : 0));
 
     const setDOMResults = setDOMContent(node);
     const renderCurry = renderAllItems(filters);
 
-    return stir.compose(setDOMResults, renderCurry, sortCurry, filterCurry, filterOldCurry, cleanCurry)(webinars);
+    const upcoming = stir.compose(sortCurryAsc, filterCurry, isUpcomingCurry, cleanCurry)(webinars);
+    const onDemand = stir.compose(sortCurryDesc, filterCurry, isOnDemandCurry, isPastCurry, cleanCurry)(webinars);
+
+    return stir.compose(setDOMResults, renderCurry)([...upcoming, ...onDemand]);
   };
 
   /* 
