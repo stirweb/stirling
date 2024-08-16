@@ -43,32 +43,30 @@
   /*  
     Helper: convertToMacro
   */
-  const convertToMacro = (countries, consts) => {
-    if (!countries.includes(",")) return countries;
+  // const convertToMacro = (countries, consts) => {
+  //   if (!countries.includes(",")) return countries;
 
-    const countriesString = countries
-      .split(",")
-      .map((item) => item.trim())
-      .sort()
-      .join("_");
+  //   const countriesString = countries
+  //     .split(",")
+  //     .map((item) => item.trim())
+  //     .sort()
+  //     .join("_");
 
-    const temp = consts.macros.filter((item) => {
-      if (item.data.slice(0, -1).join("_") === countriesString) {
-        return true;
-      }
+  //   const temp = consts.macros.filter((item) => {
+  //     if (item.data.slice(0, -1).join("_") === countriesString) {
+  //       return true;
+  //     }
 
-      return false;
-    });
+  //     return false;
+  //   });
 
-    return temp.length ? countries + ", " + temp[0].tag : countries;
-  };
+  //   return temp.length ? countries + ", " + temp[0].tag : countries;
+  // };
 
   /*  
     Filter an item (webinar) based on params (filters) supplied 
   */
   const filterer = stir.curry((consts, filters, webinar) => {
-    // webinar.countries = convertToMacro(webinar.countries, consts); // MUTATION !!!
-
     const keys = stir.filter((x) => consts.safeList.includes(x), Object.keys(filters));
 
     const tempMatches = stir.map((key) => {
@@ -108,13 +106,14 @@
       if (matchTag(filter, webinarParam, "All nationalities")) return true;
       //if (filter.includes("All nationalities")) return true; // Less
 
-      //if (filter.includes("All international")) {
-      //if (!getRegionString(consts.macros, "United Kingdom").includes(webinarParam.trim()) && webinarParam.trim()) return true;
-      //}
-
-      if (webinarParam.trim().includes("All international")) {
-        if (!getRegionString(consts.macros, "United Kingdom").includes(filter)) return true;
+      if (filter.includes("All international")) {
+        // Webinar is not tagged RUK and not tagged UK or any of their countries
+        if (!getRegionString(consts.macros, "United Kingdom").includes(webinarParam.trim()) && !getRegionString(consts.macros, "RUK").includes(webinarParam.trim()) && webinarParam.trim()) return true;
       }
+
+      // if (webinarParam.trim().includes("All international")) {
+      //   if (!getRegionString(consts.macros, "United Kingdom").includes(filter) && !getRegionString(consts.macros, "RUK").includes(filter)) return true;
+      // }
 
       // Get all the Macros the country beloongs to eg Scotland => United Kingdom
       const inMaroTags = consts.macros
@@ -125,6 +124,12 @@
         .map((item) => item.tag);
 
       if (inMaroTags.includes(webinarParam)) return true;
+
+      const isMacro = consts.macros.filter((item) => item.tag === filter);
+
+      if (isMacro.length) {
+        if (isMacro[0].data.includes(webinarParam)) return true;
+      }
     }
 
     return false;
