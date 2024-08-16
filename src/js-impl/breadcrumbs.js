@@ -19,6 +19,13 @@
   var TRUNC_THRESHOLD = 25;
   // Max level befor collapsing kicks in. Default to 4 levels, but can be
   // changed by setting the data-* attribute in the HTML/template.
+  
+	// Here we'll prevent the click event on the crumb (or any of its child elements) bubbling up.
+	// Elsewhere we've set a click handler (on the document body) which will trigger
+	// the menu (or any other widgets) to close. By trapping the clicks within the crumb
+	// it prevents the user accidentally closing the dropdown by e.g. clicking in the margin
+	// around the links.
+  trail.addEventListener("click", event=>event.stopPropagation());
 
   // loop through all the "crumbs" in the breadcrumb trail, looking for
   // DOM elements only (element type "1") i.e. not a whitespace text node etc.
@@ -41,13 +48,7 @@
           subMenuHomeItem.appendChild(link.cloneNode(true));
           subMenu.insertAdjacentElement("afterbegin", subMenuHomeItem);
 
-          /**
-           * Add a click-listener to each crumb to toggle the submenu open/close.
-           * Passing `link` into the function-scope closure so we don't have to do a
-           * querySelect() to reaquire it on every click event. Without a closure
-           * the `link` would be unpredictable.
-           */
-          applyCrumbClickListener(crumb, link);
+		  link.addEventListener("click", crumbListener);
         }
 
         // Add the data for Schema.org JSON-LD
@@ -99,7 +100,9 @@
       // Collapse the breadcrumbs and append them to the new ellipsis menu:
       crumbsToCollapse.forEach(function (value, index) {
         var li = document.createElement("li"); //create a fresh <li>
-        li.appendChild(value.querySelector("a")); //recycle the <a> from the crumb
+		var a = value.querySelector("a");//recycle the <a> from the crumb
+		a.removeEventListener("click",crumbListener);
+        li.appendChild(a); 
         ellipsisMenu.appendChild(li); //append to the new ellipsis menu
         value.parentNode.removeChild(value); //destroy the old breadcrum
         // Note: destroying the old crumb will also destroy any listeners and sub-menus
@@ -108,7 +111,8 @@
 
       // Set the ellipsis to have the same behaviour as the other breadcrumbs
       // i.e. click to show the drop-down menu
-      applyCrumbClickListener(ellipsis, ellipsisLink);
+      //applyCrumbClickListener(ellipsis, ellipsisLink);
+	  ellipsisLink.addEventListener("click", crumbListener);
     }
 
     // Truncate the remaining links…
@@ -139,43 +143,15 @@
     });
     trail.insertAdjacentElement("beforebegin", schema);
   }
+  function crumbListener (event) {
+	  event.preventDefault();
+	  var wasActive = trail.querySelector(".is-active");
+	  event.target.parentElement.classList.toggle("is-active");
+	  wasActive && wasActive.classList.remove("is-active");
 
-  function applyCrumbClickListener(crumb, link) {
-    crumb.children[0] &&
-      crumb.children[0].addEventListener("click", function (event) {
-        // Here we'll prevent the click event on the crumb (or any of its child elements) bubbling up.
-        // Elsewhere we've set a click handler (on the document body) which will trigger
-        // the menu (or any other widgets) to close. By trapping the clicks within the crumb
-        // it prevents the user accidentally closing the dropdown by e.g. clicking in the margin
-        // around the links.
-        event.stopPropagation();
-
-        // Now we will deal specifically with click events on the crumb (<li> element, i.e. `this`)
-        // and the main breadcrumb link (<a> element, `link`), or any direct children of the <a>
-        // such as <span>. The links's default action will be prevented, but any other child elements
-        // of the <li> (such as submenu links) will not be affected. (We prevent default navigation
-        //so that we can use the main link to toggle the dropdown instead).
-        if (event.target === link || event.target.parentElement === link) {
-          event.preventDefault();
-
-          /**
-           * This will toggle the `is-active` class on/off.
-           * We can simplify this in the future and just use `classList.toggle()`
-           * …when we drop IE support.
-           */
-          var wasActive = trail.querySelector(".is-active");
-          if (crumb.classList.contains("is-active")) {
-            crumb.classList.remove("is-active");
-          } else {
-            crumb.classList.add("is-active");
-          }
-          wasActive && wasActive.classList.remove("is-active");
-
-          // close all other on-screen widgets
-          if (self.UoS_closeAllWidgetsExcept) UoS_closeAllWidgetsExcept("breadcrumbs");
-        }
-      });
-  }
+	  // close all other on-screen widgets
+	  if (self.UoS_closeAllWidgetsExcept) UoS_closeAllWidgetsExcept("breadcrumbs");
+	}
 })(
   document.querySelector(".breadcrumbs"), // {HTMLElement} DOM element to use
   true, // {boolean}     Use Schema.org markup?
