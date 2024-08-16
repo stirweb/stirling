@@ -160,21 +160,23 @@
               <div class="u-energy-line-top">
                     <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">
                     <a href="${item.link}" class="c-link" >${item.title}</a></h3>
-                    ${item.countries ? `<p>For students from: ${item.countries}</p>` : ``}
+                    
+                    <p class="text-sm"><strong>${item.date}, ${item.time} (${item.zone})</strong></p>
+                    ${item.ondemand && !isUpcoming(item.datetime) ? `<span class="u-bg-energy-pink u-inline-block u-white u-p-tiny text-xxsm u-mb-1 ">Watch on-demand</span>` : ""}
+                    ${isUpcoming(item.datetime) ? `<span class="u-bg-heritage-green u-inline-block u-white u-p-tiny text-xxsm u-mb-1 ">Live event</span>` : ""}
+
                     <div class="text-sm">
-                      <p><strong>${item.date}, ${item.time} (${item.zone})</strong></p>
                       ${item.faculties ? `<p>${item.faculties}</p>` : ``}
                       ${item.description}
-
-                      ${item.ondemand ? `<span class="u-bg-energy-pink u-inline-block u-white u-p-tiny text-xxsm  ">Watch on-demand</span>` : ""}
-                      ${isUpcoming(item.datetime) ? `<span class="u-bg-heritage-green u-inline-block u-white u-p-tiny text-xxsm  ">Live event</span>` : ""}
-                  </div>
+                    </div>
+                    ${item.countries ? `<p class="text-sm">For students from: ${item.countries}</p>` : ``}
                 </div>
           </div> `;
   };
 
   /* Form the HTML to wrap all items   */
   const renderAllItems = stir.curry((section, items) => {
+    console.log(section);
     if (!items.length && !section.noItems) return;
     return `
             <div class="grid-x grid-padding-x" >
@@ -222,7 +224,7 @@
   const webinarResultsArea = stir.node("#webinarresults");
 
   if (webinarResultsArea) {
-    const filters = { params: { series: "", countries: "", subjects: "", studylevels: "", faculties: "", categories: "" } };
+    const filters = { params: { series: "", countries: "", subjects: "", studylevels: "", faculties: "", categories: "" }, divider: "no" };
     main(CONSTS, webinarResultsArea, dataWebinars, filters);
 
     const formfilters = stir.nodes("#webinarfilters select");
