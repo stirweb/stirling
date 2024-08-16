@@ -158,13 +158,17 @@
     return `
           <div class="cell small-12 large-4 medium-6 u-my-2" >
               <div class="u-energy-line-top">
+
+              <div class="u-mt-1">
+                ${item.ondemand && !isUpcoming(item.datetime) ? `<span class="u-bg-energy-purple--10 u-px-tiny u-py-xtiny text-xxsm ">Watch on-demand</span>` : ""}
+                ${isUpcoming(item.datetime) ? `<span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm ">Live event</span>` : ""}
+            </div>
+
                     <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">
                     <a href="${item.link}" class="c-link" >${item.title}</a></h3>
                     
                     <p class="text-sm"><strong>${item.date}, ${item.time} (${item.zone})</strong></p>
-                    ${item.ondemand && !isUpcoming(item.datetime) ? `<span class="u-bg-energy-pink u-inline-block u-white u-p-tiny text-xxsm u-mb-1 ">Watch on-demand</span>` : ""}
-                    ${isUpcoming(item.datetime) ? `<span class="u-bg-heritage-green u-inline-block u-white u-p-tiny text-xxsm u-mb-1 ">Live event</span>` : ""}
-
+                   
                     <div class="text-sm">
                       ${item.faculties ? `<p>${item.faculties}</p>` : ``}
                       ${item.description}
