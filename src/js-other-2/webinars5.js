@@ -41,15 +41,35 @@
   */
 
   /*  
+    Helper: convertToMacro
+  */
+  const convertToMacro = (countries, consts) => {
+    if (!countries.includes(",")) return countries;
+
+    const countriesString = countries
+      .split(",")
+      .map((item) => item.trim())
+      .sort()
+      .join("_");
+
+    const temp = consts.macros.filter((item) => {
+      if (item.data.slice(0, -1).join("_") === countriesString) {
+        return true;
+      }
+
+      return false;
+    });
+
+    return temp.length ? countries + ", " + temp[0].tag : countries;
+  };
+
+  /*  
     Filter an item (webinar) based on params (filters) supplied 
   */
   const filterer = stir.curry((consts, filters, webinar) => {
-    //console.log(webinar.title);
-    //console.log(filters);
-    //console.log(webinar);
+    // webinar.countries = convertToMacro(webinar.countries, consts); // MUTATION !!!
 
     const keys = stir.filter((x) => consts.safeList.includes(x), Object.keys(filters));
-    //console.log(keys);
 
     const tempMatches = stir.map((key) => {
       if (webinar[key]) {
@@ -61,17 +81,11 @@
         return stir.any((x) => x === true, matches);
       }
       if (filters[key] !== "") {
-        //console.log("NOT defaulting " + key);
         return false;
       }
-      //console.log("Defaulting " + key);
       return true;
     }, keys);
 
-    // if (stir.all((x) => x === true, tempMatches)) {
-    //   console.log(tempMatches);
-    // }
-    // console.log("----");
     return stir.all((x) => x === true, tempMatches);
   });
 
@@ -91,15 +105,14 @@
 
     // Countries
     if (type && type === "countries") {
-      //if (matchTag(filter, webinarParam, "All nationalities")) return true;
-      if (filter.includes("All nationalities")) return true;
+      if (matchTag(filter, webinarParam, "All nationalities")) return true;
+      //if (filter.includes("All nationalities")) return true; // Less
 
       if (filter.includes("All international")) {
         if (!getRegionString(consts.macros, "United Kingdom").includes(webinarParam.trim()) && webinarParam.trim()) return true;
       }
 
       if (webinarParam.trim().includes("All international")) {
-        console.log("2");
         if (!getRegionString(consts.macros, "United Kingdom").includes(filter)) return true;
       }
 
@@ -197,11 +210,10 @@
     return `
           <div class="cell small-12 large-4 medium-6 u-my-2" >
               <div class="u-energy-line-top">
-
-              <div class="u-mt-1">
-                ${item.ondemand && !isUpcoming(item) ? `<span class="u-bg-energy-purple--10 u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : ""}
-                ${isUpcoming(item) ? `<span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ""}
-            </div>
+                    <div class="u-mt-1">
+                        ${item.ondemand && !isUpcoming(item) ? `<span class="u-bg-energy-purple--10 u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : ""}
+                        ${isUpcoming(item) ? `<span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ""}
+                    </div>
 
                     <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">
                     <a href="${item.link}" class="c-link" >${item.title}</a></h3>
@@ -214,7 +226,7 @@
                       ${item.description}
                     </div>
                     ${item.countries ? `<p class="text-sm">For students from: ${item.countries}</p>` : ``}
-                </div>
+              </div>
           </div> `;
   };
 
