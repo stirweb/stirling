@@ -3,17 +3,18 @@
               <div class="u-energy-line-top">
                     <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">
                     <a href="${e.link}" class="c-link" >${e.title}</a></h3>
-                    ${e.countries?`<p>For students from: ${e.countries}</p>`:""}
+                    
+                    <p class="text-sm"><strong>${e.date}, ${e.time} (${e.zone})</strong></p>
+                    ${e.ondemand&&!u(e.datetime)?'<span class="u-bg-energy-pink u-inline-block u-white u-p-tiny text-xxsm u-mb-1 ">Watch on-demand</span>':""}
+                    ${u(e.datetime)?'<span class="u-bg-heritage-green u-inline-block u-white u-p-tiny text-xxsm u-mb-1 ">Live event</span>':""}
+
                     <div class="text-sm">
-                      <p><strong>${e.date}, ${e.time} (${e.zone})</strong></p>
                       ${e.faculties?`<p>${e.faculties}</p>`:""}
                       ${e.description}
-
-                      ${e.ondemand?'<span class="u-bg-energy-pink u-inline-block u-white u-p-tiny text-xxsm  ">Watch on-demand</span>':""}
-                      ${u(e.datetime)?'<span class="u-bg-heritage-green u-inline-block u-white u-p-tiny text-xxsm  ">Live event</span>':""}
-                  </div>
+                    </div>
+                    ${e.countries?`<p class="text-sm">For students from: ${e.countries}</p>`:""}
                 </div>
-          </div> `,p=stir.curry((e,t)=>{var i,r;if(t.length||e.noItems)return`
+          </div> `,p=stir.curry((e,t)=>{var i,r;if(console.log(e),t.length||e.noItems)return`
             <div class="grid-x grid-padding-x" >
               ${i=e.head,r=e.intro,i||r?`
           <div class="cell u-mt-2">
@@ -22,4 +23,4 @@
           </div>`:""}
               ${t.length?stir.map(m,t).join(""):'<div class="cell">'+e.noItems+"</div>"}
               ${e.divider&&"no"===e.divider?"":'<div class="cell"><hr /></div>'}
-            </div>`}),v=stir.curry((e,t)=>(stir.setHTML(e,t),e)),f=(e,t,i,r)=>{var s=stir.filter(e=>e.title),e=stir.filter(l(e,r.params)),a=stir.filter(o),n=stir.sort((e,t)=>parseInt(e.datetime)>parseInt(t.datetime)?1:parseInt(t.datetime)>parseInt(e.datetime)?-1:0),t=v(t),r=p(r);return stir.compose(t,r,n,e,a,s)(i)},g=stir.node("#webinarresults");g&&(f(a,g,i,{params:{series:"",countries:"",subjects:"",studylevels:"",faculties:"",categories:""}}),stir.nodes("#webinarfilters select").forEach(e=>{e.addEventListener("change",e=>{var t=stir.node("#search-student-type").value,t={params:{series:"",countries:stir.node("#search-region").value,subjects:"",studylevels:t,faculties:"",categories:stir.node("#search-category").value}};f(a,g,i,t)})})),e.forEach(e=>{f(a,e,i,t[e.dataset.webinarsects])}),s&&e.map(e=>e.innerText).join("").trim().length<1&&v(s,r)}();
+            </div>`}),v=stir.curry((e,t)=>(stir.setHTML(e,t),e)),f=(e,t,i,r)=>{var s=stir.filter(e=>e.title),e=stir.filter(l(e,r.params)),a=stir.filter(o),n=stir.sort((e,t)=>parseInt(e.datetime)>parseInt(t.datetime)?1:parseInt(t.datetime)>parseInt(e.datetime)?-1:0),t=v(t),r=p(r);return stir.compose(t,r,n,e,a,s)(i)},g=stir.node("#webinarresults");g&&(f(a,g,i,{params:{series:"",countries:"",subjects:"",studylevels:"",faculties:"",categories:""},divider:"no"}),stir.nodes("#webinarfilters select").forEach(e=>{e.addEventListener("change",e=>{var t=stir.node("#search-student-type").value,t={params:{series:"",countries:stir.node("#search-region").value,subjects:"",studylevels:t,faculties:"",categories:stir.node("#search-category").value}};f(a,g,i,t)})})),e.forEach(e=>{f(a,e,i,t[e.dataset.webinarsects])}),s&&e.map(e=>e.innerText).join("").trim().length<1&&v(s,r)}();
