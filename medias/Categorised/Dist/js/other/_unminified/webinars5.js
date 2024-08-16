@@ -95,12 +95,23 @@
       if (filter.includes("All nationalities")) return true;
 
       if (filter.includes("All international")) {
-        if (!getRegionString(consts.macros, "United Kingdom").includes(webinarParam.trim())) return true;
+        if (!getRegionString(consts.macros, "United Kingdom").includes(webinarParam.trim()) && webinarParam.trim()) return true;
       }
 
       if (webinarParam.trim().includes("All international")) {
+        console.log("2");
         if (!getRegionString(consts.macros, "United Kingdom").includes(filter)) return true;
       }
+
+      // Get all the Macros the country beloongs to eg Scotland => United Kingdom
+      const inMaroTags = consts.macros
+        .filter((item) => {
+          if (item.data.includes(filter)) return true;
+          return false;
+        })
+        .map((item) => item.tag);
+
+      if (inMaroTags.includes(webinarParam)) return true;
     }
 
     return false;
@@ -296,7 +307,7 @@
           QueryParams.set(key, formDataObject[key]);
         }
 
-        const filters = { params: { series: "", countries: formDataObject.region, subjects: "", studylevels: formDataObject.studylevel, faculties: "", categories: formDataObject.category } };
+        const filters = { params: { series: "", countries: formDataObject.region, subjects: "", studylevels: formDataObject.studylevel, faculties: "", categories: formDataObject.category }, divider: "no" };
         main(CONSTS, webinarResultsArea, dataWebinars, filters);
 
         if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars found</p>");
