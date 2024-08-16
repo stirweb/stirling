@@ -38,9 +38,12 @@
   /*
 
     DATA PROCESSING
+
   */
 
-  /*  Filter an item (webinar) based on params (filters) supplied */
+  /*  
+    Filter an item (webinar) based on params (filters) supplied 
+  */
   const filterer = stir.curry((consts, filters, webinar) => {
     //console.log(webinar.title);
     //console.log(filters);
@@ -73,18 +76,21 @@
     return stir.all((x) => x === true, tempMatches);
   });
 
-  /*  Check if match for param to filter - 1 to 1 direct + All foo  */
+  /*  
+    Check if match for param to filter - 1 to 1 direct + All foo  
+  */
   const matcher = stir.curry((consts, filter, type, webinarParam) => {
     // general
     if (filter.includes(webinarParam.trim())) return true;
     if (webinarParam.trim().includes(filter.trim())) return true;
 
-    // faculties
+    /* Macros */
+    // Faculties
     if (type && type === "faculties") {
       if (matchTag(filter, webinarParam, "All Faculties")) return true;
     }
 
-    // countries
+    // Countries
     if (type && type === "countries") {
       //if (matchTag(filter, webinarParam, "All nationalities")) return true;
       if (filter.includes("All nationalities")) return true;
@@ -101,7 +107,9 @@
     return false;
   });
 
-  /* Matcher Helper */
+  /* 
+    Helper: matchTag  
+  */
   const matchTag = (filter, param, tag) => {
     if (filter.includes(tag)) return true;
     if (param.trim().includes(tag)) return true;
@@ -109,7 +117,9 @@
     return false;
   };
 
-  /* Matcher Helper - Convert and return region countries array to String */
+  /* 
+    Helper - Convert and return region countries array to String 
+  */
   const getRegionString = (macros, tag) => {
     return macros
       .filter((item) => item.tag === tag)
@@ -117,7 +127,9 @@
       .join(", ");
   };
 
-  /* Helper: isPast  */
+  /* 
+    Helper: Webinar isPast  
+  */
   const isPast = stir.curry((item) => {
     const isoDateString = new Date().toISOString();
     const now = Number(isoDateString.split(".")[0].replaceAll(":", "").replaceAll("-", "").replaceAll("T", ""));
@@ -125,7 +137,9 @@
     return Number(item.datetime) < now;
   });
 
-  /* Helper: isUpcoming  */
+  /* 
+    Helper: Webinar isUpcoming  
+  */
   const isUpcoming = stir.curry((item) => {
     const isoDateString = new Date().toISOString();
     const now = Number(isoDateString.split(".")[0].replaceAll(":", "").replaceAll("-", "").replaceAll("T", ""));
@@ -133,7 +147,9 @@
     return Number(item.datetime) > now;
   });
 
-  /* Helper: isOnDemand  */
+  /* 
+    Helper: Webinar isOnDemand  
+  */
   const isOnDemand = stir.curry((item) => {
     return item.ondemand === "Yes";
   });
@@ -145,10 +161,14 @@
 
   const renderDivider = () => `<div class="cell"><hr /></div>`;
 
-  /* Form the HTML if there is a no items message   */
+  /* 
+    Build the HTML if there is a no items message   
+  */
   const renderNoItemsMessage = (msg) => `<div class="cell">` + msg + `</div>`;
 
-  /* Form the HTML for the section header   */
+  /* 
+    Build the HTML for the section header   
+  */
   const renderHeader = (header, intro) => {
     if (!header && !intro) return ``;
 
@@ -159,7 +179,9 @@
           </div>`;
   };
 
-  /* Form the HTML for an individual item   */
+  /* 
+    Build the HTML for an individual item   
+  */
   const renderItem = (item) => {
     //console.log(item);
     return `
@@ -186,7 +208,9 @@
           </div> `;
   };
 
-  /* Form the HTML to wrap all items   */
+  /* 
+    Build the HTML to wrap all items   
+  */
   const renderAllItems = stir.curry((section, items) => {
     console.log(section);
     if (!items.length && !section.noItems) return;
@@ -201,9 +225,12 @@
   /*
 
        EVENTS: OUTPUT (!!SIDE EFFECTS!!)
+
     */
 
-  /* Output html content to the page */
+  /* 
+    Output html content to the page 
+  */
   const setDOMContent = stir.curry((elem, html) => {
     stir.setHTML(elem, html);
     return elem;
@@ -212,6 +239,7 @@
   /*
 
         CONTROLLERS
+
     */
 
   /* Initialise curry functions then run the data through them using composition */
@@ -237,9 +265,12 @@
   /* 
   
     ON LOAD 
+
   */
 
-  /* Main form with filters */
+  /* 
+    Main form with filters 
+  */
   const webinarResultsArea = stir.node("#webinarresults");
 
   if (webinarResultsArea) {
@@ -247,7 +278,6 @@
     main(CONSTS, webinarResultsArea, dataWebinars, filters);
 
     const formfilters = stir.nodes("#webinarfilters select");
-
     formfilters.forEach((el) => {
       el.addEventListener("change", (e) => {
         const studentTypeValue = stir.node("#search-student-type").value;
@@ -260,17 +290,26 @@
     });
   }
 
-  /* Dynamic Sections */
+  /* 
+    Dynamic Sections 
+  */
+
   webinarSections.forEach((element) => {
     main(CONSTS, element, dataWebinars, dataWebinarFilters[element.dataset.webinarsects]);
   });
 
-  /* Check we have content somewhere - if not ouput a disclaimer */
+  /* 
+    Check we have content somewhere - if not ouput a disclaimer 
+  */
+
   if (disclaimerArea) {
     const contentLength = webinarSections
       .map((element) => element.innerText)
       .join("")
       .trim().length;
+
+    // const contentLength2 = webinarResultsArea.innerText.length;
+    // console.log(contentLength2);
 
     if (contentLength < 1) setDOMContent(disclaimerArea, disclaimer);
   }
