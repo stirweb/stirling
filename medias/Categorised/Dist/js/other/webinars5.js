@@ -3,8 +3,8 @@
               <div class="u-energy-line-top">
 
               <div class="u-mt-1">
-                ${e.ondemand&&!u(e.datetime)?'<span class="u-bg-energy-purple--10 u-px-tiny u-py-xtiny text-xxsm ">Watch on-demand</span>':""}
-                ${u(e.datetime)?'<span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm ">Live event</span>':""}
+                ${e.ondemand&&!u(e.datetime)?'<span class="u-bg-energy-purple--10 u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>':""}
+                ${u(e.datetime)?'<span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">Live event</span>':""}
             </div>
 
                     <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">

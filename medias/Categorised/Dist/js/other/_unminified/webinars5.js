@@ -160,8 +160,8 @@
               <div class="u-energy-line-top">
 
               <div class="u-mt-1">
-                ${item.ondemand && !isUpcoming(item.datetime) ? `<span class="u-bg-energy-purple--10 u-px-tiny u-py-xtiny text-xxsm ">Watch on-demand</span>` : ""}
-                ${isUpcoming(item.datetime) ? `<span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm ">Live event</span>` : ""}
+                ${item.ondemand && !isUpcoming(item.datetime) ? `<span class="u-bg-energy-purple--10 u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : ""}
+                ${isUpcoming(item.datetime) ? `<span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ""}
             </div>
 
                     <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">
