@@ -108,9 +108,9 @@
       if (matchTag(filter, webinarParam, "All nationalities")) return true;
       //if (filter.includes("All nationalities")) return true; // Less
 
-      if (filter.includes("All international")) {
-        if (!getRegionString(consts.macros, "United Kingdom").includes(webinarParam.trim()) && webinarParam.trim()) return true;
-      }
+      //if (filter.includes("All international")) {
+      //if (!getRegionString(consts.macros, "United Kingdom").includes(webinarParam.trim()) && webinarParam.trim()) return true;
+      //}
 
       if (webinarParam.trim().includes("All international")) {
         if (!getRegionString(consts.macros, "United Kingdom").includes(filter)) return true;
