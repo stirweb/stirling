@@ -174,7 +174,8 @@
                     <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">
                     <a href="${item.link}" class="c-link" >${item.title}</a></h3>
                     
-                    <p class="text-sm"><strong>${item.date}, ${item.time} (${item.zone})</strong></p>
+                    <p class="text-sm"><strong>${item.date}, ${item.time} 
+                    ${!item.timeend ? `` : `to ` + item.timeend} (${item.zone})</strong></p>
                    
                     <div class="text-sm">
                       ${item.faculties ? `<p>${item.faculties}</p>` : ``}
