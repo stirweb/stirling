@@ -18,7 +18,7 @@ stir.favourites = (() => {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.3" stroke="currentColor" style="width:22px;height:22px;">
             <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
           </svg>
-            <span class="u-border-bottom-solid">View favourites</span>
+            <span class="u-border-bottom-hover">View favourites</span>
           </a>`;
   };
 
@@ -27,7 +27,7 @@ stir.favourites = (() => {
     return `<div class="u-flex-medium-up  align-middle u-gap">
               <button id="removefavbtn-${sid}" class="u-heritage-green u-mb-1 u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
                 ${renderActiveIcon()}
-                <span class="u-heritage-green u-underline u-block u-pb-tiny">Favourited ${calcDaysAgo(new Date(dateSaved))}</span>
+                <span class="u-heritage-green u-border-bottom-hover u-block u-pb-tiny">Favourited ${calcDaysAgo(new Date(dateSaved))}</span>
             </button>${renderUrlToFavs(urlToFavs)}
           </div>`;
   };
@@ -38,7 +38,7 @@ stir.favourites = (() => {
             <button class="u-heritage-green u-mb-1 u-cursor-pointer u-line-height-default  flex-container u-gap-8 align-middle"
               data-action="addtofavs" aria-label="Add to your favourites" data-id="${sid}" id="addfavbtn-${sid}">
               ${renderInactiveIcon()}
-              <span class="u-heritage-green u-underline u-block ">Add to your favourites</span>
+              <span class="u-heritage-green u-border-bottom-hover u-block ">Add to your favourites</span>
             </button>${renderUrlToFavs(urlToFavs)}
         </div>`;
   };

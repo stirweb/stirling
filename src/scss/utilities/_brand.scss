@@ -220,6 +220,13 @@
   border-width: 5px;
 }
 
+.u-border-bottom-hover {
+  border-bottom: 1px solid currentColor;
+  &:hover {
+    border-bottom: 1px solid tint($energy-green, 70%);
+  }
+}
+
 /* Borders for medium down */
 
 @media screen and #{breakpoint(medium down)} {
