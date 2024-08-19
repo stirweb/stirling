@@ -156,6 +156,9 @@
 
     a {
       border-bottom: 1px solid $heritage-green;
+      &:hover {
+        border-bottom: 1px solid tint($energy-green, 70%);
+      }
     }
 
     li,
