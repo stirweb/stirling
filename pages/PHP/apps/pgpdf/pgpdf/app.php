@@ -157,9 +157,6 @@ function qs_init($api_url)
     $comm_content_url = $api_url . "/othercommunications/$other_comm_result/communicationcontent";
     $comm_content_result = QS_Post($comm_content_url, $params, null, $comm_content_payload); // returns an id
 
-    var_dump($str_posted_data);
-    var_dump($comm_content_result);
-
     return ["process" => "Data", "outcome" => "Success", "result" => $result];
 }
 
