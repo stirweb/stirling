@@ -89,23 +89,23 @@ function qs_init($api_url)
                 "Tag" => "stir_adhoc_xx_Personalised PG Prospectus_xx_xx_xx-xx-xxxx",
             ],
         ],
-        "Communications" => [
-            [
-                "Incoming" => true,
-                "Category" => "Web",
-                "Type" => "Enquiry",
-                "Headline" => "Stirling Webform Prospectus Form Requested",
-                "Subject" => "Stirling Webform Prospectus Form Requested",
-                //"Code" => "sample string 5",
-                //"Effectiveness" => "sample string 6",
-                "FromEmailAddress" => $_POST['email'],
-                //"ToEmailAddress" => "sample string 8",
-                "SendExternal" => false,
-                "Source" => "Prospectus Form Requested",
-                "ReferralSource" => "Test content",
-                //"DateCreated" => "2024-08-13T19:28:31.8108045+10:00"
-            ],
-        ],
+        // "Communications" => [
+        //     [
+        //         "Incoming" => true,
+        //         "Category" => "Web",
+        //         "Type" => "Enquiry",
+        //         "Headline" => "Stirling Webform Prospectus Form Requested",
+        //         "Subject" => "Stirling Webform Prospectus Form Requested",
+        //         //"Code" => "sample string 5",
+        //         //"Effectiveness" => "sample string 6",
+        //         "FromEmailAddress" => $_POST['email'],
+        //         //"ToEmailAddress" => "sample string 8",
+        //         "SendExternal" => false,
+        //         "Source" => "Prospectus Form Requested",
+        //         "ReferralSource" => "Test content",
+        //         //"DateCreated" => "2024-08-13T19:28:31.8108045+10:00"
+        //     ],
+        // ],
         "Consents" => [
             [
                 "Type" => "Would you like to keep receiving emails from us?",
@@ -127,10 +127,9 @@ function qs_init($api_url)
         $contact_payload["CrmNumber"] = $get_data->Data[0]->id;
     }
 
-    //$contact_payload["CommunicationContent"] = "Test Communication";
 
     // POST data to QS
-    $url = $api_url . "processes/upsertcontact";
+    $url = $api_url . "/processes/upsertcontact";
 
     $params = [
         "contactMatchingMinConfirmedScore" => 82,
@@ -138,7 +137,52 @@ function qs_init($api_url)
         "contactMatchingEnabled" => "True"
     ];
 
-    $result = QS_Post($url, $params, null, $contact_payload);
+    $result = QS_Post($url, $params, null, $contact_payload); // returns CrmNumber
+
+    echo json_decode($result);
+
+
+    // Other communication
+    $other_comm_payload = [
+        "CrmNumber" => $result,
+        "Incoming" => true,
+        "CommunicationTypeId" => 1,
+        "CommunicationCategoryName" => "Web",
+        "CommunicationCategoryId" => 2,
+        "CommunicationTypeName" => "Enquiry",
+        "Headline" => "Stirling Webform Prospectus Form Requested",
+        "SendExternal" => false,
+        "Source" => "Prospectus Form Requested",
+        "SubChannelId" => 1,
+        "CommunicationTypeId" => 1,
+        "CommunicationCategoryId" => 1,
+        //"ReferralSource" => "Test content",
+        //"Subject" => "Stirling Webform Prospectus Form Requested",
+        //"FromEmailAddress" => $_POST['email'],
+        //"DateCreated" => "2024-08-13T19:28:31.8108045+10:00"
+    ];
+
+
+
+    $other_comm_url = $api_url . "othercommunications/";
+
+    echo $other_comm_url;
+    echo json_encode($other_comm_payload);
+
+    $other_comm_result = QS_Post($other_comm_url, [], null, json_encode($other_comm_payload)); // returns an id
+
+
+    echo $other_comm_result;
+
+    // Other communication content
+    $comm_content_payload = [
+        "Content" => "Test content",
+    ];
+    $comm_content_url = $api_url . "/othercommunications/$other_comm_result/communicationcontent";
+    $comm_content_result = QS_Post($comm_content_url, $params, null, $comm_content_payload); // returns an id
+
+    //echo $comm_content_result;
+
 
     return ["process" => "Data", "outcome" => "Success", "result" => $result];
 }

@@ -92,7 +92,7 @@ $params = [
 
 $api_url = "https://integration-emea.qses-uat.com/crms/api/";
 
-$api_geturl = $api_url . "/contacts/2619/othercommunications?limit=1";
+$api_geturl = $api_url . "/api/communicationcategories?name=Web";
 // $pay =   [
 //   "CrmNumber" => '2619'
 // ];
