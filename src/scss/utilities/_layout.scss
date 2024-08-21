@@ -49,6 +49,11 @@
   display: grid;
 }
 
+.u-grid-equal-cols {
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+}
+
 .u-justify-content-center {
   justify-content: center;
 }
@@ -290,6 +295,10 @@
   width: 64px;
   min-width: 64px;
   flex-basis: 64px;
+}
+
+.u-w-half {
+  width: 50%;
 }
 
 .u-w-full,
