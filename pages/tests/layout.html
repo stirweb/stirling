@@ -1,0 +1,105 @@
+<html>
+
+<head>
+
+    <style>
+        main {
+            margin: 0 auto;
+            max-width: 1300px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+        }
+
+        .grid>.cell {
+            grid-column-start: span 12;
+        }
+
+        .grid>.cell.medium-6 {
+            grid-column-start: span 6;
+        }
+
+        .grid>.cell.medium-5 {
+            grid-column-start: span 5;
+        }
+
+        .grid>.cell.medium-4 {
+            grid-column-start: span 4;
+        }
+
+        .grid>.cell.medium-3 {
+            grid-column-start: span 3;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <main>
+
+        <div class="grid">
+            <div class="cell ">
+                <h2>Cell</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip
+                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                    dolore eu
+                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.</p>
+            </div>
+        </div>
+
+
+        <div class="grid">
+            <div class="cell medium-6">
+                <h2>Cell medium-6</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip
+                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                    dolore eu
+                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.</p>
+
+            </div>
+            <div class="cell medium-3">
+                <h2>Cell medium-3</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip
+                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                    dolore eu
+                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.</p>
+
+            </div>
+            <div class="cell medium-3">
+                <h2>Cell medium-3</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip
+                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                    dolore eu
+                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.</p>
+
+            </div>
+        </div>
+    </main>
+
+
+</body>
+
+
+
+
+</html>

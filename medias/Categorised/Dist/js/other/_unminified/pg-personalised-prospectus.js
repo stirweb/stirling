@@ -205,7 +205,7 @@ async function storePDF(pdf, fileName, serverPath) {
         method: "POST",
         body: formData,
       });
-      console.log(await response.text());
+      console.log(await response.json());
     } catch (e) {
       console.error(e);
     }
@@ -409,8 +409,8 @@ async function storePDF(pdf, fileName, serverPath) {
         body: data,
       });
 
-      //const result = await response.json();
-      const result = { success: "true" };
+      const result = await response.json();
+      //const result = { success: "true" };
 
       if (result.success === "true") {
         // Exectue the PDF Stuff
