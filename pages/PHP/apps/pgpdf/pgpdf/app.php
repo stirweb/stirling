@@ -56,15 +56,7 @@ function qs_init($api_url)
 
     $courses = json_decode($_POST['courses']);
 
-    // Whole form as a String
-    $postData = $_POST;
 
-    unset($postData["token"]);
-    unset($postData["g-recaptcha-response"]);
-    unset($postData["courses"]); // its already encoded so remove it to stop encoding twice
-
-    $postData["courses"] = $courses;
-    //$contact_payload["communicationcontent"] = "Test: data"; //json_encode(array($postData));
 
     $superConsent = $_POST['wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses'];
 
@@ -89,32 +81,13 @@ function qs_init($api_url)
                 "Tag" => "stir_adhoc_xx_Personalised PG Prospectus_xx_xx_xx-xx-xxxx",
             ],
         ],
-        // "Communications" => [
-        //     [
-        //         "Incoming" => true,
-        //         "Category" => "Web",
-        //         "Type" => "Enquiry",
-        //         "Headline" => "Stirling Webform Prospectus Form Requested",
-        //         "Subject" => "Stirling Webform Prospectus Form Requested",
-        //         //"Code" => "sample string 5",
-        //         //"Effectiveness" => "sample string 6",
-        //         "FromEmailAddress" => $_POST['email'],
-        //         //"ToEmailAddress" => "sample string 8",
-        //         "SendExternal" => false,
-        //         "Source" => "Prospectus Form Requested",
-        //         "ReferralSource" => "Test content",
-        //         //"DateCreated" => "2024-08-13T19:28:31.8108045+10:00"
-        //     ],
-        // ],
         "Consents" => [
             [
                 "Type" => "Would you like to keep receiving emails from us?",
                 "Consent" => (check_consent($superConsent, $superConsent))
             ]
         ],
-
         "ContactNoteContent" => "Other interests: " . ($_POST['area_interest_research'] ?? '') . ' ' . ($_POST['area_interest_international_students'] ?? '') . ' ' . ($_POST['area_interest_accommodation'] ?? '') . ' ' . ($_POST['area_interest_students_union'] ?? '') . ' ' . ($_POST['area_interest_sport'] ?? ''),
-        //"ContactNoteType" => "Communication",
         "EmailAddress" => $_POST['email']
     ];
 
@@ -127,8 +100,7 @@ function qs_init($api_url)
         $contact_payload["CrmNumber"] = $get_data->Data[0]->id;
     }
 
-
-    // POST data to QS
+    // POST student data to QS
     $url = $api_url . "/processes/upsertcontact";
 
     $params = [
@@ -137,52 +109,56 @@ function qs_init($api_url)
         "contactMatchingEnabled" => "True"
     ];
 
-    $result = QS_Post($url, $params, null, $contact_payload); // returns CrmNumber
-
-    echo json_decode($result);
-
+    $result = QS_Post($url, $params, null, $contact_payload); // should return CrmNumber
 
     // Other communication
     $other_comm_payload = [
         "CrmNumber" => $result,
         "Incoming" => true,
-        "CommunicationTypeId" => 1,
-        "CommunicationCategoryName" => "Web",
-        "CommunicationCategoryId" => 2,
-        "CommunicationTypeName" => "Enquiry",
+        "CommunicationCategoryID" => 8,
+        "CommunicationTypeID" => 1,
         "Headline" => "Stirling Webform Prospectus Form Requested",
         "SendExternal" => false,
         "Source" => "Prospectus Form Requested",
-        "SubChannelId" => 1,
-        "CommunicationTypeId" => 1,
-        "CommunicationCategoryId" => 1,
-        //"ReferralSource" => "Test content",
-        //"Subject" => "Stirling Webform Prospectus Form Requested",
-        //"FromEmailAddress" => $_POST['email'],
-        //"DateCreated" => "2024-08-13T19:28:31.8108045+10:00"
+        "SubChannelID" => 101,
+        "Task" => [
+            "TaskTypeId" => 6,
+            "Description" => "Stirling Webform Prospectus Form Requested"
+        ]
     ];
 
 
+    // Whole formData as a String
+    $post_data = $_POST;
 
-    $other_comm_url = $api_url . "othercommunications/";
+    unset($post_data["token"]);
+    unset($post_data["g-recaptcha-response"]);
+    unset($post_data["courses"]); // its already encoded so remove it to stop encoding twice
+    unset($post_data["pdfPath"]);
 
-    echo $other_comm_url;
-    echo json_encode($other_comm_payload);
+    //$post_data["courses"] = implode(",", $courses);
+    $post_data["courses"] = json_encode($courses);
 
-    $other_comm_result = QS_Post($other_comm_url, [], null, json_encode($other_comm_payload)); // returns an id
+    $string_it = function ($key, $value) {
+        return $key . ": " . $value . "<br>\r";
+    };
 
+    $arr_posted_data = array_map($string_it, array_keys($post_data), $post_data);
+    $str_posted_data = implode("<br>\r", $arr_posted_data);
 
-    echo $other_comm_result;
+    $other_comm_url = $api_url . "othercommunications";
+    $other_comm_result = QS_Post($other_comm_url, null, null, $other_comm_payload); // should return an id
+
 
     // Other communication content
     $comm_content_payload = [
-        "Content" => "Test content",
+        "Content" => $str_posted_data,
     ];
     $comm_content_url = $api_url . "/othercommunications/$other_comm_result/communicationcontent";
     $comm_content_result = QS_Post($comm_content_url, $params, null, $comm_content_payload); // returns an id
 
-    //echo $comm_content_result;
-
+    var_dump($str_posted_data);
+    var_dump($comm_content_result);
 
     return ["process" => "Data", "outcome" => "Success", "result" => $result];
 }
