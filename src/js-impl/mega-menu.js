@@ -63,6 +63,33 @@
       manageTabIndex(el, false);
     });
 
+    const mm_clicked = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+  
+      var id, mm;
+      id = e.target.getAttribute("aria-controls");
+      id && (mm = document.querySelector("#" + id));
+  
+      // if related megamenu found, prevent defaults and apply behaviour
+      if (mm) {
+        /**
+         * If the megamenu related to this link item is already open, close it.
+         * If it is not already open, close any that are, then open this one.
+         */
+        if (mm.classList && mm.classList.contains("animation-slide__down")) {
+          mmSlideUp(mm);
+        } else {
+          mmSlideUpAll();
+          mmSlideDown(mm);
+        }
+  
+        e.target.classList && e.target.classList.toggle(active_class);
+      } else {
+        UoS_closeAllWidgetsExcept();
+      }
+    };
+
     function mmSlideDown(el) {
       if (!el || !el.classList) return;
       el.classList.remove("animation-slide__up");
@@ -104,38 +131,21 @@
       });
     }
     const returnFocus = (id) => {
-      const el = document.querySelector(`[aria-controls="${id}"],[data-menu-id=${id}]`);
-      console.info("return focus", el);
-      if (!el) return;
-      el.focus();
+      const el = document.querySelector(`[aria-controls="${id}"]`);
+      el && el.focus();
     };
 
-    primaryNav.addEventListener("click", function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      var id, mm;
-      id = e.target.getAttribute("aria-controls") || e.target.getAttribute("data-menu-id");
-      id && (mm = document.querySelector("#" + id));
-
-      // if related megamenu found, prevent defaults and apply behaviour
-      if (mm) {
-        /**
-         * If the megamenu related to this link item is already open, close it.
-         * If it is not already open, close any that are, then open this one.
-         */
-        if (mm.classList && mm.classList.contains("animation-slide__down")) {
-          mmSlideUp(mm);
-        } else {
-          mmSlideUpAll();
-          mmSlideDown(mm);
-        }
-
-        e.target.classList && e.target.classList.toggle(active_class);
-      } else {
-        UoS_closeAllWidgetsExcept();
-      }
+    primaryNav.querySelectorAll('[data-menu-id]').forEach(nav => {
+      const mmid = nav.getAttribute('data-menu-id');
+      const mmel = mm.querySelector(`#${mmid}`);
+      if(mmid && mmel) {
+        nav.setAttribute('aria-controls',mmid);
+      }  
     });
+
+
+    primaryNav.addEventListener("click", mm_clicked);
+
 
     function escaping(event) {
       if (event.keyCode === KEY_ESC) mmSlideUpAll();
