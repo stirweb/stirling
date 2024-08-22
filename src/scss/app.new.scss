@@ -558,7 +558,7 @@ $uos-web-supplementary: (
   white: $white,
   dark-grey: $dark-grey,
   // reinstated by Martyn
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -1170,21 +1170,13 @@ button {
 @import "courses";
 @import "conversation";
 @import "countries";
-@import "faculties";
-@import "scholarships";
 @import "testimonials";
 @import "internal";
 @import "accommodation";
 @import "search";
 @import "aos/aos";
-@import "international-homepage";
-@import "study";
 @import "news-article";
-@import "sports";
 @import "jobs";
-@import "cpd";
-@import "partners";
-@import "personalisation";
 @import "case-study";
 @import "staff-profile";
 @import "maps";
@@ -1280,8 +1272,8 @@ img {
 
 .grid-container {
   margin: 0 auto;
-  width: 100%;
-  max-width: 77.5rem;
+  //   width: 100%;
+  //   max-width: 77.5rem;
 }
 
 .grid-x {
@@ -1295,24 +1287,24 @@ img {
   width: 100%;
 }
 
-.grid-x > .cell.small-12 {
-  grid-column-start: span 12;
-}
-
-.grid-x > .cell.small-10 {
-  grid-column-start: span 10;
-}
-
-.grid-x > .cell.small-8 {
-  grid-column-start: span 8;
+.grid-x > .cell.small-4 {
+  grid-column-start: span 4;
 }
 
 .grid-x > .cell.small-6 {
   grid-column-start: span 6;
 }
 
-.grid-x > .cell.small-4 {
-  grid-column-start: span 4;
+.grid-x > .cell.small-8 {
+  grid-column-start: span 8;
+}
+
+.grid-x > .cell.small-10 {
+  grid-column-start: span 10;
+}
+
+.grid-x > .cell.small-12 {
+  grid-column-start: span 12;
 }
 
 .grid-x.align-center {
@@ -1321,40 +1313,33 @@ img {
 
 /* Medium */
 @media screen and (min-width: 640px) {
-  .grid-x > .cell.medium-10 {
-    grid-column-start: span 10;
-  }
-
-  .grid-x > .cell.medium-9 {
-    grid-column-start: span 9;
-  }
-
-  .grid-x > .cell.medium-8 {
-    grid-column-start: span 8;
-  }
-
-  .grid-x > .cell.medium-7 {
-    grid-column-start: span 7;
-  }
-
-  .grid-x > .cell.medium-6 {
-    grid-column-start: span 6;
-  }
-
-  .grid-x > .cell.medium-5 {
-    grid-column-start: span 5;
-  }
-
-  .grid-x > .cell.medium-4 {
-    grid-column-start: span 4;
+  .grid-x > .cell.medium-2 {
+    grid-column-start: span 2;
   }
 
   .grid-x > .cell.medium-3 {
     grid-column-start: span 3;
   }
-
-  .grid-x > .cell.medium-2 {
-    grid-column-start: span 2;
+  .grid-x > .cell.medium-4 {
+    grid-column-start: span 4;
+  }
+  .grid-x > .cell.medium-5 {
+    grid-column-start: span 5;
+  }
+  .grid-x > .cell.medium-6 {
+    grid-column-start: span 6;
+  }
+  .grid-x > .cell.medium-7 {
+    grid-column-start: span 7;
+  }
+  .grid-x > .cell.medium-8 {
+    grid-column-start: span 8;
+  }
+  .grid-x > .cell.medium-9 {
+    grid-column-start: span 9;
+  }
+  .grid-x > .cell.medium-10 {
+    grid-column-start: span 10;
   }
 
   .medium-offset-1 {
@@ -1384,44 +1369,40 @@ img {
   .show-for-medium {
     display: initial;
   }
+
+  .medium-flex-dir-row {
+    flex-direction: row;
+  }
 }
 
 /* Large */
 @media screen and (min-width: 1024px) {
-  .grid-x > .cell.large-10 {
-    grid-column-start: span 10;
+  .grid-x > .cell.large-2 {
+    grid-column-start: span 2;
   }
-
-  .grid-x > .cell.large-9 {
-    grid-column-start: span 9;
-  }
-
-  .grid-x > .cell.large-8 {
-    grid-column-start: span 8;
-  }
-
-  .grid-x > .cell.large-7 {
-    grid-column-start: span 7;
-  }
-
-  .grid-x > .cell.large-6 {
-    grid-column-start: span 6;
-  }
-
-  .grid-x > .cell.large-5 {
-    grid-column-start: span 5;
-  }
-
-  .grid-x > .cell.large-4 {
-    grid-column-start: span 4;
-  }
-
   .grid-x > .cell.large-3 {
     grid-column-start: span 3;
   }
-
-  .grid-x > .cell.large-2 {
-    grid-column-start: span 2;
+  .grid-x > .cell.large-4 {
+    grid-column-start: span 4;
+  }
+  .grid-x > .cell.large-5 {
+    grid-column-start: span 5;
+  }
+  .grid-x > .cell.large-6 {
+    grid-column-start: span 6;
+  }
+  .grid-x > .cell.large-7 {
+    grid-column-start: span 7;
+  }
+  .grid-x > .cell.large-8 {
+    grid-column-start: span 8;
+  }
+  .grid-x > .cell.large-9 {
+    grid-column-start: span 9;
+  }
+  .grid-x > .cell.large-10 {
+    grid-column-start: span 10;
   }
 
   .large-offset-1 {
@@ -1455,40 +1436,32 @@ img {
 
 /* XLarge */
 @media screen and (min-width: 1240px) {
-  .grid-x > .cell.xlarge-10 {
-    grid-column-start: span 10;
+  .grid-x > .cell.xlarge-2 {
+    grid-column-start: span 2;
   }
-
-  .grid-x > .cell.xlarge-9 {
-    grid-column-start: span 9;
-  }
-
-  .grid-x > .cell.xlarge-8 {
-    grid-column-start: span 8;
-  }
-
-  .grid-x > .cell.xlarge-7 {
-    grid-column-start: span 7;
-  }
-
-  .grid-x > .cell.xlarge-6 {
-    grid-column-start: span 6;
-  }
-
-  .grid-x > .cell.xlarge-5 {
-    grid-column-start: span 5;
-  }
-
-  .grid-x > .cell.xlarge-4 {
-    grid-column-start: span 4;
-  }
-
   .grid-x > .cell.xlarge-3 {
     grid-column-start: span 3;
   }
-
-  .grid-x > .cell.xlarge-2 {
-    grid-column-start: span 2;
+  .grid-x > .cell.xlarge-4 {
+    grid-column-start: span 4;
+  }
+  .grid-x > .cell.xlarge-5 {
+    grid-column-start: span 5;
+  }
+  .grid-x > .cell.xlarge-6 {
+    grid-column-start: span 6;
+  }
+  .grid-x > .cell.xlarge-7 {
+    grid-column-start: span 7;
+  }
+  .grid-x > .cell.xlarge-8 {
+    grid-column-start: span 8;
+  }
+  .grid-x > .cell.xlarge-9 {
+    grid-column-start: span 9;
+  }
+  .grid-x > .cell.xlarge-10 {
+    grid-column-start: span 10;
   }
 
   .xlarge-offset-1 {
@@ -1528,4 +1501,39 @@ ol.no-bullet,
 ul.no-bullet {
   margin-left: 0;
   list-style: none;
+}
+
+[type="color"],
+[type="date"],
+[type="datetime-local"],
+[type="datetime"],
+[type="email"],
+[type="month"],
+[type="number"],
+[type="password"],
+[type="search"],
+[type="tel"],
+[type="text"],
+[type="time"],
+[type="url"],
+[type="week"],
+textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 2.4375rem;
+  margin: 0 0 1rem;
+  padding: 0.5rem;
+  border: 1px solid #cacaca;
+  border-radius: 0;
+  background-color: #fff;
+  box-shadow: inset 0 1px 2px rgba(58, 60, 57, 0.1);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #3a3c39;
+  transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
+  -webkit-appearance: none;
+  appearance: none;
 }
