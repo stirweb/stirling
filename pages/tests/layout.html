@@ -1,53 +1,166 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        main {
+        .grid-container {
             margin: 0 auto;
-            max-width: 1300px;
+            width: 77.5rem;
+            max-width: 90%;
+            padding: 0 1.5rem;
         }
 
-        .grid {
+
+
+        .grid-x {
             display: grid;
             gap: 1.5rem;
             grid-template-columns: repeat(12, minmax(0, 1fr));
+
         }
 
-        .grid>.cell {
+        .grid-x>.cell {
             grid-column-start: span 12;
         }
 
-        .grid>.cell.medium-10 {
+        .grid-x>.cell.small-12 {
+            grid-column-start: span 12;
+        }
+
+        .grid-x>.cell.small-10 {
             grid-column-start: span 10;
         }
 
-        .grid>.cell.medium-9 {
-            grid-column-start: span 9;
-        }
-
-        .grid>.cell.medium-8 {
-            grid-column-start: span 8;
-        }
-
-        .grid>.cell.medium-7 {
-            grid-column-start: span 7;
-        }
-
-        .grid>.cell.medium-6 {
+        .grid-x>.cell.small-6 {
             grid-column-start: span 6;
         }
 
-        .grid>.cell.medium-5 {
-            grid-column-start: span 5;
+        .grid-x.align-center {
+            place-items: center;
         }
 
-        .grid>.cell.medium-4 {
-            grid-column-start: span 4;
+        @media screen and (min-width: 640px) {
+            .grid-x>.cell.medium-10 {
+                grid-column-start: span 10;
+            }
+
+            .grid-x>.cell.medium-9 {
+                grid-column-start: span 9;
+            }
+
+            .grid-x>.cell.medium-8 {
+                grid-column-start: span 8;
+            }
+
+            .grid-x>.cell.medium-7 {
+                grid-column-start: span 7;
+            }
+
+            .grid-x>.cell.medium-6 {
+                grid-column-start: span 6;
+            }
+
+            .grid-x>.cell.medium-5 {
+                grid-column-start: span 5;
+            }
+
+            .grid-x>.cell.medium-4 {
+                grid-column-start: span 4;
+            }
+
+            .grid-x>.cell.medium-3 {
+                grid-column-start: span 3;
+            }
+
+            .grid-x>.cell.medium-2 {
+                grid-column-start: span 2;
+            }
+
+            .medium-offset-1 {
+                margin-left: 8.33333%;
+            }
+
+            .medium-offset-2 {
+                margin-left: 16.66667%;
+            }
+
+            .medium-offset-3 {
+                margin-left: 25%;
+            }
+
+            .medium-offset-4 {
+                margin-left: 33.33333%;
+            }
+
+            .medium-offset-0 {
+                margin-left: 0;
+            }
+
         }
 
-        .grid>.cell.medium-3 {
-            grid-column-start: span 3;
+        @media screen and (min-width: 1024px) {
+            .grid-x>.cell.large-10 {
+                grid-column-start: span 10;
+            }
+
+            .grid-x>.cell.large-9 {
+                grid-column-start: span 9;
+            }
+
+            .grid-x>.cell.large-8 {
+                grid-column-start: span 8;
+            }
+
+            .grid-x>.cell.large-7 {
+                grid-column-start: span 7;
+            }
+
+            .grid-x>.cell.large-6 {
+                grid-column-start: span 6;
+            }
+
+            .grid-x>.cell.large-5 {
+                grid-column-start: span 5;
+            }
+
+            .grid-x>.cell.large-4 {
+                grid-column-start: span 4;
+            }
+
+            .grid-x>.cell.large-3 {
+                grid-column-start: span 3;
+            }
+
+            .grid-x>.cell.large-2 {
+                grid-column-start: span 2;
+            }
+
+            .large-offset-1 {
+                margin-left: 8.33333%;
+            }
+
+            .large-offset-2 {
+                margin-left: 16.66667%;
+            }
+
+            .large-offset-3 {
+                margin-left: 25%;
+            }
+
+            .large-offset-4 {
+                margin-left: 33.33333%;
+            }
+
+            .large-offset-0 {
+                margin-left: 0;
+            }
+        }
+
+        .text-center {
+            text-align: center;
         }
     </style>
 
@@ -73,8 +186,8 @@
 
 
         <div class="grid">
-            <div class="cell medium-6">
-                <h2>Cell medium-6</h2>
+            <div class="cell medium-8 large-6">
+                <h2>Cell medium-8</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et
                     dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -85,16 +198,12 @@
                     deserunt mollit anim id est laborum.</p>
 
             </div>
-            <div class="cell medium-4">
-                <h2>Cell medium-3</h2>
+            <div class="cell medium-4 large-6">
+                <h2>Cell medium-4</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et
                     dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                    dolore eu
-                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.</p>
+                    aliquip.</p>
 
             </div>
             <div class="cell medium-3">
@@ -109,7 +218,83 @@
                     deserunt mollit anim id est laborum.</p>
 
             </div>
+
+            <div class="cell medium-9">
+                <h2>Cell medium-9</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip
+                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                    dolore eu
+                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.</p>
+
+            </div>
         </div>
+
+        <div class="grid">
+            <div class="cell medium-10 medium-offset-2">
+                <h2>Cell medium-8</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip
+                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                    dolore eu
+                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.</p>
+
+            </div>
+        </div>
+
+
+        <div class="grid">
+            <div class="cell u-padding-y">
+                <div class="grid  ">
+                    <div class="cell large-12 medium-12 small-12 text-center">
+                        <h2 class="header-stripped u-mb-2">
+                            Contact us
+                        </h2>
+                        <div class="u-mb-2">
+                            <p>Our&nbsp;Communications team is the main point of contact for media organisations
+                                wishing
+                                to find out more about how the work of the University is making lives better across
+                                the
+                                globe.</p>
+                            <p><a href="/news/contact-us/">Meet the team</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid align-center">
+                    <div class="cell large-5 small-12">
+                        <a class="button no-arrow x-large heritage-green expanded" href="tel:+44 (0) 1786 466687">
+                            <span class="show-for-small-only">Call</span>
+                            <span class="show-for-medium">
+                                <div class="flex-container align-middle align-center u-gap u-font-normal">
+                                    <span class="uos-telephone show-for-medium icon--medium"></span> +44 (0) 1786
+                                    466687
+                                </div>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="cell large-5 small-12">
+                        <a class="button no-arrow x-large heritage-green expanded"
+                            href="mailto:communications@stir.ac.uk" data-component="genericemailbutton">
+                            <span class="show-for-small-only">Email</span>
+                            <span class="show-for-medium">
+                                <div class="flex-container align-middle align-center u-gap u-font-normal">
+                                    <span class="uos-email show-for-medium icon--medium"></span>
+                                    communications@stir.ac.uk
+                                </div>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
 

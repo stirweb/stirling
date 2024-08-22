@@ -260,6 +260,32 @@ function scss() {
     .pipe(browserSync.stream());
 }
 
+// SASS App function
+function scssNew() {
+  const source = "src/scss/app.new.scss";
+  const sassPaths = ["src/scss"];
+  return src(source)
+    .pipe(sourcemaps.init())
+    .pipe(
+      sass({
+        includePaths: sassPaths,
+      })
+    )
+    .on("error", sass.logError)
+    .pipe(
+      autoprefixer({
+        //browsers: ["> 1%"],
+        cascade: false,
+      })
+    )
+    .pipe(sourcemaps.write())
+    .pipe(dest("medias/Categorised/Dist/css"))
+    .pipe(concatCss("app.new.min.css"))
+    .pipe(cleanCSS({ compatibility: "*" }))
+    .pipe(dest("medias/Categorised/Dist/css"))
+    .pipe(browserSync.stream());
+}
+
 // SASS standalone campaign files
 function scssCampaigns() {
   const source = "src/campaigns/scss/*.scss";
@@ -306,6 +332,7 @@ function img() {
 // Watch files for changes
 function watchFiles() {
   watch(["src/scss/*.scss", "src/scss/**/*.scss"]).on("change", scss);
+  watch(["src/scss/*.scss", "src/scss/**/*.scss"]).on("change", scssNew);
   watch("src/campaigns/scss/*").on("change", scssCampaigns);
   watch("src/scss-animation/infographics.scss").on("change", scssInfographs);
   watch(["src/vendor/photoswipe/uos-skin.css", "medias/Categorised/Dist/css/campaigns/grid-gallery.css"]).on("change", scssGallery);
