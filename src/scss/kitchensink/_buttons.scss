@@ -9,12 +9,16 @@ button {
 }
 
 .button {
+  display: inline-block;
+  font-family: $body-font-family !important;
+  font-size: 1.25rem;
+  text-align: center;
   line-height: 1.6;
   padding: map-get($button-padding-list, default);
   font-weight: bold;
 
-  a{
-	color: $white;
+  a {
+    color: $white;
   }
 
   // Padding
@@ -63,6 +67,15 @@ button {
   /*
         Button Colors - this will handle each color variation (e.g. heritage-green, enery-pink, ...)
   */
+
+  @each $name, $color in $button-palette {
+    &.#{$name} {
+      background-color: $color;
+      border-color: $color;
+      color: #ffffff;
+    }
+  }
+
   @each $name, $color in $button-palette {
     &.#{$name} {
       &:hover {
@@ -93,6 +106,12 @@ button {
 
   &.energy-turq {
     color: $white;
+  }
+
+  &.expanded {
+    display: block;
+    margin-right: 0;
+    margin-left: 0;
   }
 }
 
@@ -339,12 +358,12 @@ input:checked {
     width: 100%;
   }
   &:hover {
-	background-color: $white;
-	border-color: $heritage-green;
-	color: $heritage-green;
-	a {
-		color: $heritage-green;
-	}
+    background-color: $white;
+    border-color: $heritage-green;
+    color: $heritage-green;
+    a {
+      color: $heritage-green;
+    }
   }
   &.energy-pink {
     color: #fff;
