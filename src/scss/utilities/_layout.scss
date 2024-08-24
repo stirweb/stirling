@@ -156,6 +156,16 @@
   position: absolute;
 }
 
+.u-fixed {
+  position: fixed;
+}
+
+.u-center-fixed-horz {
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
 @media screen and #{breakpoint(medium up)} {
   .u-relative-medium-up {
     position: relative;
@@ -273,24 +283,28 @@
 
 /* Widths / Heights */
 
+.u-w-16,
 .u-width-16 {
   width: 16px;
   min-width: 16px;
   flex-basis: 16px;
 }
 
+.u-w-32,
 .u-width-32 {
   width: 32px;
   min-width: 32px;
   flex-basis: 32px;
 }
 
+.u-w-48,
 .u-width-48 {
   width: 48px;
   min-width: 48px;
   flex-basis: 48px;
 }
 
+.u-w-64,
 .u-width-64 {
   width: 64px;
   min-width: 64px;
@@ -299,6 +313,11 @@
 
 .u-w-half {
   width: 50%;
+}
+
+.u-w-3quarters,
+.cell.u-w-3quarters {
+  width: 75%;
 }
 
 .u-w-full,

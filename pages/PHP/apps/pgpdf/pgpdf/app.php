@@ -34,7 +34,7 @@ if (!$env) {
 
 function check_consent($val, $super_val)
 {
-    if ($super_val === "false")
+    if ($super_val === "" || $super_val === "false")
         return false;
 
     if ($val === 'true')
@@ -55,10 +55,8 @@ function qs_init($api_url)
     $get_data = QS_GET($api_geturl, null);
 
     $courses = json_decode($_POST['courses']);
-
-
-
     $superConsent = $_POST['wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses'];
+    $heat_status = $superConsent === "" || $superConsent === "false" ? "COLD" : "WARM";
 
     $contact_payload = [
         "Name" => $_POST['first_name'],
@@ -66,12 +64,9 @@ function qs_init($api_url)
         "Mobile" => $_POST['telephone'],
         "CountryOfCitizenship" => $_POST['country_of_origin'],
         "CountryOfResidence" => $_POST['country_of_residence'],
-        //"Intake" => $_POST['study_year'],
-        //"ContactStatus" => "Enquiry",
         "SubscribedToDirectEmails" => (check_consent($_POST['opt_in_for_email'], $superConsent)),
         "SubscribedToDirectPhoneCalls" => (check_consent($_POST['opt_in_for_phone'], $superConsent)),
         "SubscribedToDirectSms" => (check_consent($_POST['opt_in_for_sms'], $superConsent)),
-        "Courses" => $courses,
         "SubChannel" => "WebEnquiry",
         "CreateTask" => true,
         "TaskType" => "Incoming Communication",
@@ -91,13 +86,19 @@ function qs_init($api_url)
         "EmailAddress" => $_POST['email']
     ];
 
+    $transaction_type = '';
+
     // New record so add additional stuff
-    if (!isset($get_data->Data[0]->id)) {
+    if (!isset($get_data->Data[0]->Id)) {
         $contact_payload["Intake"] = $_POST['study_year'];
         $contact_payload["ContactStatus"] = "Enquiry";
+        $contact_payload["Courses"] = $courses;
+        $contact_payload["HeatStatus"] = $heat_status;
+        $transaction_type = "added";
     } else {
         // Existing record fix id just to be safe
-        $contact_payload["CrmNumber"] = $get_data->Data[0]->id;
+        $contact_payload["CrmNumber"] = $get_data->Data[0]->Id;
+        $transaction_type = "updated";
     }
 
     // POST student data to QS
@@ -121,10 +122,6 @@ function qs_init($api_url)
         "SendExternal" => false,
         "Source" => "Prospectus Form Requested",
         "SubChannelID" => 101,
-        "Task" => [
-            "TaskTypeId" => 6,
-            "Description" => "Stirling Webform Prospectus Form Requested"
-        ]
     ];
 
 
@@ -136,7 +133,6 @@ function qs_init($api_url)
     unset($post_data["courses"]); // its already encoded so remove it to stop encoding twice
     unset($post_data["pdfPath"]);
 
-    //$post_data["courses"] = implode(",", $courses);
     $post_data["courses"] = json_encode($courses);
 
     $string_it = function ($key, $value) {
@@ -149,7 +145,6 @@ function qs_init($api_url)
     $other_comm_url = $api_url . "othercommunications";
     $other_comm_result = QS_Post($other_comm_url, null, null, $other_comm_payload); // should return an id
 
-
     // Other communication content
     $comm_content_payload = [
         "Content" => $str_posted_data,
@@ -157,7 +152,7 @@ function qs_init($api_url)
     $comm_content_url = $api_url . "/othercommunications/$other_comm_result/communicationcontent";
     $comm_content_result = QS_Post($comm_content_url, $params, null, $comm_content_payload); // returns an id
 
-    return ["process" => "Data", "outcome" => "Success", "result" => $result];
+    return ["process" => "Data", "outcome" => "Success", "result" => "$result $transaction_type"];
 }
 
 

@@ -13,6 +13,10 @@
 
 */
 
+  const renderMarketingAlert = () => {
+    return `<p class="text-sm u-heritage-berry u-border-solid u-p-1">You must agree to being contacted if you wish to opt in to one of our marketing channels</p>`;
+  };
+
   const renderSubjectSelectItems = (subs) => subs.map((item) => `<option value="` + item.subject + `">` + item.subject + `</option>`).join(``);
 
   const renderSubjectCoursesOptions = (subject, index, data) => {
@@ -49,8 +53,14 @@
           </div>`;
   };
 
-  const renderRequiredError = () => {
-    return `<p class="u-p-2 u-heritage-berry text-center u-heritage-berry u-border-solid u-bg-white" >Please ensure you have completed all required fields</p>`;
+  // const renderRequiredError = () => {
+  //   return `<p class="u-p-2 u-heritage-berry text-center u-heritage-berry u-border-solid u-bg-white" >Please ensure you have completed all required fields</p>`;
+  // };
+
+  const renderRequiredAlert = () => {
+    return `<div class="u-fixed u-bottom-0 u-center-fixed-horz u-fadeinout" id="requiredAlert">
+              <p class="u-p-2 u-white text-center u-bg-heritage-berry ">Please review the errors with the submission</p>
+            </div>`;
   };
 
   /* 
@@ -397,6 +407,18 @@ async function storePDF(pdf, fileName, serverPath) {
     return;
   }
 
+  /* isMarketingOk */
+  const isMarketingOk = () => {
+    const nodes = stir.nodes('[data-section="marketing"]');
+    const nodeGlobal = stir.node('[data-section="marketingglobal"]');
+
+    if (nodeGlobal.value !== "true") {
+      const optIns = nodes.map((item) => item.value).filter((item) => item === "true");
+      if (optIns.length) return false;
+    }
+    return true;
+  };
+
   /* 
   doCaptcha Spam check 
 */
@@ -404,6 +426,7 @@ async function storePDF(pdf, fileName, serverPath) {
     data.append("token", token);
 
     try {
+      // Check captcha
       const response = await fetch(serverPath + "verify.php", {
         method: "POST",
         body: data,
@@ -414,29 +437,7 @@ async function storePDF(pdf, fileName, serverPath) {
 
       if (result.success === "true") {
         // Exectue the PDF Stuff
-        const required = stir.nodes("[data-required]");
-        const required2 = required.map((item) => item.name);
-
-        required2.forEach((item) => {
-          stir.node("[data-alertlabel=" + item + "]").innerText = " *";
-        });
-
-        const empties = required.filter((elem) => elem.value === "");
-
-        if (empties.length) {
-          const empties2 = empties.map((item) => item.name);
-
-          empties2.forEach((item) => {
-            stir.node("[data-alertlabel=" + item + "]").innerText = " * This field is required";
-          });
-
-          setDOMContent(stir.node("#formErrors"), renderRequiredError());
-          stir.node("#formErrors").scrollIntoView();
-          return;
-        }
-
         doPdf(subjectsData, data, serverPath);
-
         return true;
       } else {
         // DONT Exectue the PDF Stuff
@@ -513,6 +514,43 @@ async function storePDF(pdf, fileName, serverPath) {
       generatePDFBtn.addEventListener("click", function (e) {
         e.preventDefault();
         const data = new FormData(generatePDFForm);
+
+        // Required field checks
+        const required = stir.nodes("[data-required]");
+        const required2 = required.map((item) => item.name);
+
+        required2.forEach((item) => {
+          stir.node("[data-alertlabel=" + item + "]").innerText = " *";
+        });
+
+        const empties = required.filter((elem) => elem.value === "");
+
+        if (empties.length) {
+          const empties2 = empties.map((item) => item.name);
+
+          empties2.forEach((item) => {
+            const elem = stir.node("[data-alertlabel=" + item + "]");
+            elem.innerText = " * This field is required";
+            elem.classList.add("onalert");
+          });
+
+          //setDOMContent(stir.node("#formErrors"), renderRequiredError());
+          stir.node(".onalert").scrollIntoView();
+          setDOMContent(stir.node("#formErrors"), renderRequiredAlert());
+          setTimeout(() => stir.node("#requiredAlert").remove(), 2500);
+
+          return;
+        }
+
+        if (!isMarketingOk()) {
+          setDOMContent(stir.node("#marketingAlert"), renderMarketingAlert());
+          stir.node("#marketingAlert").scrollIntoView();
+
+          setDOMContent(stir.node("#formErrors"), renderRequiredAlert());
+          setTimeout(() => stir.node("#requiredAlert").remove(), 2500);
+
+          return;
+        }
 
         grecaptcha.execute(CAPTCHA, { action: "register" }).then(function (token) {
           doCaptcha(token, data);
