@@ -558,7 +558,7 @@ $uos-web-supplementary: (
   white: $white,
   dark-grey: $dark-grey,
   // reinstated by Martyn
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -1140,6 +1140,9 @@ $button-responsive-expanded: false !default;
   }
 }
 
+@import "settings/colors";
+@import "settings/zindex";
+
 button {
   border-style: none;
   background: none;
@@ -1147,8 +1150,11 @@ button {
   font-family: inherit;
 }
 
-@import "settings/colors";
-@import "settings/zindex";
+.button {
+  background-color: $heritage-green;
+  color: $white;
+  cursor: pointer;
+}
 
 // NPM STUFF...
 
@@ -1184,9 +1190,6 @@ button {
 @import "research-spotlight";
 @import "getting-around";
 
-// Utilities
-@import "utilities/utilities";
-
 body {
   margin: 0;
   font-family: $body-font-family !important;
@@ -1198,6 +1201,13 @@ body {
   a {
     text-decoration: none;
   }
+}
+
+.grid-container {
+  margin: 0 auto;
+  width: 90% !important;
+  max-width: 77.5em !important;
+  margin: 0 auto !important;
 }
 
 img {
@@ -1238,6 +1248,10 @@ img {
   .show-for-small-only {
     display: initial;
   }
+
+  .hide-for-small-only {
+    display: none;
+  }
 }
 
 /* Layout Helpers */
@@ -1256,29 +1270,36 @@ img {
 
 .align-center {
   justify-content: center;
+  place-items: center;
 }
 
 .align-right {
   justify-content: flex-end;
 }
 
-.text-center {
-  text-align: center;
-}
-
 .align-bottom {
   align-items: flex-end;
 }
 
-.grid-container {
-  margin: 0 auto;
-  //   width: 100%;
-  //   max-width: 77.5rem;
+.text-center {
+  text-align: center;
 }
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+// .float-right {
+//   float: right;
+// }
 
 .grid-x {
   display: grid;
-  gap: 1.5rem;
+  column-gap: 1.5rem;
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
@@ -1307,16 +1328,18 @@ img {
   grid-column-start: span 12;
 }
 
-.grid-x.align-center {
-  place-items: center;
-}
+// .grid-x.align-center {
+//   place-items: center;
+// }
 
 /* Medium */
 @media screen and (min-width: 640px) {
+  .grid-x > .cell.medium-1 {
+    grid-column-start: span 1;
+  }
   .grid-x > .cell.medium-2 {
     grid-column-start: span 2;
   }
-
   .grid-x > .cell.medium-3 {
     grid-column-start: span 3;
   }
@@ -1342,25 +1365,25 @@ img {
     grid-column-start: span 10;
   }
 
-  .medium-offset-1 {
-    margin-left: 8.33333%;
-  }
+  // .medium-offset-1 {
+  //   margin-left: 8.33333%;
+  // }
 
-  .medium-offset-2 {
-    margin-left: 16.66667%;
-  }
+  // .medium-offset-2 {
+  //   margin-left: 16.66667%;
+  // }
 
-  .medium-offset-3 {
-    margin-left: 25%;
-  }
+  // .medium-offset-3 {
+  //   margin-left: 25%;
+  // }
 
-  .medium-offset-4 {
-    margin-left: 33.33333%;
-  }
+  // .medium-offset-4 {
+  //   margin-left: 33.33333%;
+  // }
 
-  .medium-offset-0 {
-    margin-left: 0;
-  }
+  // .medium-offset-0 {
+  //   margin-left: 0;
+  // }
 
   .hide-for-medium {
     display: none;
@@ -1377,6 +1400,9 @@ img {
 
 /* Large */
 @media screen and (min-width: 1024px) {
+  .grid-x > .cell.large-1 {
+    grid-column-start: span 1;
+  }
   .grid-x > .cell.large-2 {
     grid-column-start: span 2;
   }
@@ -1405,25 +1431,25 @@ img {
     grid-column-start: span 10;
   }
 
-  .large-offset-1 {
-    margin-left: 8.33333%;
-  }
+  // .large-offset-1 {
+  //   margin-left: 8.33333%;
+  // }
 
-  .large-offset-2 {
-    margin-left: 16.66667%;
-  }
+  // .large-offset-2 {
+  //   margin-left: 16.66667%;
+  // }
 
-  .large-offset-3 {
-    margin-left: 25%;
-  }
+  // .large-offset-3 {
+  //   margin-left: 50%;
+  // }
 
-  .large-offset-4 {
-    margin-left: 33.33333%;
-  }
+  // .large-offset-4 {
+  //   margin-left: 33.33333%;
+  // }
 
-  .large-offset-0 {
-    margin-left: 0;
-  }
+  // .large-offset-0 {
+  //   margin-left: 0;
+  // }
 
   .hide-for-large {
     display: none;
@@ -1431,6 +1457,10 @@ img {
 
   .show-for-large {
     display: initial;
+  }
+
+  .large-flex-dir-row {
+    flex-direction: row;
   }
 }
 
@@ -1464,25 +1494,25 @@ img {
     grid-column-start: span 10;
   }
 
-  .xlarge-offset-1 {
-    margin-left: 8.33333%;
-  }
+  // .xlarge-offset-1 {
+  //   margin-left: 8.33333%;
+  // }
 
-  .xlarge-offset-2 {
-    margin-left: 16.66667%;
-  }
+  // .xlarge-offset-2 {
+  //   margin-left: 16.66667%;
+  // }
 
-  .xlarge-offset-3 {
-    margin-left: 25%;
-  }
+  // .xlarge-offset-3 {
+  //   margin-left: 25%;
+  // }
 
-  .xlarge-offset-4 {
-    margin-left: 33.33333%;
-  }
+  // .xlarge-offset-4 {
+  //   margin-left: 33.33333%;
+  // }
 
-  .xlarge-offset-0 {
-    margin-left: 0;
-  }
+  // .xlarge-offset-0 {
+  //   margin-left: 0;
+  // }
 
   .hide-for-xlarge {
     display: none;
@@ -1537,3 +1567,30 @@ textarea {
   -webkit-appearance: none;
   appearance: none;
 }
+
+select {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border-radius: 0;
+  border: 1px solid #666;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #3a3c39;
+}
+
+.responsive-embed.widescreen > iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+// Utilities
+@import "utilities/utilities";

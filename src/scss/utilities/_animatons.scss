@@ -32,6 +32,25 @@
   }
 }
 
+.u-fadeinout {
+  animation: fadeinout 2.5s;
+}
+
+@keyframes fadeinout {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 /* 
   Mega Menu 
 */

@@ -444,7 +444,7 @@
     <!-- 
 				 MAIN CONTENT 
 		-->
-    <main class="wrapper-content" aria-label="Main content" id="content">
+    <main class="wrapper-content u-px-1" aria-label="Main content" id="content">
         <div class="grid-container">
 
             <div class="grid-x u-padding-y ">
@@ -464,6 +464,96 @@
                         deserunt mollit anim id est laborum.</p>
                 </div>
             </div>
+
+            <div class="grid-x u-padding-y ">
+                <div class="cell text-center medium-6 large-3 u-padding-y  large-offset-3"><a
+                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/727"
+                        class="button expanded energy-pink " id="cta-41591">Search </a></div>
+
+                <div class="cell text-center medium-6 large-3 u-padding-y  "><a
+                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/727"
+                        class="button expanded energy-pink " id="cta-41591">Search 2</a></div>
+            </div>
+
+            <!-- Scholarship Form -->
+            <div class="grid-x">
+
+                <div class="cell small-12 medium-6 large-3">
+                    <label for="scholarship-search__feestatus"><strong>Fee status</strong></label>
+                    <select name="meta_N_phrase_and" id="scholarship-search__feestatus">
+                        <option value="Any">Any</option>
+                        <option value="RUK">England, Wales, NI, Republic of Ireland</option>
+                        <option value="International">International (including EU)</option>
+                        <option value="Scotland">Scotland</option>
+                    </select>
+                </div>
+
+                <div class="cell small-12 medium-6 large-3">
+                    <div>
+                        <label for="scholarship-search__subject"><strong>Subject</strong></label>
+                        <select name="query" id="scholarship-search__subject">
+                            <option value="!padrenullquery">Any</option>
+
+                            <option value="Accounting and finance">Accounting and finance</option>
+                            <option value="Aquaculture">Aquaculture</option>
+                            <option value="Biology">Biology</option>
+                            <option value="Business and management">Business and management</option>
+                            <option value="Computer science and software engineering">Computer science and software
+                                engineering</option>
+                            <option value="Criminology">Criminology</option>
+                            <option value="Data science and data analytics">Data science and data analytics</option>
+
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="cell small-12 medium-6 large-3">
+                    <label for="scholarship-search__level"><strong>Level</strong></label>
+                    <select name="meta_L_phrase_and" id="scholarship-search__level">
+                        <option value="Any">Any</option>
+                        <option>Undergraduate</option>
+                        <option>Postgraduate Taught</option>
+                        <option>Postgraduate Research</option>
+                    </select>
+                </div>
+
+                <div class="cell small-12 medium-6 large-3">
+                    <label for="scholarship-search__nationality"><strong>Country/region of domicile</strong></label>
+                    <select name="meta_M_phrase_and" id="scholarship-search__nationality">
+                        <option value="Any">Any</option>
+                        <option>Afghanistan</option>
+                        <option>Albania</option>
+
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell small-12  medium-12 text-right hide-for-small-only">
+                    <button class="button u-mb-1">Find a scholarship</button><br />
+                    <a class=" c-scholarship-search__button expanded c-link " id="scholarship-search__clear">Clear all
+                        filters</a>
+                </div>
+                <div class="cell small-12 medium-12 hide-for-small-only"></div>
+            </div>
+
+            <!-- <div class="grid-x grid-padding-x">
+                    <div class="cell small-12 medium-12">
+                        <label for="scholarship-search__query">Keywords</label>
+                        <input name="query" type="search" id="scholarship-search__query">
+                    </div>
+                </div> -->
+
+            <div class="grid-x grid-padding-x">
+                <div class="cell small-12 show-for-small-only">
+                    <button type="submit" class="button c-scholarship-search__button expanded">Find a
+                        scholarship</button>
+                </div>
+            </div>
+            <!-- End Scholarship Form -->
+
 
             <div class="grid-x u-padding-y u-bg-grey bg-grey u-bleed">
                 <div class="cell medium-9">
@@ -581,8 +671,39 @@
                         </div>
                     </div>
 
+
+
+
                     <div class="grid-x align-center">
-                        <div class="cell large-5 small-12">
+
+                        <nav class="cell u-flex u-gap-24 align-center flex-dir-column large-flex-dir-row u-w-3quarters">
+
+
+                            <a class="button no-arrow x-large heritage-green expanded u-flex1 u-w-full"
+                                href="tel:+44 (0) 1786 466687">
+                                <span class="show-for-small-only">Call</span>
+                                <span class="show-for-medium">
+                                    <div class="flex-container align-middle align-center u-gap u-font-normal">
+                                        <span class="uos-telephone show-for-medium icon--medium"></span> +44 (0)
+                                        1786
+                                        466687
+                                    </div>
+                                </span>
+                            </a>
+
+                            <a class="button no-arrow x-large heritage-green expanded u-flex1 u-w-full"
+                                href="mailto:communications@stir.ac.uk" data-component="genericemailbutton">
+                                <span class="show-for-small-only">Email</span>
+                                <span class="show-for-medium">
+                                    <div class="flex-container align-middle align-center u-gap u-font-normal">
+                                        <span class="uos-email show-for-medium icon--medium"></span>
+                                        communications@stir.ac.uk
+                                    </div>
+                                </span>
+                            </a>
+                        </nav>
+
+                        <!--div class="cell large-5 small-12">
                             <a class="button no-arrow x-large heritage-green expanded" href="tel:+44 (0) 1786 466687">
                                 <span class="show-for-small-only">Call</span>
                                 <span class="show-for-medium">
@@ -605,10 +726,54 @@
                                     </div>
                                 </span>
                             </a>
-                        </div>
+                        </div -->
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="grid-x  ">
+
+                <div class="cell small-12 medium-1 large-1">
+
+                </div>
+
+                <div class="cell small-12 medium-10 large-10 medium-offset-1 large-offset-1  u-padding-bottom">
+                    <div class="responsive-embed widescreen u-flex " data-lazy-container="" data-videoschema="">
+                        <iframe title="Vimeo: Be the Difference at Stirling"
+                            src="https://player.vimeo.com/video/488515749" width="640" height="564" frameborder="0"
+                            allow="autoplay; fullscreen" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
             </div>
+
+
+            <div class="cell ">
+                <div class="c-wrapper grid-x grid-padding-x u-bg-energy-turq u-white--all u-bleed bg-energy-turq  u-bleed u-pt-2 u-pb-2 align-center"
+                    data-ct="wrapper">
+                    <div class="cell text-center small-12">
+                        <nav aria-label="Suggested actions navigation"
+                            class="flex-container u-gap flex-dir-column large-flex-dir-row align-center">
+                            <a href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33479"
+                                class="button hollow no-arrow expanded">
+                                <svg class="icon">
+                                    <use xlink:href="#student-life"></use>
+                                </svg>
+                                <span>Register for updates</span></a>
+                            <a href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/14896"
+                                class="button hollow no-arrow expanded">
+                                <svg class="icon">
+                                    <use xlink:href="#computer"></use>
+                                </svg>
+                                <span>Take a virtual tour</span></a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
 
     </main>
 
@@ -751,19 +916,6 @@
 
     <!-- app.min.js -->
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=89.1"></script>
-
-    <!-- unibuddy.min.js -->
-    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
-
-
-    <script src="../../../medias/Categorised/Dist/js/other/_unminified/favourites.js"></script>
-
-    <script src="../../../medias/Categorised/Dist/js/other/_unminified/accommodation.js"></script>
-
-
-    <script defer async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1UNnY29BxIeFG4lq_-NTGEF1SUHNdQP8&loading=async&callback=initMap"></script>
-
 
 
 
