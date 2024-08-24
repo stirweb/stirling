@@ -526,6 +526,8 @@ async function storePDF(pdf, fileName, serverPath) {
         e.preventDefault();
         const data = new FormData(generatePDFForm);
 
+        setDOMContent(stir.node("#marketingAlert"), ``);
+
         // Required field checks
         const required = stir.nodes("[data-required]");
         const required2 = required.map((item) => item.name);
