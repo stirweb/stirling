@@ -577,7 +577,7 @@ async function storePDF(pdf, fileName, serverPath) {
         const dataAgreement = stir.node('[name="data_agreement"]');
         if (!dataAgreement.checked) {
           data.append("data_agreement", "false");
-          stir.node("#dataAgreeAlert").scrollIntoView();
+          stir.node("#dataAgreeSection").scrollIntoView();
 
           setDOMContent(stir.node("#dataAgreeAlert"), renderDataAlert());
           setDOMContent(stir.node("#formErrors"), renderRequiredAlert());
