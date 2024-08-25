@@ -13,6 +13,16 @@
 
 */
 
+  const renderDataAlert = () => {
+    return `
+          <div class="u-heritage-berry u-border-solid u-p-1 u-flex u-gap u-mb-1 align-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width:24px">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
+              </svg>
+               <p class="text-sm u-mb-0">The data agreement must be accepted</p>
+          </div>`;
+  };
+
   const renderMarketingAlert = () => {
     return `
           <div class="u-heritage-berry u-border-solid u-p-1 u-flex u-gap u-mb-1 align-center">
@@ -527,6 +537,7 @@ async function storePDF(pdf, fileName, serverPath) {
         const data = new FormData(generatePDFForm);
 
         setDOMContent(stir.node("#marketingAlert"), ``);
+        setDOMContent(stir.node("#dataAgreeAlert"), ``);
 
         // Required field checks
         const required = stir.nodes("[data-required]");
@@ -551,7 +562,6 @@ async function storePDF(pdf, fileName, serverPath) {
           stir.node(".onalert").scrollIntoView();
           setDOMContent(stir.node("#formErrors"), renderRequiredAlert());
           setTimeout(() => stir.node("#requiredAlert").remove(), 2500);
-
           return;
         }
 
@@ -561,7 +571,17 @@ async function storePDF(pdf, fileName, serverPath) {
 
           setDOMContent(stir.node("#formErrors"), renderRequiredAlert());
           setTimeout(() => stir.node("#requiredAlert").remove(), 2500);
+          return;
+        }
 
+        const dataAgreement = stir.node('[name="data_agreement"]');
+        if (!dataAgreement.checked) {
+          data.append("data_agreement", "false");
+          stir.node("#dataAgreeAlert").scrollIntoView();
+
+          setDOMContent(stir.node("#dataAgreeAlert"), renderDataAlert());
+          setDOMContent(stir.node("#formErrors"), renderRequiredAlert());
+          setTimeout(() => stir.node("#requiredAlert").remove(), 2500);
           return;
         }
 
