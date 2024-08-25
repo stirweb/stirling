@@ -561,7 +561,7 @@ async function storePDF(pdf, fileName, serverPath) {
           //setDOMContent(stir.node("#formErrors"), renderRequiredError());
           stir.node(".onalert").scrollIntoView();
           setDOMContent(stir.node("#formErrors"), renderRequiredAlert());
-          setTimeout(() => stir.node("#requiredAlert").remove(), 2500);
+          setTimeout(() => stir.node("#requiredAlert").remove(), 2400);
           return;
         }
 
@@ -570,7 +570,7 @@ async function storePDF(pdf, fileName, serverPath) {
           stir.node("#marketingAlert").scrollIntoView();
 
           setDOMContent(stir.node("#formErrors"), renderRequiredAlert());
-          setTimeout(() => stir.node("#requiredAlert").remove(), 2500);
+          setTimeout(() => stir.node("#requiredAlert").remove(), 2400);
           return;
         }
 
@@ -581,7 +581,7 @@ async function storePDF(pdf, fileName, serverPath) {
 
           setDOMContent(stir.node("#dataAgreeAlert"), renderDataAlert());
           setDOMContent(stir.node("#formErrors"), renderRequiredAlert());
-          setTimeout(() => stir.node("#requiredAlert").remove(), 2500);
+          setTimeout(() => stir.node("#requiredAlert").remove(), 2400);
           return;
         }
 
