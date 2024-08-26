@@ -109,9 +109,8 @@ button {
   }
 
   &.expanded {
-    display: block;
-    margin-right: 0;
-    margin-left: 0;
+    box-sizing: border-box;
+    width: 100%;
   }
 }
 

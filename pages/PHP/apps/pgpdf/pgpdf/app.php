@@ -216,7 +216,7 @@ if (isset($_POST['email'])) {
 */
 
 $from = "study@stir.ac.uk";
-$subject = "Your Personalised Prospectus is ready";
+$subject = "Your personalised prospectus is ready!";
 
 // Dynamic content
 $to = $_POST["email"];
