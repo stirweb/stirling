@@ -475,173 +475,477 @@
                 </div>
 
                 <!-- Listing -->
-                <div class="small-12 c-course-tabs " id="eventsrevamp" data-tags="">
-                    <div data-behaviour="tabs" aria-label="Label goes here">
+                <div class="small-12 cell c-course-tabs " id="eventsrevamp" data-tags="">
+                    <div data-behaviour="tabs" aria-label="Label goes here" class="stir-tabs">
+                        <div role="tablist"><button id="tab_1_1" role="tab" aria-controls="panel_1_1"
+                                aria-selected="true">Public events</button><button id="tab_1_2" role="tab"
+                                aria-controls="panel_1_2" aria-selected="false">Staff and student events</button><button
+                                id="tab_1_3" role="tab" aria-controls="panel_1_3" aria-selected="false">Archive</button>
+                        </div>
 
-                        <h2>Public events 2</h2>
-                        <div class="u-p-0  u-bg-grey u-bleed bg-grey c-search-results-area grid-x grid-padding-x"
-                            id="eventspublictab">
-                            <aside class=" cell small-12 large-4  large-order-2">
-                                <div class="u-bg-white u-p-2">
-                                    <p class=" u-font-bold flex-container u-gap-16 align-middle"><span
-                                            class="uos-shuffle u-heritage-green"></span>
-                                        Filter events</p>
+                        <div id="panel_1_1" tabindex="0" role="tabpanel" aria-labelledby="tab_1_1"
+                            class="u-bg-grey u-bleed bg-grey">
+                            <h2>Public events</h2>
+                            <div class="u-p-0 u-mt-2  c-search-results-area grid-x grid-padding-x" id="eventspublictab">
+                                <aside class=" cell small-12 large-4  large-order-2">
+                                    <div class="u-bg-white u-p-2">
+                                        <p class=" u-font-bold flex-container u-gap-16 align-middle"><span
+                                                class="uos-shuffle u-heritage-green"></span>
+                                            Filter events</p>
 
-                                    <form action="null" id="eventspublicfilters">
-                                        <fieldset>
-                                            <ul class="no-bullet">
-                                                <li><label><input name="publiceventdates" type="radio" value="all">All
-                                                    </label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="thisweek">This
-                                                        week</label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="nextweek">Next
-                                                        week</label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="thismonth">This
-                                                        month </label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="nextmonth">Next month</label>
-                                                </li>
+                                        <form action="null" id="eventspublicfilters">
+                                            <fieldset>
+                                                <ul class="no-bullet">
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="all">All
+                                                        </label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="thisweek">This
+                                                            week</label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="nextweek">Next
+                                                            week</label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="thismonth">This
+                                                            month </label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="nextmonth">Next month</label>
+                                                    </li>
 
-                                            </ul>
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </aside>
-                            <div class="cell large-8 small-12 u-mt-3 c-search-results-events  large-order-1"
-                                id="eventspublic">
-                                eventspublic
+                                                </ul>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </aside>
+                                <div id="eventspublic"
+                                    class="cell large-8 small-12  c-search-results-events  large-order-1">
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result  c-search-result__with-thumbnail"
+                                        data-result-type="event" data-perf="172522">
 
-                                <div class="u-border-width-5 u-heritage-line-left c-search-result  c-search-result__with-thumbnail"
-                                    data-result-type="event" data-perf="172522">
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
 
-                                    <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
-                                        <p class="u-text-regular u-m-0">
-
-                                            <strong> <a
-                                                    href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33105">A
-                                                    Sense of Place</a> </strong>
-                                        </p>
-                                        <div class="flex-container flex-dir-column u-gap-8">
-                                            <div class="flex-container u-gap-16 align-middle">
-                                                <span class="u-icon h5 uos-calendar"></span>
-                                                <span><time datetime="2023-01-30">30 January 2023</time> – <time
-                                                        datetime="2024-08-31">31 August 2024</time></span>
+                                                <strong> <a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33105">A
+                                                        Sense of Place</a> </strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2023-01-30">30 January 2023</time> – <time
+                                                            datetime="2024-08-31">31 August 2024</time></span>
+                                                </div>
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="uos-clock u-icon h5"></span>
+                                                    <span><time>09:00</time> – <time>17:00</time></span>
+                                                </div>
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-location "></span>
+                                                    <span>Iris Murdoch Building</span>
+                                                </div>
                                             </div>
-                                            <div class="flex-container u-gap-16 align-middle">
-                                                <span class="uos-clock u-icon h5"></span>
-                                                <span><time>09:00</time> – <time>17:00</time></span>
-                                            </div>
-                                            <div class="flex-container u-gap-16 align-middle">
-                                                <span class="u-icon h5 uos-location "></span>
-                                                <span>Iris Murdoch Building</span>
-                                            </div>
+                                            <p class="u-m-0">Explore a small exhibition of artworks in the Iris Murdoch
+                                                Building, organised by the Art Collection and chosen from the
+                                                University’s permanent collection.</p>
+
                                         </div>
-                                        <p class="u-m-0">Explore a small exhibition of artworks in the Iris Murdoch
-                                            Building, organised by the Art Collection and chosen from the University’s
-                                            permanent collection.</p>
+                                        <div class="c-search-result__image"><img src="Dumyat-Hill-Race-Square.jpg"
+                                                width="275" height="275" alt="Image: A Sense of Place">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="panel_1_2" tabindex="0" role="tabpanel" aria-labelledby="tab_1_2" hidden="">
+                            <h2>Staff and student events</h2>
+                            <div class="u-p-0  u-bg-grey u-bleed bg-grey c-search-results-area grid-x grid-padding-x"
+                                id="eventsstafftab">
+                                <aside class=" cell small-12 large-4  large-order-2">
+                                    <div class="u-bg-white u-p-2">
+                                        <p class=" u-font-bold flex-container u-gap-16 align-middle"><span
+                                                class="uos-shuffle u-heritage-green"></span>
+                                            Filter events</p>
+
+                                        <form action="null" id="eventsstafffilters">
+                                            <fieldset>
+                                                <ul class="no-bullet">
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="all">All
+                                                        </label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="thisweek">This
+                                                            week</label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="nextweek">Next
+                                                            week</label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="thismonth">This
+                                                            month </label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="nextmonth">Next month</label>
+                                                    </li>
+
+                                                </ul>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </aside>
+                                <div id="eventsstaff"
+                                    class="cell large-8 u-mt-3 c-search-results-events  large-order-1">
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result  c-search-result__with-thumbnail"
+                                        data-result-type="event" data-label-icon="pin" data-perf="172580">
+                                        <div class="c-search-result__tags">
+                                            <span class="c-search-tag">Event series</span>
+                                        </div>
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+
+                                                <strong> <a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33245">Be
+                                                        Connected</a> </strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2023-09-01">1 September 2023</time> – <time
+                                                            datetime="2024-08-31">31 August 2024</time></span>
+                                                </div>
+
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-location "></span>
+                                                    <span>University of Stirling</span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">Discover a programme of events and activities for our
+                                                Stirling community of students and staff.</p>
+
+                                        </div>
+                                        <div class="c-search-result__image"><img
+                                                src="https://stiracuk-cms01-test.terminalfour.net/terminalfour/SiteManager?ctfn=download&amp;fnno=60&amp;ceid=71636b348b61ab90bef3f1b37a0ef9361c0c1af7"
+                                                width="275" height="275" alt="Image: Be Connected"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="panel_1_3" tabindex="0" role="tabpanel" aria-labelledby="tab_1_3" hidden="">
+                            <h2>Archive</h2>
+                            <div class="u-p-0  u-bg-grey u-bleed bg-grey c-search-results-area grid-x grid-padding-x"
+                                id="eventsarchivetab">
+
+                                <div class="cell large-order-1">
+                                    <div class="u-mb-2 u-bg-mint flex-container align-stretch ">
+                                        <span
+                                            class="u-bg-heritage-green u-white u-p-tiny u-px-1 flex-container align-middle">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor"
+                                                style="width: 27px; height: 27px;">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z">
+                                                </path>
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            </svg>
+                                        </span>
+
+                                        <p class="u-p-1 u-m-0 u-black "><strong>You are viewing the events
+                                                archive.</strong> These events have passed.</p>
+                                    </div>
+                                </div>
+
+                                <aside class=" cell small-12 large-4 large-order-3" id="eventsarchivefilters">
+                                    <div class="u-bg-white  u-p-2">
+                                        <p class=" u-font-bold flex-container u-gap-16 align-middle"><span
+                                                class="uos-shuffle u-heritage-green"></span>
+                                            Filter events</p>
+                                        <form action="null" id="eventsstafffilters">
+                                            <fieldset>
+                                                <ul class="no-bullet">
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="all">All
+                                                        </label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="recordings">Recording available</label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="public">Public
+                                                            events </label></li>
+                                                    <li><label><input name="publiceventdates" type="radio"
+                                                                value="staffstudent">Staff
+                                                            and student events</label>
+                                                    </li>
+
+                                                </ul>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </aside>
+
+                                <div id="eventsarchive"
+                                    class="cell large-8 large-order-2 u-mt-3-small c-search-results-events">
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail"
+                                        data-result-type="event">
+
+
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+                                                <strong><a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/34042">Alpaca
+                                                        Therapy</a></strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2024-06-23">23 June 2024</time> </span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">Join us on 23 April to meet an alpaca!</p>
+                                            <p class="text-sm">Part of the <a
+                                                    href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33245">Be
+                                                    Connected</a> series.</p>
+                                        </div>
+                                        <div class="c-search-result__image"><img
+                                                src="https://stiracuk-cms01-test.terminalfour.net/terminalfour/SiteManager?ctfn=download&amp;fnno=60&amp;ceid=f486a9b56fda6cf020e0c8396886368d6f9de18f"
+                                                width="275" height="275" alt="Image: Alpaca Therapy"></div>
+                                    </div>
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result "
+                                        data-result-type="event">
+
+
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+                                                <strong><a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33953">III
+                                                        Symposium on Current Trends in Consumer Research</a></strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2024-05-22">22 May 2024</time> – <time
+                                                            datetime="2024-05-23">23 May 2024</time></span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">Join our III Symposium on Current Trends in Consumer
+                                                Research hosted by Professor Cele Otnes at University of Stirling in May
+                                                2024.</p>
+
+                                        </div>
 
                                     </div>
-                                    <div class="c-search-result__image"><img
-                                            src="https://stiracuk-cms01-test.terminalfour.net/terminalfour/SiteManager?ctfn=download&amp;fnno=60&amp;ceid=b05923f39fc62a3081681ac6a17980be5aed11d8"
-                                            width="275" height="275" alt="Image: A Sense of Place"></div>
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail"
+                                        data-result-type="event">
+
+
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+                                                <strong><a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33159">Dumyat
+                                                        Hill Race</a></strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2024-05-08">8 May 2024</time> </span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">The Dumyat Hill Race is the University of Stirling's
+                                                flagship running event, and a popular fixture on the Scottish hill
+                                                running calendar.</p>
+
+                                        </div>
+                                        <div class="c-search-result__image"><img
+                                                src="https://stiracuk-cms01-test.terminalfour.net/terminalfour/SiteManager?ctfn=download&amp;fnno=60&amp;ceid=a17804a62cb1ce25922a4ad29ee9dd7f7e2bc6bf"
+                                                width="275" height="275" alt="Image: Dumyat Hill Race"></div>
+                                    </div>
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result "
+                                        data-result-type="event">
+
+
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+                                                <strong><a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33800">Stirling
+                                                        PhD Publications</a></strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2024-04-17">17 April 2024</time> </span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">Join the Stirling PhD Publications webinar with speakers
+                                                Elizabeth Robson and Jamie Macpherson from University of Stirling.</p>
+                                            <p class="text-sm">Part of the <a
+                                                    href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33357">History,
+                                                    Heritage and Politics seminars</a> series.</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail"
+                                        data-result-type="event">
+
+                                        <div class="c-search-result__tags">
+                                            <span class="c-search-tag">Event series</span>
+                                        </div>
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+                                                <strong><a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/34041">University
+                                                        of Stirling's SpringFest 2024</a></strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2024-04-15">15 April 2024</time> </span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">Come along on 15 April to shop local businesses, take part
+                                                in workshops, enjoy giveaways, and celebrate spring.</p>
+                                            <p class="text-sm">Part of the <a
+                                                    href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33245">Be
+                                                    Connected</a> series.</p>
+                                        </div>
+                                        <div class="c-search-result__image"><img
+                                                src="https://stiracuk-cms01-test.terminalfour.net/terminalfour/SiteManager?ctfn=download&amp;fnno=60&amp;ceid=7bfdf937f81f304609a7b9a9c65ed3727edb58d7"
+                                                width="275" height="275"
+                                                alt="Image: University of Stirling's SpringFest 2024"></div>
+                                    </div>
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail"
+                                        data-result-type="event">
+
+
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+                                                <strong><a
+                                                        href="https://www.stir.ac.uk/study/visit-us/postgraduate-open-day">Virtual
+                                                        Postgraduate Open Day</a></strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2024-04-11">11 April 2024</time> </span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">Our Virtual Open Day features a mix of presentations,
+                                                videos and live chat.&nbsp;It&nbsp;also includes our virtual tour, which
+                                                showcases our beautiful campus and facilities.</p>
+
+                                        </div>
+                                        <div class="c-search-result__image"><img
+                                                src="https://stiracuk-cms01-test.terminalfour.net/terminalfour/SiteManager?ctfn=download&amp;fnno=60&amp;ceid=d165a318a3f1cc0f8ec7ced201af6e07f56e3750"
+                                                width="275" height="275" alt="Image: Virtual Postgraduate Open Day">
+                                        </div>
+                                    </div>
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result "
+                                        data-result-type="event">
+
+
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+                                                <strong><a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33799">Legal
+                                                        Sightseeing</a></strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2024-04-10">10 April 2024</time> </span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">Legal Sightseeing webinar features speaker Renske Vos from
+                                                Vrije Universiteit Amsterdam.</p>
+                                            <p class="text-sm">Part of the <a
+                                                    href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33357">History,
+                                                    Heritage and Politics seminars</a> series.</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result "
+                                        data-result-type="event">
+
+
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+                                                <strong><a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33568">Free
+                                                        pizza and movie night for students</a></strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2024-04-07">7 April 2024</time> </span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">Join your fellow students for a free movie screening, some
+                                                tasty pizza, and a chance to meet new people.</p>
+                                            <p class="text-sm">Part of the <a
+                                                    href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33245">Be
+                                                    Connected</a> series.</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result "
+                                        data-result-type="event">
+
+
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+                                                <strong><a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33798">Massacre
+                                                        at Agincourt: Comics Medievalism, the Battle of Agincourt, and
+                                                        the Korean War</a></strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2024-04-03">3 April 2024</time> </span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">Come along to Massacre at Agincourt and hear from speaker
+                                                Iain MacInnes from University of the Highlands and Islands.</p>
+                                            <p class="text-sm">Part of the <a
+                                                    href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33357">History,
+                                                    Heritage and Politics seminars</a> series.</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail"
+                                        data-result-type="event">
+
+
+                                        <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
+                                            <p class="u-text-regular u-m-0">
+                                                <strong><a
+                                                        href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33969">University
+                                                        of Stirling Easter Egg Hunt 2024</a></strong>
+                                            </p>
+                                            <div class="flex-container flex-dir-column u-gap-8">
+                                                <div class="flex-container u-gap-16 align-middle">
+                                                    <span class="u-icon h5 uos-calendar"></span>
+                                                    <span><time datetime="2024-03-30">30 March 2024</time> – <time
+                                                            datetime="2024-03-31">31 March 2024</time></span>
+                                                </div>
+                                            </div>
+                                            <p class="u-m-0">Mark your calendars and join our 2024 Easter Egg Hunt on
+                                                campus!</p>
+                                            <p class="text-sm">Part of the <a
+                                                    href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33245">Be
+                                                    Connected</a> series.</p>
+                                        </div>
+                                        <div class="c-search-result__image"><img
+                                                src="https://stiracuk-cms01-test.terminalfour.net/terminalfour/SiteManager?ctfn=download&amp;fnno=60&amp;ceid=3d308b12a2ce14569f6c358f184757bfee9e0db6"
+                                                width="275" height="275"
+                                                alt="Image: University of Stirling Easter Egg Hunt 2024"></div>
+                                    </div>
+                                    <div class="loadmorebtn flex-container align-center u-mb-2"><button
+                                            class="button hollow tiny">Load more results</button></div>
                                 </div>
+
                             </div>
                         </div>
 
-                        <h2>Staff and student events</h2>
-                        <div class="u-p-0  u-bg-grey u-bleed bg-grey c-search-results-area grid-x grid-padding-x"
-                            id="eventsstafftab">
-                            <aside class=" cell small-12 large-4  large-order-2">
-                                <div class="u-bg-white u-p-2">
-                                    <p class=" u-font-bold flex-container u-gap-16 align-middle"><span
-                                            class="uos-shuffle u-heritage-green"></span>
-                                        Filter events</p>
-
-                                    <form action="null" id="eventsstafffilters">
-                                        <fieldset>
-                                            <ul class="no-bullet">
-                                                <li><label><input name="publiceventdates" type="radio" value="all">All
-                                                    </label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="thisweek">This
-                                                        week</label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="nextweek">Next
-                                                        week</label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="thismonth">This
-                                                        month </label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="nextmonth">Next month</label>
-                                                </li>
-
-                                            </ul>
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </aside>
-                            <div id="eventsstaff" class="cell large-8 u-mt-3 c-search-results-events  large-order-1">
-                                <a href="https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33560"
-                                    class="c-link">View staff and student events for users with JavaScript disabled</a>
-                            </div>
-                        </div>
-
-                        <h2>Archive</h2>
-                        <div class="u-p-0  u-bg-grey u-bleed bg-grey c-search-results-area grid-x grid-padding-x"
-                            id="eventsarchivetab">
-
-                            <div class="cell large-order-1">
-                                <div class="u-mb-2 u-bg-mint flex-container align-stretch ">
-                                    <span
-                                        class="u-bg-heritage-green u-white u-p-tiny u-px-1 flex-container align-middle">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" style="width: 27px; height: 27px;">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                    </span>
-
-                                    <p class="u-p-1 u-m-0 u-black "><strong>You are viewing the events
-                                            archive.</strong> These events have passed.</p>
-                                </div>
-                            </div>
-
-                            <aside class=" cell small-12 large-4 large-order-3" id="eventsarchivefilters">
-                                <div class="u-bg-white  u-p-2">
-                                    <p class=" u-font-bold flex-container u-gap-16 align-middle"><span
-                                            class="uos-shuffle u-heritage-green"></span>
-                                        Filter events</p>
-                                    <form action="null" id="eventsstafffilters">
-                                        <fieldset>
-                                            <ul class="no-bullet">
-                                                <li><label><input name="publiceventdates" type="radio" value="all">All
-                                                    </label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="recordings">Recording available</label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="public">Public
-                                                        events </label></li>
-                                                <li><label><input name="publiceventdates" type="radio"
-                                                            value="staffstudent">Staff
-                                                        and student events</label>
-                                                </li>
-
-                                            </ul>
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </aside>
-
-                            <div id="eventsarchive"
-                                class="cell large-8 large-order-2 u-mt-3-small c-search-results-events">
-                            </div>
-
-                        </div>
 
                     </div>
                 </div>

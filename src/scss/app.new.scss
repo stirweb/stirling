@@ -558,7 +558,7 @@ $uos-web-supplementary: (
   white: $white,
   dark-grey: $dark-grey,
   // reinstated by Martyn
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -1203,55 +1203,11 @@ body {
   }
 }
 
-.grid-container {
-  margin: 0 auto;
-  width: 90% !important;
-  max-width: 77.5em !important;
-  margin: 0 auto !important;
-}
-
 img {
   display: inline-block;
   vertical-align: middle;
   max-width: 100%;
-}
-
-.show-for-sr,
-.show-on-focus {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.show-for-small-only {
-  display: none;
-}
-
-.show-for-medium {
-  display: none;
-}
-
-.show-for-large {
-  display: none;
-}
-
-.show-for-xlarge {
-  display: none;
-}
-
-@media screen and (max-width: 640px) {
-  .show-for-small-only {
-    display: initial;
-  }
-
-  .hide-for-small-only {
-    display: none;
-  }
+  height: auto;
 }
 
 /* Layout Helpers */
@@ -1293,14 +1249,20 @@ img {
   text-align: left;
 }
 
-// .float-right {
-//   float: right;
-// }
+.float-right {
+  float: right;
+}
 
 .grid-x {
   display: grid;
   column-gap: 1.5rem;
   grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+@include breakpoint(small down) {
+  .grid-x {
+    row-gap: 1.5rem;
+  }
 }
 
 .grid-x > .cell {
@@ -1328,12 +1290,37 @@ img {
   grid-column-start: span 12;
 }
 
-// .grid-x.align-center {
-//   place-items: center;
-// }
+.show-for-sr,
+.show-on-focus {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.show-for-small-only {
+  display: none;
+}
+
+.show-for-medium {
+  display: none;
+}
+
+.show-for-large {
+  display: none;
+}
+
+.show-for-xlarge {
+  display: none;
+}
 
 /* Medium */
-@media screen and (min-width: 640px) {
+// @media screen and (min-width: 640px) {
+@include breakpoint(medium up) {
   .grid-x > .cell.medium-1 {
     grid-column-start: span 1;
   }
@@ -1364,6 +1351,15 @@ img {
   .grid-x > .cell.medium-10 {
     grid-column-start: span 10;
   }
+  .medium-order-1 {
+    order: 1;
+  }
+  .medium-order-2 {
+    order: 2;
+  }
+  .medium-order-2 {
+    order: 3;
+  }
 
   // .medium-offset-1 {
   //   margin-left: 8.33333%;
@@ -1388,18 +1384,17 @@ img {
   .hide-for-medium {
     display: none;
   }
-
   .show-for-medium {
-    display: initial;
+    display: inherit;
   }
-
   .medium-flex-dir-row {
     flex-direction: row;
   }
 }
 
 /* Large */
-@media screen and (min-width: 1024px) {
+//@media screen and (min-width: 1024px) {
+@include breakpoint(large up) {
   .grid-x > .cell.large-1 {
     grid-column-start: span 1;
   }
@@ -1431,6 +1426,16 @@ img {
     grid-column-start: span 10;
   }
 
+  .large-order-1 {
+    order: 1;
+  }
+  .large-order-2 {
+    order: 2;
+  }
+  .large-order-2 {
+    order: 3;
+  }
+
   // .large-offset-1 {
   //   margin-left: 8.33333%;
   // }
@@ -1456,7 +1461,7 @@ img {
   }
 
   .show-for-large {
-    display: initial;
+    display: inherit;
   }
 
   .large-flex-dir-row {
@@ -1465,7 +1470,7 @@ img {
 }
 
 /* XLarge */
-@media screen and (min-width: 1240px) {
+@include breakpoint(xlarge up) {
   .grid-x > .cell.xlarge-2 {
     grid-column-start: span 2;
   }
@@ -1519,20 +1524,22 @@ img {
   }
 
   .show-for-xlarge {
-    display: initial;
+    display: inherit;
   }
 }
 
-.hide {
-  display: none;
+/* Small only over-rides*/
+@media screen and (max-width: 640px) {
+  .show-for-small-only {
+    display: inherit;
+  }
+
+  .hide-for-small-only {
+    display: none;
+  }
 }
 
-ol.no-bullet,
-ul.no-bullet {
-  margin-left: 0;
-  list-style: none;
-}
-
+/* Form  */
 [type="color"],
 [type="date"],
 [type="datetime-local"],
@@ -1568,6 +1575,12 @@ textarea {
   appearance: none;
 }
 
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
 select {
   box-sizing: border-box;
   width: 100%;
@@ -1585,11 +1598,29 @@ label {
   font-weight: 400;
   line-height: 1.8;
   color: #3a3c39;
+  font-size: 0.875rem;
+}
+
+label > [type="checkbox"],
+label > [type="radio"] {
+  margin-right: 0.5rem;
 }
 
 .responsive-embed.widescreen > iframe {
   width: 100%;
   aspect-ratio: 16/9;
+}
+
+/* Utils */
+.hide {
+  display: none;
+}
+
+ol.no-bullet,
+ul.no-bullet {
+  margin-left: 0;
+  list-style: none;
+  padding: 0;
 }
 
 // Utilities
