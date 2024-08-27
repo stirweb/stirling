@@ -98,10 +98,17 @@
   }
 
   /* needed because of WYSIWYG H3 styling specificity */
-  .c-wysiwyg-content .stir-accordion > h3 {
-    margin: 0;
-    padding: 0;
+  .c-wysiwyg-content {
+    h3:first-of-type {
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .stir-accordion > h3 {
+      margin: 0;
+      padding: 0;
+    }
   }
+
 }
 
 @media screen and (max-width: 63.999em) {
