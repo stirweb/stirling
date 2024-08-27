@@ -474,7 +474,20 @@
                     </div>
                 </div>
 
-                <!-- Listing -->
+                <!-- 
+                
+                    Listing 
+                 
+                -->
+                <style>
+                    .c-course-tabs [role="tabpanel"] {
+                        border-image-source: linear-gradient(#f6f5f4, #f6f5f4);
+                        background-color: #f6f5f4 !important;
+                        border-image-slice: 0 fill;
+                        border-image-outset: 0 100vw 0 100vw;
+                    }
+                </style>
+
                 <div class="small-12 cell c-course-tabs " id="eventsrevamp" data-tags="">
                     <div data-behaviour="tabs" aria-label="Label goes here" class="stir-tabs">
                         <div role="tablist"><button id="tab_1_1" role="tab" aria-controls="panel_1_1"
@@ -483,8 +496,7 @@
                                 id="tab_1_3" role="tab" aria-controls="panel_1_3" aria-selected="false">Archive</button>
                         </div>
 
-                        <div id="panel_1_1" tabindex="0" role="tabpanel" aria-labelledby="tab_1_1"
-                            class="u-bg-grey u-bleed bg-grey">
+                        <div id="panel_1_1" tabindex="0" role="tabpanel" aria-labelledby="tab_1_1" class="">
                             <h2>Public events</h2>
                             <div class="u-p-0 u-mt-2  c-search-results-area grid-x grid-padding-x" id="eventspublictab">
                                 <aside class=" cell small-12 large-4  large-order-2">

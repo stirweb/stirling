@@ -558,7 +558,7 @@ $uos-web-supplementary: (
   white: $white,
   dark-grey: $dark-grey,
   // reinstated by Martyn
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -1233,8 +1233,20 @@ img {
   justify-content: flex-end;
 }
 
+.align-stretch {
+  align-items: stretch;
+}
+
+.align-top {
+  align-items: flex-start;
+}
+
 .align-bottom {
   align-items: flex-end;
+}
+
+.align-justify {
+  justify-content: space-between;
 }
 
 .text-center {
@@ -1319,7 +1331,6 @@ img {
 }
 
 /* Medium */
-// @media screen and (min-width: 640px) {
 @include breakpoint(medium up) {
   .grid-x > .cell.medium-1 {
     grid-column-start: span 1;
@@ -1362,6 +1373,19 @@ img {
   }
 
   // .medium-offset-1 {
+  //   margin-left: calc((100% / 12) * 2);
+  // }
+  // .medium-offset-2 {
+  //   margin-left: calc((100% / 12) * 3);
+  // }
+  // .medium-offset-3 {
+  //   margin-left: calc((100% / 12) * 4);
+  // }
+  // .medium-offset-4 {
+  //   margin-left: calc((100% / 12) * 5);
+  // }
+
+  // .medium-offset-1 {
   //   margin-left: 8.33333%;
   // }
 
@@ -1393,7 +1417,6 @@ img {
 }
 
 /* Large */
-//@media screen and (min-width: 1024px) {
 @include breakpoint(large up) {
   .grid-x > .cell.large-1 {
     grid-column-start: span 1;
@@ -1539,7 +1562,8 @@ img {
   }
 }
 
-/* Form  */
+/* Form elements  */
+
 [type="color"],
 [type="date"],
 [type="datetime-local"],
@@ -1571,7 +1595,6 @@ textarea {
   line-height: 1.5;
   color: #3a3c39;
   transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
-  -webkit-appearance: none;
   appearance: none;
 }
 
@@ -1585,7 +1608,7 @@ select {
   box-sizing: border-box;
   width: 100%;
   margin: 0 0 20px;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   font-size: 1rem;
   font-family: inherit;
   border-radius: 0;
