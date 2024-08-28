@@ -30,11 +30,11 @@
     */
 
   const renderImage = (image, alt) => {
-    return `<div class="c-search-result__image"><img src="${image}" width="275" height="275" alt="Image: ${alt}"></div>`;
+    return `<div class="u-mt-1"><img src="${image}" width="275" height="275" alt="Image: ${alt}"></div>`;
   };
 
   const renderTab = (text) => {
-    return `<div class="c-search-result__tags">
+    return `<div class="u-absolute u-top--16">
                 <span class="c-search-tag">${text}</span>
             </div>`;
   };
@@ -66,7 +66,7 @@
   const renderTimes = (item) => {
     return item.isSeries
       ? ``
-      : `<div class="flex-container u-gap-16 align-middle">
+      : `<div class="u-flex u-gap-16 align-middle">
           <span class="uos-clock u-icon h5"></span>
           <span><time>${item.startTime}</time> – <time>${item.endTime}</time></span>
         </div>`;
@@ -89,85 +89,93 @@
 
   const renderEvent = stir.curry((seriesData, item) => {
     return `
-            <div class="u-border-width-5 u-heritage-line-left c-search-result  ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
+            <div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
                 ${renderLabelTab(item)} 
-                <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
-                    <p class="u-text-regular u-m-0">
-                      ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} 
-                        <strong>${renderLink(item)} </strong>
-                    </p>
-                    <div class="flex-container flex-dir-column u-gap-8">
-                        <div class="flex-container u-gap-16 align-middle">
-                            <span class="u-icon h5 uos-calendar"></span>
-                            <span><time datetime="${item.start}">${item.stirStart}</time> ${renderEndDate(item.start, item.end, item.stirEnd)}</span>
-                        </div>
-                        ${renderTimes(item)}
-                        <div class="flex-container u-gap-16 align-middle">
-                            <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`} "></span>
-                            <span>${item.location}</span>
-                        </div>
-                    </div>
-                    <p class="u-m-0">${item.summary}</p>
-                    ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
-                </div>
+
+                <div class="u-grid-medium-up u-gap-24 ${item.image ? "u-grid-cols-3_1" : ``} ">
+                  <div class=" u-flex flex-dir-column u-gap u-mt-1" >
+                      <p class="u-text-regular u-m-0">
+                        ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} 
+                          <strong>${renderLink(item)} </strong>
+                      </p>
+                      <div class="u-flex flex-dir-column u-gap-8">
+                          <div class="u-flex u-gap-16 align-middle">
+                              <span class="u-icon h5 uos-calendar"></span>
+                              <span><time datetime="${item.start}">${item.stirStart}</time> ${renderEndDate(item.start, item.end, item.stirEnd)}</span>
+                          </div>
+                          ${renderTimes(item)}
+                          <div class="u-flex u-gap-16 align-middle">
+                              <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`} "></span>
+                              <span>${item.location}</span>
+                          </div>
+                      </div>
+                      <p class="u-m-0">${item.summary}</p>
+                      ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
+                  </div>
                 ${item.image ? renderImage(item.image, item.title) : ``}  
+                </div>
+            </div>`;
+  });
+
+  const renderArchiveEvent = stir.curry((seriesData, item) => {
+    return `
+            <div class="u-border-width-5 u-heritage-line-left  u-p-2 u-bg-white text-sm u-relative u-mb-2 " data-result-type="event"  >
+                ${item.recording ? renderTab("Recording available") : ``} 
+                ${item.isSeries ? renderTab("Event series") : ``} 
+                
+                <div class="u-grid-medium-up u-gap-24 ${item.image ? "u-grid-cols-3_1" : ``} ">
+                  <div class=" u-flex flex-dir-column u-gap u-mt-1 ">
+                      <p class="u-text-regular u-m-0">
+                          <strong><a href="${item.url}">${item.title}</a></strong>
+                      </p>
+                      <div class="u-flex flex-dir-column u-gap-8">
+                          <div class="u-flex u-gap-16 align-middle">
+                              <span class="u-icon h5 uos-calendar"></span>
+                              <span><time datetime="${item.start}">${item.stirStart}</time> ${renderEndDate(item.start, item.end, item.stirEnd)}</span>
+                          </div>
+                      </div>
+                      <p class="u-m-0">${item.summary}</p>
+                      ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
+                  </div>
+                  ${item.image ? renderImage(item.image, item.title) : ``}  
+                </div>
             </div>`;
   });
 
   const renderEventsPromo = stir.curry((seriesData, item) => {
     return `
           <div class="grid-x u-bg-grey u-mb-2 ">
-            <div class="cell u-p-2 small-12 ${item.image ? `medium-8` : ``} ">
-                ${item.isSeries ? renderTab("Event series") : ``}
-                <p class="u-text-regular u-mb-2">
-                ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} <strong><a href="${item.url}">${item.title}</a></strong>
-                </p>
-                <div class="flex-container flex-dir-column u-gap-8 u-mb-1">
-                    <div class="flex-container u-gap-16 align-middle">
-                        <span class="u-icon h5 uos-calendar"></span>
-                        <span><time datetime="${item.start}">${item.stirStart}</time> ${renderEndDate(item.start, item.end, item.stirEnd)}</span>
-                    </div>
-                    ${renderTimes(item)}
-                    <div class="flex-container u-gap-16 align-middle">
-                        <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`}"></span>
-                        <span>${item.location}</span>
-                    </div>
+            <div class="cell small-12 ${item.image ? `medium-8` : ``} ">
+                <div class=" u-p-2">
+                  ${item.isSeries ? renderTab("Event series") : ``}
+                  <p class="u-text-regular u-mb-2">
+                  ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} <strong><a href="${item.url}">${item.title}</a></strong>
+                  </p>
+                  <div class="u-flex flex-dir-column u-gap-8 u-mb-1">
+                      <div class="u-flex u-gap-16 align-middle">
+                          <span class="u-icon h5 uos-calendar"></span>
+                          <span><time datetime="${item.start}">${item.stirStart}</time> ${renderEndDate(item.start, item.end, item.stirEnd)}</span>
+                      </div>
+                      ${renderTimes(item)}
+                      <div class="u-flex u-gap-16 align-middle">
+                          <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`}"></span>
+                          <span>${item.location}</span>
+                      </div>
+                  </div>
+                  <p class="u-m-0 text-sm">${item.summary}</p>
+                  ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
                 </div>
-                <p class="u-m-0 text-sm">${item.summary}</p>
-                ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
             </div>
             ${item.image ? `<div class="cell medium-4"><img src="${item.image}" class="u-object-cover" width="800" height="800" alt="Image: ${item.title}" /></div>` : ``}  
         </div>`;
   });
 
-  const renderArchiveEvent = stir.curry((seriesData, item) => {
-    return `
-            <div class="u-border-width-5 u-heritage-line-left c-search-result ${item.image ? "c-search-result__with-thumbnail" : ``}" data-result-type="event"  >
-                ${item.recording ? renderTab("Recording available") : ``} 
-                ${item.isSeries ? renderTab("Event series") : ``} 
-                <div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1 ">
-                    <p class="u-text-regular u-m-0">
-                        <strong><a href="${item.url}">${item.title}</a></strong>
-                    </p>
-                    <div class="flex-container flex-dir-column u-gap-8">
-                        <div class="flex-container u-gap-16 align-middle">
-                            <span class="u-icon h5 uos-calendar"></span>
-                            <span><time datetime="${item.start}">${item.stirStart}</time> ${renderEndDate(item.start, item.end, item.stirEnd)}</span>
-                        </div>
-                    </div>
-                    <p class="u-m-0">${item.summary}</p>
-                    ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
-                </div>
-                ${item.image ? renderImage(item.image, item.title) : ``}  
-            </div>`;
-  });
-
   const renderPaginationBtn = (end, noOfResults) => {
-    return end >= noOfResults ? `` : `<div class="loadmorebtn flex-container align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
+    return end >= noOfResults ? `` : `<div class="loadmorebtn u-flex align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
   };
 
   const renderPageMeta = (start, end, noOfResults) => {
-    return start < 2 ? `` : `<div class="flex-container align-center u-mb-2">Showing ${start + 1}-${end > noOfResults ? noOfResults : end} of ${noOfResults} results</div>`;
+    return start < 2 ? `` : `<div class="u-flex align-center u-mb-2">Showing ${start + 1}-${end > noOfResults ? noOfResults : end} of ${noOfResults} results</div>`;
   };
 
   /*

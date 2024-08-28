@@ -54,6 +54,10 @@
   grid-auto-columns: 1fr;
 }
 
+.u-grid-cols-3_1 {
+  grid-template-columns: 3fr 1fr;
+}
+
 .u-justify-content-center {
   justify-content: center;
 }
