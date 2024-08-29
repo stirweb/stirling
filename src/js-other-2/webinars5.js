@@ -352,10 +352,15 @@
       radio.value === params[radio.name] ? (radio.checked = true) : false;
       radio.value === params[radio.name] ? radio.closest("div").classList.add("u-bg-grey", "u-energy-line-top") : radio.closest("div").classList.remove("u-bg-grey", "u-energy-line-top");
 
+      //radio.value === params[radio.name] && radio.closest("div").scrollIntoView({ behavior: "smooth", block: "center" });
+
       radio.addEventListener("click", (e) => {
+        console.log(e.target.closest("div"));
+        // e.target.closest("div").scrollIntoView({ behavior: "smooth" });
+        //e.target.closest("div").offsetTop;
         doForm();
         stir.nodes("#webinarfilters input").forEach((r) => r.closest("div").classList.remove("u-bg-grey", "u-energy-line-top"));
-        e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
+        //e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
       });
     });
   }

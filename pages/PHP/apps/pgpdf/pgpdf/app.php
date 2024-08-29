@@ -82,7 +82,7 @@ function qs_init($api_url)
                 "Consent" => (check_consent($superConsent, $superConsent))
             ]
         ],
-        "ContactNoteContent" => "Other interests: " . ($_POST['area_interest_research'] ?? '') . ' ' . ($_POST['area_interest_international_students'] ?? '') . ' ' . ($_POST['area_interest_accommodation'] ?? '') . ' ' . ($_POST['area_interest_students_union'] ?? '') . ' ' . ($_POST['area_interest_sport'] ?? ''),
+        // "ContactNoteContent" => "Other interests: " . ($_POST['area_interest_research'] ?? '') . ' ' . ($_POST['area_interest_international_students'] ?? '') . ' ' . ($_POST['area_interest_accommodation'] ?? '') . ' ' . ($_POST['area_interest_students_union'] ?? '') . ' ' . ($_POST['area_interest_sport'] ?? ''),
         "EmailAddress" => $_POST['email']
     ];
 

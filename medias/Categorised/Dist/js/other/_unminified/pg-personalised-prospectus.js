@@ -309,7 +309,7 @@ async function storePDF(pdf, fileName, serverPath) {
     const textWidth = customFont.widthOfTextAtSize(firstName, fontSize);
 
     const xPos = centre - textWidth / 2;
-    const yPos = fontSize === largeFontSize ? 330 : 358;
+    const yPos = fontSize === largeFontSize ? 330 : 335;
 
     firstPageCopy.drawText(firstName.toUpperCase(), {
       x: xPos,
