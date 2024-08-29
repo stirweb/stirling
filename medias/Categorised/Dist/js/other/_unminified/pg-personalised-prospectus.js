@@ -329,7 +329,7 @@ async function storePDF(pdf, fileName, serverPath) {
 
     introInsertPageCopy.drawText(firstName.toUpperCase() + ",", {
       x: 65,
-      y: 773,
+      y: 767,
       size: secondaryFontSize,
       font: customFont,
       color: PDFLib.rgb(0.0, 0.4, 0.21),
