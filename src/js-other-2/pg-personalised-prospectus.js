@@ -307,11 +307,13 @@ async function storePDF(pdf, fileName, serverPath) {
     const fontSize = firstName.length > 11 ? secondaryFontSize : largeFontSize;
     const centre = width / 2;
     const textWidth = customFont.widthOfTextAtSize(firstName, fontSize);
+
     const xPos = centre - textWidth / 2;
+    const yPos = fontSize === largeFontSize ? 332 : 358;
 
     firstPageCopy.drawText(firstName.toUpperCase(), {
       x: xPos,
-      y: 332,
+      y: yPos,
       size: fontSize,
       font: customFont,
       color: PDFLib.rgb(0.99, 0.99, 0.99),
