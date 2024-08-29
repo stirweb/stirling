@@ -207,33 +207,35 @@
           </div>`;
   };
 
+  const renderDateTime = (item) => `<p class="text-sm u-m-0"><strong>${item.date}, ${item.time} ${!item.timeend ? `` : `to ` + item.timeend} (${item.zone})</strong></p>`;
+
   /* 
     Build the HTML for an individual item   
   */
   const renderItem = (item) => {
     //console.log(item);
     return `
-          <div class="cell small-12 large-4 medium-6 u-my-2" >
-              <div class="u-energy-line-top">
-                    <div class="u-mt-1">
-                        ${item.ondemand && !isUpcoming(item) ? `<span class="u-bg-energy-purple--10 u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : ""}
-                        ${isUpcoming(item) ? `<span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ""}
+          <div class="cell small-12 large-4 medium-6 u-mb-3 " >
+              <div class="u-border-width-4  ${item.ondemand && !isUpcoming(item) ? "u-heritage-berry-line-left" : "u-heritage-line-left"} u-p-2 u-relative u-bg-white u-h-full ">
+                    <div class="u-absolute u-top--16">
+                        ${item.ondemand && !isUpcoming(item) ? `<span class="u-bg-heritage-berry u-white  u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : ""}
+                        ${isUpcoming(item) ? `<span class="u-bg-heritage-green u-white u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ""}
                     </div>
 
-                    <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">
-                    <a href="${item.link}" class="c-link" >${item.title}</a></h3>
-                    
-                    <p class="text-sm"><strong>${item.date}, ${item.time} 
-                    ${!item.timeend ? `` : `to ` + item.timeend} (${item.zone})</strong></p>
+                    <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-2">
+                      <a href="${item.link}" class="u-border-bottom-hover u-border-width-2" >${item.title}</a>
+                    </h3>
+                    ${isUpcoming(item) ? renderDateTime(item) : ``}
                    
                     <div class="text-sm">
-                      ${item.faculties ? `<p>${item.faculties}</p>` : ``}
                       ${item.description}
                     </div>
-                    ${item.countries ? `<p class="text-sm">For students from: ${item.countries}</p>` : ``}
+                    <p class="text-sm">Audience: ${item.studylevels} students. ${item.countries} </p>
               </div>
           </div> `;
   };
+
+  const renderSummary = (num) => `<p class="u-pb-2 text-sm">Results based on filters - ${num} webinars</p>`;
 
   /* 
     Build the HTML to wrap all items   
@@ -287,7 +289,18 @@
     const upcoming = stir.compose(sortCurryAsc, filterCurry, isUpcomingCurry, cleanCurry)(webinars);
     const onDemand = stir.compose(sortCurryDesc, filterCurry, isOnDemandCurry, isPastCurry, cleanCurry)(webinars);
 
-    return stir.compose(setDOMResults, renderCurry)([...upcoming, ...onDemand]);
+    if (filters.params.view === "ondemand") {
+      return setDOMResults(renderSummary(onDemand.length) + renderCurry(onDemand));
+    }
+
+    if (filters.params.view === "live") {
+      return setDOMResults(renderSummary(upcoming.length) + renderCurry(upcoming));
+    }
+
+    const summary = renderSummary([...upcoming, ...onDemand].length);
+    const html = renderCurry([...upcoming, ...onDemand]);
+    return setDOMResults(summary + html);
+    //return stir.compose(setDOMResults, renderCurry)([...upcoming, ...onDemand]);
   };
 
   /* 
@@ -302,13 +315,28 @@
   const webinarResultsArea = stir.node("#webinarresults");
 
   if (webinarResultsArea) {
+    // Controller
+    const doForm = () => {
+      const formData = new FormData(stir.node("#webinarfilters"));
+      const formDataObject = Object.fromEntries(formData.entries());
+
+      for (let key in formDataObject) QueryParams.set(key, formDataObject[key]);
+
+      const filters = { params: { series: "", countries: formDataObject.region, subjects: "", studylevels: formDataObject.studylevel, faculties: "", categories: formDataObject.category, view: formDataObject.view }, divider: "no" };
+      main(CONSTS, webinarResultsArea, dataWebinars, filters);
+
+      if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars found</p>");
+    };
+
+    // on load
     const params = {
       category: QueryParams.get("category") ? cleanse(QueryParams.get("category")) : ``,
       studylevel: QueryParams.get("studylevel") ? cleanse(QueryParams.get("studylevel")) : ``,
       region: QueryParams.get("region") ? cleanse(QueryParams.get("region")) : ``,
+      view: QueryParams.get("view") ? cleanse(QueryParams.get("view")) : ``,
     };
 
-    const filters = { params: { series: "", countries: params.region, subjects: "", studylevels: params.studylevel, faculties: "", categories: params.category }, divider: "no" };
+    const filters = { params: { series: "", countries: params.region, subjects: "", studylevels: params.studylevel, faculties: "", categories: params.category, view: params.view }, divider: "no" };
     main(CONSTS, webinarResultsArea, dataWebinars, filters);
 
     if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars found</p>");
@@ -316,18 +344,18 @@
     // Form changes
     stir.nodes("#webinarfilters select").forEach((select) => {
       select.value = params[select.name];
-      select.addEventListener("change", (e) => {
-        const formData = new FormData(stir.node("#webinarfilters"));
-        const formDataObject = Object.fromEntries(formData.entries());
+      select.addEventListener("change", (e) => doForm());
+    });
 
-        for (let key in formDataObject) {
-          QueryParams.set(key, formDataObject[key]);
-        }
+    // Form submits
+    stir.nodes("#webinarfilters input").forEach((radio) => {
+      radio.value === params[radio.name] ? (radio.checked = true) : false;
+      radio.value === params[radio.name] ? radio.closest("div").classList.add("u-bg-grey", "u-energy-line-top") : radio.closest("div").classList.remove("u-bg-grey", "u-energy-line-top");
 
-        const filters = { params: { series: "", countries: formDataObject.region, subjects: "", studylevels: formDataObject.studylevel, faculties: "", categories: formDataObject.category }, divider: "no" };
-        main(CONSTS, webinarResultsArea, dataWebinars, filters);
-
-        if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars found</p>");
+      radio.addEventListener("click", (e) => {
+        doForm();
+        stir.nodes("#webinarfilters input").forEach((r) => r.closest("div").classList.remove("u-bg-grey", "u-energy-line-top"));
+        e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
       });
     });
   }
