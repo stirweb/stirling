@@ -255,7 +255,7 @@ async function storePDF(pdf, fileName, serverPath) {
     // Build PDF
     const fullPdf = data.get("full_prospectus");
 
-    const firstName = data.get("first_name") || "";
+    const firstName = (data.get("first_name") || "").toUpperCase();
     //const lastName = data.get("last_name") || "";
     const email = data.get("email") || "";
 
@@ -299,16 +299,19 @@ async function storePDF(pdf, fileName, serverPath) {
     const frontPdfBytes = await fetch(urlFront).then((res) => res.arrayBuffer());
     const frontPdf = await PDFLib.PDFDocument.load(frontPdfBytes);
     const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
-    //const { width, height } = firstPageCopy.getSize();
+    const { width, height } = firstPageCopy.getSize();
 
-    const largeFontSize = 66;
+    const largeFontSize = 77;
     const secondaryFontSize = 40;
 
     const fontSize = firstName.length > 11 ? secondaryFontSize : largeFontSize;
+    const centre = width / 2;
+    const textWidth = customFont.widthOfTextAtSize(firstName, fontSize);
+    const xPos = centre - textWidth / 2;
 
     firstPageCopy.drawText(firstName.toUpperCase(), {
-      x: 93,
-      y: 530,
+      x: xPos,
+      y: 332,
       size: fontSize,
       font: customFont,
       color: PDFLib.rgb(0.99, 0.99, 0.99),
@@ -321,11 +324,10 @@ async function storePDF(pdf, fileName, serverPath) {
     const introInsertPdfBytes = await fetch(urlIntroInsert).then((res) => res.arrayBuffer());
     const introInsertPdf = await PDFLib.PDFDocument.load(introInsertPdfBytes);
     const [introInsertPageCopy] = await pdfDoc.copyPages(introInsertPdf, [0]);
-    //const { width, height } = firstPageCopy.getSize();
 
-    introInsertPageCopy.drawText(firstName.toUpperCase(), {
-      x: 45,
-      y: 767,
+    introInsertPageCopy.drawText(firstName.toUpperCase() + ",", {
+      x: 65,
+      y: 773,
       size: secondaryFontSize,
       font: customFont,
       color: PDFLib.rgb(0.0, 0.4, 0.21),
