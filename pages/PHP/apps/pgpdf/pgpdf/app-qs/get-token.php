@@ -11,7 +11,7 @@ header('Content-Type: application/json');
 $body = [
 	'grant_type' => 'password',
 	'username' => getenv('QS_USER'),
-	'password' => getenv('QS_TEST'),
+	'password' => getenv('QS_PROD'),
 ];
 
 $url = QS_API . "token";

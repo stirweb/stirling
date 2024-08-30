@@ -2,7 +2,7 @@
 
 //require("token.php");
 
-define('QS_API', 'https://integration-emea.qses-uat.com/crms/api/');
+define('QS_API', 'https://integration-emea.qses.system/crms/api/');
 
 
 /* 
@@ -13,10 +13,13 @@ function QS_get_token($api_url)
 	$body = [
 		'grant_type' => 'password',
 		'username' => getenv('QS_USER'),
-		'password' => getenv('QS_TEST'),
+		'password' => getenv('QS_PROD'),
 	];
 
+
 	$url = $api_url . "token";
+
+	//var_dump(QS_Post($url, null, $body, null));
 	return QS_Post($url, null, $body, null)->access_token;
 }
 
@@ -47,6 +50,7 @@ function QS_Post($url, $params = null, $body = null, $json = null)
 	$response = curl_exec($ch);
 	$code = curl_getinfo($ch);
 
+	//var_dump($response);
 	//print_r($code);
 	curl_close($ch);
 	if (false !== $response) {
