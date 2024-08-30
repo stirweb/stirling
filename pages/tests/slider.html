@@ -69,39 +69,29 @@
 
         .carousel {
             display: flex;
-            scroll-snap-type: x mandatory;
+            /* scroll-snap-type: x mandatory;*/
             overflow-x: scroll;
             scroll-behavior: smooth;
             padding: 20px;
             outline: 1px solid red;
             position: relative;
             height: 150px;
-            /* For testing mobile */
-            width: 470px;
-
         }
 
         .item {
             height: 100px;
-            /* Adjust based on how many items you want to show */
-            scroll-snap-align: start;
+            /* scroll-snap-align: start; */
             background-color: aqua;
             margin-right: 5px;
         }
 
         /* Styles for controls */
-        #prev-btn,
-        #mid-btn,
-        #next-btn {
-            /* position: absolute;
-            /* top: 20%; */
-            /*transform: translateY(-50%); */
+        button {
             background-color: rgba(255, 255, 255, 0.3);
             border: none;
             cursor: pointer;
             padding: 10px 20px;
             outline: 1px solid red;
-            /* z-index: 1; */
         }
     </style>
 </head>
@@ -117,20 +107,23 @@
                     <div class="carousel" id="carousel">
                         <div class="item u-w-full u-whitespace-nowrap">
                             1 This is very long text that<br>
-                            <button id="prev-btn"
-                                class="u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">First</button>
+                            <button class="u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">1</button>
                         </div>
 
                         <div class="item u-w-full u-whitespace-nowrap">
                             2 This is very long text that<br>
-                            <button id="mid-btn"
-                                class="u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">Mid</button>
+                            <button class="u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">2</button>
                         </div>
 
                         <div class="item u-w-full u-whitespace-nowrap ">
                             3 This is very long text that<br>
-                            <button id="next-btn"
-                                class="u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">Last</button>
+                            <button class="u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">3</button>
+
+                        </div>
+
+                        <div class="item u-w-full u-whitespace-nowrap ">
+                            4 This is very long text that<br>
+                            <button class="u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">4</button>
 
                         </div>
 
@@ -143,26 +136,10 @@
     </main>
 
     <script>
-        const midBtn = document.getElementById('mid-btn');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
 
-        function showFirstSlide(e) {
-            handleScroll("first", e.target);
-        }
-
-        function showMidSlide(e) {
-            handleScroll("mid", e.target);
-        }
-
-        function showLastSlide(e) {
-            handleScroll("last", e.target);
-        }
-
-        // We want to know the width of one of the items. We'll use this to decide how many pixels we want our carousel to scroll.
-        function handleScroll(direction, el) {
+        function handleScroll(el) {
             const tabBox = document.querySelector(".carousel");
-            const itemWidth = el.offsetWidth;
+            const itemWidth = el.offsetWidth + 50;
             const x = el.getBoundingClientRect();
 
             const screenWidth = screen.width;
@@ -171,59 +148,36 @@
             console.log(screenWidth);
             console.log(pos);
 
-            if (pos.right > screenWidth) {
-                console.log("move");
-                tabBox.scrollBy({ left: -100, behavior: "smooth" });
+            if (el.offsetWidth > el.scrollWidth) {
+                console.log("outside right")
+            }
+
+            // if (pos.right > screenWidth) {
+            //     console.log("move right");
+            //     tabBox.scrollBy({ left: itemWidth, behavior: "smooth" });
+            // }
+
+            if (pos.left < 25) {
+                console.log("move left");
+                tabBox.scrollBy({ left: -itemWidth, behavior: "smooth" });
             }
 
             //tabBox.scrollBy({ left: -10, behavior: "smooth" });
-
-            // Based on the direction we call `scrollBy` with the item width we got earlier
-            // if (direction === "previous") {
-            //     list.scrollBy({ left: -itemWidth, behavior: "smooth" });
-            // }
-
-            // if (direction === "mid") {
-            //     const left = x.x > 0 ? 20 : -20;
-            //     list.scrollBy({ left: left, behavior: "smooth" });
-            // }
-            // if (direction === "last") {
-            //     list.scrollBy({ left: itemWidth, behavior: "smooth" });
-            // }
         }
 
+        function showFirstSlide(e) {
+            handleScroll(e.target);
 
-        // Scroll animations
-        const handleScroll2 = (el) => {
-            console.log(el);
-            const tabBox = document.querySelector("#radioTabs");
-            const itemWidth = el.closest("div").offsetWidth;
-            const pos = el.getBoundingClientRect();
+        }
 
-            const tabBoxPos = el.closest("div").getBoundingClientRect();
-            //console.log(itemWidth);
-            //console.log(tabBoxPos.x + itemWidth);
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.target.addEventListener('click', showFirstSlide);
+            });
 
-            if (el.value === "") {
-                tabBox.scrollBy({ left: -itemWidth, behavior: "smooth" });
-            }
-            if (el.value === "live") {
-                const left = pos.x > 0 ? 20 : -20;
-                tabBox.scrollBy({ left: left, behavior: "smooth" });
-            }
-            if (el.value === "ondemand") {
-                //const l = Math.floor(Math.random() * 400);
-                //console.log("move" + l);
+        })
 
-                tabBox.scrollBy({ left: 600, behavior: "smooth" });
-            }
-        };
-
-
-        // Add event listeners
-        prevBtn.addEventListener('click', showFirstSlide);
-        midBtn.addEventListener('click', showMidSlide);
-        nextBtn.addEventListener('click', showLastSlide);
 
     </script>
 </body>

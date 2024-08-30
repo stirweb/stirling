@@ -47,24 +47,24 @@
 
   const renderLink = (filePath) => {
     if (filePath === ``) return `Your file has downloaded. Please check your downloads folder`;
-    return `<a href="${filePath}" target="_blank" class="button heritage-green u-inline-block u-mt-2">Download your prospectus</a>`;
+    return `<a href="${filePath}" target="_blank" class="button heritage-green u-inline-block u-mt-2">Download your guide</a>`;
   };
 
   const renderLinkBox = (filePath) => {
     return `<div class="u-bg-energy-purple--10 u-p-3 u-mt-2">
-            <h3>Download your prospectus</h3>
+            <h3>Download your postgraduate guide</h3>
             <p class="u-flex u-gap-8 align-middle">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width:24px;height:24px;">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                 </svg>
-                Your prospectus has been successfully generated</p>
+                Your guide has been successfully generated</p>
                 <p>${renderLink(filePath)}</p>
           </div>`;
   };
 
   const renderGenerating = () => {
     return `<div class="u-bg-energy-purple--10 u-p-3 u-mt-2">
-            <h3>Download your prospectus</h3>
+            <h3>Download your guide</h3>
             <p>Building your pdf...</p>
           </div>`;
   };
