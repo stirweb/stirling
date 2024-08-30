@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Layout tests | University of Stirling</title>
+
+    <meta property="og:site_name" content="University of Stirling">
+    <meta property="og:url"
+        content="https://www.stir.ac.uk/student-life/accommodation/find-your-residence/alexander-court-family-flats/">
+    <meta property="og:title" content="Alexander Court family flats | Student life | University of Stirling">
+    <meta property="og:image"
+        content="https://www.stir.ac.uk/media/stirling/global-assets/landscape/og-airthrey-loch-1200x630.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:description"
+        content="Take a closer look at Alexander Court family flats &ndash; just one of the many University of Stirling residences available. ">
+
+    <meta name="stir.title" content="Alexander Court family flats">
+    <meta name="description"
+        content="Take a closer look at Alexander Court family flats &ndash; just one of the many University of Stirling residences available. " />
+    <meta name="Page last modified" content="2024-04-17" />
+    <link rel="canonical"
+        href="https://www.stir.ac.uk/student-life/accommodation/find-your-residence/alexander-court-family-flats/">
+    <meta name="stir.breadcrumb"
+        content="Home > Student life > Accommodation > Find your residence > Alexander Court family flats">
+    <meta name="sid" content="5746">
+    <meta name="chid" content="1">
+    <meta name="t4name" content="Alexander Court family flats">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@StirUni">
+    <meta name="twitter:title" content="Alexander Court family flats | Student life | University of Stirling">
+    <meta name="twitter:description"
+        content="Take a closer look at Alexander Court family flats &ndash; just one of the many University of Stirling residences available. ">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#006938">
+
+
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/fsmaja/FSMajaWeb-Regular.woff?v=0.1" as="font"
+        type="font/woff" crossorigin>
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Regular.ttf?v=0.1" as="font"
+        type="font/ttf" crossorigin>
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf?v=0.1" as="font"
+        type="font/ttf" crossorigin>
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/fonts.css?v=3.1" as="style">
+    <link rel="stylesheet" href="../../../medias/Categorised/Dist/fonts/fonts.css?v=3.1">
+
+
+    <link rel="preload" href="../../../medias/Categorised/Dist/css/app.new.min.css?v=198.1" as="style">
+    <link rel="stylesheet" href="../../../medias/Categorised/Dist/css/app.new.css?v=198.1">
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+
+        }
+
+        .carousel {
+            display: flex;
+            scroll-snap-type: x mandatory;
+            overflow-x: scroll;
+            scroll-behavior: smooth;
+            padding: 20px;
+            outline: 1px solid red;
+            position: relative;
+            height: 150px;
+            /* For testing mobile */
+            width: 470px;
+
+        }
+
+        .item {
+            height: 100px;
+            /* Adjust based on how many items you want to show */
+            scroll-snap-align: start;
+            background-color: aqua;
+            margin-right: 5px;
+        }
+
+        /* Styles for controls */
+        #prev-btn,
+        #mid-btn,
+        #next-btn {
+            /* position: absolute;
+            /* top: 20%; */
+            /*transform: translateY(-50%); */
+            background-color: rgba(255, 255, 255, 0.3);
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            outline: 1px solid red;
+            /* z-index: 1; */
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="wrapper-content u-px-1" aria-label="Main content" id="content">
+        <div class="grid-container">
+            <div class="grid-x u-padding-y ">
+                <div class="cell medium-6">
+
+
+                    <div class="carousel" id="carousel">
+                        <div class="item u-w-full u-whitespace-nowrap">
+                            1 This is very long text that<br>
+                            <button id="prev-btn"
+                                class="u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">First</button>
+                        </div>
+
+                        <div class="item u-w-full u-whitespace-nowrap">
+                            2 This is very long text that<br>
+                            <button id="mid-btn"
+                                class="u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">Mid</button>
+                        </div>
+
+                        <div class="item u-w-full u-whitespace-nowrap ">
+                            3 This is very long text that<br>
+                            <button id="next-btn"
+                                class="u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">Last</button>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const midBtn = document.getElementById('mid-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function showFirstSlide(e) {
+            handleScroll("first", e.target);
+        }
+
+        function showMidSlide(e) {
+            handleScroll("mid", e.target);
+        }
+
+        function showLastSlide(e) {
+            handleScroll("last", e.target);
+        }
+
+        // We want to know the width of one of the items. We'll use this to decide how many pixels we want our carousel to scroll.
+        function handleScroll(direction, el) {
+            const tabBox = document.querySelector(".carousel");
+            const itemWidth = el.offsetWidth;
+            const x = el.getBoundingClientRect();
+
+            const screenWidth = screen.width;
+            const pos = el.getBoundingClientRect();
+
+            console.log(screenWidth);
+            console.log(pos);
+
+            if (pos.right > screenWidth) {
+                console.log("move");
+                tabBox.scrollBy({ left: -100, behavior: "smooth" });
+            }
+
+            //tabBox.scrollBy({ left: -10, behavior: "smooth" });
+
+            // Based on the direction we call `scrollBy` with the item width we got earlier
+            // if (direction === "previous") {
+            //     list.scrollBy({ left: -itemWidth, behavior: "smooth" });
+            // }
+
+            // if (direction === "mid") {
+            //     const left = x.x > 0 ? 20 : -20;
+            //     list.scrollBy({ left: left, behavior: "smooth" });
+            // }
+            // if (direction === "last") {
+            //     list.scrollBy({ left: itemWidth, behavior: "smooth" });
+            // }
+        }
+
+
+        // Scroll animations
+        const handleScroll2 = (el) => {
+            console.log(el);
+            const tabBox = document.querySelector("#radioTabs");
+            const itemWidth = el.closest("div").offsetWidth;
+            const pos = el.getBoundingClientRect();
+
+            const tabBoxPos = el.closest("div").getBoundingClientRect();
+            //console.log(itemWidth);
+            //console.log(tabBoxPos.x + itemWidth);
+
+            if (el.value === "") {
+                tabBox.scrollBy({ left: -itemWidth, behavior: "smooth" });
+            }
+            if (el.value === "live") {
+                const left = pos.x > 0 ? 20 : -20;
+                tabBox.scrollBy({ left: left, behavior: "smooth" });
+            }
+            if (el.value === "ondemand") {
+                //const l = Math.floor(Math.random() * 400);
+                //console.log("move" + l);
+
+                tabBox.scrollBy({ left: 600, behavior: "smooth" });
+            }
+        };
+
+
+        // Add event listeners
+        prevBtn.addEventListener('click', showFirstSlide);
+        midBtn.addEventListener('click', showMidSlide);
+        nextBtn.addEventListener('click', showLastSlide);
+
+    </script>
+</body>
+
+</html>

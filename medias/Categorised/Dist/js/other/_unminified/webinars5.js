@@ -328,7 +328,7 @@
       if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars found</p>");
     };
 
-    // on load
+    // On load
     const params = {
       category: QueryParams.get("category") ? cleanse(QueryParams.get("category")) : ``,
       studylevel: QueryParams.get("studylevel") ? cleanse(QueryParams.get("studylevel")) : ``,
@@ -347,21 +347,51 @@
       select.addEventListener("change", (e) => doForm());
     });
 
-    // Form submits
+    // Scroll animations
+    const handleScroll = (el) => {
+      console.log(el);
+      const tabBox = document.querySelector("#radioTabs");
+      const itemWidth = el.closest("div").offsetWidth;
+      const pos = el.getBoundingClientRect();
+
+      const tabBoxPos = el.closest("div").getBoundingClientRect();
+      //console.log(itemWidth);
+      //console.log(tabBoxPos.x + itemWidth);
+
+      if (el.value === "") {
+        tabBox.scrollBy({ left: -itemWidth, behavior: "smooth" });
+      }
+      if (el.value === "live") {
+        const left = pos.x > 0 ? 20 : -20;
+        tabBox.scrollBy({ left: left, behavior: "smooth" });
+      }
+      if (el.value === "ondemand") {
+        //const l = Math.floor(Math.random() * 400);
+        //console.log("move" + l);
+
+        tabBox.scrollBy({ left: 600, behavior: "smooth" });
+      }
+    };
+
+    // Radio Tabs
+
     stir.nodes("#webinarfilters input").forEach((radio) => {
-      radio.value === params[radio.name] ? (radio.checked = true) : false;
-      radio.value === params[radio.name] ? radio.closest("div").classList.add("u-bg-grey", "u-energy-line-top") : radio.closest("div").classList.remove("u-bg-grey", "u-energy-line-top");
-
-      //radio.value === params[radio.name] && radio.closest("div").scrollIntoView({ behavior: "smooth", block: "center" });
-
+      let clicks = 0;
+      // Clicks
       radio.addEventListener("click", (e) => {
-        console.log(e.target.closest("div"));
-        // e.target.closest("div").scrollIntoView({ behavior: "smooth" });
-        //e.target.closest("div").offsetTop;
+        if (e.target.value === QueryParams.get("view") && clicks > 0) return;
+        clicks++;
+
         doForm();
         stir.nodes("#webinarfilters input").forEach((r) => r.closest("div").classList.remove("u-bg-grey", "u-energy-line-top"));
-        //e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
+        e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
+        handleScroll(e.target);
       });
+      // On Load
+      radio.value === params[radio.name] ? (radio.checked = true) : false;
+      radio.value === params[radio.name] ? radio.closest("div").classList.add("u-bg-grey", "u-energy-line-top") : radio.closest("div").classList.remove("u-bg-grey", "u-energy-line-top");
+      // radio.value === params[radio.name] && radio.closest("div").scrollIntoView({ behavior: "smooth", block: "center" });
+      radio.value === params[radio.name] && radio.click();
     });
   }
 

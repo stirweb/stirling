@@ -6,7 +6,8 @@ session_start();
 require_once('vendor/autoload.php');
 require("app-qs/qs-api.php");
 
-$api_url = "https://integration-emea.qses-uat.com/crms/api/";
+//$api_url = "https://integration-emea.qses-uat.com/crms/api/";
+$api_url = "https://integration-emea.qses.systems/crms/api/";
 
 
 
@@ -203,8 +204,9 @@ $_SESSION["token"] = QS_get_token($api_url);
 
 
 if (isset($_POST['email'])) {
-    //$qs_outcome = qs_init($api_url);
-    $qs_outcome = ["process" => "Data", "outcome" => "Success", "result" => ""];
+    //echo 'trying 1';
+    $qs_outcome = qs_init($api_url);
+    //$qs_outcome = ["process" => "Data", "outcome" => "Success", "result" => ""];
 } else {
     $qs_outcome = ["process" => "Data", "outcome" => "Fail", "result" => ""];
 }
