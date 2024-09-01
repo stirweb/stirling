@@ -347,37 +347,29 @@
       select.addEventListener("change", (e) => doForm());
     });
 
-    // Scroll animations
-    const handleScroll = (el) => {
-      console.log(el);
-      const tabBox = document.querySelector("#radioTabs");
-      const itemWidth = el.closest("div").offsetWidth;
-      const pos = el.getBoundingClientRect();
+    // Radio Tabs Scrolling
+    const handleTabScroll = (el, container) => {
+      const compStyles = window.getComputedStyle(container);
+      const paddingleft = Number(compStyles.getPropertyValue("padding-left").replace("px", ""));
 
-      const tabBoxPos = el.closest("div").getBoundingClientRect();
-      //console.log(itemWidth);
-      //console.log(tabBoxPos.x + itemWidth);
+      const itemWidth = el.closest("div").offsetWidth + paddingleft;
+      const containerBounds = container.parentElement.getBoundingClientRect();
+      const pos = el.closest("div").getBoundingClientRect();
 
-      if (el.value === "") {
-        tabBox.scrollBy({ left: -itemWidth, behavior: "smooth" });
+      console.log(pos.left, containerBounds.left, paddingleft);
+
+      if (pos.right > containerBounds.width) {
+        container.scrollBy({ left: itemWidth, behavior: "smooth" });
       }
-      if (el.value === "live") {
-        const left = pos.x > 0 ? 20 : -20;
-        tabBox.scrollBy({ left: left, behavior: "smooth" });
-      }
-      if (el.value === "ondemand") {
-        //const l = Math.floor(Math.random() * 400);
-        //console.log("move" + l);
-
-        tabBox.scrollBy({ left: 600, behavior: "smooth" });
+      if (pos.left < containerBounds.left) {
+        container.scrollBy({ left: -itemWidth, behavior: "smooth" });
       }
     };
 
     // Radio Tabs
-
     stir.nodes("#webinarfilters input").forEach((radio) => {
-      let clicks = 0;
       // Clicks
+      let clicks = 0;
       radio.addEventListener("click", (e) => {
         if (e.target.value === QueryParams.get("view") && clicks > 0) return;
         clicks++;
@@ -385,7 +377,7 @@
         doForm();
         stir.nodes("#webinarfilters input").forEach((r) => r.closest("div").classList.remove("u-bg-grey", "u-energy-line-top"));
         e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
-        handleScroll(e.target);
+        handleTabScroll(e.target, stir.node("#radioTabs"));
       });
       // On Load
       radio.value === params[radio.name] ? (radio.checked = true) : false;
