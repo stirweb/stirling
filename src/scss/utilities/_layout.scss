@@ -380,10 +380,11 @@
 
 .u-scroll-snap-x {
   overflow-x: scroll;
-  scroll-snap-type: x mandatory;
+  // scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 
 .u-scroll-snap-x > * {
-  scroll-snap-align: center;
+  // scroll-snap-align: center;
 }
