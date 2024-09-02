@@ -363,7 +363,7 @@
           const diff = newRight - maxRight + offsetRight * 2;
 
           if (newRight < maxRight) container.scrollBy({ left: diff, behavior: "smooth" });
-        }, 300);
+        }, 600);
         //
       }
       if (pos.left < containerBounds.left) {
