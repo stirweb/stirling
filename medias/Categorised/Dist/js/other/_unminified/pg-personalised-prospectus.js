@@ -64,7 +64,7 @@
 
   const renderGenerating = () => {
     return `<div class="u-bg-energy-purple--10 u-p-3 u-mt-2">
-            <h3>Download your guide</h3>
+            <h3>Download your postgraduate guide</h3>
             <p>Building your pdf...</p>
           </div>`;
   };
@@ -608,7 +608,7 @@ async function storePDF(pdf, fileName, serverPath) {
       nameRaw = "";
     }
 
-    const name = cleanse(nameRaw);
+    const firstName = cleanse(nameRaw);
     const sects = cleanse(QueryParams.get("s") ? QueryParams.get("s") : "");
     const full = cleanse(QueryParams.get("f") ? QueryParams.get("f") : "");
 
@@ -618,10 +618,10 @@ async function storePDF(pdf, fileName, serverPath) {
       .map((item) => getSubjectFromIDCurry(item))
       .filter((item) => item);
 
-    const fullProspectus = !name.length && !selectedSects.length ? "1" : full;
+    const fullProspectus = !firstName.length && !selectedSects.length ? "1" : full;
 
     const data = new FormData(doStoredPDF);
-    data.append("first_name", name);
+    data.append("first_name", firstName.charAt(0).toUpperCase() + firstName.slice(1));
     data.append("full_prospectus", fullProspectus);
     data.append("subject_area_1", selectedSects[0] ? selectedSects[0] : ``);
     data.append("subject_area_2", selectedSects[1] ? selectedSects[1] : ``);

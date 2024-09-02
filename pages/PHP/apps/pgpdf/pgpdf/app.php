@@ -204,9 +204,8 @@ $_SESSION["token"] = QS_get_token($api_url);
 
 
 if (isset($_POST['email'])) {
-    //echo 'trying 1';
-    $qs_outcome = qs_init($api_url);
-    //$qs_outcome = ["process" => "Data", "outcome" => "Success", "result" => ""];
+    //$qs_outcome = qs_init($api_url);
+    $qs_outcome = ["process" => "Data", "outcome" => "Success", "result" => ""];
 } else {
     $qs_outcome = ["process" => "Data", "outcome" => "Fail", "result" => ""];
 }
@@ -223,7 +222,7 @@ $subject = "Your personalised prospectus is ready!";
 
 // Dynamic content
 $to = $_POST["email"];
-$first =  $_POST["first_name"];
+$first =  ucfirst($_POST["first_name"]);
 $link = $_POST["pdfPath"];
 
 $message = [
@@ -250,8 +249,8 @@ $message = [
 ];
 
 if (isset($_POST['email'])) {
-    //$mail_outcome = run($message);
-    $mail_outcome = ["process" => "Mail", "outcome" => "Success", "result" => ""];
+    $mail_outcome = run($message);
+    //$mail_outcome = ["process" => "Mail", "outcome" => "Success", "result" => ""];
 } else {
     $mail_outcome = ["process" => "Mail", "outcome" => "Fail", "result" => ""];
 }
