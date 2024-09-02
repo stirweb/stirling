@@ -348,7 +348,7 @@
     });
 
     // Radio Tabs Scrolling
-    const handleTabScroll = (el, container) => {
+    const handleTabScroll = (el, container, event) => {
       const itemWidth = el.closest("div").offsetWidth;
       const containerBounds = container.parentElement.getBoundingClientRect();
       const pos = el.closest("div").getBoundingClientRect();
@@ -356,19 +356,19 @@
       if (pos.right > containerBounds.width) {
         container.scrollBy({ left: itemWidth, behavior: "smooth" });
 
-        setTimeout(function () {
-          const newRight = el.closest("div").getBoundingClientRect().right;
-          const maxRight = container.parentElement.getBoundingClientRect().right;
-          const offsetRight = window.screen.width - maxRight; // approx 28
-          const diff = newRight - maxRight + offsetRight * 2;
+        if (event === "onload") {
+          setTimeout(function () {
+            const newRight = el.closest("div").getBoundingClientRect().right;
+            const maxRight = container.parentElement.getBoundingClientRect().right;
+            const offsetRight = window.screen.width - maxRight;
+            const diff = newRight - maxRight + offsetRight * 2;
 
-          if (newRight < maxRight) container.scrollBy({ left: diff, behavior: "smooth" });
-        }, 600);
-        //
+            newRight < maxRight && container.scrollBy({ left: diff, behavior: "smooth" });
+          }, 500);
+        }
       }
       if (pos.left < containerBounds.left) {
         container.scrollBy({ left: -itemWidth, behavior: "smooth" });
-        console.log(el.closest("div").getBoundingClientRect());
       }
     };
 
@@ -377,13 +377,14 @@
       // Clicks
       let clicks = 0;
       radio.addEventListener("click", (e) => {
+        const event = clicks === 0 ? "onload" : "click";
         if (e.target.value === QueryParams.get("view") && clicks > 0) return;
         clicks++;
 
         doForm();
         stir.nodes("#webinarfilters input").forEach((r) => r.closest("div").classList.remove("u-bg-grey", "u-energy-line-top"));
         e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
-        handleTabScroll(e.target, stir.node("#radioTabs"));
+        handleTabScroll(e.target, stir.node("#radioTabs"), event);
       });
       // On Load
       radio.value === params[radio.name] ? (radio.checked = true) : false;

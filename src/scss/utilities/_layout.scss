@@ -287,6 +287,10 @@
 
 /* Widths / Heights */
 
+.u-box-border {
+  box-sizing: border-box;
+}
+
 .u-w-16,
 .u-width-16 {
   width: 16px;
@@ -374,17 +378,12 @@
   white-space: nowrap;
 }
 
-.u-snap-x {
-  scroll-behavior: smooth;
-}
-
 .u-scroll-snap-x {
   overflow-x: scroll;
-  // scroll-snap-type: x mandatory;
   scrollbar-width: none;
   scroll-behavior: smooth;
 }
 
-.u-scroll-snap-x > * {
-  // scroll-snap-align: center;
-}
+// .u-scroll-snap-x > * {
+//   // scroll-snap-align: center;
+// }
