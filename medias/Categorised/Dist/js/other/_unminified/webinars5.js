@@ -349,20 +349,26 @@
 
     // Radio Tabs Scrolling
     const handleTabScroll = (el, container) => {
-      const compStyles = window.getComputedStyle(container);
-      const paddingleft = Number(compStyles.getPropertyValue("padding-left").replace("px", ""));
-
-      const itemWidth = el.closest("div").offsetWidth + paddingleft;
+      const itemWidth = el.closest("div").offsetWidth;
       const containerBounds = container.parentElement.getBoundingClientRect();
       const pos = el.closest("div").getBoundingClientRect();
 
-      console.log(pos.left, containerBounds.left, paddingleft);
-
       if (pos.right > containerBounds.width) {
         container.scrollBy({ left: itemWidth, behavior: "smooth" });
+
+        setTimeout(function () {
+          const newRight = el.closest("div").getBoundingClientRect().right;
+          const maxRight = container.parentElement.getBoundingClientRect().right;
+          const offsetRight = window.screen.width - maxRight; // approx 28
+          const diff = newRight - maxRight + offsetRight * 2;
+
+          if (newRight < maxRight) container.scrollBy({ left: diff, behavior: "smooth" });
+        }, 300);
+        //
       }
       if (pos.left < containerBounds.left) {
         container.scrollBy({ left: -itemWidth, behavior: "smooth" });
+        console.log(el.closest("div").getBoundingClientRect());
       }
     };
 
