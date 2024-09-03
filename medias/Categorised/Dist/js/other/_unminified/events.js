@@ -35,7 +35,7 @@
 
   const renderTab = (text) => {
     return `<div class="u-absolute u-top--16">
-                <span class="c-search-tag">${text}</span>
+                <span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">${text}</span>
             </div>`;
   };
 
