@@ -1,5 +1,5 @@
 !function(){if(stir.node("#eventsrevamp")){const c=10;var e=stir.node("[data-tags]")||"",e=e?e.dataset.tags:"";const p=stir.node("#eventspublic"),m=stir.node("#eventsstaff"),M=stir.node("#eventsarchive");var t=stir.node("#eventspromo");const r=stir.node("#eventspublicfilters"),i=stir.node("#eventsstafffilters"),a=stir.node("#eventsarchivefilters"),W=stir.node("#eventspublictab"),C=stir.node("#eventsstafftab"),_=stir.node("#eventsarchivetab"),Y=stir.nodes(".stir-tabs__tab"),n=(e,t)=>`<div class="u-mt-1"><img src="${e}" width="275" height="275" alt="Image: ${t}"></div>`,l=e=>`<div class="u-absolute u-top--16">
-                <span class="c-search-tag">${e}</span>
+                <span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">${e}</span>
             </div>`,g=e=>`<div class="u-bg-white u-p-2 u-mb-2"><p class="u-m-0">${e}</p></div>`,u=(e,t,s)=>e===t?"":`– <time datetime="${t}">${s}</time>`,o=e=>e?`<span class="u-bg-heritage-berry u-white text-xxsm u-p-tiny u-mr-1">${e}</span>`:"",v=e=>e.isSeries?"":`<div class="u-flex u-gap-16 align-middle">
           <span class="uos-clock u-icon h5"></span>
           <span><time>${e.startTime}</time> – <time>${e.endTime}</time></span>
