@@ -100,7 +100,9 @@
            </div>`;
   });
 
-  const renderSummary = (num) => `<p class="u-pb-2 text-sm">Results based on filters - ${num} webinars</p>`;
+  const renderSummary = (num) => `<p class="u-pb-2 text-sm">Results based on filters - <strong>${num} webinars</strong></p>`;
+
+  const renderPaginationSummary = (start, end, total) => `<p class="u-pb-2 text-sm text-center"><strong>Displaying ${start + 1} to ${end} of ${total} results</strong></p>`;
 
   const renderLoadMoreButon = () => `<div class="text-center"><button class="button hollow tiny u-bg-white" data-loadmore>Load more results</button></div>`;
 
@@ -362,17 +364,21 @@
 
     if (filters.params.view === "live") {
       const endHtml = upcoming.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
-      return setDOMResults(renderSummary(upcoming.length) + renderCurry(upcoming.slice(start, end)) + endHtml);
+      const summaryHtml = start === 0 ? renderSummary(upcoming.length) : renderPaginationSummary(start, end, upcoming.length);
+      return setDOMResults(summaryHtml + renderCurry(upcoming.slice(start, end)) + endHtml);
     }
 
     if (filters.params.view === "ondemand") {
       const endHtml = onDemand.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
-      return setDOMResults(renderSummary(onDemand.length) + renderCurry(onDemand.slice(start, end)) + endHtml);
+      const summaryHtml = start === 0 ? renderSummary(onDemand.length) : renderPaginationSummary(start, end, onDemand.length);
+
+      return setDOMResults(summaryHtml + renderCurry(onDemand.slice(start, end)) + endHtml);
     }
 
     if (all.slice(start, end).length) {
       const endHtml = all.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
-      return setDOMResults(renderSummary(all.length) + renderCurry(all.slice(start, end)) + endHtml);
+      const summaryHtml = start === 0 ? renderSummary(all.length) : renderPaginationSummary(start, end, all.length);
+      return setDOMResults(summaryHtml + renderCurry(all.slice(start, end)) + endHtml);
     }
   };
 
