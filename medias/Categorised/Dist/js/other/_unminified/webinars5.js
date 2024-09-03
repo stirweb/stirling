@@ -91,7 +91,7 @@
       Build the HTML to wrap all items   
  */
   const renderAllItems = stir.curry((section, items) => {
-    if (!items.length && !section.noItems) return;
+    if (!items.length && !section.noItems) return ``;
     return `
            <div class="grid-x grid-padding-x" >
              ${renderHeader(section.head, section.intro)}
@@ -363,21 +363,20 @@
     const end = start + consts.itemsPerPage;
 
     if (filters.params.view === "live") {
-      const endHtml = upcoming.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
       const summaryHtml = start === 0 ? renderSummary(upcoming.length) : renderPaginationSummary(start, end, upcoming.length);
+      const endHtml = upcoming.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
       return setDOMResults(summaryHtml + renderCurry(upcoming.slice(start, end)) + endHtml);
     }
 
     if (filters.params.view === "ondemand") {
-      const endHtml = onDemand.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
       const summaryHtml = start === 0 ? renderSummary(onDemand.length) : renderPaginationSummary(start, end, onDemand.length);
-
+      const endHtml = onDemand.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
       return setDOMResults(summaryHtml + renderCurry(onDemand.slice(start, end)) + endHtml);
     }
 
     if (all.slice(start, end).length) {
-      const endHtml = all.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
       const summaryHtml = start === 0 ? renderSummary(all.length) : renderPaginationSummary(start, end, all.length);
+      const endHtml = all.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
       return setDOMResults(summaryHtml + renderCurry(all.slice(start, end)) + endHtml);
     }
   };
