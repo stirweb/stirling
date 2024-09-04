@@ -390,6 +390,10 @@
           position: absolute;
           right: 60px;
         }
+
+		&:focus {
+			outline-color: $white !important; /* ! because `a:focus` is !*/
+		}
       }
     }
   }
