@@ -39,58 +39,9 @@ body .grid-container {
 //   }
 // }
 
-a {
-  color: map-get($uos-web-supplementary, heritage-green-a11y);
-}
-
-p a,
-table a,
-.wrapper-content li:not(.c-search-letters__box) a {
-  border-bottom: 2px solid currentColor;
-  font-size: inherit;
-}
-
-p.c-image-block-search-result__heading a {
-  border: 0;
-}
-
-h2 a,
-h3 a,
-h4 a {
-  border-bottom: 2px solid transparent;
-}
-
-h2 a:hover,
-h3 a:hover,
-h4 a:hover {
-  border-bottom-color: currentColor;
-}
-
-a:hover {
-  border-bottom-color: $energy-green;
-}
-
-ul ul,
-ol ul,
-ul ol,
-ol ol {
-  margin-bottom: 1rem;
-  margin-left: 2.5rem;
-}
-
-ul.no-style,
-ul.no-style ul,
-li.no-style {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-ul,
-ol,
-dl {
-  margin-left: 2.5rem;
-}
+/* 
+    Forms 
+*/
 
 form,
 input {
@@ -119,7 +70,6 @@ input {
 [type="color"]:focus,
 textarea:focus {
   background-color: inherit;
-  //border: none;
   box-shadow: none;
 }
 
@@ -127,19 +77,33 @@ textarea:focus {
   color: #737373;
 }
 
-table {
-  margin: 30px 0 30px 0;
+/*  Focus */
+.button:focus,
+input:focus,
+textarea:focus,
+select:focus,
+.c-search-ordered-filters button:focus,
+a:focus {
+  outline: 1px solid $heritage-green !important;
+  outline-offset: 4px;
 }
 
-table th,
-table td {
-  vertical-align: top;
-  text-align: left;
+.u-white--all,
+.darkmode {
+  .button:focus,
+  input:focus,
+  textarea:focus,
+  select:focus,
+  a:focus {
+    outline: 1px solid #fff !important;
+    outline-offset: 4px;
+  }
 }
 
 /*
-  Progress bar eg used on search
+    Progress bar eg used on search - MOVE!
 */
+
 progress {
   &[value] {
     -webkit-appearance: none;
@@ -163,128 +127,9 @@ progress {
   }
 }
 
-/*
-    Back to main website button
+/* 
+    Objectfit helpers - MOVE
 */
-
-a.back-to-main-site {
-  color: $heritage-green;
-  display: inline-block;
-  font-family: $header-font-family;
-  font-size: 1.625rem; // 26px;
-  font-weight: $header-font-weight;
-}
-
-@include breakpoint(medium down) {
-  a.back-to-main-site {
-    font-size: 1.375rem; // 22px;
-    margin: 20px 0 0 0;
-  }
-}
-
-/*
-    HOOK STYLES
-    Styles a hook under the content wrapped with the class '.hook'.
-*/
-
-.hook {
-  display: inline-block;
-  position: relative;
-}
-
-.hook-right {
-  padding: 0 20px 20px 0;
-}
-
-.hook-left {
-  padding: 0 0 20px 20px;
-}
-
-.hook::before,
-.hook::after {
-  background-color: currentColor;
-  bottom: 0;
-  content: "";
-  position: absolute;
-}
-
-.hook::before {
-  height: 31px;
-  width: 7px;
-}
-
-.hook-right::before {
-  right: 0;
-}
-
-.hook-left::before {
-  left: 0;
-}
-
-.hook::after {
-  height: 8px;
-  left: 0;
-  width: 100%;
-}
-
-.hook-infinite {
-  max-width: max-content;
-
-  &::after {
-    width: 100vw;
-  }
-  &.hook-right::after {
-    left: auto;
-    right: 0;
-  }
-}
-
-.hook-energy-green::after,
-.hook-energy-green::before {
-  background-color: $energy-green;
-}
-
-/*
-    HIGHLIGHT STYLES
-    Styles a short highlight line under the content wrapped with the class '.higlight'.
-*/
-
-.highlight {
-  color: $heritage-green;
-  padding: 0 0 30px 0;
-  position: relative;
-}
-
-.highlight:after {
-  content: "";
-  background-color: $energy-green;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  width: 67px;
-  height: 8px;
-}
-
-/*
-    Callout button
-    Styles the featured buttons on the homepage.
-*/
-
-// .callout-buttons {
-//   padding-top: 60px;
-//   padding-bottom: 70px;
-// }
-
-// .button-callout {
-//   font-size: 1.25rem; // 20px;
-//   min-width: 350px;
-//   max-width: 350px;
-//   padding: 33px 50px;
-// }
-
-.c-header-nav__icon {
-  padding-left: 5px;
-}
 
 img.objfitcover,
 .c-image-text-block > img,
@@ -297,6 +142,30 @@ img.objfitcover,
   object-fit: cover;
   -o-object-position: center;
   object-position: center;
+}
+
+.objfit-container {
+  min-height: 27rem; /* 432px */
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .objfit-container {
+    min-height: 30rem; /* 464px */
+  }
+}
+
+@media screen and #{breakpoint(large up)} {
+  .objfit-container {
+    min-height: 33rem; /* 580px */
+  }
+}
+
+/* 
+    Embeds from 3rd parties
+*/
+
+.altmetric-embed a {
+  border: none;
 }
 
 #google_translate_element {
@@ -312,52 +181,5 @@ img.objfitcover,
 @media screen and #{breakpoint(large up)} {
   #google_translate_element {
     margin: 20px 0;
-  }
-}
-
-.objfit-container {
-  min-height: 27rem; /* 432px */
-}
-
-@media screen and (min-width: 640px) {
-  .objfit-container {
-    min-height: 30rem; /* 464px */
-  }
-}
-@media screen and (min-width: 1024px) {
-  .objfit-container {
-    min-height: 33rem; /* 580px */
-  }
-}
-
-.altmetric-embed a {
-  border: none;
-}
-
-/* 
-    Focus
-*/
-
-.c-promo-box--image .c-promo-box__content > div span:focus-within,
-.button:focus,
-input:focus,
-textarea:focus,
-select:focus,
-.c-search-ordered-filters button:focus,
-a:focus {
-  outline: 1px solid $heritage-green !important;
-  outline-offset: 4px;
-}
-
-.u-white--all,
-.darkmode {
-  .c-promo-box--image .c-promo-box__content > div span:focus-within,
-  .button:focus,
-  input:focus,
-  textarea:focus,
-  select:focus,
-  a:focus {
-    outline: 1px solid #fff !important;
-    outline-offset: 4px;
   }
 }

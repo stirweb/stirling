@@ -337,3 +337,65 @@ svg.u-icon {
 [data-label-icon="document"]::before {
   content: "\e92a";
 }
+
+/*
+    HOOK STYLES 
+    Styles a hook under the content wrapped with the class '.hook'.
+*/
+
+.hook {
+  display: inline-block;
+  position: relative;
+}
+
+.hook-right {
+  padding: 0 20px 20px 0;
+}
+
+.hook-left {
+  padding: 0 0 20px 20px;
+}
+
+.hook::before,
+.hook::after {
+  background-color: currentColor;
+  bottom: 0;
+  content: "";
+  position: absolute;
+}
+
+.hook::before {
+  height: 31px;
+  width: 7px;
+}
+
+.hook-right::before {
+  right: 0;
+}
+
+.hook-left::before {
+  left: 0;
+}
+
+.hook::after {
+  height: 8px;
+  left: 0;
+  width: 100%;
+}
+
+.hook-infinite {
+  max-width: max-content;
+
+  &::after {
+    width: 100vw;
+  }
+  &.hook-right::after {
+    left: auto;
+    right: 0;
+  }
+}
+
+.hook-energy-green::after,
+.hook-energy-green::before {
+  background-color: $energy-green;
+}

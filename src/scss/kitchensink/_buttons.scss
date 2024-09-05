@@ -16,6 +16,8 @@ button {
   line-height: 1.6;
   padding: map-get($button-padding-list, default);
   font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 
   a {
     color: $white;
@@ -29,7 +31,6 @@ button {
   }
 
   border: 2px solid transparent;
-  //position: relative;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 
   &:hover {
@@ -142,56 +143,18 @@ button {
   text-align: left;
 }
 
-// @include breakpoint(medium down) {
-//   // TODO remove this as its overwritten below anyway
-//   .button {
-//     font-size: 1rem;
-//   }
-// }
-
-/* 
-    Button component variation - long
-
-
-.c-long-button {
-  font-size: 1.25rem; // 20px;
-  margin-bottom: 12px;
-  padding: 11px 15px;
-  text-align: left;
-
-  &::after {
-    position: absolute;
-    right: 10px;
-  }
-}
-
-.c-long-button__badge {
-  font-size: 1rem; // 16px;
-  position: absolute;
-  right: 0;
-  margin-right: 50px;
-}
- */
-
 @include breakpoint(medium down) {
   .button {
     font-size: 1.125rem; // 18px;
   }
-  .c-contact-section .button {
-    margin-bottom: 20px;
-  }
+
   .button.x-large {
     padding: 18px;
   }
 }
-@include breakpoint(small down) {
-  .c-long-button {
-    line-height: 1.6;
-  }
-}
 
 /* 
-    Button component variation - long
+    Button variations
  */
 
 .c-dropdown-wrapper {
@@ -301,7 +264,7 @@ input:checked {
 /*
     Button that is styled to look like a link 
     (see scholarship finder)
-*/
+
 
 .c-link-button {
   background-color: transparent;
@@ -315,6 +278,7 @@ input:checked {
     color: $heritage-green;
   }
 }
+  */
 
 /* 
     Button style that can have a icomoon span icon in it 

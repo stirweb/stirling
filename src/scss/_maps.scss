@@ -1,14 +1,42 @@
 .c-maps-travel-mode-list__item {
-	display: inline-block;
-	margin-right: 30px;
+  display: inline-block;
+  margin-right: 30px;
 }
 
 .c-map--full-width {
-	height: 600px;
-	width: 100%;
+  height: 600px;
+  width: 100%;
 }
 @media screen and #{breakpoint(medium down)} {
-	.c-getting-here__header {
-		margin: 40px 0;
-	}
+  .c-getting-here__header {
+    margin: 40px 0;
+  }
+}
+
+// .c-getting-around__tabs {
+// 	.tabs {
+// 		.tabs-title > a {
+// 			margin-bottom: 0;
+
+// 			@media screen and #{breakpoint(medium down)} {
+// 				margin-right: 10px;
+// 				font-size: 1.125rem; /* 18px */
+// 			}
+// 		}
+// 		.tabs-title:last-child > a {
+// 			margin-bottom: 0;
+// 		}
+// 	}
+// }
+
+.c-getting-around__travel-mode {
+  display: inline-block;
+  margin-right: 30px !important;
+  &:last-child {
+    margin-right: 0px !important;
+  }
+}
+
+#getting-around__google-maps-link {
+  display: none;
 }

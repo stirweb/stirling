@@ -73,6 +73,7 @@
 
 .u-text-regular,
 .u-lead,
+.h5, // DEPRECATED
 .lead {
   font-size: 1.25rem;
 }
@@ -80,8 +81,6 @@
 .lead {
   font-weight: 600;
 }
-
-// also p.smaller in _type and .h6 in foundation
 
 .text-xxsm {
   font-size: 0.75rem;

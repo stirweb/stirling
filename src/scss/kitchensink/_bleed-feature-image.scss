@@ -30,16 +30,6 @@ Bleed Feature Image
   width: 73%;
 }
 
-// this stuff is now in _layout img.objfitcover
-//.c-bleed-feature__image > img {
-//    height: 100%;
-//    width: 100%;
-//    -o-object-fit: cover;
-//    object-fit: cover;
-//    -o-object-position: center;
-//    object-position: center;
-//}
-
 .c-bleed-feature__image:before {
   content: "";
   position: absolute;
