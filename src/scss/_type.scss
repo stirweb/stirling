@@ -81,30 +81,6 @@ legend {
     General styling 
 */
 
-blockquote,
-dd,
-div,
-dl,
-dt,
-form,
-legend,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-li,
-ol,
-p,
-pre,
-td,
-th,
-ul {
-  margin: 0;
-  padding: 0;
-}
-
 ul,
 ol,
 dl {
@@ -382,11 +358,11 @@ span.icon--medium {
   font-size: 30px;
 }
 
-.wrapper-content li:not(.c-search-letters__box) a {
-  border-bottom: 2px solid currentColor;
-  font-size: inherit;
+// .wrapper-content li:not(.c-search-letters__box) a {
+//   border-bottom: 2px solid currentColor;
+//   font-size: inherit;
 
-  &:hover {
-    border-bottom: 2px solid $energy-green;
-  }
-}
+//   &:hover {
+//     border-bottom: 2px solid $energy-green;
+//   }
+// }
