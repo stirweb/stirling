@@ -49,9 +49,11 @@
   display: grid;
 }
 
-.u-grid-equal-cols {
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
+@media screen and #{breakpoint(medium up)} {
+  .u-grid-equal-cols {
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
 }
 
 .u-grid-cols-3_1 {

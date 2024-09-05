@@ -5,7 +5,22 @@
 */
 
 button {
+  border-style: none;
+  background: none;
+  font-size: inherit;
+  font-family: inherit;
   color: inherit; /* default in Webkit/Blink is blue, others black. normalise by inheriting the colour from parent element */
+}
+
+/* Default */
+.button {
+  background-color: $heritage-green;
+  color: $white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: tint($heritage-green, 85%);
+  }
 }
 
 .button {

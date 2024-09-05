@@ -7,6 +7,14 @@
     ...ONLY LAYOUT STYLES HERE, PLEASE :)
 */
 
+/*
+    RESETS
+*/
+
+/* 
+  TEMPLATE
+*/
+
 @import "layout/cookies-banner";
 @import "layout/header";
 @import "layout/c-footer";
@@ -16,25 +24,6 @@
 @import "layout/mobile-menu";
 @import "layout/megamenu";
 @import "layout/sitemap";
-
-/*
-    SITE WIDE STYLES
-*/
-
-html {
-  scroll-behavior: smooth;
-}
-
-*,
-::after,
-::before {
-  box-sizing: border-box;
-}
-
-body .grid-container {
-  width: clamp(20rem, 94vw, 77.5rem);
-  margin: 0 auto;
-}
 
 /* 
     Forms 
@@ -95,6 +84,21 @@ a:focus {
     outline: 1px solid #fff !important;
     outline-offset: 4px;
   }
+}
+
+hr {
+  clear: both;
+  max-width: 77.5rem;
+  height: 0;
+  margin: 1.25rem auto;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid #cacaca;
+  border-left: 0;
+
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
 }
 
 /*
