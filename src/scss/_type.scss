@@ -7,6 +7,164 @@
     eg u-font-primary
 */
 
+/* 
+    Base Sizes 
+*/
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.875rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.375rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  h1 {
+    font-size: 2.625rem;
+  }
+
+  h2 {
+    font-size: 2.25rem;
+  }
+}
+
+@media screen and #{breakpoint(large up)} {
+  h1 {
+    font-size: 3.625rem;
+  }
+}
+
+@media screen and #{breakpoint(xlarge up)} {
+  h1 {
+    font-size: 4.5rem;
+  }
+
+  h2 {
+    font-size: 2.625rem;
+  }
+
+  h3 {
+    font-size: 1.625rem;
+  }
+}
+
+small {
+  font-size: 0.75rem; /* 12px */
+}
+
+li small {
+  font-size: 0.6875rem; /* 11px */
+}
+
+p,
+li,
+th,
+td,
+legend {
+  font-size: 1.25rem; // 16px * 1.5 = 20px
+}
+
+/* 
+    General styling 
+*/
+
+blockquote,
+dd,
+div,
+dl,
+dt,
+form,
+legend,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+ol,
+p,
+pre,
+td,
+th,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol,
+dl {
+  margin-left: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+ul {
+  list-style-type: disc;
+  list-style-position: outside;
+}
+
+ul ul,
+ol ul,
+ul ol,
+ol ol {
+  margin-bottom: 2rem;
+  margin-left: 2.5rem;
+}
+
+ul.no-style,
+ul.no-style ul,
+li.no-style {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  word-wrap: break-word;
+}
+
+em,
+i {
+  font-style: italic;
+  line-height: inherit;
+}
+
+b,
+strong {
+  font-weight: 700;
+  line-height: inherit;
+}
+
+small {
+  line-height: inherit;
+}
+
+h1 {
+  color: $heritage-green;
+  font-family: $header-font-family;
+  font-weight: 300;
+  line-height: 120%;
+  margin: 0 0 40px 0;
+  position: relative;
+}
+
 h2,
 h3,
 h4,
@@ -18,15 +176,26 @@ h6 {
   line-height: 1.5;
 }
 
-h1 {
-  color: $heritage-green;
-  font-family: $header-font-family;
-  font-size: 4.5rem; // 16px * rem = 72px
-  font-weight: 300;
-  line-height: 120%;
-  margin: 0 0 40px 0;
-  position: relative;
-  // max-width: 20ch;
+h2,
+h3 {
+  margin: 0 0 2rem 0;
+  padding: 0 0 2rem 0;
+}
+
+h3 {
+  font-weight: 700;
+}
+
+h4,
+h5 {
+  margin: 0 0 2rem 0;
+}
+
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.6;
 }
 
 h2,
@@ -37,26 +206,6 @@ h2 > strong {
   font-weight: 300;
 }
 
-h2,
-h3,
-.c-wysiwyg-content h2:first-of-type,
-.c-wysiwyg-content h3:first-of-type {
-  margin: 0 0 40px 0;
-  padding: 0 0 40px 0;
-}
-
-.c-wysiwyg-content h2,
-.c-wysiwyg-content h3,
-.c-wysiwyg-content > p + h2:first-of-type,
-.c-wysiwyg-content > p + h3:first-of-type,
-.c-wysiwyg-content ul + h2:first-of-type,
-.c-wysiwyg-content ul + h3:first-of-type,
-.c-wysiwyg-content ol + h2:first-of-type,
-.c-wysiwyg-content ol + h3:first-of-type {
-  margin: 60px 0 40px 0;
-}
-
-// p.c-image-block-search-result__heading::after
 h2:after,
 h3:after {
   content: "";
@@ -68,61 +217,68 @@ h3:after {
   height: 8px;
 }
 
-.u-head-subtle-line::after {
-  background-color: rgba(255, 255, 255, 0.42);
+h2 a,
+h3 a,
+h4 a {
+  border-bottom: 2px solid transparent;
 }
 
-/* Select h2's and h3's after a responsive video to lessen the space between. */
-.c-responsive-embed + h2,
-.c-responsive-embed + h3 {
-  margin: 0 0 40px 0;
+h2 a:hover,
+h3 a:hover,
+h4 a:hover {
+  border-bottom-color: currentColor;
 }
 
-//p.c-image-block-search-result__heading,
-h3 {
-  font-family: "Open Sans", sans-serif;
-  font-size: 1.625rem; // 16px * rem = 26px;
-  font-weight: 700;
-  line-height: 1.5; // prev 2rem
+a {
+  color: map-get($uos-web-supplementary, heritage-green-a11y);
 }
 
-// p.c-image-block-search-result__heading {
-//   position: relative;
-//   margin: 0 0 40px 0;
-//   padding: 0 0 40px 0;
-// }
-
-h4,
-h5 {
-  margin: 20px 0 20px 0;
+p a,
+table a {
+  border-bottom: 2px solid currentColor;
+  font-size: inherit;
 }
 
-h4 {
-  font-size: 1.375rem; // 16px * rem = 22px;
+a:hover {
+  border-bottom-color: $energy-green;
 }
 
-h4,
-h5,
-h6 {
-  font-weight: 600;
-  line-height: 1.6;
+/* 
+
+
+    OVERRIDES - MOVE!
+
+    
+*/
+
+/* 
+    c-wysiwyg-content 
+*/
+
+.c-wysiwyg-content h2:first-of-type,
+.c-wysiwyg-content h3:first-of-type {
+  margin: 0 0 30px 0;
+  padding: 0 0 30px 0;
 }
 
-h6 {
-  margin: 20px 0 10px 0;
+.c-wysiwyg-content h2,
+.c-wysiwyg-content h3,
+.c-wysiwyg-content > p + h2:first-of-type,
+.c-wysiwyg-content > p + h3:first-of-type,
+.c-wysiwyg-content ul + h2:first-of-type,
+.c-wysiwyg-content ul + h3:first-of-type,
+.c-wysiwyg-content ol + h2:first-of-type,
+.c-wysiwyg-content ol + h3:first-of-type {
+  margin: 40px 0 40px 0;
 }
 
 .c-wysiwyg-content ol:not(.timeline) > li {
   margin-bottom: 1em;
 }
 
-small {
-  font-size: 0.75rem; /* 12px */
-}
-
-li small {
-  font-size: 0.6875rem; /* 11px */
-}
+/* 
+    P Variations 
+*/
 
 p.smaller {
   font-size: 1rem;
@@ -138,214 +294,17 @@ p.smaller {
   }
 }
 
-@media screen and #{breakpoint(xlarge down)} {
-  h1 {
-    font-size: 3.625rem; // 16px * rem =  58px;
-    margin: 0 0 40px 0;
-    // max-width: initial;
-  }
-
-  h2 {
-    font-size: 2.25rem; // 16px * rem = 36px;
-  }
-  // h2,
-  // h3,
-  // .c-wysiwyg-content h2:first-of-type,
-  // .c-wysiwyg-content h3:first-of-type {
-  //     margin: 0 0 40px 0;
-  // }
-  .c-wysiwyg-content h2,
-  .c-wysiwyg-content h3,
-  .c-wysiwyg-content > p + h2:first-of-type,
-  .c-wysiwyg-content > p + h3:first-of-type,
-  .c-wysiwyg-content ul + h2:first-of-type,
-  .c-wysiwyg-content ul + h3:first-of-type,
-  .c-wysiwyg-content ol + h2:first-of-type,
-  .c-wysiwyg-content ol + h3:first-of-type {
-    margin: 40px 0;
-  }
-
-  //p.c-image-block-search-result__heading,
-  h3 {
-    font-size: 1.5rem; // 16px * 1.5 = 24px;
-  }
-
-  h4,
-  h5 {
-    margin: 20px 0;
-  }
-
-  h6 {
-    margin: 20px 0 10px 0;
-  }
-}
-
-@media screen and #{breakpoint(medium down)} {
-  // 640
-  h1 {
-    font-size: 2.625rem; // 16px * rem =  42px;
-    max-width: initial;
-  }
-}
-
-@media screen and #{breakpoint(small down)} {
-  h1 {
-    font-size: 2rem; // 16px * rem = 32px;
-  }
-  h2 {
-    font-size: 1.875rem; // 16px * rem = 30px;
-  }
-}
-
-.u-lede {
-  p {
-    font-size: 1.25rem; /* 16px * 1.25 = 20px */
-  }
-}
-
-@media screen and (min-width: 640px) {
-  .u-lede {
-    p {
-      font-size: 1.5rem; /* 16px * 1.5 = 24px */
-    }
-  }
-}
-
-// Overwrite the Foundation class sizes at small as they are too small
-// .h1 {
-//   font-size: 4.5rem;
-// }
-
-// .h2 {
-//   font-size: 2.25rem;
-// }
-
-@media screen and #{breakpoint(small down)} {
-  .h1 {
-    font-size: 1.875rem;
-  }
-  .h2 {
-    font-size: 1.5rem;
-  }
-  .h3 {
-    font-size: 1.4rem;
-  }
-  .h4 {
-    font-size: 1.3rem;
-  }
-  .h5 {
-    font-size: 1.15rem;
-  }
-}
-
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-  line-height: 1.5;
-}
-
-@media screen and #{breakpoint(medium up)} {
-  .h1 {
-    font-size: 3.625rem;
-  }
-}
-
-@media screen and #{breakpoint(large up)} {
-  .h1 {
-    font-size: 4.5rem;
-  }
-}
-
-/*
-    Exceptions for header when placed after classes beginning padding. u-padding-[x]
-*/
-/*
-Removes the margin from header when placed directly after '.u-padding-top' or '.u-padding-y'.
-Also applied when u-padding-top or u-padding-y is placed on a wrapper element with '.c-wrapper'.
-*/
-// .u-padding-y > h2:first-of-type,
-// .u-padding-top > h2:first-of-type,
-// .u-padding-y > h3:first-of-type,
-// .u-padding-top > h3:first-of-type {
-//     margin: 0 0 40px 0;
-// }
-// /*
-// Swaps margin and padding sizes when placed directly after .u-padding-bottom.
-// This allows for the padding to be correct for use with background-color and also gives the same effect.
-// Also applied when '.u-padding-bottom' is placed on a wrapper element with '.c-wrapper'.
-// */
-// .u-padding-bottom > h2:first-of-type,
-// .u-padding-bottom > h3:first-of-type {
-//     margin: 0 0 40px 0;
-//     padding: 60px 0 40px 0;
-// }
-
-// /*
-// Makes headings work normally is a paragraph is placed before the header.
-// Also applied when '.u-padding-top' or '.u-padding-y' is placed on a wrapper element with '.c-wrapper'.
-// */
-// .u-padding-y > p + h2:first-of-type,
-// .u-padding-top > p + h2:first-of-type,
-// .u-padding-y > p + h3:first-of-type,
-// .u-padding-top > p + h3:first-of-type {
-//     margin: 60px 0 40px 0;
-// }
-// /*
-// This will fix the spacing if an h3 is placed directly after an h2 with no text between .
-// Also applied when '.u-padding-bottom' is placed on a wrapper element with '.c-wrapper'.
-// */
-// .u-padding-bottom > h2:first-of-type + h3 {
-//     margin: 60px 0 40px 0;
-//     padding: 0 0 40px 0;
-// }
-// /*
-// In most cases an h2 or h3 are placed inside a wrapper the padding will be set to '.u-padding-top' on the wrapper itself.
-// If this is the case '.u-padding-bottom' will most likely be used to allow for proper stacking on mobile.
-// This should sort h2 and h3 for those instances.
-// */
-// .c-wrapper.u-padding-top .cell.u-padding-bottom > h2:first-of-type,
-// .c-wrapper.u-padding-top .cell.u-padding-bottom > h3:first-of-type {
-//     padding: 0 0 60px 0;
-// }
-
-// .c-wrapper.u-padding-y .cell > h2:first-of-type,
-// .c-wrapper.u-padding-y .cell > h3:first-of-type {
-//     margin: 0 0 40px 0;
-// }
-
-/*
-    Removes the margin for page headers that are automatially output on page.
-    This is because the wrapping div stops margin collapse.
-*/
-
-p {
-  word-wrap: break-word;
-}
-
 .u-p-last-mb-0 p:last-child {
   margin-bottom: 0;
 }
 
-p,
-li,
-th,
-td,
-legend {
-  font-size: 1.25rem; // 16px * 1.5 = 20px
-}
+/* 
+    H1 Variations 
+*/
 
-legend {
-  margin-bottom: 0;
-}
-
-.c-automatic-page-heading {
+h1.c-automatic-page-heading {
   margin: 0;
 }
-
-/* H1 Variations */
 
 h1.u-header-smaller {
   font-size: 2.625rem; /* 42px */
@@ -355,7 +314,6 @@ h1.u-header-smaller {
 @media screen and #{breakpoint(medium up)} {
   h1.u-header-smaller {
     font-size: 3.25rem; /* 52px */
-    margin-bottom: 20px;
   }
 }
 
@@ -365,7 +323,9 @@ h1.u-header-smaller {
   }
 }
 
-/* H2 Variations */
+/* 
+    H2 Variations 
+*/
 
 h2.u-header-larger {
   font-size: 2rem; /* 32px */
@@ -383,17 +343,15 @@ h2.u-header-larger {
 
 .header-stripped {
   padding: 0;
-}
-
-.header-stripped:after {
-  display: none;
+  &:after {
+    display: none;
+  }
 }
 
 .u-header--secondary-font {
   font-family: "Open Sans", sans-serif;
-  font-size: 1.875rem; // 16px * 1.5 = 30px
+  font-size: 1.875rem; /* 30px */
   font-weight: 700;
-  //line-height: 1.3;
 }
 
 .u-header--margin-stripped {
@@ -410,9 +368,10 @@ h2.u-header-larger {
 }
 
 .text-larger,
+.h4, // DEPRECATED
 p.text-larger,
 p.lead {
-  font-size: 1.5rem; // 16px * 1.5 = 24px
+  font-size: 1.5rem; /* 24px */
 }
 
 span.icon--large {
@@ -421,4 +380,13 @@ span.icon--large {
 
 span.icon--medium {
   font-size: 30px;
+}
+
+.wrapper-content li:not(.c-search-letters__box) a {
+  border-bottom: 2px solid currentColor;
+  font-size: inherit;
+
+  &:hover {
+    border-bottom: 2px solid $energy-green;
+  }
 }

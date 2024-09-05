@@ -32,9 +32,9 @@
 }
 
 /*
- * New Full View Masthead
+ * Full View Masthead
  * Object fit kicks it at very wide resolutions to avoid rediculousness
- */
+
 
 .c-fullview-mast {
   position: relative;
@@ -56,11 +56,12 @@
     max-height: 840px;
   }
 }
+   */
 
 /*
      Simplified responsive masthead - 
      intended for (e.g. bordered) images that can't be set to object-fit:cover 
-*/
+
 
 .c-responsive-masthead {
   display: flex;
@@ -71,6 +72,7 @@
   max-width: 77.5rem; // same as a foundation grid-wrapper
   width: 100%;
 }
+  */
 
 .u-hidey-slidey {
   transform-origin: top;
@@ -86,7 +88,7 @@
 
     &.stuck {
       transform: translateY(0%);
-	  z-index: 25; /* to defeat DiscoverUni (KIS) widget button */
+      z-index: 25; /* to defeat DiscoverUni (KIS) widget button */
     }
 
     &[data-sticky-polyfill] {
@@ -100,7 +102,6 @@
 
   &.u-sticky {
     padding: 1.625rem 0;
-    /* 16px @ 1.625rem = 26px */
   }
 
   .cell p {

@@ -26,7 +26,6 @@
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -142,7 +141,6 @@
     opacity: 0;
     transform: translateX(20%);
   }
-
   to {
     opacity: 1;
     transform: translateX(0);
@@ -154,7 +152,6 @@
     opacity: 0;
     transform: translateX(-20%);
   }
-
   to {
     opacity: 1;
     transform: translateX(0);
@@ -173,7 +170,7 @@
 }
 
 .stir__slidedown {
-  max-height: 3560px;
+  max-height: 560px; // 3560px
 }
 
 /* 

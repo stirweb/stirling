@@ -1,3 +1,4 @@
+/*
 ol.timeline {
 	margin: 1rem 0 2rem 2.5rem;
 	list-style: none;
@@ -26,7 +27,7 @@ ol.timeline {
 			height: 2.5rem;
 			text-align: center;
 			left: -1px;
-			top: -0.3rem; /* depends on the typeface */
+			top: -0.3rem; /* depends on the typeface *
 			color: $white;
 			font-weight: bold;
 			transform: translateX(-50%);
@@ -37,3 +38,4 @@ ol.timeline {
 		&:nth-child(3n+2)::before { background-color: $energy-turq;}
 	}
 }
+*/

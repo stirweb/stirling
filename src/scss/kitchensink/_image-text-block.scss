@@ -61,6 +61,7 @@ updated Aug 2022 for clearing homepage banner
   p {
     font-size: 1rem;
   }
+
   h2 {
     margin: 0 0 1rem 0;
   }
@@ -89,10 +90,11 @@ updated Aug 2022 for clearing homepage banner
   color: $black !important;
 }
 
-@media screen and (min-width: 641px) {
+@media screen and #{breakpoint(medium up)} {
   .c-image-text-block {
-    min-height: 24rem;
+    min-height: 14rem;
   }
+
   .c-image-text-block__content {
     padding: 2rem;
 
@@ -101,9 +103,10 @@ updated Aug 2022 for clearing homepage banner
     }
   }
 }
-@media screen and (min-width: 1024px) {
+
+@media screen and #{breakpoint(large up)} {
   .c-image-text-block {
-    min-height: 34rem;
+    min-height: 24rem;
   }
 }
 
