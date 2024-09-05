@@ -25,19 +25,16 @@ html {
   scroll-behavior: smooth;
 }
 
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
 body .grid-container {
-  // width: 77.5rem;
-  // max-width: 90%;
   width: clamp(20rem, 94vw, 77.5rem);
   margin: 0 auto;
 }
-
-// @include breakpoint(small down) {
-//   body .grid-container {
-//     width: 100%;
-//     max-width: 77.5rem;
-//   }
-// }
 
 /* 
     Forms 
