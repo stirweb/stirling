@@ -113,10 +113,7 @@
 
   const filterByTheme = stir.curry((theme, item) => !theme || item.theme === theme);
 
-  const getNow = () => {
-    const now = new Date();
-    return parseInt(now.getFullYear() + ("0" + (now.getMonth() + 1)).slice(-2) + ("0" + now.getDate()).slice(-2) + ("0" + now.getHours()).slice(-2) + ("0" + now.getMinutes()).slice(-2));
-  };
+  const getNow = () => Number(new Date().toISOString().split(".")[0].replaceAll(/[-:T]/g, "").slice(0, -2));
 
   const isUpcoming = stir.curry((now, item) => item.endIntFull >= now);
 
