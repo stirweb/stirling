@@ -120,6 +120,19 @@
 
   const isUpcoming = stir.curry((now, item) => item.endIntFull >= now);
 
+  const cleanQueryParam = (param) => {
+    if (typeof param !== "string") return "";
+    // Remove any non-alphanumeric characters except hyphen and underscore
+    return param.replace(/[^a-zA-Z0-9-_]/g, "");
+  };
+
+  // Updated QueryParams object with cleaning
+  const SafeQueryParams = {
+    get: (key) => cleanQueryParam(QueryParams.get(key)),
+    set: (key, value) => QueryParams.set(key, cleanQueryParam(value)),
+    remove: QueryParams.remove,
+  };
+
   /* 
       Controller
   */
@@ -158,8 +171,8 @@
     globals.resultsArea.addEventListener("click", (event) => {
       if (event.target.type === "submit") {
         setDOMContent(event.target.closest(".loadmorebtn"), "");
-        const page = Number(QueryParams.get("page")) + 1;
-        QueryParams.set("page", page);
+        const page = Number(SafeQueryParams.get("page")) + 1;
+        SafeQueryParams.set("page", String(page));
         doEventsFilter(globals, page, getNow(), dateFilter.value, themeFilter.value, initData);
       }
     });
@@ -167,8 +180,8 @@
     globals.filtersArea.addEventListener("click", (event) => {
       if (event.target.nodeName === "BUTTON") {
         const page = 1;
-        QueryParams.set("page", page);
-        QueryParams.remove("theme");
+        SafeQueryParams.set("page", String(page));
+        SafeQueryParams.remove("theme");
         dateFilter.value = "";
         themeFilter.value = "";
         doEventsFilter(globals, page, getNow(), "", "", initData);
@@ -178,8 +191,8 @@
 
     const handleFilterChange = () => {
       const page = 1;
-      QueryParams.set("page", page);
-      QueryParams.set("theme", themeFilter.value);
+      SafeQueryParams.set("page", String(page));
+      SafeQueryParams.set("theme", themeFilter.value);
       doEventsFilter(globals, page, getNow(), dateFilter.value, themeFilter.value, initData);
     };
 
@@ -192,10 +205,10 @@
   */
 
   const initData = stir.feeds.events.filter((item) => item.id);
-  const theme = QueryParams.get("theme") || "";
+  const theme = SafeQueryParams.get("theme") || "";
   const page = 1;
 
-  QueryParams.set("page", page);
+  SafeQueryParams.set("page", String(page));
   doEventsFilter(GLOBALS, page, getNow(), "", theme, initData);
 
   // Set up date filter
