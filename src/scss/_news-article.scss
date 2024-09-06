@@ -1,13 +1,13 @@
+/*
+	News 
+*/
+
 .c-image-caption {
   color: #746e64;
   display: inline-block;
   font-size: 0.875rem; /* 14px */
   margin: 10px 0;
 }
-
-/*
-	News Article
-*/
 
 .c-news__single-article {
   p > img {
@@ -18,11 +18,6 @@
     margin: 0 0 40px;
     max-width: 600px;
   }
-
-  //   h2 {
-  //     font-size: 1.625rem;
-  //     margin: 40px 0 18px 0;
-  //   }
 
   .c-testimonial,
   .c-responsive-embed {
@@ -46,19 +41,17 @@
   margin: 15px 0 40px 0;
 }
 
-/*
-	Report recommended
-
-
-.c-news__report-recommended h3 {
-  font-size: 1.5rem; 
-  margin: 0 0 35px 0;
-}
-
-.c-news__report-recommendation p {
-  font-size: 0.875rem; 
-  display: list-item;
-  left: 16px;
-  position: relative;
-}
+/* 
+  Conversation 
 */
+
+article.c-convo {
+  padding-bottom: 1rem;
+  h3 {
+    border-top: 2px solid $heritage-green;
+    padding: 1rem 0;
+  }
+  small {
+    color: inherit;
+  }
+}

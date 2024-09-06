@@ -1,3 +1,4 @@
+/*
 .c-category-label {
     background-color: $heritage-green;
     color: white;
@@ -57,8 +58,6 @@ blockquote.c-pullquote {
         font-family: FSMaja, serif;
         font-weight: 100;
         font-size: 2rem;
-        /* line-height: 1; */
-        /* text-transform: uppercase; */
     }
 }
 
@@ -67,10 +66,9 @@ blockquote.c-pullquote {
     content: none;
 }
 .c-wysiwyg-content blockquote.c-pullquote p {
-        font-size: 2rem !important;  /* sigh */
+        font-size: 2rem !important;  
 }
 
-/* Medium and up */
 @media screen and (min-width: 40em) {
     blockquote.c-pullquote {
         &[data-align] {
@@ -79,3 +77,5 @@ blockquote.c-pullquote {
         }
     }
 }
+
+*/

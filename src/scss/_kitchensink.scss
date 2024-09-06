@@ -1,6 +1,7 @@
-/* KITCHEN SINK COMPONENTS */
+/* 
+    KITCHEN SINK COMPONENTS 
+*/
 
-// Components
 @import "kitchensink/5tips";
 @import "kitchensink/accordion";
 @import "kitchensink/banners";
@@ -45,6 +46,10 @@
 @import "kitchensink/cta-listing";
 
 @import "kitchensink/timeline";
+
+/*
+    MINI COMPONENTS
+*/
 
 /*
    Wrappers
@@ -126,7 +131,7 @@ object.spritesheet {
 
 /*
  * Hook on divs
- */
+
 @mixin c-hook {
   position: relative;
   width: 100%;
@@ -159,9 +164,10 @@ object.spritesheet {
     top: 0;
   }
 }
+ */
 
 /* 
- * Google maps
+   Google maps
  */
 .c-google-maps iframe {
   position: absolute;
@@ -169,7 +175,6 @@ object.spritesheet {
   left: 0;
   width: 100% !important;
   height: 100% !important;
-  width: 100%;
 }
 
 /*
@@ -221,7 +226,25 @@ object.spritesheet {
   }
 }
 
-/* HOTJAR */
+/*
+  c-overlaper
+	eg Staff Profile template
+*/
+
+@media screen and #{breakpoint(large up)} {
+  .c-overlaper {
+    position: absolute;
+    right: 0;
+    top: 0;
+    max-width: 330px;
+    margin-top: 30px;
+  }
+}
+
+/* 
+    HOTJAR 
+*/
+
 #_hj_feedback_container {
   button[class$="__closeButton"] {
     outline: 1px dotted black;
@@ -232,4 +255,34 @@ object.spritesheet {
     outline: 1px dotted white;
     outline-offset: 1px;
   }
+}
+
+/* Map / Getting around */
+
+.c-maps-travel-mode-list__item {
+  display: inline-block;
+  margin-right: 30px;
+}
+
+.c-map--full-width {
+  height: 600px;
+  width: 100%;
+}
+
+@media screen and #{breakpoint(medium down)} {
+  .c-getting-here__header {
+    margin: 40px 0;
+  }
+}
+
+.c-getting-around__travel-mode {
+  display: inline-block;
+  margin-right: 30px !important;
+  &:last-child {
+    margin-right: 0px !important;
+  }
+}
+
+#getting-around__google-maps-link {
+  display: none;
 }
