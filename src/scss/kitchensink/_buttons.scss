@@ -65,6 +65,16 @@ button {
     margin: 0;
   }
 
+  &.tiny {
+    padding: 1.1em 1em;
+    font-size: 0.875rem;
+  }
+
+  &.small {
+    padding: 1.1em 1em;
+    font-size: 1rem;
+  }
+
   &.button-gap--right {
     margin-right: 30px;
   }
@@ -90,15 +100,47 @@ button {
       background-color: $color;
       border-color: $color;
       color: #ffffff;
+
+      &:hover {
+        background-color: #ffffff;
+        border-color: $color;
+        color: $color;
+      }
+    }
+  }
+
+  &.hollow {
+    background: transparent;
+    color: $heritage-green;
+    border: 1px solid $heritage-green;
+
+    &:hover {
+      background-color: transparent;
+      border: 1px solid tint($heritage-green, 50%);
+    }
+
+    &:focus {
+      background-color: transparent;
+      color: $heritage-green;
     }
   }
 
   @each $name, $color in $button-palette {
     &.#{$name} {
-      &:hover {
-        background-color: #ffffff;
-        border-color: $color;
+      &.hollow {
+        background: transparent;
         color: $color;
+        border: 1px solid $color;
+
+        &:hover {
+          background-color: transparent;
+          border: 1px solid tint($color, 50%);
+        }
+
+        &:focus {
+          background-color: transparent;
+          color: $color;
+        }
       }
     }
   }
@@ -214,6 +256,7 @@ button {
   background: transparent;
   border: 2px solid $heritage-green;
   color: $heritage-green;
+
   &:hover {
     background-color: transparent;
     border: 2px solid tint($heritage-green, 50%);
@@ -231,7 +274,7 @@ button {
 .u-white--all .button,
 .darkmode .button {
   background-color: transparent;
-  border: 2px solid #fff;
+  border-color: #fff;
 
   &.hollow {
     border-width: 1px;
