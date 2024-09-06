@@ -558,7 +558,7 @@ $uos-web-supplementary: (
   white: $white,
   dark-grey: $dark-grey,
   // reinstated by Martyn
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -659,74 +659,11 @@ $breakpoints: (
 $print-breakpoint: large;
 $breakpoint-classes: (small medium large xlarge xxlarge);
 
-// 3. The Grid
-// -----------
-
-/*
-$grid-row-width: $global-width;
-$grid-column-count: 12;
-$grid-column-gutter: (
-  small: 20px,
-  medium: 30px,
-);
-$grid-column-align-edge: true;
-$grid-column-alias: "columns";
-$block-grid-max: 8; */
-
 // 4. Base Typography
 // ------------------
 
 $header-font-family: "FSMaja", serif; //$body-font-family;
 $header-font-weight: 300;
-/*
-$header-font-style: normal;
-//$font-family-monospace: Consolas, "Liberation Mono", Courier, monospace;
-$header-color: inherit;
-$header-lineheight: 1;
-$header-margin-bottom: 0.5rem;
-
-$header-styles: (
-  small: (
-    "h1": (
-      "font-size": 24,
-    ),
-    "h2": (
-      "font-size": 20,
-    ),
-    "h3": (
-      "font-size": 19,
-    ),
-    "h4": (
-      "font-size": 18,
-    ),
-    "h5": (
-      "font-size": 17,
-    ),
-    "h6": (
-      "font-size": 16,
-    ),
-  ),
-  medium: (
-    "h1": (
-      "font-size": 48,
-    ),
-    "h2": (
-      "font-size": 40,
-    ),
-    "h3": (
-      "font-size": 31,
-    ),
-    "h4": (
-      "font-size": 25,
-    ),
-    "h5": (
-      "font-size": 20,
-    ),
-    "h6": (
-      "font-size": 16,
-    ),
-  ),
-); */
 
 $global-margin: 1rem;
 $global-padding: 1rem;
@@ -738,11 +675,8 @@ $global-text-direction: "ltr";
 $button-padding-list: (
   tiny: 1.1em 1em,
   small: 1.1em 1em,
-  //0.75rem,
   default: 20px 28px,
-  //0.9rem,
   large: 69px 20px,
-  //1.25rem,
 );
 
 ////
@@ -1259,25 +1193,18 @@ html {
 // re-usable components that can be used site wide
 @import "kitchensink";
 
-// site sections, broken down into scss files
-@import "homepage";
-@import "courses";
-@import "conversation";
-@import "countries";
-@import "testimonials";
+// collections
 @import "internal";
-@import "accommodation";
 @import "search";
 @import "aos/aos";
-@import "news-article";
-@import "jobs";
-@import "case-study";
-@import "staff-profile";
-@import "maps";
-@import "research-hub";
-@import "research-spotlight";
-@import "getting-around";
 
+// standalone - TODO break into reusable components
+@import "homepage";
+@import "courses";
+@import "research-hub";
+@import "news-article";
+
+// Move to layout
 body .grid-container {
   width: clamp(20rem, 94vw, 77.5rem);
   margin: 0 auto;
@@ -1357,6 +1284,8 @@ img {
 .float-right {
   float: right;
 }
+
+/* GRID */
 
 .grid-x {
   display: grid;
@@ -1507,6 +1436,7 @@ img {
   .medium-order-4 {
     order: 4;
   }
+
   .hide-for-medium {
     display: none;
   }
@@ -1606,7 +1536,6 @@ img {
   .hide-for-large {
     display: none;
   }
-
   .show-for-large {
     display: inherit;
   }
@@ -1740,6 +1669,7 @@ label > [type="radio"] {
 }
 
 /* Utils */
+
 .hide {
   display: none;
 }
@@ -1766,13 +1696,8 @@ ul.no-bullet {
 }
 
 .reveal {
-  // width: 600px;
-  // max-width: 77.5rem;
-  // margin-right: auto;
-  // margin-left: auto;
   margin: auto;
   width: clamp(20rem, 53.125rem, 80vw);
-
   z-index: 1006;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
