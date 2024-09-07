@@ -1,41 +1,39 @@
-!function(t){if(t){const s="accom",o={cookieType:"accom",urlToFavs:t.dataset.favsurl||"",activity:t.dataset.activity||"",view:stir.templates&&stir.templates.view?stir.templates.view:""},l=t;t=stir.node("#search-form");const d=stir.node("#search-price"),n=stir.node("#search-location"),c=stir.node("#search-student-type"),v=stir.node("#search-bathroom"),u=stir.node("#search-price-value");var e=stir.node("#accomfavbtns"),a=stir.node("[data-activity=shared]"),r=stir.node("#accomsharedfavsarea");const m=(t,e,a)=>e.length?stir.favourites.renderRemoveBtn(a,e[0].date,t):stir.favourites.renderAddBtn(a,t),p=stir.curry((t,e)=>{var a,r,i;return e?(a=stir.favourites.getFav(e.id,t.cookieType),`<div class="cell" id="fav-${e.id}">
-              <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
-                <div class="grid-x grid-padding-x u-p-2 ">
-                  <div class="cell u-pt-2">
-                      <p class="u-text-regular u-mb-2 "><strong><a href="${e.url}">${e.title}</a></strong></p>
-                    </div>
-                    <div class="cell large-5 text-sm">
-                      <p><strong>Price</strong></p> 
-                      ${r=e.rooms,r?(i=r.map(t=>parseFloat(t.cost)).sort((t,e)=>t-e),r=stir.removeDuplicates(r.map(t=>t.type)),i[0].toFixed(2)===i[i.length-1].toFixed(2)?`<p>£${i[0].toFixed(2)} per week</p>
-              <ul>${r.map(t=>`<li>${t}</li>`).join("")}</ul>`:`<p>From £${i[0].toFixed(2)} to £${i[i.length-1].toFixed(2)} per week</p>
-            <ul>${r.map(t=>`<li>${t}</li>`).join("")}</ul>`):""}
-                    </div>
-                    <div class="cell large-4 text-sm">
-                        <p><strong>Location</strong></p> 
-                        <p>${e.location}</p>
-                        <p><strong>Student type</strong></p>
-                        <p>${i=e.rooms,i?(i=i.map(t=>t.studType).join(",").split(",").map(t=>t.trim()),stir.removeDuplicates(i).join("<br />")):""}</p>
-                    </div>
-                    <div class="cell large-3 ">
-                        <div><img src="${e.img}" width="760" height="470" alt="Image of ${e.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
-                    </div>
-                    <div class="cell text-sm u-pt-2" id="favbtns${e.id}">
-                      ${m(t.urlToFavs,a,e.id)}
-                    </div>
-                  </div>
-              </div>
-            </div>`):""}),g=t=>t.id?`<p class="text-sm"><strong><a href="${t.url}" >${t.title} </a></strong></p>`:"",h=stir.curry(t=>t.id?`<div class="cell small-6">
-            <div class="u-green-line-top u-margin-bottom">
-              <p class="u-text-regular u-py-1"><strong><a href="${t.url}" >${t.title}</a></strong></p>
-              <div class="u-mb-1">${t.location} accommodation.</div>
-              <div>${stir.favourites.isFavourite(t.id)?'<p class="text-sm u-heritage-green">Already in my favourites</p>':stir.favourites.renderAddBtn(t.id,"")}</div>
+const AccommodationFinder=e=>{if(e){const f={cookieType:"accom",urlToFavs:e.dataset.favsurl||"",activity:e.dataset.activity||"",view:stir.templates?.view||""};e={resultsArea:e,searchForm:stir.node("#search-form"),searchPrice:stir.node("#search-price"),searchLocation:stir.node("#search-location"),searchStudentType:stir.node("#search-student-type"),searchBathroom:stir.node("#search-bathroom"),searchPriceNode:stir.node("#search-price-value"),favBtnsNode:stir.node("#accomfavbtns"),sharedArea:stir.node("[data-activity=shared]"),sharedfavArea:stir.node("#accomsharedfavsarea")};const y=(e,t,a)=>t.length?stir.favourites.renderRemoveBtn(a,t[0].date,e):stir.favourites.renderAddBtn(a,e),b=s=>e=>{var t,a,r;return e?(t=stir.favourites.getFav(e.id,s.cookieType),`
+      <div class="cell" id="fav-${e.id}">
+        <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
+          <div class="grid-x grid-padding-x u-p-2 ">
+            <div class="cell u-pt-2">
+              <p class="u-text-regular u-mb-2 "><strong><a href="${e.url}">${e.title}</a></strong></p>
             </div>
-          </div>`:""),f=stir.curry((t,e)=>{var a;return e&&(a=stir.favourites.getFav(e.id,t.cookieType),e.id)?`<div class="cell small-4">
-              <div class="u-green-line-top u-margin-bottom">
-                <p class="u-text-regular u-py-1"><strong><a href="${e.url}" >${e.title}</a></strong></p>
-                <div class="u-mb-1">${e.location} accommodation.</div>
-                <div>${m(t.urlToFavs,a,e.id)}</div>
-              </div>
-            </div>`:""});const y=()=>stir.favourites.getFavsList(s),b=stir.curry((e,t)=>{var a;return""!==e&&t.rooms?(a=stir.filter(t=>t.bathroom.toLowerCase().includes(e.toLowerCase()),t.rooms)).length?(t.rooms=a,t):{}:t}),$=stir.curry((t,e)=>""===t||!e.location||t===e.location?e:void 0),F=stir.curry((e,t)=>{var a;return""!==e&&t.rooms?(a=stir.filter(t=>t.studType.includes(e),t.rooms)).length?(t.rooms=a,t):{}:t}),T=stir.curry((e,t)=>{var a;return""!==e&&t.rooms?(a=stir.filter(t=>parseFloat(e)>parseFloat(t.cost),t.rooms)).length?(t.rooms=a,t):{}:t}),x=stir.filter(t=>{if(t&&t.title)return t}),k=stir.join(""),w=stir.curry((t,e)=>e?t.filter(t=>Number(t.id)===Number(e.id))[0]:[]),P=stir.curry((t,e)=>(stir.setHTML(t,e),!0)),Q=(t,e)=>{var a=stir.favourites.getFavsList(t.cookieType),e=stir.map(w(e)),t="micro"===t.view?stir.map(f(t)):stir.map(p(t)),r=P(l),e=stir.compose(x,e)(a),a=stir.compose(k,t)(e);return r(a||stir.templates.renderNoFavs)},L=(t,e,a)=>{var t=stir.map(p(t)),r=stir.map(T(e.price)),i=stir.map(F(e.studentType)),s=stir.map(b(e.bathroom)),e=stir.filter($(e.location)),s=stir.compose(x,s,e,i,r,stir.clone)(a),e=stir.compose(k,t)(s);return P(l,`<div class="cell u-mb-3">Results based on filters - <strong>${i=s.length} ${1===i?"property":"properties"}</strong></div>`+e)};var i=(t,e,a)=>{var r,i;t&&((i=(t=>{var e=QueryParams.get("a")||"";if(!e)return null;try{return atob(e).split(",").map(e=>({...t.filter(t=>{if(e===t.id)return t})[0],id:e}))}catch(t){}})(a))?P(t,i.map(h).join("")):P(t,stir.templates.renderNoShared)),e&&(r=a,(t=!(i=y()).length||i.length<1?null:i.sort((t,e)=>e.date-t.date).map(e=>({...r.filter(t=>{if(e.id===t.id)return t})[0],id:e.id,dateSaved:e.date})))?P(e,t.map(g).join("")+stir.templates.renderLinkToFavs):P(e,stir.templates.renderNoFavs))};const N=accommodationData?accommodationData.filter(t=>t.id&&t.id.length):[];"managefavs"===o.activity&&Q(o,N),"shared"===o.activity&&i(a,r,N),"search"===o.activity&&(i=stir.flatten(N.map(t=>t.rooms)).map(t=>Number(t.cost)).sort((t,e)=>t-e),a=Math.ceil(i[0]),r=10*Math.ceil(a/10),a=Math.ceil(i[i.length-1]),i=10*Math.ceil(a/10),d.min=r,d.max=i,d.value=QueryParams.get("price")?QueryParams.get("price"):i,n.value=QueryParams.get("location")?QueryParams.get("location"):"",c.value=QueryParams.get("student")?QueryParams.get("student"):"",v.value=QueryParams.get("bathroom")?QueryParams.get("bathroom"):"",P(u,d.value),a={price:d.value,location:n.value,studentType:c.value,bathroom:v.value},L(o,a,N),t&&t.addEventListener("input",t=>{var e={price:d.value};P(u,e.price)}),t)&&t.addEventListener("change",t=>{QueryParams.set("price",d.value),QueryParams.set("location",n.value),QueryParams.set("student",c.value),QueryParams.set("bathroom",v.value);var e={price:d.value,location:n.value,studentType:c.value,bathroom:v.value};L(o,e,N)}),e&&(stir.node("main").addEventListener("click",t=>{var e,t="BUTTON"===t.target.nodeName?t.target:t.target.closest("button");"clearallfavs"===t.dataset.action&&(stir.favourites.removeType(s),Q(o,N)),"copysharelink"===t.dataset.action&&(t=y(),t="https://www.stir.ac.uk/shareaccommodation/"+btoa(t.map(t=>t.id).join(",")),navigator.clipboard&&navigator.clipboard.writeText(t),(e=stir.t4Globals.dialogs.filter(t=>"shareDialog"===t.getId())).length)&&(e[0].open(),e[0].setContent((e=t)?` <p><strong>Share link</strong></p>  
-          ${navigator.clipboard?'<p class="text-xsm">The following share link has been copied to your clipboard:</p>':""}   
-          <p class="text-xsm">${e}</p>`:""))}),P(e,stir.templates.renderFavActionBtns)),l.addEventListener("click",t=>{var e,a,t="BUTTON"===t.target.nodeName?t.target:t.target.closest("button");t&&t.dataset&&t.dataset.action&&("addtofavs"===t.dataset.action&&(stir.favourites.addToFavs(t.dataset.id,o.cookieType),a=stir.favourites.getFav(t.dataset.id,o.cookieType),e=stir.node("#favbtns"+t.dataset.id))&&P(e,m(o.urlToFavs,a,t.dataset.id)),"removefav"===t.dataset.action)&&(stir.favourites.removeFromFavs(t.dataset.id),e=stir.favourites.getFav(t.dataset.id,o.cookieType),"search"===o.activity&&(a=stir.node("#favbtns"+t.dataset.id))&&P(a,m(o.urlToFavs,e,t.dataset.id)),"managefavs"===o.activity)&&(a=stir.node("#fav-"+t.dataset.id))&&P(a,"")})}}(stir.node("#acccomfinder"));
+            <div class="cell large-5 text-sm">
+              <p><strong>Price</strong></p> 
+              ${a=e.rooms,a?(r=a.map(e=>parseFloat(e.cost)).sort((e,t)=>e-t),a=stir.removeDuplicates(a.map(e=>e.type)),r[0].toFixed(2)===r[r.length-1].toFixed(2)?`<p>£${r[0].toFixed(2)} per week</p>
+         <ul>${a.map(e=>`<li>${e}</li>`).join("")}</ul>`:`<p>From £${r[0].toFixed(2)} to £${r[r.length-1].toFixed(2)} per week</p>
+         <ul>${a.map(e=>`<li>${e}</li>`).join("")}</ul>`):""}
+            </div>
+            <div class="cell large-4 text-sm">
+              <p><strong>Location</strong></p> 
+              <p>${e.location}</p>
+              <p><strong>Student type</strong></p>
+              <p>${r=e.rooms,r?stir.removeDuplicates(r.flatMap(e=>e.studType.split(",")).map(e=>e.trim())).join("<br />"):""}</p>
+            </div>
+            <div class="cell large-3 ">
+              <div><img src="${e.img}" width="760" height="470" alt="Image of ${e.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
+            </div>
+            <div class="cell text-sm u-pt-2" id="favbtns${e.id}">
+              ${y(s.urlToFavs,t,e.id)}
+            </div>
+          </div>
+        </div>
+      </div>
+    `):""},F=e=>e.id?`
+      <div class="cell small-6">
+        <div class="u-green-line-top u-margin-bottom">
+          <p class="u-text-regular u-py-1"><strong><a href="${e.url}">${e.title}</a></strong></p>
+          <div class="u-mb-1">${e.location} accommodation.</div>
+          <div>${stir.favourites.isFavourite(e.id)?'<p class="text-sm u-heritage-green">Already in my favourites</p>':stir.favourites.renderAddBtn(e.id,"")}</div>
+        </div>
+      </div>`:"",T=e=>e?`
+      <p><strong>Share link</strong></p>  
+      ${navigator.clipboard?'<p class="text-xsm">The following share link has been copied to your clipboard:</p>':""}   
+      <p class="text-xsm">${e}</p>`:"",$=e=>e.id?`<p class="text-sm"><strong><a href="${e.url}">${e.title}</a></strong></p>`:"",x=e=>`<div class="cell u-mb-3">Results based on filters - <strong>${e} ${1===e?"property":"properties"}</strong></div>`,k=()=>stir.templates.renderNoFavs,w=()=>stir.templates.renderLinkToFavs,A=()=>stir.templates.renderNoShared,L=stir.curry((e,t)=>(stir.setHTML(e,t),!0)),P=e=>"string"!=typeof e?"":e.replace(/[^a-zA-Z0-9-_]/g,""),N={get:e=>P(QueryParams.get(e)),set:(e,t)=>QueryParams.set(e,P(t)),remove:QueryParams.remove},B=()=>stir.favourites.getFavsList(f.cookieType),j=e=>{var t=N.get("a")||"";if(!t)return null;try{return atob(t).split(",").map(t=>({...e.find(e=>t===e.id),id:t}))}catch(e){return null}},M=e=>{var t=B();return t.length<1?null:t.sort((e,t)=>t.date-e.date).map(t=>({...e.find(e=>t.id===e.id),id:t.id,dateSaved:t.date}))},S=a=>e=>{var t;return""!==a&&e.rooms?(t=e.rooms.filter(e=>e.bathroom.toLowerCase().includes(a.toLowerCase()))).length?{...e,rooms:t}:{}:e},E=t=>e=>""!==t&&e.location&&t!==e.location?null:e,C=a=>e=>{var t;return""!==a&&e.rooms?(t=e.rooms.filter(e=>e.studType.includes(a))).length?{...e,rooms:t}:{}:e},Q=a=>e=>{var t;return""!==a&&e.rooms?(t=e.rooms.filter(e=>parseFloat(a)>parseFloat(e.cost))).length?{...e,rooms:t}:{}:e},D=e=>e&&e.title;var t,a,r,s,i,o,c,d,n,l,v,p,u,m=accommodationData?.filter(e=>e.id&&e.id.length)||[];function h(e,a,t){var r=stir.favourites.getFavsList(e.cookieType).map(t=>a.find(e=>Number(e.id)===Number(t.id))).filter(D),e=("micro"===e.view?renderMicro:b)(e),r=r.map(e).join("");L(t.resultsArea)(r||stir.templates.renderNoFavs)}function g(e,t,a,r){a=a.map(Q(t.price)).map(C(t.studentType)).map(S(t.bathroom)).filter(E(t.location)).filter(D),t=a.map(b(e)).join("");L(r.resultsArea)(x(a.length)+t)}m=m,t=f,e=e,"managefavs"===t.activity&&h(t,m,e),"shared"===t.activity&&(r=e.sharedArea,a=e.sharedfavArea,s=m,r&&((i=j(s))?L(r,i.map(F).join("")):L(r,A())),a)&&((i=M(s))?L(a,i.map($).join("")+w()):L(a,k())),"search"===t.activity&&(r=m.flatMap(e=>e.rooms).map(e=>Number(e.cost)).sort((e,t)=>e-t),s=Math.ceil(r[0]),i=Math.ceil(r[r.length-1]),e.searchPrice.min=10*Math.ceil(s/10),e.searchPrice.max=10*Math.ceil(i/10),e.searchPrice.value=N.get("price")||10*Math.ceil(i/10),e.searchLocation.value=N.get("location")||"",e.searchStudentType.value=N.get("student")||"",e.searchBathroom.value=N.get("bathroom")||"",L(e.searchPriceNode)(e.searchPrice.value),g(t,{price:e.searchPrice.value,location:e.searchLocation.value,studentType:e.searchStudentType.value,bathroom:e.searchBathroom.value},m,e),e.searchForm?.addEventListener("input",(n=e,e=>{var t={price:n.searchPrice.value};L(n.searchPriceNode)(t.price)})),e.searchForm?.addEventListener("change",(o=t,c=m,d=e,e=>{var t={price:d.searchPrice.value,location:d.searchLocation.value,studentType:d.searchStudentType.value,bathroom:d.searchBathroom.value};Object.entries(t).forEach(([e,t])=>N.set(e,t)),g(o,t,c,d)}))),e.favBtnsNode&&(stir.node("main").addEventListener("click",(l=t,v=m,p=e,e=>{var t,e="BUTTON"===e.target.nodeName?e.target:e.target.closest("button");e&&e.dataset&&e.dataset.action&&("clearallfavs"===e.dataset.action&&(stir.favourites.removeType(l.cookieType),h(l,v,p)),"copysharelink"===e.dataset.action)&&(e=B(),e="https://www.stir.ac.uk/shareaccommodation/"+btoa(e.map(e=>e.id).join(",")),navigator.clipboard&&navigator.clipboard.writeText(e),t=stir.t4Globals.dialogs.find(e=>"shareDialog"===e.getId()))&&(t.open(),t.setContent(T(e)))})),L(e.favBtnsNode)(stir.templates.renderFavActionBtns)),e.resultsArea.addEventListener("click",(u=t,e=>{var t,e=e.target.closest("button");e&&e.dataset&&e.dataset.action&&(t=e=>{var t=stir.favourites.getFav(e,u.cookieType),a=stir.node("#favbtns"+e);a&&L(a)(y(u.urlToFavs,t,e))},"addtofavs"===e.dataset.action&&(stir.favourites.addToFavs(e.dataset.id,u.cookieType),t(e.dataset.id)),"removefav"===e.dataset.action)&&(stir.favourites.removeFromFavs(e.dataset.id),t(e.dataset.id),"managefavs"===u.activity)&&(t=stir.node("#fav-"+e.dataset.id))&&L(t)("")}))}};AccommodationFinder(stir.node("#acccomfinder"));

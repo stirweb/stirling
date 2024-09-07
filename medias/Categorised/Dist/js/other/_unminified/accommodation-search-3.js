@@ -1,146 +1,102 @@
-/*
- * @author: Ryan Kaye
- * @version: 3
- */
-
-(function (scope) {
+const AccommodationFinder = (scope) => {
   if (!scope) return;
 
-  // VARS
-  const COOKIE_TYPE = "accom";
-
+  // Constants
   const CONSTS = {
     cookieType: "accom",
-    urlToFavs: scope.dataset.favsurl ? scope.dataset.favsurl : ``,
-    activity: scope.dataset.activity ? scope.dataset.activity : ``,
-    view: stir.templates && stir.templates.view ? stir.templates.view : ``,
+    urlToFavs: scope.dataset.favsurl || ``,
+    activity: scope.dataset.activity || ``,
+    view: stir.templates?.view || ``,
   };
 
-  const resultsArea = scope;
-  const searchForm = stir.node("#search-form");
-  const searchPrice = stir.node("#search-price");
-  const searchLocation = stir.node("#search-location");
-  const searchStudentType = stir.node("#search-student-type");
-  const searchBathroom = stir.node("#search-bathroom");
-  const searchPriceNode = stir.node("#search-price-value");
+  // DOM Elements
+  const DOM_ELEMENTS = {
+    resultsArea: scope,
+    searchForm: stir.node("#search-form"),
+    searchPrice: stir.node("#search-price"),
+    searchLocation: stir.node("#search-location"),
+    searchStudentType: stir.node("#search-student-type"),
+    searchBathroom: stir.node("#search-bathroom"),
+    searchPriceNode: stir.node("#search-price-value"),
+    favBtnsNode: stir.node("#accomfavbtns"),
+    sharedArea: stir.node("[data-activity=shared]"),
+    sharedfavArea: stir.node("#accomsharedfavsarea"),
+  };
 
-  const favBtnsNode = stir.node("#accomfavbtns");
-  const sharedArea = stir.node("[data-activity=shared]");
-  const sharedfavArea = stir.node("#accomsharedfavsarea");
+  /* 
+      Rendering Functions
+  */
 
-  /*
-     Renderers
-   */
-
-  /* renderPrice */
   const renderPrice = (rooms) => {
     if (!rooms) return ``;
     const allPrices = rooms.map((item) => parseFloat(item.cost)).sort((a, b) => a - b);
     const matches = stir.removeDuplicates(rooms.map((item) => item.type));
 
-    if (allPrices[0].toFixed(2) === allPrices[allPrices.length - 1].toFixed(2)) {
-      return `<p>£${allPrices[0].toFixed(2)} per week</p>
-              <ul>${matches.map((item) => `<li>${item}</li>`).join(``)}</ul>`;
-    }
-
-    return `<p>From £${allPrices[0].toFixed(2)} to £${allPrices[allPrices.length - 1].toFixed(2)} per week</p>
-            <ul>${matches.map((item) => `<li>${item}</li>`).join(``)}</ul>`;
+    return allPrices[0].toFixed(2) === allPrices[allPrices.length - 1].toFixed(2)
+      ? `<p>£${allPrices[0].toFixed(2)} per week</p>
+         <ul>${matches.map((item) => `<li>${item}</li>`).join(``)}</ul>`
+      : `<p>From £${allPrices[0].toFixed(2)} to £${allPrices[allPrices.length - 1].toFixed(2)} per week</p>
+         <ul>${matches.map((item) => `<li>${item}</li>`).join(``)}</ul>`;
   };
 
-  /* renderStudentTypes */
-  const renderStudentTypes = (rooms) => {
-    if (!rooms) return ``;
+  const renderStudentTypes = (rooms) => (rooms ? stir.removeDuplicates(rooms.flatMap((item) => item.studType.split(",")).map((item) => item.trim())).join("<br />") : ``);
 
-    const allTypes = rooms
-      .map((item) => item.studType)
-      .join(",")
-      .split(",")
-      .map((item) => item.trim());
+  const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
 
-    return stir.removeDuplicates(allTypes).join("<br />");
-  };
-
-  /* renderFavBtns */
-  const renderFavBtns = (urlToFavs, cookie, id) => {
-    return cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs);
-  };
-
-  /* renderAccom */
-  const renderAccom = stir.curry((consts, item) => {
+  const renderAccom = (consts) => (item) => {
     if (!item) return ``;
-
     const cookie = stir.favourites.getFav(item.id, consts.cookieType);
-    return `<div class="cell" id="fav-${item.id}">
-              <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
-                <div class="grid-x grid-padding-x u-p-2 ">
-                  <div class="cell u-pt-2">
-                      <p class="u-text-regular u-mb-2 "><strong><a href="${item.url}">${item.title}</a></strong></p>
-                    </div>
-                    <div class="cell large-5 text-sm">
-                      <p><strong>Price</strong></p> 
-                      ${renderPrice(item.rooms)}
-                    </div>
-                    <div class="cell large-4 text-sm">
-                        <p><strong>Location</strong></p> 
-                        <p>${item.location}</p>
-                        <p><strong>Student type</strong></p>
-                        <p>${renderStudentTypes(item.rooms)}</p>
-                    </div>
-                    <div class="cell large-3 ">
-                        <div><img src="${item.img}" width="760" height="470" alt="Image of ${item.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
-                    </div>
-                    <div class="cell text-sm u-pt-2" id="favbtns${item.id}">
-                      ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
-                    </div>
-                  </div>
-              </div>
-            </div>`;
-  });
-
-  /* renderMiniFav - used on the share page */
-  const renderMiniFav = (item) => {
-    return !item.id ? `` : `<p class="text-sm"><strong><a href="${item.url}" >${item.title} </a></strong></p>`;
-  };
-
-  /* renderShareDialog */
-  const renderShareDialog = (link) => {
-    return !link
-      ? ``
-      : ` <p><strong>Share link</strong></p>  
-          ${navigator.clipboard ? '<p class="text-xsm">The following share link has been copied to your clipboard:</p>' : ""}   
-          <p class="text-xsm">${link}</p>`;
-  };
-
-  /* renderShared */
-  const renderShared = stir.curry((item) => {
-    return !item.id
-      ? ``
-      : `<div class="cell small-6">
-            <div class="u-green-line-top u-margin-bottom">
-              <p class="u-text-regular u-py-1"><strong><a href="${item.url}" >${item.title}</a></strong></p>
-              <div class="u-mb-1">${item.location} accommodation.</div>
-              <div>${stir.favourites.isFavourite(item.id) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.id, "")}</div>
+    return `
+      <div class="cell" id="fav-${item.id}">
+        <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
+          <div class="grid-x grid-padding-x u-p-2 ">
+            <div class="cell u-pt-2">
+              <p class="u-text-regular u-mb-2 "><strong><a href="${item.url}">${item.title}</a></strong></p>
             </div>
-          </div>`;
-  });
+            <div class="cell large-5 text-sm">
+              <p><strong>Price</strong></p> 
+              ${renderPrice(item.rooms)}
+            </div>
+            <div class="cell large-4 text-sm">
+              <p><strong>Location</strong></p> 
+              <p>${item.location}</p>
+              <p><strong>Student type</strong></p>
+              <p>${renderStudentTypes(item.rooms)}</p>
+            </div>
+            <div class="cell large-3 ">
+              <div><img src="${item.img}" width="760" height="470" alt="Image of ${item.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
+            </div>
+            <div class="cell text-sm u-pt-2" id="favbtns${item.id}">
+              ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  };
 
-  /* renderMicro */
-  const renderMicro = stir.curry((consts, item) => {
-    if (!item) return ``;
-
-    const cookie = stir.favourites.getFav(item.id, consts.cookieType);
-    return !item.id
+  const renderShared = (item) =>
+    !item.id
       ? ``
-      : `<div class="cell small-4">
-              <div class="u-green-line-top u-margin-bottom">
-                <p class="u-text-regular u-py-1"><strong><a href="${item.url}" >${item.title}</a></strong></p>
-                <div class="u-mb-1">${item.location} accommodation.</div>
-                <div>${renderFavBtns(consts.urlToFavs, cookie, item.id)}</div>
-              </div>
-            </div>`;
-  });
+      : `
+      <div class="cell small-6">
+        <div class="u-green-line-top u-margin-bottom">
+          <p class="u-text-regular u-py-1"><strong><a href="${item.url}">${item.title}</a></strong></p>
+          <div class="u-mb-1">${item.location} accommodation.</div>
+          <div>${stir.favourites.isFavourite(item.id) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.id, ``)}</div>
+        </div>
+      </div>`;
 
-  /* renderNumItems */
+  const renderShareDialog = (link) =>
+    !link
+      ? ``
+      : `
+      <p><strong>Share link</strong></p>  
+      ${navigator.clipboard ? '<p class="text-xsm">The following share link has been copied to your clipboard:</p>' : ``}   
+      <p class="text-xsm">${link}</p>`;
+
+  const renderMiniFav = (item) => (!item.id ? "" : `<p class="text-sm"><strong><a href="${item.url}">${item.title}</a></strong></p>`);
+
   const renderNumItems = (num) => `<div class="cell u-mb-3">Results based on filters - <strong>${num} ${num === 1 ? `property` : `properties`}</strong></div>`;
 
   const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
@@ -149,160 +105,109 @@
   const renderNoShared = () => stir.templates.renderNoShared;
 
   /*
-      Data Processing
-    */
-
-  const getfavsCookie = () => stir.favourites.getFavsList(COOKIE_TYPE);
-
-  /* getFavsList: Returns an array of course objects */
-  const getFavsList = (data) => {
-    const favsCookie = getfavsCookie();
-
-    if (!favsCookie.length || favsCookie.length < 1) {
-      return null;
-    }
-
-    const favsCookieSorted = favsCookie.sort((a, b) => b.date - a.date);
-    // Maintain ordering by merging data into cookie object
-    return favsCookieSorted.map((item) => {
-      return {
-        ...data.filter((element) => {
-          if (item.id === element.id) return element;
-        })[0],
-        ...{ id: item.id, dateSaved: item.date },
-      };
-    });
-  };
-
-  /* filterByBathroom */
-  const filterByBathroom = stir.curry((filterValue, item) => {
-    if (filterValue === "" || !item.rooms) return item;
-
-    const matches2 = stir.filter((entry) => entry.bathroom.toLowerCase().includes(filterValue.toLowerCase()), item.rooms);
-    if (matches2.length) {
-      item.rooms = matches2;
-      return item;
-    }
-    return {};
-  });
-
-  /* filterByLocation */
-  const filterByLocation = stir.curry((filterValue, item) => {
-    if (filterValue === "" || !item.location) return item;
-    if (filterValue === item.location) return item;
-  });
-
-  /* filterByStudType */
-  const filterByStudType = stir.curry((filterValue, item) => {
-    if (filterValue === "" || !item.rooms) return item;
-
-    const matches2 = stir.filter((entry) => entry.studType.includes(filterValue), item.rooms);
-    if (matches2.length) {
-      item.rooms = matches2;
-      return item;
-    }
-    return {};
-  });
-
-  /* filterByPrice */
-  const filterByPrice = stir.curry((filterValue, item) => {
-    if (filterValue === "" || !item.rooms) return item;
-
-    const matches2 = stir.filter((entry) => parseFloat(filterValue) > parseFloat(entry.cost), item.rooms);
-    if (matches2.length) {
-      item.rooms = matches2;
-      return item;
-    }
-    return {};
-  });
-
-  /* filterEmpties */
-  const filterEmpties = stir.filter((item) => {
-    if (item && item.title) return item;
-  });
-
-  /* getShareList */
-  const getShareList = (data) => {
-    const sharedListQuery = QueryParams.get("a") || "";
-
-    if (!sharedListQuery) return null;
-
-    try {
-      // wrap in a try{} to catch any Base64 errors
-      const sharedList = atob(sharedListQuery);
-
-      // Maintain ordering by merging FB result into cookie object
-      return sharedList.split(",").map((item) => {
-        return {
-          ...data.filter((element) => {
-            if (item === element.id) return element;
-          })[0],
-          ...{ id: item },
-        };
-      });
-    } catch (e) {
-      /* URL param not Base64? */ return;
-    }
-  };
-
-  /*
-      Helpers
-    */
-
-  const joiner = stir.join(``);
-
-  const mapItem = stir.curry((alldata, fav) => {
-    if (!fav) return [];
-    return alldata.filter((entry) => Number(entry.id) === Number(fav.id))[0];
-  });
+      Handle Inputs and Outputs
+  */
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
   });
 
-  /*
-     Controllers
+  const cleanQueryParam = (param) => {
+    if (typeof param !== "string") return ``;
+    // Remove any non-alphanumeric characters except hyphen and underscore
+    return param.replace(/[^a-zA-Z0-9-_]/g, ``);
+  };
+
+  const SafeQueryParams = {
+    get: (key) => cleanQueryParam(QueryParams.get(key)),
+    set: (key, value) => QueryParams.set(key, cleanQueryParam(value)),
+    remove: QueryParams.remove,
+  };
+
+  /* 
+      Data Processing Functions
+  */
+  const getfavsCookie = () => stir.favourites.getFavsList(CONSTS.cookieType);
+
+  const getShareList = (data) => {
+    const sharedListQuery = SafeQueryParams.get("a") || "";
+    if (!sharedListQuery) return null;
+
+    try {
+      const sharedList = atob(sharedListQuery);
+      return sharedList.split(",").map((item) => ({
+        ...data.find((element) => item === element.id),
+        id: item,
+      }));
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const getFavsList = (data) => {
+    const favsCookie = getfavsCookie();
+    if (favsCookie.length < 1) return null;
+
+    return favsCookie
+      .sort((a, b) => b.date - a.date)
+      .map((item) => ({
+        ...data.find((element) => item.id === element.id),
+        id: item.id,
+        dateSaved: item.date,
+      }));
+  };
+
+  const filterByBathroom = (filterValue) => (item) => {
+    if (filterValue === `` || !item.rooms) return item;
+    const matches = item.rooms.filter((entry) => entry.bathroom.toLowerCase().includes(filterValue.toLowerCase()));
+    return matches.length ? { ...item, rooms: matches } : {};
+  };
+
+  const filterByLocation = (filterValue) => (item) => filterValue === `` || !item.location || filterValue === item.location ? item : null;
+
+  const filterByStudType = (filterValue) => (item) => {
+    if (filterValue === `` || !item.rooms) return item;
+    const matches = item.rooms.filter((entry) => entry.studType.includes(filterValue));
+    return matches.length ? { ...item, rooms: matches } : {};
+  };
+
+  const filterByPrice = (filterValue) => (item) => {
+    if (filterValue === `` || !item.rooms) return item;
+    const matches = item.rooms.filter((entry) => parseFloat(filterValue) > parseFloat(entry.cost));
+    return matches.length ? { ...item, rooms: matches } : {};
+  };
+
+  const filterEmpties = (item) => item && item.title;
+
+  /* 
+    Controller Functions
   */
 
-  /* doFavourites */
-  const doFavourites = (consts, data) => {
+  function doFavourites(consts, data, domElements) {
     const favs = stir.favourites.getFavsList(consts.cookieType);
+    const filteredData = favs.map((fav) => data.find((entry) => Number(entry.id) === Number(fav.id))).filter(filterEmpties);
 
-    const mapItemCurry = stir.map(mapItem(data));
-    //const renderer = stir.map(renderAccom(consts));
-    const renderer = consts.view === `micro` ? stir.map(renderMicro(consts)) : stir.map(renderAccom(consts));
-    const setDOM = setDOMContent(resultsArea);
+    const renderer = consts.view === "micro" ? renderMicro(consts) : renderAccom(consts);
+    const html = filteredData.map(renderer).join(``);
 
-    const filteredData = stir.compose(filterEmpties, mapItemCurry)(favs);
-    const html = stir.compose(joiner, renderer)(filteredData);
+    return setDOMContent(domElements.resultsArea)(html || stir.templates.renderNoFavs);
+  }
 
-    return html ? setDOM(html) : setDOM(stir.templates.renderNoFavs);
-  };
+  function doSearch(consts, filters, data, domElements) {
+    const filteredData = data.map(filterByPrice(filters.price)).map(filterByStudType(filters.studentType)).map(filterByBathroom(filters.bathroom)).filter(filterByLocation(filters.location)).filter(filterEmpties);
 
-  /* doSearch */
-  const doSearch = (consts, filters, data) => {
-    const renderer = stir.map(renderAccom(consts));
+    const html = filteredData.map(renderAccom(consts)).join(``);
+    return setDOMContent(domElements.resultsArea)(renderNumItems(filteredData.length) + html);
+  }
 
-    const filterByPriceCurry = stir.map(filterByPrice(filters.price));
-    const filterByStudTypeCurry = stir.map(filterByStudType(filters.studentType));
-    const filterByBathroomCurry = stir.map(filterByBathroom(filters.bathroom));
-    const filterByLocationCurry = stir.filter(filterByLocation(filters.location));
-
-    const filteredData = stir.compose(filterEmpties, filterByBathroomCurry, filterByLocationCurry, filterByStudTypeCurry, filterByPriceCurry, stir.clone)(data);
-    const html = stir.compose(joiner, renderer)(filteredData);
-
-    return setDOMContent(resultsArea, renderNumItems(filteredData.length) + html);
-  };
-
-  /* doShared */
-  const doShared = (sharedArea, sharedfavArea, data) => {
+  function doShared(sharedArea, sharedfavArea, data) {
     if (sharedArea) {
       const shareList = getShareList(data);
       if (!shareList) {
         setDOMContent(sharedArea, renderNoShared());
       } else {
-        setDOMContent(sharedArea, shareList.map(renderShared).join(""));
+        setDOMContent(sharedArea, shareList.map(renderShared).join(``));
       }
     }
 
@@ -311,153 +216,143 @@
       if (!list) {
         setDOMContent(sharedfavArea, renderNoFavs());
       } else {
-        setDOMContent(sharedfavArea, list.map(renderMiniFav).join("") + renderLinkToFavs());
+        setDOMContent(sharedfavArea, list.map(renderMiniFav).join(``) + renderLinkToFavs());
       }
     }
     return;
+  }
+
+  /* 
+        Event Handlers
+    */
+  const handleSearchFormInput = (domElements) => (event) => {
+    const filters = {
+      price: domElements.searchPrice.value,
+    };
+    setDOMContent(domElements.searchPriceNode)(filters.price);
   };
 
-  /*
-     On load
-   */
-
-  const initialData = accommodationData ? accommodationData.filter((item) => item.id && item.id.length) : [];
-
-  /*  Init Page Manage Favs */
-  if (CONSTS.activity === "managefavs") {
-    doFavourites(CONSTS, initialData);
-  }
-
-  /*  Init Page Shared */
-  if (CONSTS.activity === "shared") {
-    doShared(sharedArea, sharedfavArea, initialData);
-  }
-
-  /*  Init Page Search */
-  if (CONSTS.activity === "search") {
-    // Min and max prices for the range slider
-    const allRooms = stir.flatten(initialData.map((item) => item.rooms));
-    const prices = allRooms.map((item) => Number(item.cost)).sort((a, b) => a - b);
-
-    const min = Math.ceil(prices[0]);
-    const roundedMin = Math.ceil(min / 10) * 10;
-    const max = Math.ceil(prices[prices.length - 1]);
-    const roundedMax = Math.ceil(max / 10) * 10;
-
-    searchPrice.min = roundedMin;
-    searchPrice.max = roundedMax;
-
-    searchPrice.value = QueryParams.get("price") ? QueryParams.get("price") : roundedMax;
-    searchLocation.value = QueryParams.get("location") ? QueryParams.get("location") : "";
-    searchStudentType.value = QueryParams.get("student") ? QueryParams.get("student") : "";
-    searchBathroom.value = QueryParams.get("bathroom") ? QueryParams.get("bathroom") : "";
-
-    setDOMContent(searchPriceNode, searchPrice.value);
-
+  const handleSearchFormChange = (consts, initialData, domElements) => (event) => {
     const filters = {
-      price: searchPrice.value,
-      location: searchLocation.value,
-      studentType: searchStudentType.value,
-      bathroom: searchBathroom.value,
+      price: domElements.searchPrice.value,
+      location: domElements.searchLocation.value,
+      studentType: domElements.searchStudentType.value,
+      bathroom: domElements.searchBathroom.value,
     };
 
-    doSearch(CONSTS, filters, initialData);
+    Object.entries(filters).forEach(([key, value]) => SafeQueryParams.set(key, value));
+    doSearch(consts, filters, initialData, domElements);
+  };
 
-    /* 
-      Actions: Form changes 
-    */
-    searchForm &&
-      searchForm.addEventListener("input", (event) => {
-        const filters = {
-          price: searchPrice.value,
-        };
-        setDOMContent(searchPriceNode, filters.price);
-      });
-
-    searchForm &&
-      searchForm.addEventListener("change", (event) => {
-        QueryParams.set("price", searchPrice.value);
-        QueryParams.set("location", searchLocation.value);
-        QueryParams.set("student", searchStudentType.value);
-        QueryParams.set("bathroom", searchBathroom.value);
-
-        const filters = {
-          price: searchPrice.value,
-          location: searchLocation.value,
-          studentType: searchStudentType.value,
-          bathroom: searchBathroom.value,
-        };
-        doSearch(CONSTS, filters, initialData);
-      });
-  }
-
-  /* 
-    ACTIONS: FAVS ASIDE
-   */
-  if (favBtnsNode) {
-    stir.node("main").addEventListener("click", (event) => {
-      const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
-
-      /* ACTION: REMOVE ALL FAVS */
-      if ("clearallfavs" === target.dataset.action) {
-        stir.favourites.removeType(COOKIE_TYPE);
-        doFavourites(CONSTS, initialData);
-      }
-
-      /* ACTION: COPY SHARE LINK */
-      if ("copysharelink" === target.dataset.action) {
-        const favsCookie = getfavsCookie();
-        const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
-
-        const link = "https://www.stir.ac.uk/shareaccommodation/" + base64Params;
-        navigator.clipboard && navigator.clipboard.writeText(link);
-
-        const dialog = stir.t4Globals.dialogs.filter((item) => item.getId() === "shareDialog");
-
-        if (!dialog.length) return;
-        dialog[0].open();
-        dialog[0].setContent(renderShareDialog(link));
-      }
-    });
-
-    setDOMContent(favBtnsNode, renderFavActionBtns());
-  }
-
-  /* 
-    ACTIONS: Search result fav btn clicks  
-  */
-  resultsArea.addEventListener("click", (event) => {
+  const handleFavButtonClick = (consts, initialData, domElements) => (event) => {
     const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
 
     if (!target || !target.dataset || !target.dataset.action) return;
 
-    /* Add */
-    if (target.dataset.action === "addtofavs") {
-      stir.favourites.addToFavs(target.dataset.id, CONSTS.cookieType);
-
-      const cookie = stir.favourites.getFav(target.dataset.id, CONSTS.cookieType);
-      const node = stir.node("#favbtns" + target.dataset.id);
-
-      if (node) setDOMContent(node, renderFavBtns(CONSTS.urlToFavs, cookie, target.dataset.id));
+    if (target.dataset.action === "clearallfavs") {
+      stir.favourites.removeType(consts.cookieType);
+      doFavourites(consts, initialData, domElements);
     }
 
-    /* Remove */
+    if (target.dataset.action === "copysharelink") {
+      const favsCookie = getfavsCookie();
+      const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
+      const link = "https://www.stir.ac.uk/shareaccommodation/" + base64Params;
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(link);
+      }
+
+      const dialog = stir.t4Globals.dialogs.find((item) => item.getId() === "shareDialog");
+      if (dialog) {
+        dialog.open();
+        dialog.setContent(renderShareDialog(link));
+      }
+    }
+  };
+
+  const handleSearchResultFavClick = (consts, domElements) => (event) => {
+    const target = event.target.closest("button");
+    if (!target || !target.dataset || !target.dataset.action) return;
+
+    const updateFavButtonDisplay = (id) => {
+      const cookie = stir.favourites.getFav(id, consts.cookieType);
+      const node = stir.node("#favbtns" + id);
+      if (node) setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
+    };
+
+    if (target.dataset.action === "addtofavs") {
+      stir.favourites.addToFavs(target.dataset.id, consts.cookieType);
+      updateFavButtonDisplay(target.dataset.id);
+    }
+
     if (target.dataset.action === "removefav") {
       stir.favourites.removeFromFavs(target.dataset.id);
+      updateFavButtonDisplay(target.dataset.id);
 
-      const cookie = stir.favourites.getFav(target.dataset.id, CONSTS.cookieType);
-
-      //console.log(CONSTS.activity);
-
-      if (CONSTS.activity === "search") {
-        const node = stir.node("#favbtns" + target.dataset.id);
-        if (node) setDOMContent(node, renderFavBtns(CONSTS.urlToFavs, cookie, target.dataset.id));
-      }
-
-      if (CONSTS.activity === "managefavs") {
+      if (consts.activity === "managefavs") {
         const node = stir.node("#fav-" + target.dataset.id);
-        if (node) setDOMContent(node, "");
+        if (node) setDOMContent(node)("");
       }
     }
-  });
-})(stir.node("#acccomfinder"));
+  };
+
+  /* 
+        Initialization
+    */
+  function init(initialData, consts, domElements) {
+    if (consts.activity === "managefavs") {
+      doFavourites(consts, initialData, domElements);
+    }
+
+    if (consts.activity === "shared") {
+      doShared(domElements.sharedArea, domElements.sharedfavArea, initialData);
+    }
+
+    if (consts.activity === "search") {
+      // Initialize search form
+      const allRooms = initialData.flatMap((item) => item.rooms);
+      const prices = allRooms.map((item) => Number(item.cost)).sort((a, b) => a - b);
+      const min = Math.ceil(prices[0]);
+      const max = Math.ceil(prices[prices.length - 1]);
+
+      domElements.searchPrice.min = Math.ceil(min / 10) * 10;
+      domElements.searchPrice.max = Math.ceil(max / 10) * 10;
+      domElements.searchPrice.value = SafeQueryParams.get("price") || Math.ceil(max / 10) * 10;
+      domElements.searchLocation.value = SafeQueryParams.get("location") || ``;
+      domElements.searchStudentType.value = SafeQueryParams.get("student") || ``;
+      domElements.searchBathroom.value = SafeQueryParams.get("bathroom") || ``;
+
+      setDOMContent(domElements.searchPriceNode)(domElements.searchPrice.value);
+
+      const filters = {
+        price: domElements.searchPrice.value,
+        location: domElements.searchLocation.value,
+        studentType: domElements.searchStudentType.value,
+        bathroom: domElements.searchBathroom.value,
+      };
+
+      doSearch(consts, filters, initialData, domElements);
+
+      // Add event listeners
+      domElements.searchForm?.addEventListener("input", handleSearchFormInput(domElements));
+      domElements.searchForm?.addEventListener("change", handleSearchFormChange(consts, initialData, domElements));
+    }
+
+    // Add event listeners for favorites
+    if (domElements.favBtnsNode) {
+      stir.node("main").addEventListener("click", handleFavButtonClick(consts, initialData, domElements));
+      setDOMContent(domElements.favBtnsNode)(renderFavActionBtns());
+    }
+
+    // Add event listener for search result favorite button clicks
+    domElements.resultsArea.addEventListener("click", handleSearchResultFavClick(consts, domElements));
+  }
+
+  /* Run initialization */
+  const initialData = accommodationData?.filter((item) => item.id && item.id.length) || [];
+  init(initialData, CONSTS, DOM_ELEMENTS);
+};
+
+// Run the AccommodationFinder
+AccommodationFinder(stir.node("#acccomfinder"));
