@@ -271,7 +271,7 @@ const AccommodationFinder = (scope) => {
     }
   };
 
-  const handleSearchResultFavClick = (consts, domElements) => (event) => {
+  const handleSearchResultFavClick = (consts, domElements, data) => (event) => {
     const target = event.target.closest("button");
     if (!target || !target.dataset || !target.dataset.action) return;
 
@@ -279,6 +279,7 @@ const AccommodationFinder = (scope) => {
       const cookie = stir.favourites.getFav(id, consts.cookieType);
       const node = stir.node("#favbtns" + id);
       if (node) setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
+      if (domElements.sharedArea) doShared(domElements.sharedArea, domElements.sharedfavArea, data);
     };
 
     if (target.dataset.action === "addtofavs") {
@@ -346,7 +347,7 @@ const AccommodationFinder = (scope) => {
     }
 
     // Add event listener for search result favorite button clicks
-    domElements.resultsArea.addEventListener("click", handleSearchResultFavClick(consts, domElements));
+    domElements.resultsArea.addEventListener("click", handleSearchResultFavClick(consts, domElements, initialData));
   }
 
   /* Run initialization */
