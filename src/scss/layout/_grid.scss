@@ -92,7 +92,14 @@
 .grid-x > .cell.small-10 {
   grid-column-end: span 10;
 }
+.grid-x > .cell.small-11 {
+  grid-column-end: span 11;
+}
 .grid-x > .cell.small-12 {
+  grid-column-end: span 12;
+}
+
+.grid-x.small-up-1 > .cell {
   grid-column-end: span 12;
 }
 
@@ -186,13 +193,16 @@
   //   grid-column-start: auto; // only use offset on the first child
   // }
 
-  .grid-x.medium-up-2 .cell {
+  .grid-x.medium-up-1 > .cell {
+    grid-column-end: span 12;
+  }
+  .grid-x.medium-up-2 > .cell {
     grid-column-end: span 6;
   }
-  .grid-x.medium-up-4 .cell {
+  .grid-x.medium-up-4 > .cell {
     grid-column-end: span 3;
   }
-  .grid-x.medium-up-6 .cell {
+  .grid-x.medium-up-6 > .cell {
     grid-column-end: span 2;
   }
 
@@ -282,13 +292,13 @@
   //   grid-column-start: auto; // only use offset on the first child
   // }
 
-  .grid-x.large-up-2 .cell {
+  .grid-x.large-up-2 > .cell {
     grid-column-end: span 6;
   }
-  .grid-x.large-up-4 .cell {
+  .grid-x.large-up-4 > .cell {
     grid-column-end: span 3;
   }
-  .grid-x.large-up-6 .cell {
+  .grid-x.large-up-6 > .cell {
     grid-column-end: span 2;
   }
 
