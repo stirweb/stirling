@@ -103,20 +103,21 @@ fieldset {
 
 select {
   box-sizing: border-box;
+  background-color: $white;
   width: 100%;
   margin: 0 0 20px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   font-family: inherit;
   border-radius: 0;
-  border: 1px solid #666;
+  border: 1px solid $medium-gray;
   -webkit-appearance: none;
   appearance: none;
   background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIzMiIgaWQ9InRyaWFuZ2xlLWRvd24iIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik00IDggSDI4IEwxNiAyNiB6Ii8+PC9zdmc+");
   background-size: 15px 15px;
   background-repeat: no-repeat;
   background-origin: content-box;
-  background-position: right -1rem center;
+  background-position: right -0.5rem center;
   background-repeat: no-repeat;
 }
 
@@ -178,7 +179,7 @@ progress {
   [type="color"],
   textarea,
   select {
-    font-size: 1.25rem;
+    // font-size: 1.25rem;
     margin: 0 0 20px;
     min-height: 50px;
     padding: 0 20px;
