@@ -5,10 +5,8 @@ stir.t4Globals = stir.t4Globals || {};
  * Fees region (e.g. home/eu) selector
  * @param {*} scope DOM element that wraps the fees information (selector and table, etc).
  */
-(function (scope) {
-
+(function (scope) {    
     if (!scope) return;
-
     var select  = scope.querySelector('select');
     var table   = scope.querySelector('table');
 	var remotes = Array.prototype.slice.call(scope.querySelectorAll('[data-action="change-region"]'));
@@ -78,52 +76,53 @@ stir.t4Globals = stir.t4Globals || {};
 })(document.getElementById("course-fees-information"));
 
 
-/*
- * Handle fees info coming from a json feed 
- * rk8 Oct 2020
- * NO LONGER IN USE - NOW HANDLED IN T4
-(function (scope) {
+((scope)=>{
 
-    if (!scope) return;
+    if(!scope) return;
 
-    var dataFees = stir.t4Globals.dataFees;
+    scope.innerHTML = '';
 
-    // Use the other data if its available
-    if(stir.t4Globals.dataFeesOther )
-        dataFees = stir.t4Globals.dataFeesOther ;
+    const statuses = {
+        "H": "Scotland",
+        "O": "International (including EU)",
+        "R": "England, Wales, Northern Ireland and Republic of Ireland",
+    };
+    const modes = {
+        "FT":"Full time",
+        "PTO":"Part time",
+    }
 
-    var tbl = scope;
-    var tblRow = tbl.querySelectorAll('[data-region]');
-    var cachData = []; // Cached data for use by the EU Row
+    const formatter = new Intl.NumberFormat('en-GB', {
+        style: 'currency',
+        currency: 'GBP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      
+        // These options are needed to round to whole numbers if that's what you want.
+        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+        //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+      });
+
+    const feetable = data => `<table>${data.feeData.map(feetablerow).join('')}</table>`;
+
+    const feetablerow = data => 
     
-    // loop through the table rows and output the currect data
-    Array.prototype.forEach.call(tblRow, function (item) {
-        var region = item.dataset.region;
-        var tds = tbl.querySelectorAll('[data-region="' + region + '"] td');
-        var band = tbl.getAttribute('data-' + region);
+    `<tr>
+        <td>${statuses[data.feeStatus]}</td>
+        <td>${modes[data.modeOfAttendance]}</td>
+        <td>${data.academicYear}</td>
+        <td>${formatter.format(data.amount)}</td>
+    </tr>`;
 
-        for (var i = 0; i < dataFees.length; i++) {
-            if (dataFees[i].region === region && dataFees[i].band === band) {
-                tds[0].innerHTML = checkVal(dataFees[i].thisYear);
-                tds[1].innerHTML = checkVal(dataFees[i].nextYear);
-                // Update the cache for EU 
-                cachData.push(dataFees[i].thisYear);
-                cachData.push(dataFees[i].nextYear);
-            }
+    console.info('[Fees]');
+    const el = document.querySelector('[data-modules-route-code]');
+    const route = el && el.getAttribute('data-modules-route-code');
+    route && stir.getJSON("../fees.json", data=>{
+        if(data.feeData) {
+            scope.insertAdjacentHTML("beforeend",
+                (data.feeData.filter(item=>item.rouCode===route).map(feetable).join(''))
+            );
         }
     })
 
-    // EU data: 2020 = home val; 2021 = overseas val
-    var tds = tbl.querySelectorAll('[data-region="eu"] td');
-    tds[0].innerHTML = checkVal(cachData[0]);
-    tds[1].innerHTML = checkVal(cachData[cachData.length - 1]);
-
-    /* 
-    * Make sure we have a value. If not return TBC  
-    *
-    function checkVal(val){
-        return val.length > 0 ? val : '<abbr title="to be confirmed">TBC</abbr>';
-    }
-
-})(document.getElementById("feesTblPG"));
-*/
+})(document.getElementById("course-fees-information"));
