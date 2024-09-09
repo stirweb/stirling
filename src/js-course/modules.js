@@ -35,7 +35,7 @@ stir.course = (function() {
 	const el = document.querySelector("[data-modules-route-code][data-modules-course-type]");
 	if(!container || !el) return na;
 	
-	const routeChooser = stir.templates.course.div('optionBrowser');
+	const routeChooser = stir.templates.course.div('routeBrowser');
 	const optionChooser = stir.templates.course.div('optionBrowser');
 	const moduleBrowser = stir.templates.course.div('moduleBrowser');
 	const version = document.querySelector('time[data-sits]');
@@ -63,7 +63,8 @@ stir.course = (function() {
 	};
 
 	const reset = {
-		modules: ()=>moduleBrowser.innerHTML=''
+		modules: ()=>moduleBrowser.innerHTML='',
+		options: ()=>optionChooser.innerHTML=''
 	};
 	
 	// Set up the DOM
@@ -76,6 +77,7 @@ stir.course = (function() {
 	stir.dpt.set.show.modules( handle.modules );
 	stir.dpt.set.show.version( handle.version );
 	stir.dpt.set.reset.modules( reset.modules );
+	stir.dpt.set.reset.options( reset.options );
 
 	const _auto = () => {
 		if(!initialised) {

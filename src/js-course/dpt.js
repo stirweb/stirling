@@ -167,7 +167,7 @@ stir.dpt = (function () {
 
   const paragraph = (text) => {
     const p = document.createElement("p");
-    p.textContent = text;
+    p.innerHTML = stir.String.stripHtml(text.replace(/<\/?(br|p)>/g,"__br__")).replaceAll("__br__","<br>");
     return p;
   };
 
@@ -238,7 +238,7 @@ stir.dpt = (function () {
     if (paths.length > 0) {
       let paths_p = document.createElement("p");
       paths_p.innerHTML = `<span class="uos-shuffle"></span> <strong>There are ${stir.Array.oxfordComma(paths, true)}. Please review all options carefully.</strong>`;
-      paths_p.classList.add("c-callout", "info", "rwm2testab1");
+      paths_p.classList.add("c-callout", "info");
       frag.prepend(paths_p);
     }
 
@@ -298,6 +298,7 @@ stir.dpt = (function () {
 
     const change = (event) => {
       resetGlobals();
+      stir.dpt.reset.options();
       stir.dpt.reset.modules();
       user.rouCode = select[select.selectedIndex].value;
       user.rouName = select[select.selectedIndex].textContent;
@@ -338,6 +339,7 @@ stir.dpt = (function () {
     },
     reset: {
       modules: new Function(),
+      options: new Function()
     },
     set: {
       viewer: (path) => (urls.viewer = path),
@@ -363,6 +365,7 @@ stir.dpt = (function () {
       },
       reset: {
         modules: (callback) => (stir.dpt.reset.modules = callback),
+        options: (callback) => (stir.dpt.reset.options = callback),
       },
     },
     debug: {
