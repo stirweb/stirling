@@ -19,23 +19,18 @@ stir.coursefavs = (() => {
   const URL = host + "/s/search.json?collection=stir-courses&query=!nullpadre&fmo=true&num_ranks=2000&SF=[" + sf.join(",") + "]&";
 
   /*
-    |
-    |   RENDERERS
-    |
+      RENDERERS
   */
 
-  /* renderMiniFav - used on the share page */
-  const renderMiniFav = (item) => {
-    return !item.metaData
+  // renderMiniFav - used on the share page
+  const renderMiniFav = (item) =>
+    !item.metaData
       ? ``
       : `<p class="text-sm">
             <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title} ${item.metaData.ucas ? " - " + item.metaData.ucas : ""}</a></strong>
         </p>`;
-  };
 
-  const getHeaderItem = (header, content, classes) => {
-    return !content ? `` : `<div class="cell medium-4"><strong class="u-heritage-green">${header}</strong><p class="${classes}">${content.split("|").join(", ")}</p></div>`;
-  };
+  const getHeaderItem = (header, content, classes) => (!content ? `` : `<div class="cell medium-4"><strong class="u-heritage-green">${header}</strong><p class="${classes}">${content.split("|").join(", ")}</p></div>`);
 
   const renderFav = stir.curry((item) => {
     return !item.metaData
@@ -66,7 +61,6 @@ stir.coursefavs = (() => {
       ? ``
       : `<div class="cell large-4  "  data-sid="${item.metaData.sid}" > 
             <div class="u-green-line-top">
-                 
                   <div class="flex-container flex-dir-column u-gap u-mt-1">
                     <p class=" u-m-0">
                       <strong><a href="${item.liveUrl}" title="${item.metaData.award ? item.metaData.award : ""} ${item.title}">${item.metaData.award ? item.metaData.award : ""} ${item.title} ${item.metaData.ucas ? " - " + item.metaData.ucas : ""}</a></strong>
@@ -81,12 +75,15 @@ stir.coursefavs = (() => {
   });
 
   const renderNoFavs = () => stir.templates.renderNoFavs;
+
   const renderLinkToFavs = () => stir.templates.renderLinkToFavs;
+
   const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
+
   const renderNoShared = () => stir.templates.renderNoShared;
 
-  const renderShared = (item) => {
-    return !item.metaData
+  const renderShared = (item) =>
+    !item.metaData
       ? ``
       : `<div class="cell small-6">
             <div class="u-green-line-top u-margin-bottom">
@@ -97,111 +94,69 @@ stir.coursefavs = (() => {
               <div>${stir.favourites.isFavourite(item.metaData.sid) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.metaData.sid, "")}</div>
             </div>
           </div>`;
-  };
 
-  const renderShareDialog = (link) => {
-    return !link
+  const renderShareDialog = (link) =>
+    !link
       ? ``
       : ` <p><strong>Share link</strong></p>  
           ${navigator.clipboard ? '<p class="text-xsm">The following share link has been copied to your clipboard:</p>' : ""}   
           <p class="text-xsm">${link}</p>`;
-  };
 
   /*
-  |
-  |  HELPERS
-  |
+      HELPERS
   */
 
-  /*
-     createCourseBtnHTML : returns String (HTML)
-   */
-  const createCourseBtnHTML = (sid, url) => {
-    const el = document.createElement("div"); // temporary element
-
-    el.setAttribute("data-id", sid); // attribute needed for doCourseBtn() validation
-    el.setAttribute("data-favsurl", url);
-    doCourseBtn(el); // generate the button
-
-    return el.innerHTML; // pass back to course template
-  };
-
-  /* 
-      setDOMContent : Returns a Boolean  
-  */
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
   });
 
-  /* 
-      getfavsCookie: Returns an array of course objects
-  */
-  const _getfavsCookie = () => stir.favourites.getFavsList(COOKIE_TYPE);
-
-  const getfavsCookie = () => _getfavsCookie();
-
-  /*
-      isInCookie: Returns a boolean
-  */
-  const isInCookie = (courseId) => stir.favourites.isFavourite(courseId);
-
-  /*
-      getFavsList: Returns an array of course objects 
-  */
-  const getFavsList = (data) => {
-    const favsCookie = getfavsCookie();
-
-    if (!favsCookie.length || favsCookie.length < 1) {
-      return null;
-    }
-
-    const favsCookieSorted = favsCookie.sort((a, b) => b.date - a.date);
-    // Maintain ordering by merging FB result into cookie object
-    return favsCookieSorted.map((item) => {
-      return {
-        ...data.filter((element) => {
-          if (item.id === element.metaData.sid) return element;
-        })[0],
-        ...{ id: item.id, dateSaved: item.date },
-      };
-    });
+  const cleanQueryParam = (param) => {
+    if (typeof param !== "string") return "";
+    return param.replace(/[^a-zA-Z0-9-_]/g, ""); // Remove any non-alphanumeric characters except hyphen and underscore
   };
 
-  /* 
-    Returns an array of course objects 
-  */
-  const getShareList = (data) => {
-    const sharedListQuery = QueryParams.get("c") || "";
+  const SafeQueryParams = {
+    get: (key) => cleanQueryParam(QueryParams.get(key)),
+    set: (key, value) => QueryParams.set(key, cleanQueryParam(value)),
+    remove: QueryParams.remove,
+  };
 
+  const getfavsCookie = () => stir.favourites.getFavsList(COOKIE_TYPE);
+
+  const isInCookie = (courseId) => stir.favourites.isFavourite(courseId);
+
+  const getFavsList = (data) => {
+    const favsCookie = getfavsCookie();
+    if (!favsCookie.length) return null;
+
+    const sortedCookie = favsCookie.sort((a, b) => b.date - a.date);
+    return sortedCookie.map((item) => ({
+      ...data.find((element) => element.metaData && element.metaData.sid === item.id),
+      id: item.id,
+      dateSaved: item.date,
+    }));
+  };
+
+  const getShareList = (data) => {
+    const sharedListQuery = SafeQueryParams.get("c") || "";
     if (!sharedListQuery) return null;
 
     try {
-      // wrap in a try{} to catch any Base64 errors
       const sharedList = atob(sharedListQuery);
-      // Maintain ordering by merging FB result into cookie object
-      return sharedList.split(",").map((item) => {
-        return {
-          ...data.filter((element) => {
-            if (item === element.metaData.sid) return element;
-          })[0],
-          ...{ id: item },
-        };
-      });
+      return sharedList.split(",").map((item) => ({
+        ...data.find((element) => element.metaData && element.metaData.sid === item),
+        id: item,
+      }));
     } catch (e) {
-      /* URL param not Base64? */ return;
+      return null;
     }
   };
 
   /*
-    |
-    |   CONTROLLERS
-    |
+       CONTROLLERS
    */
 
-  /* 
-      doFavs : Returns null 
-  */
   const doFavsCurry = stir.curry((nodes, data) => {
     if (!nodes || !nodes.favsArea) return;
     const list = getFavsList(data);
@@ -209,11 +164,7 @@ stir.coursefavs = (() => {
     const view = stir.templates && stir.templates.view ? stir.templates.view : ``;
     const renderer = view === `micro` ? renderMicro : renderFav;
 
-    console.log(view);
-
-    if (!list) {
-      return !setDOMContent(nodes.favsArea, renderNoFavs());
-    }
+    if (!list) return !setDOMContent(nodes.favsArea, renderNoFavs());
 
     nodes.favBtns && setDOMContent(nodes.favBtns, renderFavActionBtns());
     return setDOMContent(nodes.favsArea, list.map(renderer).join(""));
@@ -221,170 +172,112 @@ stir.coursefavs = (() => {
 
   const doFavs = doFavsCurry(NODES);
 
-  /* 
-       doShared : Returns null 
-   */
   const doSharedCurry = stir.curry((nodes, data) => {
     if (!nodes) return;
 
     if (nodes.sharedArea) {
       const shareList = getShareList(data);
-
-      if (!shareList) {
-        setDOMContent(nodes.sharedArea, renderNoShared());
-      } else {
-        setDOMContent(nodes.sharedArea, shareList.map(renderShared).join(""));
-      }
+      setDOMContent(nodes.sharedArea, shareList ? shareList.map(renderShared).join("") : renderNoShared());
     }
 
     if (nodes.sharedfavArea) {
       const list = getFavsList(data);
-      if (!list) {
-        setDOMContent(nodes.sharedfavArea, renderNoFavs());
-      } else {
-        setDOMContent(nodes.sharedfavArea, list.map(renderMiniFav).join("") + renderLinkToFavs());
-      }
+      setDOMContent(nodes.sharedfavArea, list ? list.map(renderMiniFav).join("") + renderLinkToFavs() : renderNoFavs());
     }
-    return;
   });
 
   const doShared = doSharedCurry(NODES);
 
-  /* 
-      |
-      |   doCourseBtn : Returns null
-      |   [now using the private member `cookieId` instead of
-      |   a passed-in value to make it easier to reuse this
-      |   function from an external call.] 2023-05-02
-      |
-  */
   const doCourseBtn = (el) => {
-    const container = el.closest("[data-nodeid=coursefavsbtn]") ? el.closest("[data-nodeid=coursefavsbtn]") : el;
-
+    const container = el.closest("[data-nodeid=coursefavsbtn]") || el;
     if (!container) return;
 
-    const fav = getfavsCookie().filter((item) => item.id === el.dataset.id);
-    const urlToFavs = container.dataset.favsurl ? container.dataset.favsurl : "";
+    const fav = getfavsCookie().find((item) => item.id === el.dataset.id);
+    const urlToFavs = container.dataset.favsurl || "";
 
-    if (fav.length) {
-      setDOMContent(container, stir.favourites.renderRemoveBtn(fav[0].id, fav[0].date, urlToFavs));
-      return;
-    }
-
-    setDOMContent(container, stir.favourites.renderAddBtn(el.dataset.id, urlToFavs));
-    return;
+    setDOMContent(container, fav ? stir.favourites.renderRemoveBtn(fav.id, fav.date, urlToFavs) : stir.favourites.renderAddBtn(el.dataset.id, urlToFavs));
   };
 
-  /**
-   *
-   * Container for functions that will be defined after the data callback
-   */
+  // Container for functions that will be defined after the data callback
   const async = {};
 
-  /* 
-    fetchData : Returns null 
-  */
-  const _fetchData = (url) => {
-    stir.getJSON(url, (data) => {
-      /* Curry-in the course data now so that these functions can be called again later */
-      async.doFavs = () => {
-        doFavs(data.response.resultPacket.results || []);
-      };
-      async.doShared = () => {
-        doShared(data.response.resultPacket.results || []);
-      };
+  // Event Handlers
+  const clickHandler = (event) => {
+    const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
 
-      /* On Load */
+    if (!target || !target.dataset || !target.dataset.action) return;
+
+    const actions = {
+      addtofavs: () => {
+        if (!isInCookie(target.dataset.id)) {
+          stir.favourites.addToFavs(target.dataset.id, COOKIE_TYPE);
+        }
+        async.doShared && async.doShared();
+        async.doFavs && async.doFavs();
+        doCourseBtn(target);
+      },
+      removefav: () => {
+        const id = target.dataset.id;
+        if (id) {
+          stir.favourites.removeFromFavs(id);
+          async.doFavs && async.doFavs();
+          doCourseBtn(target.parentElement);
+        }
+      },
+      clearallfavs: () => {
+        stir.favourites.removeType(COOKIE_TYPE);
+        async.doFavs && async.doFavs();
+      },
+      copysharelink: () => {
+        const favsCookie = getfavsCookie();
+        const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
+        const link = "https://www.stir.ac.uk/share/" + base64Params;
+        navigator.clipboard && navigator.clipboard.writeText(link);
+
+        const dialog = stir.t4Globals.dialogs.find((item) => item.getId() === "shareDialog");
+        if (dialog) {
+          dialog.open();
+          dialog.setContent(renderShareDialog(link));
+        }
+      },
+    };
+
+    const action = actions[target.dataset.action];
+    if (action) action();
+  };
+
+  const createCourseBtnHTML = (sid, url) => {
+    const el = document.createElement("div");
+    el.setAttribute("data-id", sid);
+    el.setAttribute("data-favsurl", url);
+    doCourseBtn(el);
+    return el.innerHTML;
+  };
+
+  const fetchData = (url) => {
+    stir.getJSON(url, (data) => {
+      const results = data.response.resultPacket.results || [];
+      async.doFavs = () => doFavs(results);
+      async.doShared = () => doShared(results);
+
       async.doShared();
       async.doFavs();
 
-      attachEventHandlers();
+      stir.node("main").addEventListener("click", clickHandler);
     });
   };
 
-  const fetchData = () => _fetchData(URL);
-
-  /* 
-
-    EVENT LISTENER 
-  
-    */
-  function clickHandler(event) {
-    const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
-    if (!target || !target.dataset || !target.dataset.action) return;
-
-    /* ACTION: ADD a FAV */
-    if (target.dataset.action === "addtofavs") {
-      if (!isInCookie(target.dataset.id)) {
-        stir.favourites.addToFavs(target.dataset.id, COOKIE_TYPE);
-      }
-
-      async.doShared && async.doShared();
-      async.doFavs && async.doFavs();
-      doCourseBtn(target);
-    }
-
-    /* ACTION: REMOVE a FAV */
-    if ("removefav" === target.dataset.action) {
-      const id = target.dataset.id ? target.dataset.id : null;
-
-      if (id && id.length) {
-        stir.favourites.removeFromFavs(id);
-        async.doFavs && async.doFavs();
-        doCourseBtn(target.parentElement);
-      }
-    }
-
-    /* ACTION: REMOVE ALL FAVS */
-    if ("clearallfavs" === target.dataset.action) {
-      stir.favourites.removeType(COOKIE_TYPE);
-      async.doFavs && async.doFavs();
-    }
-
-    /* ACTION: COPY SHARE LINK */
-    if ("copysharelink" === target.dataset.action) {
-      const favsCookie = getfavsCookie();
-      const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
-
-      const link = "https://www.stir.ac.uk/share/" + base64Params;
-      navigator.clipboard && navigator.clipboard.writeText(link);
-
-      const dialog = stir.t4Globals.dialogs.filter((item) => item.getId() === "shareDialog");
-
-      if (!dialog.length) return;
-      dialog[0].open();
-      dialog[0].setContent(renderShareDialog(link));
-    }
-  }
-
-  /*
-      attachEventHandlers : public, returns null
-   */
-  function attachEventHandlers() {
-    stir.node("main").addEventListener("click", clickHandler);
-  }
-
-  /*
-      | 
-      |  PUBLIC METHODS
-      |
-  */
+  // Public API
   return {
-    auto: () => fetchData(),
+    auto: () => fetchData(URL),
     isFavourite: isInCookie,
-    doCourseBtn: doCourseBtn,
-    createCourseBtnHTML: createCourseBtnHTML,
-    attachEventHandlers: attachEventHandlers,
+    doCourseBtn,
+    createCourseBtnHTML,
+    attachEventHandlers: () => stir.node("main").addEventListener("click", clickHandler),
   };
 })();
 
-stir.favs = stir.coursefavs;
+// Auto-initialization
+const shouldAutoInit = [() => stir.node("#coursefavsarea"), () => stir.node("#coursesharedarea"), () => stir.nodes("#coursefavsbtn").length].some((fn) => fn());
 
-/**
- *
- * Automatically intitalise if the following nodes are detected:
- *
- */
-if (stir.node("#coursefavsarea") || stir.node("#coursesharedarea") || stir.nodes("#coursefavsbtn").length) {
-  stir.coursefavs.auto();
-}
+if (shouldAutoInit) stir.coursefavs.auto();
