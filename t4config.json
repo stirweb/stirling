@@ -18,6 +18,11 @@
         "projectPath": "medias/Categorised/Dist/js/app.min.js"
       },
       {
+        "id": 182828,
+        "description": "app.foundation.min.js",
+        "projectPath": "medias/Categorised/Dist/js/app.foundation.min.js"
+      },
+      {
         "id": 158059,
         "description": "gallery.min.js",
         "projectPath": "medias/Categorised/Dist/js/gallery.min.js"
@@ -1727,14 +1732,12 @@
         "id": 175961,
         "description": "redirects.csv",
         "projectPath": "medias/Categorised/Dist/php/smart-404/redirects.csv"
-      }
-      ,
+      },
       {
         "id": 182760,
         "description": "athena-swan.png",
         "projectPath": "medias/Categorised/Dist/images/email-signature/athena-swan.png"
-      }
-      ,
+      },
       {
         "id": 182759,
         "description": "the-awards-2024.png",

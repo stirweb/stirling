@@ -1,184 +1,189 @@
-/**
- * Foundation for Sites by ZURB
- * foundation.zurb.com
- * Licensed under MIT Open Source
- */
-
 // CUSTOM
 @charset 'utf-8';
 
-// Dependencies
-//@import '../_vendor/normalize-scss/sass/normalize';
-@import "../scss/vendor/normalize.scss";
-@import "../_vendor/sassy-lists/stylesheets/helpers/missing-dependencies";
-@import "../_vendor/sassy-lists/stylesheets/helpers/true";
-@import "../_vendor/sassy-lists/stylesheets/functions/purge";
-@import "../_vendor/sassy-lists/stylesheets/functions/remove";
-@import "../_vendor/sassy-lists/stylesheets/functions/replace";
-@import "../_vendor/sassy-lists/stylesheets/functions/to-list";
+// 1. Layout
+// ---------
+$global-width: rem-calc(1240);
+$global-lineheight: 1.5;
 
-// Settings
-// import your own `settings` here or
-// import and modify the default settings through
-// @import 'settings/settings';
+// 2. Colours
+// ---------
 
-// CUSTOM
-@import "settings/foundation";
+$light-gray: #e6e6e6;
+$medium-gray: #cacaca;
+$dark-gray: #8a8a8a;
+$dark-grey: #616361;
+$grey: #bebebe;
+$black: #3a3c39; // Tertiary Colour
+$white: #fff; //fefefe;
+
+$foundation-palette: (
+  primary: #006938,
+  secondary: #767676,
+  success: #006938,
+  warning: #ecaa00,
+  alert: #d10056,
+  black: $black,
+  white: $white,
+);
+
+$primary-color: map-get($foundation-palette, primary);
+
+$uos-web-supplementary: (
+  black: $black,
+  white: $white,
+  dark-grey: $dark-grey,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),
+);
+
+$brand-palette: (
+  // Tertiary Colours
+  light-mink: #c5bfb7,
+  medium-mink: #79766f,
+  dark-mink: #373a36,
+  // Energy Colours
+  energy: #77bf22,
+  energy-green: #77bf22,
+  energy-teal: #008996,
+  energy-yellow: #f4c400,
+  energy-orange: #ff6d00,
+  energy-light-blue: #5fb4e5,
+  energy-blue: #3d7dca,
+  energy-pink: #e80068,
+  energy-purple: #592c82,
+  energy-turq: #00a5ac,
+  // Heritage Colours
+  heritage-green: #006938,
+  heritage-teal: #005e63,
+  heritage-yellow: #ecaa00,
+  heritage-orange: #e14504,
+  heritage-blue: #385dae,
+  heritage-navy: #14315e,
+  heritage-berry: #9d1e65,
+  heritage-purple: #31006f,
+
+  // Web versions
+  web-turq: #00838a
+);
+
+$uos-button-palette: (
+  primary: map-get($foundation-palette, primary),
+  secondary: map-get($foundation-palette, secondary),
+  success: map-get($foundation-palette, success),
+  warning: map-get($foundation-palette, warning),
+  alert: map-get($foundation-palette, alert),
+  // Energy
+  energy-green: map-get($brand-palette, energy-green),
+  energy: map-get($brand-palette, energy-green),
+  energy-pink: map-get($brand-palette, energy-pink),
+  energy-turq: map-get($brand-palette, energy-turq),
+  energy-purple: map-get($brand-palette, energy-purple),
+  // Heritage
+  heritage-green: map-get($brand-palette, heritage-green),
+  heritage-berry: map-get($brand-palette, heritage-berry),
+  heritage-purple: map-get($brand-palette, heritage-purple),
+  // Misc
+  dark-mink: map-get($brand-palette, dark-mink),
+  info: map-get($brand-palette, heritage-blue),
+);
+
+// Widening Participation campaign colours
+$uos-wp-palette: (
+  wp-green: #00af99,
+  wp-red: #d10056,
+  wp-blue: #00a5db,
+);
+
+$uos-button-palette: (
+  primary: map-get($foundation-palette, primary),
+  secondary: map-get($foundation-palette, secondary),
+  success: map-get($foundation-palette, success),
+  warning: map-get($foundation-palette, warning),
+  alert: map-get($foundation-palette, alert),
+  // Energy
+  energy-green: map-get($brand-palette, energy-green),
+  energy: map-get($brand-palette, energy-green),
+  energy-pink: map-get($brand-palette, energy-pink),
+  energy-turq: map-get($brand-palette, energy-turq),
+  energy-purple: map-get($brand-palette, energy-purple),
+  // Heritage
+  heritage-green: map-get($brand-palette, heritage-green),
+  heritage-berry: map-get($brand-palette, heritage-berry),
+  heritage-purple: map-get($brand-palette, heritage-purple),
+  // Misc
+  dark-mink: map-get($brand-palette, dark-mink),
+  info: map-get($brand-palette, heritage-blue),
+);
+
+$button-palette: $uos-button-palette;
+
+$body-background: $white;
+$body-font-color: $black;
+$body-font-family: "Open Sans", sans-serif; //'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+
+// 3. Breakpoints
+// --------------
+
+$breakpoints: (
+  small: 0,
+  medium: 640px,
+  large: 1024px,
+  xlarge: 1240px,
+  xxlarge: 1440px,
+);
+$print-breakpoint: large;
+$breakpoint-classes: (small medium large xlarge xxlarge);
+
+// 4. Base Typography
+// ------------------
+
+$global-font-size: 100%;
+$header-font-family: "FSMaja", serif; //$body-font-family;
+$header-font-weight: 300;
+
+// 5. Spacing
+// ------------------
+
+$global-margin: 1rem;
+$global-padding: 1rem;
+$global-position: 1rem;
+$global-radius: 0;
+$global-text-direction: "ltr";
+
+// new button settings
+$button-padding-list: (
+  tiny: 1.1em 1em,
+  small: 1.1em 1em,
+  default: 20px 28px,
+  large: 69px 20px,
+);
+
+@import "settings/functions";
 @import "settings/colors";
 @import "settings/zindex";
-// @import 'foundation';
-@import "motion-ui";
-
-// Sass utilities
-@import "util/util";
-
-// Global variables and styles
-@import "global";
-
-// Components
-@import "grid/grid";
-@import "xy-grid/xy-grid";
-@import "typography/typography";
-@import "forms/forms";
-@import "components/visibility";
-@import "components/float";
-@import "components/button";
-// @import 'components/button-group';
-// @import 'components/accordion-menu';
-//@import 'components/accordion';
-//@import 'components/badge';
-//@import 'components/breadcrumbs';
-@import "components/callout";
-// @import 'components/card';
-@import "components/close-button";
-// @import 'components/drilldown';
-// @import 'components/dropdown-menu';
-//@import 'components/dropdown';
-@import "components/flex";
-@import "components/responsive-embed";
-// @import 'components/label';
-//@import 'components/media-object';
-//@import 'components/menu';
-//@import 'components/menu-icon';
-// @import 'components/off-canvas';
-//@import 'components/orbit';
-//@import 'components/pagination';
-// @import 'components/progress-bar';
-@import "components/reveal";
-//@import 'components/slider';
-//@import 'components/sticky';
-// @import 'components/switch';
-@import "components/table";
-//@import 'components/tabs';
-// @import 'components/title-bar';
-// @import 'components/top-bar';
-// @import 'components/thumbnail';
-// @import 'components/tooltip';
-@import "prototype/prototype";
-
-@mixin foundation-everything($flex: true, $prototype: false) {
-  @if $flex {
-    $global-flexbox: true !global;
-  }
-  @include foundation-global-styles;
-  @if not $flex {
-    @include foundation-grid;
-  } @else {
-    @if $xy-grid {
-      @include foundation-xy-grid-classes;
-    } @else {
-      @include foundation-flex-grid;
-    }
-  }
-  @include foundation-typography;
-  @include foundation-forms;
-  @include foundation-button;
-  //@include foundation-accordion;
-  // @include foundation-accordion-menu;
-  //@include foundation-badge;
-  //@include foundation-breadcrumbs;
-  // @include foundation-button-group;
-  @include foundation-callout;
-  // @include foundation-card;
-  @include foundation-close-button;
-  //@include foundation-menu;
-  //@include foundation-menu-icon;
-  // @include foundation-drilldown-menu;
-  //@include foundation-dropdown;
-  // @include foundation-dropdown-menu;
-  @include foundation-responsive-embed;
-  // @include foundation-label;
-  //@include foundation-media-object;
-  // @include foundation-off-canvas;
-  //@include foundation-orbit;
-  //@include foundation-pagination;
-  // @include foundation-progress-bar;
-  //@include foundation-slider;
-  //@include foundation-sticky;
-  @include foundation-reveal;
-  // @include foundation-switch;
-  @include foundation-table;
-  //@include foundation-tabs;
-  // @include foundation-thumbnail;
-  // @include foundation-title-bar;
-  // @include foundation-tooltip;
-  // @include foundation-top-bar;
-  @include foundation-visibility-classes;
-  @include foundation-float-classes;
-  @include motion-ui-transitions;
-  @if $flex {
-    @include foundation-flex-classes;
-  }
-
-  @if $prototype {
-    @include foundation-prototype-classes;
-  }
-}
 
 // NPM STUFF...
-
-//@import 'node_modules/slick-carousel/slick/slick.scss';
-//@import 'node_modules/slick-carousel/slick/slick-theme.scss';
 
 @import "node_modules/tiny-slider/src/tiny-slider.scss";
 
 // CUSTOM...
 
-@include foundation-everything;
+@import "layout";
+@import "type";
 
 // re-usable components that can be used site wide
 @import "kitchensink";
 
-// layout styles -- best to come before other sections so we can overwrite
-@import "layout";
-
-// typography styles -- best to come before other sections so we can overwrite
-@import "type";
-
-// Utilities
-@import "utilities/utilities";
-
-// site sections, broken down into scss files
-@import "homepage";
-@import "courses";
+// collections
 @import "internal";
 @import "search";
 @import "aos/aos";
-@import "news-article";
+
+// standalone - TODO break into reusable components
+@import "homepage";
+@import "courses";
 @import "research-hub";
+@import "news-article";
 
-// DEBUG
-
-//.badge {
-//  border-radius: 0;
-//margin-left: 10px;
-//background: #ccc;
-//font-size: 0.8rem;
-//font-weight: bold;
-//}
-
-// Fix for select triangle in Foundation not showing onced uglified
-select {
-  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIzMiIgaWQ9InRyaWFuZ2xlLWRvd24iIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik00IDggSDI4IEwxNiAyNiB6Ii8+PC9zdmc+");
-  background-size: 15px 15px;
-}
+// Utilities
+@import "utilities/utilities";
