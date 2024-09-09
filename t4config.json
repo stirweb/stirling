@@ -18,11 +18,6 @@
         "projectPath": "medias/Categorised/Dist/js/app.min.js"
       },
       {
-        "id": 182828,
-        "description": "app.foundation.min.js",
-        "projectPath": "medias/Categorised/Dist/js/app.foundation.min.js"
-      },
-      {
         "id": 158059,
         "description": "gallery.min.js",
         "projectPath": "medias/Categorised/Dist/js/gallery.min.js"
@@ -36,6 +31,11 @@
         "id": 158035,
         "description": "app.min.css",
         "projectPath": "medias/Categorised/Dist/css/app.min.css"
+      },
+      {
+        "id": 182828,
+        "description": "app.foundation.min.css",
+        "projectPath": "medias/Categorised/Dist/js/app.foundation.min.css"
       },
       {
         "id": 158036,
