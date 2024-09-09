@@ -236,7 +236,7 @@ function jsGallery() {
 
 // SASS App function
 function scss() {
-  const source = "src/scss/app.scss";
+  const source = "src/scss/app.foundation.scss";
   const sassPaths = ["node_modules/foundation-sites/scss", "node_modules/motion-ui/src", "src/scss"];
   return src(source)
     .pipe(sourcemaps.init())
@@ -254,7 +254,7 @@ function scss() {
     )
     .pipe(sourcemaps.write())
     .pipe(dest("medias/Categorised/Dist/css"))
-    .pipe(concatCss("app.min.css"))
+    .pipe(concatCss("app.foundation.min.css"))
     .pipe(cleanCSS({ compatibility: "*" }))
     .pipe(dest("medias/Categorised/Dist/css"))
     .pipe(browserSync.stream());
@@ -262,7 +262,7 @@ function scss() {
 
 // SASS App function
 function scssNew() {
-  const source = "src/scss/app.new.scss";
+  const source = "src/scss/app.scss";
   const sassPaths = ["src/scss"];
   return src(source)
     .pipe(sourcemaps.init())
@@ -280,7 +280,7 @@ function scssNew() {
     )
     .pipe(sourcemaps.write())
     .pipe(dest("medias/Categorised/Dist/css"))
-    .pipe(concatCss("app.new.min.css"))
+    .pipe(concatCss("app.min.css"))
     .pipe(cleanCSS({ compatibility: "*" }))
     .pipe(dest("medias/Categorised/Dist/css"))
     .pipe(browserSync.stream());

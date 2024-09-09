@@ -1,25 +1,188 @@
+/* 
+    Forms 
+*/
+
+form,
+input {
+  outline: none;
+  position: relative;
+}
+
+input {
+  border: none;
+  // width: 100%;
+}
+
+[type="text"]:focus,
+[type="password"]:focus,
+[type="date"]:focus,
+[type="datetime"]:focus,
+[type="datetime-local"]:focus,
+[type="month"]:focus,
+[type="week"]:focus,
+[type="email"]:focus,
+[type="number"]:focus,
+[type="search"]:focus,
+[type="tel"]:focus,
+[type="time"]:focus,
+[type="url"]:focus,
+[type="color"]:focus,
+textarea:focus {
+  background-color: inherit;
+  box-shadow: none;
+}
+
+::placeholder {
+  color: #737373;
+}
+
+/*  Focus */
+.button:focus,
+input:focus,
+textarea:focus,
+select:focus,
+.c-search-ordered-filters button:focus,
+a:focus {
+  outline: 1px solid $heritage-green !important;
+  outline-offset: 4px;
+}
+
+.u-white--all,
+.darkmode {
+  .button:focus,
+  input:focus,
+  textarea:focus,
+  select:focus,
+  a:focus {
+    outline: 1px solid #fff !important;
+    outline-offset: 4px;
+  }
+}
+
+/* Form elements  */
+
+[type="color"],
+[type="date"],
+[type="datetime-local"],
+[type="datetime"],
+[type="email"],
+[type="month"],
+[type="number"],
+[type="password"],
+[type="search"],
+[type="tel"],
+[type="text"],
+[type="time"],
+[type="url"],
+[type="week"],
+textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 2.4375rem;
+  margin: 0 0 1rem;
+  padding: 0.5rem;
+  border: 1px solid #cacaca;
+  border-radius: 0;
+  background-color: #fff;
+  box-shadow: inset 0 1px 2px rgba(58, 60, 57, 0.1);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #3a3c39;
+  transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
+  appearance: none;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+select {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border-radius: 0;
+  border: 1px solid #666;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIzMiIgaWQ9InRyaWFuZ2xlLWRvd24iIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik00IDggSDI4IEwxNiAyNiB6Ii8+PC9zdmc+");
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  background-position: right -1rem center;
+  background-repeat: no-repeat;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #3a3c39;
+  font-size: 0.875rem;
+}
+
+label > [type="checkbox"],
+label > [type="radio"] {
+  margin-right: 0.5rem;
+}
+
+/*
+    Progress bar eg used on search - MOVE!
+*/
+
+progress {
+  &[value] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 250px;
+    height: 20px;
+    background-color: #e8e7e7;
+    overflow: hidden;
+  }
+
+  &::-webkit-progress-bar {
+    background-color: #e8e7e7;
+  }
+
+  &::-webkit-progress-value {
+    background-color: #76bd22;
+  }
+
+  &::-moz-progress-bar {
+    background-color: #76bd22;
+  }
+}
+
 .c-form {
-	[type="text"],
-	[type="password"],
-	[type="date"],
-	[type="datetime"],
-	[type="datetime-local"],
-	[type="month"],
-	[type="week"],
-	[type="email"],
-	[type="number"],
-	[type="search"],
-	[type="tel"],
-	[type="time"],
-	[type="url"],
-	[type="color"],
-	textarea,
- 	select {
-		font-size: 1.25rem;
-		margin: 0 0 20px;
-		min-height: 70px;
-		padding: 0 20px;
-	}
+  [type="text"],
+  [type="password"],
+  [type="date"],
+  [type="datetime"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="week"],
+  [type="email"],
+  [type="number"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="url"],
+  [type="color"],
+  textarea,
+  select {
+    font-size: 1.25rem;
+    margin: 0 0 20px;
+    min-height: 50px;
+    padding: 0 20px;
+  }
 }
 .c-form {
   [type="text"],

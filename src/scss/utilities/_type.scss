@@ -153,3 +153,10 @@
     content: '"';
   }
 }
+
+ol.no-bullet,
+ul.no-bullet {
+  margin-left: 0;
+  list-style: none;
+  padding: 0;
+}
