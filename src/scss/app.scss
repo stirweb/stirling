@@ -33,7 +33,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -166,26 +166,27 @@ $button-padding-list: (
 
 @import "node_modules/tiny-slider/src/tiny-slider.scss";
 
-// CUSTOM...
+// STIRLING STUFF...
 
 @import "layout";
 @import "type";
 
-// re-usable components that can be used site wide
+// Site wide components
 @import "kitchensink";
 
-// collections
+// Collections
 @import "internal";
 @import "search";
 @import "aos/aos";
 
-// standalone - TODO break into reusable components
+// Section specific - TODO break up into reusable components
 @import "homepage";
 @import "courses";
 @import "research-hub";
 @import "news-article";
 
-@import "layout/grid";
+// !IMPORTANT STUFF...
+// We dont want other stuff overriding so keep to the end
 
-// Utilities
+@import "layout/grid";
 @import "utilities/utilities";
