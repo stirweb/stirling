@@ -33,7 +33,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -116,10 +116,8 @@ $uos-button-palette: (
 );
 
 $button-palette: $uos-button-palette;
-
 $body-background: $white;
 $body-font-color: $black;
-$body-font-family: "Open Sans", sans-serif; //'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 
 // 3. Breakpoints
 // --------------
@@ -138,7 +136,8 @@ $breakpoint-classes: (small medium large xlarge xxlarge);
 // ------------------
 
 $global-font-size: 100%;
-$header-font-family: "FSMaja", serif; //$body-font-family;
+$header-font-family: "FSMaja", serif;
+$body-font-family: "Open Sans", sans-serif;
 $header-font-weight: 300;
 
 // 5. Spacing
@@ -171,22 +170,22 @@ $button-padding-list: (
 @import "layout";
 @import "type";
 
-// Site wide components
+// Site wide components - TODO convert to utils?
 @import "kitchensink";
 
 // Collections
-@import "internal";
-@import "search";
 @import "aos/aos";
 
-// Section specific - TODO break up into reusable components
+// Section specific - TODO break up into reusable components or utils
+@import "internal";
+@import "search";
 @import "homepage";
 @import "courses";
 @import "research-hub";
 @import "news-article";
 
-// !IMPORTANT STUFF...
-// We dont want other stuff overriding so keep to the end
+// IMPORTANT STUFF...
+// We dont want other stuff overriding these so keep to the end
 
 @import "layout/grid";
 @import "utilities/utilities";
