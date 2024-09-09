@@ -1,3 +1,57 @@
+/* 
+    Renderer functions
+*/
+const renderDivider = () => `<div class="cell"><hr /></div>`;
+
+const renderNoItemsMessage = (msg) => `<div class="cell">${msg}</div>`;
+
+const renderHeader = (header, intro) =>
+  !header && !intro
+    ? ``
+    : `<div class="cell u-mt-2">
+    ${header ? `<h2>${header}</h2>` : ""}
+    ${intro}
+  </div>`;
+
+const renderDateTime = (item) =>
+  `<p class="text-sm u-m-0">
+    <strong>${item.date}, ${item.time} ${!item.timeend ? `` : `to ${item.timeend}`} (${item.zone})</strong>
+  </p>`;
+
+const renderItem = (item) => {
+  const statusTag = item.ondemand && !item.isupcoming ? `<span class="u-bg-heritage-berry u-white u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : item.isupcoming ? `<span class="u-bg-heritage-green u-white u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ``;
+  return `
+    <div class="cell small-12 large-4 medium-6 u-mb-3">
+      <div class="u-border-width-4 ${item.ondemand && !item.isupcoming ? "u-heritage-berry-line-left" : "u-heritage-line-left"} u-p-2 u-relative u-bg-white u-h-full">
+        <div class="u-absolute u-top--16">${statusTag}</div>
+        <h3 class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-2">
+          <a href="${item.link}" class="u-border-bottom-hover u-border-width-2">${item.title}</a>
+        </h3>
+        ${item.isupcoming ? renderDateTime(item) : ``}
+        <div class="text-sm">${item.description}</div>
+        <p class="text-sm">Audience: ${item.studylevels} students. ${item.countries}</p>
+      </div>
+    </div>`;
+};
+
+const renderAllItems = stir.curry((section, items) => {
+  if (!items.length && !section.noItems) return ``;
+  return `
+    <div class="grid-x grid-padding-x">
+      ${renderHeader(section.head, section.intro)}
+      ${!items.length ? renderNoItemsMessage(section.noItems) : items.map(renderItem).join("")}
+      ${section.divider && section.divider === "no" ? `` : renderDivider()}
+    </div>`;
+});
+
+const renderSummary = (num) => `<p class="u-pb-2 text-sm">Results based on filters - <strong>${num} webinars</strong></p>`;
+
+const renderPaginationSummary = (start, end, total) => `<p class="u-pb-2 text-sm text-center"><strong>Displaying ${start + 1} to ${end} of ${total} results</strong></p>`;
+
+const renderLoadMoreButon = () => `<div class="text-center"><button class="button hollow tiny u-bg-white" data-loadmore>Load more results</button></div>`;
+
+const renderNoData = (text) => `<p class="text-center text-sm">${text}</p>`;
+
 /*
     Helper functions
 */
@@ -46,20 +100,33 @@ const filterer = stir.curry((consts, filters, webinar) => {
 });
 
 const getISONow = () => Number(new Date().toISOString().split(".")[0].replaceAll(/[-:T]/g, ""));
+
 const isPast = (item) => !item.isupcoming;
+
 const isUpcoming = (item) => item.isupcoming;
+
 const isOnDemand = (item) => item.ondemand;
+
 const isUpcomingByDate = (compareDate) => (item) => Number(item.datetime) > compareDate;
 
 const sortByDatetime = (a, b) => parseInt(a.datetime) - parseInt(b.datetime);
 
-/*
-    Prevent injection attacks
+/* 
+    Handle inputs and outputs
 */
+const setDOMContent = stir.curry((elem, html) => {
+  stir.setHTML(elem, html);
+  return elem;
+});
+
+const appendDOMContent = stir.curry((elem, html) => {
+  elem.insertAdjacentHTML("beforeend", html);
+  return elem;
+});
+
 const cleanQueryParam = (param) => {
   if (typeof param !== "string") return "";
-  // Remove any non-alphanumeric characters except hyphen and underscore
-  return param.replace(/[^a-zA-Z0-9-_]/g, "");
+  return param.replace(/[^a-zA-Z0-9-_]/g, ""); // Remove any non-alphanumeric characters except hyphen and underscore
 };
 
 const SafeQueryParams = {
@@ -171,9 +238,36 @@ const handlePagination = (consts, webinarResultsArea, dataWebinars) => (e) => {
 };
 
 /* 
+    Tab scrolling function
+*/
+function handleTabScroll(el, container, event) {
+  const itemWidth = el.closest("div").offsetWidth;
+  const containerBounds = container.parentElement.getBoundingClientRect();
+  const pos = el.closest("div").getBoundingClientRect();
+
+  if (pos.right > containerBounds.width) {
+    container.scrollBy({ left: itemWidth, behavior: "smooth" });
+
+    if (event === "onload") {
+      setTimeout(() => {
+        const newRight = el.closest("div").getBoundingClientRect().right;
+        const maxRight = container.parentElement.getBoundingClientRect().right;
+        const offsetRight = window.screen.width - maxRight;
+        const diff = newRight - maxRight + offsetRight * 2;
+
+        newRight < maxRight && container.scrollBy({ left: diff, behavior: "smooth" });
+      }, 500);
+    }
+  }
+  if (pos.left < containerBounds.left) {
+    container.scrollBy({ left: -itemWidth, behavior: "smooth" });
+  }
+}
+
+/* 
     Initialize
 */
-function initWebinarResults(consts, dataWebinars) {
+function initWebinarFinder(consts, dataWebinars) {
   const webinarResultsArea = stir.node("#webinarresults");
   if (!webinarResultsArea) return;
 
@@ -202,6 +296,7 @@ function initWebinarResults(consts, dataWebinars) {
   };
 
   main(consts, webinarResultsArea, dataWebinars, filters, "new");
+
   if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars found</p>");
 
   // Event listeners
@@ -221,100 +316,6 @@ function initWebinarResults(consts, dataWebinars) {
   });
 
   webinarResultsArea.addEventListener("click", handlePagination(consts, webinarResultsArea, dataWebinars));
-}
-
-/* 
-    Renderer functions
-*/
-const renderDivider = () => `<div class="cell"><hr /></div>`;
-
-const renderNoItemsMessage = (msg) => `<div class="cell">${msg}</div>`;
-
-const renderHeader = (header, intro) =>
-  !header && !intro
-    ? ``
-    : `<div class="cell u-mt-2">
-    ${header ? `<h2>${header}</h2>` : ""}
-    ${intro}
-  </div>`;
-
-const renderDateTime = (item) =>
-  `<p class="text-sm u-m-0">
-    <strong>${item.date}, ${item.time} ${!item.timeend ? `` : `to ${item.timeend}`} (${item.zone})</strong>
-  </p>`;
-
-const renderItem = (item) => {
-  const statusTag = item.ondemand && !item.isupcoming ? `<span class="u-bg-heritage-berry u-white u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : item.isupcoming ? `<span class="u-bg-heritage-green u-white u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ``;
-  return `
-    <div class="cell small-12 large-4 medium-6 u-mb-3">
-      <div class="u-border-width-4 ${item.ondemand && !item.isupcoming ? "u-heritage-berry-line-left" : "u-heritage-line-left"} u-p-2 u-relative u-bg-white u-h-full">
-        <div class="u-absolute u-top--16">${statusTag}</div>
-        <h3 class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-2">
-          <a href="${item.link}" class="u-border-bottom-hover u-border-width-2">${item.title}</a>
-        </h3>
-        ${item.isupcoming ? renderDateTime(item) : ``}
-        <div class="text-sm">${item.description}</div>
-        <p class="text-sm">Audience: ${item.studylevels} students. ${item.countries}</p>
-      </div>
-    </div>`;
-};
-
-const renderAllItems = stir.curry((section, items) => {
-  if (!items.length && !section.noItems) return ``;
-  return `
-    <div class="grid-x grid-padding-x">
-      ${renderHeader(section.head, section.intro)}
-      ${!items.length ? renderNoItemsMessage(section.noItems) : items.map(renderItem).join("")}
-      ${section.divider && section.divider === "no" ? `` : renderDivider()}
-    </div>`;
-});
-
-const renderSummary = (num) => `<p class="u-pb-2 text-sm">Results based on filters - <strong>${num} webinars</strong></p>`;
-
-const renderPaginationSummary = (start, end, total) => `<p class="u-pb-2 text-sm text-center"><strong>Displaying ${start + 1} to ${end} of ${total} results</strong></p>`;
-
-const renderLoadMoreButon = () => `<div class="text-center"><button class="button hollow tiny u-bg-white" data-loadmore>Load more results</button></div>`;
-
-const renderNoData = (text) => `<p class="text-center text-sm">${text}</p>`;
-
-/* 
-    DOM manipulation functions
-*/
-const setDOMContent = stir.curry((elem, html) => {
-  stir.setHTML(elem, html);
-  return elem;
-});
-
-const appendDOMContent = stir.curry((elem, html) => {
-  elem.insertAdjacentHTML("beforeend", html);
-  return elem;
-});
-
-/* 
-    Tab scrolling function
-*/
-function handleTabScroll(el, container, event) {
-  const itemWidth = el.closest("div").offsetWidth;
-  const containerBounds = container.parentElement.getBoundingClientRect();
-  const pos = el.closest("div").getBoundingClientRect();
-
-  if (pos.right > containerBounds.width) {
-    container.scrollBy({ left: itemWidth, behavior: "smooth" });
-
-    if (event === "onload") {
-      setTimeout(() => {
-        const newRight = el.closest("div").getBoundingClientRect().right;
-        const maxRight = container.parentElement.getBoundingClientRect().right;
-        const offsetRight = window.screen.width - maxRight;
-        const diff = newRight - maxRight + offsetRight * 2;
-
-        newRight < maxRight && container.scrollBy({ left: diff, behavior: "smooth" });
-      }, 500);
-    }
-  }
-  if (pos.left < containerBounds.left) {
-    container.scrollBy({ left: -itemWidth, behavior: "smooth" });
-  }
 }
 
 /* 
@@ -351,9 +352,21 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
     macros: (stir.t4Globals.regionmacros || []).filter((item) => item.tag),
   };
 
-  const dataWebinars = stir.t4Globals.webinars || [];
+  const dataWebinarsAll = stir.t4Globals.webinars || [];
   const dataWebinarFilters = stir.t4Globals.webinarSectionData || {};
 
-  initWebinarResults(CONSTS, dataWebinars);
+  function removeDuplicates(arr, key) {
+    return arr.reduce((unique, item) => {
+      const found = unique.find((i) => i[key] === item[key]);
+      if (!found) {
+        return [...unique, item];
+      }
+      return unique;
+    }, []);
+  }
+
+  const dataWebinars = removeDuplicates(dataWebinarsAll, "id");
+
+  initWebinarFinder(CONSTS, dataWebinars);
   initWebinarSections(CONSTS, dataWebinars, dataWebinarFilters);
 })(stir.nodes("[data-webinar]"));
