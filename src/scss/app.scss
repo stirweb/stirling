@@ -33,7 +33,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,
 );
 
 $brand-palette: (
@@ -184,6 +184,8 @@ $button-padding-list: (
 @import "courses";
 @import "research-hub";
 @import "news-article";
+
+@import "layout/grid";
 
 // Utilities
 @import "utilities/utilities";
