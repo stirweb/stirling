@@ -197,8 +197,17 @@ function main(consts, node, data, filters, event) {
     case "ondemand":
       return renderResults(onDemandData, "On Demand");
     default:
-      return all.slice(start, end).length ? renderResults(all, "All") : setDOMContent(node, "<p>No webinars found</p>");
+      return all.slice(start, end).length ? null : setDOMContent(node, "<p>No webinars found</p>");
   }
+
+  // switch (filters.params.view) {
+  //   case "live":
+  //     return renderResults(upcomingData, "Upcoming");
+  //   case "ondemand":
+  //     return renderResults(onDemandData, "On Demand");
+  //   default:
+  //     return all.slice(start, end).length ? renderResults(all, "All") : setDOMContent(node, "<p>No webinars found</p>");
+  // }
 }
 
 /*
@@ -241,7 +250,7 @@ const handleRadioClick = (consts, webinarResultsArea, dataWebinars) => (e, click
   doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
   stir.nodes("#webinarfilters input").forEach((r) => r.closest("div").classList.remove("u-bg-grey", "u-energy-line-top"));
   e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
-  handleTabScroll(e.target, consts.radioTabs, event);
+  //handleTabScroll(e.target, consts.radioTabs, event);
 };
 
 const handlePagination = (consts, webinarResultsArea, dataWebinars) => (e) => {
@@ -256,7 +265,7 @@ const handlePagination = (consts, webinarResultsArea, dataWebinars) => (e) => {
 
 /* 
     Tab scrolling function
-*/
+
 function handleTabScroll(el, container, event) {
   const itemWidth = el.closest("div").offsetWidth;
   const containerBounds = container.parentElement.getBoundingClientRect();
@@ -280,6 +289,7 @@ function handleTabScroll(el, container, event) {
     container.scrollBy({ left: -itemWidth, behavior: "smooth" });
   }
 }
+*/
 
 /* 
     Initialize
