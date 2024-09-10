@@ -1116,29 +1116,42 @@ StirUniModules.initialisationRoutine = stir.course.auto;
     return contentUris.length > 1 ? contentUris[1] : "";
   };
 
+  /* 
+    Check if node is within another component (className) and return it or null
+  */
+  const isInComponent = (className, node) => {
+    let found = false,
+      tempNode = node;
+
+    while (!found && tempNode !== null) {
+      if (tempNode.classList && tempNode.classList.contains(className)) {
+        return tempNode;
+      }
+      tempNode = tempNode.parentNode;
+    }
+    return null;
+  };
+
   /*
     Find the content item then smooth scroll to it
    */
-  const slideToContent = (node, offset) => {
-    if(!node) return;
+  const slideToContent = (nodeId, offset) => {
+    const node = document.getElementById(nodeId);
 
-    const panel = node.closest('[role="tabpanel"],[role="region"]')
-    
-    // Open the tab if found and not already open
-    if (panel) {
-        const tab = panel.hasAttribute('aria-labelledby') && document.getElementById(panel.getAttribute('aria-labelledby'));
-        if(tab) {
-          if(tab.hasAttribute('aria-selected') && tab.getAttribute('aria-selected')!=="true"){
-            tab.click();
-          } else if(tab.hasAttribute('aria-expanded') && tab.getAttribute('aria-expanded')!=="true"){
-            tab.click();
-          }
-        }
+    const tab = isInComponent("stir-tabs__content", node);
+
+    // Open the tab if found and closed
+    if (tab) {
+      const tabBtn = tab.previousElementSibling;
+      if (!tabBtn.classList.contains("stir-tabs__tab--active")) tabBtn.click();
     }
 
-    if(node.getAttribute('data-behaviour')==="accordion") {
-      const accordion = node.querySelector('button[aria-expanded="false"]');
-      accordion && accordion.click();
+    const accord = isInComponent("stir-accordion", node);
+
+    // Open the accord if found and closed
+    if (accord) {
+      const accordBtn = accord.children[0].children[0];
+      if (!accordBtn.hasAttribute("aria-expanded") || accordBtn.getAttribute("aria-expanded") === "false") accordBtn.click();
     }
 
     node && stir.scrollToElement(node, offset);
@@ -1150,9 +1163,11 @@ StirUniModules.initialisationRoutine = stir.course.auto;
    */
   const handleClick = (e) => {
     const contentId = getLinkId(e.target.href);
-    if (contentId) {
+
+    if (contentId && document.getElementById(contentId)) {
       const offset = offsets[stir.MediaQuery.current] ? offsets[stir.MediaQuery.current] : 100;
-      slideToContent(document.getElementById(contentId), offset);
+
+      slideToContent(contentId, offset);
       e.preventDefault();
       return;
     }
