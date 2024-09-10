@@ -16,7 +16,7 @@ const renderHeader = (header, intro) =>
 const renderRadioTab = (id, text) => {
   return `<div class="u-border-width-4 u-white-line-top u-bg-medium-grey u-mr-tiny u-box-size-border">
               <label for="${id}" class="u-cursor-pointer u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
-              <input type="radio" id="${id}" name="view" class="hide" value="live" />${text}</label>
+              <input type="radio" id="${id}" name="view" class="hide" value="${id.replace("view", "")}" />${text}</label>
           </div>`;
 };
 
@@ -240,15 +240,13 @@ function doForm(consts, node, data, event, form) {
 */
 const handleFormChange = (consts, webinarResultsArea, dataWebinars) => () => doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
 
-const handleRadioClick = (consts, webinarResultsArea, dataWebinars) => (e, clicks) => {
+const handleRadioClick = (consts, webinarResultsArea, dataWebinars) => (e) => {
+  SafeQueryParams.set("view", e.target.value);
   SafeQueryParams.set("page", "1");
-  //const event = clicks === 0 ? "onload" : "click";
-  //if (e.target.value === SafeQueryParams.get("view") && clicks > 0) return;
 
   doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
   stir.nodes("#webinarfilters input").forEach((r) => r.closest("div").classList.remove("u-bg-grey", "u-energy-line-top"));
   e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
-  //handleTabScroll(e.target, consts.radioTabs, event);
 };
 
 const handlePagination = (consts, webinarResultsArea, dataWebinars) => (e) => {
@@ -332,13 +330,17 @@ function initWebinarForm(consts, dataWebinars) {
     select.addEventListener("change", handleFormChange(consts, webinarResultsArea, dataWebinars));
   });
 
-  stir.nodes("#webinarfilters input").forEach((radio) => {
-    let clicks = 0;
-    radio.addEventListener("click", (e) => handleRadioClick(consts, webinarResultsArea, dataWebinars)(e, clicks++));
+  consts.radioTabs.addEventListener("click", (e) => {
+    if (e.target.nodeName === "INPUT") {
+      handleRadioClick(consts, webinarResultsArea, dataWebinars)(e);
+    }
+  });
+
+  var radioTabs = stir.nodes("#webinarfilters input");
+  radioTabs.forEach((radio) => {
     if (radio.value === params[radio.name]) {
       radio.checked = true;
       radio.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
-      radio.click();
     }
   });
 
@@ -386,8 +388,6 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
 
   const apiUrl = UoS_env.name === "dev" ? "data.json" : '<t4 type="navigation"  id="5271" />';
   const dataWebinarFilters = stir.t4Globals.webinarSectionData || {};
-
-  console.log(apiUrl);
 
   // Move to T4
   function removeDuplicates(arr, key) {
