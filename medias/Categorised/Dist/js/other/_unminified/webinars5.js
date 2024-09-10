@@ -242,8 +242,8 @@ const handleFormChange = (consts, webinarResultsArea, dataWebinars) => () => doF
 
 const handleRadioClick = (consts, webinarResultsArea, dataWebinars) => (e, clicks) => {
   SafeQueryParams.set("page", "1");
-  const event = clicks === 0 ? "onload" : "click";
-  if (e.target.value === SafeQueryParams.get("view") && clicks > 0) return;
+  //const event = clicks === 0 ? "onload" : "click";
+  //if (e.target.value === SafeQueryParams.get("view") && clicks > 0) return;
 
   doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
   stir.nodes("#webinarfilters input").forEach((r) => r.closest("div").classList.remove("u-bg-grey", "u-energy-line-top"));
@@ -304,7 +304,7 @@ function initWebinarForm(consts, dataWebinars) {
     category: SafeQueryParams.get("category") ? SafeQueryParams.get("category") : ``,
     studylevel: SafeQueryParams.get("studylevel") ? SafeQueryParams.get("studylevel") : ``,
     region: SafeQueryParams.get("region") ? SafeQueryParams.get("region") : ``,
-    view: SafeQueryParams.get("view") ? SafeQueryParams.get("view") : ``,
+    view: SafeQueryParams.get("view") ? SafeQueryParams.get("view") : `live`,
     page: 1,
   };
 
