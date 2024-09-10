@@ -14,7 +14,7 @@ const renderHeader = (header, intro) =>
   </div>`;
 
 const renderRadioTab = (id, text) => {
-  return `<div class="u-border-width-4 u-white-line-top u-bg-medium-grey u-mr-tiny u-box-size-border">
+  return `<div class="u-border-width-4 u-px-1 u-white-line-top u-bg-medium-grey u-mr-tiny u-box-size-border">
               <label for="${id}" class="u-cursor-pointer u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
               <input type="radio" id="${id}" name="view" class="hide" value="${id.replace("view", "")}" />${text}</label>
           </div>`;
@@ -173,9 +173,13 @@ function main(consts, node, data, filters, event) {
 
   if (upcomingData.length && !stir.node("#viewlive")) {
     appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "View live"));
+  } else if (filters.params.view === "live" && !stir.node("#viewlive")) {
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "View live"));
   }
 
   if (onDemandData.length && !stir.node("#viewondemand")) {
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewondemand", "On demand"));
+  } else if (filters.params.view === "ondemand" && !stir.node("#viewondemand")) {
     appendDOMContent(consts.radioTabs, renderRadioTab("viewondemand", "On demand"));
   }
 
@@ -238,7 +242,10 @@ function doForm(consts, node, data, event, form) {
 /* 
     Event Handlers
 */
-const handleFormChange = (consts, webinarResultsArea, dataWebinars) => () => doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
+const handleFormChange = (consts, webinarResultsArea, dataWebinars) => () => {
+  SafeQueryParams.set("page", "1");
+  doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
+};
 
 const handleRadioClick = (consts, webinarResultsArea, dataWebinars) => (e) => {
   SafeQueryParams.set("view", e.target.value);
