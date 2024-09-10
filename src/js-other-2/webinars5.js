@@ -225,11 +225,11 @@ function doForm(consts, node, data, event, form) {
     page: SafeQueryParams.get("page"),
     params: {
       series: "",
-      countries: formDataObject.region,
+      countries: mapQueryParams(formDataObject.region),
       subjects: "",
-      studylevels: formDataObject.studylevel,
+      studylevels: mapQueryParams(formDataObject.studylevel),
       faculties: "",
-      categories: formDataObject.category,
+      categories: mapQueryParams(formDataObject.category),
       view: formDataObject.view,
     },
     divider: "no",
@@ -294,6 +294,18 @@ function handleTabScroll(el, container, event) {
 }
 */
 
+const mapQueryParams = (val) => {
+  const val2 = val.replaceAll("-", " ");
+
+  if (val2 === "Postgraduate taught") {
+    return "Postgraduate (taught)";
+  }
+  if (val2 === "Postgraduate research") {
+    return "Postgraduate (research)";
+  }
+  return val2;
+};
+
 /* 
     Initialize
 */
@@ -317,11 +329,11 @@ function initWebinarForm(consts, dataWebinars) {
     page: params.page,
     params: {
       series: "",
-      countries: params.region,
+      countries: mapQueryParams(params.region),
       subjects: "",
-      studylevels: params.studylevel,
+      studylevels: mapQueryParams(params.studylevel),
       faculties: "",
-      categories: params.category,
+      categories: mapQueryParams(params.category),
       view: params.view,
     },
     divider: "no",
