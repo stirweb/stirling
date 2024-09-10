@@ -185,7 +185,7 @@ function main(consts, node, data, filters, event) {
 
   const renderResults = (data, title) => {
     const summaryHtml = start === 0 ? renderSummary(data.length) : renderPaginationSummary(start, end, data.length);
-    const endHtml = data.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
+    const endHtml = data.length > end ? renderLoadMoreButon() : renderNoData(``);
 
     const setDOMResults = event === "new" ? setDOMContent(node) : appendDOMContent(node);
     const renderCurry = renderAllItems(filters);
