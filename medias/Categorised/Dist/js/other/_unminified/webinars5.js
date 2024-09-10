@@ -13,6 +13,15 @@ const renderHeader = (header, intro) =>
     ${intro}
   </div>`;
 
+const renderRadioTab = (id, text) => {
+  return `<div
+              class="u-border-width-4 u-white-line-top u-bg-medium-grey u-mr-tiny u-box-size-border">
+              <label for="${id}"
+                  class="u-cursor-pointer u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
+                  <input type="radio" id="${id}" name="view" class="hide" value="live" />${text}</label>
+          </div>`;
+};
+
 const renderDateTime = (item) =>
   `<p class="text-sm u-m-0">
     <strong>${item.date}, ${item.time} ${!item.timeend ? `` : `to ${item.timeend}`} (${item.zone})</strong>
@@ -164,6 +173,14 @@ function main(consts, node, data, filters, event) {
   const start = itemsPerPage * (page - 1);
   const end = start + itemsPerPage;
 
+  if (upcomingData.length && !stir.node("#viewlive")) {
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "View live"));
+  }
+
+  if (onDemandData.length && !stir.node("#viewondemand")) {
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewondemand", "On demand"));
+  }
+
   const renderResults = (data, title) => {
     const summaryHtml = start === 0 ? renderSummary(data.length) : renderPaginationSummary(start, end, data.length);
     const endHtml = data.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
@@ -224,7 +241,7 @@ const handleRadioClick = (consts, webinarResultsArea, dataWebinars) => (e, click
   doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
   stir.nodes("#webinarfilters input").forEach((r) => r.closest("div").classList.remove("u-bg-grey", "u-energy-line-top"));
   e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
-  handleTabScroll(e.target, stir.node("#radioTabs"), event);
+  handleTabScroll(e.target, consts.radioTabs, event);
 };
 
 const handlePagination = (consts, webinarResultsArea, dataWebinars) => (e) => {
@@ -267,8 +284,10 @@ function handleTabScroll(el, container, event) {
 /* 
     Initialize
 */
-function initWebinarFinder(consts, dataWebinars) {
-  const webinarResultsArea = stir.node("#webinarresults");
+function initWebinarForm(consts, dataWebinars) {
+  if (!consts.webinarResultsArea) return;
+
+  const webinarResultsArea = consts.webinarResultsArea;
   if (!webinarResultsArea) return;
 
   SafeQueryParams.set("page", "1");
@@ -322,7 +341,9 @@ function initWebinarFinder(consts, dataWebinars) {
     Initialize webinar sections
 */
 function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
-  const webinarSections = stir.nodes("[data-webinarSects]");
+  if (!consts.webinarSections.length) return;
+
+  const webinarSections = consts.webinarSections;
   webinarSections.forEach((element) => {
     main(consts, element, dataWebinars, dataWebinarFilters[element.dataset.webinarsects], "onload");
   });
@@ -347,14 +368,18 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
   if (!scope) return;
 
   const CONSTS = {
+    webinarResultsArea: stir.node("#webinarresults"),
+    radioTabs: stir.node("#radioTabs"),
+    webinarSections: stir.nodes("[data-webinarSects]"),
     itemsPerPage: 6,
     safeList: ["countries", "series", "subjects", "studylevels", "faculties", "categories"],
     macros: (stir.t4Globals.regionmacros || []).filter((item) => item.tag),
   };
 
-  const dataWebinarsAll = stir.t4Globals.webinars || [];
+  const apiUrl = UoS_env.name === "dev" ? "data.json" : '<t4 type="navigation" name="Helper: Fetch Region Macros JSON" id="4703" />';
   const dataWebinarFilters = stir.t4Globals.webinarSectionData || {};
 
+  // Move to T4
   function removeDuplicates(arr, key) {
     return arr.reduce((unique, item) => {
       const found = unique.find((i) => i[key] === item[key]);
@@ -365,8 +390,32 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
     }, []);
   }
 
-  const dataWebinars = removeDuplicates(dataWebinarsAll, "id");
+  // Fetch function to get webinar data
+  function fetchWebinarData(apiUrl) {
+    return fetch(apiUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return removeDuplicates(data, "id");
+      })
+      .catch((error) => {
+        console.error("There was a problem fetching the webinar data:", error);
+        return []; // Return an empty array in case of error
+      });
+  }
 
-  initWebinarFinder(CONSTS, dataWebinars);
-  initWebinarSections(CONSTS, dataWebinars, dataWebinarFilters);
+  // Initialization function to use fetched data
+  function initializeWebinars(dataWebinars) {
+    initWebinarForm(CONSTS, dataWebinars);
+    initWebinarSections(CONSTS, dataWebinars, dataWebinarFilters);
+  }
+
+  // Fetch data and initialize
+  fetchWebinarData(apiUrl).then((dataWebinars) => {
+    initializeWebinars(dataWebinars);
+  });
 })(stir.nodes("[data-webinar]"));
