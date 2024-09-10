@@ -14,11 +14,9 @@ const renderHeader = (header, intro) =>
   </div>`;
 
 const renderRadioTab = (id, text) => {
-  return `<div
-              class="u-border-width-4 u-white-line-top u-bg-medium-grey u-mr-tiny u-box-size-border">
-              <label for="${id}"
-                  class="u-cursor-pointer u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
-                  <input type="radio" id="${id}" name="view" class="hide" value="live" />${text}</label>
+  return `<div class="u-border-width-4 u-white-line-top u-bg-medium-grey u-mr-tiny u-box-size-border">
+              <label for="${id}" class="u-cursor-pointer u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
+              <input type="radio" id="${id}" name="view" class="hide" value="live" />${text}</label>
           </div>`;
 };
 
@@ -386,8 +384,10 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
     macros: (stir.t4Globals.regionmacros || []).filter((item) => item.tag),
   };
 
-  const apiUrl = UoS_env.name === "dev" ? "data.json" : '<t4 type="navigation" name="Helper: Fetch Region Macros JSON" id="4703" />';
+  const apiUrl = UoS_env.name === "dev" ? "data.json" : '<t4 type="navigation"  id="4703" />';
   const dataWebinarFilters = stir.t4Globals.webinarSectionData || {};
+
+  console.log(apiUrl);
 
   // Move to T4
   function removeDuplicates(arr, key) {
