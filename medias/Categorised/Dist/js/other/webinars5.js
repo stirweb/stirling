@@ -1,8 +1,8 @@
 const renderDivider=()=>'<div class="cell"><hr /></div>',renderNoItemsMessage=e=>`<div class="cell">${e}</div>`,renderHeader=(e,t)=>e||t?`<div class="cell u-mt-2 u-margin-bottom">
     ${e?`<h2>${e}</h2>`:""}
     ${t}
-  </div>`:"",renderRadioTab=(e,t)=>`<div class="u-border-width-4 u-px-1 u-white-line-top u-bg-medium-grey u-mr-tiny u-box-size-border">
-              <label for="${e}" class="u-cursor-pointer u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
+  </div>`:"",renderRadioTab=(e,t)=>`<div class="u-border-width-4 u-px-1 u-white-line-top u-bg-white u-mr-tiny u-box-size-border">
+              <label for="${e}" class="u-cursor-pointer u-heritage-green  u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
               <input type="radio" id="${e}" name="view" class="hide" value="${e.replace("view","")}" />${t}</label>
           </div>`,renderDateTime=e=>`<p class="text-sm u-m-0">
     <strong>${e.date}, ${e.time} ${e.timeend?"to "+e.timeend:""} (${e.zone})</strong>

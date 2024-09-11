@@ -14,8 +14,8 @@ const renderHeader = (header, intro) =>
   </div>`;
 
 const renderRadioTab = (id, text) => {
-  return `<div class="u-border-width-4 u-px-1 u-white-line-top u-bg-medium-grey u-mr-tiny u-box-size-border">
-              <label for="${id}" class="u-cursor-pointer u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
+  return `<div class="u-border-width-4 u-px-1 u-white-line-top u-bg-white u-mr-tiny u-box-size-border">
+              <label for="${id}" class="u-cursor-pointer u-heritage-green  u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
               <input type="radio" id="${id}" name="view" class="hide" value="${id.replace("view", "")}" />${text}</label>
           </div>`;
 };
