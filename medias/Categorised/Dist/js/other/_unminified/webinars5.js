@@ -44,7 +44,7 @@ const renderItem = (item) => {
 const renderAllItems = stir.curry((section, items) => {
   if (!items.length && !section.noItems) return ``;
   return `
-    <div class="grid-x grid-padding-x">
+    <div class="grid-x ">
       ${renderHeader(section.head, section.intro)}
       ${!items.length ? renderNoItemsMessage(section.noItems) : items.map(renderItem).join("")}
       ${section.divider && section.divider === "no" ? `` : renderDivider()}
@@ -142,6 +142,7 @@ const SafeQueryParams = {
   remove: QueryParams.remove,
 };
 
+/* OutPut Section Content */
 function outputSectionContent(filters, node, data) {
   const { upcomingData, onDemandData } = data;
   const all = [...upcomingData, ...onDemandData];
@@ -431,7 +432,7 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
     }
   }
 
-  // Move to T4
+  /* Move to T4
   function removeDuplicates(arr, key) {
     return arr.reduce((unique, item) => {
       const found = unique.find((i) => i[key] === item[key]);
@@ -440,7 +441,7 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
       }
       return unique;
     }, []);
-  }
+  } */
 
   // Fetch function to get webinar data
   function fetchWebinarData(apiUrl) {
@@ -452,7 +453,8 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
         return response.json();
       })
       .then((data) => {
-        return removeDuplicates(data, "id");
+        console.log(data);
+        return data;
       })
       .catch((error) => {
         console.error("There was a problem fetching the webinar data:", error);
