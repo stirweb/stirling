@@ -453,7 +453,6 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
