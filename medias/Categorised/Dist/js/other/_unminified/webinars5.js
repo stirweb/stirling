@@ -8,7 +8,7 @@ const renderNoItemsMessage = (msg) => `<div class="cell">${msg}</div>`;
 const renderHeader = (header, intro) =>
   !header && !intro
     ? ``
-    : `<div class="cell u-mt-2">
+    : `<div class="cell u-mt-2 u-margin-bottom">
     ${header ? `<h2>${header}</h2>` : ""}
     ${intro}
   </div>`;
@@ -51,7 +51,7 @@ const renderAllItems = stir.curry((section, items) => {
     </div>`;
 });
 
-const renderSummary = (num) => `<p class="u-pb-2 text-sm">Results based on filters - <strong>${num} webinars</strong></p>`;
+const renderSummary = (num) => (Number(num) === 0 ? `<p class="u-pb-2 text-sm"><strong>No webinars or information sessions found.</strong></p>` : `<p class="u-pb-2 text-sm">Results based on filters - <strong>${num} webinars</strong></p>`);
 
 const renderPaginationSummary = (start, end, total) => `<p class="u-pb-2 text-sm text-center"><strong>Displaying ${start + 1} to ${end} of ${total} results</strong></p>`;
 
@@ -142,28 +142,18 @@ const SafeQueryParams = {
   remove: QueryParams.remove,
 };
 
-/* 
-    Main controller function
-*/
-function main(consts, node, data, filters, event) {
-  const now = getISONow();
+function outputSectionContent(filters, node, data) {
+  const { upcomingData, onDemandData } = data;
+  const all = [...upcomingData, ...onDemandData];
 
-  // Data processing pipeline
-  const processWebinars = stir.compose(
-    stir.filter(filterer(consts, filters.params)),
-    stir.map((item) => ({ ...item, isupcoming: isUpcomingByDate(now)(item) })),
-    stir.filter((item) => item.title)
-  );
+  const renderCurry = renderAllItems(filters);
 
-  const webinarsData = processWebinars(data);
-  const upcomingData = stir.compose(stir.sort(sortByDatetime), stir.filter(isUpcoming))(webinarsData);
+  all.length > 0 ? setDOMContent(node, renderCurry(all)) : setDOMContent(node, renderSummary(0));
+}
 
-  const onDemandData = stir.compose(
-    stir.sort((a, b) => -sortByDatetime(a, b)), // Reverse sort for on-demand
-    stir.filter(isOnDemand),
-    stir.filter(isPast)
-  )(webinarsData);
-
+/* OutPut Form Content */
+function outPutFormContent(consts, filters, node, event, data) {
+  const { upcomingData, onDemandData } = data;
   const all = [...upcomingData, ...onDemandData];
 
   const { itemsPerPage } = consts;
@@ -172,9 +162,9 @@ function main(consts, node, data, filters, event) {
   const end = start + itemsPerPage;
 
   if (upcomingData.length && !stir.node("#viewlive")) {
-    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "View live"));
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "View upcoming live"));
   } else if (filters.params.view === "live" && !stir.node("#viewlive")) {
-    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "View live"));
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "View upcoming live"));
   }
 
   if (onDemandData.length && !stir.node("#viewondemand")) {
@@ -199,23 +189,41 @@ function main(consts, node, data, filters, event) {
     case "ondemand":
       return renderResults(onDemandData, "On Demand");
     default:
-      return all.slice(start, end).length ? null : setDOMContent(node, "<p>No webinars found</p>");
+      return all.slice(start, end).length ? null : setDOMContent(node, "<p>No webinars or information sessions found</p>");
   }
+}
 
-  // switch (filters.params.view) {
-  //   case "live":
-  //     return renderResults(upcomingData, "Upcoming");
-  //   case "ondemand":
-  //     return renderResults(onDemandData, "On Demand");
-  //   default:
-  //     return all.slice(start, end).length ? renderResults(all, "All") : setDOMContent(node, "<p>No webinars found</p>");
-  // }
+/* 
+    Process Data controller function
+*/
+function processData(consts, data, filters) {
+  const now = getISONow();
+
+  // Data processing pipeline
+  const processWebinars = stir.compose(
+    stir.filter(filterer(consts, filters.params)),
+    stir.map((item) => ({ ...item, isupcoming: isUpcomingByDate(now)(item) })),
+    stir.filter((item) => item.title)
+  );
+
+  const webinarsData = processWebinars(data);
+  const upcomingData = stir.compose(stir.sort(sortByDatetime), stir.filter(isUpcoming))(webinarsData);
+
+  const onDemandData = stir.compose(
+    stir.sort((a, b) => -sortByDatetime(a, b)), // Reverse sort for on-demand
+    stir.filter(isOnDemand),
+    stir.filter(isPast)
+  )(webinarsData);
+
+  //const all = [...upcomingData, ...onDemandData];
+
+  return { upcomingData: upcomingData, onDemandData: onDemandData };
 }
 
 /*
     Form Controller
 */
-function doForm(consts, node, data, event, form) {
+function doForm(consts, node, allData, event, form) {
   const formData = new FormData(form);
   const formDataObject = Object.fromEntries(formData.entries());
 
@@ -235,8 +243,10 @@ function doForm(consts, node, data, event, form) {
     divider: "no",
   };
 
-  main(consts, node, data, filters, event);
-  if (node.innerHTML === "") setDOMContent(node, "<p>No webinars found</p>");
+  const data = processData(consts, allData, filters);
+  outPutFormContent(consts, filters, node, event, data);
+
+  //if (node.innerHTML === "") setDOMContent(node, "<p>No webinars found</p>");
 }
 
 /* 
@@ -339,9 +349,10 @@ function initWebinarForm(consts, dataWebinars) {
     divider: "no",
   };
 
-  main(consts, webinarResultsArea, dataWebinars, filters, "new");
+  const data = processData(consts, dataWebinars, filters);
+  outPutFormContent(consts, filters, webinarResultsArea, "new", data);
 
-  if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars found</p>");
+  //if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars or information sessions found.</p>");
 
   // Event listeners
   stir.nodes("#webinarfilters select").forEach((select) => {
@@ -374,7 +385,9 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
 
   const webinarSections = consts.webinarSections;
   webinarSections.forEach((element) => {
-    main(consts, element, dataWebinars, dataWebinarFilters[element.dataset.webinarsects], "onload");
+    const data = processData(consts, dataWebinars, dataWebinarFilters[element.dataset.webinarsects]);
+    outputSectionContent(dataWebinarFilters[element.dataset.webinarsects], element, data);
+    //const data = processData(consts, dataWebinars, filters);
   });
 
   const disclaimerArea = stir.node("[data-webinardisclaimer]");
@@ -391,7 +404,7 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
 }
 
 /* 
-    Main execution
+    On load execution
 */
 (function (scope) {
   if (!scope) return;
