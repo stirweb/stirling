@@ -163,9 +163,9 @@ function outPutFormContent(consts, filters, node, event, data) {
   const end = start + itemsPerPage;
 
   if (upcomingData.length && !stir.node("#viewlive")) {
-    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "View upcoming live"));
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "Upcoming live"));
   } else if (filters.params.view === "live" && !stir.node("#viewlive")) {
-    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "View upcoming live"));
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "Upcoming live"));
   }
 
   if (onDemandData.length && !stir.node("#viewondemand")) {
