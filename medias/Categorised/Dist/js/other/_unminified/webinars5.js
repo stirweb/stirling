@@ -405,8 +405,10 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
     macros: (stir.t4Globals.regionmacros || []).filter((item) => item.tag),
   };
 
-  const apiUrl = UoS_env.name === "dev" ? "data.json" : '<t4 type="navigation"  id="5271" />';
+  const apiUrl = UoS_env.name === "dev" ? "data.json" : '<t4 type="navigation" id="5271" />';
   const dataWebinarFilters = stir.t4Globals.webinarSectionData || {};
+
+  console.log(apiUrl);
 
   // Move to T4
   function removeDuplicates(arr, key) {
