@@ -295,15 +295,15 @@ function handleTabScroll(el, container, event) {
 */
 
 const mapQueryParams = (val) => {
-  const val2 = val.replaceAll("-", " ");
+  const value = val.replaceAll("-", " ");
 
-  if (val2 === "Postgraduate taught") {
+  if (value === "Postgraduate taught") {
     return "Postgraduate (taught)";
   }
-  if (val2 === "Postgraduate research") {
+  if (value === "Postgraduate research") {
     return "Postgraduate (research)";
   }
-  return val2;
+  return value;
 };
 
 /* 
@@ -405,10 +405,18 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
     macros: (stir.t4Globals.regionmacros || []).filter((item) => item.tag),
   };
 
-  const apiUrl = UoS_env.name === "dev" ? "data.json" : '<t4 type="navigation" id="5271" />';
   const dataWebinarFilters = stir.t4Globals.webinarSectionData || {};
 
-  console.log(apiUrl);
+  function getApiUrl(env) {
+    switch (env) {
+      case "dev":
+        return "index.json";
+      case "preview":
+        return '<t4 type="navigation" id="5271" />';
+      default:
+        return '<t4 type="navigation" id="5271" />' + "index.json";
+    }
+  }
 
   // Move to T4
   function removeDuplicates(arr, key) {
@@ -446,7 +454,7 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
   }
 
   // Fetch data and initialize
-  fetchWebinarData(apiUrl).then((dataWebinars) => {
+  fetchWebinarData(getApiUrl(UoS_env.name)).then((dataWebinars) => {
     initializeWebinars(dataWebinars);
   });
 })(stir.nodes("[data-webinar]"));
