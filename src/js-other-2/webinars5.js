@@ -174,7 +174,7 @@ function outPutFormContent(consts, filters, node, event, data) {
     appendDOMContent(consts.radioTabs, renderRadioTab("viewondemand", "On demand"));
   }
 
-  const renderResults = (data, title) => {
+  const renderResults = (data) => {
     const summaryHtml = start === 0 ? renderSummary(data.length) : renderPaginationSummary(start, end, data.length);
     const endHtml = data.length > end ? renderLoadMoreButon() : renderNoData(``);
 
@@ -186,9 +186,9 @@ function outPutFormContent(consts, filters, node, event, data) {
 
   switch (filters.params.view) {
     case "live":
-      return renderResults(upcomingData, "Upcoming");
+      return renderResults(upcomingData);
     case "ondemand":
-      return renderResults(onDemandData, "On Demand");
+      return renderResults(onDemandData);
     default:
       return all.slice(start, end).length ? null : setDOMContent(node, "<p>No webinars or information sessions found</p>");
   }
@@ -388,7 +388,6 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
   webinarSections.forEach((element) => {
     const data = processData(consts, dataWebinars, dataWebinarFilters[element.dataset.webinarsects]);
     outputSectionContent(dataWebinarFilters[element.dataset.webinarsects], element, data);
-    //const data = processData(consts, dataWebinars, filters);
   });
 
   const disclaimerArea = stir.node("[data-webinardisclaimer]");
