@@ -220,7 +220,7 @@
   }
 
   .hide-for-medium {
-    display: none;
+    display: none !important;
   }
   .show-for-medium {
     display: inherit;
@@ -316,7 +316,7 @@
   }
 
   .hide-for-large {
-    display: none;
+    display: none !important;
   }
   .show-for-large {
     display: inherit;
@@ -373,7 +373,7 @@
   }
 
   .hide-for-small-only {
-    display: none;
+    display: none !important;
   }
 }
 
