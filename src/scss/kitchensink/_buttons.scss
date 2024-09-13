@@ -145,6 +145,12 @@ button {
     }
   }
 
+  &.clear {
+    border-color: transparent;
+    background-color: transparent;
+    color: $heritage-green;
+  }
+
   &.subtle {
     background-color: #e5f1f2; // energy teal very light
     color: $heritage-green;
