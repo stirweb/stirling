@@ -25,6 +25,13 @@
     Use numeric value ( u-mt-1) - xs, sm etc is deprecated to avoid confusion with screen size
 */
 
+ol.no-bullet,
+ul.no-bullet {
+  margin-left: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .u-m-0 {
   margin: 0;
 }
