@@ -4470,12 +4470,13 @@ function goGoGadgetTabbordian() {
 			tab.tab.removeAttribute("aria-controls");
 		});
 	}
-
+	
 	if(accordion){
 		instance.tabs.forEach(tab => {
 			tab.content.setAttribute("role","region");
 			tab.header.textContent = '';
 			tab.header.append(tab.accordion);
+			tab.header.classList.add('x-header-control')
 			tab.accordion.setAttribute("aria-expanded","false");
 			tab.accordion.setAttribute("aria-controls",tab.content.id);
 			tab.content.setAttribute("aria-labelledby",tab.accordion.id);
@@ -4486,6 +4487,7 @@ function goGoGadgetTabbordian() {
 		instance.tabs.forEach(tab => {
 			tab.accordion.remove();
 			tab.header.textContent = tab.label;
+			tab.header.classList.remove('x-header-control')
 			tab.content.removeAttribute("role");			
 			tab.content.removeAttribute("aria-labelledby");
 			tab.content.removeAttribute("hidden");
