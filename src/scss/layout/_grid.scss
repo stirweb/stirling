@@ -61,11 +61,11 @@
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
-@include breakpoint(small down) {
-  .grid-x {
-    row-gap: 1.5rem;
-  }
-}
+//@include breakpoint(small down) {
+// .grid-x {
+//   row-gap: 0.5rem;
+// }
+//}
 
 .grid-x > .cell {
   grid-column-end: span 12;
