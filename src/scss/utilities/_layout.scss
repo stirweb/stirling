@@ -135,6 +135,9 @@
 }
 
 @media screen and #{breakpoint(medium up)} {
+  .u-gap-8-medium-up {
+    gap: 8px;
+  }
   .u-gap-32-medium-up {
     gap: 32px;
   }
