@@ -16,6 +16,7 @@ button {
 .button {
   background-color: $heritage-green;
   color: $white;
+  text-decoration: none;
   cursor: pointer;
 
   &:hover {
