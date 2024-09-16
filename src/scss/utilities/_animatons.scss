@@ -128,12 +128,14 @@
   opacity: 1;
   transform: translateX(0%);
   animation: fadein-slide-left 1s ease-in-out;
+  animation-fill-mode: forwards;
 }
 
 .fadein-slide-right {
   opacity: 1;
   transform: translateX(0%);
   animation: fadein-slide-right 1s ease-in-out;
+  animation-fill-mode: forwards;
 }
 
 @keyframes fadein-slide-left {
@@ -190,4 +192,8 @@
   /* … to be reviewed!  */
   /* filter: brightness(70%) saturate(0.666); */
   opacity: 0.7;
+}
+
+.u-animate-in-view {
+  animation-timeline: view(block 50% 12%);
 }
