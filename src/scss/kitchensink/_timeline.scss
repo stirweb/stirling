@@ -1,8 +1,8 @@
-/*
-ol.timeline {
+/* Clearing Timeline - stylised numerical list */
+ol.numberlist {
 	margin: 1rem 0 2rem 2.5rem;
 	list-style: none;
-	counter-reset: timeline;
+	counter-reset: numberlist;
 
 	> li {
 		position: relative;
@@ -10,7 +10,7 @@ ol.timeline {
 		border-left: 2px solid currentColor;
 		padding-bottom: 2rem;
 		padding-left: 2.5rem;
-		counter-increment: timeline 1;
+		counter-increment: numberlist 1;
 
 		&:last-child {
 			border-color: transparent;
@@ -18,7 +18,7 @@ ol.timeline {
 
 		&::before {
 			position: absolute;
-			content: counter(timeline);
+			content: counter(numberlist);
 			font-family: "General Sans","Open Sans",Arial,sans-serif;
 			font-size: 1.875rem;
 			line-height: 1.225;
@@ -27,7 +27,7 @@ ol.timeline {
 			height: 2.5rem;
 			text-align: center;
 			left: -1px;
-			top: -0.3rem; /* depends on the typeface *
+			top: -0.3rem; /* depends on the typeface */
 			color: $white;
 			font-weight: bold;
 			transform: translateX(-50%);
@@ -38,4 +38,3 @@ ol.timeline {
 		&:nth-child(3n+2)::before { background-color: $energy-turq;}
 	}
 }
-*/
