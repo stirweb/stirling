@@ -191,3 +191,7 @@ img.objfitcover,
     min-height: 33rem; /* 580px */
   }
 }
+
+p:has(img) img {
+  margin: 24px 0;
+}
