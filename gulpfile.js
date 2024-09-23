@@ -234,7 +234,7 @@ function jsGallery() {
  * SASS / CSS Tasks
  */
 
-// SASS App function
+// SASS App function - Foundation version NOT IN USE
 function scss() {
   const source = "src/scss/app.foundation.scss";
   const sassPaths = ["node_modules/foundation-sites/scss", "node_modules/motion-ui/src", "src/scss"];
@@ -260,30 +260,32 @@ function scss() {
     .pipe(browserSync.stream());
 }
 
-// SASS App function
+// SASS App function - New Foundation Free
 function scssNew() {
   const source = "src/scss/app.scss";
   const sassPaths = ["src/scss"];
-  return src(source)
-    .pipe(sourcemaps.init())
-    .pipe(
-      sass({
-        includePaths: sassPaths,
-      })
-    )
-    .on("error", sass.logError)
-    .pipe(
-      autoprefixer({
-        //browsers: ["> 1%"],
-        cascade: false,
-      })
-    )
-    .pipe(sourcemaps.write())
-    .pipe(dest("medias/Categorised/Dist/css"))
-    .pipe(concatCss("app.min.css"))
-    .pipe(cleanCSS({ compatibility: "*" }))
-    .pipe(dest("medias/Categorised/Dist/css"))
-    .pipe(browserSync.stream());
+  return (
+    src(source)
+      //.pipe(sourcemaps.init())
+      .pipe(
+        sass({
+          includePaths: sassPaths,
+        })
+      )
+      .on("error", sass.logError)
+      .pipe(
+        autoprefixer({
+          //browsers: ["> 1%"],
+          cascade: false,
+        })
+      )
+      //.pipe(sourcemaps.write())
+      .pipe(dest("medias/Categorised/Dist/css"))
+      .pipe(concatCss("app.min.css"))
+      .pipe(cleanCSS({ compatibility: "*" }))
+      .pipe(dest("medias/Categorised/Dist/css"))
+      .pipe(browserSync.stream())
+  );
 }
 
 // SASS standalone campaign files
@@ -331,7 +333,7 @@ function img() {
 
 // Watch files for changes
 function watchFiles() {
-  watch(["src/scss/*.scss", "src/scss/**/*.scss"]).on("change", scss);
+  // watch(["src/scss/*.scss", "src/scss/**/*.scss"]).on("change", scss);
   watch(["src/scss/*.scss", "src/scss/**/*.scss"]).on("change", scssNew);
   watch("src/campaigns/scss/*").on("change", scssCampaigns);
   watch("src/scss-animation/infographics.scss").on("change", scssInfographs);
