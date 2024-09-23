@@ -28,11 +28,11 @@
 @media screen and #{breakpoint(xlarge up)} {
   .c-news__single-article {
     p > img {
-      margin: 60px 0 0;
+      margin: 3.75rem 0 0;
     }
 
     .c-image-caption {
-      margin: 0 0 60px;
+      margin: 0 0 3.75rem;
     }
   }
 }

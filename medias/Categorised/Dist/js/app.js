@@ -670,7 +670,7 @@ return /******/ (function(modules) { // webpackBootstrap
     For browsers that do not support Element.closest(),
     but carry support for element.matches()
     (or a prefixed equivalent, meaning IE9+)
- */
+
 
 if (!Element.prototype.matches) {
   Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
@@ -687,11 +687,11 @@ if (!Element.prototype.closest) {
     return null;
   };
 }
-
+ */
 /*
     element.remove();
     https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
- */
+
 
 (function (arr) {
   arr.forEach(function (item) {
@@ -708,11 +708,11 @@ if (!Element.prototype.closest) {
     });
   });
 })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
-
+ */
 /*
     Array.includes()
     https://github.com/kevlatus/polyfill-array-includes/blob/master/array-includes.js
- */
+
 
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, "includes", {
@@ -748,11 +748,11 @@ if (!Array.prototype.includes) {
     },
   });
 }
-
+ */
 /*
     String.includes()
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
- */
+
 
 if (!String.prototype.includes) {
   String.prototype.includes = function (search, start) {
@@ -767,11 +767,12 @@ if (!String.prototype.includes) {
     return this.indexOf(search, start) !== -1;
   };
 }
+   */
 
 /*
     Object.entries()
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
- */
+
 
 if (!Object.entries) {
   Object.entries = function (obj) {
@@ -783,10 +784,10 @@ if (!Object.entries) {
     return resArray;
   };
 }
-
+ */
 /*
     Object.values()
- */
+
 
 if (!Object.values) {
   Object.values = function (obj) {
@@ -796,6 +797,7 @@ if (!Object.values) {
     return vals;
   };
 }
+ */
 
 /**
  * Generate an avatar image from letters
