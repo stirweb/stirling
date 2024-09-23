@@ -1872,9 +1872,13 @@ h2.u-header-larger {
 .u-header--margin-stripped {
   margin: 0 0 10px !important; }
 
+.u-line-height-1 {
+  line-height: 1; }
+
+.u-line-height-1_2,
 .u-compress-line-height,
 .u-line-height-compress {
-  line-height: 1; }
+  line-height: 1.2; }
 
 .u-line-height-default {
   line-height: 1.6; }
