@@ -364,4 +364,4 @@ function startBrowserSync() {
 
 // Tasks to define the execution of the functions simultaneously or in series
 exports.watch = parallel(watchFiles, startBrowserSync);
-exports.default = series(clear, parallel(js, jsProd, jsOther, jsOther2, jsCourses, jsSearch, jsGallery, scss, scssCampaigns, scssInfographs, scssGallery, img));
+exports.default = series(clear, parallel(js, jsProd, jsOther, jsOther2, jsCourses, jsSearch, jsGallery, scssNew, scssCampaigns, scssInfographs, scssGallery, img));

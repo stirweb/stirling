@@ -1,6 +1,6 @@
 function conversation(e){var t,r,a,l,n,o,i=document.querySelector(".convo");if(i)for(var s=(s=parseInt(i.getAttribute("data-max"))||1)<e.length?s:e.length,c=0;c<s;c++)t=e[c].alt||"",r=e[c].image||"",a=e[c].title||"",l=e[c].author.name||"",n=e[c].author.etc||"",o=e[c].href||"",i.insertAdjacentHTML("beforeend",'<article id="conv'+c+'" class="cell large-4 medium-6 small-12 flex-container flex-dir-column u-gap" aria-label="The Conversation: '+a+'"><img alt="'+t+'" src="'+r+'" loading="lazy" /><h3 class="header-stripped u-font-normal u-m-0"><a href="'+o+'" class="c-link ">'+a+'</a></h3><p class="text-sm">'+l+",  "+n+"</p></article>")}var stir=stir||{};stir.t4Globals=stir.t4Globals||{},stir.t4Globals.conversation=stir.t4Globals.conversation||{},function(){var e=stir.t4Globals.conversation.max;const t=document.querySelector(".u-article-summaries");if(t&&stir.Date.newsDate&&stir.Array.oxfordComma){const r=stir.curry((e,t)=>t.slice(0,e||t.length))(e),a=e=>`
 	<article id=${e.querySelector("id").textContent} class="cell small-12 medium-4 large-3 c-convo" aria-label="The Conversation: ${e.querySelector("title").textContent}">
-		<h3 class="header-stripped u-mt-1 u-mb-0 u-font-normal u-compress-line-height  u-energy-line-top">
+		<h3 class="header-stripped u-mt-1 u-mb-0 u-font-normal u-line-height-1  u-energy-line-top">
 			<a href="${e.querySelector("link").getAttribute("href")}" class="c-link-null u-inline text-sm">
 			${e.querySelector("title").textContent}
 			</a>
