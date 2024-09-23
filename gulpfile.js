@@ -28,9 +28,9 @@ const concat = require("gulp-concat");
 const concatCss = require("gulp-concat-css");
 const expect = require("gulp-expect-file");
 const plumber = require("gulp-plumber");
-const rename = require("gulp-rename");
+//const rename = require("gulp-rename");
 const sass = require("gulp-sass")(require("node-sass"));
-const sourcemaps = require("gulp-sourcemaps");
+//const sourcemaps = require("gulp-sourcemaps");
 const uglify = require("gulp-uglify");
 
 // Clean assets - NOT actually in use
@@ -142,7 +142,6 @@ function jsOther() {
       // )
       .pipe(dest("medias/Categorised/Dist/js/other/_unminified")) // unminified version
       .pipe(uglify())
-      //.pipe(rename({ extname: ".min.js" }))
       .pipe(dest("medias/Categorised/Dist/js/other"))
       .pipe(browserSync.stream())
   );
@@ -168,7 +167,6 @@ function jsOther2() {
       // )
       .pipe(dest("medias/Categorised/Dist/js/other/_unminified")) // unminified version
       .pipe(uglify())
-      //.pipe(rename({ extname: ".min.js" }))
       .pipe(dest("medias/Categorised/Dist/js/other"))
       .pipe(browserSync.stream())
   );
@@ -235,6 +233,7 @@ function jsGallery() {
  */
 
 // SASS App function - Foundation version NOT IN USE
+/*
 function scss() {
   const source = "src/scss/app.foundation.scss";
   const sassPaths = ["node_modules/foundation-sites/scss", "node_modules/motion-ui/src", "src/scss"];
@@ -259,6 +258,7 @@ function scss() {
     .pipe(dest("medias/Categorised/Dist/css"))
     .pipe(browserSync.stream());
 }
+*/
 
 // SASS App function - New Foundation Free
 function scssNew() {
