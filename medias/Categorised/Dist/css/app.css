@@ -4541,8 +4541,7 @@ cite:before {
   .c-wysiwyg-content .quote-attribute {
     font-weight: 600;
     margin: 0 auto 60px;
-    max-width: 960px;
-    padding-left: 35px; }
+    max-width: 960px; }
 
 @media screen and (max-width: 89.99875em) {
   .c-wysiwyg-content p + blockquote {
