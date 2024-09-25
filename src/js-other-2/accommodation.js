@@ -63,6 +63,7 @@ let map;
 async function initMap() {
   const renderDistance = (obj) => `<p>Time to campus: ${obj?.duration} <br />Distance to campus: ${obj?.distance}</p>`;
 
+  /* Calculate the route */
   function calcRoute(mode, start, end, distances) {
     const request = {
       origin: start,
@@ -99,19 +100,20 @@ async function initMap() {
     // );
   }
 
+  /* On load */
   const elMap = document.getElementById("map");
   const elMode = document.getElementById("travelmode");
   const start = elMap.dataset.start;
   const campusCentralEnd = "56.145922,-3.920283";
   const intoEnd = "56.14463111249244,-3.9212629038270252";
 
-  const endBits = campusCentralEnd.split(",");
-  const startBits = start.split(",");
+  const endCoords = campusCentralEnd.split(",");
+  const startCoords = start.split(",");
 
-  const startIsSouth = Number(endBits[0]) > Number(startBits[0]) ? true : false;
+  const startIsSouth = Number(endCoords[0]) > Number(startCoords[0]) ? true : false;
 
   const end = startIsSouth ? intoEnd : campusCentralEnd;
-  const centre = { lat: Number(endBits[0]), lng: Number(endBits[1]) }; // Uni Coordinates
+  const centre = { lat: Number(endCoords[0]), lng: Number(endCoords[1]) }; // Uni Coordinates
 
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
