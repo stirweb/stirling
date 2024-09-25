@@ -21,8 +21,12 @@
     }
   }
 
-  p > img {
+  p img:not(+ span.c-image-caption) {
     margin: 2rem 0;
+  }
+
+  p img + span.c-image-caption {
+    outline: 1px solid red;
   }
 
   blockquote {

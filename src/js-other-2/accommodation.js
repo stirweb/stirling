@@ -61,23 +61,23 @@
 let map;
 
 async function initMap() {
-  const renderDistance = (time, distance) => {
-    return `<p>Time to campus: ${time} <br />
-            Distance to campus: ${distance}</p>`;
+  const renderDistance = (obj) => {
+    return `<p>Time to campus: ${obj.duration} <br />
+            Distance to campus: ${obj.distance}</p>`;
   };
 
-  const outputDistance = (response, status) => {
-    if (status === "OK") {
-      const html = renderDistance(response.rows[0].elements[0].duration.text, response.rows[0].elements[0].distance.text);
-      stir.node("#traveldurations").innerHTML = html;
-    }
-  };
+  // const outputDistance = (response, status) => {
+  //   if (status === "OK") {
+  //     const html = renderDistance(response.rows[0].elements[0].duration.text, response.rows[0].elements[0].distance.text);
+  //     stir.node("#traveldurations").innerHTML = html;
+  //   }
+  // };
 
-  function calcRoute(mode, start, end) {
+  function calcRoute(mode, start, end, distances) {
     const request = {
       origin: start,
       destination: end,
-      travelMode: mode,
+      travelMode: mode.toUpperCase(),
     };
     directionsService.route(request, function (result, status) {
       if (status == "OK") {
@@ -85,16 +85,20 @@ async function initMap() {
       }
     });
 
-    var service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-      {
-        origins: [start],
-        destinations: [end],
-        travelMode: mode,
-        unitSystem: google.maps.UnitSystem.METRIC,
-      },
-      outputDistance
-    );
+    if (distances.length) {
+      stir.node("#traveldurations").innerHTML = renderDistance(distances[0].distances[mode]);
+    }
+
+    // var service = new google.maps.DistanceMatrixService();
+    // service.getDistanceMatrix(
+    //   {
+    //     origins: [start],
+    //     destinations: [end],
+    //     travelMode: mode,
+    //     unitSystem: google.maps.UnitSystem.METRIC,
+    //   },
+    //   outputDistance
+    // );
   }
 
   const elMap = document.getElementById("map");
@@ -136,15 +140,20 @@ async function initMap() {
   };
 
   if (!elMap) return;
-  if (elMode) elMode.value = "WALKING";
+  if (elMode) elMode.value = "walking";
+
+  const propertyName = stir.node("h1").outerText;
+
+  const distances = stirDistanceMatrix.filter((item) => item.name === propertyName);
 
   const map = new google.maps.Map(document.getElementById("map"), mapOptions);
   directionsRenderer.setMap(map);
-  calcRoute("WALKING", start, end);
+
+  calcRoute("walking", start, end, distances);
 
   elMode &&
     elMode.addEventListener("click", (e) => {
-      calcRoute(e.currentTarget.value, start, end);
+      calcRoute(e.currentTarget.value, start, end, distances);
     });
 }
 
