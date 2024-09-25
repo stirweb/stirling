@@ -4522,8 +4522,6 @@ cite:before {
       margin: 60px auto 1rem; }
   .c-wysiwyg-content p img {
     margin: 2rem 0; }
-  .c-wysiwyg-content p img + span.c-image-caption {
-    outline: 1px solid red; }
   .c-wysiwyg-content blockquote {
     border-left: 5px solid #77bf22;
     font-weight: 600;
