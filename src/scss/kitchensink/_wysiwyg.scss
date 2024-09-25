@@ -21,13 +21,13 @@
     }
   }
 
-  p img:not(+ span.c-image-caption) {
+  p img {
     margin: 2rem 0;
   }
 
-  // p img + span.c-image-caption {
-  //   outline: 1px solid red;
-  // }
+  p img:has(+ span.c-image-caption) {
+    margin-bottom: 1rem;
+  }
 
   blockquote {
     border-left: 5px solid $energy-green;
