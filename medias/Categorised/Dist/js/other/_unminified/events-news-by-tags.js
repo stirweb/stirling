@@ -97,7 +97,6 @@
     const newsWrapperWidth = noOfNews === 2 ? 8 : 12;
 
     const processNews = stir.pipe(stir.map(renderNewsItem(newsCellWidth)), take(noOfNews));
-
     const news = processNews(dataNews);
 
     return {
