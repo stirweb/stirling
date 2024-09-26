@@ -17,7 +17,9 @@
   };
 
   const renderEventsWrapper = (content) => {
-    return ` <div class="cell small-12 medium-4">
+    return !content
+      ? ``
+      : ` <div class="cell small-12 medium-4">
                 <div class="grid-x">
                     <div class="cell"><h2 class="header-stripped u-header--margin-stripped">Events</h2></div>
                     ${content}
@@ -80,15 +82,12 @@
     const now = getISONow();
     const event = stir.compose(stir.map(renderEvent), first, stir.sort(sortByDatetime), stir.filter(filterByTag(tag)), stir.filter(filterUpcomingEvents), stir.map(addIsUpcoming(now)), stir.filter(filterValidEvents))(dataEvents);
 
-    //const event = [];
     const noOfNews = event.length === 1 ? 2 : 3;
     const newsCellWidth = noOfNews === 2 ? 6 : 4;
     const newsWrapperWidth = noOfNews === 2 ? 8 : 12;
 
     const renderNewsCurry = renderNewsItem(newsCellWidth);
-
     const news = stir.map(renderNewsCurry, dataNews).slice(0, noOfNews);
-
     node.innerHTML = renderNewsWrapper(newsWrapperWidth, news.join("")) + renderEventsWrapper(event.join(""));
   };
 
@@ -105,7 +104,6 @@
   /* Main function */
 
   const main = () => {
-    console.log(newsList);
     const node = stir.node("#newsEventListing");
     const tag = node.dataset.tags;
 
