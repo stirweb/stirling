@@ -88,15 +88,16 @@
   // processData
   const processData = (dataEvents, dataNews, tag) => {
     const now = getISONow();
-    const processEvents = stir.compose(stir.map(renderEvent), first, stir.sort(sortByDatetime), stir.filter(filterByTag(tag)), stir.filter(filterUpcomingEvents), stir.map(addIsUpcoming(now)), stir.filter(filterValidEvents));
 
+    const processEvents = stir.pipe(stir.filter(filterValidEvents), stir.map(addIsUpcoming(now)), stir.filter(filterUpcomingEvents), stir.filter(filterByTag(tag)), stir.sort(sortByDatetime), first, stir.map(renderEvent));
     const event = processEvents(dataEvents);
 
     const noOfNews = event.length === 1 ? 2 : 3;
     const newsCellWidth = noOfNews === 2 ? 6 : 4;
     const newsWrapperWidth = noOfNews === 2 ? 8 : 12;
 
-    const processNews = stir.compose(take(noOfNews), stir.map(renderNewsItem(newsCellWidth)));
+    const processNews = stir.pipe(stir.map(renderNewsItem(newsCellWidth)), take(noOfNews));
+
     const news = processNews(dataNews);
 
     return {

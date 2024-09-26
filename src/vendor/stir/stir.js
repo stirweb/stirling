@@ -331,7 +331,7 @@ stir.formatStirDate = stir.Date.galleryDate;
 /*
  * Function: Determine if a date is BST or GMT
  * Parameter should be a JavaScript Date Object
- */
+
 stir.BSTorGMT = function (d) {
   var objBST = [
     { year: 2021, start: 20210328, end: 20211031 },
@@ -372,6 +372,7 @@ stir.BSTorGMT = function (d) {
   console.error("Parameter one of stir.BSTorGMT() should be a JavaScript Date Object");
   return "";
 };
+ */
 
 stir.createDOMFragment = function (htmlStr) {
   if (!htmlStr) return;
@@ -892,32 +893,41 @@ stir.clone = function (input) {
 
 /*
    Identity helper function
- */
+
 stir.identity = function (input) {
   return input;
 };
+ */
 
 /*
    Not helper function
- */
+
 stir.not = function not(predicate) {
   return function negated(...args) {
     return !predicate(...args);
   };
 };
+ */
 
 /*
    Partial helper function
- */
+
 stir.partial = function (fn, ...presetArgs) {
   return function partiallyApplied(...laterArgs) {
     return fn(...presetArgs, ...laterArgs);
   };
 };
+ */
+
+stir.reverseArgs = function (fn) {
+  return function argsReversed(...args) {
+    return fn(...args.reverse());
+  };
+};
 
 /*
    Compose helper function
- */
+*/
 stir.compose = function (...fns) {
   return fns.reduceRight(function reducer(fn1, fn2) {
     return function composed(...args) {
@@ -927,7 +937,12 @@ stir.compose = function (...fns) {
 };
 
 /*
-   Curry helper function
+    Pipe helper function - Performs left-to-right function composition. 
+ */
+stir.pipe = stir.reverseArgs(stir.compose);
+
+/*
+    Curry helper function
  */
 stir.curry = function (fn, arity = fn.length) {
   return (function nextCurried(prevArgs) {
@@ -944,7 +959,7 @@ stir.curry = function (fn, arity = fn.length) {
 };
 
 /*
-   Sort version that returns a new list
+   Curried version of Sort that returns a new list
  */
 stir.sort = stir.curry(function (fn, list) {
   if (typeof fn === "function") return stir.clone(list).sort(fn);
@@ -990,26 +1005,25 @@ stir.isNumeric = function (input) {
 stir.callback = {};
 stir.callback.queue = [];
 
-stir.callback.enqueue = 
-	 ticket => {
-		if(!ticket) return;
-		var chain = window;
-		var callback;
-		var data = ticket.split(".");
-		while (data.length > 0) {
-			var n = data.shift();
-			if ("function" === typeof chain[n]) {
-				callback = chain[n];
-			} else if ("undefined" !== typeof chain[n]) {
-				chain = chain[n];
-			}
-		}
-		if(callback) {
-			callback();
-		} else {
-			stir.callback.queue.push(ticket);
-		}
-	 };
+stir.callback.enqueue = (ticket) => {
+  if (!ticket) return;
+  var chain = window;
+  var callback;
+  var data = ticket.split(".");
+  while (data.length > 0) {
+    var n = data.shift();
+    if ("function" === typeof chain[n]) {
+      callback = chain[n];
+    } else if ("undefined" !== typeof chain[n]) {
+      chain = chain[n];
+    }
+  }
+  if (callback) {
+    callback();
+  } else {
+    stir.callback.queue.push(ticket);
+  }
+};
 
 /*
    Unbound and curried map filter reduce each etc functions
