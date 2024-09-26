@@ -431,17 +431,6 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
     }
   }
 
-  /* Move to T4
-  function removeDuplicates(arr, key) {
-    return arr.reduce((unique, item) => {
-      const found = unique.find((i) => i[key] === item[key]);
-      if (!found) {
-        return [...unique, item];
-      }
-      return unique;
-    }, []);
-  } */
-
   // Fetch function to get webinar data
   function fetchWebinarData(apiUrl) {
     return fetch(apiUrl)
