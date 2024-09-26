@@ -1,0 +1,7 @@
+!function(){const e=t=>{return"string"==typeof t&&t.trim().length?`${(t=t.split(" "))[0]} ${t[1].slice(0,3)} `+t[2]:""},s=t=>`
+        <img class="show-for-medium" src="${t.image}" alt="Image for event: ${t.title}" loading="lazy" />
+        <time class="u-block u-my-1 u-grey--dark">${e(t.stirStart)} - ${e(t.stirEnd)}</time>
+        <h3 class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
+            <a href="${t.url}" class="c-link u-inline">${t.title}</a>
+        </h3>
+        <p class="text-sm">${t.summary}</p>`,n=()=>Number((new Date).toISOString().split(".")[0].replaceAll(/[-:T]/g,"").slice(0,-2)),a=(t,e)=>parseInt(t.startInt)-parseInt(e.startInt),o=i=>t=>{return{...t,isupcoming:(e=i,(t=>Number(t.endInt)>e)(t))};var e},l=t=>t.id,c=t=>t.isupcoming,m=e=>t=>t.tags.includes(e),p=t=>t.filter((t,e)=>0===e);var t,i;{const u=stir.node("#eventListing"),d=u.dataset.tags;u&&d&&(t=UoS_env.name,i={dev:"../index.json",preview:'<t4 type="navigation" id="5214" />',default:'<t4 type="navigation" id="5214" />index.json'},fetch(i[t]||i.default).then(t=>t.ok?t.json():Promise.reject("Network response was not ok")).catch(t=>(console.error("There was a problem fetching the data:",t),[])).then(t=>{var e,i,r;t=t,e=d,i=u,r=n(),e=stir.compose(stir.map(s),p,stir.sort(a),stir.filter(m(e)),stir.filter(c),stir.map(o(r)),stir.filter(l))(t),i.innerHTML=e.join("")}))}}();

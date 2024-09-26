@@ -1719,6 +1719,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/fee.js"
       },
       {
+        "id": 183211,
+        "description": "events-news-by-tags.js",
+        "projectPath": "medias/Categorised/Dist/js/other/events-news-by-tags.js"
+      },
+      {
         "id": 181358,
         "description": "pg-personalised-prospectus.js",
         "projectPath": "medias/Categorised/Dist/js/other/pg-personalised-prospectus.js"
