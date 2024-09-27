@@ -1,17 +1,10 @@
 (function () {
   /* Renderers */
 
-  const renderNewsDate = (date) => {
-    if (typeof date !== "string" || !date.trim().length) return ``;
-    const [weekday, day, month, year] = date.split(" ");
-    return `${day} ${month.slice(0, 3)} ${year}`;
-  };
+  const renderDate = (dateFormatter) => (date) => typeof date === "string" && date.trim().length ? dateFormatter(date.split(" ")) : "";
 
-  const renderEventDate = (date) => {
-    if (typeof date !== "string" || !date.trim().length) return ``;
-    const [day, month, year] = date.split(" ");
-    return `${day} ${month.slice(0, 3)} ${year}`;
-  };
+  const renderNewsDate = renderDate(([, day, month, year]) => `${day} ${month.slice(0, 3)} ${year}`);
+  const renderEventDate = renderDate(([day, month, year]) => `${day} ${month.slice(0, 3)} ${year}`);
 
   const renderNewsWrapper = (width, content) => {
     return ` <div class="cell small-12 medium-${width}">
