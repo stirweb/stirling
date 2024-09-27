@@ -517,6 +517,29 @@
 
     <script src="../../../medias/Categorised/Dist/js/other/_unminified/events-news-by-tags.js?v=1.1"></script>
 
+
+    <script>
+        const mushrooms1 = {
+            amanita: ["muscaria", new Date("1995-12-17T03:24:00"), "virosa"],
+        };
+
+        const mushrooms2 = structuredClone(mushrooms1);
+
+
+        mushrooms1.amanita[1] = new Date("1996-12-17T03:24:00")
+        mushrooms1.amanita.pop();
+
+        mushrooms2.amanita.push("pantherina");
+
+
+        console.log(mushrooms1.amanita);
+        console.log(mushrooms2.amanita); // ["muscaria", "virosa", "pantherina"]
+
+
+
+
+    </script>
+
 </body>
 
 </html>

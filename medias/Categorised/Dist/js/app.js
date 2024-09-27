@@ -2150,19 +2150,26 @@ stir.stringToNode = (htmlString) => stir.createDOMFragment(htmlString).firstElem
 const _isArray = Array.isArray;
 const _keys = Object.keys;
 
+const reverseArgs = function (fn) {
+  return function argsReversed(...args) {
+    return fn(...args.reverse());
+  };
+};
+
 /*
-   Clone helper function
+   Clone helper function - 27/09/2024 replaced with structuredClone (Ryan)
  */
 stir.clone = function (input) {
-  const out = _isArray(input) ? Array(input.length) : {};
-  if (input && input.getTime) return new Date(input.getTime());
+  // const out = _isArray(input) ? Array(input.length) : {};
+  // if (input && input.getTime) return new Date(input.getTime());
 
-  for (const key in input) {
-    const v = input[key];
-    out[key] = typeof v === "object" && v !== null ? (v.getTime ? new Date(v.getTime()) : stir.clone(v)) : v;
-  }
+  // for (const key in input) {
+  //   const v = input[key];
+  //   out[key] = typeof v === "object" && v !== null ? (v.getTime ? new Date(v.getTime()) : stir.clone(v)) : v;
+  // }
 
-  return out;
+  // return out;
+  return structuredClone(input);
 };
 
 /*
@@ -2193,12 +2200,6 @@ stir.partial = function (fn, ...presetArgs) {
 };
  */
 
-stir.reverseArgs = function (fn) {
-  return function argsReversed(...args) {
-    return fn(...args.reverse());
-  };
-};
-
 /*
    Compose helper function
 */
@@ -2213,7 +2214,7 @@ stir.compose = function (...fns) {
 /*
     Pipe helper function - Performs left-to-right function composition. 
  */
-stir.pipe = stir.reverseArgs(stir.compose);
+stir.pipe = reverseArgs(stir.compose);
 
 /*
     Curry helper function
