@@ -270,7 +270,8 @@
 /* Object fit */
 
 .u-object-cover,
-.u-object-cover > img {
+.u-object-cover > img,
+.u-object-cover > picture img {
   object-fit: cover;
   object-position: center;
   height: 100%;
