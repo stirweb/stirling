@@ -1578,7 +1578,8 @@ img.objfitcover,
 .c-image-text-block > img,
 .c-half-n-half__image > img,
 .c-masthead__image > img,
-.c-bleed-feature__image > img {
+.c-bleed-feature__image > img,
+.c-bleed-feature__image > picture > img {
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -2389,9 +2390,6 @@ Bleed Feature Image
   float: left; }
 
 .c-bleed-feature__image {
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
   position: absolute;
   top: 0;
   left: 0;
