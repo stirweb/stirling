@@ -44,7 +44,7 @@ stir.t4Globals.conversation = stir.t4Globals.conversation || {};
 
   // Template for output
   const article = (article) => `
-	<article id=${article.querySelector("id").textContent} class="cell small-12 medium-4 large-3 c-convo" aria-label="The Conversation: ${article.querySelector("title").textContent}">
+	<article id=${article.querySelector("id").textContent} class="cell small-12 medium-6 large-3 c-convo" aria-label="The Conversation: ${article.querySelector("title").textContent}">
 		<h3 class="header-stripped u-mt-1 u-mb-0 u-font-normal u-line-height-1  u-energy-line-top">
 			<a href="${article.querySelector("link").getAttribute("href")}" class="c-link-null u-inline text-sm">
 			${article.querySelector("title").textContent}
