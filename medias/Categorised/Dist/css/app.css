@@ -1576,6 +1576,7 @@ Scroll To Top Button
 */
 img.objfitcover,
 .c-image-text-block > img,
+.c-image-text-block > picture > img,
 .c-half-n-half__image > img,
 .c-masthead__image > img,
 .c-bleed-feature__image > img,
@@ -3843,7 +3844,8 @@ updated Aug 2022 for clearing homepage banner
   .c-image-text-block > .grid-container {
     display: flex;
     align-items: center; }
-  .c-image-text-block > img {
+  .c-image-text-block > img,
+  .c-image-text-block > picture > img {
     position: absolute;
     left: 0;
     top: 0;
