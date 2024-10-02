@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+
+</body>
+
+
+
+<script>
+    let dontCacheBust = ['woff', 'ttf'];
+
+    let src = '/media/dist/fonts/fsmaja/FSMajaWeb-Regular.woff';
+    let version = '15';
+    let filename = 'FSMajaWeb-Regular.woff';
+    let as = "", type = "", crossorigin = "";
+
+
+    let arrayFile = filename.split('.');
+    let ext = arrayFile[arrayFile.length - 1];
+    let ver = dontCacheBust.indexOf(ext) > -1 ? `` : `?v=` + version;
+
+    var isPreview = false;
+
+    if (filename.indexOf('.ttf') > -1) {
+        as = ' as="font"';
+        type = ' type="font/ttf"';
+        crossorigin = ' crossorigin';
+    } else if (filename.indexOf('.woff') > -1) {
+        as = ' as="font"';
+        type = ' type="font/woff"';
+        crossorigin = ' crossorigin';
+    } else if (filename.indexOf('.css') > -1) {
+        as = ' as="style"';
+    }
+
+    let srcVer = isPreview ? src : src + ver;
+
+    //let comment = isPreview ? ' <!--  ' + filename  + ' v ' + ver  + ' -->    :'';
+    let comment = '';
+    console.log('<link rel="preload" href="' + srcVer + '"' + as + type + crossorigin + '>' + comment);
+</script>
+
+</html>
