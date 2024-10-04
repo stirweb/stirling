@@ -3304,7 +3304,6 @@ textarea {
   line-height: 1.5;
   color: #3a3c39;
   transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
-  -webkit-appearance: none;
   appearance: none; }
 
 fieldset {
@@ -3322,7 +3321,6 @@ select {
   font-family: inherit;
   border-radius: 0;
   border: 1px solid #cacaca;
-  -webkit-appearance: none;
   appearance: none;
   background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIzMiIgaWQ9InRyaWFuZ2xlLWRvd24iIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik00IDggSDI4IEwxNiAyNiB6Ii8+PC9zdmc+");
   background-size: 15px 15px;
@@ -3346,7 +3344,6 @@ label > [type="radio"] {
     Progress bar eg used on search - MOVE!
 */
 progress[value] {
-  -webkit-appearance: none;
   appearance: none;
   width: 250px;
   height: 20px;
@@ -4735,9 +4732,9 @@ li.c-colour-swatch__pms:before {
 .c-download-box.small-download-box .button {
   padding: 8px 13px 8px 3px; }
 
-.c-download-box.small-download-box .dropdown-pane {
-  width: 420%; }
-
+/* .c-download-box.small-download-box .dropdown-pane {
+    width: 420%;
+} */
 .c-download-box.small-download-box img {
   padding: 25px 25px 30px; }
 
@@ -5012,7 +5009,6 @@ ol.numberlist {
   margin: auto;
   width: clamp(20rem, 53.125rem, 80vw);
   z-index: 1006;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   display: none;
   padding: 2rem;
@@ -5882,7 +5878,6 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
  * flip-left, flip-right, flip-up, flip-down
  */
 [data-aos^='flip'][data-aos^='flip'] {
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transition-property: transform; }
 
