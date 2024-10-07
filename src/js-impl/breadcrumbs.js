@@ -8,14 +8,17 @@
 (function (trail, useSchemaDotOrg, collapse) {
   if (!trail) return; // just bail out now if there is no breadcrumb trail
 
-
-  // [2024-08-15] set this to FALSE to revert to old behaviour! [rwm2]
   const compact = "small"===stir.MediaQuery.current;
 
 
   var schemaData = [];
   var hierarchyLevel = 0; // track the depth as we move through the hierarchy
-  var hierarchyMax = trail.getAttribute("data-hierarchy-max") || (compact?1:4);
+  //var hierarchyMax = trail.getAttribute("data-hierarchy-max") || (compact?1:4);
+  const hierarchyMax = {
+    small: 1,
+    medium: 2,
+    large:3
+  };
   var TRUNC_THRESHOLD = 25;
   // Max level befor collapsing kicks in. Default to 4 levels, but can be
   // changed by setting the data-* attribute in the HTML/template.
@@ -71,11 +74,11 @@
   }
 
   if (collapse) {
-    if (hierarchyLevel > hierarchyMax) {
+    if (hierarchyLevel > hierarchyMax.small) {
       // Out of all the crumbs, select just the ones we want to collapse
       // and transform the resulting NodeList into a regular Array:
-      var crumbsToCollapse = Array.prototype.slice.call(trail.querySelectorAll("[data-hierarchy-level]")).slice(0, 0 - hierarchyMax);
-
+      var crumbsToCollapse = Array.prototype.slice.call(trail.querySelectorAll("[data-hierarchy-level]")).slice(0, 0 - hierarchyMax.small);
+      
       // Just return early if there are too few crumbs:
       if (1 === crumbsToCollapse.length) return;
 
@@ -95,18 +98,26 @@
       home.insertAdjacentElement("afterend", ellipsis);
       ellipsisLink.innerText = "…";
       ellipsis.classList.add("breadcrumbs__item--has-submenu");
+      if(crumbsToCollapse.length<hierarchyMax.medium) {
+        ellipsis.classList.add("show-for-small-only");
+      }
       ellipsis.setAttribute("data-collapse", "");
 
       // Collapse the breadcrumbs and append them to the new ellipsis menu:
-      crumbsToCollapse.forEach(function (value, index) {
-        var li = document.createElement("li"); //create a fresh <li>
-		var a = value.querySelector("a");//recycle the <a> from the crumb
-		a.removeEventListener("click",crumbListener);
+      crumbsToCollapse.forEach((crumb,index) => {
+        var li = document.createElement("li");
+        var a = crumb.querySelector("a").cloneNode(true);
         li.appendChild(a); 
-        ellipsisMenu.appendChild(li); //append to the new ellipsis menu
-        value.parentNode.removeChild(value); //destroy the old breadcrum
-        // Note: destroying the old crumb will also destroy any listeners and sub-menus
-        // that were attached to it.
+        ellipsisMenu.appendChild(li);
+        if(index>crumbsToCollapse.length-hierarchyMax.medium){
+          crumb.classList.add("show-for-medium");
+          a.classList.add("show-for-small-only");
+        } else if(index>crumbsToCollapse.length-hierarchyMax.large) {
+          crumb.classList.add("show-for-large");
+          a.classList.add("hide-for-large");
+        } else {
+          crumb.remove();
+        }
       });
 
       // Set the ellipsis to have the same behaviour as the other breadcrumbs
