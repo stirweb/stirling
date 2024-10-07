@@ -2546,6 +2546,10 @@ button {
   color: inherit;
   /* default in Webkit/Blink is blue, others black. normalise by inheriting the colour from parent element */ }
 
+button:focus {
+  outline: 1px solid #006938;
+  outline-offset: 4px; }
+
 /* Default */
 .button {
   background-color: #006938;
@@ -2995,6 +2999,9 @@ button {
 
 .u-white--all.button.heritage-berry:hover {
   background-color: #9d1e65; }
+
+.u-white--all button:focus {
+  outline: 1px solid #fff; }
 
 /* 
     label/input[type=radio|checkbox] combos that should display as buttons
