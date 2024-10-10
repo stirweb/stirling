@@ -2767,7 +2767,9 @@ stir.MediaQuery = (function () {
       ellipsisLink.innerText = "…";
       ellipsis.classList.add("breadcrumbs__item--has-submenu");
       if(crumbsToCollapse.length<hierarchyMax.medium) {
-        ellipsis.classList.add("show-for-small-only");
+        ellipsis.classList.add("hide-for-medium");
+      } else if(crumbsToCollapse.length<hierarchyMax.large) {
+        ellipsis.classList.add("hide-for-large");
       }
       ellipsis.setAttribute("data-collapse", "");
 
