@@ -28,7 +28,9 @@
 
   const renderEvent = (item) => {
     return `<div class="cell small-12 ">
-                <img class="show-for-medium" src="${item.image}" alt="Image for event: ${item.title}" loading="lazy" />
+              <div class="u-aspect-ratio-16-9 ">
+                <img class="show-for-medium u-aspect-ratio-16-9" src="${item.image}" alt="Image for event: ${item.title}" loading="lazy" />
+              </div>
                 <time class="u-block u-my-1 u-grey--dark">${renderEventDate(item.stirStart)} - ${renderEventDate(item.stirEnd)}</time>
                 <h3 class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
                     <a href="${item.url}" class="c-link u-inline">${item.title}</a>
@@ -39,7 +41,9 @@
 
   const renderNewsItem = stir.curry((width, item) => {
     return `<div class="cell small-12 medium-${width}">
-                <img class="show-for-medium" src="${item.thumbnail}" alt="Image for article: ${item.title}" loading="lazy" />
+                <div class="u-aspect-ratio-16-9 ">
+                  <img class="show-for-medium u-object-cover" src="${item.thumbnail}" alt="Image for article: ${item.title}" loading="lazy" />
+                </div>
                 <time class="u-block u-my-1 u-grey--dark">${renderNewsDate(item.date)}</time>
                 <h3 class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
                     <a href="${item.url}" class="c-link u-inline">${item.title}</a>
