@@ -17,7 +17,7 @@
             <div class="grid-x grid-padding-x " >${i}</div>
         </div>`),p=stir.curry((e,a,i)=>`
       <${a} class="small-12 cell ${e}">
-        <div class="u-aspect-ratio-3-2 "><a href="${i.url}"><img class=" u-object-cover" src="${i.image}" alt="${i.imagealt}" loading="lazy"></a></div>
+        <div class="u-aspect-ratio-16-9 "><a href="${i.url}"><img class=" u-object-cover" src="${i.image}" alt="${i.imagealt}" loading="lazy"></a></div>
         <h3 class="header-stripped u-my-1 u-font-normal u-compress-line-height">
         <a href="${i.url}" class="c-link u-inline">${i.title}</a>
       </h3>
