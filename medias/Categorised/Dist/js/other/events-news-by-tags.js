@@ -10,7 +10,7 @@
                 </div>
             </div>`:"",n=e=>`<div class="cell small-12 ">
               <div class="u-aspect-ratio-16-9 ">
-                <img class="show-for-medium u-aspect-ratio-16-9" src="${e.image}" alt="Image for event: ${e.title}" loading="lazy" />
+                <img class="show-for-medium u-object-cover" src="${e.image}" alt="Image for event: ${e.title}" loading="lazy" />
               </div>
                 <time class="u-block u-my-1 u-grey--dark">${s(e.stirStart)} - ${s(e.stirEnd)}</time>
                 <h3 class="header-stripped u-mb-1 u-font-normal u-compress-line-height">

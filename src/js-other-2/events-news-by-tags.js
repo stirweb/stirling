@@ -29,7 +29,7 @@
   const renderEvent = (item) => {
     return `<div class="cell small-12 ">
               <div class="u-aspect-ratio-16-9 ">
-                <img class="show-for-medium u-aspect-ratio-16-9" src="${item.image}" alt="Image for event: ${item.title}" loading="lazy" />
+                <img class="show-for-medium u-object-cover" src="${item.image}" alt="Image for event: ${item.title}" loading="lazy" />
               </div>
                 <time class="u-block u-my-1 u-grey--dark">${renderEventDate(item.stirStart)} - ${renderEventDate(item.stirEnd)}</time>
                 <h3 class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
