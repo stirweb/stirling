@@ -18,13 +18,7 @@ stir.funnelback =
 
 (function () {
   const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-  //const fallbackimgurl = '<t4 type="media" id="183393" formatter="image/*" cdn="true" pxl-filter-id="10" />';
-
-  const fallbackimgurl = `<img src="/media/stirling/news/news-centre/generic/airthrey-loch-1200x630.jpg" width="1200" height="630" alt="Airthrey Loch University of Stirling" loading="lazy" />
-`.trim();
-
-  console.log(fallbackimgurl);
-
+  const fallbackimgurl = '<t4 type="media" id="183393" formatter="path/*" cdn="true" pxl-filter-id="10" />';
   const templates = {
     relatedCourses: (result) => `<li><a href="${result.liveUrl}">${result.metaData.award || ""} ${result.title}</a></li>`,
     relatedNews: (result) => `<article class="cell large-4 medium-6 small-12" aria-label="${result.title.split("|").shift().trim()}">
