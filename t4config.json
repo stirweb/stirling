@@ -428,6 +428,11 @@
         "projectPath": "medias/Categorised/Dist/css/campaigns/activity-timetable.css"
       },
       {
+        "id": 183460,
+        "description": "gallery.css",
+        "projectPath": "medias/Categorised/Dist/css/campaigns/gallery.css"
+      },
+      {
         "id": 158039,
         "description": "civic.css",
         "projectPath": "medias/Categorised/Dist/css/campaigns/civic.css"
@@ -1732,6 +1737,11 @@
         "id": 181794,
         "description": "webinars5.js",
         "projectPath": "medias/Categorised/Dist/js/other/webinars5.js"
+      },
+      {
+        "id": 183454,
+        "description": "gallery.js",
+        "projectPath": "medias/Categorised/Dist/js/other/gallery.js"
       },
       {
         "id": 175961,
