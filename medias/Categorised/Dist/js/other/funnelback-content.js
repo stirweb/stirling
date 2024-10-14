@@ -1,5 +1,5 @@
 var stir=stir||{};stir.funnelback=stir.funnelback||(()=>{const e="dev"===UoS_env.name||"qa"===UoS_env.name||"preview"===UoS_env.name?"stage-shared-15-24-search.clients.uk.funnelback.com":"search.stir.ac.uk",t=`https://${e}/s/`;return{getHostname:()=>e,getJsonEndpoint:()=>new URL("search.json",t),getScaleEndpoint:()=>new URL("scale",t)}})(),function(){const c="dev"===UoS_env.name||"qa"===UoS_env.name,o={relatedCourses:e=>`<li><a href="${e.liveUrl}">${e.metaData.award||""} ${e.title}</a></li>`,relatedNews:e=>`<article class="cell large-4 medium-6 small-12" aria-label="${e.title.split("|").shift().trim()}">
-    ${o.link(e.liveUrl,o.image(o.imageUrl(e),e.metaData.imagealt)||o.image('<t4 type="media" id="183393" formatter="image/*" cdn="true" pxl-filter-id="10" />',"Airthrey Loch"))}
+    ${o.link(e.liveUrl,o.image(o.imageUrl(e),e.metaData.imagealt)||o.image('<t4 type="media" id="183393" formatter="path/*" cdn="true" pxl-filter-id="10" />',"Airthrey Loch"))}
 		<time class="u-block u-my-1 u-dark-grey">${stir.Date.newsDate(new Date(e.date))}</time>
 		<h3 class="header-stripped u-header--margin-stripped u-mt-1 u-font-normal u-compress-line-height"><a href="${e.liveUrl}" class="c-link u-inline">${e.title.split("|").shift().trim()}</a></h3>
 		<p class="text-sm">${e.summary}</p>
