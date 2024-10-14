@@ -1734,6 +1734,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/webinars5.js"
       },
       {
+        "id": 183454,
+        "description": "gallery.js",
+        "projectPath": "medias/Categorised/Dist/js/other/gallery.js"
+      },
+      {
         "id": 175961,
         "description": "redirects.csv",
         "projectPath": "medias/Categorised/Dist/php/smart-404/redirects.csv"
