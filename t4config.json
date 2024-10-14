@@ -428,6 +428,11 @@
         "projectPath": "medias/Categorised/Dist/css/campaigns/activity-timetable.css"
       },
       {
+        "id": 183460,
+        "description": "gallery.css",
+        "projectPath": "medias/Categorised/Dist/css/campaigns/gallery.css"
+      },
+      {
         "id": 158039,
         "description": "civic.css",
         "projectPath": "medias/Categorised/Dist/css/campaigns/civic.css"
