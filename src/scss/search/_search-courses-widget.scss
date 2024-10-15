@@ -16,7 +16,7 @@ $c-course-search-widget__button-min-width: 219px;
     box-shadow: none;
     font-size: 1.3125rem;
     height: 100%;
-    max-width: 880px;
+
     margin: 0;
     background-color: #fff;
     background-image: url('<t4 type="media" id="163605" formatter="path/*"/>');
@@ -56,6 +56,7 @@ $c-course-search-widget__button-min-width: 219px;
       padding: 12px 0 12px 45px;
       background-size: 27px;
       background-position-y: 22px;
+      max-width: 98%;
     }
     .c-course-search-widget__search-input::placeholder {
       font-size: 1.688rem;
@@ -130,12 +131,12 @@ $c-course-search-widget__button-min-width: 219px;
     New GRID version
 */
 @media screen and (min-width: 40rem) {
-	.c-course-search-widget__form[class*="u-grid"]{
-		grid-template-columns: 3fr 1fr;
-		gap: 1rem;
+  .c-course-search-widget__form[class*="u-grid"] {
+    grid-template-columns: 3fr 1fr;
+    gap: 1rem;
 
     button {
       grid-row: span 2;
     }
-	}
+  }
 }

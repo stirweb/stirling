@@ -130,11 +130,18 @@
   gap: 24px;
 }
 
+.u-gap-32 {
+  gap: 32px;
+}
+
 .u-gap-40 {
   gap: 40px;
 }
 
 @media screen and #{breakpoint(medium up)} {
+  .u-gap-8-medium-up {
+    gap: 8px;
+  }
   .u-gap-32-medium-up {
     gap: 32px;
   }
@@ -267,7 +274,8 @@
 /* Object fit */
 
 .u-object-cover,
-.u-object-cover > img {
+.u-object-cover > img,
+.u-object-cover > picture img {
   object-fit: cover;
   object-position: center;
   height: 100%;
@@ -343,6 +351,10 @@
   max-width: none;
 }
 
+.u-min-w-none {
+  min-width: auto;
+}
+
 .u-max-w-350 {
   max-width: 350px;
 }
@@ -361,6 +373,12 @@
   }
 }
 
+.u-basis-20 > * {
+  flex-basis: 20px;
+  width: 20px;
+  min-width: 20px;
+}
+
 /* 
   Common aspect ratios 
 */
@@ -375,6 +393,10 @@
 /* Homepage news */
 .u-aspect-ratio-4-3 {
   aspect-ratio: 4/3;
+}
+
+.u-aspect-ratio-16-9 {
+  aspect-ratio: 16/9;
 }
 
 .u-whitespace-nowrap {

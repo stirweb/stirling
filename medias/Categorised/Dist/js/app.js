@@ -670,7 +670,7 @@ return /******/ (function(modules) { // webpackBootstrap
     For browsers that do not support Element.closest(),
     but carry support for element.matches()
     (or a prefixed equivalent, meaning IE9+)
- */
+
 
 if (!Element.prototype.matches) {
   Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
@@ -687,11 +687,11 @@ if (!Element.prototype.closest) {
     return null;
   };
 }
-
+ */
 /*
     element.remove();
     https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/remove()/remove().md
- */
+
 
 (function (arr) {
   arr.forEach(function (item) {
@@ -708,11 +708,11 @@ if (!Element.prototype.closest) {
     });
   });
 })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
-
+ */
 /*
     Array.includes()
     https://github.com/kevlatus/polyfill-array-includes/blob/master/array-includes.js
- */
+
 
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, "includes", {
@@ -748,11 +748,11 @@ if (!Array.prototype.includes) {
     },
   });
 }
-
+ */
 /*
     String.includes()
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes
- */
+
 
 if (!String.prototype.includes) {
   String.prototype.includes = function (search, start) {
@@ -767,11 +767,12 @@ if (!String.prototype.includes) {
     return this.indexOf(search, start) !== -1;
   };
 }
+   */
 
 /*
     Object.entries()
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
- */
+
 
 if (!Object.entries) {
   Object.entries = function (obj) {
@@ -783,10 +784,10 @@ if (!Object.entries) {
     return resArray;
   };
 }
-
+ */
 /*
     Object.values()
- */
+
 
 if (!Object.values) {
   Object.values = function (obj) {
@@ -796,6 +797,7 @@ if (!Object.values) {
     return vals;
   };
 }
+ */
 
 /**
  * Generate an avatar image from letters
@@ -1603,7 +1605,7 @@ stir.formatStirDate = stir.Date.galleryDate;
 /*
  * Function: Determine if a date is BST or GMT
  * Parameter should be a JavaScript Date Object
- */
+
 stir.BSTorGMT = function (d) {
   var objBST = [
     { year: 2021, start: 20210328, end: 20211031 },
@@ -1644,6 +1646,7 @@ stir.BSTorGMT = function (d) {
   console.error("Parameter one of stir.BSTorGMT() should be a JavaScript Date Object");
   return "";
 };
+ */
 
 stir.createDOMFragment = function (htmlStr) {
   if (!htmlStr) return;
@@ -2147,49 +2150,59 @@ stir.stringToNode = (htmlString) => stir.createDOMFragment(htmlString).firstElem
 const _isArray = Array.isArray;
 const _keys = Object.keys;
 
+const reverseArgs = function (fn) {
+  return function argsReversed(...args) {
+    return fn(...args.reverse());
+  };
+};
+
 /*
-   Clone helper function
+   Clone helper function - 27/09/2024 replaced with structuredClone (Ryan)
  */
 stir.clone = function (input) {
-  const out = _isArray(input) ? Array(input.length) : {};
-  if (input && input.getTime) return new Date(input.getTime());
+  // const out = _isArray(input) ? Array(input.length) : {};
+  // if (input && input.getTime) return new Date(input.getTime());
 
-  for (const key in input) {
-    const v = input[key];
-    out[key] = typeof v === "object" && v !== null ? (v.getTime ? new Date(v.getTime()) : stir.clone(v)) : v;
-  }
+  // for (const key in input) {
+  //   const v = input[key];
+  //   out[key] = typeof v === "object" && v !== null ? (v.getTime ? new Date(v.getTime()) : stir.clone(v)) : v;
+  // }
 
-  return out;
+  // return out;
+  return structuredClone(input);
 };
 
 /*
    Identity helper function
- */
+
 stir.identity = function (input) {
   return input;
 };
+ */
 
 /*
    Not helper function
- */
+
 stir.not = function not(predicate) {
   return function negated(...args) {
     return !predicate(...args);
   };
 };
+ */
 
 /*
    Partial helper function
- */
+
 stir.partial = function (fn, ...presetArgs) {
   return function partiallyApplied(...laterArgs) {
     return fn(...presetArgs, ...laterArgs);
   };
 };
+ */
 
 /*
    Compose helper function
- */
+*/
 stir.compose = function (...fns) {
   return fns.reduceRight(function reducer(fn1, fn2) {
     return function composed(...args) {
@@ -2199,7 +2212,12 @@ stir.compose = function (...fns) {
 };
 
 /*
-   Curry helper function
+    Pipe helper function - Performs left-to-right function composition. 
+ */
+stir.pipe = reverseArgs(stir.compose);
+
+/*
+    Curry helper function
  */
 stir.curry = function (fn, arity = fn.length) {
   return (function nextCurried(prevArgs) {
@@ -2216,7 +2234,7 @@ stir.curry = function (fn, arity = fn.length) {
 };
 
 /*
-   Sort version that returns a new list
+   Curried version of Sort that returns a new list
  */
 stir.sort = stir.curry(function (fn, list) {
   if (typeof fn === "function") return stir.clone(list).sort(fn);
@@ -2262,26 +2280,25 @@ stir.isNumeric = function (input) {
 stir.callback = {};
 stir.callback.queue = [];
 
-stir.callback.enqueue = 
-	 ticket => {
-		if(!ticket) return;
-		var chain = window;
-		var callback;
-		var data = ticket.split(".");
-		while (data.length > 0) {
-			var n = data.shift();
-			if ("function" === typeof chain[n]) {
-				callback = chain[n];
-			} else if ("undefined" !== typeof chain[n]) {
-				chain = chain[n];
-			}
-		}
-		if(callback) {
-			callback();
-		} else {
-			stir.callback.queue.push(ticket);
-		}
-	 };
+stir.callback.enqueue = (ticket) => {
+  if (!ticket) return;
+  var chain = window;
+  var callback;
+  var data = ticket.split(".");
+  while (data.length > 0) {
+    var n = data.shift();
+    if ("function" === typeof chain[n]) {
+      callback = chain[n];
+    } else if ("undefined" !== typeof chain[n]) {
+      chain = chain[n];
+    }
+  }
+  if (callback) {
+    callback();
+  } else {
+    stir.callback.queue.push(ticket);
+  }
+};
 
 /*
    Unbound and curried map filter reduce each etc functions
@@ -2659,14 +2676,17 @@ stir.MediaQuery = (function () {
 (function (trail, useSchemaDotOrg, collapse) {
   if (!trail) return; // just bail out now if there is no breadcrumb trail
 
-
-  // [2024-08-15] set this to FALSE to revert to old behaviour! [rwm2]
   const compact = "small"===stir.MediaQuery.current;
 
 
   var schemaData = [];
   var hierarchyLevel = 0; // track the depth as we move through the hierarchy
-  var hierarchyMax = trail.getAttribute("data-hierarchy-max") || (compact?1:4);
+  //var hierarchyMax = trail.getAttribute("data-hierarchy-max") || (compact?1:4);
+  const hierarchyMax = {
+    small: 1,
+    medium: 2,
+    large:3
+  };
   var TRUNC_THRESHOLD = 25;
   // Max level befor collapsing kicks in. Default to 4 levels, but can be
   // changed by setting the data-* attribute in the HTML/template.
@@ -2722,11 +2742,11 @@ stir.MediaQuery = (function () {
   }
 
   if (collapse) {
-    if (hierarchyLevel > hierarchyMax) {
+    if (hierarchyLevel > hierarchyMax.small) {
       // Out of all the crumbs, select just the ones we want to collapse
       // and transform the resulting NodeList into a regular Array:
-      var crumbsToCollapse = Array.prototype.slice.call(trail.querySelectorAll("[data-hierarchy-level]")).slice(0, 0 - hierarchyMax);
-
+      var crumbsToCollapse = Array.prototype.slice.call(trail.querySelectorAll("[data-hierarchy-level]")).slice(0, 0 - hierarchyMax.small);
+      
       // Just return early if there are too few crumbs:
       if (1 === crumbsToCollapse.length) return;
 
@@ -2746,18 +2766,28 @@ stir.MediaQuery = (function () {
       home.insertAdjacentElement("afterend", ellipsis);
       ellipsisLink.innerText = "…";
       ellipsis.classList.add("breadcrumbs__item--has-submenu");
+      if(crumbsToCollapse.length<hierarchyMax.medium) {
+        ellipsis.classList.add("hide-for-medium");
+      } else if(crumbsToCollapse.length<hierarchyMax.large) {
+        ellipsis.classList.add("hide-for-large");
+      }
       ellipsis.setAttribute("data-collapse", "");
 
       // Collapse the breadcrumbs and append them to the new ellipsis menu:
-      crumbsToCollapse.forEach(function (value, index) {
-        var li = document.createElement("li"); //create a fresh <li>
-		var a = value.querySelector("a");//recycle the <a> from the crumb
-		a.removeEventListener("click",crumbListener);
+      crumbsToCollapse.forEach((crumb,index) => {
+        var li = document.createElement("li");
+        var a = crumb.querySelector("a").cloneNode(true);
         li.appendChild(a); 
-        ellipsisMenu.appendChild(li); //append to the new ellipsis menu
-        value.parentNode.removeChild(value); //destroy the old breadcrum
-        // Note: destroying the old crumb will also destroy any listeners and sub-menus
-        // that were attached to it.
+        ellipsisMenu.appendChild(li);
+        if(index>crumbsToCollapse.length-hierarchyMax.medium){
+          crumb.classList.add("show-for-medium");
+          a.classList.add("show-for-small-only");
+        } else if(index>crumbsToCollapse.length-hierarchyMax.large) {
+          crumb.classList.add("show-for-large");
+          a.classList.add("hide-for-large");
+        } else {
+          crumb.remove();
+        }
       });
 
       // Set the ellipsis to have the same behaviour as the other breadcrumbs
@@ -2906,7 +2936,6 @@ stir.Concierge = function Concierge(popup) {
   const renderGenericItem = (text) => `<li class="c-header-search__item">${text}</li>`;
 
   const renderAllItem = (item) => {
-    console.log(item);
     const url = item.collection === "stir-events" ? item.metaData.page : funnelbackServer + item.clickTrackingUrl;
     return `
       <li class="c-header-search__item">
@@ -4470,12 +4499,13 @@ function goGoGadgetTabbordian() {
 			tab.tab.removeAttribute("aria-controls");
 		});
 	}
-
+	
 	if(accordion){
 		instance.tabs.forEach(tab => {
 			tab.content.setAttribute("role","region");
 			tab.header.textContent = '';
 			tab.header.append(tab.accordion);
+			tab.header.classList.add('x-header-control')
 			tab.accordion.setAttribute("aria-expanded","false");
 			tab.accordion.setAttribute("aria-controls",tab.content.id);
 			tab.content.setAttribute("aria-labelledby",tab.accordion.id);
@@ -4486,6 +4516,7 @@ function goGoGadgetTabbordian() {
 		instance.tabs.forEach(tab => {
 			tab.accordion.remove();
 			tab.header.textContent = tab.label;
+			tab.header.classList.remove('x-header-control')
 			tab.content.removeAttribute("role");			
 			tab.content.removeAttribute("aria-labelledby");
 			tab.content.removeAttribute("hidden");
@@ -4720,6 +4751,8 @@ var stir = stir || {};
   // if we are in preview, dynamically load the preview tools
   // otherwise just skip this
 
+  if("www.stir.ac.uk"===window.location.hostname) return;
+
   switch (window.location.hostname) {
     case "localhost":
       stir.addScript("/src/js-other/t4-preview-tools.js");
@@ -4728,6 +4761,7 @@ var stir = stir || {};
       stir.addScript("/stirling/src/js-other/qa-protect.js");
       break;
     case "stiracuk-cms01-production.terminalfour.net":
+    case "stiracuk-cms01-test.terminalfour.net":
       stir.addScript('<t4 type="media" id="158095" formatter="path/*" />');
       break;
   }

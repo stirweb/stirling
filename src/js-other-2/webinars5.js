@@ -8,10 +8,17 @@ const renderNoItemsMessage = (msg) => `<div class="cell">${msg}</div>`;
 const renderHeader = (header, intro) =>
   !header && !intro
     ? ``
-    : `<div class="cell u-mt-2">
+    : `<div class="cell u-mt-2 u-margin-bottom">
     ${header ? `<h2>${header}</h2>` : ""}
     ${intro}
   </div>`;
+
+const renderRadioTab = (id, text) => {
+  return `<div class="u-border-width-4 u-px-1 u-white-line-top u-bg-white u-mr-tiny u-box-size-border">
+              <label for="${id}" class="u-cursor-pointer u-heritage-green  u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
+              <input type="radio" id="${id}" name="view" class="hide" value="${id.replace("view", "")}" />${text}</label>
+          </div>`;
+};
 
 const renderDateTime = (item) =>
   `<p class="text-sm u-m-0">
@@ -37,14 +44,14 @@ const renderItem = (item) => {
 const renderAllItems = stir.curry((section, items) => {
   if (!items.length && !section.noItems) return ``;
   return `
-    <div class="grid-x grid-padding-x">
+    <div class="grid-x ">
       ${renderHeader(section.head, section.intro)}
       ${!items.length ? renderNoItemsMessage(section.noItems) : items.map(renderItem).join("")}
       ${section.divider && section.divider === "no" ? `` : renderDivider()}
     </div>`;
 });
 
-const renderSummary = (num) => `<p class="u-pb-2 text-sm">Results based on filters - <strong>${num} webinars</strong></p>`;
+const renderSummary = (num) => (Number(num) === 0 ? `<p class="u-pb-2 text-sm"><strong>No webinars or information sessions found.</strong></p>` : `<p class="u-pb-2 text-sm">Results based on filters - <strong>${num} webinars</strong></p>`);
 
 const renderPaginationSummary = (start, end, total) => `<p class="u-pb-2 text-sm text-center"><strong>Displaying ${start + 1} to ${end} of ${total} results</strong></p>`;
 
@@ -135,10 +142,62 @@ const SafeQueryParams = {
   remove: QueryParams.remove,
 };
 
+/* OutPut Section Content */
+function outputSectionContent(filters, node, data) {
+  const { upcomingData, onDemandData } = data;
+  const all = [...upcomingData, ...onDemandData];
+
+  const renderCurry = renderAllItems(filters);
+
+  all.length > 0 ? setDOMContent(node, renderCurry(all)) : setDOMContent(node, renderSummary(0));
+}
+
+/* OutPut Form Content */
+function outPutFormContent(consts, filters, node, event, data) {
+  const { upcomingData, onDemandData } = data;
+  const all = [...upcomingData, ...onDemandData];
+
+  const { itemsPerPage } = consts;
+  const page = filters.page;
+  const start = itemsPerPage * (page - 1);
+  const end = start + itemsPerPage;
+
+  if (upcomingData.length && !stir.node("#viewlive")) {
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "Upcoming live"));
+  } else if (filters.params.view === "live" && !stir.node("#viewlive")) {
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewlive", "Upcoming live"));
+  }
+
+  if (onDemandData.length && !stir.node("#viewondemand")) {
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewondemand", "On demand"));
+  } else if (filters.params.view === "ondemand" && !stir.node("#viewondemand")) {
+    appendDOMContent(consts.radioTabs, renderRadioTab("viewondemand", "On demand"));
+  }
+
+  const renderResults = (data) => {
+    const summaryHtml = start === 0 ? renderSummary(data.length) : renderPaginationSummary(start, end, data.length);
+    const endHtml = data.length > end ? renderLoadMoreButon() : renderNoData(``);
+
+    const setDOMResults = event === "new" ? setDOMContent(node) : appendDOMContent(node);
+    const renderCurry = renderAllItems(filters);
+
+    return setDOMResults(summaryHtml + renderCurry(data.slice(start, end)) + endHtml);
+  };
+
+  switch (filters.params.view) {
+    case "live":
+      return renderResults(upcomingData);
+    case "ondemand":
+      return renderResults(onDemandData);
+    default:
+      return all.slice(start, end).length ? null : setDOMContent(node, "<p>No webinars or information sessions found</p>");
+  }
+}
+
 /* 
-    Main controller function
+    Process Data controller function
 */
-function main(consts, node, data, filters, event) {
+function processData(consts, data, filters) {
   const now = getISONow();
 
   // Data processing pipeline
@@ -157,37 +216,15 @@ function main(consts, node, data, filters, event) {
     stir.filter(isPast)
   )(webinarsData);
 
-  const all = [...upcomingData, ...onDemandData];
+  //const all = [...upcomingData, ...onDemandData];
 
-  const { itemsPerPage } = consts;
-  const page = filters.page;
-  const start = itemsPerPage * (page - 1);
-  const end = start + itemsPerPage;
-
-  const renderResults = (data, title) => {
-    const summaryHtml = start === 0 ? renderSummary(data.length) : renderPaginationSummary(start, end, data.length);
-    const endHtml = data.length > end ? renderLoadMoreButon() : renderNoData(`No more items to load`);
-
-    const setDOMResults = event === "new" ? setDOMContent(node) : appendDOMContent(node);
-    const renderCurry = renderAllItems(filters);
-
-    return setDOMResults(summaryHtml + renderCurry(data.slice(start, end)) + endHtml);
-  };
-
-  switch (filters.params.view) {
-    case "live":
-      return renderResults(upcomingData, "Upcoming");
-    case "ondemand":
-      return renderResults(onDemandData, "On Demand");
-    default:
-      return all.slice(start, end).length ? renderResults(all, "All") : setDOMContent(node, "<p>No webinars found</p>");
-  }
+  return { upcomingData: upcomingData, onDemandData: onDemandData };
 }
 
 /*
     Form Controller
 */
-function doForm(consts, node, data, event, form) {
+function doForm(consts, node, allData, event, form) {
   const formData = new FormData(form);
   const formDataObject = Object.fromEntries(formData.entries());
 
@@ -197,34 +234,37 @@ function doForm(consts, node, data, event, form) {
     page: SafeQueryParams.get("page"),
     params: {
       series: "",
-      countries: formDataObject.region,
+      countries: mapQueryParams(formDataObject.region),
       subjects: "",
-      studylevels: formDataObject.studylevel,
+      studylevels: mapQueryParams(formDataObject.studylevel),
       faculties: "",
-      categories: formDataObject.category,
+      categories: mapQueryParams(formDataObject.category),
       view: formDataObject.view,
     },
     divider: "no",
   };
 
-  main(consts, node, data, filters, event);
-  if (node.innerHTML === "") setDOMContent(node, "<p>No webinars found</p>");
+  const data = processData(consts, allData, filters);
+  outPutFormContent(consts, filters, node, event, data);
+
+  //if (node.innerHTML === "") setDOMContent(node, "<p>No webinars found</p>");
 }
 
 /* 
     Event Handlers
 */
-const handleFormChange = (consts, webinarResultsArea, dataWebinars) => () => doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
-
-const handleRadioClick = (consts, webinarResultsArea, dataWebinars) => (e, clicks) => {
+const handleFormChange = (consts, webinarResultsArea, dataWebinars) => () => {
   SafeQueryParams.set("page", "1");
-  const event = clicks === 0 ? "onload" : "click";
-  if (e.target.value === SafeQueryParams.get("view") && clicks > 0) return;
+  doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
+};
+
+const handleRadioClick = (consts, webinarResultsArea, dataWebinars) => (e) => {
+  SafeQueryParams.set("view", e.target.value);
+  SafeQueryParams.set("page", "1");
 
   doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
   stir.nodes("#webinarfilters input").forEach((r) => r.closest("div").classList.remove("u-bg-grey", "u-energy-line-top"));
   e.target.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
-  handleTabScroll(e.target, stir.node("#radioTabs"), event);
 };
 
 const handlePagination = (consts, webinarResultsArea, dataWebinars) => (e) => {
@@ -239,7 +279,7 @@ const handlePagination = (consts, webinarResultsArea, dataWebinars) => (e) => {
 
 /* 
     Tab scrolling function
-*/
+
 function handleTabScroll(el, container, event) {
   const itemWidth = el.closest("div").offsetWidth;
   const containerBounds = container.parentElement.getBoundingClientRect();
@@ -263,12 +303,27 @@ function handleTabScroll(el, container, event) {
     container.scrollBy({ left: -itemWidth, behavior: "smooth" });
   }
 }
+*/
+
+const mapQueryParams = (val) => {
+  const value = val.replaceAll("-", " ");
+
+  if (value === "Postgraduate taught") {
+    return "Postgraduate (taught)";
+  }
+  if (value === "Postgraduate research") {
+    return "Postgraduate (research)";
+  }
+  return value;
+};
 
 /* 
     Initialize
 */
-function initWebinarFinder(consts, dataWebinars) {
-  const webinarResultsArea = stir.node("#webinarresults");
+function initWebinarForm(consts, dataWebinars) {
+  if (!consts.webinarResultsArea) return;
+
+  const webinarResultsArea = consts.webinarResultsArea;
   if (!webinarResultsArea) return;
 
   SafeQueryParams.set("page", "1");
@@ -277,7 +332,7 @@ function initWebinarFinder(consts, dataWebinars) {
     category: SafeQueryParams.get("category") ? SafeQueryParams.get("category") : ``,
     studylevel: SafeQueryParams.get("studylevel") ? SafeQueryParams.get("studylevel") : ``,
     region: SafeQueryParams.get("region") ? SafeQueryParams.get("region") : ``,
-    view: SafeQueryParams.get("view") ? SafeQueryParams.get("view") : ``,
+    view: SafeQueryParams.get("view") ? SafeQueryParams.get("view") : `live`,
     page: 1,
   };
 
@@ -285,19 +340,20 @@ function initWebinarFinder(consts, dataWebinars) {
     page: params.page,
     params: {
       series: "",
-      countries: params.region,
+      countries: mapQueryParams(params.region),
       subjects: "",
-      studylevels: params.studylevel,
+      studylevels: mapQueryParams(params.studylevel),
       faculties: "",
-      categories: params.category,
+      categories: mapQueryParams(params.category),
       view: params.view,
     },
     divider: "no",
   };
 
-  main(consts, webinarResultsArea, dataWebinars, filters, "new");
+  const data = processData(consts, dataWebinars, filters);
+  outPutFormContent(consts, filters, webinarResultsArea, "new", data);
 
-  if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars found</p>");
+  //if (webinarResultsArea.innerHTML === "") setDOMContent(webinarResultsArea, "<p>No webinars or information sessions found.</p>");
 
   // Event listeners
   stir.nodes("#webinarfilters select").forEach((select) => {
@@ -305,13 +361,17 @@ function initWebinarFinder(consts, dataWebinars) {
     select.addEventListener("change", handleFormChange(consts, webinarResultsArea, dataWebinars));
   });
 
-  stir.nodes("#webinarfilters input").forEach((radio) => {
-    let clicks = 0;
-    radio.addEventListener("click", (e) => handleRadioClick(consts, webinarResultsArea, dataWebinars)(e, clicks++));
+  consts.radioTabs.addEventListener("click", (e) => {
+    if (e.target.nodeName === "INPUT") {
+      handleRadioClick(consts, webinarResultsArea, dataWebinars)(e);
+    }
+  });
+
+  var radioTabs = stir.nodes("#webinarfilters input");
+  radioTabs.forEach((radio) => {
     if (radio.value === params[radio.name]) {
       radio.checked = true;
       radio.closest("div").classList.add("u-bg-grey", "u-energy-line-top");
-      radio.click();
     }
   });
 
@@ -322,9 +382,12 @@ function initWebinarFinder(consts, dataWebinars) {
     Initialize webinar sections
 */
 function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
-  const webinarSections = stir.nodes("[data-webinarSects]");
+  if (!consts.webinarSections.length) return;
+
+  const webinarSections = consts.webinarSections;
   webinarSections.forEach((element) => {
-    main(consts, element, dataWebinars, dataWebinarFilters[element.dataset.webinarsects], "onload");
+    const data = processData(consts, dataWebinars, dataWebinarFilters[element.dataset.webinarsects]);
+    outputSectionContent(dataWebinarFilters[element.dataset.webinarsects], element, data);
   });
 
   const disclaimerArea = stir.node("[data-webinardisclaimer]");
@@ -341,32 +404,59 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
 }
 
 /* 
-    Main execution
+    On load execution
 */
 (function (scope) {
   if (!scope) return;
 
   const CONSTS = {
+    webinarResultsArea: stir.node("#webinarresults"),
+    radioTabs: stir.node("#radioTabs"),
+    webinarSections: stir.nodes("[data-webinarSects]"),
     itemsPerPage: 6,
     safeList: ["countries", "series", "subjects", "studylevels", "faculties", "categories"],
     macros: (stir.t4Globals.regionmacros || []).filter((item) => item.tag),
   };
 
-  const dataWebinarsAll = stir.t4Globals.webinars || [];
   const dataWebinarFilters = stir.t4Globals.webinarSectionData || {};
 
-  function removeDuplicates(arr, key) {
-    return arr.reduce((unique, item) => {
-      const found = unique.find((i) => i[key] === item[key]);
-      if (!found) {
-        return [...unique, item];
-      }
-      return unique;
-    }, []);
+  function getApiUrl(env) {
+    switch (env) {
+      case "dev":
+        return "index.json";
+      case "preview":
+        return '<t4 type="navigation" id="5271" />';
+      default:
+        return '<t4 type="navigation" id="5271" />' + "index.json";
+    }
   }
 
-  const dataWebinars = removeDuplicates(dataWebinarsAll, "id");
+  // Fetch function to get webinar data
+  function fetchWebinarData(apiUrl) {
+    return fetch(apiUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.error("There was a problem fetching the webinar data:", error);
+        return []; // Return an empty array in case of error
+      });
+  }
 
-  initWebinarFinder(CONSTS, dataWebinars);
-  initWebinarSections(CONSTS, dataWebinars, dataWebinarFilters);
+  // Initialization function to use fetched data
+  function initializeWebinars(dataWebinars) {
+    initWebinarForm(CONSTS, dataWebinars);
+    initWebinarSections(CONSTS, dataWebinars, dataWebinarFilters);
+  }
+
+  // Fetch data and initialize
+  fetchWebinarData(getApiUrl(UoS_env.name)).then((dataWebinars) => {
+    initializeWebinars(dataWebinars);
+  });
 })(stir.nodes("[data-webinar]"));

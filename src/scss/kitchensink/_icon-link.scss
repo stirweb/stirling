@@ -19,7 +19,11 @@
 }
 
 .c-icon-link span[class^="uos-snapchat"] {
-  color: #000000;
+  color: #373a36;
+}
+
+.c-icon-link span[class^="uos-tiktok"] {
+  color: #373a36;
 }
 
 .c-icon-link span[class^="uos-facebook"],
@@ -27,6 +31,7 @@
 .c-icon-link span[class^="uos-twitter"],
 .c-icon-link span[class^="uos-youtube"],
 .c-icon-link span[class^="uos-linkedin"],
+.c-icon-link span[class^="uos-tiktok"],
 .c-icon-link span[class^="uos-snapchat"] {
   font-size: 3.125rem; /* 50px */
 }

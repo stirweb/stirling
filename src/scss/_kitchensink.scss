@@ -355,4 +355,13 @@ object.spritesheet {
     outline: 1px dotted white;
     outline-offset: 1px;
   }
+  h2::after,
+  h3::after {
+    content: none;
+  }
+}
+
+h2#hj-survey-lbl-1::after,
+h3#hj-survey-lbl-1::after {
+  content: none;
 }

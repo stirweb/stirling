@@ -16,7 +16,8 @@ updated Aug 2022 for clearing homepage banner
     align-items: center;
   }
 
-  > img {
+  > img,
+  > picture > img {
     position: absolute;
     left: 0;
     top: 0;

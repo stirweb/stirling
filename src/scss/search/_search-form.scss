@@ -3,32 +3,35 @@
 */
 
 .c-search-form {
-	[type=search],[type=text],button{
-		margin: 0;
-	}
-	input::placeholder {
-		color: #5a5858;
-	}
-	input,button {
-		&:focus-visible {
-			/* ensure high-contrast mode still has an indicator */
-			outline: 2px transparent solid !important;
-	
-			/* Apply a thick white box-shadow with 
+  [type="search"],
+  [type="text"],
+  button {
+    margin: 0;
+  }
+  input::placeholder {
+    color: #5a5858;
+  }
+  input,
+  button {
+    &:focus-visible {
+      /* ensure high-contrast mode still has an indicator */
+      outline: 2px transparent solid !important;
+
+      /* Apply a thick white box-shadow with 
 			a thin green indicator in the middle */
-			box-shadow: 0 0 0 2px $white, 0 0 0 4px $heritage-green, 0 0 0 6px $white;
-			z-index: 1;
-		}
-	}
+      box-shadow: 0 0 0 2px $white, 0 0 0 4px $heritage-green, 0 0 0 6px $white;
+      z-index: 1;
+    }
+  }
 }
 @media only screen and (min-width: 720px) {
-	.c-search-form .search-input-area div {
-		display: grid;
-		grid-template-columns: 5fr 1fr;
-	}
+  .c-search-form .search-input-area div {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+  }
 }
-@media only screen and (min-width: 720px) and (max-width: 1439px){
-	.c-search-form.u-trans-up {
-		transform: translateY(-200%);
-	}
+@media only screen and (min-width: 720px) and (max-width: 1439px) {
+  .c-search-form.u-trans-up {
+    transform: translateY(-200%);
+  }
 }

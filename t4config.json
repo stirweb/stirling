@@ -428,6 +428,11 @@
         "projectPath": "medias/Categorised/Dist/css/campaigns/activity-timetable.css"
       },
       {
+        "id": 183460,
+        "description": "gallery.css",
+        "projectPath": "medias/Categorised/Dist/css/campaigns/gallery.css"
+      },
+      {
         "id": 158039,
         "description": "civic.css",
         "projectPath": "medias/Categorised/Dist/css/campaigns/civic.css"
@@ -1719,6 +1724,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/fee.js"
       },
       {
+        "id": 183211,
+        "description": "events-news-by-tags.js",
+        "projectPath": "medias/Categorised/Dist/js/other/events-news-by-tags.js"
+      },
+      {
         "id": 181358,
         "description": "pg-personalised-prospectus.js",
         "projectPath": "medias/Categorised/Dist/js/other/pg-personalised-prospectus.js"
@@ -1727,6 +1737,11 @@
         "id": 181794,
         "description": "webinars5.js",
         "projectPath": "medias/Categorised/Dist/js/other/webinars5.js"
+      },
+      {
+        "id": 183454,
+        "description": "gallery.js",
+        "projectPath": "medias/Categorised/Dist/js/other/gallery.js"
       },
       {
         "id": 175961,

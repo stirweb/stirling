@@ -1,123 +1,122 @@
 .c-header-search {
-    position: absolute;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: z($z-index-elements, header-search);
+
+  &[aria-hidden] {
+    display: none;
+  }
+  /*     visibility: hidden;
+    opacity: 0; */
+
+  .overlay {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: z($z-index-elements, header-search);
+    height: 100%;
+    background: $black;
+    opacity: 0.7;
+  }
 
-	&[aria-hidden] {
-		display: none;
-	}
-/*     visibility: hidden;
-    opacity: 0; */
+  .content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: $white;
+    padding-top: 1rem;
+  }
 
+  input[name="query"] {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $dark-gray;
+    box-shadow: none;
+    border: none;
+  }
 
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: $black;
-        opacity: 0.7;
-    }
-
-    .content {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: $white;
-        padding-top: 1rem;
-    }
-
-    input[name="query"] {
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: $dark-gray;
-        box-shadow: none;
-        border: none;
-    }
-
-    input + button[type="submit"] {
-        position: absolute;
-        top: 10px;
-        right: 0px;
-        background: none;
-        color: $black;
-    }
+  input + button[type="submit"] {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    background: none;
+    color: $black;
+  }
 }
 .c-header-search__input-wrapper {
-    padding: 20px 0;
-    position: relative;
+  padding: 20px 0;
+  position: relative;
 }
 
 .c-header-search__wrapper {
-    display: block; /* rk8 new concierge search */
+  display: block; /* rk8 new concierge search */
 }
 
 .c-header-search__results {
-    fieldset {
-        margin-bottom: 1rem;
-    }
-    fieldset input {
-        position: absolute;
-        left: -9999px;
-    }
-    fieldset a {
-        display: block;
-        line-height: 2em;
-    }
-    fieldset input:focus + a {
-        text-decoration: underline;
-    }
+  fieldset {
+    margin-bottom: 1rem;
+  }
+  fieldset input {
+    position: absolute;
+    left: -9999px;
+  }
+  fieldset a {
+    display: block;
+    line-height: 2em;
+  }
+  fieldset input:focus + a {
+    text-decoration: underline;
+  }
 }
 
 .c-header-search__title {
-    font-size: 1.25rem; /* 20px */
-    margin-bottom: 20px;
-    color: $heritage-green;
+  font-size: 1.25rem; /* 20px */
+  margin-bottom: 20px;
+  color: $heritage-green;
 }
 
 .c-header-search__item {
+  font-size: 100%;
+  margin-bottom: 1rem;
+
+  p {
     font-size: 100%;
-    margin-bottom: 1rem;
+  }
 
-    p {
-        font-size: 100%;
-    }
-
-    a {
-        text-decoration: underline;
-    }
+  a {
+    text-decoration: underline;
+  }
 }
 
 .c-header-search__column {
-    padding: 1rem;
-    padding-top: 50px;
-    padding-bottom: 50px;
+  padding: 1rem;
+  padding-top: 50px;
+  padding-bottom: 50px;
 
-    ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .c-header-search__suggestions {
-    .c-header-search__item {
-        font-weight: bold;
-        margin-bottom: 1rem;
-        b {
-            font-weight: normal;
-        }
-        .c-header-search__highlight {
-            font-weight: normal;
-        }
+  .c-header-search__item {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    b {
+      font-weight: normal;
     }
+    .c-header-search__highlight {
+      font-weight: normal;
+    }
+  }
 }
 
 .c-header-search__suggestions .c-header-search__item {
-    font-weight: 400;
+  font-weight: 400;
 }

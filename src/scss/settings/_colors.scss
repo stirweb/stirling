@@ -117,7 +117,8 @@ $bg-grey: tint($light-mink, 15%);
     color: $white !important;
 
     &:hover {
-      border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+      //border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+      text-decoration-color: rgba(255, 255, 255, 0.5);
     }
 
     &:before {
@@ -139,15 +140,15 @@ $bg-grey: tint($light-mink, 15%);
 }
 
 .u-white--all {
-  .c-wysiwyg-content li a,
-  li a,
-  p a {
-    border-bottom: 2px solid $white;
-  }
+  // .c-wysiwyg-content li a,
+  // li a,
+  // p a {
+  //   border-bottom: none;
+  // }
 
-  p a:hover {
-    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-  }
+  // p a:hover {
+  //   border-bottom: none;
+  // }
 
   select {
     option,
