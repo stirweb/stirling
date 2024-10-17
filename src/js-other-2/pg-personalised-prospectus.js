@@ -40,7 +40,7 @@
     return subjectSelected[0].courses
       .map((item) => {
         const ident = item.newName.replaceAll(" ", "-").toLowerCase();
-        return `<div class="u-flex u-mb-1"><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}" value="${item.newName}" data-id="subject_course_${index}" data-type="subject_course"><label for="${ident}">${item.newName}</label></div>`;
+        return `<div class="u-flex u-mb-1 u-gap-8"><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}" value="${item.newName}" data-id="subject_course_${index}" data-type="subject_course"><label class="u-m-0" for="${ident}">${item.newName}</label></div>`;
       })
       .join(``);
   };
