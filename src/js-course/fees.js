@@ -83,9 +83,9 @@ stir.t4Globals = stir.t4Globals || {};
     scope.innerHTML = '';
 
     const statuses = {
-        "H": "Scotland",
-        "O": "International (including EU)",
-        "R": "England, Wales, Northern Ireland and Republic of Ireland",
+        "H": "Scottish students",
+        "O": "International students (including EU)",
+        "R": "Students from England, Wales, Northern Ireland and Republic of Ireland",
     };
     const modes = {
         "FT":"Full time",
@@ -103,24 +103,27 @@ stir.t4Globals = stir.t4Globals || {};
         //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
       });
 
+    const feetables = data => feetable(data);
+
+    //<pre>${JSON.stringify(data,null,"\t")}</pre>
     const feetable = data => `<table>${data.feeData.map(feetablerow).join('')}</table>`;
 
     const feetablerow = data => 
     
     `<tr>
-        <td>${statuses[data.feeStatus]}</td>
-        <td>${modes[data.modeOfAttendance]}</td>
-        <td>${data.academicYear}</td>
+        <td><strong>${statuses[data.feeStatus]}</strong> (${modes[data.modeOfAttendance]})</td>
+        <!-- <td>${modes[data.modeOfAttendance]}</td> -->
+        <!-- <td>${data.academicYear}</td> -->
         <td>${formatter.format(data.amount)}</td>
     </tr>`;
 
-    console.info('[Fees]');
     const el = document.querySelector('[data-modules-route-code]');
     const route = el && el.getAttribute('data-modules-route-code');
+    console.info('[Fees] Route', route);
     route && stir.getJSON("../fees.json", data=>{
         if(data.feeData) {
             scope.insertAdjacentHTML("beforeend",
-                (data.feeData.filter(item=>item.rouCode===route).map(feetable).join(''))
+                (data.feeData.filter(item=>item.rouCode===route).map(feetables).join(''))
             );
         }
     })
