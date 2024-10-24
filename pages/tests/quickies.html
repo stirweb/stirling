@@ -8,46 +8,117 @@
 </head>
 
 <body>
-
-
-
-
+    <select id="subject_area_1" name="subject_area_1" class="subjectSelect"></select>
+    <select id="subject_area_2" name="subject_area_2" class="subjectSelect"></select>
+    <select id="subject_area_3" name="subject_area_3" class="subjectSelect"></select>
 </body>
 
 
 
 <script>
-    let dontCacheBust = ['woff', 'ttf'];
 
-    let src = '/media/dist/fonts/fsmaja/FSMajaWeb-Regular.woff';
-    let version = '15';
-    let filename = 'FSMajaWeb-Regular.woff';
-    let as = "", type = "", crossorigin = "";
+    let filterAndFormatDates = (dates) => {
+        let today = new Date();
+        let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        return dates
+            .filter(dateNum => {
+                let year = Math.floor(dateNum / 10000);
+                let month = Math.floor((dateNum % 10000) / 100) - 1;
+                let day = dateNum % 100;
+
+                let date = new Date(year, month, day);
+                return date > today;
+            })
+            .map(dateNum => {
+                let year = Math.floor(dateNum / 10000);
+                let month = Math.floor((dateNum % 10000) / 100) - 1;
+
+                return {
+                    value: dateNum,
+                    formatted: `${months[month]}-${year}`
+                };
+            });
+    };
+
+    // Your array
+    let startDates = [
+        20240128,
+        20240528,
+        20240928,
+        20241128,
+        20250128,
+        20250528,
+        20250928,
+        20260128,
+        20260928,
+        20270128,
+        20270928,
+        20280128,
+        20280928,
+        20290128,
+        20290928,
+    ];
+
+    const formattedDates = filterAndFormatDates(startDates);
+    console.log(formattedDates);
 
 
-    let arrayFile = filename.split('.');
-    let ext = arrayFile[arrayFile.length - 1];
-    let ver = dontCacheBust.indexOf(ext) > -1 ? `` : `?v=` + version;
 
-    var isPreview = false;
+    //const futureDates = filterFutureDates(startDates);
+    //console.log(futureDates);
 
-    if (filename.indexOf('.ttf') > -1) {
-        as = ' as="font"';
-        type = ' type="font/ttf"';
-        crossorigin = ' crossorigin';
-    } else if (filename.indexOf('.woff') > -1) {
-        as = ' as="font"';
-        type = ' type="font/woff"';
-        crossorigin = ' crossorigin';
-    } else if (filename.indexOf('.css') > -1) {
-        as = ' as="style"';
-    }
-
-    let srcVer = isPreview ? src : src + ver;
-
-    //let comment = isPreview ? ' <!--  ' + filename  + ' v ' + ver  + ' -->    :'';
-    let comment = '';
-    console.log('<link rel="preload" href="' + srcVer + '"' + as + type + crossorigin + '>' + comment);
+    /*
+        // Array of options for the select elements
+        const optionsArray = ["One", "Two", "Three", "Four", "Five"];
+    
+        // Assume we have three select elements with IDs 'select1', 'select2', and 'select3'
+        const selects = ['subject_area_1', 'subject_area_2', 'subject_area_3'].map(id => document.getElementById(id));
+    
+        // Function to populate a select element with options
+        function populateSelect(select, options) {
+            select.innerHTML = '';
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                select.appendChild(optionElement);
+            });
+        }
+    
+    
+        function updateSelects() {
+            // Get all selected values
+            const selectedValues = selects.map(select => select.value);
+    
+            // Update each select
+            selects.forEach((select, index) => {
+                // Filter  options to exclude those selected in other lists
+                const availableOptions = optionsArray.filter(option =>
+                    !selectedValues.includes(option) || option === select.value
+                );
+    
+                // Repopulate the select with available options
+                populateSelect(select, availableOptions);
+    
+                // Ensure the currently selected option remains selected
+                if (selectedValues[index]) {
+                    select.value = selectedValues[index];
+                }
+            });
+        }
+    
+        // Initially populate all selects
+        //selects.forEach(select => populateSelect(select, optionsArray));
+        populateSelect(selects[0], optionsArray)
+    
+    
+        // Add event listeners to all selects
+        selects.forEach(select => select.addEventListener('change', updateSelects));
+    
+        // Initial update
+        //updateSelects();
+        */
 </script>
 
 </html>
