@@ -39,12 +39,14 @@
 
   const renderSubjectCoursesOptions = (subject, index, data) => {
     const subjectSelected = data.filter((item) => item.subject === subject);
-    return subjectSelected[0].courses
-      .map((item) => {
-        const ident = item.newName.replaceAll(" ", "-").toLowerCase();
-        return `<div class="u-flex u-mb-1 u-gap-8"><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}" value="${item.newName}" data-id="subject_course_${index}" data-type="subject_course"><label class="u-m-0" for="${ident}">${item.newName}</label></div>`;
-      })
-      .join(``);
+    return subjectSelected[0]
+      ? subjectSelected[0].courses
+          .map((item) => {
+            const ident = item.newName.replaceAll(" ", "-").toLowerCase();
+            return `<div class="u-flex u-mb-1 u-gap-8"><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}" value="${item.newName}" data-id="subject_course_${index}" data-type="subject_course"><label class="u-m-0" for="${ident}">${item.newName}</label></div>`;
+          })
+          .join(``)
+      : ``;
   };
 
   const renderLink = (filePath) => {
@@ -197,8 +199,28 @@ function storePDF2(pdf, fileName2, serverPath) {
     });
   };
 
+  const escapeHTML = (unsafe) => {
+    return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  };
+
+  const sanitizeInput = (input) => {
+    if (typeof input !== "string") {
+      return input;
+    }
+
+    // Convert input to string and trim whitespace
+    let sanitized = input.toString().trim();
+
+    // Remove potential script tags and their contents
+    sanitized = sanitized.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
+    sanitized = escapeHTML(sanitized);
+
+    return sanitized;
+  };
+
   /* cleanse */
-  const cleanse = (string) => string.replaceAll("script>", "").replaceAll("script%3E", "").replaceAll("<", "");
+  const cleanse = (string) => sanitizeInput(string);
+  //const cleanse = (string) => string.replaceAll("script>", "").replaceAll("script%3E", "").replaceAll("<", "");
 
   /*
     CONTROLLERS
@@ -238,7 +260,7 @@ async function storePDF(pdf, fileName, serverPath) {
         method: "POST",
         body: formData,
       });
-      console.log(await response.json());
+      console.log(await response.text());
     } catch (e) {
       console.error(e);
     }
@@ -261,9 +283,9 @@ async function storePDF(pdf, fileName, serverPath) {
     //const lastName = data.get("last_name") || "";
     const email = data.get("email") || "";
 
-    const subject1 = data.get("subject_area_1");
-    const subject2 = data.get("subject_area_2");
-    const subject3 = data.get("subject_area_3");
+    const subject1 = data.get("subject_area_0");
+    const subject2 = data.get("subject_area_1");
+    const subject3 = data.get("subject_area_2");
 
     const pdfDoc = await PDFLib.PDFDocument.create();
 
@@ -486,28 +508,70 @@ async function storePDF(pdf, fileName, serverPath) {
   const generatePDFForm = stir.node("#generatePDFForm");
 
   if (generatePDFForm) {
-    const selects = stir.nodes("select");
-    selects.forEach((element) => (element.value = "")); // reset on load
+    /* 
+      ACTION: Form Select change events 
+    */
 
-    const subjectSelect = stir.nodes(".subjectSelect");
-    subjectSelect[0] && subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
-    subjectSelect[1].innerHTML = renderpleaseSelect() + renderSubjectSelectItems(subjectsData);
-    subjectSelect[2].innerHTML = renderpleaseSelect() + renderSubjectSelectItems(subjectsData);
+    function populateSelect(select, options) {
+      select.innerHTML = "";
+      options.forEach((option) => {
+        const optionElement = document.createElement("option");
+        optionElement.value = option !== "Select an option" ? option : "";
+        optionElement.textContent = option;
+        select.appendChild(optionElement);
+      });
+    }
+
+    function updateSelects(indexUpdated) {
+      const selectedValues = selects.map((select) => select.value);
+
+      selects.forEach((select, index) => {
+        const availableOptions = optionsArray.filter((option) => !selectedValues.includes(option) || option === select.value);
+        populateSelect(select, availableOptions);
+
+        // Ensure the currently selected option remains selected
+        if (selectedValues[index]) {
+          select.value = selectedValues[index];
+        }
+
+        if (index === Number(indexUpdated)) {
+          stir.node("#subject_area_" + index + "_courses").innerHTML = renderSubjectCoursesOptions(selectedValues[index], index, subjectsData);
+        }
+      });
+    }
+
+    const optionsArray = ["Select an option", ...subjectsData.map((item) => item.subject)];
+    const selects = ["subject_area_0", "subject_area_1", "subject_area_2"].map((id) => document.getElementById(id));
+
+    populateSelect(selects[0], optionsArray);
+
+    selects.forEach((select) =>
+      select.addEventListener("change", (event) => {
+        updateSelects(event.target.id.replace("subject_area_", ""));
+      })
+    );
 
     /* 
-    ACTION: Form change events 
-  */
-    generatePDFForm &&
-      generatePDFForm.addEventListener("change", function (e) {
-        e.preventDefault();
+      Old Version 
+    */
 
-        const data = new FormData(generatePDFForm);
+    //const selects = stir.nodes("select");
+    //selects.forEach((element) => (element.value = "")); // reset on load
 
-        //const studyYear = data.get("study_year");
-        const subject1 = data.get("subject_area_1");
-        const subject2 = data.get("subject_area_2");
-        const subject3 = data.get("subject_area_3");
+    //const subjectSelect = stir.nodes(".subjectSelect");
+    //subjectSelect[0] && subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
+    //subjectSelect[1].innerHTML = renderpleaseSelect() + renderSubjectSelectItems(subjectsData);
+    //subjectSelect[2].innerHTML = renderpleaseSelect() + renderSubjectSelectItems(subjectsData);
 
+    //generatePDFForm &&
+    //generatePDFForm.addEventListener("change", function (e) {
+    //e.preventDefault();
+    //const data = new FormData(generatePDFForm);
+    //const studyYear = data.get("study_year");
+    //const subject1 = data.get("subject_area_1");
+    //const subject2 = data.get("subject_area_2");
+    //const subject3 = data.get("subject_area_3");
+    /*
         // 1st select
         if (e.target.id === "subject_area_1" && subject1) {
           // Show the subject courses
@@ -535,7 +599,8 @@ async function storePDF(pdf, fileName, serverPath) {
           stir.node("#subject_area_3_courses").innerHTML = renderSubjectCoursesOptions(subject3, "3", subjectsData);
         }
         return;
-      });
+        */
+    // });
 
     /* 
     ACTION: Form submit event 
@@ -628,9 +693,9 @@ async function storePDF(pdf, fileName, serverPath) {
     const data = new FormData(doStoredPDF);
     data.append("first_name", firstName.charAt(0).toUpperCase() + firstName.slice(1));
     data.append("full_prospectus", fullProspectus);
-    data.append("subject_area_1", selectedSects[0] ? selectedSects[0] : ``);
-    data.append("subject_area_2", selectedSects[1] ? selectedSects[1] : ``);
-    data.append("subject_area_3", selectedSects[2] ? selectedSects[2] : ``);
+    data.append("subject_area_0", selectedSects[0] ? selectedSects[0] : ``);
+    data.append("subject_area_1", selectedSects[1] ? selectedSects[1] : ``);
+    data.append("subject_area_2", selectedSects[2] ? selectedSects[2] : ``);
 
     doPdf(subjectsData, data, serverPath);
   }
