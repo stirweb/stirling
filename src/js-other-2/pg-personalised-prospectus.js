@@ -200,7 +200,8 @@ function storePDF2(pdf, fileName2, serverPath) {
   };
 
   const escapeHTML = (unsafe) => {
-    return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    return unsafe;
+    //return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   };
 
   const sanitizeInput = (input) => {
