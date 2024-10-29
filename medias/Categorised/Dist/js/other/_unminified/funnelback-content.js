@@ -27,7 +27,7 @@ stir.funnelback =
 		<h3 class="header-stripped u-header--margin-stripped u-mt-1 u-font-normal u-compress-line-height"><a href="${result.liveUrl}" class="c-link u-inline">${result.title.split("|").shift().trim()}</a></h3>
 		<p class="text-sm">${result.summary}</p>
 		</article>`,
-    image: (src, alt) => (src && alt ? `<img class="show-for-medium" src="${src}" alt="${alt}">` : ""),
+    image: (src, alt) => (src && alt ? `<img class=show-for-medium src="${src}" alt="${alt}" loading=lazy>` : ""),
     link: (url, text) => (url && text ? `<a href="${url}">${text}</a>` : ""),
     imageUrl: (result) => (result.metaData ? result.metaData.thumbnail || result.metaData.image.split("|").shift() : ""),
   };

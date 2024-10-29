@@ -33,4 +33,4 @@
       fullImage.style.transform = "";
     }, 300);
   });
-})(stir.node(".gallery-overlay"));
+})(stir.node(".stir-gallery"));
