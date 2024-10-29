@@ -1,4 +1,7 @@
 (function () {
+  /* 
+      Helpers
+  */
   const popImage = (thumbnail, overlay, fullImage) => {
     const rect = thumbnail.getBoundingClientRect();
     const startX = rect.left + rect.width / 2;
@@ -20,7 +23,7 @@
   };
 
   /* 
-        Thumnail clicks
+      Thumbnail clicks
   */
 
   const thumbs = document.querySelectorAll(".gallery-thumbnail");
@@ -39,7 +42,7 @@
   });
 
   /* 
-        overlay clicks
+      Overlay clicks
   */
 
   const overlays = document.querySelectorAll(".gallery-overlay");
@@ -54,21 +57,18 @@
       const overlay = gallery.querySelector(".gallery-overlay");
       const fullImage = gallery.querySelector(".gallery-full-image");
 
+      // Next
       if (e.target.classList.contains("rightBtn") || e.target.parentElement.classList.contains("rightBtn")) {
         const last = thumbnails.length;
         const index = Number(overlay.getAttribute("data-index"));
         const newIndex = index + 1 === last ? 0 : index + 1;
-
-        // console.log(last);
-        // console.log(index);
-        // console.log(newIndex);
-        // console.log("--");
 
         popImage(thumbnails[newIndex], overlay, fullImage);
         e.stopPropagation();
         return;
       }
 
+      // Prev
       if (e.target.classList.contains("leftBtn") || e.target.parentElement.classList.contains("leftBtn")) {
         const last = thumbnails.length;
         const index = Number(overlay.getAttribute("data-index"));
@@ -77,7 +77,7 @@
         return;
       }
 
-      //if (e.target.classList.contains("closeBtn") || e.target.parentElement.classList.contains("closeBtn")) {
+      // Close
       overlay.classList.remove("active");
       fullImage.style.transform = fullImage.style.transform.replace("scale(1)", "scale(0.2)");
 
