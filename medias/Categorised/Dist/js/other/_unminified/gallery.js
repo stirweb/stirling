@@ -1,36 +1,70 @@
-(function (scope) {
-  if (!scope) return;
+(function () {
+  const main = document.querySelector("main");
 
-  const thumbnails = document.querySelectorAll(".gallery-thumbnail");
-  const overlay = document.querySelector(".gallery-overlay");
-  const fullImage = document.querySelector(".gallery-full-image");
+  main &&
+    main.addEventListener("click", (e) => {
+      if (e.target.classList.contains("gallery-thumbnail")) {
+        const gallery = e.target.closest(".stir-microgallery");
+        const thumb = e.target;
 
-  thumbnails.forEach((thumbnail) => {
-    thumbnail.addEventListener("click", (e) => {
-      const rect = thumbnail.getBoundingClientRect();
-      const startX = rect.left + rect.width / 2;
-      const startY = rect.top + rect.height / 2;
-      const fullSrc = thumbnail.getAttribute("data-full");
+        if (!gallery) return;
 
-      fullImage.style.transform = `translate(${startX - window.innerWidth / 2}px, ${startY - window.innerHeight / 2}px) scale(0.2)`;
-      fullImage.src = fullSrc;
-      fullImage.alt = thumbnail.alt;
+        const thumbnails = Array.from(gallery.querySelectorAll(".gallery-thumbnail"));
+        const overlay = gallery.querySelector(".gallery-overlay");
+        const fullImage = gallery.querySelector(".gallery-full-image");
 
-      overlay.style.display = "flex";
-      setTimeout(() => {
-        overlay.classList.add("active");
-        fullImage.style.transform = "translate(0, 0) scale(1)";
-      }, 150);
+        const popImage = (thumbnail, overlay) => {
+          const rect = thumbnail.getBoundingClientRect();
+          const startX = rect.left + rect.width / 2;
+          const startY = rect.top + rect.height / 2;
+          const fullSrc = thumbnail.getAttribute("data-full");
+          const index = Number(thumbnail.getAttribute("data-index"));
+
+          fullImage.style.transform = `translate(${startX - window.innerWidth / 2}px, ${startY - window.innerHeight / 2}px) scale(0.2)`;
+          fullImage.src = fullSrc;
+          fullImage.alt = thumbnail.alt;
+
+          overlay.style.display = "flex";
+          overlay.setAttribute("data-index", index);
+
+          setTimeout(() => {
+            overlay.classList.add("active");
+            fullImage.style.transform = "translate(0, 0) scale(1)";
+          }, 150);
+        };
+
+        popImage(thumb, overlay);
+
+        overlay.addEventListener("click", (e) => {
+          if (e.target.classList.contains("rightBtn") || e.target.parentElement.classList.contains("rightBtn")) {
+            const last = thumbnails.length;
+            const index = Number(overlay.getAttribute("data-index"));
+            const newIndex = index + 1 === last ? 0 : index + 1;
+
+            // console.log(last);
+            // console.log(index);
+            // console.log(newIndex);
+
+            popImage(thumbnails[newIndex], overlay);
+          }
+
+          if (e.target.classList.contains("leftBtn") || e.target.parentElement.classList.contains("leftBtn")) {
+            const last = thumbnails.length;
+            const index = Number(overlay.getAttribute("data-index"));
+            const newIndex = index === 0 ? last - 1 : index - 1;
+            popImage(thumbnails[newIndex], overlay);
+          }
+
+          if (e.target.classList.contains("closeBtn") || e.target.parentElement.classList.contains("closeBtn")) {
+            overlay.classList.remove("active");
+            fullImage.style.transform = fullImage.style.transform.replace("scale(1)", "scale(0.2)");
+
+            setTimeout(() => {
+              overlay.style.display = "none";
+              fullImage.style.transform = "";
+            }, 300);
+          }
+        });
+      }
     });
-  });
-
-  overlay.addEventListener("click", () => {
-    overlay.classList.remove("active");
-    fullImage.style.transform = fullImage.style.transform.replace("scale(1)", "scale(0.2)");
-
-    setTimeout(() => {
-      overlay.style.display = "none";
-      fullImage.style.transform = "";
-    }, 300);
-  });
-})(stir.node(".stir-microgallery"));
+})();

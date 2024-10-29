@@ -3583,13 +3583,10 @@ progress::-moz-progress-bar {
   opacity: 0;
   transition: opacity 0.3s ease, transform 0.3s ease; }
 
-.gallery-overlay svg {
-  position: fixed;
-  top: 20px;
-  right: 30px;
+.gallery-overlay svg.closeBtn {
   transition: transform 0.2s ease-in-out; }
 
-.gallery-overlay svg:hover {
+.gallery-overlay svg.closeBtn:hover {
   transform: rotate(180deg); }
 
 /*
@@ -8711,6 +8708,9 @@ article.c-convo small {
 .u-top-0 {
   top: 0; }
 
+.u-top-16 {
+  top: 16px; }
+
 .u-top--16 {
   top: -16px; }
 
@@ -8720,11 +8720,14 @@ article.c-convo small {
 .u-top--100 {
   top: -100px; }
 
+.u-bottom-0 {
+  bottom: 0; }
+
 .u-right-0 {
   right: 0; }
 
-.u-bottom-0 {
-  bottom: 0; }
+.u-right-32 {
+  right: 32px; }
 
 .u-left-0 {
   left: 0; }
