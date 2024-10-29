@@ -1794,6 +1794,7 @@ stir.lazyJS = (nodes, scriptSrc) => {
   const nodesInUse = nodes.filter((item) => stir.node(item));
   if (!nodesInUse.length) return;
 
+  console.log(nodesInUse);
   nodesInUse.forEach((item) => {
     let observer = stir.createIntersectionObserver({
       element: stir.node(item),
@@ -4024,7 +4025,7 @@ stir.accord = (function () {
 var stir = stir || {};
 (function () {
   const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="183454" formatter="path/*" />' : UoS_env.wc_path + "js/other/gallery.js";
-  stir.lazyJS([".stir-microgallery"], scriptSrc);
+  stir.addScript(scriptSrc);
 })();
 
 var stir = stir || {};

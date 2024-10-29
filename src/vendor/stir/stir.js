@@ -520,6 +520,7 @@ stir.lazyJS = (nodes, scriptSrc) => {
   const nodesInUse = nodes.filter((item) => stir.node(item));
   if (!nodesInUse.length) return;
 
+  console.log(nodesInUse);
   nodesInUse.forEach((item) => {
     let observer = stir.createIntersectionObserver({
       element: stir.node(item),
