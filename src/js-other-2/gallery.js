@@ -21,35 +21,32 @@
 
   /* 
         Thumnail clicks
-      */
-  const main = document.querySelector("main");
+  */
 
-  main &&
-    main.addEventListener("click", (e) => {
-      if (e.target.classList.contains("gallery-thumbnail")) {
-        const gallery = e.target.closest(".stir-microgallery");
-        const thumb = e.target;
+  const thumbs = document.querySelectorAll(".gallery-thumbnail");
 
-        if (!gallery) return;
+  thumbs.forEach((thumb) => {
+    thumb.addEventListener("click", (e) => {
+      const gallery = e.target.closest(".stir-microgallery");
 
-        //const thumbnails = Array.from(gallery.querySelectorAll(".gallery-thumbnail"));
-        const overlay = gallery.querySelector(".gallery-overlay");
-        const fullImage = gallery.querySelector(".gallery-full-image");
+      if (!gallery) return;
 
-        popImage(thumb, overlay, fullImage);
-      }
+      const overlay = gallery.querySelector(".gallery-overlay");
+      const fullImage = gallery.querySelector(".gallery-full-image");
+
+      popImage(thumb, overlay, fullImage);
     });
+  });
 
   /* 
         overlay clicks
-      */
+  */
 
   const overlays = document.querySelectorAll(".gallery-overlay");
 
   overlays.forEach((overlay) => {
     overlay.addEventListener("click", (e) => {
       const gallery = e.target.closest(".stir-microgallery");
-      //const thumb = e.target;
 
       if (!gallery) return;
 
@@ -65,7 +62,6 @@
         // console.log(last);
         // console.log(index);
         // console.log(newIndex);
-
         // console.log("--");
 
         popImage(thumbnails[newIndex], overlay, fullImage);
