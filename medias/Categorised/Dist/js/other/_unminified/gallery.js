@@ -31,8 +31,13 @@
   thumbs.forEach((thumb) => {
     thumb.addEventListener("click", (e) => {
       const gallery = e.target.closest(".stir-microgallery");
-
       if (!gallery) return;
+
+      const galleryThumbs = gallery.querySelectorAll(".gallery-thumbnail");
+
+      galleryThumbs.forEach((item, index) => {
+        item.setAttribute("data-index", index);
+      });
 
       const overlay = gallery.querySelector(".gallery-overlay");
       const fullImage = gallery.querySelector(".gallery-full-image");
