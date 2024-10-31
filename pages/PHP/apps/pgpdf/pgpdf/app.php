@@ -182,6 +182,7 @@ function run($message)
 	ON LOAD
 */
 
+
 if (!isset($_POST['email'])) {
     echo json_encode([["process" => "Data", "outcome" => "Fail", "result" => ""], ["process" => "Mail", "outcome" => "Fail", "result" => ""]]);
     exit();
