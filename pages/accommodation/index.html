@@ -664,11 +664,11 @@
                             <div>
                                 <h3 class="text-md">Travelling to campus</h3>
                                 <p>Alexander Court family flats are located on-campus. Choose a route to see how long it
-                                    takes to get to Campus Central via walking or cycling.</p>
+                                    takes to get to Campus Central via walking or bicycling.</p>
                                 <div class="u-mt-2"><strong class="u-block u-mb-1">Show route for... </strong><select
                                         id="travelmode">
-                                        <option value="WALKING" selected>Walking</option>
-                                        <option value="BICYCLING">Cycling</option>
+                                        <option value="walking" selected>Walking</option>
+                                        <option value="bicycling">Cycling</option>
                                     </select>
                                     <div id="traveldurations"></div>
                                 </div>
@@ -866,9 +866,162 @@
     <!-- app.min.js -->
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=89.1"></script>
 
-    <!-- unibuddy.min.js -->
-    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
-
+    <script>
+        const stirDistanceMatrix = [
+            {
+                "name": "Alangrange",
+                "distances": {
+                    "walking": { "duration": "18 mins", "distance": "1.2 km" },
+                    "bicycling": { "duration": "5 mins", "distance": "1.2 km" },
+                    "transit": { "duration": "18 mins", "distance": "1.2 km" },
+                    "driving": { "duration": "6 mins", "distance": "2.1 km" }
+                }
+            },
+            {
+                "name": "Alexander Court family flats",
+                "distances": {
+                    "walking": { "duration": "16 mins", "distance": "1.1 km" },
+                    "bicycling": { "duration": "4 mins", "distance": "1.1 km" }
+                }
+            },
+            {
+                "name": "Alexander Court standard flats",
+                "distances": {
+                    "walking": { "duration": "16 mins", "distance": "1.1 km" },
+                    "bicycling": { "duration": "4 mins", "distance": "1.1 km" }
+                }
+            },
+            {
+                "name": "Alexander Court townhouses",
+                "distances": {
+                    "walking": { "duration": "17 mins", "distance": "1.2 km" },
+                    "bicycling": { "duration": "4 mins", "distance": "1.2 km" }
+                }
+            },
+            {
+                "name": "Andrew Stewart Hall",
+                "distances": {
+                    "walking": { "duration": "6 mins", "distance": "0.4 km" },
+                    "bicycling": { "duration": "2 mins", "distance": "0.5 km" }
+                }
+            },
+            {
+                "name": "Beech Court standard flats",
+                "distances": {
+                    "walking": { "duration": "7 mins", "distance": "0.5 km" },
+                    "bicycling": { "duration": "2 mins", "distance": "0.5 km" }
+                }
+            },
+            {
+                "name": "Beech Court studio flats",
+                "distances": {
+                    "walking": { "duration": "7 mins", "distance": "0.5 km" },
+                    "bicycling": { "duration": "2 mins", "distance": "0.5 km" }
+                }
+            },
+            {
+                "name": "Fraser of Allander House",
+                "distances": {
+                    "walking": { "duration": "5 mins", "distance": "0.3 km" },
+                    "bicycling": { "duration": "2 mins", "distance": "0.6 km" }
+                }
+            },
+            {
+                "name": "Friarscroft",
+                "distances": {
+                    "walking": { "duration": "13 mins", "distance": "0.8 km" },
+                    "bicycling": { "duration": "5 mins", "distance": "0.8 km" },
+                    "transit": { "duration": "12 mins", "distance": "2.3 km" },
+                    "driving": { "duration": "3 mins", "distance": "1.5 km" }
+                }
+            },
+            {
+                "name": "John Forty's Court",
+                "distances": {
+                    "walking": { "duration": "35 mins", "distance": "2.4 km" },
+                    "bicycling": { "duration": "11 mins", "distance": "2.5 km" },
+                    "transit": { "duration": "20 mins", "distance": "3.6 km" },
+                    "driving": { "duration": "7 mins", "distance": "3.1 km" }
+                }
+            },
+            {
+                "name": "Juniper Court standard flats",
+                "distances": {
+                    "walking": { "duration": "6 mins", "distance": "0.4 km" },
+                    "bicycling": { "duration": "2 mins", "distance": "0.5 km" }
+                }
+            },
+            {
+                "name": "Juniper Court studio flats",
+                "distances": {
+                    "walking": { "duration": "6 mins", "distance": "0.4 km" },
+                    "bicycling": { "duration": "2 mins", "distance": "0.4 km" }
+                }
+            },
+            {
+                "name": "Lyon Crescent",
+                "distances": {
+                    "walking": { "duration": "34 mins", "distance": "2.4 km" },
+                    "bicycling": { "duration": "10 mins", "distance": "2.4 km" },
+                    "transit": { "duration": "23 mins", "distance": "2.6 km" },
+                    "driving": { "duration": "9 mins", "distance": "3.6 km" }
+                }
+            },
+            {
+                "name": "Pendreich Way",
+                "distances": {
+                    "walking": { "duration": "21 mins", "distance": "1.5 km" },
+                    "bicycling": { "duration": "6 mins", "distance": "1.5 km" }
+                }
+            },
+            {
+                "name": "Polwarth House",
+                "distances": {
+                    "walking": { "duration": "6 mins", "distance": "0.4 km" },
+                    "bicycling": { "duration": "2 mins", "distance": "0.5 km" }
+                }
+            },
+            {
+                "name": "Spittal Hill",
+                "distances": {
+                    "walking": { "duration": "11 mins", "distance": "0.7 km" },
+                    "bicycling": { "duration": "4 mins", "distance": "0.7 km" }
+                }
+            },
+            {
+                "name": "Thistle Chambers",
+                "distances": {
+                    "walking": { "duration": "54 mins", "distance": "3.8 km" },
+                    "bicycling": { "duration": "17 mins", "distance": "3.9 km" },
+                    "transit": { "duration": "23 mins", "distance": "5.2 km" },
+                    "driving": { "duration": "10 mins", "distance": "4.9 km" }
+                }
+            },
+            {
+                "name": "Union Street Development",
+                "distances": {
+                    "walking": { "duration": "44 mins", "distance": "3.1 km" },
+                    "bicycling": { "duration": "14 mins", "distance": "3.1 km" },
+                    "transit": { "duration": "20 mins", "distance": "4.6 km" },
+                    "driving": { "duration": "8 mins", "distance": "3.8 km" }
+                }
+            },
+            {
+                "name": "Willow Court standard flats",
+                "distances": {
+                    "walking": { "duration": "5 mins", "distance": "0.4 km" },
+                    "bicycling": { "duration": "2 mins", "distance": "0.5 km" }
+                }
+            },
+            {
+                "name": "Willow Court studio flats",
+                "distances": {
+                    "walking": { "duration": "5 mins", "distance": "0.4 km" },
+                    "bicycling": { "duration": "2 mins", "distance": "0.5 km" }
+                }
+            }
+        ];
+    </script>
 
     <script src="../../../medias/Categorised/Dist/js/other/_unminified/favourites.js"></script>
 

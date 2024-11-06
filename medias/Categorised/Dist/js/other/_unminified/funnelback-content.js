@@ -18,17 +18,18 @@ stir.funnelback =
 
 (function () {
   const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+  const fallbackimgurl = '<t4 type="media" id="183393" formatter="path/*" cdn="true" pxl-filter-id="10" />';
   const templates = {
     relatedCourses: (result) => `<li><a href="${result.liveUrl}">${result.metaData.award || ""} ${result.title}</a></li>`,
     relatedNews: (result) => `<article class="cell large-4 medium-6 small-12" aria-label="${result.title.split("|").shift().trim()}">
-		${templates.link(result.liveUrl, templates.image(result.metaData.image.split("|").slice(-1)[0], result.metaData.imagealt) || templates.image("https://www.stir.ac.uk/media/stirling/news/news-centre/generic/airthrey-related-news.jpg", "Airthrey Loch"))}
+    ${templates.link(result.liveUrl, templates.image(templates.imageUrl(result), result.metaData.imagealt) || templates.image(fallbackimgurl, "Airthrey Loch"))}
 		<time class="u-block u-my-1 u-dark-grey">${stir.Date.newsDate(new Date(result.date))}</time>
 		<h3 class="header-stripped u-header--margin-stripped u-mt-1 u-font-normal u-compress-line-height"><a href="${result.liveUrl}" class="c-link u-inline">${result.title.split("|").shift().trim()}</a></h3>
 		<p class="text-sm">${result.summary}</p>
 		</article>`,
-    /* <p><pre>${result.metaData.image.split("|").join("\n")}</pre></p> */
-    image: (src, alt) => (src && alt ? `<img class="show-for-medium" src="${src}" alt="${alt}">` : ""),
+    image: (src, alt) => (src && alt ? `<img class=show-for-medium src="${src}" alt="${alt}" loading=lazy>` : ""),
     link: (url, text) => (url && text ? `<a href="${url}">${text}</a>` : ""),
+    imageUrl: (result) => (result.metaData ? result.metaData.thumbnail || result.metaData.image.split("|").shift() : ""),
   };
   const max = {
     relatedCourses: 25,
@@ -36,7 +37,7 @@ stir.funnelback =
   };
   const parameters = {
     relatedCourses: `&sort=title&SF=[award]&num_ranks=${max["relatedCourses"] + 1}`,
-    relatedNews: `&sort=date&SF=[c,d,h1,image,imagealt,tags]&num_ranks=${max["relatedNews"] + 1}`,
+    relatedNews: `&sort=date&SF=[c,d,h1,image,imagealt,tags,thumbnail]&num_ranks=${max["relatedNews"] + 1}`,
   };
   const getMetaQueryParams = (metaName, metaValue) => (metaName && metaValue ? `&meta_${metaName}_orsand=${metaValue}` : "");
   const getFacetsFromMetaTags = (name) => Array.prototype.slice.call(document.querySelectorAll(`meta[name="${name}"]`)).map((el) => el.content);

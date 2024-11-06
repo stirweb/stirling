@@ -360,3 +360,8 @@ object.spritesheet {
     content: none;
   }
 }
+
+h2#hj-survey-lbl-1::after,
+h3#hj-survey-lbl-1::after {
+  content: none;
+}

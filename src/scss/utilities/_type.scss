@@ -19,14 +19,6 @@
     - lead (lead paragraph)
     - no-bullet (for ul's)
 
-    Typescale classes 
-    
-    h1 (3rem)
-    h2 (2.5rem)
-    h3 (1.9375rem)
-    h4 (1.5625rem)
-    h5 (1.25rem)
-    h6 (1rem)
 
     In our scss/_type.scss
 
@@ -152,11 +144,4 @@
   &::after {
     content: '"';
   }
-}
-
-ol.no-bullet,
-ul.no-bullet {
-  margin-left: 0;
-  list-style: none;
-  padding: 0;
 }
