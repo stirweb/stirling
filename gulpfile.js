@@ -28,9 +28,9 @@ const concat = require("gulp-concat");
 const concatCss = require("gulp-concat-css");
 const expect = require("gulp-expect-file");
 const plumber = require("gulp-plumber");
-const rename = require("gulp-rename");
+//const rename = require("gulp-rename");
 const sass = require("gulp-sass")(require("node-sass"));
-const sourcemaps = require("gulp-sourcemaps");
+//const sourcemaps = require("gulp-sourcemaps");
 const uglify = require("gulp-uglify");
 
 // Clean assets - NOT actually in use
@@ -142,7 +142,6 @@ function jsOther() {
       // )
       .pipe(dest("medias/Categorised/Dist/js/other/_unminified")) // unminified version
       .pipe(uglify())
-      //.pipe(rename({ extname: ".min.js" }))
       .pipe(dest("medias/Categorised/Dist/js/other"))
       .pipe(browserSync.stream())
   );
@@ -168,7 +167,6 @@ function jsOther2() {
       // )
       .pipe(dest("medias/Categorised/Dist/js/other/_unminified")) // unminified version
       .pipe(uglify())
-      //.pipe(rename({ extname: ".min.js" }))
       .pipe(dest("medias/Categorised/Dist/js/other"))
       .pipe(browserSync.stream())
   );
@@ -234,7 +232,8 @@ function jsGallery() {
  * SASS / CSS Tasks
  */
 
-// SASS App function
+// SASS App function - Foundation version NOT IN USE
+/*
 function scss() {
   const source = "src/scss/app.foundation.scss";
   const sassPaths = ["node_modules/foundation-sites/scss", "node_modules/motion-ui/src", "src/scss"];
@@ -259,31 +258,34 @@ function scss() {
     .pipe(dest("medias/Categorised/Dist/css"))
     .pipe(browserSync.stream());
 }
+*/
 
-// SASS App function
+// SASS App function - New Foundation Free
 function scssNew() {
   const source = "src/scss/app.scss";
   const sassPaths = ["src/scss"];
-  return src(source)
-    .pipe(sourcemaps.init())
-    .pipe(
-      sass({
-        includePaths: sassPaths,
-      })
-    )
-    .on("error", sass.logError)
-    .pipe(
-      autoprefixer({
-        //browsers: ["> 1%"],
-        cascade: false,
-      })
-    )
-    .pipe(sourcemaps.write())
-    .pipe(dest("medias/Categorised/Dist/css"))
-    .pipe(concatCss("app.min.css"))
-    .pipe(cleanCSS({ compatibility: "*" }))
-    .pipe(dest("medias/Categorised/Dist/css"))
-    .pipe(browserSync.stream());
+  return (
+    src(source)
+      //.pipe(sourcemaps.init())
+      .pipe(
+        sass({
+          includePaths: sassPaths,
+        })
+      )
+      .on("error", sass.logError)
+      .pipe(
+        autoprefixer({
+          //browsers: ["> 1%"],
+          cascade: false,
+        })
+      )
+      //.pipe(sourcemaps.write())
+      .pipe(dest("medias/Categorised/Dist/css"))
+      .pipe(concatCss("app.min.css"))
+      .pipe(cleanCSS({ compatibility: "*" }))
+      .pipe(dest("medias/Categorised/Dist/css"))
+      .pipe(browserSync.stream())
+  );
 }
 
 // SASS standalone campaign files
@@ -331,7 +333,7 @@ function img() {
 
 // Watch files for changes
 function watchFiles() {
-  watch(["src/scss/*.scss", "src/scss/**/*.scss"]).on("change", scss);
+  // watch(["src/scss/*.scss", "src/scss/**/*.scss"]).on("change", scss);
   watch(["src/scss/*.scss", "src/scss/**/*.scss"]).on("change", scssNew);
   watch("src/campaigns/scss/*").on("change", scssCampaigns);
   watch("src/scss-animation/infographics.scss").on("change", scssInfographs);
@@ -362,4 +364,4 @@ function startBrowserSync() {
 
 // Tasks to define the execution of the functions simultaneously or in series
 exports.watch = parallel(watchFiles, startBrowserSync);
-exports.default = series(clear, parallel(js, jsProd, jsOther, jsOther2, jsCourses, jsSearch, jsGallery, scss, scssCampaigns, scssInfographs, scssGallery, img));
+exports.default = series(clear, parallel(js, jsProd, jsOther, jsOther2, jsCourses, jsSearch, jsGallery, scssNew, scssCampaigns, scssInfographs, scssGallery, img));

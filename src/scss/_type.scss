@@ -211,12 +211,16 @@ a {
 
 p a,
 table a {
-  border-bottom: 2px solid currentColor;
+  // border-bottom: 2px solid currentColor;
   font-size: inherit;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 2px;
 }
 
 a:hover {
-  border-bottom-color: $energy-green;
+  //border-bottom-color: $energy-green;
+  text-decoration-color: $energy-green;
 }
 
 /* 
@@ -248,7 +252,7 @@ a:hover {
   margin: 40px 0 40px 0;
 }
 
-.c-wysiwyg-content ol:not(.timeline) > li {
+.c-wysiwyg-content ol:not(.numberlist) > li {
   margin-bottom: 1em;
 }
 
@@ -334,6 +338,11 @@ h2.u-header-larger {
   margin: 0 0 10px !important;
 }
 
+.u-line-height-1 {
+  line-height: 1;
+}
+
+.u-line-height-1_2,
 .u-compress-line-height,
 .u-line-height-compress {
   line-height: 1.2;

@@ -224,7 +224,8 @@ function getColourPack($level, $colours)
 
 function main($data, $colours, $boilerplates)
 {
-    if (isset($data->error)) {
+
+    if (isset($data->error) || !isset($data)) {
         echo renderError();
         return null;
     }
@@ -268,8 +269,11 @@ $content = file_get_contents("https://www.stir.ac.uk/data/courses/akari/module/i
 $init_data = json_decode($content);
 
 //echo "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";
+//echo "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";
 
-//var_dump($init_data);
+
+
+
 
 $colours_json = '[{ "level": "ug", "first": "heritage-green", "second": "energy-turq", "third": "energy-purple" },{ "level": "pg", "first": "heritage-purple", "second": "heritage-purple", "third": "heritage-green" }]';
 $init_colours = json_decode($colours_json);

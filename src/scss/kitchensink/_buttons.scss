@@ -12,10 +12,16 @@ button {
   color: inherit; /* default in Webkit/Blink is blue, others black. normalise by inheriting the colour from parent element */
 }
 
+button:focus {
+  outline: 1px solid $heritage-green;
+  outline-offset: 4px;
+}
+
 /* Default */
 .button {
   background-color: $heritage-green;
   color: $white;
+  text-decoration: none;
   cursor: pointer;
 
   &:hover {
@@ -143,6 +149,12 @@ button {
         }
       }
     }
+  }
+
+  &.clear {
+    border-color: transparent;
+    background-color: transparent;
+    color: $heritage-green;
   }
 
   &.subtle {
@@ -297,6 +309,10 @@ button {
 
 .u-white--all.button.heritage-berry:hover {
   background-color: $heritage-berry;
+}
+
+.u-white--all button:focus {
+  outline: 1px solid $white;
 }
 
 /* 

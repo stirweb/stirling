@@ -165,14 +165,15 @@ hr {
 
 img.objfitcover,
 .c-image-text-block > img,
+.c-image-text-block > picture > img,
 .c-half-n-half__image > img,
+.c-half-n-half__image > picture > img,
 .c-masthead__image > img,
-.c-bleed-feature__image > img {
+.c-bleed-feature__image > img,
+.c-bleed-feature__image > picture > img {
   height: 100%;
   width: 100%;
-  -o-object-fit: cover;
   object-fit: cover;
-  -o-object-position: center;
   object-position: center;
 }
 

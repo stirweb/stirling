@@ -28,17 +28,17 @@
 @media screen and #{breakpoint(xlarge up)} {
   .c-news__single-article {
     p > img {
-      margin: 60px 0 0;
+      margin: 3.75rem 0 0;
     }
 
     .c-image-caption {
-      margin: 0 0 60px;
+      margin: 0 0 3.75rem;
     }
   }
 }
 
 .c-image-caption.c-main-image-caption {
-  margin: 15px 0 40px 0;
+  margin: 1rem 0 2.5rem 0;
 }
 
 /* 
@@ -46,9 +46,9 @@
 */
 
 article.c-convo {
-  padding-bottom: 1rem;
+  //padding-bottom: 1rem;
   h3 {
-    border-top: 2px solid $heritage-green;
+    // border-top: 2px solid $energy-green;
     padding: 1rem 0;
   }
   small {
