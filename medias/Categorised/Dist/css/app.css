@@ -4777,7 +4777,7 @@ li.c-colour-swatch__pms:before {
   padding: 25px 25px 30px; }
 
 .c-dropdown-wrapper {
-  background-color: red; }
+  width: 280px; }
   .c-dropdown-wrapper .button--dropdown {
     min-width: auto; }
     .c-dropdown-wrapper .button--dropdown:hover {
