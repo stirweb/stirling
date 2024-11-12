@@ -3175,9 +3175,6 @@ input:checked + label.button {
 .btn-global-search {
   border: 0; }
 
-.button--dropdown {
-  min-width: none; }
-
 /* 
 	Callouts
 	build with utils eg u-bg-heritage-berry u-white--all u-p-1 u-my-2
@@ -6088,6 +6085,9 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
 .internal-sidebar-menu nav {
   top: 70px;
   margin-top: 25px; }
+
+.bb-note {
+  font-size: 0.9rem !important; }
 
 .internal-landing-grid-cluster {
   display: -ms-grid;
