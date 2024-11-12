@@ -6087,7 +6087,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   margin-top: 25px; }
 
 .bb-note {
-  font-size: 0.9rem !important; }
+  font-size: 0.9rem; }
 
 .internal-landing-grid-cluster {
   display: -ms-grid;
