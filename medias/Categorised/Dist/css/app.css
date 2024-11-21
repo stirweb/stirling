@@ -6954,77 +6954,40 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     transform: translateY(-200%); } }
 
 /*
-    SEARCH REVAMP 
+    SEARCH NAV TAB BUTTONS
  */
+.slide-tabs-2 {
+  background: whitesmoke; }
+  .slide-tabs-2 .carousel > button {
+    height: 100px; }
+  .slide-tabs-2 .carousel-slides {
+    overflow: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none; }
+    .slide-tabs-2 .carousel-slides::-webkit-scrollbar {
+      display: none; }
+    .slide-tabs-2 .carousel-slides button {
+      width: 100px; }
+
+/*
+      SEARCH RESULTS
+  */
 .c-search-results-area {
-  /*
-      SLIDE TABS NAV
+  /*  
+    Results summary  eg Showing 1-10 of 3969 results
   */
   /*
-  &.stuck {
-    padding-top: 0;
-    padding-bottom: 0;
-
-    .slide-tabs-2 {
-      border-bottom: 0px solid rgba(204, 204, 204, 0.4);
-      background: rgba(245, 245, 245, 0.9);
-    }
-
-    /* Tab buttons *
-    .tns-controls {
-      button {
-        height: 60px;
-      }
-    }
-
-    /* Arrow buttons *
-    .tns-item {
-      h2 {
-        padding-bottom: 0;
-
-        button {
-          position: relative;
-
-          .slide-tab--text {
-            opacity: 0%;
-            transition: opacity 0.3s;
-            position: absolute;
-
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-          }
-        }
-      }
-    }
-  }
-  */
-  /* 
-
-      Results summary 
-      eg Showing 1-10 of 3969 results
-
-  */
-  /*
-
        Default result box styles
-
   */
   /* 
-
       Aside content panel eg recommended panel
-
   */
-  /* 
-
-     Aside Filters content panel
-
+  /*  
+    Aside Filters content panel 
   */
   /*
-
         RESULTS - generic or tab-agnostic stuff
-
-     */
+  */
   /* 
        All results tab
   */
@@ -7034,75 +6997,6 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   /* 
       Staff, Events, News panel results
   */ }
-  .c-search-results-area .slide-tabs-2 {
-    padding: 5px 0 5px 0;
-    position: sticky;
-    top: 0;
-    z-index: 9;
-    background: whitesmoke;
-    /* Tab buttons 
-    .tns-controls {
-      position: relative;
-
-      button {
-        position: absolute;
-        top: 0px;
-        padding: 0 5px;
-        z-index: 200;
-        height: 80px;
-        margin: 10px 0;
-
-        &:first-of-type {
-          left: -50px;
-          border-right: 1px solid #bebebe;
-        }
-
-        &:last-of-type {
-          right: -50px;
-          border-left: 1px solid #bebebe;
-        }
-
-        &:disabled {
-          opacity: 0.2;
-        }
-      }
-    }*/
-    /* Arrow buttons 
-    .tns-item {
-      text-align: center;
-
-      h2 {
-        display: inline-block;
-        width: auto;
-        padding-bottom: 5px;
-        margin-bottom: 0px;
-        margin-top: 10px;
-
-        &::after {
-          content: none;
-        }
-
-        > button {
-          cursor: pointer;
-          font-weight: 400;
-          font-family: "Open Sans", sans-serif;
-          font-size: 0.8rem; // 1rem
-          padding: 20px;
-          line-height: 1.4;
-
-          > span.icon--medium {
-            font-size: 25px;
-          }
-        }
-
-        &.slide-tab--active {
-          background-color: #006636;
-          > button {
-            color: #fff;
-          }
-        }
-      }
-    }*/ }
   .c-search-results-area .c-search-results-summary .c-tag,
   .c-search-results-area .c-search-result__body .c-tag {
     padding: 0.3rem;
@@ -7345,6 +7239,9 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
 fieldset[data-facet*="mode"] span::first-letter {
   text-transform: capitalize; }
 
+/*
+  Medium up
+*/
 @media screen and (min-width: 40em) {
   .c-search-results-area .c-search-result {
     padding: 2.25rem; }
@@ -7366,12 +7263,12 @@ fieldset[data-facet*="mode"] span::first-letter {
     width: auto; } }
 
 /*
- * LARGE UP
+    LARGE UP
  */
 @media screen and (min-width: 64em) {
   /* 
-     *  Staff, Events, News panel results
-     */
+        Staff, Events, News panel results
+  */
   .c-search-results-area .c-search-results-panel {
     display: grid;
     gap: 0 30px;
@@ -7421,7 +7318,7 @@ fieldset[data-facet*="mode"] span::first-letter {
     grid-column-end: 4; } }
 
 /*
- * Large Down
+   Large Down
  */
 @media screen and (max-width: 77.49875em) {
   .c-search-results-area aside.c-search-results-filters {
@@ -7444,7 +7341,7 @@ fieldset[data-facet*="mode"] span::first-letter {
     font-size: 2rem; } }
 
 /*
- * Small only
+   Small only
  */
 @media screen and (max-width: 39.99875em) {
   .c-search-results-area .c-search-result[data-delivery="online"]::after {
