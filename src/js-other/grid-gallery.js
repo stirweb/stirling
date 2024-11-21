@@ -23,7 +23,7 @@
 
     galleryEl.style.setProperty("--num-rows", Math.ceil(max/3));
 	
-	window[galleryID].slice(0,max).forEach(photo => {
+	window[galleryID].slice(0,max).forEach((photo,x) => {
 		//photo = window[galleryID][x];
         var item = document.createElement('li');
         //var link = document.createElement('a');
