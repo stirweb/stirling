@@ -1,134 +1,37 @@
 /*
-    SEARCH REVAMP 
+    SEARCH NAV TAB BUTTONS
  */
 
+.slide-tabs-2 {
+  background: rgba(245, 245, 245, 1);
+
+  .carousel > button {
+    height: 100px;
+  }
+
+  .carousel-slides {
+    overflow: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    button {
+      width: 100px;
+    }
+  }
+}
+
+/*
+      SEARCH RESULTS
+  */
+
 .c-search-results-area {
-  /*
-      SLIDE TABS NAV
+  /*  
+    Results summary  eg Showing 1-10 of 3969 results
   */
-  .slide-tabs-2 {
-    padding: 5px 0 5px 0;
-    position: sticky;
-    top: 0;
-    z-index: 9;
-    background: rgba(245, 245, 245, 1);
-
-    // .tns-nav {
-    //   display: none;
-    // }
-
-    /* Tab buttons 
-    .tns-controls {
-      position: relative;
-
-      button {
-        position: absolute;
-        top: 0px;
-        padding: 0 5px;
-        z-index: 200;
-        height: 80px;
-        margin: 10px 0;
-
-        &:first-of-type {
-          left: -50px;
-          border-right: 1px solid #bebebe;
-        }
-
-        &:last-of-type {
-          right: -50px;
-          border-left: 1px solid #bebebe;
-        }
-
-        &:disabled {
-          opacity: 0.2;
-        }
-      }
-    }*/
-
-    /* Arrow buttons 
-    .tns-item {
-      text-align: center;
-
-      h2 {
-        display: inline-block;
-        width: auto;
-        padding-bottom: 5px;
-        margin-bottom: 0px;
-        margin-top: 10px;
-
-        &::after {
-          content: none;
-        }
-
-        > button {
-          cursor: pointer;
-          font-weight: 400;
-          font-family: "Open Sans", sans-serif;
-          font-size: 0.8rem; // 1rem
-          padding: 20px;
-          line-height: 1.4;
-
-          > span.icon--medium {
-            font-size: 25px;
-          }
-        }
-
-        &.slide-tab--active {
-          background-color: #006636;
-          > button {
-            color: #fff;
-          }
-        }
-      }
-    }*/
-  }
-  /*
-  &.stuck {
-    padding-top: 0;
-    padding-bottom: 0;
-
-    .slide-tabs-2 {
-      border-bottom: 0px solid rgba(204, 204, 204, 0.4);
-      background: rgba(245, 245, 245, 0.9);
-    }
-
-    /* Tab buttons *
-    .tns-controls {
-      button {
-        height: 60px;
-      }
-    }
-
-    /* Arrow buttons *
-    .tns-item {
-      h2 {
-        padding-bottom: 0;
-
-        button {
-          position: relative;
-
-          .slide-tab--text {
-            opacity: 0%;
-            transition: opacity 0.3s;
-            position: absolute;
-
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-          }
-        }
-      }
-    }
-  }
-  */
-
-  /* 
-
-      Results summary 
-      eg Showing 1-10 of 3969 results
-
-  */
-
   .c-search-results-summary,
   .c-search-result__body {
     .c-tag {
@@ -142,17 +45,13 @@
   }
 
   /*
-
        Default result box styles
-
   */
-
   .c-search-result {
     background-color: #fff;
     padding: 1.5rem;
     position: relative;
     margin: 0 0 3rem 0;
-    //border-left: 3px solid $heritage-green;
 
     a {
       border-bottom: 1px solid $heritage-green;
@@ -169,7 +68,6 @@
     /*
         POP UP result
     */
-
     &.c-popout-result {
       border-left: 0px !important;
       padding: 0;
@@ -253,32 +151,22 @@
   }
 
   /* 
-
       Aside content panel eg recommended panel
-
   */
-
   aside.c-search-results-asides {
     p:not(.u-text-regular) {
       font-size: 1rem;
     }
   }
 
-  /* 
-
-     Aside Filters content panel
-
+  /*  
+    Aside Filters content panel 
   */
-
   aside.search-filters-area,
   aside.c-search-results-filters {
     > div:first-of-type {
       margin-bottom: 40px;
     }
-
-    // .tns-nav {
-    //   display: none;
-    // }
 
     .c-search-filters-header {
       margin-bottom: 0;
@@ -309,16 +197,6 @@
       &:last-child {
         margin-bottom: 0;
       }
-
-      // .tns-controls {
-      //   text-align: center;
-      //   position: relative;
-      //   top: -7px;
-
-      //   button {
-      //     margin: 0 0.5rem;
-      //   }
-      // }
 
       ul li {
         margin: 0 0 1em 0;
@@ -387,11 +265,8 @@
   }
 
   /*
-
         RESULTS - generic or tab-agnostic stuff
-
-     */
-
+  */
   .c-search-result[data-result-type="course"] {
     .stir-accordion {
       border-top: 1px solid #ede9e9;
@@ -492,7 +367,6 @@
   /* 
       Courses panel results
   */
-
   .c-search-result[data-delivery="online"] {
     &::after {
       /* content: "\e998"; */ /* videochat */
@@ -515,7 +389,6 @@
   /* 
       Staff, Events, News panel results
   */
-
   .c-search-result {
     &[data-result-type="news"],
     &[data-result-type="event"],
@@ -550,12 +423,13 @@ fieldset[data-facet*="mode"] span::first-letter {
   text-transform: capitalize;
 }
 
-//@media only screen and (min-width: 640px) {
+/*
+  Medium up
+*/
 @media screen and #{breakpoint(medium up)} {
   .c-search-results-area {
     .c-search-result {
       padding: 2.25rem;
-      //border-left: 5px solid $heritage-green;
 
       .c-search-result__meta > div {
         border-left: 1px solid #ede9e9;
@@ -585,15 +459,12 @@ fieldset[data-facet*="mode"] span::first-letter {
 }
 
 /*
- * LARGE UP
+    LARGE UP
  */
-
-//@media only screen and (min-width: 1040px) {
 @media screen and #{breakpoint(large up)} {
   /* 
-     *  Staff, Events, News panel results
-     */
-
+        Staff, Events, News panel results
+  */
   .c-search-results-area {
     .c-search-results-panel {
       display: grid;
@@ -684,10 +555,9 @@ fieldset[data-facet*="mode"] span::first-letter {
 }
 
 /*
- * Large Down
+   Large Down
  */
 
-//@media only screen and (max-width: 1080px) {
 @media screen and #{breakpoint(large down)} {
   .c-search-results-area {
     aside.c-search-results-filters {
@@ -725,10 +595,9 @@ fieldset[data-facet*="mode"] span::first-letter {
 }
 
 /*
- * Small only
+   Small only
  */
 
-//@media only screen and (max-width: 640px) {
 @media screen and #{breakpoint(small down)} {
   .c-search-results-area {
     .c-search-result[data-delivery="online"] {
