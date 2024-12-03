@@ -53,7 +53,7 @@
             </div>`),J=stir.curry((e,t)=>`
           <div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${t.image?"medium-8":""} ">
-                <div class=" u-p-2">
+                <div class="u-relative u-p-2">
                   ${t.isSeries?l("Event series"):""}
                   <p class="u-text-regular u-mb-2">
                   ${o(t.cancelled)} ${o(t.rescheduled)} <strong><a href="${t.url}">${t.title}</a></strong>
