@@ -6,54 +6,59 @@ stir.t4Globals = stir.t4Globals || {};
  * @param {*} scope DOM element that wraps the fees information (selector and table, etc).
  */
 (function (scope) {    
-    if (!scope) return;
-    var select  = scope.querySelector('select');
-    var table   = scope.querySelector('table');
+	if (!scope) return;
+	var select  = scope.querySelector('select');
+	var table   = scope.querySelector('table');
 	var remotes = Array.prototype.slice.call(scope.querySelectorAll('[data-action="change-region"]'));
-    var region;
+	var region;
 
-    function toggle(flag) {
-        if (this.nodeType === 1)
-            flag ? this.classList.remove('hide') : this.classList.add('hide');
-    }
+	function toggle(flag) {
+		if (this.nodeType === 1)
+			flag ? this.classList.remove('hide') : this.classList.add('hide');
+	}
 
-    function show(el) {
-        toggle.call(el, true);
-    }
+	function show(el) {
+		toggle.call(el, true);
+	}
 
-    function hide(el) {
-        toggle.call(el, false)
-    }
+	function hide(el) {
+		toggle.call(el, false)
+	}
 
-    function hideAll() {
-        hide(table);
-        getRegionals().forEach(hide); // IE Compatible forEach
-    }
+	function hideAll() {
+		hide(table);
+		getRegionals().forEach(hide); // IE Compatible forEach
+	}
 
-    function getRegionals(region) {
-        // querySelectorAll returns a NodeList, but IE can't use forEach() on
-        // a NodeList directly, so this function converts it to a regular
-        // Array, which is more compatible.
-        return Array.prototype.slice.call(scope.querySelectorAll('[data-region' + (region ? '="' + region + '"' : '') + ']'));
-    }
+	function getRegionals(region) {
+		// querySelectorAll returns a NodeList, but IE can't use forEach() on
+		// a NodeList directly, so this function converts it to a regular
+		// Array, which is more compatible.
+		return Array.prototype.slice.call(scope.querySelectorAll('[data-region' + (region ? '="' + region + '"' : '') + ']'));
+	}
 
-    function handleChanges() {
-        // First, hide all region-specific elements:
-        hideAll();
-        // Then, only reveal the ones that match the selected region.
-        if (region = this.options[this.options.selectedIndex].value) {
-            show(table);
-            getRegionals(region).forEach(show);
-        }
-    }
+	function handleChanges() {
+		// First, hide all region-specific elements:
+		hideAll();
+		// Then, only reveal the ones that match the selected region.
+		if (region = this.options[this.options.selectedIndex].value) {
+			//console.info("region:",region)
+			showTheStuff(region);
+		}
+	}
 
-    // Initial state: hide the table and all region-specific elements (until
-    // the user has selected a region):
-    hideAll();
+	function showTheStuff(region) {
+		show(table);
+		getRegionals(region).forEach(show);
+	}
 
-    // Now listen for the user:
+	// Initial state: hide the table and all region-specific elements (until
+	// the user has selected a region):
+	hideAll();
+
+	// Now listen for the user:
 	if(!select.id) select.id = 'change-region';
-    select.addEventListener('change', handleChanges);
+	select.addEventListener('change', handleChanges);
 
 	// Set up any remote controls. Each `remote` should just be
 	// a simple <span> with some text:
@@ -77,55 +82,128 @@ stir.t4Globals = stir.t4Globals || {};
 
 
 ((scope)=>{
+	if(!scope) return;
+	const select  = scope.querySelector('select');
+	if(!select || !select.hasAttribute('data-level')) return;
 
-    if(!scope) return;
+	stir.fees = stir.fees || {};
 
-    scope.innerHTML = '';
+	console.info('[Fee API] Study level:',select.getAttribute('data-level'));
 
-    const statuses = {
-        "H": "Scottish students",
-        "O": "International students (including EU)",
-        "R": "Students from England, Wales, Northern Ireland and Republic of Ireland",
-    };
-    const modes = {
-        "FT":"Full time",
-        "PTO":"Part time",
-    }
+	let initialised = false;
 
-    const formatter = new Intl.NumberFormat('en-GB', {
-        style: 'currency',
-        currency: 'GBP',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      
-        // These options are needed to round to whole numbers if that's what you want.
-        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-        //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
-      });
+	const feeapi = "dev"===UoS_env.name?'../fees-31-10-2024.json':'<t4 type="media" id="182818" formatter="path/*" />'
 
-    const feetables = data => feetable(data);
+	const statuses = {
+		UG: {
+			"H": "Scottish students",
+			"R": "Students from England, Wales, Northern Ireland and Republic of Ireland",
+			"O": "International students (including EU)",
+		},
+		PG: {
+			"H": "Students from the UK and Republic of Ireland",
+			"O": "International (including EU) students",
+		}
+	};
+	const regions = {
+		UG: {
+			"H": "home",
+			"R": "ruk",
+			"O": "int-eu",
+		},
+		PG: {
+			"H": "home",
+			"O": "overseas",
+		}
+	};
+	const modes = {
+		"FT":"full time",
+		"PTO":"part time",
+	}
 
-    //<pre>${JSON.stringify(data,null,"\t")}</pre>
-    const feetable = data => `<table>${data.feeData.map(feetablerow).join('')}</table>`;
+	const info = {};
 
-    const feetablerow = data => 
-    
-    `<tr>
-        <td><strong>${statuses[data.feeStatus]}</strong> (${modes[data.modeOfAttendance]})</td>
-        <!-- <td>${modes[data.modeOfAttendance]}</td> -->
-        <!-- <td>${data.academicYear}</td> -->
-        <td>${formatter.format(data.amount)}</td>
-    </tr>`;
+	const formatter = new Intl.NumberFormat('en-GB', {
+		style: 'currency',
+		currency: 'GBP',
+		minimumFractionDigits: 0,
+		maximumFractionDigits: 0	  
+		// These options are needed to round to whole numbers if that's what you want.
+		//minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+		//maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+	  });
 
-    const el = document.querySelector('[data-modules-route-code]');
-    const route = el && el.getAttribute('data-modules-route-code');
-    console.info('[Fees] Route', route);
-    route && stir.getJSON("../fees.json", data=>{
-        if(data.feeData) {
-            scope.insertAdjacentHTML("beforeend",
-                (data.feeData.filter(item=>item.rouCode===route).map(feetables).join(''))
-            );
-        }
-    })
+	const feetables = data => {
+		info.theyears = data.feeData.map(data=>data.academicYear).filter(onlyUnique);
+		info.stata = data.feeData.map(data=>data.feeStatus).filter(onlyUnique);
+		info.moda = data.feeData.map(data=>data.modeOfAttendance).filter(onlyUnique);
+
+		return feetable(
+			info.stata.map(status=>
+				info.moda.map(mode => 
+					feetablerow(status,mode,
+						data.feeData.filter(
+							a=>a.feeStatus===status&&a.modeOfAttendance===mode
+						)
+					)
+				).join('')
+			).join(''));
+	};
+
+	const onlyUnique = (value, index, self)  => self.indexOf(value) === index;
+
+	const feetable = (data, caption) => 
+		`<table>`+
+		(caption?`<caption>${caption}</caption>`:'')+
+		`<thead><td>🚨 <small><pre style=display:inline>Using API Data [${route}]</pre></small></td>`+
+		info.theyears.map(th_year).join('')+
+		`</thead><tbody>`+
+		`${data}</tbody>`+
+		`</table>`;
+
+	const th_year = year => `<th scope="col" style="width:20%;">${(year)}</th>`;
+	const td_amount = data => `<td>${formatter.format(data.amount)}</td>`;
+
+	function feetablerow (status,mode,data) {
+		return `<tr class=hide data-region=${regions[level][status]}>`+
+		`<th scope=row>${statuses[level][status]}`+
+		`${info.moda.length>1?`<br>(${modes[mode]})`:''}`+
+		`</th>`+
+		info.theyears.map(year => data.filter(a=>a.academicYear===year).map(td_amount).join('')).join('')+
+		`</tr>`;
+	}
+
+	const el = document.querySelector('[data-modules-route-code]');
+	const route = (()=>{
+
+		if(!el) return false;
+		if(!el.hasAttribute('data-modules-route-code')) {
+			return console.error('[Fee API] No routecode') && false;
+		}
+		if(el.getAttribute('data-modules-route-code').indexOf(',')!==-1) {
+			console.info('[Fee API] ⚠️ Multiple route codes');
+		}
+		return el.getAttribute('data-modules-route-code').split(',').shift().trim();
+
+	})();
+	const level = el && el.getAttribute('data-modules-course-type');
+
+	console.info('[Fee API] Route', route);
+	
+	stir.fees.auto = () => {
+		if(!initialised) {
+			initialised = true;
+			console.info('[Fee API] auto triggered');
+			route && stir.getJSON(feeapi, data=>{
+				if(data.feeData) {
+					const oldtable = scope.querySelector('table');
+					oldtable && (oldtable.innerHTML = 
+						(data.feeData.filter(item=>item.rouCode===route).map(feetables).join('')));
+					if(select.value) select.dispatchEvent(new Event("change"));
+				}
+			});
+		}
+	}
+	if(stir.callback && stir.callback.queue && stir.callback.queue.indexOf("stir.fees.auto")>-1) stir.fees.auto();
 
 })(document.getElementById("course-fees-information"));
