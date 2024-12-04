@@ -240,8 +240,8 @@
     const contentArea = stir.node("#content");
     contentArea && contentArea.classList.add("u-padding-bottom");
 
-    const deliveries = doDeliveries(dataDeliveries, colourPack);
-    //const deliveries = "";
+    //const deliveries = doDeliveries(dataDeliveries, colourPack);
+    const deliveries = "";
     setDOMContent(stir.node("#deliveries"), renderTeachingDeliveries(deliveries, deliveriesFallbackText));
 
     const assessmentsData = dataAssessments ? dataAssessments : [];
