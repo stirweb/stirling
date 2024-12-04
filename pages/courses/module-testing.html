@@ -7,7 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Rapturous homecoming for Stirling&rsquo;s Olympic swimmers | About | University of Stirling</title>
+    <title>Module Testing | University of Stirling</title>
 
     <meta property="og:image"
         content="https://pxl-stiracuk.terminalfour.net/fit-in/1200x630/filters:quality(97)/filters:format(webp)/prod01/cdn/media/stirling/news/news-centre/2024/october/Olympics2-1200X630.jpg" />
@@ -96,7 +96,6 @@
     <link rel="alternate" title="Homepage news feed" type="application/json"
         href="/media/stirling/feeds/homepage.json" /> <!-- Photoswipe CSS -->
     <link rel="stylesheet" href="../../medias/Categorised/Dist/bundles/photoswipe/photoswipe.css?v=1.1">
-
 
 
     <script>
@@ -390,21 +389,16 @@
     <!-- app.min.js -->
     <script type="text/javascript" src="../../medias/Categorised/Dist/js/app.min.js?v=113.1"></script>
 
-
     <script>
+        (async () => {
 
-
-        function extractCodeFromUrl(url) {
-            const urlObj = new URL(url);
-            return urlObj.searchParams.get('code');
-        }
-
-
-
-        async function getData(url) {
+            function extractCodeFromUrl(url) {
+                const urlObj = new URL(url);
+                return urlObj.searchParams.get('code');
+            }
 
             try {
-                const response = await fetch(url);
+                const response = await fetch("./modules.json");
                 if (!response.ok) {
                     throw new Error(`Response status: ${response.status}`);
                 }
@@ -432,21 +426,15 @@
                     return `<p class="text-xsm"><a href="${item.url}">Module: ${item.code}</a></p>`;
                 });
 
-
-                // console.log(modulesHtml.length)
-
+                // Output to page
                 const title = `<h3>${modulesHtml.length} modules found</h3>`;
-                // Output
                 stir.node("#results").innerHTML = title + modulesHtml.join("");
-
 
             } catch (error) {
                 console.error(error.message);
             }
-        }
 
-        getData("./modules.json");
-
+        })();
 
     </script>
 
