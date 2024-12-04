@@ -89,7 +89,7 @@
       setTimeout(() => {
         overlay.style.display = "none";
         fullImage.style.transform = "";
-      }, 300);
+      }, 310);
     });
   });
 })();

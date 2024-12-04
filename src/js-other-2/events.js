@@ -146,7 +146,7 @@
     return `
           <div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${item.image ? `medium-8` : ``} ">
-                <div class=" u-p-2">
+                <div class="u-relative u-p-2">
                   ${item.isSeries ? renderTab("Event series") : ``}
                   <p class="u-text-regular u-mb-2">
                   ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} <strong><a href="${item.url}">${item.title}</a></strong>

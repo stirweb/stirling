@@ -14,7 +14,8 @@
 
           const perc = (value / max) * 100;
           const valueInverted = 100 - perc;
-          const textPosition = perc / 2 - 2;
+          const textPositionInit = perc / 2 - 2;
+          const textPosition = textPositionInit === 0 ? 1 : textPositionInit;
 
           const frag = stir.createDOMFragment(`<div class="barchart-value u-bg-${colour} u-absolute" style="right:${valueInverted}%"></div>
                                                 <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${textPosition}%">${value}${unit}</div>`);
@@ -40,6 +41,14 @@
 
   /* 
 
+        HELPERS
+
+    */
+
+  const upperCaseFirstWord = (s) => s[0].toUpperCase() + s.slice(1);
+
+  /* 
+
         RENDERERS
 
     */
@@ -55,7 +64,7 @@
 
   /* renderDeliverablesTotal */
   const renderDeliverablesTotal = (hours, colourPack) => {
-    return `<div class="u-bg-${colourPack.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
+    return `<div class="u-bg-${colourPack[0].second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
                 <strong class="u-flex1">Total workload</strong>
                 <strong>${hours} hours</strong>
             </div>`;
@@ -67,8 +76,8 @@
       ? renderDeliverablesTotal(hours, colourPack)
       : `
         <div>
-            <span class="u-inline-block u-p-tiny u-px-1">${type}</span>
-            <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${hours}" data-max="${total}" data-unit="" data-colour="${colourPack.second}"></div>
+            <span class="u-inline-block u-p-tiny u-px-1">${label + `: ` + upperCaseFirstWord(type)}</span>
+            <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-medium-grey" data-value="${hours}" data-max="${total}" data-unit="" data-colour="${colourPack[0].second}"></div>
         </div>`;
   });
 
@@ -87,7 +96,7 @@
       ? ``
       : `<div>
           <span class="u-inline-block u-p-tiny u-px-1">${name}</span>
-          <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${value}" data-max="100" data-unit="%" data-colour="${colourPack[0].second}"></div>
+          <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-medium-grey" data-value="${value}" data-max="100" data-unit="%" data-colour="${colourPack[0].second}"></div>
         </div>`;
   });
 
@@ -145,7 +154,6 @@
       DATA PROCESSING
   */
 
-  /*
   const doDeliveries = (deliveries, colourPack) => {
     const deliveriesTotalItem = deliveries.filter((item) => item.typekey === "total");
     const deliveriesTotalValue = deliveriesTotalItem.length ? deliveriesTotalItem[0].hours : null;
@@ -163,7 +171,7 @@
 
     return Number(total) !== sum ? `` : deliveries.map(renderDeliverablesCurry).join(``);
     //return Number(total) !== sum ? renderDebug(total, sum, `Hours (Total Study Time)`, deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
-  }; */
+  };
 
   const removeDuplicates = (arr) => arr.filter((item, index) => arr.indexOf(item) === index);
 
@@ -230,7 +238,8 @@
     const contentArea = stir.node("#content");
     contentArea && contentArea.classList.add("u-padding-bottom");
 
-    const deliveries = ""; //doDeliveries(dataDeliveries, colourPack);
+    //const deliveries = doDeliveries(dataDeliveries, colourPack);
+    const deliveries = "";
     setDOMContent(stir.node("#deliveries"), renderTeachingDeliveries(deliveries, deliveriesFallbackText));
 
     const assessmentsData = dataAssessments ? dataAssessments : [];
