@@ -13,12 +13,14 @@
           const colour = entry.target.dataset.colour || "energy-turq";
 
           const perc = (value / max) * 100;
-          const valueInverted = 100 - perc;
-          const textPositionInit = perc / 2 - 2;
+          const percInverted = 100 - perc;
+          const percInvertedFixed = percInverted > 98 ? 98 : percInverted;
+
+          const textPositionInit = perc / 2 - 0.5;
           const textPosition = textPositionInit === 0 ? 1 : textPositionInit;
 
-          const frag = stir.createDOMFragment(`<div class="barchart-value u-bg-${colour} u-absolute" style="right:${valueInverted}%"></div>
-                                                <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${textPosition}%">${value}${unit}</div>`);
+          const frag = stir.createDOMFragment(`<div class="barchart-value u-bg-${colour} u-absolute" style="right:${percInvertedFixed}%"></div>
+                                                <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${Math.abs(textPosition)}%">${value}${unit}</div>`);
           entry.target.append(frag);
         } else {
           entry.target.innerHTML = ``;
