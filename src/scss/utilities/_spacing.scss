@@ -122,6 +122,25 @@ ul.no-bullet {
   }
 }
 
+@media screen and #{breakpoint(large up)} {
+  .u-m-2 {
+    margin: 40px;
+  }
+
+  .u-mb-2 {
+    margin-bottom: 40px;
+  }
+
+  .u-mt-2 {
+    margin-top: 40px;
+  }
+
+  .u-my-2 {
+    margin-bottom: 40px;
+    margin-top: 40px;
+  }
+}
+
 /* Size 3 */
 
 .u-m-3 {
