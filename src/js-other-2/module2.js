@@ -171,6 +171,9 @@
         return accumulator + currentValue;
       }, 0);
 
+    //console.log(deliveries);
+    //console.log(sum);
+
     return Number(total) !== sum ? `` : deliveries.map(renderDeliverablesCurry).join(``);
     //return Number(total) !== sum ? renderDebug(total, sum, `Hours (Total Study Time)`, deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
   };
@@ -242,6 +245,7 @@
 
     //const deliveries = doDeliveries(dataDeliveries, colourPack);
     const deliveries = "";
+
     setDOMContent(stir.node("#deliveries"), renderTeachingDeliveries(deliveries, deliveriesFallbackText));
 
     const assessmentsData = dataAssessments ? dataAssessments : [];

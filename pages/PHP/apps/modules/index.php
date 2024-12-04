@@ -268,8 +268,8 @@ $semester = isset($_GET['semester']) ? $_GET['semester'] : '';
 $content = file_get_contents("https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester");
 $init_data = json_decode($content);
 
-//echo "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";
-//echo "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";
+// JSON url
+echo "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";
 
 
 

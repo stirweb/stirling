@@ -1358,6 +1358,11 @@
         "projectPath": "medias/Categorised/Dist/html/email-signature.html"
       },
       {
+        "id": 185723,
+        "description": "email-signature-marketing.html",
+        "projectPath": "medias/Categorised/Dist/html/email-signature-marketing.html"
+      },
+      {
         "id": 158321,
         "description": "contact-form-cn.html",
         "projectPath": "medias/Categorised/Dist/html/contact-form-cn.html"
