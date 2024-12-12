@@ -1,12 +1,25 @@
 var stir = stir || {};
 stir.t4Globals = stir.t4Globals || {};
+stir.fees = stir.fees || {};
 
-/**
- * Fees region (e.g. home/eu) selector
- * @param {*} scope DOM element that wraps the fees information (selector and table, etc).
- */
-(function (scope) {    
+stir.fees.template = {
+
+	"select": `<label>
+					  <h4>Select your fee status to see the tuition fee for this course:</h4>
+						<select>
+							<option value="" disabled selected>Select fee status</option>
+							<option value="home">Scotland</option>
+							<option value="ruk">England, Wales, NI, Republic of Ireland</option>
+							<option value="int-eu">International (including EU)</option>
+						</select>
+					</label>`,
+
+
+};
+
+stir.fees.doFeesTable = function doFeesTable (scope) {    
 	if (!scope) return;
+	console.info("[Fee API] tabulating fees");
 	var select  = scope.querySelector('select');
 	var table   = scope.querySelector('table');
 	var remotes = Array.prototype.slice.call(scope.querySelectorAll('[data-action="change-region"]'));
@@ -77,11 +90,14 @@ stir.t4Globals = stir.t4Globals || {};
 			select.focus();
 		});
 	});
+};
 
-})(document.getElementById("course-fees-information"));
-
-
+/**
+ * Fees region (e.g. home/eu) selector
+ * @param {*} scope DOM element that wraps the fees information (selector and table, etc).
+ */
 ((scope)=>{
+
 
 	const stuff = {};
 
@@ -89,16 +105,15 @@ stir.t4Globals = stir.t4Globals || {};
 		console.error("[Fee API] no scope");
 		scope = document.createElement("div");
 		scope.id = "course-fees-information";
-
+		
 		stuff.feestab = document.querySelector('[data-tab-callback="stir.fees.auto"] + div [data-behaviour="accordion"] div');
 		console.info('[Fee API] fees tab',stuff.feestab);
 		stuff.feestab.prepend(scope);
-
+	} else {
+		stir.fees.doFeesTable(scope);
 	}
 	const select  = scope.querySelector('select') || document.createElement('select');
 //	if(!select || !select.hasAttribute('data-level')) return;
-
-	stir.fees = stir.fees || {};
 
 	//console.info('[Fee API] Study level:',select.getAttribute('data-level'));
 
