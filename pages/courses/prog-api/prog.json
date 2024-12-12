@@ -1,0 +1,525 @@
+{
+	"programmeAvailabilities": [
+		{
+			"isActive": "Y",
+			"loadCategory": "FT",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2018-09-10",
+			"year": -1
+		},
+		{
+			"isActive": "Y",
+			"loadCategory": "FT",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2019-01-14",
+			"year": -1
+		},
+		{
+			"isActive": "Y",
+			"loadCategory": "PTO",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2021-09-13",
+			"year": 2021
+		},
+		{
+			"isActive": "Y",
+			"loadCategory": "PTO",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2023-01-23",
+			"year": 2022
+		},
+		{
+			"isActive": "Y",
+			"loadCategory": "FT",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2025-09-15",
+			"year": 2025
+		},
+		{
+			"isActive": "Y",
+			"loadCategory": "PTO",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2025-09-15",
+			"year": 2025
+		},
+		{
+			"isActive": "Y",
+			"loadCategory": "PTO",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2026-01-19",
+			"year": 2026
+		},
+		{
+			"isActive": "Y",
+			"loadCategory": "PTO",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2026-09-14",
+			"year": 2026
+		},
+		{
+			"isActive": "Y",
+			"loadCategory": "PTO",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2027-01-18",
+			"year": 2026
+		},
+		{
+			"isActive": "Y",
+			"loadCategory": "FT",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2026-09-14",
+			"year": 2026
+		}
+	],
+	"programmecode": "UCX12-ENGJOU",
+	"programmelevel": 9,
+	"programmeStructure": [
+		{
+			"andOr": "and",
+			"description": "",
+			"maxCredits": 480,
+			"maxModules": 0,
+			"minCredits": 480,
+			"minModules": 0,
+			"sectionNumber": "1",
+			"sections": [
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "ENGU9A1",
+							"credits": 20,
+							"section": "1.1",
+							"title": "Introduction to Literary Studies: Genre",
+							"type": "Yr 1, semester 1 - Autumn"
+						},
+						{
+							"code": "JOUU9A1",
+							"credits": 20,
+							"section": "1.1",
+							"title": "Introduction to Journalism Studies",
+							"type": "Yr 1, semester 1 - Autumn"
+						},
+						{
+							"code": "ANYFSE1",
+							"credits": 0,
+							"section": "1.1",
+							"title": "ANYFSE1",
+							"type": "Yr 1, semester 1 - Autumn"
+						},
+						{
+							"code": "ANYFSE1",
+							"credits": 0,
+							"section": "1.1",
+							"title": "ANYFSE1",
+							"type": "Yr 1, semester 1 - Autumn"
+						}
+					],
+					"sectionNumber": "1.1",
+					"title": "Yr 1, semester 1 - Autumn"
+				},
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "ENGU9A2",
+							"credits": 20,
+							"section": "1.2",
+							"title": "Introduction to Literary Studies: Theories & Approaches",
+							"type": "Yr 1, semester 2 - Spring"
+						},
+						{
+							"code": "ENGU9A2",
+							"credits": 20,
+							"section": "1.2",
+							"title": "Introduction to Literary Studies: Theories & Approaches",
+							"type": "Yr 1, semester 2 - Spring"
+						},
+						{
+							"code": "JOUU9A2",
+							"credits": 20,
+							"section": "1.2",
+							"title": "Ethical Issues in Journalism",
+							"type": "Yr 1, semester 2 - Spring"
+						},
+						{
+							"code": "ANYFSE2",
+							"credits": 0,
+							"section": "1.2",
+							"title": "ANYFSE2",
+							"type": "Yr 1, semester 2 - Spring"
+						}
+					],
+					"sectionNumber": "1.2",
+					"title": "Yr 1, semester 2 - Spring"
+				},
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "ENGU903",
+							"credits": 20,
+							"section": "1.3",
+							"title": "Literary Revolutions",
+							"type": "Yr 2, semester 3 - Autumn"
+						},
+						{
+							"code": "ENGU903",
+							"credits": 20,
+							"section": "1.3",
+							"title": "Literary Revolutions",
+							"type": "Yr 2, semester 3 - Autumn"
+						},
+						{
+							"code": "JOUU9A3",
+							"credits": 20,
+							"section": "1.3",
+							"title": "Writing for Journalists 1",
+							"type": "Yr 2, semester 3 - Autumn"
+						},
+						{
+							"code": "ANYFAR3",
+							"credits": 0,
+							"section": "1.3",
+							"title": "any module (Arts programmes)",
+							"type": "Yr 2, semester 3 - Autumn"
+						}
+					],
+					"sectionNumber": "1.3",
+					"title": "Yr 2, semester 3 - Autumn"
+				},
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "JOUU9A4",
+							"credits": 20,
+							"section": "1.4",
+							"title": "Writing for Journalists 2",
+							"type": "Yr 2, semester 4 - Spring"
+						},
+						{
+							"code": "ENGFSE4",
+							"credits": 0,
+							"section": "1.4",
+							"title": "Semester 4 English Studies Modules",
+							"type": "Yr 2, semester 4 - Spring"
+						},
+						{
+							"code": "ANYFSJ4",
+							"credits": 0,
+							"section": "1.4",
+							"title": "any semester 4 - Journalism",
+							"type": "Yr 2, semester 4 - Spring"
+						}
+					],
+					"sectionNumber": "1.4",
+					"title": "Yr 2, semester 4 - Spring"
+				},
+				{
+					"andOr": "and",
+					"description": "In year 3, students must take 3 modules in English and 3 in Journalism.",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "JOUU9A5",
+							"credits": 20,
+							"section": "1.5",
+							"title": "Contemporary Journalism Practice",
+							"type": "Yr 3, semester 5 - Autumn Option 1"
+						},
+						{
+							"code": "_G0F010",
+							"credits": 0,
+							"section": "1.5",
+							"title": "Sem 5 English Group 2 or Journalism options",
+							"type": "Yr 3, semester 5 - Autumn Option 1"
+						},
+						{
+							"code": "ENGFHG1",
+							"credits": 0,
+							"section": "1.5",
+							"title": "Sem 5 English group 1",
+							"type": "Yr 3, semester 5 - Autumn Option 1"
+						}
+					],
+					"sectionNumber": "1.5",
+					"title": "Yr 3, semester 5 - Autumn Option 1"
+				},
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "JOUU9JL",
+							"credits": 20,
+							"section": "1.6",
+							"title": "Law and Government for Journalists",
+							"type": "Yr 3, semester 6 - Spring Option 1"
+						},
+						{
+							"code": "ENGFC10",
+							"credits": 0,
+							"section": "1.6",
+							"title": "Level 10 modules in English (combined degrees)",
+							"type": "Yr 3, semester 6 - Spring Option 1"
+						},
+						{
+							"code": "ENGFJOU",
+							"credits": 0,
+							"section": "1.6",
+							"title": "Level 10 modules in English, Film or Journalism",
+							"type": "Yr 3, semester 6 - Spring Option 1"
+						}
+					],
+					"sectionNumber": "1.6",
+					"title": "Yr 3, semester 6 - Spring Option 1"
+				},
+				{
+					"andOr": "and",
+					"description": "In year 3, students must take 3 modules in English and 3 in Journalism.",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "JOUU9A5",
+							"credits": 20,
+							"section": "1.7",
+							"title": "Contemporary Journalism Practice",
+							"type": "Yr 3, semester 5 - Autumn Option 2"
+						},
+						{
+							"code": "_G0F019",
+							"credits": 0,
+							"section": "1.7",
+							"title": "Sem 5 English Group 1 or Journalism options",
+							"type": "Yr 3, semester 5 - Autumn Option 2"
+						},
+						{
+							"code": "ENGFHG2",
+							"credits": 0,
+							"section": "1.7",
+							"title": "Sem 5 English group 2",
+							"type": "Yr 3, semester 5 - Autumn Option 2"
+						}
+					],
+					"sectionNumber": "1.7",
+					"title": "Yr 3, semester 5 - Autumn Option 2"
+				},
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "JOUU9JL",
+							"credits": 20,
+							"section": "1.8",
+							"title": "Law and Government for Journalists",
+							"type": "Yr 3, semester 6 - Spring Option 2"
+						},
+						{
+							"code": "ENGFC10",
+							"credits": 0,
+							"section": "1.8",
+							"title": "Level 10 modules in English (combined degrees)",
+							"type": "Yr 3, semester 6 - Spring Option 2"
+						},
+						{
+							"code": "ENGFJOU",
+							"credits": 0,
+							"section": "1.8",
+							"title": "Level 10 modules in English, Film or Journalism",
+							"type": "Yr 3, semester 6 - Spring Option 2"
+						}
+					],
+					"sectionNumber": "1.8",
+					"title": "Yr 3, semester 6 - Spring Option 2"
+				},
+				{
+					"andOr": "and",
+					"description": "Students wishing to take the English Studies disseration must take ENGU9DP in semester 7",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "ENGU9DP",
+							"credits": 20,
+							"section": "1.9",
+							"title": "Dissertation Preparation",
+							"type": "Yr 4, semester 7 - Autumn Option 1"
+						},
+						{
+							"code": "_G0F011",
+							"credits": 0,
+							"section": "1.9",
+							"title": "Year 4 options in English or Journalism",
+							"type": "Yr 4, semester 7 - Autumn Option 1"
+						},
+						{
+							"code": "JOUFY24",
+							"credits": 0,
+							"section": "1.9",
+							"title": "20 credit modules in Journalism, yr 4 Combined Honours",
+							"type": "Yr 4, semester 7 - Autumn Option 1"
+						}
+					],
+					"sectionNumber": "1.9",
+					"title": "Yr 4, semester 7 - Autumn Option 1"
+				},
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "ENGU9A8",
+							"credits": 60,
+							"section": "1.10",
+							"title": "English Studies Dissertation",
+							"type": "Yr 4, semester 8 - Spring Option 1"
+						}
+					],
+					"sectionNumber": "1.10",
+					"title": "Yr 4, semester 8 - Spring Option 1"
+				},
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "_G0F011",
+							"credits": 0,
+							"section": "1.11",
+							"title": "Year 4 options in English or Journalism",
+							"type": "Yr 4, semester 7 - Autumn Option 2"
+						},
+						{
+							"code": "ENGFC10",
+							"credits": 0,
+							"section": "1.11",
+							"title": "Level 10 modules in English (combined degrees)",
+							"type": "Yr 4, semester 7 - Autumn Option 2"
+						},
+						{
+							"code": "JOUFY24",
+							"credits": 0,
+							"section": "1.11",
+							"title": "20 credit modules in Journalism, yr 4 Combined Honours",
+							"type": "Yr 4, semester 7 - Autumn Option 2"
+						}
+					],
+					"sectionNumber": "1.11",
+					"title": "Yr 4, semester 7 - Autumn Option 2"
+				},
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "JOUFSS8",
+							"credits": 0,
+							"section": "1.12",
+							"title": "Journalism Dissertations",
+							"type": "Yr 4, semester 8 - Spring Option 2"
+						}
+					],
+					"sectionNumber": "1.12",
+					"title": "Yr 4, semester 8 - Spring Option 2"
+				},
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "ENGU9DP",
+							"credits": 20,
+							"section": "1.13",
+							"title": "Dissertation Preparation",
+							"type": "Yr 4, semester 7 - Autumn Option 3"
+						},
+						{
+							"code": "FMSFSE7",
+							"credits": 0,
+							"section": "1.13",
+							"title": "40 credit modules in Film & Media/Journalism",
+							"type": "Yr 4, semester 7 - Autumn Option 3"
+						}
+					],
+					"sectionNumber": "1.13",
+					"title": "Yr 4, semester 7 - Autumn Option 3"
+				},
+				{
+					"andOr": "and",
+					"description": "",
+					"maxCredits": 60,
+					"maxModules": 0,
+					"minCredits": 60,
+					"minModules": 0,
+					"sectionContent": [
+						{
+							"code": "ENGU9A8",
+							"credits": 60,
+							"section": "1.14",
+							"title": "English Studies Dissertation",
+							"type": "Yr 4, semester 8 - Spring Option 3"
+						}
+					],
+					"sectionNumber": "1.14",
+					"title": "Yr 4, semester 8 - Spring Option 3"
+				}
+			],
+			"title": "Full Time, September start, Stirling Campus"
+		}
+	],
+	"programmetitle": "BA (Hons) English Studies and Journalism Studies"
+}
