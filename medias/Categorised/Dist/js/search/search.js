@@ -812,7 +812,6 @@ var scrollend = { __proto__: null };
 
 */
 (function () {
-  console.log("hello");
   /*
         Debounce
   */
