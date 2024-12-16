@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Module Testing | University of Stirling</title>
+
+
+
+</head>
+
+<body class="external-pages">
+
+
+
+    <!-- 
+				 MAIN CONTENT 
+		-->
+    <main class="wrapper-content" aria-label="Main content" id="content">
+
+        <div class="cell u-margin-y" id="results">
+        </div>
+
+    </main>
+
+
+    <script>
+        (async () => {
+
+            function extractCodeFromUrl(url) {
+                const urlObj = new URL(url);
+                return urlObj.searchParams.get('code');
+            }
+
+            try {
+                const response = await fetch("./images.json");
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                const json = await response.json();
+
+                // Reformat
+                // const modules = json.map(item => {
+                //     const uri = "/courses/module/";
+                //     const uri2 = "https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/33273";
+
+                //     return {
+                //         "url": item.Module.replace(uri, uri2),
+                //         "code": extractCodeFromUrl(item.Module.replace(uri, uri2))
+                //     };
+                // });
+
+                // Remove duplicate items
+                const uniqueModules = json.filter((module, index, self) =>
+                    self.findIndex(m => m.templateid === module.templateid) === index
+                );
+
+                // Render
+                const modulesHtml = uniqueModules.map(item => {
+                    return `<p class="text-xsm">${item.templateid} : ${item.alias} : ${item.name} </p>`;
+                });
+
+                // Output to page
+                const title = `<h3>${modulesHtml.length} modules found</h3>`;
+                document.getElementById("results").innerHTML = title + modulesHtml.join("");
+
+            } catch (error) {
+                console.error(error.message);
+            }
+
+        })();
+
+    </script>
+
+
+</body>
+
+</html>
