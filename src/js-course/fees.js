@@ -2,20 +2,6 @@ var stir = stir || {};
 stir.t4Globals = stir.t4Globals || {};
 stir.fees = stir.fees || {};
 
-stir.fees.template = {
-
-	"select": `<label>
-					  <h4>Select your fee status to see the tuition fee for this course:</h4>
-						<select>
-							<option value="" disabled selected>Select fee status</option>
-							<option value="home">Scotland</option>
-							<option value="ruk">England, Wales, NI, Republic of Ireland</option>
-							<option value="int-eu">International (including EU)</option>
-						</select>
-					</label>`,
-
-
-};
 
 stir.fees.doFeesTable = function doFeesTable (scope) {    
 	if (!scope) return;
@@ -98,21 +84,23 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
  */
 ((scope)=>{
 
+	//const select  = scope.querySelector('select');
 
 	const stuff = {};
+	stuff.feestab = document.querySelector('[data-tab-callback="stir.fees.auto"] + div [data-behaviour="accordion"] div');
 
 	if(!scope) {
 		console.error("[Fee API] no scope");
 		scope = document.createElement("div");
 		scope.id = "course-fees-information";
 		
-		stuff.feestab = document.querySelector('[data-tab-callback="stir.fees.auto"] + div [data-behaviour="accordion"] div');
 		console.info('[Fee API] fees tab',stuff.feestab);
 		stuff.feestab.prepend(scope);
 	} else {
 		stir.fees.doFeesTable(scope);
 	}
 	const select  = scope.querySelector('select') || document.createElement('select');
+	const options = scope.querySelectorAll('select > option');
 //	if(!select || !select.hasAttribute('data-level')) return;
 
 	//console.info('[Fee API] Study level:',select.getAttribute('data-level'));
@@ -161,10 +149,9 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 	  });
 
 	const feetables = data => {
-		info.theyears = data.feeData.map(data=>data.academicYear).filter(onlyUnique);
-		info.stata = data.feeData.map(data=>data.feeStatus).filter(onlyUnique);
-		info.moda = data.feeData.map(data=>data.modeOfAttendance).filter(onlyUnique);
-
+		
+		console.info('[Fee API] stuff.feestab',stuff.feestab);
+		stuff.feestab.insertAdjacentHTML("afterbegin",info.stata.map(stat=>statuses[level][stat]).join(', '))
 		return feetable(
 			info.stata.map(status=>
 				info.moda.map(mode => 
@@ -219,6 +206,12 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 		oldtable && (oldtable.innerHTML = html);
 	};
 
+	const updateOldSelect = data => {
+		console.info('[Fee API] select',info.stata);
+		options.forEach(option=>{
+			console.info(option);
+		});
+	};
 
 	const level = el && el.getAttribute('data-modules-course-type');
 
@@ -228,18 +221,24 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 	stir.fees.auto = () => {
 		if(!initialised) {
 			initialised = true;
-			console.info('[Fee API] auto triggered');
 			routes && stir.getJSON(feeapi, data=>{
 				if(data.feeData) {
 					routes.forEach(route=>{
 						routedata = data.feeData.filter(item=>item.rouCode===route);
 						feedata = routedata.length && routedata[0].feeData
-						console.info('[Fee API]',scope,route,routedata.length?feedata.length:'x');
-						!routedata.length && scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 ${route}: no match for this route code found in the fees data</pre></p>`);
-						routedata.length && scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 ${route}: API fee data ${feedata.length>0?'available':'not available'}</pre></p>`);
-						routedata.length && updateOldTable(data.feeData.filter(item=>item.rouCode===route).map(feetables).join(''));
+
+						info.theyears = feedata && feedata.map(data=>data.academicYear).filter(onlyUnique);
+						info.stata = feedata && feedata.map(data=>data.feeStatus).filter(onlyUnique);
+						info.moda = feedata && feedata.map(data=>data.modeOfAttendance).filter(onlyUnique);
+
+						if(!routedata.length) {
+							scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 ${route}: no match for this route code found in the fees data</pre></p>`);
+						} else {
+							scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 ${route}: API fee data ${feedata.length>0?'available':'not available'}</pre></p>`);
+							updateOldTable(routedata.map(feetables).join(''));
+							updateOldSelect();
+						}
 					});
-					//if(select.value) select.dispatchEvent(new Event("change"));
 				}
 			});
 		}
