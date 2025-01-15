@@ -101,7 +101,7 @@
       : `<div >
           <span class="u-inline-block u-p-tiny u-px-1">${name}</span>
           <div class="u-flex">
-            <div class="barchart u-relative u-flex u-flex1 align-middle u-overflow-hidden u-bg-medium-grey" data-value="${value}" data-max="100" data-unit="%" data-colour="${colourPack[0].second}"></div>
+            <div class="barchart u-relative u-flex u-flex1 align-middle u-overflow-hidden u-bg-light-medium-grey" data-value="${value}" data-max="100" data-unit="%" data-colour="${colourPack[0].second}"></div>
             <div class="u-pl-2 text-xlg u-font-primary u-line-height-1 u-${colourPack[0].second} u-top--16 u-relative"  >${value}%</div>
           </div>
         </div>`;
