@@ -1578,6 +1578,7 @@ Scroll To Top Button
     Objectfit helpers - MOVE
 */
 img.objfitcover,
+picture.objfitcover > img,
 .c-image-text-block > img,
 .c-image-text-block > picture > img,
 .c-half-n-half__image > img,
