@@ -61,13 +61,11 @@
 
     <style>
         .barchart {
-            height: 50px;
+            height: 20px;
         }
 
         .barchart-value {
             width: 2400px;
-            top: 0;
-            bottom: 0;
             right: 100%;
             animation: 1s u-horz-slide-in-out forwards;
         }
