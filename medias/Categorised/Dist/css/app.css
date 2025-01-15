@@ -9170,6 +9170,9 @@ ul.no-bullet {
 .u-pr-2 {
   padding-right: 24px; }
 
+.u-pl-2 {
+  padding-left: 24px; }
+
 @media screen and (min-width: 40em) {
   .u-p-2 {
     padding: 32px; }
@@ -9182,7 +9185,9 @@ ul.no-bullet {
     padding-top: 32px;
     padding-bottom: 32px; }
   .u-pr-2 {
-    padding-right: 32px; } }
+    padding-right: 32px; }
+  .u-pl-2 {
+    padding-left: 32px; } }
 
 /* Size 3 */
 .u-p-3 {
