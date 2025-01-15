@@ -386,6 +386,10 @@ ul.no-bullet {
   padding-right: 24px;
 }
 
+.u-pl-2 {
+  padding-left: 24px;
+}
+
 @media screen and #{breakpoint(medium up)} {
   .u-p-2 {
     padding: 32px;
@@ -407,6 +411,10 @@ ul.no-bullet {
 
   .u-pr-2 {
     padding-right: 32px;
+  }
+
+  .u-pl-2 {
+    padding-left: 32px;
   }
 }
 
