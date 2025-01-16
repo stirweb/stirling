@@ -5,11 +5,14 @@ stir.fees = stir.fees || {};
 
 stir.fees.doFeesTable = function doFeesTable (scope) {    
 	if (!scope) return;
-	console.info("[Fee API] tabulating fees");
-	var select  = scope.querySelector('select');
-	var table   = scope.querySelector('table');
+	const select  = document.createElement('select');
+
+	var table   = document.createElement('table');
 	var remotes = Array.prototype.slice.call(scope.querySelectorAll('[data-action="change-region"]'));
 	var region;
+
+	scope.prepend(table);
+	scope.prepend(select);
 
 	function toggle(flag) {
 		if (this.nodeType === 1)
@@ -41,7 +44,6 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 		hideAll();
 		// Then, only reveal the ones that match the selected region.
 		if (region = this.options[this.options.selectedIndex].value) {
-			//console.info("region:",region)
 			showTheStuff(region);
 		}
 	}
@@ -78,36 +80,54 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 	});
 };
 
+stir.fees.template = {
+	chooser: `<label for=change-region><h4>Select your fee status to see the tuition fee for this course:</h4></label>`,
+	default: `<option value disabled selected>Select fee status</option>`
+};
+
 /**
  * Fees region (e.g. home/eu) selector
  * @param {*} scope DOM element that wraps the fees information (selector and table, etc).
  */
 ((scope)=>{
 
-	//const select  = scope.querySelector('select');
-
+	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
+	
+	if(!scope) {
+		
+		debug && console.error("[Fee API] no scope");
+		return;
+		//		scope = document.createElement("div");
+		//		scope.id = "course-fees-information";
+		//		
+		//		console.info('[Fee API] fees tab',stuff.feestab);
+		//		stuff.feestab.prepend(scope);
+	}
+	
+	if(scope.hasAttribute('data-local')) {
+		debug && console.info('[Fee API] API override is in place');
+		return; // t4 editor has indicated that API data for this route is to be ignored
+	}
+	
+	let initialised = false;
 	const stuff = {};
 	stuff.feestab = document.querySelector('[data-tab-callback="stir.fees.auto"] + div [data-behaviour="accordion"] div');
-
-	if(!scope) {
-		console.error("[Fee API] no scope");
-		scope = document.createElement("div");
-		scope.id = "course-fees-information";
-		
-		console.info('[Fee API] fees tab',stuff.feestab);
-		stuff.feestab.prepend(scope);
-	} else {
-		stir.fees.doFeesTable(scope);
-	}
-	const select  = scope.querySelector('select') || document.createElement('select');
-	const options = scope.querySelectorAll('select > option');
-//	if(!select || !select.hasAttribute('data-level')) return;
-
-	//console.info('[Fee API] Study level:',select.getAttribute('data-level'));
-
-	let initialised = false;
-
+	const info = {};
 	const feeapi = "dev"===UoS_env.name?'../fees-31-10-2024.json':'<t4 type="media" id="182818" formatter="path/*" />'
+
+
+	const labels = {
+		UG: {
+			"H": "Scotland",
+			"R": "England, Wales, NI, Republic of Ireland",
+			"O": "International (including EU)",
+		},
+		PG: {
+			"H": "UK and Republic of Ireland",
+			"O": "International (including EU)",
+		}
+
+	};
 
 	const statuses = {
 		UG: {
@@ -136,8 +156,6 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 		"PTO":"part time",
 	}
 
-	const info = {};
-
 	const formatter = new Intl.NumberFormat('en-GB', {
 		style: 'currency',
 		currency: 'GBP',
@@ -150,8 +168,6 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 
 	const feetables = data => {
 		
-		console.info('[Fee API] stuff.feestab',stuff.feestab);
-		stuff.feestab.insertAdjacentHTML("afterbegin",info.stata.map(stat=>statuses[level][stat]).join(', '))
 		return feetable(
 			info.stata.map(status=>
 				info.moda.map(mode => 
@@ -161,19 +177,19 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 						)
 					)
 				).join('')
-			).join(''));
+			).join(''),"Annual fees");
 	};
 
 	const onlyUnique = (value, index, self)  => self.indexOf(value) === index;
 
 	const feetable = (data, caption) => 
-		`<table>`+
+		//`<table>`+
 		(caption?`<caption>${caption}</caption>`:'')+
-		`<thead><td>🚨 <small><pre style=display:inline>Using API Data [${routes}]</pre></small></td>`+
+		`<thead><td></td>`+
 		info.theyears.map(th_year).join('')+
 		`</thead><tbody>`+
-		`${data}</tbody>`+
-		`</table>`;
+		`${data}</tbody>`;
+		//`</table>`;
 
 	const th_year = year => `<th scope="col" style="width:20%;">${(year)}</th>`;
 	const td_amount = data => `<td>${formatter.format(data.amount)}</td>`;
@@ -192,10 +208,11 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 
 		if(!el) return false;
 		if(!el.hasAttribute('data-modules-route-code')) {
-			return console.error('[Fee API] No routecode') && false;
+			debug && console.error('[Fee API] No routecode');
+			return false;
 		}
 		if(el.getAttribute('data-modules-route-code').indexOf(',')!==-1) {
-			console.info('[Fee API] ⚠️ Multiple route codes');
+			debug && console.info('[Fee API] Multiple route codes');
 		}
 		return el.getAttribute('data-modules-route-code').split(',').map(item=>item.trim());
 
@@ -207,20 +224,25 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 	};
 
 	const updateOldSelect = data => {
-		console.info('[Fee API] select',info.stata);
-		options.forEach(option=>{
-			console.info(option);
+		stuff.select.innerHTML = stir.fees.template.default;
+		info.stata.forEach(status => {
+			const option = document.createElement('option');
+			option.value = regions[level][status];
+			option.textContent = labels[level][status];
+			stuff.select.append(option);
 		});
 	};
 
 	const level = el && el.getAttribute('data-modules-course-type');
-
-	console.info('[Fee API] Route', routes.join(", "));
-
 	
 	stir.fees.auto = () => {
 		if(!initialised) {
 			initialised = true;
+
+			stir.fees.doFeesTable(scope);
+			stuff.select  = scope.querySelector('select');
+			scope.insertAdjacentHTML("afterbegin",stir.fees.template.chooser);
+
 			routes && stir.getJSON(feeapi, data=>{
 				if(data.feeData) {
 					routes.forEach(route=>{
@@ -232,11 +254,16 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 						info.moda = feedata && feedata.map(data=>data.modeOfAttendance).filter(onlyUnique);
 
 						if(!routedata.length) {
-							scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 ${route}: no match for this route code found in the fees data</pre></p>`);
+							debug && console.error(`[Fee API] ${route}: no match for this route code found in the fees data`);
+							stuff.select && stuff.select.remove();
 						} else {
-							scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 ${route}: API fee data ${feedata.length>0?'available':'not available'}</pre></p>`);
-							updateOldTable(routedata.map(feetables).join(''));
-							updateOldSelect();
+							debug && console.info(`${route}: API fee data ${feedata.length>0?'available':'not available'}`);
+							if(feedata.length) {
+								updateOldTable(routedata.map(feetables).join(''));
+								stuff.select && updateOldSelect();
+							} else {
+								stuff.select && stuff.select.remove();
+							}
 						}
 					});
 				}
@@ -244,9 +271,7 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 		}
 	}
 
-	console.info('[Fee API] stir.callback',stir.callback);
-
-	stir.fees.auto();
+	//stir.fees.auto();
 
 	if(stir.callback && stir.callback.queue && stir.callback.queue.indexOf("stir.fees.auto")>-1) stir.fees.auto();
 
