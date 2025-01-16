@@ -2,17 +2,24 @@ var stir = stir || {};
 stir.t4Globals = stir.t4Globals || {};
 stir.fees = stir.fees || {};
 
+stir.fees.template = {
+	chooser: `<h4>Select your fee status to see the tuition fee for this course:</h4>`,
+	default: `<option value disabled selected>Select fee status</option>`
+};
 
 stir.fees.doFeesTable = function doFeesTable (scope) {    
 	if (!scope) return;
+	const label  = document.createElement('label');
 	const select  = document.createElement('select');
-
-	var table   = document.createElement('table');
+	const table   = document.createElement('table');
 	var remotes = Array.prototype.slice.call(scope.querySelectorAll('[data-action="change-region"]'));
 	var region;
 
+    label.innerHTML = stir.fees.template.chooser;
+    select.innerHTML = stir.fees.template.default;
+    label.append(select);
 	scope.prepend(table);
-	scope.prepend(select);
+	scope.prepend(label);
 
 	function toggle(flag) {
 		if (this.nodeType === 1)
@@ -80,11 +87,6 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 	});
 };
 
-stir.fees.template = {
-	chooser: `<label for=change-region><h4>Select your fee status to see the tuition fee for this course:</h4></label>`,
-	default: `<option value disabled selected>Select fee status</option>`
-};
-
 /**
  * Fees region (e.g. home/eu) selector
  * @param {*} scope DOM element that wraps the fees information (selector and table, etc).
@@ -94,14 +96,8 @@ stir.fees.template = {
 	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
 	
 	if(!scope) {
-		
 		debug && console.error("[Fee API] no scope");
 		return;
-		//		scope = document.createElement("div");
-		//		scope.id = "course-fees-information";
-		//		
-		//		console.info('[Fee API] fees tab',stuff.feestab);
-		//		stuff.feestab.prepend(scope);
 	}
 	
 	if(scope.hasAttribute('data-local')) {
@@ -224,7 +220,6 @@ stir.fees.template = {
 	};
 
 	const updateOldSelect = data => {
-		stuff.select.innerHTML = stir.fees.template.default;
 		info.stata.forEach(status => {
 			const option = document.createElement('option');
 			option.value = regions[level][status];
@@ -241,7 +236,6 @@ stir.fees.template = {
 
 			stir.fees.doFeesTable(scope);
 			stuff.select  = scope.querySelector('select');
-			scope.insertAdjacentHTML("afterbegin",stir.fees.template.chooser);
 
 			routes && stir.getJSON(feeapi, data=>{
 				if(data.feeData) {
