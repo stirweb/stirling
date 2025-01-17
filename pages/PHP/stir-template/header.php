@@ -59,6 +59,17 @@
     <meta name="twitter:card" content="summary_large_image" />
 
 
+    <style>
+        .barchart {
+            height: 18px;
+        }
+
+        .barchart-value {
+            width: 2400px;
+            right: 100%;
+            animation: 1s u-horz-slide-in-out forwards;
+        }
+    </style>
 
 </head>
 

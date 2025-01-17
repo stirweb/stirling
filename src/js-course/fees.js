@@ -109,7 +109,7 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 	const stuff = {};
 	stuff.feestab = document.querySelector('[data-tab-callback="stir.fees.auto"] + div [data-behaviour="accordion"] div');
 	const info = {};
-	const feeapi = "dev"===UoS_env.name?'../fees-31-10-2024.json':'<t4 type="media" id="182818" formatter="path/*" />'
+	const feeapi = "dev"===UoS_env.name?'../fees.json':'<t4 type="media" id="182818" formatter="path/*" />'
 
 
 	const labels = {
@@ -264,8 +264,6 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 			});
 		}
 	}
-
-	//stir.fees.auto();
 
 	if(stir.callback && stir.callback.queue && stir.callback.queue.indexOf("stir.fees.auto")>-1) stir.fees.auto();
 

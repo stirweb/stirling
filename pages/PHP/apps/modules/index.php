@@ -100,7 +100,7 @@ function renderTeachingAssessment($deliveries, $assessments, $colourPack, $boile
               <h3 class="header-stripped u-bg-' . $colourPack[0]->second . '--10 u-p-1 u-' . $colourPack[0]->second . '-line-left u-border-width-5 u-text-regular u-mt-2">Engagement overview</h3>
               <div class="grid-x grid-padding-x " id="deliveries"></div>
 
-              <h3 class="header-stripped u-bg-' . $colourPack[0]->second . '--10 u-p-1 u-' . $colourPack[0]->second . '-line-left u-border-width-5 u-text-regular u-mt-3 ">Assessment overview</h3>
+              <h3 class="header-stripped u-bg-' . $colourPack[0]->second . '--10 u-p-1 u-' . $colourPack[0]->second . '-line-left u-border-width-5 u-text-regular u-mt-1 ">Assessment overview</h3>
               
               <div class="grid-x grid-padding-x " id="assessments"></div>
               ' . $boilerplates["teachingTimetableInfo"] . '
@@ -265,13 +265,14 @@ $code = isset($_GET['code']) ? $_GET['code'] : '';
 $session = isset($_GET['session']) ? $_GET['session'] : '';
 $semester = isset($_GET['semester']) ? $_GET['semester'] : '';
 
-$content = file_get_contents("https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester");
+//$apiUrl = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";// Prod
+$apiUrl = "https://www.stir.ac.uk/data/pd-api-qa/?module=$code/$session/$semester"; // QA
+
+$content = file_get_contents($apiUrl);
 $init_data = json_decode($content);
 
-//echo "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";
-//echo "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";
-
-
+// JSON url
+echo "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";
 
 
 

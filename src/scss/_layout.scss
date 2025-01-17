@@ -140,14 +140,18 @@ hr {
   clear: both;
   max-width: 77.5rem;
   height: 0;
-  margin: 1.25rem auto;
+  margin: 1.6rem auto;
   border-top: 0;
   border-right: 0;
-  border-bottom: 1px solid #cacaca;
+  border-bottom: 3px solid #f6f5f4;
   border-left: 0;
   box-sizing: content-box;
   height: 0;
   overflow: visible;
+}
+
+.u-bg-grey hr {
+  border-color: #cacaca;
 }
 
 @import "layout/cookies-banner";
@@ -164,6 +168,7 @@ hr {
 */
 
 img.objfitcover,
+picture.objfitcover > img,
 .c-image-text-block > img,
 .c-image-text-block > picture > img,
 .c-half-n-half__image > img,

@@ -13,11 +13,16 @@
           const colour = entry.target.dataset.colour || "energy-turq";
 
           const perc = (value / max) * 100;
-          const valueInverted = 100 - perc;
-          const textPosition = perc / 2 - 2;
+          const percInverted = 100 - perc;
+          const percInvertedFixed = percInverted > 98 ? 98 : percInverted;
 
-          const frag = stir.createDOMFragment(`<div class="barchart-value u-bg-${colour} u-absolute" style="right:${valueInverted}%"></div>
-                                                <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${textPosition}%">${value}${unit}</div>`);
+          const textPositionInit = perc / 2 - 0.5;
+          const textPosition = textPositionInit === 0 ? 1 : textPositionInit;
+
+          const frag = stir.createDOMFragment(`<div>
+                                                  <div class="barchart-value u-top-0 u-bottom-0 u-bg-${colour} u-absolute" style="right:${percInvertedFixed}%"></div>
+                                                  <div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${Math.abs(textPosition)}%"></div>
+                                              </div>`);
           entry.target.append(frag);
         } else {
           entry.target.innerHTML = ``;
@@ -40,6 +45,14 @@
 
   /* 
 
+        HELPERS
+
+    */
+
+  const upperCaseFirstWord = (s) => s[0].toUpperCase() + s.slice(1);
+
+  /* 
+
         RENDERERS
 
     */
@@ -55,7 +68,7 @@
 
   /* renderDeliverablesTotal */
   const renderDeliverablesTotal = (hours, colourPack) => {
-    return `<div class="u-bg-${colourPack.second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
+    return `<div class="u-bg-${colourPack[0].second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
                 <strong class="u-flex1">Total workload</strong>
                 <strong>${hours} hours</strong>
             </div>`;
@@ -67,8 +80,8 @@
       ? renderDeliverablesTotal(hours, colourPack)
       : `
         <div>
-            <span class="u-inline-block u-p-tiny u-px-1">${type}</span>
-            <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${hours}" data-max="${total}" data-unit="" data-colour="${colourPack.second}"></div>
+            <span class="u-inline-block u-p-tiny u-px-1">${label + `: ` + upperCaseFirstWord(type)}</span>
+            <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-medium-grey" data-value="${hours}" data-max="${total}" data-unit="" data-colour="${colourPack[0].second}"></div>
         </div>`;
   });
 
@@ -85,9 +98,12 @@
   const renderAssessmentItem = stir.curry((colourPack, { name, value }) => {
     return Number(value) === 0
       ? ``
-      : `<div>
+      : `<div >
           <span class="u-inline-block u-p-tiny u-px-1">${name}</span>
-          <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-grey--mid" data-value="${value}" data-max="100" data-unit="%" data-colour="${colourPack[0].second}"></div>
+          <div class="u-flex">
+            <div class="barchart u-relative u-flex u-flex1 align-middle u-overflow-hidden u-bg-light-medium-grey" data-value="${value}" data-max="100" data-unit="%" data-colour="${colourPack[0].second}"></div>
+            <div class="u-pl-2 text-xlg u-font-primary u-line-height-1 u-${colourPack[0].second} u-top--16 u-relative"  >${value}%</div>
+          </div>
         </div>`;
   });
 
@@ -145,7 +161,6 @@
       DATA PROCESSING
   */
 
-  /*
   const doDeliveries = (deliveries, colourPack) => {
     const deliveriesTotalItem = deliveries.filter((item) => item.typekey === "total");
     const deliveriesTotalValue = deliveriesTotalItem.length ? deliveriesTotalItem[0].hours : null;
@@ -161,9 +176,12 @@
         return accumulator + currentValue;
       }, 0);
 
+    //console.log(deliveries);
+    //console.log(sum);
+
     return Number(total) !== sum ? `` : deliveries.map(renderDeliverablesCurry).join(``);
     //return Number(total) !== sum ? renderDebug(total, sum, `Hours (Total Study Time)`, deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
-  }; */
+  };
 
   const removeDuplicates = (arr) => arr.filter((item, index) => arr.indexOf(item) === index);
 
@@ -230,7 +248,9 @@
     const contentArea = stir.node("#content");
     contentArea && contentArea.classList.add("u-padding-bottom");
 
-    const deliveries = ""; //doDeliveries(dataDeliveries, colourPack);
+    //const deliveries = doDeliveries(dataDeliveries, colourPack);
+    const deliveries = "";
+
     setDOMContent(stir.node("#deliveries"), renderTeachingDeliveries(deliveries, deliveriesFallbackText));
 
     const assessmentsData = dataAssessments ? dataAssessments : [];

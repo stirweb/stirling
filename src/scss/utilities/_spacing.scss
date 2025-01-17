@@ -122,6 +122,25 @@ ul.no-bullet {
   }
 }
 
+@media screen and #{breakpoint(large up)} {
+  .u-m-2 {
+    margin: 40px;
+  }
+
+  .u-mb-2 {
+    margin-bottom: 40px;
+  }
+
+  .u-mt-2 {
+    margin-top: 40px;
+  }
+
+  .u-my-2 {
+    margin-bottom: 40px;
+    margin-top: 40px;
+  }
+}
+
 /* Size 3 */
 
 .u-m-3 {
@@ -367,6 +386,10 @@ ul.no-bullet {
   padding-right: 24px;
 }
 
+.u-pl-2 {
+  padding-left: 24px;
+}
+
 @media screen and #{breakpoint(medium up)} {
   .u-p-2 {
     padding: 32px;
@@ -388,6 +411,10 @@ ul.no-bullet {
 
   .u-pr-2 {
     padding-right: 32px;
+  }
+
+  .u-pl-2 {
+    padding-left: 32px;
   }
 }
 

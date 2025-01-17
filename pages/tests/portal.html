@@ -1,0 +1,1565 @@
+<!--[if HTML5]><![endif]-->
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+
+
+
+
+
+
+
+
+
+<!--Custom Page Imports-->
+
+<!----------------------->
+
+<!-- Portal Page Options---->
+<!--Check Login?---------------------><!-- false = NO, true = YES-->
+<!--Database Connection?-------------><!-- false = NO, true = YES-->
+<!--Include Session Semester Info?---><!-- false = NO, true = YES-->
+<!--Secure Page----------------------><!-- false = NO, true = YES-->
+<!--Number of cols on page?----------><!-- 1 = One column, 2 = Two Columns,*NOTE:3 no longer in use*-->
+<!--Page Type?-----------------------><!-- GUEST = open to anyone, STAFF = Staff Only, STUDENT = Student Only, STAFF-STUDENT = Staff or Student-->
+<!--SITS Availability Check?---------><!-- false = no sits data on this page, true = sits data on this page -->
+<!--Navigation Type------------------><!-- E=external Website Nav, P=Portal Nav  -->
+<!------------------------->
+
+<!-- jsp includes-->
+
+
+
+
+
+
+
+
+
+
+<!----------------->
+
+<!-- Bean declarations-->
+
+<!---------------------->
+
+<!--extra JSP code-->
+
+<!------------------>
+
+<head>
+    <title>Ask a Question</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Assets -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!--  <link rel="stylesheet" href="https://portal.stir.ac.uk/media-dtp/foundation/css/foundation.min.css" media="screen" />-->
+    <link rel="stylesheet" href="https://portal.stir.ac.uk/media-dtp/ask/app.css" media="screen" />
+    <link rel="stylesheet" href="https://portal.stir.ac.uk/media-dtp/ask/fonts.css" media="screen" />
+    <!--  <link rel="stylesheet" href="https://portal.stir.ac.uk/media-dtp/foundation/css/print.css" type="text/css" media="print" />-->
+    <link rel="stylesheet" href="https://portal.stir.ac.uk/media-dtp/foundation/css/portal.css" type="text/css"
+        media="screen" />
+    <!--<link rel="stylesheet" href="https://portal.stir.ac.uk/media-dtp/wwwstiracuk/font-awesome/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="https://portal.stir.ac.uk/media-dtp/wwwstiracuk/foundation-icons/foundation-icons.css">
+
+    <script src="https://portal.stir.ac.uk/media-dtp/foundation/js/vendor/custom.modernizr.js"></script>
+    <!-- modernizr -->
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://load.collect.stir.ac.uk/qguyvksw.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })
+            (window, document, 'script', 'dataLayer', 'GTM-NLVN8V');
+    </script>
+    <!-- End Google Tag Manager -->
+    <script language="javascript" src="/javascript/general-scripts.js"></script>
+
+    <!-----Other page specific header items below(css etc)------------>
+    <!-----*NOTE: Put any jQuery scripts at footer of page*----------->
+    <style>
+        /*      .button.hollow{
+      
+              background-color: rgba(255,255,255,.7);
+              transition: none;
+              -webkit-transition: none;
+              color: #52990f;
+              border: 1px solid #52990f;
+              text-decoration: none;
+              padding: 1em;
+              margin: 1.2em 15px;
+              font-size: 1.2rem;
+              min-width: 8em;
+              display: inline-block;
+              font-family: Lato,sans-serif;
+              border-radius: 3px;
+            }*/
+        .button.actionBtn.clear.hover,
+        .button.actionBtn.clear.selected {
+            background-color: #52990f;
+            border-color: #52990f;
+            color: #fff;
+        }
+
+        /*      .button.hollow.go-select{
+              min-width: auto;
+              margin:auto;
+              width:100%;
+            }*/
+
+        .question {
+            margin-top: 1.2em;
+        }
+
+        .question.select-box {
+            margin-top: 0.7em;
+        }
+
+
+        .row-question {
+            /*border-bottom:1px dotted #3c3c3c;*/
+            margin-bottom: 2em !important;
+        }
+
+        .flag {
+            width: 100%;
+            height: 100%;
+        }
+
+        .enq-form {
+            font-size: 1.2em;
+        }
+
+        .question.mainForm {
+            margin-top: 0em;
+        }
+
+        .intl-tel-input {
+            width: 100%;
+        }
+
+        .select2-container .select2-selection--single,
+        .select2-container .select2-container--default {
+            height: 2.3em !important;
+            border: 1px solid #ccc !important;
+            border-radius: 0px !important;
+        }
+
+        .select2-container--default .select2-selection--multiple {
+            height: 10.6em !important;
+        }
+
+        .prospectus-download {
+            margin-bottom: 3em !important;
+            border-bottom: 1px dotted #e4e4e4;
+        }
+
+        i.large {
+            font-size: 4em;
+        }
+
+        a.seventyfive {
+            width: 75%;
+        }
+
+        .row-question .row-ans {
+            display: none;
+        }
+
+        .half-padding-y {
+            padding: 30px 0;
+        }
+
+        .full-form {
+            padding-left: 0.9375em;
+            padding-right: 0.9375em;
+            background-color: #efefef;
+        }
+
+        .select2~.form-error {
+            margin-top: 0.5rem;
+        }
+
+        .button.datepicker-close:after {
+            content: '';
+            margin: 0;
+        }
+
+        .whileLoading {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(255, 255, 255, .8) url('/img/loading.gif') 50% 50% no-repeat;
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        body.loading .whileLoading {
+            display: block;
+        }
+
+        .select2-selection__placeholder {
+            color: #000;
+        }
+
+        .mainForm a {
+            text-decoration: underline;
+        }
+
+
+        /*      .large{ font-size: 50px; line-height: 50px; }
+            .medium { font-size: 35px; padding: 0 5px; }
+            .small { font-size: 20px; padding: 0 5px; }*/
+    </style>
+    <link rel="stylesheet" href="/javascript/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="/javascript/intl-tel-input/css/intlTelInput.css">
+    <link rel="stylesheet"
+        href="https://portal.stir.ac.uk/media-dtp/plugins/foundation-datepicker/css/foundation-datepicker.css"
+        media="screen">
+    <link rel="stylesheet" href="/javascript/applicant-portal/libs/toastr.min.css" />
+
+
+    <!---------------------------------------------------------------->
+
+    <script>
+        var useSITS = "Y";
+        var ari = "ALL";
+        var aris = [{ "ariType": "UG", "ariTypeDesc": "Undergraduate Programmes", "aris": [{ "ariCode": "UG-NONE", "ariDesc": "None/No specific area" }, { "ariCode": "UG-DAF-ACC", "ariDesc": "Accountancy" }, { "ariCode": "UG-SBE-ABI", "ariDesc": "Animal Biology" }, { "ariCode": "UG-SBE-ABS", "ariDesc": "Applied Biological Science" }, { "ariCode": "UG-IAQ-AQU", "ariDesc": "Aquaculture" }, { "ariCode": "UG-ASS-CSP", "ariDesc": "Bachelor of Arts Criminology \u0026 Social Policy" }, { "ariCode": "UG-ASS-CSO", "ariDesc": "Bachelor of Arts Criminology \u0026 Sociology" }, { "ariCode": "UG-ASS-SWK", "ariDesc": "Bachelor of Arts Social Work" }, { "ariCode": "UG-ASS-SSP", "ariDesc": "Bachelor of Arts Sociology \u0026 Social Policy" }, { "ariCode": "UG-DAT-SCI", "ariDesc": "Bachelor of Science Data Science and Artificial Intelligence" }, { "ariCode": "UG-SBE-BIO", "ariDesc": "Biology" }, { "ariCode": "UG-MAO-BSC", "ariDesc": "Business Computing" }, { "ariCode": "UG-MAO-BUS", "ariDesc": "Business Studies" }, { "ariCode": "UG-SBE-CBI", "ariDesc": "Cell Biology" }, { "ariCode": "UG-CSM-CSC", "ariDesc": "Computing Science" }, { "ariCode": "UG-SBE-CBM", "ariDesc": "Conservation Biology \u0026 Management" }, { "ariCode": "UG-FMS-DME", "ariDesc": "Digital Media" }, { "ariCode": "UG-SBE-ECO", "ariDesc": "Ecology" }, { "ariCode": "UG-SBE-ECC", "ariDesc": "Ecology and Conservation" }, { "ariCode": "UG-ECN-ECN", "ariDesc": "Economics" }, { "ariCode": "UG-ENG-ENG", "ariDesc": "English Studies" }, { "ariCode": "UG-SBE-GEO", "ariDesc": "Environmental Geography" }, { "ariCode": "UG-SBE-GOE", "ariDesc": "Environmental Geography \u0026 Outdoor Education" }, { "ariCode": "UG-SBE-ENS", "ariDesc": "Environmental Science" }, { "ariCode": "UG-SBE-ESM", "ariDesc": "Environmental Science MSci" }, { "ariCode": "UG-SBE-EOE", "ariDesc": "Environmental Science and Outdoor Education" }, { "ariCode": "UG-LCR-IME", "ariDesc": "European Languages and Society with International Management" }, { "ariCode": "UG-MAO-SEM", "ariDesc": "Events Management" }, { "ariCode": "UG-FMS-FMS", "ariDesc": "Film \u0026 Media" }, { "ariCode": "UG-DAF-FIN", "ariDesc": "Finance" }, { "ariCode": "UG-LCR-FRE", "ariDesc": "French" }, { "ariCode": "UG-DAT-GRA", "ariDesc": "Graduate Apprenticeship in Data Science" }, { "ariCode": "UG-HIS-HIS", "ariDesc": "History" }, { "ariCode": "UG-MAO-HRM", "ariDesc": "Human Resource Management" }, { "ariCode": "UG-POL-IPO", "ariDesc": "International Politics" }, { "ariCode": "UG-FMS-JOU", "ariDesc": "Journalism" }, { "ariCode": "UG-LAW-LLB", "ariDesc": "LLB Law" }, { "ariCode": "UG-LAW-LAW", "ariDesc": "Law" }, { "ariCode": "UG-MAO-MAO", "ariDesc": "Management" }, { "ariCode": "UG-IAQ-MBI", "ariDesc": "Marine Biology" }, { "ariCode": "UG-IAQ-MAR", "ariDesc": "Marine and Freshwater Biology" }, { "ariCode": "UG-MKT-MKT", "ariDesc": "Marketing" }, { "ariCode": "UG-CSM-MTS", "ariDesc": "Mathematics" }, { "ariCode": "UG-CSM-MAT", "ariDesc": "Mathematics and Its Applications" }, { "ariCode": "UG-LCR-MLG", "ariDesc": "Modern Language" }, { "ariCode": "UG-NMS-NUR", "ariDesc": "Nursing" }, { "ariCode": "UG-NMS-HAN", "ariDesc": "Nursing - Adult (Hons)" }, { "ariCode": "UG-NMS-NMH", "ariDesc": "Nursing - Mental Health" }, { "ariCode": "UG-NMS-HMN", "ariDesc": "Nursing - Mental Health (Hons)" }, { "ariCode": "UG-PAR-SCI", "ariDesc": "Paramedic Science" }, { "ariCode": "UG-PHI-PHI", "ariDesc": "Philosophy" }, { "ariCode": "UG-POL-POL", "ariDesc": "Politics" }, { "ariCode": "UG-POL-PPE", "ariDesc": "Politics, Philosophy and Economics (PPE)" }, { "ariCode": "UG-IOE-EDP", "ariDesc": "Primary Education" }, { "ariCode": "UN-DAF-PRA", "ariDesc": "Professional Accountancy" }, { "ariCode": "UG-PSY-PSY", "ariDesc": "Psychology" }, { "ariCode": "UG-LCR-REL", "ariDesc": "Religious Studies" }, { "ariCode": "UG-MKT-RMK", "ariDesc": "Retail Marketing" }, { "ariCode": "UG-MKT-RMS", "ariDesc": "Retail Marketing (Singapore)" }, { "ariCode": "UG-HIS-SHI", "ariDesc": "Scottish History" }, { "ariCode": "UG-IOE-EDS", "ariDesc": "Secondary Education" }, { "ariCode": "UG-IOE-ESC", "ariDesc": "Secondary Education (Chemistry or Physics)" }, { "ariCode": "UG-CSM-COM", "ariDesc": "Software Development with Cyber Security" }, { "ariCode": "UG-CSM-SEN", "ariDesc": "Software Engineering" }, { "ariCode": "UG-LCR-SPA", "ariDesc": "Spanish \u0026 Latin American Studies" }, { "ariCode": "UG-MAO-SBM", "ariDesc": "Sport Business Management" }, { "ariCode": "UG-MAO-SMS", "ariDesc": "Sport Business Management (Singapore)" }, { "ariCode": "UG-MKT-SMS", "ariDesc": "Sport Studies and Marketing (Singapore)" }, { "ariCode": "UG-SPS-SES", "ariDesc": "Sport and Exercise Science" }, { "ariCode": "UG-SPO-PSY", "ariDesc": "Sports Psychology" }, { "ariCode": "UG-SPS-SPS", "ariDesc": "Sports Studies" }, { "ariCode": "UG-MAO-SES", "ariDesc": "Sustanable Events Management (Singapore)" }, { "ariCode": "UG-IOE-TQF", "ariDesc": "Teaching Qualification for Further Education" }, { "ariCode": "UG-HIS-HHE", "ariDesc": "\u0026nbsp;" }, { "ariCode": "UG-MAO-BSL", "ariDesc": "\u0026nbsp;" }] }, { "ariType": "PG", "ariTypeDesc": "Postgraduate Programmes", "aris": [{ "ariCode": "PGT-ASS-APP", "ariDesc": " Applied Professional Studies (MSc)" }, { "ariCode": "PG-NONE", "ariDesc": "None/No specific area" }, { "ariCode": "PGT-ADV-CMP", "ariDesc": "Advanced Computing with Artificial Intelligence MSc" }, { "ariCode": "PGT-NMS-ADV", "ariDesc": "Advancing Practice (MSc)" }, { "ariCode": "PGT-ASS-SRC", "ariDesc": "Applied Social Research (Criminology) (MSc)" }, { "ariCode": "PGT-ASS-ASR", "ariDesc": "Applied Social Research (MSc)" }, { "ariCode": "PGT-IAQ-AQU", "ariDesc": "Aquaculture (MSc)" }, { "ariCode": "PGT-IAQ-AQP", "ariDesc": "Aquatic Pathobiology (MSc)" }, { "ariCode": "PGT-IAQ-AVS", "ariDesc": "Aquatic Veterinary Studies (MSc)" }, { "ariCode": "PGT-ART-INT", "ariDesc": "Artificial Intelligence MSc" }, { "ariCode": "PGT-PSY-ARE", "ariDesc": "Autism Research MSc" }, { "ariCode": "PGT-MAO-BDM", "ariDesc": "Behavioural Decision Making for Finance (MSc)" }, { "ariCode": "PGT-MAO-BSC", "ariDesc": "Behavioural Science (MSc)" }, { "ariCode": "PGT-CSM-BDA", "ariDesc": "Big Data (MSc)" }, { "ariCode": "PGT-BDA-ONL", "ariDesc": "Big Data (Msc) ONLINE" }, { "ariCode": "PGT-MAO-BMA", "ariDesc": "Business and Management (MSc)" }, { "ariCode": "PGT-IED-TQF", "ariDesc": "Cert Tertiary Ed - Teaching Qualification" }, { "ariCode": "PGD-NMS-NUR", "ariDesc": "Clinical Doctorates" }, { "ariCode": "PGT-ASS-CRI", "ariDesc": "Criminology MSc" }, { "ariCode": "PGT-MAO-DSB", "ariDesc": "Data Science for Business (MSc)" }, { "ariCode": "PGT-DSB-ONL", "ariDesc": "Data Science for Business (MSc) ONLINE" }, { "ariCode": "PGT-ASS-DEM", "ariDesc": "Dementia Studies (MSc)" }, { "ariCode": "PGT-ASS-DES", "ariDesc": "Design for Dementia and Ageing (PGCert)" }, { "ariCode": "PGT-ECN-BFI", "ariDesc": "Digital Banking and Finance (MSc)" }, { "ariCode": "PGT-MKT-BRA", "ariDesc": "Digital Marketing and Brand Management (MSc)" }, { "ariCode": "PGT-FMS-DMS", "ariDesc": "Digital Media and Communication MSc" }, { "ariCode": "PGT-ASS-DIS", "ariDesc": "Disaster Interventions and Humanitarian Aid (MSc)" }, { "ariCode": "PGT-ASS-DSR", "ariDesc": "Doctor of Applied Social Research" }, { "ariCode": "PGD-MAO-DBA", "ariDesc": "Doctor of Business Administration" }, { "ariCode": "PGD-POL-DIP", "ariDesc": "Doctor of Diplomacy" }, { "ariCode": "PGD-IED-EDU", "ariDesc": "Doctorate Education" }, { "ariCode": "PGT-IED-EDU", "ariDesc": "Education MSc" }, { "ariCode": "PGT-IED-ELH", "ariDesc": "Educational Leadership (Spec Qual for Head) (MSc)" }, { "ariCode": "PGT-IED-MEL", "ariDesc": "English Language Teaching and Management (MSc)" }, { "ariCode": "PGT-SBE-CAS", "ariDesc": "Enviromental Management (Conservation) (MSc)" }, { "ariCode": "PGT-SBE-ENV", "ariDesc": "Environmental Management (Energy) (MSc)" }, { "ariCode": "PGT-SBE-ENM", "ariDesc": "Environmental Management (MSc)" }, { "ariCode": "PGT-FMS-TVC", "ariDesc": "Factual Television MSc" }, { "ariCode": "PGT-DAF-FIN", "ariDesc": "Finance (MSc)" }, { "ariCode": "PGT-DAF-FII", "ariDesc": "Finance and Investment" }, { "ariCode": "PGT-CSM-FIT", "ariDesc": "Financial Technology (Fintech) MSc" }, { "ariCode": "PGT-CMC-GND", "ariDesc": "Gender and Diplomatic Practice (MSc)" }, { "ariCode": "PGT-NMS-GLO", "ariDesc": "Gerontology and Global Ageing (Online) MSc" }, { "ariCode": "PGT-POL-GPP", "ariDesc": "Global Politics MSc" }, { "ariCode": "PGT-PSY-HPS", "ariDesc": "Health Psychology (MSc)" }, { "ariCode": "PGT-NMS-HLR", "ariDesc": "Health Research (MRes)" }, { "ariCode": "PGT-HIS-EHP", "ariDesc": "Heritage (MSc)" }, { "ariCode": "PGT-ASS-HSP", "ariDesc": "Housing Part Time (MSc)" }, { "ariCode": "PGT-ASS-HOU", "ariDesc": "Housing Studies (MSc)" }, { "ariCode": "PGT-NSC-HAI", "ariDesc": "Human Animal Interaction (MSc)" }, { "ariCode": "PGT-MAO-IHR", "ariDesc": "Human Resource Management (MSc)" }, { "ariCode": "PGT-HUM-DIP", "ariDesc": "Human Rights and Diplomacy MSc/LLM" }, { "ariCode": "PGT-DAF-IAF", "ariDesc": "International Accounting and Finance (MSc)" }, { "ariCode": "PGT-MAO-IBU", "ariDesc": "International Business (MSc)" }, { "ariCode": "PGT-POL-ICC", "ariDesc": "International Conflict and Cooperation (MSc)" }, { "ariCode": "PGT-FMS-INJ", "ariDesc": "International Journalism MSc" }, { "ariCode": "PGT-DAF-INV", "ariDesc": "Investment Analysis (MSc)" }, { "ariCode": "PGT-LAW-AGP", "ariDesc": "LLB Accelerated Graduate Programme" }, { "ariCode": "PGT-LAW-LCJ", "ariDesc": "LLM Environmental Law and Climate Justice" }, { "ariCode": "PGT-LAW-EPG", "ariDesc": "LLM/MSc Environmental Policy \u0026 Governance" }, { "ariCode": "PGT-MAO-BUA", "ariDesc": "MBA" }, { "ariCode": "PGT-MAO-BSU", "ariDesc": "MBA Business Scale Up" }, { "ariCode": "PGT-MAO-BSI", "ariDesc": "MBA Sustainability Impact" }, { "ariCode": "PGT-ENG-CRW", "ariDesc": "MLitt Creative Writing" }, { "ariCode": "PGT-PHI-PHI", "ariDesc": "MLitt Philosophy - St Andrews/Stirling Grad Prog" }, { "ariCode": "PGT-ENG-PUB", "ariDesc": "MLitt Publishing Studies" }, { "ariCode": "PGT-ENG-SLI", "ariDesc": "MLitt Scottish Literature" }, { "ariCode": "PGT-CMC-GEN", "ariDesc": "MLitt, Masters/MSc Genders and Sexualities" }, { "ariCode": "PGR-ENG-REN", "ariDesc": "MPhil Renaissance Studies" }, { "ariCode": "PGT-ASS-MRAR", "ariDesc": "MRes Applied Social Research" }, { "ariCode": "PGT-MAO-BSM", "ariDesc": "MRes Business and Management" }, { "ariCode": "PGT-IED-EDR", "ariDesc": "MRes Educational Research" }, { "ariCode": "PGT-LCR-HUM", "ariDesc": "MRes Humanities" }, { "ariCode": "PGT-FMS-MER", "ariDesc": "MRes Media Research" }, { "ariCode": "PGT-ENG-MRPS", "ariDesc": "MRes Publishing Studies" }, { "ariCode": "PGT-BUS-AYS", "ariDesc": "MSc Business Analytics" }, { "ariCode": "PGT-BAN-ONL", "ariDesc": "MSc Business Analytics (Online)" }, { "ariCode": "PGT-ASS-CRR", "ariDesc": "MSc Criminological Research" }, { "ariCode": "PGT-ENG-ELL", "ariDesc": "MSc English Language \u0026 Linguistics" }, { "ariCode": "PGT-PLA-OBS", "ariDesc": "MSc Environmental Remote Sensing and Geospatial Sciences" }, { "ariCode": "PGT-FIN-DATA", "ariDesc": "MSc Finance and Data Analytics" }, { "ariCode": "PGT-FIN-ECO", "ariDesc": "MSc Finance and Economics" }, { "ariCode": "PGT-FIN-RISK", "ariDesc": "MSc Finance and Risk Management" }, { "ariCode": "PGT-HIS-HTR", "ariDesc": "MSc Historical Research" }, { "ariCode": "PGT-NMS-PHS", "ariDesc": "MSc Physiotherapy (pre-registration)" }, { "ariCode": "PGT-MAO-MAM", "ariDesc": "Management (Muscat) MSc" }, { "ariCode": "PGT-MKT-MKT", "ariDesc": "Marketing (MSc)" }, { "ariCode": "PGT-MKT-ANA", "ariDesc": "Marketing Analytics MSc" }, { "ariCode": "PGT-NMS-MPH", "ariDesc": "Master of Public Health (MPH)" }, { "ariCode": "PGT-CSM-MDS", "ariDesc": "Mathematics and Data Science (MSc)" }, { "ariCode": "PGT-FMS-MCM", "ariDesc": "Media \u0026 Communications Management (Vietnam) (MSc)" }, { "ariCode": "PGT-FMS-MMA", "ariDesc": "Media Management (MSc)" }, { "ariCode": "PGT-MKT-RET", "ariDesc": "Multichannel Retail Marketing (MSc)" }, { "ariCode": "PGE-SRA-PRO", "ariDesc": "PG Prospectus Request" }, { "ariCode": "PGR-IED-TRE", "ariDesc": "PhD TESOL Research" }, { "ariCode": "PGT-NMS-POD", "ariDesc": "Podiatry (pre-registration) (MSc)" }, { "ariCode": "PGD-CSM-DBD", "ariDesc": "Professional Doctorate Data Science" }, { "ariCode": "PGT-DOC-HEA", "ariDesc": "Professional Doctorate Health Psychology" }, { "ariCode": "PGT-IED-PEL", "ariDesc": "Professional Education and Leadership (MSc)" }, { "ariCode": "PGT-PSY-CDE", "ariDesc": "Psychological Research (Child Development) MSc" }, { "ariCode": "PGT-PSY-COG", "ariDesc": "Psychological Research (Cognition and Neuro) MSc" }, { "ariCode": "PGT-PSY-EVO", "ariDesc": "Psychological Research (Evolutionary Psych) MSc" }, { "ariCode": "PGT-PSY-PAA", "ariDesc": "Psychological Research (Perception \u0026 Action) MSc" }, { "ariCode": "PGT-PSY-PFA", "ariDesc": "Psychological Research (Psychology of Faces) MSc" }, { "ariCode": "PGT-PSY-BIL", "ariDesc": "Psychological Research Methods (Bilingualism) MSc" }, { "ariCode": "PGT-PSY-REM", "ariDesc": "Psychological Research Methods (General) MSc" }, { "ariCode": "PGT-PSY-PRM", "ariDesc": "Psychological Research Methods (MSc)" }, { "ariCode": "PGT-PSY-PTH", "ariDesc": "Psychological Therapy Primary Care (MSc)" }, { "ariCode": "PGT-PSY-ACC", "ariDesc": "Psychology (Accredited Conversion Course) (MSc)" }, { "ariCode": "PGT-SPS-PSY", "ariDesc": "Psychology of Sport (MSc)" }, { "ariCode": "PGT-NMS-PHE", "ariDesc": "Public Health (MSc)" }, { "ariCode": "PGT-POL-PUB", "ariDesc": "Public Policy (MSc)" }, { "ariCode": "PGT-FMS-SPRO", "ariDesc": "Public Relations and Strategic Communication (Online) (MSc)" }, { "ariCode": "PGT-FMS-SPR", "ariDesc": "Public Relations and Strategic Communications (MSc)" }, { "ariCode": "PGR-DAF-ACF", "ariDesc": "Research Accounting and Finance" }, { "ariCode": "PGR-ASS-ASS", "ariDesc": "Research Applied Social Science" }, { "ariCode": "PGR-IAQ-AQU", "ariDesc": "Research Aquaculture" }, { "ariCode": "PGR-IAQ-AVS", "ariDesc": "Research Aquatic Veterinary Studies" }, { "ariCode": "PGR-ECN-BFI", "ariDesc": "Research Banking and Finance" }, { "ariCode": "PGR-SBE-SBE", "ariDesc": "Research Biological \u0026 Environmental Science" }, { "ariCode": "PGR-SBE-BIS", "ariDesc": "Research Biological Science" }, { "ariCode": "PGR-CSM-CSC", "ariDesc": "Research Computing Science" }, { "ariCode": "PGR-CSM-CSM", "ariDesc": "Research Computing Science \u0026 Mathematics" }, { "ariCode": "PGR-ASS-DEM", "ariDesc": "Research Dementia Studies" }, { "ariCode": "PGR-SBE-ECO", "ariDesc": "Research Ecology" }, { "ariCode": "PGR-ECN-ECN", "ariDesc": "Research Economics" }, { "ariCode": "PGR-IED-EDU", "ariDesc": "Research Education" }, { "ariCode": "PGR-ENG-ENG", "ariDesc": "Research English Studies" }, { "ariCode": "PGR-SBE-ENS", "ariDesc": "Research Environmental Science" }, { "ariCode": "PGR-FMS-FMS", "ariDesc": "Research Film and Media" }, { "ariCode": "PGR-FMS-FMJ", "ariDesc": "Research Film, Media \u0026 Journalism" }, { "ariCode": "PGR-DAF-FIN", "ariDesc": "Research Finance" }, { "ariCode": "PGR-LCR-FRE", "ariDesc": "Research French" }, { "ariCode": "PGR-HIS-HIS", "ariDesc": "Research History" }, { "ariCode": "PGR-ASS-HOU", "ariDesc": "Research Housing Studies" }, { "ariCode": "PGR-LCR-LCR", "ariDesc": "Research Languages, Cultures and Religions" }, { "ariCode": "PGR-LAW-LAW", "ariDesc": "Research Law" }, { "ariCode": "PGR-MAO-MAO", "ariDesc": "Research Management and Organisation" }, { "ariCode": "PGR-MKT-MKT", "ariDesc": "Research Marketing" }, { "ariCode": "PGR-CSM-MAT", "ariDesc": "Research Mathematics" }, { "ariCode": "PGR-NMS-NMS", "ariDesc": "Research Nursing and Midwifery Studies" }, { "ariCode": "PGR-PHI-PHI", "ariDesc": "Research Philosophy" }, { "ariCode": "PGR-POL-POL", "ariDesc": "Research Politics" }, { "ariCode": "PGR-PSY-PSY", "ariDesc": "Research Psychology" }, { "ariCode": "PGR-FMS-PRE", "ariDesc": "Research Public Relations" }, { "ariCode": "PGR-ENG-PUB", "ariDesc": "Research Publishing Studies" }, { "ariCode": "PGR-LCR-REL", "ariDesc": "Research Religious Studies" }, { "ariCode": "PGR-ASS-SWK", "ariDesc": "Research Social Work" }, { "ariCode": "PGR-ASS-SSP", "ariDesc": "Research Sociology \u0026 Social Policy" }, { "ariCode": "PGR-LCR-SPA", "ariDesc": "Research Spanish" }, { "ariCode": "PGR-SPS-SPS", "ariDesc": "Research Sports Studies" }, { "ariCode": "PGT-ASS-SOE", "ariDesc": "Social Enterprise (MSc)" }, { "ariCode": "PGT-ASS-SSS", "ariDesc": "Social Statistics and Social Research (MSc)" }, { "ariCode": "PGT-ASS-SWK", "ariDesc": "Social Work (MSc)" }, { "ariCode": "PGT-NMS-PHV", "ariDesc": "Specialist Community Public Health Nurse (Health Visiting) (MSc)" }, { "ariCode": "PGT-SPS-NUTR", "ariDesc": "Sport Nutrition (MSc)" }, { "ariCode": "PGT-SPS-PCO", "ariDesc": "Sport Performance Coaching (MSc)" }, { "ariCode": "PGT-SPS-SMG", "ariDesc": "Sports Management (MSc)" }, { "ariCode": "PGT-FMS-PRB", "ariDesc": "Strategic Communication \u0026 PR - Barcelona (MSc)" }, { "ariCode": "PGT-MAO-SSB", "ariDesc": "Strategic Sustainable Business (MSc)" }, { "ariCode": "PST-ASS-SUB", "ariDesc": "Substance Use (MSc)" }, { "ariCode": "PGT-IED-TESO", "ariDesc": "TESOL (Online) (MSc)" }, { "ariCode": "PGT-IED-TES", "ariDesc": "Teaching English to Speakers of Other Language (MSc)" }, { "ariCode": "PGT-HIS-TEC", "ariDesc": "Technical Building Conservation (MSc)" }, { "ariCode": "PGT-LCR-TTSL", "ariDesc": "Translation Studies with TESOL (MSc)" }, { "ariCode": "PGT-TRA-CON", "ariDesc": "Translation and Conference Interpreting MSc" }, { "ariCode": "PGT-NMS-PHY", "ariDesc": "\u0026nbsp;" }] }, { "ariType": "SHORT", "ariTypeDesc": "Short Programmes", "aris": [{ "ariCode": "SHORT-NONE", "ariDesc": "None/No specific area" }, { "ariCode": "SC-ACC-EDU", "ariDesc": "Access Courses" }, { "ariCode": "SC-EUS-EDU", "ariDesc": "Certificate English for University Study" }, { "ariCode": "SC-ERA-SRA", "ariDesc": "ERASMUS Exchange" }, { "ariCode": "SC-ELT-EDU", "ariDesc": "General English Language Programme" }, { "ariCode": "SC-SCH-SRA", "ariDesc": "International Summer School" }, { "ariCode": "SC-CAS-NUR", "ariDesc": "Nursing - Advanced Clinical Assessment" }, { "ariCode": "SC-DER-NUR", "ariDesc": "Nursing - Dermatology for Health Professionals" }, { "ariCode": "SC-PSC-NUR", "ariDesc": "Nursing - Nurse Prescribers" }, { "ariCode": "SC-RTP-NUR", "ariDesc": "Nursing - Return to Practice" }, { "ariCode": "SC-TSV-NUR", "ariDesc": "Nursing - Tissue Viability" }, { "ariCode": "SC-PRE-EDU", "ariDesc": "Pre-Sessional English" }, { "ariCode": "SC-PUS-EDU", "ariDesc": "Prep for Cert English for University Study" }, { "ariCode": "SC-PSN-NUR", "ariDesc": "Professional Studies for Nursing" }, { "ariCode": "SC-SRA-PRO", "ariDesc": "SC Prospectus Request" }, { "ariCode": "SC-SAB-SRA", "ariDesc": "Study Abroad Opportunities" }] }];
+        var code1 = "UG-DAF-ACC";
+        var codsEU = [{ "codCode": "853", "codName": "Aland Islands", "codGeg": "3", "isoCode": "AX" }, { "codCode": "610", "codName": "Austria", "codGeg": "3", "isoCode": "AT" }, { "codCode": "614", "codName": "Belgium", "codGeg": "3", "isoCode": "BE" }, { "codCode": "621", "codName": "Bulgaria", "codGeg": "3", "isoCode": "BG" }, { "codCode": "856", "codName": "Canary Islands", "codGeg": "3", "isoCode": "ES" }, { "codCode": "834", "codName": "Croatia", "codGeg": "3", "isoCode": "HR" }, { "codCode": "882", "codName": "Cyprus (European Union)", "codGeg": "3", "isoCode": "CY" }, { "codCode": "849", "codName": "Czech Republic", "codGeg": "3", "isoCode": "CZ" }, { "codCode": "641", "codName": "Denmark", "codGeg": "3", "isoCode": "DK" }, { "codCode": "831", "codName": "Estonia", "codGeg": "3", "isoCode": "EE" }, { "codCode": "EU", "codName": "European Union not otherwise specified", "codGeg": "3", "isoCode": "" }, { "codCode": "651", "codName": "Finland", "codGeg": "3", "isoCode": "FI" }, { "codCode": "653", "codName": "France", "codGeg": "3", "isoCode": "FR" }, { "codCode": "656", "codName": "Germany", "codGeg": "3", "isoCode": "DE" }, { "codCode": "659", "codName": "Gibraltar", "codGeg": "3", "isoCode": "GI" }, { "codCode": "661", "codName": "Greece", "codGeg": "3", "isoCode": "GR" }, { "codCode": "867", "codName": "Guadeloupe", "codGeg": "3", "isoCode": "GP" }, { "codCode": "670", "codName": "Hungary", "codGeg": "3", "isoCode": "HU" }, { "codCode": "676", "codName": "Ireland", "codGeg": "3", "isoCode": "IE" }, { "codCode": "678", "codName": "Italy", "codGeg": "3", "isoCode": "IT" }, { "codCode": "832", "codName": "Latvia", "codGeg": "3", "isoCode": "LV" }, { "codCode": "833", "codName": "Lithuania", "codGeg": "3", "isoCode": "LT" }, { "codCode": "693", "codName": "Luxembourg", "codGeg": "3", "isoCode": "LU" }, { "codCode": "700", "codName": "Malta", "codGeg": "3", "isoCode": "MT" }, { "codCode": "869", "codName": "Martinique", "codGeg": "3", "isoCode": "MQ" }, { "codCode": "710", "codName": "Netherlands", "codGeg": "3", "isoCode": "NL" }, { "codCode": "727", "codName": "Poland", "codGeg": "3", "isoCode": "PL" }, { "codCode": "728", "codName": "Portugal", "codGeg": "3", "isoCode": "PT" }, { "codCode": "733", "codName": "Romania", "codGeg": "3", "isoCode": "RO" }, { "codCode": "850", "codName": "Slovakia", "codGeg": "3", "isoCode": "SK" }, { "codCode": "835", "codName": "Slovenia", "codGeg": "3", "isoCode": "SI" }, { "codCode": "751", "codName": "Spain", "codGeg": "3", "isoCode": "ES" }, { "codCode": "755", "codName": "Sweden", "codGeg": "3", "isoCode": "SE" }];
+        var codsWorld = [{ "codCode": "602", "codName": "Afghanistan", "codGeg": "5", "isoCode": "AF" }, { "codCode": "603", "codName": "Albania", "codGeg": "5", "isoCode": "AL" }, { "codCode": "604", "codName": "Algeria", "codGeg": "5", "isoCode": "DZ" }, { "codCode": "854", "codName": "American Samoa", "codGeg": "5", "isoCode": "AS" }, { "codCode": "605", "codName": "Andorra", "codGeg": "5", "isoCode": "AD" }, { "codCode": "606", "codName": "Angola", "codGeg": "5", "isoCode": "AO" }, { "codCode": "824", "codName": "Anguilla", "codGeg": "5", "isoCode": "AI" }, { "codCode": "607", "codName": "Antigua and Barbuda", "codGeg": "5", "isoCode": "AG" }, { "codCode": "608", "codName": "Argentina", "codGeg": "5", "isoCode": "AR" }, { "codCode": "836", "codName": "Armenia", "codGeg": "5", "isoCode": "AM" }, { "codCode": "855", "codName": "Aruba", "codGeg": "5", "isoCode": "AW" }, { "codCode": "609", "codName": "Australia", "codGeg": "5", "isoCode": "AU" }, { "codCode": "837", "codName": "Azerbaijan", "codGeg": "5", "isoCode": "AZ" }, { "codCode": "611", "codName": "Bahamas", "codGeg": "5", "isoCode": "BS" }, { "codCode": "612", "codName": "Bahrain", "codGeg": "5", "isoCode": "BH" }, { "codCode": "787", "codName": "Bangladesh", "codGeg": "5", "isoCode": "BD" }, { "codCode": "613", "codName": "Barbados", "codGeg": "5", "isoCode": "BB" }, { "codCode": "838", "codName": "Belarus", "codGeg": "5", "isoCode": "BY" }, { "codCode": "668", "codName": "Belize", "codGeg": "5", "isoCode": "BZ" }, { "codCode": "640", "codName": "Benin", "codGeg": "5", "isoCode": "BJ" }, { "codCode": "615", "codName": "Bermuda", "codGeg": "5", "isoCode": "BM" }, { "codCode": "616", "codName": "Bhutan", "codGeg": "5", "isoCode": "BT" }, { "codCode": "617", "codName": "Bolivia", "codGeg": "5", "isoCode": "BO" }, { "codCode": "887", "codName": "Bonaire Sint Eustatius and Saba", "codGeg": "5", "isoCode": "" }, { "codCode": "848", "codName": "Bosnia and Herzegovina", "codGeg": "5", "isoCode": "BA" }, { "codCode": "618", "codName": "Botswana", "codGeg": "5", "isoCode": "BW" }, { "codCode": "619", "codName": "Brazil", "codGeg": "5", "isoCode": "BR" }, { "codCode": "776", "codName": "British Virgin Islands", "codGeg": "5", "isoCode": "VG" }, { "codCode": "620", "codName": "Brunei Darussalam", "codGeg": "5", "isoCode": "BN" }, { "codCode": "769", "codName": "Burkina Faso", "codGeg": "5", "isoCode": "BF" }, { "codCode": "622", "codName": "Burma (Myanmar)", "codGeg": "5", "isoCode": "MM" }, { "codCode": "623", "codName": "Burundi", "codGeg": "5", "isoCode": "BI" }, { "codCode": "624", "codName": "Cambodia", "codGeg": "5", "isoCode": "KH" }, { "codCode": "625", "codName": "Cameroon", "codGeg": "5", "isoCode": "CM" }, { "codCode": "626", "codName": "Canada", "codGeg": "5", "isoCode": "CA" }, { "codCode": "788", "codName": "Cape Verde", "codGeg": "5", "isoCode": "CV" }, { "codCode": "XW", "codName": "Caribbean not Otherwise Specified", "codGeg": "5", "isoCode": "" }, { "codCode": "789", "codName": "Cayman Islands", "codGeg": "5", "isoCode": "KY" }, { "codCode": "627", "codName": "Central African Republic", "codGeg": "5", "isoCode": "CF" }, { "codCode": "XU", "codName": "Central America not otherwise specified", "codGeg": "5", "isoCode": "" }, { "codCode": "629", "codName": "Chad", "codGeg": "5", "isoCode": "TD" }, { "codCode": "630", "codName": "Chile", "codGeg": "5", "isoCode": "CL" }, { "codCode": "631", "codName": "China", "codGeg": "5", "isoCode": "CN" }, { "codCode": "857", "codName": "Christmas Island", "codGeg": "5", "isoCode": "CX" }, { "codCode": "858", "codName": "Cocos (Keeling) Islands", "codGeg": "5", "isoCode": "CC" }, { "codCode": "632", "codName": "Colombia", "codGeg": "5", "isoCode": "CO" }, { "codCode": "804", "codName": "Comoros", "codGeg": "5", "isoCode": "KM" }, { "codCode": "634", "codName": "Congo", "codGeg": "5", "isoCode": "CG" }, { "codCode": "633", "codName": "Congo (Democratic Republic)", "codGeg": "5", "isoCode": "CD" }, { "codCode": "859", "codName": "Cook Islands", "codGeg": "5", "isoCode": "CK" }, { "codCode": "635", "codName": "Costa Rica", "codGeg": "5", "isoCode": "CR" }, { "codCode": "636", "codName": "Cuba", "codGeg": "5", "isoCode": "CU" }, { "codCode": "885", "codName": "Curacao", "codGeg": "5", "isoCode": "" }, { "codCode": "883", "codName": "Cyprus (Non-European Union)", "codGeg": "5", "isoCode": "CY" }, { "codCode": "749", "codName": "Djibouti", "codGeg": "5", "isoCode": "DJ" }, { "codCode": "642", "codName": "Dominica", "codGeg": "5", "isoCode": "DM" }, { "codCode": "643", "codName": "Dominican Republic", "codGeg": "5", "isoCode": "DO" }, { "codCode": "786", "codName": "East Timor (Timor-Leste)", "codGeg": "5", "isoCode": "TL" }, { "codCode": "645", "codName": "Ecuador", "codGeg": "5", "isoCode": "EC" }, { "codCode": "768", "codName": "Egypt", "codGeg": "5", "isoCode": "EG" }, { "codCode": "646", "codName": "El Salvador", "codGeg": "5", "isoCode": "SV" }, { "codCode": "790", "codName": "Equatorial Guinea", "codGeg": "5", "isoCode": "GQ" }, { "codCode": "860", "codName": "Eritrea", "codGeg": "5", "isoCode": "ER" }, { "codCode": "851", "codName": "Eritrea", "codGeg": "5", "isoCode": "ER" }, { "codCode": "754", "codName": "Eswatini", "codGeg": "5", "isoCode": "AZ" }, { "codCode": "648", "codName": "Ethiopia", "codGeg": "5", "isoCode": "ET" }, { "codCode": "649", "codName": "Falkland Islands (Malvinas)", "codGeg": "5", "isoCode": "FK" }, { "codCode": "865", "codName": "Faroe Islands", "codGeg": "5", "isoCode": "FO" }, { "codCode": "650", "codName": "Fiji", "codGeg": "5", "isoCode": "FJ" }, { "codCode": "791", "codName": "French Guiana", "codGeg": "5", "isoCode": "GF" }, { "codCode": "822", "codName": "French Polynesia", "codGeg": "5", "isoCode": "PF" }, { "codCode": "654", "codName": "Gabon", "codGeg": "5", "isoCode": "GA" }, { "codCode": "655", "codName": "Gambia", "codGeg": "5", "isoCode": "GM" }, { "codCode": "847", "codName": "Georgia", "codGeg": "5", "isoCode": "GE" }, { "codCode": "658", "codName": "Ghana", "codGeg": "5", "isoCode": "GH" }, { "codCode": "828", "codName": "Greenland", "codGeg": "5", "isoCode": "GL" }, { "codCode": "662", "codName": "Grenada", "codGeg": "5", "isoCode": "GD" }, { "codCode": "796", "codName": "Guam", "codGeg": "5", "isoCode": "UM" }, { "codCode": "663", "codName": "Guatemala", "codGeg": "5", "isoCode": "GT" }, { "codCode": "664", "codName": "Guinea", "codGeg": "5", "isoCode": "GN" }, { "codCode": "802", "codName": "Guinea Bissau", "codGeg": "5", "isoCode": "GW" }, { "codCode": "665", "codName": "Guyana", "codGeg": "5", "isoCode": "GY" }, { "codCode": "666", "codName": "Haiti", "codGeg": "5", "isoCode": "HT" }, { "codCode": "878", "codName": "Holy See (Vatican City State)", "codGeg": "5", "isoCode": "" }, { "codCode": "667", "codName": "Honduras", "codGeg": "5", "isoCode": "HN" }, { "codCode": "669", "codName": "Hong Kong", "codGeg": "5", "isoCode": "HU" }, { "codCode": "671", "codName": "Iceland", "codGeg": "5", "isoCode": "IS" }, { "codCode": "672", "codName": "India", "codGeg": "5", "isoCode": "IN" }, { "codCode": "673", "codName": "Indonesia", "codGeg": "5", "isoCode": "ID" }, { "codCode": "674", "codName": "Iran Islamic Republic of", "codGeg": "5", "isoCode": "IR" }, { "codCode": "675", "codName": "Iraq", "codGeg": "5", "isoCode": "IQ" }, { "codCode": "677", "codName": "Israel", "codGeg": "5", "isoCode": "IL" }, { "codCode": "679", "codName": "Ivory Coast (Cote d\u0027Ivoire)", "codGeg": "5", "isoCode": "CI" }, { "codCode": "680", "codName": "Jamaica", "codGeg": "5", "isoCode": "JM" }, { "codCode": "681", "codName": "Japan", "codGeg": "5", "isoCode": "JP" }, { "codCode": "682", "codName": "Jordan", "codGeg": "5", "isoCode": "JO" }, { "codCode": "839", "codName": "Kazakhstan", "codGeg": "5", "isoCode": "KZ" }, { "codCode": "683", "codName": "Kenya", "codGeg": "5", "isoCode": "KE" }, { "codCode": "660", "codName": "Kiribati", "codGeg": "5", "isoCode": "KI" }, { "codCode": "685", "codName": "Korea Democratic People\u0027s Republic of", "codGeg": "5", "isoCode": "KP" }, { "codCode": "684", "codName": "Korea Republic of", "codGeg": "5", "isoCode": "KR" }, { "codCode": "881", "codName": "Kosovo", "codGeg": "5", "isoCode": "" }, { "codCode": "686", "codName": "Kuwait", "codGeg": "5", "isoCode": "KW" }, { "codCode": "840", "codName": "Kyrgyzstan", "codGeg": "5", "isoCode": "KG" }, { "codCode": "687", "codName": "Lao PDR", "codGeg": "5", "isoCode": "LA" }, { "codCode": "688", "codName": "Lebanon", "codGeg": "5", "isoCode": "LB" }, { "codCode": "690", "codName": "Lesotho", "codGeg": "5", "isoCode": "LS" }, { "codCode": "691", "codName": "Liberia", "codGeg": "5", "isoCode": "LR" }, { "codCode": "692", "codName": "Libya", "codGeg": "5", "isoCode": "LY" }, { "codCode": "827", "codName": "Liechtenstein", "codGeg": "5", "isoCode": "LI" }, { "codCode": "694", "codName": "Macao", "codGeg": "5", "isoCode": "MO" }, { "codCode": "695", "codName": "Madagascar", "codGeg": "5", "isoCode": "MG" }, { "codCode": "696", "codName": "Malawi", "codGeg": "5", "isoCode": "MW" }, { "codCode": "698", "codName": "Malaysia", "codGeg": "5", "isoCode": "MY" }, { "codCode": "793", "codName": "Maldives", "codGeg": "5", "isoCode": "MV" }, { "codCode": "699", "codName": "Mali", "codGeg": "5", "isoCode": "ML" }, { "codCode": "861", "codName": "Marshall Islands", "codGeg": "5", "isoCode": "MH" }, { "codCode": "701", "codName": "Mauritania", "codGeg": "5", "isoCode": "MR" }, { "codCode": "702", "codName": "Mauritius", "codGeg": "5", "isoCode": "MU" }, { "codCode": "821", "codName": "Mayotte", "codGeg": "5", "isoCode": "YT" }, { "codCode": "703", "codName": "Mexico", "codGeg": "5", "isoCode": "MX" }, { "codCode": "862", "codName": "Micronesia Federated States of", "codGeg": "5", "isoCode": "FM" }, { "codCode": "XR", "codName": "Middle East Not Otherwise Specified", "codGeg": "5", "isoCode": "" }, { "codCode": "841", "codName": "Moldova", "codGeg": "5", "isoCode": "MD" }, { "codCode": "825", "codName": "Monaco", "codGeg": "5", "isoCode": "MC" }, { "codCode": "704", "codName": "Mongolia", "codGeg": "5", "isoCode": "MN" }, { "codCode": "864", "codName": "Montenegro", "codGeg": "5", "isoCode": "ME" }, { "codCode": "705", "codName": "Montserrat", "codGeg": "5", "isoCode": "MS" }, { "codCode": "706", "codName": "Morocco", "codGeg": "5", "isoCode": "MA" }, { "codCode": "707", "codName": "Mozambique", "codGeg": "5", "isoCode": "MZ" }, { "codCode": "798", "codName": "Namibia", "codGeg": "5", "isoCode": "NA" }, { "codCode": "805", "codName": "Nauru", "codGeg": "5", "isoCode": "NR" }, { "codCode": "709", "codName": "Nepal", "codGeg": "5", "isoCode": "NP" }, { "codCode": "637", "codName": "Netherlands Antilles", "codGeg": "5", "isoCode": "AN" }, { "codCode": "711", "codName": "New Caledonia", "codGeg": "5", "isoCode": "NC" }, { "codCode": "714", "codName": "New Zealand", "codGeg": "5", "isoCode": "NZ" }, { "codCode": "715", "codName": "Nicaragua", "codGeg": "5", "isoCode": "NI" }, { "codCode": "716", "codName": "Niger", "codGeg": "5", "isoCode": "NE" }, { "codCode": "717", "codName": "Nigeria", "codGeg": "5", "isoCode": "NG" }, { "codCode": "871", "codName": "Niue", "codGeg": "5", "isoCode": "NU" }, { "codCode": "998", "codName": "No information provided (Overseas)", "codGeg": "5", "isoCode": "" }, { "codCode": "872", "codName": "Norfolk Island", "codGeg": "5", "isoCode": "NF" }, { "codCode": "XT", "codName": "North America Not Otherwise Specified", "codGeg": "5", "isoCode": "" }, { "codCode": "852", "codName": "North Macedonia", "codGeg": "5", "isoCode": "MK" }, { "codCode": "873", "codName": "Northern Mariana Islands", "codGeg": "5", "isoCode": "MP" }, { "codCode": "718", "codName": "Norway", "codGeg": "5", "isoCode": "NO" }, { "codCode": "782", "codName": "Not Known", "codGeg": "5", "isoCode": "" }, { "codCode": "708", "codName": "Oman", "codGeg": "5", "isoCode": "OM" }, { "codCode": "721", "codName": "Pakistan", "codGeg": "5", "isoCode": "PK" }, { "codCode": "874", "codName": "Palau", "codGeg": "5", "isoCode": "PW" }, { "codCode": "870", "codName": "Palestinian State of", "codGeg": "5", "isoCode": "PS" }, { "codCode": "722", "codName": "Panama", "codGeg": "5", "isoCode": "PA" }, { "codCode": "723", "codName": "Papua New Guinea", "codGeg": "5", "isoCode": "PG" }, { "codCode": "724", "codName": "Paraguay", "codGeg": "5", "isoCode": "PY" }, { "codCode": "725", "codName": "Peru", "codGeg": "5", "isoCode": "PE" }, { "codCode": "726", "codName": "Philippines", "codGeg": "5", "isoCode": "PH" }, { "codCode": "823", "codName": "Pitcairn Islands", "codGeg": "5", "isoCode": "PN" }, { "codCode": "730", "codName": "Puerto Rico", "codGeg": "5", "isoCode": "PR" }, { "codCode": "731", "codName": "Qatar", "codGeg": "5", "isoCode": "QA" }, { "codCode": "795", "codName": "Reunion", "codGeg": "5", "isoCode": "RE" }, { "codCode": "842", "codName": "Russian Federation", "codGeg": "5", "isoCode": "RU" }, { "codCode": "734", "codName": "Rwanda", "codGeg": "5", "isoCode": "RW" }, { "codCode": "BL", "codName": "ST BARTHELEMY", "codGeg": "5", "isoCode": "BL" }, { "codCode": "738", "codName": "Saint Vincent and the Grenadines", "codGeg": "5", "isoCode": "VC" }, { "codCode": "741", "codName": "Samoa", "codGeg": "5", "isoCode": "WS" }, { "codCode": "826", "codName": "San Marino", "codGeg": "5", "isoCode": "SM" }, { "codCode": "803", "codName": "Sao Tome and Principe", "codGeg": "5", "isoCode": "ST" }, { "codCode": "743", "codName": "Saudi Arabia", "codGeg": "5", "isoCode": "SA" }, { "codCode": "785", "codName": "Senegal", "codGeg": "5", "isoCode": "SN" }, { "codCode": "780", "codName": "Serbia", "codGeg": "5", "isoCode": "RS" }, { "codCode": "744", "codName": "Seychelles", "codGeg": "5", "isoCode": "SC" }, { "codCode": "745", "codName": "Sierra Leone", "codGeg": "5", "isoCode": "SL" }, { "codCode": "746", "codName": "Singapore", "codGeg": "5", "isoCode": "SG" }, { "codCode": "886", "codName": "Sint Maarten (Dutch Part)", "codGeg": "5", "isoCode": "" }, { "codCode": "747", "codName": "Solomon Islands", "codGeg": "5", "isoCode": "SB" }, { "codCode": "748", "codName": "Somalia", "codGeg": "5", "isoCode": "SO" }, { "codCode": "750", "codName": "South Africa", "codGeg": "5", "isoCode": "ZA" }, { "codCode": "XV", "codName": "South America Not Otherwise Specified", "codGeg": "5", "isoCode": "" }, { "codCode": "830", "codName": "South Georgia and South Sandwich Islands", "codGeg": "5", "isoCode": "GS" }, { "codCode": "884", "codName": "South Sudan", "codGeg": "5", "isoCode": "SS" }, { "codCode": "628", "codName": "Sri Lanka", "codGeg": "5", "isoCode": "LK" }, { "codCode": "735", "codName": "St Helena Ascension \u0026 Tristan da Cunha", "codGeg": "5", "isoCode": "SH" }, { "codCode": "737", "codName": "St Lucia", "codGeg": "5", "isoCode": "LC" }, { "codCode": "MF", "codName": "St Martin (French Part) [St Martin]", "codGeg": "5", "isoCode": "MF" }, { "codCode": "875", "codName": "St Pierre And Miquelon", "codGeg": "5", "isoCode": "PM" }, { "codCode": "736", "codName": "St. Kitts-Nevis", "codGeg": "5", "isoCode": "KN" }, { "codCode": "783", "codName": "Stateless", "codGeg": "5", "isoCode": "" }, { "codCode": "752", "codName": "Sudan", "codGeg": "5", "isoCode": "SD" }, { "codCode": "753", "codName": "Suriname", "codGeg": "5", "isoCode": "SR" }, { "codCode": "876", "codName": "Svalbard And Jan Mayen", "codGeg": "5", "isoCode": "SJ" }, { "codCode": "756", "codName": "Switzerland", "codGeg": "5", "isoCode": "CH" }, { "codCode": "757", "codName": "Syrian Arab Republic (Syria)", "codGeg": "5", "isoCode": "SY" }, { "codCode": "652", "codName": "Taiwan", "codGeg": "5", "isoCode": "TW" }, { "codCode": "843", "codName": "Tajikistan", "codGeg": "5", "isoCode": "TJ" }, { "codCode": "759", "codName": "Tanzania United Republic of", "codGeg": "5", "isoCode": "TZ" }, { "codCode": "760", "codName": "Thailand", "codGeg": "5", "isoCode": "TH" }, { "codCode": "762", "codName": "Togo", "codGeg": "5", "isoCode": "TG" }, { "codCode": "877", "codName": "Tokelau", "codGeg": "5", "isoCode": "TK" }, { "codCode": "784", "codName": "Tonga", "codGeg": "5", "isoCode": "TO" }, { "codCode": "763", "codName": "Trinidad and Tobago", "codGeg": "5", "isoCode": "TT" }, { "codCode": "765", "codName": "Tunisia", "codGeg": "5", "isoCode": "TN" }, { "codCode": "766", "codName": "Turkey", "codGeg": "5", "isoCode": "TR" }, { "codCode": "844", "codName": "Turkmenistan", "codGeg": "5", "isoCode": "TM" }, { "codCode": "799", "codName": "Turks and Caicos Islands", "codGeg": "5", "isoCode": "TC" }, { "codCode": "647", "codName": "Tuvalu", "codGeg": "5", "isoCode": "TV" }, { "codCode": "767", "codName": "Uganda", "codGeg": "5", "isoCode": "UG" }, { "codCode": "845", "codName": "Ukraine", "codGeg": "5", "isoCode": "UA" }, { "codCode": "764", "codName": "United Arab Emirates", "codGeg": "5", "isoCode": "AE" }, { "codCode": "771", "codName": "United States of America", "codGeg": "5", "isoCode": "US" }, { "codCode": "770", "codName": "Uruguay", "codGeg": "5", "isoCode": "UY" }, { "codCode": "846", "codName": "Uzbekistan", "codGeg": "5", "isoCode": "UZ" }, { "codCode": "713", "codName": "Vanuatu", "codGeg": "5", "isoCode": "VU" }, { "codCode": "773", "codName": "Venezuela (Bolivarian Republic of)", "codGeg": "5", "isoCode": "VE" }, { "codCode": "775", "codName": "Vietnam (North)", "codGeg": "5", "isoCode": "VN" }, { "codCode": "774", "codName": "Vietnam (Viet Nam)", "codGeg": "5", "isoCode": "VN" }, { "codCode": "800", "codName": "Virgin Islands (US)", "codGeg": "5", "isoCode": "VI" }, { "codCode": "879", "codName": "Wallis \u0026 Futuna", "codGeg": "5", "isoCode": "WF" }, { "codCode": "880", "codName": "Western Sahara", "codGeg": "5", "isoCode": "EH" }, { "codCode": "601", "codName": "Yemen", "codGeg": "5", "isoCode": "YE" }, { "codCode": "781", "codName": "Zambia", "codGeg": "5", "isoCode": "ZM" }, { "codCode": "732", "codName": "Zimbabwe", "codGeg": "5", "isoCode": "ZW" }];
+        var codsWales = [{ "codCode": "518", "codName": "Blaenau Gwent", "codGeg": "2", "isoCode": "" }, { "codCode": "513", "codName": "Bridgend", "codGeg": "2", "isoCode": "" }, { "codCode": "517", "codName": "Caerphilly", "codGeg": "2", "isoCode": "" }, { "codCode": "522", "codName": "Cardiff", "codGeg": "2", "isoCode": "" }, { "codCode": "510", "codName": "Carmarthenshire", "codGeg": "2", "isoCode": "" }, { "codCode": "508", "codName": "Ceredigion", "codGeg": "2", "isoCode": "" }, { "codCode": "503", "codName": "Conwy", "codGeg": "2", "isoCode": "" }, { "codCode": "504", "codName": "Denbighshire", "codGeg": "2", "isoCode": "" }, { "codCode": "505", "codName": "Flintshire", "codGeg": "2", "isoCode": "" }, { "codCode": "502", "codName": "Gwynedd", "codGeg": "2", "isoCode": "" }, { "codCode": "501", "codName": "Isle of Anglesey", "codGeg": "2", "isoCode": "" }, { "codCode": "516", "codName": "Merthyr Tydfil", "codGeg": "2", "isoCode": "" }, { "codCode": "520", "codName": "Monmouthshire", "codGeg": "2", "isoCode": "" }, { "codCode": "512", "codName": "Neath Port Talbot", "codGeg": "2", "isoCode": "" }, { "codCode": "521", "codName": "Newport", "codGeg": "2", "isoCode": "" }, { "codCode": "509", "codName": "Pembrokeshire", "codGeg": "2", "isoCode": "" }, { "codCode": "507", "codName": "Powys", "codGeg": "2", "isoCode": "" }, { "codCode": "515", "codName": "Rhondda Cynon Taff", "codGeg": "2", "isoCode": "" }, { "codCode": "511", "codName": "Swansea", "codGeg": "2", "isoCode": "" }, { "codCode": "519", "codName": "Torfaen", "codGeg": "2", "isoCode": "" }, { "codCode": "514", "codName": "Vale of Glamorgan", "codGeg": "2", "isoCode": "" }, { "codCode": "6826", "codName": "Wales", "codGeg": "2", "isoCode": "" }, { "codCode": "506", "codName": "Wrexham", "codGeg": "2", "isoCode": "" }];
+        var codsEng = [{ "codCode": "301", "codName": "Barking and Dagenham", "codGeg": "2", "isoCode": "" }, { "codCode": "302", "codName": "Barnet", "codGeg": "2", "isoCode": "" }, { "codCode": "370", "codName": "Barnsley", "codGeg": "2", "isoCode": "" }, { "codCode": "101", "codName": "Bath and North East Somerset", "codGeg": "2", "isoCode": "" }, { "codCode": "902", "codName": "Bedfordshire", "codGeg": "2", "isoCode": "" }, { "codCode": "303", "codName": "Bexley", "codGeg": "2", "isoCode": "" }, { "codCode": "330", "codName": "Birmingham", "codGeg": "2", "isoCode": "" }, { "codCode": "143", "codName": "Blackburn with Darwen", "codGeg": "2", "isoCode": "" }, { "codCode": "144", "codName": "Blackpool", "codGeg": "2", "isoCode": "" }, { "codCode": "350", "codName": "Bolton", "codGeg": "2", "isoCode": "" }, { "codCode": "114", "codName": "Bournemouth", "codGeg": "2", "isoCode": "" }, { "codCode": "127", "codName": "Bracknell Forest", "codGeg": "2", "isoCode": "" }, { "codCode": "380", "codName": "Bradford", "codGeg": "2", "isoCode": "" }, { "codCode": "304", "codName": "Brent", "codGeg": "2", "isoCode": "" }, { "codCode": "115", "codName": "Brighton and Hove", "codGeg": "2", "isoCode": "" }, { "codCode": "102", "codName": "Bristol", "codGeg": "2", "isoCode": "" }, { "codCode": "305", "codName": "Bromley", "codGeg": "2", "isoCode": "" }, { "codCode": "904", "codName": "Buckinghamshire", "codGeg": "2", "isoCode": "" }, { "codCode": "351", "codName": "Bury", "codGeg": "2", "isoCode": "" }, { "codCode": "381", "codName": "Calderdale", "codGeg": "2", "isoCode": "" }, { "codCode": "905", "codName": "Cambridgeshire", "codGeg": "2", "isoCode": "" }, { "codCode": "450", "codName": "Camden", "codGeg": "2", "isoCode": "" }, { "codCode": "906", "codName": "Cheshire", "codGeg": "2", "isoCode": "" }, { "codCode": "451", "codName": "City of London", "codGeg": "2", "isoCode": "" }, { "codCode": "908", "codName": "Cornwall", "codGeg": "2", "isoCode": "" }, { "codCode": "331", "codName": "Coventry", "codGeg": "2", "isoCode": "" }, { "codCode": "306", "codName": "Croydon", "codGeg": "2", "isoCode": "" }, { "codCode": "909", "codName": "Cumbria", "codGeg": "2", "isoCode": "" }, { "codCode": "116", "codName": "Darlington", "codGeg": "2", "isoCode": "" }, { "codCode": "117", "codName": "Derby", "codGeg": "2", "isoCode": "" }, { "codCode": "910", "codName": "Derbyshire", "codGeg": "2", "isoCode": "" }, { "codCode": "911", "codName": "Devon", "codGeg": "2", "isoCode": "" }, { "codCode": "371", "codName": "Doncaster", "codGeg": "2", "isoCode": "" }, { "codCode": "912", "codName": "Dorset", "codGeg": "2", "isoCode": "" }, { "codCode": "332", "codName": "Dudley", "codGeg": "2", "isoCode": "" }, { "codCode": "913", "codName": "Durham", "codGeg": "2", "isoCode": "" }, { "codCode": "307", "codName": "Ealing", "codGeg": "2", "isoCode": "" }, { "codCode": "110", "codName": "East Riding of Yorkshire", "codGeg": "2", "isoCode": "" }, { "codCode": "914", "codName": "East Sussex", "codGeg": "2", "isoCode": "" }, { "codCode": "308", "codName": "Enfield", "codGeg": "2", "isoCode": "" }, { "codCode": "5826", "codName": "England", "codGeg": "2", "isoCode": "" }, { "codCode": "915", "codName": "Essex", "codGeg": "2", "isoCode": "" }, { "codCode": "390", "codName": "Gateshead", "codGeg": "2", "isoCode": "" }, { "codCode": "916", "codName": "Gloucestershire", "codGeg": "2", "isoCode": "" }, { "codCode": "452", "codName": "Greenwich", "codGeg": "2", "isoCode": "" }, { "codCode": "453", "codName": "Hackney", "codGeg": "2", "isoCode": "" }, { "codCode": "134", "codName": "Halton", "codGeg": "2", "isoCode": "" }, { "codCode": "454", "codName": "Hammersmith and Fulham", "codGeg": "2", "isoCode": "" }, { "codCode": "917", "codName": "Hampshire", "codGeg": "2", "isoCode": "" }, { "codCode": "309", "codName": "Haringey", "codGeg": "2", "isoCode": "" }, { "codCode": "310", "codName": "Harrow", "codGeg": "2", "isoCode": "" }, { "codCode": "105", "codName": "Hartlepool", "codGeg": "2", "isoCode": "" }, { "codCode": "311", "codName": "Havering", "codGeg": "2", "isoCode": "" }, { "codCode": "140", "codName": "Herefordshire", "codGeg": "2", "isoCode": "" }, { "codCode": "919", "codName": "Hertfordshire", "codGeg": "2", "isoCode": "" }, { "codCode": "312", "codName": "Hillingdon", "codGeg": "2", "isoCode": "" }, { "codCode": "313", "codName": "Hounslow", "codGeg": "2", "isoCode": "" }, { "codCode": "921", "codName": "Isle of Wight", "codGeg": "2", "isoCode": "" }, { "codCode": "420", "codName": "Isles of Scilly", "codGeg": "2", "isoCode": "" }, { "codCode": "455", "codName": "Islington", "codGeg": "2", "isoCode": "" }, { "codCode": "456", "codName": "Kensington and Chelsea", "codGeg": "2", "isoCode": "" }, { "codCode": "922", "codName": "Kent", "codGeg": "2", "isoCode": "" }, { "codCode": "109", "codName": "Kingston upon Hull", "codGeg": "2", "isoCode": "" }, { "codCode": "314", "codName": "Kingston upon Thames", "codGeg": "2", "isoCode": "" }, { "codCode": "382", "codName": "Kirklees", "codGeg": "2", "isoCode": "" }, { "codCode": "340", "codName": "Knowsley", "codGeg": "2", "isoCode": "" }, { "codCode": "457", "codName": "Lambeth", "codGeg": "2", "isoCode": "" }, { "codCode": "923", "codName": "Lancashire", "codGeg": "2", "isoCode": "" }, { "codCode": "383", "codName": "Leeds", "codGeg": "2", "isoCode": "" }, { "codCode": "118", "codName": "Leicester", "codGeg": "2", "isoCode": "" }, { "codCode": "924", "codName": "Leicestershire", "codGeg": "2", "isoCode": "" }, { "codCode": "458", "codName": "Lewisham", "codGeg": "2", "isoCode": "" }, { "codCode": "925", "codName": "Lincolnshire", "codGeg": "2", "isoCode": "" }, { "codCode": "341", "codName": "Liverpool", "codGeg": "2", "isoCode": "" }, { "codCode": "119", "codName": "Luton", "codGeg": "2", "isoCode": "" }, { "codCode": "352", "codName": "Manchester", "codGeg": "2", "isoCode": "" }, { "codCode": "142", "codName": "Medway", "codGeg": "2", "isoCode": "" }, { "codCode": "315", "codName": "Merton", "codGeg": "2", "isoCode": "" }, { "codCode": "106", "codName": "Middlesbrough", "codGeg": "2", "isoCode": "" }, { "codCode": "120", "codName": "Milton Keynes", "codGeg": "2", "isoCode": "" }, { "codCode": "391", "codName": "Newcastle upon Tyne", "codGeg": "2", "isoCode": "" }, { "codCode": "316", "codName": "Newham", "codGeg": "2", "isoCode": "" }, { "codCode": "926", "codName": "Norfolk", "codGeg": "2", "isoCode": "" }, { "codCode": "111", "codName": "North East Lincolnshire", "codGeg": "2", "isoCode": "" }, { "codCode": "112", "codName": "North Lincolnshire", "codGeg": "2", "isoCode": "" }, { "codCode": "103", "codName": "North Somerset", "codGeg": "2", "isoCode": "" }, { "codCode": "392", "codName": "North Tyneside", "codGeg": "2", "isoCode": "" }, { "codCode": "927", "codName": "North Yorkshire", "codGeg": "2", "isoCode": "" }, { "codCode": "928", "codName": "Northamptonshire", "codGeg": "2", "isoCode": "" }, { "codCode": "929", "codName": "Northumberland", "codGeg": "2", "isoCode": "" }, { "codCode": "145", "codName": "Nottingham", "codGeg": "2", "isoCode": "" }, { "codCode": "930", "codName": "Nottinghamshire", "codGeg": "2", "isoCode": "" }, { "codCode": "353", "codName": "Oldham", "codGeg": "2", "isoCode": "" }, { "codCode": "931", "codName": "Oxfordshire", "codGeg": "2", "isoCode": "" }, { "codCode": "133", "codName": "Peterborough", "codGeg": "2", "isoCode": "" }, { "codCode": "136", "codName": "Plymouth", "codGeg": "2", "isoCode": "" }, { "codCode": "121", "codName": "Poole", "codGeg": "2", "isoCode": "" }, { "codCode": "122", "codName": "Portsmouth", "codGeg": "2", "isoCode": "" }, { "codCode": "130", "codName": "Reading", "codGeg": "2", "isoCode": "" }, { "codCode": "317", "codName": "Redbridge", "codGeg": "2", "isoCode": "" }, { "codCode": "107", "codName": "Redcar and Cleveland", "codGeg": "2", "isoCode": "" }, { "codCode": "318", "codName": "Richmond upon Thames", "codGeg": "2", "isoCode": "" }, { "codCode": "354", "codName": "Rochdale", "codGeg": "2", "isoCode": "" }, { "codCode": "372", "codName": "Rotherham", "codGeg": "2", "isoCode": "" }, { "codCode": "123", "codName": "Rutland", "codGeg": "2", "isoCode": "" }, { "codCode": "355", "codName": "Salford", "codGeg": "2", "isoCode": "" }, { "codCode": "333", "codName": "Sandwell", "codGeg": "2", "isoCode": "" }, { "codCode": "343", "codName": "Sefton", "codGeg": "2", "isoCode": "" }, { "codCode": "373", "codName": "Sheffield", "codGeg": "2", "isoCode": "" }, { "codCode": "932", "codName": "Shropshire", "codGeg": "2", "isoCode": "" }, { "codCode": "131", "codName": "Slough", "codGeg": "2", "isoCode": "" }, { "codCode": "334", "codName": "Solihull", "codGeg": "2", "isoCode": "" }, { "codCode": "933", "codName": "Somerset", "codGeg": "2", "isoCode": "" }, { "codCode": "104", "codName": "South Gloucestershire", "codGeg": "2", "isoCode": "" }, { "codCode": "393", "codName": "South Tyneside", "codGeg": "2", "isoCode": "" }, { "codCode": "124", "codName": "Southampton", "codGeg": "2", "isoCode": "" }, { "codCode": "138", "codName": "Southend on Sea", "codGeg": "2", "isoCode": "" }, { "codCode": "459", "codName": "Southwark", "codGeg": "2", "isoCode": "" }, { "codCode": "342", "codName": "St.Helens", "codGeg": "2", "isoCode": "" }, { "codCode": "934", "codName": "Staffordshire", "codGeg": "2", "isoCode": "" }, { "codCode": "356", "codName": "Stockport", "codGeg": "2", "isoCode": "" }, { "codCode": "108", "codName": "Stockton-on-Tees", "codGeg": "2", "isoCode": "" }, { "codCode": "125", "codName": "Stoke-on-Trent", "codGeg": "2", "isoCode": "" }, { "codCode": "935", "codName": "Suffolk", "codGeg": "2", "isoCode": "" }, { "codCode": "394", "codName": "Sunderland", "codGeg": "2", "isoCode": "" }, { "codCode": "936", "codName": "Surrey", "codGeg": "2", "isoCode": "" }, { "codCode": "319", "codName": "Sutton", "codGeg": "2", "isoCode": "" }, { "codCode": "126", "codName": "Swindon", "codGeg": "2", "isoCode": "" }, { "codCode": "357", "codName": "Tameside", "codGeg": "2", "isoCode": "" }, { "codCode": "146", "codName": "Telford and Wrekin", "codGeg": "2", "isoCode": "" }, { "codCode": "128", "codName": "The Royal Borough of Windsor Maidenhead", "codGeg": "2", "isoCode": "" }, { "codCode": "139", "codName": "Thurrock", "codGeg": "2", "isoCode": "" }, { "codCode": "137", "codName": "Torbay", "codGeg": "2", "isoCode": "" }, { "codCode": "460", "codName": "Tower Hamlets", "codGeg": "2", "isoCode": "" }, { "codCode": "358", "codName": "Trafford", "codGeg": "2", "isoCode": "" }, { "codCode": "384", "codName": "Wakefield", "codGeg": "2", "isoCode": "" }, { "codCode": "335", "codName": "Walsall", "codGeg": "2", "isoCode": "" }, { "codCode": "320", "codName": "Waltham Forest", "codGeg": "2", "isoCode": "" }, { "codCode": "461", "codName": "Wandsworth", "codGeg": "2", "isoCode": "" }, { "codCode": "135", "codName": "Warrington", "codGeg": "2", "isoCode": "" }, { "codCode": "937", "codName": "Warwickshire", "codGeg": "2", "isoCode": "" }, { "codCode": "129", "codName": "West Berkshire", "codGeg": "2", "isoCode": "" }, { "codCode": "938", "codName": "West Sussex", "codGeg": "2", "isoCode": "" }, { "codCode": "462", "codName": "Westminster", "codGeg": "2", "isoCode": "" }, { "codCode": "359", "codName": "Wigan", "codGeg": "2", "isoCode": "" }, { "codCode": "939", "codName": "Wiltshire", "codGeg": "2", "isoCode": "" }, { "codCode": "344", "codName": "Wirral", "codGeg": "2", "isoCode": "" }, { "codCode": "132", "codName": "Wokingham", "codGeg": "2", "isoCode": "" }, { "codCode": "336", "codName": "Wolverhampton", "codGeg": "2", "isoCode": "" }, { "codCode": "141", "codName": "Worcestershire", "codGeg": "2", "isoCode": "" }, { "codCode": "113", "codName": "York", "codGeg": "2", "isoCode": "" }];
+        var codsNI = [{ "codCode": "001", "codName": "Belfast", "codGeg": "2", "isoCode": "" }, { "codCode": "003", "codName": "County Antrim", "codGeg": "2", "isoCode": "" }, { "codCode": "005", "codName": "County Armagh", "codGeg": "2", "isoCode": "" }, { "codCode": "004", "codName": "County Down", "codGeg": "2", "isoCode": "" }, { "codCode": "008", "codName": "County Fermanagh", "codGeg": "2", "isoCode": "" }, { "codCode": "006", "codName": "County Londonderry", "codGeg": "2", "isoCode": "" }, { "codCode": "007", "codName": "County Tyrone", "codGeg": "2", "isoCode": "" }, { "codCode": "8826", "codName": "Northern Ireland", "codGeg": "2", "isoCode": "" }];
+        var codsScot = [{ "codCode": "161", "codName": "Aberdeen", "codGeg": "1", "isoCode": "" }, { "codCode": "162", "codName": "Aberdeenshire", "codGeg": "1", "isoCode": "" }, { "codCode": "163", "codName": "Angus", "codGeg": "1", "isoCode": "" }, { "codCode": "164", "codName": "Argyll \u0026 Bute", "codGeg": "1", "isoCode": "" }, { "codCode": "166", "codName": "Clackmannanshire", "codGeg": "1", "isoCode": "" }, { "codCode": "168", "codName": "Dumfries \u0026 Galloway", "codGeg": "1", "isoCode": "" }, { "codCode": "169", "codName": "Dundee", "codGeg": "1", "isoCode": "" }, { "codCode": "170", "codName": "East Ayrshire", "codGeg": "1", "isoCode": "" }, { "codCode": "171", "codName": "East Dunbartonshire", "codGeg": "1", "isoCode": "" }, { "codCode": "172", "codName": "East Lothian", "codGeg": "1", "isoCode": "" }, { "codCode": "173", "codName": "East Renfrewshire", "codGeg": "1", "isoCode": "" }, { "codCode": "174", "codName": "Edinburgh", "codGeg": "1", "isoCode": "" }, { "codCode": "175", "codName": "Falkirk", "codGeg": "1", "isoCode": "" }, { "codCode": "176", "codName": "Fife", "codGeg": "1", "isoCode": "" }, { "codCode": "177", "codName": "Glasgow", "codGeg": "1", "isoCode": "" }, { "codCode": "178", "codName": "Highland", "codGeg": "1", "isoCode": "" }, { "codCode": "179", "codName": "Inverclyde", "codGeg": "1", "isoCode": "" }, { "codCode": "180", "codName": "Midlothian", "codGeg": "1", "isoCode": "" }, { "codCode": "181", "codName": "Moray", "codGeg": "1", "isoCode": "" }, { "codCode": "182", "codName": "North Ayrshire", "codGeg": "1", "isoCode": "" }, { "codCode": "183", "codName": "North Lanarkshire", "codGeg": "1", "isoCode": "" }, { "codCode": "184", "codName": "Orkney Islands", "codGeg": "1", "isoCode": "" }, { "codCode": "185", "codName": "Perthshire \u0026 Kinross", "codGeg": "1", "isoCode": "" }, { "codCode": "186", "codName": "Renfrewshire", "codGeg": "1", "isoCode": "" }, { "codCode": "7826", "codName": "Scotland", "codGeg": "1", "isoCode": "" }, { "codCode": "165", "codName": "Scottish Borders", "codGeg": "1", "isoCode": "" }, { "codCode": "187", "codName": "Shetland Islands", "codGeg": "1", "isoCode": "" }, { "codCode": "188", "codName": "South Ayrshire", "codGeg": "1", "isoCode": "" }, { "codCode": "189", "codName": "South Lanarkshire", "codGeg": "1", "isoCode": "" }, { "codCode": "190", "codName": "Stirling", "codGeg": "1", "isoCode": "" }, { "codCode": "167", "codName": "West Dunbartonshire", "codGeg": "1", "isoCode": "" }, { "codCode": "191", "codName": "West Lothian", "codGeg": "1", "isoCode": "" }, { "codCode": "192", "codName": "Western Isles", "codGeg": "1", "isoCode": "" }];
+        var codsCIM = [{ "codCode": "592", "codName": "Alderney", "codGeg": "4", "isoCode": "" }, { "codCode": "593", "codName": "Guernsey", "codGeg": "4", "isoCode": "" }, { "codCode": "595", "codName": "Isle of Man", "codGeg": "4", "isoCode": "" }, { "codCode": "594", "codName": "Jersey", "codGeg": "4", "isoCode": "" }, { "codCode": "889", "codName": "St Barthelemy", "codGeg": "4", "isoCode": "" }, { "codCode": "888", "codName": "St Martin (French part)", "codGeg": "4", "isoCode": "" }];
+        var prospectusUG = "UGE-SRA-PRO";
+        var prospectusPG = "PGE-SRA-PRO";
+        var prospectusSC = "SC-SRA-PRO";
+        var years = [{ "udvCode": "AYR", "uddCode": "YR1", "shortName": "2024/5", "fullName": "2024/25" }, { "udvCode": "AYR", "uddCode": "YR2", "shortName": "2025/6", "fullName": "2025/26" }, { "udvCode": "AYR", "uddCode": "YR3", "shortName": "2026/7", "fullName": "2026/27" }];
+
+        var prospectusUGLink = "https://www.stir.ac.uk/study/download-a-prospectus/";
+        var prospectusPGLink = "https://www.stir.ac.uk/study/download-a-prospectus/";
+        var prospectusUGLinkText = "Download our undergraduate prospectus now ";
+        var prospectusPGLinkText = "Download our postgraduate prospectus now";
+
+    </script>
+</head>
+
+<body class="external-pages">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://load.collect.stir.ac.uk/ns.html?id=GTM-NLVN8V" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+
+    <a href="#content" class="show-for-sr">Skip header navigation</a>
+    <h1 class="show-for-sr">University of Stirling</h1>
+    <!-- Mobile Nav -->
+    <div id="mobile-menu" class="c-mobile-menu">
+        <a href="#" id="close_mobile_menu" class="closebtn">×</a>
+        <ul class="slidemenu">
+            <li><a href="/">Home</a>
+                <ul class="multilevel-linkul-0 slidemenu__current" data-has-breadcrumbs="true" data-has-drilldown="true"
+                    style="right: 0px; z-index: 100011; height: 1151px;">
+                    <li class="slidemenu__bc slidemenu__home-link"><a href="https://www.stir.ac.uk/">Home</a></li>
+                    <li class="slidemenu__bc slidemenu__goto"><a href="/"
+                            class="slidemenu__bc-link slidemenu__goto-link">Home<span class="slidemenu__home-text">
+                                home</span></a></li>
+                    <li class="slidemenu__subitem slidemenu__has-submenu"><a href="https://www.stir.ac.uk/study/"
+                            class="slidemenu__subitem-link">Study</a></li>
+                    <li class="slidemenu__subitem slidemenu__has-submenu"><a
+                            href="https://www.stir.ac.uk/international/"
+                            class="slidemenu__subitem-link">International</a></li>
+                    <li class="slidemenu__subitem slidemenu__has-submenu"><a href="https://www.stir.ac.uk/research/"
+                            class="slidemenu__subitem-link">Research</a></li>
+                    <li class="slidemenu__subitem slidemenu__has-submenu"><a href="https://www.stir.ac.uk/about/"
+                            class="slidemenu__subitem-link">About</a></li>
+
+
+
+                    <li class="position:absolute; left: 50px">
+                        <ul class="slidemenu__other-links" data-has-drilldown="true">
+                            <li class="slidemenu__other-links-portal"><a href="https://portal.stir.ac.uk">My Portal</a>
+                            </li>
+                            <li class="slidemenu__other-links-contact"><a
+                                    href="https://www.stir.ac.uk/about/contact-us/">Contact</a></li>
+                            <li class="slidemenu__other-links-search"><a href="https://www.stir.ac.uk/search/">Site
+                                    Search</a></li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+    <div id="mobile-menu__content">
+        <div id="top-edge-callouts-container"></div>
+        <!--
+          MAIN SITE HEADER
+  -->
+        <header class="c-header" role="banner" id="layout-header">
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x">
+                    <div class="cell large-4 medium-4 small-8">
+                        <a href="https://www.stir.ac.uk/" title="University of Stirling"><img
+                                src="https://portal.stir.ac.uk/media-dtp/ask/logo.svg" alt="University of Stirling logo"
+                                class="c-site-logo"></a>
+                    </div>
+                    <nav role="navigation" class="cell large-8 medium-8 small-4 flex-container align-right">
+                        <div class="c-header-nav flex-container flex-dir-column align-bottom align-center">
+                            <ul
+                                class="c-header-nav c-header-nav--secondary u-font-semibold flex-container align-middle">
+                                <li class="c-header-nav__item show-for-large">
+                                    <a class="c-header-nav__link" href="#">&nbsp;</a>
+                                </li>
+                                <li class="c-header-nav__item">
+                                </li>
+                            </ul>
+                            <ul class="c-header-nav c-header-nav--primary u-font-bold show-for-xlarge">
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" data-menu-id="mm__study"
+                                        href="https://www.stir.ac.uk/study/">Study</a>
+                                </li>
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" data-menu-id="mm__international"
+                                        href="https://www.stir.ac.uk/international/">International</a>
+                                </li>
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" data-menu-id="mm__research"
+                                        href="https://www.stir.ac.uk/research/">Research</a>
+                                </li>
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" data-menu-id="mm__about"
+                                        href="https://www.stir.ac.uk/about/">About</a>
+                                </li>
+                                <li class="c-header-nav__item">
+                                    <a class="c-header-nav__link" data-menu-id="mm__student-life"
+                                        href="https://www.stir.ac.uk/student-life/">Student life</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="hide-for-xlarge flex-container align-middle align-center flex-dir-column">
+                            <a href="#" id="open_mobile_menu" aria-label="Open mobile menu"
+                                class="c-header-burger flex-container align-middle">
+                                <span class="c-header-burger__bun"></span>
+                            </a>
+                            <span>Menu</span>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Breadcrumb -->
+        <section class="breadcrumbs-container u-bg-grey show-for-large">
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x">
+                    <div class="cell">
+                        <nav role="navigation">
+                            <ul class="breadcrumbs">
+                                <li>
+                                    <a href="https://www.stir.ac.uk/">Home</a>
+                                </li>
+                                <li>
+                                    <a href="/student/enquiry/ask.jsp">Ask a question</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x u-padding-bottom">
+                <!-- Content Start -->
+
+
+
+
+                <!--    <div class="row page main">-->
+
+                <!--        <section class="large-12 columns">-->
+
+
+
+                <div class="cell main-content-header large-10 medium-10 small-12 ">
+                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green u-margin-top"><span
+                            class="change-title">Ask a Question</span><span class="subject"></span></h1>
+                    <!--          <div class="cell large-10 medium-10 small-12 half-padding-y  breadcrumbTrail">-->
+                    <!--<div class="cell large-10 medium-10 small-12 grid-margin-x breadcrumbTrail">-->
+                    <div class="grid-x grid-padding-x  large-up-3 small-up-1 medium-up-2 breadcrumbTrail">
+                    </div>
+                </div>
+
+
+
+                <div class="cell finished" style="display:none">
+                    <div class="large-12 cell">
+                        <div class="cell">
+                            <div class="large-12 cell">
+                                <div class="alert-box alert stir-green-alert">
+                                    <p> <strong>Thank you for submitting your question or request</strong></p>
+                                    <p>A member of the Student Recruitment & Admissions Service will respond shortly.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="large-12 cell">
+                                <div class="standout-box">
+                                    <h6>Further Information</h6>
+                                    <ul>
+                                        <li> <a href="https://www.stir.ac.uk/courses/ug/">View Undergraduate
+                                                Courses/Departments</a> </li>
+                                        <li> <a href="https://www.stir.ac.uk/courses/pg-taught/">View Postgraduate
+                                                Courses/Departments</a> </li>
+                                        <li> <a href="https://www.stir.ac.uk/student-life/accommodation/">View our
+                                                Accommodation Pages</a> </li>
+                                        <li> <a href="https://www.stir.ac.uk/study/fees-funding/">Find out more
+                                                information about UG Finance</a> </li>
+                                        <li> <a
+                                                href="https://www.stir.ac.uk/study/fees-funding/postgraduate-loans-and-funding/">Find
+                                                out more information about PG Finance</a> </li>
+                                        <li> <a
+                                                href="https://www.stir.ac.uk/international/study-abroad-exchange/want-to-study-abroad/">Find
+                                                out more information about our International/Study Abroad Office</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="cell  row-question" data-question-breadcrumb-pre="I am interested in "
+                    data-question-breadcrumb-post=" study" data-question-id="level" data-question-number="1"
+                    data-next-question-number="2" data-previous-question-number="0">
+                    <div class="cell small-12  medium-12">
+                        <h2 class="question  header-stripped  text-center ">What level of study are you interested in?
+                        </h2>
+                    </div>
+
+
+                    <div class="grid-x grid-padding-x  large-up-3 small-up-1 medium-up-2 ">
+
+                        <div class="cell text-center small-12 medium-4 row-ans" data-question-number="1"><a
+                                class="button expanded heritage-green actionBtn" href="#" data-answer-code="UG"
+                                data-answer="Undergraduate">Undergraduate</a></div>
+                        <div class="cell text-center small-12 medium-4 row-ans" data-question-number="1"><a
+                                class="button expanded heritage-green actionBtn" href="#" data-answer="Postgraduate"
+                                data-answer-code="PG">Postgraduate</a></div>
+                        <div class="cell text-center small-12 medium-4 row-ans" data-question-number="1"><a
+                                class="button expanded heritage-green actionBtn" href="#" data-answer="Other"
+                                data-answer-code="SHORT">Other</a></div>
+                    </div>
+                </div>
+
+
+
+                <div class="cell row-question" data-question-breadcrumb-pre="I want to " data-question-id="want"
+                    data-question-number="2" data-next-question-number="3" data-previous-question-number="1"
+                    style="display:none">
+                    <div class="grid-x">
+                        <div class="cell small-12  medium-12">
+                            <h2 class="question header-stripped  text-center">What would you like to do?</h2>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-padding-x  large-up-3 small-up-1 medium-up-2 ">
+                        <div class="cell text-center small-12 medium-4 row-ans" data-question-number="2"><a
+                                class="button clear heritage-green actionBtn seventyfive" href="#"
+                                data-answer-code="order" data-answer="Order a prospectus"><i class="fi-book large "
+                                    aria-hidden="true"></i><br>Order a Prospectus</a></div>
+                        <div class="cell text-center small-12 medium-4 row-ans" data-question-number="2"><a
+                                class="button clear heritage-green actionBtn seventyfive" href="#"
+                                data-answer-code="question" data-answer="Ask a question"><i
+                                    class="fi-comment-quotes large" aria-hidden="true"></i><br>Ask a Question</a></div>
+                        <div class="cell text-center small-12 medium-4 row-ans" data-question-number="2"><a
+                                class="button clear heritage-green actionBtn seventyfive" href="#"
+                                data-answer-code="both" data-answer="Both order a prospectus, and ask a question"><i
+                                    class="fi-check large" aria-hidden="true"></i><br>Both</a></div>
+                    </div>
+                </div>
+
+                <div class="cell row-question" data-question-breadcrumb-pre="I am from " data-question-id="nationality"
+                    data-question-number="3" data-next-question-number="done" data-previous-question-number="2"
+                    style="display:none">
+                    <div class="cell small-12  medium-12 ">
+
+                        <h2 class="question header-stripped  text-center">Where are you from?</h2>
+                    </div>
+
+                    <div class="grid-x grid-padding-x  large-up-4 small-up-2 medium-up-3">
+
+                        <div class="cell   row-ans" data-question-number="3"><a
+                                class="button clear heritage-green actionBtn" href="#" data-answer-code="XH"
+                                data-answer="Scotland"><img class="flag" src="/img/enquiry/SCOT.png" /><br>Scotland</a>
+                        </div>
+                        <div class="cell  row-ans" data-question-number="3"><a
+                                class="button clear heritage-green actionBtn" href="#" data-answer-code="XF"
+                                data-answer="England"><img class="flag" src="/img/enquiry/ENG.png" /><br>England</a>
+                        </div>
+                        <div class="cell row-ans " data-question-number="3"><a
+                                class="button clear heritage-green actionBtn" href="#" data-answer-code="XI"
+                                data-answer="Wales"><img class="flag" src="/img/enquiry/WALES.png" /><br>Wales</a></div>
+                        <div class="cell row-ans " data-question-number="3"><a
+                                class="button clear heritage-green actionBtn" href="#" data-answer-code="XG"
+                                data-answer="Northern Ireland"><img class="flag"
+                                    src="/img/enquiry/NI.png" /><br>Northern Ireland</a></div>
+                        <div class="cell row-ans " data-question-number="3"><a
+                                class="button clear heritage-green actionBtn" href="#" data-answer-code="4"
+                                data-answer="Channel Islands / Isle of Man"><img class="flag"
+                                    src="/img/enquiry/CIM.png" /><br>Isle of Man and the Channel Islands</a></div>
+                        <div class="cell  row-ans" data-question-number="3"><a
+                                class="button clear heritage-green actionBtn" href="#" data-answer-code="3"
+                                data-answer="the EU"><img class="flag" src="/img/enquiry/EU.png" /><br>EU</a></div>
+                        <div class="cell row-ans " data-question-number="3"><a
+                                class="button clear heritage-green actionBtn" href="#" data-answer-code="5"
+                                data-answer="Rest of World"><img class="flag" src="/img/enquiry/WORLD.png" /><br>Rest of
+                                World</a></div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row enq-row full-form u-padding-y u-margin-bottom" id="order" style="display:none">
+                <div class="grid-container">
+                    <div class="grid-x grid-margin-x  grid-padding-y">
+                        <div class="large-12 cell">
+                            <h4 id="requestProspectusHeading"></h4>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x  grid-padding-y prospectus-download">
+                        <!--<div class="large-3 cell"><h5 class="question mainForm">Want to download the prospectus now?</h5></div>-->
+                        <div class="large-9 cell"><a class='prospectusURL button radius' href='' target='_blank'></a>
+                        </div>
+                        <div class="large-12 cell">
+                            <h5 class="question mainForm " id="orRequest"></h5>
+                        </div>
+                    </div>
+
+                    <form data-abide novalidate id="prospectusForm" class="enq-form" data-form="form-order">
+
+                        <input type="hidden" name="formType" class="formType form-order" value="prospectus" />
+                        <input type="hidden" name="geg" class="from form-order" value="" />
+                        <input type="hidden" name="studyLevel" class="studyLevel form-order" value="" />
+
+                        <input type="hidden" name="IPP_ARI_UTM1" class="ipq form-order" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM2" class="ipq form-order" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM3" class="ipq form-order" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM4" class="ipq form-order" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM5" class="ipq form-order" value="" />
+
+
+                        <!--<div class="grid-x grid-margin-x  grid-padding-y">
+                       <div class="large-12 cell">-->
+
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+
+                            <div class="cell large-12">
+                                <label for="order-fn">
+                                    <h6 class="question mainForm">First name*</h6>
+                                    <input type="text" id="order-fn" name="forenameOne" placeholder="e.g. Jennifer"
+                                        class="form-text form-order" required>
+                                    <span class="form-error ">Please enter your first name</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                            <div class="large-12 cell"><label for="order-sn">
+                                    <h6 class="question mainForm">Last name*</h6>
+
+                                    <input type="text" id="order-sn" placeholder="e.g. Smith" name="surname"
+                                        class="form-text form-order" required />
+                                    <small class="form-error" style="display:none">Please enter your last name</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div id="prospectusAddress">
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="order-pa1">
+                                        <h6 class="question mainForm">Postal address 1*</h6>
+
+
+                                        <input type="text" id="order-pa1" name="homeAddressLineOne"
+                                            class="form-text form-order" required />
+                                        <small class="form-error" style="display:none">Please enter your address</small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="order-pa2">
+                                        <h6 class="question mainForm">Postal address 2</h6>
+                                        <input type="text" id="order-pa2" name="homeAddressLineTwo"
+                                            class="form-text form-order" data-mandatory="false" />
+                                        <small class="form-error" style="display:none"></small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="order-pa3">
+                                        <h6 class="question mainForm">Postal address 3</h6>
+                                        <input type="text" id="order-pa3" name="homeAddressLineThree"
+                                            class="form-text form-order" data-mandatory="false" />
+                                        <small class="form-error" style="display:none"></small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="order-papc">
+                                        <h6 class="question mainForm">Post code/Zip code</h6>
+                                        <input type="text" id="order-papc" name="homeAddressPostCode"
+                                            class="form-text form-order" data-mandatory="false" />
+                                        <small class="form-error" style="display:none"></small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="order-pat">
+                                        <h6 class="question mainForm">Town/City</h6>
+                                        <input type="text" id="order-pat" name="homeAddressLineFour"
+                                            class="form-text form-order" data-mandatory="false" />
+                                        <small class="form-error" style="display:none"></small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row county-row"
+                            style="margin-bottom:1em;">
+
+                            <div class="large-12 cell">
+                                <label for="order-cod">
+                                    <h6 class="question mainForm county" style="display:none">Region*</h6>
+                                    <h6 class="ipq mainForm country" style="display:none">Country/Region*</h6>
+
+                                    <select id="order-cod" name="IPP_ARI_COD"
+                                        class="form-select cod-picker form-order ipq" required
+                                        style="width:100%;margin-bottom:10px;"></select>
+                                    <small class="form-error" style="display:none"> Please select an option from the
+                                        list</small>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                            <div class="large-12 cell">
+                                <label for="order-em">
+                                    <h6 class="question mainForm">Email*</h6>
+                                    <input type="text" id="order-em" placeholder="e.g. jennifer.smith@abc.com"
+                                        name="homeAddressEmailAddress" class="form-text form-order" data-type="email"
+                                        required pattern="email">
+                                    <small class="form-error" style="display:none">Please enter a valid email
+                                        address</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                            <div class="large-12 cell">
+                                <label for="order-tel">
+                                    <h6 class="question mainForm">Telephone</h6>
+                                    <input type="tel" id="order-tel" name="homeAddressTelephoneOne"
+                                        class="form-text tel form-order" data-mandatory="false" style="width:100%">
+                                    <small class="form-error" style="display:none"></small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row" style="margin-top:1em">
+
+                            <div class="large-12 cell">
+                                <label for="ari-select-form-order">
+                                    <h6 class="question mainForm">Are you interested in any areas of study? (up to 5)
+                                    </h6>
+
+                                    <select name="ari" id="ari-select-form-order" class="form-order" multiple="multiple"
+                                        style="width:100%" class="same-height"></select>
+                                    <small class="form-error" style="display:none"></small>
+                                </label>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row" style="margin-top:1em">
+                            <div class="large-12 cell">
+                                <label for="order-question-start">
+                                    <h6 class="question mainForm">When would you like to start?*</h6>
+
+
+                                    <select name="IPP_ARI_AYR" id="order-question-start"
+                                        class="form-select form-order ipq year" data-mandatory="true" required
+                                        style="width:100%;margin-bottom:10px;"></select>
+                                    <span class="form-error "></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                            <div class="large-12 cell">
+                                <h5 class="question mainForm">
+                                    We'd love to keep in touch by sending you useful information about the University
+                                    and our courses.
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                            <div class="  cell large-12 large-offset-1 ">
+                                <label for="mktCheckbox">
+                                    <h6>
+                                        <input id="order-mktCheckbox" name="IPP_ARI_MKT" type="checkbox"
+                                            class="ipq form-order " tabindex="0">
+                                        Yes, keep me up-to-date on everything I need to know about Stirling.
+                                    </h6>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+
+                            <div class="large-12 cell">
+                                <h5 class="question mainForm">
+                                    By submitting, you are agreeing to the University's <a
+                                        href='https://www.stir.ac.uk/legal/#one' target='_blank'>Terms of Use </a> and
+                                    <a href='https://www.stir.ac.uk/legal/#four' target='_blank'>Privacy Statement</a>.
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div data-abide-error class="alert callout" style="display: none;">
+                            <p><i class="fi-alert"></i> There are some errors on the form, please check the highlighted
+                                fields and correct accordingly.</p>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row" style="margin-top:1em">
+                            <fieldset class="cell large-4 medium-6 small-10"><button
+                                    class="button expanded heritage-green submit-form" data-form="form-order">Submit
+                                    your request</button></fieldset>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="enq-row full-form u-padding-y u-margin-bottom" id="question" style="display:none">
+                <div class="grid-container">
+                    <div class="cell small-12  medium-12 ">
+                        <h4>Ask a question</h4>
+                        If you are a current student, and your question relates to your current studies, then please
+                        contact our student services team on <a href="mailto:ask@stir.ac.uk">ask@stir.ac.uk</a>.
+                        Alternatively, the team are available on live chat between 9am-5pm Monday-Friday on your student
+                        portal via the link below: <a href="/">https://portal.stir.ac.uk/</a>
+                    </div>
+                    <form data-abide novalidate id="questionForm" class="enq-form" data-form="form-question">
+
+
+                        <input type="hidden" name="formType" class="formType form-question" value="question" />
+                        <input type="hidden" name="geg" class="from form-question" value="" />
+                        <input type="hidden" name="studyLevel" class="studyLevel form-question" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM1" class="ipq form-question" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM2" class="ipq form-question" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM3" class="ipq form-question" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM4" class="ipq form-question" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM5" class="ipq form-question" value="" />
+
+
+                        <div class="grid-x grid-margin-x  grid-padding-y">
+
+                            <div class="large-12 cell">
+                                <label for="question-qu">
+                                    <h6 class="question mainForm">Your question*</h6>
+                                    <textarea id="question-qu"
+                                        placeholder="e.g. Can I study Nursing and Aquaculture together?" type="text"
+                                        name="notes" class="form-textarea form-question" data-mandatory="true"
+                                        style="width:100%;height:7em;" required></textarea>
+                                    <span class="form-error ">Please enter your question</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y">
+                            <div class="large-12 cell">
+                                <label for="ari-select-form-question">
+                                    <h6 class="question mainForm">Are you interested in any areas of study? (up to 5)
+                                    </h6>
+                                    <select name="ari" id="ari-select-form-question" class="form-question"
+                                        multiple="multiple" style="width:100%" class="same-height"></select>
+                                    <small class="error" style="display:none"></small>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y">
+                            <div class="large-12 cell">
+                                <label for="question-fn">
+                                    <h6 class="question mainForm">First name*</h6>
+                                    <input id="question-fn" type="text" placeholder="e.g. Jennifer" name="forenameOne"
+                                        class="form-text form-question" data-mandatory="true" required>
+                                    <span class="form-error ">Please enter your first name</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y">
+                            <div class="large-12 cell">
+                                <label for="question-sn">
+                                    <h6 class="question mainForm">Last name*</h6>
+                                    <input id="question-sn" type="text" placeholder="e.g. Smith" name="surname"
+                                        class="form-text form-question" data-mandatory="true" required />
+                                    <span class="form-error ">Please enter your last name</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y">
+                            <div class="large-12 cell">
+                                <label for="question-dob">
+                                    <h6 class="question mainForm">Date of birth</h6>
+                                    <input id="question-dob" type="text" placeholder="e.g. 21/09/1991"
+                                        name="dateOfBirth" class="form-text form-question " data-mandatory="false" />
+                                    <span class="form-error "></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y">
+                            <div class="large-12 cell">
+                                <label for="question-cod">
+                                    <h6 class="question mainForm county" style="display:none">Region*</h6>
+                                    <h6 class="question mainForm country" style="display:none">Country/Region*</h6>
+                                    <select id="question-cod" name="IPP_ARI_COD"
+                                        class="form-select cod-picker form-question ipq" data-mandatory="true"
+                                        style="width:100%;margin-bottom:10px;" required></select>
+                                    <small class="form-error" style="display:none"> Please select an option from the
+                                        list</small>
+                                </label>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y">
+                            <div class="large-6 cell">
+                                <label for="question-em">
+                                    <h6 class="question mainForm">Email*</h6>
+
+
+                                    <input id="question-em" type="text" placeholder="e.g. jennifer.smith@abc.com"
+                                        name="homeAddressEmailAddress" class="form-text form-question" pattern="email"
+                                        required>
+                                    <small class="form-error" style="display:none">Please enter a valid email
+                                        address</small>
+                                </label>
+                            </div>
+                            <!--            </div>
+              
+                          <div class="grid-x grid-margin-x  grid-padding-y">-->
+                            <div class="large-6 cell">
+                                <label for="question-tel">
+                                    <h6 class="question mainForm">Telephone</h6>
+
+                                    <input id="question-tel" type="tel" name="homeAddressTelephoneOne"
+                                        class="form-text tel form-question" data-mandatory="false" style="width:100%">
+                                    <span class="form-error "></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y">
+                            <div class="large-12 cell">
+                                <label for="question-start">
+                                    <h6 class="question mainForm">When would you like to start?*</h6>
+
+
+                                    <select name="IPP_ARI_AYR" id="question-start"
+                                        class="form-select form-question ipq year" data-mandatory="true" required
+                                        style="width:100%;margin-bottom:10px;"></select>
+                                    <span class="form-error "></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid-x  grid-padding-y">
+                            <div class="large-12 large-offset-1 cell">
+                                <h6 class="question mainForm">
+                                    We'd love to keep in touch by sending you useful information about the University
+                                    and our courses.
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="grid-x  ">
+                            <div class="large-12 large-offset-1 cell">
+                                <label for="question-mktCheckbox">
+                                    <h6>
+                                        <input id="question-mktCheckbox" name="IPP_ARI_MKT" type="checkbox"
+                                            class="ipq form-question " tabindex="0">
+
+                                        Yes, keep me up-to-date on everything I need to know about Stirling.
+                                    </h6>
+                                </label>
+                            </div>
+
+
+                            <div class="large-12 large-offset-1 cell ">
+                                <h6 class="question mainForm">
+                                    By submitting, you are agreeing to the University's <a
+                                        href='https://www.stir.ac.uk/legal/#one' target='_blank'>Terms of Use </a> and
+                                    <a href='https://www.stir.ac.uk/legal/#four' target='_blank'>Privacy Statement</a>.
+                                </h6>
+                            </div>
+                        </div>
+
+                        <div data-abide-error class="alert callout" style="display: none;">
+                            <p><i class="fi-alert"></i> There are some errors on the form, please check the highlighted
+                                fields and correct accordingly.</p>
+                        </div>
+
+
+                        <div class="grid-x grid-margin-x  grid-padding-y">
+                            <fieldset class="cell large-4 medium-6 small-10">
+
+                                <button class="button expanded heritage-green submit-form "
+                                    data-form="form-backup">Submit your question</button>
+
+                            </fieldset>
+
+
+                        </div>
+                    </form>
+
+
+
+
+
+                </div>
+            </div>
+
+
+
+            <div class="row enq-row full-form u-padding-y u-margin-bottom" id="both" style="display:none">
+                <div class="grid-container">
+                    <div class="large-12 cell">
+                        <h4 id="bothHeading">Ask a question and request a prospectus</h4>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y prospectus-download">
+                            <!--              <div class="large-3 cell"><h5 class="question mainForm">Want to download the prospectus now?</h5></div>-->
+                            <div class="large-9 cell"><a class='prospectusURL button radius' href=''
+                                    target='_blank'></a></div>
+                            <div class="large-12 cell">
+                                <h5 class="question mainForm" id="bothOrRequest">Or request a posted copy, and ask us a
+                                    question below...</h5>
+                            </div>
+                        </div>
+
+
+
+                        <form data-abide novalidate id="questionForm" class="enq-form" data-form="form-both">
+                            <input type="hidden" name="formType" class="formType form-both" value="both" />
+                            <input type="hidden" name="geg" class="from form-both" value="" />
+                            <input type="hidden" name="studyLevel" class="studyLevel form-both" value="" />
+                            <input type="hidden" name="IPP_ARI_UTM1" class="ipq form-both" value="" />
+                            <input type="hidden" name="IPP_ARI_UTM2" class="ipq form-both" value="" />
+                            <input type="hidden" name="IPP_ARI_UTM3" class="ipq form-both" value="" />
+                            <input type="hidden" name="IPP_ARI_UTM4" class="ipq form-both" value="" />
+                            <input type="hidden" name="IPP_ARI_UTM5" class="ipq form-both" value="" />
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="both-qu">
+                                        <h5 class="question mainForm">Your question*</h5>
+                                        <textarea id="both-qu" type="text" name="notes"
+                                            placeholder="e.g. Can I study Nursing and Aquaculture together?"
+                                            class="form-textarea form-both" data-mandatory="true"
+                                            style="width:100%;height:7em;"></textarea>
+                                        <small class="error" style="display:none"></small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="ari-select-form-both">
+                                        <h5 class="question mainForm">Are you interested in any areas of study? (up to
+                                            5)</h5>
+                                        <select name="ari" id="ari-select-form-both" class="form-both"
+                                            multiple="multiple" style="width:100%" class="same-height"></select>
+                                        <small class="form-error" style="display:none"></small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="both-fn">
+                                        <h5 class="question mainForm">First Name*</h5>
+
+                                        <input type="text" id="both-fn" placeholder="e.g. Jennifer" name="forenameOne"
+                                            class="form-text form-both" required>
+                                        <small class="form-error" style="display:none">Please enter your first
+                                            name</small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="both-sn">
+                                        <h5 class="question mainForm">Last Name*</h5>
+                                        <input type="text" id="both-sn" placeholder="e.g. Smith"
+                                            placeholder="e.g. Smith" name="surname" class="form-text form-both"
+                                            required />
+                                        <small class="form-error" style="display:none"></small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="both-dob">
+                                        <h5 class="question mainForm">Date Of Birth</h5>
+
+                                        <input type="text" id="both-dob" placeholder="e.g. 21/09/1991"
+                                            name="dateOfBirth" class="form-text form-both " data-mandatory="false"
+                                            style="width:95%" />
+                                        <small class="form-error" style="display:none"></small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="bothAddress">
+                                <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                    <div class="large-12 cell">
+                                        <label for="both-pa1">
+                                            <h5 class="question mainForm">Postal address 1*</h5>
+                                            <input id="both-pa1" type="text" name="homeAddressLineOne"
+                                                class="form-text form-both" required />
+                                            <small class="form-error" style="display:none">Please enter your
+                                                address</small>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                    <div class="large-12 cell">
+                                        <label for="both-pa2">
+                                            <h5 class="question mainForm">Postal address 2</h5>
+
+                                            <input id="both-pa2" type="text" name="homeAddressLineTwo"
+                                                class="form-text form-both" data-mandatory="false" />
+                                            <small class="form-error" style="display:none"></small>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                    <div class="large-12 cell">
+                                        <label for="both-pa3">
+                                            <h5 class="question mainForm">Postal address 3</h5>
+                                            <input id="both-pa3" type="text" name="homeAddressLineFour"
+                                                class="form-text form-both" data-mandatory="false" />
+                                            <small class="form-error" style="display:none"></small>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                    <div class="large-12 cell">
+                                        <label for="both-papc">
+                                            <h5 class="question mainForm">Post code/Zip code</h5>
+                                            <input id="both-papc" type="text" name="homeAddressPostCode"
+                                                class="form-text form-both" data-mandatory="false" />
+                                            <small class="form-error" style="display:none"></small>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                    <div class="large-12 cell">
+                                        <label for="both-pat">
+                                            <h5 class="question mainForm">Town/City</h5>
+
+                                            <input id="both-pat" type="text" name="homeAddressLineFour"
+                                                class="form-text form-both" data-mandatory="false" />
+                                            <small class="form-error" style="display:none"></small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="both-cod">
+                                        <h5 class="question mainForm county" style="display:none">Region*</h5>
+                                        <h5 class="question mainForm country" style="display:none">Country/Region*</h5>
+
+                                        <select id="both-cod" name="IPP_ARI_COD"
+                                            class="form-select cod-picker form-both ipq" required
+                                            style="width:100%;margin-bottom:10px;"></select>
+                                        <small class="form-error" style="display:none"> Please select an option from the
+                                            list</small>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="both-em">
+                                        <h5 class="question mainForm">Email*</h5>
+                                        <input id="both-em" type="text" placeholder="e.g. jennifer.smith@abc.com"
+                                            name="homeAddressEmailAddress" class="form-text form-both" data-type="email"
+                                            required>
+                                        <small class="form-error" style="display:none">Please enter a valid email
+                                            address</small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="both-tel">
+                                        <h5 class="question mainForm">Telephone</h5>
+                                        <input id="both-tel" type="tel" name="homeAddressTelephoneOne"
+                                            class="form-text tel form-both" data-mandatory="false" style="width:100%">
+                                        <small class="form-error" style="display:none"></small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                                <div class="large-12 cell">
+                                    <label for="both-start">
+                                        <h5 class="question mainForm">When would you like to start?*</h5>
+                                        <select id="both-start" name="IPP_ARI_AYR"
+                                            class="year form-select form-both ipq" data-mandatory="true" required
+                                            style="width:100%;margin-bottom:10px;"></select>
+                                        <small class="form-error" style="display:none"></small>
+                                    </label>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+                            <div class="grid-x  grid-padding-y">
+                                <div class="large-12 large-offset-1 cell">
+                                    <h6 class="question mainForm">
+                                        We'd love to keep in touch by sending you useful information about the
+                                        University and our courses.
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="grid-x  ">
+                                <div class="large-12 large-offset-1 cell">
+                                    <label for="question-mktCheckbox">
+                                        <h6>
+                                            <input id="both-mktCheckbox" name="IPP_ARI_MKT" type="checkbox"
+                                                class="ipq form-both " tabindex="0">
+
+                                            Yes, keep me up-to-date on everything I need to know about Stirling.
+                                        </h6>
+                                    </label>
+                                </div>
+
+
+                                <div class="large-12 large-offset-1 cell ">
+                                    <h6 class="question mainForm">
+                                        By submitting, you are agreeing to the University's <a
+                                            href='https://www.stir.ac.uk/legal/#one' target='_blank'>Terms of Use </a>
+                                        and <a href='https://www.stir.ac.uk/legal/#four' target='_blank'>Privacy
+                                            Statement</a>.
+                                    </h6>
+                                </div>
+                            </div>
+
+                            <div data-abide-error class="alert callout" style="display: none;">
+                                <p><i class="fi-alert"></i> There are some errors on the form, please check the
+                                    highlighted fields and correct accordingly.</p>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="grid-x grid-margin-x  grid-padding-y">
+                                <fieldset class="cell large-4 medium-6 small-10">
+
+                                    <button class="button expanded heritage-green submit-form "
+                                        data-form="form-both">Submit your question</button>
+
+                                </fieldset>
+
+
+                            </div>
+
+
+
+
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row enq-row full-form u-padding-y u-margin-bottom" id="backup" style="display:none">
+                <div class="grid-container">
+                    <div class="large-12 cell">
+                        <h4>Ask a question</h4>
+                        If you are a current student, and your question relates to your current studies, then please
+                        contact our student services team on <a href="mailto:ask@stir.ac.uk">ask@stir.ac.uk</a>.
+                        Alternatively, the team are available on live chat between 9am-5pm Monday-Friday on your student
+                        portal via the link below: <a href="/">https://portal.stir.ac.uk/</a>
+                    </div>
+                    <form data-abide novalidate id="questionForm" class="enq-form" data-form="form-backup">
+                        <input type="hidden" name="formType" class="formType form-backup" value="backup" />
+                        <input type="hidden" name="geg" class="from form-backup" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM1" class="ipq form-backup" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM2" class="ipq form-backup" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM3" class="ipq form-backup" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM4" class="ipq form-backup" value="" />
+                        <input type="hidden" name="IPP_ARI_UTM5" class="ipq form-backup" value="" />
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                            <div class="large-12 cell">
+                                <label for="qu">
+                                    <textarea id="qu" type="text" name="notes"
+                                        placeholder="e.g. Can I study Nursing and Aquaculture together?"
+                                        class="form-textarea form-backup" required
+                                        style="width:100%;height:7em;"></textarea>
+                                    <small class="form-error" style="display:none">Please enter a question</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                            <div class="large-12 cell">
+                                <label for="fn">
+                                    <h5 class="question mainForm">First Name*</h5>
+                                    <input id="fn" type="text" placeholder="e.g. Jennifer" name="forenameOne"
+                                        class="form-text form-backup" required>
+                                    <small class="form-error" style="display:none">Please enter your first name</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                            <div class="large-12 cell">
+                                <label for="sn">
+                                    <h5 class="question mainForm">Last Name*</h5>
+                                    <input id="sn" type="text" placeholder="e.g. Smith" placeholder="e.g. Smith"
+                                        name="surname" class="form-text form-backup" data-mandatory="true" required />
+                                    <small class="form-error" style="display:none">Please enter your last name</small>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                            <div class="large-12 cell">
+                                <label for="em">
+                                    <h5 class="question mainForm">Email*</h5>
+
+                                    <input id="em" type="text" placeholder="e.g. jennifer.smith@abc.com"
+                                        name="homeAddressEmailAddress" class="form-text form-backup" data-type="email"
+                                        required pattern="email">
+                                    <small class="form-error" style="display:none">Please enter a valid email
+                                        address</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid-x grid-margin-x  grid-padding-y form-row">
+                            <div class="large-12 cell">
+                                <label for="tel">
+                                    <h5 class="question mainForm">Telephone</h5>
+                                    <input id="tel" type="tel" name="homeAddressTelephoneOne"
+                                        class="form-text tel form-backup" data-mandatory="false" style="width:100%">
+                                    <small class="form-error" style="display:none"></small>
+                                </label>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="grid-x  grid-padding-y">
+                            <div class="large-12 large-offset-1 cell">
+                                <h6 class="question mainForm">
+                                    We'd love to keep in touch by sending you useful information about the University
+                                    and our courses.
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="grid-x  ">
+                            <div class="large-12 large-offset-1 cell">
+                                <label for="question-mktCheckbox">
+                                    <h6>
+                                        <input id="backup-mktCheckbox" name="IPP_ARI_MKT" type="checkbox"
+                                            class="ipq form-backup " tabindex="0">
+
+                                        Yes, keep me up-to-date on everything I need to know about Stirling.
+                                    </h6>
+                                </label>
+                            </div>
+
+
+                            <div class="large-12 large-offset-1 cell ">
+                                <h6 class="question mainForm">
+                                    By submitting, you are agreeing to the University's <a
+                                        href='https://www.stir.ac.uk/legal/#one' target='_blank'>Terms of Use </a> and
+                                    <a href='https://www.stir.ac.uk/legal/#four' target='_blank'>Privacy Statement</a>.
+                                </h6>
+                            </div>
+                        </div>
+
+                        <div data-abide-error class="alert callout" style="display: none;">
+                            <p><i class="fi-alert"></i> There are some errors on the form, please check the highlighted
+                                fields and correct accordingly.</p>
+                        </div>
+                        <div class="grid-x grid-margin-x  grid-padding-y">
+                            <fieldset class="cell large-4 medium-6 small-10">
+
+                                <button class="button expanded heritage-green submit-form "
+                                    data-form="form-backup">Submit your question</button>
+
+                            </fieldset>
+
+
+                        </div>
+
+
+
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- Content End -->
+        </div>
+        <div class="whileLoading"></div>
+
+
+        <!--          </div>-->
+
+
+        <!---End main content area --->
+
+        </section>
+
+
+
+
+    </div>
+    <footer role="contentinfo" class="c-footer">
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x">
+                <!-- Footer Contact -->
+                <div class="c-footer__contact cell large-4 medium-7 small-12">
+                    <h2 class="c-footer__header u-font-bold">Contact us</h2>
+                    <ul role="list" class="no-bullet">
+                        <li>
+                            <a class="c-footer__link" href="https://portal.stir.ac.uk/student/enquiry/ask.jsp">Ask us a
+                                question &#10217;</a>
+                        </li>
+                        <li>
+                            <a class="c-footer__link" href="tel:+44(0)1786473171">Tel: +44 (0) 1786 473171</a>
+                        </li>
+                        <li class="c-footer__address">
+                            <p class="u-font-bold">
+                                <span>University of Stirling</span>
+                                <span>Stirling</span>
+                                <span>FK9 4LA</span>
+                                <span>Scotland UK</span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Footer Follow -->
+                <div class="c-footer__follow cell large-2 medium-5 small-12">
+                    <h2 class="c-footer__header u-font-bold">Follow us</h2>
+                    <ul role="list" class="no-bullet">
+                        <li class="c-follow__link c-follow--facebook">
+                            <a class="c-footer__link c-footer__link--social c-footer__link--facebook"
+                                href="https://www.facebook.com/pages/University-of-Stirling/124645794614">
+                                <span class="show-for-sr">Facebook</span>
+                                <span class="uos-facebook"></span>
+                            </a>
+                        </li>
+                        <li class="c-follow__link c-follow--instagram">
+                            <a class="c-footer__link c-footer__link--social c-footer__link--instagram"
+                                href="https://instagram.com/universityofstirling/">
+                                <span class="show-for-sr">Instagram</span>
+                                <span class="uos-instagram"></span>
+                            </a>
+                        </li>
+                        <li class="c-follow__link c-follow--twitter">
+                            <a class="c-footer__link c-footer__link--social c-footer__link--twitter"
+                                href="https://www.twitter.com/StirUni">
+                                <span class="show-for-sr">Twitter</span>
+                                <span class="uos-twitter"></span>
+                            </a>
+                        </li>
+                        <li class="c-follow__link c-follow--youtube">
+                            <a class="c-footer__link c-footer__link--social c-footer__link--youtube"
+                                href="https://www.youtube.com/user/UniversityOfStirling">
+                                <span class="show-for-sr">YouTube</span>
+                                <span class="uos-youtube"></span>
+                            </a>
+                        </li>
+                        <li class="c-follow__link c-follow--linkedin">
+                            <a class="c-footer__link c-footer__link--social c-footer__link--linkedin"
+                                href="https://www.linkedin.com/edu/school?id=12676">
+                                <span class="show-for-sr">LinkedIn</span>
+                                <span class="uos-linkedin"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Footer Popular Links -->
+                <div class="c-footer__popular-links cell large-2 medium-4 small-12">
+                    <h2 class="c-footer__header u-font-bold">Popular Links</h2>
+                    <ul role="list" class="no-bullet">
+                        <li>
+                            <a class="c-footer__link" href="https://www.stir.ac.uk/about/faculties/">Faculties</a>
+                        </li>
+                        <li>
+                            <a class="c-footer__link"
+                                href="https://www.stir.ac.uk/about/professional-services/">Professional services</a>
+                        </li>
+                        <li>
+                            <a class="c-footer__link" href="https://www.stir.ac.uk/about/our-people/alumni/">Alumni</a>
+                        </li>
+                        <li>
+                            <a class="c-footer__link" href="https://www.stir.ac.uk/about/work-at-stirling/">Jobs at
+                                Stirling</a>
+                        </li>
+                        <li>
+                            <a class="c-footer__link" href="https://www.stir.ac.uk/about/getting-here/">Getting here</a>
+                        </li>
+                        <li>
+                            <a class="c-footer__link"
+                                href="https://www.stir.ac.uk/student-life/students-union/">Student's Union</a>
+                        </li>
+                        <li>
+                            <a class="c-footer__link" href="https://shop.stir.ac.uk/">Online shop</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Footer Site Information -->
+                <div class="c-footer__site-info cell large-2 medium-4 small-12">
+                    <h2 class="c-footer__header u-font-bold">Site Information</h2>
+                    <ul role="list" class="no-bullet">
+                        <li>
+                            <a class="c-footer__link"
+                                href="https://www.stir.ac.uk/about/policy-legal-and-cookies/">Policy, Legal and
+                                Cookies</a>
+                        </li>
+                        <li>
+                            <a class="c-footer__link" href="https://www.stir.ac.uk/sitemap/">Sitemap</a>
+                        </li>
+                        <li>
+                            <a class="c-footer__link"
+                                href="https://www.stir.ac.uk/about/modern-slavery-statement/">Modern Slavery
+                                Statement</a>
+                        </li>
+                        <li>
+                            <a class="c-footer__link" href="https://www.stir.ac.uk/about/">Scottish Charity No
+                                SC011159</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Footer Accreditations -->
+                <div class="c-footer__accreditations cell large-2 medium-4 small-12">
+                    <img src="https://portal.stir.ac.uk/media-dtp/ask/logos-accreditation.png"
+                        alt="University accreditation logos for UK QAA, Queen's Anniversary Prize, Athena Swan Bronze Award, and the Scottish Credit and Qualifications Framework (SCQF)" />
+                </div>
+                <!-- Footer Be the difference -->
+                <div class="c-footer__btd">
+                    <img src="https://portal.stir.ac.uk/media-dtp/ask/logo-btd.svg" alt="Be the difference" />
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer -->
+    <div class="c-copyright u-bg-black" aria-label="copyright">
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x">
+                <div class="cell large-12 medium-12 small-12">
+                    <p><a class="t4Edit-page" href="#" rel="nofollow">&copy;</a> University of Stirling</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://portal.stir.ac.uk/media-dtp/foundation/js/vendor/jquery.js"></script> <!-- jQuery -->
+    <script src="https://portal.stir.ac.uk/media-dtp/foundation/js/foundation.min.js"></script>
+    <!-- foundation + all JavaScript plugins -->
+    <script src="https://portal.stir.ac.uk/media-dtp/foundation/js/app.js"></script> <!-- app.js -->
+    <script src="https://portal.stir.ac.uk/media-dtp/foundation/js/portal.js"></script><!-- portal scripts-->
+    <!-- autocomplete -->
+    <!--<script type="text/javascript" src="/media/wwwstiracuk/styleassets/javascript/fbac.js"></script>-->
+    <!-- Foot area content -->
+    <script>
+
+        $(document).foundation();
+
+    </script>
+    <!-----Custom jQuery page scripts----------->
+    <script src="/javascript/select2/js/select2.full.min.js"></script>
+    <script
+        src="https://portal.stir.ac.uk/media-dtp/plugins/foundation-datepicker/js/foundation-datepicker.js"></script>
+    <script src="https://portal.stir.ac.uk/javascript/intl-tel-input/js/intlTelInput.min.js"></script>
+    <script src="https://portal.stir.ac.uk/javascript/applicant-portal/libs/toastr.min.js"></script>
+    <script src="https://portal.stir.ac.uk/javascript/enquiry/enquiry.js"></script>
+
+    <!------------------------------------------>
+</body>
+
+</html>
