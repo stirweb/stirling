@@ -61,7 +61,7 @@
 
     <style>
         .barchart {
-            height: 20px;
+            height: 18px;
         }
 
         .barchart-value {
