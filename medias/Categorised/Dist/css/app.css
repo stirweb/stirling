@@ -8197,16 +8197,18 @@ article.c-convo small {
   place-items: center; }
 
 .align-right {
-  justify-content: flex-end; }
+  justify-content: end; }
 
 .align-stretch {
   align-items: stretch; }
 
-.align-top {
-  align-items: flex-start; }
+.align-top,
+.items-start {
+  align-items: start; }
 
-.align-bottom {
-  align-items: flex-end; }
+.align-bottom,
+.items-end {
+  align-items: end; }
 
 .align-justify {
   justify-content: space-between; }
