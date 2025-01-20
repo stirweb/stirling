@@ -239,27 +239,26 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 
 			routes && stir.getJSON(feeapi, data=>{
 				if(data.feeData) {
-					routes.forEach(route=>{
-						routedata = data.feeData.filter(item=>item.rouCode===route);
-						feedata = routedata.length && routedata[0].feeData
+					const route = routes.shift();
+					routedata = data.feeData.filter(item=>item.rouCode===route);
+					feedata = routedata.length && routedata[0].feeData
 
-						info.theyears = feedata && feedata.map(data=>data.academicYear).filter(onlyUnique);
-						info.stata = feedata && feedata.map(data=>data.feeStatus).filter(onlyUnique);
-						info.moda = feedata && feedata.map(data=>data.modeOfAttendance).filter(onlyUnique);
+					info.theyears = feedata && feedata.map(data=>data.academicYear).filter(onlyUnique);
+					info.stata = feedata && feedata.map(data=>data.feeStatus).filter(onlyUnique);
+					info.moda = feedata && feedata.map(data=>data.modeOfAttendance).filter(onlyUnique);
 
-						if(!routedata.length) {
-							debug && console.error(`[Fee API] ${route}: no match for this route code found in the fees data`);
-							stuff.select && stuff.select.remove();
+					if(!routedata.length) {
+						debug && console.error(`[Fee API] ${route}: no match for this route code found in the fees data`);
+						stuff.select && stuff.select.remove();
+					} else {
+						debug && console.info(`${route}: API fee data ${feedata.length>0?'available':'not available'}`);
+						if(feedata.length) {
+							updateOldTable(routedata.map(feetables).join(''));
+							stuff.select && updateOldSelect();
 						} else {
-							debug && console.info(`${route}: API fee data ${feedata.length>0?'available':'not available'}`);
-							if(feedata.length) {
-								updateOldTable(routedata.map(feetables).join(''));
-								stuff.select && updateOldSelect();
-							} else {
-								stuff.select && stuff.select.remove();
-							}
+							stuff.select && stuff.select.remove();
 						}
-					});
+					}
 				}
 			});
 		}
