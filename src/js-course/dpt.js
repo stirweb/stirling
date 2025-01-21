@@ -29,7 +29,7 @@ stir.dpt = (function () {
 
   const urls = {
     // Akari module viewer:
-    viewer: window.location.hostname != "www.stir.ac.uk" ? "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/33273" : "/courses/module/",
+    viewer: window.location.hostname != "www.stir.ac.uk" ? `https://${window.location.hostname}/terminalfour/preview/1/en/33273` : "/courses/module/",
     // Portal web frontend:
     calendar: `${PORTAL}/calendar/calendar`,
     // Portal data endpoints:

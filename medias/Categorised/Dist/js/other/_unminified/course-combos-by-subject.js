@@ -49,7 +49,7 @@
     return !courses.length ? `` : `<h2 id="${renderJumpURI(subject)}" class="u-margin-top">${subject}</h2>${courses.map(renderCourse).join("")}`;
   };
 
-  const makeLink = stir.curry((host, path, text) => (path ? `<a href="${host + path}">${text}</a>` : text));
+  const makeLink = stir.curry((host, path, text) => (path ? `<a href="${host + path}" class="u-border-bottom-hover">${text}</a>` : text));
 
   const makeLinkPortalApply = makeLink("https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=");
 
