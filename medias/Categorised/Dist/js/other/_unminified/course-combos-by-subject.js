@@ -1,13 +1,3 @@
-/*
-    @title: Course Combinations Listing
-    @author: Ryan Kaye
-    @author: Robert Morrison
-    @date: October 2021
-    @version: 1.1
-    @description: Builds listings of course apply links grouped by subject and including combinations
-
- */
-
 (function (scope) {
   if (!scope) return;
 
@@ -18,18 +8,18 @@
     "UDX12-PSY": "BA (Hons) Psychology",
   };
 
-  /*
-    
-         RENDERERS
-    
-       */
-
   const renderJumpLinkNav = (links) => {
     return `<nav class="u-columns-2 u-bg-grey u-bleed bg-grey u-padding-y">${links}</nav>`;
   };
 
   const renderJumpLink = (item) => {
     return `<a href="#${renderJumpURI(item)}" class="u-block u-py-tiny">${item}</a>`;
+  };
+
+  // Helper function to get title append if it exists
+  const getTitleAppend = (applyCode) => {
+    const match = titleAppends.find((item) => item.applyCode === applyCode);
+    return match ? ` ${match.append}` : "";
   };
 
   const renderCourse = (course) => {
@@ -44,7 +34,6 @@
                 </div>`;
   };
 
-  /*  Returns the html for a group of courses (unless the group is empty) */
   const renderCourseGroup = (subject, courses) => {
     return !courses.length ? `` : `<h2 id="${renderJumpURI(subject)}" class="u-margin-top">${subject}</h2>${courses.map(renderCourse).join("")}`;
   };
@@ -58,7 +47,13 @@
       course.applyCode &&
       course.applyCode
         .split(", ")
-        .map((code, index, codes) => (code ? `<li>${makeLinkPortalApply(code.trim(), courseTitles[code.trim()] || [course.prefix, course.title].join(" ").trim())} <small>${codes.length > 1 ? " (" + code + ")" : ""}</small></li>` : `<!-- ${course.title} -->`))
+        .map((code, index, codes) => {
+          const titleAppend = getTitleAppend(code.trim());
+          const baseTitle = courseTitles[code.trim()] || [course.prefix, course.title].join(" ").trim();
+          const fullTitle = baseTitle + titleAppend;
+
+          return code ? `<li>${makeLinkPortalApply(code.trim(), fullTitle)} <small>${codes.length > 1 ? " (" + code + ")" : ""}</small></li>` : `<!-- ${course.title} -->`;
+        })
         .join("\n")
     );
   };
@@ -67,13 +62,6 @@
 
   const renderJumpURI = (text) => text.replace(/[^a-zA-Z]/g, "-").toLowerCase();
 
-  /*
-    
-        HELPERS
-    
-       */
-
-  /* Returns an array of course objects with their respective combinations appended */
   const getCoursesCombos = stir.curry((_combos, _courses) =>
     stir.map((course) => {
       return { ...course, ...{ combinations: getCombosForCourse(_combos, course) } };
@@ -84,7 +72,6 @@
 
   const filterBySubject = stir.curry((_courses, _subject) => stir.filter(courseMatchesSubject(_subject), _courses));
 
-  /* Returns an array of combination course data (based on the URL) for a given parent course. */
   const getCombosForCourse = (_combos, _course) => _combos.filter((combo) => combo.courses && combo.courses.filter((course) => course.url === _course.url).length);
 
   const removeDuplicates = stir.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
@@ -102,35 +89,25 @@
     return true;
   });
 
-  /* 
-    
-        ON LOAD
-    
-       */
+  /*
+
+    ON LOAD
+
+    */
 
   const initialCourses = stir.t4globals.courses || [];
   const initialCombos = stir.t4globals.combos || [];
 
-  /* A sorted, unique Array of course subjects */
-  const subjects = stir.compose(
-    stir.sort(null),
-    filterEmpties,
-    removeDuplicates,
-    flatten, //some courses have multiple subjects
-    extractCourseSubjects,
-    stir.clone
-  )(initialCourses);
+  const titleAppends = stir.t4globals.titleAppends || [];
 
-  /* Courses data - remove any with no apply codes: */
+  const subjects = stir.compose(stir.sort(null), filterEmpties, removeDuplicates, flatten, extractCourseSubjects, stir.clone)(initialCourses);
+
   const courses = stir.filter(hasCode, initialCourses);
 
-  /* Combos data - clean up: */
   const combos = stir.filter((item) => item.title, initialCombos);
 
-  /* Curry-in the combos now; we'll use this function later to match the combos to (a filterd list of) courses:*/
   const expandCoursesWithCombos = getCoursesCombos(combos);
 
-  /* Curry-in the courses now, then later we'll selectivly pass subjects we want to filter on:*/
   const filterCoursesBySubject = filterBySubject(courses);
 
   const html = stir.map((subject) => renderCourseGroup(subject, expandCoursesWithCombos(filterCoursesBySubject(subject))), subjects).join(``);
@@ -138,9 +115,6 @@
 
   setDOMContent(resultsArea, jumpLinksHtml + html);
 
-  /* 
-          Finally get the accordions working
-       */
   Array.prototype.forEach.call(resultsArea.querySelectorAll('[data-behaviour="accordion"]'), function (accordion) {
     new stir.accord(accordion, false);
   });

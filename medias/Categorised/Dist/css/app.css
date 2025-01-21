@@ -981,8 +981,6 @@ body > nav > a.u-show-on-focus {
     list-style: none;
     line-height: 1.8333;
     padding-bottom: 4px; }
-  .site-footer [class*="uos-"] {
-    font-size: 24px; }
   .site-footer .site-footer__address {
     font-weight: 700;
     line-height: 1.6; }

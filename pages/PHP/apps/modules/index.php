@@ -265,14 +265,14 @@ $code = isset($_GET['code']) ? $_GET['code'] : '';
 $session = isset($_GET['session']) ? $_GET['session'] : '';
 $semester = isset($_GET['semester']) ? $_GET['semester'] : '';
 
-//$apiUrl = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";// Prod
+//$apiUrl = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester"; // Prod
 $apiUrl = "https://www.stir.ac.uk/data/pd-api-qa/?module=$code/$session/$semester"; // QA
 
 $content = file_get_contents($apiUrl);
 $init_data = json_decode($content);
 
 // JSON url
-echo "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester";
+echo $apiUrl;
 
 
 
