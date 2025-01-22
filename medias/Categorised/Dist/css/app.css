@@ -973,7 +973,7 @@ body > nav > a.u-show-on-focus {
 
 /* New Footer Jan 2025 rk8 */
 #site-footer {
-  color: #f5f3f3; }
+  color: #fff; }
   #site-footer *:focus {
     outline: 1px solid #fff !important; }
   #site-footer a {
