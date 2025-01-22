@@ -8,6 +8,8 @@
     "UDX12-PSY": "BA (Hons) Psychology",
   };
 
+  /* RENDERERS */
+
   const renderJumpLinkNav = (links) => {
     return `<nav class="u-columns-2 u-bg-grey u-bleed bg-grey u-padding-y">${links}</nav>`;
   };
@@ -61,6 +63,8 @@
   const comboApplyLinksList = (combos) => (combos ? combos.map((combo) => `<li>${makeLinkPortalApply(combo.codes.apply, [combo.prefix, combo.title].join(" ").trim())}</li>`).join("\n") : null);
 
   const renderJumpURI = (text) => text.replace(/[^a-zA-Z]/g, "-").toLowerCase();
+
+  /* HELPERS */
 
   const getCoursesCombos = stir.curry((_combos, _courses) =>
     stir.map((course) => {

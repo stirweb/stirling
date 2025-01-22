@@ -154,6 +154,14 @@ hr {
   border-color: #cacaca;
 }
 
+.u-bg-black hr {
+  border-color: #595858;
+}
+
+.hr-1 {
+  border-bottom: 1px solid;
+}
+
 @import "layout/cookies-banner";
 @import "layout/header";
 @import "layout/footer";
