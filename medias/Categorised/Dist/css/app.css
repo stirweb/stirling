@@ -977,7 +977,7 @@ body > nav > a.u-show-on-focus {
   #site-footer *:focus {
     outline: 1px solid #fff !important; }
   #site-footer a {
-    color: #fff;
+    color: #ffffff;
     text-decoration: none; }
     #site-footer a:hover {
       text-decoration: underline;
