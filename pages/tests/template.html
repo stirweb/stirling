@@ -7,7 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Finance Office | About | University of Stirling</title>
+    <title>Template | University of Stirling</title>
 
 
 
@@ -435,7 +435,7 @@
 
 
 
-
+    <!-- 
 
 
     <footer aria-label="Main footer" class="u-bg-black u-padding-y u-white--all">
@@ -571,20 +571,22 @@
 
         </div>
     </footer>
-
+-->
     <p>&nbsp;</p>
 
+    <style>
+
+    </style>
 
     <!-- Ver 2 -->
-    <footer aria-label="Main footer" class="u-bg-black u-padding-y u-white--all">
+    <footer aria-label="Main footer">
+        <div class="u-bg-black u-padding-y u-clip" id="site-footer">
 
-        <div class="grid-container">
-
-            <div class="u-grid u-grid-equal-cols u-gap ">
+            <div class="u-gap u-grid-5-cols grid-container ">
                 <div>
                     <p>Follow us</p>
 
-                    <div class="u-flex u-gap-8 u-text-regular">
+                    <div class="u-flex u-gap-8 u-text-regular site-footer_follow">
                         <a href="https://www.facebook.com/universityofstirling/">
                             <span class="show-for-sr">Facebook</span>
                             <span class="uos-facebook"></span>
@@ -626,7 +628,7 @@
                 <div>
                     <p>Popular links</p>
 
-                    <nav class="u-flex flex-dir-column u-gap">
+                    <nav class="u-flex flex-dir-column u-gap" aria-label="Popular links">
                         <a href="">Faculties</a>
                         <a href="">Professional services</a>
 
@@ -647,35 +649,28 @@
 
                 <div>
                     <p>Site information</p>
-                    <nav class="u-flex flex-dir-column u-gap">
-                        <a href="">Sitemap</a>
-
-                        <a href="">Policy, Legal and Cookies</a>
-
+                    <nav class="u-flex flex-dir-column u-gap" aria-label="Site information">
+                        <a href="/sitemap/">Sitemap</a>
+                        <a href="/about/policy-legal-and-cookies/">Policy, Legal and Cookies</a>
                         <a href="">Accessibility statement</a>
-
                         <a href="">Modern Slavery Statement</a>
-
                         <a href="">Scottish Charity No SC011159</a>
-
-
                     </nav>
                 </div>
 
+                <div class="hide-for-large"></div>
 
                 <div>
-
                     <p>Contact us</p>
 
-                    Tel: +44 (0) 1786 473171<br><br>
+                    <a href="tel:+44(0)1786473171" class="u-block u-mb-1">Tel: +44 (0) 1786 473171</a>
 
                     University of Stirling<br>
                     Stirling<br>
                     FK9 4LA<br>
-                    Scotland UK<br><br>
+                    Scotland UK<br>
 
-                    <a href="#">Ask us a question</a>
-
+                    <a href="#" class="u-block u-mt-1">Ask us a question ⟩</a>
                 </div>
 
                 <div>
@@ -690,28 +685,48 @@
                     </figure>
                 </div>
 
-
-
             </div>
 
-
-
-            <div class="u-my-2" style="border-top: 1px solid #605f5f;"> </div>
+            <div class="grid-container">
+                <hr class="hr-1">
+            </div>
 
             <div class="grid-container">
                 <div class="u-grid u-grid-equal-cols u-gap ">
-                    <div>© University of Stirling<br /><br />
+                    <div>
+                        <div class="u-relative u-left--16 u-top-32">
+                            <img src="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn/media/dist/images/accreditations/cred1x.png"
+                                srcset="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn/media/dist/images/accreditations/cred.png 2x"
+                                width="250" height="38" alt="Athena Swan Silver Award, UK QAA, SCQF" loading="lazy"
+                                usemap="#accreditations">
 
-                        <img src="accreds.jpg" width="200px" />
+                            <map name="accreditations">
+                                <area alt="Athena Swan Silver Award"
+                                    href="/about/professional-services/student-academic-and-corporate-services/policy-and-planning/equality-diversity-and-inclusion/gender-equality/athena-swan-charter/"
+                                    shape="rect" coords="18,0,78,38">
+                                <area alt="Facts and Figures" href="/about/our-reputation/facts-and-figures/"
+                                    shape="rect" coords="88,0,250,38">
+                            </map>
+
+                        </div>
                     </div>
 
-                    <div class=" u-flex items-end flex-dir-column u-relative u-top--32">
-
+                    <div class=" u-flex items-end flex-dir-column  ">
                         <img src="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn/media/dist/images/btd-strap-energy.svg"
-                            alt="Be the difference" loading=lazy>
+                            alt="Be the difference" loading=lazy id="imgBeTheDiff">
                     </div>
                 </div>
 
+            </div>
+
+            <div class="c-copyright u-bg-black">
+                <div class="grid-container">
+                    <div class="grid-x grid-padding-x">
+                        <div class="cell large-12 medium-12 small-12">
+                            <p>© University of Stirling</p>
+                        </div>
+                    </div>
+                </div>
             </div>
     </footer>
 
