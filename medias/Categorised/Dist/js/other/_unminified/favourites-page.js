@@ -23,7 +23,7 @@ const FavouritesArea = (scope, cookieType, data) => {
 
   const renderImage = (img, title) => {
     if (!img) return ``;
-    return `<div class="cell large-3 ">
+    return `<div class="cell large-3">
                 <div><img src="${img}" width="760" height="470" alt="Image of ${title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
             </div>`;
   };

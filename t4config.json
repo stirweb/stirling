@@ -1749,6 +1749,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/micro-gallery.js"
       },
       {
+        "id": 187098,
+        "description": "favourites-page.js",
+        "projectPath": "medias/Categorised/Dist/js/other/favourites-page.js"
+      },
+      {
         "id": 175961,
         "description": "redirects.csv",
         "projectPath": "medias/Categorised/Dist/php/smart-404/redirects.csv"
