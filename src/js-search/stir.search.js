@@ -385,7 +385,10 @@ stir.search = () => {
 		const ranks = data.response.resultPacket.resultsSummary.numRanks;
 		const summary = element.parentElement.parentElement.querySelector(".c-search-results-summary");
 		element.setAttribute("data-page", calcPage(start, ranks));
-		summary && (summary.innerHTML = stir.templates.search.summary(data));
+		if(summary){
+			summary.innerHTML = '';
+			summary.append(stir.templates.search.summary(data));
+		}
 		return data; // data pass-thru so we can compose() this function
 	});
 
