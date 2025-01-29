@@ -9,7 +9,7 @@ const FavouritesArea=(t,e,a)=>{if(t){var r=t.querySelector('[data-activity="mana
                 <p><strong>Content</strong></p> 
                 ${t.content}
               </div>
-              ${a=t.img,r=t.title,a?`<div class="cell large-3 ">
+              ${a=t.img,r=t.title,a?`<div class="cell large-3">
                 <div><img src="${a}" width="760" height="470" alt="Image of ${r}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
             </div>`:""}
               <div class="cell text-sm u-pt-2" id="favbtns${t.id}">
