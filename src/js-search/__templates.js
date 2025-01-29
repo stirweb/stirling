@@ -243,17 +243,31 @@ stir.templates.search = (() => {
     breadcrumb: (crumbs) => `<p class="u-m-0">${crumbs}</p>`,
     trailstring: (trail) => (trail.length ? trail.map(anchor).join(" > ") : ""),
 
+    message: (hit, count, queried) => {
+      const p = document.createElement('p');
+      p.classList.add(hit?"text-sm":"search_summary_noresults");
+      p.innerHTML = hit ? `There are <strong>${count} results</strong>`:"<strong>There are no results</strong>";
+      if(queried) p.insertAdjacentText("beforeend"," for ");
+      return p;
+    },
+
     summary: (data) => {
+      const summary = document.createElement("div");
       const { currEnd, totalMatching, currStart } = data.response.resultPacket.resultsSummary;
-      const querySanitised = stir.String.htmlEntities(data.question.originalQuery)
-        .replace(/^!padrenullquery$/, "")
-        .trim();
-      const queryEcho = ''; //querySanitised.length > 1 ? ` for <em>${querySanitised}</em>` : "";
-      const message = totalMatching > 0 ? `	<p class="text-sm">There are <strong>${totalMatching.toLocaleString("en")} results</strong>${queryEcho}.</p>` : `<p id="search_summary_noresults"><strong>There are no results${queryEcho}</strong>.</p>`;
+      const querySanitised = stir.String.htmlEntities(data.question.originalQuery).replace(/^!padrenullquery$/, "").trim() || "";
+      const queryEcho = document.createElement("em");
+      const message = stir.templates.search.message(totalMatching>0,totalMatching.toLocaleString("en"),querySanitised.length > 1);
       const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
-	    const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : '';
-      return `<div class="u-py-2"> ${hostinfo} ${message} ${tokens} ${spelling} </div>`;
+	    const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
+
+      queryEcho.textContent = querySanitised;
+      if(querySanitised.length > 1) message.append(queryEcho);
+      summary.classList.add("u-py-2");
+      summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
+      summary.append(message)
+      summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
+      return summary;
     },
     pagination: (summary) => {
       const { currEnd, totalMatching, progress } = summary;
