@@ -1,11 +1,26 @@
 ((scope)=>{
 
-    console.info('[Entry Requirements]');
+	console.info('[Entry requirements] begin:');
+	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
     const reqapi = "dev"===UoS_env.name?'../reqs.json':'<t4 type="media" id="181797" formatter="path/*" />'
 
-    const el = document.querySelector('[data-modules-route-code]');
-    const route = el && el.getAttribute('data-modules-route-code');
-    console.info('[Reqs API]',route);
+	const el = document.querySelector('[data-modules-route-code]');
+	const routes = (()=>{
+
+		if(!el) return false;
+		if(!el.hasAttribute('data-modules-route-code')) {
+			debug && console.error('[Entry requirements] No routecode');
+			return false;
+		}
+		if(el.getAttribute('data-modules-route-code').indexOf(',')!==-1) {
+			debug && console.info('[Entry requirements] Multiple route codes');
+		}
+		return el.getAttribute('data-modules-route-code').split(',').map(item=>item.trim());
+
+	})();
+
+	const route = routes.shift();
+	console.info('[Entry requirements] route code',route);
     route && stir.getJSON(reqapi, data=>{
         if(data.entryRequirements) {
             const reqs = data.entryRequirements.filter(item=>item.rouCode===(route.split(',').pop().trim())).pop();
