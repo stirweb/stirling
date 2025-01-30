@@ -43,6 +43,18 @@ const AccommodationFinder = (scope) => {
 
   const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
 
+  const renderMicro = (consts) => (item) => {
+    if (!item) return ``;
+    const cookie = stir.favourites.getFav(item.id, consts.cookieType);
+    return `<div class="cell medium-4">
+              <p><strong><a href="${item.url}">${item.title}</a></strong></p>
+              
+               <div class=" text-sm u-pt-2" id="favbtns${item.id}">
+                ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
+              </div>
+            </div>`;
+  };
+
   const renderAccom = (consts) => (item) => {
     if (!item) return ``;
     const cookie = stir.favourites.getFav(item.id, consts.cookieType);
@@ -188,7 +200,10 @@ const AccommodationFinder = (scope) => {
     const favs = stir.favourites.getFavsList(consts.cookieType);
     const filteredData = favs.map((fav) => data.find((entry) => Number(entry.id) === Number(fav.id))).filter(filterEmpties);
 
+    console.log(filteredData);
+
     const renderer = consts.view === "micro" ? renderMicro(consts) : renderAccom(consts);
+
     const html = filteredData.map(renderer).join(``);
 
     return setDOMContent(domElements.resultsArea)(html || stir.templates.renderNoFavs);
