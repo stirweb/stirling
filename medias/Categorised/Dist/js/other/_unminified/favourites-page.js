@@ -1,10 +1,13 @@
 const FavouritesArea = (scope, cookieType, data) => {
   if (!scope) return;
 
-  const resultsArea = scope.querySelector('[data-activity="managefavs"]');
+  const resultsArea = scope.querySelector("[data-activity]");
+
+  console.log(resultsArea);
 
   // Constants
   const CONSTS = {
+    allowedCookieTypes: ["accom", "course"],
     cookieType: cookieType,
     urlToFavs: resultsArea.dataset.favsurl || ``,
     activity: resultsArea.dataset.activity || ``,
@@ -14,18 +17,24 @@ const FavouritesArea = (scope, cookieType, data) => {
   // DOM Elements
   const DOM_ELEMENTS = {
     resultsArea: resultsArea,
-    favBtnsNode: scope.querySelector('[data-area="favActionBtns"]'),
+    favBtnsNode: scope.querySelector("[data-area=favActionBtns]"),
   };
 
   /* 
         Rendering Functions
     */
 
+  const renderMicro = (consts) => (item) => {
+    return `<div class="cell large-3 text-sm u-bg-grey u-p-1 u-mb-1">
+                     <p class="u-text-regular  "><strong><a href="${item.url}">${item.title}</a></strong></p>
+            </div>`;
+  };
+
   const renderImage = (img, title) => {
     if (!img) return ``;
     return `<div class="cell large-3">
                 <div><img src="${img}" width="760" height="470" alt="Image of ${title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
-            </div>`;
+             </div>`;
   };
 
   const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
@@ -40,7 +49,7 @@ const FavouritesArea = (scope, cookieType, data) => {
               <div class="cell u-pt-2">
                 <p class="u-text-regular u-mb-2 "><strong><a href="${item.url}">${item.title}</a></strong></p>
               </div>
-              <div class="cell ${item.img ? `large-9` : `large-12`}  text-sm">
+              <div class="cell ${item.img ? `large-9` : `large-12`} text-sm">
                 <p><strong>Content</strong></p> 
                 ${item.content}
               </div>
@@ -75,7 +84,7 @@ const FavouritesArea = (scope, cookieType, data) => {
 
   const renderMiniFav = (item) => (!item.id ? "" : `<p class="text-sm"><strong><a href="${item.url}">${item.title}</a></strong></p>`);
 
-  const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
+  //const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
   const renderNoFavs = () => stir.templates.renderNoFavs;
   const renderLinkToFavs = () => stir.templates.renderLinkToFavs;
   const renderNoShared = () => stir.templates.renderNoShared;
@@ -105,6 +114,23 @@ const FavouritesArea = (scope, cookieType, data) => {
         Data Processing Functions
     */
   const getfavsCookie = () => stir.favourites.getFavsList(CONSTS.cookieType);
+
+  const getAllRecentFavs = (cookieTypes) => {
+    // Get all cookies and combine into single array
+    const allFavs = cookieTypes.reduce((acc, type) => {
+      const typeFavs = stir.favourites.getFavsList(type).map((fav) => ({
+        ...fav,
+        type,
+      }));
+      return [...acc, ...typeFavs];
+    }, []);
+
+    // Sort by date descending and take first 4
+    return allFavs.sort((a, b) => b.date - a.date).slice(0, 4);
+  };
+
+  // Usage example:
+  //const recentFavs = getAllRecentFavs();
 
   const getShareList = (data) => {
     const sharedListQuery = SafeQueryParams.get("a") || "";
@@ -144,7 +170,22 @@ const FavouritesArea = (scope, cookieType, data) => {
     const favs = stir.favourites.getFavsList(consts.cookieType);
     const filteredData = favs.map((fav) => data.find((entry) => Number(entry.id) === Number(fav.id))).filter(filterEmpties);
 
-    const renderer = consts.view === "micro" ? renderMicro(consts) : renderItem(consts);
+    const view = domElements.resultsArea.dataset.view || ``;
+    const renderer = view === "micro" ? renderMicro(consts) : renderItem(consts);
+
+    if (domElements.resultsArea.dataset.activity === "latestfavs") {
+      const recentFavs = getAllRecentFavs(consts.allowedCookieTypes);
+      const filteredData = recentFavs
+        .map((fav) => ({
+          ...data.find((entry) => Number(entry.id) === Number(fav.id)),
+          type: fav.type,
+          dateSaved: fav.date,
+        }))
+        .filter(filterEmpties);
+
+      const html = filteredData.map(renderer).join(``);
+      return setDOMContent(domElements.resultsArea)(html || stir.templates.renderNoFavs);
+    }
 
     const html = filteredData.map(renderer).join(``);
 
@@ -182,8 +223,6 @@ const FavouritesArea = (scope, cookieType, data) => {
     if (!target || !target.dataset || !target.dataset.action) return;
 
     if (target.dataset.action === "clearallfavs") {
-      console.log(consts.cookieType);
-
       if (target.dataset.fav !== consts.cookieType) return;
 
       stir.favourites.removeType(consts.cookieType);
@@ -238,7 +277,7 @@ const FavouritesArea = (scope, cookieType, data) => {
           Initialization
       */
   function init(initialData, consts, domElements) {
-    if (consts.activity === "managefavs") {
+    if (consts.activity === "managefavs" || consts.activity === "latestfavs") {
       doFavourites(consts, initialData, domElements);
     }
 
@@ -265,3 +304,4 @@ const FavouritesArea = (scope, cookieType, data) => {
 // Run the FavouritesArea
 FavouritesArea(stir.node("#acccomArea"), "accom", accommodationData);
 FavouritesArea(stir.node("#courseArea"), "course", courseData);
+FavouritesArea(stir.node("#latestFavs"), "all", [...courseData, ...accommodationData]);
