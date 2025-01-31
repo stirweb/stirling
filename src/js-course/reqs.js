@@ -19,20 +19,20 @@
 
 	})();
 
-	const route = routes.shift();
+	const route = routes.shift().trim();
 	console.info('[Entry requirements] route code',route);
     route && stir.getJSON(reqapi, data=>{
         if(data.entryRequirements) {
-            const reqs = data.entryRequirements.filter(item=>item.rouCode===(route.split(',').pop().trim())).pop();
+            const reqs = data.entryRequirements.filter(item=>item.rouCode===(route)).pop();
             if(!reqs) {
-                return scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 ${route.split(',').pop().trim()}: no match for this route code found in the requirements data</pre></p>`);
+                return scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 ${route}: no match for this route code found in the requirements data</pre></p>`);
             }
             var feeccordion = document.createElement('div');
             feeccordion.setAttribute('data-behaviour','accordion');
             feeccordion.innerHTML = 
             `<h3>API data</h3>
             <div>
-            <p>Entry requirments status: ${reqs.entryRequirmentsStatus}<br>Academic year: ${reqs.ayr}<br>Data updated: ${reqs.updatedDate}</p><hr>`+
+            <p>Route: <strong>${route}</strong><br>Entry requirments status: ${reqs.entryRequirmentsStatus}<br>Academic year: ${reqs.ayr}<br>Data updated: ${reqs.updatedDate}</p><hr>`+
             '<div style="column-count:3">'+
             reqs.entryRequirements.map(
                 req => `<p style="font-size:.8rem;break-inside:avoid-column;"><strong>${req.entryRequirementCode}</strong> ${req.entryRequirementName}<br>${req.note}</p>`
