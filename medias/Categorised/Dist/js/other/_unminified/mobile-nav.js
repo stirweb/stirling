@@ -62,7 +62,14 @@
       : ``;
   };
 
-  const renderMenu = (links) => links.map(renderLink).join("");
+  function removeDuplicatesByKey(array, key) {
+    return [...new Map(array.map((item) => [item[key], item])).values()];
+  }
+
+  const renderMenu = (linksAll) => {
+    const links = removeDuplicatesByKey(linksAll, "p");
+    return links.map(renderLink).join("");
+  };
 
   /*
       State Helpers   
@@ -122,7 +129,7 @@
     const baseSection = getParentSection(currentUrl);
     const ajaxUrl = getMenuAjaxUrl(baseSection);
 
-    console.log(currentUrl);
+    //console.log(currentUrl);
 
     if (currentUrl.includes("https://")) {
       window.location = currentUrl;
