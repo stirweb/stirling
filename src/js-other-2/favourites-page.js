@@ -3,6 +3,8 @@ const FavouritesArea = (scope, cookieType) => {
 
   const resultsArea = scope.querySelector("[data-activity]");
 
+  console.log(UoS_env.name);
+
   // Constants
   const CONSTS = {
     allowedCookieTypes: ["accom", "course", "schol", "page"],
@@ -10,6 +12,7 @@ const FavouritesArea = (scope, cookieType) => {
     urlToFavs: resultsArea.dataset.favsurl || ``,
     activity: resultsArea.dataset.activity || ``,
     view: stir.templates?.view || ``,
+    fbhost: UoS_env.name === "prod" || UoS_env.name === "dev" ? "https://search.stir.ac.uk" : "https://stage-shared-15-24-admin.clients.uk.funnelback.com",
   };
 
   // DOM Elements
@@ -126,8 +129,6 @@ const FavouritesArea = (scope, cookieType) => {
   function doFavourites(consts, domElements, action) {
     const favs = stir.favourites.getFavsListAll();
 
-    console.log(action);
-
     if (!favs.length) {
       setDOMContent(domElements.resultsArea, `<div class="cell">No favourites saved.</div>`);
       return;
@@ -141,7 +142,7 @@ const FavouritesArea = (scope, cookieType) => {
       .map((item) => item.id)
       .join("+");
 
-    const fbUrl = `http://search.stir.ac.uk/s/search.json?collection=stir-main&SF=[sid,type]&query=&meta_sid_or=${query}`;
+    const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&SF=[sid,type]&query=&meta_sid_or=${query}`;
 
     // Funnelback search
     stir.getJSON(fbUrl, (results) => {
@@ -202,7 +203,7 @@ const FavouritesArea = (scope, cookieType) => {
       const sharedList = atob(sharedListQuery);
       const query = sharedList.replaceAll(",", "+");
 
-      const fbUrl = `http://search.stir.ac.uk/s/search.json?collection=stir-main&SF=[sid,type]&query=&meta_sid_or=${query}`;
+      const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&SF=[sid,type]&query=&meta_sid_or=${query}`;
 
       // Funnelback search
       stir.getJSON(fbUrl, (results) => {
@@ -285,7 +286,6 @@ const FavouritesArea = (scope, cookieType) => {
     };
 
     if (target.dataset.action === "addtofavs") {
-      console.log(consts.cookieType);
       stir.favourites.addToFavs(target.dataset.id, consts.cookieType);
       updateFavButtonDisplay(target.dataset.id);
     }
