@@ -231,7 +231,7 @@ stir.templates.search = (() => {
       if (!facets[facet]) return label;
       const labels = facets[facet];
       if (labels.findIndex) {
-        return labels[labels.findIndex((val) => label === val.toLowerCase())]||label;
+        return labels[labels.findIndex((val) => label === val.toLowerCase())] || label;
       } else if (labels[label]) return labels[label];
       return label;
     };
@@ -261,28 +261,31 @@ stir.templates.search = (() => {
     trailstring: (trail) => (trail.length ? trail.map(anchor).join(" > ") : ""),
 
     message: (hit, count, queried) => {
-      const p = document.createElement('p');
-      p.classList.add(hit?"text-sm":"search_summary_noresults");
-      p.innerHTML = hit ? `There are <strong>${count} results</strong>`:"<strong>There are no results</strong>";
-      if(queried) p.insertAdjacentText("beforeend"," for ");
+      const p = document.createElement("p");
+      p.classList.add(hit ? "text-sm" : "search_summary_noresults");
+      p.innerHTML = hit ? `There are <strong>${count} results</strong>` : "<strong>There are no results</strong>";
+      if (queried) p.insertAdjacentText("beforeend", " for ");
       return p;
     },
 
     summary: (data) => {
       const summary = document.createElement("div");
       const { currEnd, totalMatching, currStart } = data.response.resultPacket.resultsSummary;
-      const querySanitised = stir.String.htmlEntities(data.question.originalQuery).replace(/^!padrenullquery$/, "").trim() || "";
+      const querySanitised =
+        stir.String.htmlEntities(data.question.originalQuery)
+          .replace(/^!padrenullquery$/, "")
+          .trim() || "";
       const queryEcho = document.createElement("em");
-      const message = stir.templates.search.message(totalMatching>0,totalMatching.toLocaleString("en"),querySanitised.length > 1);
+      const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
       const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
-	    const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
+      const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
 
       queryEcho.textContent = querySanitised;
-      if(querySanitised.length > 1) message.append(queryEcho);
+      if (querySanitised.length > 1) message.append(queryEcho);
       summary.classList.add("u-py-2");
       summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
-      summary.append(message)
+      summary.append(message);
       summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
       return summary;
     },
@@ -423,7 +426,7 @@ stir.templates.search = (() => {
 			${item.metaData.code ? " - " + item.metaData.code : ""}
 			</a></strong>
 		  </p>
-		  <p class="u-m-0">${item.summary}</p>
+		  <p class="u-m-0 c-course-summary">${item.summary}</p>
 		  ${stir.templates.search.clearing(item) || ""}
 		  <div class="c-search-result__meta grid-x">
 			${stir.templates.search.courseFact("Start dates", item.metaData.start, false)}
@@ -607,7 +610,7 @@ stir.templates.search = (() => {
 						</div>
 					</div>
 					<p class=text-sm>${item.summary}</p>
-					${item.metaData.register ? `<p class="u-m-0 text-sm"><a href="${item.metaData.register}" class="u-m-0 button hollow tiny">Register now</a></p>` : ''}
+					${item.metaData.register ? `<p class="u-m-0 text-sm"><a href="${item.metaData.register}" class="u-m-0 button hollow tiny">Register now</a></p>` : ""}
 				</div>
 				${image(item.metaData.image && item.metaData.image.split("|")[0], item.title.split(" | ")[0])}
 				${item.metaData?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
@@ -651,9 +654,9 @@ stir.templates.search = (() => {
 					<accordion-summary>${item.name}</accordion-summary>
 					<div>
 						<ul>${item.allValues
-							.filter((facetValue) => facetCategoryLabel(item.name, facetValue.label))
-							.map(stir.templates.search.labelledFacetItems(item))
-							.join("")}</ul>
+              .filter((facetValue) => facetCategoryLabel(item.name, facetValue.label))
+              .map(stir.templates.search.labelledFacetItems(item))
+              .join("")}</ul>
 					</div>
 				</div>
 			</fieldset>`,

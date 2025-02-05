@@ -4,7 +4,7 @@ const AccommodationFinder = (scope) => {
   // Constants
   const CONSTS = {
     cookieType: "accom",
-    urlToFavs: scope.dataset.favsurl || ``,
+    urlToFavs: `/favourites/`,
     activity: scope.dataset.activity || ``,
     view: stir.templates?.view || ``,
   };
@@ -43,21 +43,12 @@ const AccommodationFinder = (scope) => {
 
   const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
 
-  const renderMicro = (consts) => (item) => {
-    if (!item) return ``;
-    const cookie = stir.favourites.getFav(item.id, consts.cookieType);
-    return `<div class="cell medium-4">
-              <p><strong><a href="${item.url}">${item.title}</a></strong></p>
-              
-               <div class=" text-sm u-pt-2" id="favbtns${item.id}">
-                ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
-              </div>
-            </div>`;
-  };
+  const renderMigrateText = () => `<p class="text-sm u-heritage-green"><a href="/favouites/migrate/">Migrate your favourites to our new system.</a></p>`;
 
   const renderAccom = (consts) => (item) => {
     if (!item) return ``;
     const cookie = stir.favourites.getFav(item.id, consts.cookieType);
+
     return `
       <div class="cell" id="fav-${item.id}">
         <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
@@ -79,7 +70,7 @@ const AccommodationFinder = (scope) => {
               <div><img src="${item.img}" width="760" height="470" alt="Image of ${item.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
             </div>
             <div class="cell text-sm u-pt-2" id="favbtns${item.id}">
-              ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
+              ${consts.migrateFavs ? renderMigrateText() : renderFavBtns(consts.urlToFavs, cookie, item.id)}
             </div>
           </div>
         </div>
@@ -87,34 +78,12 @@ const AccommodationFinder = (scope) => {
     `;
   };
 
-  const renderShared = (item) =>
-    !item.id
-      ? ``
-      : `
-      <div class="cell small-6">
-        <div class="u-green-line-top u-margin-bottom">
-          <p class="u-text-regular u-py-1"><strong><a href="${item.url}">${item.title}</a></strong></p>
-          <div class="u-mb-1">${item.location} accommodation.</div>
-          <div>${stir.favourites.isFavourite(item.id) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.id, ``)}</div>
-        </div>
-      </div>`;
-
-  const renderShareDialog = (link) =>
-    !link
-      ? ``
-      : `
-      <p><strong>Share link</strong></p>  
-      ${navigator.clipboard ? '<p class="text-xsm">The following share link has been copied to your clipboard:</p>' : ``}   
-      <p class="text-xsm">${link}</p>`;
-
-  const renderMiniFav = (item) => (!item.id ? "" : `<p class="text-sm"><strong><a href="${item.url}">${item.title}</a></strong></p>`);
-
   const renderNumItems = (num) => `<div class="cell u-mb-3">Results based on filters - <strong>${num} ${num === 1 ? `property` : `properties`}</strong></div>`;
 
   const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
-  const renderNoFavs = () => stir.templates.renderNoFavs;
-  const renderLinkToFavs = () => stir.templates.renderLinkToFavs;
-  const renderNoShared = () => stir.templates.renderNoShared;
+  // const renderNoFavs = () => stir.templates.renderNoFavs;
+  // const renderLinkToFavs = () => stir.templates.renderLinkToFavs;
+  // const renderNoShared = () => stir.templates.renderNoShared;
 
   /*
       Handle Inputs and Outputs
@@ -140,35 +109,6 @@ const AccommodationFinder = (scope) => {
   /* 
       Data Processing Functions
   */
-  const getfavsCookie = () => stir.favourites.getFavsList(CONSTS.cookieType);
-
-  const getShareList = (data) => {
-    const sharedListQuery = SafeQueryParams.get("a") || "";
-    if (!sharedListQuery) return null;
-
-    try {
-      const sharedList = atob(sharedListQuery);
-      return sharedList.split(",").map((item) => ({
-        ...data.find((element) => item === element.id),
-        id: item,
-      }));
-    } catch (e) {
-      return null;
-    }
-  };
-
-  const getFavsList = (data) => {
-    const favsCookie = getfavsCookie();
-    if (favsCookie.length < 1) return null;
-
-    return favsCookie
-      .sort((a, b) => b.date - a.date)
-      .map((item) => ({
-        ...data.find((element) => item.id === element.id),
-        id: item.id,
-        dateSaved: item.date,
-      }));
-  };
 
   const filterByBathroom = (filterValue) => (item) => {
     if (filterValue === `` || !item.rooms) return item;
@@ -193,48 +133,16 @@ const AccommodationFinder = (scope) => {
   const filterEmpties = (item) => item && item.title;
 
   /* 
+
     Controller Functions
+
   */
-
-  function doFavourites(consts, data, domElements) {
-    const favs = stir.favourites.getFavsList(consts.cookieType);
-    const filteredData = favs.map((fav) => data.find((entry) => Number(entry.id) === Number(fav.id))).filter(filterEmpties);
-
-    console.log(filteredData);
-
-    const renderer = consts.view === "micro" ? renderMicro(consts) : renderAccom(consts);
-
-    const html = filteredData.map(renderer).join(``);
-
-    return setDOMContent(domElements.resultsArea)(html || stir.templates.renderNoFavs);
-  }
 
   function doSearch(consts, filters, data, domElements) {
     const filteredData = data.map(filterByPrice(filters.price)).map(filterByStudType(filters.studentType)).map(filterByBathroom(filters.bathroom)).filter(filterByLocation(filters.location)).filter(filterEmpties);
 
     const html = filteredData.map(renderAccom(consts)).join(``);
     return setDOMContent(domElements.resultsArea)(renderNumItems(filteredData.length) + html);
-  }
-
-  function doShared(sharedArea, sharedfavArea, data) {
-    if (sharedArea) {
-      const shareList = getShareList(data);
-      if (!shareList) {
-        setDOMContent(sharedArea, renderNoShared());
-      } else {
-        setDOMContent(sharedArea, shareList.map(renderShared).join(``));
-      }
-    }
-
-    if (sharedfavArea) {
-      const list = getFavsList(data);
-      if (!list) {
-        setDOMContent(sharedfavArea, renderNoFavs());
-      } else {
-        setDOMContent(sharedfavArea, list.map(renderMiniFav).join(``) + renderLinkToFavs());
-      }
-    }
-    return;
   }
 
   /* 
@@ -259,33 +167,7 @@ const AccommodationFinder = (scope) => {
     doSearch(consts, filters, initialData, domElements);
   };
 
-  const handleFavButtonClick = (consts, initialData, domElements) => (event) => {
-    const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
-
-    if (!target || !target.dataset || !target.dataset.action) return;
-
-    if (target.dataset.action === "clearallfavs") {
-      stir.favourites.removeType(consts.cookieType);
-      doFavourites(consts, initialData, domElements);
-    }
-
-    if (target.dataset.action === "copysharelink") {
-      const favsCookie = getfavsCookie();
-      const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
-      const link = "https://www.stir.ac.uk/shareaccommodation/" + base64Params;
-
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(link);
-      }
-
-      const dialog = stir.t4Globals.dialogs.find((item) => item.getId() === "shareDialog");
-      if (dialog) {
-        dialog.open();
-        dialog.setContent(renderShareDialog(link));
-      }
-    }
-  };
-
+  /* handleSearchResultFavClick */
   const handleSearchResultFavClick = (consts, domElements, data) => (event) => {
     const target = event.target.closest("button");
     if (!target || !target.dataset || !target.dataset.action) return;
@@ -317,14 +199,6 @@ const AccommodationFinder = (scope) => {
         Initialization
     */
   function init(initialData, consts, domElements) {
-    if (consts.activity === "managefavs") {
-      doFavourites(consts, initialData, domElements);
-    }
-
-    if (consts.activity === "shared") {
-      doShared(domElements.sharedArea, domElements.sharedfavArea, initialData);
-    }
-
     if (consts.activity === "search") {
       // Initialize search form
       const allRooms = initialData.flatMap((item) => item.rooms);

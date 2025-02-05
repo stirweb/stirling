@@ -109,6 +109,11 @@ stir.favourites = (() => {
   };
 
   /* getFavsList: Returns an array of objects. PARAM: cookieType = accomm, course etc */
+  const getFavsListAll = () => {
+    return getfavsCookie(COOKIE_ID);
+  };
+
+  /* getFavsList: Returns an array of objects. PARAM: cookieType = accomm, course etc */
   const getFavsList = (cookieType) => {
     const favsCookieAll2 = getfavsCookie(COOKIE_ID);
 
@@ -126,8 +131,9 @@ stir.favourites = (() => {
     return favsCookieSorted;
   };
 
+  /* getFav */
   const getFav = (id, cookieType) => {
-    const cookies = stir.favourites.getFavsList(cookieType);
+    const cookies = getfavsCookie(COOKIE_ID);
     return cookies.filter((entry) => Number(entry.id) === Number(id));
   };
 
@@ -135,7 +141,7 @@ stir.favourites = (() => {
   const addToFavs = (id, type) => {
     if (!isFavourite(Number(id))) {
       const favsCookie2 = [...getfavsCookie(COOKIE_ID), { id: id, date: Date.now(), type: type }];
-      document.cookie = COOKIE_ID + JSON.stringify(favsCookie2) + calcExpiryDate(COOKIE_EXPIRY_DAYS) + ";path=/";
+      document.cookie = COOKIE_ID + JSON.stringify(favsCookie2) + calcExpiryDate(COOKIE_EXPIRY_DAYS) + ";path=/;SameSite=Lax";
       return true;
     }
     return false;
@@ -145,16 +151,17 @@ stir.favourites = (() => {
   const removeFromFavs = (id) => {
     if (id && id.length) {
       const favsCookie = JSON.stringify(getfavsCookie(COOKIE_ID).filter((item) => Number(item.id) !== Number(id)));
-      document.cookie = COOKIE_ID + favsCookie + calcExpiryDate(COOKIE_EXPIRY_DAYS) + ";path=/";
+      document.cookie = COOKIE_ID + favsCookie + calcExpiryDate(COOKIE_EXPIRY_DAYS) + ";path=/;SameSite=Lax";
       return true;
     }
     return false;
   };
 
-  /* removeAll */
+  /* removeType */
   const removeType = (type) => {
-    const favsCookie = JSON.stringify(getfavsCookie(COOKIE_ID).filter((item) => item.type !== type));
-    document.cookie = COOKIE_ID + favsCookie + calcExpiryDate(COOKIE_EXPIRY_DAYS) + ";path=/";
+    const favsCookie = JSON.stringify(getfavsCookie(COOKIE_ID).filter((item) => !type.includes(item.type)));
+
+    document.cookie = COOKIE_ID + favsCookie + calcExpiryDate(COOKIE_EXPIRY_DAYS) + ";path=/;SameSite=Lax";
     return true;
   };
 
@@ -167,6 +174,7 @@ stir.favourites = (() => {
   return {
     getFav: (id, cookieType) => getFav(id, cookieType),
     getFavsList: (type) => getFavsList(type),
+    getFavsListAll: () => getFavsListAll(),
     renderAddBtn: (sid, urlToFavs) => renderAddBtn(sid, urlToFavs),
     renderRemoveBtn: (sid, dateSaved, urlToFavs) => renderRemoveBtn(sid, dateSaved, urlToFavs),
     addToFavs: (id, type) => addToFavs(id, type),
