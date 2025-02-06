@@ -142,7 +142,7 @@ const FavouritesArea = (scope, cookieType) => {
       .map((item) => item.id)
       .join("+");
 
-    const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&SF=[sid,type]&query=&meta_sid_or=${query}`;
+    const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=${query}`;
 
     // Funnelback search
     stir.getJSON(fbUrl, (results) => {
@@ -161,7 +161,7 @@ const FavouritesArea = (scope, cookieType) => {
             return {
               id: item,
               date: favs.filter((fav) => fav.id === item)[0].date,
-              title: element.title.split(" | ")[0],
+              title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
               content: element.summary,
               url: element.liveUrl + `?orgin=favourites`,
               type: element.metaData.type,
@@ -205,7 +205,7 @@ const FavouritesArea = (scope, cookieType) => {
       const sharedList = atob(sharedListQuery);
       const query = sharedList.replaceAll(",", "+");
 
-      const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&SF=[sid,type]&query=&meta_sid_or=${query}`;
+      const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=${query}`;
 
       // Funnelback search
       stir.getJSON(fbUrl, (results) => {
@@ -223,7 +223,7 @@ const FavouritesArea = (scope, cookieType) => {
               return {
                 id: item,
                 date: Date.now(),
-                title: element.title.split(" | ")[0],
+                title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
                 content: element.summary,
                 url: element.liveUrl + `?orgin=shared`,
                 type: element.metaData.type,
@@ -301,6 +301,7 @@ const FavouritesArea = (scope, cookieType) => {
       if (consts.activity === "managefavs") {
         const node = stir.node("#fav-" + target.dataset.id);
         if (node) setDOMContent(node)("");
+        doFavourites(consts, domElements, "latestfavs");
       }
     }
   };
@@ -327,7 +328,6 @@ const FavouritesArea = (scope, cookieType) => {
   }
 
   /* Run initialization */
-
   init(CONSTS, DOM_ELEMENTS);
 };
 
