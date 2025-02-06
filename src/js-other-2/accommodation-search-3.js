@@ -18,9 +18,6 @@ const AccommodationFinder = (scope) => {
     searchStudentType: stir.node("#search-student-type"),
     searchBathroom: stir.node("#search-bathroom"),
     searchPriceNode: stir.node("#search-price-value"),
-    favBtnsNode: stir.node("#accomfavbtns"),
-    sharedArea: stir.node("[data-activity=shared]"),
-    sharedfavArea: stir.node("#accomsharedfavsarea"),
   };
 
   /* 
@@ -42,8 +39,6 @@ const AccommodationFinder = (scope) => {
   const renderStudentTypes = (rooms) => (rooms ? stir.removeDuplicates(rooms.flatMap((item) => item.studType.split(",")).map((item) => item.trim())).join("<br />") : ``);
 
   const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
-
-  const renderMigrateText = () => `<p class="text-sm u-heritage-green"><a href="/favouites/migrate/">Migrate your favourites to our new system.</a></p>`;
 
   const renderAccom = (consts) => (item) => {
     if (!item) return ``;
@@ -70,7 +65,7 @@ const AccommodationFinder = (scope) => {
               <div><img src="${item.img}" width="760" height="470" alt="Image of ${item.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
             </div>
             <div class="cell text-sm u-pt-2" id="favbtns${item.id}">
-              ${consts.migrateFavs ? renderMigrateText() : renderFavBtns(consts.urlToFavs, cookie, item.id)}
+              ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
             </div>
           </div>
         </div>
@@ -79,11 +74,6 @@ const AccommodationFinder = (scope) => {
   };
 
   const renderNumItems = (num) => `<div class="cell u-mb-3">Results based on filters - <strong>${num} ${num === 1 ? `property` : `properties`}</strong></div>`;
-
-  const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
-  // const renderNoFavs = () => stir.templates.renderNoFavs;
-  // const renderLinkToFavs = () => stir.templates.renderLinkToFavs;
-  // const renderNoShared = () => stir.templates.renderNoShared;
 
   /*
       Handle Inputs and Outputs
@@ -134,7 +124,7 @@ const AccommodationFinder = (scope) => {
 
   /* 
 
-    Controller Functions
+      Controller Functions
 
   */
 
@@ -155,6 +145,9 @@ const AccommodationFinder = (scope) => {
     setDOMContent(domElements.searchPriceNode)(filters.price);
   };
 
+  /* 
+      handleSearchFormChange 
+  */
   const handleSearchFormChange = (consts, initialData, domElements) => (event) => {
     const filters = {
       price: domElements.searchPrice.value,
@@ -167,26 +160,30 @@ const AccommodationFinder = (scope) => {
     doSearch(consts, filters, initialData, domElements);
   };
 
-  /* handleSearchResultFavClick */
-  const handleSearchResultFavClick = (consts, domElements, data) => (event) => {
+  /* 
+      updateFavouriteBtn 
+  */
+  const updateFavouriteBtn = (id, consts) => {
+    const cookie = stir.favourites.getFav(id, consts.cookieType);
+    const node = stir.node("#favbtns" + id);
+    if (node) setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
+  };
+
+  /* 
+      handleFavouriteBtnClick 
+  */
+  const handleFavouriteBtnClick = (consts) => (event) => {
     const target = event.target.closest("button");
     if (!target || !target.dataset || !target.dataset.action) return;
 
-    const updateFavButtonDisplay = (id) => {
-      const cookie = stir.favourites.getFav(id, consts.cookieType);
-      const node = stir.node("#favbtns" + id);
-      if (node) setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
-      if (domElements.sharedArea) doShared(domElements.sharedArea, domElements.sharedfavArea, data);
-    };
-
     if (target.dataset.action === "addtofavs") {
       stir.favourites.addToFavs(target.dataset.id, consts.cookieType);
-      updateFavButtonDisplay(target.dataset.id);
+      updateFavouriteBtn(target.dataset.id, consts);
     }
 
     if (target.dataset.action === "removefav") {
       stir.favourites.removeFromFavs(target.dataset.id);
-      updateFavButtonDisplay(target.dataset.id);
+      updateFavouriteBtn(target.dataset.id, consts);
 
       if (consts.activity === "managefavs") {
         const node = stir.node("#fav-" + target.dataset.id);
@@ -197,10 +194,9 @@ const AccommodationFinder = (scope) => {
 
   /* 
         Initialization
-    */
+  */
   function init(initialData, consts, domElements) {
     if (consts.activity === "search") {
-      // Initialize search form
       const allRooms = initialData.flatMap((item) => item.rooms);
       const prices = allRooms.map((item) => Number(item.cost)).sort((a, b) => a - b);
       const min = Math.ceil(prices[0]);
@@ -229,14 +225,8 @@ const AccommodationFinder = (scope) => {
       domElements.searchForm?.addEventListener("change", handleSearchFormChange(consts, initialData, domElements));
     }
 
-    // Add event listeners for favorites
-    if (domElements.favBtnsNode) {
-      stir.node("main").addEventListener("click", handleFavButtonClick(consts, initialData, domElements));
-      setDOMContent(domElements.favBtnsNode)(renderFavActionBtns());
-    }
-
     // Add event listener for search result favorite button clicks
-    domElements.resultsArea.addEventListener("click", handleSearchResultFavClick(consts, domElements, initialData));
+    domElements.resultsArea.addEventListener("click", handleFavouriteBtnClick(consts));
   }
 
   /* Run initialization */

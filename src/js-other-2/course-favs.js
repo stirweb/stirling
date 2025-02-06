@@ -27,7 +27,6 @@ stir.coursefavs = (() => {
     if (!container) return;
 
     const fav = stir.favourites.getFavsListAll().find((item) => item.id === el.dataset.id);
-
     setDOMContent(container, fav ? stir.favourites.renderRemoveBtn(fav.id, fav.date, URL_TO_FAVS) : stir.favourites.renderAddBtn(el.dataset.id, URL_TO_FAVS));
   };
 
@@ -41,18 +40,18 @@ stir.coursefavs = (() => {
     const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
 
     if (!target || !target.dataset || !target.dataset.action) return;
+    const id = target.dataset.id;
 
     const actions = {
       addtofavs: () => {
-        if (!isInCookie(target.dataset.id)) {
-          //const el = target.closest(".c-search-result");
-          stir.favourites.addToFavs(target.dataset.id, COOKIE_TYPE);
+        if (id) {
+          if (!isInCookie(id)) {
+            stir.favourites.addToFavs(target.dataset.id, COOKIE_TYPE);
+          }
         }
-
         doCourseBtn(target);
       },
       removefav: () => {
-        const id = target.dataset.id;
         if (id) {
           stir.favourites.removeFromFavs(id);
           doCourseBtn(target.parentElement);

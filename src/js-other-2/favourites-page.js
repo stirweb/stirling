@@ -149,7 +149,7 @@ const FavouritesArea = (scope, cookieType) => {
       const arrayResults = results?.response?.resultPacket?.results || [];
 
       if (!arrayResults.length) return;
-      console.log(arrayResults);
+      //console.log(arrayResults);
       const favList = query.split("+").map((item) => {
         return arrayResults
           .filter((element) => {
@@ -164,7 +164,7 @@ const FavouritesArea = (scope, cookieType) => {
               title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
               content: element.summary,
               url: element.liveUrl + `?orgin=favourites`,
-              type: element.metaData.type,
+              type: element.metaData.type ? element.metaData.type : "page",
             };
           });
       });
@@ -185,6 +185,8 @@ const FavouritesArea = (scope, cookieType) => {
         .flatten(favList)
         .filter((item) => item.type && item.type.toLowerCase().includes(consts.cookieType.toLowerCase()))
         .sort((a, b) => b.date - a.date);
+
+      console.log(consts.cookieType);
 
       if (!filteredData.length) {
         setDOMContent(domElements.resultsArea, renderNoFavs());
@@ -226,7 +228,7 @@ const FavouritesArea = (scope, cookieType) => {
                 title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
                 content: element.summary,
                 url: element.liveUrl + `?orgin=shared`,
-                type: element.metaData.type,
+                type: element.metaData.type ? element.metaData.type : "page",
               };
             });
         });
@@ -335,4 +337,5 @@ const FavouritesArea = (scope, cookieType) => {
 FavouritesArea(stir.node("#acccomArea"), "accommodation");
 FavouritesArea(stir.node("#courseArea"), "course");
 FavouritesArea(stir.node("#scholArea"), "scholarship");
+FavouritesArea(stir.node("#pageArea"), "page");
 FavouritesArea(stir.node("#latestFavs"), "all");
