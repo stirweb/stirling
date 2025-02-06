@@ -5,7 +5,7 @@ const FavouritesArea=(t,e)=>{if(t){var a,s,r,i,o=t.querySelector("[data-activity
           <div class="cell" id="fav-${t.id}">
             <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
               <div class="grid-x grid-padding-x u-p-2 ">
-                <div class="cell u-pt-2">
+                <div class="cell u-pt-1">
                   <p class="u-text-regular u-mb-2 "><strong><a href="${t.url}">${t.title}</a></strong></p>
                 </div>
                 <div class="cell ${t.img?"large-9":"large-12"} text-sm">

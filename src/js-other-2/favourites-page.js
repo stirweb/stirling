@@ -50,7 +50,7 @@ const FavouritesArea = (scope, cookieType) => {
           <div class="cell" id="fav-${item.id}">
             <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
               <div class="grid-x grid-padding-x u-p-2 ">
-                <div class="cell u-pt-2">
+                <div class="cell u-pt-1">
                   <p class="u-text-regular u-mb-2 "><strong><a href="${item.url}">${item.title}</a></strong></p>
                 </div>
                 <div class="cell ${item.img ? `large-9` : `large-12`} text-sm">
