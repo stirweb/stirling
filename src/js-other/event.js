@@ -35,10 +35,8 @@
   if (!seriesEventsArea && !moreEventsArea) return;
 
   /*
-    |
-    |   RENDERERS
-    |
-    */
+       Renderers
+  */
 
   const renderHeader = (text, classes) => (text ? `<h3 class="header-stripped ${classes}">${text}</h3>` : ``);
 
@@ -94,15 +92,12 @@
   const renderNoEvents = () => "<p><strong>No events on date selected</strong></p>";
 
   /*
-    |
-    |   HELPERS
-    |
-    */
+    Helpers
+  */
 
   const renderMoreEventsMapper = stir.map(renderMoreEvent);
 
   const limitTo3 = stir.filter((item, index) => index < 3);
-  const limitTo1 = stir.filter((item, index) => index < 1);
 
   const dateUserFilter = stir.curry((d, item) => {
     if (d === ``) return item;
@@ -110,10 +105,6 @@
     const itemDays = getDaysArray(item.start, item.end);
     if (inDateRange(itemDays, d)) return item;
   });
-
-  // const dateMapper = (item) => {
-  //   return { start: item.start, stirStart: item.stirStart, startInt: item.startInt };
-  // };
 
   const removeDuplicateObjectFromArray = stir.curry((key, array) => {
     let check = {};
@@ -166,8 +157,8 @@
   });
 
   /* 
-        tags : Returns a boolean
-    */
+      filterByTag : Returns a boolean
+  */
   const filterByTag = stir.curry((tags_, item) => {
     const isTrue = (bol) => bol;
     const tags = tags_.split(", ");
@@ -182,8 +173,8 @@
   });
 
   /* 
-        inDateRange : Returns a boolean
-    */
+      inDateRange : Returns a boolean
+  */
   const inDateRange = stir.curry((filterRange, date) => {
     const matches = filterRange.filter((day) => day === date);
     return matches.length ? true : false; // Only need one match
@@ -212,10 +203,8 @@
   };
 
   /*
-    |
-    |   CONTROLLERS
-    |
-    */
+      Controllers
+  */
 
   const doPastSeries = (date, initialData) => {
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
@@ -236,13 +225,6 @@
   };
 
   const doDateFilter = (initialData) => {
-    // const removeDupsByStart = removeDuplicateObjectFromArray("start");
-
-    //const start = stir.compose(limitTo1, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
-    //const end = stir.compose(limitTo1, stir.sort(sortByEndDateDesc), isSeriesChildFilter, stir.filter(filterEmpties))(initialData);
-    //const days = getDaysArray(start[0].start, end[0].end);
-    //return stir.compose(joiner, stir.map(renderDates))(days);
-
     const passedEvents = getPastSeriesEvents(initialData);
     const upcomingEvents = getUpcomingSeriesEvents(initialData);
     const allSeriesEvents = [...passedEvents, ...upcomingEvents];
@@ -257,14 +239,14 @@
     const currents = currentId ? stir.filter((item) => item.id === Number(currentId), initialData) : null;
     const current = currents.length ? currents[0] : null;
 
-    //Priority 1: events with same tag
+    // Priority 1: events with same tag
     const tags = current ? current.tags : null;
     const filterByTagCurry = stir.filter(filterByTag(tags));
     const filterCurrent = stir.filter((item) => item.id !== Number(currentId));
 
     const tagItems = stir.compose(filterCurrent, filterByTagCurry, stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
 
-    //Priority 2: pinned events then Priority 3: most imminent events
+    // Priority 2: pinned events then Priority 3: most imminent events
     const items = stir.compose(filterCurrent, stir.sort(sortByPin), stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
     const allItems = [...tagItems, ...items];
 
@@ -272,14 +254,14 @@
   };
 
   /*
-    |
-    |   ON LOAD
-    |
-    */
+  
+     ON LOAD
+    
+  */
 
   const url = getJSONUrl(UoS_env.name);
 
-  /* Fetch the data */
+  //Fetch the data
   stir.getJSON(url, (initialData) => {
     if (initialData.error) return;
 
@@ -287,10 +269,10 @@
       const pastHtml = doPastSeries("", initialData);
       setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData) + pastHtml);
 
-      /* Add Series filter */
+      // Add Series filter
       setDOMContent(seriesDateFilter, renderOptionOne() + doDateFilter(initialData));
 
-      /* Event Listener */
+      // Event Listener
       seriesDateFilter.addEventListener("change", (event) => {
         const upcomingHtml = doUpcomingSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
         const pastHtml = doPastSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
@@ -333,14 +315,12 @@
                     <g id="Color-" transform="translate(-501.000000, -474.000000)">
                         <g id="Flickr" transform="translate(501.000000, 474.000000)">
                             <path d="M46.8292683,10.1695828 C46.8292683,15.7864719 42.2171072,20.3418803 36.5173021,20.3418803 C30.8119899,20.3418803 26.1970752,15.7864719 26.1970752,10.1695828 C26.1970752,4.55540841 30.8119899,0 36.5173021,0 C42.2171072,0 46.8292683,4.55540841 46.8292683,10.1695828" fill="#FF007F">
-
                             </path>
                             <path d="M20.6294395,10.1695828 C20.6294395,15.7864719 16.0145249,20.3418803 10.3092127,20.3418803 C4.61216113,20.3418803 0,15.7864719 0,10.1695828 C0,4.55540841 4.61216113,0 10.3092127,0 C16.0145249,0 20.6294395,4.55540841 20.6294395,10.1695828" fill="#0960D5">
-
                             </path>
-                                    </g>
-                                </g>
-                            </g>
+                        </g>
+                    </g>
+                </g>
               </svg>
               <a href="https://www.flickr.com/photos/79498756@N04/albums/${galleryId}" class="button expanded heritage-green">View the album on Flickr</a>
             </div>`;

@@ -128,7 +128,7 @@ const FavouritesArea = (scope, cookieType) => {
     */
   function doFavourites(consts, domElements, action) {
     const favs = stir.favourites.getFavsListAll();
-
+    console.log(favs);
     if (!favs.length) {
       setDOMContent(domElements.resultsArea, `<div class="cell">No favourites saved.</div>`);
       return;
@@ -179,6 +179,8 @@ const FavouritesArea = (scope, cookieType) => {
         const html = recentFavs.map(renderMicro(consts)).join(``);
         return setDOMContent(domElements.latestArea)(html || ``);
       }
+
+      console.log(stir.flatten(favList));
 
       //  By Type
       const filteredData = stir
@@ -338,4 +340,5 @@ FavouritesArea(stir.node("#acccomArea"), "accommodation");
 FavouritesArea(stir.node("#courseArea"), "course");
 FavouritesArea(stir.node("#scholArea"), "scholarship");
 FavouritesArea(stir.node("#pageArea"), "page");
+FavouritesArea(stir.node("#eventArea"), "event");
 FavouritesArea(stir.node("#latestFavs"), "all");

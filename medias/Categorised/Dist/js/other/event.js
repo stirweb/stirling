@@ -8,7 +8,7 @@
                             d="M315.392 9.728c0 8.192 4.096 16.384 10.24 22.528l413.696 415.744-413.696 415.744c-12.288 12.288-12.288 32.768 0 47.104 12.288 12.288 32.768 12.288 47.104 0l438.272-438.272c12.288-12.288 12.288-34.816 0-47.104l-440.32-438.272c-12.288-12.288-32.768-12.288-47.104 0-6.144 6.144-8.192 14.336-8.192 22.528z" />
                     </svg>
                 </span>
-            </a>`}),g=stir.filter((t,r)=>r<3);stir.filter((t,r)=>r<1);const n=stir.curry((t,r)=>{var e;return""===t||(e=S(r.start,r.end),C(e,t))?r:void 0}),p=stir.curry((r,e)=>{var s={},i=[];for(let t=0;t<e.length;t++)s[e[t][r]]||(s[e[t][r]]=!0,i.push(e[t]));return i}),v=t=>t.start,h=stir.map((t,r)=>{return`
+            </a>`}),g=stir.filter((t,r)=>r<3),n=stir.curry((t,r)=>{var e;return""===t||(e=S(r.start,r.end),C(e,t))?r:void 0}),p=stir.curry((r,e)=>{var s={},i=[];for(let t=0;t<e.length;t++)s[e[t][r]]||(s[e[t][r]]=!0,i.push(e[t]));return i}),v=t=>t.start,h=stir.map((t,r)=>{return`
         <div class="${r%2==1?"":"u-bg-grey"} ${0===r?"u-heritage-line-top u-border-width-5":""} u-p-1 c-event-list u-gap">
           <div >
             ${t.cancelled?s("Cancelled"):""}${t.rescheduled?s("Rescheduled"):""} 
@@ -26,14 +26,12 @@
                     <g id="Color-" transform="translate(-501.000000, -474.000000)">
                         <g id="Flickr" transform="translate(501.000000, 474.000000)">
                             <path d="M46.8292683,10.1695828 C46.8292683,15.7864719 42.2171072,20.3418803 36.5173021,20.3418803 C30.8119899,20.3418803 26.1970752,15.7864719 26.1970752,10.1695828 C26.1970752,4.55540841 30.8119899,0 36.5173021,0 C42.2171072,0 46.8292683,4.55540841 46.8292683,10.1695828" fill="#FF007F">
-
                             </path>
                             <path d="M20.6294395,10.1695828 C20.6294395,15.7864719 16.0145249,20.3418803 10.3092127,20.3418803 C4.61216113,20.3418803 0,15.7864719 0,10.1695828 C0,4.55540841 4.61216113,0 10.3092127,0 C16.0145249,0 20.6294395,4.55540841 20.6294395,10.1695828" fill="#0960D5">
-
                             </path>
-                                    </g>
-                                </g>
-                            </g>
+                        </g>
+                    </g>
+                </g>
               </svg>
               <a href="https://www.flickr.com/photos/79498756@N04/albums/${galleryId}" class="button expanded heritage-green">View the album on Flickr</a>
             </div>`)}(stir.node("#flickrgallery"));

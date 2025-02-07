@@ -81,9 +81,9 @@
   /*  
     Find the results that match the filters and reorder 
   */
-  const filterData = stir.curry((CONSTS, filters, schol) => {
+  const filterData = stir.curry((consts, filters, schol) => {
     if (schol.title) {
-      if (isMatch(filters, schol, CONSTS)) {
+      if (isMatch(filters, schol, consts)) {
         return schol;
       }
     }
@@ -153,8 +153,8 @@
   /*
     Determine if a scholarship matches the filters
   */
-  const isMatch = (filters, schol, CONSTS) => {
-    const matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, CONSTS.regions.ukroi)];
+  const isMatch = (filters, schol, consts) => {
+    const matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, consts.regions.ukroi)];
 
     return stir.all((b) => b, matchFilter);
   };
@@ -382,7 +382,7 @@
     
    */
 
-  const handleSearchResultFavClick = (consts, domElements, data) => (event) => {
+  const handleSearchResultFavClick = (consts) => (event) => {
     const target = event.target.closest("button");
     if (!target || !target.dataset || !target.dataset.action) return;
 
@@ -491,12 +491,12 @@
   /* 
     Main controller function  
   */
-  const main = (setFiltersFlag, page, CONSTS, initMeta, initData) => {
-    if (setFiltersFlag) setFormValues(CONSTS.nodes);
+  const main = (setFiltersFlag, page, consts, initMeta, initData) => {
+    if (setFiltersFlag) setFormValues(consts.nodes);
 
-    const setDOMResults = page === 1 ? setDOMContent(CONSTS.nodes.resultsArea) : appendDOMContent(CONSTS.nodes.resultsArea);
-    const filterDataCurry = stir.filter(filterData(CONSTS, getFilterVars(CONSTS.nodes, CONSTS.regionmacros)));
-    const mapRankCurry = stir.map(mapRank(getFilterVars(CONSTS.nodes, CONSTS.regionmacros)));
+    const setDOMResults = page === 1 ? setDOMContent(consts.nodes.resultsArea) : appendDOMContent(consts.nodes.resultsArea);
+    const filterDataCurry = stir.filter(filterData(consts, getFilterVars(consts.nodes, consts.regionmacros)));
+    const mapRankCurry = stir.map(mapRank(getFilterVars(consts.nodes, consts.regionmacros)));
     const sortDataCurry = stir.sort((a, b) => (parseInt(a.rank) < parseInt(b.rank) ? -1 : parseInt(a.rank) > parseInt(b.rank) ? 1 : 0));
 
     const data = stir.compose(sortDataCurry, mapRankCurry, filterDataCurry)(initData);
@@ -506,24 +506,23 @@
       totalPosts: data.length,
       start: (page - 1) * initMeta.postsPerPage,
       end: (page - 1) * initMeta.postsPerPage + initMeta.postsPerPage,
-      feeStatusFilter: getFilterVars(CONSTS.nodes, CONSTS.regionmacros).feeStatus,
+      feeStatusFilter: getFilterVars(consts.nodes, consts.regionmacros).feeStatus,
     };
 
     const last = newMeta.end > newMeta.totalPosts ? newMeta.totalPosts : newMeta.end;
     const meta = stir.Object.extend({}, initMeta, newMeta, { last: last });
 
     const paginationFilter = stir.filter((schol, index) => index >= meta.start && index < last);
-    const renderer = renderFormResults(CONSTS, meta);
+    const renderer = renderFormResults(consts, meta);
 
     stir.compose(setDOMResults, renderer, paginationFilter)(data);
 
-    CONSTS.nodes.resultsArea.addEventListener("click", handleSearchResultFavClick(CONSTS, [], data));
+    consts.nodes.resultsArea.addEventListener("click", handleSearchResultFavClick(consts));
   };
 
   /*
     
-     FORM BASED VERSION
-     ie scholarship finder
+     Finder
     
    */
 
@@ -604,7 +603,7 @@
     }
 
     /*
-       EVENT: On load
+       On load
      */
 
     const page = stir.isNumeric(QueryParams.get("page")) ? QueryParams.get("page") : 1;
@@ -613,13 +612,13 @@
 
   /*
    
-    HARD CODED Listings
+    Hard Coded Listings
     eg on the international Pages
    
    */
 
   /* 
-    Form the html for the listing 
+    Generate the html for the listing 
   */
   const renderHardcodedResults = stir.curry((data) => {
     return stir.map((el) => `<li ><a href="${el.scholarship.url}">${el.scholarship.title}</a> ${debug ? el.rank : ""}</li>`, data);
@@ -660,11 +659,11 @@
   /* 
     Loop the countries and get the matches for each
   */
-  const getCountriesData = (CONSTS, element, allData) => {
+  const getCountriesData = (consts, element, allData) => {
     return element.dataset.country.split(", ").map((country) => {
-      const filters = getCountryListingFilters(element, country, CONSTS.regionmacros);
+      const filters = getCountryListingFilters(element, country, consts.regionmacros);
 
-      const filterDataCurry = stir.filter(filterData(CONSTS, filters));
+      const filterDataCurry = stir.filter(filterData(consts, filters));
       const mapRankCurry = stir.map(mapRank(filters));
       const limitDataCurry = stir.filter((el) => parseInt(el.rank) < 1000);
 

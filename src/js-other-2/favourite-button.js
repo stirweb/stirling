@@ -21,11 +21,12 @@
    */
 
   const doFavouriteBtn = (el) => {
-    const container = el.closest("[data-nodeid=coursefavsbtn]") || el;
+    const container = el.closest("[data-nodeid=favbtn]") || null;
+
     if (!container) return;
 
-    const fav = stir.favourites.getFavsListAll().find((item) => item.id === el.dataset.id);
-    setDOMContent(container, fav ? stir.favourites.renderRemoveBtn(fav.id, fav.date, URL_TO_FAVS) : stir.favourites.renderAddBtn(el.dataset.id, URL_TO_FAVS));
+    const fav = stir.favourites.getFavsListAll().find((item) => item.id === container.dataset.id);
+    setDOMContent(container, fav ? stir.favourites.renderRemoveBtn(fav.id, fav.date, URL_TO_FAVS) : stir.favourites.renderAddBtn(container.dataset.id, URL_TO_FAVS));
   };
 
   /* 
@@ -37,11 +38,13 @@
     if (!target || !target.dataset || !target.dataset.action) return;
 
     const id = scope.dataset.id;
+    const cookieType = scope.dataset.type ? scope.dataset.type : COOKIE_TYPE;
+
     const actions = {
       addtofavs: () => {
         if (id) {
-          if (!isInCookie(target.dataset.id)) {
-            stir.favourites.addToFavs(target.dataset.id, COOKIE_TYPE);
+          if (!isInCookie(id)) {
+            stir.favourites.addToFavs(id, cookieType);
           }
         }
         doFavouriteBtn(target);
@@ -64,4 +67,4 @@
 
   doFavouriteBtn(scope);
   scope.addEventListener("click", clickHandler);
-})(stir.node("[data-nodeid=coursefavsbtn]"));
+})(stir.node("[data-nodeid=favbtn]"));
