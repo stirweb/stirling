@@ -3,7 +3,7 @@ const FavouritesArea = (scope, cookieType) => {
 
   const resultsArea = scope.querySelector("[data-activity]");
 
-  console.log(UoS_env.name);
+  if (!resultsArea) return;
 
   // Constants
   const CONSTS = {
@@ -113,9 +113,20 @@ const FavouritesArea = (scope, cookieType) => {
 
   /* 
 
-    Data Processing Functions
+    Helpers
 
    */
+
+  function formatDate(date) {
+    if (!date) return "";
+    return `<b>${new Date(date)
+      .toLocaleDateString("en-UK", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+      .replace(",", "")}</b><br/>`;
+  }
 
   /* 
 
@@ -123,12 +134,9 @@ const FavouritesArea = (scope, cookieType) => {
 
   */
 
-  /*
-        doFavourites
-    */
   function doFavourites(consts, domElements, action) {
     const favs = stir.favourites.getFavsListAll();
-    console.log(favs);
+
     if (!favs.length) {
       setDOMContent(domElements.resultsArea, `<div class="cell">No favourites saved.</div>`);
       return;
@@ -142,14 +150,14 @@ const FavouritesArea = (scope, cookieType) => {
       .map((item) => item.id)
       .join("+");
 
-    const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=${query}`;
+    const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&SF=[sid,type,award,startDate,endDate]&query=&meta_sid_or=${query}`;
 
     // Funnelback search
     stir.getJSON(fbUrl, (results) => {
       const arrayResults = results?.response?.resultPacket?.results || [];
 
       if (!arrayResults.length) return;
-      //console.log(arrayResults);
+
       const favList = query.split("+").map((item) => {
         return arrayResults
           .filter((element) => {
@@ -162,7 +170,7 @@ const FavouritesArea = (scope, cookieType) => {
               id: item,
               date: favs.filter((fav) => fav.id === item)[0].date,
               title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
-              content: element.summary,
+              content: formatDate(element.metaData.startDate) + element.summary,
               url: element.liveUrl + `?orgin=favourites`,
               type: element.metaData.type ? element.metaData.type : "page",
             };
@@ -180,15 +188,11 @@ const FavouritesArea = (scope, cookieType) => {
         return setDOMContent(domElements.latestArea)(html || ``);
       }
 
-      console.log(stir.flatten(favList));
-
       //  By Type
       const filteredData = stir
         .flatten(favList)
         .filter((item) => item.type && item.type.toLowerCase().includes(consts.cookieType.toLowerCase()))
         .sort((a, b) => b.date - a.date);
-
-      console.log(consts.cookieType);
 
       if (!filteredData.length) {
         setDOMContent(domElements.resultsArea, renderNoFavs());
@@ -201,7 +205,7 @@ const FavouritesArea = (scope, cookieType) => {
   /*
     doShared
   */
-  function doShared(sharedArea, sharedfavArea, consts) {
+  function doShared(sharedArea, consts) {
     const sharedListQuery = SafeQueryParams.get("s") || "";
     if (!sharedListQuery) return setDOMContent(sharedArea, renderNoShared());
 
@@ -282,7 +286,7 @@ const FavouritesArea = (scope, cookieType) => {
   };
 
   /* handleSearchResultFavClick */
-  const handleSearchResultFavClick = (consts, domElements, data) => (event) => {
+  const handleSearchResultFavClick = (consts, domElements) => (event) => {
     const target = event.target.closest("button");
     if (!target || !target.dataset || !target.dataset.action) return;
 
@@ -290,7 +294,7 @@ const FavouritesArea = (scope, cookieType) => {
       const cookie = stir.favourites.getFav(id, consts.cookieType);
       const node = stir.node("#favbtns" + id);
       if (node) setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
-      if (domElements.sharedArea) doShared(domElements.sharedArea, domElements.sharedfavArea, consts);
+      if (domElements.sharedArea) doShared(domElements.sharedArea, consts);
     };
 
     if (target.dataset.action === "addtofavs") {
@@ -319,7 +323,7 @@ const FavouritesArea = (scope, cookieType) => {
     }
 
     if (consts.activity === "shared") {
-      doShared(domElements.sharedArea, domElements.sharedfavArea, consts);
+      doShared(domElements.sharedArea, consts);
     }
 
     // Add event listeners for favorites
