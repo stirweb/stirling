@@ -345,4 +345,5 @@ FavouritesArea(stir.node("#courseArea"), "course");
 FavouritesArea(stir.node("#scholArea"), "scholarship");
 FavouritesArea(stir.node("#pageArea"), "page");
 FavouritesArea(stir.node("#eventArea"), "event");
+FavouritesArea(stir.node("#webinarArea"), "webinar");
 FavouritesArea(stir.node("#latestFavs"), "all");
