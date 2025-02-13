@@ -500,6 +500,8 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
   /* 
     ONLOAD: Fetch data and initialize 
   */
+
+  console.log(getApiUrl(UoS_env.name));
   fetchWebinarData(getApiUrl(UoS_env.name)).then((dataWebinars) => {
     initializeWebinars(CONSTS, dataWebinars);
   });
