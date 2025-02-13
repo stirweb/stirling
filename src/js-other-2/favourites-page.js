@@ -12,7 +12,7 @@ const FavouritesArea = (scope, cookieType) => {
     urlToFavs: resultsArea.dataset.favsurl || ``,
     activity: resultsArea.dataset.activity || ``,
     view: stir.templates?.view || ``,
-    fbhost: UoS_env.name === "prod" || UoS_env.name === "dev" ? "https://search.stir.ac.uk" : "https://stage-shared-15-24-search.clients.uk.funnelback.com",
+    fbhost: UoS_env.name === "prod" || UoS_env.name === "dev2" ? "https://search.stir.ac.uk" : "https://stage-shared-15-24-search.clients.uk.funnelback.com",
   };
 
   // DOM Elements
@@ -150,13 +150,15 @@ const FavouritesArea = (scope, cookieType) => {
       .map((item) => item.id)
       .join("+");
 
-    const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&SF=[sid,type,award,startDate,endDate]&query=&meta_sid_or=${query}`;
-
+    const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award,startDate,endDate]&query=&meta_sid_or=${query}`;
+    console.log(fbUrl);
     // Funnelback search
     stir.getJSON(fbUrl, (results) => {
       const arrayResults = results?.response?.resultPacket?.results || [];
 
       if (!arrayResults.length) return;
+
+      console.log(arrayResults);
 
       const favList = query.split("+").map((item) => {
         return arrayResults
@@ -213,7 +215,7 @@ const FavouritesArea = (scope, cookieType) => {
       const sharedList = atob(sharedListQuery);
       const query = sharedList.replaceAll(",", "+");
 
-      const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=${query}`;
+      const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award]&query=&meta_sid_or=${query}`;
 
       // Funnelback search
       stir.getJSON(fbUrl, (results) => {

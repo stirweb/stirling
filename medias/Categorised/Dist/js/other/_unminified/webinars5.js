@@ -29,7 +29,7 @@ const renderDateTime = (item) =>
   </p>`;
 
 const renderItem = stir.curry((consts, item) => {
-  const cookie = stir.favourites.getFav(item.id, consts.cookieType);
+  const cookie = stir.favourites && stir.favourites.getFav(item.id, consts.cookieType);
   const statusTag = item.ondemand && !item.isupcoming ? `<span class="u-bg-heritage-berry u-white u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : item.isupcoming ? `<span class="u-bg-heritage-green u-white u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ``;
   return `
     <div class="cell small-12 large-4 medium-6 u-mb-3"  >
@@ -41,7 +41,7 @@ const renderItem = stir.curry((consts, item) => {
         ${item.isupcoming ? renderDateTime(item) : ``}
         <div class="text-sm">${item.description}</div>
         <p class="text-sm">Audience: ${item.studylevels} students. ${item.countries}</p>
-        <div id="favbtns${item.id}">${renderFavBtns(consts.urlToFavs, cookie, item.id)}</div>
+        <div id="favbtns${item.id}">${cookie && renderFavBtns(consts.urlToFavs, cookie, item.id)}</div>
       </div>
     </div>`;
 });
@@ -223,8 +223,6 @@ function processData(consts, data, filters) {
     stir.filter(isPast)
   )(webinarsData);
 
-  //const all = [...upcomingData, ...onDemandData];
-
   return { upcomingData: upcomingData, onDemandData: onDemandData };
 }
 
@@ -253,8 +251,6 @@ function doForm(consts, node, allData, event, form) {
 
   const data = processData(consts, allData, filters);
   outPutFormContent(consts, filters, node, event, data);
-
-  //if (node.innerHTML === "") setDOMContent(node, "<p>No webinars found</p>");
 }
 
 /* 
@@ -265,12 +261,8 @@ function doForm(consts, node, allData, event, form) {
       updateFavouriteBtn 
   */
 const updateFavouriteBtn = (id, consts) => {
-  console.log(id);
-
   const cookie = stir.favourites.getFav(id, consts.cookieType);
   const node = stir.node("#favbtns" + id);
-
-  console.log(node);
 
   if (node) setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
 };
@@ -366,7 +358,6 @@ const mapQueryParams = (val) => {
     Initialize
 */
 function initWebinarForm(consts, dataWebinars) {
-  console.log("form");
   if (!consts.webinarResultsArea) return;
 
   const webinarResultsArea = consts.webinarResultsArea;
