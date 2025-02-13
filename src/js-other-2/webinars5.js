@@ -466,6 +466,8 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
         return "index.json";
       case "preview":
         return '<t4 type="navigation" id="5271" />';
+      case "appdev-preview":
+        return '<t4 type="navigation" id="5271" />';
       default:
         return '<t4 type="navigation" id="5271" />' + "index.json";
     }
