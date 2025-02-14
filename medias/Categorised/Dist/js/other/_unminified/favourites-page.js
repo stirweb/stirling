@@ -128,6 +128,16 @@ const FavouritesArea = (scope, cookieType) => {
       .replace(",", "")}</b><br/>`;
   }
 
+  function getUrl(element) {
+    if (element.metaData.type) {
+      console.log(element.metaData.type);
+      if (element.metaData.type.toLowerCase() === "event") return element.metaData.page + `?orgin=favourites`;
+
+      if (element.metaData.type.toLowerCase() === "webinar") return element.metaData.register + `?orgin=favourites`;
+    }
+    return element.liveUrl + `?orgin=favourites`;
+  }
+
   /* 
 
         Controller Functions
@@ -150,7 +160,7 @@ const FavouritesArea = (scope, cookieType) => {
       .map((item) => item.id)
       .join("+");
 
-    const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award,startDate,endDate]&query=&meta_sid_or=${query}`;
+    const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award,startDate,endDate,register,page]&query=&meta_sid_or=${query}`;
     console.log(fbUrl);
     // Funnelback search
     stir.getJSON(fbUrl, (results) => {
@@ -173,7 +183,7 @@ const FavouritesArea = (scope, cookieType) => {
               date: favs.filter((fav) => fav.id === item)[0].date,
               title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
               content: formatDate(element.metaData.startDate) + element.summary,
-              url: element.liveUrl + `?orgin=favourites`,
+              url: getUrl(element),
               type: element.metaData.type ? element.metaData.type : "page",
             };
           });
@@ -215,7 +225,7 @@ const FavouritesArea = (scope, cookieType) => {
       const sharedList = atob(sharedListQuery);
       const query = sharedList.replaceAll(",", "+");
 
-      const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award]&query=&meta_sid_or=${query}`;
+      const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award,startDate,endDate,register,page]&query=&meta_sid_or=${query}`;
 
       // Funnelback search
       stir.getJSON(fbUrl, (results) => {

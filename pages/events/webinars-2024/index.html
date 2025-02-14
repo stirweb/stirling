@@ -198,50 +198,62 @@
         -->
     <header class="c-header" id="layout-header" aria-label="Main header">
         <div class="grid-container">
-            <div class="grid-x grid-padding-x">
+            <div class="grid-x ">
                 <div class="cell large-4 medium-4 small-8">
-                    <a href="/" title="University of Stirling"><img
-                            src="../../../medias/Categorised/Dist/css/images/logos/logo.svg"
-                            alt="University of Stirling logo" class="c-site-logo"></a>
+                    <a href="/" title="University of Stirling">
+                        <img src="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn/media/dist/css/images/logos/logo.svg"
+                            alt="University of Stirling" class="c-site-logo">
+                    </a>
                 </div>
-
                 <nav aria-label="primary" class="cell large-8 medium-8 small-4 flex-container align-right">
                     <div class="c-header-nav flex-container flex-dir-column align-bottom align-center">
                         <ul class="c-header-nav c-header-nav--secondary u-font-semibold flex-container align-middle">
                             <li class="c-header-nav__item show-for-medium">
-                                <a href="https://stirlinguni.cn/" class="c-header-nav__link" data-microsite="cn">中文网</a>
+                                <a class=c-header-nav__link href="/favourites/">
+                                    <svg version="1.1" data-stiricon="heart-active" fill="currentColor"
+                                        viewBox="0 0 50 50" style="width:16px;height:16px;">
+                                        <path
+                                            d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2c0,0-0.1,0-0.1,0c-3,0-5.8,1.2-7.9,3.4
+                                             c-4.3,4.5-4.2,11.7,0.2,16l18.1,18.1c0.5,0.5,1.6,0.5,2.1,0l17.9-17.9c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+                                             C47.5,15,46.3,12.2,44.1,10.1z M42,24.2l-17,17l-17-17c-3.3-3.3-3.3-8.6,0-11.8c1.6-1.6,3.7-2.4,5.9-2.4c2.2-0.1,4.4,0.8,6,2.5
+                                             l4.1,4.1c0.6,0.6,1.5,0.6,2.1,0l4.2-4.2c3.4-3.2,8.5-3.2,11.8,0C45.3,15.6,45.3,20.9,42,24.2z">
+                                        </path>
+                                    </svg>
+                                    My favoutites</a>
+                            </li>
+                            <li class="c-header-nav__item show-for-medium">
+                                <a class=c-header-nav__link href="https://stirlinguni.cn/" data-microsite="cn">中文网</a>
                             </li>
                             <li class="c-header-nav__item show-for-large">
-                                <a href="https://portal.stir.ac.uk/my-portal.jsp" rel="nofollow"
-                                    class="c-header-nav__link" id="header-portal__button">My Portal</a>
+                                <a class=c-header-nav__link href="https://portal.stir.ac.uk/my-portal.jsp"
+                                    rel="nofollow" id="header-portal__button">My Portal</a>
                             </li>
-                            <li class="c-header-nav__item">
-                                <a class="c-header-nav__link" id="header-search__button" href="/search/">
+                            <li class="c-header-nav__item u-flex">
+                                <a class="c-header-nav__link u-flex align-middle u-gap-4" id="header-search__button"
+                                    href="/search/">
                                     <span class="show-for-medium">Site search</span>
                                     <span class="c-header-nav__icon uos-magnifying-glass u-font-semibold"></span>
+                                    <span class="show-for-small-only show-for-sr">Site search</span>
                                 </a>
                             </li>
                         </ul>
                         <ul class="c-header-nav c-header-nav--primary u-font-bold show-for-xlarge">
-                            <li class="c-header-nav__item">
-                                <a class="c-header-nav__link" data-menu-id="mm__study" aria-controls=mm__study
-                                    href="/study/">Study</a>
+                            <li class=c-header-nav__item>
+                                <a class=c-header-nav__link data-menu-id=mm__study href="/study/">Study</a>
                             </li>
-                            <li class="c-header-nav__item">
-                                <a class="c-header-nav__link" data-menu-id="mm__international"
-                                    aria-controls=mm__international href="/international/">International</a>
+                            <li class=c-header-nav__item>
+                                <a class=c-header-nav__link data-menu-id=mm__international
+                                    href="/international/">International</a>
                             </li>
-                            <li class="c-header-nav__item">
-                                <a class="c-header-nav__link" data-menu-id="mm__research" aria-controls=mm__research
-                                    href="/research/">Research</a>
+                            <li class=c-header-nav__item>
+                                <a class=c-header-nav__link data-menu-id=mm__research href="/research/">Research</a>
                             </li>
-                            <li class="c-header-nav__item">
-                                <a class="c-header-nav__link" data-menu-id="mm__about" aria-controls=mm__about
-                                    href="/about/">About</a>
+                            <li class=c-header-nav__item>
+                                <a class=c-header-nav__link data-menu-id=mm__about href="/about/">About</a>
                             </li>
-                            <li class="c-header-nav__item">
-                                <a class="c-header-nav__link" data-menu-id="mm__student-life"
-                                    aria-controls=mm__student-life href="/student-life/">Student life</a>
+                            <li class=c-header-nav__item>
+                                <a class=c-header-nav__link data-menu-id=mm__student-life href="/student-life/">Student
+                                    life</a>
                             </li>
                         </ul>
                     </div>
@@ -272,8 +284,8 @@
                             <input type="search" name="query" id="header-search__query" class="c-header-search__query"
                                 autocomplete="off" placeholder="Site search" tabindex="-1">
 
-                            <button class="button no-arrow" type="submit" title="submit search term" aria-label="submit"
-                                tabindex="-1">
+                            <button class="button no-arrow u-m-0 u-p-1 u-min-w-none" type="submit"
+                                title="submit search term" aria-label="submit" tabindex="-1">
                                 <span class="uos-magnifying-glass"></span>
                             </button>
                         </div>
@@ -310,6 +322,7 @@
         </form>
         <nav id="megamenu__container" aria-label="primary navigation submenu"></nav>
     </header>
+
 
     <!-- 
 				 BREADCRUMB 
