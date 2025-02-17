@@ -91,8 +91,8 @@ const FavouritesArea = (scope, cookieType) => {
   const renderNoShared = () => stir.templates.renderNoShared;
 
   /*
-          Handle Inputs and Outputs
-      */
+      Handle Inputs and Outputs
+  */
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
@@ -128,19 +128,32 @@ const FavouritesArea = (scope, cookieType) => {
       .replace(",", "")}</b><br/>`;
   }
 
+  /**
+    Generates a URL based on the element type and metadata
+    @param {Object} element - The element containing metadata and URL information
+    @returns {string} The formatted URL with origin parameter
+   */
   function getUrl(element) {
-    if (element.metaData.type) {
-      console.log(element.metaData.type);
-      if (element.metaData.type.toLowerCase() === "event") return element.metaData.page + `?orgin=favourites`;
+    const ORIGIN_PARAM = "?origin=favourites";
+    const { metaData, liveUrl } = element;
 
-      if (element.metaData.type.toLowerCase() === "webinar") return element.metaData.register + `?orgin=favourites`;
+    if (!metaData?.type) {
+      return liveUrl + ORIGIN_PARAM;
     }
-    return element.liveUrl + `?orgin=favourites`;
+
+    const elementType = metaData.type.toLowerCase();
+
+    const URL_MAPPINGS = {
+      event: () => metaData.page + ORIGIN_PARAM,
+      webinar: () => metaData.register + ORIGIN_PARAM,
+    };
+
+    return (URL_MAPPINGS[elementType] || (() => liveUrl + ORIGIN_PARAM))();
   }
 
   /* 
 
-        Controller Functions
+    Controller Functions
 
   */
 
