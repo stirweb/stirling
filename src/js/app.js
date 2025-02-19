@@ -5,14 +5,23 @@
 var UoS_env = (function () {
   var hostname = window.location.hostname;
 
+  const funnelback = {
+	stirling:	'search.stir.ac.uk',									// CNAME alias
+	public:		'stir-search.clients.uk.funnelback.com',				// Public alias
+	shared:		'shared-15-24-search.clients.uk.funnelback.com', 		// FQDN
+	staging:	'stage-shared-15-24-search.clients.uk.funnelback.com'	// Staging server
+  };
+
   var env_name = "prod";
-  var wc_path = "/media/dist/";
-  var t4_tags = false;
+  var wc_path  = "/media/dist/";
+  var t4_tags  = false;
+  var search   = funnelback.stirling; 
 
   switch (hostname) {
     case "localhost":
       env_name = "dev";
-      wc_path = "/medias/Categorised/Dist/";
+      wc_path  = "/medias/Categorised/Dist/";
+      search   = funnelback.staging;
       break;
 
     case "stiracuk-cms01-production.terminalfour.net":
@@ -25,6 +34,7 @@ var UoS_env = (function () {
       env_name = "appdev-preview";
       wc_path = "";
       t4_tags = true;
+      search   = funnelback.staging;
       break;
 
     case "stir.ac.uk":
@@ -34,6 +44,7 @@ var UoS_env = (function () {
     case "stirweb.github.io":
       env_name = "qa";
       wc_path = "/medias/Categorised/Dist/";
+      search   = funnelback.staging;
       break;
   }
 
