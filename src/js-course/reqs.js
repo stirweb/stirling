@@ -1,13 +1,27 @@
 ((scope)=>{
 
 
-	const debuglink = `onclick="alert('This link will need a T4 Nav Object')"`;
+	const debuglink = `javascript:alert('[Work in progess] This link will need a T4 Nav Object')`;
 
 	const template = {
-		wp: "Widening access students may be eligible for an adjusted offer of entry. To find out if this applies to you go to our widening access pages. Care-experienced applicants will be guaranteed an offer of a place if they meet the minimum entry requirements.",
+		wp: "Widening access students may be eligible for an adjusted offer of entry. To find out if this applies to you go to our widening access pages. Care-experienced applicants will be guaranteed an offer of a place if they meet the minimum entry requirements.",
 		es: "<p>Essential subjects must have been taken within the last five years to ensure your required subject knowledge is current.<br>Recent work experience can be taken into consideration in place of a formal qualification.</p>",
+		elr: ""
 	};
-	
+	const setELR = (INTELI1,INTELP1,INTELT1) => {
+		template.elr = `<p>If English is not your first language you must have one of the following qualifications as evidence of your English language skills:</p>
+		<ul>
+		<li>IELTS Academic or UKVI ${INTELI1}.</li>
+		<li>Pearson Test of English (Academic) ${INTELP1}.</li>
+		<li>IBT TOEFL ${INTELT1}.</li>
+		</ul>
+		<p>See our <a href="${debuglink}">information on English language requirements</a> for more details on the language tests we accept and options to waive these requirements.</p>
+		<p><strong>Pre-sessional English language courses</strong></p>
+		<p>If you need to improve your English language skills before you enter this course, our partner INTO University of Stirling offers a range of English language courses. These intensive and flexible courses are designed to improve your English ability for entry to this degree.</p>
+		<p>Find out more about our pre-sessional English language courses</p>`;
+	};
+
+	const getELR = () => template.elr;
 	const structure = {
 		
 		UG: {
@@ -44,15 +58,21 @@
 					]
 				},
 				{
-					id: "SY2",
+					id: "RY1",
 					title: "Other qualifications",
 					codes: [
 						{id: "RY1HNMD", title: "English, Welsh and Northern Irish HNC/HND"},
-						{id: "", title: "Essential subjects"}
+						{id: "RY1ACC", title: "English, Welsh and Northern Irish access courses"},
+						{id: "SY1SUBJ", title: "Essential subjects", body: template.es}
 					]
 				},
 				{
-					id: "AG",
+					id: "",
+					title: "International entry requirements",
+					body: `<p><a href="${debuglink}">View the entry requirements for your country</a></p>`
+				},
+				{
+					id: "AGAE",
 					title: "Advanced entry",
 					codes: [
 						{id: "AGAE"}
@@ -61,16 +81,7 @@
 				{
 					id: "",
 					title: "English language requirements",
-					body: `<p>If English is not your first language you must have one of the following qualifications as evidence of your English language skills:</p>
-					<ul>
-						<li>IELTS Academic or UKVI [INTELI1.note]</li>
-						<li>Pearson Test of English (Academic) [INTELP1.note]</li>
-						<li>IBT TOEFL [INTELT1.note]</li>
-					</ul>
-					<p>See our information on English language requirements for more details on the language tests we accept and options to waive these requirements.</p>
-					<p>Pre-sessional English language courses</p>
-					<p>If you need to improve your English language skills before you enter this course, our partner INTO University of Stirling offers a range of English language courses. These intensive and flexible courses are designed to improve your English ability for entry to this degree.</p>
-					<p>Find out more about our pre-sessional English language courses</p>`
+					body: getELR
 				}
 			]
 		},
@@ -102,16 +113,26 @@
 	
 
 	function render (type,route) {
+		// a simple array of the requirement codes for the current route. 
 		const codes = route.entryRequirements.map(req => req.entryRequirementCode);
-		console.info('route',route);
-		console.info('structure',structure.UG);
 
-		console.info('codes',codes);
-		return structure[type].sections.map(section=>{
+		console.info('route',route); console.info('structure',structure.UG); console.info('codes',codes);
+
+		setELR(
+			route.entryRequirements.filter(req=>req.entryRequirementCode==="INTELI1").map(req=>req.note),
+			route.entryRequirements.filter(req=>req.entryRequirementCode==="INTELP1").map(req=>req.note),
+			route.entryRequirements.filter(req=>req.entryRequirementCode==="INTELT1").map(req=>req.note)
+		);
+
+		// generate HTML using the JSON structure object
+		return `<p><b>⚠️ WORK IN PROGRESS</b></p>` + 
+			structure[type].sections.map(section=>{
+
+			// if a section has an ID it must match at least one 
+			// requirement code otherwise it won't be shown.
 			if (section.id && codes.filter(code=>code.indexOf(section.id)===0).length) {
-
 				const heading = `<small>[${section.codes && section.codes.filter(c=>c.id).map(c=>c.id).join(', ')}]</small><h3>${section.title}</h3>`;
-
+				// if the section has codes, map them to the route data
 				const body = section.codes ? section.codes.map(subsection => {
 					if(subsection.id) {
 						const matches = route.entryRequirements.filter(req=>req.entryRequirementCode.indexOf(subsection.id)===0);
@@ -124,7 +145,8 @@
 				return heading + body;
 			}
 
-			return `<h3>${section.title}</h3>${section.body||''}`
+			// if a ssection has no ID then it will just always be shown
+			return `<h3>${section.title}</h3>${("function"===typeof section.body?section.body():section.body)||''}`
 
 		})
 		.map(debug => `<div style="border:1px solid salmon; padding:1rem">${debug}</div><br>`)
@@ -132,7 +154,7 @@
 		
 	}
 
-	const routecode = routes.shift().trim();
+	const routecode = routes.shift().trim(); // take only the FIRST route code
 	console.info('[Entry requirements] route code',routecode);
     routecode && stir.getJSON(reqapi, data=>{
         if(data.entryRequirements) {
@@ -148,7 +170,6 @@
             feeccordion.innerHTML = 
 			`<div>
 			${render(type,route)}
-			<hr>
             <p>Route: <strong>${routecode}</strong><br>Entry requirments status: ${route.entryRequirmentsStatus}<br>Academic year: ${route.ayr}<br>Data updated: ${route.updatedDate}</p><hr>`+
             '<div style="column-count:3">'+
             route.entryRequirements.map(
