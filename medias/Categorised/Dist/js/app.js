@@ -2400,10 +2400,10 @@ stir.ga = (() => {
     }
   
     return {
-      //url: hostname,
       name: env_name,
       wc_path: wc_path,
       t4_tags: t4_tags,
+      search: search
     };
   })();
   
