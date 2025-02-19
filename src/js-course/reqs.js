@@ -14,18 +14,18 @@
 			sections: [
 				{
 					id: "SY1",
-					title: "Year 1 entry – Four-year honours",
+					title: "Year 1 entry - Four-year honours",
 					codes: [
 						{id: "SY1SH", title: "SQA Highers"},
 						{id: "SY1AL", title: "GCE A-levels"},
 						{id: "SY1IB", title: "IB Diploma"},
 						{id: "RY1BT", title: "BTEC (Level 3)"},
-						{id: "SY1SUBJ", title: "Essential subjects", body: template.es},
+						{id: "SY1SUBJ", title: "Essential subjects", body: template.es},
 						{id: "", title:"Widening access students", body: template.wp}
 					]
 				},{
 					id: "SY2",
-					title: "Year 2 entry – Three-year honours",
+					title: "Year 2 entry - Three-year honours",
 					codes: [
 						{id: "SY2AH", title: "SQA Advanced Highers"},
 						{id: "SY2AL", title: "GCE A-levels"},
@@ -48,7 +48,7 @@
 					title: "Other qualifications",
 					codes: [
 						{id: "RY1HNMD", title: "English, Welsh and Northern Irish HNC/HND"},
-						{id: "", title: "Essential subjects"}
+						{id: "", title: "Essential subjects"}
 					]
 				},
 				{
@@ -67,7 +67,7 @@
 						<li>Pearson Test of English (Academic) [INTELP1.note]</li>
 						<li>IBT TOEFL [INTELT1.note]</li>
 					</ul>
-					<p>See our information on English language requirements for more details on the language tests we accept and options to waive these requirements.</p>
+					<p>See our information on English language requirements for more details on the language tests we accept and options to waive these requirements.</p>
 					<p>Pre-sessional English language courses</p>
 					<p>If you need to improve your English language skills before you enter this course, our partner INTO University of Stirling offers a range of English language courses. These intensive and flexible courses are designed to improve your English ability for entry to this degree.</p>
 					<p>Find out more about our pre-sessional English language courses</p>`
