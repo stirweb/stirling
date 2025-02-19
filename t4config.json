@@ -1767,6 +1767,11 @@
         "id": 182759,
         "description": "the-awards-2024.png",
         "projectPath": "medias/Categorised/Dist/images/email-signature/the-awards-2024.png"
+      },
+      {
+        "id": 187507,
+        "description": "email-signature-primary-personal-tutor.html",
+        "projectPath": "medias/Categorised/Dist/html/email-signature-primary-personal-tutor.html"
       }
     ]
   }
