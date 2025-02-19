@@ -130,19 +130,21 @@
 
 			// if a section has an ID it must match at least one 
 			// requirement code otherwise it won't be shown.
-			if (section.id && codes.filter(code=>code.indexOf(section.id)===0).length) {
-				const heading = `<small>[${section.codes && section.codes.filter(c=>c.id).map(c=>c.id).join(', ')}]</small><h3>${section.title}</h3>`;
-				// if the section has codes, map them to the route data
-				const body = section.codes ? section.codes.map(subsection => {
-					if(subsection.id) {
-						const matches = route.entryRequirements.filter(req=>req.entryRequirementCode.indexOf(subsection.id)===0);
-						const title = subsection.title?`<strong>${subsection.title}</strong><br>`:"";
-						return matches.length ? `<p>${title}${subsection.prenote||""}${matches.map(req=>req.note).join('')}${subsection.body||""}${subsection.postnote||""}</p>` : `<p><strong>${subsection.title}</strong><br>[no data]</p>`;
-					}
-					return "<p>"+(subsection.title?`<strong>${subsection.title}</strong><br>`:"") + (subsection.body||"") +"</p>";
-				}).join('') : section.body;
-
-				return heading + body;
+			if (section.id) {
+				if (codes.filter(code=>code.indexOf(section.id)===0).length) {
+					const heading = `<small>[${section.codes && section.codes.filter(c=>c.id).map(c=>c.id).join(', ')}]</small><h3>${section.title}</h3>`;
+					// if the section has codes, map them to the route data
+					const body = section.codes ? section.codes.map(subsection => {
+						if(subsection.id) {
+							const matches = route.entryRequirements.filter(req=>req.entryRequirementCode.indexOf(subsection.id)===0);
+							const title = subsection.title?`<strong>${subsection.title}</strong><br>`:"";
+							return matches.length ? `<p>${title}${subsection.prenote||""}${matches.map(req=>req.note).join('')}${subsection.body||""}${subsection.postnote||""}</p>` : `<p><strong>${subsection.title}</strong><br>[no data]</p>`;
+						}
+						return "<p>"+(subsection.title?`<strong>${subsection.title}</strong><br>`:"") + (subsection.body||"") +"</p>";
+					}).join('') : section.body;
+					return heading + body;
+				}
+				return `<h3>${section.title}</h3><p>No matches</p>`;
 			}
 
 			// if a ssection has no ID then it will just always be shown
