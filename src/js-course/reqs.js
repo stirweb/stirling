@@ -8,17 +8,21 @@
 		es: "<p>Essential subjects must have been taken within the last five years to ensure your required subject knowledge is current.<br>Recent work experience can be taken into consideration in place of a formal qualification.</p>",
 		elr: ""
 	};
-	const setELR = (INTELI1,INTELP1,INTELT1) => {
+	const elr = {
+		UG: ["INTELI1","INTELP1","INTELT1"],
+		PG: ["PGELI1","PGELP1","PGELT1"]
+	};
+	const setELR = (ELI1,ELP1,ELT1) => {
 		template.elr = `<p>If English is not your first language you must have one of the following qualifications as evidence of your English language skills:</p>
 		<ul>
-		<li>IELTS Academic or UKVI ${INTELI1}.</li>
-		<li>Pearson Test of English (Academic) ${INTELP1}.</li>
-		<li>IBT TOEFL ${INTELT1}.</li>
+		<li>IELTS Academic or UKVI ${ELI1}.</li>
+		<li>Pearson Test of English (Academic) ${ELP1}.</li>
+		<li>IBT TOEFL ${ELT1}.</li>
 		</ul>
 		<p>See our <a href="${debuglink}">information on English language requirements</a> for more details on the language tests we accept and options to waive these requirements.</p>
 		<p><strong>Pre-sessional English language courses</strong></p>
 		<p>If you need to improve your English language skills before you enter this course, our partner INTO University of Stirling offers a range of English language courses. These intensive and flexible courses are designed to improve your English ability for entry to this degree.</p>
-		<p>Find out more about our pre-sessional English language courses</p>`;
+		<p>Find out more about our <a href="${debuglink}">pre-sessional English language courses</a></p>`;
 	};
 
 	const getELR = () => template.elr;
@@ -86,16 +90,51 @@
 			]
 		},
 		PG: {
-			sections: []
+			sections: [
+				{
+					id:"PG",
+					title:"Academic requirements",
+					codes: [
+						{id:"PG2.2"},
+						{id:"PG2.1"},
+						{id:"PGAPS"},
+						{id:"AGREF", body: "One reference required as standard."}
+					]
+				},
+				{
+					id:"PG",
+					title:"Essential Subjects",
+					codes: [
+						{id:"PGSUBJ"},
+						{id:"PGOTH"}
+					]
+				},
+				{
+					id: "",
+					title: "International entry requirements",
+					body: `<p><a href="${debuglink}">View the entry requirements for your country</a></p>`
+				},
+				{
+					id:"",
+					title:"Other routes of entry",
+					body: `<p>If you don't currently meet our academic requirements, INTO University of Stirling offers a variety of preparation programmes that can earn you the qualifications and skills you need to progress onto some of our courses. Explore INTO University of Stirling to see the pathway and pre-masters routes available.</p>`
+				},
+				{
+					id:"",
+					title:"English language requirements",
+					body: getELR
+				}
+			]
 		}
 	};
-
+	
 	console.info('[Entry requirements] begin:');
 	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
     const reqapi = "dev"===UoS_env.name?'../reqs.json':'<t4 type="media" id="181797" formatter="path/*" />'
-
+	
 	const el = document.querySelector('[data-modules-route-code]');
 	const type = el && el.getAttribute('data-modules-course-type');
+	console.info('[Entry requirements] type', type);
 	const routes = (()=>{
 
 		if(!el) return false;
@@ -110,8 +149,6 @@
 
 	})();
 
-	
-
 	function render (type,route) {
 		// a simple array of the requirement codes for the current route. 
 		const codes = route.entryRequirements.map(req => req.entryRequirementCode);
@@ -119,14 +156,15 @@
 		console.info('route',route); console.info('structure',structure.UG); console.info('codes',codes);
 
 		setELR(
-			route.entryRequirements.filter(req=>req.entryRequirementCode==="INTELI1").map(req=>req.note),
-			route.entryRequirements.filter(req=>req.entryRequirementCode==="INTELP1").map(req=>req.note),
-			route.entryRequirements.filter(req=>req.entryRequirementCode==="INTELT1").map(req=>req.note)
+			route.entryRequirements.filter(req=>req.entryRequirementCode===elr[type][0]).map(req=>req.note),
+			route.entryRequirements.filter(req=>req.entryRequirementCode===elr[type][1]).map(req=>req.note),
+			route.entryRequirements.filter(req=>req.entryRequirementCode===elr[type][2]).map(req=>req.note)
 		);
 
 		// generate HTML using the JSON structure object
 		return `<p><b>⚠️ WORK IN PROGRESS</b></p>` + 
 			structure[type].sections.map(section=>{
+				console.info('[Entry requirements] sections…')
 
 			// if a section has an ID it must match at least one 
 			// requirement code otherwise it won't be shown.
@@ -138,7 +176,7 @@
 						if(subsection.id) {
 							const matches = route.entryRequirements.filter(req=>req.entryRequirementCode.indexOf(subsection.id)===0);
 							const title = subsection.title?`<strong>${subsection.title}</strong><br>`:"";
-							return matches.length ? `<p>${title}${subsection.prenote||""}${matches.map(req=>req.note).join('')}${subsection.body||""}${subsection.postnote||""}</p>` : `<p><strong>${subsection.title}</strong><br>[no data]</p>`;
+							return matches.length ? `<p>${title}${subsection.prenote||""}${matches.map(req=>req.note).join('')}${subsection.body||""}${subsection.postnote||""}</p>` : `<p><strong>${subsection.title||subsection.id}</strong><br>[no data]</p>`;
 						}
 						return "<p>"+(subsection.title?`<strong>${subsection.title}</strong><br>`:"") + (subsection.body||"") +"</p>";
 					}).join('') : section.body;
