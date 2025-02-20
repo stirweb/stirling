@@ -1,5 +1,5 @@
 (function (scope) {
-  if (!stir.favourites) return console.error("[Course Favourites] stir.favourites library not loaded");
+  if (!stir.favourites) return console.error("[Course Favourites] stir.favourites library not loaded!");
 
   // GLOBAL VARS
   const COOKIE_TYPE = "page";
