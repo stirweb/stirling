@@ -189,6 +189,19 @@
         </ul>
 
         <ul class="slidemenu__other-links no-bullet u-p-3 flex-container flex-dir-column u-gap-16">
+
+            <li class="slidemenu__other-links-favs text-sm">
+                <a href="/favourites/" rel="nofollow" class="u-flex u-gap-16 align-middle u-svg-16">
+                    <svg version="1.1" data-stiricon="heart-inactive" fill="currentColor" viewBox="0 0 50 50">
+                        <path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2c0,0-0.1,0-0.1,0c-3,0-5.8,1.2-7.9,3.4
+                     c-4.3,4.5-4.2,11.7,0.2,16l18.1,18.1c0.5,0.5,1.6,0.5,2.1,0l17.9-17.9c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+                     C47.5,15,46.3,12.2,44.1,10.1z M42,24.2l-17,17l-17-17c-3.3-3.3-3.3-8.6,0-11.8c1.6-1.6,3.7-2.4,5.9-2.4c2.2-0.1,4.4,0.8,6,2.5
+                     l4.1,4.1c0.6,0.6,1.5,0.6,2.1,0l4.2-4.2c3.4-3.2,8.5-3.2,11.8,0C45.3,15.6,45.3,20.9,42,24.2z">
+                        </path>
+                    </svg>
+                    <span>My favourites</span></a>
+            </li>
+
             <li class="slidemenu__other-links-portal text-sm"><a href="https://portal.stir.ac.uk/my-portal.jsp"
                     rel="nofollow">My Portal</a></li>
             <li class="slidemenu__other-links-contact text-sm"><a href="/about/contact-us/">Contact</a></li>
@@ -202,6 +215,7 @@
     <!--
 		MAIN HEADER
 	-->
+
     <header class="c-header" id="layout-header" aria-label="Main header">
         <div class="grid-container">
             <div class="grid-x ">
@@ -214,10 +228,12 @@
                 <nav aria-label="primary" class="cell large-8 medium-8 small-4 flex-container align-right">
                     <div class="c-header-nav flex-container flex-dir-column align-bottom align-center">
                         <ul class="c-header-nav c-header-nav--secondary u-font-semibold flex-container align-middle">
-                            <li class="c-header-nav__item show-for-medium">
-                                <a class="c-header-nav__link u-flex align-middle u-gap-4" href="/favourites/">
-                                    <svg version="1.1" data-stiricon="heart-active" fill="currentColor"
-                                        viewBox="0 0 50 50" style="width:16px;height:16px;">
+
+                            <li class="c-header-nav__item show-for-large">
+                                <a class="c-header-nav__link u-flex-large-up align-middle u-gap-4 u-svg-16"
+                                    href="/favourites/">
+                                    <svg version="1.1" data-stiricon="heart-inactive" fill="currentColor"
+                                        viewBox="0 0 50 50" class="svg-icon">
                                         <path
                                             d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2c0,0-0.1,0-0.1,0c-3,0-5.8,1.2-7.9,3.4
                                          c-4.3,4.5-4.2,11.7,0.2,16l18.1,18.1c0.5,0.5,1.6,0.5,2.1,0l17.9-17.9c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
@@ -225,8 +241,9 @@
                                          l4.1,4.1c0.6,0.6,1.5,0.6,2.1,0l4.2-4.2c3.4-3.2,8.5-3.2,11.8,0C45.3,15.6,45.3,20.9,42,24.2z">
                                         </path>
                                     </svg>
-                                    My favoutites</a>
+                                    <span>My favoutites</span></a>
                             </li>
+
                             <li class="c-header-nav__item show-for-medium">
                                 <a class=c-header-nav__link href="https://stirlinguni.cn/" data-microsite="cn">中文网</a>
                             </li>
@@ -602,8 +619,8 @@
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=118.1"></script>
 
     <script>
-        const MegaFavs = ((scope) => {
-            if (!scope) return;
+
+        const TempateFavs = (() => {
 
             const COOKIE_ID = "favs="
             const FB_URL = 'https://stage-shared-15-24-search.clients.uk.funnelback.com/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=';
@@ -612,6 +629,16 @@
                 renderCourseLink: Returns an array of html strings 
             */
             const renderCourseLink = (item) => `<li><a href="${item.url}">${item.title}</></li>`;
+
+            /* 
+                renderIcon: Returns a html strings 
+            */
+            const renderIcon = () => {
+                return `<svg version="1.1" data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50" >
+                            <path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+        C47.5,15,46.3,12.2,44.1,10.1z"></path>
+                        </svg>`;
+            };
 
             /* 
                 getfavsCookie: Returns an array of objects 
@@ -645,7 +672,7 @@
             /*
                 Controller
             */
-            function init(cookieId, fbUrl) {
+            function initMega(cookieId, fbUrl) {
                 const favCourses = getFavsList("course", cookieId);
 
                 if (!favCourses.length) return;
@@ -683,10 +710,49 @@
                 });
             }
 
-            init(COOKIE_ID, FB_URL);
+            /*
+                Controller
+            */
+            function initHeader(cookieId, iconNodes) {
+                const favs = getfavsCookie(cookieId);
+
+                if (!iconNodes.length || !favs.length) return;
+
+                console.log(iconNodes);
+                iconNodes.forEach(element => {
+                    stir.setHTML(element, renderIcon());
+                });
+            }
+
+            /*
+                On Load
+            */
+
+            const iconNodes = stir.nodes("[data-stiricon=heart-inactive]");
+            const megaMenuBtn = stir.node(".c-header-nav--primary");
+            let megaMenuClicks = 0;
+
+            initHeader(COOKIE_ID, iconNodes);
+
+
+            const callbackMegaMenu = (mutationList, observer) => {
+                for (const mutation of mutationList) {
+                    for (const addedNode of mutation.addedNodes) {
+                        if (addedNode.id == 'mm__study') {
+                            initMega(COOKIE_ID, FB_URL);
+                        }
+                    }
+                }
+            };
+
+            const config = { attributes: true, childList: true, subtree: true };
+            const observer = new MutationObserver(callbackMegaMenu);
+
+            observer.observe(stir.node("#megamenu__container"), config);
+
         });
 
-        MegaFavs(stir.node("#megamenu__container"));
+        TempateFavs();
     </script>
 
 
