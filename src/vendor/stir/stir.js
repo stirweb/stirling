@@ -175,7 +175,18 @@ stir.String = {
   },
   htmlEntities: function htmlEntities(str) {
     //return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&"+"quot;");
-    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, ["&", "quot;"].join(""));
+    //return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, ["&", "quot;"].join(""));
+	var entityMap = {
+		"&": "&amp;",
+		"<": "&lt;",
+		">": "&gt;",
+		'"': ["&", "quot;"].join(""),
+		"'": "&#39;",
+		"/": "&#x2F;",
+		"`": "&#x60;",
+		"=": "&#x3D;"
+	};
+	return String(str).replace(/[&<>"'`=\/]/g, s=>entityMap[s]);
   },
   stripHtml: function stripHtml(dirtyString) {
     var doc = new DOMParser().parseFromString(dirtyString, "text/html");

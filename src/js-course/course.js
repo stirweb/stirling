@@ -2,7 +2,7 @@ var stir = stir || {};
 stir.t4Globals = stir.t4Globals || {};
 
 stir.components = stir.components || {};
-/* stir.components.html = stir.components.html || {}; */
+stir.components.html = stir.components.html || {};
 stir.components.unistats = stir.components.unistats || {};
 stir.components.discoveruni = stir.components.discoveruni || {};
 
@@ -36,11 +36,11 @@ stir.components.discoveruni.widget = function (options) {
   widget.setAttribute("data-language", "en-GB");
   return widget;
 };
-/* stir.components.html.details = function (options) {
+stir.components.html.details = function (options) {
     var widget = document.createElement('details');
     options.summary && (widget.innerHTML = '<summary>' + options.summary + '</summary>');
     return widget;
-}; */
+};
 
 stir.components.accordion = function (options) {
   var id = stir.components.id.getNewId();
@@ -131,14 +131,15 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
         if (widgets.length > 1 && window.DiscoverUniWidget) {
           var widgetStylesAdded = false;
           var widgetsReady = 0;
-          var contentInsertionNode = new stir.components.accordion({
+          var contentInsertionNode = new stir.components.html.details({
             id: "morewidgets",
-            title: "View more Discover Uni information",
+            summary: "View more Discover Uni information",
           });
 
+		  contentInsertionNode.classList.add("u-my-2","u-cursor-pointer","u-header--secondary-font","text-larger");
           kiswidget.insertAdjacentElement("afterend", contentInsertionNode);
-          new stir.accord(contentInsertionNode);
-          contentInsertionNode = contentInsertionNode.querySelector("[data-tab-content]");
+          //new stir.accord(contentInsertionNode);
+          //contentInsertionNode = contentInsertionNode.querySelector("[data-tab-content]");
 
           // patch DiscoverUniWidget's addCss() function so it only runs once per page (not once per widget!)
           DiscoverUniWidget.prototype._addCss = DiscoverUniWidget.prototype.addCss;
