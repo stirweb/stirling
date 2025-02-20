@@ -204,7 +204,7 @@
                 return scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 ${routecode}: no match for this route code found in the requirements data</pre></p>`);
             }
 			if(!route.entryRequirements || route.entryRequirements.length===0) {
-				return scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 route code ${routecode}: matched but requirements data available</pre></p>`);
+				return scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 route code ${routecode}: matched but requirements data is not available</pre></p>`);
 			}
             var feeccordion = document.createElement('div');
             feeccordion.setAttribute('data-behaviour','accordion');
