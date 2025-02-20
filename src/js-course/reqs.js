@@ -97,6 +97,7 @@
 					codes: [
 						{id:"PG2.2"},
 						{id:"PG2.1"},
+						{id:"PG2.2/2.1"},
 						{id:"PGAPS"},
 						{id:"AGREF", body: "One reference required as standard."}
 					]
