@@ -1754,11 +1754,6 @@
         "projectPath": "medias/Categorised/Dist/js/other/favourites-page.js"
       },
       {
-        "id": 187630,
-        "description": "favourite-button.js",
-        "projectPath": "medias/Categorised/Dist/js/other/favourite-button.js"
-      },
-      {
         "id": 175961,
         "description": "redirects.csv",
         "projectPath": "medias/Categorised/Dist/php/smart-404/redirects.csv"
