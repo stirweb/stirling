@@ -1,6 +1,8 @@
 const FavouritesArea = (scope, cookieType) => {
   if (!scope) return;
 
+  console.log("working");
+
   const resultsArea = scope.querySelector("[data-activity]");
 
   if (!resultsArea) return;
