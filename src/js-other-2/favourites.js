@@ -26,9 +26,9 @@ stir.favourites = (() => {
   /* renderRemoveBtn */
   const renderRemoveBtn = (sid, dateSaved, showUrlToFavs) => {
     return `<div class="u-flex-medium-up  align-middle u-gap">
-              <button id="removefavbtn-${sid}" class="u-heritage-green  u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
+              <button id="removefavbtn-${sid}" class="u-heritage-green u-line-height-default u-cursor-pointer flex-container u-gap-8 align-middle" aria-label="Remove from favourites" data-action="removefav" data-id="${sid}">
                 ${renderActiveIcon()}
-                <span class="u-heritage-green u-border-bottom-hover u-block u-pb-tiny">Favourited ${calcDaysAgo(new Date(dateSaved))}</span>
+                <span class="u-heritage-green u-border-bottom-hover u-block ">Favourited ${calcDaysAgo(new Date(dateSaved))}</span>
             </button>${renderUrlToFavs(showUrlToFavs)}
           </div>`;
   };

@@ -636,6 +636,6 @@
       }
     });
 
-    scope.addEventListener("click", handleFavouriteBtnClick());
+    stir.node("main").addEventListener("click", handleFavouriteBtnClick());
   });
 })(stir.node("#eventsrevamp"));
