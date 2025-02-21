@@ -6,7 +6,7 @@ const renderDivider = () => `<div class="cell"><hr /></div>`;
 
 const renderNoItemsMessage = (msg) => `<div class="cell">${msg}</div>`;
 
-const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
+const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
 
 const renderHeader = (header, intro) =>
   !header && !intro
@@ -41,7 +41,7 @@ const renderItem = stir.curry((consts, item) => {
         ${item.isupcoming ? renderDateTime(item) : ``}
         <div class="text-sm">${item.description}</div>
         <p class="text-sm">Audience: ${item.studylevels} students. ${item.countries}</p>
-        <div id="favbtns${item.id}">${cookie && renderFavBtns(consts.urlToFavs, cookie, item.id)}</div>
+        <div id="favbtns${item.id}">${cookie && renderFavBtns(consts.showUrlToFavs, cookie, item.id)}</div>
       </div>
     </div>`;
 });
@@ -264,7 +264,7 @@ const updateFavouriteBtn = (id, consts) => {
   const cookie = stir.favourites.getFav(id, consts.cookieType);
   const node = stir.node("#favbtns" + id);
 
-  if (node) setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
+  if (node) setDOMContent(node)(renderFavBtns(consts.showUrlToFavs, cookie, id));
 };
 
 /* 
@@ -454,7 +454,7 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
     itemsPerPage: 6,
     safeList: ["countries", "series", "subjects", "studylevels", "faculties", "categories"],
     macros: (stir.t4Globals.regionmacros || []).filter((item) => item.tag),
-    urlToFavs: "",
+    showUrlToFavs: "",
     cookieType: "webinar",
   };
 

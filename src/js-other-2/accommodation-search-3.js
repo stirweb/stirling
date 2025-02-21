@@ -4,7 +4,7 @@ const AccommodationFinder = (scope) => {
   // Constants
   const CONSTS = {
     cookieType: "accom",
-    urlToFavs: `/favourites/`,
+    showUrlToFavs: `true`,
     activity: scope.dataset.activity || ``,
     view: stir.templates?.view || ``,
   };
@@ -38,7 +38,7 @@ const AccommodationFinder = (scope) => {
 
   const renderStudentTypes = (rooms) => (rooms ? stir.removeDuplicates(rooms.flatMap((item) => item.studType.split(",")).map((item) => item.trim())).join("<br />") : ``);
 
-  const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
+  const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
 
   const renderAccom = (consts) => (item) => {
     if (!item) return ``;
@@ -65,7 +65,7 @@ const AccommodationFinder = (scope) => {
               <div><img src="${item.img}" width="760" height="470" alt="Image of ${item.title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
             </div>
             <div class="cell text-sm u-pt-2" id="favbtns${item.id}">
-              ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
+              ${renderFavBtns(consts.showUrlToFavs, cookie, item.id)}
             </div>
           </div>
         </div>
@@ -166,7 +166,7 @@ const AccommodationFinder = (scope) => {
   const updateFavouriteBtn = (id, consts) => {
     const cookie = stir.favourites.getFav(id, consts.cookieType);
     const node = stir.node("#favbtns" + id);
-    if (node) setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
+    if (node) setDOMContent(node)(renderFavBtns(consts.showUrlToFavs, cookie, id));
   };
 
   /* 

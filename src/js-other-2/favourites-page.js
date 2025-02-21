@@ -1,8 +1,6 @@
 const FavouritesArea = (scope, cookieType) => {
   if (!scope) return;
 
-  console.log("working");
-
   const resultsArea = scope.querySelector("[data-activity]");
 
   if (!resultsArea) return;
@@ -11,7 +9,7 @@ const FavouritesArea = (scope, cookieType) => {
   const CONSTS = {
     allowedCookieTypes: ["accom", "course", "schol", "page"],
     cookieType: cookieType,
-    urlToFavs: resultsArea.dataset.favsurl || ``,
+    showUrlToFavs: resultsArea.dataset.favsurl || ``,
     activity: resultsArea.dataset.activity || ``,
     view: stir.templates?.view || ``,
     fbhost: UoS_env.name === "prod" || UoS_env.name === "dev2" ? "https://search.stir.ac.uk" : "https://stage-shared-15-24-search.clients.uk.funnelback.com",
@@ -43,7 +41,7 @@ const FavouritesArea = (scope, cookieType) => {
             </div>`;
   };
 
-  const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
+  const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
 
   const renderItem = (consts) => (item) => {
     if (!item) return ``;
@@ -60,7 +58,7 @@ const FavouritesArea = (scope, cookieType) => {
                 </div>
                 ${renderImage(item.img, item.title)}
                 <div class="cell text-sm u-pt-2" id="favbtns${item.id}" data-type="${item.type}">
-                  ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
+                  ${renderFavBtns(consts.showUrlToFavs, cookie, item.id)}
                 </div>
               </div>
             </div>
@@ -320,7 +318,7 @@ const FavouritesArea = (scope, cookieType) => {
     const updateFavButtonDisplay = (id) => {
       const cookie = stir.favourites.getFav(id, consts.cookieType);
       const node = stir.node("#favbtns" + id);
-      if (node) setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
+      if (node) setDOMContent(node)(renderFavBtns(consts.showUrlToFavs, cookie, id));
       if (domElements.sharedArea) doShared(domElements.sharedArea, consts);
     };
 

@@ -42,7 +42,7 @@
 
   const CONSTANTS = {
     cookieType: "scholarship",
-    urlToFavs: "/favourites/",
+    showUrlToFavs: "true",
     debug: debug,
     regions: {
       ukroi: stir.flatten(regionmacros.filter((item) => item.tag === "UK and ROI").map((el) => el.data)), // Changed from item.tag === "United Kingdom" to include ROI 20 Sep 2022
@@ -278,7 +278,7 @@
         </div> `;
   });
 
-  const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
+  const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
 
   /* 
     Form the HTML for an individual result
@@ -304,7 +304,7 @@
               
                 ${debug && schol ? renderDebug(schol) : ""}
             <div class="cell text-sm u-pt-2" id="favbtns${schol.scholarship.id}">
-              ${renderFavBtns(consts.urlToFavs, cookie, schol.scholarship.id)}
+              ${renderFavBtns(consts.showUrlToFavs, cookie, schol.scholarship.id)}
             </div>
             </div>
         </div>`;
@@ -391,7 +391,7 @@
       const node = stir.node("#favbtns" + id);
 
       if (node) {
-        setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
+        setDOMContent(node)(renderFavBtns(consts.showUrlToFavs, cookie, id));
       }
     };
 
