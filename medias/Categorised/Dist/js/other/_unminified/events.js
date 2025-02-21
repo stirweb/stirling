@@ -117,7 +117,7 @@
                   </div>
                 ${item.image ? renderImage(item.image, item.title) : ``} 
                  </div>
-                  <div class="u-mt-1" id="favbtns${item.sid}">${cookie && renderFavBtns("true", cookie, item.sid)}</div>
+                  <div class="u-mt-2" id="favbtns${item.sid}">${cookie && renderFavBtns("true", cookie, item.sid)}</div>
             </div>`;
   });
 

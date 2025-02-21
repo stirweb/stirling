@@ -28,7 +28,7 @@
                   </div>
                 ${t.image?l(t.image,t.title):""} 
                  </div>
-                  <div class="u-mt-1" id="favbtns${t.sid}">${r&&h("true",r,t.sid)}</div>
+                  <div class="u-mt-2" id="favbtns${t.sid}">${r&&h("true",r,t.sid)}</div>
             </div>`}),B=stir.curry((e,t)=>`
             <div class="u-border-width-5 u-heritage-line-left  u-p-2 u-bg-white text-sm u-relative u-mb-2 " data-result-type="event"  >
                 ${t.recording?u("Recording available"):""} 
