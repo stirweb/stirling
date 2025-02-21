@@ -147,6 +147,8 @@
   });
 
   const renderEventsPromo = stir.curry((seriesData, item) => {
+    const cookieType = "event";
+    const cookie = stir.favourites && stir.favourites.getFav(item.sid, cookieType);
     return `
           <div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${item.image ? `medium-8` : ``} ">
@@ -168,6 +170,7 @@
                   </div>
                   <p class="u-m-0 text-sm">${item.summary}</p>
                   ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
+                 <div class="u-mt-1" id="favbtns${item.sid}">${cookie && renderFavBtns("true", cookie, item.sid)}</div>
                 </div>
             </div>
             ${item.image ? `<div class="cell medium-4"><img src="${item.image}" class="u-object-cover" width="800" height="800" alt="Image: ${item.title}" /></div>` : ``}  
