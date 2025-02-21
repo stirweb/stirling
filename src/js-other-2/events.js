@@ -87,11 +87,14 @@
     return ``;
   };
 
+  const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
+
   const renderEvent = stir.curry((seriesData, item) => {
+    const cookieType = "event";
+    const cookie = stir.favourites && stir.favourites.getFav(item.sid, cookieType);
     return `
             <div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
                 ${renderLabelTab(item)} 
-
                 <div class="u-grid-medium-up u-gap-24 ${item.image ? "u-grid-cols-3_1" : ``} ">
                   <div class=" u-flex flex-dir-column u-gap u-mt-1" >
                       <p class="u-text-regular u-m-0">
@@ -112,8 +115,9 @@
                       <p class="u-m-0">${item.summary}</p>
                       ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
                   </div>
-                ${item.image ? renderImage(item.image, item.title) : ``}  
-                </div>
+                ${item.image ? renderImage(item.image, item.title) : ``} 
+                 </div>
+                  <div class="u-mt-1" id="favbtns${item.sid}">${cookie && renderFavBtns("true", cookie, item.sid)}</div>
             </div>`;
   });
 
@@ -545,6 +549,37 @@
     |
     */
 
+    const updateFavouriteBtn = (id) => {
+      const cookie = stir.favourites.getFav(id, "event");
+      const node = stir.node("#favbtns" + id);
+
+      if (node) setDOMContent(node)(renderFavBtns("true", cookie, id));
+    };
+
+    /* 
+          handleFavouriteBtnClick 
+      */
+    const handleFavouriteBtnClick = () => (event) => {
+      const cookieType = "event";
+      const target = event.target.closest("button");
+      if (!target || !target.dataset || !target.dataset.action) return;
+
+      if (target.dataset.action === "addtofavs") {
+        stir.favourites.addToFavs(target.dataset.id, cookieType);
+        updateFavouriteBtn(target.dataset.id);
+      }
+
+      if (target.dataset.action === "removefav") {
+        stir.favourites.removeFromFavs(target.dataset.id);
+        updateFavouriteBtn(target.dataset.id);
+
+        if (consts.activity === "managefavs") {
+          const node = stir.node("#fav-" + target.dataset.id);
+          if (node) setDOMContent(node)("");
+        }
+      }
+    };
+
     stir.each((item) => {
       item.addEventListener("click", (event) => {
         QueryParams.set("page", 1);
@@ -595,5 +630,7 @@
         doArchiveEvents(eventsarchivefilters.querySelector("input:checked").value, initData);
       }
     });
+
+    scope.addEventListener("click", handleFavouriteBtnClick());
   });
 })(stir.node("#eventsrevamp"));
