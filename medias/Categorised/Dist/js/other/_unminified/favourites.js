@@ -4,7 +4,7 @@ stir.favourites = (() => {
   // GLOBAL VARS
   const COOKIE_ID = "favs=";
   const COOKIE_EXPIRY_DAYS = 365;
-  const URL_TO_FAVS = UoS_env.name === "dev" ? `/favourites/` : `<t4 type="navigation" id="50" />`;
+  const URL_TO_FAVS = UoS_env.name === "dev" ? `/favourites/` : `<t4 type="navigation" id="5255" />`;
 
   /*
 
