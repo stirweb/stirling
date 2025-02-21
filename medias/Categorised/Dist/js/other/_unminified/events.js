@@ -152,7 +152,8 @@
     return `
           <div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${item.image ? `medium-8` : ``} ">
-                <div class="u-relative u-p-2">
+                <div class="u-relative u-p-2 u-flex flex-dir-column u-gap-8 u-h-full">
+                <div class="u-flex1">
                   ${item.isSeries ? renderTab("Event series") : ``}
                   <p class="u-text-regular u-mb-2">
                   ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} <strong><a href="${item.url}">${item.title}</a></strong>
@@ -170,7 +171,8 @@
                   </div>
                   <p class="u-m-0 text-sm">${item.summary}</p>
                   ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
-                 <div class="u-mt-1" id="favbtns${item.sid}">${cookie && renderFavBtns("true", cookie, item.sid)}</div>
+                 </div>
+                  <div id="favbtns${item.sid}">${cookie && renderFavBtns("true", cookie, item.sid)}</div>
                 </div>
             </div>
             ${item.image ? `<div class="cell medium-4"><img src="${item.image}" class="u-object-cover" width="800" height="800" alt="Image: ${item.title}" /></div>` : ``}  

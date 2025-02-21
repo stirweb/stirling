@@ -53,7 +53,8 @@
             </div>`),J=stir.curry((e,t)=>{var s=stir.favourites&&stir.favourites.getFav(t.sid,"event");return`
           <div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${t.image?"medium-8":""} ">
-                <div class="u-relative u-p-2">
+                <div class="u-relative u-p-2 u-flex flex-dir-column u-gap-8 u-h-full">
+                <div class="u-flex1">
                   ${t.isSeries?u("Event series"):""}
                   <p class="u-text-regular u-mb-2">
                   ${g(t.cancelled)} ${g(t.rescheduled)} <strong><a href="${t.url}">${t.title}</a></strong>
@@ -71,7 +72,8 @@
                   </div>
                   <p class="u-m-0 text-sm">${t.summary}</p>
                   ${t.isSeriesChild?f(t.isSeriesChild,e):""}
-                 <div class="u-mt-1" id="favbtns${t.sid}">${s&&h("true",s,t.sid)}</div>
+                 </div>
+                  <div id="favbtns${t.sid}">${s&&h("true",s,t.sid)}</div>
                 </div>
             </div>
             ${t.image?`<div class="cell medium-4"><img src="${t.image}" class="u-object-cover" width="800" height="800" alt="Image: ${t.title}" /></div>`:""}  
