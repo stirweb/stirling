@@ -24,6 +24,10 @@ stir.dpt = (function () {
     UG: "opt=runcode&ct=UG",
     PG: "opt=runpgcode&ct=PG",
   };
+  const currentVersion = {
+    UG: 362,
+    PG: 357
+  };
 
   const PORTAL = "https://portal.stir.ac.uk";
 
@@ -35,12 +39,12 @@ stir.dpt = (function () {
     // Portal data endpoints:
     servlet: `${PORTAL}/servlet/CalendarServlet`,
     route: {
-      UG: "?opt=menu&callback=stir.dpt.show.routes", //+ (ver?ver:'')
-      PG: "?opt=pgmenu&ct=PG&callback=stir.dpt.show.routes", //+ (ver?ver:'')
+      UG: `?opt=menu&ver=${currentVersion["UG"]}&callback=stir.dpt.show.routes`,//+ (ver?ver:'')
+      PG: `?opt=pgmenu&ver=${currentVersion["PG"]}&ct=PG&callback=stir.dpt.show.routes`, //+ (ver?ver:'')
     },
-    option: (type, roucode) => `?opt=${type.toLowerCase()}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&callback=stir.dpt.show.options`,
-    fees: (type, roucode) => `?opt=${type}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&callback=stir.dpt.show.fees`,
-    modules: (type, roucode, moa, occ) => `?${modulesEndpointParams[type.toUpperCase()]}&moa=${moa}&occ=${occ}&rouCode=${roucode}&callback=stir.dpt.show.modules`,
+    option: (type, roucode) => `?opt=${type.toLowerCase()}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&ver=${currentVersion[type.toUpperCase()]}&callback=stir.dpt.show.options`,
+    fees: (type, roucode) => `?opt=${type}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&ver=${currentVersion[type.toUpperCase()]}&callback=stir.dpt.show.fees`,
+    modules: (type, roucode, moa, occ) => `?${modulesEndpointParams[type.toUpperCase()]}&moa=${moa}&occ=${occ}&rouCode=${roucode}&ver=${currentVersion[type.toUpperCase()]}&callback=stir.dpt.show.modules`,
     module: (mod, year, sem) => stir.akari.get.module([mod, year, sem].join("/")),
   };
 
