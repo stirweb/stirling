@@ -230,21 +230,22 @@ const FavouritesArea = (scope, cookieType) => {
     doShared
   */
   function doShared(sharedArea, consts) {
-    const sharedListQuery = SafeQueryParams.get("s") || "";
-    if (!sharedListQuery) return setDOMContent(sharedArea, renderNoShared());
+    const sharedList = SafeQueryParams.get("s") || "";
+    if (!sharedList) return setDOMContent(sharedArea, renderNoShared());
 
     try {
-      const sharedList = atob(sharedListQuery);
-      const query = sharedList.replaceAll(",", "+");
+      //const sharedList = sharedList;
+      const query = sharedList.replaceAll("I", "+");
 
       const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award,startDate,endDate,register,page]&query=&meta_sid_or=${query}`;
 
       // Funnelback search
       stir.getJSON(fbUrl, (results) => {
         const arrayResults = results?.response?.resultPacket?.results || [];
+
         if (!arrayResults.length) return;
 
-        const sharedList2 = sharedList.split(",").map((item) => {
+        const sharedList2 = sharedList.split("I").map((item) => {
           return arrayResults
             .filter((element) => {
               if (Number(item) === Number(element.metaData.sid)) {
@@ -294,7 +295,7 @@ const FavouritesArea = (scope, cookieType) => {
     if (target.dataset.action === "copysharelink") {
       const favsCookie = stir.favourites.getFavsListAll();
 
-      const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
+      const base64Params = favsCookie.map((item) => item.id).join("I");
       const link = "https://www.stir.ac.uk/sharefavs/" + base64Params;
 
       if (navigator.clipboard) {
@@ -368,7 +369,10 @@ const FavouritesArea = (scope, cookieType) => {
   FavouritePromos
 
 */
-const FavouritePromos = () => {
+const FavouritePromos = (data) => {
+  if (!data || !data.length) return;
+
+  /* renderPromo */
   const renderPromo = (item) => {
     return `
       <div class="u-flex1-large-up u-bg-heritage-berry u-white--all u-flex-large-up flex-dir-column u-gap align-center u-mt-1">
@@ -385,19 +389,20 @@ const FavouritePromos = () => {
   };
 
   /* doPromos */
-  function doPromos(promosData) {
+  function doPromos(data) {
     const promoTypeNodes = stir.nodes("[data-promos]");
 
     promoTypeNodes.forEach((node) => {
       const promoType = node.getAttribute("data-promos");
-      const promos = promosData.filter((promo) => promo.type === promoType);
+      const promos = data.filter((promo) => promo.type === promoType);
 
       promoHtml = promos.map(renderPromo).join(``);
       stir.setHTML(node, promoHtml);
     });
   }
 
-  doPromos(promosData);
+  /* on load */
+  doPromos(data);
 };
 
 // Run the FavouritesArea
@@ -409,4 +414,5 @@ FavouritesArea(stir.node("#eventArea"), "event");
 FavouritesArea(stir.node("#webinarArea"), "webinar");
 FavouritesArea(stir.node("#latestFavs"), "all");
 
-FavouritePromos();
+// Run the FavouritePromos
+//promosData && FavouritePromos(promosData);
