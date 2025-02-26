@@ -383,6 +383,15 @@ svg.u-icon {
   width: 100%;
 }
 
+.hook-skinny::before {
+  height: 24px;
+  width: 5px;
+}
+
+.hook-skinny::after {
+  height: 5px;
+}
+
 .hook-infinite {
   max-width: max-content;
 

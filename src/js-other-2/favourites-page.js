@@ -378,7 +378,7 @@ const FavouritePromos = () => {
     return `
       <div class="u-flex1-large-up u-bg-heritage-berry u-white--all u-flex-large-up flex-dir-column u-gap align-center u-mt-1">
           <div class="u-py-2 flex-container flex-dir-column u-gap">
-              <div class=" hook hook-right hook-energy-green u-mr-2">
+              <div class="hook hook-skinny hook-right hook-energy-green u-mr-2">
                   <h2 class=" text-lg u-uppercase  u-pl-2 u-m-0 u-p-0">${item.head}</h2>
               </div>
               <div class="u-px-2">
