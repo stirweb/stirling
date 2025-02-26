@@ -37,7 +37,7 @@ stir.funnelback =
   };
   const parameters = {
     relatedCourses: `&sort=title&SF=[award]&num_ranks=${max["relatedCourses"] + 1}`,
-    relatedNews: `&sort=date&SF=[c,d,h1,image,imagealt,tags,thumbnail]&num_ranks=${max["relatedNews"] + 1}`,
+    relatedNews: `&sort=date&SF=[c,d,h1,image,imagealt,tags,thumbnail]&MBL=300&num_ranks=${max["relatedNews"] + 1}`,
   };
   const getMetaQueryParams = (metaName, metaValue) => (metaName && metaValue ? `&meta_${metaName}_orsand=${metaValue}` : "");
   const getFacetsFromMetaTags = (name) => Array.prototype.slice.call(document.querySelectorAll(`meta[name="${name}"]`)).map((el) => el.content);
