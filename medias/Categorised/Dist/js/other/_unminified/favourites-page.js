@@ -372,3 +372,37 @@ FavouritesArea(stir.node("#pageArea"), "page");
 FavouritesArea(stir.node("#eventArea"), "event");
 FavouritesArea(stir.node("#webinarArea"), "webinar");
 FavouritesArea(stir.node("#latestFavs"), "all");
+
+const FavouritePromos = () => {
+  const renderPromo = (item) => {
+    return `
+      <div class="u-flex1-large-up u-bg-heritage-berry u-white--all u-flex-large-up flex-dir-column u-gap align-center u-mt-1">
+          <div class="u-py-2 flex-container flex-dir-column u-gap">
+              <div class=" hook hook-right hook-energy-green u-mr-2">
+                  <h2 class=" text-lg u-uppercase  u-pl-2 u-m-0 u-p-0">${item.head}</h2>
+              </div>
+              <div class="u-px-2">
+                  <p class="text-sm u-mb-1">${item.body}</p>
+                  <a class="button heritage-green u-cursor-pointer expanded text-sm " href="${item.link}" aria-label="Book your place">${item.button}</a>
+              </div>
+          </div>
+      </div>`;
+  };
+
+  /* doPromos */
+  function doPromos(promosData) {
+    const promoTypeNodes = stir.nodes("[data-promos]");
+
+    promoTypeNodes.forEach((node) => {
+      const promoType = node.getAttribute("data-promos");
+      const promos = promosData.filter((promo) => promo.type === promoType);
+
+      promoHtml = promos.map(renderPromo).join(``);
+      stir.setHTML(node, promoHtml);
+    });
+  }
+
+  doPromos(promosData);
+};
+
+FavouritePromos();

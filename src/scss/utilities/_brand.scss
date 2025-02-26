@@ -360,7 +360,7 @@ svg.u-icon {
 .hook::after {
   background-color: currentColor;
   bottom: 0;
-  content: "";
+  content: "" !important;
   position: absolute;
 }
 
