@@ -162,6 +162,7 @@ const FavouritesArea = (scope, cookieType) => {
 
     if (!favs.length) {
       setDOMContent(domElements.resultsArea, `<div class="cell">No favourites saved.</div>`);
+      setDOMContent(domElements.latestArea, `<div class="cell">No favourites saved.</div>`);
       return;
     }
 
@@ -174,14 +175,12 @@ const FavouritesArea = (scope, cookieType) => {
       .join("+");
 
     const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award,startDate,endDate,register,page]&query=&meta_sid_or=${query}`;
-    console.log(fbUrl);
+
     // Funnelback search
     stir.getJSON(fbUrl, (results) => {
       const arrayResults = results?.response?.resultPacket?.results || [];
 
       if (!arrayResults.length) return;
-
-      console.log(arrayResults);
 
       const favList = query.split("+").map((item) => {
         return arrayResults
@@ -364,15 +363,11 @@ const FavouritesArea = (scope, cookieType) => {
   init(CONSTS, DOM_ELEMENTS);
 };
 
-// Run the FavouritesArea
-FavouritesArea(stir.node("#acccomArea"), "accommodation");
-FavouritesArea(stir.node("#courseArea"), "course");
-FavouritesArea(stir.node("#scholArea"), "scholarship");
-FavouritesArea(stir.node("#pageArea"), "page");
-FavouritesArea(stir.node("#eventArea"), "event");
-FavouritesArea(stir.node("#webinarArea"), "webinar");
-FavouritesArea(stir.node("#latestFavs"), "all");
+/*
 
+  FavouritePromos
+
+*/
 const FavouritePromos = () => {
   const renderPromo = (item) => {
     return `
@@ -404,5 +399,14 @@ const FavouritePromos = () => {
 
   doPromos(promosData);
 };
+
+// Run the FavouritesArea
+FavouritesArea(stir.node("#acccomArea"), "accommodation");
+FavouritesArea(stir.node("#courseArea"), "course");
+FavouritesArea(stir.node("#scholArea"), "scholarship");
+FavouritesArea(stir.node("#pageArea"), "page");
+FavouritesArea(stir.node("#eventArea"), "event");
+FavouritesArea(stir.node("#webinarArea"), "webinar");
+FavouritesArea(stir.node("#latestFavs"), "all");
 
 FavouritePromos();

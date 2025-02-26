@@ -3813,10 +3813,9 @@ C47.5,15,46.3,12.2,44.1,10.1z"></path>
   */
   function initHeader(cookieId, iconNodes) {
     const favs = getfavsCookie(cookieId);
-    console.log(favs);
+
     if (!iconNodes.length || !favs.length) return;
 
-    console.log(iconNodes);
     iconNodes.forEach((element) => {
       stir.setHTML(element, renderIcon());
     });
@@ -3827,8 +3826,6 @@ C47.5,15,46.3,12.2,44.1,10.1z"></path>
   */
 
   const iconNodes = stir.nodes("[data-stiricon=heart-inactive]");
-  const megaMenuBtn = stir.node(".c-header-nav--primary");
-  let megaMenuClicks = 0;
 
   initHeader(COOKIE_ID, iconNodes);
 
