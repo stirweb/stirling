@@ -67,7 +67,9 @@
 						{id: "SY1HN", title:"Scottish HNC/HND", prenote: "Year one minimum entry - ",},
 						{id: "SY1ACC50%", title:"Access courses", prenote: ""},
 						{id: "SY1SWAPB", postnote: " - for mature students only"},
-						{id: "", body:'Email our <a href="mailto:admissions@stir.ac.uk">Admissions Team</a> for advice about other access courses.'}
+						{id: "", body:'Email our <a href="mailto:admissions@stir.ac.uk">Admissions Team</a> for advice about other access courses.'},
+						{id: "", title: "Foundation Apprenticeships", body: "Considered to be equivalent to 1 Higher at Grade B."},
+						{id: "SY1SUBJ", title: "Essential subjects", body: template.es}
 					]
 				},
 				{
@@ -159,20 +161,21 @@
 	})();
 
 	function render (el,type,route) {
+		
 		// a simple array of the requirement codes for the current route. 
 		const codes = route.entryRequirements.map(req => req.entryRequirementCode);
-		const wrapper = document.createElement('div');
-		el.append(wrapper);
 
 		console.info('route',route); console.info('structure',structure.UG); console.info('codes',codes);
 
+		// we need to prepare the ELR template before looping through the sections
+		// this will embed the requirements notes into the ELR boilerplate text.
 		setELR(
 			route.entryRequirements.filter(req=>req.entryRequirementCode===elr[type][0]).map(req=>req.note),
 			route.entryRequirements.filter(req=>req.entryRequirementCode===elr[type][1]).map(req=>req.note),
 			route.entryRequirements.filter(req=>req.entryRequirementCode===elr[type][2]).map(req=>req.note)
 		);
 
-		// generate HTML using the JSON structure object
+		// Now generate HTML using the JSON structure object
 		structure[type].sections.map(section=>{
 				console.info('[Entry requirements] sections…')
 
@@ -190,24 +193,23 @@
 						}
 						return "<p>"+(subsection.title?`<strong>${subsection.title}</strong><br>`:"") + (subsection.body||"") +"</p>";
 					}).join('') : section.body;
-					return heading + body;
+					return heading + `<div>${body}</div>`;
 				}
 				return (debug?`<h3>${section.title}</h3><p>No matches</p>`:'');
 			}
 
 			// if a ssection has no ID then it will just always be shown
-			return `<h3>${section.title}</h3>${("function"===typeof section.body?section.body():section.body)||''}`
+			return `<h3>${section.title}</h3><div>${("function"===typeof section.body?section.body():section.body)||''}</div>`
 
 		})
-		.map(accordion => {
-			const el = document.createElement('div');
-			el.setAttribute("data-behaviour","accordion");
-			el.innerHTML = accordion;
-			new stir.accord(el,false);
-			return el;
-		}).forEach(element => wrapper.append(element));
-
-		return wrapper;
+		.map(html => {
+			const accordion = document.createElement('div');
+			accordion.setAttribute("data-behaviour","accordion");
+			accordion.innerHTML = html;
+			el.append(accordion)
+			new stir.accord(accordion,false);
+			return accordion;
+		});
 		
 	}
 
@@ -222,13 +224,8 @@
 			if(!route.entryRequirements || route.entryRequirements.length===0) {
 				return scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 route code ${routecode}: matched but requirements data is not available</pre></p>`);
 			}
-            var feeccordion = document.createElement('div');
-            feeccordion.setAttribute('data-behaviour','accordion');
-            render(feeccordion,type,route);
-            console.info(scope);
-            //scope.appendChild(frag);
-            scope.prepend(feeccordion);
-            new stir.accord(feeccordion, false)
+			scope.innerHTML = "<p>⚠️ These accordion sections are now using API data.</p>";
+            render(scope,type,route);
         }
     })
 
