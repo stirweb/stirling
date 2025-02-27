@@ -1225,6 +1225,8 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 
 ((scope)=>{
 
+	//const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
+	const debug = false;
 
 	const debuglink = `javascript:alert('[Work in progess] This link will need a T4 Nav Object')`;
 
@@ -1256,6 +1258,13 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 		UG: {
 			sections: [
 				{
+					id: "UG",
+					title: "Academic requirements",
+					codes: [
+						{id: "UG2.2"}
+					]
+				},
+				{
 					id: "SY1",
 					title: "Year 1 entry - Four-year honours",
 					codes: [
@@ -1281,7 +1290,7 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 					title: "Other Scottish qualifications",
 					codes: [
 						{id: "SY1HN", title:"Scottish HNC/HND", prenote: "Year one minimum entry - ",},
-						{id: "SY1ACC50%", title:"Access courses", prenote: "::NOTE OVERRIDE::"},
+						{id: "SY1ACC50%", title:"Access courses", prenote: ""},
 						{id: "SY1SWAPB", postnote: " - for mature students only"},
 						{id: "", body:'Email our <a href="mailto:admissions@stir.ac.uk">Admissions Team</a> for advice about other access courses.'}
 					]
@@ -1355,7 +1364,6 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 	};
 	
 	console.info('[Entry requirements] begin:');
-	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
     const reqapi = "dev"===UoS_env.name?'../reqs.json':'<t4 type="media" id="181797" formatter="path/*" />'
 	
 	const el = document.querySelector('[data-modules-route-code]');
@@ -1375,9 +1383,11 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 
 	})();
 
-	function render (type,route) {
+	function render (el,type,route) {
 		// a simple array of the requirement codes for the current route. 
 		const codes = route.entryRequirements.map(req => req.entryRequirementCode);
+		const wrapper = document.createElement('div');
+		el.append(wrapper);
 
 		console.info('route',route); console.info('structure',structure.UG); console.info('codes',codes);
 
@@ -1388,35 +1398,41 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 		);
 
 		// generate HTML using the JSON structure object
-		return `<p><b>⚠️ WORK IN PROGRESS</b></p>` + 
-			structure[type].sections.map(section=>{
+		structure[type].sections.map(section=>{
 				console.info('[Entry requirements] sections…')
 
 			// if a section has an ID it must match at least one 
 			// requirement code otherwise it won't be shown.
 			if (section.id) {
 				if (codes.filter(code=>code.indexOf(section.id)===0).length) {
-					const heading = `<small>[${section.codes && section.codes.filter(c=>c.id).map(c=>c.id).join(', ')}]</small><h3>${section.title}</h3>`;
+					const heading = `<h3>${section.title}</h3>`;
 					// if the section has codes, map them to the route data
 					const body = section.codes ? section.codes.map(subsection => {
 						if(subsection.id) {
 							const matches = route.entryRequirements.filter(req=>req.entryRequirementCode.indexOf(subsection.id)===0);
 							const title = subsection.title?`<strong>${subsection.title}</strong><br>`:"";
-							return matches.length ? `<p>${title}${subsection.prenote||""}${matches.map(req=>req.note).join('')}${subsection.body||""}${subsection.postnote||""}</p>` : `<p><strong>${subsection.title||subsection.id}</strong><br>[no data]</p>`;
+							return matches.length ? `<p>${title}${subsection.prenote||""}${matches.map(req=>req.note).join('')}${subsection.body||""}${subsection.postnote||""}</p>` : (debug?`<p><strong>${subsection.title||subsection.id}</strong><br>[no data]</p>`:'');
 						}
 						return "<p>"+(subsection.title?`<strong>${subsection.title}</strong><br>`:"") + (subsection.body||"") +"</p>";
 					}).join('') : section.body;
 					return heading + body;
 				}
-				return `<h3>${section.title}</h3><p>No matches</p>`;
+				return (debug?`<h3>${section.title}</h3><p>No matches</p>`:'');
 			}
 
 			// if a ssection has no ID then it will just always be shown
 			return `<h3>${section.title}</h3>${("function"===typeof section.body?section.body():section.body)||''}`
 
 		})
-		.map(debug => `<div style="border:1px solid salmon; padding:1rem">${debug}</div><br>`)
-		.join('');
+		.map(accordion => {
+			const el = document.createElement('div');
+			el.setAttribute("data-behaviour","accordion");
+			el.innerHTML = accordion;
+			new stir.accord(el,false);
+			return el;
+		}).forEach(element => wrapper.append(element));
+
+		return wrapper;
 		
 	}
 
@@ -1433,19 +1449,7 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 			}
             var feeccordion = document.createElement('div');
             feeccordion.setAttribute('data-behaviour','accordion');
-            feeccordion.innerHTML = 
-			`<div>
-			${render(type,route)}
-            <p>Route: <strong>${routecode}</strong><br>Entry requirments status: ${route.entryRequirmentsStatus}<br>Academic year: ${route.ayr}<br>Data updated: ${route.updatedDate}</p><hr>`+
-            '<div style="column-count:3">'+
-            route.entryRequirements.map(
-                req => `<p style="font-size:.8rem;break-inside:avoid-column;"><strong>${req.entryRequirementCode}</strong> ${req.entryRequirementName}<br>${req.note}</p>`
-            ).join('') +
-            '</div><details style="margin:1rem;padding:1rem;border:2px dashed red"><summary>JSON data</summary><pre>' + JSON.stringify(
-                (route),
-                null,
-                "\t"
-            ) + '</pre></details></div>';
+            render(feeccordion,type,route);
             console.info(scope);
             //scope.appendChild(frag);
             scope.prepend(feeccordion);
