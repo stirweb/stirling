@@ -1225,6 +1225,8 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 
 ((scope)=>{
 
+	//const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
+	const debug = false;
 
 	const debuglink = `javascript:alert('[Work in progess] This link will need a T4 Nav Object')`;
 
@@ -1256,6 +1258,13 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 		UG: {
 			sections: [
 				{
+					id: "UG",
+					title: "Academic requirements",
+					codes: [
+						{id: "UG2.2"}
+					]
+				},
+				{
 					id: "SY1",
 					title: "Year 1 entry - Four-year honours",
 					codes: [
@@ -1281,9 +1290,11 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 					title: "Other Scottish qualifications",
 					codes: [
 						{id: "SY1HN", title:"Scottish HNC/HND", prenote: "Year one minimum entry - ",},
-						{id: "SY1ACC50%", title:"Access courses", prenote: "::NOTE OVERRIDE::"},
+						{id: "SY1ACC50%", title:"Access courses", prenote: ""},
 						{id: "SY1SWAPB", postnote: " - for mature students only"},
-						{id: "", body:'Email our <a href="mailto:admissions@stir.ac.uk">Admissions Team</a> for advice about other access courses.'}
+						{id: "", body:'Email our <a href="mailto:admissions@stir.ac.uk">Admissions Team</a> for advice about other access courses.'},
+						{id: "", title: "Foundation Apprenticeships", body: "Considered to be equivalent to 1 Higher at Grade B."},
+						{id: "SY1SUBJ", title: "Essential subjects", body: template.es}
 					]
 				},
 				{
@@ -1355,7 +1366,6 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 	};
 	
 	console.info('[Entry requirements] begin:');
-	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
     const reqapi = "dev"===UoS_env.name?'../reqs.json':'<t4 type="media" id="181797" formatter="path/*" />'
 	
 	const el = document.querySelector('[data-modules-route-code]');
@@ -1375,48 +1385,56 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 
 	})();
 
-	function render (type,route) {
+	function render (el,type,route) {
+		
 		// a simple array of the requirement codes for the current route. 
 		const codes = route.entryRequirements.map(req => req.entryRequirementCode);
 
 		console.info('route',route); console.info('structure',structure.UG); console.info('codes',codes);
 
+		// we need to prepare the ELR template before looping through the sections
+		// this will embed the requirements notes into the ELR boilerplate text.
 		setELR(
 			route.entryRequirements.filter(req=>req.entryRequirementCode===elr[type][0]).map(req=>req.note),
 			route.entryRequirements.filter(req=>req.entryRequirementCode===elr[type][1]).map(req=>req.note),
 			route.entryRequirements.filter(req=>req.entryRequirementCode===elr[type][2]).map(req=>req.note)
 		);
 
-		// generate HTML using the JSON structure object
-		return `<p><b>⚠️ WORK IN PROGRESS</b></p>` + 
-			structure[type].sections.map(section=>{
+		// Now generate HTML using the JSON structure object
+		structure[type].sections.map(section=>{
 				console.info('[Entry requirements] sections…')
 
 			// if a section has an ID it must match at least one 
 			// requirement code otherwise it won't be shown.
 			if (section.id) {
 				if (codes.filter(code=>code.indexOf(section.id)===0).length) {
-					const heading = `<small>[${section.codes && section.codes.filter(c=>c.id).map(c=>c.id).join(', ')}]</small><h3>${section.title}</h3>`;
+					const heading = `<h3>${section.title}</h3>`;
 					// if the section has codes, map them to the route data
 					const body = section.codes ? section.codes.map(subsection => {
 						if(subsection.id) {
 							const matches = route.entryRequirements.filter(req=>req.entryRequirementCode.indexOf(subsection.id)===0);
 							const title = subsection.title?`<strong>${subsection.title}</strong><br>`:"";
-							return matches.length ? `<p>${title}${subsection.prenote||""}${matches.map(req=>req.note).join('')}${subsection.body||""}${subsection.postnote||""}</p>` : `<p><strong>${subsection.title||subsection.id}</strong><br>[no data]</p>`;
+							return matches.length ? `<p>${title}${subsection.prenote||""}${matches.map(req=>req.note).join('')}${subsection.body||""}${subsection.postnote||""}</p>` : (debug?`<p><strong>${subsection.title||subsection.id}</strong><br>[no data]</p>`:'');
 						}
 						return "<p>"+(subsection.title?`<strong>${subsection.title}</strong><br>`:"") + (subsection.body||"") +"</p>";
 					}).join('') : section.body;
-					return heading + body;
+					return heading + `<div>${body}</div>`;
 				}
-				return `<h3>${section.title}</h3><p>No matches</p>`;
+				return (debug?`<h3>${section.title}</h3><p>No matches</p>`:'');
 			}
 
 			// if a ssection has no ID then it will just always be shown
-			return `<h3>${section.title}</h3>${("function"===typeof section.body?section.body():section.body)||''}`
+			return `<h3>${section.title}</h3><div>${("function"===typeof section.body?section.body():section.body)||''}</div>`
 
 		})
-		.map(debug => `<div style="border:1px solid salmon; padding:1rem">${debug}</div><br>`)
-		.join('');
+		.map(html => {
+			const accordion = document.createElement('div');
+			accordion.setAttribute("data-behaviour","accordion");
+			accordion.innerHTML = html;
+			el.append(accordion)
+			new stir.accord(accordion,false);
+			return accordion;
+		});
 		
 	}
 
@@ -1431,25 +1449,8 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 			if(!route.entryRequirements || route.entryRequirements.length===0) {
 				return scope.insertAdjacentHTML("afterbegin",`<p><pre>💾 route code ${routecode}: matched but requirements data is not available</pre></p>`);
 			}
-            var feeccordion = document.createElement('div');
-            feeccordion.setAttribute('data-behaviour','accordion');
-            feeccordion.innerHTML = 
-			`<div>
-			${render(type,route)}
-            <p>Route: <strong>${routecode}</strong><br>Entry requirments status: ${route.entryRequirmentsStatus}<br>Academic year: ${route.ayr}<br>Data updated: ${route.updatedDate}</p><hr>`+
-            '<div style="column-count:3">'+
-            route.entryRequirements.map(
-                req => `<p style="font-size:.8rem;break-inside:avoid-column;"><strong>${req.entryRequirementCode}</strong> ${req.entryRequirementName}<br>${req.note}</p>`
-            ).join('') +
-            '</div><details style="margin:1rem;padding:1rem;border:2px dashed red"><summary>JSON data</summary><pre>' + JSON.stringify(
-                (route),
-                null,
-                "\t"
-            ) + '</pre></details></div>';
-            console.info(scope);
-            //scope.appendChild(frag);
-            scope.prepend(feeccordion);
-            new stir.accord(feeccordion, false)
+			scope.innerHTML = "<p>⚠️ These accordion sections are now using API data.</p>";
+            render(scope,type,route);
         }
     })
 
