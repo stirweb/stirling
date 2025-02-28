@@ -415,4 +415,4 @@ FavouritesArea(stir.node("#webinarArea"), "webinar");
 FavouritesArea(stir.node("#latestFavs"), "all");
 
 // Run the FavouritePromos
-//promosData && FavouritePromos(promosData);
+promosData && FavouritePromos(promosData);
