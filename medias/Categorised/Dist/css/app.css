@@ -1595,6 +1595,15 @@ a:hover {
   margin-bottom: 1em; }
 
 /* 
+    stir-tabs
+*/
+.stir-tabs h3 {
+  font-size: 1.3rem; }
+
+.stir-tabs h4 {
+  font-size: 1.125rem; }
+
+/* 
     P Variations 
 */
 p.smaller {
@@ -4099,6 +4108,8 @@ table caption {
   .stir-tabs .c-wysiwyg-content h3::after {
     content: none !important; }
   .stir-tabs .c-wysiwyg-content p + h3 {
+    margin: 1rem 0; }
+  .stir-tabs .c-wysiwyg-content p + h4 {
     margin: 1rem 0; }
   .stir-tabs .c-wysiwyg-content .stir-accordion > h3 {
     margin: 1rem 0;
