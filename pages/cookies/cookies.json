@@ -1382,7 +1382,7 @@
   {
     "Name": "_dd_s",
     "Provider": "Vimeo",
-    "Purpose": null,
+    "Purpose": "",
     "Expiry": "15 minutes",
     "Type": "Third-party",
     "MoreInfoUrl": "",
