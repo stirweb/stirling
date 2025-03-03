@@ -440,8 +440,17 @@
     <main class="wrapper-content" aria-label="Main content" id="content">
         <div class="grid-container">
             <div class="grid-x ">
-                <div class="cell ">
 
+                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
+                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Cookies</h1>
+                </div>
+
+                <div class="cell u-padding-y">
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea eos consequatur corporis odit,
+                        libero a minima iste, explicabo quod, fuga non sint corrupti quam reprehenderit. Nesciunt
+                        voluptas vel magni autem.</p>
+
+                    <p data-cookiesmodified></p>
 
                     <div data-cookies="Necessary"></div>
                     <div data-cookies="Performance"></div>
@@ -452,6 +461,8 @@
     </main>
 
 </body>
+
+<script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=58.1"></script>
 
 <script>
 
@@ -494,9 +505,25 @@
         `;
     };
 
-    // Set cookie tables
-    fetch('./cookies.json')
-        .then(response => response.json())
+
+
+    /*
+        On load: Fetch the data from cookies.json and render the tables
+    */
+
+    const dataUrl = UoS_env.name === "dev" ? "./cookies.json" : '<t4 type="navigation" id="5290" />';
+
+    fetch(dataUrl)
+        .then(response => {
+            // Log the last modified date from response headers
+            if (response.headers.get('last-modified')) {
+                const lastModified = response.headers.get('last-modified').split(" ");
+                const div = document.querySelector(`[data-cookiesmodified]`);
+
+                if (div) div.innerHTML = `These lists of cookies were last reviewed on ${lastModified[1]} ${lastModified[2]} ${lastModified[3]}.`;
+            }
+            return response.json();
+        })
         .then(data => {
             // Group cookies by type
             const cookieGroups = data.reduce((acc, cookie) => {
