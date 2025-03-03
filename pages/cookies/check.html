@@ -440,90 +440,62 @@
     <main class="wrapper-content" aria-label="Main content" id="content">
         <div class="grid-container">
             <div class="grid-x ">
-                <div class="cell ">
-
-
-                    <div data-cookies="Necessary"></div>
-                    <div data-cookies="Performance"></div>
-                    <div data-cookies="Marketing"></div>
-                    <div data-cookies="Third-party"></div>
+                <div class="cell u-padding-y">
+                    <div id="tables-container">Check the console!</div>
                 </div>
             </div>
+        </div>
     </main>
 
 </body>
 
 <script>
 
-    // Check Applier and Provider
-    const checkApplier = (provider, applier) => {
-        if (applier === '') return '';
-        if (provider === applier) return '';
-        return `(${applier})`;
+    // Fetch and parse a JSON file
+    const fetchJson = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error(`Error fetching ${url}:`, error.message);
+            throw error;
+        }
     };
 
-    // Create table HTML
-    const createTableHTML = (cookies) => {
-        if (!cookies || cookies.length === 0) return '';
+    // Main function to find differences between two JSON files
+    const findNewEntries = async (oldFileUrl, newFileUrl) => {
+        const [oldData, newData] = await Promise.all([
+            fetchJson(oldFileUrl),
+            fetchJson(newFileUrl)
+        ]);
 
-        return `
-            <table class="u-mb-3" border="1">
-                <caption class="u-mb-1">${cookies[0].Type} cookies</caption>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Provider</th>
-                        <th>Purpose</th>
-                        <th>Expiry</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${cookies.map(cookie => `
-                        <tr>
-                            <td>${cookie.Name}</td>
-                            <td>${cookie.Provider} ${checkApplier(cookie.Provider, cookie.Applier)}</td>
-                            <td>
-                                <p>${cookie.Purpose}</p>
-                                ${cookie.MoreInfoUrl ? `<p><a href="${cookie.MoreInfoUrl}" target="_blank">${cookie.Applier}'s cookie policy</a></p>` : ''}
-                            </td>
-                            <td>${cookie.Expiry}</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `;
+        const newEntries = newData.filter((item) => {
+            return !oldData.find((item2) => {
+                return item.Name === item2.Name && item.Domain === item2.Domain;
+            });
+        });
+
+        return newEntries;
     };
 
-    // Set cookie tables
-    fetch('./cookies.json')
-        .then(response => response.json())
-        .then(data => {
-            // Group cookies by type
-            const cookieGroups = data.reduce((acc, cookie) => {
-                if (!acc[cookie.Type]) {
-                    acc[cookie.Type] = [];
-                }
-                acc[cookie.Type].push(cookie);
-                return acc;
-            }, {});
+    // Execute the comparison
+    const compareJsonFiles = async () => {
+        try {
+            const oldFileUrl = './cookies.json';
+            const newFileUrl = './new-cookies.json';
 
-            // Sort cookies within each group by name
-            Object.keys(cookieGroups).forEach(type => {
-                cookieGroups[type].sort((a, b) => a.Name.localeCompare(b.Name));
-            });
+            const newEntries = await findNewEntries(oldFileUrl, newFileUrl);
+            console.log(JSON.stringify(newEntries));
+        } catch (error) {
+            console.error('Comparison failed:', error);
+        }
+    };
 
-            // Insert tables into respective divs
-            const types = ['Necessary', 'Performance', 'Marketing', 'Third-party'];
-            types.forEach(type => {
-                const div = document.querySelector(`div[data-cookies="${type}"]`);
-                if (div && cookieGroups[type]) {
-                    div.innerHTML = `
-                        ${createTableHTML(cookieGroups[type])}
-                    `;
-                }
-            });
-        })
-        .catch(error => console.error('Error loading JSON:', error));
+    // Run the comparison
+    compareJsonFiles();
 
 </script>
 
