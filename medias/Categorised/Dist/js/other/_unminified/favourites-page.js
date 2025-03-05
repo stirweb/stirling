@@ -296,7 +296,7 @@ const FavouritesArea = (scope, cookieType) => {
       const favsCookie = stir.favourites.getFavsListAll();
 
       const base64Params = favsCookie.map((item) => item.id).join("I");
-      const link = "https://www.stir.ac.uk/sharefavs/" + base64Params;
+      const link = "https://www.stir.ac.uk/share/" + base64Params;
 
       if (navigator.clipboard) {
         navigator.clipboard.writeText(link);
