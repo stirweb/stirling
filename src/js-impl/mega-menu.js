@@ -202,7 +202,7 @@
 
 const TempateFavs = () => {
   const COOKIE_ID = "favs=";
-  const FB_URL = "https://stage-shared-15-24-search.clients.uk.funnelback.com/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=";
+  const FB_URL = "https://search.stir.ac.uk/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=";
 
   /* 
       renderCourseLink: Returns an array of html strings 
@@ -286,7 +286,9 @@ C47.5,15,46.3,12.2,44.1,10.1z"></path>
       const courses = stir.flatten(favList).sort((a, b) => b.date - a.date);
 
       // Make sure Megamenu has loaded then insert the links
-      stir.node("#megaCourses") && stir.node("#megaCourses").insertAdjacentHTML("beforeend", `<ul>${courses.map(renderCourseLink).join("")}</ul>`);
+      stir.nodes("[data-coursefavs]").forEach((element) => {
+        element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses.map(renderCourseLink).join("")}</ul>`);
+      });
     });
   }
 
