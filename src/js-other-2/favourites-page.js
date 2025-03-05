@@ -161,10 +161,12 @@ const FavouritesArea = (scope, cookieType) => {
     const favs = stir.favourites.getFavsListAll();
 
     if (!favs.length) {
-      setDOMContent(domElements.resultsArea, `<div class="cell">No favourites saved.</div>`);
+      setDOMContent(domElements.resultsArea, `<div class="cell">${stir.templates.renderNoFavs}</div>`);
       setDOMContent(domElements.latestArea, `<div class="cell">No favourites saved.</div>`);
       return;
     }
+
+    console.log("hi");
 
     const view = domElements.resultsArea.dataset.view || ``;
     const renderer = view === "micro" ? renderMicro(consts) : renderItem(consts);
@@ -234,9 +236,7 @@ const FavouritesArea = (scope, cookieType) => {
     if (!sharedList) return setDOMContent(sharedArea, renderNoShared());
 
     try {
-      //const sharedList = sharedList;
       const query = sharedList.replaceAll("I", "+");
-
       const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award,startDate,endDate,register,page]&query=&meta_sid_or=${query}`;
 
       // Funnelback search
