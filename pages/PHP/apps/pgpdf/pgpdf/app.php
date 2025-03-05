@@ -74,7 +74,7 @@ function qs_init($api_url)
         "TaskDescription" => "Stirling Webform Prospectus Form Requested",
         "Tags" => [
             [
-                "Tag" => "stir_pgpr_xx_Personalisd PG Prospectus_xx_xx_xx-xx-xx",
+                "Tag" => "stir_pgpr_xx_Personalised PG Prospectus_xx_xx_xx-xx-xx",
             ],
         ],
         "Consents" => [
