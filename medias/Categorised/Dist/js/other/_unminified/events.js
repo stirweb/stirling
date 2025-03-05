@@ -87,11 +87,14 @@
     return ``;
   };
 
+  const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
+
   const renderEvent = stir.curry((seriesData, item) => {
+    const cookieType = "event";
+    const cookie = stir.favourites && stir.favourites.getFav(item.sid, cookieType);
     return `
             <div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
                 ${renderLabelTab(item)} 
-
                 <div class="u-grid-medium-up u-gap-24 ${item.image ? "u-grid-cols-3_1" : ``} ">
                   <div class=" u-flex flex-dir-column u-gap u-mt-1" >
                       <p class="u-text-regular u-m-0">
@@ -112,8 +115,9 @@
                       <p class="u-m-0">${item.summary}</p>
                       ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
                   </div>
-                ${item.image ? renderImage(item.image, item.title) : ``}  
-                </div>
+                ${item.image ? renderImage(item.image, item.title) : ``} 
+                 </div>
+                  <div class="u-mt-2" id="favbtns${item.sid}">${cookie && renderFavBtns("true", cookie, item.sid)}</div>
             </div>`;
   });
 
@@ -143,10 +147,13 @@
   });
 
   const renderEventsPromo = stir.curry((seriesData, item) => {
+    const cookieType = "event";
+    const cookie = stir.favourites && stir.favourites.getFav(item.sid, cookieType);
     return `
           <div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${item.image ? `medium-8` : ``} ">
-                <div class="u-relative u-p-2">
+                <div class="u-relative u-p-2 u-flex flex-dir-column u-gap-8 u-h-full">
+                <div class="u-flex1">
                   ${item.isSeries ? renderTab("Event series") : ``}
                   <p class="u-text-regular u-mb-2">
                   ${renderInfoTag(item.cancelled)} ${renderInfoTag(item.rescheduled)} <strong><a href="${item.url}">${item.title}</a></strong>
@@ -164,6 +171,8 @@
                   </div>
                   <p class="u-m-0 text-sm">${item.summary}</p>
                   ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
+                 </div>
+                  <div id="favbtns${item.sid}">${cookie && renderFavBtns("true", cookie, item.sid)}</div>
                 </div>
             </div>
             ${item.image ? `<div class="cell medium-4"><img src="${item.image}" class="u-object-cover" width="800" height="800" alt="Image: ${item.title}" /></div>` : ``}  
@@ -545,6 +554,37 @@
     |
     */
 
+    const updateFavouriteBtn = (id) => {
+      const cookie = stir.favourites.getFav(id, "event");
+      const node = stir.node("#favbtns" + id);
+
+      if (node) setDOMContent(node)(renderFavBtns("true", cookie, id));
+    };
+
+    /* 
+          handleFavouriteBtnClick 
+      */
+    const handleFavouriteBtnClick = () => (event) => {
+      const cookieType = "event";
+      const target = event.target.closest("button");
+      if (!target || !target.dataset || !target.dataset.action) return;
+
+      if (target.dataset.action === "addtofavs") {
+        stir.favourites.addToFavs(target.dataset.id, cookieType);
+        updateFavouriteBtn(target.dataset.id);
+      }
+
+      if (target.dataset.action === "removefav") {
+        stir.favourites.removeFromFavs(target.dataset.id);
+        updateFavouriteBtn(target.dataset.id);
+
+        if (consts.activity === "managefavs") {
+          const node = stir.node("#fav-" + target.dataset.id);
+          if (node) setDOMContent(node)("");
+        }
+      }
+    };
+
     stir.each((item) => {
       item.addEventListener("click", (event) => {
         QueryParams.set("page", 1);
@@ -595,5 +635,7 @@
         doArchiveEvents(eventsarchivefilters.querySelector("input:checked").value, initData);
       }
     });
+
+    stir.node("main").addEventListener("click", handleFavouriteBtnClick());
   });
 })(stir.node("#eventsrevamp"));

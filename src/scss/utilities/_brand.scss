@@ -360,7 +360,7 @@ svg.u-icon {
 .hook::after {
   background-color: currentColor;
   bottom: 0;
-  content: "";
+  content: "" !important;
   position: absolute;
 }
 
@@ -381,6 +381,15 @@ svg.u-icon {
   height: 8px;
   left: 0;
   width: 100%;
+}
+
+.hook-skinny::before {
+  height: 24px;
+  width: 5px;
+}
+
+.hook-skinny::after {
+  height: 5px;
 }
 
 .hook-infinite {

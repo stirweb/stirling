@@ -1,0 +1,341 @@
+[
+  {
+    "Name": "__cf_bm",
+    "Domain": ".load.collect.stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "30 minutes",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "__cf_bm",
+    "Domain": ".vimeo.com",
+    "Purpose": "/",
+    "Expiry": "30 minutes",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "__RequestVerificationToken",
+    "Domain": "forms.office.com",
+    "Purpose": "/",
+    "Expiry": "End of session",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "__Secure-ROLLOUT_TOKEN",
+    "Domain": ".youtube.com",
+    "Purpose": "/",
+    "Expiry": "6 months",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "__tmbid",
+    "Domain": "www.stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "_a_id",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "_cfuvid",
+    "Domain": ".vimeo.com",
+    "Purpose": "/",
+    "Expiry": "End of session",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "_dd_s",
+    "Domain": "player.vimeo.com",
+    "Purpose": "/",
+    "Expiry": "15 minutes",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "_fbp",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "3 months",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "_ga",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "_ga_ENJQ0W7S1M",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "_ga_ENJQ0W7S1M",
+    "Domain": ".www.stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "_gcl_au",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "3 months",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "_GRECAPTCHA",
+    "Domain": "www.google.com",
+    "Purpose": "/recaptcha",
+    "Expiry": "6 months",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "ANONCHK",
+    "Domain": ".c.office.com",
+    "Purpose": "/",
+    "Expiry": "10 minutes",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "ar_debug",
+    "Domain": "api.edkt.io",
+    "Purpose": "/",
+    "Expiry": "1 month",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "ar_debug_uuid",
+    "Domain": "api.edkt.io",
+    "Purpose": "/",
+    "Expiry": "6 months",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "AWSALB",
+    "Domain": "www.stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "7 days",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "AWSALBCORS",
+    "Domain": "emea3.recruitmentplatform.com",
+    "Purpose": "/",
+    "Expiry": "7 days",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "AWSALBCORS",
+    "Domain": "kuula.co",
+    "Purpose": "/",
+    "Expiry": "7 days",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "AWSALBCORS",
+    "Domain": "www.stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "7 days",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "AWSELBCORS",
+    "Domain": "payments.blackbaud.com",
+    "Purpose": "/",
+    "Expiry": "40 minutes",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "bcookie",
+    "Domain": ".linkedin.com",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "bid",
+    "Domain": ".consentag.eu",
+    "Purpose": "/",
+    "Expiry": "5 months",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "cid_[hash]",
+    "Domain": ".ctnsnet.com",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "CookieControl",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "End of session",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "csrftoken",
+    "Domain": ".eventbrite.co.uk",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "EXPIRE_TIMESTAMP",
+    "Domain": "emea3.recruitmentplatform.com",
+    "Purpose": "/",
+    "Expiry": "End of session",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "FormsWebSessionId",
+    "Domain": "forms.office.com",
+    "Purpose": "/",
+    "Expiry": "1 month",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "FPAU",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "3 months",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "FPID",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "FPLC",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "/",
+    "Expiry": "20 hours",
+    "Set by": "1st party"
+  },
+  {
+    "Name": "G",
+    "Domain": ".eventbrite.co.uk",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "li_gc",
+    "Domain": ".linkedin.com",
+    "Purpose": "/",
+    "Expiry": "6 months",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "lidc",
+    "Domain": ".linkedin.com",
+    "Purpose": "/",
+    "Expiry": "1 day",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "mgref",
+    "Domain": ".eventbrite.co.uk",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "MR",
+    "Domain": ".c.bing.com",
+    "Purpose": "/",
+    "Expiry": "7 days",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "MR",
+    "Domain": ".c.office.com",
+    "Purpose": "/",
+    "Expiry": "7 days",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "MUID",
+    "Domain": ".bing.com",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "MUID",
+    "Domain": ".office.com",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "SM",
+    "Domain": ".c.office.com",
+    "Purpose": "/",
+    "Expiry": "End of session",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "SRM_B",
+    "Domain": ".c.bing.com",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "VISITOR_INFO1_LIVE",
+    "Domain": ".youtube.com",
+    "Purpose": "/",
+    "Expiry": "6 months",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "VISITOR_PRIVACY_METADATA",
+    "Domain": ".youtube.com",
+    "Purpose": "/",
+    "Expiry": "6 months",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "vuid",
+    "Domain": ".vimeo.com",
+    "Purpose": "/",
+    "Expiry": "1 year",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "YSC",
+    "Domain": ".youtube.com",
+    "Purpose": "/",
+    "Expiry": "End of session",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "Test",
+    "Domain": ".youtube.com",
+    "Purpose": "/",
+    "Expiry": "End of session",
+    "Set by": "3rd party"
+  },
+  {
+    "Name": "CookieControl",
+    "Provider": "Civic Cookie Control",
+    "Purpose": "Stores the user's cookie consent state for the current domain.",
+    "Expiry": "90 days",
+    "Type": "Necessary",
+    "MoreInfo": "",
+    "Applier": "",
+    "Domain": ".stir.ac.u"
+  }
+]

@@ -1,23 +1,26 @@
-const FavouritesArea = (scope, cookieType, data) => {
+const FavouritesArea = (scope, cookieType) => {
   if (!scope) return;
 
   const resultsArea = scope.querySelector("[data-activity]");
 
-  console.log(resultsArea);
+  if (!resultsArea) return;
 
   // Constants
   const CONSTS = {
-    allowedCookieTypes: ["accom", "course"],
+    allowedCookieTypes: ["accom", "course", "schol", "page"],
     cookieType: cookieType,
-    urlToFavs: resultsArea.dataset.favsurl || ``,
+    showUrlToFavs: resultsArea.dataset.favsurl || ``,
     activity: resultsArea.dataset.activity || ``,
     view: stir.templates?.view || ``,
+    fbhost: UoS_env.name === "prod" || UoS_env.name === "dev2" ? "https://search.stir.ac.uk" : "https://stage-shared-15-24-search.clients.uk.funnelback.com",
   };
 
   // DOM Elements
   const DOM_ELEMENTS = {
     resultsArea: resultsArea,
+    sharedArea: scope.querySelector("[data-activity=shared]"),
     favBtnsNode: scope.querySelector("[data-area=favActionBtns]"),
+    latestArea: stir.node("[data-activity=latestfavs]"),
   };
 
   /* 
@@ -25,8 +28,9 @@ const FavouritesArea = (scope, cookieType, data) => {
     */
 
   const renderMicro = (consts) => (item) => {
-    return `<div class="cell large-3 text-sm u-bg-grey u-p-1 u-mb-1">
-                     <p class="u-text-regular  "><strong><a href="${item.url}">${item.title}</a></strong></p>
+    return `<div class="cell large-3 text-sm u-bg-white u-p-1 u-mb-1">
+                <p class="u-text-regular  "><strong><a href="${item.url}">${item.title}</a></strong></p>
+                 <p><strong>${item.type && stir.capitaliseFirst(item.type)}</strong></p>
             </div>`;
   };
 
@@ -34,64 +38,61 @@ const FavouritesArea = (scope, cookieType, data) => {
     if (!img) return ``;
     return `<div class="cell large-3">
                 <div><img src="${img}" width="760" height="470" alt="Image of ${title}" class="u-aspect-ratio-1-1 u-object-cover" /></div>
-             </div>`;
+            </div>`;
   };
 
-  const renderFavBtns = (urlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, urlToFavs) : stir.favourites.renderAddBtn(id, urlToFavs));
+  const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
 
   const renderItem = (consts) => (item) => {
     if (!item) return ``;
     const cookie = stir.favourites.getFav(item.id, consts.cookieType);
     return `
-        <div class="cell" id="fav-${item.id}">
-          <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
-            <div class="grid-x grid-padding-x u-p-2 ">
-              <div class="cell u-pt-2">
-                <p class="u-text-regular u-mb-2 "><strong><a href="${item.url}">${item.title}</a></strong></p>
-              </div>
-              <div class="cell ${item.img ? `large-9` : `large-12`} text-sm">
-                <p><strong>Content</strong></p> 
-                ${item.content}
-              </div>
-              ${renderImage(item.img, item.title)}
-              <div class="cell text-sm u-pt-2" id="favbtns${item.id}">
-                ${renderFavBtns(consts.urlToFavs, cookie, item.id)}
+          <div class="cell" id="fav-${item.id}">
+            <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
+              <div class="grid-x grid-padding-x u-p-2 ">
+                <div class="cell u-pt-1">
+                  <p class="u-text-regular u-mb-2 "><strong><a href="${item.url}">${item.title}</a></strong></p>
+                </div>
+                <div class="cell ${item.img ? `large-9` : `large-12`} text-sm">
+                  ${item.content}
+                </div>
+                ${renderImage(item.img, item.title)}
+                <div class="cell text-sm u-pt-2" id="favbtns${item.id}" data-type="${item.type}">
+                  ${renderFavBtns(consts.showUrlToFavs, cookie, item.id)}
+                </div>
               </div>
             </div>
-          </div>
-        </div>`;
+          </div>`;
   };
 
   const renderShared = (item) =>
     !item.id
       ? ``
       : `
-        <div class="cell small-6">
-          <div class="u-green-line-top u-margin-bottom">
-            <p class="u-text-regular u-py-1"><strong><a href="${item.url}">${item.title}</a></strong></p>
-            <div class="u-mb-1">${item.location} accommodation.</div>
-            <div>${stir.favourites.isFavourite(item.id) ? `<p class="text-sm u-heritage-green">Already in my favourites</p>` : stir.favourites.renderAddBtn(item.id, ``)}</div>
-          </div>
-        </div>`;
+          <div class="cell medium-4">
+            <div class="u-green-line-top u-margin-bottom">
+                <p class="u-text-regular u-pt-1"><strong><a href="${item.url}">${item.title}</a></strong></p>
+                <div class="u-mb-1"><strong>${stir.capitaliseFirst(item.type)}</strong></div>
+                <div class="u-mb-1">${item.content}</div>
+                <div data-type="${item.type}">${stir.favourites.isFavourite(item.id) ? `<p class="text-sm u-heritage-green">Already in your favourites</p>` : stir.favourites.renderAddBtn(item.id, ``)}</div>
+            </div>
+          </div>`;
 
   const renderShareDialog = (link) =>
     !link
       ? ``
       : `
-        <p><strong>Share link</strong></p>  
-        ${navigator.clipboard ? '<p class="text-xsm">The following share link has been copied to your clipboard:</p>' : ``}   
-        <p class="text-xsm">${link}</p>`;
+          <p><strong>Share link</strong></p>  
+          ${navigator.clipboard ? '<p class="text-xsm">The following share link has been copied to your clipboard:</p>' : ``}   
+          <p class="text-xsm">${link}</p>`;
 
-  const renderMiniFav = (item) => (!item.id ? "" : `<p class="text-sm"><strong><a href="${item.url}">${item.title}</a></strong></p>`);
-
-  //const renderFavActionBtns = () => stir.templates.renderFavActionBtns;
   const renderNoFavs = () => stir.templates.renderNoFavs;
-  const renderLinkToFavs = () => stir.templates.renderLinkToFavs;
+
   const renderNoShared = () => stir.templates.renderNoShared;
 
   /*
-        Handle Inputs and Outputs
-    */
+      Handle Inputs and Outputs
+  */
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
@@ -111,113 +112,174 @@ const FavouritesArea = (scope, cookieType, data) => {
   };
 
   /* 
-        Data Processing Functions
-    */
-  const getfavsCookie = () => stir.favourites.getFavsList(CONSTS.cookieType);
 
-  const getAllRecentFavs = (cookieTypes) => {
-    // Get all cookies and combine into single array
-    const allFavs = cookieTypes.reduce((acc, type) => {
-      const typeFavs = stir.favourites.getFavsList(type).map((fav) => ({
-        ...fav,
-        type,
-      }));
-      return [...acc, ...typeFavs];
-    }, []);
+    Helpers
 
-    // Sort by date descending and take first 4
-    return allFavs.sort((a, b) => b.date - a.date).slice(0, 4);
-  };
+   */
 
-  // Usage example:
-  //const recentFavs = getAllRecentFavs();
+  function formatDate(date) {
+    if (!date) return "";
+    return `<b>${new Date(date)
+      .toLocaleDateString("en-UK", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+      .replace(",", "")}</b><br/>`;
+  }
 
-  const getShareList = (data) => {
-    const sharedListQuery = SafeQueryParams.get("a") || "";
-    if (!sharedListQuery) return null;
+  /**
+    Generates a URL based on the element type and metadata
+    @param {Object} element - The element containing metadata and URL information
+    @returns {string} The formatted URL with origin parameter
+   */
+  function getUrl(element) {
+    const ORIGIN_PARAM = "?origin=favourites";
+    const { metaData, liveUrl } = element;
 
-    try {
-      const sharedList = atob(sharedListQuery);
-      return sharedList.split(",").map((item) => ({
-        ...data.find((element) => item === element.id),
-        id: item,
-      }));
-    } catch (e) {
-      return null;
+    if (!metaData?.type) {
+      return liveUrl + ORIGIN_PARAM;
     }
-  };
 
-  const getFavsList = (data) => {
-    const favsCookie = getfavsCookie();
-    if (favsCookie.length < 1) return null;
+    const elementType = metaData.type.toLowerCase();
 
-    return favsCookie
-      .sort((a, b) => b.date - a.date)
-      .map((item) => ({
-        ...data.find((element) => item.id === element.id),
-        id: item.id,
-        dateSaved: item.date,
-      }));
-  };
+    const URL_MAPPINGS = {
+      event: () => metaData.page + ORIGIN_PARAM,
+      webinar: () => metaData.register + ORIGIN_PARAM,
+    };
 
-  const filterEmpties = (item) => item && item.title;
+    return (URL_MAPPINGS[elementType] || (() => liveUrl + ORIGIN_PARAM))();
+  }
 
   /* 
-      Controller Functions
-    */
 
-  function doFavourites(consts, data, domElements) {
-    const favs = stir.favourites.getFavsList(consts.cookieType);
-    const filteredData = favs.map((fav) => data.find((entry) => Number(entry.id) === Number(fav.id))).filter(filterEmpties);
+    Controller Functions
+
+  */
+
+  function doFavourites(consts, domElements, action) {
+    const favs = stir.favourites.getFavsListAll();
+
+    if (!favs.length) {
+      setDOMContent(domElements.resultsArea, `<div class="cell">No favourites saved.</div>`);
+      setDOMContent(domElements.latestArea, `<div class="cell">No favourites saved.</div>`);
+      return;
+    }
 
     const view = domElements.resultsArea.dataset.view || ``;
     const renderer = view === "micro" ? renderMicro(consts) : renderItem(consts);
 
-    if (domElements.resultsArea.dataset.activity === "latestfavs") {
-      const recentFavs = getAllRecentFavs(consts.allowedCookieTypes);
-      const filteredData = recentFavs
-        .map((fav) => ({
-          ...data.find((entry) => Number(entry.id) === Number(fav.id)),
-          type: fav.type,
-          dateSaved: fav.date,
-        }))
-        .filter(filterEmpties);
+    const query = favs
+      .filter((item) => Number(item.id))
+      .map((item) => item.id)
+      .join("+");
 
-      const html = filteredData.map(renderer).join(``);
-      return setDOMContent(domElements.resultsArea)(html || stir.templates.renderNoFavs);
-    }
+    const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award,startDate,endDate,register,page]&query=&meta_sid_or=${query}`;
 
-    const html = filteredData.map(renderer).join(``);
+    // Funnelback search
+    stir.getJSON(fbUrl, (results) => {
+      const arrayResults = results?.response?.resultPacket?.results || [];
 
-    return setDOMContent(domElements.resultsArea)(html || stir.templates.renderNoFavs);
+      if (!arrayResults.length) return;
+
+      const favList = query.split("+").map((item) => {
+        return arrayResults
+          .filter((element) => {
+            if (Number(item) === Number(element.metaData.sid)) {
+              return item;
+            }
+          })
+          .map((element) => {
+            return {
+              id: item,
+              date: favs.filter((fav) => fav.id === item)[0].date,
+              title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
+              content: formatDate(element.metaData.startDate) + element.summary,
+              url: getUrl(element),
+              type: element.metaData.type ? element.metaData.type : "page",
+            };
+          });
+      });
+
+      // Latest Favs
+      if (action === "latestfavs") {
+        const recentFavs = stir
+          .flatten(favList)
+          .sort((a, b) => b.date - a.date)
+          .slice(0, 4);
+
+        const html = recentFavs.map(renderMicro(consts)).join(``);
+        return setDOMContent(domElements.latestArea)(html || ``);
+      }
+
+      //  By Type
+      const filteredData = stir
+        .flatten(favList)
+        .filter((item) => item.type && item.type.toLowerCase().includes(consts.cookieType.toLowerCase()))
+        .sort((a, b) => b.date - a.date);
+
+      if (!filteredData.length) {
+        setDOMContent(domElements.resultsArea, renderNoFavs());
+      } else {
+        setDOMContent(domElements.resultsArea, filteredData.map(renderer).join(``));
+      }
+    });
   }
 
-  function doShared(sharedArea, sharedfavArea, data) {
-    if (sharedArea) {
-      const shareList = getShareList(data);
-      if (!shareList) {
-        setDOMContent(sharedArea, renderNoShared());
-      } else {
-        setDOMContent(sharedArea, shareList.map(renderShared).join(``));
-      }
-    }
+  /*
+    doShared
+  */
+  function doShared(sharedArea, consts) {
+    const sharedList = SafeQueryParams.get("s") || "";
+    if (!sharedList) return setDOMContent(sharedArea, renderNoShared());
 
-    if (sharedfavArea) {
-      const list = getFavsList(data);
-      if (!list) {
-        setDOMContent(sharedfavArea, renderNoFavs());
-      } else {
-        setDOMContent(sharedfavArea, list.map(renderMiniFav).join(``) + renderLinkToFavs());
-      }
+    try {
+      //const sharedList = sharedList;
+      const query = sharedList.replaceAll("I", "+");
+
+      const fbUrl = `${consts.fbhost}/s/search.json?collection=stir-main&num_ranks=50&SF=[sid,type,award,startDate,endDate,register,page]&query=&meta_sid_or=${query}`;
+
+      // Funnelback search
+      stir.getJSON(fbUrl, (results) => {
+        const arrayResults = results?.response?.resultPacket?.results || [];
+
+        if (!arrayResults.length) return;
+
+        const sharedList2 = sharedList.split("I").map((item) => {
+          return arrayResults
+            .filter((element) => {
+              if (Number(item) === Number(element.metaData.sid)) {
+                return item;
+              }
+            })
+            .map((element) => {
+              return {
+                id: item,
+                date: Date.now(),
+                title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
+                content: element.summary,
+                url: element.liveUrl + `?orgin=shared`,
+                type: element.metaData.type ? element.metaData.type : "page",
+              };
+            });
+        });
+
+        if (!sharedList2) {
+          setDOMContent(sharedArea, renderNoShared());
+        } else {
+          setDOMContent(sharedArea, stir.flatten(sharedList2).map(renderShared).join(``));
+        }
+      });
+    } catch (e) {
+      return null;
     }
-    return;
   }
 
   /* 
-          Event Handlers
-      */
+            Event Handlers
+        */
 
-  const handleFavActionButtonClick = (consts, initialData, domElements) => (event) => {
+  const handleFavActionButtonClick = (consts, domElements) => (event) => {
     const target = event.target.nodeName === "BUTTON" ? event.target : event.target.closest("button");
 
     if (!target || !target.dataset || !target.dataset.action) return;
@@ -226,12 +288,14 @@ const FavouritesArea = (scope, cookieType, data) => {
       if (target.dataset.fav !== consts.cookieType) return;
 
       stir.favourites.removeType(consts.cookieType);
-      doFavourites(consts, initialData, domElements);
+      doFavourites(consts, domElements, target.dataset.action);
+      doFavourites(consts, domElements, "latestfavs");
     }
 
     if (target.dataset.action === "copysharelink") {
-      const favsCookie = getfavsCookie();
-      const base64Params = btoa(favsCookie.map((item) => item.id).join(","));
+      const favsCookie = stir.favourites.getFavsListAll();
+
+      const base64Params = favsCookie.map((item) => item.id).join("I");
       const link = "https://www.stir.ac.uk/sharefavs/" + base64Params;
 
       if (navigator.clipboard) {
@@ -246,15 +310,16 @@ const FavouritesArea = (scope, cookieType, data) => {
     }
   };
 
-  const handleSearchResultFavClick = (consts, domElements, data) => (event) => {
+  /* handleSearchResultFavClick */
+  const handleSearchResultFavClick = (consts, domElements) => (event) => {
     const target = event.target.closest("button");
     if (!target || !target.dataset || !target.dataset.action) return;
 
     const updateFavButtonDisplay = (id) => {
       const cookie = stir.favourites.getFav(id, consts.cookieType);
       const node = stir.node("#favbtns" + id);
-      if (node) setDOMContent(node)(renderFavBtns(consts.urlToFavs, cookie, id));
-      if (domElements.sharedArea) doShared(domElements.sharedArea, domElements.sharedfavArea, data);
+      if (node) setDOMContent(node)(renderFavBtns(consts.showUrlToFavs, cookie, id));
+      if (domElements.sharedArea) doShared(domElements.sharedArea, consts);
     };
 
     if (target.dataset.action === "addtofavs") {
@@ -269,39 +334,88 @@ const FavouritesArea = (scope, cookieType, data) => {
       if (consts.activity === "managefavs") {
         const node = stir.node("#fav-" + target.dataset.id);
         if (node) setDOMContent(node)("");
+        doFavourites(consts, domElements, "latestfavs");
       }
     }
   };
 
   /* 
-          Initialization
-      */
-  function init(initialData, consts, domElements) {
+      Initialization
+   */
+  function init(consts, domElements) {
     if (consts.activity === "managefavs" || consts.activity === "latestfavs") {
-      doFavourites(consts, initialData, domElements);
+      doFavourites(consts, domElements, consts.activity);
     }
 
     if (consts.activity === "shared") {
-      doShared(domElements.sharedArea, domElements.sharedfavArea, initialData);
+      doShared(domElements.sharedArea, consts);
     }
 
     // Add event listeners for favorites
     if (domElements.favBtnsNode) {
-      stir.node("main").addEventListener("click", handleFavActionButtonClick(consts, initialData, domElements));
-      //setDOMContent(domElements.favBtnsNode)(renderFavActionBtns());
+      stir.node("main").addEventListener("click", handleFavActionButtonClick(consts, domElements));
     }
 
     // Add event listener for search result favorite button clicks
-    domElements.resultsArea.addEventListener("click", handleSearchResultFavClick(consts, domElements, initialData));
+    domElements.resultsArea.addEventListener("click", handleSearchResultFavClick(consts, domElements));
   }
 
   /* Run initialization */
-  const initialData = data?.filter((item) => item.id && item.id.length) || [];
+  init(CONSTS, DOM_ELEMENTS);
+};
 
-  init(initialData, CONSTS, DOM_ELEMENTS);
+/*
+
+  FavouritePromos
+
+*/
+const FavouritePromos = (data) => {
+  if (!data || !data.length) return;
+
+  /* renderPromo */
+  const renderPromo = (item) => {
+    return `
+      <div class="u-flex1-large-up u-bg-heritage-berry u-white--all u-flex-large-up flex-dir-column u-gap align-center u-mt-1">
+          <div class="u-py-2 flex-container flex-dir-column u-gap">
+              <div class="hook hook-skinny hook-right hook-energy-green u-mr-2">
+                  <h2 class=" text-lg u-uppercase  u-pl-2 u-m-0 u-p-0">${item.head}</h2>
+              </div>
+              <div class="u-px-2">
+                  <p class="text-sm u-mb-1">${item.body}</p>
+                  <a class="button heritage-green u-cursor-pointer expanded text-sm " href="${item.link}" aria-label="Book your place">${item.button}</a>
+              </div>
+          </div>
+      </div>`;
+  };
+
+  /* doPromos */
+  function doPromos(data) {
+    const promoTypeNodes = stir.nodes("[data-promos]");
+
+    promoTypeNodes.forEach((node) => {
+      const promoType = node.getAttribute("data-promos");
+      const promos = data.filter((promo) => promo.type === promoType);
+
+      promoHtml = promos.map(renderPromo).join(``);
+      stir.setHTML(node, promoHtml);
+    });
+  }
+
+  /* on load */
+  doPromos(data);
 };
 
 // Run the FavouritesArea
-FavouritesArea(stir.node("#acccomArea"), "accom", accommodationData);
-FavouritesArea(stir.node("#courseArea"), "course", courseData);
-FavouritesArea(stir.node("#latestFavs"), "all", [...courseData, ...accommodationData]);
+FavouritesArea(stir.node("#acccomArea"), "accommodation");
+FavouritesArea(stir.node("#courseArea"), "course");
+FavouritesArea(stir.node("#scholArea"), "scholarship");
+FavouritesArea(stir.node("#pageArea"), "page");
+FavouritesArea(stir.node("#eventArea"), "event");
+FavouritesArea(stir.node("#webinarArea"), "webinar");
+FavouritesArea(stir.node("#latestFavs"), "all");
+
+// Run the FavouritePromos
+
+stir.promosData = stir.promosData || [];
+
+FavouritePromos(stir.promosData);

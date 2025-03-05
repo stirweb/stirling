@@ -66,11 +66,11 @@
     const mm_clicked = function (e) {
       e.preventDefault();
       e.stopPropagation();
-  
+
       var id, mm;
       id = e.target.getAttribute("aria-controls");
       id && (mm = document.querySelector("#" + id));
-  
+
       // if related megamenu found, prevent defaults and apply behaviour
       if (mm) {
         /**
@@ -83,7 +83,7 @@
           mmSlideUpAll();
           mmSlideDown(mm);
         }
-  
+
         e.target.classList && e.target.classList.toggle(active_class);
       } else {
         UoS_closeAllWidgetsExcept();
@@ -135,17 +135,15 @@
       el && el.focus();
     };
 
-    primaryNav.querySelectorAll('[data-menu-id]').forEach(nav => {
-      const mmid = nav.getAttribute('data-menu-id');
+    primaryNav.querySelectorAll("[data-menu-id]").forEach((nav) => {
+      const mmid = nav.getAttribute("data-menu-id");
       const mmel = mm.querySelector(`#${mmid}`);
-      if(mmid && mmel) {
-        nav.setAttribute('aria-controls',mmid);
-      }  
+      if (mmid && mmel) {
+        nav.setAttribute("aria-controls", mmid);
+      }
     });
 
-
     primaryNav.addEventListener("click", mm_clicked);
-
 
     function escaping(event) {
       if (event.keyCode === KEY_ESC) mmSlideUpAll();
@@ -197,3 +195,136 @@
     });
   }
 })();
+
+/*
+  Tempate Favourites
+*/
+
+const TempateFavs = () => {
+  const COOKIE_ID = "favs=";
+  const FB_URL = "https://stage-shared-15-24-search.clients.uk.funnelback.com/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=";
+
+  /* 
+      renderCourseLink: Returns an array of html strings 
+  */
+  const renderCourseLink = (item) => `<li><a href="${item.url}">${item.title}</></li>`;
+
+  /* 
+      renderIcon: Returns a html strings 
+  */
+  const renderIcon = () => {
+    return `<svg version="1.1" data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50" >
+                  <path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+C47.5,15,46.3,12.2,44.1,10.1z"></path>
+              </svg>`;
+  };
+
+  /* 
+      getfavsCookie: Returns an array of objects 
+  */
+  function getfavsCookie(cookieId) {
+    const favCookie = document.cookie
+      .split(";")
+      .filter((i) => i.includes(cookieId))
+      .map((i) => i.replace(cookieId, ""));
+
+    return favCookie.length ? JSON.parse(favCookie) : [];
+  }
+
+  /* 
+      getFavsList: Returns an array of objects. PARAM: cookieType = accomm, course etc 
+  */
+  function getFavsList(cookieType, cookieId) {
+    const favsCookieAll2 = getfavsCookie(cookieId);
+
+    const favsCookieAll = favsCookieAll2.map((item) => {
+      if (!item.type) item.type = "course";
+      return item;
+    });
+
+    const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
+
+    if (!favsCookie.length || favsCookie.length < 1) return [];
+    return favsCookie.sort((a, b) => b.date - a.date);
+  }
+
+  /*
+      Controller
+  */
+  function initMega(cookieId, fbUrl) {
+    const favCourses = getFavsList("course", cookieId);
+
+    if (!favCourses.length) return;
+
+    const query = favCourses
+      .filter((item) => Number(item.id))
+      .map((item) => item.id)
+      .join("+");
+    const fbUrlFull = fbUrl + query;
+
+    stir.getJSON(fbUrlFull, (results) => {
+      const arrayResults = results?.response?.resultPacket?.results || [];
+      if (!arrayResults.length) return;
+
+      const favList = query.split("+").map((item) => {
+        return arrayResults
+          .filter((element) => {
+            if (Number(item) === Number(element.metaData.sid)) {
+              return item;
+            }
+          })
+          .map((element) => {
+            return {
+              id: item,
+              date: favCourses.filter((fav) => fav.id === item)[0].date,
+              title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
+              url: element.liveUrl + `?orgin=megafavourites`,
+            };
+          });
+      });
+
+      const courses = stir.flatten(favList).sort((a, b) => b.date - a.date);
+
+      // Make sure Megamenu has loaded then insert the links
+      stir.node("#megaCourses") && stir.node("#megaCourses").insertAdjacentHTML("beforeend", `<ul>${courses.map(renderCourseLink).join("")}</ul>`);
+    });
+  }
+
+  /*
+      Controller
+  */
+  function initHeader(cookieId, iconNodes) {
+    const favs = getfavsCookie(cookieId);
+
+    if (!iconNodes.length || !favs.length) return;
+
+    iconNodes.forEach((element) => {
+      stir.setHTML(element, renderIcon());
+    });
+  }
+
+  /*
+      On Load
+  */
+
+  const iconNodes = stir.nodes("[data-stiricon=heart-inactive]");
+
+  initHeader(COOKIE_ID, iconNodes);
+
+  const callbackMegaMenu = (mutationList, observer) => {
+    for (const mutation of mutationList) {
+      for (const addedNode of mutation.addedNodes) {
+        if (addedNode.id == "mm__study") {
+          initMega(COOKIE_ID, FB_URL);
+        }
+      }
+    }
+  };
+
+  const config = { attributes: true, childList: true, subtree: true };
+  const observer = new MutationObserver(callbackMegaMenu);
+
+  observer.observe(stir.node("#megamenu__container"), config);
+};
+
+TempateFavs();

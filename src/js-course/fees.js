@@ -110,7 +110,8 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 	stuff.feestab = document.querySelector('[data-tab-callback="stir.fees.auto"] + div [data-behaviour="accordion"] div');
 	const info = {};
 	const feeapi = "dev"===UoS_env.name?'../fees.json':'<t4 type="media" id="182818" formatter="path/*" />'
-
+	// Media #182818 is "fees.json" which contains a T4 Web Object that fetches live data via the live site.
+	// (in preview it will make an API call, in staging it will be "t4-cached").
 
 	const labels = {
 		UG: {
@@ -122,7 +123,6 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 			"H": "UK and Republic of Ireland",
 			"O": "International (including EU)",
 		}
-
 	};
 
 	const statuses = {
