@@ -3796,7 +3796,7 @@ C47.5,15,46.3,12.2,44.1,10.1z"></path>
               id: item,
               date: favCourses.filter((fav) => fav.id === item)[0].date,
               title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
-              url: element.liveUrl + `?orgin=megafavourites`,
+              url: element.liveUrl + `?orgin=datacoursefavs`,
             };
           });
       });
