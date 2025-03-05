@@ -6949,8 +6949,8 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       color: #006636;
       padding-top: 10px; }
       .c-search-results-area .c-search-result[data-result-type="course"] .stir-accordion button::before {
-        background-color: #006636;
-        color: #fff;
+        background-color: #fff;
+        color: #006636 #fff;
         width: 30px;
         height: 30px;
         text-align: center;
