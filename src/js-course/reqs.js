@@ -3,11 +3,19 @@
 	//const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
 	const debug = false;
 
-	const debuglink = `javascript:alert('[Work in progess] This link will need a T4 Nav Object')`;
+	const debuglink = `javascript:alert('[Preview] This link uses a T4 Nav Object')`;
+
+	const links = {
+		wp: UoS_env.t4_tags ? '<t4 type="navigation" name="Path to: Widening Participation (School)" id="5286" />':debuglink,
+		acc: UoS_env.t4_tags ? '<t4 type="navigation" name="Path to: Access courses" id="5287" />':debuglink,
+		swap: UoS_env.t4_tags ? '<t4 type="navigation" name="Path to: SWAP access courses" id="5288" />':debuglink
+	};
 
 	const template = {
-		wp: "Widening access students may be eligible for an adjusted offer of entry. To find out if this applies to you go to our widening access pages. Care-experienced applicants will be guaranteed an offer of a place if they meet the minimum entry requirements.",
+		wp: `Widening access students may be eligible for an adjusted offer of entry. To find out if this applies to you go to our <a href="${links.wp}">widening access pages</a>. Care-experienced applicants will be guaranteed an offer of a place if they meet the minimum entry requirements.`,
 		es: "<p>Essential subjects must have been taken within the last five years to ensure your required subject knowledge is current.<br>Recent work experience can be taken into consideration in place of a formal qualification.</p>",
+		acc: `<a href="${links.acc}">University of Stirling access course</a> &mdash; for mature students only. You must pass the course with 50% or above.`,
+		swap: `<a href="${links.swap}">SWAP Access course</a> &mdash; for mature students only.`,
 		elr: ""
 	};
 	const elr = {
@@ -15,16 +23,17 @@
 		PG: ["PGELI1","PGELP1","PGELT1"]
 	};
 	const setELR = (ELI1,ELP1,ELT1) => {
-		template.elr = `<p>If English is not your first language you must have one of the following qualifications as evidence of your English language skills:</p>
-		<ul>
-		<li>IELTS Academic or UKVI ${ELI1}.</li>
-		<li>Pearson Test of English (Academic) ${ELP1}.</li>
-		<li>IBT TOEFL ${ELT1}.</li>
-		</ul>
-		<p>See our <a href="${debuglink}">information on English language requirements</a> for more details on the language tests we accept and options to waive these requirements.</p>
-		<p><strong>Pre-sessional English language courses</strong></p>
-		<p>If you need to improve your English language skills before you enter this course, our partner INTO University of Stirling offers a range of English language courses. These intensive and flexible courses are designed to improve your English ability for entry to this degree.</p>
-		<p>Find out more about our <a href="${debuglink}">pre-sessional English language courses</a></p>`;
+		template.elr = `
+			<p>If English is not your first language you must have one of the following qualifications as evidence of your English language skills:</p>
+			<ul>
+				<li>IELTS Academic or UKVI ${ELI1}.</li>
+				<li>Pearson Test of English (Academic) ${ELP1}.</li>
+				<li>IBT TOEFL ${ELT1}.</li>
+			</ul>
+			<p>See our <a href="${debuglink}">information on English language requirements</a> for more details on the language tests we accept and options to waive these requirements.</p>
+			<p><strong>Pre-sessional English language courses</strong></p>
+			<p>If you need to improve your English language skills before you enter this course, our partner INTO University of Stirling offers a range of English language courses. These intensive and flexible courses are designed to improve your English ability for entry to this degree.</p>
+			<p>Find out more about our <a href="${debuglink}">pre-sessional English language courses</a></p>`;
 	};
 
 	const getELR = () => template.elr;
@@ -64,9 +73,9 @@
 					id: "SY1",
 					title: "Other Scottish qualifications",
 					codes: [
-						{id: "SY1HN", title:"Scottish HNC/HND", prenote: "Year one minimum entry - ",},
-						{id: "SY1ACC50%", title:"Access courses", prenote: ""},
-						{id: "SY1SWAPB", postnote: " - for mature students only"},
+						{id: "SY1HN", title:"Scottish HNC/HND", prenote: "Year one minimum entry &mdash; ",},
+						{id: "SY1ACC50%", title:"Access courses", replace: template.acc},
+						{id: "SY1SWAPB", replace: template.sw},
 						{id: "", body:'Email our <a href="mailto:admissions@stir.ac.uk">Admissions Team</a> for advice about other access courses.'},
 						{id: "", title: "Foundation Apprenticeships", body: "Considered to be equivalent to 1 Higher at Grade B."},
 						{id: "SY1SUBJ", title: "Essential subjects", body: template.es}
@@ -177,7 +186,7 @@
 
 		// Now generate HTML using the JSON structure object
 		structure[type].sections.map(section=>{
-				console.info('[Entry requirements] sections…')
+			console.info('[Entry requirements] sections…')
 
 			// if a section has an ID it must match at least one 
 			// requirement code otherwise it won't be shown.
@@ -186,19 +195,25 @@
 					const heading = `<h3>${section.title}</h3>`;
 					// if the section has codes, map them to the route data
 					const body = section.codes ? section.codes.map(subsection => {
+						// if a subsection has an ID then it must match at least one requirement code
 						if(subsection.id) {
 							const matches = route.entryRequirements.filter(req=>req.entryRequirementCode.indexOf(subsection.id)===0);
 							const title = subsection.title?`<strong>${subsection.title}</strong><br>`:"";
-							return matches.length ? `<p>${title}${subsection.prenote||""}${matches.map(req=>req.note).join('')}${subsection.body||""}${subsection.postnote||""}</p>` : (debug?`<p><strong>${subsection.title||subsection.id}</strong><br>[no data]</p>`:'');
+							const body = `<p>${title}${subsection.prenote||""}${matches.map(req=>subsection.replace?subsection.replace:req.note).join('')}${subsection.body||""}${subsection.postnote||""}</p>`;
+							return matches.length ? body : '';
 						}
+						// if a subsection has NO ID then it's just shown unconditionally.
+						// (title and body are both optional so in practice it must have one or other)
 						return "<p>"+(subsection.title?`<strong>${subsection.title}</strong><br>`:"") + (subsection.body||"") +"</p>";
 					}).join('') : section.body;
+
 					return heading + `<div>${body}</div>`;
 				}
+				// we get here if the section ID does not match
 				return (debug?`<h3>${section.title}</h3><p>No matches</p>`:'');
 			}
 
-			// if a ssection has no ID then it will just always be shown
+			// if a section has no ID then it will be shown unconditionally
 			return `<h3>${section.title}</h3><div>${("function"===typeof section.body?section.body():section.body)||''}</div>`
 
 		})
