@@ -285,7 +285,6 @@
   */
   const renderItem = (consts, _meta, schol) => {
     const cookie = stir.favourites.getFav(schol.scholarship.id, consts.cookieType);
-    console.log(cookie);
     return `
         <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-line-left u-border-width-5 u-relative">
             <div class="u-absolute u-top--16">
