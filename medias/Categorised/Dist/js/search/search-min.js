@@ -52,7 +52,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 			${e.metaData.code?" - "+e.metaData.code:""}
 			</a></strong>
 		  </p>
-		  <p class="u-m-0">${e.summary}</p>
+		  <p class="u-m-0 c-course-summary">${e.summary}</p>
 		  ${stir.templates.search.clearing(e)||""}
 		  <div class="c-search-result__meta grid-x">
 			${stir.templates.search.courseFact("Start dates",e.metaData.start,!1)}

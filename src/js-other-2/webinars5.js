@@ -1,9 +1,12 @@
 /* 
     Renderer functions
 */
+
 const renderDivider = () => `<div class="cell"><hr /></div>`;
 
 const renderNoItemsMessage = (msg) => `<div class="cell">${msg}</div>`;
+
+const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
 
 const renderHeader = (header, intro) =>
   !header && !intro
@@ -25,10 +28,11 @@ const renderDateTime = (item) =>
     <strong>${item.date}, ${item.time} ${!item.timeend ? `` : `to ${item.timeend}`} (${item.zone})</strong>
   </p>`;
 
-const renderItem = (item) => {
+const renderItem = stir.curry((consts, item) => {
+  const cookie = stir.favourites && stir.favourites.getFav(item.id, consts.cookieType);
   const statusTag = item.ondemand && !item.isupcoming ? `<span class="u-bg-heritage-berry u-white u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : item.isupcoming ? `<span class="u-bg-heritage-green u-white u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ``;
   return `
-    <div class="cell small-12 large-4 medium-6 u-mb-3">
+    <div class="cell small-12 large-4 medium-6 u-mb-3"  >
       <div class="u-border-width-4 ${item.ondemand && !item.isupcoming ? "u-heritage-berry-line-left" : "u-heritage-line-left"} u-p-2 u-relative u-bg-white u-h-full">
         <div class="u-absolute u-top--16">${statusTag}</div>
         <h3 class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-2">
@@ -37,16 +41,19 @@ const renderItem = (item) => {
         ${item.isupcoming ? renderDateTime(item) : ``}
         <div class="text-sm">${item.description}</div>
         <p class="text-sm">Audience: ${item.studylevels} students. ${item.countries}</p>
+        <div id="favbtns${item.id}">${cookie && renderFavBtns(consts.showUrlToFavs, cookie, item.id)}</div>
       </div>
     </div>`;
-};
+});
 
-const renderAllItems = stir.curry((section, items) => {
+const renderAllItems = stir.curry((consts, section, items) => {
   if (!items.length && !section.noItems) return ``;
+
+  const render = renderItem(consts);
   return `
     <div class="grid-x ">
       ${renderHeader(section.head, section.intro)}
-      ${!items.length ? renderNoItemsMessage(section.noItems) : items.map(renderItem).join("")}
+      ${!items.length ? renderNoItemsMessage(section.noItems) : items.map(render).join("")}
       ${section.divider && section.divider === "no" ? `` : renderDivider()}
     </div>`;
 });
@@ -143,11 +150,11 @@ const SafeQueryParams = {
 };
 
 /* OutPut Section Content */
-function outputSectionContent(filters, node, data) {
+function outputSectionContent(filters, node, data, consts) {
   const { upcomingData, onDemandData } = data;
   const all = [...upcomingData, ...onDemandData];
 
-  const renderCurry = renderAllItems(filters);
+  const renderCurry = renderAllItems(consts, filters);
 
   all.length > 0 ? setDOMContent(node, renderCurry(all)) : setDOMContent(node, renderSummary(0));
 }
@@ -179,7 +186,7 @@ function outPutFormContent(consts, filters, node, event, data) {
     const endHtml = data.length > end ? renderLoadMoreButon() : renderNoData(``);
 
     const setDOMResults = event === "new" ? setDOMContent(node) : appendDOMContent(node);
-    const renderCurry = renderAllItems(filters);
+    const renderCurry = renderAllItems(consts, filters);
 
     return setDOMResults(summaryHtml + renderCurry(data.slice(start, end)) + endHtml);
   };
@@ -216,8 +223,6 @@ function processData(consts, data, filters) {
     stir.filter(isPast)
   )(webinarsData);
 
-  //const all = [...upcomingData, ...onDemandData];
-
   return { upcomingData: upcomingData, onDemandData: onDemandData };
 }
 
@@ -246,13 +251,45 @@ function doForm(consts, node, allData, event, form) {
 
   const data = processData(consts, allData, filters);
   outPutFormContent(consts, filters, node, event, data);
-
-  //if (node.innerHTML === "") setDOMContent(node, "<p>No webinars found</p>");
 }
 
 /* 
     Event Handlers
 */
+
+/* 
+      updateFavouriteBtn 
+  */
+const updateFavouriteBtn = (id, consts) => {
+  const cookie = stir.favourites.getFav(id, consts.cookieType);
+  const node = stir.node("#favbtns" + id);
+
+  if (node) setDOMContent(node)(renderFavBtns(consts.showUrlToFavs, cookie, id));
+};
+
+/* 
+          handleFavouriteBtnClick 
+      */
+const handleFavouriteBtnClick = (consts) => (event) => {
+  const target = event.target.closest("button");
+  if (!target || !target.dataset || !target.dataset.action) return;
+
+  if (target.dataset.action === "addtofavs") {
+    stir.favourites.addToFavs(target.dataset.id, consts.cookieType);
+    updateFavouriteBtn(target.dataset.id, consts);
+  }
+
+  if (target.dataset.action === "removefav") {
+    stir.favourites.removeFromFavs(target.dataset.id);
+    updateFavouriteBtn(target.dataset.id, consts);
+
+    if (consts.activity === "managefavs") {
+      const node = stir.node("#fav-" + target.dataset.id);
+      if (node) setDOMContent(node)("");
+    }
+  }
+};
+
 const handleFormChange = (consts, webinarResultsArea, dataWebinars) => () => {
   SafeQueryParams.set("page", "1");
   doForm(consts, webinarResultsArea, dataWebinars, "new", stir.node("#webinarfilters"));
@@ -375,6 +412,7 @@ function initWebinarForm(consts, dataWebinars) {
     }
   });
 
+  webinarResultsArea.addEventListener("click", handleFavouriteBtnClick(consts));
   webinarResultsArea.addEventListener("click", handlePagination(consts, webinarResultsArea, dataWebinars));
 }
 
@@ -387,7 +425,7 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
   const webinarSections = consts.webinarSections;
   webinarSections.forEach((element) => {
     const data = processData(consts, dataWebinars, dataWebinarFilters[element.dataset.webinarsects]);
-    outputSectionContent(dataWebinarFilters[element.dataset.webinarsects], element, data);
+    outputSectionContent(dataWebinarFilters[element.dataset.webinarsects], element, data, consts);
   });
 
   const disclaimerArea = stir.node("[data-webinardisclaimer]");
@@ -416,6 +454,8 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
     itemsPerPage: 6,
     safeList: ["countries", "series", "subjects", "studylevels", "faculties", "categories"],
     macros: (stir.t4Globals.regionmacros || []).filter((item) => item.tag),
+    showUrlToFavs: "",
+    cookieType: "webinar",
   };
 
   const dataWebinarFilters = stir.t4Globals.webinarSectionData || {};
@@ -425,6 +465,8 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
       case "dev":
         return "index.json";
       case "preview":
+        return '<t4 type="navigation" id="5271" />';
+      case "appdev-preview":
         return '<t4 type="navigation" id="5271" />';
       default:
         return '<t4 type="navigation" id="5271" />' + "index.json";
@@ -449,14 +491,20 @@ function initWebinarSections(consts, dataWebinars, dataWebinarFilters) {
       });
   }
 
-  // Initialization function to use fetched data
-  function initializeWebinars(dataWebinars) {
-    initWebinarForm(CONSTS, dataWebinars);
-    initWebinarSections(CONSTS, dataWebinars, dataWebinarFilters);
+  /* 
+    Initialization function to use fetched data 
+  */
+  function initializeWebinars(consts, dataWebinars) {
+    initWebinarForm(consts, dataWebinars);
+    initWebinarSections(consts, dataWebinars, dataWebinarFilters);
   }
 
-  // Fetch data and initialize
+  /* 
+    ONLOAD: Fetch data and initialize 
+  */
+
+  console.log(getApiUrl(UoS_env.name));
   fetchWebinarData(getApiUrl(UoS_env.name)).then((dataWebinars) => {
-    initializeWebinars(dataWebinars);
+    initializeWebinars(CONSTS, dataWebinars);
   });
 })(stir.nodes("[data-webinar]"));

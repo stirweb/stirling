@@ -849,7 +849,7 @@ body > nav > a.u-show-on-focus {
 
 .c-header {
   background-color: #ffffff;
-  padding: 34px 0;
+  padding: 32px 0;
   position: relative; }
 
 .c-site-logo {
@@ -8559,6 +8559,24 @@ article.c-convo small {
   min-width: 20px; }
 
 /* 
+  SVG icon sizing
+*/
+svg.u-svg-16,
+.u-svg-16 svg {
+  width: 16px;
+  height: 16px; }
+
+svg.u-svg-24,
+.u-svg-24 svg {
+  width: 24px;
+  height: 24px; }
+
+svg.u-svg-32,
+.u-svg-32 svg {
+  width: 32px;
+  height: 32px; }
+
+/* 
   Common aspect ratios 
 */
 .u-aspect-ratio-1-1 {
@@ -8778,6 +8796,9 @@ ul.no-bullet {
 .u-mb-2 {
   margin-bottom: 24px; }
 
+.u-mr-2 {
+  margin-right: 24px; }
+
 .u-my-2 {
   margin-bottom: 24px;
   margin-top: 24px; }
@@ -8785,6 +8806,8 @@ ul.no-bullet {
 @media screen and (min-width: 40em) {
   .u-m-2 {
     margin: 32px; }
+  .u-mr-2 {
+    margin-right: 32px; }
   .u-mt-2 {
     margin-top: 32px; }
   .u-mb-2 {
@@ -8796,6 +8819,8 @@ ul.no-bullet {
 @media screen and (min-width: 64em) {
   .u-m-2 {
     margin: 40px; }
+  .u-mr-2 {
+    margin-right: 40px; }
   .u-mb-2 {
     margin-bottom: 40px; }
   .u-mt-2 {
@@ -9383,7 +9408,7 @@ svg.u-icon {
 .hook::after {
   background-color: currentColor;
   bottom: 0;
-  content: "";
+  content: "" !important;
   position: absolute; }
 
 .hook::before {
@@ -9400,6 +9425,13 @@ svg.u-icon {
   height: 8px;
   left: 0;
   width: 100%; }
+
+.hook-skinny::before {
+  height: 24px;
+  width: 5px; }
+
+.hook-skinny::after {
+  height: 5px; }
 
 .hook-infinite {
   max-width: max-content; }

@@ -98,6 +98,10 @@ ul.no-bullet {
   margin-bottom: 24px;
 }
 
+.u-mr-2 {
+  margin-right: 24px;
+}
+
 .u-my-2 {
   margin-bottom: 24px;
   margin-top: 24px;
@@ -106,6 +110,10 @@ ul.no-bullet {
 @media screen and #{breakpoint(medium up)} {
   .u-m-2 {
     margin: 32px;
+  }
+
+  .u-mr-2 {
+    margin-right: 32px;
   }
 
   .u-mt-2 {
@@ -125,6 +133,10 @@ ul.no-bullet {
 @media screen and #{breakpoint(large up)} {
   .u-m-2 {
     margin: 40px;
+  }
+
+  .u-mr-2 {
+    margin-right: 40px;
   }
 
   .u-mb-2 {

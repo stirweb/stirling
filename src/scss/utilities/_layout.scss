@@ -400,6 +400,27 @@
 }
 
 /* 
+  SVG icon sizing
+*/
+
+svg.u-svg-16,
+.u-svg-16 svg {
+  width: 16px;
+  height: 16px;
+}
+svg.u-svg-24,
+.u-svg-24 svg {
+  width: 24px;
+  height: 24px;
+}
+
+svg.u-svg-32,
+.u-svg-32 svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* 
   Common aspect ratios 
 */
 

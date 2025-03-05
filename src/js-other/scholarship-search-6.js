@@ -41,6 +41,8 @@
   const feeStatusesAll = stirt4globals.feeStatusesAll.feestatuses || [];
 
   const CONSTANTS = {
+    cookieType: "scholarship",
+    showUrlToFavs: "true",
     debug: debug,
     regions: {
       ukroi: stir.flatten(regionmacros.filter((item) => item.tag === "UK and ROI").map((el) => el.data)), // Changed from item.tag === "United Kingdom" to include ROI 20 Sep 2022
@@ -79,9 +81,9 @@
   /*  
     Find the results that match the filters and reorder 
   */
-  const filterData = stir.curry((CONSTS, filters, schol) => {
+  const filterData = stir.curry((consts, filters, schol) => {
     if (schol.title) {
-      if (isMatch(filters, schol, CONSTS)) {
+      if (isMatch(filters, schol, consts)) {
         return schol;
       }
     }
@@ -151,8 +153,8 @@
   /*
     Determine if a scholarship matches the filters
   */
-  const isMatch = (filters, schol, CONSTS) => {
-    const matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, CONSTS.regions.ukroi)];
+  const isMatch = (filters, schol, consts) => {
+    const matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, consts.regions.ukroi)];
 
     return stir.all((b) => b, matchFilter);
   };
@@ -271,21 +273,25 @@
     return `
         <p class="u-margin-bottom text-center"> Displaying  ${_meta.start + 1} - ${_meta.last}  of  <strong>${_meta.totalPosts} results</strong> that match your criteria.</p>
         ${stir.map((schol) => renderItem(consts, _meta, schol), _data).join("")} 
-        <div class="grid-x grid-padding-x " id="pagination-box">
+        <div class="grid-x " id="pagination-box">
           ${renderPagination(_meta)}
         </div> `;
   });
+
+  const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
 
   /* 
     Form the HTML for an individual result
   */
   const renderItem = (consts, _meta, schol) => {
+    const cookie = stir.favourites.getFav(schol.scholarship.id, consts.cookieType);
+    console.log(cookie);
     return `
         <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-line-left u-border-width-5 u-relative">
             <div class="u-absolute u-top--16">
             ${getReorderedString(schol.scholarship.studyLevel, "desc").map(renderTag).join("")}
             </div>
-            <div class="grid-x grid-padding-x">
+            <div class="grid-x ">
                 <div class="cell  u-mt-1">
                     <p class="u-heritage-green u-mb-2">
                       <strong><a href="${schol.scholarship.url}">${schol.scholarship.title}</a></strong></p>
@@ -297,6 +303,9 @@
                 ${renderDetail(getFeeStatusText(schol.scholarship.feeStatus, consts, _meta.feeStatusFilter) + " ", "Fee status", true)}
               
                 ${debug && schol ? renderDebug(schol) : ""}
+            <div class="cell text-sm u-pt-2" id="favbtns${schol.scholarship.id}">
+              ${renderFavBtns(consts.showUrlToFavs, cookie, schol.scholarship.id)}
+            </div>
             </div>
         </div>`;
   };
@@ -372,6 +381,35 @@
      EVENTS: INPUT (!!SIDE EFFECTS!!)
     
    */
+
+  const handleSearchResultFavClick = (consts) => (event) => {
+    const target = event.target.closest("button");
+    if (!target || !target.dataset || !target.dataset.action) return;
+
+    const updateFavButtonDisplay = (id) => {
+      const cookie = stir.favourites.getFav(id, consts.cookieType);
+      const node = stir.node("#favbtns" + id);
+
+      if (node) {
+        setDOMContent(node)(renderFavBtns(consts.showUrlToFavs, cookie, id));
+      }
+    };
+
+    if (target.dataset.action === "addtofavs") {
+      stir.favourites.addToFavs(target.dataset.id, consts.cookieType);
+      updateFavButtonDisplay(target.dataset.id);
+    }
+
+    if (target.dataset.action === "removefav") {
+      stir.favourites.removeFromFavs(target.dataset.id);
+      updateFavButtonDisplay(target.dataset.id);
+
+      if (consts.activity === "managefavs") {
+        const node = stir.node("#fav-" + target.dataset.id);
+        if (node) setDOMContent(node)("");
+      }
+    }
+  };
 
   /* 
     Filter Helper functions 
@@ -453,12 +491,12 @@
   /* 
     Main controller function  
   */
-  const main = (setFiltersFlag, page, CONSTS, initMeta, initData) => {
-    if (setFiltersFlag) setFormValues(CONSTS.nodes);
+  const main = (setFiltersFlag, page, consts, initMeta, initData) => {
+    if (setFiltersFlag) setFormValues(consts.nodes);
 
-    const setDOMResults = page === 1 ? setDOMContent(CONSTS.nodes.resultsArea) : appendDOMContent(CONSTS.nodes.resultsArea);
-    const filterDataCurry = stir.filter(filterData(CONSTS, getFilterVars(CONSTS.nodes, CONSTS.regionmacros)));
-    const mapRankCurry = stir.map(mapRank(getFilterVars(CONSTS.nodes, CONSTS.regionmacros)));
+    const setDOMResults = page === 1 ? setDOMContent(consts.nodes.resultsArea) : appendDOMContent(consts.nodes.resultsArea);
+    const filterDataCurry = stir.filter(filterData(consts, getFilterVars(consts.nodes, consts.regionmacros)));
+    const mapRankCurry = stir.map(mapRank(getFilterVars(consts.nodes, consts.regionmacros)));
     const sortDataCurry = stir.sort((a, b) => (parseInt(a.rank) < parseInt(b.rank) ? -1 : parseInt(a.rank) > parseInt(b.rank) ? 1 : 0));
 
     const data = stir.compose(sortDataCurry, mapRankCurry, filterDataCurry)(initData);
@@ -468,22 +506,23 @@
       totalPosts: data.length,
       start: (page - 1) * initMeta.postsPerPage,
       end: (page - 1) * initMeta.postsPerPage + initMeta.postsPerPage,
-      feeStatusFilter: getFilterVars(CONSTS.nodes, CONSTS.regionmacros).feeStatus,
+      feeStatusFilter: getFilterVars(consts.nodes, consts.regionmacros).feeStatus,
     };
 
     const last = newMeta.end > newMeta.totalPosts ? newMeta.totalPosts : newMeta.end;
     const meta = stir.Object.extend({}, initMeta, newMeta, { last: last });
 
     const paginationFilter = stir.filter((schol, index) => index >= meta.start && index < last);
-    const renderer = renderFormResults(CONSTS, meta);
+    const renderer = renderFormResults(consts, meta);
 
-    return stir.compose(setDOMResults, renderer, paginationFilter)(data);
+    stir.compose(setDOMResults, renderer, paginationFilter)(data);
+
+    consts.nodes.resultsArea.addEventListener("click", handleSearchResultFavClick(consts));
   };
 
   /*
     
-     FORM BASED VERSION
-     ie scholarship finder
+     Finder
     
    */
 
@@ -536,20 +575,6 @@
           doPageClick(Number(e.target.getAttribute("data-page")) + 1);
           return;
         }
-
-        // if (e.target.matches("#pagination-box a")) {
-        //   const loadPage = e.target.getAttribute("data-page");
-
-        //   doPageClick(loadPage);
-        //   e.preventDefault();
-        // }
-
-        // if (e.target.matches("#pagination-box a span")) {
-        //   const loadPage2 = e.target.parentNode.getAttribute("data-page");
-
-        //   doPageClick(loadPage2);
-        //   e.preventDefault();
-        // }
       },
       false
     );
@@ -578,7 +603,7 @@
     }
 
     /*
-       EVENT: On load
+       On load
      */
 
     const page = stir.isNumeric(QueryParams.get("page")) ? QueryParams.get("page") : 1;
@@ -587,13 +612,13 @@
 
   /*
    
-    HARD CODED Listings
+    Hard Coded Listings
     eg on the international Pages
    
    */
 
   /* 
-    Form the html for the listing 
+    Generate the html for the listing 
   */
   const renderHardcodedResults = stir.curry((data) => {
     return stir.map((el) => `<li ><a href="${el.scholarship.url}">${el.scholarship.title}</a> ${debug ? el.rank : ""}</li>`, data);
@@ -634,11 +659,11 @@
   /* 
     Loop the countries and get the matches for each
   */
-  const getCountriesData = (CONSTS, element, allData) => {
+  const getCountriesData = (consts, element, allData) => {
     return element.dataset.country.split(", ").map((country) => {
-      const filters = getCountryListingFilters(element, country, CONSTS.regionmacros);
+      const filters = getCountryListingFilters(element, country, consts.regionmacros);
 
-      const filterDataCurry = stir.filter(filterData(CONSTS, filters));
+      const filterDataCurry = stir.filter(filterData(consts, filters));
       const mapRankCurry = stir.map(mapRank(filters));
       const limitDataCurry = stir.filter((el) => parseInt(el.rank) < 1000);
 
