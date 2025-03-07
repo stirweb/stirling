@@ -128,7 +128,7 @@
   };
 
   const getSearchParam = (tag) => {
-    if (tag.includes("Faculty of") || tag.includes("Stirling Management School")) {
+    if (tag.includes("Faculty of") || tag.includes("Management School") || tag.includes("Business School")) {
       return `meta_faculty=${tag}`;
     }
     return `meta_tags=${tag}`;
@@ -141,24 +141,19 @@
   const main = () => {
     const fbhost = `https://${UoS_env.search}`;
     const node = stir.node("#newsEventListing");
-    const eventtag = node?.dataset.eventtag;
-    const newstag = node?.dataset.newstag;
 
     if (!node) return;
 
+    const eventtag = node?.dataset.eventtag;
+    const newstag = node?.dataset.newstag;
+
     const eventsApiUrl = `${fbhost}/s/search.json?collection=stir-events&SF=[d,startDate,type,tags,page,image]&query=!null&sort=date&fmo=true&meta_tags=${eventtag}`;
     const newsApiUrl = `${fbhost}/s/search.json?collection=stir-main&SF=[d,type,tags,faculty,thumbnail]&query=&sort=date&fmo=true&meta_type=news&${getSearchParam(newstag)}`;
-
-    //console.log("Events API URL:", eventsApiUrl);
-    console.log("News API URL:", newsApiUrl);
 
     Promise.all([fetchData(eventsApiUrl), fetchData(newsApiUrl)])
       .then(([eventsData, newsData]) => {
         const dataEvents = eventsData.response.resultPacket.results;
         const dataNews = newsData.response.resultPacket.results;
-
-        // console.log("Events:", dataEvents);
-        ///console.log("News:", dataNews);
 
         const content = processData(dataEvents, dataNews);
         updateDOM(node, content);
