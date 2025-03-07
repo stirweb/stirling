@@ -58,7 +58,7 @@
                  ${renderImage(item.metaData.thumbnail, item.title)}
                 <time class="u-block u-my-1 u-grey--dark">${renderDate(item.date)}</time>
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
-                    <a href="${item.url}" class=" u-inline text-sm">${item.title.split(" | ")[0]}</a>
+                    <a href="${item.displayUrl}" class=" u-inline text-sm">${item.title.split(" | ")[0]}</a>
                 </p>
                 <p class="text-sm">${item.summary}</p>
             </div>`;
@@ -157,8 +157,8 @@
         const dataEvents = eventsData.response.resultPacket.results;
         const dataNews = newsData.response.resultPacket.results;
 
-        //console.log("Events:", dataEvents);
-        //console.log("News:", dataNews);
+        console.log("Events:", dataEvents);
+        console.log("News:", dataNews);
 
         const content = processData(dataEvents, dataNews);
         updateDOM(node, content);
