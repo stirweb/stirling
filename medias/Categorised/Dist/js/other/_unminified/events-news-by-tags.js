@@ -127,6 +127,13 @@
     node.innerHTML = content.newsContent + content.eventsContent;
   };
 
+  const getSearchParam = (tag) => {
+    if (tag.includes("Faculty of") || tag.includes("Stirling Management School")) {
+      return `meta_faculty=${tag}`;
+    }
+    return `meta_tags=${tag}`;
+  };
+
   /* 
     Main function 
   */
@@ -140,7 +147,10 @@
     if (!node) return;
 
     const eventsApiUrl = `${fbhost}/s/search.json?collection=stir-events&SF=[d,startDate,type,tags,page,image]&query=!null&sort=date&fmo=true&meta_tags=${eventtag}`;
-    const newsApiUrl = `${fbhost}/s/search.json?collection=stir-main&SF=[d,type,tags,facult,thumbnail]&query=&sort=date&fmo=true&meta_type=news&meta_tags=${newstag}`;
+    const newsApiUrl = `${fbhost}/s/search.json?collection=stir-main&SF=[d,type,tags,facult,thumbnail]&query=&sort=date&fmo=true&meta_type=news&${getSearchParam(newstag)}`;
+
+    //console.log("Events API URL:", eventsApiUrl);
+    //console.log("News API URL:", newsApiUrl);
 
     Promise.all([fetchData(eventsApiUrl), fetchData(newsApiUrl)])
       .then(([eventsData, newsData]) => {
