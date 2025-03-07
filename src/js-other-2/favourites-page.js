@@ -12,7 +12,7 @@ const FavouritesArea = (scope, cookieType) => {
     showUrlToFavs: resultsArea.dataset.favsurl || ``,
     activity: resultsArea.dataset.activity || ``,
     view: stir.templates?.view || ``,
-    fbhost: UoS_env.name === "prod" || UoS_env.name === "dev2" ? "https://search.stir.ac.uk" : "https://stage-shared-15-24-search.clients.uk.funnelback.com",
+    fbhost: UoS_env.name === "prod" || UoS_env.name === "dev" ? "https://search.stir.ac.uk" : "https://stage-shared-15-24-search.clients.uk.funnelback.com",
   };
 
   // DOM Elements

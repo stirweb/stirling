@@ -1,29 +1,29 @@
-!function(){var e=s=>e=>"string"==typeof e&&e.trim().length?s(e.split(" ")):"";const t=e(([,e,s,t])=>`${e} ${s.slice(0,3)} `+t),s=e(([e,s,t])=>`${e} ${s.slice(0,3)} `+t),l=(e,s)=>` <div class="cell small-12 medium-${e}">
-                <div class="grid-x">
-                    <div class="cell"><h2 class="header-stripped">News</h2></div>
-                    ${s}
-                </div>
-            </div>`,r=e=>e?` <div class="cell small-12 medium-4">
+!function(){const s=e=>{e=new Date(e);return e.getDate()+` ${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][e.getMonth()]} `+e.getFullYear()},l=e=>e?` <div class="cell small-12 medium-4">
                 <div class="grid-x">
                     <div class="cell"><h2 class="header-stripped">Events</h2></div>
                     ${e}
                 </div>
-            </div>`:"",n=e=>`<div class="cell small-12 ">
+            </div>`:"",i=e=>`<div class="cell small-12 ">
               <div class="u-aspect-ratio-16-9 ">
-                <img class="show-for-medium u-object-cover" src="${e.image}" alt="Image for event: ${e.title}" loading="lazy" />
+                <img class="show-for-medium u-object-cover" src="${e.metaData.image}" alt="Image for event: ${e.title}" loading="lazy" />
               </div>
-                <time class="u-block u-my-1 u-grey--dark">${s(e.stirStart)} - ${s(e.stirEnd)}</time>
-                <h3 class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
-                    <a href="${e.url}" class="c-link u-inline">${e.title}</a>
-                </h3>
+                <time class="u-block u-my-1 u-grey--dark">${s(e.metaData.startDate.split("T")[0])} - ${s(e.metaData.d.split("T")[0])}</time>
+                <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
+                    <a href="${e.metaData.page}" class=" u-inline text-sm">${e.title}</a>
+                </p>
                 <p class="text-sm">${e.summary}</p>
-            </div>`,c=stir.curry((e,s)=>`<div class="cell small-12 medium-${e}">
-                <div class="u-aspect-ratio-16-9 ">
-                  <img class="show-for-medium u-object-cover" src="${s.thumbnail}" alt="Image for article: ${s.title}" loading="lazy" />
+            </div>`,n=(e,t)=>` <div class="cell small-12 medium-${e}">
+                <div class="grid-x">
+                    <div class="cell"><h2 class="header-stripped">News</h2></div>
+                    ${t}
                 </div>
-                <time class="u-block u-my-1 u-grey--dark">${t(s.date)}</time>
-                <h3 class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
-                    <a href="${s.url}" class="c-link u-inline">${s.title}</a>
-                </h3>
-                <p class="text-sm">${s.summary}</p>
-            </div>`),d=()=>Number((new Date).toISOString().split(".")[0].replaceAll(/[-:T]/g,"").slice(0,-2)),o=(e,s)=>parseInt(e.startInt)-parseInt(s.startInt),m=t=>e=>{return{...e,isupcoming:(s=t,(e=>Number(e.endInt)>s)(e))};var s},u=e=>e.id,p=e=>e.isupcoming,v=s=>e=>e.tags.includes(s),h=e=>e.slice(0,1),g=stir.curry((e,s)=>s.slice(0,e));var i;{const $=stir.node("#newsEventListing"),f=$?.dataset.tags;$&&f&&(e=UoS_env.name,i={dev:"../index.json",preview:'<t4 type="navigation" id="5214" />',default:'<t4 type="navigation" id="5214" />index.json'},fetch(i[e]||i.default).then(e=>e.ok?e.json():Promise.reject("Network response was not ok")).catch(e=>(console.error("There was a problem fetching the data:",e),[])).then(e=>{e=e,s=newsList,a=f,t=d(),t=stir.pipe(stir.filter(u),stir.map(m(t)),stir.filter(p),stir.filter(v(a)),stir.sort(o),h,stir.map(n))(e),a=1===t.length?2:3,e=2==a?6:4,i=2==a?8:12,e=stir.pipe(stir.map(c(e)),g(a))(s);var s,t,i,a={newsContent:l(i,e.join("")),eventsContent:r(t.join(""))};$.innerHTML=a.newsContent+a.eventsContent}))}}();
+            </div>`,c=stir.curry((e,t)=>`<div class="cell small-12 medium-${e}">
+                <div class="u-aspect-ratio-16-9 ">
+                  <img class="show-for-medium u-object-cover" src="${t.metaData.thumbnail}" alt="Image for article: ${t.title}" loading="lazy" />
+                </div>
+                <time class="u-block u-my-1 u-grey--dark">${s(t.date)}</time>
+                <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
+                    <a href="${t.url}" class=" u-inline text-sm">${t.title.split(" | ")[0]}</a>
+                </p>
+                <p class="text-sm">${t.summary}</p>
+            </div>`),a=e=>e.toISOString().split(".")[0].replaceAll(/[-:T]/g,"").slice(0,-2),o=()=>Number(a(new Date)),m=s=>e=>{return{...e,isupcoming:(t=s,(e=>Number(a(new Date(e.metaData.d)))>t)(e))};var t},d=e=>e.isupcoming,u=e=>e.slice(0,1),p=stir.curry((e,t)=>t.slice(0,e)),e=e=>fetch(e).then(e=>e.ok?e.json():Promise.reject("Network response was not ok")).catch(e=>(console.error("There was a problem fetching the data:",e),[]));{var t="prod"===UoS_env.name||"dev"===UoS_env.name?"https://search.stir.ac.uk":"https://stage-shared-15-24-search.clients.uk.funnelback.com";const g=stir.node("#newsEventListing");var r=g?.dataset.eventtag,v=g?.dataset.newstag;g&&(r=t+"/s/search.json?collection=stir-events&SF=[d,startDate,type,tags,page,image]&query=!null&sort=date&fmo=true&meta_tags="+r,t=t+"/s/search.json?collection=stir-main&SF=[d,type,tags,facult,thumbnail]&query=&sort=date&fmo=true&meta_type=news&meta_tags="+v,Promise.all([e(r),e(t)]).then(([e,t])=>{var s,a,r,e=e.response.resultPacket.results,t=t.response.resultPacket.results,e=(console.log("Events:",e),console.log("News:",t),e=e,t=t,s=o(),s=stir.pipe(stir.map(m(s)),stir.filter(d),u,stir.map(i))(e),e=1===s.length?2:3,a=2==e?6:4,r=2==e?8:12,a=stir.pipe(stir.map(c(a)),p(e))(t),{newsContent:n(r,a.join("")),eventsContent:l(s.join(""))});g.innerHTML=e.newsContent+e.eventsContent}).catch(e=>{console.error("Error fetching data:",e)}))}}();
