@@ -129,7 +129,7 @@
   */
 
   const main = () => {
-    const fbhost = UoS_env.name === "prod" || UoS_env.name === "dev" ? "https://search.stir.ac.uk" : "https://stage-shared-15-24-search.clients.uk.funnelback.com";
+    const fbhost = `https://${UoS_env.search}`;
     const node = stir.node("#newsEventListing");
     const eventtag = node?.dataset.eventtag;
     const newstag = node?.dataset.newstag;
