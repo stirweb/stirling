@@ -15,6 +15,13 @@
     return `${day} ${month} ${year}`;
   };
 
+  const renderImage = (src, alt) => {
+    if (!src) return ``;
+    return ` <div class="u-aspect-ratio-16-9 ">
+                <img class="show-for-medium u-object-cover" src="${src}" alt="Image for: ${alt}" loading="lazy" />
+              </div>`;
+  };
+
   const renderEventsWrapper = (content) => {
     return !content
       ? ``
@@ -28,8 +35,7 @@
 
   const renderEvent = (item) => {
     return `<div class="cell small-12 ">
-              <div class="u-aspect-ratio-16-9 ">
-                <img class="show-for-medium u-object-cover" src="${item.metaData.image}" alt="Image for event: ${item.title}" loading="lazy" />
+              ${renderImage(item.metaData.image, item.title)}
               </div>
                 <time class="u-block u-my-1 u-grey--dark">${renderDate(item.metaData.startDate.split("T")[0])} - ${renderDate(item.metaData.d.split("T")[0])}</time>
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
@@ -50,9 +56,7 @@
 
   const renderNewsItem = stir.curry((width, item) => {
     return `<div class="cell small-12 medium-${width}">
-                <div class="u-aspect-ratio-16-9 ">
-                  <img class="show-for-medium u-object-cover" src="${item.metaData.thumbnail}" alt="Image for article: ${item.title}" loading="lazy" />
-                </div>
+                 ${renderImage(item.metaData.image, item.title)}
                 <time class="u-block u-my-1 u-grey--dark">${renderDate(item.date)}</time>
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
                     <a href="${item.url}" class=" u-inline text-sm">${item.title.split(" | ")[0]}</a>
@@ -144,8 +148,8 @@
         const dataEvents = eventsData.response.resultPacket.results;
         const dataNews = newsData.response.resultPacket.results;
 
-        console.log("Events:", dataEvents);
-        console.log("News:", dataNews);
+        //console.log("Events:", dataEvents);
+        //console.log("News:", dataNews);
 
         const content = processData(dataEvents, dataNews);
         updateDOM(node, content);
