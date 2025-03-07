@@ -157,8 +157,8 @@
         const dataEvents = eventsData.response.resultPacket.results;
         const dataNews = newsData.response.resultPacket.results;
 
-        console.log("Events:", dataEvents);
-        console.log("News:", dataNews);
+        // console.log("Events:", dataEvents);
+        ///console.log("News:", dataNews);
 
         const content = processData(dataEvents, dataNews);
         updateDOM(node, content);
