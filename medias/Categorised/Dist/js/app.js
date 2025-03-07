@@ -2376,7 +2376,7 @@ var UoS_env = (function () {
     case "localhost":
       env_name = "dev";
       wc_path = "/medias/Categorised/Dist/";
-      search = funnelback.staging;
+      //search = funnelback.staging;
       break;
 
     case "stiracuk-cms01-production.terminalfour.net":

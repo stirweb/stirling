@@ -147,10 +147,10 @@
     if (!node) return;
 
     const eventsApiUrl = `${fbhost}/s/search.json?collection=stir-events&SF=[d,startDate,type,tags,page,image]&query=!null&sort=date&fmo=true&meta_tags=${eventtag}`;
-    const newsApiUrl = `${fbhost}/s/search.json?collection=stir-main&SF=[d,type,tags,facult,thumbnail]&query=&sort=date&fmo=true&meta_type=news&${getSearchParam(newstag)}`;
+    const newsApiUrl = `${fbhost}/s/search.json?collection=stir-main&SF=[d,type,tags,faculty,thumbnail]&query=&sort=date&fmo=true&meta_type=news&${getSearchParam(newstag)}`;
 
     //console.log("Events API URL:", eventsApiUrl);
-    //console.log("News API URL:", newsApiUrl);
+    console.log("News API URL:", newsApiUrl);
 
     Promise.all([fetchData(eventsApiUrl), fetchData(newsApiUrl)])
       .then(([eventsData, newsData]) => {
