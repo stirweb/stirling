@@ -36,7 +36,6 @@
   const renderEvent = (item) => {
     return `<div class="cell small-12 ">
               ${renderImage(item.metaData.image, item.title)}
-              </div>
                 <time class="u-block u-my-1 u-grey--dark">${renderDate(item.metaData.startDate.split("T")[0])} - ${renderDate(item.metaData.d.split("T")[0])}</time>
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
                     <a href="${item.metaData.page}" class=" u-inline text-sm">${item.title}</a>
@@ -56,7 +55,7 @@
 
   const renderNewsItem = stir.curry((width, item) => {
     return `<div class="cell small-12 medium-${width}">
-                 ${renderImage(item.metaData.image, item.title)}
+                 ${renderImage(item.metaData.thumbnail, item.title)}
                 <time class="u-block u-my-1 u-grey--dark">${renderDate(item.date)}</time>
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
                     <a href="${item.url}" class=" u-inline text-sm">${item.title.split(" | ")[0]}</a>
