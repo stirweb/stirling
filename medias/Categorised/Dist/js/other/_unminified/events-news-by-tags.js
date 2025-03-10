@@ -44,9 +44,9 @@
     return `<div class="cell small-12 u-grid-medium-up u-gap-24 u-grid-cols-2_1 u-mb-2 u-bg-white">
               <div class="u-border-width-5 u-heritage-line-left u-p-2 ">
                <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
-                    <a href="${item.displayUrl}" class=" u-inline text-sm">${item.title.split(" | ")[0]}</a>
+                  <a href="${item.displayUrl}" class=" u-inline text-sm">${item.title.split(" | ")[0]}</a>
                 </p>
-                 <time class="u-block u-my-1 u-grey--dark">${renderDate(item.date)}</time>
+                <time class="u-block u-my-1 u-grey--dark">${renderDate(item.date)}</time>
                 <p class="text-sm">${item.summary}</p>
               </div>
                ${renderImage(item.metaData.thumbnail, item.title)}
@@ -58,10 +58,9 @@
     return `<div class="cell small-12 u-grid-medium-up u-gap-24 u-grid-cols-2_1 u-mb-2 u-bg-white">
               <div class="u-border-width-5 u-heritage-line-left u-p-2">  
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
-                    <a href="${item.metaData.page}" class=" u-inline text-sm">${item.title}</a>
+                  <a href="${item.metaData.page}" class=" u-inline text-sm">${item.title}</a>
                 </p>
                  <time class="u-block u-my-1 u-grey--dark">${renderDate(item.metaData.startDate.split("T")[0])} ${end}</time>
-               
                 <p class="text-sm">${item.summary}</p>
               </div>
               ${renderImage(item.metaData.image, item.title)}
@@ -93,7 +92,7 @@
 
   const renderWrapper = (width, header, content) => {
     if (!content) return "";
-    return ` <div class="cell small-12 medium-${width}">
+    return `<div class="cell small-12 medium-${width} u-mt-3">
                 <div class="grid-x">
                     <div class="cell"><h2 class="header-stripped">${header}</h2></div>
                     ${content}
@@ -123,12 +122,11 @@
   const getNewsOffset = (size) => {
     if (size === "small") return 0;
 
-    const compactEvents = document.querySelectorAll('[data-type="compactevent"]');
+    const compactEvents = document.querySelectorAll('[data-type="compactevent"]').length;
 
-    if (!compactEvents) return 0;
-    if (compactEvents === 1) return 1;
+    if (compactEvents === 1) return 2;
 
-    return 2;
+    return 3;
   };
 
   /* 
