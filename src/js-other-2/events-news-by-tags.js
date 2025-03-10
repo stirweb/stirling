@@ -254,8 +254,8 @@
     const eventtag = node?.dataset.eventtag;
     const newstag = node?.dataset.newstag;
 
-    const eventsApiUrl = `${fbhost}/s/search.json?collection=stir-events&SF=[d,startDate,type,tags,page,image]&query=!null&num_ranks=20&sort=date&fmo=true&meta_tags=${eventtag}`;
-    const newsApiUrl = `${fbhost}/s/search.json?collection=stir-main&SF=[d,type,tags,faculty,thumbnail]&query=!null&num_ranks=20&sort=date&fmo=true&meta_type=news&${getSearchParam(newstag)}`;
+    const eventsApiUrl = !eventtag ? `` : `${fbhost}/s/search.json?collection=stir-events&SF=[d,startDate,type,tags,page,image]&query=!null&num_ranks=20&sort=date&fmo=true&meta_tags=${eventtag}`;
+    const newsApiUrl = !newstag ? `` : `${fbhost}/s/search.json?collection=stir-main&SF=[d,type,tags,faculty,thumbnail]&query=!null&num_ranks=20&sort=date&fmo=true&meta_type=news&${getSearchParam(newstag)}`;
 
     Promise.all([fetchData(eventsApiUrl), fetchData(newsApiUrl)])
       .then(([eventsData, newsData]) => {
