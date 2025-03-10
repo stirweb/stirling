@@ -6950,7 +6950,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       padding-top: 10px; }
       .c-search-results-area .c-search-result[data-result-type="course"] .stir-accordion button::before {
         background-color: #fff;
-        color: #006636 #fff;
+        color: #006636;
         width: 30px;
         height: 30px;
         text-align: center;
@@ -8313,6 +8313,9 @@ article.c-convo small {
 
 .u-grid-cols-3_1 {
   grid-template-columns: 3fr 1fr; }
+
+.u-grid-cols-2_1 {
+  grid-template-columns: 2fr 1fr; }
 
 .u-justify-content-center {
   justify-content: center; }
