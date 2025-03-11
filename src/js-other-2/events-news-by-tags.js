@@ -28,6 +28,12 @@
   const renderDate = (dateString) => {
     const date = new Date(dateString);
 
+    // Check if the date is invalid
+    if (isNaN(date.getTime())) {
+      console.error(`Invalid date provided: ${dateString}`);
+      return ``;
+    }
+
     const day = date.getDate();
     const month = CONFIG.months[date.getMonth()];
     const year = date.getFullYear();
