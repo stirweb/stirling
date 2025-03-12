@@ -276,8 +276,8 @@
         padding-top: 10px;
 
         &::before {
-          background-color: #006636;
-          color: #fff;
+          background-color: #fff; //#006636;
+          color: #006636; //#fff;
           width: 30px;
           height: 30px;
           text-align: center;
