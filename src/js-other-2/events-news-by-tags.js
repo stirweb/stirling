@@ -416,7 +416,8 @@
         const contentSmallListing = processData(dataEvents, dataNews, "small");
         const contentLargeListing = processData(dataEvents, dataNews, "large");
 
-        updateDOM(node, contentSmallListing);
+        // if no news dont bother rendering small listing
+        dataNews.length && updateDOM(node, contentSmallListing);
         updateDOM(node, contentLargeListing);
       })
       .catch((error) => {
