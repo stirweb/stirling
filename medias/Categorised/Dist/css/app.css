@@ -1233,7 +1233,8 @@ body > nav > a.u-show-on-focus {
                   /* 15px (reduced from 16px to prevent overflow scroll) */
                   color: #3a3c39; }
                   .megamenu .megamenu__links > ul > li > ul > li > ul > li > a:hover {
-                    text-decoration: underline; }
+                    text-decoration: underline;
+                    text-underline-offset: 6px; }
   .megamenu .megamenu__prev-button,
   .megamenu .megamenu__next-button {
     display: none; }
