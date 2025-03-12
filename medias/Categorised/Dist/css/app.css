@@ -977,11 +977,14 @@ body > nav > a.u-show-on-focus {
   #site-footer *:focus {
     outline: 1px solid #fff !important; }
   #site-footer a {
-    color: #ffffff;
-    text-decoration: none; }
-    #site-footer a:hover {
+    color: #ffffff; }
+  #site-footer a:not(:has(> span)) {
+    text-decoration: underline;
+    text-decoration-color: #9e9e9e;
+    text-underline-offset: 6px; }
+    #site-footer a:not(:has(> span)):hover {
       text-decoration: underline;
-      text-underline-offset: 4px; }
+      text-decoration-color: #fff; }
   #site-footer .u-grid-5-cols > div {
     margin-bottom: 32px; }
   #site-footer .site-footer__map {
@@ -1230,7 +1233,8 @@ body > nav > a.u-show-on-focus {
                   /* 15px (reduced from 16px to prevent overflow scroll) */
                   color: #3a3c39; }
                   .megamenu .megamenu__links > ul > li > ul > li > ul > li > a:hover {
-                    text-decoration: underline; }
+                    text-decoration: underline;
+                    text-underline-offset: 6px; }
   .megamenu .megamenu__prev-button,
   .megamenu .megamenu__next-button {
     display: none; }
