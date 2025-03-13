@@ -978,13 +978,16 @@ body > nav > a.u-show-on-focus {
     outline: 1px solid #fff !important; }
   #site-footer a {
     color: #ffffff; }
-  #site-footer a:not(:has(> span)) {
+  #site-footer #footer-contact a {
     text-decoration: underline;
-    text-decoration-color: #9e9e9e;
+    text-decoration-color: #bbb;
     text-underline-offset: 6px; }
-    #site-footer a:not(:has(> span)):hover {
-      text-decoration: underline;
+    #site-footer #footer-contact a:hover {
       text-decoration-color: #fff; }
+  #site-footer a:not(:has(> span)):hover {
+    text-decoration: underline;
+    text-decoration-color: #fff;
+    text-underline-offset: 6px; }
   #site-footer .u-grid-5-cols > div {
     margin-bottom: 32px; }
   #site-footer .site-footer__map {
