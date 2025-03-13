@@ -44,14 +44,21 @@
     color: #ffffff;
   }
 
-  a:not(:has(> span)) {
+  #footer-contact a {
     text-decoration: underline;
-    text-decoration-color: #9e9e9e;
+    text-decoration-color: #bbb;
     text-underline-offset: 6px;
 
     &:hover {
+      text-decoration-color: #fff;
+    }
+  }
+
+  a:not(:has(> span)) {
+    &:hover {
       text-decoration: underline;
       text-decoration-color: #fff;
+      text-underline-offset: 6px;
     }
   }
 
