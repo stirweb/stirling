@@ -11,7 +11,7 @@ stir.altmetric = {
 	handles: (title,handles) => handles.map(stir.altmetric.handle(title)).shift(),
 	row: (element,index) => `<tr><td>${(index+1)}</td><td>${stir.altmetric.handles(element.attributes['title'],element.attributes.identifiers['handles'])}</td><td class=donut>${element.attributes.identifiers['dois'].map(stir.altmetric.donut).join('')}</td></tr>`,
 	tbody: json => json.slice(0,stir.altmetric.max).map(stir.altmetric.row).join(''),
-	table: json => `<table><caption>University of Stirling research papers ranked by Altmetric</caption><thead><tr><th scope=col>Position</th><th scope=col>Research paper</th><th class=donut scope=col>Altmetric score</th></thead></tr><tbody>${stir.altmetric.tbody(json)}</tbody></table>`,
+	table: json => `<table><caption>University of Stirling research papers ranked by Altmetric</caption><thead><tr><th scope=col>Rank</th><th scope=col>Title</th><th class=donut scope=col>Score</th></thead></tr><tbody>${stir.altmetric.tbody(json)}</tbody></table>`,
 	callback: function(json) {
 		if(!json) return;
 		var container = document.getElementById('top10');
