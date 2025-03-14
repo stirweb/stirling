@@ -3843,8 +3843,8 @@ C47.5,15,46.3,12.2,44.1,10.1z"></path>
 
   const config = { attributes: true, childList: true, subtree: true };
   const observer = new MutationObserver(callbackMegaMenu);
-
-  observer.observe(stir.node("#megamenu__container"), config);
+  const menucontainer = stir.node("#megamenu__container");
+  menucontainer && observer.observe(menucontainer, config);
 };
 
 TempateFavs();
