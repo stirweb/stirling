@@ -391,9 +391,9 @@
           right: 60px;
         }
 
-		&:focus {
-			outline-color: $white !important; /* ! because `a:focus` is !*/
-		}
+        &:focus {
+          outline-color: $white !important; /* ! because `a:focus` is !*/
+        }
       }
     }
   }
@@ -613,9 +613,9 @@ svg.icon {
     justify-content: center;
     gap: 20px;
 
-	a.button {
-		margin-bottom: 0;
-	}
+    a.button {
+      margin-bottom: 0;
+    }
 
     a:not(.button) {
       font-size: 1.125rem; //1.25rem; /* 20px */
@@ -624,9 +624,9 @@ svg.icon {
       line-height: 3;
       border: 1px solid #fff;
 
-	  &:hover {
-		border-color: rgba(255, 255, 255, 0.7);
-	  }
+      &:hover {
+        border-color: rgba(255, 255, 255, 0.7);
+      }
 
       span {
         display: inline-block;
@@ -651,7 +651,7 @@ svg.icon {
       }
     }
 
-   /*  a:hover span::before {
+    /*  a:hover span::before {
       width: 100%;
     } */
   }
@@ -750,7 +750,7 @@ a[data-mode*="Online"] {
 }
 @media screen and (min-width: 640px) {
   .c-course-datasheet {
-    background-color: #006938; /* fallback to solid green */
+    background-color: $heritage-green; /* fallback to solid green */
   }
   .c-course-datasheet[data-accreditation] {
     background: linear-gradient(90deg, #006938 50%, #f6f5f4 50%); /* hard-stop gradient to give the full-width two-colour background */

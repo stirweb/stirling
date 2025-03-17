@@ -6805,7 +6805,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     cursor: pointer; }
     .c-search-results-area .c-search-results-summary .c-tag:hover,
     .c-search-results-area .c-search-result__body .c-tag:hover {
-      border-color: #006636; }
+      border-color: heritage-green-a11y; }
   .c-search-results-area .c-search-result {
     background-color: #fff;
     padding: 1.5rem;
@@ -6883,7 +6883,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     .c-search-results-area aside.search-filters-area .c-search-filters-header button,
     .c-search-results-area aside.c-search-results-filters .c-search-filters-header button {
       cursor: pointer;
-      border: 1px solid #76bd22; }
+      border: 1px solid #77bf22; }
     .c-search-results-area aside.search-filters-area .c-search-filters-header span,
     .c-search-results-area aside.c-search-results-filters .c-search-filters-header span {
       margin-right: 10px;
@@ -6955,11 +6955,11 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   .c-search-results-area .c-search-result[data-result-type="course"] .stir-accordion {
     border-top: 1px solid #ede9e9; }
     .c-search-results-area .c-search-result[data-result-type="course"] .stir-accordion button {
-      color: #006636;
+      color: heritage-green-a11y;
       padding-top: 10px; }
       .c-search-results-area .c-search-result[data-result-type="course"] .stir-accordion button::before {
         background-color: #fff;
-        color: #006636;
+        color: heritage-green-a11y;
         width: 30px;
         height: 30px;
         text-align: center;
@@ -7018,7 +7018,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     top: 1.3rem;
     right: 2.4rem;
     font-size: 2.4rem;
-    color: #006636; }
+    color: heritage-green-a11y; }
   .c-search-results-area .c-search-results-courses .c-search-ordered-filters button {
     background-color: #e6eeea; }
   .c-search-results-area .c-search-result[data-result-type="news"] > div > div.c-icon-image, .c-search-results-area .c-search-result[data-result-type="event"] > div > div.c-icon-image, .c-search-results-area .c-search-result[data-result-pin] > div > div.c-icon-image, .c-search-results-area .c-search-result[data-result-type="studentstory"] > div > div.c-icon-image, .c-search-results-area .c-search-result[data-result-type="person"] > div > div.c-icon-image {
