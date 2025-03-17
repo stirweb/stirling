@@ -125,6 +125,10 @@
   display: none;
 }
 
+.show-for-medium-only {
+  display: none;
+}
+
 .show-for-large {
   display: none;
 }
@@ -227,6 +231,9 @@
   .show-for-medium {
     display: inherit;
   }
+  .show-for-medium-only {
+    display: inherit;
+  }
   .medium-flex-dir-row {
     flex-direction: row;
   }
@@ -317,6 +324,10 @@
     order: 4;
   }
 
+  .show-for-medium-only {
+    display: none;
+  }
+
   .hide-for-large {
     display: none !important;
   }
@@ -357,6 +368,10 @@
   }
   .grid-x > .cell.xlarge-10 {
     grid-column-end: span 10;
+  }
+
+  .show-for-medium-only {
+    display: none;
   }
 
   .hide-for-xlarge {
