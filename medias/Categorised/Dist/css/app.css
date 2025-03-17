@@ -7980,7 +7980,8 @@ article.c-convo small {
   color: inherit; }
 
 /* Layout Helpers (Foundation) */
-.flex-container {
+.flex-container,
+.u-flex {
   display: flex; }
 
 .flex-dir-column {
@@ -8085,6 +8086,9 @@ article.c-convo small {
 .show-for-large {
   display: none; }
 
+.show-for-large-only {
+  display: none; }
+
 .show-for-xlarge {
   display: none; }
 
@@ -8146,8 +8150,6 @@ article.c-convo small {
     display: none !important; }
   .show-for-medium {
     display: inherit; }
-  .show-for-medium-only {
-    display: inherit; }
   .medium-flex-dir-row {
     flex-direction: row; } }
 
@@ -8203,8 +8205,6 @@ article.c-convo small {
     order: 3; }
   .large-order-4 {
     order: 4; }
-  .show-for-medium-only {
-    display: none; }
   .hide-for-large {
     display: none !important; }
   .show-for-large {
@@ -8232,18 +8232,30 @@ article.c-convo small {
     grid-column-end: span 9; }
   .grid-x > .cell.xlarge-10 {
     grid-column-end: span 10; }
-  .show-for-medium-only {
-    display: none; }
   .hide-for-xlarge {
     display: none; }
   .show-for-xlarge {
     display: inherit; } }
 
-/* Small only over-rides*/
-@media screen and (max-width: 640px) {
+/* Small only over-rides */
+@media screen and (max-width: 39.99875em) {
   .show-for-small-only {
     display: inherit; }
   .hide-for-small-only {
+    display: none !important; } }
+
+/* Medium only over-rides */
+@media screen and (min-width: 40em) and (max-width: 63.99875em) {
+  .show-for-medium-only {
+    display: inherit; }
+  .hide-for-medium-only {
+    display: none !important; } }
+
+/* Large only over-rides */
+@media screen and (min-width: 64em) and (max-width: 77.49875em) {
+  .show-for-large-only {
+    display: inherit; }
+  .hide-for-large-only {
     display: none !important; } }
 
 .hide {
@@ -8286,7 +8298,7 @@ article.c-convo small {
 
     https://get.foundation/sites/docs/flexbox-utilities.html
 
-    - flex-container
+    - flex-container / u-flex
     - flex-dir-column
     - flex-dir-column large-flex-dir-row (responsive)
     - flex-dir-column-reverse
@@ -8311,9 +8323,6 @@ article.c-convo small {
     - align-bottom
     - align-stretch
 */
-.u-flex {
-  display: flex; }
-
 .u-flex-wrap,
 .flex-wrap {
   flex-wrap: wrap; }

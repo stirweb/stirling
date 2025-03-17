@@ -1,6 +1,7 @@
 /* Layout Helpers (Foundation) */
 
-.flex-container {
+.flex-container,
+.u-flex {
   display: flex;
 }
 
@@ -133,6 +134,10 @@
   display: none;
 }
 
+.show-for-large-only {
+  display: none;
+}
+
 .show-for-xlarge {
   display: none;
 }
@@ -228,12 +233,11 @@
   .hide-for-medium {
     display: none !important;
   }
+
   .show-for-medium {
     display: inherit;
   }
-  .show-for-medium-only {
-    display: inherit;
-  }
+
   .medium-flex-dir-row {
     flex-direction: row;
   }
@@ -324,10 +328,6 @@
     order: 4;
   }
 
-  .show-for-medium-only {
-    display: none;
-  }
-
   .hide-for-large {
     display: none !important;
   }
@@ -370,10 +370,6 @@
     grid-column-end: span 10;
   }
 
-  .show-for-medium-only {
-    display: none;
-  }
-
   .hide-for-xlarge {
     display: none;
   }
@@ -383,13 +379,32 @@
   }
 }
 
-/* Small only over-rides*/
-@media screen and (max-width: 640px) {
+/* Small only over-rides */
+@include breakpoint(small only) {
   .show-for-small-only {
     display: inherit;
   }
-
   .hide-for-small-only {
+    display: none !important;
+  }
+}
+
+/* Medium only over-rides */
+@include breakpoint(medium only) {
+  .show-for-medium-only {
+    display: inherit;
+  }
+  .hide-for-medium-only {
+    display: none !important;
+  }
+}
+
+/* Large only over-rides */
+@include breakpoint(large only) {
+  .show-for-large-only {
+    display: inherit;
+  }
+  .hide-for-large-only {
     display: none !important;
   }
 }
