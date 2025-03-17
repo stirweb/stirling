@@ -39,7 +39,7 @@
       border: 1px solid #ccc;
       cursor: pointer;
       &:hover {
-        border-color: #006636;
+        border-color: heritage-green-a11y;
       }
     }
   }
@@ -176,12 +176,12 @@
 
       button {
         cursor: pointer;
-        border: 1px solid #76bd22;
+        border: 1px solid $energy-green;
       }
 
       span {
         margin-right: 10px;
-        color: #006938;
+        color: $heritage-green;
       }
     }
     fieldset.c-search-filters-subgroup {
@@ -272,12 +272,12 @@
       border-top: 1px solid #ede9e9;
 
       button {
-        color: #006636;
+        color: heritage-green-a11y;
         padding-top: 10px;
 
         &::before {
-          background-color: #fff; //#006636;
-          color: #006636; //#fff;
+          background-color: #fff; //heritage-green-a11y;
+          color: heritage-green-a11y; //#fff;
           width: 30px;
           height: 30px;
           text-align: center;
@@ -316,7 +316,7 @@
       position: absolute;
       left: -30px;
       color: #fff;
-      background-color: #006938;
+      background-color: $heritage-green;
       top: 0;
       padding: 0.2rem 0;
       text-align: center;
@@ -376,7 +376,7 @@
       top: 1.3rem;
       right: 2.4rem;
       font-size: 2.4rem;
-      color: #006636;
+      color: heritage-green-a11y;
     }
   }
 
@@ -449,7 +449,7 @@ fieldset[data-facet*="mode"] span::first-letter {
         position: absolute;
         left: -45px;
         color: #fff;
-        background-color: #006938;
+        background-color: $heritage-green;
         top: 0;
         padding: 0.6rem;
         width: auto;
