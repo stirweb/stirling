@@ -1,6 +1,7 @@
 /* Layout Helpers (Foundation) */
 
-.flex-container {
+.flex-container,
+.u-flex {
   display: flex;
 }
 
@@ -125,7 +126,15 @@
   display: none;
 }
 
+.show-for-medium-only {
+  display: none;
+}
+
 .show-for-large {
+  display: none;
+}
+
+.show-for-large-only {
   display: none;
 }
 
@@ -224,9 +233,11 @@
   .hide-for-medium {
     display: none !important;
   }
+
   .show-for-medium {
     display: inherit;
   }
+
   .medium-flex-dir-row {
     flex-direction: row;
   }
@@ -368,13 +379,32 @@
   }
 }
 
-/* Small only over-rides*/
-@media screen and (max-width: 640px) {
+/* Small only over-rides */
+@include breakpoint(small only) {
   .show-for-small-only {
     display: inherit;
   }
-
   .hide-for-small-only {
+    display: none !important;
+  }
+}
+
+/* Medium only over-rides */
+@include breakpoint(medium only) {
+  .show-for-medium-only {
+    display: inherit;
+  }
+  .hide-for-medium-only {
+    display: none !important;
+  }
+}
+
+/* Large only over-rides */
+@include breakpoint(large only) {
+  .show-for-large-only {
+    display: inherit;
+  }
+  .hide-for-large-only {
     display: none !important;
   }
 }
