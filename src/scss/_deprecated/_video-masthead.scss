@@ -4,7 +4,7 @@
 
 .video-banner {
   position: relative;
-  background: #006938;
+  background: $heritage-green;
 
   &:not([data-aspect="16:9"]) span {
     bottom: 6vw;

@@ -6,7 +6,7 @@
 
     https://get.foundation/sites/docs/flexbox-utilities.html
 
-    - flex-container
+    - flex-container / u-flex
     - flex-dir-column
     - flex-dir-column large-flex-dir-row (responsive)
     - flex-dir-column-reverse
@@ -31,10 +31,6 @@
     - align-bottom
     - align-stretch
 */
-
-.u-flex {
-  display: flex;
-}
 
 .u-flex-wrap,
 .flex-wrap {
