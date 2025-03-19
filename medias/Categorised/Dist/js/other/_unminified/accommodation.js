@@ -104,7 +104,7 @@ async function initMap() {
   const elMap = document.getElementById("map");
   const elMode = document.getElementById("travelmode");
   const start = elMap.dataset.start;
-  const campusCentralEnd = "56.145922,-3.920283";
+  const campusCentralEnd = "56.14680729752698,-3.919866552957819";
   const intoEnd = "56.14463111249244,-3.9212629038270252";
 
   const endCoords = campusCentralEnd.split(",");
