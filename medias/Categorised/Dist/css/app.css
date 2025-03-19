@@ -6627,72 +6627,70 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
 /*
       Mobile first
 */
-.c-course-search-widget__form {
-  margin: 0; }
-  .c-course-search-widget__form .c-course-search-widget__search-input {
+.c-course-search-widget__search-input {
+  border: none;
+  border-bottom: 5px solid #cdcdcd;
+  box-shadow: none;
+  font-size: 1.3125rem;
+  height: 100%;
+  margin: 0;
+  background-color: #fff;
+  background-image: url('<t4 type="media" id="163605" formatter="path/*"/>');
+  background-repeat: no-repeat;
+  background-position: 5px 17px;
+  background-size: 20px;
+  padding: 7px 0 7px 35px;
+  transition: border-bottom 0.3s ease-in-out; }
+  .c-course-search-widget__search-input[type="search"]:focus {
     border: none;
-    border-bottom: 5px solid #cdcdcd;
-    box-shadow: none;
+    border-bottom: 5px solid #77bf22;
+    background-color: #fff; }
+  .c-course-search-widget__search-input:-ms-input-placeholder {
+    color: #006938;
+    font-family: "FSMaja", serif;
+    font-weight: 300;
     font-size: 1.3125rem;
-    height: 100%;
-    margin: 0;
-    background-color: #fff;
-    background-image: url('<t4 type="media" id="163605" formatter="path/*"/>');
-    background-repeat: no-repeat;
-    background-position: 5px 17px;
-    background-size: 20px;
-    padding: 7px 0 7px 35px;
-    transition: border-bottom 0.3s ease-in-out; }
-    .c-course-search-widget__form .c-course-search-widget__search-input[type="search"]:focus {
-      border: none;
-      border-bottom: 5px solid #77bf22;
-      background-color: #fff; }
-    .c-course-search-widget__form .c-course-search-widget__search-input:-ms-input-placeholder {
-      color: #006938;
-      font-family: "FSMaja", serif;
-      font-weight: 300;
-      font-size: 1.3125rem;
-      -ms-transition: color 0.3s ease-in-out;
-      transition: color 0.3s ease-in-out; }
-    .c-course-search-widget__form .c-course-search-widget__search-input::placeholder {
-      color: #006938;
-      font-family: "FSMaja", serif;
-      font-weight: 300;
-      font-size: 1.3125rem;
-      transition: color 0.3s ease-in-out; }
-    .c-course-search-widget__form .c-course-search-widget__search-input[type="search"]:focus:-ms-input-placeholder {
-      color: #cdcdcd; }
-    .c-course-search-widget__form .c-course-search-widget__search-input[type="search"]:focus::placeholder {
-      color: #cdcdcd; }
+    -ms-transition: color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out; }
+  .c-course-search-widget__search-input::placeholder {
+    color: #006938;
+    font-family: "FSMaja", serif;
+    font-weight: 300;
+    font-size: 1.3125rem;
+    transition: color 0.3s ease-in-out; }
+  .c-course-search-widget__search-input[type="search"]:focus:-ms-input-placeholder {
+    color: #cdcdcd; }
+  .c-course-search-widget__search-input[type="search"]:focus::placeholder {
+    color: #cdcdcd; }
 
 /* 
     Medium Up 
 */
 @media screen and (min-width: 40em) {
-  .c-course-search-widget__form .c-course-search-widget__search-input {
+  .c-course-search-widget__search-input {
     margin: 0 45px 0 0;
     font-size: 1.688rem;
     padding: 12px 0 12px 45px;
     background-size: 27px;
     background-position-y: 22px;
     max-width: 98%; }
-  .c-course-search-widget__form .c-course-search-widget__search-input:-ms-input-placeholder {
+  .c-course-search-widget__search-input:-ms-input-placeholder {
     font-size: 1.688rem; }
-  .c-course-search-widget__form .c-course-search-widget__search-input::placeholder {
+  .c-course-search-widget__search-input::placeholder {
     font-size: 1.688rem; } }
 
 /* 
     Large Up 
 */
 @media screen and (min-width: 64em) {
-  .c-course-search-widget__form .c-course-search-widget__search-input {
+  .c-course-search-widget__search-input {
     margin: 0 45px 0 0;
     font-size: 1.813rem;
     padding: 13px 0 13px 45px;
     background-position-y: 27px; }
-  .c-course-search-widget__form .c-course-search-widget__search-input:-ms-input-placeholder {
+  .c-course-search-widget__search-input:-ms-input-placeholder {
     font-size: 1.813rem; }
-  .c-course-search-widget__form .c-course-search-widget__search-input::placeholder {
+  .c-course-search-widget__search-input::placeholder {
     font-size: 1.813rem; } }
 
 /* 
@@ -6729,14 +6727,18 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
 
 /*
     New GRID version
-*/
+
 @media screen and (min-width: 40rem) {
   .c-course-search-widget__form[class*="u-grid"] {
     grid-template-columns: 3fr 1fr;
-    gap: 1rem; }
-    .c-course-search-widget__form[class*="u-grid"] button {
-      grid-row: span 2; } }
+    gap: 1rem;
 
+    button {
+      grid-row: span 2;
+    }
+  }
+}
+*/
 /*
 	Widget used on homepage etc
 */
