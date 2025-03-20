@@ -9,19 +9,26 @@
   /* 
     NODES
   */
-  const eventspublic = stir.node("#eventspublic");
-  const eventsstaff = stir.node("#eventsstaff");
-  const eventsarchive = stir.node("#eventsarchive");
-  const eventspromo = stir.node("#eventspromo");
-  const eventspublicfilters = stir.node("#eventspublicfilters");
-  const eventsstafffilters = stir.node("#eventsstafffilters");
-  const eventsarchivefilters = stir.node("#eventsarchivefilters");
 
-  const eventsPublicTab = stir.node("#eventspublictab");
-  const eventsStaffTab = stir.node("#eventsstafftab");
-  const eventsArchiveTab = stir.node("#eventsarchivetab");
-
-  const stirTabs = stir.nodes(".stir-tabs__tab");
+  const DOM = {
+    eventsPublic: stir.node("#eventspublic"),
+    eventsStaff: stir.node("#eventsstaff"),
+    eventsArt: stir.node("#eventsart"),
+    eventsWebinars: stir.node("#eventswebinars"),
+    eventsArchive: stir.node("#eventsarchive"),
+    eventsPromo: stir.node("#eventspromo"),
+    eventsPublicFilters: stir.node("#eventspublicfilters"),
+    eventsStaffFilters: stir.node("#eventsstafffilters"),
+    eventsArtFilters: stir.node("#eventsartfilters"),
+    eventsWebinarsFilters: stir.node("#eventswebinarsfilters"),
+    eventsArchiveFilters: stir.node("#eventsarchivefilters"),
+    eventsPublicTab: stir.node("#eventspublictab"),
+    eventsStaffTab: stir.node("#eventsstafftab"),
+    eventsArtTab: stir.node("#eventsarttab"),
+    eventsWebinarsTab: stir.node("#eventswebinarstab"),
+    eventsArchiveTab: stir.node("#eventsarchivetab"),
+    stirTabs: stir.nodes(".stir-tabs__tab"),
+  };
 
   /* 
     |
@@ -146,7 +153,7 @@
             </div>`;
   });
 
-  const renderEventsPromo = stir.curry((seriesData, item) => {
+  const rendereventsPromo = stir.curry((seriesData, item) => {
     const cookieType = "event";
     const cookie = stir.favourites && stir.favourites.getFav(item.sid, cookieType);
     return `
@@ -188,9 +195,7 @@
   };
 
   /*
-    |
-    |   HELPERS
-    |
+       HELPERS
     */
 
   const setDOMContent = stir.curry((node, html) => {
@@ -203,20 +208,28 @@
     return elem;
   });
 
-  const setDOMPromo = setDOMContent(eventspromo);
-
   const getNow = () => {
     let yourDate = new Date();
     return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
   };
 
-  const isPublic = (item) => item.audience.includes("Public");
+  const isPublic = (item) => item.audience.includes("Public") && !item.tags.includes("Art Collection") && !item.type.includes("Webinar");
 
-  const isStaffStudent = (item) => item.audience.includes("Staff") || item.audience.includes("Student");
+  const isStaffOrStudent = (item) => item.audience.includes("Staff") || item.audience.includes("Student");
+
+  const isStaffStudent = (item) => isStaffOrStudent(item) && !item.audience.includes("Public") && !item.tags.includes("Art Collection");
 
   const isPublicFilter = stir.filter(isPublic);
 
   const isStaffFilter = stir.filter(isStaffStudent);
+
+  const isArt = (item) => item.tags && item.tags.includes("Art Collection");
+
+  const isArtFilter = stir.filter(isArt);
+
+  const isWebinar = (item) => item.type && item.type.includes("Webinar");
+
+  const isWebinarFilter = stir.filter(isWebinar);
 
   const isPassed = (item) => Number(item.endInt) < getNow() && item.archive.length && !item.hideFromFeed.length;
 
@@ -242,7 +255,20 @@
 
   const sortByStartDateDesc = (a, b) => Number(b.startInt) - Number(a.startInt);
 
-  const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
+  //const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
+
+  /**
+   * Custom sort function that prioritizes pinned items then sorts by date
+   * @param {Object} a - First event item
+   * @param {Object} b - Second event item
+   * @returns {number} Sort order (-1, 0, 1)
+   */
+  const sortByPinAndDate = (a, b) => {
+    if (a.pin !== b.pin) return a.pin - b.pin;
+
+    // If pin status is the same, sort by date
+    return Number(a.startInt) - Number(b.startInt);
+  };
 
   const hasRecording = stir.filter((item) => item.recording);
 
@@ -275,22 +301,32 @@
   };
 
   /* 
-    | 
-    |    DATE HELPERS
-    |
+      DATE HELPERS
     */
 
-  /* 
-        inDateRange : Returns a boolean
-    */
+  /**
+   * Checks if a specific date exists within an array of dates
+   * @param {string[]} filterRange - Array of date strings in ISO format (YYYY-MM-DD)
+   * @param {string} date - Single date string to check against the range
+   * @returns {boolean} Returns true if the date exists in the filterRange, false otherwise
+   * @example
+   * inDateRange(['2023-07-24', '2023-07-25'], '2023-07-24') // returns true
+   * inDateRange(['2023-07-24', '2023-07-25'], '2023-07-26') // returns false
+   */
   const inDateRange = stir.curry((filterRange, date) => {
     const matches = filterRange.filter((day) => day === date);
     return matches.length ? true : false; // Only need one match
   });
 
-  /* 
-        getDaysArray : Returns an array of date strings eg 2023-07-24
-    */
+  /**
+   * Generates an array of consecutive dates between two dates as ISO strings
+   * @param {string} s - Start date in ISO format (YYYY-MM-DD)
+   * @param {string} e - End date in ISO format (YYYY-MM-DD)
+   * @returns {string[]} Array of dates as ISO strings (YYYY-MM-DD)
+   * @example
+   * getDaysArray('2023-07-24', '2023-07-26')
+   * // returns ['2023-07-24', '2023-07-25', '2023-07-26']
+   */
   const getDaysArray = (s, e) => {
     let a = [];
 
@@ -300,9 +336,15 @@
     return a;
   };
 
-  /* 
-        getThisWeekStartEnds : Returns an object with start & end dates eg 2023-07-24, 2023-07-30 
-    */
+  /**
+   * Gets the start and end dates for the current week
+   * @returns {Object} Object containing start and end dates
+   * @property {string} start - First day of week in ISO format
+   * @property {string} end - Last day of week in ISO format
+   * @example
+   * getThisWeekStartEnds()
+   * // returns { start: '2023-07-24', end: '2023-07-30' }
+   */
   const getThisWeekStartEnds = () => {
     const date = new Date();
     const first = new Date(date.setDate(date.getDate() + ((0 + (0 - date.getDay())) % 7)));
@@ -311,9 +353,15 @@
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
-  /* 
-        getNextWeekStartEnds : Returns an object with start & end dates eg 2023-07-24, 2023-07-30
-    */
+  /**
+   * Gets the start and end dates for next week
+   * @returns {Object} Object containing start and end dates
+   * @property {string} start - First day of next week in ISO format
+   * @property {string} end - Last day of next week in ISO format
+   * @example
+   * getNextWeekStartEnds()
+   * // returns { start: '2023-07-31', end: '2023-08-06' }
+   */
   const getNextWeekStartEnds = () => {
     const date = new Date();
     const first = new Date(date.setDate(date.getDate() + ((0 + (7 - date.getDay())) % 7)));
@@ -322,9 +370,15 @@
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
-  /* 
-        getThisMonthStartEnds : Returns an object with start & end dates eg 2023-04-01, 2023-04-30 
-    */
+  /**
+   * Gets the start and end dates for current month
+   * @returns {Object} Object containing start and end dates
+   * @property {string} start - First day of month in ISO format
+   * @property {string} end - Last day of month in ISO format
+   * @example
+   * getThisMonthStartEnds()
+   * // returns { start: '2023-07-01', end: '2023-07-31' }
+   */
   const getThisMonthStartEnds = () => {
     const date = new Date();
     const first = new Date(date.getFullYear(), date.getMonth(), 2);
@@ -333,9 +387,15 @@
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
-  /* 
-        getNextMonthStartEnds : Returns an object with start & end dates eg 2023-04-01, 2023-04-30 
-    */
+  /**
+   * Gets the start and end dates for next month
+   * @returns {Object} Object containing start and end dates
+   * @property {string} start - First day of next month in ISO format
+   * @property {string} end - Last day of next month in ISO format
+   * @example
+   * getNextMonthStartEnds()
+   * // returns { start: '2023-08-01', end: '2023-08-31' }
+   */
   const getNextMonthStartEnds = () => {
     const date = new Date();
     const first = new Date(date.getFullYear(), date.getMonth() + 1, 2);
@@ -344,9 +404,14 @@
     return { start: first.toISOString().split("T")[0], end: last.toISOString().split("T")[0] };
   };
 
-  /* 
-        getFilterRange : Returns the correct array of dates [2023-07-24, 2023-07-24]
-    */
+  /**
+   * Gets a date range array based on the specified time period
+   * @param {string} rangeWanted - Time period ('thisweek'|'nextweek'|'thismonth'|'nextmonth')
+   * @returns {string[]|null} Array of ISO date strings or null if invalid range
+   * @example
+   * getFilterRange('thisweek')
+   * // returns ['2023-07-24', '2023-07-25', ..., '2023-07-30']
+   */
   const getFilterRange = (rangeWanted) => {
     if (rangeWanted === "thisweek") return getDaysArray(getThisWeekStartEnds().start, getThisWeekStartEnds().end);
 
@@ -359,9 +424,16 @@
     return null;
   };
 
-  /* 
-        inRange : Returns a boolean
-    */
+  /**
+   * Checks if an item's date range overlaps with a given filter range
+   * @param {string[]} range - Array of date strings to check against
+   * @param {Object} item - Event item with start and end dates
+   * @returns {boolean} True if dates overlap, false otherwise
+   * @example
+   * inRange(['2023-07-24', '2023-07-25'],
+   *         {start: '2023-07-24', end: '2023-07-26'})
+   * // returns true
+   */
   const inRange = stir.curry((range, item) => {
     const itemRange = getDaysArray(item.start, item.end);
 
@@ -369,9 +441,22 @@
     return stir.any((item) => item, ranges);
   });
 
-  /* 
-        tags : Returns a boolean
-    */
+  /**
+   * Filters an event item based on whether it contains all specified tags
+   * @param {string} tags_ - Comma-separated string of tags to filter by (e.g. "tag1, tag2")
+   * @param {Object} item - Event item object containing tags property
+   * @returns {Object|undefined} Returns the item if all tags match, undefined otherwise
+   * @description
+   * This curried function:
+   * 1. Splits the input tags string into an array
+   * 2. Returns the item if no tags are specified
+   * 3. Splits the item's tags into an array
+   * 4. Checks if all input tags exist in the item's tags
+   * 5. Returns the item only if all tags match
+   * @example
+   * filterByTag("Workshop, Online")({ tags: "Workshop, Online, Free" }) // returns item
+   * filterByTag("Workshop")({ tags: "Conference, Online" }) // returns undefined
+   */
   const filterByTag = stir.curry((tags_, item) => {
     const isTrue = (bol) => bol;
     const tags = tags_.split(", ");
@@ -394,7 +479,15 @@
   |  CONTROLLERS
   |
   */
-  const doPublicEvents = (rangeWanted, initData) => {
+
+  /**
+   * Handles display of upcoming events with filtering, pagination and rendering
+   * @param {string} rangeWanted - Time period filter ('thisweek'|'nextweek'|'thismonth'|'nextmonth'|'all')
+   * @param {HTMLElement} node - DOM element to render events into
+   * @param {Function} filter - Filter function to apply to events (e.g. isPublicFilter, isStaffFilter)
+   * @param {Array} initData - Initial array of event data objects
+   */
+  function doUpcomingEvents(rangeWanted, node, filter, initData) {
     const filterRange = getFilterRange(rangeWanted);
     const page = Number(QueryParams.get("page")) || 1;
     const start = ITEMS_PER_PAGE * (page - 1);
@@ -403,70 +496,38 @@
     const seriesData = stir.compose(isSeriesFilter)(initData);
     const renderEventsMapper = stir.map(renderEvent(seriesData));
 
-    const setDOMPublic = page === 1 ? setDOMContent(eventspublic) : appendDOMContent(eventspublic);
+    const setDOMPublic = page === 1 ? setDOMContent(node) : appendDOMContent(node);
 
     const pageFilterCurry = stir.filter((item, index) => {
       if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
     });
 
     if (!filterRange) {
-      const dataAll1 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(initData);
+      console.log("sorting");
+      const dataAll1 = stir.compose(stir.sort(sortByPinAndDate), filter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(initData);
       const dataAll1b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll1);
       const noOfResults = dataAll1.length;
 
       dataAll1.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll1b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
-    } else {
-      const inRangeCurry = inRange(filterRange);
-      const dataDateFiltered = stir.filter(inRangeCurry, initData);
-
-      const dataAll2 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isPublicFilter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(dataDateFiltered);
-      const dataAll2b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll2);
-      const noOfResults = dataAll2.length;
-
-      dataAll2.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll2b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
+      return;
     }
-  };
 
-  /* 
-  |  doStaffEvents
-  */
-  const doStaffEvents = (rangeWanted, initData) => {
-    const filterRange = getFilterRange(rangeWanted);
-    const page = Number(QueryParams.get("page")) || 1;
-    const start = ITEMS_PER_PAGE * (page - 1);
-    const end = start + ITEMS_PER_PAGE;
+    const inRangeCurry = inRange(filterRange);
+    const dataDateFiltered = stir.filter(inRangeCurry, initData);
 
-    const seriesData = stir.compose(isSeriesFilter)(initData);
-    const renderEventsMapper = stir.map(renderEvent(seriesData));
+    const dataAll2 = stir.compose(stir.sort(sortByPinAndDate), filter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(dataDateFiltered);
+    const dataAll2b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll2);
+    const noOfResults = dataAll2.length;
 
-    const setDOMStaff = page === 1 ? setDOMContent(eventsstaff) : appendDOMContent(eventsstaff);
+    dataAll2.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll2b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
+  }
 
-    const pageFilterCurry = stir.filter((item, index) => {
-      if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
-    });
-
-    if (!filterRange) {
-      const dataAll1 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(initData);
-      const dataAll1b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll1);
-      const noOfResults = dataAll1.length;
-
-      dataAll1.length ? setDOMStaff(renderPageMeta(start, end, noOfResults) + dataAll1b + renderPaginationBtn(end, noOfResults)) : setDOMStaff(renderNoData("No events found. Try the public events tab."));
-    } else {
-      const inRangeCurry = inRange(filterRange);
-      const dataDateFiltered = stir.filter(inRangeCurry, initData);
-
-      const dataAll2 = stir.compose(stir.sort(sortByPin), stir.sort(sortByStartDate), isStaffFilter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(dataDateFiltered);
-      const dataAll2b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll2);
-      const noOfResults = dataAll2.length;
-
-      dataAll2.length ? setDOMStaff(renderPageMeta(start, end, noOfResults) + dataAll2b + renderPaginationBtn(end, noOfResults)) : setDOMStaff(renderNoData("No events found. Try the public events tab."));
-    }
-  };
-
-  /* 
-  |  doArchiveEvents
-  */
-  const doArchiveEvents = (target, initData) => {
+  /**
+   * Handles display of archived events with filtering, pagination and rendering
+   * @param {string} rangeWanted - Time period filter ('thisweek'|'nextweek'|'thismonth'|'nextmonth'|'all')
+   * @param {Array} initData - Initial array of event data objects
+   */
+  function doArchiveEvents(target, initData) {
     const page = Number(QueryParams.get("page")) || 1;
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
@@ -474,7 +535,7 @@
     const seriesData = stir.compose(isSeriesFilter)(initData);
     const renderArchiveEventsMapper = stir.map(renderArchiveEvent(seriesData));
 
-    const setDOMArchive = page === 1 ? setDOMContent(eventsarchive) : appendDOMContent(eventsarchive);
+    const setDOMArchive = page === 1 ? setDOMContent(DOM.eventsArchive) : appendDOMContent(DOM.eventsArchive);
 
     const pageFilterCurry = stir.filter((item, index) => {
       if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
@@ -511,14 +572,31 @@
 
       htmlStaff.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + htmlStaffb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
     }
-  };
+  }
 
-  const doPromo = (initData) => {
+  /**
+   * Renders featured/promotional event at the top of the events listing
+   * @param {Array} initData - Array of event data objects to filter and render
+   * @description
+   * This function:
+   * 1. Filters the events data to find series events
+   * 2. Creates a curried version of the promo event renderer
+   * 3. Filters for promotional events that are:
+   *    - Upcoming
+   *    - Match any specified tags
+   *    - Marked as promotional (eventPromo flag)
+   * 4. Takes the first promotional event found
+   * 5. Renders it into the promo section DOM element
+   * @example
+   * doPromo(eventsData);
+   */
+  function doPromo(initData) {
     const seriesData = stir.filter(isSeriesFilter, initData);
-    const renderEventsPromoCurry = renderEventsPromo(seriesData);
+    const rendereventsPromoCurry = rendereventsPromo(seriesData);
 
-    stir.compose(setDOMPromo, joiner, stir.map(renderEventsPromoCurry), limitToOne, isPromoFilter, stir.sort(sortByStartDate), filterByTagCurry, isUpcomingFilter)(initData);
-  };
+    const setDOMPromo = setDOMContent(DOM.eventsPromo);
+    stir.compose(setDOMPromo, joiner, stir.map(rendereventsPromoCurry), limitToOne, isPromoFilter, stir.sort(sortByStartDate), filterByTagCurry, isUpcomingFilter)(initData);
+  }
 
   /*
     | 
@@ -526,25 +604,33 @@
     |
     */
 
-  setDOMContent(eventspublic, "");
-  setDOMContent(eventsstaff, "");
+  setDOMContent(DOM.eventsPublic, "");
+  setDOMContent(DOM.eventsStaff, "");
+  setDOMContent(DOM.eventsArt, "");
+  setDOMContent(DOM.eventsWebinars, "");
 
-  eventspublicfilters.querySelector("input[type=radio]").checked = true;
-  eventsstafffilters.querySelector("input[type=radio]").checked = true;
-  eventsarchivefilters.querySelector("input[type=radio]").checked = true;
+  DOM.eventsPublicFilters.querySelector("input[type=radio]").checked = true;
+  DOM.eventsStaffFilters.querySelector("input[type=radio]").checked = true;
+  DOM.eventsArchiveFilters.querySelector("input[type=radio]").checked = true;
+  DOM.eventsArtFilters.querySelector("input[type=radio]").checked = true;
+  DOM.eventsWebinarsFilters.querySelector("input[type=radio]").checked = true;
 
   const url = getJSONUrl(UoS_env.name);
 
-  /* Fetch the data */
+  /* 
+    Fetch the data 
+  */
   stir.getJSON(url, (data) => {
     if (data.error) return;
 
     const initData = data.filter((item) => item.id);
     QueryParams.set("page", 1);
 
-    // Populate the 3 tabs + promo
-    doPublicEvents("all", initData);
-    doStaffEvents("all", initData);
+    doUpcomingEvents("all", DOM.eventsStaff, isStaffFilter, initData);
+    doUpcomingEvents("all", DOM.eventsPublic, isPublicFilter, initData);
+    doUpcomingEvents("all", DOM.eventsArt, isArtFilter, initData);
+    doUpcomingEvents("all", DOM.eventsWebinars, isWebinarFilter, initData);
+
     doArchiveEvents("all", initData);
     doPromo(initData);
 
@@ -585,54 +671,90 @@
       }
     };
 
+    /* 
+      Tab clicks 
+    */
     stir.each((item) => {
       item.addEventListener("click", (event) => {
         QueryParams.set("page", 1);
       });
-    }, stirTabs);
+    }, DOM.stirTabs);
 
-    eventsPublicTab.addEventListener("click", (event) => {
+    /* 
+      Filter clicks 
+    */
+    DOM.eventsPublicTab.addEventListener("click", (event) => {
       const page = Number(QueryParams.get("page")) || 1;
 
       if (event.target.type === "radio") {
         QueryParams.set("page", 1);
-        doPublicEvents(eventspublicfilters.querySelector("input:checked").value, initData);
+        doUpcomingEvents(DOM.eventsPublicFilters.querySelector("input:checked").value, DOM.eventsPublic, isPublicFilter, initData);
       }
 
       if (event.target.type === "submit") {
         setDOMContent(event.target.closest(".loadmorebtn"), "");
         QueryParams.set("page", page + 1);
-        doPublicEvents(eventspublicfilters.querySelector("input:checked").value, initData);
+        doUpcomingEvents(DOM.eventsPublicFilters.querySelector("input:checked").value, DOM.eventsPublic, isPublicFilter, initData);
       }
     });
 
-    eventsStaffTab.addEventListener("click", (event) => {
+    DOM.eventsArtTab.addEventListener("click", (event) => {
       const page = Number(QueryParams.get("page")) || 1;
 
       if (event.target.type === "radio") {
         QueryParams.set("page", 1);
-        doStaffEvents(eventsstafffilters.querySelector("input:checked").value, initData);
+        doUpcomingEvents(DOM.eventsArtFilters.querySelector("input:checked").value, DOM.eventsArt, isArtFilter, initData);
       }
 
       if (event.target.type === "submit") {
         setDOMContent(event.target.closest(".loadmorebtn"), "");
         QueryParams.set("page", page + 1);
-        doStaffEvents(eventsstafffilters.querySelector("input:checked").value, initData);
+        doUpcomingEvents(DOM.eventsArtFilters.querySelector("input:checked").value, DOM.eventsArt, isArtFilter, initData);
       }
     });
 
-    eventsArchiveTab.addEventListener("click", (event) => {
+    DOM.eventsWebinarsTab.addEventListener("click", (event) => {
       const page = Number(QueryParams.get("page")) || 1;
 
       if (event.target.type === "radio") {
         QueryParams.set("page", 1);
-        doArchiveEvents(eventsarchivefilters.querySelector("input:checked").value, initData);
+        doUpcomingEvents(DOM.eventsWebinarsFilters.querySelector("input:checked").value, DOM.eventsWebinars, isWebinarFilter, initData);
       }
 
       if (event.target.type === "submit") {
         setDOMContent(event.target.closest(".loadmorebtn"), "");
         QueryParams.set("page", page + 1);
-        doArchiveEvents(eventsarchivefilters.querySelector("input:checked").value, initData);
+        doUpcomingEvents(DOM.eventsWebinarsFilters.querySelector("input:checked").value, DOM.eventsWebinars, isWebinarFilter, initData);
+      }
+    });
+
+    DOM.eventsStaffTab.addEventListener("click", (event) => {
+      const page = Number(QueryParams.get("page")) || 1;
+
+      if (event.target.type === "radio") {
+        QueryParams.set("page", 1);
+        doUpcomingEvents(DOM.eventsStaffFilters.querySelector("input:checked").value, DOM.eventsStaff, isStaffFilter, initData);
+      }
+
+      if (event.target.type === "submit") {
+        setDOMContent(event.target.closest(".loadmorebtn"), "");
+        QueryParams.set("page", page + 1);
+        doUpcomingEvents(DOM.eventsStaffFilters.querySelector("input:checked").value, DOM.eventsStaff, isStaffFilter, initData);
+      }
+    });
+
+    DOM.eventsArchiveTab.addEventListener("click", (event) => {
+      const page = Number(QueryParams.get("page")) || 1;
+
+      if (event.target.type === "radio") {
+        QueryParams.set("page", 1);
+        doArchiveEvents(DOM.eventsArchiveFilters.querySelector("input:checked").value, initData);
+      }
+
+      if (event.target.type === "submit") {
+        setDOMContent(event.target.closest(".loadmorebtn"), "");
+        QueryParams.set("page", page + 1);
+        doArchiveEvents(DOM.eventsArchiveFilters.querySelector("input:checked").value, initData);
       }
     });
 
