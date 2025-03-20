@@ -16,7 +16,7 @@ const FavouritesArea = (scope, cookieType) => {
   };
 
   // DOM Elements
-  const DOM_ELEMENTS = {
+  const DOM = {
     resultsArea: resultsArea,
     sharedArea: scope.querySelector("[data-activity=shared]"),
     favBtnsNode: scope.querySelector("[data-area=favActionBtns]"),
@@ -129,9 +129,9 @@ const FavouritesArea = (scope, cookieType) => {
   }
 
   /**
-    Generates a URL based on the element type and metadata
-    @param {Object} element - The element containing metadata and URL information
-    @returns {string} The formatted URL with origin parameter
+   * Generates a URL based on the element type and metadata
+   * @param {Object} element - The element containing metadata and URL information
+   * @returns {string} The formatted URL with origin parameter
    */
   function getUrl(element) {
     const ORIGIN_PARAM = "?origin=favourites";
@@ -165,8 +165,6 @@ const FavouritesArea = (scope, cookieType) => {
       setDOMContent(domElements.latestArea, `<div class="cell">No favourites saved.</div>`);
       return;
     }
-
-    console.log("hi");
 
     const view = domElements.resultsArea.dataset.view || ``;
     const renderer = view === "micro" ? renderMicro(consts) : renderItem(consts);
@@ -361,7 +359,7 @@ const FavouritesArea = (scope, cookieType) => {
   }
 
   /* Run initialization */
-  init(CONSTS, DOM_ELEMENTS);
+  init(CONSTS, DOM);
 };
 
 /*
