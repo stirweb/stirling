@@ -61,7 +61,7 @@
             <strong >Date:</strong> ${item.stirStart} ${item.stirEnd !== item.stirStart ? ` - ` + item.stirEnd : ``} <br />
             <strong>Time:</strong> ${item.startTime} - ${item.endTime}
           </div>
-          <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${item.summary}<br /><strong>Location</strong><br />${item.location} </span></div>
+          <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${item.summary}<br /><strong>Location</strong><br />${item.location}.</span></div>
           <div><span class="u-inline-block u-mb-1">${renderAudience(item.audience)}</span></div>
           <div><span class="u-inline-block u-mb-1">${item.recording ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>` : ``}</span></div>
         </div>`;
