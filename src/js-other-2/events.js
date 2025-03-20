@@ -99,8 +99,7 @@
   const renderEvent = stir.curry((seriesData, item) => {
     const cookieType = "event";
     const cookie = stir.favourites && stir.favourites.getFav(item.sid, cookieType);
-    return `
-            <div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
+    return `<div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
                 ${renderLabelTab(item)} 
                 <div class="u-grid-medium-up u-gap-24 ${item.image ? "u-grid-cols-3_1" : ``} ">
                   <div class=" u-flex flex-dir-column u-gap u-mt-1" >
@@ -129,8 +128,7 @@
   });
 
   const renderArchiveEvent = stir.curry((seriesData, item) => {
-    return `
-            <div class="u-border-width-5 u-heritage-line-left  u-p-2 u-bg-white text-sm u-relative u-mb-2 " data-result-type="event"  >
+    return `<div class="u-border-width-5 u-heritage-line-left  u-p-2 u-bg-white text-sm u-relative u-mb-2 " data-result-type="event"  >
                 ${item.recording ? renderTab("Recording available") : ``} 
                 ${item.isSeries ? renderTab("Event series") : ``} 
                 
@@ -156,8 +154,7 @@
   const rendereventsPromo = stir.curry((seriesData, item) => {
     const cookieType = "event";
     const cookie = stir.favourites && stir.favourites.getFav(item.sid, cookieType);
-    return `
-          <div class="grid-x u-bg-grey u-mb-2 ">
+    return `<div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${item.image ? `medium-8` : ``} ">
                 <div class="u-relative u-p-2 u-flex flex-dir-column u-gap-8 u-h-full">
                 <div class="u-flex1">
@@ -271,6 +268,8 @@
   };
 
   const hasRecording = stir.filter((item) => item.recording);
+
+  const identity = (input) => input;
 
   const isSeriesFilter = stir.filter((item) => item.isSeries.length);
 
@@ -498,14 +497,15 @@
 
     const setDOMPublic = page === 1 ? setDOMContent(node) : appendDOMContent(node);
 
+    const sorter = stir.sort(sortByPinAndDate);
+
     const pageFilterCurry = stir.filter((item, index) => {
       if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
     });
 
     if (!filterRange) {
-      console.log("sorting");
-      const dataAll1 = stir.compose(stir.sort(sortByPinAndDate), filter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(initData);
-      const dataAll1b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll1);
+      const dataAll1 = stir.pipe(isUpcomingFilter, removeDupsbyPerf, filterByTagCurry, filter, sorter)(initData);
+      const dataAll1b = stir.pipe(pageFilterCurry, renderEventsMapper, joiner)(dataAll1);
       const noOfResults = dataAll1.length;
 
       dataAll1.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll1b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
@@ -515,8 +515,8 @@
     const inRangeCurry = inRange(filterRange);
     const dataDateFiltered = stir.filter(inRangeCurry, initData);
 
-    const dataAll2 = stir.compose(stir.sort(sortByPinAndDate), filter, filterByTagCurry, removeDupsbyPerf, isUpcomingFilter)(dataDateFiltered);
-    const dataAll2b = stir.compose(joiner, renderEventsMapper, pageFilterCurry)(dataAll2);
+    const dataAll2 = stir.pipe(isUpcomingFilter, removeDupsbyPerf, filterByTagCurry, filter, sorter)(dataDateFiltered);
+    const dataAll2b = stir.pipe(pageFilterCurry, renderEventsMapper, joiner)(dataAll2);
     const noOfResults = dataAll2.length;
 
     dataAll2.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll2b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
@@ -535,42 +535,34 @@
     const seriesData = stir.compose(isSeriesFilter)(initData);
     const renderArchiveEventsMapper = stir.map(renderArchiveEvent(seriesData));
 
+    const sorter = stir.sort(sortByStartDateDesc);
     const setDOMArchive = page === 1 ? setDOMContent(DOM.eventsArchive) : appendDOMContent(DOM.eventsArchive);
 
     const pageFilterCurry = stir.filter((item, index) => {
       if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
     });
 
-    if (target === "all") {
-      const dataAll = stir.compose(stir.sort(sortByStartDateDesc), filterByTagCurry, isPassedFilter)(initData);
-      const dataAllb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(dataAll);
+    // Helper function to process the data using a passed filter function
+    const processTargetData = (filterFn, data) => {
+      const dataAll = stir.pipe(isPassedFilter, filterByTagCurry, filterFn, sorter)(data);
+      const dataAllb = stir.pipe(pageFilterCurry, renderArchiveEventsMapper, joiner)(dataAll);
+
       const noOfResults = dataAll.length;
-
       dataAll.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + dataAllb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
-    }
+    };
 
+    // Process the data based on selected filter
+    if (target === "all") {
+      processTargetData(identity, initData);
+    }
     if (target === "recordings") {
-      const htmlRecordings = stir.compose(stir.sort(sortByStartDateDesc), hasRecording, filterByTagCurry, isPassedFilter)(initData);
-      const htmlRecordingsb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(htmlRecordings);
-      const noOfResults = htmlRecordings.length;
-
-      htmlRecordings.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + htmlRecordingsb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
+      processTargetData(hasRecording, initData);
     }
-
     if (target === "public") {
-      const htmlPublic = stir.compose(stir.sort(sortByStartDateDesc), isPublicFilter, filterByTagCurry, isPassedFilter)(initData);
-      const htmlPublicb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(htmlPublic);
-      const noOfResults = htmlPublic.length;
-
-      htmlPublic.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + htmlPublicb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
+      processTargetData(isPublicFilter, initData);
     }
-
     if (target === "staffstudent") {
-      const htmlStaff = stir.compose(stir.sort(sortByStartDateDesc), isStaffFilter, filterByTagCurry, isPassedFilter)(initData);
-      const htmlStaffb = stir.compose(joiner, renderArchiveEventsMapper, pageFilterCurry)(htmlStaff);
-      const noOfResults = htmlStaff.length;
-
-      htmlStaff.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + htmlStaffb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
+      processTargetData(isStaffFilter, initData);
     }
   }
 
@@ -592,10 +584,11 @@
    */
   function doPromo(initData) {
     const seriesData = stir.filter(isSeriesFilter, initData);
-    const rendereventsPromoCurry = rendereventsPromo(seriesData);
-
+    const rendereventsPromoCurry = stir.map(rendereventsPromo(seriesData));
+    const sorter = stir.sort(sortByStartDate);
     const setDOMPromo = setDOMContent(DOM.eventsPromo);
-    stir.compose(setDOMPromo, joiner, stir.map(rendereventsPromoCurry), limitToOne, isPromoFilter, stir.sort(sortByStartDate), filterByTagCurry, isUpcomingFilter)(initData);
+
+    stir.pipe(isUpcomingFilter, filterByTagCurry, sorter, isPromoFilter, limitToOne, rendereventsPromoCurry, joiner, setDOMPromo)(initData);
   }
 
   /*
@@ -640,6 +633,64 @@
     |
     */
 
+    /* 
+      Tab clicks 
+    */
+    stir.each((item) => {
+      item.addEventListener("click", (event) => {
+        QueryParams.set("page", 1);
+      });
+    }, DOM.stirTabs);
+
+    /*
+     * Filter clicks
+     */
+
+    /**
+     * Handle filter click events
+     * @param {HTMLElement} tabElement - DOM element for the tab
+     * @param {HTMLElement} filtersElement - DOM element containing the filters
+     * @param {HTMLElement} contentElement - DOM element where content should be displayed
+     * @param {Function} filterFunction - Filter function to use
+     * @param {Function} eventFunction - Event function to call (doUpcomingEvents or doArchiveEvents)
+     * @param {Object} initData - Initial data for the events
+     */
+    function handleFilterClick(tabElement, filtersElement, contentElement, filterFunction, eventFunction, initData) {
+      tabElement.addEventListener("click", (event) => {
+        const page = Number(QueryParams.get("page")) || 1;
+
+        if (event.target.type === "radio") {
+          QueryParams.set("page", 1);
+          eventFunction(filtersElement.querySelector("input:checked").value, contentElement, filterFunction, initData);
+        }
+
+        if (event.target.type === "submit") {
+          setDOMContent(event.target.closest(".loadmorebtn"), "");
+          QueryParams.set("page", page + 1);
+          eventFunction(filtersElement.querySelector("input:checked").value, contentElement, filterFunction, initData);
+        }
+      });
+    }
+
+    // Handle each tab with the appropriate parameters
+    handleFilterClick(DOM.eventsPublicTab, DOM.eventsPublicFilters, DOM.eventsPublic, isPublicFilter, doUpcomingEvents, initData);
+    handleFilterClick(DOM.eventsArtTab, DOM.eventsArtFilters, DOM.eventsArt, isArtFilter, doUpcomingEvents, initData);
+    handleFilterClick(DOM.eventsWebinarsTab, DOM.eventsWebinarsFilters, DOM.eventsWebinars, isWebinarFilter, doUpcomingEvents, initData);
+    handleFilterClick(DOM.eventsStaffTab, DOM.eventsStaffFilters, DOM.eventsStaff, isStaffFilter, doUpcomingEvents, initData);
+
+    // Note that archive tab uses doArchiveEvents function instead
+    handleFilterClick(
+      DOM.eventsArchiveTab,
+      DOM.eventsArchiveFilters,
+      null, // Content element not needed for archive events
+      null, // Filter function not needed for archive events
+      (filterValue, _, __, initData) => doArchiveEvents(filterValue, initData), // Adapter function
+      initData
+    );
+
+    /* 
+       Handle Favourites
+    */
     const updateFavouriteBtn = (id) => {
       const cookie = stir.favourites.getFav(id, "event");
       const node = stir.node("#favbtns" + id);
@@ -647,9 +698,6 @@
       if (node) setDOMContent(node)(renderFavBtns("true", cookie, id));
     };
 
-    /* 
-          handleFavouriteBtnClick 
-      */
     const handleFavouriteBtnClick = () => (event) => {
       const cookieType = "event";
       const target = event.target.closest("button");
@@ -670,93 +718,6 @@
         }
       }
     };
-
-    /* 
-      Tab clicks 
-    */
-    stir.each((item) => {
-      item.addEventListener("click", (event) => {
-        QueryParams.set("page", 1);
-      });
-    }, DOM.stirTabs);
-
-    /* 
-      Filter clicks 
-    */
-    DOM.eventsPublicTab.addEventListener("click", (event) => {
-      const page = Number(QueryParams.get("page")) || 1;
-
-      if (event.target.type === "radio") {
-        QueryParams.set("page", 1);
-        doUpcomingEvents(DOM.eventsPublicFilters.querySelector("input:checked").value, DOM.eventsPublic, isPublicFilter, initData);
-      }
-
-      if (event.target.type === "submit") {
-        setDOMContent(event.target.closest(".loadmorebtn"), "");
-        QueryParams.set("page", page + 1);
-        doUpcomingEvents(DOM.eventsPublicFilters.querySelector("input:checked").value, DOM.eventsPublic, isPublicFilter, initData);
-      }
-    });
-
-    DOM.eventsArtTab.addEventListener("click", (event) => {
-      const page = Number(QueryParams.get("page")) || 1;
-
-      if (event.target.type === "radio") {
-        QueryParams.set("page", 1);
-        doUpcomingEvents(DOM.eventsArtFilters.querySelector("input:checked").value, DOM.eventsArt, isArtFilter, initData);
-      }
-
-      if (event.target.type === "submit") {
-        setDOMContent(event.target.closest(".loadmorebtn"), "");
-        QueryParams.set("page", page + 1);
-        doUpcomingEvents(DOM.eventsArtFilters.querySelector("input:checked").value, DOM.eventsArt, isArtFilter, initData);
-      }
-    });
-
-    DOM.eventsWebinarsTab.addEventListener("click", (event) => {
-      const page = Number(QueryParams.get("page")) || 1;
-
-      if (event.target.type === "radio") {
-        QueryParams.set("page", 1);
-        doUpcomingEvents(DOM.eventsWebinarsFilters.querySelector("input:checked").value, DOM.eventsWebinars, isWebinarFilter, initData);
-      }
-
-      if (event.target.type === "submit") {
-        setDOMContent(event.target.closest(".loadmorebtn"), "");
-        QueryParams.set("page", page + 1);
-        doUpcomingEvents(DOM.eventsWebinarsFilters.querySelector("input:checked").value, DOM.eventsWebinars, isWebinarFilter, initData);
-      }
-    });
-
-    DOM.eventsStaffTab.addEventListener("click", (event) => {
-      const page = Number(QueryParams.get("page")) || 1;
-
-      if (event.target.type === "radio") {
-        QueryParams.set("page", 1);
-        doUpcomingEvents(DOM.eventsStaffFilters.querySelector("input:checked").value, DOM.eventsStaff, isStaffFilter, initData);
-      }
-
-      if (event.target.type === "submit") {
-        setDOMContent(event.target.closest(".loadmorebtn"), "");
-        QueryParams.set("page", page + 1);
-        doUpcomingEvents(DOM.eventsStaffFilters.querySelector("input:checked").value, DOM.eventsStaff, isStaffFilter, initData);
-      }
-    });
-
-    DOM.eventsArchiveTab.addEventListener("click", (event) => {
-      const page = Number(QueryParams.get("page")) || 1;
-
-      if (event.target.type === "radio") {
-        QueryParams.set("page", 1);
-        doArchiveEvents(DOM.eventsArchiveFilters.querySelector("input:checked").value, initData);
-      }
-
-      if (event.target.type === "submit") {
-        setDOMContent(event.target.closest(".loadmorebtn"), "");
-        QueryParams.set("page", page + 1);
-        doArchiveEvents(DOM.eventsArchiveFilters.querySelector("input:checked").value, initData);
-      }
-    });
 
     stir.node("main").addEventListener("click", handleFavouriteBtnClick());
   });
