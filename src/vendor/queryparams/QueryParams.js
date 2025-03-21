@@ -183,26 +183,38 @@ var QueryParams = (function () {
    */
   // TODO use document..search? instead of href
   function _remove(name, reload, url, replace, noencode) {
-    if (!url) url = window.location.href;
+    //if (!url) url = window.location.href;
 
 	/* old code here */
 	// var newUrl = _removeURLParameter(url, noencode? name : encodeURIComponent(name));
 	/* old code end */
 	
 	/* new code here */
-	var newUrl = url;
-	if(url.indexOf(name)>-1) {
-		newUrl = _removeURLParameter(url, name);
-	} else if (url.indexOf(encodeURIComponent(name))>-1) {
-		newUrl = _removeURLParameter(url, encodeURIComponent(name));
-	}
+//	var newUrl = url;
+//	if(url.indexOf(name)>-1) {
+//		newUrl = _removeURLParameter(url, name);
+//	} else if (url.indexOf(encodeURIComponent(name))>-1) {
+//		newUrl = _removeURLParameter(url, encodeURIComponent(name));
+//	}
+
+    var ooh = new URL(url||window.location);
+    var qsp = new URLSearchParams(ooh.search);
+    if(qsp.has(name)){
+      qsp.delete(name);
+      ooh.search = qsp.toString();
+
+      if(replace) {
+        _replaceStateHandler(ooh.href)
+      } else {
+        _pushStateHandler(ooh.href);
+      }
+
+      if (reload) {
+        window.location.href = document.location.href;
+      }
+    }
 	/* new code end */
 
-	if(newUrl!==url) replace ? _replaceStateHandler(newUrl): _pushStateHandler(newUrl);
-
-    if (reload) {
-      window.location.href = document.location.href;
-    }
   }
 
   return {
