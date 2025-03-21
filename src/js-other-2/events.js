@@ -1,7 +1,17 @@
 (function (scope) {
   if (!scope) return;
 
+  /**
+   * GLOBAL VARIABLES
+   */
+
   const ITEMS_PER_PAGE = 10;
+
+  const ART_TAG = "Art Collection";
+  const WEBINAR_TAG = "Webinar";
+  const PUBLIC_TAG = "Public";
+  const STAFF_TAG = "Staff";
+  const STUDENT_TAG = "Student";
 
   const tagsNode = stir.node("[data-tags]") || "";
   const TAGS = tagsNode ? tagsNode.dataset.tags : "";
@@ -47,7 +57,7 @@
   };
 
   const renderLabelTab = (item) => {
-    if (item.type === "Webinar") return renderTab("Webinar");
+    if (item.type === WEBINAR_TAG) return renderTab(WEBINAR_TAG);
     if (item.isSeries) return renderTab("Event series");
     return ``;
   };
@@ -65,9 +75,9 @@
   };
 
   const renderLink = (item) => {
-    if (!item.url) return `${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}`;
+    if (!item.url) return `${item.type === WEBINAR_TAG ? `Webinar: ` : ``}${item.title}`;
 
-    return ` <a href="${item.url}">${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}</a>`;
+    return ` <a href="${item.url}">${item.type === WEBINAR_TAG ? `Webinar: ` : ``}${item.title}</a>`;
   };
 
   const renderTimes = (item) => {
@@ -88,7 +98,7 @@
 
   const renderIconTag = (item) => {
     if (item.pin < 1) return `data-label-icon="pin"`;
-    if (item.type === "Webinar") return `data-label-icon="computer"`;
+    if (item.type === WEBINAR_TAG) return `data-label-icon="computer"`;
     if (item.isSeries) return `data-label-icon="startdates"`;
 
     return ``;
@@ -197,6 +207,14 @@
    *
    */
 
+  const getJSONUrl = (env) => {
+    if (env === "dev") return "../index.json";
+    if (env === "preview") return '<t4 type="navigation" id="5214" />'; // 5222 for limitrd archive
+    if (env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; // 5222 for limitrd archive
+
+    return `/data/events/revamp/json/index.json`; // live
+  };
+
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
@@ -207,32 +225,71 @@
     return elem;
   });
 
-  const getNow = () => {
-    let yourDate = new Date();
-    return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
+  const removeDuplicateObjectFromArray = stir.curry((key, array) => {
+    let check = {};
+    let res = [];
+    for (let i = 0; i < array.length; i++) {
+      if (!check[array[i][key]]) {
+        check[array[i][key]] = true;
+        res.push(array[i]);
+      }
+    }
+    return res;
+  });
+
+  /**
+   * Cleans a query parameter by removing non-alphanumeric characters (except hyphen and underscore)
+   * @param {string} param - The query parameter to clean
+   * @returns {string} The cleaned query parameter
+   */
+  const cleanQueryParam = (param) => {
+    if (typeof param !== "string") return "";
+    // Remove any non-alphanumeric characters except hyphen and underscore
+    return param.replace(/[^a-zA-Z0-9-_]/g, "");
   };
 
-  const isPublic = (item) => item.audience.includes("Public") && !item.tags.includes("Art Collection") && !item.type.includes("Webinar");
+  /**
+   * @namespace SafeQueryParams
+   * @description
+   * An object providing safe access to query parameters, ensuring that all values are cleaned to prevent XSS attacks.
+   * It extends the original `QueryParams` object with a `cleanQueryParam` function to sanitize the values.
+   * @property {function} get - A function that retrieves a query parameter by key and cleans it.
+   * @property {function} set - A function that sets a query parameter by key, cleaning the value before setting it.
+   * @property {function} remove - A function that removes a query parameter by key.
+   */
+  const SafeQueryParams = {
+    get: (key) => cleanQueryParam(QueryParams.get(key)),
+    set: (key, value) => QueryParams.set(key, cleanQueryParam(value)),
+    remove: QueryParams.remove,
+  };
 
-  const isStaffOrStudent = (item) => item.audience.includes("Staff") || item.audience.includes("Student");
+  /**
+   *
+   *  FILTERS
+   *
+   */
 
-  const isStaffStudent = (item) => isStaffOrStudent(item) && !item.audience.includes("Public") && !item.tags.includes("Art Collection");
+  const isPublic = (item) => item.audience.includes(PUBLIC_TAG) && !item.tags.includes(ART_TAG) && !item.type.includes(WEBINAR_TAG);
+
+  const isStaffOrStudent = (item) => item.audience.includes(STAFF_TAG) || item.audience.includes(STUDENT_TAG);
+
+  const isStaffStudent = (item) => isStaffOrStudent(item) && !item.audience.includes(PUBLIC_TAG) && !item.tags.includes(ART_TAG);
 
   const isPublicFilter = stir.filter(isPublic);
 
   const isStaffFilter = stir.filter(isStaffStudent);
 
-  const isArt = (item) => item.tags && item.tags.includes("Art Collection");
+  const isArt = (item) => item.tags && item.tags.includes(ART_TAG);
 
   const isArtFilter = stir.filter(isArt);
 
-  const isWebinar = (item) => item.type && item.type.includes("Webinar");
+  const isWebinar = (item) => item.type && item.type.includes(WEBINAR_TAG);
 
   const isWebinarFilter = stir.filter(isWebinar);
 
-  const isPassed = (item) => Number(item.endInt) < getNow() && item.archive.length && !item.hideFromFeed.length;
+  const isPast = (item) => Number(item.endInt) < getNow() && item.archive.length && !item.hideFromFeed.length;
 
-  const isPassedFilter = stir.filter(isPassed);
+  const isPastFilter = stir.filter(isPast);
 
   const isUpcoming = (item) => {
     return Number(item.endInt) >= getNow() && !item.hideFromFeed.length;
@@ -250,6 +307,57 @@
     return index === 0;
   });
 
+  const hasRecording = stir.filter((item) => item.recording);
+
+  const identity = (input) => input;
+
+  const isSeriesFilter = stir.filter((item) => item.isSeries.length);
+
+  const paginationFilter = stir.curry((page, itemsPerPage, index) => {
+    const start = itemsPerPage * (page - 1);
+    const end = start + itemsPerPage;
+    return index >= start && index < end;
+  });
+
+  /**
+   * Filters an event item based on whether it contains all specified tags
+   * @param {string} tags_ - Comma-separated string of tags to filter by (e.g. "tag1, tag2")
+   * @param {Object} item - Event item object containing tags property
+   * @returns {Object|undefined} Returns the item if all tags match, undefined otherwise
+   * @description
+   * This curried function:
+   * 1. Splits the input tags string into an array
+   * 2. Returns the item if no tags are specified
+   * 3. Splits the item's tags into an array
+   * 4. Checks if all input tags exist in the item's tags
+   * 5. Returns the item only if all tags match
+   * @example
+   * filterByTag("Workshop, Online")({ tags: "Workshop, Online, Free" }) // returns item
+   * filterByTag("Workshop")({ tags: "Conference, Online" }) // returns undefined
+   */
+  const filterByTag = stir.curry((tags_, item) => {
+    const isTrue = (bol) => bol;
+    const tags = tags_.split(", ");
+
+    if (!tags && !tags.length) return item;
+    if (tags.length === 1 && tags[0] === "") return item;
+
+    const itemTags = item.tags.split(", ");
+    const matches = tags.map((ele) => itemTags.includes(ele));
+
+    if (stir.all(isTrue, matches)) return item;
+  });
+
+  const filterByTagCurry = stir.filter(filterByTag(TAGS));
+
+  const removeDupsbyPerf = removeDuplicateObjectFromArray("perfId");
+
+  /**
+   *
+   *  SORTERS
+   *
+   */
+
   const sortByStartDate = (a, b) => Number(a.startInt) - Number(b.startInt);
 
   const sortByStartDateDesc = (a, b) => Number(b.startInt) - Number(a.startInt);
@@ -265,43 +373,16 @@
     return Number(a.startInt) - Number(b.startInt); // If pin status is the same, sort by date
   };
 
-  const hasRecording = stir.filter((item) => item.recording);
-
-  const identity = (input) => input;
-
-  const isSeriesFilter = stir.filter((item) => item.isSeries.length);
-
-  const paginationFilter = stir.curry((page, itemsPerPage, index) => {
-    const start = itemsPerPage * (page - 1);
-    const end = start + itemsPerPage;
-    return index >= start && index < end;
-  });
-
-  const removeDuplicateObjectFromArray = stir.curry((key, array) => {
-    let check = {};
-    let res = [];
-    for (let i = 0; i < array.length; i++) {
-      if (!check[array[i][key]]) {
-        check[array[i][key]] = true;
-        res.push(array[i]);
-      }
-    }
-    return res;
-  });
-
-  const getJSONUrl = (env) => {
-    if (env === "dev") return "../index.json";
-    if (env === "preview") return '<t4 type="navigation" id="5214" />'; //5222 for limitrd archive
-    if (env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; //5222 for limitrd archive
-
-    return `/data/events/revamp/json/index.json`;
-  };
-
   /**
    *
    *  DATE HELPERS
    *
    */
+
+  const getNow = () => {
+    let yourDate = new Date();
+    return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
+  };
 
   /**
    * Checks if a specific date exists within an array of dates
@@ -441,65 +522,6 @@
   });
 
   /**
-   * Filters an event item based on whether it contains all specified tags
-   * @param {string} tags_ - Comma-separated string of tags to filter by (e.g. "tag1, tag2")
-   * @param {Object} item - Event item object containing tags property
-   * @returns {Object|undefined} Returns the item if all tags match, undefined otherwise
-   * @description
-   * This curried function:
-   * 1. Splits the input tags string into an array
-   * 2. Returns the item if no tags are specified
-   * 3. Splits the item's tags into an array
-   * 4. Checks if all input tags exist in the item's tags
-   * 5. Returns the item only if all tags match
-   * @example
-   * filterByTag("Workshop, Online")({ tags: "Workshop, Online, Free" }) // returns item
-   * filterByTag("Workshop")({ tags: "Conference, Online" }) // returns undefined
-   */
-  const filterByTag = stir.curry((tags_, item) => {
-    const isTrue = (bol) => bol;
-    const tags = tags_.split(", ");
-
-    if (!tags && !tags.length) return item;
-    if (tags.length === 1 && tags[0] === "") return item;
-
-    const itemTags = item.tags.split(", ");
-    const matches = tags.map((ele) => itemTags.includes(ele));
-
-    if (stir.all(isTrue, matches)) return item;
-  });
-
-  const filterByTagCurry = stir.filter(filterByTag(TAGS));
-
-  const removeDupsbyPerf = removeDuplicateObjectFromArray("perfId");
-
-  /**
-   * Cleans a query parameter by removing non-alphanumeric characters (except hyphen and underscore)
-   * @param {string} param - The query parameter to clean
-   * @returns {string} The cleaned query parameter
-   */
-  const cleanQueryParam = (param) => {
-    if (typeof param !== "string") return "";
-    // Remove any non-alphanumeric characters except hyphen and underscore
-    return param.replace(/[^a-zA-Z0-9-_]/g, "");
-  };
-
-  /**
-   * @namespace SafeQueryParams
-   * @description
-   * An object providing safe access to query parameters, ensuring that all values are cleaned to prevent XSS attacks.
-   * It extends the original `QueryParams` object with a `cleanQueryParam` function to sanitize the values.
-   * @property {function} get - A function that retrieves a query parameter by key and cleans it.
-   * @property {function} set - A function that sets a query parameter by key, cleaning the value before setting it.
-   * @property {function} remove - A function that removes a query parameter by key.
-   */
-  const SafeQueryParams = {
-    get: (key) => cleanQueryParam(QueryParams.get(key)),
-    set: (key, value) => QueryParams.set(key, cleanQueryParam(value)),
-    remove: QueryParams.remove,
-  };
-
-  /**
    *
    *  CONTROLLERS
    *
@@ -529,28 +551,36 @@
       if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
     });
 
-    if (!filterRange) {
-      const dataAll1 = stir.pipe(isUpcomingFilter, removeDupsbyPerf, filterByTagCurry, filter, sorter)(initData);
-      const dataAll1b = stir.pipe(pageFilterCurry, renderEventsMapper, joiner)(dataAll1);
-      const noOfResults = dataAll1.length;
+    /**
+     * Processes event data through filtering pipeline
+     * @param {Array} dataSource - The source data to process
+     * @returns {Array} Array containing the number of results and the rendered HTML
+     */
+    const processUpcomingEvents = (dataSource) => {
+      const dataAll = stir.pipe(isUpcomingFilter, removeDupsbyPerf, filterByTagCurry, filter, sorter)(dataSource);
+      const dataAllRendered = stir.pipe(pageFilterCurry, renderEventsMapper, joiner)(dataAll);
 
-      dataAll1.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll1b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
-      return;
+      return [dataAll.length, dataAllRendered];
+    };
+
+    let noOfResults, results;
+
+    if (!filterRange) {
+      [noOfResults, results] = processUpcomingEvents(initData);
     }
 
-    const inRangeCurry = inRange(filterRange);
-    const dataDateFiltered = stir.filter(inRangeCurry, initData);
+    if (filterRange) {
+      const inRangeCurry = inRange(filterRange);
+      const dataDateFiltered = stir.filter(inRangeCurry, initData);
+      [noOfResults, results] = processUpcomingEvents(dataDateFiltered);
+    }
 
-    const dataAll2 = stir.pipe(isUpcomingFilter, removeDupsbyPerf, filterByTagCurry, filter, sorter)(dataDateFiltered);
-    const dataAll2b = stir.pipe(pageFilterCurry, renderEventsMapper, joiner)(dataAll2);
-    const noOfResults = dataAll2.length;
-
-    dataAll2.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll2b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
+    noOfResults ? setDOMPublic(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
   }
 
   /**
    * Handles display of archived events with filtering, pagination and rendering
-   * @param {string} rangeWanted - Time period filter ('thisweek'|'nextweek'|'thismonth'|'nextmonth'|'all')
+   * @param {string} target - Filter target ('all'|'recordings'|'public'|'staffstudent')
    * @param {Array} initData - Initial array of event data objects
    */
   function doArchiveEvents(target, initData) {
@@ -568,28 +598,37 @@
       if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
     });
 
-    // Helper function to process the data using a passed filter function
-    const processTargetData = (filterFn, data) => {
-      const dataAll = stir.pipe(isPassedFilter, filterByTagCurry, filterFn, sorter)(data);
-      const dataAllb = stir.pipe(pageFilterCurry, renderArchiveEventsMapper, joiner)(dataAll);
+    /**
+     * Processes event data through filtering pipeline
+     * @param {Function} filterFn - Filter function to apply to events (e.g. isPublicFilter, isStaffFilter)
+     * @param {Array} dataSource - The source data to process
+     * @returns {Array} Array containing the number of results and the rendered HTML
+     */
+    const processArchiveEvents = (filterFn, initdata) => {
+      const dataAll = stir.pipe(isPastFilter, filterByTagCurry, filterFn, sorter)(initdata);
+      const dataAllRendered = stir.pipe(pageFilterCurry, renderArchiveEventsMapper, joiner)(dataAll);
 
-      const noOfResults = dataAll.length;
-      dataAll.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + dataAllb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
+      return [dataAll.length, dataAllRendered];
     };
 
     // Process the data based on selected filter
+    let noOfResults, results;
+
     if (target === "all") {
-      processTargetData(identity, initData);
+      [noOfResults, results] = processArchiveEvents(identity, initData);
     }
     if (target === "recordings") {
-      processTargetData(hasRecording, initData);
+      [noOfResults, results] = processArchiveEvents(hasRecording, initData);
     }
-    if (target === "public") {
-      processTargetData(isPublicFilter, initData);
+    if (target === PUBLIC_TAG) {
+      [noOfResults, results] = processArchiveEvents(isPublicFilter, initData);
     }
     if (target === "staffstudent") {
-      processTargetData(isStaffFilter, initData);
+      [noOfResults, results] = processArchiveEvents(isStaffFilter, initData);
     }
+
+    // Render the results data  or no results message
+    noOfResults ? setDOMArchive(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
   }
 
   /**
