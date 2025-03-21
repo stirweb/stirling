@@ -6,9 +6,9 @@
   const tagsNode = stir.node("[data-tags]") || "";
   const TAGS = tagsNode ? tagsNode.dataset.tags : "";
 
-  /* 
-    NODES
-  */
+  /**
+   * NODES
+   */
 
   const DOM = {
     eventsPublic: stir.node("#eventspublic"),
@@ -30,11 +30,11 @@
     stirTabs: stir.nodes(".stir-tabs__tab"),
   };
 
-  /* 
-    |
-    |   RENDERERS : Return a string of Html Code
-    |
-    */
+  /**
+   *
+   *   RENDERERS : Return a string of Html
+   *
+   */
 
   const renderImage = (image, alt) => {
     return `<div class="u-mt-1"><img src="${image}" width="275" height="275" alt="Image: ${alt}"></div>`;
@@ -191,9 +191,11 @@
     return start < 2 ? `` : `<div class="u-flex align-center u-mb-2">Showing ${start + 1}-${end > noOfResults ? noOfResults : end} of ${noOfResults} results</div>`;
   };
 
-  /*
-       HELPERS
-    */
+  /**
+   *
+   *  HELPERS
+   *
+   */
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
@@ -252,8 +254,6 @@
 
   const sortByStartDateDesc = (a, b) => Number(b.startInt) - Number(a.startInt);
 
-  //const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
-
   /**
    * Custom sort function that prioritizes pinned items then sorts by date
    * @param {Object} a - First event item
@@ -262,9 +262,7 @@
    */
   const sortByPinAndDate = (a, b) => {
     if (a.pin !== b.pin) return a.pin - b.pin;
-
-    // If pin status is the same, sort by date
-    return Number(a.startInt) - Number(b.startInt);
+    return Number(a.startInt) - Number(b.startInt); // If pin status is the same, sort by date
   };
 
   const hasRecording = stir.filter((item) => item.recording);
@@ -299,9 +297,11 @@
     return `/data/events/revamp/json/index.json`;
   };
 
-  /* 
-      DATE HELPERS
-    */
+  /**
+   *
+   *  DATE HELPERS
+   *
+   */
 
   /**
    * Checks if a specific date exists within an array of dates
@@ -473,11 +473,37 @@
 
   const removeDupsbyPerf = removeDuplicateObjectFromArray("perfId");
 
-  /* 
-  | 
-  |  CONTROLLERS
-  |
-  */
+  /**
+   * Cleans a query parameter by removing non-alphanumeric characters (except hyphen and underscore)
+   * @param {string} param - The query parameter to clean
+   * @returns {string} The cleaned query parameter
+   */
+  const cleanQueryParam = (param) => {
+    if (typeof param !== "string") return "";
+    // Remove any non-alphanumeric characters except hyphen and underscore
+    return param.replace(/[^a-zA-Z0-9-_]/g, "");
+  };
+
+  /**
+   * @namespace SafeQueryParams
+   * @description
+   * An object providing safe access to query parameters, ensuring that all values are cleaned to prevent XSS attacks.
+   * It extends the original `QueryParams` object with a `cleanQueryParam` function to sanitize the values.
+   * @property {function} get - A function that retrieves a query parameter by key and cleans it.
+   * @property {function} set - A function that sets a query parameter by key, cleaning the value before setting it.
+   * @property {function} remove - A function that removes a query parameter by key.
+   */
+  const SafeQueryParams = {
+    get: (key) => cleanQueryParam(QueryParams.get(key)),
+    set: (key, value) => QueryParams.set(key, cleanQueryParam(value)),
+    remove: QueryParams.remove,
+  };
+
+  /**
+   *
+   *  CONTROLLERS
+   *
+   */
 
   /**
    * Handles display of upcoming events with filtering, pagination and rendering
@@ -488,7 +514,7 @@
    */
   function doUpcomingEvents(rangeWanted, node, filter, initData) {
     const filterRange = getFilterRange(rangeWanted);
-    const page = Number(QueryParams.get("page")) || 1;
+    const page = Number(SafeQueryParams.get("page")) || 1;
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
 
@@ -528,7 +554,7 @@
    * @param {Array} initData - Initial array of event data objects
    */
   function doArchiveEvents(target, initData) {
-    const page = Number(QueryParams.get("page")) || 1;
+    const page = Number(SafeQueryParams.get("page")) || 1;
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
 
@@ -591,11 +617,11 @@
     stir.pipe(isUpcomingFilter, filterByTagCurry, sorter, isPromoFilter, limitToOne, rendereventsPromoCurry, joiner, setDOMPromo)(initData);
   }
 
-  /*
-    | 
-    |  ON LOAD
-    |
-    */
+  /**
+   *
+   *  ON LOAD EVENTS
+   *
+   */
 
   setDOMContent(DOM.eventsPublic, "");
   setDOMContent(DOM.eventsStaff, "");
@@ -610,14 +636,14 @@
 
   const url = getJSONUrl(UoS_env.name);
 
-  /* 
-    Fetch the data 
-  */
+  /**
+   * Fetch the data and set things off
+   */
   stir.getJSON(url, (data) => {
     if (data.error) return;
 
     const initData = data.filter((item) => item.id);
-    QueryParams.set("page", 1);
+    SafeQueryParams.set("page", "1");
 
     doUpcomingEvents("all", DOM.eventsStaff, isStaffFilter, initData);
     doUpcomingEvents("all", DOM.eventsPublic, isPublicFilter, initData);
@@ -627,22 +653,22 @@
     doArchiveEvents("all", initData);
     doPromo(initData);
 
-    /*
-    | 
-    |  CLICK EVENTS LISTENERS
-    |
-    */
+    /**
+     *
+     *  CLICK EVENTS LISTENERS
+     *
+     */
 
-    /* 
-      Tab clicks 
-    */
+    /*
+     * Tab clicks
+     */
     stir.each((item) => {
       item.addEventListener("click", (event) => {
-        QueryParams.set("page", 1);
+        SafeQueryParams.set("page", "1");
       });
     }, DOM.stirTabs);
 
-    /*
+    /**
      * Filter clicks
      */
 
@@ -657,16 +683,16 @@
      */
     function handleFilterClick(tabElement, filtersElement, contentElement, filterFunction, eventFunction, initData) {
       tabElement.addEventListener("click", (event) => {
-        const page = Number(QueryParams.get("page")) || 1;
+        const page = Number(SafeQueryParams.get("page")) || 1;
 
         if (event.target.type === "radio") {
-          QueryParams.set("page", 1);
+          SafeQueryParams.set("page", "1");
           eventFunction(filtersElement.querySelector("input:checked").value, contentElement, filterFunction, initData);
         }
 
         if (event.target.type === "submit") {
           setDOMContent(event.target.closest(".loadmorebtn"), "");
-          QueryParams.set("page", page + 1);
+          SafeQueryParams.set("page", String(page + 1));
           eventFunction(filtersElement.querySelector("input:checked").value, contentElement, filterFunction, initData);
         }
       });
@@ -688,9 +714,9 @@
       initData
     );
 
-    /* 
-       Handle Favourites
-    */
+    /**
+     * Handle Favourite Button clicks
+     */
     const updateFavouriteBtn = (id) => {
       const cookie = stir.favourites.getFav(id, "event");
       const node = stir.node("#favbtns" + id);
@@ -711,11 +737,6 @@
       if (target.dataset.action === "removefav") {
         stir.favourites.removeFromFavs(target.dataset.id);
         updateFavouriteBtn(target.dataset.id);
-
-        if (consts.activity === "managefavs") {
-          const node = stir.node("#fav-" + target.dataset.id);
-          if (node) setDOMContent(node)("");
-        }
       }
     };
 
