@@ -662,16 +662,16 @@
    *
    */
 
-  setDOMContent(DOM.eventsPublic, "");
-  setDOMContent(DOM.eventsStaff, "");
-  setDOMContent(DOM.eventsArt, "");
-  setDOMContent(DOM.eventsWebinars, "");
+  DOM.eventsPublic && setDOMContent(DOM.eventsPublic, "");
+  DOM.eventsStaff && setDOMContent(DOM.eventsStaff, "");
+  DOM.eventsArt && setDOMContent(DOM.eventsArt, "");
+  DOM.eventsWebinars && setDOMContent(DOM.eventsWebinars, "");
 
-  DOM.eventsPublicFilters.querySelector("input[type=radio]").checked = true;
-  DOM.eventsStaffFilters.querySelector("input[type=radio]").checked = true;
-  DOM.eventsArchiveFilters.querySelector("input[type=radio]").checked = true;
-  DOM.eventsArtFilters.querySelector("input[type=radio]").checked = true;
-  DOM.eventsWebinarsFilters.querySelector("input[type=radio]").checked = true;
+  DOM.eventsPublicFilters && DOM.eventsPublicFilters.querySelector("input[type=radio]") && (DOM.eventsPublicFilters.querySelector("input[type=radio]").checked = true);
+  DOM.eventsStaffFilters && DOM.eventsStaffFilters.querySelector("input[type=radio]") && (DOM.eventsStaffFilters.querySelector("input[type=radio]").checked = true);
+  DOM.eventsArchiveFilters && DOM.eventsArchiveFilters.querySelector("input[type=radio]") && (DOM.eventsArchiveFilters.querySelector("input[type=radio]").checked = true);
+  DOM.eventsArtFilters && DOM.eventsArtFilters.querySelector("input[type=radio]") && (DOM.eventsArtFilters.querySelector("input[type=radio]").checked = true);
+  DOM.eventsWebinarsFilters && DOM.eventsWebinarsFilters.querySelector("input[type=radio]") && (DOM.eventsWebinarsFilters.querySelector("input[type=radio]").checked = true);
 
   const url = getJSONUrl(UoS_env.name);
 
@@ -684,10 +684,10 @@
     const initData = data.filter((item) => item.id);
     SafeQueryParams.set("page", "1");
 
-    doUpcomingEvents("all", DOM.eventsStaff, isStaffFilter, initData);
-    doUpcomingEvents("all", DOM.eventsPublic, isPublicFilter, initData);
-    doUpcomingEvents("all", DOM.eventsArt, isArtFilter, initData);
-    doUpcomingEvents("all", DOM.eventsWebinars, isWebinarFilter, initData);
+    DOM.eventsStaff && doUpcomingEvents("all", DOM.eventsStaff, isStaffFilter, initData);
+    DOM.eventsPublic && doUpcomingEvents("all", DOM.eventsPublic, isPublicFilter, initData);
+    DOM.eventsArt && doUpcomingEvents("all", DOM.eventsArt, isArtFilter, initData);
+    DOM.eventsWebinars && doUpcomingEvents("all", DOM.eventsWebinars, isWebinarFilter, initData);
 
     doArchiveEvents("all", initData);
     doPromo(initData);
@@ -738,10 +738,10 @@
     }
 
     // Handle each tab with the appropriate parameters
-    handleFilterClick(DOM.eventsPublicTab, DOM.eventsPublicFilters, DOM.eventsPublic, isPublicFilter, doUpcomingEvents, initData);
-    handleFilterClick(DOM.eventsArtTab, DOM.eventsArtFilters, DOM.eventsArt, isArtFilter, doUpcomingEvents, initData);
-    handleFilterClick(DOM.eventsWebinarsTab, DOM.eventsWebinarsFilters, DOM.eventsWebinars, isWebinarFilter, doUpcomingEvents, initData);
-    handleFilterClick(DOM.eventsStaffTab, DOM.eventsStaffFilters, DOM.eventsStaff, isStaffFilter, doUpcomingEvents, initData);
+    DOM.eventsPublicTab && handleFilterClick(DOM.eventsPublicTab, DOM.eventsPublicFilters, DOM.eventsPublic, isPublicFilter, doUpcomingEvents, initData);
+    DOM.eventsArtTab && handleFilterClick(DOM.eventsArtTab, DOM.eventsArtFilters, DOM.eventsArt, isArtFilter, doUpcomingEvents, initData);
+    DOM.eventsWebinarsTab && handleFilterClick(DOM.eventsWebinarsTab, DOM.eventsWebinarsFilters, DOM.eventsWebinars, isWebinarFilter, doUpcomingEvents, initData);
+    DOM.eventsStaffTab && handleFilterClick(DOM.eventsStaffTab, DOM.eventsStaffFilters, DOM.eventsStaff, isStaffFilter, doUpcomingEvents, initData);
 
     // Note that archive tab uses doArchiveEvents function instead
     handleFilterClick(
