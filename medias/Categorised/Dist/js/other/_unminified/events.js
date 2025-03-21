@@ -14,7 +14,8 @@
   const STUDENT_TAG = "Student";
 
   const tagsNode = stir.node("[data-tags]") || "";
-  const TAGS = tagsNode ? tagsNode.dataset.tags : "";
+  const tags = tagsNode ? tagsNode.dataset.tags : "";
+  const TAGS = tags.split(",")[0];
 
   /**
    * NODES
