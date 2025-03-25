@@ -2309,7 +2309,7 @@ Bleed Feature Image
     margin: 0;
     padding: 1rem;
     background-color: #f6f5f4;
-    z-index: 2;
+    z-index: 11;
     border-bottom: 5px solid #ccc; }
     .breadcrumbs > li ul li {
       line-height: 2; }
