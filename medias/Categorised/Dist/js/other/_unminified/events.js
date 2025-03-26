@@ -538,8 +538,6 @@
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
 
-    console.log(initData);
-
     const seriesData = stir.compose(isSeriesFilter)(initData);
     const renderEventsMapper = stir.map(renderEvent(seriesData));
 
@@ -573,6 +571,16 @@
       const inRangeCurry = inRange(filterRange);
       const dataDateFiltered = stir.filter(inRangeCurry, initData);
       [noOfResults, results] = processUpcomingEvents(dataDateFiltered);
+    }
+
+    if (!noOfResults) {
+      const tab = node.closest("[role=tabpanel]");
+      if (tab) {
+        const tabId = tab.id;
+        const tabBtn = document.querySelector(`[aria-controls=${tabId}]`);
+        tab.remove();
+        tabBtn.remove();
+      }
     }
 
     noOfResults ? setDOMPublic(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try one of the other events tab."));
@@ -691,6 +699,9 @@
 
     doArchiveEvents("all", initData);
     doPromo(initData);
+
+    // Make sure the first tab available is open
+    scope.querySelector("[role=tab]") && scope.querySelector("[role=tab]").click();
 
     /**
      *
