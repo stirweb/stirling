@@ -579,11 +579,11 @@
         const tabId = tab.id;
         const tabBtn = document.querySelector(`[aria-controls=${tabId}]`);
         tab.remove();
-        tabBtn.remove();
+        tabBtn && tabBtn.remove();
       }
     }
 
-    noOfResults ? setDOMPublic(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try one of the other events tab."));
+    noOfResults && setDOMPublic(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults));
   }
 
   /**
