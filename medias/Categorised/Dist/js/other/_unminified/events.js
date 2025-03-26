@@ -194,12 +194,12 @@
         </div>`;
   });
 
-  const renderPaginationBtn = (end, noOfResults) => {
-    return end >= noOfResults ? `` : `<div class="loadmorebtn u-flex align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
+  const renderPaginationBtn = (end, totalResults) => {
+    return end >= totalResults ? `` : `<div class="loadmorebtn u-flex align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
   };
 
-  const renderPageMeta = (start, end, noOfResults) => {
-    return start < 2 ? `` : `<div class="u-flex align-center u-mb-2">Showing ${start + 1}-${end > noOfResults ? noOfResults : end} of ${noOfResults} results</div>`;
+  const renderPageMeta = (start, end, totalResults) => {
+    return start < 2 ? `` : `<div class="u-flex align-center u-mb-2">Showing ${start + 1}-${end > totalResults ? totalResults : end} of ${totalResults} results</div>`;
   };
 
   /**
@@ -561,19 +561,19 @@
       return [dataAll.length, dataAllRendered];
     };
 
-    let noOfResults, results;
+    let totalResults, results;
 
     if (!filterRange) {
-      [noOfResults, results] = processUpcomingEvents(initData);
+      [totalResults, results] = processUpcomingEvents(initData);
     }
 
     if (filterRange) {
       const inRangeCurry = inRange(filterRange);
       const dataDateFiltered = stir.filter(inRangeCurry, initData);
-      [noOfResults, results] = processUpcomingEvents(dataDateFiltered);
+      [totalResults, results] = processUpcomingEvents(dataDateFiltered);
     }
 
-    if (!noOfResults) {
+    if (!totalResults) {
       const tab = node.closest("[role=tabpanel]");
       if (tab) {
         const tabId = tab.id;
@@ -583,7 +583,7 @@
       }
     }
 
-    noOfResults && setDOMPublic(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults));
+    totalResults && setDOMPublic(renderPageMeta(start, end, totalResults) + results + renderPaginationBtn(end, totalResults));
   }
 
   /**
@@ -620,23 +620,23 @@
     };
 
     // Process the data based on selected filter
-    let noOfResults, results;
+    let totalResults, results;
 
     if (target === "all") {
-      [noOfResults, results] = processArchiveEvents(identity, initData);
+      [totalResults, results] = processArchiveEvents(identity, initData);
     }
     if (target === "recordings") {
-      [noOfResults, results] = processArchiveEvents(hasRecording, initData);
+      [totalResults, results] = processArchiveEvents(hasRecording, initData);
     }
     if (target === PUBLIC_TAG) {
-      [noOfResults, results] = processArchiveEvents(isPublicFilter, initData);
+      [totalResults, results] = processArchiveEvents(isPublicFilter, initData);
     }
     if (target === "staffstudent") {
-      [noOfResults, results] = processArchiveEvents(isStaffFilter, initData);
+      [totalResults, results] = processArchiveEvents(isStaffFilter, initData);
     }
 
     // Render the results data  or no results message
-    noOfResults ? setDOMArchive(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
+    totalResults ? setDOMArchive(renderPageMeta(start, end, totalResults) + results + renderPaginationBtn(end, totalResults)) : setDOMArchive(renderNoData("No events found."));
   }
 
   /**
