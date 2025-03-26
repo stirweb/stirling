@@ -575,7 +575,7 @@
       [noOfResults, results] = processUpcomingEvents(dataDateFiltered);
     }
 
-    noOfResults ? setDOMPublic(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
+    noOfResults ? setDOMPublic(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try one of the other events tab."));
   }
 
   /**
