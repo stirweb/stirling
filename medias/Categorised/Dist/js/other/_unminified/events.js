@@ -364,15 +364,12 @@
   const sortByStartDateDesc = (a, b) => Number(b.startInt) - Number(a.startInt);
 
   /**
-   * Custom sort function that prioritizes pinned items then sorts by date
+   * Sort function that uses the pin field to prioritize pinned items then date
    * @param {Object} a - First event item
    * @param {Object} b - Second event item
    * @returns {number} Sort order (-1, 0, 1)
    */
-  const sortByPinAndDate = (a, b) => {
-    if (a.pin !== b.pin) return a.pin - b.pin;
-    return Number(a.startInt) - Number(b.startInt); // If pin status is the same, sort by date
-  };
+  const sortByPinDate = (a, b) => Number(a.pin) - Number(b.pin);
 
   /**
    *
@@ -541,12 +538,14 @@
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
 
+    console.log(initData);
+
     const seriesData = stir.compose(isSeriesFilter)(initData);
     const renderEventsMapper = stir.map(renderEvent(seriesData));
 
     const setDOMPublic = page === 1 ? setDOMContent(node) : appendDOMContent(node);
 
-    const sorter = stir.sort(sortByPinAndDate);
+    const sorter = stir.sort(sortByPinDate);
 
     const pageFilterCurry = stir.filter((item, index) => {
       if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
