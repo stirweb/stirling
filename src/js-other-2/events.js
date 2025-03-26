@@ -702,6 +702,7 @@
 
     // Make sure the first tab available is open
     scope.querySelector("[role=tab]") && scope.querySelector("[role=tab]").click();
+    window.scrollTo(0, 0);
 
     /**
      *
