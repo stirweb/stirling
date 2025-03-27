@@ -191,7 +191,7 @@ object.spritesheet {
     position: absolute;
     height: 1.9375rem;
     border-top: 7px solid $heritage-green;
-    z-index: z($z-index-elements, hook);
+    /* z-index: z($z-index-elements, hook); */
     left: 0;
     width: 100%;
   }
@@ -199,8 +199,6 @@ object.spritesheet {
 
 .c-hook--top-right {
   @include c-hook;
-  //z-index: 1;
-
   &::before {
     border-right: 7px solid $heritage-green;
     top: 0;
@@ -209,7 +207,6 @@ object.spritesheet {
 
 .c-hook--top-left {
   @include c-hook;
-
   &::before {
     border-left: 7px solid $heritage-green;
     top: 0;
