@@ -1,14 +1,25 @@
 (function (scope) {
   if (!scope) return;
 
+  /**
+   * GLOBAL VARIABLES
+   */
+
   const ITEMS_PER_PAGE = 10;
 
-  const tagsNode = stir.node("[data-tags]") || "";
-  const TAGS = tagsNode ? tagsNode.dataset.tags : "";
+  const ART_TAG = "Art Collection";
+  const WEBINAR_TAG = "Webinar";
+  const PUBLIC_TAG = "Public";
+  const STAFF_TAG = "Staff";
+  const STUDENT_TAG = "Student";
 
-  /* 
-    NODES
-  */
+  const tagsNode = stir.node("[data-tags]") || "";
+  const tags = tagsNode ? tagsNode.dataset.tags : "";
+  const TAGS = tags.split(",")[0];
+
+  /**
+   * NODES
+   */
 
   const DOM = {
     eventsPublic: stir.node("#eventspublic"),
@@ -30,11 +41,11 @@
     stirTabs: stir.nodes(".stir-tabs__tab"),
   };
 
-  /* 
-    |
-    |   RENDERERS : Return a string of Html Code
-    |
-    */
+  /**
+   *
+   *   RENDERERS : Return a string of Html
+   *
+   */
 
   const renderImage = (image, alt) => {
     return `<div class="u-mt-1"><img src="${image}" width="275" height="275" alt="Image: ${alt}"></div>`;
@@ -47,7 +58,7 @@
   };
 
   const renderLabelTab = (item) => {
-    if (item.type === "Webinar") return renderTab("Webinar");
+    if (item.type === WEBINAR_TAG) return renderTab(WEBINAR_TAG);
     if (item.isSeries) return renderTab("Event series");
     return ``;
   };
@@ -65,9 +76,9 @@
   };
 
   const renderLink = (item) => {
-    if (!item.url) return `${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}`;
+    if (!item.url) return `${item.type === WEBINAR_TAG ? `Webinar: ` : ``}${item.title}`;
 
-    return ` <a href="${item.url}">${item.type === "Webinar" ? `Webinar: ` : ``}${item.title}</a>`;
+    return ` <a href="${item.url}">${item.type === WEBINAR_TAG ? `Webinar: ` : ``}${item.title}</a>`;
   };
 
   const renderTimes = (item) => {
@@ -88,7 +99,7 @@
 
   const renderIconTag = (item) => {
     if (item.pin < 1) return `data-label-icon="pin"`;
-    if (item.type === "Webinar") return `data-label-icon="computer"`;
+    if (item.type === WEBINAR_TAG) return `data-label-icon="computer"`;
     if (item.isSeries) return `data-label-icon="startdates"`;
 
     return ``;
@@ -183,17 +194,27 @@
         </div>`;
   });
 
-  const renderPaginationBtn = (end, noOfResults) => {
-    return end >= noOfResults ? `` : `<div class="loadmorebtn u-flex align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
+  const renderPaginationBtn = (end, totalResults) => {
+    return end >= totalResults ? `` : `<div class="loadmorebtn u-flex align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
   };
 
-  const renderPageMeta = (start, end, noOfResults) => {
-    return start < 2 ? `` : `<div class="u-flex align-center u-mb-2">Showing ${start + 1}-${end > noOfResults ? noOfResults : end} of ${noOfResults} results</div>`;
+  const renderPageMeta = (start, end, totalResults) => {
+    return start < 2 ? `` : `<div class="u-flex align-center u-mb-2">Showing ${start + 1}-${end > totalResults ? totalResults : end} of ${totalResults} results</div>`;
   };
 
-  /*
-       HELPERS
-    */
+  /**
+   *
+   *  HELPERS
+   *
+   */
+
+  const getJSONUrl = (env) => {
+    if (env === "dev") return "../index.json";
+    if (env === "preview") return '<t4 type="navigation" id="5214" />'; // 5222 for limitrd archive
+    if (env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; // 5222 for limitrd archive
+
+    return `/data/events/revamp/json/index.json`; // live
+  };
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
@@ -205,32 +226,71 @@
     return elem;
   });
 
-  const getNow = () => {
-    let yourDate = new Date();
-    return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
+  const removeDuplicateObjectFromArray = stir.curry((key, array) => {
+    let check = {};
+    let res = [];
+    for (let i = 0; i < array.length; i++) {
+      if (!check[array[i][key]]) {
+        check[array[i][key]] = true;
+        res.push(array[i]);
+      }
+    }
+    return res;
+  });
+
+  /**
+   * Cleans a query parameter by removing non-alphanumeric characters (except hyphen and underscore)
+   * @param {string} param - The query parameter to clean
+   * @returns {string} The cleaned query parameter
+   */
+  const cleanQueryParam = (param) => {
+    if (typeof param !== "string") return "";
+    // Remove any non-alphanumeric characters except hyphen and underscore
+    return param.replace(/[^a-zA-Z0-9-_]/g, "");
   };
 
-  const isPublic = (item) => item.audience.includes("Public") && !item.tags.includes("Art Collection") && !item.type.includes("Webinar");
+  /**
+   * @namespace SafeQueryParams
+   * @description
+   * An object providing safe access to query parameters, ensuring that all values are cleaned to prevent XSS attacks.
+   * It extends the original `QueryParams` object with a `cleanQueryParam` function to sanitize the values.
+   * @property {function} get - A function that retrieves a query parameter by key and cleans it.
+   * @property {function} set - A function that sets a query parameter by key, cleaning the value before setting it.
+   * @property {function} remove - A function that removes a query parameter by key.
+   */
+  const SafeQueryParams = {
+    get: (key) => cleanQueryParam(QueryParams.get(key)),
+    set: (key, value) => QueryParams.set(key, cleanQueryParam(value)),
+    remove: QueryParams.remove,
+  };
 
-  const isStaffOrStudent = (item) => item.audience.includes("Staff") || item.audience.includes("Student");
+  /**
+   *
+   *  FILTERS
+   *
+   */
 
-  const isStaffStudent = (item) => isStaffOrStudent(item) && !item.audience.includes("Public") && !item.tags.includes("Art Collection");
+  const isPublic = (item) => item.audience.includes(PUBLIC_TAG) && !item.tags.includes(ART_TAG) && !item.type.includes(WEBINAR_TAG);
+
+  const isStaffOrStudent = (item) => item.audience.includes(STAFF_TAG) || item.audience.includes(STUDENT_TAG);
+
+  const isStaffStudent = (item) => isStaffOrStudent(item) && !item.audience.includes(PUBLIC_TAG) && !item.tags.includes(ART_TAG);
 
   const isPublicFilter = stir.filter(isPublic);
 
   const isStaffFilter = stir.filter(isStaffStudent);
 
-  const isArt = (item) => item.tags && item.tags.includes("Art Collection");
+  const isArt = (item) => item.tags && item.tags.includes(ART_TAG);
 
   const isArtFilter = stir.filter(isArt);
 
-  const isWebinar = (item) => item.type && item.type.includes("Webinar");
+  const isWebinar = (item) => item.type && item.type.includes(WEBINAR_TAG);
 
   const isWebinarFilter = stir.filter(isWebinar);
 
-  const isPassed = (item) => Number(item.endInt) < getNow() && item.archive.length && !item.hideFromFeed.length;
+  const isPast = (item) => Number(item.endInt) < getNow() && item.archive.length && !item.hideFromFeed.length;
 
-  const isPassedFilter = stir.filter(isPassed);
+  const isPastFilter = stir.filter(isPast);
 
   const isUpcoming = (item) => {
     return Number(item.endInt) >= getNow() && !item.hideFromFeed.length;
@@ -248,25 +308,6 @@
     return index === 0;
   });
 
-  const sortByStartDate = (a, b) => Number(a.startInt) - Number(b.startInt);
-
-  const sortByStartDateDesc = (a, b) => Number(b.startInt) - Number(a.startInt);
-
-  //const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
-
-  /**
-   * Custom sort function that prioritizes pinned items then sorts by date
-   * @param {Object} a - First event item
-   * @param {Object} b - Second event item
-   * @returns {number} Sort order (-1, 0, 1)
-   */
-  const sortByPinAndDate = (a, b) => {
-    if (a.pin !== b.pin) return a.pin - b.pin;
-
-    // If pin status is the same, sort by date
-    return Number(a.startInt) - Number(b.startInt);
-  };
-
   const hasRecording = stir.filter((item) => item.recording);
 
   const identity = (input) => input;
@@ -279,29 +320,67 @@
     return index >= start && index < end;
   });
 
-  const removeDuplicateObjectFromArray = stir.curry((key, array) => {
-    let check = {};
-    let res = [];
-    for (let i = 0; i < array.length; i++) {
-      if (!check[array[i][key]]) {
-        check[array[i][key]] = true;
-        res.push(array[i]);
-      }
-    }
-    return res;
+  /**
+   * Filters an event item based on whether it contains all specified tags
+   * @param {string} tags_ - Comma-separated string of tags to filter by (e.g. "tag1, tag2")
+   * @param {Object} item - Event item object containing tags property
+   * @returns {Object|undefined} Returns the item if all tags match, undefined otherwise
+   * @description
+   * This curried function:
+   * 1. Splits the input tags string into an array
+   * 2. Returns the item if no tags are specified
+   * 3. Splits the item's tags into an array
+   * 4. Checks if all input tags exist in the item's tags
+   * 5. Returns the item only if all tags match
+   * @example
+   * filterByTag("Workshop, Online")({ tags: "Workshop, Online, Free" }) // returns item
+   * filterByTag("Workshop")({ tags: "Conference, Online" }) // returns undefined
+   */
+  const filterByTag = stir.curry((tags_, item) => {
+    const isTrue = (bol) => bol;
+    const tags = tags_.split(", ");
+
+    if (!tags && !tags.length) return item;
+    if (tags.length === 1 && tags[0] === "") return item;
+
+    const itemTags = item.tags.split(", ");
+    const matches = tags.map((ele) => itemTags.includes(ele));
+
+    if (stir.all(isTrue, matches)) return item;
   });
 
-  const getJSONUrl = (env) => {
-    if (env === "dev") return "../index.json";
-    if (env === "preview") return '<t4 type="navigation" id="5214" />'; //5222 for limitrd archive
-    if (env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; //5222 for limitrd archive
+  const filterByTagCurry = stir.filter(filterByTag(TAGS));
 
-    return `/data/events/revamp/json/index.json`;
+  const removeDupsbyPerf = removeDuplicateObjectFromArray("perfId");
+
+  /**
+   *
+   *  SORTERS
+   *
+   */
+
+  const sortByStartDate = (a, b) => Number(a.startInt) - Number(b.startInt);
+
+  const sortByStartDateDesc = (a, b) => Number(b.startInt) - Number(a.startInt);
+
+  /**
+   * Sort function that uses the pin field to prioritize pinned items then date
+   * @param {Object} a - First event item
+   * @param {Object} b - Second event item
+   * @returns {number} Sort order (-1, 0, 1)
+   */
+  const sortByPinDate = (a, b) => Number(a.pin) - Number(b.pin);
+
+  /**
+   *
+   *  DATE HELPERS
+   *
+   */
+
+  const getNow = () => {
+    let yourDate = new Date();
+    return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
   };
-
-  /* 
-      DATE HELPERS
-    */
 
   /**
    * Checks if a specific date exists within an array of dates
@@ -441,43 +520,10 @@
   });
 
   /**
-   * Filters an event item based on whether it contains all specified tags
-   * @param {string} tags_ - Comma-separated string of tags to filter by (e.g. "tag1, tag2")
-   * @param {Object} item - Event item object containing tags property
-   * @returns {Object|undefined} Returns the item if all tags match, undefined otherwise
-   * @description
-   * This curried function:
-   * 1. Splits the input tags string into an array
-   * 2. Returns the item if no tags are specified
-   * 3. Splits the item's tags into an array
-   * 4. Checks if all input tags exist in the item's tags
-   * 5. Returns the item only if all tags match
-   * @example
-   * filterByTag("Workshop, Online")({ tags: "Workshop, Online, Free" }) // returns item
-   * filterByTag("Workshop")({ tags: "Conference, Online" }) // returns undefined
+   *
+   *  CONTROLLERS
+   *
    */
-  const filterByTag = stir.curry((tags_, item) => {
-    const isTrue = (bol) => bol;
-    const tags = tags_.split(", ");
-
-    if (!tags && !tags.length) return item;
-    if (tags.length === 1 && tags[0] === "") return item;
-
-    const itemTags = item.tags.split(", ");
-    const matches = tags.map((ele) => itemTags.includes(ele));
-
-    if (stir.all(isTrue, matches)) return item;
-  });
-
-  const filterByTagCurry = stir.filter(filterByTag(TAGS));
-
-  const removeDupsbyPerf = removeDuplicateObjectFromArray("perfId");
-
-  /* 
-  | 
-  |  CONTROLLERS
-  |
-  */
 
   /**
    * Handles display of upcoming events with filtering, pagination and rendering
@@ -488,7 +534,7 @@
    */
   function doUpcomingEvents(rangeWanted, node, filter, initData) {
     const filterRange = getFilterRange(rangeWanted);
-    const page = Number(QueryParams.get("page")) || 1;
+    const page = Number(SafeQueryParams.get("page")) || 1;
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
 
@@ -497,38 +543,56 @@
 
     const setDOMPublic = page === 1 ? setDOMContent(node) : appendDOMContent(node);
 
-    const sorter = stir.sort(sortByPinAndDate);
+    const sorter = stir.sort(sortByPinDate);
 
     const pageFilterCurry = stir.filter((item, index) => {
       if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
     });
 
-    if (!filterRange) {
-      const dataAll1 = stir.pipe(isUpcomingFilter, removeDupsbyPerf, filterByTagCurry, filter, sorter)(initData);
-      const dataAll1b = stir.pipe(pageFilterCurry, renderEventsMapper, joiner)(dataAll1);
-      const noOfResults = dataAll1.length;
+    /**
+     * Processes event data through filtering pipeline
+     * @param {Array} dataSource - The source data to process
+     * @returns {Array} Array containing the number of results and the rendered HTML
+     */
+    const processUpcomingEvents = (dataSource) => {
+      const dataAll = stir.pipe(isUpcomingFilter, removeDupsbyPerf, filterByTagCurry, filter, sorter)(dataSource);
+      const dataAllRendered = stir.pipe(pageFilterCurry, renderEventsMapper, joiner)(dataAll);
 
-      dataAll1.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll1b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
-      return;
+      return [dataAll.length, dataAllRendered];
+    };
+
+    let totalResults, results;
+
+    if (!filterRange) {
+      [totalResults, results] = processUpcomingEvents(initData);
     }
 
-    const inRangeCurry = inRange(filterRange);
-    const dataDateFiltered = stir.filter(inRangeCurry, initData);
+    if (filterRange) {
+      const inRangeCurry = inRange(filterRange);
+      const dataDateFiltered = stir.filter(inRangeCurry, initData);
+      [totalResults, results] = processUpcomingEvents(dataDateFiltered);
+    }
 
-    const dataAll2 = stir.pipe(isUpcomingFilter, removeDupsbyPerf, filterByTagCurry, filter, sorter)(dataDateFiltered);
-    const dataAll2b = stir.pipe(pageFilterCurry, renderEventsMapper, joiner)(dataAll2);
-    const noOfResults = dataAll2.length;
+    if (!totalResults) {
+      const tab = node.closest("[role=tabpanel]");
+      if (tab) {
+        const tabId = tab.id;
+        const tabBtn = document.querySelector(`[aria-controls=${tabId}]`);
+        tab.remove();
+        tabBtn && tabBtn.remove();
+      }
+    }
 
-    dataAll2.length ? setDOMPublic(renderPageMeta(start, end, noOfResults) + dataAll2b + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
+    totalResults && setDOMPublic(renderPageMeta(start, end, totalResults) + results + renderPaginationBtn(end, totalResults));
   }
 
   /**
    * Handles display of archived events with filtering, pagination and rendering
-   * @param {string} rangeWanted - Time period filter ('thisweek'|'nextweek'|'thismonth'|'nextmonth'|'all')
+   * @param {string} target - Filter target ('all'|'recordings'|'public'|'staffstudent')
    * @param {Array} initData - Initial array of event data objects
    */
   function doArchiveEvents(target, initData) {
-    const page = Number(QueryParams.get("page")) || 1;
+    const page = Number(SafeQueryParams.get("page")) || 1;
     const start = ITEMS_PER_PAGE * (page - 1);
     const end = start + ITEMS_PER_PAGE;
 
@@ -542,28 +606,37 @@
       if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
     });
 
-    // Helper function to process the data using a passed filter function
-    const processTargetData = (filterFn, data) => {
-      const dataAll = stir.pipe(isPassedFilter, filterByTagCurry, filterFn, sorter)(data);
-      const dataAllb = stir.pipe(pageFilterCurry, renderArchiveEventsMapper, joiner)(dataAll);
+    /**
+     * Processes event data through filtering pipeline
+     * @param {Function} filterFn - Filter function to apply to events (e.g. isPublicFilter, isStaffFilter)
+     * @param {Array} dataSource - The source data to process
+     * @returns {Array} Array containing the number of results and the rendered HTML
+     */
+    const processArchiveEvents = (filterFn, initdata) => {
+      const dataAll = stir.pipe(isPastFilter, filterByTagCurry, filterFn, sorter)(initdata);
+      const dataAllRendered = stir.pipe(pageFilterCurry, renderArchiveEventsMapper, joiner)(dataAll);
 
-      const noOfResults = dataAll.length;
-      dataAll.length ? setDOMArchive(renderPageMeta(start, end, noOfResults) + dataAllb + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
+      return [dataAll.length, dataAllRendered];
     };
 
     // Process the data based on selected filter
+    let totalResults, results;
+
     if (target === "all") {
-      processTargetData(identity, initData);
+      [totalResults, results] = processArchiveEvents(identity, initData);
     }
     if (target === "recordings") {
-      processTargetData(hasRecording, initData);
+      [totalResults, results] = processArchiveEvents(hasRecording, initData);
     }
-    if (target === "public") {
-      processTargetData(isPublicFilter, initData);
+    if (target === PUBLIC_TAG) {
+      [totalResults, results] = processArchiveEvents(isPublicFilter, initData);
     }
     if (target === "staffstudent") {
-      processTargetData(isStaffFilter, initData);
+      [totalResults, results] = processArchiveEvents(isStaffFilter, initData);
     }
+
+    // Render the results data  or no results message
+    totalResults ? setDOMArchive(renderPageMeta(start, end, totalResults) + results + renderPaginationBtn(end, totalResults)) : setDOMArchive(renderNoData("No events found."));
   }
 
   /**
@@ -591,58 +664,62 @@
     stir.pipe(isUpcomingFilter, filterByTagCurry, sorter, isPromoFilter, limitToOne, rendereventsPromoCurry, joiner, setDOMPromo)(initData);
   }
 
-  /*
-    | 
-    |  ON LOAD
-    |
-    */
+  /**
+   *
+   *  ON LOAD EVENTS
+   *
+   */
 
-  setDOMContent(DOM.eventsPublic, "");
-  setDOMContent(DOM.eventsStaff, "");
-  setDOMContent(DOM.eventsArt, "");
-  setDOMContent(DOM.eventsWebinars, "");
+  DOM.eventsPublic && setDOMContent(DOM.eventsPublic, "");
+  DOM.eventsStaff && setDOMContent(DOM.eventsStaff, "");
+  DOM.eventsArt && setDOMContent(DOM.eventsArt, "");
+  DOM.eventsWebinars && setDOMContent(DOM.eventsWebinars, "");
 
-  DOM.eventsPublicFilters.querySelector("input[type=radio]").checked = true;
-  DOM.eventsStaffFilters.querySelector("input[type=radio]").checked = true;
-  DOM.eventsArchiveFilters.querySelector("input[type=radio]").checked = true;
-  DOM.eventsArtFilters.querySelector("input[type=radio]").checked = true;
-  DOM.eventsWebinarsFilters.querySelector("input[type=radio]").checked = true;
+  DOM.eventsPublicFilters && DOM.eventsPublicFilters.querySelector("input[type=radio]") && (DOM.eventsPublicFilters.querySelector("input[type=radio]").checked = true);
+  DOM.eventsStaffFilters && DOM.eventsStaffFilters.querySelector("input[type=radio]") && (DOM.eventsStaffFilters.querySelector("input[type=radio]").checked = true);
+  DOM.eventsArchiveFilters && DOM.eventsArchiveFilters.querySelector("input[type=radio]") && (DOM.eventsArchiveFilters.querySelector("input[type=radio]").checked = true);
+  DOM.eventsArtFilters && DOM.eventsArtFilters.querySelector("input[type=radio]") && (DOM.eventsArtFilters.querySelector("input[type=radio]").checked = true);
+  DOM.eventsWebinarsFilters && DOM.eventsWebinarsFilters.querySelector("input[type=radio]") && (DOM.eventsWebinarsFilters.querySelector("input[type=radio]").checked = true);
 
   const url = getJSONUrl(UoS_env.name);
 
-  /* 
-    Fetch the data 
-  */
+  /**
+   * Fetch the data and set things off
+   */
   stir.getJSON(url, (data) => {
     if (data.error) return;
 
     const initData = data.filter((item) => item.id);
-    QueryParams.set("page", 1);
+    SafeQueryParams.set("page", "1");
 
-    doUpcomingEvents("all", DOM.eventsStaff, isStaffFilter, initData);
-    doUpcomingEvents("all", DOM.eventsPublic, isPublicFilter, initData);
-    doUpcomingEvents("all", DOM.eventsArt, isArtFilter, initData);
-    doUpcomingEvents("all", DOM.eventsWebinars, isWebinarFilter, initData);
+    DOM.eventsStaff && doUpcomingEvents("all", DOM.eventsStaff, isStaffFilter, initData);
+    DOM.eventsPublic && doUpcomingEvents("all", DOM.eventsPublic, isPublicFilter, initData);
+    DOM.eventsArt && doUpcomingEvents("all", DOM.eventsArt, isArtFilter, initData);
+    DOM.eventsWebinars && doUpcomingEvents("all", DOM.eventsWebinars, isWebinarFilter, initData);
 
     doArchiveEvents("all", initData);
     doPromo(initData);
 
-    /*
-    | 
-    |  CLICK EVENTS LISTENERS
-    |
-    */
+    // Make sure the first tab available is open
+    scope.querySelector("[role=tab]") && scope.querySelector("[role=tab]").click();
+    window.scrollTo(0, 0);
 
-    /* 
-      Tab clicks 
-    */
+    /**
+     *
+     *  CLICK EVENTS LISTENERS
+     *
+     */
+
+    /*
+     * Tab clicks
+     */
     stir.each((item) => {
       item.addEventListener("click", (event) => {
-        QueryParams.set("page", 1);
+        SafeQueryParams.set("page", "1");
       });
     }, DOM.stirTabs);
 
-    /*
+    /**
      * Filter clicks
      */
 
@@ -657,26 +734,26 @@
      */
     function handleFilterClick(tabElement, filtersElement, contentElement, filterFunction, eventFunction, initData) {
       tabElement.addEventListener("click", (event) => {
-        const page = Number(QueryParams.get("page")) || 1;
+        const page = Number(SafeQueryParams.get("page")) || 1;
 
         if (event.target.type === "radio") {
-          QueryParams.set("page", 1);
+          SafeQueryParams.set("page", "1");
           eventFunction(filtersElement.querySelector("input:checked").value, contentElement, filterFunction, initData);
         }
 
         if (event.target.type === "submit") {
           setDOMContent(event.target.closest(".loadmorebtn"), "");
-          QueryParams.set("page", page + 1);
+          SafeQueryParams.set("page", String(page + 1));
           eventFunction(filtersElement.querySelector("input:checked").value, contentElement, filterFunction, initData);
         }
       });
     }
 
     // Handle each tab with the appropriate parameters
-    handleFilterClick(DOM.eventsPublicTab, DOM.eventsPublicFilters, DOM.eventsPublic, isPublicFilter, doUpcomingEvents, initData);
-    handleFilterClick(DOM.eventsArtTab, DOM.eventsArtFilters, DOM.eventsArt, isArtFilter, doUpcomingEvents, initData);
-    handleFilterClick(DOM.eventsWebinarsTab, DOM.eventsWebinarsFilters, DOM.eventsWebinars, isWebinarFilter, doUpcomingEvents, initData);
-    handleFilterClick(DOM.eventsStaffTab, DOM.eventsStaffFilters, DOM.eventsStaff, isStaffFilter, doUpcomingEvents, initData);
+    DOM.eventsPublicTab && handleFilterClick(DOM.eventsPublicTab, DOM.eventsPublicFilters, DOM.eventsPublic, isPublicFilter, doUpcomingEvents, initData);
+    DOM.eventsArtTab && handleFilterClick(DOM.eventsArtTab, DOM.eventsArtFilters, DOM.eventsArt, isArtFilter, doUpcomingEvents, initData);
+    DOM.eventsWebinarsTab && handleFilterClick(DOM.eventsWebinarsTab, DOM.eventsWebinarsFilters, DOM.eventsWebinars, isWebinarFilter, doUpcomingEvents, initData);
+    DOM.eventsStaffTab && handleFilterClick(DOM.eventsStaffTab, DOM.eventsStaffFilters, DOM.eventsStaff, isStaffFilter, doUpcomingEvents, initData);
 
     // Note that archive tab uses doArchiveEvents function instead
     handleFilterClick(
@@ -688,9 +765,9 @@
       initData
     );
 
-    /* 
-       Handle Favourites
-    */
+    /**
+     * Handle Favourite Button clicks
+     */
     const updateFavouriteBtn = (id) => {
       const cookie = stir.favourites.getFav(id, "event");
       const node = stir.node("#favbtns" + id);
@@ -711,11 +788,6 @@
       if (target.dataset.action === "removefav") {
         stir.favourites.removeFromFavs(target.dataset.id);
         updateFavouriteBtn(target.dataset.id);
-
-        if (consts.activity === "managefavs") {
-          const node = stir.node("#fav-" + target.dataset.id);
-          if (node) setDOMContent(node)("");
-        }
       }
     };
 

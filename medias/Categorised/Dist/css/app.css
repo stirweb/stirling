@@ -2309,7 +2309,7 @@ Bleed Feature Image
     margin: 0;
     padding: 1rem;
     background-color: #f6f5f4;
-    z-index: 2;
+    z-index: 11;
     border-bottom: 5px solid #ccc; }
     .breadcrumbs > li ul li {
       line-height: 2; }
@@ -4221,7 +4221,8 @@ cite:before {
     object-position: center;
     height: 100%;
     max-height: 450px;
-    width: 100%; }
+    width: 100%;
+    overflow: hidden; }
   /* 1 Quote available */
   .pullquote-grid--1 .pullquote {
     margin-left: 16%;
@@ -4951,7 +4952,7 @@ object.spritesheet {
     position: absolute;
     height: 1.9375rem;
     border-top: 7px solid #006938;
-    z-index: 2;
+    /* z-index: z($z-index-elements, hook); */
     left: 0;
     width: 100%; }
   .c-hook--top-right::before {
@@ -4966,7 +4967,7 @@ object.spritesheet {
     position: absolute;
     height: 1.9375rem;
     border-top: 7px solid #006938;
-    z-index: 2;
+    /* z-index: z($z-index-elements, hook); */
     left: 0;
     width: 100%; }
   .c-hook--top-left::before {

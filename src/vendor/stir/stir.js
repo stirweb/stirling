@@ -176,17 +176,17 @@ stir.String = {
   htmlEntities: function htmlEntities(str) {
     //return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&"+"quot;");
     //return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, ["&", "quot;"].join(""));
-	var entityMap = {
-		"&": "&amp;",
-		"<": "&lt;",
-		">": "&gt;",
-		'"': ["&", "quot;"].join(""),
-		"'": "&#39;",
-		"/": "&#x2F;",
-		"`": "&#x60;",
-		"=": "&#x3D;"
-	};
-	return String(str).replace(/[&<>"'`=\/]/g, s=>entityMap[s]);
+    var entityMap = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': ["&", "quot;"].join(""),
+      "'": "&#39;",
+      "/": "&#x2F;",
+      "`": "&#x60;",
+      "=": "&#x3D;",
+    };
+    return String(str).replace(/[&<>"'`=\/]/g, (s) => entityMap[s]);
   },
   stripHtml: function stripHtml(dirtyString) {
     var doc = new DOMParser().parseFromString(dirtyString, "text/html");
@@ -897,45 +897,8 @@ const reverseArgs = function (fn) {
    Clone helper function - 27/09/2024 replaced with structuredClone (Ryan)
  */
 stir.clone = function (input) {
-  // const out = _isArray(input) ? Array(input.length) : {};
-  // if (input && input.getTime) return new Date(input.getTime());
-
-  // for (const key in input) {
-  //   const v = input[key];
-  //   out[key] = typeof v === "object" && v !== null ? (v.getTime ? new Date(v.getTime()) : stir.clone(v)) : v;
-  // }
-
-  // return out;
   return structuredClone(input);
 };
-
-/*
-   Identity helper function
-
-stir.identity = function (input) {
-  return input;
-};
- */
-
-/*
-   Not helper function
-
-stir.not = function not(predicate) {
-  return function negated(...args) {
-    return !predicate(...args);
-  };
-};
- */
-
-/*
-   Partial helper function
-
-stir.partial = function (fn, ...presetArgs) {
-  return function partiallyApplied(...laterArgs) {
-    return fn(...presetArgs, ...laterArgs);
-  };
-};
- */
 
 /*
    Compose helper function

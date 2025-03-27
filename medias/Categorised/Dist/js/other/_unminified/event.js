@@ -48,7 +48,7 @@
 
   const renderLink = (item) => {
     if (!item.url) return `${item.title}<br />`;
-    return `<a href="${item.url}">${item.title}</a><br />`;
+    return `<a href="${item.url}" class="u-underline">${item.title}</a><br />`;
   };
 
   const renderEvent = (item, index) => {

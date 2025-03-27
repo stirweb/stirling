@@ -56,7 +56,7 @@
 			margin: 0;
 			padding: 1rem;
 			background-color: $bg-grey;
-			z-index: 2;
+			z-index: z($z-index-elements, breadcrumbs-submenu);
 			border-bottom: 5px solid #ccc;
 
 			li {

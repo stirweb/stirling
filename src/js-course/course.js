@@ -126,7 +126,7 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
       var widgetScript = d.createElement("script");
 
       widgetScript.id = "unistats-widget-script";
-      widgetScript.src = "https://discoveruni.gov.uk/widget/embed-script/";
+      widgetScript.src = "https://widget.discoveruni.gov.uk/widget/embed-script/";
       widgetScript.addEventListener("load", function (event) {
         if (widgets.length > 1 && window.DiscoverUniWidget) {
           var widgetStylesAdded = false;
