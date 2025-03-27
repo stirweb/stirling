@@ -181,40 +181,21 @@ var QueryParams = (function () {
    * @param {boolean} replace [Optional] Use replaceState instead of pushState
    * @param {boolean} noencode [Optional] Don't use encodeURIComponent on name parameter [default = false]
    */
-  // TODO use document..search? instead of href
   function _remove(name, reload, url, replace, noencode) {
-    //if (!url) url = window.location.href;
 
-	/* old code here */
-	// var newUrl = _removeURLParameter(url, noencode? name : encodeURIComponent(name));
-	/* old code end */
-	
-	/* new code here */
-//	var newUrl = url;
-//	if(url.indexOf(name)>-1) {
-//		newUrl = _removeURLParameter(url, name);
-//	} else if (url.indexOf(encodeURIComponent(name))>-1) {
-//		newUrl = _removeURLParameter(url, encodeURIComponent(name));
-//	}
+    const u = new URL(url||window.location);
 
-    var ooh = new URL(url||window.location);
-    var qsp = new URLSearchParams(ooh.search);
-    if(qsp.has(name)){
-      qsp.delete(name);
-      ooh.search = qsp.toString();
-
-      if(replace) {
-        _replaceStateHandler(ooh.href)
+    if (u.searchParams.has(name)) {
+      u.searchParams.delete(name);
+      if (replace) {
+        _replaceStateHandler(u.href)
       } else {
-        _pushStateHandler(ooh.href);
+        _pushStateHandler(u.href);
       }
-
       if (reload) {
         window.location.href = document.location.href;
       }
     }
-	/* new code end */
-
   }
 
   return {
