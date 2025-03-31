@@ -105,6 +105,11 @@
     return ``;
   };
 
+  const renderIsRecurring = (item) => {
+    const isRecurring = item.repeat ? true : false;
+    return !isRecurring ? `` : `<div class="u-flex u-gap-16 align-middle"><span class="u-icon h5 uos-timer"></span><span>${item.repeat}</span></div>`;
+  };
+
   const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
 
   const renderEvent = stir.curry((seriesData, item) => {
@@ -128,6 +133,7 @@
                               <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`} "></span>
                               <span>${item.location}</span>
                           </div>
+                          ${renderIsRecurring(item)}
                       </div>
                       <p class="u-m-0">${item.summary}</p>
                       ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
@@ -194,12 +200,12 @@
         </div>`;
   });
 
-  const renderPaginationBtn = (end, noOfResults) => {
-    return end >= noOfResults ? `` : `<div class="loadmorebtn u-flex align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
+  const renderPaginationBtn = (end, totalResults) => {
+    return end >= totalResults ? `` : `<div class="loadmorebtn u-flex align-center u-mb-2" ><button class="button hollow tiny">Load more results</button></div>`;
   };
 
-  const renderPageMeta = (start, end, noOfResults) => {
-    return start < 2 ? `` : `<div class="u-flex align-center u-mb-2">Showing ${start + 1}-${end > noOfResults ? noOfResults : end} of ${noOfResults} results</div>`;
+  const renderPageMeta = (start, end, totalResults) => {
+    return start < 2 ? `` : `<div class="u-flex align-center u-mb-2">Showing ${start + 1}-${end > totalResults ? totalResults : end} of ${totalResults} results</div>`;
   };
 
   /**
@@ -364,15 +370,12 @@
   const sortByStartDateDesc = (a, b) => Number(b.startInt) - Number(a.startInt);
 
   /**
-   * Custom sort function that prioritizes pinned items then sorts by date
+   * Sort function that uses the pin field to prioritize pinned items then date
    * @param {Object} a - First event item
    * @param {Object} b - Second event item
    * @returns {number} Sort order (-1, 0, 1)
    */
-  const sortByPinAndDate = (a, b) => {
-    if (a.pin !== b.pin) return a.pin - b.pin;
-    return Number(a.startInt) - Number(b.startInt); // If pin status is the same, sort by date
-  };
+  const sortByPinDate = (a, b) => Number(a.pin) - Number(b.pin);
 
   /**
    *
@@ -546,7 +549,7 @@
 
     const setDOMPublic = page === 1 ? setDOMContent(node) : appendDOMContent(node);
 
-    const sorter = stir.sort(sortByPinAndDate);
+    const sorter = stir.sort(sortByPinDate);
 
     const pageFilterCurry = stir.filter((item, index) => {
       if (paginationFilter(page, ITEMS_PER_PAGE, index)) return item;
@@ -564,19 +567,29 @@
       return [dataAll.length, dataAllRendered];
     };
 
-    let noOfResults, results;
+    let totalResults, results;
 
     if (!filterRange) {
-      [noOfResults, results] = processUpcomingEvents(initData);
+      [totalResults, results] = processUpcomingEvents(initData);
     }
 
     if (filterRange) {
       const inRangeCurry = inRange(filterRange);
       const dataDateFiltered = stir.filter(inRangeCurry, initData);
-      [noOfResults, results] = processUpcomingEvents(dataDateFiltered);
+      [totalResults, results] = processUpcomingEvents(dataDateFiltered);
     }
 
-    noOfResults ? setDOMPublic(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults)) : setDOMPublic(renderNoData("No events found. Try the staff and student events tab."));
+    if (!totalResults) {
+      const tab = node.closest("[role=tabpanel]");
+      if (tab) {
+        const tabId = tab.id;
+        const tabBtn = document.querySelector(`[aria-controls=${tabId}]`);
+        tab.remove();
+        tabBtn && tabBtn.remove();
+      }
+    }
+
+    totalResults && setDOMPublic(renderPageMeta(start, end, totalResults) + results + renderPaginationBtn(end, totalResults));
   }
 
   /**
@@ -613,23 +626,23 @@
     };
 
     // Process the data based on selected filter
-    let noOfResults, results;
+    let totalResults, results;
 
     if (target === "all") {
-      [noOfResults, results] = processArchiveEvents(identity, initData);
+      [totalResults, results] = processArchiveEvents(identity, initData);
     }
     if (target === "recordings") {
-      [noOfResults, results] = processArchiveEvents(hasRecording, initData);
+      [totalResults, results] = processArchiveEvents(hasRecording, initData);
     }
     if (target === PUBLIC_TAG) {
-      [noOfResults, results] = processArchiveEvents(isPublicFilter, initData);
+      [totalResults, results] = processArchiveEvents(isPublicFilter, initData);
     }
     if (target === "staffstudent") {
-      [noOfResults, results] = processArchiveEvents(isStaffFilter, initData);
+      [totalResults, results] = processArchiveEvents(isStaffFilter, initData);
     }
 
     // Render the results data  or no results message
-    noOfResults ? setDOMArchive(renderPageMeta(start, end, noOfResults) + results + renderPaginationBtn(end, noOfResults)) : setDOMArchive(renderNoData("No events found."));
+    totalResults ? setDOMArchive(renderPageMeta(start, end, totalResults) + results + renderPaginationBtn(end, totalResults)) : setDOMArchive(renderNoData("No events found."));
   }
 
   /**
@@ -692,6 +705,10 @@
 
     doArchiveEvents("all", initData);
     doPromo(initData);
+
+    // Make sure the first tab available is open
+    scope.querySelector("[role=tab]") && scope.querySelector("[role=tab]").click();
+    window.scrollTo(0, 0);
 
     /**
      *

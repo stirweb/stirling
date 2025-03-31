@@ -105,6 +105,11 @@
     return ``;
   };
 
+  const renderIsRecurring = (item) => {
+    const isRecurring = item.repeat ? true : false;
+    return !isRecurring ? `` : `<div class="u-flex u-gap-16 align-middle"><span class="u-icon h5 uos-timer"></span><span>${item.repeat}</span></div>`;
+  };
+
   const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
 
   const renderEvent = stir.curry((seriesData, item) => {
@@ -128,6 +133,7 @@
                               <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`} "></span>
                               <span>${item.location}</span>
                           </div>
+                          ${renderIsRecurring(item)}
                       </div>
                       <p class="u-m-0">${item.summary}</p>
                       ${item.isSeriesChild ? renderSeriesInfo(item.isSeriesChild, seriesData) : ``}
