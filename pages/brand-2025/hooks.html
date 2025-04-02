@@ -437,8 +437,7 @@
                     <div class="c-wysiwyg-content">
                         <p><strong>Our business services </strong><strong>can host any event with our wide range of
                                 event and conference venues, catering services and accommodation.</strong></p>
-                        <p><strong>Our experienced in-house graphic design and print teams are ready to work with you on
-                                any marketing brief or business project.</strong></p>
+
                     </div>
                 </div>
             </div>
@@ -453,13 +452,6 @@
                 --bg-color: #edf7f8;
                 --border-thickness: 30px;
                 --container-padding: 20px;
-            }
-
-            body {
-                font-family: Arial, Helvetica, sans-serif;
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
             }
 
             .sdg-section-wrapper {
@@ -491,7 +483,6 @@
                 bottom: 5px;
                 right: 0;
                 border-bottom: var(--border-thickness) solid var(--border-color);
-
             }
 
             /* Container Styling */
@@ -581,46 +572,51 @@
                 flex: 1;
                 min-width: 280px;
                 text-align: center;
-                height: 350px;
                 position: relative;
+                object-fit: cover;
+                object-position: center;
+                height: 400px;
             }
 
             .sdg-image-column img {
-                max-width: 100%;
-                height: auto;
                 display: block;
-                margin: 0 auto;
                 object-fit: cover;
                 object-position: center;
-                aspect-ratio: 3 / 2;
+                width: 100%;
+                height: 100%;
             }
 
             /* Responsive Adjustments */
-            @media (max-width: 768px) {
+            @media (max-width: 780px) {
                 .sdg-content-box {
                     flex-direction: column;
                     padding: 20px;
+                    gap: 50px;
                 }
 
                 .sdg-text-column {
-                    padding-right: 0;
-                    padding-bottom: 20px;
-                    text-align: center;
+                    padding: 20px;
+
                 }
 
-                .sdg-image-column {
-                    padding-top: 10px;
+
+                .sdg-section-wrapper::after {
+                    bottom: 25px;
+
                 }
 
-                .sdg-content-box::before,
+
+
+                .sdg-content-box::before {
+                    height: 80px;
+                }
+
                 .sdg-image-column::after {
-                    width: 70%;
-                    height: 50%;
+
+                    height: 80px;
                 }
 
-                .sdg-text-column h2 {
-                    font-size: 1.5em;
-                }
+
             }
         </style>
 
@@ -633,7 +629,8 @@
                         <p>We work towards the UN's Sustainable Development Goals to create a better and fairer
                             world. Find
                             out about our impact.</p>
-                        <a href="#" class="c-link">Sustainable Development Goals</a>
+
+                        <a href="#" class="c-link u-energy-turq">Sustainable Development Goals</a>
                     </div>
                     <div class="sdg-image-column">
                         <img src="image.webp" alt="UN Sustainable Development Goals Wheel">
