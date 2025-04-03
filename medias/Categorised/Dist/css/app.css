@@ -7653,7 +7653,9 @@ svg.icon {
   display: flex;
   flex-wrap: wrap; }
   .accred-logos img {
-    margin: 0 1rem 1rem 0; }
+    /* margin: 0 1rem 1rem 0; */
+    display: block;
+    margin-bottom: 1rem; }
 
 .c-whats-next {
   padding-top: 0;

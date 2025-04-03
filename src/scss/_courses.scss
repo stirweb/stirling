@@ -551,7 +551,9 @@ svg.icon {
   flex-wrap: wrap;
 
   img {
-    margin: 0 1rem 1rem 0;
+    /* margin: 0 1rem 1rem 0; */
+    display: block;
+    margin-bottom: 1rem;
   }
 }
 
