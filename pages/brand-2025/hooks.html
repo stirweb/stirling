@@ -485,7 +485,6 @@
                 border-bottom: var(--border-thickness) solid var(--border-color);
             }
 
-            /* Container Styling */
             .sdg-section-container {
                 width: 100%;
                 max-width: 1240px;
@@ -497,7 +496,6 @@
                 align-items: center;
             }
 
-            /* Content Box Styling */
             .sdg-content-box {
                 background-color: var(--bg-color);
                 display: flex;
@@ -507,7 +505,6 @@
                 position: relative;
             }
 
-            /* L-shaped Borders */
             .sdg-content-box::before,
             .sdg-content-box::after,
             .sdg-image-column::after {
@@ -536,7 +533,6 @@
                 border-left: var(--border-thickness) solid var(--border-color);
             }
 
-            /* Text Column Styling */
             .sdg-text-column {
                 flex: 1;
                 min-width: 280px;
@@ -552,17 +548,13 @@
             }
 
             .sdg-text-column p {
-                color: var(--border-color);
+                /* color: var(--border-color); */
                 margin-bottom: 20px;
             }
 
             /* Link Styling */
             .sdg-link {
                 color: var(--border-color);
-            }
-
-            .sdg-link:hover {
-                text-decoration: underline;
             }
 
             /* Image Column Styling */
@@ -588,7 +580,7 @@
             @media (max-width: 780px) {
                 .sdg-content-box {
                     flex-direction: column;
-                    padding: 20px;
+
                     gap: 50px;
                 }
 
@@ -597,13 +589,10 @@
 
                 }
 
-
                 .sdg-section-wrapper::after {
                     bottom: 25px;
 
                 }
-
-
 
                 .sdg-content-box::before {
                     height: 80px;
@@ -621,14 +610,13 @@
         <div class="sdg-section-wrapper">
             <div class="sdg-section-container">
                 <div class="sdg-content-box">
-                    <div class="sdg-text-column text-md">
-                        <h2 class="header-stripped u-font-secondary text-lg ">Our work in the UN's<br>Sustainable
+                    <div class="sdg-text-column ">
+                        <h2 class="header-stripped u-font-secondary text-lg ">Our work in the UN's Sustainable
                             Development Goals</h2>
                         <p>We work towards the UN's Sustainable Development Goals to create a better and fairer
                             world. Find
                             out about our impact.</p>
-
-                        <a href="#" class="c-link u-energy-turq text-md">Sustainable Development Goals</a>
+                        <a href="#" class="c-link u-energy-turq ">Sustainable Development Goals</a>
                     </div>
                     <div class="sdg-image-column">
                         <img src="image.webp" alt="UN Sustainable Development Goals Wheel">
