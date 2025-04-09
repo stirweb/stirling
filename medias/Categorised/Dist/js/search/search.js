@@ -578,13 +578,10 @@ stir.templates.search = (() => {
     },
 
     event: (item) => {
-      const hasThumbnail = item.metaData?.image || item.metaData?.tags?.indexOf("Webinar") > -1;
+      const isWebinar = item.metaData?.tags?.indexOf("Webinar") > -1;
+      const hasThumbnail = item.metaData?.image || isWebinar;
       const title = item.title.split(" | ")[0];
-
-      // ${item.metaData.register ? anchor({ text: title, href: item.metaData.register }) : title}
-      //	  const urls = item.metaData.image.split("|");
-      //      const hacklink = urls[1] ? urls[1] : "/events/";
-      const url = item.collection == "stir-events" ? (item.metaData.page ? item.metaData.page : "#") : FB_BASE() + item.clickTrackingUrl;
+      const url = item.collection == "stir-events" ? (item.metaData.page ? item.metaData.page : item.metaData.register?item.metaData.register:"#") : FB_BASE() + item.clickTrackingUrl;
 
       return `
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
@@ -1041,7 +1038,7 @@ var stir = stir || {};
  */
 stir.funnelback = (() => {
   const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-  const hostname = debug ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
+  const hostname = UoS_env.search;
   const url = `https://${hostname}/s/`;
 
   // alternative public hostname: `shared-15-24-search.clients.uk.funnelback.com`
