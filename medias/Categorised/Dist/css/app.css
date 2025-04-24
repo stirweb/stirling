@@ -4400,20 +4400,8 @@ cite:before {
 
 /*
     Testimonial - Full 
+    Doesnt seem to do anything
 */
-.c-wysiwyg-content .c-blockquote--simple,
-.c-blockquote--simple {
-  border: none;
-  font-weight: normal;
-  max-width: initial;
-  padding: 0; }
-
-.c-wysiwyg-content .c-blockquote--simple p,
-.c-wysiwyg-content .c-blockquote--simple li,
-.c-blockquote--simple li,
-.c-blockquote--simple p {
-  color: #3a3c39; }
-
 .c-zoom {
   position: relative;
   width: 100%;
