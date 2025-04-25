@@ -5,40 +5,26 @@
  */
 
 var stir = stir || {};
-stir.templates = stir.templates || {};
 
-
-stir.templates.course = {
-	link: (text,href) => `<a href="${href}">${text}</a>`,
-	para: content => `<p>${content}</p>`,
-	option: option => `Starting ${option[3]}, ${option[1].toLowerCase()} (${option[4]})`,
-	div: (id,onclick) => {
-		const div = document.createElement('div');
-		div.id = id; div.onclick = onclick;
-		return div;
-	},
-	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,
-
-	offline: `<p class="text-center c-callout">Module information is temporarily unavailable.</p>`,
-
-	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2024. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
-};
-
-
-stir.course = (function() {
-
+stir.course = (boilerplates => {
+	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
 	const na = {auto: new Function()};
 
 	if(!stir.dpt) return na;
+	if(!stir.akari) return na;
 
 	const container = document.getElementById('course-modules-container');
 	const el = document.querySelector("[data-modules-route-code][data-modules-course-type]");
 	if(!container || !el) return na;
 	
-	const routeChooser = stir.templates.course.div('routeBrowser');
+	const routeChooser  = stir.templates.course.div('routeBrowser');
 	const optionChooser = stir.templates.course.div('optionBrowser');
 	const moduleBrowser = stir.templates.course.div('moduleBrowser');
+	const moduleViewer  = stir.templates.course.dialogue('moduleViewer');
+	const moduleInfo    = stir.templates.course.div('moduleInfo');
 	const version = document.querySelector('time[data-sits]');
+	const spinner = new stir.Spinner(moduleViewer);
+	const status = {}; // used to track modal/url changes
 
 	let initialised = false;
 
@@ -55,29 +41,57 @@ stir.course = (function() {
 		});
 	};
 
+	const render = data => {
+		debug && console.info('[Modules] data',data);
+		moduleInfo.innerHTML = stir.templates.course.module(boilerplates, data);
+		spinner.hide();
+	};
+
 	const handle = {
 		routes: frag => routeChooser.append(frag),
 		options: frag => optionChooser.append(frag),
-		modules: frag => {moduleBrowser.append(frag);reflow()},
+		modules: frag => {moduleBrowser.append(frag);reflow();},
+		module: (id,url) => {
+			spinner.show();
+			stir.akari.get.module( id, render );
+			moduleViewer.showModal();
+			history.pushState(null,"",url);
+			status.history = status.moduleViewer = true;
+		},
 		version: frag => version && frag && (version.textContent = frag)
 	};
 
 	const reset = {
 		modules: ()=>moduleBrowser.innerHTML='',
+		module: ()=>moduleInfo.innerHTML='',
 		options: ()=>optionChooser.innerHTML=''
 	};
 	
 	// Set up the DOM
 	container.insertAdjacentHTML("beforeend",stir.templates.course.disclaimer);
 	container.append( routeChooser, optionChooser, moduleBrowser );
+	document.body.append(moduleViewer);
+	moduleViewer.append(moduleInfo);
 	
 	// Set up data callback/handlers
-	stir.dpt.set.show.routes( handle.routes );
-	stir.dpt.set.show.options( handle.options );
-	stir.dpt.set.show.modules( handle.modules );
-	stir.dpt.set.show.version( handle.version );
-	stir.dpt.set.reset.modules( reset.modules );
-	stir.dpt.set.reset.options( reset.options );
+	stir.dpt.set.show.routes  ( handle.routes  );
+	stir.dpt.set.show.options ( handle.options );
+	stir.dpt.set.show.modules ( handle.modules );
+	stir.dpt.set.show.module  ( handle.module  );
+	stir.dpt.set.show.version ( handle.version );
+	stir.dpt.set.reset.modules( reset.modules  );
+	stir.dpt.set.reset.module ( reset.module   );
+	stir.dpt.set.reset.options( reset.options  );
+
+	window.addEventListener("popstate",e=>{
+		status.history = false
+		if (status.moduleViewer) moduleViewer.close();
+	});
+	
+	moduleViewer.addEventListener("close", e=>{
+		status.moduleViewer = false;
+		if(status.history) history.back();
+	});
 
 	const _auto = () => {
 		if(!initialised) {
@@ -107,8 +121,9 @@ stir.course = (function() {
 		auto: _auto
 	};
 
-})();
+});
 
+stir.getJSON('https://www.stir.ac.uk/data/modules/boilerplate/', data => stir.course(data) );
 
 // TEMPORARY ONLY UNTIL T4 REPUBLISHES THE COURSE PAGES
 // 2024-02-07 r.w.morrison@stir.ac.uk

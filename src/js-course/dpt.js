@@ -33,7 +33,7 @@ stir.dpt = (function () {
 
   const urls = {
     // Akari module viewer:
-    viewer: window.location.hostname != "www.stir.ac.uk" ? `https://${window.location.hostname}/terminalfour/preview/1/en/33273` : "/courses/module/",
+    viewer: window.location.hostname != "www.stir.ac.uk" ? `/terminalfour/preview/1/en/33273` : "/courses/module/",
     // Portal web frontend:
     calendar: `${PORTAL}/calendar/calendar`,
     // Portal data endpoints:
@@ -92,7 +92,7 @@ stir.dpt = (function () {
   const moduleLink = (data) => {
     // LINK TO NEW AKARI MODULE PAGES
     const url = `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
-	return availability(data) ? `<a href="${url}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
+	return availability(data) ? `<a href="${url}" data-spa="${data.modCode}/${data.mavSemSession}/${data.mavSemCode}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
 	
     // LINK TO OLD DEGREE PROGRAM TABLES
     //return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
@@ -190,6 +190,12 @@ stir.dpt = (function () {
     e.preventDefault();
   }
 
+  function viewModule(e) {
+    e.preventDefault();
+    stir.dpt.reset.module();
+    stir.dpt.show.module(this.getAttribute('data-spa'),this.getAttribute('href'));
+  }
+
   const versionToSession = (data) => {
     if(!data || !data.length) return;
 	// [2024-03-14] rwm2 -- remove DEBUG test to make it live --
@@ -251,6 +257,11 @@ stir.dpt = (function () {
       var a = el.querySelector(".c-course-modules__view-more-link a");
       a && a.addEventListener("click", viewMore.bind(el));
     });
+    
+    Array.prototype.forEach.call(frag.querySelectorAll("a[data-spa]"), el => {
+      el.addEventListener("click", viewModule.bind(el));
+    });
+
 
     return frag;
   };
@@ -333,6 +344,7 @@ stir.dpt = (function () {
       routes: new Function(),
       options: new Function(),
       modules: new Function(),
+      module: new Function(),
       version: new Function()
     },
     get: {
@@ -342,6 +354,7 @@ stir.dpt = (function () {
       version: getVersion
     },
     reset: {
+      module: new Function(),
       modules: new Function(),
       options: new Function()
     },
@@ -365,9 +378,11 @@ stir.dpt = (function () {
             }
           }),
         modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data))),
+        module:  (callback) => (stir.dpt.show.module  =  (a,b) => callback(a,b)),
         version: (callback) => (stir.dpt.show.version = (data) => callback(versionToSession(data)))
       },
       reset: {
+        module:  (callback) => (stir.dpt.reset.module = callback),
         modules: (callback) => (stir.dpt.reset.modules = callback),
         options: (callback) => (stir.dpt.reset.options = callback),
       },
