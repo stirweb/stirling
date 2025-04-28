@@ -9302,6 +9302,9 @@ ul.no-bullet {
 .u-grey-line-left {
   border-left: 1px solid #f6f5f4; }
 
+.u-medium-grey-line {
+  border: 1px solid #d5d4d4; }
+
 /*
   General Borders
 */

@@ -92,7 +92,7 @@
     let getEndInt = (startInt, _mainPerf) => { return Number(startInt.toString().slice(0, 8) + _mainPerf.endTime.replace(":", "")) };
 
 
-    let getPerfId = (perfId, index) => {
+    let createPerfId = (perfId, index) => {
         let index2 = index + 1;
         return Number(String(perfId) + "." + index2);
     };
@@ -116,7 +116,7 @@
     let recurringDatesFiltered = recurringDates.filter(item => item.startInt >= nowDateInt && item.startInt <= endDateInt).slice(0, 7);
 
     let recurringDatesFiltered2 = recurringDatesFiltered.map((item, index) => {
-        return Object.assign(item, { end: item.start, stirEnd: item.stirStart, endInt: getEndInt(item.startInt, myPerf), perfId: getPerfId(myPerf.perfId, index), pin: item.startInt });
+        return Object.assign(item, { end: item.start, stirEnd: item.stirStart, endInt: getEndInt(item.startInt, myPerf), perfId: createPerfId(myPerf.perfId, index), pin: item.startInt });
     });
 
     console.log(recurringDatesFiltered2);
