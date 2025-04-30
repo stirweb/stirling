@@ -3042,11 +3042,11 @@ textarea:focus {
 
 :-ms-input-placeholder {
   color: #737373;
-  font-size: 1.25rem; }
+  font-size: 1rem; }
 
 ::placeholder {
   color: #737373;
-  font-size: 1.25rem; }
+  font-size: 1rem; }
 
 /*  Focus */
 .button:focus,
