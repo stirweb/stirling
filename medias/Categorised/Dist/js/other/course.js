@@ -280,11 +280,7 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
       var widgetScript = d.createElement("script");
 
       widgetScript.id = "unistats-widget-script";
-<<<<<<< Updated upstream
       widgetScript.src = "https://widget.discoveruni.gov.uk/widget/embed-script/";
-=======
-      widgetScript.src = "https://discoveruni.gov.uk/widget/embed-script/";
->>>>>>> Stashed changes
       widgetScript.addEventListener("load", function (event) {
         if (widgets.length > 1 && window.DiscoverUniWidget) {
           var widgetStylesAdded = false;
@@ -1248,7 +1244,7 @@ StirUniModules.initialisationRoutine = stir.course.auto;
   */
 
   const offsets = { small: 50, medium: 150 };
-  const errorMsg = ["WARNING!! Missing apply now button anchor location ID", "Please inform a dev!! "];
+  const errorMsg = ["WARNING!! Missing content: Entry Requirements > Application Procedure"];
 
   if (!applySlideBtns && !skipLinks) return;
 
@@ -1269,23 +1265,23 @@ StirUniModules.initialisationRoutine = stir.course.auto;
     Find the content item then smooth scroll to it
    */
   const slideToContent = (node, offset) => {
-    if(!node) return;
+    if (!node) return;
 
-    const panel = node.closest('[role="tabpanel"],[role="region"]')
-    
+    const panel = node.closest('[role="tabpanel"],[role="region"]');
+
     // Open the tab if found and not already open
     if (panel) {
-        const tab = panel.hasAttribute('aria-labelledby') && document.getElementById(panel.getAttribute('aria-labelledby'));
-        if(tab) {
-          if(tab.hasAttribute('aria-selected') && tab.getAttribute('aria-selected')!=="true"){
-            tab.click();
-          } else if(tab.hasAttribute('aria-expanded') && tab.getAttribute('aria-expanded')!=="true"){
-            tab.click();
-          }
+      const tab = panel.hasAttribute("aria-labelledby") && document.getElementById(panel.getAttribute("aria-labelledby"));
+      if (tab) {
+        if (tab.hasAttribute("aria-selected") && tab.getAttribute("aria-selected") !== "true") {
+          tab.click();
+        } else if (tab.hasAttribute("aria-expanded") && tab.getAttribute("aria-expanded") !== "true") {
+          tab.click();
         }
+      }
     }
 
-    if(node.getAttribute('data-behaviour')==="accordion") {
+    if (node.getAttribute("data-behaviour") === "accordion") {
       const accordion = node.querySelector('button[aria-expanded="false"]');
       accordion && accordion.click();
     }
