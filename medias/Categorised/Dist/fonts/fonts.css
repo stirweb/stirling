@@ -3,16 +3,16 @@
 */
 
 @font-face {
-  font-family: "Open Sans";
-  src: url('<t4 type="media" id="158105" formatter="path/*" />') format('OpenType'), url("open-sans/OpenSans-Regular.ttf") format('OpenType');
+  font-family: "General Sans";
+  src: url('<t4 type="media" id="173668" formatter="path/*" />') format('OpenType'), url("general-sans/GeneralSans-Regular.ttf") format('OpenType');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Open Sans";
-  src: url('<t4 type="media" id="158104" formatter="path/*" />')  format('OpenType'), url("open-sans/OpenSans-Bold.ttf") format('OpenType');
+  font-family: "General Sans";
+  src: url('<t4 type="media" id="173667" formatter="path/*" />')  format('OpenType'), url("general-sans/GeneralSans-Bold.ttf") format('OpenType');
   font-weight: 700;
   font-style: bold;
   font-display: swap;

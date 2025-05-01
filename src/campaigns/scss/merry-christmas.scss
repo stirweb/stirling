@@ -1,574 +1,559 @@
 /*
-    Open Sans
+    General Sans
 */
 
 @font-face {
-	font-family: "Open Sans";
-	src: url('<t4 type="media" id="158105" formatter="path/*" />') format('OpenType'), url("open-sans/OpenSans-Regular.ttf") format('OpenType');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+  font-family: "General Sans";
+  src: url('<t4 type="media" id="158105" formatter="path/*" />') format("OpenType"), url("open-sans/OpenSans-Regular.ttf") format("OpenType");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-	font-family: "Open Sans";
-	src: url('<t4 type="media" id="158104" formatter="path/*" />') format('OpenType'), url("open-sans/OpenSans-Bold.ttf") format('OpenType');
-	font-weight: 700;
-	font-style: bold;
-	font-display: swap;
+  font-family: "General Sans";
+  src: url('<t4 type="media" id="158104" formatter="path/*" />') format("OpenType"), url("open-sans/OpenSans-Bold.ttf") format("OpenType");
+  font-weight: 700;
+  font-style: bold;
+  font-display: swap;
 }
 
 html {
-	font-family: "Open Sans", Helvetica, Arial, sans-serif;
-	/* background:#BEE6F1; */
-	background: #006938;
+  font-family: "General Sans", Helvetica, Arial, sans-serif;
+  /* background:#BEE6F1; */
+  background: #006938;
 }
 
 figure[data-video],
 .barnacles {
-	background-color: #9d1e65;
-	/* box-shadow: 0 -4px 3px -2px rgb(255,255,255); */
-	/* snow resting on top? */
+  background-color: #9d1e65;
+  /* box-shadow: 0 -4px 3px -2px rgb(255,255,255); */
+  /* snow resting on top? */
 }
 
 canvas#wintertime {
-	/* background:linear-gradient(#279efa,#00345f); */
-	/* Original background */
-	/* background:linear-gradient(#BEE6F1,#68A3BB); */
-	/* match for 2019 video */
-	background-image: url('<t4 type="media" id="174825" formatter="path/*" />'), linear-gradient(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
-	background-size: 500px 500px, auto;
-	/* bg tile is square SVG so we can adjust scale here */
-	background-position: center;
+  /* background:linear-gradient(#279efa,#00345f); */
+  /* Original background */
+  /* background:linear-gradient(#BEE6F1,#68A3BB); */
+  /* match for 2019 video */
+  background-image: url('<t4 type="media" id="174825" formatter="path/*" />'), linear-gradient(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
+  background-size: 500px 500px, auto;
+  /* bg tile is square SVG so we can adjust scale here */
+  background-position: center;
 }
 
 #hohoho {
-	width: 100%;
-	height: 98px;
-	/* background: url(../../images/campaigns/christmas/santa.png); */
-	position: fixed;
-	transform-origin: 0 50%;
-	/* transform: translate(-100%, 100%) rotate(-10deg); */
-	animation: hohoho 3.333s linear 4s forwards normal;
-	animation-iteration-count: 1;
-	animation-delay: 3s;
-	animation-fill-mode: forwards;
-	top: 98px;
-	left: -100%;
-	/* background: url(../img/santa.png), repeating-linear-gradient( 45deg, #21734F, #21734F 10px, white 10px, white 20px, #519B7B 20px, #519B7B 30px, white 30px, white 40px ); */
-	background-size: 300px 98px, cover;
-	background-repeat: no-repeat, repeat;
-	background-position: right center, center;
-
+  width: 100%;
+  height: 98px;
+  /* background: url(../../images/campaigns/christmas/santa.png); */
+  position: fixed;
+  transform-origin: 0 50%;
+  /* transform: translate(-100%, 100%) rotate(-10deg); */
+  animation: hohoho 3.333s linear 4s forwards normal;
+  animation-iteration-count: 1;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+  top: 98px;
+  left: -100%;
+  /* background: url(../img/santa.png), repeating-linear-gradient( 45deg, #21734F, #21734F 10px, white 10px, white 20px, #519B7B 20px, #519B7B 30px, white 30px, white 40px ); */
+  background-size: 300px 98px, cover;
+  background-repeat: no-repeat, repeat;
+  background-position: right center, center;
 }
 
 @keyframes hohoho {
-	0% {
-		transform: translate(0, 0)
-			/* rotate(-10deg) */
-		;
-	}
+  0% {
+    transform: translate(0, 0) /* rotate(-10deg) */;
+  }
 
-	100% {
-		transform: translate(150%, 0)
-			/* rotate(20deg) */
-		;
-	}
+  100% {
+    transform: translate(150%, 0) /* rotate(20deg) */;
+  }
 }
 
 body {
-	margin: 0;
+  margin: 0;
 }
 
 a {
-	text-decoration: none;
-	color: #006938;
+  text-decoration: none;
+  color: #006938;
 }
 
 a img {
-	border: none;
+  border: none;
 }
 
 a:hover {
-	color: #006938;
+  color: #006938;
 }
 
 #logo {
-	margin: 10px 30px;
+  margin: 10px 30px;
 }
 
 div#snow {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	border-bottom: 2em solid #FFFFFF;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 2em solid #ffffff;
 }
 
 div#snowdrift {
-	background: transparent url('<t4 type="media" id="174826" formatter="path/*" />') top left repeat-x;
-	height: 20px;
-	background-size: 304px 20px;
-	/* @2x */
+  background: transparent url('<t4 type="media" id="174826" formatter="path/*" />') top left repeat-x;
+  height: 20px;
+  background-size: 304px 20px;
+  /* @2x */
 }
 
 img#instructions {
-	position: absolute;
-	top: 50px;
-	right: 3%;
+  position: absolute;
+  top: 50px;
+  right: 3%;
 }
 
 div#msg {
-	position: absolute;
-	top: 130px;
-	color: #0a5089;
-	z-index: 100;
-	font-size: 120%;
-	font-family: Georgia, Baskerville, serif;
-	width: 260px;
-	display: none;
-	transform: rotate(15deg);
-	text-align: center;
-	line-height: 1.9em;
-	background: transparent;
+  position: absolute;
+  top: 130px;
+  color: #0a5089;
+  z-index: 100;
+  font-size: 120%;
+  font-family: Georgia, Baskerville, serif;
+  width: 260px;
+  display: none;
+  transform: rotate(15deg);
+  text-align: center;
+  line-height: 1.9em;
+  background: transparent;
 }
 
 .airmail {
-	background-color: #fff;
-	border-radius: 3px;
-	margin-bottom: 2em;
-	background: url('<t4 type="media" id="174819" formatter="path/*" />'), url('<t4 type="media" id="174825" formatter="path/*" />'), linear-gradient(#9d1e65, #9d1e65);
-	border: 1em solid transparent;
-	background-size: 225px 225px, 500px 500px;
-	background-clip: padding-box, border-box, border-box;
-	background-origin: border-box;
-	background-position: center, -50% -50%;
+  background-color: #fff;
+  border-radius: 3px;
+  margin-bottom: 2em;
+  background: url('<t4 type="media" id="174819" formatter="path/*" />'), url('<t4 type="media" id="174825" formatter="path/*" />'), linear-gradient(#9d1e65, #9d1e65);
+  border: 1em solid transparent;
+  background-size: 225px 225px, 500px 500px;
+  background-clip: padding-box, border-box, border-box;
+  background-origin: border-box;
+  background-position: center, -50% -50%;
 }
 
-
 .stamped {
-	display: flex;
-	flex-direction: column-reverse;
-	font-size: 1.2rem;
-	padding: 1em;
+  display: flex;
+  flex-direction: column-reverse;
+  font-size: 1.2rem;
+  padding: 1em;
 
-	.post {
-		text-align: right;
-	}
+  .post {
+    text-align: right;
+  }
 
-	.message {
-		margin-top: 1em;
-		padding-top: 1em;
-		border-top: 1px solid #ccc;
+  .message {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid #ccc;
 
-		p:first-child {
-			margin-top: 0;
-		}
-	}
+    p:first-child {
+      margin-top: 0;
+    }
+  }
 }
 
 #letter,
 #personalise-box {
-	display: none;
-	/* green candy-stripes */
-	/* padding:1em; */
-	/* background: repeating-linear-gradient( 45deg, #21734F, #21734F 10px, white 10px, white 20px, #519B7B 20px, #519B7B 30px, white 30px, white 40px ); */
-	/* Tartan border */
+  display: none;
+  /* green candy-stripes */
+  /* padding:1em; */
+  /* background: repeating-linear-gradient( 45deg, #21734F, #21734F 10px, white 10px, white 20px, #519B7B 20px, #519B7B 30px, white 30px, white 40px ); */
+  /* Tartan border */
 }
 
 #personalise-box {
-	h2 {
-		text-align: center;
-		margin: 0;
-		padding: 1em 0 0 0;
-	}
+  h2 {
+    text-align: center;
+    margin: 0;
+    padding: 1em 0 0 0;
+  }
 
-	label,
-	label span {
-		display: block;
-	}
+  label,
+  label span {
+    display: block;
+  }
 
-	input {
-		font-size: 1.1em;
-	}
+  input {
+    font-size: 1.1em;
+  }
 
-	input.error {
-		border-color: red;
-	}
+  input.error {
+    border-color: red;
+  }
 
-	input[type=text],
-	input[type=email],
-	textarea {
-		width: 100%;
-		margin: 0.5em 0 2em;
-	}
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    margin: 0.5em 0 2em;
+  }
 
-	textarea {
-		min-height: 10em;
-		font-size: 1rem;
-	}
+  textarea {
+    min-height: 10em;
+    font-size: 1rem;
+  }
 
-	textarea[disabled] {
-		min-height: 6em;
-		border: 1px solid #CCCCCC;
-		background: none;
-	}
+  textarea[disabled] {
+    min-height: 6em;
+    border: 1px solid #cccccc;
+    background: none;
+  }
 
-	input[type="submit"] {
-		border: 2px solid #006938;
-		background: #fff;
-		color: #006938;
-		cursor: pointer;
-		padding: 1em;
-	}
+  input[type="submit"] {
+    border: 2px solid #006938;
+    background: #fff;
+    color: #006938;
+    cursor: pointer;
+    padding: 1em;
+  }
 
-	textarea {
-		font-family: Helvetica, Arial, sans-serif;
-	}
+  textarea {
+    font-family: Helvetica, Arial, sans-serif;
+  }
 }
 
 .small {
-	font-size: 75%;
+  font-size: 75%;
 }
 
-
-
 #santa {
-	position: relative;
-	left: -200px;
-	top: 400px;
+  position: relative;
+  left: -200px;
+  top: 400px;
 }
 
 div#msg {
-	top: 80px;
+  top: 80px;
 }
 
 .container {
-	max-width: 60em;
-	margin: 0 auto 4em;
-	position: relative;
+  max-width: 60em;
+  margin: 0 auto 4em;
+  position: relative;
 }
 
 figure {
-	img {
-		max-width: 100%;
-		border-radius: 3px;
-	}
+  img {
+    max-width: 100%;
+    border-radius: 3px;
+  }
 }
 
 canvas#wintertime {
-	position: fixed;
-	top: 0;
-	display: block;
+  position: fixed;
+  top: 0;
+  display: block;
 }
 
 video {
-	display: block;
+  display: block;
 }
 
 form#personalise-form {
-	color: #333333;
-	padding: 2em;
-	position: relative;
-	border-radius: 3px;
+  color: #333333;
+  padding: 2em;
+  position: relative;
+  border-radius: 3px;
 }
 
 figure[data-video] {
-	position: relative;
-	padding-bottom: 53.65%;
-	/* 16:9~ish aspect ratio */
-	padding-top: 25px;
-	height: 0;
-	margin: 2em 0;
+  position: relative;
+  padding-bottom: 53.65%;
+  /* 16:9~ish aspect ratio */
+  padding-top: 25px;
+  height: 0;
+  margin: 2em 0;
 
-	iframe,
-	video,
-	img {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-	}
+  iframe,
+  video,
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .postmark {
-	transform: rotate(-10deg) scale(0.7);
-	transform-origin: center right;
-	max-height: 15vw;
-	max-width: 100%;
+  transform: rotate(-10deg) scale(0.7);
+  transform-origin: center right;
+  max-height: 15vw;
+  max-width: 100%;
 }
 
 .frank {
-	display: flex;
-	justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 
-	svg {
-		max-height: 15vw;
-		transform: rotate(-5deg);
-	}
+  svg {
+    max-height: 15vw;
+    transform: rotate(-5deg);
+  }
 }
 
 form#personalise-form input,
 form#personalise-form textarea {
-	background-color: lemonchiffon;
-	border: 1px solid #CCC;
+  background-color: lemonchiffon;
+  border: 1px solid #ccc;
 }
 
 form#personalise-form textarea#footer {
-	background: none;
-	border: 0;
+  background: none;
+  border: 0;
 }
 
 textarea#footer {
-	color: #777;
-	background: none;
-	min-height: 6em;
-	margin-bottom: 0;
+  color: #777;
+  background: none;
+  min-height: 6em;
+  margin-bottom: 0;
 }
 
 form aside ol,
 form aside div p {
-	padding-left: 2em;
+  padding-left: 2em;
 }
 
 form aside li {
-	margin-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 form aside li span {
-	font-variant: small-caps;
+  font-variant: small-caps;
 }
 
 form aside div p {
-	position: relative;
+  position: relative;
 }
 
 form aside div p span {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 form aside div p::before {
-	content: "i";
-	position: absolute;
-	left: .5em;
-	color: #fff;
-	font-family: Georgia, serif;
-	background: #519B7B;
-	border-radius: 50%;
-	height: 1.2em;
-	width: 1.2em;
-	line-height: 1.2;
-	text-align: center;
-	top: -0.2em;
-	border: 0.1em solid #006938;
+  content: "i";
+  position: absolute;
+  left: 0.5em;
+  color: #fff;
+  font-family: Georgia, serif;
+  background: #519b7b;
+  border-radius: 50%;
+  height: 1.2em;
+  width: 1.2em;
+  line-height: 1.2;
+  text-align: center;
+  top: -0.2em;
+  border: 0.1em solid #006938;
 }
 
 form aside div h3 {
-	color: #006938;
+  color: #006938;
 }
 
 .postman {
-	animation-name: postman;
-	animation-timing-function: ease-in;
-	animation-duration: 1.2s;
+  animation-name: postman;
+  animation-timing-function: ease-in;
+  animation-duration: 1.2s;
 }
 
-
 @keyframes postman {
+  0% {
+    transform: translate(0);
+    opacity: 1;
+  }
 
-	0% {
-		transform: translate(0);
-		opacity: 1;
-	}
+  2% {
+    transform: translate(-2em) rotate(3deg);
+  }
 
-	2% {
-		transform: translate(-2em) rotate(3deg);
-	}
+  16% {
+    transform: rotate(-3deg);
+  }
 
-	16% {
-		transform: rotate(-3deg);
-	}
-
-	100% {
-		transform: translate(100em);
-		opacity: 0;
-	}
-
+  100% {
+    transform: translate(100em);
+    opacity: 0;
+  }
 }
 
 @media screen and (min-width: 641px) {
+  .post {
+    margin-left: 1rem;
+  }
 
-	.post {
-		margin-left: 1rem;
-	}
+  .frank {
+    svg {
+      height: 6rem;
+      transform: rotate(-10deg);
+      transform-origin: right;
+    }
+  }
 
-	.frank {
-		svg {
-			height: 6rem;
-			transform: rotate(-10deg);
-			transform-origin: right;
-		}
-	}
+  .stamped {
+    flex-direction: row;
 
-	.stamped {
-		flex-direction: row;
+    .message {
+      border-right: 1px solid #ccc;
+      padding-right: 1rem;
+      border-top: 0;
+      padding-top: 0;
+    }
 
-		.message {
-			border-right: 1px solid #ccc;
-			padding-right: 1rem;
-			border-top: 0;
-			padding-top: 0;
-		}
-
-		.post {
-			width: 33%;
-		}
-	}
+    .post {
+      width: 33%;
+    }
+  }
 }
 
 @media only screen and (max-width: 862px) {
-	#personalise-form::after {
-		display: none;
-	}
+  #personalise-form::after {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 862px) {
-	.airmail.stamped {
-		font-size: 1.4rem;
-	}
+  .airmail.stamped {
+    font-size: 1.4rem;
+  }
 
-	form#personalise-form {
-		display: flex;
-		justify-content: space-between;
-		flex-direction: row-reverse;
-	}
+  form#personalise-form {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
 
-	form#personalise-form section {
-		width: 60%;
-	}
+  form#personalise-form section {
+    width: 60%;
+  }
 
-	form#personalise-form aside {
-		width: 33%;
-	}
+  form#personalise-form aside {
+    width: 33%;
+  }
 }
 
 /* 
 */
 svg#assets {
-	display: none;
+  display: none;
 }
 
-
 svg.icon {
-	width: 0.8em;
-	height: 0.8em;
-	fill: currentColor;
-	margin-bottom: -0.1em;
-	display: inline;
+  width: 0.8em;
+  height: 0.8em;
+  fill: currentColor;
+  margin-bottom: -0.1em;
+  display: inline;
 }
 
 .barnacles {
-	/* display: flex; */
-	display: none;
-	/* will be revealed by JS */
-	list-style: none;
-	margin: 0 0 2em 0;
-	padding: 0;
-	display: -ms-flexbox;
-	font-size: 2rem;
-	flex-wrap: wrap;
-	justify-content: flex-end;
-	align-items: baseline;
-	padding: 1rem;
-	border-radius: 3px;
+  /* display: flex; */
+  display: none;
+  /* will be revealed by JS */
+  list-style: none;
+  margin: 0 0 2em 0;
+  padding: 0;
+  display: -ms-flexbox;
+  font-size: 2rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: baseline;
+  padding: 1rem;
+  border-radius: 3px;
 
-	span {
-		font-size: 1rem;
-	}
+  span {
+    font-size: 1rem;
+  }
 
-	a {
-		color: white;
-	}
+  a {
+    color: white;
+  }
 
-	li {
-		display: inline-block;
-		margin-left: 1em;
-	}
+  li {
+    display: inline-block;
+    margin-left: 1em;
+  }
 
-	a:hover svg {
-		border-radius: 2px;
-		background: white;
-	}
+  a:hover svg {
+    border-radius: 2px;
+    background: white;
+  }
 
-	&::before {
-		content: "Share: ";
-		/* font-family: "Just Another Hand", cursive; */
-		color: white;
-		font-style: italic;
-		font-size: 0.6875em;
-		/* 22px */
-	}
+  &::before {
+    content: "Share: ";
+    /* font-family: "Just Another Hand", cursive; */
+    color: white;
+    font-style: italic;
+    font-size: 0.6875em;
+    /* 22px */
+  }
 }
 
 a[href*="twitter.com"]:hover use {
-	fill: #1da1f2;
+  fill: #1da1f2;
 }
 
 a[href*="facebook.com"]:hover use {
-	fill: #3b5998;
+  fill: #3b5998;
 }
 
 a[href*="linkedin.com"]:hover use {
-	fill: #007bb5;
+  fill: #007bb5;
 }
 
 a[href*="instagram.com"]:hover use {
-	fill: #3b5998;
+  fill: #3b5998;
 }
 
 a[href*="wechat.com"]:hover use {
-	fill: rgb(26, 173, 25);
+  fill: rgb(26, 173, 25);
 }
 
 a[href*="weibo.com"]:hover use {
-	fill: #C30E1B;
+  fill: #c30e1b;
 }
 
-
 #cookiebanner {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-	position: fixed;
-	top: auto;
-	bottom: 0;
-	right: 0;
-	left: 0;
+  position: fixed;
+  top: auto;
+  bottom: 0;
+  right: 0;
+  left: 0;
 
-	p {
-		margin: 0 1em;
-	}
+  p {
+    margin: 0 1em;
+  }
 
-	button {
-		margin: 0;
-	}
+  button {
+    margin: 0;
+  }
 
-	p,
-	a,
-	button {
-		font-size: 0.875rem;
-	}
+  p,
+  a,
+  button {
+    font-size: 0.875rem;
+  }
 }
 
 @media screen and (min-width: 40em) {
-	#cookiebanner {
-
-		p,
-		a,
-		button {
-			font-size: 1rem;
-		}
-	}
+  #cookiebanner {
+    p,
+    a,
+    button {
+      font-size: 1rem;
+    }
+  }
 }
