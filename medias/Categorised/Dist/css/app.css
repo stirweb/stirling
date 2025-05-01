@@ -7572,7 +7572,7 @@ svg.icon {
     .c-course-datasheet h2::after {
       content: none; }
   .c-course-datasheet .c-icon-block p {
-    font-size: 1rem; }
+    font-size: 1.125rem; }
   .c-course-datasheet .c-facts__facts a {
     border-bottom-width: 1px; }
 
@@ -7615,7 +7615,7 @@ svg.icon {
   display: flex; }
   .c-icon-block h2 {
     font-family: "General Sans", Arial, Helvetica, sans-serif;
-    font-size: 1rem;
+    font-size: 1.12rem;
     margin: 0;
     line-height: inherit;
     color: inherit;
