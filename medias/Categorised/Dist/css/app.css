@@ -780,7 +780,7 @@ html {
 /* Template */
 body {
   margin: 0;
-  font-family: "Open Sans", sans-serif !important;
+  font-family: "General Sans", sans-serif !important;
   font-size: 1rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -895,7 +895,7 @@ body > nav > a.u-show-on-focus {
   height: 8px;
   width: 0;
   left: 0;
-  bottom: -37px;
+  bottom: -38px;
   transition: width 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   /* easeOutQuart */ }
 
@@ -1460,7 +1460,7 @@ ul,
 ol,
 dl {
   margin-left: 2.5rem;
-  margin-bottom: 2rem; }
+  margin-bottom: 1rem; }
 
 ul {
   list-style-type: disc;
@@ -1512,14 +1512,14 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Open Sans", sans-serif;
+  font-family: "General Sans", sans-serif;
   font-weight: 400;
   position: relative;
   line-height: 1.5; }
 
 h2,
 h3 {
-  margin: 0 0 2rem 0;
+  margin: 0 0 1rem 0;
   padding: 0 0 2rem 0; }
 
 h3 {
@@ -1527,7 +1527,7 @@ h3 {
 
 h4,
 h5 {
-  margin: 0 0 2rem 0; }
+  margin: 0 0 1rem 0; }
 
 h4,
 h5,
@@ -1659,7 +1659,7 @@ h2.u-header-larger {
     display: none; }
 
 .u-header--secondary-font {
-  font-family: "Open Sans", sans-serif;
+  font-family: "General Sans", sans-serif;
   font-size: 1.875rem;
   /* 30px */
   font-weight: 700; }
@@ -1863,7 +1863,7 @@ h3.c-tab-accord-group-head {
   .stir-accordion > accordion-summary,
   .stir-accordion > h2 {
     display: block;
-    font-family: "Open Sans", sans-serif;
+    font-family: "General Sans", sans-serif;
     margin-bottom: 0;
     padding: 0;
     font-weight: 700;
@@ -2353,7 +2353,7 @@ button:focus {
 
 .button {
   display: inline-block;
-  font-family: "Open Sans", sans-serif !important;
+  font-family: "General Sans", sans-serif !important;
   font-size: 1.25rem;
   text-align: center;
   line-height: 1.6;
@@ -3133,7 +3133,7 @@ label {
   font-weight: 400;
   line-height: 1.8;
   color: #3a3c39;
-  font-size: 0.875rem; }
+  font-size: 1rem; }
 
 label > [type="checkbox"],
 label > [type="radio"] {
@@ -3404,7 +3404,8 @@ progress::-moz-progress-bar {
     font-size: 1rem !important; }
   .c-half-n-half .c-half-n-half__copy p,
   .c-half-n-half .c-half-n-half__copy ul li {
-    font-size: 1rem; }
+    font-size: 1.125rem;
+    /* 18px */ }
 
 /* 
     Wrapper overrides 
@@ -3704,7 +3705,7 @@ updated Aug 2022 for clearing homepage banner
 
 .c-image-text-block__alt-header {
   color: #3a3c39;
-  font-family: "Open Sans", sans-serif;
+  font-family: "General Sans", sans-serif;
   font-size: 2rem;
   margin: 0 0 32px 0; }
 
@@ -4056,7 +4057,7 @@ table caption {
     .stir-tabs [role="tabpanel"] h3::after {
       content: none; }
   .stir-tabs [role="tabpanel"] > h2 {
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-family: "General Sans", Arial, Helvetica, sans-serif;
     color: #3a3c39;
     padding: 1rem 0;
     font-weight: 700;
@@ -4124,7 +4125,7 @@ table caption {
   .stir-tabs > div > h2 {
     margin: 0;
     padding: 0;
-    font-family: "Open Sans", sans-serif; }
+    font-family: "General Sans", sans-serif; }
     .stir-tabs > div > h2::after {
       content: none; } }
 
@@ -7614,7 +7615,7 @@ svg.icon {
 .c-icon-block {
   display: flex; }
   .c-icon-block h2 {
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-family: "General Sans", Arial, Helvetica, sans-serif;
     font-size: 1rem;
     margin: 0;
     line-height: inherit;
@@ -8670,7 +8671,7 @@ svg.u-svg-32,
   font-weight: 300; }
 
 .u-font-secondary {
-  font-family: "Open Sans", sans-serif; }
+  font-family: "General Sans", sans-serif; }
 
 .u-text-callout,
 .u-callout-text {
