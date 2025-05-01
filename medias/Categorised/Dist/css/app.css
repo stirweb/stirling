@@ -2278,8 +2278,8 @@ Bleed Feature Image
     z-index: 11;
     border-bottom: 5px solid #ccc; }
     .breadcrumbs > li ul li {
-      line-height: 1.5;
-      margin-bottom: 0.7rem; }
+      line-height: 1.4;
+      margin-bottom: 0.6rem; }
   .breadcrumbs > li.is-active ul {
     display: block; }
   .breadcrumbs > li:not(.breadcrumbs__item--has-submenu):last-child > a::after {
