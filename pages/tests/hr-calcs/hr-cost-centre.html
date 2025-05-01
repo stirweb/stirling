@@ -117,25 +117,29 @@
 
                 <div class="cell  small-12 small-12 medium-10 medium-offset-1 u-padding-y  u-bg-grey u-bleed bg-grey">
                     <form id="fte-form" class="u-mb-2 u-bg-white u-p-2 u-medium-grey-line u-border">
-                        <label for="fte-total-hours" class="u-mt-1">Total FTE for the contract</label>
+                        <label for="fte-total-hours" class="u-mt-1 u-font-bold">Total FTE for the contract </label>
                         <input type="text" id="fte-total-hours" name="fte-total-hours" class="u-input u-mt-1 u-border"
-                            placeholder="Enter value">
+                            placeholder="Enter value (%)">
 
-                        <label for="fte-cost-centre-1" class="u-mt-1">FTE to be charged to Cost Centre 1</label>
+                        <label for="fte-cost-centre-1" class="u-mt-1 u-font-bold">FTE to be charged to Cost Centre
+                            1</label>
                         <input type="text" id="fte-cost-centre-1" name="fte-cost-centre-1"
-                            class="u-input u-mt-1 u-border" placeholder="Enter value">
+                            class="u-input u-mt-1 u-border" placeholder="Enter value (%)">
 
-                        <label for="fte-cost-centre-2" class="u-mt-1">FTE to be charged to Cost Centre 2</label>
+                        <label for="fte-cost-centre-2" class="u-mt-1 u-font-bold">FTE to be charged to Cost Centre
+                            2</label>
                         <input type="text" id="fte-cost-centre-2" name="fte-cost-centre-2"
-                            class="u-input u-mt-1 u-border" placeholder="Enter value">
+                            class="u-input u-mt-1 u-border" placeholder="Enter value (%)">
 
-                        <label for="fte-cost-centre-3" class="u-mt-1">FTE to be charged to Cost Centre 3</label>
+                        <label for="fte-cost-centre-3" class="u-mt-1 u-font-bold">FTE to be charged to Cost Centre
+                            3</label>
                         <input type="text" id="fte-cost-centre-3" name="fte-cost-centre-3"
-                            class="u-input u-mt-1 u-border" placeholder="Enter value">
+                            class="u-input u-mt-1 u-border" placeholder="Enter value (%)">
 
-                        <label for="fte-cost-centre-4" class="u-mt-1">FTE to be charged to Cost Centre 4</label>
+                        <label for="fte-cost-centre-4" class="u-mt-1 u-font-bold">FTE to be charged to Cost Centre
+                            4</label>
                         <input type="text" id="fte-cost-centre-4" name="fte-cost-centre-4"
-                            class="u-input u-mt-1 u-border" placeholder="Enter value">
+                            class="u-input u-mt-1 u-border" placeholder="Enter value (%)">
 
                         <button type="submit"
                             class="button expanded u-mt-1 align-center align-middle no-arrow u-mt-2 u-gap-8 u-inline-flex">
@@ -161,59 +165,74 @@
 
 <script>
 
-
-
-
     (function () {
-        // Get reference to the form and result div
-        const fteForm = document.getElementById('fte-form');
-        const fteResult = document.getElementById('fte-result');
+        // Helper function to extract form values
+        const getFormValues = form => ({
+            totalFTE: parseFloat(form.querySelector('#fte-total-hours').value) || 0,
+            costCentre1: parseFloat(form.querySelector('#fte-cost-centre-1').value) || 0,
+            costCentre2: parseFloat(form.querySelector('#fte-cost-centre-2').value) || 0,
+            costCentre3: parseFloat(form.querySelector('#fte-cost-centre-3').value) || 0,
+            costCentre4: parseFloat(form.querySelector('#fte-cost-centre-4').value) || 0
+        });
 
-        // Add event listener for form submission
-        fteForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent form from submitting normally
+        // Helper function to validate input
+        const validateInput = values =>
+            values.totalFTE <= 0
+                ? { isValid: false, errorMessage: '<p class="u-error">Please enter a valid total FTE value greater than 0.</p>' }
+                : { isValid: true };
 
-            // Get values from the form inputs
-            const totalFTE = parseFloat(document.getElementById('fte-total-hours').value) || 0;
-            const costCentre1 = parseFloat(document.getElementById('fte-cost-centre-1').value) || 0;
-            const costCentre2 = parseFloat(document.getElementById('fte-cost-centre-2').value) || 0;
-            const costCentre3 = parseFloat(document.getElementById('fte-cost-centre-3').value) || 0;
-            const costCentre4 = parseFloat(document.getElementById('fte-cost-centre-4').value) || 0;
+        // Helper function to calculate percentages
+        const calculatePercentages = values => {
+            const { totalFTE, costCentre1, costCentre2, costCentre3, costCentre4 } = values;
 
-            // Check if totalFTE is valid
-            if (totalFTE <= 0) {
-                fteResult.innerHTML = '<p class="u-error">Please enter a valid total FTE value greater than 0.</p>';
-                return;
-            }
+            const calculatePercent = value => ((value / totalFTE) * 100).toFixed(2);
 
-            // Calculate percentages for each cost center
-            const percent1 = ((costCentre1 / totalFTE) * 100).toFixed(2);
-            const percent2 = ((costCentre2 / totalFTE) * 100).toFixed(2);
-            const percent3 = ((costCentre3 / totalFTE) * 100).toFixed(2);
-            const percent4 = ((costCentre4 / totalFTE) * 100).toFixed(2);
+            const percentages = [
+                calculatePercent(costCentre1),
+                calculatePercent(costCentre2),
+                calculatePercent(costCentre3),
+                calculatePercent(costCentre4)
+            ];
 
-            // Calculate total percentage
-            const totalPercent = (
-                parseFloat(percent1) +
-                parseFloat(percent2) +
-                parseFloat(percent3) +
-                parseFloat(percent4)
-            ).toFixed(2);
+            const totalPercent = percentages
+                .map(parseFloat)
+                .reduce((sum, percent) => sum + percent, 0)
+                .toFixed(2);
 
-            // Display results
-            let resultHTML = `<div class="u-mt-2 u-p-2 u-medium-grey-line u-border u-bg-light-grey text-sm">
-                                <p><strong>Percentage to be charged to:</strong></p>
-                                <p class="u-flex"><span class="u-flex1">Cost Centre 1:</span> <strong class="u-heritage-green">${percent1}%</strong></p>
-                                <p class="u-flex"><span class="u-flex1"> Cost Centre 2:</span> <strong class="u-heritage-green">${percent2}%</strong></p>
-                                <p class="u-flex"><span class="u-flex1">Cost Centre 3:</span> <strong class="u-heritage-green">${percent3}%</strong></p>
-                                <p class="u-flex"><span class="u-flex1">Cost Centre 4:</span> <strong class="u-heritage-green">${percent4}%</strong></p>
-                                                            
-                                <hr />
-                                <p class="u-flex"><span class="u-flex1">Total Cost Centre split:</span> <strong class="u-heritage-green">${totalPercent}%</strong></p>
-                            
-                            </div>`;
+            return { percentages, totalPercent };
+        };
 
-            fteResult.innerHTML = resultHTML;
+        // Helper function to generate result HTML
+        const renderResult = ({ percentages, totalPercent }) => `
+            <div class="u-mt-2 u-p-2 u-medium-grey-line u-border u-bg-light-grey text-sm">
+                <p><strong>Percentage to be charged to:</strong></p>
+                <p class="u-flex"><span class="u-flex1">Cost Centre 1:</span> <strong class="u-heritage-green">${percentages[0]}%</strong></p>
+                <p class="u-flex"><span class="u-flex1"> Cost Centre 2:</span> <strong class="u-heritage-green">${percentages[1]}%</strong></p>
+                <p class="u-flex"><span class="u-flex1">Cost Centre 3:</span> <strong class="u-heritage-green">${percentages[2]}%</strong></p>
+                <p class="u-flex"><span class="u-flex1">Cost Centre 4:</span> <strong class="u-heritage-green">${percentages[3]}%</strong></p>                          
+                <hr />
+                <p class="u-flex"><span class="u-flex1">Total Cost Centre split:</span> <strong class="u-heritage-green">${totalPercent}%</strong></p>
+                <hr />
+                <p class="u-heritage-berry text-center">Cost centre splits should be confirmed with Finance before processing on SAP</p>
+            </div>
+        `;
+
+        // Function composition to process form data
+        const processForm = form => {
+            const values = getFormValues(form);
+            const validation = validateInput(values);
+
+            if (!validation.isValid) return validation.errorMessage;
+
+            const calculationResult = calculatePercentages(values);
+            return renderResult(calculationResult);
+        };
+
+        // Set up event listener (side effect)
+        document.getElementById('fte-form').addEventListener('submit', event => {
+            event.preventDefault();
+            const resultElement = document.getElementById('fte-result');
+            resultElement.innerHTML = processForm(event.target);
         });
     })();
 
