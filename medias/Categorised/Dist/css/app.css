@@ -4349,8 +4349,6 @@ cite:before {
   /*
     Blockquote
   */ }
-  .c-wysiwyg-content ul {
-    margin-bottom: 16px; }
   .c-wysiwyg-content p + blockquote:not(.c-pullquote) {
     margin: 60px auto 0; }
     .c-wysiwyg-content p + blockquote:not(.c-pullquote) + p:not(.quote-attribute) {
@@ -4392,10 +4390,6 @@ cite:before {
   .c-wysiwyg-content .quote-attribute {
     margin: 0 auto 40px; } }
 
-/*
-    Testimonial - Full 
-    Doesnt seem to do anything
-*/
 .c-zoom {
   position: relative;
   width: 100%;

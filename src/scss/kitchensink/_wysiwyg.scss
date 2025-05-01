@@ -5,10 +5,6 @@
 .c-wysiwyg-content {
   overflow-x: auto;
 
-  ul {
-    margin-bottom: 16px;
-  }
-
   /*
     Blockquote
   */
@@ -54,7 +50,6 @@
     font-weight: 600;
     margin: 0 auto 60px;
     max-width: 960px;
-    // padding-left: 35px;
   }
 }
 
@@ -97,23 +92,3 @@
     }
   }
 }
-
-/*
-    Testimonial - Full 
-    Doesnt seem to do anything
-*/
-
-// .c-wysiwyg-content .c-blockquote--simple,
-// .c-blockquote--simple {
-//   border: none;
-//   font-weight: normal;
-//   max-width: initial;
-//   padding: 0;
-// }
-
-// .c-wysiwyg-content .c-blockquote--simple p,
-// .c-wysiwyg-content .c-blockquote--simple li,
-// .c-blockquote--simple li,
-// .c-blockquote--simple p {
-//   color: $black;
-// }
