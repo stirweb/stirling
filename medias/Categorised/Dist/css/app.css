@@ -2248,7 +2248,8 @@ Bleed Feature Image
     font-weight: bold; }
   .breadcrumbs li:empty {
     display: none; }
-  .breadcrumbs li, .breadcrumbs a {
+  .breadcrumbs li,
+  .breadcrumbs a {
     font-size: 1rem; }
   .breadcrumbs > li:last-child > a {
     font-weight: 700; }
@@ -2258,9 +2259,9 @@ Bleed Feature Image
     font-size: 12px;
     content: " \e97b"; }
   .breadcrumbs > li.breadcrumbs__item--has-submenu > a::after {
-    content: " "; }
+    content: " \e981"; }
   .breadcrumbs > li.is-active > a::after {
-    content: " "; }
+    content: " \e979"; }
   .breadcrumbs > li ul {
     display: none;
     position: absolute;
@@ -2275,7 +2276,8 @@ Bleed Feature Image
     z-index: 11;
     border-bottom: 5px solid #ccc; }
     .breadcrumbs > li ul li {
-      line-height: 2; }
+      line-height: 1.5;
+      margin-bottom: 0.7rem; }
   .breadcrumbs > li.is-active ul {
     display: block; }
   .breadcrumbs > li:not(.breadcrumbs__item--has-submenu):last-child > a::after {
@@ -2283,7 +2285,8 @@ Bleed Feature Image
 
 .breadcrumbs--internal {
   border-color: #006938; }
-  .breadcrumbs--internal li, .breadcrumbs--internal a {
+  .breadcrumbs--internal li,
+  .breadcrumbs--internal a {
     color: #fff; }
   .breadcrumbs--internal li ul {
     background-color: #006938; }
