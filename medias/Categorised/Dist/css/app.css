@@ -1576,20 +1576,6 @@ a:hover {
   text-decoration-color: #77bf22; }
 
 /* 
- *
- *  OVERRIDES - MOVE!
- *
-*/
-/* 
-    stir-tabs
-*/
-.stir-tabs h3 {
-  font-size: 1.313rem; }
-
-.stir-tabs h4 {
-  font-size: 1.125rem; }
-
-/* 
     P Variations 
 */
 p.smaller {
@@ -4016,6 +4002,10 @@ table caption {
   margin-top: 2rem;
   /* accordion trigger */
   /* needed because of WYSIWYG H3 styling specificity */ }
+  .stir-tabs h3 {
+    font-size: 1.313rem; }
+  .stir-tabs h4 {
+    font-size: 1.125rem; }
   .stir-tabs [role="tablist"] {
     display: none; }
   .stir-tabs [role="tab"] {
@@ -4024,10 +4014,7 @@ table caption {
     border-style: solid;
     border-color: transparent;
     color: #006938;
-    cursor: pointer;
-    /* &[aria-selected="false"] {
-			border-top-color: #ccc;
-		} */ }
+    cursor: pointer; }
     .stir-tabs [role="tab"][aria-selected="true"] {
       color: #3a3c39;
       border-top-color: #77bf22;
