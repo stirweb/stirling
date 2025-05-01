@@ -2,100 +2,102 @@
  * @group breadcrumbs
  */
 
- .breadcrumbs {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	gap: 1rem;
-	position: relative;
-	border: 0 solid $bg-grey;
-	border-width: 1.125rem 0;
+.breadcrumbs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  border: 0 solid $bg-grey;
+  border-width: 1.125rem 0;
 
-	.currentsection {
-		font-weight: bold;
-	}
+  .currentsection {
+    font-weight: bold;
+  }
 
-	li:empty {
-		display: none;
-	}
-	
-	li, a {
-		font-size: 1rem;
-	}
+  li:empty {
+    display: none;
+  }
 
-	> li {
+  li,
+  a {
+    font-size: 1rem;
+  }
 
-		&:last-child > a {
-			font-weight: 700;
-		}
+  > li {
+    &:last-child > a {
+      font-weight: 700;
+    }
 
-		> a::after {
-			font-family: "uos";
-			color: currentColor;
-			font-size: 12px;
-			content: " \e97b"; // chevron-right
-		}
+    > a::after {
+      font-family: "uos";
+      color: currentColor;
+      font-size: 12px;
+      content: " \e97b"; // chevron-right
+    }
 
-		&.breadcrumbs__item--has-submenu > a::after {
-			content: " \e981"	// plus
-		}
-		&.is-active > a::after {
-			  content: " \e979" // downron
-		}
+    &.breadcrumbs__item--has-submenu > a::after {
+      content: " \e981"; // plus
+    }
+    &.is-active > a::after {
+      content: " \e979"; // downron
+    }
 
-		ul {
-			display: none;
-			position: absolute;
-			top:3rem;
-			right: 0;
-			bottom: auto;
-			left: 0;
+    ul {
+      display: none;
+      position: absolute;
+      top: 3rem;
+      right: 0;
+      bottom: auto;
+      left: 0;
 
-			list-style: none;
-			margin: 0;
-			padding: 1rem;
-			background-color: $bg-grey;
-			z-index: z($z-index-elements, breadcrumbs-submenu);
-			border-bottom: 5px solid #ccc;
+      list-style: none;
+      margin: 0;
+      padding: 1rem;
+      background-color: $bg-grey;
+      z-index: z($z-index-elements, breadcrumbs-submenu);
+      border-bottom: 5px solid #ccc;
 
-			li {
-				line-height: 2;
-			}
-		}
+      li {
+        line-height: 1.5;
+        margin-bottom: 0.7rem;
+      }
+    }
 
-		&.is-active ul {
-			display: block;
-		}
+    &.is-active ul {
+      display: block;
+    }
 
-		&:not(.breadcrumbs__item--has-submenu):last-child > a::after {
-			content: none;
-		}
-	}
- }
-
- .breadcrumbs--internal {
-	border-color: $heritage-green;
-	li, a {
-		color: $white;
-	}
-	li ul {
-		background-color: $heritage-green;
-	}
+    &:not(.breadcrumbs__item--has-submenu):last-child > a::after {
+      content: none;
+    }
+  }
 }
 
- @media screen and (min-width: 64rem) {
-	.breadcrumbs {
-		border-width: 2.125rem 0;
-		gap: 2rem;
+.breadcrumbs--internal {
+  border-color: $heritage-green;
+  li,
+  a {
+    color: $white;
+  }
+  li ul {
+    background-color: $heritage-green;
+  }
+}
 
-		> li {
-			position: relative;
+@media screen and (min-width: 64rem) {
+  .breadcrumbs {
+    border-width: 2.125rem 0;
+    gap: 2rem;
 
-			ul {
-				min-width: 30ch;
-				left: -1rem;
-			}
-		}
-	}
- }
+    > li {
+      position: relative;
+
+      ul {
+        min-width: 30ch;
+        left: -1rem;
+      }
+    }
+  }
+}
