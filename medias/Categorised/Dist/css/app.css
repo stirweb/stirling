@@ -4075,7 +4075,7 @@ table caption {
     .stir-tabs [role="region"] p,
     .stir-tabs [role="region"] li,
     .stir-tabs [role="region"] td {
-      font-size: 1rem; }
+      font-size: 1.125rem; }
     .stir-tabs [role="tabpanel"] [data-behaviour="accordion"] > h3,
     .stir-tabs [role="region"] [data-behaviour="accordion"] > h3 {
       padding: 0;
@@ -4630,8 +4630,7 @@ li.c-colour-swatch__pms:before {
   /* 36px */ }
 
 .c-facts__facts {
-  font-size: 1rem;
-  /* 16px */
+  font-size: 1.125rem;
   margin-bottom: 0;
   list-style: none;
   margin: 0;
@@ -4655,7 +4654,7 @@ li.c-colour-swatch__pms:before {
 .c-facts__fact-heading {
   font-weight: 700; }
   .c-facts__fact-heading::after {
-    content: ' -'; }
+    content: " -"; }
 
 .c-facts__course-leaflet-link {
   margin-top: 30px;
