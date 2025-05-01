@@ -3404,7 +3404,8 @@ progress::-moz-progress-bar {
     font-size: 1rem !important; }
   .c-half-n-half .c-half-n-half__copy p,
   .c-half-n-half .c-half-n-half__copy ul li {
-    font-size: 1rem; }
+    font-size: 1.125rem;
+    /* 18px */ }
 
 /* 
     Wrapper overrides 
