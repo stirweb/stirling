@@ -25,6 +25,10 @@
     font-size: 1rem;
   }
 
+  > li > a {
+    font-size: 1.125rem;
+  }
+
   > li {
     &:last-child > a {
       font-weight: 700;
