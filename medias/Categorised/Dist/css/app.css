@@ -2251,6 +2251,8 @@ Bleed Feature Image
   .breadcrumbs li,
   .breadcrumbs a {
     font-size: 1rem; }
+  .breadcrumbs > li > a {
+    font-size: 1.125rem; }
   .breadcrumbs > li:last-child > a {
     font-weight: 700; }
   .breadcrumbs > li > a::after {
