@@ -1576,23 +1576,10 @@ a:hover {
   text-decoration-color: #77bf22; }
 
 /* 
-
-
-    OVERRIDES - MOVE!
-
-    
+ *
+ *  OVERRIDES - MOVE!
+ *
 */
-/* 
-    c-wysiwyg-content 
-*/
-.c-wysiwyg-content h2:first-of-type,
-.c-wysiwyg-content h3:first-of-type {
-  margin: 0 0 30px 0;
-  padding: 0 0 30px 0; }
-
-.c-wysiwyg-content ol:not(.numberlist) > li {
-  margin-bottom: 1em; }
-
 /* 
     stir-tabs
 */
@@ -1606,9 +1593,9 @@ a:hover {
     P Variations 
 */
 p.smaller {
-  font-size: 1rem; }
+  font-size: 1.125rem; }
   p.smaller a.c-link {
-    font-size: 1rem;
+    font-size: 1.125rem;
     border-bottom: none; }
     p.smaller a.c-link::after {
       margin: 0 0 0 2px;
@@ -4390,6 +4377,17 @@ cite:before {
     font-weight: 600;
     margin: 0 auto 60px;
     max-width: 960px; }
+
+/*
+  Moved from Type
+*/
+.c-wysiwyg-content h2:first-of-type,
+.c-wysiwyg-content h3:first-of-type {
+  margin: 0 0 1rem 0;
+  padding: 0 0 30px 0; }
+
+.c-wysiwyg-content ol:not(.numberlist) > li {
+  margin-bottom: 1rem; }
 
 @media screen and (max-width: 89.99875em) {
   .c-wysiwyg-content p + blockquote {
