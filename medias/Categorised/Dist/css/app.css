@@ -4139,8 +4139,7 @@ table caption {
 cite {
   color: #3a3c39;
   font-style: normal;
-  font-size: 1rem;
-  /* 16px */
+  font-size: 1.125rem;
   margin: 0 0 24px 0; }
 
 cite:before {
