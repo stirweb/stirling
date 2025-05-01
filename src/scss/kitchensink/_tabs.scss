@@ -5,6 +5,14 @@
 .stir-tabs {
   margin-top: 2rem;
 
+  h3 {
+    font-size: 1.313rem;
+  }
+
+  h4 {
+    font-size: 1.125rem;
+  }
+
   [role="tablist"] {
     display: none;
   }
@@ -23,9 +31,6 @@
       border-bottom-color: #ccc;
       background-color: #f6f5f4;
     }
-    /* &[aria-selected="false"] {
-			border-top-color: #ccc;
-		} */
   }
 
   [role="tabpanel"] {
