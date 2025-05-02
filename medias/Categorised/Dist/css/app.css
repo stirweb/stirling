@@ -1406,7 +1406,7 @@ picture.objfitcover > img,
     Base Sizes 
 */
 h1 {
-  font-size: 2rem; }
+  font-size: 2.125rem; }
 
 h2 {
   font-size: 1.875rem; }
@@ -1539,7 +1539,6 @@ h2,
 h2 > strong {
   color: #006938;
   font-family: "FSMaja", serif;
-  font-size: 2.25rem;
   font-weight: 300; }
 
 h2:after,
