@@ -1,68 +1,68 @@
 // Key facts
 
 .c-facts {
-    padding: 42px 0;
+  padding: 42px 0;
 }
 
 .c-facts__heading {
-    margin-bottom: 10px;
-    font-weight: 300;
-    color: $white;
-    font-family: $header-font-family;
-    font-size: 2.25rem; /* 36px */
+  margin-bottom: 10px;
+  font-weight: 300;
+  color: $white;
+  font-family: $header-font-family;
+  font-size: 2.25rem; /* 36px */
 }
 
 .c-facts__facts {
+  font-size: 1.125rem;
+  margin-bottom: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  p,
+  li,
+  th,
+  td {
     font-size: 1rem; /* 16px */
-    margin-bottom: 0;
-    list-style: none;
+  }
+
+  li {
+    display: inline;
+    margin: 0 32px 6px 0;
+  }
+
+  &:last-child {
     margin: 0;
-    padding: 0;
-
-    p,
-    li,
-    th,
-    td {
-        font-size: 1rem; /* 16px */
-    }
-
-    li {
-        display: inline;
-        margin: 0 32px 6px 0;
-    }
-
-    &:last-child {
-        margin: 0;
-    }
+  }
 }
 
 @media screen and #{breakpoint(small down)} {
-    .c-facts__facts {
-        li {
-            display: block;
-        }
+  .c-facts__facts {
+    li {
+      display: block;
     }
+  }
 }
 
 .c-facts__fact-heading {
-    font-weight: 700;
+  font-weight: 700;
 
-    &::after {
-        content: ' -';
-    }
+  &::after {
+    content: " -";
+  }
 }
 
 .c-facts__course-leaflet-link {
-    margin-top: 30px;
-    margin-bottom: 0;
+  margin-top: 30px;
+  margin-bottom: 0;
 
-    a {
-        color: $white;
-        text-decoration: none;
-        font-size: 1rem; /* 16px */
+  a {
+    color: $white;
+    text-decoration: none;
+    font-size: 1rem; /* 16px */
 
-        &:hover {
-            text-decoration: underline;
-        }
+    &:hover {
+      text-decoration: underline;
     }
+  }
 }

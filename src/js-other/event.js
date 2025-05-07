@@ -46,17 +46,22 @@
 
   const renderInfoTag = (info) => `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span><br/>`;
 
+  const renderLink = (item) => {
+    if (!item.url) return `${item.title}<br />`;
+    return `<a href="${item.url}" class="u-underline">${item.title}</a><br />`;
+  };
+
   const renderEvent = (item, index) => {
     return `
         <div class="${index % 2 === 1 ? `` : `u-bg-grey`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : ``} u-p-1 c-event-list u-gap">
           <div >
             ${item.cancelled ? renderInfoTag("Cancelled") : ``}${item.rescheduled ? renderInfoTag("Rescheduled") : ``} 
             <span class="u-inline-block u-mb-1"><strong>Event</strong><br />
-            <a href="${item.url}">${item.title}</a></span><br />
+           ${renderLink(item)}
             <strong >Date:</strong> ${item.stirStart} ${item.stirEnd !== item.stirStart ? ` - ` + item.stirEnd : ``} <br />
             <strong>Time:</strong> ${item.startTime} - ${item.endTime}
           </div>
-          <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${item.summary} </span></div>
+          <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${item.summary}<br /><strong>Location</strong><br />${item.location}.</span></div>
           <div><span class="u-inline-block u-mb-1">${renderAudience(item.audience)}</span></div>
           <div><span class="u-inline-block u-mb-1">${item.recording ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>` : ``}</span></div>
         </div>`;

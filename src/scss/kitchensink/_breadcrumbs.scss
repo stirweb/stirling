@@ -2,100 +2,106 @@
  * @group breadcrumbs
  */
 
- .breadcrumbs {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	gap: 1rem;
-	position: relative;
-	border: 0 solid $bg-grey;
-	border-width: 1.125rem 0;
+.breadcrumbs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  border: 0 solid $bg-grey;
+  border-width: 1.125rem 0;
 
-	.currentsection {
-		font-weight: bold;
-	}
+  .currentsection {
+    font-weight: bold;
+  }
 
-	li:empty {
-		display: none;
-	}
-	
-	li, a {
-		font-size: 1rem;
-	}
+  li:empty {
+    display: none;
+  }
 
-	> li {
+  li,
+  a {
+    font-size: 1rem;
+  }
 
-		&:last-child > a {
-			font-weight: 700;
-		}
+  > li > a {
+    font-size: 1.125rem;
+  }
 
-		> a::after {
-			font-family: "uos";
-			color: currentColor;
-			font-size: 12px;
-			content: " \e97b"; // chevron-right
-		}
+  > li {
+    &:last-child > a {
+      font-weight: 700;
+    }
 
-		&.breadcrumbs__item--has-submenu > a::after {
-			content: " \e981"	// plus
-		}
-		&.is-active > a::after {
-			  content: " \e979" // downron
-		}
+    > a::after {
+      font-family: "uos";
+      color: currentColor;
+      font-size: 12px;
+      content: " \e97b"; // chevron-right
+    }
 
-		ul {
-			display: none;
-			position: absolute;
-			top:3rem;
-			right: 0;
-			bottom: auto;
-			left: 0;
+    &.breadcrumbs__item--has-submenu > a::after {
+      content: " \e981"; // plus
+    }
+    &.is-active > a::after {
+      content: " \e979"; // downron
+    }
 
-			list-style: none;
-			margin: 0;
-			padding: 1rem;
-			background-color: $bg-grey;
-			z-index: 2;
-			border-bottom: 5px solid #ccc;
+    ul {
+      display: none;
+      position: absolute;
+      top: 3rem;
+      right: 0;
+      bottom: auto;
+      left: 0;
 
-			li {
-				line-height: 2;
-			}
-		}
+      list-style: none;
+      margin: 0;
+      padding: 1rem;
+      background-color: $bg-grey;
+      z-index: z($z-index-elements, breadcrumbs-submenu);
+      border-bottom: 5px solid #ccc;
 
-		&.is-active ul {
-			display: block;
-		}
+      li {
+        line-height: 1.4;
+        margin-bottom: 0.6rem;
+      }
+    }
 
-		&:not(.breadcrumbs__item--has-submenu):last-child > a::after {
-			content: none;
-		}
-	}
- }
+    &.is-active ul {
+      display: block;
+    }
 
- .breadcrumbs--internal {
-	border-color: $heritage-green;
-	li, a {
-		color: $white;
-	}
-	li ul {
-		background-color: $heritage-green;
-	}
+    &:not(.breadcrumbs__item--has-submenu):last-child > a::after {
+      content: none;
+    }
+  }
 }
 
- @media screen and (min-width: 64rem) {
-	.breadcrumbs {
-		border-width: 2.125rem 0;
-		gap: 2rem;
+.breadcrumbs--internal {
+  border-color: $heritage-green;
+  li,
+  a {
+    color: $white;
+  }
+  li ul {
+    background-color: $heritage-green;
+  }
+}
 
-		> li {
-			position: relative;
+@media screen and (min-width: 64rem) {
+  .breadcrumbs {
+    border-width: 2.125rem 0;
+    gap: 2rem;
 
-			ul {
-				min-width: 30ch;
-				left: -1rem;
-			}
-		}
-	}
- }
+    > li {
+      position: relative;
+
+      ul {
+        min-width: 30ch;
+        left: -1rem;
+      }
+    }
+  }
+}

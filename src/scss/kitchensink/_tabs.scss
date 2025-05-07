@@ -5,6 +5,14 @@
 .stir-tabs {
   margin-top: 2rem;
 
+  h3 {
+    font-size: 1.313rem;
+  }
+
+  h4 {
+    font-size: 1.125rem;
+  }
+
   [role="tablist"] {
     display: none;
   }
@@ -23,9 +31,6 @@
       border-bottom-color: #ccc;
       background-color: #f6f5f4;
     }
-    /* &[aria-selected="false"] {
-			border-top-color: #ccc;
-		} */
   }
 
   [role="tabpanel"] {
@@ -43,7 +48,7 @@
       }
     }
     > h2 {
-      font-family: "Open Sans", Arial, Helvetica, sans-serif;
+      font-family: "General Sans", Arial, Helvetica, sans-serif;
       color: $black;
       padding: 1rem 0;
       font-weight: 700;
@@ -63,7 +68,7 @@
     p,
     li,
     td {
-      font-size: 1rem;
+      font-size: 1.125rem;
     }
     [data-behaviour="accordion"] > h3 {
       padding: 0;
@@ -138,7 +143,7 @@
   .stir-tabs > div > h2 {
     margin: 0;
     padding: 0;
-    font-family: "Open Sans", sans-serif;
+    font-family: "General Sans", sans-serif;
     &::after {
       content: none;
     }
