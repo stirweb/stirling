@@ -98,7 +98,7 @@ $uos-web-supplementary: (
   white: $white,
   dark-grey: $dark-grey,
   // reinstated by Martyn
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -161,7 +161,7 @@ $uos-wp-palette: (
 
 $body-background: $white;
 $body-font-color: $black;
-$body-font-family: "Open Sans", sans-serif; //'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+$body-font-family: "General Sans", sans-serif; //'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 $body-antialiased: true;
 $global-margin: 1rem;
 $global-padding: 1rem;

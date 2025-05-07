@@ -6,7 +6,7 @@
     h2,
     h3 {
       padding-bottom: 0;
-      font-family: "Open Sans", sans-serif;
+      font-family: "General Sans", sans-serif;
     }
 
     h2::after,
@@ -108,7 +108,7 @@
   &:focus {
     outline: none;
     #star {
-      outline: 2px solid white; 
+      outline: 2px solid white;
       outline-offset: 1px;
     }
   }
