@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 var stir = stir || {};
 stir.templates = stir.templates || {};
 
@@ -182,8 +181,6 @@ stir.akari = (() => {
 	};
 
 })();
-=======
->>>>>>> Stashed changes
 /*
  * Country specific entry requirements select box processes
  * @author: Ryan Kaye
@@ -631,11 +628,7 @@ stir.dpt = (function () {
 
   const urls = {
     // Akari module viewer:
-<<<<<<< Updated upstream
     viewer: window.location.hostname != "www.stir.ac.uk" ? `/terminalfour/preview/1/en/33273` : "/courses/module/",
-=======
-    viewer: window.location.hostname != "www.stir.ac.uk" ? `https://${window.location.hostname}/terminalfour/preview/1/en/33273` : "/courses/module/",
->>>>>>> Stashed changes
     // Portal web frontend:
     calendar: `${PORTAL}/calendar/calendar`,
     // Portal data endpoints:
@@ -694,11 +687,7 @@ stir.dpt = (function () {
   const moduleLink = (data) => {
     // LINK TO NEW AKARI MODULE PAGES
     const url = `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
-<<<<<<< Updated upstream
 	return availability(data) ? `<a href="${url}" data-spa="${data.modCode}/${data.mavSemSession}/${data.mavSemCode}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
-=======
-	return availability(data) ? `<a href="${url}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
->>>>>>> Stashed changes
 	
     // LINK TO OLD DEGREE PROGRAM TABLES
     //return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
@@ -796,15 +785,12 @@ stir.dpt = (function () {
     e.preventDefault();
   }
 
-<<<<<<< Updated upstream
   function viewModule(e) {
     e.preventDefault();
     stir.dpt.reset.module();
     stir.dpt.show.module(this.getAttribute('data-spa'),this.getAttribute('href'));
   }
 
-=======
->>>>>>> Stashed changes
   const versionToSession = (data) => {
     if(!data || !data.length) return;
 	// [2024-03-14] rwm2 -- remove DEBUG test to make it live --
@@ -866,14 +852,11 @@ stir.dpt = (function () {
       var a = el.querySelector(".c-course-modules__view-more-link a");
       a && a.addEventListener("click", viewMore.bind(el));
     });
-<<<<<<< Updated upstream
     
     Array.prototype.forEach.call(frag.querySelectorAll("a[data-spa]"), el => {
       el.addEventListener("click", viewModule.bind(el));
     });
 
-=======
->>>>>>> Stashed changes
 
     return frag;
   };
@@ -956,10 +939,7 @@ stir.dpt = (function () {
       routes: new Function(),
       options: new Function(),
       modules: new Function(),
-<<<<<<< Updated upstream
       module: new Function(),
-=======
->>>>>>> Stashed changes
       version: new Function()
     },
     get: {
@@ -969,10 +949,7 @@ stir.dpt = (function () {
       version: getVersion
     },
     reset: {
-<<<<<<< Updated upstream
       module: new Function(),
-=======
->>>>>>> Stashed changes
       modules: new Function(),
       options: new Function()
     },
@@ -996,17 +973,11 @@ stir.dpt = (function () {
             }
           }),
         modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data))),
-<<<<<<< Updated upstream
         module:  (callback) => (stir.dpt.show.module  =  (a,b) => callback(a,b)),
         version: (callback) => (stir.dpt.show.version = (data) => callback(versionToSession(data)))
       },
       reset: {
         module:  (callback) => (stir.dpt.reset.module = callback),
-=======
-        version: (callback) => (stir.dpt.show.version = (data) => callback(versionToSession(data)))
-      },
-      reset: {
->>>>>>> Stashed changes
         modules: (callback) => (stir.dpt.reset.modules = callback),
         options: (callback) => (stir.dpt.reset.options = callback),
       },
@@ -1295,7 +1266,6 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
  */
 
 var stir = stir || {};
-<<<<<<< Updated upstream
 
 stir.course = (boilerplates => {
 	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
@@ -1303,39 +1273,11 @@ stir.course = (boilerplates => {
 
 	if(!stir.dpt) return na;
 	if(!stir.akari) return na;
-=======
-stir.templates = stir.templates || {};
-
-
-stir.templates.course = {
-	link: (text,href) => `<a href="${href}">${text}</a>`,
-	para: content => `<p>${content}</p>`,
-	option: option => `Starting ${option[3]}, ${option[1].toLowerCase()} (${option[4]})`,
-	div: (id,onclick) => {
-		const div = document.createElement('div');
-		div.id = id; div.onclick = onclick;
-		return div;
-	},
-	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,
-
-	offline: `<p class="text-center c-callout">Module information is temporarily unavailable.</p>`,
-
-	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2024. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
-};
-
-
-stir.course = (function() {
-
-	const na = {auto: new Function()};
-
-	if(!stir.dpt) return na;
->>>>>>> Stashed changes
 
 	const container = document.getElementById('course-modules-container');
 	const el = document.querySelector("[data-modules-route-code][data-modules-course-type]");
 	if(!container || !el) return na;
 	
-<<<<<<< Updated upstream
 	const routeChooser  = stir.templates.course.div('routeBrowser');
 	const optionChooser = stir.templates.course.div('optionBrowser');
 	const moduleBrowser = stir.templates.course.div('moduleBrowser');
@@ -1344,12 +1286,6 @@ stir.course = (function() {
 	const version = document.querySelector('time[data-sits]');
 	const spinner = new stir.Spinner(moduleViewer);
 	const status = {}; // used to track modal/url changes
-=======
-	const routeChooser = stir.templates.course.div('routeBrowser');
-	const optionChooser = stir.templates.course.div('optionBrowser');
-	const moduleBrowser = stir.templates.course.div('moduleBrowser');
-	const version = document.querySelector('time[data-sits]');
->>>>>>> Stashed changes
 
 	let initialised = false;
 
@@ -1366,7 +1302,6 @@ stir.course = (function() {
 		});
 	};
 
-<<<<<<< Updated upstream
 	const render = data => {
 		debug && console.info('[Modules] data',data);
 		moduleInfo.innerHTML = stir.templates.course.module(boilerplates, data);
@@ -1384,28 +1319,18 @@ stir.course = (function() {
 			history.pushState(null,"",url);
 			status.history = status.moduleViewer = true;
 		},
-=======
-	const handle = {
-		routes: frag => routeChooser.append(frag),
-		options: frag => optionChooser.append(frag),
-		modules: frag => {moduleBrowser.append(frag);reflow()},
->>>>>>> Stashed changes
 		version: frag => version && frag && (version.textContent = frag)
 	};
 
 	const reset = {
 		modules: ()=>moduleBrowser.innerHTML='',
-<<<<<<< Updated upstream
 		module: ()=>moduleInfo.innerHTML='',
-=======
->>>>>>> Stashed changes
 		options: ()=>optionChooser.innerHTML=''
 	};
 	
 	// Set up the DOM
 	container.insertAdjacentHTML("beforeend",stir.templates.course.disclaimer);
 	container.append( routeChooser, optionChooser, moduleBrowser );
-<<<<<<< Updated upstream
 	document.body.append(moduleViewer);
 	moduleViewer.append(moduleInfo);
 	
@@ -1428,16 +1353,6 @@ stir.course = (function() {
 		status.moduleViewer = false;
 		if(status.history) history.back();
 	});
-=======
-	
-	// Set up data callback/handlers
-	stir.dpt.set.show.routes( handle.routes );
-	stir.dpt.set.show.options( handle.options );
-	stir.dpt.set.show.modules( handle.modules );
-	stir.dpt.set.show.version( handle.version );
-	stir.dpt.set.reset.modules( reset.modules );
-	stir.dpt.set.reset.options( reset.options );
->>>>>>> Stashed changes
 
 	const _auto = () => {
 		if(!initialised) {
@@ -1467,14 +1382,9 @@ stir.course = (function() {
 		auto: _auto
 	};
 
-<<<<<<< Updated upstream
 });
 
 stir.getJSON('https://www.stir.ac.uk/data/modules/boilerplate/', data => stir.course(data) );
-=======
-})();
-
->>>>>>> Stashed changes
 
 // TEMPORARY ONLY UNTIL T4 REPUBLISHES THE COURSE PAGES
 // 2024-02-07 r.w.morrison@stir.ac.uk
