@@ -5,10 +5,6 @@
 .c-wysiwyg-content {
   overflow-x: auto;
 
-  ul {
-    margin-bottom: 16px;
-  }
-
   /*
     Blockquote
   */
@@ -54,8 +50,31 @@
     font-weight: 600;
     margin: 0 auto 60px;
     max-width: 960px;
-    // padding-left: 35px;
   }
+}
+
+/*
+  Moved from Type
+*/
+// .c-wysiwyg-content h2:first-of-type,
+// .c-wysiwyg-content h3:first-of-type {
+//   margin: 0 0 1rem 0;
+//   padding: 0 0 30px 0;
+// }
+
+// .c-wysiwyg-content h2,
+// .c-wysiwyg-content h3,
+// .c-wysiwyg-content > p + h2:first-of-type,
+// .c-wysiwyg-content > p + h3:first-of-type,
+// .c-wysiwyg-content ul + h2:first-of-type,
+// .c-wysiwyg-content ul + h3:first-of-type,
+// .c-wysiwyg-content ol + h2:first-of-type,
+// .c-wysiwyg-content ol + h3:first-of-type {
+//   margin: 40px 0 40px 0;
+// }
+
+.c-wysiwyg-content ol:not(.numberlist) > li {
+  margin-bottom: 1rem;
 }
 
 @media screen and #{breakpoint(xlarge down)} {
@@ -73,23 +92,3 @@
     }
   }
 }
-
-/*
-    Testimonial - Full 
-    Doesnt seem to do anything
-*/
-
-// .c-wysiwyg-content .c-blockquote--simple,
-// .c-blockquote--simple {
-//   border: none;
-//   font-weight: normal;
-//   max-width: initial;
-//   padding: 0;
-// }
-
-// .c-wysiwyg-content .c-blockquote--simple p,
-// .c-wysiwyg-content .c-blockquote--simple li,
-// .c-blockquote--simple li,
-// .c-blockquote--simple p {
-//   color: $black;
-// }
