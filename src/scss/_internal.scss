@@ -11,12 +11,13 @@
    burger--internal-sidebar-menu
    internal-pages-mobile-menu
   
- */
+
 
 @import "internal/burger-menus";
 @import "internal/internal-search";
 @import "internal/landing";
 
+*/
 /*
    INTERNAL
    Internal signpost dropdown
@@ -105,7 +106,6 @@
 }
 
 /*
-   INTERNAL 
    General internal styles
    class is on the body tag of the template
  */
@@ -115,11 +115,11 @@
 
   h1 {
     color: $heritage-green;
-    font-size: 2.25rem; /* 36px */
+    font-size: 2.25rem;
   }
 
   p {
-    font-size: 1.625rem; /* 26px */
+    font-size: 1.625rem;
   }
 }
 
@@ -127,24 +127,32 @@
   .internal-pages {
     .intro {
       h1 {
-        font-size: 1.75rem; /* 28px */
+        font-size: 1.75rem;
       }
 
       p {
-        font-size: 1.125rem; /* 18px */
+        font-size: 1.125rem;
       }
     }
 
     .placeholder .uos-magnifying-glass {
-      font-size: 1.25rem; /* 20px */
+      font-size: 1.25rem;
     }
   }
 }
 
 /*
+   BRANDBANK
+ */
+
+.bb-note {
+  font-size: 0.9rem;
+}
+
+/*
    BRANDBANK 
    Masthead alternative code
- */
+ *
 
 .c-image-text-block--internal {
   > .grid-container {
@@ -155,11 +163,9 @@
     background-position: top center;
   }
 }
+*/
 
 /*
-   BRANDBANK
- */
-
 .internal-page-content {
   hr {
     border-bottom: 3px solid #f6f5f4;
@@ -173,7 +179,7 @@
 
 /* 
    BRANDBANK 
- */
+
 
 @media screen and #{breakpoint(small down)} {
   .external-pages .internal-page-content {
@@ -239,10 +245,10 @@
     }
   }
 }
-
+ */
 /*
    BRANDBANK
- */
+
 
 .internal-pages-mobile-menu {
   display: none;
@@ -258,10 +264,10 @@
     }
   }
 }
-
+ */
 /*
   BRANDBANK
-*/
+
 
 @media screen and #{breakpoint(medium down)} {
   .internal-sidebar-menu li.currentbranch0:before {
@@ -269,10 +275,10 @@
     font-family: "uos";
   }
 }
-
+*/
 /* 
    BRANDBANK 
- */
+
 .internal-sidebar-menu {
   nav {
     position: sticky;
@@ -281,7 +287,7 @@
 
   a {
     color: $black;
-    font-size: 1.125rem; /* 18px */
+    font-size: 1.125rem; 
   }
 
   li {
@@ -291,7 +297,7 @@
 
   span {
     color: $heritage-green;
-    font-size: 1.125rem; /* 18px */
+    font-size: 1.125rem; 
   }
 
   .multilevel-linkul-1 {
@@ -323,7 +329,7 @@
 
   ul {
     &.multilevel-linkul-0 a {
-      font-size: 1rem; /* 16px */
+      font-size: 1rem; 
     }
 
     &[class*="multilevel"] {
@@ -338,7 +344,4 @@
     font-family: "uos";
   }
 }
-
-.bb-note {
-  font-size: 0.9rem;
-}
+ */
