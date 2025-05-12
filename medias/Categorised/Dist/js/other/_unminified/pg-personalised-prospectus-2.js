@@ -74,10 +74,6 @@
           </div>`;
   };
 
-  // const renderRequiredError = () => {
-  //   return `<p class="u-p-2 u-heritage-berry text-center u-heritage-berry u-border-solid u-bg-white" >Please ensure you have completed all required fields</p>`;
-  // };
-
   const renderRequiredAlert = () => {
     return `<div class="u-fixed u-bottom-0 u-center-fixed-horz u-fadeinout" id="requiredAlert">
               <div class="u-flex u-gap u-p-2 u-white text-center u-bg-heritage-berry ">
@@ -113,41 +109,6 @@
     const sub = data.filter((item) => item.id === Number(id));
     return !sub.length ? `` : sub[0].subject;
   });
-
-  /* 
-    downloadPDF 
-
-function storePDF2(pdf, fileName2, serverPath) {
-  const linkSource = `${pdf}`;
-  const fileName = "YourPersonalisedPGPerspectus.pdf";
-  const fileURL = linkSource;
-
-  if (!window.ActiveXObject) {
-    var save = document.createElement("a");
-    save.href = fileURL;
-    save.target = "_blank";
-    var filename = fileURL.substring(fileURL.lastIndexOf("/") + 1);
-    save.download = fileName || filename;
-
-    if (navigator.userAgent.toLowerCase().match(/(ipad|iphone|safari)/) && navigator.userAgent.search("Chrome") < 0) {
-      console.log("Safari");
-      return save;
-      //document.location = save.href;
-      // window event not working here
-    } else {
-      var evt = new MouseEvent("click", {
-        view: window,
-        bubbles: true,
-        cancelable: false,
-      });
-      save.dispatchEvent(evt);
-      (window.URL || window.webkitURL).revokeObjectURL(save.href);
-
-      return ``;
-    }
-  }
-}
-*/
 
   /*  b64toBlob */
   function b64toBlob(b64Data, contentType, sliceSize) {
@@ -228,26 +189,6 @@ function storePDF2(pdf, fileName2, serverPath) {
     CONTROLLERS
 */
 
-  /* 
-    storePDF: SEND the pdf file to Supabase and get the link url back *
-
-async function storePDF(pdf, fileName, serverPath) {
-  const fileNameFull = fileName + ".pdf";
-
-  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ID);
-  const pdfBlob = b64toBlob(pdf, "application/pdf", 512);
-
-  const { data, error } = await _supabase.storage.from("pdfs").upload(fileNameFull, pdfBlob, {
-    cacheControl: "3600",
-    upsert: false,
-  });
-
-  if (data) return data;
-
-  return null;
-}
- */
-
   /*
     CONTROLLER: submitData: 
     Send data (formData) to the backend to be processed (MC QS)
@@ -259,8 +200,6 @@ async function storePDF(pdf, fileName, serverPath) {
 
     const courses = [...getSelectedCourses(), ...getSelectedSubjects()];
     formData.append("courses", JSON.stringify(courses));
-
-    return;
 
     try {
       const response = await fetch(serverPath + "app.php", {
@@ -495,6 +434,7 @@ async function storePDF(pdf, fileName, serverPath) {
       });
 
       const result = await response.json();
+      //const result = { success: "true" };
 
       if (result.success === "true") {
         // Exectue the PDF Stuff

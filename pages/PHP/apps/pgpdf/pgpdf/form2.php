@@ -1497,19 +1497,20 @@
 
                             </div>
 
-                            <!-- 
                             <div>
-                                <label class="u-font-bold block u-mb-tiny " for="social_media_advertising_or_digital_advertising">
-                                    Social media advertising or digital advertising
+                                <label class="u-font-bold block u-mb-tiny " for="opt_in_for_sms">
+                                    Opt in for social media
                                 </label>
 
-                                 <select data-section="marketing" id="social_media_advertising_or_digital_advertising" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="social_media_advertising_or_digital_advertising">
+                                <select data-section="marketing" id="opt_in_for_social" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_social">
                                     <option value="">Select an option</option>
                                     <option value="true">Yes please</option>
                                     <option value="false">No thanks</option>
-                                </select> 
+                                </select>
 
-                            </div>-->
+                            </div>
+
+
 
 
                             <p class="text-sm text-gray-700">
@@ -1767,8 +1768,6 @@
                     "newName": "MLitt Philosophy"
                 }, {
                     "newName": "LLM Environmental Law and Climate Justice"
-                }, {
-                    "newName": "MSc Gender and Diplomatic Practice"
                 }]
             },
             {

@@ -2,12 +2,12 @@
 
 session_start();
 
+$ENV_MODE = 'QA'; // Change to 'PROD' for production
 
 require_once('vendor/autoload.php');
 require("app-qs/qs-api.php");
 
-//$api_url = "https://integration-emea.qses-uat.com/crms/api/";
-$api_url = "https://integration-emea.qses.systems/crms/api/";
+$api_url = $ENV_MODE === 'QA' ? "https://integration-emea.qses-uat.com/crms/api/" : "https://integration-emea.qses.systems/crms/api/";
 
 
 
@@ -25,6 +25,7 @@ if (!$env) {
 } else {
     foreach ($env as $k => $v) putenv(trim("$k=$v"));
 }
+
 
 
 /* 
@@ -68,10 +69,9 @@ function qs_init($api_url)
         "SubscribedToDirectEmails" => (check_consent($_POST['opt_in_for_email'], $superConsent)),
         "SubscribedToDirectPhoneCalls" => (check_consent($_POST['opt_in_for_phone'], $superConsent)),
         "SubscribedToDirectSms" => (check_consent($_POST['opt_in_for_sms'], $superConsent)),
+
         "SubChannel" => "WebEnquiry",
-        "CreateTask" => true,
-        "TaskType" => "Incoming Communication",
-        "TaskDescription" => "Stirling Webform Prospectus Form Requested",
+
         "Tags" => [
             [
                 "Tag" => "stir_pgpr_xx_Personalised PG Prospectus_xx_xx_xx-xx-xx",
@@ -81,9 +81,13 @@ function qs_init($api_url)
             [
                 "Type" => "Would you like to keep receiving emails from us?",
                 "Consent" => (check_consent($superConsent, $superConsent))
+            ],
+            [
+                "Type" => "Opt-In to Social Media?",
+                "Consent" => (check_consent($_POST['opt_in_for_social'], $superConsent))
             ]
         ],
-        // "ContactNoteContent" => "Other interests: " . ($_POST['area_interest_research'] ?? '') . ' ' . ($_POST['area_interest_international_students'] ?? '') . ' ' . ($_POST['area_interest_accommodation'] ?? '') . ' ' . ($_POST['area_interest_students_union'] ?? '') . ' ' . ($_POST['area_interest_sport'] ?? ''),
+
         "EmailAddress" => $_POST['email']
     ];
 
@@ -123,7 +127,13 @@ function qs_init($api_url)
         "SendExternal" => false,
         "Source" => "Prospectus Form Requested",
         "SubChannelID" => 101,
+        "Task" => [
+            "TaskTypeId" => 6,
+            "Description" => "Stirling Webform Prospectus Form Requested"
+        ]
     ];
+
+
 
 
     // Whole formData as a String
@@ -141,17 +151,18 @@ function qs_init($api_url)
     };
 
     $arr_posted_data = array_map($string_it, array_keys($post_data), $post_data);
-    $str_posted_data = implode("<br>\r", $arr_posted_data);
+    $str_posted_data2 = implode("<br>\r", $arr_posted_data);
 
     $other_comm_url = $api_url . "othercommunications";
-    $other_comm_result = QS_Post($other_comm_url, null, null, $other_comm_payload); // should return an id
+    $other_comm_result_id = QS_Post($other_comm_url, null, null, $other_comm_payload); // should return an id
 
     // Other communication content
     $comm_content_payload = [
-        "Content" => $str_posted_data,
+        "Content" => $str_posted_data2,
     ];
-    $comm_content_url = $api_url . "/othercommunications/$other_comm_result/communicationcontent";
+    $comm_content_url = $api_url . "/othercommunications/$other_comm_result_id/communicationcontent";
     $comm_content_result = QS_Post($comm_content_url, $params, null, $comm_content_payload); // returns an id
+
 
     return ["process" => "Data", "outcome" => "Success", "result" => "$result $transaction_type"];
 }
@@ -200,12 +211,12 @@ if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 
 */
 
-$_SESSION["token"] = QS_get_token($api_url);
+$_SESSION["token"] = QS_get_token($api_url, $ENV_MODE);
 
 
 
 if (isset($_POST['email'])) {
-    //$qs_outcome = qs_init($api_url);
+    $qs_outcome = qs_init($api_url);
     $qs_outcome = ["process" => "Data", "outcome" => "Success", "result" => ""];
 } else {
     $qs_outcome = ["process" => "Data", "outcome" => "Fail", "result" => ""];
