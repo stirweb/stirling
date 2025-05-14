@@ -6,7 +6,8 @@
 
 var stir = stir || {};
 
-stir.course = (boilerplates => {
+stir.course = (() => {
+	console.info('[Modules] stir.course');
 	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
 	const na = {auto: new Function()};
 
@@ -43,8 +44,16 @@ stir.course = (boilerplates => {
 
 	const render = data => {
 		debug && console.info('[Modules] data',data);
-		moduleInfo.innerHTML = stir.templates.course.module(boilerplates, data);
+		if(!boilerplates) return console.error('Boilerplate text not loaded!');
+
 		spinner.hide();
+		
+		// Render module information HTML:
+		moduleInfo.innerHTML = stir.templates.course.module(boilerplates, data);
+		
+		// Find and activate animated bar graphs:
+		stir.templates.course.barcharts( moduleInfo.querySelectorAll(".barchart") )
+		
 	};
 
 	const handle = {
@@ -68,7 +77,7 @@ stir.course = (boilerplates => {
 	};
 	
 	// Set up the DOM
-	container.insertAdjacentHTML("beforeend",stir.templates.course.disclaimer);
+	//container.insertAdjacentHTML("beforeend",stir.templates.course.disclaimer);
 	container.append( routeChooser, optionChooser, moduleBrowser );
 	document.body.append(moduleViewer);
 	moduleViewer.append(moduleInfo);
@@ -93,7 +102,8 @@ stir.course = (boilerplates => {
 		if(status.history) history.back();
 	});
 
-	const _auto = () => {
+	function _auto() {
+		console.info('[Modules] auto',initialised);
 		if(!initialised) {
 			initialised = true;
 			version && stir.dpt.get.version(parameter.level);
@@ -103,7 +113,11 @@ stir.course = (boilerplates => {
 				stir.dpt.get.options(parameter.level, parameter.route, parameter.auto);
 			}
 		}
-	};
+	}
+
+	function _init(data) {
+		boilerplates = data;
+	}
 
 	// STIR TABS AWARE
 	//const panel = container.closest && container.closest('[role=tabpanel]');
@@ -118,12 +132,19 @@ stir.course = (boilerplates => {
 	// todo: empty the queue?
 
 	return {
-		auto: _auto
+		init: _init,	// get module boilerplate text
+		auto: _auto		// initialise and begin
 	};
 
-});
+})();
 
-stir.getJSON('https://www.stir.ac.uk/data/modules/boilerplate/', data => stir.course(data) );
+const container = document.getElementById('course-modules-container');
+
+stir.getJSON('https://www.stir.ac.uk/data/modules/boilerplate/', data => {
+	console.info('[Modules] boilerplates', data);
+
+	stir.course.init(data);
+});
 
 // TEMPORARY ONLY UNTIL T4 REPUBLISHES THE COURSE PAGES
 // 2024-02-07 r.w.morrison@stir.ac.uk
