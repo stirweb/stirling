@@ -8,11 +8,9 @@
   const serverPath = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
 
   /**
-   *
    * RENDERERS
    * These functions are used to render HTML elements dynamically based on the data provided. They are used to create dropdown options,
    * alerts, and other UI components.
-   *
    */
 
   const renderpleaseSelect = () => `<option value="" >Select an option</option>`;
@@ -88,9 +86,8 @@
   };
 
   /**
-   *
    * HELPER FUNCTIONS
-   *
+   * These functions are used to manipulate the DOM, handle data, and perform various tasks related to the PDF generation process.
    */
 
   const setDOMContent = stir.curry((node, html) => {
@@ -187,7 +184,7 @@
   const cleanse = (string) => sanitizeInput(string);
 
   /**
-   *  CONTROLLER: submitData
+   * CONTROLLER: submitData
    * @param {string} pdfPath - The path to the PDF file
    * @param {string} serverPath - The path to the server
    * @param {FormData} formData - The form data to be sent
@@ -348,8 +345,6 @@
     var i = 0;
     while (i < pagesIntro.length) {
       if (i === 2) {
-        //let [p] = await pdfDoc.copyPages(introPdfDoc, [i]);
-        //pdfDoc.addPage(p);
         pdfDoc.addPage(introInsertPageCopy);
       } else {
         let [p] = await pdfDoc.copyPages(introPdfDoc, [i]);
@@ -360,22 +355,22 @@
 
     const errorUrl = serverPath + "rawpdfs/.pdf";
 
-    // Merge 1
+    // Merge subject doc 1
     if (url1 !== errorUrl) {
       await mergePdf(url1, pdfDoc, "PDF 1");
     }
 
-    // Merge 2
+    // Merge subject doc 2
     if (url2 !== errorUrl) {
       await mergePdf(url2, pdfDoc, "PDF 2");
     }
 
-    // Merge 3
+    // Merge subject doc 3
     if (url3 !== errorUrl) {
       await mergePdf(url3, pdfDoc, "PDF 3");
     }
 
-    // Back page merge
+    // Merge back page
     await mergePdf(urlBack, pdfDoc, "Back Pages");
 
     // Generate as Base 64
@@ -441,7 +436,6 @@
       });
 
       const result = await response.json();
-      //const result = { success: "true" }; // Skip captcha while testing
 
       if (result.success === "true") {
         // Exectue the PDF Stuff
@@ -460,11 +454,9 @@
   }
 
   /**
-   *
    * ON LOAD - FORM VERSION
    * This function handles the generation of a personalized PDF prospectus based on user input. It sets up event listeners
    * for form submission, populates select options, and validates user input.
-   *
    */
 
   const generatePDFBtn = stir.node("#generatePDFBtn");
@@ -578,10 +570,8 @@
   }
 
   /**
-   *
-   * ON LOAD - RETRIEVE LATER VERSION
+   * ON LOAD - RETRIEVE LATER VERSION FROM EMAIL URL
    * Retrieves the user's name and selected subjects from the URL parameters and generates a PDF prospectus based on that information.
-   *
    */
 
   if (stir.node("#doStoredPDF")) {
