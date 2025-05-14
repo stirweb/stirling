@@ -252,7 +252,7 @@
     setDOMContent(resultsNode, renderGenerating());
     resultsNode.scrollIntoView();
 
-    // Build PDF
+    // Get the data from the form
     const fullPdf = data.get("full_prospectus");
 
     const firstName = (data.get("first_name") || "").toUpperCase();
@@ -263,6 +263,7 @@
     const subject2 = data.get("subject_area_1");
     const subject3 = data.get("subject_area_2");
 
+    // Start the PDF generation
     const pdfDoc = await PDFLib.PDFDocument.create();
 
     //const urlFull = serverPath + "rawpdfs/full-non-personalised.pdf";
@@ -274,8 +275,6 @@
     const url1 = serverPath + "rawpdfs/" + subject1.replaceAll(",", "") + ".pdf";
     const url2 = serverPath + "rawpdfs/" + subject2.replaceAll(",", "") + ".pdf";
     const url3 = serverPath + "rawpdfs/" + subject3.replaceAll(",", "") + ".pdf";
-
-    //const fileName = String(Date.now() + "--" + firstName + lastName + String(Math.floor(Math.random() * 100)));
 
     // Font
     const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
@@ -295,7 +294,7 @@
       return;
     }
 
-    /* Personalised PDF */
+    // First page personalisation
     const frontPdfBytes = await fetch(urlFront).then((res) => res.arrayBuffer());
     const frontPdf = await PDFLib.PDFDocument.load(frontPdfBytes);
     const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
@@ -320,9 +319,10 @@
       rotate: PDFLib.degrees(0),
     });
 
+    // First page merge
     pdfDoc.addPage(firstPageCopy);
 
-    // Intro insert
+    // Intro personalisation
     const introInsertPdfBytes = await fetch(urlIntroInsert).then((res) => res.arrayBuffer());
     const introInsertPdf = await PDFLib.PDFDocument.load(introInsertPdfBytes);
     const [introInsertPageCopy] = await pdfDoc.copyPages(introInsertPdf, [0]);
