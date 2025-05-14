@@ -1319,7 +1319,6 @@
                                         <div id="subject_area_0_courses" class="u-columns-2 u-mx-1"></div>
                                     </div>
 
-
                                     <div class="subject_area_1 u-mt-1">
                                         <div>
                                             <label class="u-font-bold block u-mb-tiny" for="subject_area_1">Subject area 2</label>
@@ -1342,7 +1341,6 @@
 
                                 </div>
 
-
                                 <div class="u-bg-energy-turq--10 u-p-1 u-mt-2 text-sm u-heritage-teal u-border-solid u-flex u-gap" style="border-radius: 5px;">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="u-svg-32">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -1356,55 +1354,8 @@
                                             <span> Send me the full guide</span>
                                         </label>
                                     </div>
-
                                 </div>
 
-                                <!-- <p class="u-mt-2">
-                                You're almost done...
-                                Now tell us about any other areas you're interested in:
-                            </p> -->
-
-                                <!-- div>
-                                <div>
-                                    <label for="area_interest_research" class="flex items-center">
-                                        <input id="area_interest_research" type="checkbox" name="area_interest_research" value="research">
-                                        <span class="ml-2">Research</span>
-                                    </label>
-
-                                </div>
-
-                                <div>
-                                    <label for="area_interest_international_students" class="flex items-center">
-                                        <input id="area_interest_international_students" type="checkbox" name="area_interest_international_students" value="international_students">
-                                        <span>International Students</span>
-                                    </label>
-
-                                </div>
-
-                                <div>
-                                    <label for="area_interest_accommodation" class="flex items-center">
-                                        <input id="area_interest_accommodation" type="checkbox" name="area_interest_accommodation" value="accommodation">
-                                        <span>Accommodation</span>
-                                    </label>
-
-                                </div>
-
-                                <div>
-                                    <label for="area_interest_students_union" class="flex items-center">
-                                        <input id="area_interest_students_union" type="checkbox" name="area_interest_students_union" value="students_union">
-                                        <span class="ml-2">Students' Union</span>
-                                    </label>
-
-                                </div>
-
-                                <div>
-                                    <label for="area_interest_sport" class="flex items-center">
-                                        <input id="area_interest_sport" type="checkbox" name="area_interest_sport" value="sport">
-                                        <span class="ml-2">Sport</span>
-                                    </label>
-
-                                </div>
-                            </!-->
                             </div>
                         </div>
 
@@ -1431,11 +1382,11 @@
                                 </div>
                             </div>
 
-
                             <h2 class="u-mt-2 header-stripped text-lg">
                                 Keep in touch
                             </h2>
                             <div id="marketingAlert"></div>
+
                             <p>
                                 <label class="u-font-bold block u-mb-tiny " for="wed_love_to_keep_in_touch">
                                     We'd love to keep in touch by sending you useful information about the
@@ -1458,89 +1409,87 @@
                                 information about the University and our courses. I would like to be contacted
                                 by:</p>
 
-                            <div>
-                                <label class="u-font-bold block u-mb-tiny " for="opt_in_for_email">
-                                    Opt in for email
-                                </label>
+                            <div class="u-flex-medium-up  u-gap">
 
-                                <select data-section="marketing" id="opt_in_for_email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_email">
-                                    <option value="">Select an option</option>
-                                    <option value="true">Yes please</option>
-                                    <option value="false">No thanks</option>
-                                </select>
+                                <div class="u-flex1">
+                                    <label class="u-font-bold block u-mb-tiny " for="opt_in_for_email">
+                                        Opt in for email
+                                    </label>
 
+                                    <select data-section="marketing" id="opt_in_for_email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_email">
+                                        <option value="">Select an option</option>
+                                        <option value="true">Yes please</option>
+                                        <option value="false">No thanks</option>
+                                    </select>
+                                </div>
+
+                                <div class="u-flex1">
+                                    <label class="u-font-bold block u-mb-tiny " for="opt_in_for_phone">
+                                        Opt in for phone
+                                    </label>
+
+                                    <select data-section="marketing" id="opt_in_for_phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_phone">
+                                        <option value="">Select an option</option>
+                                        <option value="true">Yes please</option>
+                                        <option value="false">No thanks</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div>
-                                <label class="u-font-bold block u-mb-tiny " for="opt_in_for_phone">
-                                    Opt in for phone
-                                </label>
+                            <div class="u-flex-medium-up  u-gap">
 
-                                <select data-section="marketing" id="opt_in_for_phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_phone">
-                                    <option value="">Select an option</option>
-                                    <option value="true">Yes please</option>
-                                    <option value="false">No thanks</option>
-                                </select>
+                                <div class="u-flex1">
+                                    <label class="u-font-bold block u-mb-tiny " for="opt_in_for_sms">
+                                        Opt in for sms
+                                    </label>
 
+                                    <select data-section="marketing" id="opt_in_for_sms" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_sms">
+                                        <option value="">Select an option</option>
+                                        <option value="true">Yes please</option>
+                                        <option value="false">No thanks</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="u-flex1">
+                                    <label class="u-font-bold block u-mb-tiny " for="opt_in_for_sms">
+                                        Opt in for social media
+                                    </label>
+
+                                    <select data-section="marketing" id="opt_in_for_social" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_social">
+                                        <option value="">Select an option</option>
+                                        <option value="true">Yes please</option>
+                                        <option value="false">No thanks</option>
+                                    </select>
+
+                                </div>
                             </div>
 
-                            <div>
-                                <label class="u-font-bold block u-mb-tiny " for="opt_in_for_sms">
-                                    Opt in for sms
-                                </label>
-
-                                <select data-section="marketing" id="opt_in_for_sms" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_sms">
-                                    <option value="">Select an option</option>
-                                    <option value="true">Yes please</option>
-                                    <option value="false">No thanks</option>
-                                </select>
-
-                            </div>
-
-                            <div>
-                                <label class="u-font-bold block u-mb-tiny " for="opt_in_for_sms">
-                                    Opt in for social media
-                                </label>
-
-                                <select data-section="marketing" id="opt_in_for_social" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_social">
-                                    <option value="">Select an option</option>
-                                    <option value="true">Yes please</option>
-                                    <option value="false">No thanks</option>
-                                </select>
-
-                            </div>
-
-
-
-
-                            <p class="text-sm text-gray-700">
+                            <p class="text-sm text-gray-700 u-mt-1">
                                 You can unsubscribe at any time by emailing: <a href="mailto:study.stirling@stir.ac.uk" class="underline">study.stirling@stir.ac.uk</a>
                             </p>
 
                             <div class="g-recaptcha" data-sitekey="6LeLc_wpAAAAAK9XBEY5HhZcsYEgTTi1wukDL685" data-callback="onSubmit" data-size="invisible">
                             </div>
                         </div>
-                        <div class="u-mt-2"><button id="generatePDFBtn" class="button ">Generate</button></div>
+
+                        <div class="u-mt-2">
+                            <button id="generatePDFBtn" class="button ">Generate</button>
+                        </div>
 
                     </form>
 
                     <div id="resultBox"></div>
-
-
                 </div>
 
             </div>
         </div>
     </main>
 
-    <!-- iframe id="pdf" style="width: 100%; height: 10%;"></iframe -->
-
     <script src="../../../../../../../medias/Categorised/Dist/js/app.min.js"></script>
 
     <script>
         const CAPTCHA = "6LeLc_wpAAAAAK9XBEY5HhZcsYEgTTi1wukDL685";
-
-
 
         const subjectsData = [{
                 "id": 1,
@@ -1589,8 +1538,6 @@
                 }, {
                     "newName": "MSc Digital Marketing and Brand Management"
                 }, {
-                    "newName": "MRes Business and Management"
-                }, {
                     "newName": "MSc Behavioural Science"
                 }, {
                     "newName": "MSc Business Analytics"
@@ -1615,7 +1562,7 @@
                 }, {
                     "newName": "MSc Public Relations and Strategic Communication"
                 }, {
-                    "newName": "MSc Strategic Communication and Public Relations (Joint degree UPF Barcelona)"
+                    "newName": "MSc Strategic Communication and Public Relations (Joint Degree UPF Barcelona)"
                 }, {
                     "newName": "MSc Public Relations and Strategic Communication (Online)"
                 }, {
@@ -1657,7 +1604,7 @@
                 }, {
                     "newName": "MSc Big Data"
                 }, {
-                    "newName": "MSc Financial Technology (Fintech)"
+                    "newName": "MSc Financial Technology (FinTech)"
                 }, {
                     "newName": "MSc Mathematics and Data Science"
                 }, {
@@ -1679,19 +1626,19 @@
                 }, {
                     "newName": "MSc English Language Teaching and Management"
                 }, {
-                    "newName": "PG Dip Teaching Qualification in Further Education (Pre-Service)"
+                    "newName": "PGDip Tertiary Education with Teaching Qualification (Further Education) - pre-service"
                 }, {
-                    "newName": "PG Cert Teaching Qualification in Further Education (In-Service)"
+                    "newName": "PGCert Tertiary Education with Teaching Qualification (Further Education) - in-service"
                 }, {
                     "newName": "MSc Teaching English to Speakers of Other Languages (TESOL)"
                 }, {
                     "newName": "MSc Teaching English to Speakers of Other Languages (TESOL) (Online)"
                 }, {
-                    "newName": "MSc Educational Leadership"
+                    "newName": "MSc Educational Leadership (Specialist Qualification for Headship)"
                 }, {
                     "newName": "MRes Educational Research"
                 }, {
-                    "newName": "MSc Professional Educational and Leadership"
+                    "newName": "MSc Professional Education and Leadership"
                 }]
             },
             {
@@ -1702,6 +1649,8 @@
                     "newName": "MSc Environmental Management"
                 }, {
                     "newName": "MSc Environmental Remote Sensing and Geospatial Sciences"
+                }, {
+                    "newName": "LLM Environmental Law and Climate Justice"
                 }]
             },
             {
@@ -1711,13 +1660,13 @@
                 "courses": [{
                     "newName": "MSc Specialist Community Public Health Nurse (Health Visiting)"
                 }, {
-                    "newName": "MPH Public Health"
+                    "newName": "MPH Master of Public Health"
                 }, {
-                    "newName": "MPH Public Health (Online)"
+                    "newName": "MPH Master of Public Health (Online)"
                 }, {
-                    "newName": "MSc Physiotherapy (Pre registration)"
+                    "newName": "MSc Physiotherapy (pre-registration)"
                 }, {
-                    "newName": "MSc Podiatry (Pre registration)"
+                    "newName": "MSc Podiatry (pre-registration)"
                 }, {
                     "newName": "MSc Advancing Practice"
                 }, {
@@ -1753,9 +1702,9 @@
                 "subject": "Housing Studies",
                 "qsSubject": "Social Sciences",
                 "courses": [{
-                    "newName": "MSc, PG Dip Housing Studies (Part time) (Online)"
+                    "newName": "MSc / PG Dip Housing Studies (part-time)"
                 }, {
-                    "newName": "MSc, PG Dip Housing Studies (with internship)"
+                    "newName": "MSc / PG Dip Housing Studies (with internship)"
                 }]
             },
             {
@@ -1763,7 +1712,7 @@
                 "subject": "Law and Philosophy",
                 "qsSubject": "Law and Philosophy",
                 "courses": [{
-                    "newName": "MSc, LLM Human Rights and Diplomacy"
+                    "newName": "LLM, MSc Human Rights and Diplomacy"
                 }, {
                     "newName": "MLitt Philosophy"
                 }, {
@@ -1795,13 +1744,13 @@
                 }, {
                     "newName": "MSc Health Psychology"
                 }, {
-                    "newName": "MA, MSc Human Animal Interaction"
+                    "newName": "MSc / MA Human Animal Interaction"
                 }, {
                     "newName": "MSc Psychological Research Methods"
                 }, {
                     "newName": "MSc Psychological Therapy in Primary Care"
                 }, {
-                    "newName": "MSc Psychology (Accredited Conversion)"
+                    "newName": "MSc Psychology (accredited conversion course)"
                 }, {
                     "newName": "MSc Behavioural Science"
                 }]
@@ -1815,7 +1764,7 @@
                 }, {
                     "newName": "MSc Social Statistics and Social Research"
                 }, {
-                    "newName": "MSc Applied Professional Studies (Blended)"
+                    "newName": "MSc Applied Professional Studies"
                 }, {
                     "newName": "MSc Substance Use (Online)"
                 }]
@@ -1849,7 +1798,7 @@
                 "subject": "Gender",
                 "qsSubject": "Communications, Media and Culture",
                 "courses": [{
-                    "newName": "MLitt, MSc Gender and Sexualities"
+                    "newName": "MLitt, MSc Genders and Sexualities"
                 }, {
                     "newName": "MSc Gender and Diplomatic Practice"
                 }]

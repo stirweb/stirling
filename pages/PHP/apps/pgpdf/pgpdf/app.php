@@ -261,8 +261,8 @@ $message = [
 ];
 
 if (isset($_POST['email'])) {
-    $mail_outcome = run($message);
-    //$mail_outcome = ["process" => "Mail", "outcome" => "Success", "result" => ""];
+    //$mail_outcome = run($message);
+    $mail_outcome = ["process" => "Mail", "outcome" => "Success", "result" => ""];
 } else {
     $mail_outcome = ["process" => "Mail", "outcome" => "Fail", "result" => ""];
 }
