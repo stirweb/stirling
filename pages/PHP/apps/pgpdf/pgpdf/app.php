@@ -216,7 +216,7 @@ $_SESSION["token"] = QS_get_token($api_url, $ENV_MODE);
 
 
 if (isset($_POST['email'])) {
-    $qs_outcome = qs_init($api_url);
+    //$qs_outcome = qs_init($api_url);
     $qs_outcome = ["process" => "Data", "outcome" => "Success", "result" => ""];
 } else {
     $qs_outcome = ["process" => "Data", "outcome" => "Fail", "result" => ""];
