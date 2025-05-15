@@ -2,13 +2,17 @@
 
 session_start();
 
-$ENV_MODE = 'QA'; // Change to 'PROD' for production
+$ENV_MODE = 'QA'; // Change to 'PROD' for production or QA for UAT / Test mode
+
+// These only take effect if ENV_MODE is set to QA - in PROD mode everything is active
+$TEST_QS = true; // Set to false to test without sending data to QS
+$TEST_MAIL = false; // Set to false to test without sending emails via mailchimp
+
 
 require_once('vendor/autoload.php');
 require("app-qs/qs-api.php");
 
 $api_url = $ENV_MODE === 'QA' ? "https://integration-emea.qses-uat.com/crms/api/" : "https://integration-emea.qses.systems/crms/api/";
-
 
 
 /* 
@@ -133,9 +137,6 @@ function qs_init($api_url)
         ]
     ];
 
-
-
-
     // Whole formData as a String
     $post_data = $_POST;
 
@@ -160,9 +161,9 @@ function qs_init($api_url)
     $comm_content_payload = [
         "Content" => $str_posted_data2,
     ];
+
     $comm_content_url = $api_url . "/othercommunications/$other_comm_result_id/communicationcontent";
     $comm_content_result = QS_Post($comm_content_url, $params, null, $comm_content_payload); // returns an id
-
 
     return ["process" => "Data", "outcome" => "Success", "result" => "$result $transaction_type"];
 }
@@ -189,8 +190,21 @@ function run($message)
 
 
 /*
+    FUNCTION: Check if testing
+*/
+function check_if_submitting($env, $testing)
+{
+    if ($env !== 'QA')
+        return true;
+
+    return $testing;
+}
+
+
+/*
 
 	ON LOAD
+
 */
 
 
@@ -214,10 +228,9 @@ if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 $_SESSION["token"] = QS_get_token($api_url, $ENV_MODE);
 
 
-
 if (isset($_POST['email'])) {
-    //$qs_outcome = qs_init($api_url);
-    $qs_outcome = ["process" => "Data", "outcome" => "Success", "result" => ""];
+    $submitqs = check_if_submitting($ENV_MODE, $TEST_QS);
+    $qs_outcome = $submitqs ? qs_init($api_url) : ["process" => "Data", "outcome" => "Success", "result" => "Skipped sending"];
 } else {
     $qs_outcome = ["process" => "Data", "outcome" => "Fail", "result" => ""];
 }
@@ -260,9 +273,12 @@ $message = [
     "template_content" => []
 ];
 
+
+
+
 if (isset($_POST['email'])) {
-    //$mail_outcome = run($message);
-    $mail_outcome = ["process" => "Mail", "outcome" => "Success", "result" => ""];
+    $submitmail = check_if_submitting($ENV_MODE, $TEST_MAIL);
+    $mail_outcome = $submitmail ? run($message) : ["process" => "Mail", "outcome" => "Success", "result" => "Skipped sending"];
 } else {
     $mail_outcome = ["process" => "Mail", "outcome" => "Fail", "result" => ""];
 }

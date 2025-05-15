@@ -1387,7 +1387,7 @@
                             </h2>
                             <div id="marketingAlert"></div>
 
-                            <p>
+                            <div>
                                 <label class="u-font-bold block u-mb-tiny " for="wed_love_to_keep_in_touch">
                                     We'd love to keep in touch by sending you useful information about the
                                     University and our courses
@@ -1399,7 +1399,7 @@
                                         about Stirling</option>
                                     <option value="false">No, thank you</option>
                                 </select>
-                            </p>
+                            </div>
 
                             <p class="text-sm text-gray-700">
                                 By submitting you are agreeing to the <a href="https://www.stir.ac.uk/about/policy-legal-and-cookies" target="_blank" class="underline">University's terms of use and privacy statement</a>.

@@ -184,7 +184,7 @@
   const cleanse = (string) => sanitizeInput(string);
 
   /**
-   * CONTROLLER: submitData
+   * submitData
    * @param {string} pdfPath - The path to the PDF file
    * @param {string} serverPath - The path to the server
    * @param {FormData} formData - The form data to be sent
@@ -210,11 +210,14 @@
   }
 
   /**
-   * Merges a PDF from a URL into the main document
+   * mergePdf
    * @param {string} url - URL of the PDF to merge
    * @param {PDFDocument} targetDoc - The document to merge into
    * @param {string} label - Label for logging
    * @returns {Promise<boolean>} - Success status
+   * @description This function fetches a PDF from the given URL, loads it, and merges its pages into the target document.
+   * It returns true if the merge is successful, otherwise false.
+   * @throws {Error} - Throws an error if the PDF cannot be loaded
    */
   async function mergePdf(url, targetDoc, label) {
     try {
