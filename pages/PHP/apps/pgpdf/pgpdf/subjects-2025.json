@@ -15,7 +15,7 @@
     "id": 3,
     "subject": "Business and Management",
     "qsSubject": "Business and Management",
-    "courses": [{ "newName": "MSc International Business" }, { "newName": "MSc Human Resource Management" }, { "newName": "MSc Marketing" }, { "newName": "MSc Marketing Analytics" }, { "newName": "MSc Digital Marketing and Brand Management" }, { "newName": "MRes Business and Management" }, { "newName": "MSc Behavioural Science" }, { "newName": "MSc Business Analytics" }, { "newName": "MSc Data Science for Business" }, { "newName": "MSc Business and Management" }]
+    "courses": [{ "newName": "MSc International Business" }, { "newName": "MSc Human Resource Management" }, { "newName": "MSc Marketing" }, { "newName": "MSc Marketing Analytics" }, { "newName": "MSc Digital Marketing and Brand Management" }, { "newName": "MSc Behavioural Science" }, { "newName": "MSc Business Analytics" }, { "newName": "MSc Data Science for Business" }, { "newName": "MSc Business and Management" }]
   },
   {
     "id": 4,
