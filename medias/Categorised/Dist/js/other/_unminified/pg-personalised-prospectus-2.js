@@ -5,7 +5,11 @@
    *
    */
 
-  const serverPath = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
+  const SERVER = {
+    path: UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "",
+    app: "app-uat.php",
+    verify: "verify.php",
+  };
 
   /**
    * RENDERERS
@@ -186,20 +190,20 @@
   /**
    * submitData
    * @param {string} pdfPath - The path to the PDF file
-   * @param {string} serverPath - The path to the server
+   * @param {Object} server - The server configuration object
    * @param {FormData} formData - The form data to be sent
    * @description This function sends the PDF path and form data to the server for processing. It appends the selected courses and subjects to the form data and sends it via a POST request.
    * @returns {Promise<void>} - Returns a promise that resolves when the data is submitted
    * @throws {Error} - Throws an error if the fetch request fails
    */
-  async function submitData(pdfPath, serverPath, formData) {
+  async function submitData(pdfPath, server, formData) {
     formData.append("pdfPath", pdfPath);
 
     const courses = [...getSelectedCourses(), ...getSelectedSubjects()];
     formData.append("courses", JSON.stringify(courses));
 
     try {
-      const response = await fetch(serverPath + "app.php", {
+      const response = await fetch(server.path + server.app, {
         method: "POST",
         body: formData,
       });
@@ -243,12 +247,12 @@
    * CONTROLLER: Build the pdf
    * @param {Array} subsData - Array of subject data
    * @param {FormData} data - Form data from the user
-   * @param {string} serverPath - Path to the server
+   * @param {Object} server - Server configuration object
    * @returns {Promise<void>} - Returns a promise that resolves when the PDF is generated
    * @description This function generates a PDF document based on the provided subject data and user input. It retrieves the necessary
    * PDF templates, merges them, and customizes the content with user-specific information. The generated PDF is then made available for download.
    */
-  async function doPdf(subsData, data, serverPath) {
+  async function doPdf(subsData, data, server) {
     const retrieveUrl = `https://www.stir.ac.uk/study/postgraduate/create-your-personalised-prospectus/welcome-back/`;
     const resultsNode = stir.node("#resultBox");
 
@@ -269,15 +273,15 @@
     // Start the PDF generation
     const pdfDoc = await PDFLib.PDFDocument.create();
 
-    //const urlFull = serverPath + "rawpdfs/full-non-personalised.pdf";
-    const urlFront = serverPath + "rawpdfs/Front.pdf";
-    const urlIntro = serverPath + "rawpdfs/Intro.pdf";
-    const urlIntroInsert = serverPath + "rawpdfs/IntroInsert.pdf";
-    const urlBack = serverPath + "rawpdfs/Back.pdf";
+    //const urlFull = server.path + "rawpdfs/full-non-personalised.pdf";
+    const urlFront = server.path + "rawpdfs/Front.pdf";
+    const urlIntro = server.path + "rawpdfs/Intro.pdf";
+    const urlIntroInsert = server.path + "rawpdfs/IntroInsert.pdf";
+    const urlBack = server.path + "rawpdfs/Back.pdf";
 
-    const url1 = serverPath + "rawpdfs/" + subject1.replaceAll(",", "") + ".pdf";
-    const url2 = serverPath + "rawpdfs/" + subject2.replaceAll(",", "") + ".pdf";
-    const url3 = serverPath + "rawpdfs/" + subject3.replaceAll(",", "") + ".pdf";
+    const url1 = server.path + "rawpdfs/" + subject1.replaceAll(",", "") + ".pdf";
+    const url2 = server.path + "rawpdfs/" + subject2.replaceAll(",", "") + ".pdf";
+    const url3 = server.path + "rawpdfs/" + subject3.replaceAll(",", "") + ".pdf";
 
     // Font
     const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
@@ -290,9 +294,9 @@
     /*  Full unpersonalised PDF */
     if (fullPdf === "1") {
       const pdfPathFull = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&s=&f=1}`;
-      const fileNameFull = serverPath + "rawpdfs/full-non-personalised.pdf";
+      const fileNameFull = server.path + "rawpdfs/full-non-personalised.pdf";
 
-      email && submitData(pdfPathFull, serverPath, data);
+      email && submitData(pdfPathFull, server, data);
       setDOMContent(resultsNode, renderLinkBox(fileNameFull));
       return;
     }
@@ -356,7 +360,7 @@
       i++;
     }
 
-    const errorUrl = serverPath + "rawpdfs/.pdf";
+    const errorUrl = server.path + "rawpdfs/.pdf";
 
     // Merge subject doc 1
     if (url1 !== errorUrl) {
@@ -387,7 +391,7 @@
     const userSubjects = [getSubjectID(subsData, subject1), getSubjectID(subsData, subject2), getSubjectID(subsData, subject3)].filter((item) => Number(item));
     const pdfPath = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&f=0&s=${userSubjects.join(",")}`;
 
-    email && submitData(pdfPath, serverPath, data);
+    email && submitData(pdfPath, server, data);
 
     const personalisedMessageNode = stir.node("#pgstudent");
     personalisedMessageNode && setDOMContent(personalisedMessageNode, data.get("first_name"));
@@ -422,18 +426,18 @@
    * @description This function sends the captcha token to the server for verification. If the verification is successful, it proceeds
    * to generate the PDF. If not, it logs a message indicating suspected spam.
    */
-  async function doCaptcha(token, data) {
+  async function doCaptcha(server, token, data) {
     data.append("token", token);
 
     // For dev skip captcha check
     if (UoS_env.name === `dev`) {
-      doPdf(subjectsData, data, serverPath);
+      doPdf(subjectsData, data, server);
       return true;
     }
 
     try {
       // Check captcha
-      const response = await fetch(serverPath + "verify.php", {
+      const response = await fetch(server.path + server.verify, {
         method: "POST",
         body: data,
       });
@@ -441,17 +445,16 @@
       const result = await response.json();
 
       if (result.success === "true") {
-        // Exectue the PDF Stuff
-        doPdf(subjectsData, data, serverPath);
+        // Execute the PDF Stuff
+        doPdf(subjectsData, data, server);
         return true;
       } else {
-        // DONT Exectue the PDF Stuff
+        // DON'T Execute the PDF Stuff
         console.log("Captcha - suspected spam");
         return false;
       }
     } catch (e) {
       console.log("Error with captcha check");
-      //console.log(e);
       return false;
     }
   }
@@ -566,7 +569,7 @@
         }
 
         grecaptcha.execute(CAPTCHA, { action: "register" }).then(function (token) {
-          doCaptcha(token, data);
+          doCaptcha(SERVER, token, data);
           return;
         });
       });
@@ -604,6 +607,6 @@
     data.append("subject_area_1", selectedSects[1] ? selectedSects[1] : ``);
     data.append("subject_area_2", selectedSects[2] ? selectedSects[2] : ``);
 
-    doPdf(subjectsData, data, serverPath);
+    doPdf(subjectsData, data, SERVER);
   }
 })();
