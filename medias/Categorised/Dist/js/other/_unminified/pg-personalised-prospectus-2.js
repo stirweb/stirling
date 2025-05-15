@@ -5,9 +5,11 @@
    *
    */
 
+  const useUAT = typeof USE_UAT !== "undefined" ? USE_UAT : false;
+
   const SERVER = {
     path: UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "",
-    app: USE_UAT ? "app-uat.php" : "app.php",
+    app: useUAT ? "app-uat.php" : "app.php",
     verify: "verify.php",
   };
 
