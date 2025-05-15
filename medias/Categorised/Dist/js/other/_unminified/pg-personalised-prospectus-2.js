@@ -1,19 +1,19 @@
 (function () {
-  /* 
-
-    CONFIG 
-
-*/
+  /**
+   *
+   *   CONFIG
+   *
+   */
 
   const serverPath = UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "";
 
-  /* 
+  /**
+   * RENDERERS
+   * These functions are used to render HTML elements dynamically based on the data provided. They are used to create dropdown options,
+   * alerts, and other UI components.
+   */
 
-    RENDERERS 
-
-*/
-
-  const renderpleaseSelect = () => `<option value="">Select an option</option>`;
+  const renderpleaseSelect = () => `<option value="" >Select an option</option>`;
 
   const renderDataAlert = () => {
     return `
@@ -35,15 +35,16 @@
           </div>`;
   };
 
-  const renderSubjectSelectItems = (subs) => subs.map((item) => `<option value="` + item.subject + `">` + item.subject + `</option>`).join(``);
+  //const renderSubjectSelectItems = (subs) => subs.map((item) => `<option value="` + item.subject + `">` + item.subject + `</option>`).join(``);
 
   const renderSubjectCoursesOptions = (subject, index, data) => {
     const subjectSelected = data.filter((item) => item.subject === subject);
+
     return subjectSelected[0]
       ? subjectSelected[0].courses
           .map((item) => {
             const ident = item.newName.replaceAll(" ", "-").toLowerCase();
-            return `<div class="u-flex u-mb-1 u-gap-8"><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}" value="${item.newName}" data-id="subject_course_${index}" data-type="subject_course"><label class="u-m-0" for="${ident}">${item.newName}</label></div>`;
+            return `<div class="u-flex u-mb-1 u-gap-8 "><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}" value="${item.newName}" data-id="subject_course_${index}" data-type="subject_course"><label class="u-m-0" for="${ident}">${item.newName}</label></div>`;
           })
           .join(``)
       : ``;
@@ -73,10 +74,6 @@
           </div>`;
   };
 
-  // const renderRequiredError = () => {
-  //   return `<p class="u-p-2 u-heritage-berry text-center u-heritage-berry u-border-solid u-bg-white" >Please ensure you have completed all required fields</p>`;
-  // };
-
   const renderRequiredAlert = () => {
     return `<div class="u-fixed u-bottom-0 u-center-fixed-horz u-fadeinout" id="requiredAlert">
               <div class="u-flex u-gap u-p-2 u-white text-center u-bg-heritage-berry ">
@@ -88,11 +85,10 @@
             </div>`;
   };
 
-  /* 
-
-   HELPERS
-
-*/
+  /**
+   * HELPER FUNCTIONS
+   * These functions are used to manipulate the DOM, handle data, and perform various tasks related to the PDF generation process.
+   */
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
@@ -113,42 +109,7 @@
     return !sub.length ? `` : sub[0].subject;
   });
 
-  /* 
-    downloadPDF 
-
-function storePDF2(pdf, fileName2, serverPath) {
-  const linkSource = `${pdf}`;
-  const fileName = "YourPersonalisedPGPerspectus.pdf";
-  const fileURL = linkSource;
-
-  if (!window.ActiveXObject) {
-    var save = document.createElement("a");
-    save.href = fileURL;
-    save.target = "_blank";
-    var filename = fileURL.substring(fileURL.lastIndexOf("/") + 1);
-    save.download = fileName || filename;
-
-    if (navigator.userAgent.toLowerCase().match(/(ipad|iphone|safari)/) && navigator.userAgent.search("Chrome") < 0) {
-      console.log("Safari");
-      return save;
-      //document.location = save.href;
-      // window event not working here
-    } else {
-      var evt = new MouseEvent("click", {
-        view: window,
-        bubbles: true,
-        cancelable: false,
-      });
-      save.dispatchEvent(evt);
-      (window.URL || window.webkitURL).revokeObjectURL(save.href);
-
-      return ``;
-    }
-  }
-}
-*/
-
-  /*  b64toBlob */
+  /* b64toBlob */
   function b64toBlob(b64Data, contentType, sliceSize) {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
@@ -172,7 +133,7 @@ function storePDF2(pdf, fileName2, serverPath) {
     return blob;
   }
 
-  /*  getSelectedSubjects */
+  /* getSelectedSubjects */
   const getSelectedSubjects = () => {
     const subjectSelects = stir.nodes(".subjectSelect");
     const selectedSubjects = [];
@@ -180,7 +141,7 @@ function storePDF2(pdf, fileName2, serverPath) {
     subjectSelects.forEach((elem) => {
       for (const option of elem.options) {
         if (option.selected) {
-          selectedSubjects.push(option.value);
+          selectedSubjects.push(option.dataset.qs);
         }
       }
     });
@@ -192,7 +153,7 @@ function storePDF2(pdf, fileName2, serverPath) {
       });
   };
 
-  /*  getSelectedCourses */
+  /* getSelectedCourses */
   const getSelectedCourses = () => {
     return stir.nodes('input[data-type="subject_course"]:checked').map((elem) => {
       return { StudyLevel: "Postgraduate", Faculty: "", Course: elem.value };
@@ -221,35 +182,16 @@ function storePDF2(pdf, fileName2, serverPath) {
 
   /* cleanse */
   const cleanse = (string) => sanitizeInput(string);
-  //const cleanse = (string) => string.replaceAll("script>", "").replaceAll("script%3E", "").replaceAll("<", "");
 
-  /*
-    CONTROLLERS
-*/
-
-  /* 
-    storePDF: SEND the pdf file to Supabase and get the link url back *
-
-async function storePDF(pdf, fileName, serverPath) {
-  const fileNameFull = fileName + ".pdf";
-
-  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ID);
-  const pdfBlob = b64toBlob(pdf, "application/pdf", 512);
-
-  const { data, error } = await _supabase.storage.from("pdfs").upload(fileNameFull, pdfBlob, {
-    cacheControl: "3600",
-    upsert: false,
-  });
-
-  if (data) return data;
-
-  return null;
-}
- */
-
-  /*
-    CONTROLLER: submitData: Send data (formData) to the backend to be processed (MC QS)
-*/
+  /**
+   * submitData
+   * @param {string} pdfPath - The path to the PDF file
+   * @param {string} serverPath - The path to the server
+   * @param {FormData} formData - The form data to be sent
+   * @description This function sends the PDF path and form data to the server for processing. It appends the selected courses and subjects to the form data and sends it via a POST request.
+   * @returns {Promise<void>} - Returns a promise that resolves when the data is submitted
+   * @throws {Error} - Throws an error if the fetch request fails
+   */
   async function submitData(pdfPath, serverPath, formData) {
     formData.append("pdfPath", pdfPath);
 
@@ -267,9 +209,45 @@ async function storePDF(pdf, fileName, serverPath) {
     }
   }
 
-  /* 
-    CONTROLLER: Build the pdf
-*/
+  /**
+   * mergePdf
+   * @param {string} url - URL of the PDF to merge
+   * @param {PDFDocument} targetDoc - The document to merge into
+   * @param {string} label - Label for logging
+   * @returns {Promise<boolean>} - Success status
+   * @description This function fetches a PDF from the given URL, loads it, and merges its pages into the target document.
+   * It returns true if the merge is successful, otherwise false.
+   * @throws {Error} - Throws an error if the PDF cannot be loaded
+   */
+  async function mergePdf(url, targetDoc, label) {
+    try {
+      const pdfBytes = await fetch(url).then((res) => res.arrayBuffer());
+      const sourceDoc = await PDFLib.PDFDocument.load(pdfBytes);
+      const pages = sourceDoc.getPages();
+
+      var i = 0;
+      while (i < pages.length) {
+        let [p] = await targetDoc.copyPages(sourceDoc, [i]);
+        targetDoc.addPage(p);
+        i++;
+      }
+
+      return true;
+    } catch (error) {
+      console.log(`Error loading ${label} PDF`);
+      return false;
+    }
+  }
+
+  /**
+   * CONTROLLER: Build the pdf
+   * @param {Array} subsData - Array of subject data
+   * @param {FormData} data - Form data from the user
+   * @param {string} serverPath - Path to the server
+   * @returns {Promise<void>} - Returns a promise that resolves when the PDF is generated
+   * @description This function generates a PDF document based on the provided subject data and user input. It retrieves the necessary
+   * PDF templates, merges them, and customizes the content with user-specific information. The generated PDF is then made available for download.
+   */
   async function doPdf(subsData, data, serverPath) {
     const retrieveUrl = `https://www.stir.ac.uk/study/postgraduate/create-your-personalised-prospectus/welcome-back/`;
     const resultsNode = stir.node("#resultBox");
@@ -277,7 +255,7 @@ async function storePDF(pdf, fileName, serverPath) {
     setDOMContent(resultsNode, renderGenerating());
     resultsNode.scrollIntoView();
 
-    // Build PDF
+    // Get the data from the form
     const fullPdf = data.get("full_prospectus");
 
     const firstName = (data.get("first_name") || "").toUpperCase();
@@ -288,6 +266,7 @@ async function storePDF(pdf, fileName, serverPath) {
     const subject2 = data.get("subject_area_1");
     const subject3 = data.get("subject_area_2");
 
+    // Start the PDF generation
     const pdfDoc = await PDFLib.PDFDocument.create();
 
     //const urlFull = serverPath + "rawpdfs/full-non-personalised.pdf";
@@ -299,8 +278,6 @@ async function storePDF(pdf, fileName, serverPath) {
     const url1 = serverPath + "rawpdfs/" + subject1.replaceAll(",", "") + ".pdf";
     const url2 = serverPath + "rawpdfs/" + subject2.replaceAll(",", "") + ".pdf";
     const url3 = serverPath + "rawpdfs/" + subject3.replaceAll(",", "") + ".pdf";
-
-    //const fileName = String(Date.now() + "--" + firstName + lastName + String(Math.floor(Math.random() * 100)));
 
     // Font
     const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
@@ -320,7 +297,7 @@ async function storePDF(pdf, fileName, serverPath) {
       return;
     }
 
-    /* Personalised PDF */
+    // First page personalisation
     const frontPdfBytes = await fetch(urlFront).then((res) => res.arrayBuffer());
     const frontPdf = await PDFLib.PDFDocument.load(frontPdfBytes);
     const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
@@ -345,9 +322,10 @@ async function storePDF(pdf, fileName, serverPath) {
       rotate: PDFLib.degrees(0),
     });
 
+    // First page merge
     pdfDoc.addPage(firstPageCopy);
 
-    // Intro insert
+    // Intro personalisation
     const introInsertPdfBytes = await fetch(urlIntroInsert).then((res) => res.arrayBuffer());
     const introInsertPdf = await PDFLib.PDFDocument.load(introInsertPdfBytes);
     const [introInsertPageCopy] = await pdfDoc.copyPages(introInsertPdf, [0]);
@@ -370,8 +348,6 @@ async function storePDF(pdf, fileName, serverPath) {
     var i = 0;
     while (i < pagesIntro.length) {
       if (i === 2) {
-        //let [p] = await pdfDoc.copyPages(introPdfDoc, [i]);
-        //pdfDoc.addPage(p);
         pdfDoc.addPage(introInsertPageCopy);
       } else {
         let [p] = await pdfDoc.copyPages(introPdfDoc, [i]);
@@ -382,59 +358,23 @@ async function storePDF(pdf, fileName, serverPath) {
 
     const errorUrl = serverPath + "rawpdfs/.pdf";
 
-    // Main merge
+    // Merge subject doc 1
     if (url1 !== errorUrl) {
-      const doc1PdfBytes = await fetch(url1).then((res) => res.arrayBuffer());
-      const doc1PdfDoc = await PDFLib.PDFDocument.load(doc1PdfBytes);
-
-      const pages1 = doc1PdfDoc.getPages();
-      var i = 0;
-      while (i < pages1.length) {
-        let [p] = await pdfDoc.copyPages(doc1PdfDoc, [i]);
-        pdfDoc.addPage(p);
-        i++;
-      }
+      await mergePdf(url1, pdfDoc, "PDF 1");
     }
 
-    // Merge 2
+    // Merge subject doc 2
     if (url2 !== errorUrl) {
-      const doc2PdfBytes = await fetch(url2).then((res) => res.arrayBuffer());
-      const doc2PdfDoc = await PDFLib.PDFDocument.load(doc2PdfBytes);
-
-      const pages2 = doc2PdfDoc.getPages();
-      var i = 0;
-      while (i < pages2.length) {
-        let [p] = await pdfDoc.copyPages(doc2PdfDoc, [i]);
-        pdfDoc.addPage(p);
-        i++;
-      }
+      await mergePdf(url2, pdfDoc, "PDF 2");
     }
 
-    // Merge 3
+    // Merge subject doc 3
     if (url3 !== errorUrl) {
-      const doc3PdfBytes = await fetch(url3).then((res) => res.arrayBuffer());
-      const doc3PdfDoc = await PDFLib.PDFDocument.load(doc3PdfBytes);
-
-      const pages3 = doc3PdfDoc.getPages();
-      var i = 0;
-      while (i < pages3.length) {
-        let [p] = await pdfDoc.copyPages(doc3PdfDoc, [i]);
-        pdfDoc.addPage(p);
-        i++;
-      }
+      await mergePdf(url3, pdfDoc, "PDF 3");
     }
 
-    // Back page merge
-    const backPdfBytes = await fetch(urlBack).then((res) => res.arrayBuffer());
-    const backPdfDoc = await PDFLib.PDFDocument.load(backPdfBytes);
-
-    const pagesBack = backPdfDoc.getPages();
-    var i = 0;
-    while (i < pagesBack.length) {
-      let [p] = await pdfDoc.copyPages(backPdfDoc, [i]);
-      pdfDoc.addPage(p);
-      i++;
-    }
+    // Merge back page
+    await mergePdf(urlBack, pdfDoc, "Back Pages");
 
     // Generate as Base 64
     const pdfDataUri = await pdfDoc.saveAsBase64({
@@ -457,7 +397,12 @@ async function storePDF(pdf, fileName, serverPath) {
     return;
   }
 
-  /* isMarketingOk */
+  /**
+   * isMarketingOk
+   * @returns {boolean} - Returns true if marketing opt-in is valid, false otherwise
+   * @description This function checks if the marketing opt-in is valid based on the user's selections. If the global opt-in is
+   * not checked, it verifies that at least one marketing option is selected.
+   */
   const isMarketingOk = () => {
     const nodes = stir.nodes('[data-section="marketing"]');
     const nodeGlobal = stir.node('[data-section="marketingglobal"]');
@@ -469,11 +414,22 @@ async function storePDF(pdf, fileName, serverPath) {
     return true;
   };
 
-  /* 
-  doCaptcha Spam check 
-*/
+  /**
+   * doCaptcha
+   * @param {string} token - The captcha token
+   * @param {FormData} data - The form data to be sent
+   * @returns {Promise<boolean>} - Returns true if the captcha is valid, false otherwise
+   * @description This function sends the captcha token to the server for verification. If the verification is successful, it proceeds
+   * to generate the PDF. If not, it logs a message indicating suspected spam.
+   */
   async function doCaptcha(token, data) {
     data.append("token", token);
+
+    // For dev skip captcha check
+    if (UoS_env.name === `dev`) {
+      doPdf(subjectsData, data, serverPath);
+      return true;
+    }
 
     try {
       // Check captcha
@@ -483,7 +439,6 @@ async function storePDF(pdf, fileName, serverPath) {
       });
 
       const result = await response.json();
-      //const result = { success: "true" };
 
       if (result.success === "true") {
         // Exectue the PDF Stuff
@@ -501,28 +456,32 @@ async function storePDF(pdf, fileName, serverPath) {
     }
   }
 
-  /*  
-    ON LOAD - FORM VERSION   
-*/
+  /**
+   * ON LOAD - FORM VERSION
+   * This function handles the generation of a personalized PDF prospectus based on user input. It sets up event listeners
+   * for form submission, populates select options, and validates user input.
+   */
 
   const generatePDFBtn = stir.node("#generatePDFBtn");
   const generatePDFForm = stir.node("#generatePDFForm");
 
   if (generatePDFForm) {
-    /* 
-      ACTION: Form Select change events 
-    */
+    const optionsArray = [{ name: "Select an option", value: "Select an option" }, ...subjectsData.map((item) => ({ name: item.subject, qs: item.qsSubject })).sort((a, b) => a.name.localeCompare(b.name))];
+    const selects = ["subject_area_0", "subject_area_1", "subject_area_2"].map((id) => document.getElementById(id));
 
+    // Function: populateSelect */
     function populateSelect(select, options) {
       select.innerHTML = "";
       options.forEach((option) => {
         const optionElement = document.createElement("option");
-        optionElement.value = option !== "Select an option" ? option : "";
-        optionElement.textContent = option;
+        optionElement.value = option.name !== "Select an option" ? option.name : "";
+        optionElement.textContent = option.name;
+        option.value !== "Select an option" ? optionElement.setAttribute("data-qs", option.qs) : optionElement.setAttribute("data-qs", "");
         select.appendChild(optionElement);
       });
     }
 
+    // Function: updateSelects */
     function updateSelects(indexUpdated) {
       const selectedValues = selects.map((select) => select.value);
 
@@ -541,20 +500,17 @@ async function storePDF(pdf, fileName, serverPath) {
       });
     }
 
-    const optionsArray = ["Select an option", ...subjectsData.map((item) => item.subject)];
-    const selects = ["subject_area_0", "subject_area_1", "subject_area_2"].map((id) => document.getElementById(id));
-
+    // On load
     populateSelect(selects[0], optionsArray);
 
+    // Change event listener for each select
     selects.forEach((select) =>
       select.addEventListener("change", (event) => {
         updateSelects(event.target.id.replace("subject_area_", ""));
       })
     );
 
-    /* 
-    ACTION: Form submit event 
- */
+    // ACTION: Form submit event
     generatePDFBtn &&
       generatePDFBtn.addEventListener("click", function (e) {
         e.preventDefault();
@@ -616,9 +572,10 @@ async function storePDF(pdf, fileName, serverPath) {
       });
   }
 
-  /*
-  ON LOAD - RETRIEVE LATER VERSION
-*/
+  /**
+   * ON LOAD - RETRIEVE LATER VERSION FROM EMAIL URL
+   * Retrieves the user's name and selected subjects from the URL parameters and generates a PDF prospectus based on that information.
+   */
 
   if (stir.node("#doStoredPDF")) {
     let nameRaw = "";
