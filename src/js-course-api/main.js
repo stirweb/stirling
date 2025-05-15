@@ -5,7 +5,7 @@
 	const query = 'programme=UCX12-BUSLAW/2024/5/SPR';
 	//const apiUrl = `https://${host}${path}?${query}`;
 	//const apiUrl = 'https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/35030?programme=UCX12-BUSLAW/2024/5/SPR';
-	const apiUrl = '/pages/data/akari/course.json';
+	const apiUrl = '/stirling/pages/data/akari/course.json';
 	const skip = ["programmeTitle","versionNumber"];
 	const skips = element => skip.indexOf(element) === -1;
 
