@@ -1490,6 +1490,7 @@
 
     <script>
         const CAPTCHA = "6LeLc_wpAAAAAK9XBEY5HhZcsYEgTTi1wukDL685";
+        const USE_UAT = true; // Set to false for production
 
         const subjectsData = [{
                 "id": 1,
