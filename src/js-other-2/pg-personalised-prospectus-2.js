@@ -7,7 +7,7 @@
 
   const SERVER = {
     path: UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "",
-    app: "app-uat.php",
+    app: USE_UAT ? "app-uat.php" : "app.php",
     verify: "verify.php",
   };
 
