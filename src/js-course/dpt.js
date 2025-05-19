@@ -25,8 +25,8 @@ stir.dpt = (function () {
     PG: "opt=runpgcode&ct=PG",
   };
   const currentVersion = {
-    UG: 362,
-    PG: 357
+    UG: 436,
+    PG: 417
   };
 
   const PORTAL = "https://portal.stir.ac.uk";
