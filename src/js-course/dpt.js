@@ -28,6 +28,7 @@ stir.dpt = (function () {
     UG: 436,
     PG: 417
   };
+  debug && console.info(`[DPT] using versions `, currentVersion);
 
   const PORTAL = "https://portal.stir.ac.uk";
 
