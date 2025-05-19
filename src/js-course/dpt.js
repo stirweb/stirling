@@ -92,10 +92,11 @@ stir.dpt = (function () {
   const moduleLink = (data) => {
     // LINK TO NEW AKARI MODULE PAGES
     const url = `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
-	return availability(data) ? `<a href="${url}" data-spa="${data.modCode}/${data.mavSemSession}/${data.mavSemCode}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
+    //data-spa="${data.modCode}/${data.mavSemSession}/${data.mavSemCode}"
+	  return availability(data) ? `<a href="${url}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
 	
     // LINK TO OLD DEGREE PROGRAM TABLES
-    //return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
+    // return `${stir.templates.course.link(data.modName,`${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`)}`;
   };
 
   const template = {
