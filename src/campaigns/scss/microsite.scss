@@ -72,13 +72,30 @@ a:hover {
   padding: 20px 0;
 
   img {
-    max-width: 300px;
+    max-width: 240px;
   }
+}
+
+/* 
+  Mobile menu button 
+*/
+#mobilemenubutton {
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  float: right;
+  cursor: pointer;
+}
+
+#mobilemenubutton:hover svg,
+#mobilemenubutton:focus svg {
+  //color: rgb(var(--main-color)) !important;
 }
 
 /* 
   Mobile Menu Styling 
 */
+
 #mobilemenu {
   position: absolute;
   width: 100%;
@@ -108,25 +125,11 @@ a:hover {
 #mobilemenu a:hover,
 #mobilemenu a:focus {
   background-color: rgba(var(--main-color), 0.1);
-  color: rgb(var(--main-color));
+  //color: rgb(var(--main-color));
 }
 
 #mobilemenu a:last-child {
   border-bottom: none;
-}
-
-/* Style for the mobile menu button */
-#mobilemenubutton {
-  background: transparent;
-  border: none;
-  padding: 0.5rem;
-  float: right;
-  cursor: pointer;
-}
-
-#mobilemenubutton:hover svg,
-#mobilemenubutton:focus svg {
-  color: rgb(var(--main-color)) !important;
 }
 
 /* Hierarchical Mobile Menu Styling */
@@ -485,79 +488,27 @@ a:hover {
   }
 }
 
-// .micrositenav {
-//   padding-top: 1.5rem;
-//   padding-bottom: 1.5rem;
-//   background-color: #14315e; // fallback
-//   background-color: rgba(var(--safe-color), 1);
-
-//   a {
-//     color: #fff;
-//     margin: 1rem;
-
-//     &:focus {
-//       outline-color: #fff !important;
-//     }
+// .c-wysiwyg-content {
+//   li a {
+//     border-bottom: 2px solid rgba(var(--main-color), 1) !important;
 
 //     &:hover {
-//       text-decoration: underline;
-//       text-underline-offset: 5px;
+//       border-bottom-color: rgba(var(--main-color), 0.5) !important;
+//       color: rgba(var(--hover-color), 1) !important;
 //     }
 //   }
-// }
 
-// nav.micrositenav .burger--internal-main-menu span {
-//   background-color: #fff;
-
-//   &::before {
-//     background-color: #fff;
+//   blockquote {
+//     border-left: 5px solid rgba(var(--main-color), 1);
+//     font-weight: 600;
+//     max-width: 960px;
+//     margin: 0 auto;
+//     padding: 0 0 0 30px;
 //   }
-//   &::after {
-//     background-color: #fff;
+
+//   p {
 //   }
 // }
-
-.c-masthead__image {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: top center;
-  max-height: 260px;
-  min-height: 260px;
-  position: relative;
-}
-
-.c-masthead .c-masthead__callout-text {
-  color: rgba(var(--main-color), 1);
-
-  &:after {
-    border-right: 7px solid rgba(var(--main-color), 1);
-    border-bottom: 7px solid rgba(var(--main-color), 1);
-    border-right: 0px solid rgba(var(--main-color), 1);
-    border-bottom: 7px solid rgba(var(--main-color), 1);
-  }
-}
-
-.c-wysiwyg-content {
-  li a {
-    border-bottom: 2px solid rgba(var(--main-color), 1) !important;
-
-    &:hover {
-      border-bottom-color: rgba(var(--main-color), 0.5) !important;
-      color: rgba(var(--hover-color), 1) !important;
-    }
-  }
-
-  blockquote {
-    border-left: 5px solid rgba(var(--main-color), 1);
-    font-weight: 600;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 0 0 30px;
-  }
-
-  p {
-  }
-}
 
 /* Buttons */
 
