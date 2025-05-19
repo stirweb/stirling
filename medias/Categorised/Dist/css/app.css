@@ -1375,10 +1375,10 @@ body > nav > a.u-show-on-focus {
                 font-size: 1rem;
                 /* 16px */
                 color: #3a3c39;
-                border-bottom: 1px solid #a8a9a8 !important; }
+                border-bottom: 2px solid #a8a9a8 !important; }
                 .sitemap > ul > li > ul > li > ul > li > a:hover, .sitemap--skip-top-level > ul > li > ul > li > ul > li > ul > li > a:hover {
                   text-decoration: none;
-                  border-bottom: 1px solid #3a3c39 !important; }
+                  border-bottom: 2px solid #3a3c39 !important; }
               .sitemap > ul > li > ul > li > ul > li > ul, .sitemap--skip-top-level > ul > li > ul > li > ul > li > ul > li > ul {
                 display: none; }
 
@@ -2344,7 +2344,7 @@ button {
   /* default in Webkit/Blink is blue, others black. normalise by inheriting the colour from parent element */ }
 
 button:focus {
-  outline: 1px solid #006938;
+  outline: 2px solid #006938;
   outline-offset: 4px; }
 
 /* Default */
