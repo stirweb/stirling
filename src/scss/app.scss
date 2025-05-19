@@ -33,7 +33,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -137,7 +137,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge);
 
 $global-font-size: 100%;
 $header-font-family: "FSMaja", serif;
-$body-font-family: "General Sans", sans-serif;
+$body-font-family: "General Sans", "Open Sans", sans-serif;
 $header-font-weight: 300;
 
 // 5. Spacing
