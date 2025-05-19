@@ -780,7 +780,7 @@ html {
 /* Template */
 body {
   margin: 0;
-  font-family: "General Sans", sans-serif !important;
+  font-family: "General Sans", "Open Sans", sans-serif !important;
   font-size: 1.125rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1375,10 +1375,10 @@ body > nav > a.u-show-on-focus {
                 font-size: 1rem;
                 /* 16px */
                 color: #3a3c39;
-                border-bottom: 1px solid #a8a9a8 !important; }
+                border-bottom: 2px solid #a8a9a8 !important; }
                 .sitemap > ul > li > ul > li > ul > li > a:hover, .sitemap--skip-top-level > ul > li > ul > li > ul > li > ul > li > a:hover {
                   text-decoration: none;
-                  border-bottom: 1px solid #3a3c39 !important; }
+                  border-bottom: 2px solid #3a3c39 !important; }
               .sitemap > ul > li > ul > li > ul > li > ul, .sitemap--skip-top-level > ul > li > ul > li > ul > li > ul > li > ul {
                 display: none; }
 
@@ -2344,7 +2344,7 @@ button {
   /* default in Webkit/Blink is blue, others black. normalise by inheriting the colour from parent element */ }
 
 button:focus {
-  outline: 1px solid #006938;
+  outline: 2px solid #006938;
   outline-offset: 4px; }
 
 /* Default */
@@ -2358,7 +2358,7 @@ button:focus {
 
 .button {
   display: inline-block;
-  font-family: "General Sans", sans-serif !important;
+  font-family: "General Sans", "Open Sans", sans-serif !important;
   font-size: 1.25rem;
   text-align: center;
   line-height: 1.6;
@@ -3710,7 +3710,7 @@ updated Aug 2022 for clearing homepage banner
 
 .c-image-text-block__alt-header {
   color: #3a3c39;
-  font-family: "General Sans", sans-serif;
+  font-family: "General Sans", "Open Sans", sans-serif;
   font-size: 2rem;
   margin: 0 0 32px 0; }
 
@@ -8406,6 +8406,11 @@ svg.u-svg-32,
 .u-svg-32 svg {
   width: 32px;
   height: 32px; }
+
+svg.u-svg-40,
+.u-svg-40 svg {
+  width: 40px;
+  height: 40px; }
 
 /* 
   Common aspect ratios 
