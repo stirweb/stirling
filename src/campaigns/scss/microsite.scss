@@ -78,6 +78,17 @@ header {
   }
 }
 
+@media screen and (max-width: 64em) {
+  header.c-header {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+
+    img {
+      max-width: 140px;
+    }
+  }
+}
+
 .micrositenav {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
