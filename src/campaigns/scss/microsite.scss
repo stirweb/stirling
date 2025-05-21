@@ -63,8 +63,8 @@ a:hover {
 */
 
 .c-wrapper {
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 /*
@@ -101,7 +101,6 @@ header {
   background: transparent;
   border: none;
   padding: 0.5rem;
-  float: right;
   cursor: pointer;
 }
 
@@ -316,13 +315,13 @@ header {
   font-weight: 700;
 }
 
-.c-footer__contact {
-  background-image: url("../../dist/css/images/maps/footer-map-scotland.svg");
-  background-position: 75% center;
-  background-repeat: no-repeat;
-  background-size: 200px;
-  min-height: 254px;
-}
+// .c-footer__contact {
+//   background-image: url("../../dist/css/images/maps/footer-map-scotland.svg");
+//   background-position: 75% center;
+//   background-repeat: no-repeat;
+//   background-size: 200px;
+//   min-height: 254px;
+// }
 
 .c-footer__contact li {
   margin: 0 0 10px 0;
@@ -577,6 +576,7 @@ a.button:hover {
 
   li {
     padding-bottom: 0.5rem;
+    font-size: 1.125rem;
   }
 
   a {
