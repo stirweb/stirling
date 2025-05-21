@@ -1,11 +1,36 @@
 (() => {
+
+	console.info(window.location.search);
+
+	const u = new URL(window.location);
 	const el = document.querySelector("main#content > .grid-container");
-	const host = 'www.stir.ac.uk';
-	const path = '/data/pd-api-dev/'
-	const query = 'programme=UCX12-BUSLAW/2024/5/SPR';
-	//const apiUrl = `https://${host}${path}?${query}`;
-	//const apiUrl = 'https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/35030?programme=UCX12-BUSLAW/2024/5/SPR';
-	const apiUrl = '/stirling/pages/data/akari/course.json';
+	const spinner = new stir.Spinner(el);
+	const host = window.location.hostname;
+	const path = '/data/pd-api-dev/';
+	const ppth = 'terminalfour/preview/1/en/35030';
+	const code = u.searchParams.has("route") ? u.searchParams.get('route') : 'UCX12-BUSLAW';
+	const sess = u.searchParams.has("sess") ? u.searchParams.get('sess') : '2024/5';
+	const seme = 'SPR';
+	const query = `programme=${code}/${sess}/${seme}`;
+
+	const apiUrl = (()=>{
+		switch (UoS_env.name) {
+			case "dev":
+				return `https://www.stir.ac.uk${path}?${query}`;
+				return '/pages/data/akari/course.json';
+			case "qa":
+				return '/stirling/pages/data/akari/course.json';
+			case "preview":
+			case "appdev-preview":
+				return `https://${host}/${ppth}?${query}`;
+			case "pub":
+				return `https://${host}${path}?${query}`;
+
+		}
+	})();
+
+	console.info('[Main] apiUrl',apiUrl);
+
 	const skip = ["programmeTitle","versionNumber"];
 	const skips = element => skip.indexOf(element) === -1;
 
@@ -49,9 +74,11 @@
 		return
 	}
 
+	spinner.show();
+
 	fetch(apiUrl)
 		.then((response) => response.json())
-		.then((data) =>
+		.then((data) => {
 			el.insertAdjacentHTML(
 				"beforeend",
 				`<div class="grid-container u-px-1">
@@ -69,9 +96,8 @@
 							${ Object.keys(data).filter(skips).filter(el=>"string"===typeof data[el]||"number"===typeof data[el]).map(el => `<p><b>${el}</b><br>${data[el]}</p><br>`).join("") }
 						</div>
 					</div>
-				</div>	
-				`
-			)
-		);
+				</div>`);
+			spinner.hide();
+		});
 
 })();
