@@ -21,7 +21,7 @@ stir.templates.course = {
 
 	offline: `<p class="text-center c-callout">Module information is temporarily unavailable.</p>`,
 
-	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2024. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
+	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2025. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
 };
 
 

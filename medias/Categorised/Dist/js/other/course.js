@@ -415,7 +415,7 @@ var stir = stir || {};
 stir.dpt = (function () {
   const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
   const _semestersPerYear = 2;
-  const viewMoreModulesThreshold = 4;
+  const viewMoreModulesThreshold = 5;
   const config = {
     css: {
       truncateModuleCollection: "c-course-modules__accordion-content--hide-rows",
@@ -437,8 +437,8 @@ stir.dpt = (function () {
     PG: "opt=runpgcode&ct=PG",
   };
   const currentVersion = {
-    UG: 362,
-    PG: 357
+    UG: 436, //362
+    PG: 417  //357
   };
 
   const PORTAL = "https://portal.stir.ac.uk";
@@ -1084,7 +1084,7 @@ stir.templates.course = {
 
 	offline: `<p class="text-center c-callout">Module information is temporarily unavailable.</p>`,
 
-	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2024. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
+	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2025. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
 };
 
 
