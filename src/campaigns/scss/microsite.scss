@@ -95,6 +95,10 @@ header {
   background-color: #14315e;
   background-color: rgba(var(--safe-color), 1);
 
+  a {
+    font-size: 1.125rem;
+  }
+
   a:focus {
     outline: 1px solid #fff !important;
   }
