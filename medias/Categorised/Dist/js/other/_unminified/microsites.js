@@ -139,43 +139,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!mobileLinksUrl) return;
 
-    fetch(mobileLinksUrl)
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to load sitemap");
-        return response.text();
-      })
-      .then((html) => {
-        const mainList = processSitemap(html);
+    const mainList = processSitemap(mobileLinksUrl);
 
-        if (mainList) {
-          // Clear and add the processed menu
-          mobileMenu.innerHTML = "";
-          mobileMenu.appendChild(mainList);
-        } else {
-          throw new Error("Could not process sitemap structure");
-        }
-      })
-      .catch((error) => {
-        console.error("Error loading menu:", error);
-
-        // Fallback to main navigation
-        const mainNav = document.querySelector(".site-navigation");
-        if (mainNav) {
-          const mainList = createElement("ul", { className: "mobile-menu-main-list" });
-
-          Array.from(mainNav.querySelectorAll("a")).forEach((link) => {
-            const li = createElement("li");
-            const clonedLink = link.cloneNode(true);
-            li.appendChild(clonedLink);
-            mainList.appendChild(processMenuItem(li));
-          });
-
-          mobileMenu.innerHTML = "";
-          mobileMenu.appendChild(mainList);
-        } else {
-          mobileMenu.innerHTML = '<div class="text-center"><em>Menu could not be loaded</em></div>';
-        }
-      });
+    if (mainList) {
+      // Clear and add the processed menu
+      mobileMenu.innerHTML = "";
+      mobileMenu.appendChild(mainList);
+    }
   };
 
   // Toggle menu visibility function
