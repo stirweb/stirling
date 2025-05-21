@@ -3,7 +3,7 @@ var stir = stir || {};
 stir.dpt = (function () {
   const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
   const _semestersPerYear = 2;
-  const viewMoreModulesThreshold = 4;
+  const viewMoreModulesThreshold = 5;
   const config = {
     css: {
       truncateModuleCollection: "c-course-modules__accordion-content--hide-rows",
