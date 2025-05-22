@@ -1640,6 +1640,10 @@
                     "newName": "MRes Educational Research"
                 }, {
                     "newName": "MSc Professional Education and Leadership"
+                }, {
+                    "newName": "PGDE Secondary Education: Physics with Science"
+                }, {
+                    "newName": "PGDE Secondary Education: Chemistry with Science"
                 }]
             },
             {
@@ -1647,12 +1651,17 @@
                 "subject": "Environmental Sciences",
                 "qsSubject": "Environmental Sciences",
                 "courses": [{
-                    "newName": "MSc Environmental Management"
-                }, {
-                    "newName": "MSc Environmental Remote Sensing and Geospatial Sciences"
-                }, {
-                    "newName": "LLM Environmental Law and Climate Justice"
-                }]
+                        "newName": "MSc Environmental Management"
+                    }, {
+                        "newName": "MSc Environmental Remote Sensing and Geospatial Sciences"
+                    },
+                    {
+                        "newName": "MSc Global Environmental Sustainability"
+                    },
+                    {
+                        "newName": "LLM Environmental Law and Climate Justice"
+                    }
+                ]
             },
             {
                 "id": 10,
@@ -1775,10 +1784,15 @@
                 "subject": "Social Work",
                 "qsSubject": "Social Sciences",
                 "courses": [{
-                    "newName": "MSc Social Work Studies"
-                }, {
-                    "newName": "MSc Substance Use (Online)"
-                }]
+                        "newName": "MSc Social Work Studies"
+                    },
+                    {
+                        "newName": "MSc Applied Professional Studies"
+                    },
+                    {
+                        "newName": "MSc Substance Use (Online)"
+                    }
+                ]
             },
             {
                 "id": 19,
