@@ -5,10 +5,28 @@
  */
 
 var stir = stir || {};
+stir.templates = stir.templates || {};
 
-stir.course = (() => {
-	console.info('[Modules] stir.course');
-	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
+
+stir.templates.course = {
+	link: (text,href) => `<a href="${href}">${text}</a>`,
+	para: content => `<p>${content}</p>`,
+	option: option => `Starting ${option[3]}, ${option[1].toLowerCase()} (${option[4]})`,
+	div: (id,onclick) => {
+		const div = document.createElement('div');
+		div.id = id; div.onclick = onclick;
+		return div;
+	},
+	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,
+
+	offline: `<p class="text-center c-callout">Module information is temporarily unavailable.</p>`,
+
+	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2025. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
+};
+
+
+stir.course = (function() {
+
 	const na = {auto: new Function()};
 
 	if(!stir.dpt) return na;
