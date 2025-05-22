@@ -1,4 +1,96 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const mainMenu = document.getElementById("mainmenu");
+
+  if (!mainMenu || !mobileLinksUrl) return;
+
+  // Parse the HTML string
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(mobileLinksUrl, "text/html");
+
+  // Find the first level item (to skip it) and get its children
+  const firstLevelItem = doc.querySelector("ul > li");
+  if (!firstLevelItem) return;
+
+  // Get the second level menu (these will be our main visible links)
+  const secondLevelMenu = firstLevelItem.querySelector("ul");
+  if (!secondLevelMenu) return;
+
+  // Process all second-level items
+  const secondLevelItems = Array.from(secondLevelMenu.children);
+  secondLevelItems.forEach((item) => {
+    // Get link element
+    const link = item.querySelector(":scope > a");
+    if (!link) return;
+
+    // Skip the home link
+    if (link.innerText === "Home") return;
+
+    // Create nav item container
+    const navItem = document.createElement("div");
+    navItem.className = "main-nav-item";
+
+    // Clone the link
+    const mainLink = document.createElement("a");
+    mainLink.href = link.getAttribute("href");
+    mainLink.textContent = link.textContent;
+    mainLink.className = "main-nav-link";
+
+    // Check if this item has children (third level)
+    const subMenu = item.querySelector(":scope > ul");
+    if (subMenu) {
+      // This has a dropdown
+      navItem.classList.add("has-dropdown");
+
+      // Create dropdown container
+      const dropdown = document.createElement("div");
+      dropdown.className = "main-dropdown-menu";
+
+      // Process all third-level items
+      const thirdLevelItems = Array.from(subMenu.children);
+      thirdLevelItems.forEach((subItem) => {
+        const subLink = subItem.querySelector("a");
+        if (!subLink) return;
+
+        const dropdownItem = document.createElement("a");
+        dropdownItem.href = subLink.getAttribute("href");
+        dropdownItem.textContent = subLink.textContent;
+        dropdownItem.className = "main-dropdown-item";
+
+        dropdown.appendChild(dropdownItem);
+      });
+
+      // Add indicator for dropdown
+      const dropdownIndicator = document.createElement("span");
+      dropdownIndicator.className = "main-dropdown-indicator";
+      dropdownIndicator.innerHTML = `
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+</svg>`;
+      mainLink.appendChild(dropdownIndicator);
+
+      // Append dropdown to nav item
+      navItem.appendChild(mainLink);
+      navItem.appendChild(dropdown);
+
+      // Toggle dropdown on hover for desktop
+      navItem.addEventListener("mouseenter", () => {
+        dropdown.classList.add("active");
+      });
+
+      navItem.addEventListener("mouseleave", () => {
+        dropdown.classList.remove("active");
+      });
+    } else {
+      // Simple link with no children
+      navItem.appendChild(mainLink);
+    }
+
+    // Add to main menu
+    mainMenu.appendChild(navItem);
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
   const mobileMenuButton = document.getElementById("mobilemenubutton");
   const mobileMenu = document.getElementById("mobilemenu");
 

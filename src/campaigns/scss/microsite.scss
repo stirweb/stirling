@@ -72,6 +72,7 @@ a:hover {
 */
 header {
   padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   img {
     max-width: 240px;
@@ -80,7 +81,6 @@ header {
 
 @media screen and (max-width: 64em) {
   header.c-header {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
 
     img {
@@ -89,6 +89,75 @@ header {
   }
 }
 
+/*
+  Main Navigation
+*/
+
+.main-nav-item {
+  position: relative;
+}
+
+.main-nav-link {
+  border-bottom: none;
+  display: flex;
+  gap: 4px;
+  font-size: 1.063rem;
+}
+
+.main-nav-link:hover {
+  border-bottom: none;
+  color: rgba(var(--main-color), 1);
+  text-decoration: none;
+}
+
+.main-dropdown-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-dropdown-indicator > svg {
+  width: 16px;
+  height: 16px;
+}
+
+.main-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  padding: 0.5rem 0;
+  display: none;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.main-dropdown-menu.active {
+  display: flex;
+}
+
+.main-dropdown-item {
+  padding: 0.5rem 1rem;
+  color: #333;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #eee;
+}
+
+.main-dropdown-item:last-child {
+  border: none;
+}
+
+.main-dropdown-item:hover {
+  background-color: rgba(var(--main-color), 0.1);
+}
+
+/*
+  Old Main nav
+*/
 .micrositenav {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
