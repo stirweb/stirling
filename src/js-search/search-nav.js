@@ -177,9 +177,10 @@ var scrollend = { __proto__: null };
 
     // Show the tabs container
     tabsScope.classList.remove("hide");
-
+    
     // Select buttons and tab panels
-    const buttons = tabsScope.querySelectorAll("button");
+    const nav = tabsScope.querySelector('nav#nav-slider');
+    const buttons = nav && nav.querySelectorAll("button");
     const tabs = tabsScope.querySelectorAll("#mySlider1 > div");
 
     /*
@@ -197,7 +198,7 @@ var scrollend = { __proto__: null };
       });
 
       // Remove active states from all buttons
-      buttons.forEach((button) => {
+      buttons && buttons.forEach((button) => {
         if (button) {
           button.classList.remove("u-white", "u-bg-heritage-green");
         }
@@ -218,7 +219,7 @@ var scrollend = { __proto__: null };
     };
 
     // Add click event listeners to tab buttons
-    buttons.forEach((button) => {
+    buttons && buttons.forEach((button) => {
       button.addEventListener("click", (event) => {
         const btn = event.target.closest("button[data-open]");
         if (!btn) return;
@@ -234,22 +235,24 @@ var scrollend = { __proto__: null };
     });
 
     // Initialize tab panel attributes for accessibility
-    tabs.forEach((tab) => {
-      const panelId = tab.getAttribute("data-panel");
-      tab.setAttribute("role", "tabpanel");
-      tab.setAttribute("tabindex", "0");
-      tab.setAttribute("id", `search_results_panel_${panelId}`);
-      tab.setAttribute("aria-labelledby", `searchtab_${panelId}`);
-    });
-
-    // Determine initial open tab from URL or default to 'all'
-    const initialTabId = QueryParams.get("tab") || "all";
-    const initialButton = tabsScope.querySelector(`[data-open="${initialTabId}"]`);
-
-    // Open and scroll to the initial tab
-    if (initialButton) {
-      initialButton.click();
-      initialButton.scrollIntoView({ block: "end" });
+    // (only if there is more than one tab)
+    if(tabs && tabs.length > 1) {
+      tabs.forEach((tab) => {
+        const panelId = tab.getAttribute("data-panel");
+        tab.setAttribute("role", "tabpanel");
+        tab.setAttribute("tabindex", "0");
+        tab.setAttribute("id", `search_results_panel_${panelId}`);
+        tab.setAttribute("aria-labelledby", `searchtab_${panelId}`);
+      });
+      // Determine initial open tab from URL or default to 'all'
+      const initialTabId = QueryParams.get("tab") || "all";
+      const initialButton = tabsScope.querySelector(`[data-open="${initialTabId}"]`);
+      
+      // Open and scroll to the initial tab
+      if (initialButton) {
+        initialButton.click();
+        initialButton.scrollIntoView({ block: "end" });
+      }
     }
   };
 
