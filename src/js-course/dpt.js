@@ -365,15 +365,11 @@ stir.dpt = (function () {
       version:  na,
       next: function(e) {
         if(_mcPointer===_moduleCache.length-1) return;
-        _mcPointer++;
-        stir.dpt.show.module( moduleIdentifier(_moduleCache[_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
-        stir.course.step(true);
+        stir.dpt.show.module( moduleIdentifier(_moduleCache[++_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
       },
       previous: function(e) {
         if(_mcPointer<=0) return;
-        _mcPointer--;
-        stir.dpt.show.module( moduleIdentifier(_moduleCache[_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
-        stir.course.step(true);
+        stir.dpt.show.module( moduleIdentifier(_moduleCache[--_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
       }
     },
     get: {
