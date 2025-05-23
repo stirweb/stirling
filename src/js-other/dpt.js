@@ -39,11 +39,6 @@ stir.dpt = (function(){
 	
 	const getModules = (type, roucode, moa, occ) => stir.getJSONp(`${urls.calendar}${urls.modules(type.toLowerCase(),roucode,moa,occ)}`);
 
-//	const debug = data => {
-//		console.info('[DPT] debug', data);
-//		stdout.textContent = JSON.stringify(data,null,'\t');
-//	};
-
 	const makeSelector = (data,name) => {
 
 		const label = document.createElement('label');

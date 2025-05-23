@@ -1,6 +1,7 @@
 var stir = stir || {};
 stir.templates = stir.templates || {};
 
+
 stir.templates.course = {
 	colours: {
 		UG: ["heritage-green","energy-turq","energy-purple"],
@@ -14,30 +15,42 @@ stir.templates.course = {
 		div.id = id; div.onclick = onclick;
 		return div;
 	},
-	dialogue: () => {
+	dialogue: (id) => {
 		const d = document.createElement('dialog');
 		const x = document.createElement('button');
+		const p = document.createElement('button');
+		const n = document.createElement('button');
+		const w = document.createElement('nav');
+
+		const prev = stir.dpt.show.previous;
+		const next = stir.dpt.show.next;
+
+		id && (d.id = id);
 		d.setAttribute('data-module-modal','');
+		w.setAttribute('aria-label','module navigation');
+		w.append(p,n);
 		d.append(x);
-		x.addEventListener("click",e=>{
-			d.close();
-		});
+		d.append(w);
+
+		x.addEventListener("click",e=>d.close());
+		p.addEventListener("click",prev.bind(p));
+		n.addEventListener("click",next.bind(n));
+
 		x.textContent = "Close";
+		p.textContent = "ꜛ Previous";
+		n.textContent = "ꜜ Next";
 		return d;
 	},
 	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,
 
 	offline: `<p class="text-center c-callout">Module information is temporarily unavailable.</p>`,
 
-	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2024. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`,
+	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2025. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
 };
 
 stir.templates.course.barcharts = (barcharts) => {
-
-	console.info('[Templates] barcharts',barcharts)
 	
 	function onIntersection(entries, opts) {
-		console.info('[Templates] onIntersection',entries)
 		
 		entries.forEach((entry) => {
 		  if (entry.isIntersecting) {

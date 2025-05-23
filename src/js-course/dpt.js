@@ -14,6 +14,7 @@ stir.dpt = (function () {
     },
   };
   let user = {}, _year=0, _semesterCache=[];
+  let _moduleCache=[],_mcPointer=0;
   let routesCurry;
   
   function resetGlobals() {
@@ -58,14 +59,14 @@ stir.dpt = (function () {
   //		user.type=type;
   //	};
 
-  const spitCodes = (csv) => csv.replace(/\s/g, "").split(",");
+  const splitCodes = (csv) => csv.replace(/\s/g, "").split(",");
 
   const getVersion = (type) => stir.getJSONp(`${urls.version[type]}`);
 
   const getRoutes = (type, routesCSV, auto) => {
     user.type = type;
     user.auto = auto;
-    stir.dpt.show.routes = routesCurry(spitCodes(routesCSV));
+    stir.dpt.show.routes = routesCurry(splitCodes(routesCSV));
     stir.getJSONp(`${urls.servlet}${urls.route[type.toUpperCase()]}`);
   };
 
@@ -89,10 +90,14 @@ stir.dpt = (function () {
     return urlBits[urlBits.length - 2];
   };
 
-  const moduleLink = (data) => {
+  const moduleUrl = data => `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
+  const moduleIdentifier = data => `${data.modCode}/${data.mavSemSession}/${data.mavSemCode}`;
+
+  const moduleLink = (data,index) => {
     // LINK TO NEW AKARI MODULE PAGES
-    const url = `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
-	return availability(data) ? `<a href="${url}" data-spa="${data.modCode}/${data.mavSemSession}/${data.mavSemCode}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
+    const link = `<a href="${moduleUrl(data)}" data-index=${index} data-spa="${moduleIdentifier(data)}">${data.modName}</a>`;
+    const fallback = `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
+	  return availability(data) ? link : fallback;
 	
     // LINK TO OLD DEGREE PROGRAM TABLES
     //return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
@@ -105,10 +110,19 @@ stir.dpt = (function () {
       header: (text) => `<p class=c-course-modules__collection-header>${text}</p>`,
       footer: (text) => `<p class=c-course-modules__pdm-note>${text}</p>`,
     },
-    module: (data) =>
-      `<tr><td>${moduleLink(data)}
+    module: (data) => {
+      // stash a list of modules to facilitate prev/next navigation among them
+      _moduleCache.push({
+          modName:data.modName,
+          modCode:data.modCode,
+          mavSemSession:data.mavSemSession,
+          mavSemCode:data.mavSemCode,
+          mavOccurrence:data.mavOccurrence});
+
+      return `<tr><td>${moduleLink(data,_moduleCache.length)}
 			<span class=c-course-modules__module-code>(${data.modCode})</span>
-			</td><td>${data.modCredit} credits</td></tr>`,
+			</td><td>${data.modCredit} credits</td></tr>`;
+    },
     nodata: `<tr><td colspan=2> no data </td></tr>`,
     container: (text) => `<div class="c-wysiwyg-content ${config.css.truncateModuleCollection}" data-collection-container>${text}</div>`,
   };
@@ -150,7 +164,7 @@ stir.dpt = (function () {
     return "Compulsory module";
   };
 
-  // hide the module if it's unavailable. (This condition was taken from calendar js).
+  // hide the module if it's unavailable. (This logic was taken from Portal calendar.js).
   const availability = (m) => m.mavSemSemester !== null && m.mavSemSemester.length !== 0 && m.mavSemSemester !== "[n]" && m.mavSemSemester !== "Not Available";
 
   const collectionView = stir.curry((semesterID, collection, c) => {
@@ -158,7 +172,6 @@ stir.dpt = (function () {
     let header = template.collection.header(getCollectionHeader(collection.collectionStatusCode));
     let notes = collection.collectionType == "LIST" || collection.collectionType == "CHOICE" ? template.collection.notes(collection.collectionNotes) : "";
     let body = template.collection.table(collectionId, collection.mods.map(moduleView).join(""));
-
     let footer = collection.collectionFootnote ? template.collection.footer(collection.collectionFootnote) : "";
     let more =
       collection.mods.length > viewMoreModulesThreshold
@@ -192,8 +205,8 @@ stir.dpt = (function () {
 
   function viewModule(e) {
     e.preventDefault();
-    stir.dpt.reset.module();
-    stir.dpt.show.module(this.getAttribute('data-spa'),this.getAttribute('href'));
+    _mcPointer = parseInt(this.getAttribute('data-index'))-1;
+    stir.dpt.show.module( this.getAttribute('data-spa'), this.getAttribute('href') );
   }
 
   const versionToSession = (data) => {
@@ -216,6 +229,7 @@ stir.dpt = (function () {
   };
 
   const modulesOverview = (data) => {
+
     let frag = document.createDocumentFragment();
     data.initialText && frag.append(paragraph(data.initialText));
 
@@ -338,14 +352,28 @@ stir.dpt = (function () {
 
   ///////////////////////////////////////
 
+  const na = new Function();
+
   return {
     show: {
-      fees: new Function(),
-      routes: new Function(),
-      options: new Function(),
-      modules: new Function(),
-      module: new Function(),
-      version: new Function()
+      fees:     na,
+      routes:   na,
+      options:  na,
+      modules:  na,
+      module:   na,
+      version:  na,
+      next: function(e) {
+        if(_mcPointer===_moduleCache.length-1) return;
+        _mcPointer++;
+        stir.dpt.show.module( moduleIdentifier(_moduleCache[_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
+        stir.course.step(true);
+      },
+      previous: function(e) {
+        if(_mcPointer<=0) return;
+        _mcPointer--;
+        stir.dpt.show.module( moduleIdentifier(_moduleCache[_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
+        stir.course.step(true);
+      }
     },
     get: {
       options: getOptions,
@@ -354,9 +382,9 @@ stir.dpt = (function () {
       version: getVersion
     },
     reset: {
-      module: new Function(),
-      modules: new Function(),
-      options: new Function()
+      module:  na,
+      modules: na,
+      options: na
     },
     set: {
       viewer: (path) => (urls.viewer = path),
