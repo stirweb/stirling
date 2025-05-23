@@ -27,7 +27,8 @@ stir.course = (function() {
 	const version = document.querySelector('time[data-sits]');
 	const spinner = new stir.Spinner(moduleViewer);
 	const status = {
-		steps: 1
+//		steps: 1,
+		uid: 0
 	}; // used to track modal/url changes
 
 	let initialised = false;
@@ -74,8 +75,7 @@ stir.course = (function() {
 			moduleViewer.showModal();
 			//status.moduleViewer = true;
 			if(url) {
-				history.pushState(null,"",url);
-				status.history = true;
+				history.pushState({uid:++status.uid},"",url);
 			}
 		},
 		version: frag => version && frag && (version.textContent = frag)
@@ -99,6 +99,10 @@ stir.course = (function() {
 	stir.dpt.set.reset.options( reset.options  );
 
 	window.addEventListener("popstate",e=>{
+		if(e.state && e.state.uid){
+			status.uid = e.state.uid;
+		}
+
 		let params = new URLSearchParams(document.location.search);
 		let modurl = params.has("code") && params.has("session") && params.has("semester") && params.has("occurrence");
 
@@ -106,19 +110,17 @@ stir.course = (function() {
 			handle.module(`${params.get("code")}/${params.get("session")}/${params.get("semester")}`,null);
 		} else {
 			if (moduleViewer.open) {
+				status.uid = 0; // reset counter
 				moduleViewer.close();
-				status.history = false;
 			}
-		}
-
-		if(status.steps>1) {
-			status.steps--;
 		}
 	});
 	
 	moduleViewer.addEventListener("close", e=>{
-		if(status.history) history.go(0-status.steps);
-		status.steps=1;
+		if(status.uid>0) {
+			history.go(0-status.uid);
+			status.uid = 0; // reset counter
+		}
 	});
 
 	function _auto() {
@@ -137,10 +139,6 @@ stir.course = (function() {
 		boilerplates = data;
 	}
 
-	function _step() {
-		status.steps++;
-	}
-
 	// STIR TABS AWARE
 	//const panel = container.closest && container.closest('[role=tabpanel]');
 	//if(panel && window.location.hash.indexOf(panel.id)===1) _auto();
@@ -156,7 +154,6 @@ stir.course = (function() {
 	return {
 		init: _init,	// get module boilerplate text
 		auto: _auto,	// initialise and begin
-		step: _step		// prev/next stepping
 	};
 
 })();
