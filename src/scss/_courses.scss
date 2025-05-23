@@ -478,7 +478,7 @@ svg.icon {
   }
 
   .c-icon-block p {
-    font-size: 1rem;
+    font-size: 1.125rem;
   }
   .c-facts__facts a {
     border-bottom-width: 1px;
@@ -530,8 +530,8 @@ svg.icon {
   display: flex;
 
   h2 {
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
-    font-size: 1rem;
+    font-family: "General Sans", Arial, Helvetica, sans-serif;
+    font-size: 1.12rem;
     margin: 0;
     line-height: inherit;
     color: inherit;
@@ -739,14 +739,26 @@ a[data-mode*="Online"] {
   overscroll-behavior: contain;
   border-radius: 2px;
 
-  button {
+  > button {
     position: fixed;
     top: 1rem;
     right: 2vw;
+  }
+
+  > nav {
+    position: fixed;
+    top: 1rem;
+    left: 1vw;
+    z-index: 1;
+    background: rgba(255,255,255,.85);
+    padding: .5rem 0 .5rem 1rem;
+  }
+  > button, > nav button {
     padding: 1rem;
     background: $heritage-green;
     color: $white;
     cursor: pointer;
+    margin-right: 1rem;
   }
 
 }

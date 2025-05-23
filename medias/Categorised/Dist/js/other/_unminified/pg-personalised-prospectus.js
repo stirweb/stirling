@@ -553,57 +553,6 @@ async function storePDF(pdf, fileName, serverPath) {
     );
 
     /* 
-      Old Version 
-    */
-
-    //const selects = stir.nodes("select");
-    //selects.forEach((element) => (element.value = "")); // reset on load
-
-    //const subjectSelect = stir.nodes(".subjectSelect");
-    //subjectSelect[0] && subjectSelect[0].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData));
-    //subjectSelect[1].innerHTML = renderpleaseSelect() + renderSubjectSelectItems(subjectsData);
-    //subjectSelect[2].innerHTML = renderpleaseSelect() + renderSubjectSelectItems(subjectsData);
-
-    //generatePDFForm &&
-    //generatePDFForm.addEventListener("change", function (e) {
-    //e.preventDefault();
-    //const data = new FormData(generatePDFForm);
-    //const studyYear = data.get("study_year");
-    //const subject1 = data.get("subject_area_1");
-    //const subject2 = data.get("subject_area_2");
-    //const subject3 = data.get("subject_area_3");
-    /*
-        // 1st select
-        if (e.target.id === "subject_area_1" && subject1) {
-          // Show the subject courses
-          stir.node("#subject_area_1_courses").innerHTML = renderSubjectCoursesOptions(subject1, "1", subjectsData);
-
-          // Remove the selected item from the subject list
-          //const subjectsData1 = subjectsData.filter((item) => item.subject !== subject1);
-          //subjectSelect[1].insertAdjacentHTML("beforeend", renderSubjectSelectItems(subjectsData1));
-          //subjectSelect[1].innerHTML = renderpleaseSelect() + renderSubjectSelectItems(subjectsData1);
-        }
-
-        // 2nd select
-        if (e.target.id === "subject_area_2" && subject2) {
-          // Show the subject courses
-          //stir.node("#subject_area_3_courses").innerHTML = "";
-          stir.node("#subject_area_2_courses").innerHTML = renderSubjectCoursesOptions(subject2, "2", subjectsData);
-
-          // Show the subject list
-          //const subjectsData2 = subjectsData.filter((item) => item.subject !== subject2 && item.subject !== subject1);
-          //subjectSelect[2].innerHTML = renderpleaseSelect() + renderSubjectSelectItems(subjectsData2);
-        }
-
-        // 3rd select
-        if (e.target.id === "subject_area_3" && subject3) {
-          stir.node("#subject_area_3_courses").innerHTML = renderSubjectCoursesOptions(subject3, "3", subjectsData);
-        }
-        return;
-        */
-    // });
-
-    /* 
     ACTION: Form submit event 
  */
     generatePDFBtn &&

@@ -63,7 +63,7 @@ body > nav > a.u-show-on-focus {
   height: 8px;
   width: 0;
   left: 0;
-  bottom: -37px;
+  bottom: -38px;
   transition: width 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); /* easeOutQuart */
 }
 
@@ -121,4 +121,38 @@ body > nav > a.u-show-on-focus {
 
 .c-header-nav__icon {
   padding-left: 5px;
+}
+
+/* 
+  Burger menu
+*/
+
+.c-header-burger {
+  width: 28px;
+  height: 25px;
+  position: relative;
+  cursor: pointer;
+  margin: 8px 16px 5px;
+}
+
+.c-header-burger__bun,
+.c-header-burger__bun:before,
+.c-header-burger__bun:after {
+  background-color: #3e3e3e;
+  width: 100%;
+  height: 4px;
+}
+
+.c-header-burger__bun:before,
+.c-header-burger__bun:after {
+  content: "";
+  position: absolute;
+}
+
+.c-header-burger__bun:before {
+  top: 0;
+}
+
+.c-header-burger__bun:after {
+  bottom: 0;
 }
