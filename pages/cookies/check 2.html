@@ -440,136 +440,92 @@
     <main class="wrapper-content" aria-label="Main content" id="content">
         <div class="grid-container">
             <div class="grid-x ">
-
-                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
-                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Cookies</h1>
-                </div>
-
-                <div class="cell u-padding-bottom">
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea eos consequatur corporis odit,
-                        libero a minima iste, explicabo quod, fuga non sint corrupti quam reprehenderit. Nesciunt
-                        voluptas vel magni autem.</p>
-
-                    <p data-cookiesmodified>These lists of cookies were last reviewed on</p>
-
-                    <div data-cookies="Necessary"></div>
-                    <div data-cookies="Performance"></div>
-                    <div data-cookies="Marketing"></div>
-                    <div data-cookies="Third-party"></div>
+                <div class="cell u-padding-y">
+                    <div id="tables-container">Check the console!</div>
                 </div>
             </div>
+        </div>
     </main>
 
 </body>
 
-<script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=58.1"></script>
-
 <script>
 
-    // Check Applier and Provider
-    const checkApplier = (provider, applier) => {
-
-        if (!applier) return '';
-        if (applier === '') return '';
-        if (provider === applier) return '';
-        return `(${applier})`;
-    };
-
-    const getMoreInfoApplier = (cookie) => {
-        if (cookie.Applier) return cookie.Applier;
-        if (cookie.Provider) return cookie.Provider;
-        return '';
-    };
-
-    // Create table HTML
-    const createTableHTML = (cookies) => {
-        if (!cookies || cookies.length === 0) return '';
-
-
-
-        return `
-            <table class="u-mb-3" border="1">
-                <caption class="u-mb-1">${cookies[0].Type} cookies</caption>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Provider</th>
-                        <th>Purpose</th>
-                        <th>Expiry</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${cookies.map(cookie => `
-                        <tr>
-                            <td>${cookie.Name}</td>
-                            <td>${cookie.Provider} ${checkApplier(cookie.Provider, cookie.Applier)}</td>
-                            <td>
-                                <p>${cookie.Purpose}</p>
-                                ${cookie.MoreInfoUrl ? `<p><a href="${cookie.MoreInfoUrl}" target="_blank">${getMoreInfoApplier(cookie)}'s cookie policy</a></p>` : ''}
-                            </td>
-                            <td>${cookie.Expiry}</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `;
-    };
-
-    /*
-        On load: Fetch the data from cookies.json and render the tables
-    */
-
-    const getDataUrl = (env) => {
-        // Determine the environment and return the appropriate URL
-
-        if (env === "preview" || env === "appdev") return '<t4 type="navigation" id="5290" />';
-
-        if (env === "dev") return "./cookies.json";
-
-        return '<t4 type="navigation" id="5290" />index.json'; // prod by default
-    };
-
-
-    const dataUrl = getDataUrl(UoS_env.name);
-
-    fetch(dataUrl)
-        .then(response => {
-            // Log the last modified date from response headers
-            if (response.headers.get('last-modified')) {
-                const lastModified = response.headers.get('last-modified').split(" ");
-                const div = document.querySelector(`[data-cookiesmodified]`);
-
-                if (div) div.innerHTML = `These lists of cookies were last reviewed on ${lastModified[1]} ${lastModified[2]} ${lastModified[3]}.`;
+    // Fetch and parse a JSON file
+    const fetchJson = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            return response.json();
-        })
-        .then(data => {
-            // Group cookies by type
-            const cookieGroups = data.reduce((acc, cookie) => {
-                if (!acc[cookie.Type]) {
-                    acc[cookie.Type] = [];
-                }
-                acc[cookie.Type].push(cookie);
-                return acc;
-            }, {});
+            return await response.json();
+        } catch (error) {
+            console.error(`Error fetching ${url}:`, error.message);
+            throw error;
+        }
+    };
 
-            // Sort cookies within each group by name
-            Object.keys(cookieGroups).forEach(type => {
-                cookieGroups[type].sort((a, b) => a.Name.localeCompare(b.Name));
-            });
+    // Main function to find differences between two JSON files
+    const findDifferences = async (oldFileUrl, newFileUrl) => {
+        const [oldData, newData] = await Promise.all([
+            fetchJson(oldFileUrl),
+            fetchJson(newFileUrl)
+        ]);
 
-            // Insert tables into respective divs
-            const types = ['Necessary', 'Performance', 'Marketing', 'Third-party'];
-            types.forEach(type => {
-                const div = document.querySelector(`div[data-cookies="${type}"]`);
-                if (div && cookieGroups[type]) {
-                    div.innerHTML = `
-                        ${createTableHTML(cookieGroups[type])}
-                    `;
-                }
+        // Find entries in newData that are not in oldData
+        const newEntries = newData.filter((newItem) => {
+            return !oldData.find((oldItem) => {
+                return newItem.Name === oldItem.Name && newItem.Domain === oldItem.Domain;
             });
-        })
-        .catch(error => console.error('Error loading JSON:', error));
+        });
+
+        // Find entries in oldData that are not in newData
+        const removedEntries = oldData.filter((oldItem) => {
+            return !newData.find((newItem) => {
+                return oldItem.Name === newItem.Name && oldItem.Domain === newItem.Domain;
+            });
+        });
+
+        return {
+            added: newEntries,
+            removed: removedEntries
+        };
+    };
+
+    // Execute the comparison
+    const compareJsonFiles = async () => {
+        try {
+            const oldFileUrl = './cookies.json';
+            const newFileUrl = './new-cookies.json';
+
+            const differences = await findDifferences(oldFileUrl, newFileUrl);
+
+            console.log('=== COOKIE COMPARISON RESULTS ===');
+
+            console.log(`\n✅ NEW COOKIES (${differences.added.length}):`);
+            if (differences.added.length > 0) {
+                console.table(differences.added);
+            } else {
+                console.log('No new cookies found');
+            }
+
+            console.log(`\n❌ REMOVED COOKIES (${differences.removed.length}):`);
+            if (differences.removed.length > 0) {
+                console.table(differences.removed);
+            } else {
+                console.log('No removed cookies found');
+            }
+
+            // Output formatted JSON if needed
+            console.log('\nJSON format of differences:');
+            console.log(JSON.stringify(differences, null, 2));
+        } catch (error) {
+            console.error('Comparison failed:', error);
+        }
+    };
+
+    // Run the comparison
+    compareJsonFiles();
 
 </script>
 

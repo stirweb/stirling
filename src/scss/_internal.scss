@@ -55,9 +55,8 @@
 
 .c-internal-signpost-dropdown__submenu {
   position: absolute;
-  top: 100%;
+  top: 38px;
   right: 0;
-  background: $white;
   z-index: 50;
 
   // shadow line beneath the submenu
@@ -88,11 +87,11 @@
   }
 }
 
-.c-internal-signpost-dropdown__link--show-submenu {
-  .c-internal-signpost-dropdown__submenu {
-    display: block !important;
-  }
-}
+// .c-internal-signpost-dropdown__link--show-submenu {
+//   .c-internal-signpost-dropdown__submenu {
+//     display: block !important;
+//   }
+// }
 
 /*
    General internal styles
