@@ -37,8 +37,8 @@ stir.templates.course = {
 		n.addEventListener("click",next.bind(n));
 
 		x.textContent = "Close";
-		p.textContent = "ꜛ Previous";
-		n.textContent = "ꜜ Next";
+		p.innerHTML = '<span class="uos-arrows-up"></span> Previous'; //icon--large u-block u-heritage-green u-m-1
+		n.innerHTML = '<span class="uos-arrows-down"></span> Next';
 		return d;
 	},
 	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,
