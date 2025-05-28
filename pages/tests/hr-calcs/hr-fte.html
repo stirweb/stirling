@@ -197,21 +197,22 @@
                         <div class="toggle-container u-mb-1 u-mt-2">
                             <p><strong>Hours calculation method</strong></p>
                             <div class="switch-toggle">
-                                <input type="radio" id="hours-weekly-toggle" name="hours-method" value="weekly" checked>
-                                <label for="hours-weekly-toggle" class="u-font-bold">Hours per week</label>
-                                <input type="radio" id="hours-total-toggle" name="hours-method" value="total">
+                                <input type="radio" id="hours-total-toggle" name="hours-method" value="total" checked>
                                 <label for="hours-total-toggle" class="u-font-bold">Total contract hours</label>
+                                <input type="radio" id="hours-weekly-toggle" name="hours-method" value="weekly">
+                                <label for="hours-weekly-toggle" class="u-font-bold">Hours per week</label>
+
                                 <span class="toggle-highlight"></span>
                             </div>
                         </div>
 
                         <!-- Hours input fields -->
-                        <div id="hours-weekly-container" class="toggle-option">
+                        <div id="hours-weekly-container" class="toggle-option" style="display: none;">
                             <label for="hours-week" class="u-font-bold">Hours per week</label>
                             <input type="text" id="hours-week" name="hours-week" placeholder="Enter hours per week">
                         </div>
 
-                        <div id="hours-total-container" class="toggle-option" style="display: none;">
+                        <div id="hours-total-container" class="toggle-option">
                             <label for="hours-total" class="u-font-bold">Total hours for full contract</label>
                             <input type="text" id="hours-total" name="hours-total"
                                 placeholder="Enter total hours for full contract">
@@ -277,7 +278,11 @@
         const calculateDaysBetween = (startDate, endDate) =>
             Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
 
-        const calculateFullWeeks = days => Math.floor(days / 7);
+
+        const calculateFullWeeks = days => {
+            const days2 = days + 1
+            return Math.round((days2 / 7) * 100) / 100;
+        }
 
         const calculateEndDate = (startDate, weeks) => {
             const result = new Date(startDate);
@@ -285,8 +290,9 @@
             return result;
         };
 
-        const calculateHoursPerWeek = (totalHours, weeks) =>
-            totalHours / weeks;
+        const calculateHoursPerWeek = (totalHours, weeks) => {
+            return totalHours / weeks;
+        };
 
         const calculateFTE = (hoursPerWeek, standardHours) =>
             hoursPerWeek / standardHours;

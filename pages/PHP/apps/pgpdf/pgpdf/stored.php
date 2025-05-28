@@ -68,325 +68,323 @@
 
     <script>
         const subjectsData = [{
-                "subject": "Accounting, Finance, Banking and Economics",
                 "id": 1,
+                "subject": "Accounting, Finance, Banking and Economics",
+                "qsSubject": "Accounting, Finance, Banking and Economics",
                 "courses": [{
-                        "name": "MSc Digital Banking and Finance"
-                    },
-                    {
-                        "name": "MSc Finance"
-                    },
-                    {
-                        "name": "MSc Finance and Data Analytics"
-
-                    },
-                    {
-                        "name": "MSc Finance and Risk Management"
-
-                    },
-                    {
-                        "name": "MSc International Accounting and Finance"
-
-                    },
-                    {
-                        "name": "MSc Investment Analysis"
-
-                    }
-                ]
+                    "newName": "MSc International Accounting and Finance"
+                }, {
+                    "newName": "MSc Finance and Data Analytics"
+                }, {
+                    "newName": "MSc Finance"
+                }, {
+                    "newName": "MSc Digital Banking and Finance"
+                }, {
+                    "newName": "MSc Investment Analysis"
+                }, {
+                    "newName": "MSc Behavioural Science"
+                }, {
+                    "newName": "MSc Finance and Risk Management"
+                }]
             },
             {
-                "subject": "Aquaculture",
                 "id": 2,
+                "subject": "Aquaculture",
+                "qsSubject": "Aquaculture",
                 "courses": [{
-                        "name": "MSc Aquatic Pathobiology"
-                    },
-                    {
-                        "name": "MSc Aquatic Veterinary Studies"
-                    },
-                    {
-                        "name": "MSc Sustainable Aquaculture"
-                    }
-                ]
+                    "newName": "MSc Aquatic Pathobiology"
+                }, {
+                    "newName": "MSc Aquatic Veterinary Studies"
+                }, {
+                    "newName": "MSc Sustainable Aquaculture"
+                }]
             },
             {
-                "subject": "Business and Management",
                 "id": 3,
+                "subject": "Business and Management",
+                "qsSubject": "Business and Management",
                 "courses": [{
-                        "name": "Master of Business Administration (MBA)"
-                    },
-                    {
-                        "name": "MRes Business and Management"
-                    },
-                    {
-                        "name": "MSc Behavioural Science"
-                    },
-                    {
-                        "name": "MSc Business Analytics"
-                    },
-                    {
-                        "name": "MSc Business and Management"
-                    },
-                    {
-                        "name": "MSc Data Science for Business"
-                    }, {
-                        "name": "MSc Human Resource Management"
-                    },
-                    {
-                        "name": "MSc International Business"
-                    },
-                    {
-                        "name": "MSc Marketing"
-                    },
-                    {
-                        "name": "MSc Marketing Analytics"
-                    },
-                    {
-                        "name": "MSc Marketing and Brand Management"
-                    }
-                ]
+                    "newName": "MSc International Business"
+                }, {
+                    "newName": "MSc Human Resource Management"
+                }, {
+                    "newName": "MSc Marketing"
+                }, {
+                    "newName": "MSc Marketing Analytics"
+                }, {
+                    "newName": "MSc Digital Marketing and Brand Management"
+                }, {
+                    "newName": "MRes Business and Management"
+                }, {
+                    "newName": "MSc Behavioural Science"
+                }, {
+                    "newName": "MSc Business Analytics"
+                }, {
+                    "newName": "MSc Data Science for Business"
+                }, {
+                    "newName": "MSc Business and Management"
+                }]
             },
             {
-                "subject": "Communications, Media and Culture",
                 "id": 4,
+                "subject": "Marketing, Media, PR and Communications",
+                "qsSubject": "Communications, Media and Culture",
                 "courses": [{
-                        "name": "MLitt / MSc Gender Studies"
-                    },
-                    {
-                        "name": "MRes Media Research"
-                    },
-                    {
-                        "name": "MSc Digital Media and Communication"
-                    },
-                    {
-                        "name": "MSc International Journalism"
-                    },
-                    {
-                        "name": "MSc Media Management"
-                    },
-                    {
-                        "name": "MSc Public Relations and Strategic Communication"
-                    },
-                    {
-                        "name": "MSc Public Relations and Strategic Communication (ONLINE)"
-                    },
-                    {
-                        "name": "MSc Strategic Communication and Public Relations (PFU)"
-                    }
-                ]
+                    "newName": "MSc Digital Media and Communication"
+                }, {
+                    "newName": "MSc International Journalism"
+                }, {
+                    "newName": "MSc Media Management"
+                }, {
+                    "newName": "MRes Media Research"
+                }, {
+                    "newName": "MSc Public Relations and Strategic Communication"
+                }, {
+                    "newName": "MSc Strategic Communication and Public Relations (Joint degree UPF Barcelona)"
+                }, {
+                    "newName": "MSc Public Relations and Strategic Communication (Online)"
+                }, {
+                    "newName": "MSc Marketing"
+                }, {
+                    "newName": "MSc Marketing Analytics"
+                }, {
+                    "newName": "MSc Digital Marketing and Brand Management"
+                }]
             },
             {
-                "subject": "Computing, Data Science and Mathematics",
                 "id": 5,
+                "subject": "Criminology",
+                "qsSubject": "Social Sciences",
                 "courses": [{
-                        "name": "MSc Artificial Intelligence"
-                    },
-                    {
-                        "name": "MSc Big Data"
-                    },
-                    {
-                        "name": "MSc Big Data (ONLINE)"
-                    },
-                    {
-                        "name": "MSc Financial Technology"
-                    },
-                    {
-                        "name": "MSc Mathematics and Data Science"
-                    }
-                ]
+                    "newName": "MSc Criminology"
+                }, {
+                    "newName": "MSc Criminological Research"
+                }]
             },
             {
-                "subject": "Education",
                 "id": 6,
+                "subject": "Dementia and Ageing",
+                "qsSubject": "Social Sciences",
                 "courses": [{
-                        "name": "MRes Educational Research"
-                    },
-                    {
-                        "name": "MSc Education"
-                    },
-                    {
-                        "name": "MSc Educational Leadership (Specialist Qual for Headship)"
-                    },
-                    {
-                        "name": "MSc English Language Teaching and Management"
-                    },
-                    {
-                        "name": "MSc Professional Education and Leadership"
-                    },
-                    {
-                        "name": "MSc Teaching English to Speakers of Other Languages"
-                    },
-                    {
-                        "name": "MSc Teaching English to Speakers of Other Languages (ONLINE)"
-                    },
-                    {
-                        "name": "PG Cert Teaching Qualification in Further Education (In-service)"
-                    },
-                    {
-                        "name": "PG Dip Teaching Qualification in Further Education (Pre-service)"
-                    }
-                ]
+                    "newName": "MSc Dementia Studies (Online)"
+                }, {
+                    "newName": "PgCert Design for Dementia and Ageing (Online)"
+                }, {
+                    "newName": "MSc Gerontology and Global Ageing (Online)"
+                }]
             },
             {
-                "subject": "Environmental Sciences",
                 "id": 7,
+                "subject": "Big Data, Data Science and Analytics",
+                "qsSubject": "Computing, Data Science and Mathematics",
                 "courses": [{
-                        "name": "MSc Environmental Management"
-                    },
-                    {
-                        "name": "MSc Environmental Remote Sensing and Geospatial Sciences"
-                    }
-                ]
+                    "newName": "MSc Artificial Intelligence"
+                }, {
+                    "newName": "MSc Big Data"
+                }, {
+                    "newName": "MSc Financial Technology (Fintech)"
+                }, {
+                    "newName": "MSc Mathematics and Data Science"
+                }, {
+                    "newName": "MSc Advanced Computing with Artificial Intelligence"
+                }, {
+                    "newName": "MSc Big Data (Online)"
+                }, {
+                    "newName": "MSc Data Science for Business"
+                }, {
+                    "newName": "MSc Business Analytics"
+                }]
             },
             {
-                "subject": "Health Sciences",
                 "id": 8,
+                "subject": "Education",
+                "qsSubject": "Education",
                 "courses": [{
-                        "name": "MPH Public Health (ONLINE)"
-                    },
-                    {
-                        "name": "MRes Health Research (ONLINE)"
-                    },
-                    {
-                        "name": "MSc Advancing Practice"
-                    },
-                    {
-                        "name": "MSc Early Years Practice Health Visiting"
-                    }
-                ]
+                    "newName": "MSc Education"
+                }, {
+                    "newName": "MSc English Language Teaching and Management"
+                }, {
+                    "newName": "PG Dip Teaching Qualification in Further Education (Pre-Service)"
+                }, {
+                    "newName": "PG Cert Teaching Qualification in Further Education (In-Service)"
+                }, {
+                    "newName": "MSc Teaching English to Speakers of Other Languages (TESOL)"
+                }, {
+                    "newName": "MSc Teaching English to Speakers of Other Languages (TESOL) (Online)"
+                }, {
+                    "newName": "MSc Educational Leadership"
+                }, {
+                    "newName": "MRes Educational Research"
+                }, {
+                    "newName": "MSc Professional Educational and Leadership"
+                }]
             },
             {
-                "subject": "History, Heritage and Politics",
                 "id": 9,
+                "subject": "Environmental Sciences",
+                "qsSubject": "Environmental Sciences",
                 "courses": [{
-                        "name": "MPP Public Policy"
-                    },
-                    {
-                        "name": "MRes Historical Research"
-                    },
-                    {
-                        "name": "MSc Heritage"
-                    },
-                    {
-                        "name": "MSc Historical Research"
-                    },
-                    {
-                        "name": "MSc International Conflict and Cooperation"
-                    }
-                ]
+                    "newName": "MSc Environmental Management"
+                }, {
+                    "newName": "MSc Environmental Remote Sensing and Geospatial Sciences"
+                }]
             },
             {
-                "subject": "Law and Philosophy",
                 "id": 10,
+                "subject": "Health Sciences",
+                "qsSubject": "Health Sciences",
                 "courses": [{
-                        "name": "LLM International Energy and Environmental"
-                    },
-                    {
-                        "name": "MLitt Philosophy"
-                    },
-                    {
-                        "name": "MSc Human Rights and Diplomacy Law"
-                    }
-                ]
+                    "newName": "MSc Specialist Community Public Health Nurse (Health Visiting)"
+                }, {
+                    "newName": "MPH Public Health"
+                }, {
+                    "newName": "MPH Public Health (Online)"
+                }, {
+                    "newName": "MSc Physiotherapy (Pre registration)"
+                }, {
+                    "newName": "MSc Podiatry (Pre registration)"
+                }, {
+                    "newName": "MSc Advancing Practice"
+                }, {
+                    "newName": "MRes Health Research (Online)"
+                }]
             },
             {
-                "subject": "Literature and Languages",
                 "id": 11,
+                "subject": "History and Heritage",
+                "qsSubject": "History, Heritage and Politics",
                 "courses": [{
-                        "name": "MLitt Creative Writing"
-                    },
-                    {
-                        "name": "MLitt English Language and Linguistics"
-                    },
-                    {
-                        "name": "MLitt Publishing Studies"
-                    },
-                    {
-                        "name": "MRes Humanities"
-                    },
-                    {
-                        "name": "MRes Publishing Studies"
-                    }
-                ]
+                    "newName": "MSc Heritage"
+                }, {
+                    "newName": "MRes Historical Research"
+                }, {
+                    "newName": "MSc Historical Research"
+                }]
             },
             {
-                "subject": "Psychology",
                 "id": 12,
+                "subject": "Politics",
+                "qsSubject": "History, Heritage and Politics",
                 "courses": [{
-                        "name": "MSc / MA Human Animal Interaction"
-                    },
-                    {
-                        "name": "MSc Autism Research"
-                    },
-                    {
-                        "name": "MSc Health Psychology"
-                    },
-                    {
-                        "name": "MSc Psychological Research Methods"
-                    },
-                    {
-                        "name": "MSc Psychology (accredited conversion course)"
-                    }
-                ]
+                    "newName": "MSc International Conflict and Cooperation"
+                }, {
+                    "newName": "MPP Public Policy"
+                }, {
+                    "newName": "MSc Global Politics"
+                }]
             },
             {
-                "subject": "Social Sciences",
                 "id": 13,
+                "subject": "Housing Studies",
+                "qsSubject": "Social Sciences",
                 "courses": [{
-                        "name": "MRes Criminological Research"
-                    },
-                    {
-                        "name": "MSc Applied Professional Studies"
-                    },
-                    {
-                        "name": "MSc Applied Social Research"
-                    },
-                    {
-                        "name": "MSc Criminology"
-                    },
-                    {
-                        "name": "MSc Dementia Studies (ONLINE)"
-                    },
-                    {
-                        "name": "MSc Gerontology and Global Ageing"
-                    },
-                    {
-                        "name": "MSc Housing Studies (part-time)"
-                    },
-                    {
-                        "name": "MSc Housing Studies (with internship)"
-                    },
-                    {
-                        "name": "MSc Social Statistics and Social Research"
-                    },
-                    {
-                        "name": "MSc Social Work Studies"
-                    },
-                    {
-                        "name": "MSc Substance Use (ONLINE)"
-                    }
-                ]
+                    "newName": "MSc, PG Dip Housing Studies (Part time) (Online)"
+                }, {
+                    "newName": "MSc, PG Dip Housing Studies (with internship)"
+                }]
             },
             {
-                "subject": "Sport",
                 "id": 14,
+                "subject": "Law and Philosophy",
+                "qsSubject": "Law and Philosophy",
                 "courses": [{
-                        "name": "MSc Psychology of Sport"
-                    },
-                    {
-                        "name": "MSc Sport Management"
-                    },
-                    {
-                        "name": "MSc Sport Nutrition"
-                    },
-                    {
-                        "name": "MSc Sport Performance Coaching (ONLINE)"
-                    }
-                ]
+                    "newName": "MSc, LLM Human Rights and Diplomacy"
+                }, {
+                    "newName": "MLitt Philosophy"
+                }, {
+                    "newName": "LLM Environmental Law and Climate Justice"
+                }, {
+                    "newName": "MSc Gender and Diplomatic Practice"
+                }]
+            },
+            {
+                "id": 15,
+                "subject": "Literature and Languages",
+                "qsSubject": "Literature and Languages",
+                "courses": [{
+                    "newName": "MLitt Creative Writing"
+                }, {
+                    "newName": "MSc English Language and Linguistics"
+                }, {
+                    "newName": "MRes Humanities"
+                }, {
+                    "newName": "MLitt Publishing Studies"
+                }, {
+                    "newName": "MRes Publishing Studies"
+                }]
+            },
+            {
+                "id": 16,
+                "subject": "Psychology",
+                "qsSubject": "Psychology",
+                "courses": [{
+                    "newName": "MSc Autism Research"
+                }, {
+                    "newName": "MSc Health Psychology"
+                }, {
+                    "newName": "MA, MSc Human Animal Interaction"
+                }, {
+                    "newName": "MSc Psychological Research Methods"
+                }, {
+                    "newName": "MSc Psychological Therapy in Primary Care"
+                }, {
+                    "newName": "MSc Psychology (Accredited Conversion)"
+                }, {
+                    "newName": "MSc Behavioural Science"
+                }]
+            },
+            {
+                "id": 17,
+                "subject": "Social Sciences",
+                "qsSubject": "Social Sciences",
+                "courses": [{
+                    "newName": "MSc Applied Social Research"
+                }, {
+                    "newName": "MSc Social Statistics and Social Research"
+                }, {
+                    "newName": "MSc Applied Professional Studies (Blended)"
+                }, {
+                    "newName": "MSc Substance Use (Online)"
+                }]
+            },
+            {
+                "id": 18,
+                "subject": "Social Work",
+                "qsSubject": "Social Sciences",
+                "courses": [{
+                    "newName": "MSc Social Work Studies"
+                }, {
+                    "newName": "MSc Substance Use (Online)"
+                }]
+            },
+            {
+                "id": 19,
+                "subject": "Sport",
+                "qsSubject": "Sport",
+                "courses": [{
+                    "newName": "MSc Psychology of Sport (Accredited)"
+                }, {
+                    "newName": "MSc Sport Nutrition"
+                }, {
+                    "newName": "MSc Sport Management"
+                }, {
+                    "newName": "MSc Sport Performance Coaching (Online)"
+                }]
+            },
+            {
+                "id": 20,
+                "subject": "Gender",
+                "qsSubject": "Communications, Media and Culture",
+                "courses": [{
+                    "newName": "MLitt, MSc Gender and Sexualities"
+                }, {
+                    "newName": "MSc Gender and Diplomatic Practice"
+                }]
             }
         ];
     </script>
 
-    <script src="../../../../../../../medias/Categorised/Dist/js/other/_unminified/pg-personalised-prospectus.js"></script>
+    <script src="../../../../../../../medias/Categorised/Dist/js/other/_unminified/pg-personalised-prospectus-2.js"></script>
 
 
 

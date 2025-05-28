@@ -780,7 +780,7 @@ html {
 /* Template */
 body {
   margin: 0;
-  font-family: "General Sans", sans-serif !important;
+  font-family: "General Sans", "Open Sans", sans-serif !important;
   font-size: 1.125rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1375,10 +1375,10 @@ body > nav > a.u-show-on-focus {
                 font-size: 1rem;
                 /* 16px */
                 color: #3a3c39;
-                border-bottom: 1px solid #a8a9a8 !important; }
+                border-bottom: 2px solid #a8a9a8 !important; }
                 .sitemap > ul > li > ul > li > ul > li > a:hover, .sitemap--skip-top-level > ul > li > ul > li > ul > li > ul > li > a:hover {
                   text-decoration: none;
-                  border-bottom: 1px solid #3a3c39 !important; }
+                  border-bottom: 2px solid #3a3c39 !important; }
               .sitemap > ul > li > ul > li > ul > li > ul, .sitemap--skip-top-level > ul > li > ul > li > ul > li > ul > li > ul {
                 display: none; }
 
@@ -2344,7 +2344,7 @@ button {
   /* default in Webkit/Blink is blue, others black. normalise by inheriting the colour from parent element */ }
 
 button:focus {
-  outline: 1px solid #006938;
+  outline: 2px solid #006938;
   outline-offset: 4px; }
 
 /* Default */
@@ -2358,7 +2358,7 @@ button:focus {
 
 .button {
   display: inline-block;
-  font-family: "General Sans", sans-serif !important;
+  font-family: "General Sans", "Open Sans", sans-serif !important;
   font-size: 1.25rem;
   text-align: center;
   line-height: 1.6;
@@ -3710,7 +3710,7 @@ updated Aug 2022 for clearing homepage banner
 
 .c-image-text-block__alt-header {
   color: #3a3c39;
-  font-family: "General Sans", sans-serif;
+  font-family: "General Sans", "Open Sans", sans-serif;
   font-size: 2rem;
   margin: 0 0 32px 0; }
 
@@ -5822,22 +5822,6 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
    General internal styles
    class is on the body tag of the template
  */
-.internal-pages .intro {
-  margin-top: 60px; }
-  .internal-pages .intro h1 {
-    color: #006938;
-    font-size: 2.25rem; }
-  .internal-pages .intro p {
-    font-size: 1.625rem; }
-
-@media screen and (max-width: 63.99875em) {
-  .internal-pages .intro h1 {
-    font-size: 1.75rem; }
-  .internal-pages .intro p {
-    font-size: 1.125rem; }
-  .internal-pages .placeholder .uos-magnifying-glass {
-    font-size: 1.25rem; } }
-
 /*
    BRANDBANK
  */
@@ -8423,6 +8407,11 @@ svg.u-svg-32,
   width: 32px;
   height: 32px; }
 
+svg.u-svg-40,
+.u-svg-40 svg {
+  width: 40px;
+  height: 40px; }
+
 /* 
   Common aspect ratios 
 */
@@ -9117,6 +9106,9 @@ ul.no-bullet {
 
 .u-grey-line-left {
   border-left: 1px solid #f6f5f4; }
+
+.u-medium-grey-line {
+  border: 1px solid #d5d4d4; }
 
 /*
   General Borders

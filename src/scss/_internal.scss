@@ -99,36 +99,36 @@
    class is on the body tag of the template
  */
 
-.internal-pages .intro {
-  margin-top: 60px;
+// .internal-pages .intro {
+//   margin-top: 60px;
 
-  h1 {
-    color: $heritage-green;
-    font-size: 2.25rem;
-  }
+//   h1 {
+//     color: $heritage-green;
+//     font-size: 2.25rem;
+//   }
 
-  p {
-    font-size: 1.625rem;
-  }
-}
+//   p {
+//     font-size: 1.625rem;
+//   }
+// }
 
-@media screen and #{breakpoint(medium down)} {
-  .internal-pages {
-    .intro {
-      h1 {
-        font-size: 1.75rem;
-      }
+//@media screen and #{breakpoint(medium down)} {
+// .internal-pages {
+//   .intro {
+//     h1 {
+//       font-size: 1.75rem;
+//     }
 
-      p {
-        font-size: 1.125rem;
-      }
-    }
+//     p {
+//       font-size: 1.125rem;
+//     }
+//   }
 
-    .placeholder .uos-magnifying-glass {
-      font-size: 1.25rem;
-    }
-  }
-}
+//   .placeholder .uos-magnifying-glass {
+//     font-size: 1.25rem;
+//   }
+// }
+//}
 
 /*
    BRANDBANK
