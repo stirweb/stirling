@@ -36,7 +36,7 @@
 				<div class="grid-container u-px-1">
 					<div class="grid-x">
 						<div class=cell>
-							<h1>Courses</h1>
+							<h1 class=c-course-heading>Courses</h1>
 							<p>${data.map(year => `
 								<details>
 									<summary>${year.academicYear}</summary>
@@ -50,7 +50,7 @@
 													<summary>${division.name}</summary>
 													<div class=u-px-1>
 														${division.routes.map(route => `
-														<p><a href="course.html?year=${year.academicYear}&route=${route.code}">${route.name}</a> <small>${route.code}</small></p>
+														<p><a href="/pages/courses/api/course.html?year=${year.academicYear}&route=${route.code}">${route.name}</a> <small>${route.code}</small></p>
 														`).join('')}
 													</div>
 												</details>

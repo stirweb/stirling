@@ -16,7 +16,7 @@
 	const apiUrl = (()=>{
 		switch (UoS_env.name) {
 			case "dev":
-				return `https://www.stir.ac.uk${path}?${query}`;
+				//return `https://www.stir.ac.uk${path}?${query}`;
 				return '/pages/data/akari/course.json';
 			case "qa":
 				return '/stirling/pages/data/akari/course.json';
@@ -31,7 +31,7 @@
 
 	console.info('[Main] apiUrl',apiUrl);
 
-	const skip = ["programmeTitle","versionNumber"];
+	const skip = ["programmeTitle","versionNumber","dateOfApproval","dateOfIntroduction","award","programmeCode","owningFaculty","owningDivision","ucasCode","creditPoints","ectsCredits","programmeLevel"];
 	const skips = element => skip.indexOf(element) === -1;
 
 	const modules = module => `
@@ -60,7 +60,8 @@
 			</div>
 		</details>`;
 	
-	
+	const availability = data => `<p>${data.year} ${data.location} ${data.deliveryMode} ${data.loadCategory} (Active: ${data.isActive})</p>`;
+		
 	function structure(data) {
 		return `<p>${data.entryPointDescription}</p>
 				${data.years.map(year=>`${year.semesters.map(semester).join('')}`).join('')}
@@ -83,17 +84,32 @@
 				"beforeend",
 				`<div class="grid-container u-px-1">
 					<div class="grid-x">
-						<div class=cell>
-							<h1>${data["programmeTitle"]}</h1>
+						<div class="cell u-padding-y">
+							<h1 class="c-course-heading c-course-title__heading u-heritage-green">${data["programmeTitle"]}</h1>
+							<div>
+								<p><strong>Award</strong> ${data.award}</p>
+								<p><strong>UCAS</strong> ${data.ucasCode}</p>
+								<p><strong>Code</strong> ${data.programmeCode}</p>
+								<p><strong>Level</strong> ${data.programmeLevel}</p>
+								<p><strong>ECTS</strong> ${data.ectsCredits}</p>
+								<p><strong>Credits</strong> ${data.creditPoints}</p>
+								<p><strong>Faculty</strong> ${data.owningFaculty} (${data.owningDivision})</p>
+
+							</div>
+							<!-- "string"===typeof data[el]||"number"===typeof data[el] -->
+							${ Object.keys(data).filter(skips).filter(el=>true).map(el => `<p><b>${el} [${typeof data[el]}]</b><br>${data[el]}</p><br>`).join("") }
 							<p><b>Learning outcomes</b></p>
+							${console.info(data.learningOutcomes)||''}
 							<ul>
-								${data.learningOutcomes.map(outcome => `<li>${outcome.description}</li>`).join('')}
+								${data.learningOutcomes.map(outcome => `<li>${outcome.description} ${Object.keys(outcome.graduateAttributes).map(id=>`<strong>${outcome.graduateAttributes[id]}</strong>`).join(", ")}</li>`).join('')}
 							</ul>
+							
+							<p><b>Programme availabilities</b></p>
+							${data.programmeAvailabilities.map(availability).join('')}
 							<div class="u-p-2 u-mb-2" style="background: #f6f5f4">
-							<p><b>Programme structure</b></p>
+								<p><b>Programme structure</b></p>
 								${data.programmeStructure.map(structure).join('')}
 							</div>
-							${ Object.keys(data).filter(skips).filter(el=>"string"===typeof data[el]||"number"===typeof data[el]).map(el => `<p><b>${el}</b><br>${data[el]}</p><br>`).join("") }
 						</div>
 					</div>
 				</div>`);
