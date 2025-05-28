@@ -5791,9 +5791,8 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
 
 .c-internal-signpost-dropdown__submenu {
   position: absolute;
-  top: 100%;
+  top: 38px;
   right: 0;
-  background: #fff;
   z-index: 50; }
   .c-internal-signpost-dropdown__submenu::after {
     content: " ";
@@ -5814,9 +5813,6 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       /* 20px */
       white-space: nowrap;
       font-weight: 300; }
-
-.c-internal-signpost-dropdown__link--show-submenu .c-internal-signpost-dropdown__submenu {
-  display: block !important; }
 
 /*
    General internal styles
@@ -8799,6 +8795,9 @@ ul.no-bullet {
 
 .u-px-tiny {
   padding-left: 8px;
+  padding-right: 8px; }
+
+.u-pr-tiny {
   padding-right: 8px; }
 
 /* Size 1 */
