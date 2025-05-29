@@ -64,15 +64,15 @@
     <nav class="skip-nav-btn" aria-label="Skip to content navigation"><a href="#content">skip to main content</a></nav>
 
     <!--
-            MOBILE MENU
-        -->
-
-    <nav id="mobile-menu-2" class="c-mobile-menu u-bg-grey " aria-label="Mobile navigation">
+    MOBILE MENU
+-->
+    <nav id="mobile-menu-2" class="c-mobile-menu u-bg-grey" aria-label="Mobile navigation">
         <a href="#" id="close_mobile_menu" class="closebtn">&times;</a>
+
         <ul class="sitemenu-2 no-bullet u-bg-white">
             <li class="u-underline u-energy-teal--light">
                 <a href="/" class="button no-arrow button--left-align clear expanded u-m-0 text-left" data-action="go">
-                    <div class="flex-container align-middle u-gap-16">
+                    <div class="u-flex align-middle u-gap-16">
                         <span class="u-flex1">Home</span>
                         <span class="uos-chevron-right u-icon"></span>
                     </div>
@@ -80,7 +80,7 @@
             </li>
             <li class="u-underline u-energy-teal--light">
                 <a href="/internal-staff/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
-                    <div class="flex-container align-middle u-gap-16">
+                    <div class="u-flex align-middle u-gap-16">
                         <span class="u-flex1">Staff</span>
                         <span class="uos-chevron-right u-icon"></span>
                     </div>
@@ -88,41 +88,45 @@
             </li>
             <li class="u-underline u-energy-teal--light">
                 <a href="/internal-students/" class="button no-arrow button--left-align clear expanded u-m-0 text-left">
-                    <div class="flex-container align-middle u-gap-16">
+                    <div class="u-flex align-middle u-gap-16">
                         <span class="u-flex1">Students</span>
                         <span class="uos-chevron-right u-icon"></span>
                     </div>
                 </a>
             </li>
-
         </ul>
-        <ul class="slidemenu__other-links no-bullet u-p-3 flex-container flex-dir-column u-gap-16">
+
+        <ul class="slidemenu__other-links no-bullet u-p-3 u-flex flex-dir-column u-gap-16">
             <li class="slidemenu__other-links-portal text-sm"><a href="https://portal.stir.ac.uk/my-portal.jsp"
                     rel="nofollow">My Portal</a></li>
             <li class="slidemenu__other-links-contact text-sm"><a href="/about/contact-us/">Contact</a></li>
             <li class="slidemenu__other-links-search text-sm"><a href="/search/">Search our site</a></li>
             <li class="slidemenu__other-links-microsite text-sm"><a href="http://stirlinguni.cn/"
-                    data-microsite="cn">中文网</a>
-            </li>
+                    data-microsite="cn">中文网</a></li>
         </ul>
     </nav>
 
 
     <!--
-            MAIN HEADER
-         -->
+    MAIN HEADER
+ -->
     <header class="c-header" id="layout-header" aria-label="Main header">
         <div class="grid-container">
-            <div class="grid-x ">
+            <div class="grid-x">
+
+                <!-- Logo -->
                 <div class="cell large-4 medium-4 small-8">
                     <a href="/" title="University of Stirling">
                         <img src="../../medias/Categorised/Dist/css/images/logos/logo.svg" class="c-site-logo"
                             alt="University of Stirling">
                     </a>
                 </div>
-                <nav class="cell large-8 medium-8 small-4 flex-container align-right" aria-label="Primary navigation">
-                    <div class="c-header-nav flex-container flex-dir-column align-bottom">
-                        <ul class="c-header-nav c-header-nav--secondary u-font-semibold flex-container align-middle">
+
+                <!-- Nav -->
+                <nav class="cell large-8 medium-8 small-4 u-flex align-right" aria-label="Primary navigation">
+                    <div class="c-header-nav u-flex flex-dir-column align-bottom">
+                        <!-- Main links  -->
+                        <ul class="c-header-nav c-header-nav--secondary u-font-semibold u-flex align-middle">
                             <li class="c-header-nav__item show-for-large">
                                 <a class="c-header-nav__link u-flex align-middle u-gap-8"
                                     href="https://www.stir.ac.uk/"><span class="uos-home"></span> University home</a>
@@ -139,12 +143,14 @@
                                 </a>
                             </li>
                         </ul>
-                        <!-- SHORTCUTS TO OTHER AREAS -->
-                        <div class="c-internal-signpost-dropdown">
-                            <p class="c-internal-signpost-dropdown__text">You are viewing <a href="#"
-                                    class="c-internal-signpost-dropdown__link u-inline-block u-px-tiny u-bg-grey"
-                                    id="internal-signpost-dropdown__link">Staff internal pages</a></p>
 
+                        <!-- Shortcuts  -->
+                        <div class="c-internal-signpost-dropdown">
+                            <p class="c-internal-signpost-dropdown__text">You are viewing
+                                <button
+                                    class="c-internal-signpost-dropdown__link u-inline-block u-px-tiny u-bg-grey u-cursor-pointer"
+                                    id="internal-signpost-dropdown__link">Staff internal pages</button>
+                            </p>
                             <div class="c-internal-signpost-dropdown__submenu hide u-bg-grey"
                                 id="internal-signpost-dropdown__submenu">
                                 <ul>
@@ -154,8 +160,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hide-for-large flex-container align-middle align-center flex-dir-column">
-                        <a href="#" id="open_mobile_menu" class="c-header-burger flex-container align-middle">
+
+                    <!-- Burger  -->
+                    <div class="hide-for-large u-flex align-middle align-center flex-dir-column">
+                        <a href="#" id="open_mobile_menu" class="c-header-burger u-flex align-middle">
                             <span class="show-for-sr">Show/hide mobile menu</span>
                             <span class="c-header-burger__bun"></span>
                         </a>
@@ -163,17 +171,19 @@
                     </div>
                 </nav>
             </div>
-            <div class="grid-x ">
-                <div class="cell u-mt-1 flex-container flex-dir-column align-center large-flex-dir-row u-gap-8"
+            <div class="grid-x">
+                <div class="cell u-mt-1 u-flex flex-dir-column align-center large-flex-dir-row u-gap-8"
                     id=portal-status></div>
             </div>
         </div>
 
+
         <!-- Main search -->
         <form id="header-search" class="c-header-search" aria-hidden="true" aria-label="Popup for site search field"
             method="get" action="https://search.stir.ac.uk/s/search.html" data-js-action="/search/">
-            <input type="hidden" name="collection" value="stir-main">
+            <input type="hidden" name="collection" value="stir-main" />
             <div class="overlay"></div>
+
             <div class="content">
                 <div class="grid-container">
                     <div class="grid-x">
@@ -181,7 +191,7 @@
                             <label class="show-for-sr" for="header-search__query">Site search</label>
                             <input type="text" name="query" id="header-search__query" class="c-header-search__query"
                                 for="header-search__query" autocomplete="off" placeholder="Site search">
-                            <button class="button no-arrow" type="submit">
+                            <button class="button no-arrow u-m-0 u-p-1 u-min-w-none" type="submit">
                                 <span class="show-for-sr">Submit</span>
                                 <span class="uos-magnifying-glass"></span>
                             </button>
@@ -210,21 +220,20 @@
 
 
     <!--
-            BREADCRUMB
-         -->
+    BREADCRUMB
+ -->
+
     <nav class="breadcrumbs-container u-bg-heritage-green show-for-large" aria-label="breadcrumbs">
         <div class="grid-container">
-            <div class="grid-x ">
+            <div class="grid-x">
                 <div class="cell small-12">
-
                     <ul class="breadcrumbs breadcrumbs--internal">
                         <li><a href="/internal-staff/">Staff</a>
                             <ul>
-                                <li><span class="currentsection">Careers Service</span></li>
+                                <li><a href="/internal-staff/careers/">Careers Service</a></li>
                                 <li><a href="/internal-staff/central-timetabling/">Central Timetabling</a></li>
                                 <li><a href="/internal-staff/commercial-services/">Commercial Services</a></li>
                                 <li><a href="/internal-staff/communications/">Communications</a></li>
-                                <li><a href="/internal-staff/advancement/">Directorate for Advancement</a></li>
                                 <li><a href="/internal-staff/employability/">Employability</a></li>
                                 <li><a href="/internal-staff/equality-and-diversity/">Equality and diversity</a></li>
                                 <li><a href="/internal-staff/estates-and-campus-services/">Estates and Campus
@@ -236,40 +245,34 @@
                                 <li><a href="/internal-staff/human-resources-and-organisation-development/">Human
                                         Resources and Organisation Development</a></li>
                                 <li><a href="/internal-staff/information-services/">Information Services</a></li>
-                                <li><a href="/internal-staff/macrobert-arts-centre/">Macrobert Arts Centre</a></li>
-                                <li><a href="/internal-staff/merchandise/">Merchandise</a></li>
                                 <li><a href="/internal-staff/news-announcements/">News and announcements for staff</a>
                                 </li>
                                 <li><a href="/internal-staff/research/">Research resources</a></li>
                                 <li><a href="/internal-staff/safe-campus/">Safe campus</a></li>
                                 <li><a href="/internal-staff/charity/">Staff Charities Fund</a></li>
-                                <li><a href="/internal-staff/have-your-say-2017/">Staff survey - Have your say</a></li>
-                                <li><a href="/internal-staff/strategic-plan/">Strategic Plan</a></li>
-                                <li><a href="/internal-students/student-support/">Student Support Services (student
-                                        area)</a></li>
                                 <li><a href="/internal-staff/sacs/">Student, Academic and Corporate Services</a></li>
                                 <li><a href="/internal-staff/supporting-our-students/">Supporting our students</a></li>
                                 <li><a href="/internal-staff/university-dates/">University dates</a></li>
                                 <li><a href="/internal-staff/website/">Website</a></li>
                             </ul>
                         </li>
-                        <li><a href="/internal-staff/careers/">Careers Service</a></li>
+                        <li></li>
                         <li></li>
                         <li></li>
                         <li></li>
                     </ul>
-
                 </div>
             </div>
         </div>
     </nav>
 
+
     <!--
-            MOBILE & TABLET SIGNPOST
-        -->
+    MOBILE & TABLET SIGNPOST
+-->
     <nav class="breadcrumbs-container u-bg-heritage-green hide-for-large u-white--all" aria-label="Mobile breadcrumbs">
         <div class="grid-container">
-            <div class="grid-x ">
+            <div class="grid-x">
                 <div class="cell small-12">
                     <p class="breadcrumbs breadcrumbs--internal">You are viewing a Staff internal page</p>
                 </div>
@@ -281,188 +284,299 @@
 
 
     <!-- 
-            MAIN CONTENT 
-        -->
+    MAIN CONTENT 
+-->
     <main class="wrapper-content" aria-label="Main content" id="content">
         <div class="grid-container">
-            <div class="grid-x ">
+            <div class="grid-x">
+                <!-- 
 
-                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
-                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">
-                        Careers Service
-                    </h1>
+                <div class="cell main-content-header medium-10 small-12 u-padding-y">
+                <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">
+                Staff
+                </h1>
+                </div>
+                -->
+                <!-- Alternative Page Heading -->
+                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y ">
+                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Information for staff</h1>
                 </div>
 
+            </div>
+        </div>
 
-                <!-- Text with Heading -->
-                <div class="cell small-12 u-padding-bottom medium-10 large-10  " id="d.en.123137">
+        <!-- Block: Feature: Text over Full Width Bg Image -->
+        <section id="d.en.73964" class="c-image-text-block " aria-label="Large image promo:  (73964)"
+            data-objectfit="true">
+
+            <picture>
+                <source media="(min-width: 63.75rem)"
+                    srcset="https://pxl-v6-stiracuk.terminalfour.net/fit-in/1900x689/filters:quality(88)/filters:format(webp)/prod01/cdn/media/stirling/global-assets/landscape/banners/airthrey-loch-in-autumn-1920X689.jpg" />
+                <source media="(min-width: 40rem)"
+                    srcset="https://pxl-v6-stiracuk.terminalfour.net/fit-in/1020x367/filters:quality(88)/filters:format(webp)/prod01/cdn/media/stirling/global-assets/landscape/banners/airthrey-loch-in-autumn-1920X689.jpg" />
+                <source
+                    srcset="https://pxl-v6-stiracuk.terminalfour.net/fit-in/640x230/filters:quality(88)/filters:format(webp)/prod01/cdn/media/stirling/global-assets/landscape/banners/airthrey-loch-in-autumn-1920X689.jpg" />
+                <img src="https://pxl-v6-stiracuk.terminalfour.net/fit-in/640x230/filters:quality(88)/filters:format(webp)/prod01/cdn/media/stirling/global-assets/landscape/banners/airthrey-loch-in-autumn-1920X689.jpg"
+                    width="" height=""
+                    alt="Airthrey Loch in autumn on a bright day looking north across the loch towards the accommodation buildings nestled amoung the trees as their leaves turn yellow and orangey-brown"
+                    loading="lazy" />
+
+            </picture>
+
+            <div class="grid-container  ">
+                <div class="c-image-text-block__content">
+                    <!-- HEADER -->
+
+                    <!-- TEXT -->
                     <div class="c-wysiwyg-content">
-                        <p>The Careers and Employability Service has a wealth of resources that are valuable not only to
-                            students, but to all staff and researchers.&nbsp; Read on to discover how we can support
-                            you!</p>
-                        <h2>Careers and Employability Staff Resource Hub</h2>
-                        <p>This SharePoint site supports staff to embed employability in the curriculum.&nbsp; It
-                            provides resources, case studies, and examples of good practice being delivered throughout
-                            the university.</p>
-                        <p><a
-                                href="https://stir.sharepoint.com/sites/CareersandEmployability/SitePages/Careers-and-Employability-at-the-University-of-Stirling.aspx">Join
-                                the Staff Resource Hub</a> to discover how we</p>
-                        <ul>
-                            <li><a
-                                    href="https://stir.sharepoint.com/sites/CareersandEmployability/SitePages/Business-Engagement.aspx">network
-                                    with employers</a> and bring them to meet with students and staff (remotely or
-                                on-campus)</li>
-                            <li>support placements</li>
-                            <li>run the <a href="/student-life/careers/get-career-experience/my-stirling-award/">My
-                                    Stirling Award</a></li>
-                            <li>contribute to wider University of Stirling initiatives and pilots such as Graduate
-                                Apprenticeships, Inplace and the Riipen work-based learning platform</li>
-                            <li>develop policy (<a
-                                    href="/about/professional-services/student-academic-and-corporate-services/academic-registry/policy-and-procedure/work-based-and-placement-learning-policy/">Work
-                                    Placement and Project Policy WPPP</a>)</li>
-                            <li>engage in the Enhancement Themes</li>
-                            <li>co-ordinate the <a
-                                    href="https://stir.sharepoint.com/sites/CareersandEmployability/SitePages/Data--Graduate-Outcomes.aspx">Graduate
-                                    Outcomes survey</a></li>
-                            <li>collect and analyse <a
-                                    href="https://stir.sharepoint.com/sites/CareersandEmployability/SitePages/Employability-Data--Graduate-Outcomes;-Surveys;-Career-Readiness.aspx">data
-                                    relevant to employability</a> such as the <a
-                                    href="https://stir.sharepoint.com/sites/CareersandEmployability/SitePages/Data--Exit-Survey.aspx">exit
-                                    survey</a> and the <a
-                                    href="https://stir.sharepoint.com/sites/CareersandEmployability/SitePages/Data--Career-Readiness.aspx">career
-                                    readiness survey</a> conducted annually</li>
-                            <li>provide staff development</li>
-                        </ul>
+                        <p><strong>Welcome!</strong><br />Browse the <a href="/internal-staff/#d.en.73980">popular
+                                links</a> below or <a href="/internal/search/">search</a> for more information.</p>
+                        <p><strong>Staff Roundup</strong><br />Read the latest <a href="/communications/roundup/">Staff
+                                Roundup</a> or find previous&nbsp;issues in the <a
+                                href="/communications/roundup/#d.en.129361">archive</a>.</p>
+                        <p>Campus <a href="/internal-staff/#d.en.73981">news and events</a></p>
                     </div>
-                </div>
-                <!-- End Text with Heading -->
+                    <div class="flex-container flex-dir-column u-gap">
 
-                <!-- Video Embed -->
-                <div id="d.en.123139" class="cell small-12 medium-10 large-10   ">
-                    <div class="responsive-embed widescreen" data-lazy-container>
-                        <noscript data-load="lazy"><iframe title="Introduction to Careers and Employability Service"
-                                src="https://stirling.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=3609b27e-b861-445c-911a-ad9000c7ef10&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&captions=false&interactivity=all"
-                                height="405" width="720" style="border: 1px solid #464646;" allowfullscreen
-                                allow="autoplay"></iframe></noscript>
+
+
                     </div>
-                    <p class="c-image-caption">Introduction to Careers and Employability Service</p>
                 </div>
-                <!-- End Video Embed -->
-                <!-- Wrapper Start -->
-                <div class="cell" id="d.en.123151">
-                    <div class="c-wrapper grid-x  u-bg-white u-bleed bg-white u-padding-y" data-ct="wrapper">
+            </div>
+        </section>
+        <!-- END Block: Feature: Text over Full Width Bg Image -->
+
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x"><!-- Wrapper Start -->
+                <div class="cell" id="d.en.156367">
+                    <div class="c-wrapper grid-x grid-padding-x  u-padding-top" data-ct="wrapper">
+
+                        <!-- Search widget -->
+                        <div class="cell u-padding-bottom u-pt-2">
+                            <!--beginnoindex-->
+                            <form class="c-form c-search-form x-search-redevelopment"
+                                action="https://search.stir.ac.uk/s/search.html" data-js-action="/internal/search/"
+                                action="/internal/search/" method="get">
+                                <input type="hidden" name="collection" value="stir-internal">
+                                <div class="search-input-area">
+                                    <div>
+                                        <label for="site-search__search-input" class="show-for-sr">Query</label>
+                                        <input id="site-search__search-input" type="search"
+                                            class="c-site-search__search-input" name="query" autocomplete="off"
+                                            placeholder="Search for staff and student information">
+                                        <button class="button expanded btn-global-search ">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!--endnoindex-->
+                        </div>
 
                         <!-- Text with Heading -->
-                        <div class="cell small-12  medium-10 large-10  " id="d.en.123141">
-                            <h2 class="">Other resources for staff</h2>
-                            <div class="c-wysiwyg-content">
-                                <h3>1. Careers Service Canvas site</h3>
-                                <p>We recommend you join the <a href="https://canvas.stir.ac.uk/enroll/P4XBB8">Careers
-                                        on Canvas</a> site if, as a staff member, you require any career advice.&nbsp;
-                                    There are over 300 pages of information on job hunting, occupations, application
-                                    advice, and much more.</p>
-                                <p><a href="https://canvas.stir.ac.uk/enroll/P4XBB8">Careers on Canvas</a> also has a
-                                    dedicated section providing advice for <a
-                                        href="https://canvas.stir.ac.uk/courses/3162/pages/careers-support-for-postgraduate-researchers-and-research-staff">Postgraduate
-                                        researchers and research staff.</a>&nbsp; All our Careers Consultants have
-                                    experience working with researchers and we offer one-to-one appointments every day;
-                                    these can be booked via <a
-                                        href="https://stirling.targetconnect.net/">TARGETconnect</a>. We also host
-                                    several opportunities to engage with employers and organisations that want to
-                                    recruit students, including researchers, and we host insight Panels of professionals
-                                    working in specific industries &ndash; you can see all our upcoming events and
-                                    register a space on <a href="https://stirling.targetconnect.net/">TARGETconnect</a>.
-                                    We work closely with our colleagues in the Institute for Advanced Studies to
-                                    contribute to a programme of support, and regularly run workshops including topics
-                                    such as Career Options outside of Academia, and CVs for Researchers.</p>
-                                <h3>2. University external website</h3>
-                                <p>The <a href="/student-life/careers/employers/">Careers and Employability Service
-                                        employer pages</a> on the University website are a useful resource if you are in
-                                    contact with an employer who is interested in working with the University and our
-                                    students.&nbsp; They may have a job opportunity they want to advertise, be able to
-                                    support a student on placement, or wish to be involved in a careers event.&nbsp;
-                                    Directing the employer to these web pages will allow them to know what support we
-                                    can provide and how to contact us.</p>
-                                <h3>3. TARGETconnect</h3>
-                                <p>Staff can join our online platform TARGETconnect where vacancies, volunteering
-                                    opportunities and career events are advertised. If you have a job, volunteering or
-                                    paid internship opportunity that would be suitable for a student or graduate please
-                                    contact <a href="mailto:employers@stir.ac.uk">employers@stir.ac.uk</a> and request
-                                    to be added as a contact for the University employer&rsquo;s account where you can
-                                    log in and post your opportunity.</p>
-                                <p>Please note that paid internships can run part-time during the semester (15 hours a
-                                    week maximum) or part-time or full-time during the summer vacation (4 to 12 weeks).
-                                    Internship projects could include a piece of research, social media projects,
-                                    database design and event organisation. Please contact us with any other ideas you
-                                    may have by emailing <a
-                                        href="mailto:internship@stir.ac.uk">internship@stir.ac.uk</a>.</p>
-                            </div>
+                        <div class="cell small-12  medium-10 large-10  " id="d.en.73978">
+                            <h2 class="">Popular pages</h2>
                         </div>
                         <!-- End Text with Heading -->
-
+                        <div class=" cell small-12  ">
+                            <!-- To update popular pages, edit the content on Internal Areas » Staff » Popular pages -->
+                            <div class="u-button-wall"><a
+                                    href="https://stir.sharepoint.com/sites/HRandODHub/SitePages/HR-Policies.aspx"
+                                    class="button hollow">A-Z of HR policies and guidance</a><a href=""
+                                    class="button hollow">Academic Advancement</a><a
+                                    href="/internal-staff/human-resources-and-organisation-development/working-at-stirling/annual-leave/"
+                                    class="button hollow">Annual leave</a><a href="/brand-bank/"
+                                    class="button hollow">Brand bank</a><a
+                                    href="/internal-staff/estates-and-campus-services/staff-parking/"
+                                    class="button hollow">Car parking</a><a
+                                    href="/internal-staff/commercial-services/catering/"
+                                    class="button hollow">Catering</a><a
+                                    href="/internal-staff/estates-and-campus-services/how-do-i/"
+                                    class="button hollow">Estates - How do I...?</a><a
+                                    href="/internal-staff/finance-office/" class="button hollow">Finance office</a><a
+                                    href="/about/business/business-services/graphics-and-print-services/"
+                                    class="button hollow">Graphics and Print</a><a
+                                    href="https://stir.sharepoint.com/sites/HRandODHub/SitePages/HR-Forms(1).aspx"
+                                    class="button hollow">HR forms</a><a
+                                    href="/internal-staff/human-resources-and-organisation-development/learning-and-development/"
+                                    class="button hollow">Learning and development</a><a
+                                    href="/about/professional-services/human-resources-and-organisation-development/pay-pensions-and-benefits/"
+                                    class="button hollow">Pay, pensions and benefits</a><a
+                                    href="/internal-staff/research/" class="button hollow">Researcher resources</a><a
+                                    href="https://www.stir.ac.uk/internal-staff/central-timetabling/staff-room-booking-guidance/"
+                                    class="button hollow">Room bookings</a><a href="/student-life/sport-at-stirling/"
+                                    class="button hollow">Sport</a><a
+                                    href="https://portal.stir.ac.uk/general/phone-directory/department-search.jsp"
+                                    class="button hollow">Staff directory</a><a
+                                    href="/internal-staff/supporting-our-students/" class="button hollow">Supporting our
+                                    students</a><a href="https://stir.unidesk.ac.uk/tas/public/ssp/"
+                                    class="button hollow">UniDesk &ndash; Library, IT and Student Services Hub Self
+                                    Service</a><a href="/internal-staff/university-dates/"
+                                    class="button hollow">University dates</a></div>
+                        </div>
                     </div>
                 </div>
                 <!-- Wrapper End -->
 
                 <!-- Wrapper Start -->
-                <div class="cell" id="d.en.123149">
-                    <div class="c-wrapper grid-x  u-bg-grey u-bleed bg-grey  u-padding-y" data-ct="wrapper">
-
-                        <!-- Text with Heading -->
-                        <div class="cell small-12  medium-10 large-10  " id="d.en.123143">
-                            <h2 class="">You can help us support students with their career planning by encouraging them
-                                to</h2>
-                            <div class="c-wysiwyg-content">
-                                <ol>
-                                    <li>&nbsp;Enrol with the&nbsp;<a
-                                            href="https://canvas.stir.ac.uk/enroll/P4XBB8">Careers and Employability
-                                            Service on Canvas</a> to access a wealth of information on exploring their
-                                        options, job hunting, CVs and applications, interviews, postgraduate study and
-                                        lots more.</li>
-                                    <li><a href="https://canvas.stir.ac.uk/courses/3162/pages/my-stirling-award">Register
-                                            for the&nbsp;My Stirling Award</a> to gain recognition for their
-                                        extra-curricular achievements. Split into three levels - Bronze, Silver and
-                                        Gold. Part-time work, volunteering, attending events and involvement with
-                                        university sports clubs and societies all count.</li>
-                                    <li>Activate&nbsp;<a href="https://stirling.targetconnect.net/">TARGETconnect</a> to
-                                        find work and volunteering opportunities, register for upcoming events or
-                                        workshops, and make an appointment with a Careers and Employability Consultant
-                                    </li>
-                                    <li>Score and improve their CV using <a
-                                            href="https://canvas.stir.ac.uk/courses/3162/pages/careerset-cv-checker">CareerSet</a>,
-                                        an online platform that scans CVs against top recruiter and hiring managers
-                                        criteria.&nbsp; Cover letters can also be enhanced using core checks and
-                                        relevancy checks.</li>
-                                </ol>
-                            </div>
-                        </div>
-                        <!-- End Text with Heading -->
-
-                    </div>
-                </div>
-                <!-- Wrapper End -->
-
-                <!-- Wrapper Start -->
-                <div class="cell" id="d.en.123147">
-                    <div class="c-wrapper grid-x  u-bg-heritage-green u-white--all u-bleed bg-heritage-green u-padding-y"
+                <div class="cell" id="d.en.73967">
+                    <div class="c-wrapper grid-x grid-padding-x u-bg-grey u-bleed bg-grey  u-padding-top"
                         data-ct="wrapper">
-                        <!-- Icon CTA -->
-                        <div class="cell small-12 text-center c-icon-link  medium-4 large-4   " id="d.en.123144"><span
-                                class="uos-linkedin icon--large u-block u-heritage-green u-m-1"></span>
-                            <div class="u-px-1"><a
-                                    href="https://www.linkedin.com/company/university-of-stirling-careers-service"
-                                    class="c-link">Connect with us on LinkedIn </a></div>
-                        </div><!-- End Icon CTA --><!-- Icon CTA -->
-                        <div class="cell small-12 text-center c-icon-link  medium-4 large-4   " id="d.en.123145"><span
-                                class="uos-instagram icon--large u-block u-heritage-green u-m-1"></span>
-                            <div class="u-px-1"><a href="https://www.instagram.com/stirlingunicareers/"
-                                    class="c-link">Follow us on Instagram </a></div>
-                        </div><!-- End Icon CTA --><!-- Icon CTA -->
-                        <div class="cell small-12 text-center c-icon-link  medium-4 large-4   " id="d.en.123146"><span
-                                class="uos-twitter icon--large u-block u-heritage-green u-m-1"></span>
-                            <div class="u-px-1"><a href="https://twitter.com/StirUniCareers" class="c-link">Follow us on
-                                    Twitter </a></div>
-                        </div><!-- End Icon CTA -->
+                        <!-- Promo Box  -->
+                        <div class="cell small-12 medium-4 u-my-1 large-6 medium-6 u-padding-bottom  " id="d.en.73984"
+                            data-component="promo-standard">
+                            <div class=" flex-container u-gap u-p-1 ">
+                                <div><span class="uos-globe text-lg u-heritage-green"></span></div>
+                                <div>
+                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                        <div class="u-h-full">
+                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                <h2
+                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                    Strategic Plan 2030 </h2>
+                                                <div class="text-sm u-p-last-mb-0">
+                                                    <p>This strategic plan sets out the University&rsquo;s direction to
+                                                        2030 and beyond. It builds on the strong momentum and success of
+                                                        our previous strategic plan, and it reinforces our ambition for
+                                                        excellence in all we do.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=""> <a href="/about/strategic-plan/"
+                                                class="heritage-green  c-link">Strategic Plan</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Promo Box --><!-- Promo Box  -->
+                        <div class="cell small-12 medium-4 u-my-1 large-6 medium-6 u-padding-bottom  " id="d.en.73987"
+                            data-component="promo-standard">
+                            <div class=" flex-container u-gap u-p-1 ">
+                                <div><span class="uos-shaking-hands text-lg u-heritage-green"></span></div>
+                                <div>
+                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                        <div class="u-h-full">
+                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                <h2
+                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                    Staff induction </h2>
+                                                <div class="text-sm u-p-last-mb-0">
+                                                    <p>To help you settle in, we've brought together all of the
+                                                        essential 'need to know' information about the University into
+                                                        one place.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Promo Box -->
+                    </div>
+                </div>
+                <!-- Wrapper End -->
+
+                <!-- Wrapper Start -->
+                <div class="cell" id="d.en.73981">
+                    <div class="c-wrapper grid-x grid-padding-x u-bg-white u-bleed bg-white u-padding-top"
+                        data-ct="wrapper">
+
+                        <!-- Text with Heading -->
+                        <div class="cell small-12  medium-10 large-10  " id="d.en.73970">
+                            <h2 class=" header-stripped ">Campus news</h2>
+                        </div>
+                        <!-- End Text with Heading -->
+                        <!-- CTA -->
+                        <div class="cell text-center medium-5 large-5 u-padding-bottom  "><a
+                                href="https://portal.stir.ac.uk/news-events-announ/news-event-ann-home.jsp#two"
+                                class="button expanded heritage-green " id="cta-73975">See all news on the staff
+                                portal</a></div><!-- End CTA -->
+                        <!-- Text with Heading -->
+                        <div class="cell small-12  medium-10 large-10  " id="d.en.73988">
+                            <h2 class=" header-stripped ">Events</h2>
+                        </div>
+                        <!-- End Text with Heading -->
+                        <!-- CTA -->
+                        <div class="cell text-center medium-5 large-5 u-padding-bottom  "><a
+                                href="https://portal.stir.ac.uk/news-events-announ/news-event-ann-home.jsp#three"
+                                class="button expanded heritage-green " id="cta-73969">See all events on the staff
+                                portal</a></div><!-- End CTA -->
+                    </div>
+                </div>
+                <!-- Wrapper End -->
+
+                <!-- Wrapper Start -->
+                <div class="cell" id="d.en.73985">
+                    <div class="c-wrapper grid-x grid-padding-x u-bg-dark-grey u-white--all u-bleed bg-dark-grey u-padding-top"
+                        data-ct="wrapper">
+                        <!-- Promo Box  -->
+                        <div class="cell small-12 medium-4 u-my-1 large-4 medium-10 u-padding-bottom  " id="d.en.73966"
+                            data-component="promo-standard">
+                            <div class=" flex-container u-gap u-p-1 ">
+                                <div><span class="uos-group text-lg u-heritage-green"></span></div>
+                                <div>
+                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                        <div class="u-h-full">
+                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                <h2
+                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                    Staff Roundup </h2>
+                                                <div class="text-sm u-p-last-mb-0">
+                                                    <p>For the latest staff news read our weekly newsletter. Email
+                                                        submissions for the next edition to&nbsp;<a
+                                                            href="mailto:communications@stir.ac.uk">communications@stir.ac.uk</a>.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=""> <a href="/communications/roundup/"
+                                                class="heritage-green  c-link">Roundup archive</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Promo Box --><!-- Promo Box  -->
+                        <div class="cell small-12 medium-4 u-my-1 large-4 medium-10 u-padding-bottom  " id="d.en.73991"
+                            data-component="promo-standard">
+                            <div class=" flex-container u-gap u-p-1 ">
+                                <div><span class="uos-document text-lg u-heritage-green"></span></div>
+                                <div>
+                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                        <div class="u-h-full">
+                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                <h2
+                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                    Faculty newsletters </h2>
+                                                <div class="text-sm u-p-last-mb-0">
+                                                    <p>See the latest news, information and announcements from&nbsp;your
+                                                        faculty with our newsletter archive.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=""> <a href="/communications/newsletters/"
+                                                class="heritage-green  c-link">Newsletters</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Promo Box --><!-- Promo Box  -->
+                        <div class="cell small-12 medium-4 u-my-1 large-4 medium-10 u-padding-bottom  " id="d.en.73963"
+                            data-component="promo-standard">
+                            <div class=" flex-container u-gap u-p-1 ">
+                                <div><span class="uos-computer text-lg u-heritage-green"></span></div>
+                                <div>
+                                    <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
+                                        <div class="u-h-full">
+                                            <div class="flex-container u-gap flex-dir-column u-overflow-hidden ">
+                                                <h2
+                                                    class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 ">
+                                                    My Portal </h2>
+                                                <div class="text-sm u-p-last-mb-0">
+                                                    <p>Access the Portal for quick links to&nbsp;more&nbsp;resources,
+                                                        information and your personal staff details.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=""> <a href="https://portal.stir.ac.uk"
+                                                class="heritage-green  c-link">Portal home</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- End Promo Box -->
                     </div>
                 </div>
                 <!-- Wrapper End -->
@@ -472,123 +586,153 @@
         </div>
     </main>
     <!--beginnoindex-->
+
     <!-- 
-				Main Footer 
-			-->
+        Main Footer 
+    -->
     <footer aria-label="Main footer">
-        <div class="u-bg-black u-clip u-padding-top">
-            <div class="stir-grid site-footer" data-lazy-container>
-                <!-- Contact -->
-                <div class="site-footer__contact">
-                    <h2><a href="/about/contact-us/">Contact us</a></h2>
-                    <ul>
-                        <li><a href="https://portal.stir.ac.uk/student/enquiry/ask.jsp">Ask us a question &#10217;</a>
-                        </li>
-                        <li><a href="tel:+44(0)1786473171">Tel: +44 (0) 1786 473171</a></li>
-                        <li class="site-footer__address u-font-bold"><span>University of Stirling</span>
-                            <span>Stirling</span> <span>FK9 4LA</span> <span>Scotland UK</span>
-                        </li>
-                    </ul>
+        <div class="u-bg-black u-padding-y u-clip" id="site-footer">
+            <div class="u-gap u-grid-5-cols grid-container">
+                <div>
+                    <p class="text-md"><strong>Follow us</strong></p>
+                    <div class="u-flex u-gap-8 u-text-regular site-footer_follow">
+                        <a href="https://www.facebook.com/universityofstirling/">
+                            <span class="show-for-sr">Facebook</span>
+                            <span class="uos-facebook"></span>
+                        </a>
+
+                        <a href="https://www.instagram.com/universityofstirling/">
+                            <span class="show-for-sr">Instagram</span>
+                            <span class="uos-instagram"></span>
+                        </a>
+
+                        <a href="https://x.com/StirUni">
+                            <span class="show-for-sr">X</span>
+                            <svg width="18" height="18" viewBox="0 0 1200 1227" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"
+                                    fill="white" />
+                            </svg>
+                        </a>
+
+                        <a href="https://www.youtube.com/user/UniversityOfStirling">
+                            <span class="show-for-sr">YouTube</span>
+                            <span class="uos-youtube-old"></span>
+                        </a>
+
+                        <a href="https://www.linkedin.com/school/university-of-stirling/">
+                            <span class="show-for-sr">LinkedIn</span>
+                            <span class="uos-linkedin"></span>
+                        </a>
+
+                        <a href="https://www.tiktok.com/@universityofstirling/">
+                            <span class="show-for-sr">TikTok</span>
+                            <span class="uos-tiktok"></span>
+                        </a>
+
+                    </div>
                 </div>
-                <figure class="site-footer__map">
-                    <a href="/about/getting-here/">
-                        <img src="../../medias/Categorised/Dist/css/images/maps/footer-map-scotland.svg"
-                            alt="Map of the UK with a marker indicating the location of the University of Stirling"
-                            loading=lazy>
-                    </a>
-                    <figcaption class="show-for-sr">Map of the United Kingdom of Great Britain and Northern Ireland
-                    </figcaption>
-                </figure>
-                <!-- Social -->
-                <div class="site-footer__follow">
-                    <h2>Follow us</h2>
-                    <ul>
-                        <li>
-                            <a href="https://www.facebook.com/universityofstirling/">
-                                <span class="show-for-sr">Facebook</span>
-                                <span class="uos-facebook"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.instagram.com/universityofstirling/">
-                                <span class="show-for-sr">Instagram</span>
-                                <span class="uos-instagram"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.twitter.com/StirUni">
-                                <span class="show-for-sr">Twitter</span>
-                                <span class="uos-twitter"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.youtube.com/user/UniversityOfStirling">
-                                <span class="show-for-sr">YouTube</span>
-                                <span class="uos-youtube-old"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.linkedin.com/school/university-of-stirling/">
-                                <span class="show-for-sr">LinkedIn</span>
-                                <span class="uos-linkedin"></span>
-                            </a>
-                        </li>
-                    </ul>
+
+                <div>
+                    <p class="text-md"><strong>Popular links</strong></p>
+                    <nav aria-label="Popular links">
+                        <ul class="u-flex flex-dir-column u-gap no-bullet text-sm">
+                            <li><a href="/about/faculties/">Faculties</a></li>
+                            <li><a href="/about/professional-services/">Professional services</a></li>
+                            <li><a href="/about/our-people/alumni/">Alumni</a></li>
+                            <li><a href="/about/work-at-stirling/">Jobs at Stirling</a></li>
+                            <li><a href="/about/getting-here/">Getting here</a></li>
+                            <li><a href="/student-life/students-union/">Students’ Union</a></li>
+                            <li><a href="https://shop.stir.ac.uk/">Online shop</a></li>
+                            <li><a href="https://blog.stir.ac.uk/ ">Blog</a></li>
+                            <li><a aria-label="Information for current students" id="footer-link-students"
+                                    rel="nofollow" href="/internal-students/">Current students</a></li>
+                            <li><a aria-label="Information for current staff" id="footer-link-staff" rel="nofollow"
+                                    href="/internal-staff/">Staff</a></li>
+
+                        </ul>
+                    </nav>
                 </div>
-                <!-- Popular links -->
-                <div class="site-footer__popular-links">
-                    <h2>Popular links</h2>
-                    <ul>
-                        <li><a href="/about/faculties/">Faculties</a></li>
-                        <li><a href="/about/professional-services/">Professional services</a></li>
-                        <li><a href="/about/our-people/alumni/">Alumni</a></li>
-                        <li><a href="/about/work-at-stirling/">Jobs at Stirling</a></li>
-                        <li><a href="/about/getting-here/">Getting here</a></li>
-                        <li><a href="/student-life/students-union/">Students’ Union</a></li>
-                        <li><a href="https://shop.stir.ac.uk/">Online shop</a></li>
-                        <li><a href="https://blog.stir.ac.uk/ ">Blog</a></li>
-                        <li><a aria-label="Information for current students" id="footer-link-students" rel="nofollow"
-                                href="/internal-students/">Current students</a></li>
-                        <li><a aria-label="Information for current staff" id="footer-link-staff" rel="nofollow"
-                                href="/internal-staff/">Staff</a></li>
-                    </ul>
+
+                <div>
+                    <p class="text-md"><strong>Site information</strong></p>
+                    <nav aria-label="Site information">
+                        <ul class="u-flex flex-dir-column u-gap no-bullet text-sm">
+                            <li><a href="/about/policy-legal-and-cookies/">Policy, Legal and Cookies</a></li>
+                            <li><a href="/about/accessibility/">Accessibility statement</a></li>
+                            <li><a href="/sitemap/">Sitemap</a></li>
+                            <li><a href="/about/modern-slavery-statement/">Modern Slavery Statement</a></li>
+                            <li><a href="/about/">Scottish Charity No SC011159</a></li>
+                        </ul>
+                    </nav>
                 </div>
-                <!-- Site information -->
-                <div class="site-footer__site-info">
-                    <h2>Site information</h2>
-                    <ul>
-                        <li><a href="/about/policy-legal-and-cookies/">Policy, Legal and Cookies</a></li>
-                        <li><a href="/about/accessibility/">Accessibility statement</a></li>
-                        <li><a href="/sitemap/">Sitemap</a></li>
-                        <li><a href="/about/modern-slavery-statement/">Modern Slavery Statement</a></li>
-                        <li><a href="/about/">Scottish Charity No SC011159</a></li>
-                    </ul>
+
+                <div class="hide-for-large"></div>
+
+                <div id="footer-contact">
+                    <p class="text-md"><strong>Contact us</strong></p>
+                    <a href="tel:+44(0)1786473171" class="u-block u-mb-1">Tel: +44 (0) 1786 473171</a>
+
+                    University of Stirling<br>
+                    Stirling<br>
+                    FK9 4LA<br>
+                    Scotland UK<br>
+
+                    <a href="https://portal.stir.ac.uk/student/enquiry/ask.jsp" class="u-block u-mt-1">Ask us a question
+                        &#10217;</a>
                 </div>
-                <!-- Accreditations -->
-                <div class="site-footer__awards">
-                    <a
-                        href="/news/news-archive/../2019/11/university-of-stirling-wins-the-uks-highest-academic-honour/"><img
-                            src="../../medias/Categorised/Dist/images/accreditations/qap-2019.svg"
-                            alt="The Queen's Anniversary Prizes for Higher and Further Education 2019" loading=lazy></a>
+
+                <div>
+                    <figure class="site-footer__map">
+                        <a href="/about/getting-here/">
+                            <img src="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn../../medias/Categorised/Dist/css/images/maps/footer-map-scotland.svg"
+                                alt="Map of the UK with a marker indicating the location of the University of Stirling"
+                                loading=lazy>
+                        </a>
+                        <figcaption class="show-for-sr">Map of the United Kingdom of Great Britain and Northern Ireland
+                        </figcaption>
+                    </figure>
                 </div>
-                <div class="site-footer__accreditations">
-                    <a href="/about/our-reputation/facts-and-figures/" aria-label="University facts and figures"><img
-                            src="../../medias/Categorised/Dist/images/accreditations/accreditations-cluster.png"
-                            srcset="../../medias/Categorised/Dist/images/accreditations/accreditations-cluster2x.png 2x"
-                            width="250" height="38" alt="UK QAA, Athena Swan Bronze Award, SCQF" loading=lazy></a>
-                </div>
-                <div class="site-footer__lockup">
-                    <img src="../../medias/Categorised/Dist/images/btd-strap-energy.svg" alt="Be the difference"
-                        loading=lazy>
+
+            </div>
+
+            <div class="grid-container">
+                <hr class="hr-1">
+            </div>
+
+            <div class="grid-container">
+                <div class="u-grid u-grid-equal-cols u-gap ">
+                    <div>
+                        <div class="u-relative u-left--16  u-top-32">
+                            <img src="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn../../medias/Categorised/Dist/images/accreditations/cred1x.png"
+                                srcset="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn../../medias/Categorised/Dist/images/accreditations/cred.png 2x"
+                                width="250" height="38" alt="Athena Swan Silver Award, UK QAA, SCQF" loading=lazy
+                                usemap=#accreditations>
+
+                            <map name=accreditations>
+                                <area alt="Athena Swan Silver Award"
+                                    href="/about/professional-services/student-academic-and-corporate-services/policy-and-planning/equality-diversity-and-inclusion/gender-equality/athena-swan-charter/"
+                                    shape=rect coords="18,0,78,38">
+                                <area alt="Facts and Figures" href="/about/our-reputation/facts-and-figures/" shape=rect
+                                    coords="88,0,250,38">
+                            </map>
+                        </div>
+                    </div>
+
+                    <div class=" u-flex items-end flex-dir-column">
+                        <img src="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn../../medias/Categorised/Dist/images/btd-strap-energy.svg"
+                            alt="Be the difference" loading=lazy id="imgBeTheDiff">
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Copyright footer -->
         <div class="c-copyright u-bg-black">
             <div class="grid-container">
-                <div class="grid-x ">
-                    <div class="cell large-12 medium-12 small-12">
-                        <p>&copy; University of Stirling</p>
+                <div class="grid-x grid-padding-x">
+                    <div class="cell large-12 medium-12 small-12 u-white">
+                        <p class="text-sm">&copy; University of Stirling</p>
                     </div>
                 </div>
             </div>
@@ -596,14 +740,16 @@
         <!-- Back to top button -->
         <a href="#" id="c-scroll-to-top-button" class="c-scroll-to-top flex-container align-middle align-center"><span
                 class="show-for-sr">Scroll back to the top</span><span class="uos-arrows-up"></span></a>
+
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src=https://load.collect.stir.ac.uk/ns.html?id=GTM-NLVN8V height="0" width="0"
+                style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
     </footer>
     <!--endnoindex-->
 
     <!-- app.min.js -->
-    <script type="text/javascript" src="../../medias/Categorised/Dist/js/app.min.js?v=75.1"></script>
-
-    <!-- unibuddy.min.js -->
-    <script type="text/javascript" src="../../medias/Categorised/Dist/js/other/unibuddy.js?v=2.1"></script>
+    <script type="text/javascript" src="../../medias/Categorised/Dist/js/app.min.js?v=130.1"></script>
 
 
 
