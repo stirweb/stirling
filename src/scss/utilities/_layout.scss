@@ -388,12 +388,14 @@
 }
 
 @media screen and #{breakpoint(medium up)} {
-  .u-columns-2 {
+  .u-columns-2,
+  .u-columns-2 ul {
     column-count: 2;
     column-gap: 1.5rem;
   }
 
-  .u-columns-3 {
+  .u-columns-3,
+  .u-columns-3 ul {
     column-count: 3;
     column-gap: 1.5rem;
   }
