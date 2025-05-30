@@ -4763,16 +4763,11 @@ li.c-colour-swatch__pms:before {
 
 @media screen and (min-width: 40em) {
   .c-cta-listing {
-    padding: 40px; }
-    .c-cta-listing ul {
-      column-count: 2;
-      column-gap: 30px; } }
+    padding: 40px; } }
 
 @media screen and (min-width: 64em) {
   .c-cta-listing {
-    padding: 40px 60px; }
-    .c-cta-listing ul {
-      column-gap: 40px; } }
+    padding: 40px 60px; } }
 
 .c-wrapper.u-bg-grey .c-cta-listing {
   background-color: #fff; }
