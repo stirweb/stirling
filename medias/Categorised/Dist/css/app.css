@@ -8375,7 +8375,11 @@ article.c-convo small {
 
 @media screen and (min-width: 40em) {
   .u-columns-2 {
-    column-count: 2; } }
+    column-count: 2;
+    column-gap: 1.5rem; }
+  .u-columns-3 {
+    column-count: 2;
+    column-gap: 1.5rem; } }
 
 .u-basis-20 > * {
   flex-basis: 20px;
