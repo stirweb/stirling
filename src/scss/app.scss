@@ -1,6 +1,38 @@
 // CUSTOM
 @charset 'utf-8';
 
+/*
+    General Sans
+*/
+
+@font-face {
+  font-family: "General Sans";
+  src: url('<t4 type="media" id="173668" formatter="path/*" />') format("OpenType"), url("../fonts/general-sans/GeneralSans-Regular.ttf") format("OpenType");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url('<t4 type="media" id="179150" formatter="path/*" />') format("OpenType"), url("../fonts/general-sans/GeneralSans-Semibold.ttf") format("OpenType");
+  font-weight: 700;
+  font-style: bold;
+  font-display: swap;
+}
+
+/*
+    FSMaja
+*/
+
+@font-face {
+  font-family: "FSMaja";
+  src: url('<t4 type="media" id="158106" formatter="path/*" />') format("woff"), url("../fonts/fsmaja/FSMajaWeb-Regular.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 // 1. Layout
 // ---------
 $global-width: rem-calc(1240);
@@ -33,7 +65,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (

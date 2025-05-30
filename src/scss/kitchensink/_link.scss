@@ -18,36 +18,45 @@
   }
 
   &:after {
-    content: "\e97b";
-    font-family: "uos";
-    margin: 0 0 0 10px;
-    //position: relative;
-    //right: -10px;
-    //bottom: -1px;
+    //content: "\e97b";
+    //font-family: "uos";
+    content: url("data:image/svg+xml;base64,ICAgPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiCiAgICAgICAgICAgICAgICAgICAgICAgIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0idS1zdmctMjQiPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im04LjI1IDQuNSA3LjUgNy41LTcuNSA3LjUiIC8+CiAgICAgICAgICAgICAgICAgICAgPC9zdmc+");
+    width: 24px;
+    height: 24px;
+    position: relative;
+    display: inline-block;
+    top: 5px;
   }
 }
 
 .c-link.u-black:hover {
   color: $black;
 }
+
 .c-link.u-black:before {
   background-color: $black;
 }
+
 .c-link.u-white:hover {
   color: $white;
 }
+
 .c-link.u-white:before {
   background-color: $white;
 }
+
 .c-link:hover:before {
   width: 100%;
 }
+
 ul .c-link {
   margin: 0 0 10px 0;
 }
+
 .c-link.no-arrow:after {
   content: "";
 }
+
 .c-wysiwyg-content li a,
 .accordion-content li a,
 .tabs-panel li a {

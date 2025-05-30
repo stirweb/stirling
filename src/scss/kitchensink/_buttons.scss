@@ -1,10 +1,33 @@
 /*
     Default Button Style Component
-
     Also .expanded
 */
 
+/* 
+  Function to map icon filter values based on color
+*/
+@function icon-filter($color) {
+  // Map of colors to their filter values
+  $filter-map: (
+    $heritage-green: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%),
+    $energy-green: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%),
+    //$energy: invert(10%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%),
+    $energy-pink: invert(36%) sepia(93%) saturate(7471%) hue-rotate(330deg) brightness(95%) contrast(96%),
+    $energy-turq: invert(49%) sepia(81%) saturate(392%) hue-rotate(127deg) brightness(97%) contrast(96%),
+    $heritage-berry: invert(80%) sepia(63%) saturate(3611%) hue-rotate(307deg) brightness(89%) contrast(91%),
+    $energy-purple: invert(15%) sepia(71%) saturate(6118%) hue-rotate(268deg) brightness(105%) contrast(107%),
+    $heritage-purple: invert(90%) sepia(71%) saturate(6118%) hue-rotate(268deg) brightness(95%) contrast(107%),
+  );
+
+  // Return the filter value for the given color or a default
+  @return map-get($filter-map, $color) or brightness(0);
+}
+
+/* 
+  Actual button 
+*/
 button {
+  cursor: pointer;
   border-style: none;
   background: none;
   font-size: inherit;
@@ -17,19 +40,15 @@ button:focus {
   outline-offset: 4px;
 }
 
-/* Default */
+/* 
+  Default .button
+*/
 .button {
   background-color: $heritage-green;
   color: $white;
   text-decoration: none;
+  border: 2px solid transparent;
   cursor: pointer;
-
-  &:hover {
-    background-color: tint($heritage-green, 85%);
-  }
-}
-
-.button {
   display: inline-block;
   font-family: $body-font-family !important;
   font-size: 1.25rem;
@@ -40,6 +59,16 @@ button:focus {
   margin-top: 1rem;
   margin-bottom: 1rem;
   min-width: 14rem;
+
+  &:hover {
+    background-color: $white;
+    border: 2px solid $heritage-green;
+    color: $heritage-green;
+  }
+
+  &:hover::after {
+    filter: brightness(0) invert(1);
+  }
 
   a {
     color: $white;
@@ -55,15 +84,23 @@ button:focus {
   border: 2px solid transparent;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 
-  &:hover {
-    border-bottom-color: transparent;
+  &:after {
+    // content: "\e97b";
+    // font-family: "uos";
+    // margin: 0 0 0 10px;
+    // position: relative;
+    content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI2ZmZiIgY2xhc3M9InNpemUtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJtOC4yNSA0LjUgNy41IDcuNS03LjUgNy41IiAvPgo8L3N2Zz4K");
+    width: 24px;
+    height: 24px;
+    position: relative;
+    right: -4px;
+    top: 5px;
+    display: inline-block;
+    color: #ffff;
   }
 
-  &:after {
-    content: "\e97b";
-    font-family: "uos";
-    margin: 0 0 0 10px;
-    position: relative;
+  &:hover::after {
+    filter: icon-filter($heritage-green);
   }
 
   &.no-arrow:after {
@@ -74,11 +111,23 @@ button:focus {
   &.tiny {
     padding: 1.1em 1em;
     font-size: 0.875rem;
+
+    &:after {
+      width: 16px;
+      height: 16px;
+      top: 3px;
+    }
   }
 
   &.small {
     padding: 1.1em 1em;
     font-size: 1rem;
+
+    &:after {
+      width: 20px;
+      height: 20px;
+      top: 4px;
+    }
   }
 
   &.button-gap--right {
@@ -111,6 +160,10 @@ button:focus {
         background-color: #ffffff;
         border-color: $color;
         color: $color;
+
+        &::after {
+          filter: icon-filter($color);
+        }
       }
     }
   }
@@ -119,6 +172,10 @@ button:focus {
     background: transparent;
     color: $heritage-green;
     border: 1px solid $heritage-green;
+
+    &::after {
+      filter: icon-filter($heritage-green);
+    }
 
     &:hover {
       background-color: transparent;
@@ -137,6 +194,10 @@ button:focus {
         background: transparent;
         color: $color;
         border: 1px solid $color;
+
+        &::after {
+          filter: icon-filter($color);
+        }
 
         &:hover {
           background-color: transparent;
@@ -185,94 +246,57 @@ button:focus {
 }
 
 /* 
-    Button pseudo-elements 
+    Button variations
  */
 
-.button--close:after {
-  content: "\e905";
+// .button--close:after {
+//   content: "\e905";
+// }
+
+// Back
+.button--back {
+  &:before {
+    //content: "\e97a";
+    //font-family: "uos";
+    //margin: 0 10px 0 0;
+    content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI2ZmZiIgY2xhc3M9InNpemUtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTUuNzUgMTkuNSA4LjI1IDEybDcuNS03LjUiIC8+Cjwvc3ZnPgo=");
+    position: relative;
+    width: 24px;
+    height: 24px;
+    right: 4px;
+    top: 5px;
+    display: inline-block;
+  }
+
+  &:hover:before {
+    filter: icon-filter($heritage-green);
+  }
+
+  &:after {
+    content: "";
+  }
 }
 
-.button--back:before {
-  content: "\e97a";
-  font-family: "uos";
-  margin: 0 10px 0 0;
-  position: relative;
-}
-
-.button--back:after {
-  content: "";
-}
-
-.button--dropdown:after {
-  content: "\e979";
-  font-family: "uos";
-}
-
+// Mobile navigation - replace with utility class
 .button--left-align {
   text-align: left;
 }
 
-@include breakpoint(medium down) {
-  .button {
-    font-size: 1.125rem; // 18px;
-  }
-
-  .button.x-large {
-    padding: 18px;
-  }
-}
-
-/* 
-    Button variations
- */
-
-.c-dropdown-wrapper {
-  display: inline-block;
-  position: relative;
-
-  .button--dropdown {
-    margin: 0;
-
-    &:after {
-      content: "\e979";
-    }
-  }
-
-  .dropdown-pane {
-    position: absolute;
-    background-color: #fff;
-    padding: 10px;
-    border: 0px solid #cacaca;
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
-    width: 100%;
-
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    a {
-      border-bottom: 0px solid $heritage-green;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-/* 
-    Button component variation - outline ghost style
- */
-
+// outline ghost style
 .button.outine-button {
   background: transparent;
   border: 2px solid $heritage-green;
   color: $heritage-green;
 
+  &::after {
+    filter: icon-filter($heritage-green);
+  }
+
   &:hover {
     background-color: transparent;
     border: 2px solid tint($heritage-green, 50%);
   }
+
   &:focus {
     background-color: transparent;
     color: $heritage-green;
@@ -297,8 +321,17 @@ button:focus {
     color: #fff;
     border-color: rgba(255, 255, 255, 0.5);
   }
+
   &:focus {
     background-color: transparent;
+  }
+
+  &::after {
+    filter: brightness(0) invert(1);
+  }
+
+  &:hover::after {
+    filter: brightness(0) invert(1);
   }
 }
 
@@ -335,27 +368,9 @@ input:checked {
   }
 }
 
-/*
-    Button that is styled to look like a link 
-    (see scholarship finder)
-
-
-.c-link-button {
-  background-color: transparent;
-  color: $heritage-green;
-  text-align: left;
-  padding: 1em 0;
-
-  &:hover,
-  &:focus {
-    background-color: transparent;
-    color: $heritage-green;
-  }
-}
-  */
-
 /* 
     Button style that can have a icomoon span icon in it 
+    Only used on virtual tour at the moment
 */
 
 .button-icon span[class^="uos-"] {
@@ -488,6 +503,20 @@ input:checked {
 
   &.u-sticky__small.u-sticky.stuck {
     width: 77%;
+  }
+}
+
+/*
+    Responsive amends
+*/
+
+@include breakpoint(medium down) {
+  .button {
+    font-size: 1.125rem; // 18px;
+  }
+
+  .button.x-large {
+    padding: 18px;
   }
 }
 
