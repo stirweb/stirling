@@ -50,7 +50,11 @@
 													<summary>${division.name}</summary>
 													<div class=u-px-1>
 														${division.routes.map(route => `
-														<p><a href="/pages/courses/api/course.html?year=${year.academicYear}&route=${route.code}">${route.name}</a> <small>${route.code}</small></p>
+														<p>${route.name} <small>${route.code}</small>
+															<a href="/pages/courses/api/course.html?session=${year.academicYear}&route=${route.code}&semester=AUT">Autumn</a> | 
+															<a href="/pages/courses/api/course.html?session=${year.academicYear}&route=${route.code}&semester=SPR">Spring</a> | 
+															<a href="/pages/courses/api/course.html?session=${year.academicYear}&route=${route.code}&semester=SUM">Summer</a>
+														</p>
 														`).join('')}
 													</div>
 												</details>

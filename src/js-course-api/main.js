@@ -9,15 +9,15 @@
 	const path = '/data/pd-api-dev/';
 	const ppth = 'terminalfour/preview/1/en/35030';
 	const code = u.searchParams.has("route") ? u.searchParams.get('route') : 'UCX12-BUSLAW';
-	const sess = u.searchParams.has("sess") ? u.searchParams.get('sess') : '2024/5';
-	const seme = 'SPR';
+	const sess = u.searchParams.has("session") ? u.searchParams.get('session') : '2024/5';
+	const seme = u.searchParams.has("semester") ? u.searchParams.get('semester') :'SPR';
 	const query = `programme=${code}/${sess}/${seme}`;
 
 	const apiUrl = (()=>{
 		switch (UoS_env.name) {
 			case "dev":
-				//return `https://www.stir.ac.uk${path}?${query}`;
-				return '/pages/data/akari/course.json';
+				return `https://www.stir.ac.uk${path}?${query}`;
+				//return '/pages/data/akari/course.json';
 			case "qa":
 				return '/stirling/pages/data/akari/course.json';
 			case "preview":
@@ -31,8 +31,22 @@
 
 	console.info('[Main] apiUrl',apiUrl);
 
-	const skip = ["programmeTitle","versionNumber","dateOfApproval","dateOfIntroduction","award","programmeCode","owningFaculty","owningDivision","ucasCode","creditPoints","ectsCredits","programmeLevel"];
+	const debug = ["learningOutcomes","programmeAvailabilities","programmeStructure","qaaBenchmarks"];
+	const skip = ["programmeTitle","versionNumber","dateOfApproval","dateOfIntroduction","award","programmeCode","owningFaculty","owningDivision","ucasCode","creditPoints","ectsCredits","programmeLevel"].concat(debug);
 	const skips = element => skip.indexOf(element) === -1;
+	const labels = {
+		"assessmentApproach": "Approach to assessment",
+		"awardBodies": "Awarding bodies",
+		"careerAvenues": "Career avenues",
+		"learnTeachApproach": "Approach to learning and teaching",
+		"partnerInstitutions": "Partner institutions",
+		"programmeOverview": "Overview",
+		"qaaBenchmarks": "QAA benchmarks"
+	};
+	const categories = {
+		FT: "Full time",
+		PTO: "Part time"
+	};
 
 	const modules = module => `
 		<tr>
@@ -60,13 +74,10 @@
 			</div>
 		</details>`;
 	
-	const availability = data => `<p>${data.year} ${data.location} ${data.deliveryMode} ${data.loadCategory} (Active: ${data.isActive})</p>`;
+	const availability = data => `<li>${data.year} ${data.location}, ${data.deliveryMode} ${categories[data.loadCategory]||data.loadCategory}${"Y"===data.isActive?"":' (Inactive)'}</li>`;
+	const benchmark = data => `<li>${data}</li>`;
 		
-	function structure(data) {
-		return `<p>${data.entryPointDescription}</p>
-				${data.years.map(year=>`${year.semesters.map(semester).join('')}`).join('')}
-		`;
-	} 
+	const structure = data => `<p>${data.entryPointDescription}</p> ${data.years.map(year=>`${year.semesters.map(semester).join('')}`).join('')}`;  
 
 
 	if(!el) return console.warn('[Course API] no DOM');
@@ -77,37 +88,54 @@
 
 	spinner.show();
 
+	el.insertAdjacentHTML("beforeend",`<div class=cell><pre>🤖 ${apiUrl}</pre></div>`);
+
 	fetch(apiUrl)
-		.then((response) => response.json())
+		.then((response) => {
+			if (!response.ok) {
+				console.error(`Response status: ${response.status}`);
+			} else {
+				return response.json();
+			}
+		})
 		.then((data) => {
+			if(!data) {
+				spinner.hide();
+				el.insertAdjacentHTML("beforeend",`<p><strong>Error</strong>: No data!</p>`);
+				return;
+			}
 			el.insertAdjacentHTML(
 				"beforeend",
 				`<div class="grid-container u-px-1">
 					<div class="grid-x">
 						<div class="cell u-padding-y">
 							<h1 class="c-course-heading c-course-title__heading u-heritage-green">${data["programmeTitle"]}</h1>
-							<div>
+							<div class="u-bg-heritage-green--10 u-p-1 u-mb-2" style="column-count:2">
 								<p><strong>Award</strong> ${data.award}</p>
 								<p><strong>UCAS</strong> ${data.ucasCode}</p>
 								<p><strong>Code</strong> ${data.programmeCode}</p>
 								<p><strong>Level</strong> ${data.programmeLevel}</p>
 								<p><strong>ECTS</strong> ${data.ectsCredits}</p>
 								<p><strong>Credits</strong> ${data.creditPoints}</p>
-								<p><strong>Faculty</strong> ${data.owningFaculty} (${data.owningDivision})</p>
-
+								<p><strong>Faculty</strong> ${data.owningFaculty}</p>
+								<p><strong>Division</strong> ${data.owningDivision}</p>
 							</div>
+
+							<!-- AUTO -->
 							<!-- "string"===typeof data[el]||"number"===typeof data[el] -->
-							${ Object.keys(data).filter(skips).filter(el=>true).map(el => `<p><b>${el} [${typeof data[el]}]</b><br>${data[el]}</p><br>`).join("") }
-							<p><b>Learning outcomes</b></p>
-							${console.info(data.learningOutcomes)||''}
+							${ Object.keys(data).filter(skips).filter(el=>true).map(el => `<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]} [${typeof data[el]}]</p><br>`).join("") }
+							<!-- AUTO -->
+
+							<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">QAA benchmarks</h3>
+							<ul>${data.qaaBenchmarks.map(benchmark).join('')}</ul>
+							<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Learning outcomes and graduate attributes</h3>
 							<ul>
 								${data.learningOutcomes.map(outcome => `<li>${outcome.description} ${Object.keys(outcome.graduateAttributes).map(id=>`<strong>${outcome.graduateAttributes[id]}</strong>`).join(", ")}</li>`).join('')}
 							</ul>
-							
-							<p><b>Programme availabilities</b></p>
-							${data.programmeAvailabilities.map(availability).join('')}
+							<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3>
+							<ul>${data.programmeAvailabilities.map(availability).join('')}</ul>
+							<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme structure</h3>
 							<div class="u-p-2 u-mb-2" style="background: #f6f5f4">
-								<p><b>Programme structure</b></p>
 								${data.programmeStructure.map(structure).join('')}
 							</div>
 						</div>
