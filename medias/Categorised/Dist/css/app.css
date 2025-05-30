@@ -8368,10 +8368,12 @@ article.c-convo small {
   transform: translateY(-100%); }
 
 @media screen and (min-width: 40em) {
-  .u-columns-2 {
+  .u-columns-2,
+  .u-columns-2 ul {
     column-count: 2;
     column-gap: 1.5rem; }
-  .u-columns-3 {
+  .u-columns-3,
+  .u-columns-3 ul {
     column-count: 3;
     column-gap: 1.5rem; } }
 
