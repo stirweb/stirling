@@ -4757,14 +4757,6 @@ li.c-colour-swatch__pms:before {
       .c-cta-listing li a:hover:before {
         width: 100%; }
 
-@media screen and (min-width: 40em) {
-  .c-cta-listing {
-    padding: 40px; } }
-
-@media screen and (min-width: 64em) {
-  .c-cta-listing {
-    padding: 40px 60px; } }
-
 .c-wrapper.u-bg-grey .c-cta-listing {
   background-color: #fff; }
 
