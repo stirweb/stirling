@@ -2,7 +2,7 @@ var stir = stir || {};
 
 stir.akari = (function () {
   let params = new URLSearchParams(document.location.search);
-  const url = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=";
+  const url = "https://www.stir.ac.uk/data/pd-akari/?module=";
   const browser = document.getElementById("moduleBrowser");
   const debug = (data) => console.info(data);
 

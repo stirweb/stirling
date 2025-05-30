@@ -4832,15 +4832,11 @@ li.c-colour-swatch__pms:before {
       width: 95%; } }
 
 .c-cta-listing {
-  background-color: #f6f5f4;
-  border-left: 7px solid #77bf22;
-  padding: 30px;
   margin: 0 0 2rem 0;
   width: 100%; }
   .c-cta-listing ol,
   .c-cta-listing ul {
     counter-reset: item;
-    column-count: 1;
     margin: 0; }
   .c-cta-listing li {
     color: #006938;
@@ -4851,10 +4847,13 @@ li.c-colour-swatch__pms:before {
       position: relative;
       border-bottom: 0 !important; }
       .c-cta-listing li a:after {
-        content: "\e97b";
-        font-family: "uos";
-        font-size: 1rem;
-        margin: 1px 0 0 6px; }
+        content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgY2xhc3M9InNpemUtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJtOC4yNSA0LjUgNy41IDcuNS03LjUgNy41IiAvPgo8L3N2Zz4K");
+        position: relative;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        top: 4px;
+        right: -5px; }
       .c-cta-listing li a:before {
         content: "";
         position: absolute;
@@ -4866,22 +4865,6 @@ li.c-colour-swatch__pms:before {
         transition: width 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
       .c-cta-listing li a:hover:before {
         width: 100%; }
-
-@media screen and (min-width: 40em) {
-  .c-cta-listing {
-    padding: 40px; }
-    .c-cta-listing ul {
-      column-count: 2;
-      column-gap: 30px; } }
-
-@media screen and (min-width: 64em) {
-  .c-cta-listing {
-    padding: 40px 60px; }
-    .c-cta-listing ul {
-      column-gap: 40px; } }
-
-.c-wrapper.u-bg-grey .c-cta-listing {
-  background-color: #fff; }
 
 /* Clearing Timeline - stylised numerical list */
 ol.numberlist {
@@ -8481,7 +8464,11 @@ article.c-convo small {
 
 @media screen and (min-width: 40em) {
   .u-columns-2 {
-    column-count: 2; } }
+    column-count: 2;
+    column-gap: 1.5rem; }
+  .u-columns-3 {
+    column-count: 3;
+    column-gap: 1.5rem; } }
 
 .u-basis-20 > * {
   flex-basis: 20px;
