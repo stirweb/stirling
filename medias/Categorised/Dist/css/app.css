@@ -4734,7 +4734,6 @@ li.c-colour-swatch__pms:before {
   .c-cta-listing ol,
   .c-cta-listing ul {
     counter-reset: item;
-    column-count: 1;
     margin: 0; }
   .c-cta-listing li {
     color: #006938;
