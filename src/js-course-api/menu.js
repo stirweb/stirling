@@ -69,10 +69,140 @@
 				</div>`
 	};
 
-	fetch(apiUrl)
-		.then( (response) => response.json() )
-		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data)) );
+//	fetch(apiUrl)
+//		.then( (response) => response.json() )
+//		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data)) );
 
+	el.insertAdjacentHTML("beforeend",templates.menu([
+	{
+		"academicYear": "2023/4",
+		"faculties": [
+			{
+				"name": "Arts & Humanities",
+				"divisions": [
+					{
+						"routes": [
+							{
+								"code": "UCX12-BUSFMS",
+								"name": "BA (Hons) Film and Media"
+							}
+						],
+						"name": "Communications, Media and Culture"
+					},
+					{
+						"routes": [
+							{
+								"code": "UCX12-HISHER",
+								"name": "BA (Hons) History and Heritage"
+							},
+							{
+								"code": "UHX12-HIT",
+								"name": "BA (Hons) Heritage and Tourism"
+							}
+						],
+						"name": "History, Heritage and Politics"
+					},
+					{
+						"routes": [
+							{
+								"code": "UHX12-BSL",
+								"name": "BA (Hons) Business Law"
+							}
+						],
+						"name": "Law and Philosophy"
+					},
+					{
+						"routes": [
+							{
+								"code": "TXX43-CRW",
+								"name": "MLitt Creative Writing"
+							}
+						],
+						"name": "Literature and Languages"
+					}
+				]
+			},
+			{
+				"name": "Faculty of Social Sciences",
+				"divisions": [
+					{
+						"routes": [
+							{
+								"code": "TXO45-DEM",
+								"name": "MSc Dementia Studies (Online)"
+							}
+						],
+						"name": "Dementia and Ageing"
+					}
+				]
+			}
+		]
+	},
+	{
+		"academicYear": "2024/5",
+		"faculties": [
+			{
+				"name": "Arts & Humanities",
+				"divisions": [
+					{
+						"routes": [
+							{
+								"code": "UCX12-BUSFMS",
+								"name": "BA (Hons) Film and Media 2024/5 (test)"
+							}
+						],
+						"name": "Communications, Media and Culture"
+					},
+					{
+						"routes": [
+							{
+								"code": "UCX12-HISHER",
+								"name": "BA (Hons) History and Heritage"
+							},
+							{
+								"code": "UHX12-HIT",
+								"name": "BA (Hons) Heritage and Tourism"
+							}
+						],
+						"name": "History, Heritage and Politics"
+					},
+					{
+						"routes": [
+							{
+								"code": "UHX12-BSL",
+								"name": "BA (Hons) Business Law"
+							}
+						],
+						"name": "Law and Philosophy"
+					},
+					{
+						"routes": [
+							{
+								"code": "TXX43-CRW",
+								"name": "MLitt Creative Writing"
+							}
+						],
+						"name": "Literature and Languages"
+					}
+				]
+			},
+			{
+				"name": "Faculty of Social Sciences",
+				"divisions": [
+					{
+						"routes": [
+							{
+								"code": "TXO45-DEM",
+								"name": "MSc Dementia Studies (Online)"
+							}
+						],
+						"name": "Dementia and Ageing"
+					}
+				]
+			}
+		]
+	}
+]));
 
 
 })();
