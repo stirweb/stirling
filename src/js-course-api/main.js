@@ -99,7 +99,7 @@
 			}
 		})
 		.then((data) => {
-			if(!data) {
+			if(!data || data.error) {
 				spinner.hide();
 				el.insertAdjacentHTML("beforeend",`<p><strong>Error</strong>: No data!</p>`);
 				return;
