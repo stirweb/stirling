@@ -205,3 +205,10 @@ picture.objfitcover > img,
     min-height: 33rem; /* 580px */
   }
 }
+
+/* 
+  Hacks 
+*/
+body > img.crpb {
+  display: none !important;
+}
