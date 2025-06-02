@@ -366,10 +366,12 @@ stir.dpt = (function () {
       next: function(e) {
         if(_mcPointer===_moduleCache.length-1) return;
         stir.dpt.show.module( moduleIdentifier(_moduleCache[++_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
+        this.parentElement && this.parentElement.setAttribute('data-mc',_mcPointer);
       },
       previous: function(e) {
         if(_mcPointer<=0) return;
         stir.dpt.show.module( moduleIdentifier(_moduleCache[--_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
+        this.parentElement && this.parentElement.setAttribute('data-mc',_mcPointer);
       }
     },
     get: {
@@ -402,7 +404,7 @@ stir.dpt = (function () {
               getModules(user.type, user.rouCode, data[0][0], data[0][2]);
             }
           }),
-        modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data))),
+        modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data),_moduleCache.length-1)),
         module:  (callback) => (stir.dpt.show.module  =  (a,b) => callback(a,b)),
         version: (callback) => (stir.dpt.show.version = (data) => callback(versionToSession(data)))
       },
