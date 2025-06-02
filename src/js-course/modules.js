@@ -26,10 +26,12 @@ stir.course = (function() {
 	const moduleInfo    = stir.templates.course.div('moduleInfo');
 	const version = document.querySelector('time[data-sits]');
 	const spinner = new stir.Spinner(moduleViewer);
-	const status = {
-//		steps: 1,
-		uid: 0
-	}; // used to track modal/url changes
+	
+	// used to track modal/url changes
+	const status = { 
+		uid: 0,
+		total: 0
+	};
 
 	let initialised = false;
 
@@ -51,7 +53,7 @@ stir.course = (function() {
 		spinner.hide();
 		
 		// Render module information HTML:
-		moduleInfo.innerHTML = stir.templates.course.module(boilerplates, data);
+		moduleInfo.innerHTML = stir.templates.course.module(boilerplates, status.total, data);
 		
 		// Find and activate animated bar graphs:
 		stir.templates.course.barcharts( moduleInfo.querySelectorAll(".barchart") )
@@ -67,7 +69,11 @@ stir.course = (function() {
 	const handle = {
 		routes: frag => routeChooser.append(frag),
 		options: frag => optionChooser.append(frag),
-		modules: frag => {moduleBrowser.append(frag);reflow();},
+		modules: (frag,count) => {
+			status.total = count;
+			moduleBrowser.append(frag);
+			reflow();
+		},
 		module: (id,url) => {
 			reset.module();
 			spinner.show();

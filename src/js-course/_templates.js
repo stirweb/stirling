@@ -10,12 +10,11 @@ stir.templates.course = {
 	link: (text,href) => `<a href="${href}">${text}</a>`,
 	para: content => `<p>${content}</p>`,
 	option: option => `Starting ${option[3]}, ${option[1].toLowerCase()} (${option[4]})`,
-	div: (id,onclick) => {
+	div: id => {
 		const div = document.createElement('div');
-		div.id = id; div.onclick = onclick;
-		return div;
+		div.id = id; return div;
 	},
-	dialogue: (id) => {
+	dialogue: id => {
 		const d = document.createElement('dialog');
 		const x = document.createElement('button');
 		const p = document.createElement('button');
@@ -37,10 +36,11 @@ stir.templates.course = {
 		n.addEventListener("click",next.bind(n));
 
 		x.textContent = "Close";
-		p.innerHTML = '<span class="uos-arrows-up"></span> Previous'; //icon--large u-block u-heritage-green u-m-1
+		p.innerHTML = '<span class="uos-arrows-up"></span> Previous';
 		n.innerHTML = '<span class="uos-arrows-down"></span> Next';
 		return d;
 	},
+
 	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,
 
 	offline: `<p class="text-center c-callout">Module information is temporarily unavailable.</p>`,
@@ -89,7 +89,7 @@ stir.templates.course.barcharts = (barcharts) => {
 
 };
 
-stir.templates.course.module = (boilerplates, data) => {
+stir.templates.course.module = (boilerplates, count, data) => {
 	if (!boilerplates) return 'no data';
 	if (!data || !data.moduleTitle || !data.moduleCode || !data.moduleLevel || !data.moduleCredits || !data.moduleOverview || !data.learningOutcomes) {
 		console.error('[stir.templates.course.module] data error',data);
@@ -98,9 +98,11 @@ stir.templates.course.module = (boilerplates, data) => {
 
 	var otherInfo,additionalCosts;
 
+	const colour = stir.templates.course.colours[data.moduleLevelDescription];
+
 	const studyAbroad = (()=>{
 		if (data.studyAbroad !== "Yes") return;
-		return `<h3 class="header-stripped u-bg-heritage-green--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
+		return `<h3 class="header-stripped u-bg-${colour[0]}--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
 		${boilerplates["studyAbroad"]?boilerplates["studyAbroad"]:''}
 		${boilerplates["studyAbroadLink"]?`<p><a href="${boilerplates["studyAbroadLink"]}">Find out more about our study abroad opportunities.</a></p>`:''}`;
 	})();
@@ -123,8 +125,8 @@ stir.templates.course.module = (boilerplates, data) => {
 			`<div>
 				<span class="u-inline-block u-p-tiny u-px-1">${item.category}</span>
 				<div class="u-flex">
-					<div class="barchart u-relative u-flex u-flex1 align-middle u-overflow-hidden u-bg-light-medium-grey" data-value="${item.value}" data-max="100" data-unit="%" data-colour="${stir.templates.course.colours[data.moduleLevelDescription][1]}"></div>
-					<div class="u-pl-2 text-xlg u-font-primary u-line-height-1 u-energy-turq u-top--16 u-relative">${item.value}%</div>
+					<div class="barchart u-relative u-flex u-flex1 align-middle u-overflow-hidden u-bg-light-medium-grey" data-value="${item.value}" data-max="100" data-unit="%" data-colour="${colour[1]}"></div>
+					<div class="u-pl-2 text-xlg u-font-primary u-line-height-1 u-${colour[1]} u-top--16 u-relative">${item.value}%</div>
 				</div>
 			</div>`;
 
@@ -141,6 +143,9 @@ stir.templates.course.module = (boilerplates, data) => {
 		return 100===assessmentPercentTotal(data)?`<div class="cell large-${width} u-mb-1">${AssessmentCategorySummaries.map(assessment).join('')}</div>`:'';
 	}
 
+	const discoverLink = "UG"===data.moduleLevelDescription?boilerplates.awardsCtaUG:boilerplates.awardsCtaPG;
+	const discoverLevel = "UG"===data.moduleLevelDescription?'undergraduates':'postgraduates';
+
 	return `    <style>
      .barchart {
             height: 18px;
@@ -150,11 +155,18 @@ stir.templates.course.module = (boilerplates, data) => {
             width: 2400px;
             right: 100%;
             animation: 1s u-horz-slide-in-out forwards;
-	}</style>
+	}
+	nav[data-mc="0"] button:first-child,
+	nav[data-mc="${count}"] button:last-child {
+		background-color: #666;
+		cursor: not-allowed;
+	}
+	
+	</style>
 <main class="wrapper-content u-padding-bottom" aria-label="Main content" id="content">
 	<div class="grid-container" data-api="PROD">
 		<div class="grid-x grid-padding-x u-my-2 align-middle">
-			<div class="cell large-6  c-course-title u-padding-y">
+			<div class="cell large-6 c-course-title u-padding-y">
 				<h1 class="u-header-smaller">${data.moduleTitle}</h1>
 			</div>
 			<div class="cell large-6">
@@ -194,7 +206,7 @@ stir.templates.course.module = (boilerplates, data) => {
 	</div>
 	<div class="grid-container">
 		<div class="grid-x grid-padding-x start">
-			<div class="cell medium-9 bg-grey u-bleed u-p-2 ">
+			<div class="cell medium-9 bg-grey u-bleed u-p-2">
 				<p>The module information below is for the 2024/5 intake and may be subject to change, including in
 					response to student feedback and continuous innovation development. See our 
 					<a href="/study/important-information-for-applicants/terms-conditions/2023-24-student-terms-and-conditions/">
@@ -202,27 +214,27 @@ stir.templates.course.module = (boilerplates, data) => {
 			</div>
 			<div class="cell u-p-2">
 				<h2 id="contentandaims">Content and aims</h2>
-				<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">
+				<h3 class="header-stripped u-bg-${colour[0]}--10 u-${colour[0]}-line-left u-p-1 u-border-width-5 u-text-regular">
 					Module overview
 				</h3>
 				${data.moduleOverview}
 
-				<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular u-mt-2">Learning outcomes</h3>
+				<h3 class="header-stripped u-bg-${colour[0]}--10 u-${colour[0]}-line-left u-p-1 u-border-width-5 u-text-regular u-mt-2">Learning outcomes</h3>
 				<p><strong>${boilerplates["outcomesIntro"]}</strong></p>
 				<ul>${data.learningOutcomes.map(item=>`<li>${item}</li>`).join('')}</ul>
 			</div>
-			<div class="cell">
+			<div class="cell u-p-2">
 				<h2 id="teaching">Teaching and assessment</h2>
 				${boilerplates["teachingIntro"]||"<kbd>NO DATA</kbd>"}
 
-				<h3 class="header-stripped u-bg-energy-turq--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular u-mt-2">Engagement overview</h3>
+				<h3 class="header-stripped u-bg-${colour[1]}--10 u-p-1 u-${colour[1]}-line-left u-border-width-5 u-text-regular u-mt-2">Engagement overview</h3>
 				<div class="grid-x grid-padding-x" id="deliveries">
 					<div class="cell">
 						<p>Engagement and teaching information isn't currently available, but it will be made clear to you when you make your module selections.</p>
 					</div>
 				</div>
 
-				<h3 class="header-stripped u-bg-energy-turq--10 u-p-1 u-energy-turq-line-left u-border-width-5 u-text-regular u-mt-3">Assessment overview</h3>
+				<h3 class="header-stripped u-bg-${colour[1]}--10 u-p-1 u-${colour[1]}-line-left u-border-width-5 u-text-regular u-mt-3">Assessment overview</h3>
 
 				<div class="grid-x grid-padding-x" id="assessments"> ${assessments(data.assessments[0]["tabAssessments"])} </div>
 
@@ -232,21 +244,19 @@ stir.templates.course.module = (boilerplates, data) => {
 
 			<div class="cell u-mt-2">
 				<h2 id="awards">Awards</h2>
-				<h3 class="header-stripped u-bg-energy-purple--10 u-p-1 u-energy-purple-line-left u-border-width-5 u-text-regular">Credits</h3>
-				<p class="flex-container u-gap align-middle"><img src="https://www.stir.ac.uk/media/dist/images/modules/scotland-flag.png" width="65" height="44" alt="Scotland flag"> This module is worth 20 SCQF (Scottish Credit and Qualifications Framework) credits.</p>
-				<p class="flex-container u-gap align-middle"><img src="https://www.stir.ac.uk/media/dist/images/modules/EU-flag.png" width="65" height="44" alt="EU flag"> This equates to 10 ECTS (The European Credit Transfer and Accumulation System) credits.</p>
-				<!-- A1 -->
+				<h3 class="header-stripped u-bg-${colour[2]}--10 u-p-1 u-${colour[2]}-line-left u-border-width-5 u-text-regular">Credits</h3>
+				<p class="flex-container u-gap align-middle"><img src="https://www.stir.ac.uk/media/dist/images/modules/scotland-flag.png" width="65" height="44" alt="Scotland flag"> This module is worth ${data.moduleCredits} SCQF (Scottish Credit and Qualifications Framework) credits.</p>
+				<p class="flex-container u-gap align-middle"><img src="https://www.stir.ac.uk/media/dist/images/modules/EU-flag.png" width="65" height="44" alt="EU flag"> This equates to ${data.ectsModuleCredits} ECTS (The European Credit Transfer and Accumulation System) credits.</p>
+				<div class="u-mb-2 u-bg-${colour[2]}--10 flex-container align-stretch">
+					<span class="u-bg-${colour[2]} u-white flex-container align-middle u-width-64 u-px-1">
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="svg-icon">
+							<path d="M14.667,4.5,23,12.833m0,0-8.333,8.333M23,12.833H3" transform="translate(-1 -0.833)" stroke-linecap="round" stroke-linejoin="round"></path>
+						</svg>
+					</span>
+					<p class="u-p-1 u-m-0 u-black"><strong>Discover more:</strong> <a href="${discoverLink}" class="u-${colour[2]}">Assessment and award of credit for ${discoverLevel}</a></p>
+				</div>
 			</div>
 			${furtherDetails}
 		</div>
 	</div>
 </main>`;};
-
-/* A1 ––– <div class="u-mb-2 u-bg-energy-purple--10 flex-container align-stretch">
-					<span class="u-bg-energy-purple u-white flex-container align-middle u-width-64 u-px-1">
-						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="svg-icon">
-							<path d="M14.667,4.5,23,12.833m0,0-8.333,8.333M23,12.833H3" transform="translate(-1 -0.833)" stroke-linecap="round" stroke-linejoin="round"></path>
-						</svg>
-					</span>
-					<p class="u-p-1 u-m-0 u-black "><strong>Discover more:</strong> <a href="" class="u-energy-purple">Assessment and award of credit for undergraduates</a></p>
-				</div> */
