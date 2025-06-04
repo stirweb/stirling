@@ -25,31 +25,39 @@
 
   .slidemenu__other-links {
     margin-left: 32px;
+
     li a:before {
-      font-family: "uos";
-      padding-right: 15px;
-      color: $heritage-green;
+      //font-family: "uos";  <span class="uos-magnifying-glass"></spa
+      //padding-right: 15px;
+      //color: $heritage-green;
     }
 
-    .slidemenu__other-links-portal a::before {
-      content: "\e95c";
-    }
+    // .slidemenu__other-links-portal a::before {
+    //   content: "\e95c";
+    // }
 
     .slidemenu__other-links-staff a::before {
-      content: "\e95d";
+      //content: "\e95d";
+      content: var(--icon-lock-open);
+      width: 24px;
+      height: 24px;
+      top: 2px;
+      display: inline-block;
+      position: relative;
+      margin-right: 16px;
     }
 
-    .slidemenu__other-links-contact a::before {
-      content: "\e966";
-    }
+    // .slidemenu__other-links-contact a::before {
+    //   content: "\e966";
+    // }
 
-    .slidemenu__other-links-search a::before {
-      content: "\e93f";
-    }
+    // .slidemenu__other-links-search a::before {
+    //   content: "\e93f";
+    // }
 
-    .slidemenu__other-links-microsite a::before {
-      content: "\e920";
-    }
+    // .slidemenu__other-links-microsite a::before {
+    //   content: "\e920";
+    // }
   }
 }
 

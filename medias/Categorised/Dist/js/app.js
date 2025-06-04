@@ -2831,7 +2831,9 @@ var stir = stir || {};
  */
 stir.Concierge = function Concierge(popup) {
   const button = document.querySelector("#header-search__button");
-  if (!popup || !button) return;
+  const buttons = [...document.querySelectorAll(".header-search-button"), ...[button]];
+
+  if (!popup || !buttons.length) return;
 
   var obj2param = this.obj2param;
 
@@ -2875,7 +2877,11 @@ stir.Concierge = function Concierge(popup) {
     results.hide();
 
     // Assign various event handlers
-    button.addEventListener("click", opening);
+
+    buttons.forEach((openButton) => {
+      openButton.addEventListener("click", opening);
+    });
+
     nodes.input.addEventListener("focus", focusing);
     nodes.input.addEventListener("keyup", stir.debounce(handleInput, keyUpTime));
 

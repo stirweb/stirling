@@ -38,7 +38,7 @@
             <a class="button no-arrow button--left-align subtle expanded u-m-0 text-left " href="${item.p}" data-action="go">
               <div class="flex-container align-middle u-gap-16">  
                 <span class="u-flex1">${item.t} home</span>
-                <span class="uos-chevron-right u-icon"></span>
+                <span class="u-chevron-right"></span>
                 </div>
             </a>
         </li>`
@@ -55,7 +55,7 @@
             <a class="button no-arrow button--left-align clear expanded u-m-0 text-left" href="${link}">
               <div class="flex-container align-middle u-gap-16"> 
                 <span class="u-flex1">${item.t}</span>
-                <span class="uos-chevron-right u-icon"></span>
+                <span class="u-chevron-right"></span>
               </div>
             </a>
         </li>`
