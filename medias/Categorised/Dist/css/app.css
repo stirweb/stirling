@@ -6925,13 +6925,9 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   .c-search-results-area .c-search-results-courses .c-search-ordered-filters button {
     background-color: #e6eeea; }
   .c-search-results-area .c-search-result[data-result-type="news"] > div > div.c-icon-image, .c-search-results-area .c-search-result[data-result-type="event"] > div > div.c-icon-image, .c-search-results-area .c-search-result[data-result-pin] > div > div.c-icon-image, .c-search-results-area .c-search-result[data-result-type="studentstory"] > div > div.c-icon-image, .c-search-results-area .c-search-result[data-result-type="person"] > div > div.c-icon-image {
-    background: #e6e6e6;
     /* background: linear-gradient(342deg, rgba(230, 230, 230, 1) 46%, rgba(238, 238, 238, 1) 46%); */
-    background: repeating-radial-gradient(circle at 0 0, #eee, #e6e6e6 50px);
-    height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
     font-size: 6rem;
     color: #838383; }
 
