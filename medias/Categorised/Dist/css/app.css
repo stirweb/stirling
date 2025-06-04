@@ -590,6 +590,36 @@ a:has(img):hover {
  * has gone wrong.
  * Example usage: z($z-index-elements, homepage-masthead-vide)
  */
+/**
+* Variables for icons used in the application
+* These icons are encoded in base64 format for inline usage
+* This allows for easy embedding of SVG icons without additional HTTP requests
+* Usage: var(--icon-plus), var(--icon-chevron-down), etc.
+* Heritage green by default, but can be overridden in specific contexts
+* eg :hover::after {
+*     filter: brightness(0) invert(1);
+*   }
+*/
+:root {
+  --icon-plus: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTEyIDQuNXYxNW03LjUtNy41aC0xNSIgLz4KPC9zdmc+CgoKCgoKCg==");
+  --icon-minus: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTUgMTJoMTQiIC8+Cjwvc3ZnPgoKCgoKCgoK");
+  --icon-chevron-down: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0ibTE5LjUgOC4yNS03LjUgNy41LTcuNS03LjUiIC8+Cjwvc3ZnPgoKCgoKCg==");
+  --icon-chevron-right: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0ibTguMjUgNC41IDcuNSA3LjUtNy41IDcuNSIgLz4KPC9zdmc+CgoKCgo=");
+  --icon-chevron-left: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTE1Ljc1IDE5LjUgOC4yNSAxMmw3LjUtNy41IiAvPgo8L3N2Zz4KCgoKCg==");
+  --icon-lock-open: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTEzLjUgMTAuNVY2Ljc1YTQuNSA0LjUgMCAxIDEgOSAwdjMuNzVNMy43NSAyMS43NWgxMC41YTIuMjUgMi4yNSAwIDAgMCAyLjI1LTIuMjV2LTYuNzVhMi4yNSAyLjI1IDAgMCAwLTIuMjUtMi4yNUgzLjc1YTIuMjUgMi4yNSAwIDAgMC0yLjI1IDIuMjV2Ni43NWEyLjI1IDIuMjUgMCAwIDAgMi4yNSAyLjI1WiIgLz4KPC9zdmc+CgoKCgoKCgoK"); }
+
+/*
+  Utils for icons
+*/
+.u-chevron-right::after {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  top: 3px;
+  right: -5px;
+  content: var(--icon-chevron-right); }
+
 .tns-outer {
   padding: 0 !important; }
   .tns-outer [hidden] {
@@ -899,13 +929,12 @@ body > nav > a.u-show-on-focus {
   position: relative; }
 
 .c-header-nav--secondary {
-  margin: 0 0 14px 0; }
-  .c-header-nav--secondary .c-header-nav__item {
-    margin: 0 18px 0 0; }
+  margin: 0 0 1rem 0;
+  gap: 1rem; }
   .c-header-nav--secondary .c-header-nav__link {
     color: #3a3c39;
-    font-size: 0.9375rem;
-    /* 15px */ }
+    font-size: 1rem;
+    /* 16px */ }
     .c-header-nav--secondary .c-header-nav__link img {
       width: 24px;
       height: 16px;
@@ -938,9 +967,13 @@ body > nav > a.u-show-on-focus {
     /* 26px */ } }
 
 .c-header-nav__item-staff a::before {
-  content: "\e95d";
-  font-family: "uos";
-  padding-right: 5px;
+  content: var(--icon-lock-open);
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  left: -8px;
   color: #3a3c39; }
 
 /* 
@@ -1051,20 +1084,8 @@ body > nav > a.u-show-on-focus {
       display: block; }
     #site-footer .site-footer__map img {
       max-height: 12em; }
-  #site-footer .site-footer_follow a:hover {
-    text-decoration: none; }
-  #site-footer .site-footer_follow a[href*="facebook"]:hover {
-    color: #3b5998; }
-  #site-footer .site-footer_follow a[href*="instagram"]:hover {
-    color: #125688; }
-  #site-footer .site-footer_follow a[href*="twitter"]:hover {
-    color: #1da1f2; }
-  #site-footer .site-footer_follow a[href*="youtube"]:hover {
-    color: #ff0000; }
-  #site-footer .site-footer_follow a[href*="linkedin"]:hover {
-    color: #007bb5; }
-  #site-footer .site-footer_follow a[href*="tiktok"]:hover {
-    color: #ff3b5c; }
+  #site-footer .site-footer_follow {
+    gap: 12px; }
 
 @media screen and (max-width: 639px) {
   #site-footer #imgBeTheDiff {
@@ -1197,20 +1218,14 @@ body > nav > a.u-show-on-focus {
     display: none; }
   .c-mobile-menu .slidemenu__other-links {
     margin-left: 32px; }
-    .c-mobile-menu .slidemenu__other-links li a:before {
-      font-family: "uos";
-      padding-right: 15px;
-      color: #006938; }
-    .c-mobile-menu .slidemenu__other-links .slidemenu__other-links-portal a::before {
-      content: "\e95c"; }
     .c-mobile-menu .slidemenu__other-links .slidemenu__other-links-staff a::before {
-      content: "\e95d"; }
-    .c-mobile-menu .slidemenu__other-links .slidemenu__other-links-contact a::before {
-      content: "\e966"; }
-    .c-mobile-menu .slidemenu__other-links .slidemenu__other-links-search a::before {
-      content: "\e93f"; }
-    .c-mobile-menu .slidemenu__other-links .slidemenu__other-links-microsite a::before {
-      content: "\e920"; }
+      content: var(--icon-lock-open);
+      width: 24px;
+      height: 24px;
+      top: 2px;
+      display: inline-block;
+      position: relative;
+      margin-right: 16px; }
 
 .c-mobile-menu.c-mobile-menu-visible {
   position: fixed;
@@ -2317,11 +2332,11 @@ Bleed Feature Image
     height: 16px;
     top: 3px;
     right: -5px;
-    content: url("data:image/svg+xml;base64,ICAgPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiCiAgICAgICAgICAgICAgICAgICAgICAgIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0idS1zdmctMjQiPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im04LjI1IDQuNSA3LjUgNy41LTcuNSA3LjUiIC8+CiAgICAgICAgICAgICAgICAgICAgPC9zdmc+"); }
+    content: var(--icon-chevron-right); }
   .breadcrumbs > li.breadcrumbs__item--has-submenu > a::after {
-    content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0ic2l6ZS02Ij4KICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0xMiA0LjV2MTVtNy41LTcuNWgtMTUiIC8+Cjwvc3ZnPgo="); }
+    content: var(--icon-plus); }
   .breadcrumbs > li.is-active > a::after {
-    content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0ic2l6ZS02Ij4KICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im0xOS41IDguMjUtNy41IDcuNS03LjUtNy41IiAvPgo8L3N2Zz4K"); }
+    content: var(--icon-chevron-down); }
   .breadcrumbs > li ul {
     display: none;
     position: absolute;
@@ -2348,6 +2363,9 @@ Bleed Feature Image
   .breadcrumbs--internal li,
   .breadcrumbs--internal a {
     color: #fff; }
+    .breadcrumbs--internal li::after,
+    .breadcrumbs--internal a::after {
+      filter: brightness(0) invert(1); }
   .breadcrumbs--internal li ul {
     background-color: #006938; }
 
@@ -2412,8 +2430,6 @@ button:focus {
     background-color: #fff;
     border: 2px solid #006938;
     color: #006938; }
-  .button:hover::after {
-    filter: brightness(0) invert(1); }
   .button a {
     color: #fff; }
   .button.tiny {
@@ -2423,7 +2439,7 @@ button:focus {
   .button.large {
     padding: 69px 20px; }
   .button:after {
-    content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI2ZmZiIgY2xhc3M9InNpemUtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJtOC4yNSA0LjUgNy41IDcuNS03LjUgNy41IiAvPgo8L3N2Zz4K");
+    content: var(--icon-chevron-right);
     width: 24px;
     height: 24px;
     position: relative;
@@ -2431,8 +2447,10 @@ button:focus {
     top: 5px;
     display: inline-block;
     color: #ffff; }
+  .button::after {
+    filter: brightness(0) invert(1); }
   .button:hover::after {
-    filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .button.no-arrow:after {
     content: none;
     margin: 0; }
@@ -2467,7 +2485,7 @@ button:focus {
       border-color: #006938;
       color: #006938; }
       .button.primary:hover::after {
-        filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .button.secondary {
     background-color: #767676;
     border-color: #767676;
@@ -2487,7 +2505,7 @@ button:focus {
       border-color: #006938;
       color: #006938; }
       .button.success:hover::after {
-        filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .button.warning {
     background-color: #ecaa00;
     border-color: #ecaa00;
@@ -2517,7 +2535,7 @@ button:focus {
       border-color: #77bf22;
       color: #77bf22; }
       .button.energy-green:hover::after {
-        filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
   .button.energy {
     background-color: #77bf22;
     border-color: #77bf22;
@@ -2527,7 +2545,7 @@ button:focus {
       border-color: #77bf22;
       color: #77bf22; }
       .button.energy:hover::after {
-        filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
   .button.energy-pink {
     background-color: #e80068;
     border-color: #e80068;
@@ -2537,7 +2555,7 @@ button:focus {
       border-color: #e80068;
       color: #e80068; }
       .button.energy-pink:hover::after {
-        filter: invert(36%) sepia(93%) saturate(7471%) hue-rotate(330deg) brightness(95%) contrast(96%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
   .button.energy-turq {
     background-color: #00a5ac;
     border-color: #00a5ac;
@@ -2547,7 +2565,7 @@ button:focus {
       border-color: #00a5ac;
       color: #00a5ac; }
       .button.energy-turq:hover::after {
-        filter: invert(49%) sepia(81%) saturate(392%) hue-rotate(127deg) brightness(97%) contrast(96%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%); }
   .button.energy-purple {
     background-color: #592c82;
     border-color: #592c82;
@@ -2557,7 +2575,7 @@ button:focus {
       border-color: #592c82;
       color: #592c82; }
       .button.energy-purple:hover::after {
-        filter: invert(15%) sepia(71%) saturate(6118%) hue-rotate(268deg) brightness(105%) contrast(107%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
   .button.heritage-green {
     background-color: #006938;
     border-color: #006938;
@@ -2567,7 +2585,7 @@ button:focus {
       border-color: #006938;
       color: #006938; }
       .button.heritage-green:hover::after {
-        filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .button.heritage-berry {
     background-color: #9d1e65;
     border-color: #9d1e65;
@@ -2577,7 +2595,7 @@ button:focus {
       border-color: #9d1e65;
       color: #9d1e65; }
       .button.heritage-berry:hover::after {
-        filter: invert(80%) sepia(63%) saturate(3611%) hue-rotate(307deg) brightness(89%) contrast(91%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
   .button.heritage-purple {
     background-color: #31006f;
     border-color: #31006f;
@@ -2587,7 +2605,7 @@ button:focus {
       border-color: #31006f;
       color: #31006f; }
       .button.heritage-purple:hover::after {
-        filter: invert(90%) sepia(71%) saturate(6118%) hue-rotate(268deg) brightness(95%) contrast(107%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%); }
   .button.dark-mink {
     background-color: #373a36;
     border-color: #373a36;
@@ -2613,7 +2631,7 @@ button:focus {
     color: #006938;
     border: 1px solid #006938; }
     .button.hollow::after {
-      filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.hollow:hover {
       background-color: transparent;
       border: 1px solid #80b49c; }
@@ -2625,7 +2643,7 @@ button:focus {
     color: #006938;
     border: 1px solid #006938; }
     .button.primary.hollow::after {
-      filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.primary.hollow:hover {
       background-color: transparent;
       border: 1px solid #80b49c; }
@@ -2649,7 +2667,7 @@ button:focus {
     color: #006938;
     border: 1px solid #006938; }
     .button.success.hollow::after {
-      filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.success.hollow:hover {
       background-color: transparent;
       border: 1px solid #80b49c; }
@@ -2685,7 +2703,7 @@ button:focus {
     color: #77bf22;
     border: 1px solid #77bf22; }
     .button.energy-green.hollow::after {
-      filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
     .button.energy-green.hollow:hover {
       background-color: transparent;
       border: 1px solid #bbdf91; }
@@ -2697,7 +2715,7 @@ button:focus {
     color: #77bf22;
     border: 1px solid #77bf22; }
     .button.energy.hollow::after {
-      filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
     .button.energy.hollow:hover {
       background-color: transparent;
       border: 1px solid #bbdf91; }
@@ -2709,7 +2727,7 @@ button:focus {
     color: #e80068;
     border: 1px solid #e80068; }
     .button.energy-pink.hollow::after {
-      filter: invert(36%) sepia(93%) saturate(7471%) hue-rotate(330deg) brightness(95%) contrast(96%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
     .button.energy-pink.hollow:hover {
       background-color: transparent;
       border: 1px solid #f480b4; }
@@ -2721,7 +2739,7 @@ button:focus {
     color: #00a5ac;
     border: 1px solid #00a5ac; }
     .button.energy-turq.hollow::after {
-      filter: invert(49%) sepia(81%) saturate(392%) hue-rotate(127deg) brightness(97%) contrast(96%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%); }
     .button.energy-turq.hollow:hover {
       background-color: transparent;
       border: 1px solid #80d2d6; }
@@ -2733,7 +2751,7 @@ button:focus {
     color: #592c82;
     border: 1px solid #592c82; }
     .button.energy-purple.hollow::after {
-      filter: invert(15%) sepia(71%) saturate(6118%) hue-rotate(268deg) brightness(105%) contrast(107%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
     .button.energy-purple.hollow:hover {
       background-color: transparent;
       border: 1px solid #ac96c1; }
@@ -2745,7 +2763,7 @@ button:focus {
     color: #006938;
     border: 1px solid #006938; }
     .button.heritage-green.hollow::after {
-      filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.heritage-green.hollow:hover {
       background-color: transparent;
       border: 1px solid #80b49c; }
@@ -2757,7 +2775,7 @@ button:focus {
     color: #9d1e65;
     border: 1px solid #9d1e65; }
     .button.heritage-berry.hollow::after {
-      filter: invert(80%) sepia(63%) saturate(3611%) hue-rotate(307deg) brightness(89%) contrast(91%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
     .button.heritage-berry.hollow:hover {
       background-color: transparent;
       border: 1px solid #ce8fb2; }
@@ -2769,7 +2787,7 @@ button:focus {
     color: #31006f;
     border: 1px solid #31006f; }
     .button.heritage-purple.hollow::after {
-      filter: invert(90%) sepia(71%) saturate(6118%) hue-rotate(268deg) brightness(95%) contrast(107%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%); }
     .button.heritage-purple.hollow:hover {
       background-color: transparent;
       border: 1px solid #9880b7; }
@@ -2823,7 +2841,7 @@ button:focus {
     Button variations
  */
 .button--back:before {
-  content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI2ZmZiIgY2xhc3M9InNpemUtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTUuNzUgMTkuNSA4LjI1IDEybDcuNS03LjUiIC8+Cjwvc3ZnPgo=");
+  content: var(--icon-chevron-left);
   position: relative;
   width: 24px;
   height: 24px;
@@ -2831,8 +2849,11 @@ button:focus {
   top: 5px;
   display: inline-block; }
 
+.button--back:before {
+  filter: brightness(0) invert(1); }
+
 .button--back:hover:before {
-  filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .button--back:after {
   content: ""; }
@@ -2845,7 +2866,7 @@ button:focus {
   border: 2px solid #006938;
   color: #006938; }
   .button.outine-button::after {
-    filter: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%); }
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .button.outine-button:hover {
     background-color: transparent;
     border: 2px solid #80b49c; }
@@ -3897,12 +3918,13 @@ updated Aug 2022 for clearing homepage banner
     background-color: #006938;
     transition: width 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
   .c-link:after {
-    content: url("data:image/svg+xml;base64,ICAgPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiCiAgICAgICAgICAgICAgICAgICAgICAgIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0idS1zdmctMjQiPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im04LjI1IDQuNSA3LjUgNy41LTcuNSA3LjUiIC8+CiAgICAgICAgICAgICAgICAgICAgPC9zdmc+");
+    content: var(--icon-chevron-right);
     width: 24px;
     height: 24px;
     position: relative;
     display: inline-block;
-    top: 5px; }
+    top: 5px;
+    right: -4px; }
 
 .c-link.u-black:hover {
   color: #3a3c39; }
@@ -3938,10 +3960,6 @@ ul .c-link {
 
 .u-white--all .c-news-events__title .c-link:hover {
   border-bottom-color: #fff; }
-
-.c-link.safariFix:after {
-  position: relative;
-  right: 10px; }
 
 ul.pagination {
   margin: 0;
@@ -4847,7 +4865,7 @@ li.c-colour-swatch__pms:before {
       position: relative;
       border-bottom: 0 !important; }
       .c-cta-listing li a:after {
-        content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgY2xhc3M9InNpemUtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJtOC4yNSA0LjUgNy41IDcuNS03LjUgNy41IiAvPgo8L3N2Zz4K");
+        content: var(--icon-chevron-right);
         position: relative;
         width: 20px;
         height: 20px;
@@ -5869,14 +5887,18 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   text-decoration: none;
   border-bottom: 2px solid #77bf22; }
   .c-internal-signpost-dropdown__link::after {
-    content: " \e981" !important;
-    font-family: "uos" !important;
+    content: var(--icon-plus);
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    position: relative;
+    right: -5px;
     font-size: 0.75rem;
     cursor: pointer; }
   .c-internal-signpost-dropdown__link:hover {
     border-bottom: 2px solid #006938; }
   .c-internal-signpost-dropdown__link.is-active::after {
-    content: " \e979" !important; }
+    content: var(--icon-chevron-down); }
 
 .c-internal-signpost-dropdown__submenu {
   position: absolute;

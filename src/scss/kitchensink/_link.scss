@@ -20,12 +20,13 @@
   &:after {
     //content: "\e97b";
     //font-family: "uos";
-    content: url("data:image/svg+xml;base64,ICAgPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiCiAgICAgICAgICAgICAgICAgICAgICAgIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0idS1zdmctMjQiPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im04LjI1IDQuNSA3LjUgNy41LTcuNSA3LjUiIC8+CiAgICAgICAgICAgICAgICAgICAgPC9zdmc+");
+    content: var(--icon-chevron-right);
     width: 24px;
     height: 24px;
     position: relative;
     display: inline-block;
     top: 5px;
+    right: -4px;
   }
 }
 
@@ -76,7 +77,7 @@ ul .c-link {
   border-bottom-color: #fff;
 }
 
-.c-link.safariFix:after {
-  position: relative;
-  right: 10px;
-}
+// .c-link.safariFix:after {
+//   position: relative;
+//   right: 10px;
+// }

@@ -7,16 +7,16 @@
   Function to map icon filter values based on color
 */
 @function icon-filter($color) {
-  // Map of colors to their filter values
+  // Map of colors to their filter values. Inverting from white
+  // https://angel-rs.github.io/css-color-filter-generator/
   $filter-map: (
-    $heritage-green: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%),
-    $energy-green: invert(70%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%),
-    //$energy: invert(10%) sepia(56%) saturate(1096%) hue-rotate(118deg) brightness(92%) contrast(102%),
-    $energy-pink: invert(36%) sepia(93%) saturate(7471%) hue-rotate(330deg) brightness(95%) contrast(96%),
-    $energy-turq: invert(49%) sepia(81%) saturate(392%) hue-rotate(127deg) brightness(97%) contrast(96%),
-    $heritage-berry: invert(80%) sepia(63%) saturate(3611%) hue-rotate(307deg) brightness(89%) contrast(91%),
-    $energy-purple: invert(15%) sepia(71%) saturate(6118%) hue-rotate(268deg) brightness(105%) contrast(107%),
-    $heritage-purple: invert(90%) sepia(71%) saturate(6118%) hue-rotate(268deg) brightness(95%) contrast(107%),
+    $heritage-green: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%),
+    $energy-green: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%),
+    $energy-pink: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%),
+    $energy-turq: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%),
+    $heritage-berry: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%),
+    $energy-purple: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%),
+    $heritage-purple: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%),
   );
 
   // Return the filter value for the given color or a default
@@ -60,14 +60,13 @@ button:focus {
   margin-bottom: 1rem;
   min-width: 14rem;
 
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+
   &:hover {
     background-color: $white;
     border: 2px solid $heritage-green;
     color: $heritage-green;
-  }
-
-  &:hover::after {
-    filter: brightness(0) invert(1);
   }
 
   a {
@@ -81,15 +80,12 @@ button:focus {
     }
   }
 
-  border: 2px solid transparent;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-
   &:after {
     // content: "\e97b";
     // font-family: "uos";
     // margin: 0 0 0 10px;
     // position: relative;
-    content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI2ZmZiIgY2xhc3M9InNpemUtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJtOC4yNSA0LjUgNy41IDcuNS03LjUgNy41IiAvPgo8L3N2Zz4K");
+    content: var(--icon-chevron-right);
     width: 24px;
     height: 24px;
     position: relative;
@@ -97,6 +93,10 @@ button:focus {
     top: 5px;
     display: inline-block;
     color: #ffff;
+  }
+
+  &::after {
+    filter: brightness(0) invert(1);
   }
 
   &:hover::after {
@@ -249,23 +249,23 @@ button:focus {
     Button variations
  */
 
-// .button--close:after {
-//   content: "\e905";
-// }
-
 // Back
 .button--back {
   &:before {
     //content: "\e97a";
     //font-family: "uos";
     //margin: 0 10px 0 0;
-    content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI2ZmZiIgY2xhc3M9InNpemUtNiI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTUuNzUgMTkuNSA4LjI1IDEybDcuNS03LjUiIC8+Cjwvc3ZnPgo=");
+    content: var(--icon-chevron-left);
     position: relative;
     width: 24px;
     height: 24px;
     right: 4px;
     top: 5px;
     display: inline-block;
+  }
+
+  &:before {
+    filter: brightness(0) invert(1);
   }
 
   &:hover:before {
