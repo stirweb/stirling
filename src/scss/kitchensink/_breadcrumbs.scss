@@ -35,17 +35,26 @@
     }
 
     > a::after {
-      font-family: "uos";
+      //font-family: "uos";
+      //font-size: 12px;
       color: currentColor;
-      font-size: 12px;
-      content: " \e97b"; // chevron-right
+      position: relative;
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      top: 3px;
+      right: -5px;
+      // content: " \e97b"; // chevron-right
+      content: var(--icon-chevron-right);
     }
 
     &.breadcrumbs__item--has-submenu > a::after {
-      content: " \e981"; // plus
+      //content: " \e981"; // plus
+      content: var(--icon-plus);
     }
     &.is-active > a::after {
-      content: " \e979"; // downron
+      //content: " \e979"; // downron
+      content: var(--icon-chevron-down);
     }
 
     ul {
@@ -81,10 +90,16 @@
 
 .breadcrumbs--internal {
   border-color: $heritage-green;
+
   li,
   a {
     color: $white;
+
+    &::after {
+      filter: brightness(0) invert(1);
+    }
   }
+
   li ul {
     background-color: $heritage-green;
   }
