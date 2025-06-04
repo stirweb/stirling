@@ -15,10 +15,6 @@ body > nav > a.u-show-on-focus {
   max-height: 79px;
 }
 
-.c-header-nav {
-  margin: 0;
-}
-
 .c-header-nav__item {
   display: inline-block;
 }
@@ -78,9 +74,9 @@ body > nav > a.u-show-on-focus {
     margin: 0;
   }
 
-  .c-header .uos-magnifying-glass {
-    font-size: 1.625rem; /* 26px */
-  }
+  // .c-header .uos-magnifying-glass {
+  //   font-size: 1.625rem; /* 26px */
+  // }
 }
 
 .c-header-nav__item-staff a::before {
