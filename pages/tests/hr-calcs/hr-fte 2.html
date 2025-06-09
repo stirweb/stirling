@@ -119,6 +119,55 @@
                         color: #000;
                     }
 
+                    .switch-toggle {
+                        position: relative;
+                        display: flex;
+                        background-color: #e6e6e6;
+                        border-radius: 24px;
+                        padding: 2px;
+                        margin-bottom: 1rem;
+                    }
+
+                    .switch-toggle input[type="radio"] {
+                        position: absolute;
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                    }
+
+                    .switch-toggle label {
+                        position: relative;
+                        z-index: 2;
+                        flex: 1;
+                        text-align: center;
+                        padding: 0.5rem;
+                        cursor: pointer;
+                        transition: color 0.2s ease;
+                        font-weight: normal;
+                        margin: 0;
+                    }
+
+                    .switch-toggle input[type="radio"]:checked+label {
+                        color: #006938;
+                    }
+
+                    .toggle-highlight {
+                        position: absolute;
+                        top: 2px;
+                        left: 2px;
+                        height: calc(100% - 4px);
+                        width: calc(50% - 2px);
+                        background-color: white;
+                        border-radius: 24px;
+                        transition: transform 0.3s ease;
+                        z-index: 1;
+                        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .switch-toggle input[type="radio"]:nth-of-type(2):checked~.toggle-highlight {
+                        transform: translateX(100%);
+                    }
+
                     .toggle-option {
                         transition: opacity 0.3s ease;
                     }
@@ -140,57 +189,57 @@
                     <form id="fte-form" class="u-mb-2 u-bg-white u-p-2 u-medium-grey-line u-border">
 
                         <!-- Contract date fields -->
-                        <div class="u-bg-grey u-p-2 ">
-                            <label for="fte-start" class="u-font-bold">Contract start date</label>
-                            <input type="date" id="fte-start" name="fte-start" placeholder="Enter Contract start date"
-                                required>
+                        <label for="fte-start" class="u-font-bold">Contract start date</label>
+                        <input type="date" id="fte-start" name="fte-start" placeholder="Enter Contract start date"
+                            required>
+
+                        <!-- Hours toggle switch -->
+                        <div class="toggle-container u-mb-1 u-mt-2">
+                            <p><strong>Hours calculation method</strong></p>
+                            <div class="switch-toggle">
+                                <input type="radio" id="hours-total-toggle" name="hours-method" value="total" checked>
+                                <label for="hours-total-toggle" class="u-font-bold">Total contract hours</label>
+                                <input type="radio" id="hours-weekly-toggle" name="hours-method" value="weekly">
+                                <label for="hours-weekly-toggle" class="u-font-bold">Hours per week</label>
+
+                                <span class="toggle-highlight"></span>
+                            </div>
                         </div>
 
-                        <div class="u-bg-grey u-p-2 u-mt-2">
-                            <!-- Hours toggle switch -->
-                            <div class="u-mb-1 ">
-                                <label for="hours-method" class="u-font-bold">Select hours calculation method</label>
-                                <select id="hours-method" name="hours-method" class="u-mb-1">
-                                    <option value="total">Total contract hours</option>
-                                    <option value="weekly">Hours per week</option>
-                                </select>
-                            </div>
+                        <!-- Hours input fields -->
+                        <div id="hours-weekly-container" class="toggle-option" style="display: none;">
+                            <label for="hours-week" class="u-font-bold">Hours per week</label>
+                            <input type="text" id="hours-week" name="hours-week" placeholder="Enter hours per week">
+                        </div>
 
-                            <!-- Hours input fields -->
-                            <div id="hours-weekly-container" class="toggle-option" style="display: none;">
-                                <label for="hours-week" class="u-font-bold">Hours per week</label>
-                                <input type="text" id="hours-week" name="hours-week" placeholder="Enter hours per week">
-                            </div>
-
-                            <div id="hours-total-container" class="toggle-option">
-                                <label for="hours-total" class="u-font-bold">Total hours for full contract</label>
-                                <input type="text" id="hours-total" name="hours-total"
-                                    placeholder="Enter total hours for full contract">
-                            </div>
+                        <div id="hours-total-container" class="toggle-option">
+                            <label for="hours-total" class="u-font-bold">Total hours for full contract</label>
+                            <input type="text" id="hours-total" name="hours-total"
+                                placeholder="Enter total hours for full contract">
                         </div>
 
                         <!-- Duration toggle switch -->
-                        <div class="u-bg-grey u-p-2 u-mt-2">
-                            <div class="u-mb-1 ">
-                                <label for="duration-method" class="u-font-bold">Select contract duration calculation
-                                    method</label>
-                                <select id="duration-method" name="duration-method" class="u-mb-1">
-                                    <option value="end-date">End date</option>
-                                    <option value="weeks">Number of weeks</option>
-                                </select>
+                        <div class="toggle-container u-mb-1 u-mt-2">
+                            <p><strong>Contract duration calculation method</strong></p>
+                            <div class="switch-toggle">
+                                <input type="radio" id="end-date-toggle" name="duration-method" value="end-date"
+                                    checked>
+                                <label for="end-date-toggle" class="u-font-bold">End date</label>
+                                <input type="radio" id="weeks-toggle" name="duration-method" value="weeks">
+                                <label for="weeks-toggle" class="u-font-bold">Number of weeks</label>
+                                <span class="toggle-highlight"></span>
                             </div>
+                        </div>
 
-                            <!-- Duration input fields -->
-                            <div id="end-date-container" class="toggle-option">
-                                <label for="fte-end" class="u-font-bold">Contract end date</label>
-                                <input type="date" id="fte-end" name="fte-end" placeholder="Enter contract end date">
-                            </div>
+                        <!-- Duration input fields -->
+                        <div id="end-date-container" class="toggle-option">
+                            <label for="fte-end" class="u-font-bold">Contract end date</label>
+                            <input type="date" id="fte-end" name="fte-end" placeholder="Enter contract end date">
+                        </div>
 
-                            <div id="weeks-container" class="toggle-option" style="display: none;">
-                                <label for="weeks" class="u-font-bold">Number of full weeks</label>
-                                <input type="number" id="weeks" name="weeks" placeholder="Enter number of weeks"
-                                    min="1">
-                            </div>
+                        <div id="weeks-container" class="toggle-option" style="display: none;">
+                            <label for="weeks" class="u-font-bold">Number of full weeks</label>
+                            <input type="number" id="weeks" name="weeks" placeholder="Enter number of weeks" min="1">
                         </div>
 
                         <button type="submit"
@@ -375,19 +424,21 @@
          *  Toggle functionality for hours and duration methods
         **/
 
+        // Get toggle elements
+        const hoursWeeklyToggle = document.getElementById('hours-weekly-toggle');
+        const hoursTotalToggle = document.getElementById('hours-total-toggle');
+        const endDateToggle = document.getElementById('end-date-toggle');
+        const weeksToggle = document.getElementById('weeks-toggle');
+
         // Get container elements
         const hoursWeeklyContainer = document.getElementById('hours-weekly-container');
         const hoursTotalContainer = document.getElementById('hours-total-container');
         const endDateContainer = document.getElementById('end-date-container');
         const weeksContainer = document.getElementById('weeks-container');
 
-        // Get select elements
-        const hoursMethodSelect = document.getElementById('hours-method');
-        const durationMethodSelect = document.getElementById('duration-method');
-
         // Hours method toggle handler
         function toggleHoursMethod() {
-            if (hoursMethodSelect.value === 'weekly') {
+            if (hoursWeeklyToggle.checked) {
                 // Show and enable weekly hours input
                 hoursWeeklyContainer.style.display = 'block';
                 document.getElementById('hours-week').disabled = false;
@@ -410,7 +461,7 @@
 
         // Duration method toggle handler
         function toggleDurationMethod() {
-            if (durationMethodSelect.value === 'end-date') {
+            if (endDateToggle.checked) {
                 // Show and enable end date input
                 endDateContainer.style.display = 'block';
                 document.getElementById('fte-end').disabled = false;
@@ -432,8 +483,10 @@
         }
 
         // Add event listeners
-        hoursMethodSelect.addEventListener('change', toggleHoursMethod);
-        durationMethodSelect.addEventListener('change', toggleDurationMethod);
+        hoursWeeklyToggle.addEventListener('change', toggleHoursMethod);
+        hoursTotalToggle.addEventListener('change', toggleHoursMethod);
+        endDateToggle.addEventListener('change', toggleDurationMethod);
+        weeksToggle.addEventListener('change', toggleDurationMethod);
 
         // Initial toggle state
         toggleHoursMethod();
