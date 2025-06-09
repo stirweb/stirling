@@ -1942,6 +1942,7 @@ h3.c-tab-accord-group-head {
         bottom: 1rem;
         right: 1rem;
         margin-top: -1.2rem;
+        font-weight: 400;
         content: "-"; }
       .stir-accordion > h3 button:focus,
       .stir-accordion > h4 button:focus,
@@ -4199,7 +4200,8 @@ table caption {
     border-top: 5px solid #fff;
     border-bottom: 5px solid #f6f5f4; }
     .stir-tabs .pseudotab[aria-expanded]::after {
-      float: right; }
+      float: right;
+      font-weight: 400; }
   .stir-tabs .pseudotab[aria-expanded="true"],
   .stir-tabs .pseudotab[aria-expanded]:hover,
   .stir-tabs .pseudotab[aria-expanded]:focus-visible {
