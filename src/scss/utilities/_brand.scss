@@ -8,6 +8,59 @@
 
 */
 
+/*
+  New brand 2025 bracket hook styles
+*/
+
+:root {
+  --border-color: $pink-medium;
+  --border-thickness: 40px;
+}
+
+.u-hook-tl,
+.u-hook-br {
+  position: relative;
+}
+
+// vertical bit
+.u-hook-tl::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  height: 110px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top: var(--border-thickness) solid $pink-medium;
+  border-left: var(--border-thickness) solid $pink-medium;
+}
+
+// horizontal bit
+.u-hook-tl::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  height: 20%;
+}
+
+// horizontal bit
+.u-hook-br::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  height: 110px;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  border-bottom: var(--border-thickness) solid $pink-medium;
+  border-right: var(--border-thickness) solid $pink-medium;
+}
+
+/*
+
+*/
+
 .u-arrow:after {
   content: "\e97b";
   font-family: "uos";
