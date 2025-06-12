@@ -8142,14 +8142,23 @@ a[data-mode*="Online"] {
   -ms-scroll-chaining: none;
   overscroll-behavior: contain;
   border-radius: 2px; }
-  [data-module-modal] button {
+  [data-module-modal] > button {
     position: fixed;
     top: 1rem;
-    right: 2vw;
+    right: 2vw; }
+  [data-module-modal] > nav {
+    position: fixed;
+    top: 1rem;
+    left: 1vw;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.85);
+    padding: .5rem 0 .5rem 1rem; }
+  [data-module-modal] > button, [data-module-modal] > nav button {
     padding: 1rem;
     background: #006938;
     color: #fff;
-    cursor: pointer; }
+    cursor: pointer;
+    margin-right: 1rem; }
 
 /* M E D I A   Q U E R I E S */
 @media screen and (max-width: 63.9375em) {
