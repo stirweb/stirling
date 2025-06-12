@@ -41,21 +41,21 @@ $global-lineheight: 1.5;
 // 2. Colours
 // ---------
 
-$grey: #bebebe; // before bebebe
-$light-gray: #e6e6e6; // before e6e6e6
-$medium-gray: #cacaca; // before cacaca
+$grey: #f1f1ef; // before bebebe
+$light-gray: #f1f1ef; // before e6e6e6
+$medium-gray: #d1d1c9; // before cacaca
 $dark-gray: #3a3c39; // before 8a8a8a
 $dark-grey: #3a3c39; // before 616361
 
-$black: #000000;
+$black: #000;
 $white: #fff; // before fefefe;
 
 $foundation-palette: (
   primary: #006938,
   secondary: #767676,
   success: #006938,
-  warning: #ecaa00,
-  alert: #d10056,
+  warning: #edab00,
+  alert: #e80068,
   black: $black,
   white: $white,
 );
@@ -66,7 +66,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -82,9 +82,9 @@ $brand-palette: (
   energy-yellow: #f4c400,
   energy-orange: #ff6d00,
   energy-light-blue: #77a4da,
-  energy-blue: #3d7dca,
+  energy-blue: #2c498a,
   energy-pink: #e80068,
-  energy-purple: #9053c6,
+  energy-purple: #592c82,
   energy-turq: #00a5ac,
 
   // Heritage Colours
@@ -92,62 +92,69 @@ $brand-palette: (
   heritage-teal: #005e63,
   heritage-yellow: #edab00,
   heritage-orange: #d9541a,
-  heritage-blue: #2c498a,
+  heritage-blue: #122c54,
   heritage-navy: #14315e,
-  heritage-berry: #7c184f,
-  heritage-purple: #592c82,
+  heritage-berry: #511535,
+  // no longer exists. before 7c184f. Mapped to dark pink
+  heritage-purple: #3f0066,
   // Web versions
   web-turq: #00838a,
 
   // New 2025 colours
   // Green
+  green-tint-7: #edf4f1,
   green-tint: #9fcc69,
   // energy-green
-  green-light: #76b72a,
+  //green-light: #76b72a,
   // heritage-green
-  green-medium: #006938,
+  //green-medium: #006938,
   green-dark: #005734,
 
   // Neutral
+  neutral-tint-7: #f1f1ef,
   neutral-light: #d1d1c9,
   neutral-medium: #97956d,
   neutral-medium-dark: #5f6350,
   neutral-dark: #3a3a26,
 
   // Teal
+  teal-tint-7: #edf7f8,
   teal-tint: #4cacb5,
-  teal-light: #008996,
-  teal-medium: #005e63,
+  //teal-light: #008996,
+  //teal-medium: #005e63,
   teal-dark: #003a3d,
 
   // Blue
+  blue-tint-7: #f0f2f9,
   blue-tint: #77a4da,
-  blue-light: #3d7dca,
-  blue-medium: #2c498a,
+  //blue-light: #3d7dca,
+  //blue-medium: #2c498a,
   blue-dark: #122c54,
 
   // Purple
+  purple-tint-7: #f4f0f7,
   purple-tint: #b186d7,
-  purple-light: #9053c6,
-  purple-medium: #592c82,
+  //purple-light: #9053c6,
+  //purple-medium: #592c82,
   purple-dark: #3f0066,
 
   // Pink
+  pink-tint-7: #f6eff3,
   pink-tint: #ef4c95,
-  pink-light: #e80068,
+  //pink-light: #e80068,
   pink-medium: #7c184f,
   pink-dark: #511535,
 
   // Orange
   orange-tint: #ff994c,
-  orange-light: #ff6d00,
-  orange-medium: #d9541a,
+  //orange-light: #ff6d00,
+  //orange-medium: #d9541a,
   orange-dark: #852903,
 
   // Yellow
   yellow-tint: #f7d64c,
-  yellow-light: #f4c400,
-  yellow-medium: #edab00,
+  //yellow-light: #f4c400,
+  //yellow-medium: #edab00,
   yellow-dark: #7b5c18
 );
 
@@ -161,6 +168,7 @@ $uos-button-palette: (
   energy-green: map-get($brand-palette, energy-green),
   energy: map-get($brand-palette, energy-green),
   energy-pink: map-get($brand-palette, energy-pink),
+  pink-tint: map-get($brand-palette, pink-tint),
   energy-turq: map-get($brand-palette, energy-turq),
   energy-purple: map-get($brand-palette, energy-purple),
   // Heritage
@@ -179,26 +187,26 @@ $uos-wp-palette: (
   wp-blue: #00a5db,
 );
 
-$uos-button-palette: (
-  primary: map-get($foundation-palette, primary),
-  secondary: map-get($foundation-palette, secondary),
-  success: map-get($foundation-palette, success),
-  warning: map-get($foundation-palette, warning),
-  alert: map-get($foundation-palette, alert),
-  // Energy
-  energy-green: map-get($brand-palette, energy-green),
-  energy: map-get($brand-palette, energy-green),
-  energy-pink: map-get($brand-palette, energy-pink),
-  energy-turq: map-get($brand-palette, energy-turq),
-  energy-purple: map-get($brand-palette, energy-purple),
-  // Heritage
-  heritage-green: map-get($brand-palette, heritage-green),
-  heritage-berry: map-get($brand-palette, heritage-berry),
-  heritage-purple: map-get($brand-palette, heritage-purple),
-  // Misc
-  dark-mink: map-get($brand-palette, dark-mink),
-  info: map-get($brand-palette, heritage-blue),
-);
+// $uos-button-palette: (
+//   primary: map-get($foundation-palette, primary),
+//   secondary: map-get($foundation-palette, secondary),
+//   success: map-get($foundation-palette, success),
+//   warning: map-get($foundation-palette, warning),
+//   alert: map-get($foundation-palette, alert),
+//   // Energy
+//   energy-green: map-get($brand-palette, energy-green),
+//   energy: map-get($brand-palette, energy-green),
+//   energy-pink: map-get($brand-palette, energy-pink),
+//   energy-turq: map-get($brand-palette, energy-turq),
+//   energy-purple: map-get($brand-palette, energy-purple),
+//   // Heritage
+//   heritage-green: map-get($brand-palette, heritage-green),
+//   heritage-berry: map-get($brand-palette, heritage-berry),
+//   heritage-purple: map-get($brand-palette, heritage-purple),
+//   // Misc
+//   dark-mink: map-get($brand-palette, dark-mink),
+//   info: map-get($brand-palette, heritage-blue),
+// );
 
 $button-palette: $uos-button-palette;
 $body-background: $white;

@@ -155,7 +155,7 @@ h6 {
 h2,
 h3 {
   margin: 0 0 1rem 0;
-  padding: 0 0 2rem 0;
+  //padding: 0 0 2rem 0;
 }
 
 h3 {
@@ -181,16 +181,16 @@ h2 > strong {
   font-weight: 300;
 }
 
-h2:after,
-h3:after {
-  content: "";
-  background-color: #76bd22;
-  bottom: 13px;
-  left: 0;
-  position: absolute;
-  width: 60px;
-  height: 8px;
-}
+// h2:after,
+// h3:after {
+//   content: "";
+//   background-color: #76bd22;
+//   bottom: 13px;
+//   left: 0;
+//   position: absolute;
+//   width: 60px;
+//   height: 8px;
+// }
 
 h2 a,
 h3 a,
