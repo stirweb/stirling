@@ -1,10 +1,33 @@
 /*
     Default Button Style Component
-
     Also .expanded
 */
 
+/* 
+  Function to map icon filter values based on color
+*/
+@function icon-filter($color) {
+  // Map of colors to their filter values. Inverting from white
+  // https://angel-rs.github.io/css-color-filter-generator/
+  $filter-map: (
+    $heritage-green: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%),
+    $energy-green: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%),
+    $energy-pink: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%),
+    $energy-turq: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%),
+    $heritage-berry: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%),
+    $energy-purple: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%),
+    $heritage-purple: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%),
+  );
+
+  // Return the filter value for the given color or a default
+  @return map-get($filter-map, $color) or brightness(0);
+}
+
+/* 
+  Actual button 
+*/
 button {
+  cursor: pointer;
   border-style: none;
   background: none;
   font-size: inherit;
@@ -13,23 +36,19 @@ button {
 }
 
 button:focus {
-  outline: 1px solid $heritage-green;
+  outline: 2px solid $heritage-green;
   outline-offset: 4px;
 }
 
-/* Default */
+/* 
+  Default .button
+*/
 .button {
   background-color: $heritage-green;
   color: $white;
   text-decoration: none;
+  border: 2px solid transparent;
   cursor: pointer;
-
-  &:hover {
-    background-color: tint($heritage-green, 85%);
-  }
-}
-
-.button {
   display: inline-block;
   font-family: $body-font-family !important;
   font-size: 1.25rem;
@@ -40,6 +59,15 @@ button:focus {
   margin-top: 1rem;
   margin-bottom: 1rem;
   min-width: 14rem;
+
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  &:hover {
+    background-color: $white;
+    border: 2px solid $heritage-green;
+    color: $heritage-green;
+  }
 
   a {
     color: $white;
@@ -52,18 +80,27 @@ button:focus {
     }
   }
 
-  border: 2px solid transparent;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-  &:hover {
-    border-bottom-color: transparent;
+  &:after {
+    // content: "\e97b";
+    // font-family: "uos";
+    // margin: 0 0 0 10px;
+    // position: relative;
+    content: var(--icon-chevron-right);
+    width: 24px;
+    height: 24px;
+    position: relative;
+    right: -4px;
+    top: 5px;
+    display: inline-block;
+    color: #ffff;
   }
 
-  &:after {
-    content: "\e97b";
-    font-family: "uos";
-    margin: 0 0 0 10px;
-    position: relative;
+  &::after {
+    filter: brightness(0) invert(1);
+  }
+
+  &:hover::after {
+    filter: icon-filter($heritage-green);
   }
 
   &.no-arrow:after {
@@ -74,11 +111,23 @@ button:focus {
   &.tiny {
     padding: 1.1em 1em;
     font-size: 0.875rem;
+
+    &:after {
+      width: 16px;
+      height: 16px;
+      top: 3px;
+    }
   }
 
   &.small {
     padding: 1.1em 1em;
     font-size: 1rem;
+
+    &:after {
+      width: 20px;
+      height: 20px;
+      top: 4px;
+    }
   }
 
   &.button-gap--right {
@@ -111,6 +160,10 @@ button:focus {
         background-color: #ffffff;
         border-color: $color;
         color: $color;
+
+        &::after {
+          filter: icon-filter($color);
+        }
       }
     }
   }
@@ -119,6 +172,10 @@ button:focus {
     background: transparent;
     color: $heritage-green;
     border: 1px solid $heritage-green;
+
+    &::after {
+      filter: icon-filter($heritage-green);
+    }
 
     &:hover {
       background-color: transparent;
@@ -137,6 +194,10 @@ button:focus {
         background: transparent;
         color: $color;
         border: 1px solid $color;
+
+        &::after {
+          filter: icon-filter($color);
+        }
 
         &:hover {
           background-color: transparent;
@@ -185,94 +246,57 @@ button:focus {
 }
 
 /* 
-    Button pseudo-elements 
+    Button variations
  */
 
-.button--close:after {
-  content: "\e905";
+// Back
+.button--back {
+  &:before {
+    //content: "\e97a";
+    //font-family: "uos";
+    //margin: 0 10px 0 0;
+    content: var(--icon-chevron-left);
+    position: relative;
+    width: 24px;
+    height: 24px;
+    right: 4px;
+    top: 5px;
+    display: inline-block;
+  }
+
+  &:before {
+    filter: brightness(0) invert(1);
+  }
+
+  &:hover:before {
+    filter: icon-filter($heritage-green);
+  }
+
+  &:after {
+    content: "";
+  }
 }
 
-.button--back:before {
-  content: "\e97a";
-  font-family: "uos";
-  margin: 0 10px 0 0;
-  position: relative;
-}
-
-.button--back:after {
-  content: "";
-}
-
-.button--dropdown:after {
-  content: "\e979";
-  font-family: "uos";
-}
-
+// Mobile navigation - replace with utility class
 .button--left-align {
   text-align: left;
 }
 
-@include breakpoint(medium down) {
-  .button {
-    font-size: 1.125rem; // 18px;
-  }
-
-  .button.x-large {
-    padding: 18px;
-  }
-}
-
-/* 
-    Button variations
- */
-
-.c-dropdown-wrapper {
-  display: inline-block;
-  position: relative;
-
-  .button--dropdown {
-    margin: 0;
-
-    &:after {
-      content: "\e979";
-    }
-  }
-
-  .dropdown-pane {
-    position: absolute;
-    background-color: #fff;
-    padding: 10px;
-    border: 0px solid #cacaca;
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
-    width: 100%;
-
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    a {
-      border-bottom: 0px solid $heritage-green;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-/* 
-    Button component variation - outline ghost style
- */
-
+// outline ghost style
 .button.outine-button {
   background: transparent;
   border: 2px solid $heritage-green;
   color: $heritage-green;
 
+  &::after {
+    filter: icon-filter($heritage-green);
+  }
+
   &:hover {
     background-color: transparent;
     border: 2px solid tint($heritage-green, 50%);
   }
+
   &:focus {
     background-color: transparent;
     color: $heritage-green;
@@ -297,8 +321,17 @@ button:focus {
     color: #fff;
     border-color: rgba(255, 255, 255, 0.5);
   }
+
   &:focus {
     background-color: transparent;
+  }
+
+  &::after {
+    filter: brightness(0) invert(1);
+  }
+
+  &:hover::after {
+    filter: brightness(0) invert(1);
   }
 }
 
@@ -335,27 +368,9 @@ input:checked {
   }
 }
 
-/*
-    Button that is styled to look like a link 
-    (see scholarship finder)
-
-
-.c-link-button {
-  background-color: transparent;
-  color: $heritage-green;
-  text-align: left;
-  padding: 1em 0;
-
-  &:hover,
-  &:focus {
-    background-color: transparent;
-    color: $heritage-green;
-  }
-}
-  */
-
 /* 
     Button style that can have a icomoon span icon in it 
+    Only used on virtual tour at the moment
 */
 
 .button-icon span[class^="uos-"] {
@@ -488,6 +503,20 @@ input:checked {
 
   &.u-sticky__small.u-sticky.stuck {
     width: 77%;
+  }
+}
+
+/*
+    Responsive amends
+*/
+
+@include breakpoint(medium down) {
+  .button {
+    font-size: 1.125rem; // 18px;
+  }
+
+  .button.x-large {
+    padding: 18px;
   }
 }
 

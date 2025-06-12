@@ -6,6 +6,10 @@
   const courseTitles = {
     "UDX16-PSY": "BSc (Hons) Psychology",
     "UDX12-PSY": "BA (Hons) Psychology",
+    "UDX16-NURADN": "BSc (Hons) Nursing - Adult",
+    "UDX20-NURADN": "BSc Nursing - Adult",
+    "UDX16-NURMHN": "BSc (Hons) Nursing - Mental Health",
+    "UDX20-NURMHN": "BSc  Nursing - Mental Health",
   };
 
   /* RENDERERS */

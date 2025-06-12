@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FTE Calculator HR | University of Stirling</title>
+
+
+    <meta property="og:site_name" content="University of Stirling">
+    <meta property="og:url" content="https://www.stir.ac.uk/about/professional-services/finance-office/">
+    <meta property="og:title" content="Finance Office | About | University of Stirling">
+    <meta property="og:image"
+        content="https://www.stir.ac.uk/media/stirling/global-assets/landscape/og-airthrey-loch-1200x630.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:description"
+        content="The Finance Department strives to deliver a high quality service for its customers. We help the University achieve financial sustainability to deliver its strategic objectives.">
+
+    <meta name="stir.title" content="Finance Office">
+    <meta name="description"
+        content="The Finance Department strives to deliver a high quality service for its customers. We help the University achieve financial sustainability to deliver its strategic objectives." />
+    <meta name="Page last modified" content="2024-03-21" />
+    <link rel="canonical" href="https://www.stir.ac.uk/about/professional-services/finance-office/">
+    <meta name="stir.breadcrumb" content="Home > About > Professional services > Finance Office">
+    <meta name="sid" content="6565">
+    <meta name="chid" content="1">
+    <meta name="t4name" content="Finance Office">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@StirUni">
+    <meta name="twitter:title" content="Finance Office | About | University of Stirling">
+    <meta name="twitter:description"
+        content="The Finance Department strives to deliver a high quality service for its customers. We help the University achieve financial sustainability to deliver its strategic objectives.">
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#006938">
+
+
+
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/fsmaja/FSMajaWeb-Regular.woff" as="font"
+        type="font/woff" crossorigin>
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Regular.ttf" as="font"
+        type="font/ttf" crossorigin>
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/open-sans/OpenSans-Bold.ttf" as="font"
+        type="font/ttf" crossorigin>
+    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/fonts.css?v=3.1" as="style">
+    <link rel="stylesheet" href="../../../medias/Categorised/Dist/fonts/fonts.css?v=3.1">
+
+
+    <link rel="preload" href="../../../medias/Categorised/Dist/css/app.min.css?v=286.1" as="style">
+    <link rel="stylesheet" href="../../../medias/Categorised/Dist/css/app.min.css?v=286.1">
+
+
+
+
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://load.collect.stir.ac.uk/qguyvksw.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NLVN8V');
+    </script>
+
+</head>
+
+<body class="external-pages">
+    <!--beginnoindex-->
+    <nav class="skip-nav-btn" aria-label="Skip to content navigation"><a href="#content">skip to main content</a></nav>
+
+    <!--
+		MOBILE NAV
+	-->
+
+
+    <!--
+		MAIN HEADER
+	-->
+
+
+
+    <!-- 
+		BREADCRUMB 
+	-->
+
+
+
+
+    <!--endnoindex-->
+
+    <!-- 
+				 MAIN CONTENT 
+		-->
+    <main class="wrapper-content" aria-label="Main content" id="content">
+        <div class="grid-container">
+            <div class="grid-x ">
+
+                <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
+                    <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">FTE calculator</h1>
+                </div>
+
+                <style>
+                    .toggle-container {
+                        margin-bottom: 1.5rem;
+                    }
+
+                    .toggle-container h3 {
+                        font-size: 1rem;
+                        margin-bottom: 0.5rem;
+                        color: #000;
+                    }
+
+                    .toggle-option {
+                        transition: opacity 0.3s ease;
+                    }
+
+                    #fte-result {
+                        margin-top: 1.5rem;
+                    }
+
+                    ::placeholder {
+                        font-size: 1rem;
+                    }
+
+                    .u-inline-flex {
+                        display: inline-flex;
+                    }
+                </style>
+
+                <div class="cell  small-12 small-12 medium-10 medium-offset-1 u-padding-y  u-bg-grey u-bleed bg-grey">
+                    <form id="fte-form" class="u-mb-2 u-bg-white u-p-2 u-medium-grey-line u-border">
+
+                        <!-- Contract date fields -->
+                        <div class="u-bg-grey u-p-2 ">
+                            <label for="fte-start" class="u-font-bold">Contract start date</label>
+                            <input type="date" id="fte-start" name="fte-start" placeholder="Enter Contract start date"
+                                required>
+                        </div>
+
+                        <div class="u-bg-grey u-p-2 u-mt-2">
+                            <!-- Hours toggle switch -->
+                            <div class="u-mb-1 ">
+                                <label for="hours-method" class="u-font-bold">Select hours calculation method</label>
+                                <select id="hours-method" name="hours-method" class="u-mb-1">
+                                    <option value="total">Total contract hours</option>
+                                    <option value="weekly">Hours per week</option>
+                                </select>
+                            </div>
+
+                            <!-- Hours input fields -->
+                            <div id="hours-weekly-container" class="toggle-option" style="display: none;">
+                                <label for="hours-week" class="u-font-bold">Hours per week</label>
+                                <input type="text" id="hours-week" name="hours-week" placeholder="Enter hours per week">
+                            </div>
+
+                            <div id="hours-total-container" class="toggle-option">
+                                <label for="hours-total" class="u-font-bold">Total hours for full contract</label>
+                                <input type="text" id="hours-total" name="hours-total"
+                                    placeholder="Enter total hours for full contract">
+                            </div>
+                        </div>
+
+                        <!-- Duration toggle switch -->
+                        <div class="u-bg-grey u-p-2 u-mt-2">
+                            <div class="u-mb-1 ">
+                                <label for="duration-method" class="u-font-bold">Select contract duration calculation
+                                    method</label>
+                                <select id="duration-method" name="duration-method" class="u-mb-1">
+                                    <option value="end-date">End date</option>
+                                    <option value="weeks">Number of weeks</option>
+                                </select>
+                            </div>
+
+                            <!-- Duration input fields -->
+                            <div id="end-date-container" class="toggle-option">
+                                <label for="fte-end" class="u-font-bold">Contract end date</label>
+                                <input type="date" id="fte-end" name="fte-end" placeholder="Enter contract end date">
+                            </div>
+
+                            <div id="weeks-container" class="toggle-option" style="display: none;">
+                                <label for="weeks" class="u-font-bold">Number of full weeks</label>
+                                <input type="number" id="weeks" name="weeks" placeholder="Enter number of weeks"
+                                    min="1">
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="button expanded u-mt-1 align-center align-middle no-arrow u-mt-2 u-gap-8 u-inline-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
+                                stroke="currentColor" class="u-svg-24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
+                            </svg>
+                            Calculate FTE</button>
+
+                        <div id="fte-result"></div>
+                    </form>
+                </div>
+            </div>
+    </main>
+
+
+    <!-- app.min.js -->
+    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=118.1"></script>
+
+</body>
+
+<script>
+
+    (function () {
+        // Constants
+        const STANDARD_HOURS_PER_WEEK = 36;
+
+        // Helper functions for validation
+        const isValidDate = date => !isNaN(date.getTime());
+        const isValidNumber = num => !isNaN(num) && num > 0;
+        const isAfter = (dateA, dateB) => dateA > dateB;
+
+        // Helper functions for calculations
+        const calculateDaysBetween = (startDate, endDate) =>
+            Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+
+        const calculateFullWeeks = days => {
+            const days2 = days + 1
+            return Math.round((days2 / 7) * 100) / 100;
+        }
+
+        const calculateEndDate = (startDate, weeks) => {
+            const result = new Date(startDate);
+            result.setDate(startDate.getDate() + (weeks * 7));
+            return result;
+        };
+
+        const calculateHoursPerWeek = (totalHours, weeks) => {
+            return totalHours / weeks;
+        };
+
+        const calculateFTE = (hoursPerWeek, standardHours) =>
+            hoursPerWeek / standardHours;
+
+        const formatDate = date => date.toLocaleDateString('en-GB');
+
+        // Function to generate result HTML
+        const renderResult = (data) => `
+            <div class="u-border u-bg-light-grey u-p-2 u-flex flex-dir-column medium-flex-dir-row u-gap">
+                <div class="u-flex1">
+                    <p><span class="text-sm">Contract duration</span><br/> <strong>${data.weeks} weeks</strong></p>
+                    <p><span class="text-sm">Start date</span><br/> <strong>${formatDate(data.startDate)}</strong></p>
+                    <p><span class="text-sm">End date</span><br/> <strong>${formatDate(data.endDate)}</strong></p>
+                </div>
+                <div class="u-flex1">
+                    <p><span class="text-sm">Hours per week</span><br/> <strong>${data.hoursPerWeek.toFixed(2)}</strong></p>
+                    ${data.totalHours ? `<p><span class="text-sm">Total contract hours</span><br/> <strong>${data.totalHours.toFixed(2)}</strong></p>` : ''}
+                    <p><span class="text-sm">FTE</span><br/> <strong class="text-lg u-heritage-green">${(data.fte * 100).toFixed(2)}%</strong></p>
+                </div>
+            </div>
+        `;
+
+        // Function to handle form submission and orchestrate calculations
+        const handleSubmit = event => {
+            event.preventDefault();
+
+            // Get form inputs - fixed IDs to match HTML
+            const formData = {
+                startDate: new Date(document.getElementById('fte-start').value),
+                endDateInput: document.getElementById('fte-end').value,
+                weeksInput: document.getElementById('weeks').value,
+                hoursPerWeek: parseFloat(document.getElementById('hours-week').value || 0),
+                totalHours: parseFloat(document.getElementById('hours-total').value || 0)
+            };
+
+            // Validation for date
+            if (!isValidDate(formData.startDate)) {
+                alert('Please enter a valid start date.');
+                return;
+            }
+
+            // Validation for duration method
+            if (!formData.endDateInput && !formData.weeksInput) {
+                alert('Please enter either a contract end date OR number of full weeks.');
+                return;
+            }
+
+            // Validation for hours input method
+            if (!isValidNumber(formData.hoursPerWeek) && !isValidNumber(formData.totalHours)) {
+                alert('Please enter either hours per week OR total hours for the contract.');
+                return;
+            }
+
+            // First determine the duration
+            let durationResults;
+
+            if (formData.endDateInput) {
+                durationResults = calculateFromEndDate(formData);
+            } else {
+                durationResults = calculateFromWeeks(formData);
+            }
+
+            if (!durationResults) return;
+
+            // Then calculate FTE based on hours input method
+            const calculationResults = calculateFTEFromHours(formData, durationResults);
+            displayResults(calculationResults);
+        };
+
+        // Process calculations when end date is provided
+        const calculateFromEndDate = ({ startDate, endDateInput }) => {
+            const endDate = new Date(endDateInput);
+
+            if (!isValidDate(endDate) || !isAfter(endDate, startDate)) {
+                alert('Please enter a valid end date that comes after the start date.');
+                return null;
+            }
+
+            const daysDiff = calculateDaysBetween(startDate, endDate);
+            const fullWeeks = calculateFullWeeks(daysDiff);
+
+            return { endDate, fullWeeks };
+        };
+
+        // Process calculations when weeks are provided
+        const calculateFromWeeks = ({ startDate, weeksInput }) => {
+            const fullWeeks = parseFloat(weeksInput);
+            const endDate = calculateEndDate(startDate, fullWeeks);
+
+            return { endDate, fullWeeks };
+        };
+
+        // Calculate FTE based on which hours input method was used
+        const calculateFTEFromHours = (formData, durationResults) => {
+            let hoursPerWeek, totalHours, fte;
+
+            if (isValidNumber(formData.hoursPerWeek)) {
+                // Using hours per week option
+                hoursPerWeek = formData.hoursPerWeek;
+                totalHours = hoursPerWeek * durationResults.fullWeeks;
+            } else {
+                // Using total hours option
+                totalHours = formData.totalHours;
+                hoursPerWeek = calculateHoursPerWeek(totalHours, durationResults.fullWeeks);
+            }
+
+            fte = calculateFTE(hoursPerWeek, STANDARD_HOURS_PER_WEEK);
+
+            return {
+                startDate: formData.startDate,
+                endDate: durationResults.endDate,
+                weeks: durationResults.fullWeeks,
+                hoursPerWeek,
+                totalHours,
+                fte
+            };
+        };
+
+        // Display results in the DOM
+        const displayResults = (results) => {
+            const resultElement = document.getElementById('fte-result');
+            resultElement && (resultElement.innerHTML = renderResult(results));
+        };
+
+        // Event listener setup
+        document.getElementById('fte-form').addEventListener('submit', handleSubmit);
+
+        /**
+         *  Toggle functionality for hours and duration methods
+        **/
+
+        // Get container elements
+        const hoursWeeklyContainer = document.getElementById('hours-weekly-container');
+        const hoursTotalContainer = document.getElementById('hours-total-container');
+        const endDateContainer = document.getElementById('end-date-container');
+        const weeksContainer = document.getElementById('weeks-container');
+
+        // Get select elements
+        const hoursMethodSelect = document.getElementById('hours-method');
+        const durationMethodSelect = document.getElementById('duration-method');
+
+        // Hours method toggle handler
+        function toggleHoursMethod() {
+            if (hoursMethodSelect.value === 'weekly') {
+                // Show and enable weekly hours input
+                hoursWeeklyContainer.style.display = 'block';
+                document.getElementById('hours-week').disabled = false;
+
+                // Hide, disable and reset total hours input
+                hoursTotalContainer.style.display = 'none';
+                document.getElementById('hours-total').disabled = true;
+                document.getElementById('hours-total').value = "";
+            } else {
+                // Hide, disable and reset weekly hours input
+                hoursWeeklyContainer.style.display = 'none';
+                document.getElementById('hours-week').disabled = true;
+                document.getElementById('hours-week').value = "";
+
+                // Show and enable total hours input
+                hoursTotalContainer.style.display = 'block';
+                document.getElementById('hours-total').disabled = false;
+            }
+        }
+
+        // Duration method toggle handler
+        function toggleDurationMethod() {
+            if (durationMethodSelect.value === 'end-date') {
+                // Show and enable end date input
+                endDateContainer.style.display = 'block';
+                document.getElementById('fte-end').disabled = false;
+
+                // Hide, disable and reset weeks input
+                weeksContainer.style.display = 'none';
+                document.getElementById('weeks').disabled = true;
+                document.getElementById('weeks').value = "";
+            } else {
+                // Hide, disable and reset end date input
+                endDateContainer.style.display = 'none';
+                document.getElementById('fte-end').disabled = true;
+                document.getElementById('fte-end').value = "";
+
+                // Show and enable weeks input
+                weeksContainer.style.display = 'block';
+                document.getElementById('weeks').disabled = false;
+            }
+        }
+
+        // Add event listeners
+        hoursMethodSelect.addEventListener('change', toggleHoursMethod);
+        durationMethodSelect.addEventListener('change', toggleDurationMethod);
+
+        // Initial toggle state
+        toggleHoursMethod();
+        toggleDurationMethod();
+
+    })();
+
+</script>
+
+</html>

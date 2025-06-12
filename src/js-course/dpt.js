@@ -3,7 +3,7 @@ var stir = stir || {};
 stir.dpt = (function () {
   const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
   const _semestersPerYear = 2;
-  const viewMoreModulesThreshold = 4;
+  const viewMoreModulesThreshold = 5;
   const config = {
     css: {
       truncateModuleCollection: "c-course-modules__accordion-content--hide-rows",
@@ -25,8 +25,8 @@ stir.dpt = (function () {
     PG: "opt=runpgcode&ct=PG",
   };
   const currentVersion = {
-    UG: 362,
-    PG: 357
+    UG: 436, //362
+    PG: 417  //357
   };
 
   const PORTAL = "https://portal.stir.ac.uk";

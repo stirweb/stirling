@@ -51,7 +51,7 @@ h3.c-tab-accord-group-head {
   > accordion-summary,
   > h2 {
     display: block;
-    font-family: "Open Sans", sans-serif;
+    font-family: "General Sans", sans-serif;
     margin-bottom: 0;
     padding: 0;
     font-weight: 700;
@@ -77,6 +77,7 @@ h3.c-tab-accord-group-head {
         bottom: 1rem;
         right: 1rem;
         margin-top: -1.2rem;
+        font-weight: 400;
         content: "-";
       }
 

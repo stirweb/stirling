@@ -397,13 +397,13 @@
     &[data-result-type="person"] {
       > div {
         > div.c-icon-image {
-          background: rgb(230, 230, 230);
+          //background: rgb(230, 230, 230);
           /* background: linear-gradient(342deg, rgba(230, 230, 230, 1) 46%, rgba(238, 238, 238, 1) 46%); */
-          background: repeating-radial-gradient(circle at 0 0, #eee, #e6e6e6 50px);
-          height: 100%;
+          //background: repeating-radial-gradient(circle at 0 0, #eee, #e6e6e6 50px);
+          //height: 100%;
           display: flex;
           justify-content: center;
-          align-items: center;
+          //align-items: center;
           font-size: 6rem;
           //text-shadow: -3px -3px #c1c1c1, -6px -6px #f1f1f1;
           color: #838383;

@@ -390,6 +390,12 @@
 @media screen and #{breakpoint(medium up)} {
   .u-columns-2 {
     column-count: 2;
+    column-gap: 1.5rem;
+  }
+
+  .u-columns-3 {
+    column-count: 3;
+    column-gap: 1.5rem;
   }
 }
 
@@ -422,6 +428,12 @@ svg.u-svg-32,
 .u-svg-32 svg {
   width: 32px;
   height: 32px;
+}
+
+svg.u-svg-40,
+.u-svg-40 svg {
+  width: 40px;
+  height: 40px;
 }
 
 /* 

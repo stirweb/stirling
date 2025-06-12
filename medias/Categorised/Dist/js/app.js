@@ -2831,7 +2831,9 @@ var stir = stir || {};
  */
 stir.Concierge = function Concierge(popup) {
   const button = document.querySelector("#header-search__button");
-  if (!popup || !button) return;
+  const buttons = [...document.querySelectorAll(".header-search-button"), ...[button]];
+
+  if (!popup || !buttons.length) return;
 
   var obj2param = this.obj2param;
 
@@ -2875,7 +2877,11 @@ stir.Concierge = function Concierge(popup) {
     results.hide();
 
     // Assign various event handlers
-    button.addEventListener("click", opening);
+
+    buttons.forEach((openButton) => {
+      openButton.addEventListener("click", opening);
+    });
+
     nodes.input.addEventListener("focus", focusing);
     nodes.input.addEventListener("keyup", stir.debounce(handleInput, keyUpTime));
 
@@ -3333,10 +3339,10 @@ stir.Concierge.prototype.obj2param = function (obj) {
  * INTERNAL MENUS
  */
 
-/*
+/**
  * Main Mobile Burger Menu (Internal)
  * Only used by brandbank and Microsites
- */
+ *
 
 (function () {
     var intSideMenu = document.querySelector('.internal-sidebar-menu');
@@ -3353,7 +3359,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
     /**
      * Function: show / hide relavent menu (m) 
      * when burger (b) is clicked
-     */
+     *
     function intMenutoogle(m, b) {
         m.style.display = 'block'; // just in case there is a display none on the el
         if (m.classList.contains("hide")) {
@@ -3367,7 +3373,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
 
     /**
      * Click events
-     */
+     *
     if (intMainMobileBurger && intMainMobileNav) {
         intMainMobileBurger.onclick = function (e) {
             intMenutoogle(intMainMobileNav, intMainMobileBurger)
@@ -3387,75 +3393,71 @@ stir.Concierge.prototype.obj2param = function (obj) {
         }; 
     }*/
 
-    /**
+/**
      * On load events
-     */
+     *
     if (!intSideMenu)
         if (intSubMobileBurger)
             intSubMobileBurger.classList.add('hide'); // remove the sub menu burger if no sub menu
 
 })();
-
+*/
 
 /**
  * INTERNAL SIGNPOST DROPDOWN
  */
 
-var intSignPostBtn = document.getElementById('internal-signpost-dropdown__link');
-var intSignPostMenu = document.getElementById('internal-signpost-dropdown__submenu');
+(function () {
+  var intSignPostBtn = document.getElementById("internal-signpost-dropdown__link");
+  var intSignPostMenu = document.getElementById("internal-signpost-dropdown__submenu");
 
-if (intSignPostBtn && intSignPostMenu) {
+  if (intSignPostBtn && intSignPostMenu) {
     intSignPostBtn.onclick = function (e) {
-        e.stopPropagation();
+      e.stopPropagation();
 
-        if (intSignPostMenu.classList.contains('hide')) {
-            intSignPostMenu.classList.remove('hide');
-            intSignPostBtn.classList.add('is-active');
-        } else {
-            intSignPostMenu.classList.add('hide');
-            intSignPostBtn.classList.remove('is-active');
-        }
+      if (intSignPostMenu.classList.contains("hide")) {
+        intSignPostMenu.classList.remove("hide");
+        intSignPostBtn.classList.add("is-active");
+      } else {
+        intSignPostMenu.classList.add("hide");
+        intSignPostBtn.classList.remove("is-active");
+      }
 
-        // kill other popups
-        UoS_closeAllWidgetsExcept("internalSignpost");
+      // kill other popups
+      UoS_closeAllWidgetsExcept("internalSignpost");
 
-        e.preventDefault();
-        return false;
+      e.preventDefault();
+      return false;
     };
+  }
+})();
 
-    // Not sure if this is needed
-    //intSignPostMenu.onclick = function (e) {
-    //e.preventDefault();  
-    //};
-}
-
-/*
+/**
  * Replacement for Foundation dropdown component
  * Used on Brandbank for file picker
  */
 (function (scope) {
+  if (!scope) return;
 
-    if(!scope) return;
-    
-    var ddPanes = document.querySelectorAll(".dropdown-pane");
-    var ddBtns = document.querySelectorAll(".button--dropdown");
+  var ddPanes = document.querySelectorAll(".dropdown-pane");
+  var ddBtns = document.querySelectorAll(".button--dropdown");
 
-    for (var i = 0; i < ddPanes.length; i++) {
-        ddPanes[i].classList.add('hide');
-    }
+  for (var i = 0; i < ddPanes.length; i++) {
+    ddPanes[i].classList.add("hide");
+  }
 
-    function doClick(el) {
-        el.onclick = function (e) {
-            e.target.nextElementSibling.classList.toggle('hide');
-            e.preventDefault();
-        };
-    }
+  function doClick(el) {
+    el.onclick = function (e) {
+      e.target.nextElementSibling.classList.toggle("hide");
+      e.preventDefault();
+    };
+  }
 
-    for (var i = 0; i < ddPanes.length; i++) {
-        doClick(ddBtns[i]);
-    }
+  for (var i = 0; i < ddPanes.length; i++) {
+    doClick(ddBtns[i]);
+  }
+})(document.querySelector(".c-download-box"));
 
-})( document.querySelector(".c-download-box") );
 /**
  * Lazy loading
  **/
@@ -3481,334 +3483,356 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
  */
 
 (function () {
-  var url;
-  var KEY_ESC = 27;
-  var mm = document.getElementById("megamenu__container__dev") || document.getElementById("megamenu__container");
+	var url;
+	var KEY_ESC = "Escape";
+	var mm = document.getElementById("megamenu__container__dev") || document.getElementById("megamenu__container");
 
-  if (!mm) return;
+	if (!mm) return;
 
-  switch (UoS_env.name) {
-    case "dev":
-      url = "/pages/data/awd/megamenu.html";
-      break;
+	switch (UoS_env.name) {
+		case "dev":
+			url = "/pages/data/awd/megamenu.html";
+			break;
 
-    case "qa":
-      url = "/stirling/pages/data/awd/megamenu.html";
-      break;
+		case "qa":
+			url = "/stirling/pages/data/awd/megamenu.html";
+			break;
 
-    case "preview":
-    case "production":
-      url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2834";
-      break;
+		case "preview":
+		case "production":
+			url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2834";
+			break;
 
-    case "app-preview":
-    case "appdev-preview":
-    case "test":
-      url = "https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/2834";
-      break;
+		case "app-preview":
+		case "appdev-preview":
+		case "test":
+			url = "https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/2834";
+			break;
 
-    default: // live
-      url = "/developer-components/includes/template-external/mega-menu/";
-      break;
-  }
+		default: // live
+			url = "/developer-components/includes/template-external/mega-menu/";
+			break;
+	}
 
-  function initMegamenu() {
-    var primaryNav = document.querySelector("#layout-header .c-header-nav--primary");
-    var mainSections = document.querySelectorAll(".megamenu__links > ul > li > a");
+	function initMegamenu() {
+		var primaryNav = document.querySelector("#layout-header .c-header-nav--primary");
+		var mainSections = document.querySelectorAll(".megamenu__links > ul > li > a");
+		var megalinks = document.querySelectorAll(".megamenu .megamenu__links");
+		var active_class = "c-header-nav__link--is-active";
+		var activeElement;
 
-    for (var i = 0; i < mainSections.length; i++) {
-      mainSections[i].insertAdjacentText("afterbegin", "Visit ");
-      mainSections[i].insertAdjacentText("beforeend", " home");
-    }
+		for (var i = 0; i < mainSections.length; i++) {
+			mainSections[i].insertAdjacentText("afterbegin", "Visit ");
+			mainSections[i].insertAdjacentText("beforeend", " home");
+		}
 
-    /**
-     * @var active_class The CSS class name to use to style the active megamenu
-     */
-    var active_class = "c-header-nav__link--is-active";
+		// prevent click propagating up through to body (which will close the mm)
+		mm.addEventListener("click", function (e) {
+			e.stopPropagation();
+		});
 
-    // prevent click propagating up through to body (which will close the mm)
-    mm.addEventListener("click", function (e) {
-      e.stopPropagation();
-    });
+		Array.prototype.forEach.call(document.querySelectorAll(".megamenu"), function (el) {
+			el.classList && el.classList.add("animation-slide");
+			el.setAttribute("tabindex", -1);
+			manageTabIndex(el, false);
+		});
 
-    Array.prototype.forEach.call(document.querySelectorAll(".megamenu"), function (el) {
-      el.classList && el.classList.add("animation-slide");
-      el.setAttribute("tabindex", -1);
-      manageTabIndex(el, false);
-    });
+		const mm_clicked = function (e) {
+			e.preventDefault();
+			e.stopPropagation();
 
-    const mm_clicked = function (e) {
-      e.preventDefault();
-      e.stopPropagation();
+			var id, mm;
+			id = e.target.getAttribute("aria-controls");
+			id && (mm = document.querySelector("#" + id));
 
-      var id, mm;
-      id = e.target.getAttribute("aria-controls");
-      id && (mm = document.querySelector("#" + id));
+			// if related megamenu found, prevent defaults and apply behaviour
+			if (mm) {
+				/**
+				 * If the megamenu related to this link item is already open, close it.
+				 * If it is not already open, close any that are, then open this one.
+				 */
+				if (mm.classList && mm.classList.contains("animation-slide__down")) {
+					mmSlideUp(mm);
+				} else {
+					mmSlideUpAll();
+					mmSlideDown(mm);
+				}
 
-      // if related megamenu found, prevent defaults and apply behaviour
-      if (mm) {
-        /**
-         * If the megamenu related to this link item is already open, close it.
-         * If it is not already open, close any that are, then open this one.
-         */
-        if (mm.classList && mm.classList.contains("animation-slide__down")) {
-          mmSlideUp(mm);
-        } else {
-          mmSlideUpAll();
-          mmSlideDown(mm);
-        }
+				e.target.classList && e.target.classList.toggle(active_class);
+			} else {
+				UoS_closeAllWidgetsExcept();
+			}
+		};
 
-        e.target.classList && e.target.classList.toggle(active_class);
-      } else {
-        UoS_closeAllWidgetsExcept();
-      }
-    };
+		function mmSlideDown(el) {
+			if (!el || !el.classList) return;
+			el.classList.remove("animation-slide__up");
+			el.classList.add("animation-slide__down");
+			manageTabIndex(el, true);
+			mmFocusFirstElement(el);
+			// listen for 'close' requests etc.
+			document.addEventListener("widgetRequestClose", closing);
+			document.addEventListener("keyup", escaping);
+			activeElement = el;
+		}
 
-    function mmSlideDown(el) {
-      if (!el || !el.classList) return;
-      el.classList.remove("animation-slide__up");
-      el.classList.add("animation-slide__down");
-      manageTabIndex(el, true);
-      mmFocusFirstElement(el);
-      // listen for 'close' requests
-      document.addEventListener("widgetRequestClose", closing);
-      document.addEventListener("keyup", escaping);
-    }
-    function mmSlideUp(el) {
-      if (!el || !el.classList) return;
-      el.classList.add("animation-slide__up");
-      el.classList.remove("animation-slide__down");
-      manageTabIndex(el, false);
-      // stop listening for 'close' requests
-      document.removeEventListener("keyup", escaping);
-      document.removeEventListener("widgetRequestClose", closing);
-      el.id && returnFocus(el.id);
-    }
-    function mmSlideUpAll() {
-      unhighlight();
-      Array.prototype.forEach.call(document.querySelectorAll(".megamenu.animation-slide__down"), function (el) {
-        mmSlideUp(el);
-      });
-    }
-    function mmFocusFirstElement(el) {
-      const focusable = el.querySelector("a,button,input");
-      focusable && focusable.focus();
-    }
-    function unhighlight() {
-      Array.prototype.forEach.call(primaryNav.querySelectorAll("." + active_class), function (el) {
-        el.classList && el.classList.remove(active_class);
-      });
-    }
-    function manageTabIndex(mm, state) {
-      Array.prototype.forEach.call(mm.querySelectorAll("a"), function (el) {
-        state ? el.removeAttribute("tabindex") : el.setAttribute("tabindex", -1);
-      });
-    }
-    const returnFocus = (id) => {
-      const el = document.querySelector(`[aria-controls="${id}"]`);
-      el && el.focus();
-    };
+		function mmSlideUp(el) {
+			if (!el || !el.classList) return;
+			el.classList.add("animation-slide__up");
+			el.classList.remove("animation-slide__down");
+			manageTabIndex(el, false);
+			// stop listening for requests
+			document.removeEventListener("keyup", escaping);
+			document.removeEventListener("widgetRequestClose", closing);
+			el.id && returnFocus(el.id);
+			activeElement = null;
+		}
 
-    primaryNav.querySelectorAll("[data-menu-id]").forEach((nav) => {
-      const mmid = nav.getAttribute("data-menu-id");
-      const mmel = mm.querySelector(`#${mmid}`);
-      if (mmid && mmel) {
-        nav.setAttribute("aria-controls", mmid);
-      }
-    });
+		function mmSlideUpAll() {
+			unhighlight();
+			Array.prototype.forEach.call(document.querySelectorAll(".megamenu.animation-slide__down"), function (el) {
+				mmSlideUp(el);
+			});
+		}
 
-    primaryNav.addEventListener("click", mm_clicked);
+		function mmFocusFirstElement(el) {
+			const focusable = el.querySelector("a,button,input");
+			focusable && focusable.focus();
+		}
 
-    function escaping(event) {
-      if (event.keyCode === KEY_ESC) mmSlideUpAll();
-    }
+		function unhighlight() {
+			Array.prototype.forEach.call(primaryNav.querySelectorAll("." + active_class), function (el) {
+				el.classList && el.classList.remove(active_class);
+			});
+		}
 
-    function closing() {
-      unhighlight();
-      mmSlideUp(document.querySelector(".megamenu.animation-slide__down"));
-    }
+		function manageTabIndex(mm, state) {
+			Array.prototype.forEach.call(mm.querySelectorAll("a"), function (el) {
+				state ? el.removeAttribute("tabindex") : el.setAttribute("tabindex", -1);
+			});
+		}
 
-    {
-      /* Megamenu "subpage" scrolling behaviour */
-      var megalinks = document.querySelectorAll(".megamenu .megamenu__links");
+		const returnFocus = (id) => {
+			const el = document.querySelector(`[aria-controls="${id}"]`);
+			el && el.focus();
+		};
 
-      function pan(sibling, positive, event) {
-        var dollyTrack = this.parentNode.querySelector("ul > li > ul");
-        var distance = positive ? dollyTrack.scrollWidth - dollyTrack.clientWidth : 0;
-        stir.scroll.call(dollyTrack, 0, distance);
-        this.style.display = "none";
-        sibling && (sibling.style.display = "block");
-        event.preventDefault();
-      }
+		function escaping(event) {
+			if (event.code === KEY_ESC) mmSlideUpAll();
+			if (event.code === "ArrowRight" || event.code === "ArrowLeft") panning(event);
+		}
 
-      for (var i = 0; i < megalinks.length; i++) {
-        var prev = megalinks[i].querySelector(".megamenu__prev-button");
-        var next = megalinks[i].querySelector(".megamenu__next-button");
-        if (prev && next) {
-          prev.onclick = pan.bind(prev, next, false);
-          next.onclick = pan.bind(next, prev, true);
-        }
-      }
-    }
+		function closing() {
+			unhighlight();
+			mmSlideUp(document.querySelector(".megamenu.animation-slide__down"));
+		}
 
-    loaded = true;
-  }
+		function panning(event) {
+			var dollyTrack = activeElement.querySelector("ul>li>ul");
+			var prev = activeElement.querySelector(".megamenu__prev-button");
+			var next = activeElement.querySelector(".megamenu__next-button");
 
-  /**
-   * Only load the MegaMenu if the viewport is (currently) larger than 1240px.
-   */
-  var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-  if (vw >= 1240) {
-    stir.load(url, function (data) {
-      if (data && !data.error) {
-        mm.innerHTML = data;
-        initMegamenu();
-      } else {
-        console.error("Unable to load MegaMenu");
-      }
-    });
-  }
+			if (event.code === "ArrowRight") {
+				dollyTrack && stir.scroll.call(dollyTrack, 0, dollyTrack.scrollWidth - dollyTrack.clientWidth);
+				next.style.display = 'none';
+				prev.style.display = 'block';
+			}
+			if (event.code === "ArrowLeft") {
+				dollyTrack && stir.scroll.call(dollyTrack, 0, 0);
+				prev.style.display = 'none';
+				next.style.display = 'block';
+			}
+		}
+
+		{
+			/* Megamenu "subpage" scrolling behaviour */
+
+			function pan(sibling, positive, event) {
+				var dollyTrack = this.parentNode.querySelector("ul > li > ul");
+				var distance = positive ? dollyTrack.scrollWidth - dollyTrack.clientWidth : 0;
+				stir.scroll.call(dollyTrack, 0, distance);
+				this.style.display = "none";
+				sibling && (sibling.style.display = "block");
+				event.preventDefault();
+			}
+
+			for (var i = 0; i < megalinks.length; i++) {
+				var prev = megalinks[i].querySelector(".megamenu__prev-button");
+				var next = megalinks[i].querySelector(".megamenu__next-button");
+				if (prev && next) {
+					prev.addEventListener("click", pan.bind(prev, next, false));
+					next.addEventListener("click", pan.bind(next, prev, true));
+				}
+			}
+		}
+
+		primaryNav.querySelectorAll("[data-menu-id]").forEach((nav) => {
+			const mmid = nav.getAttribute("data-menu-id");
+			const mmel = mm.querySelector(`#${mmid}`);
+			if (mmid && mmel) {
+				nav.setAttribute("aria-controls", mmid);
+			}
+		});
+
+		primaryNav.addEventListener("click", mm_clicked);
+
+		loaded = true;
+	}
+
+	/**
+	 * Only load the MegaMenu if the viewport is (currently) larger than 1240px.
+	 */
+	var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+	if (vw >= 1240) {
+		stir.load(url, function (data) {
+			if (data && !data.error) {
+				mm.innerHTML = data;
+				initMegamenu();
+			} else {
+				console.error("Unable to load MegaMenu");
+			}
+		});
+	}
 })();
 
 /*
-  Tempate Favourites
+Tempate Favourites
 */
 
 const TempateFavs = () => {
-  const COOKIE_ID = "favs=";
-  const FB_URL = "https://search.stir.ac.uk/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=";
+	const COOKIE_ID = "favs=";
+	const FB_URL = "https://search.stir.ac.uk/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=";
 
-  /* 
-      renderCourseLink: Returns an array of html strings 
-  */
-  const renderCourseLink = (item) => `<li><a href="${item.url}">${item.title}</></li>`;
+	/* 
+		renderCourseLink: Returns an array of html strings 
+	*/
+	const renderCourseLink = (item) => `<li><a href="${item.url}">${item.title}</></li>`;
 
-  /* 
-      renderIcon: Returns a html strings 
-  */
-  const renderIcon = () => {
-    return `<svg version="1.1" data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50" >
-                  <path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
-C47.5,15,46.3,12.2,44.1,10.1z"></path>
-              </svg>`;
-  };
+	/* 
+		renderIcon: Returns a html strings 
+	*/
+	const renderIcon = () => {
+		return `<svg version="1.1" data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50" >
+					<path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+	C47.5,15,46.3,12.2,44.1,10.1z"></path>
+				</svg>`;
+	};
 
-  /* 
-      getfavsCookie: Returns an array of objects 
-  */
-  function getfavsCookie(cookieId) {
-    const favCookie = document.cookie
-      .split(";")
-      .filter((i) => i.includes(cookieId))
-      .map((i) => i.replace(cookieId, ""));
+	/* 
+		getfavsCookie: Returns an array of objects 
+	*/
+	function getfavsCookie(cookieId) {
+		const favCookie = document.cookie
+			.split(";")
+			.filter((i) => i.includes(cookieId))
+			.map((i) => i.replace(cookieId, ""));
 
-    return favCookie.length ? JSON.parse(favCookie) : [];
-  }
+		return favCookie.length ? JSON.parse(favCookie) : [];
+	}
 
-  /* 
-      getFavsList: Returns an array of objects. PARAM: cookieType = accomm, course etc 
-  */
-  function getFavsList(cookieType, cookieId) {
-    const favsCookieAll2 = getfavsCookie(cookieId);
+	/* 
+		getFavsList: Returns an array of objects. PARAM: cookieType = accomm, course etc 
+	*/
+	function getFavsList(cookieType, cookieId) {
+		const favsCookieAll2 = getfavsCookie(cookieId);
 
-    const favsCookieAll = favsCookieAll2.map((item) => {
-      if (!item.type) item.type = "course";
-      return item;
-    });
+		const favsCookieAll = favsCookieAll2.map((item) => {
+			if (!item.type) item.type = "course";
+			return item;
+		});
 
-    const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
+		const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
 
-    if (!favsCookie.length || favsCookie.length < 1) return [];
-    return favsCookie.sort((a, b) => b.date - a.date);
-  }
+		if (!favsCookie.length || favsCookie.length < 1) return [];
+		return favsCookie.sort((a, b) => b.date - a.date);
+	}
 
-  /*
-      Controller
-  */
-  function initMega(cookieId, fbUrl) {
-    const favCourses = getFavsList("course", cookieId);
+	/*
+		Controller
+	*/
+	function initMega(cookieId, fbUrl) {
+		const favCourses = getFavsList("course", cookieId);
 
-    if (!favCourses.length) return;
+		if (!favCourses.length) return;
 
-    const query = favCourses
-      .filter((item) => Number(item.id))
-      .map((item) => item.id)
-      .join("+");
-    const fbUrlFull = fbUrl + query;
+		const query = favCourses
+			.filter((item) => Number(item.id))
+			.map((item) => item.id)
+			.join("+");
+		const fbUrlFull = fbUrl + query;
 
-    stir.getJSON(fbUrlFull, (results) => {
-      const arrayResults = results?.response?.resultPacket?.results || [];
-      if (!arrayResults.length) return;
+		stir.getJSON(fbUrlFull, (results) => {
+			const arrayResults = results?.response?.resultPacket?.results || [];
+			if (!arrayResults.length) return;
 
-      const favList = query.split("+").map((item) => {
-        return arrayResults
-          .filter((element) => {
-            if (Number(item) === Number(element.metaData.sid)) {
-              return item;
-            }
-          })
-          .map((element) => {
-            return {
-              id: item,
-              date: favCourses.filter((fav) => fav.id === item)[0].date,
-              title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
-              url: element.liveUrl + `?orgin=datacoursefavs`,
-            };
-          });
-      });
+			const favList = query.split("+").map((item) => {
+				return arrayResults
+					.filter((element) => {
+						if (Number(item) === Number(element.metaData.sid)) {
+							return item;
+						}
+					})
+					.map((element) => {
+						return {
+							id: item,
+							date: favCourses.filter((fav) => fav.id === item)[0].date,
+							title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
+							url: element.liveUrl + `?orgin=datacoursefavs`,
+						};
+					});
+			});
 
-      const courses = stir.flatten(favList).sort((a, b) => b.date - a.date);
+			const courses = stir.flatten(favList).sort((a, b) => b.date - a.date);
 
-      // Make sure Megamenu has loaded then insert the links
-      stir.nodes("[data-coursefavs]").forEach((element) => {
-        element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses.map(renderCourseLink).join("")}</ul>`);
-      });
-    });
-  }
+			// Make sure Megamenu has loaded then insert the links
+			stir.nodes("[data-coursefavs]").forEach((element) => {
+				element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses.map(renderCourseLink).join("")}</ul>`);
+			});
+		});
+	}
 
-  /*
-      Controller
-  */
-  function initHeader(cookieId) {
-    const favs = getfavsCookie(cookieId);
+	/*
+		Controller
+	*/
+	function initHeader(cookieId) {
+		const favs = getfavsCookie(cookieId);
 
-    const iconNodes = stir.nodes("[data-stiricon=heart-inactive]");
+		const iconNodes = stir.nodes("[data-stiricon=heart-inactive]");
 
-    if (!iconNodes.length || !favs.length) return;
+		if (!iconNodes.length || !favs.length) return;
 
-    iconNodes.forEach((element) => {
-      stir.setHTML(element, renderIcon());
-    });
+		iconNodes.forEach((element) => {
+			stir.setHTML(element, renderIcon());
+		});
 
-    if (!favs.length) return;
-    const iconNodeParent = stir.node("header [data-stiricon=heart-inactive]").parentNode;
-    iconNodeParent && iconNodeParent.insertAdjacentHTML("beforebegin", `<em data-aos="u-fade-up-out" class=" u-heritage-green text-sm">${favs.length}</em>`);
-  }
+		if (!favs.length) return;
+		const iconNodeParent = stir.node("header [data-stiricon=heart-inactive]").parentNode;
+		iconNodeParent && iconNodeParent.insertAdjacentHTML("beforebegin", `<em data-aos="u-fade-up-out" class=" u-heritage-green text-sm">${favs.length}</em>`);
+	}
 
-  /*
-      On Load
-  */
+	/*
+		On Load
+	*/
 
-  initHeader(COOKIE_ID);
+	initHeader(COOKIE_ID);
 
-  const callbackMegaMenu = (mutationList, observer) => {
-    for (const mutation of mutationList) {
-      for (const addedNode of mutation.addedNodes) {
-        if (addedNode.id == "mm__study") {
-          initMega(COOKIE_ID, FB_URL);
-        }
-      }
-    }
-  };
+	const callbackMegaMenu = (mutationList, observer) => {
+		for (const mutation of mutationList) {
+			for (const addedNode of mutation.addedNodes) {
+				if (addedNode.id == "mm__study") {
+					initMega(COOKIE_ID, FB_URL);
+				}
+			}
+		}
+	};
 
-  const config = { attributes: true, childList: true, subtree: true };
-  const observer = new MutationObserver(callbackMegaMenu);
-  const menucontainer = stir.node("#megamenu__container");
-  menucontainer && observer.observe(menucontainer, config);
+	const config = { attributes: true, childList: true, subtree: true };
+	const observer = new MutationObserver(callbackMegaMenu);
+	const menucontainer = stir.node("#megamenu__container");
+	menucontainer && observer.observe(menucontainer, config);
 };
 
 TempateFavs();
-
 var stir = stir || {};
 (function () {
   const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="174054" formatter="path/*" />' : UoS_env.wc_path + "js/other/mobile-nav.js";

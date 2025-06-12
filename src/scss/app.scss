@@ -1,6 +1,38 @@
 // CUSTOM
 @charset 'utf-8';
 
+/*
+    General Sans
+*/
+
+@font-face {
+  font-family: "General Sans";
+  src: url('<t4 type="media" id="173668" formatter="path/*" />') format("OpenType"), url("../fonts/general-sans/GeneralSans-Regular.ttf") format("OpenType");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url('<t4 type="media" id="179150" formatter="path/*" />') format("OpenType"), url("../fonts/general-sans/GeneralSans-Semibold.ttf") format("OpenType");
+  font-weight: 700;
+  font-style: bold;
+  font-display: swap;
+}
+
+/*
+    FSMaja
+*/
+
+@font-face {
+  font-family: "FSMaja";
+  src: url('<t4 type="media" id="158106" formatter="path/*" />') format("woff"), url("../fonts/fsmaja/FSMajaWeb-Regular.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 // 1. Layout
 // ---------
 $global-width: rem-calc(1240);
@@ -9,13 +41,14 @@ $global-lineheight: 1.5;
 // 2. Colours
 // ---------
 
-$light-gray: #e6e6e6;
-$medium-gray: #cacaca;
-$dark-gray: #8a8a8a;
-$dark-grey: #616361;
-$grey: #bebebe;
-$black: #3a3c39; // Tertiary Colour
-$white: #fff; //fefefe;
+$grey: #bebebe; // before bebebe
+$light-gray: #e6e6e6; // before e6e6e6
+$medium-gray: #cacaca; // before cacaca
+$dark-gray: #3a3c39; // before 8a8a8a
+$dark-grey: #3a3c39; // before 616361
+
+$black: #000000;
+$white: #fff; // before fefefe;
 
 $foundation-palette: (
   primary: #006938,
@@ -33,37 +66,89 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
   // Tertiary Colours
-  light-mink: #c5bfb7,
-  medium-mink: #79766f,
-  dark-mink: #373a36,
+  light-mink: #d1d1c9,
+  medium-mink: #97956d,
+  dark-mink: #3a3a26,
+
   // Energy Colours
-  energy: #77bf22,
-  energy-green: #77bf22,
+  energy: #76b72a,
+  energy-green: #76b72a,
   energy-teal: #008996,
   energy-yellow: #f4c400,
   energy-orange: #ff6d00,
-  energy-light-blue: #5fb4e5,
+  energy-light-blue: #77a4da,
   energy-blue: #3d7dca,
   energy-pink: #e80068,
-  energy-purple: #592c82,
+  energy-purple: #9053c6,
   energy-turq: #00a5ac,
+
   // Heritage Colours
   heritage-green: #006938,
   heritage-teal: #005e63,
-  heritage-yellow: #ecaa00,
-  heritage-orange: #e14504,
-  heritage-blue: #385dae,
+  heritage-yellow: #edab00,
+  heritage-orange: #d9541a,
+  heritage-blue: #2c498a,
   heritage-navy: #14315e,
-  heritage-berry: #9d1e65,
-  heritage-purple: #31006f,
-
+  heritage-berry: #7c184f,
+  heritage-purple: #592c82,
   // Web versions
-  web-turq: #00838a
+  web-turq: #00838a,
+
+  // New 2025 colours
+  // Green
+  green-tint: #9fcc69,
+  // energy-green
+  green-light: #76b72a,
+  // heritage-green
+  green-medium: #006938,
+  green-dark: #005734,
+
+  // Neutral
+  neutral-light: #d1d1c9,
+  neutral-medium: #97956d,
+  neutral-medium-dark: #5f6350,
+  neutral-dark: #3a3a26,
+
+  // Teal
+  teal-tint: #4cacb5,
+  teal-light: #008996,
+  teal-medium: #005e63,
+  teal-dark: #003a3d,
+
+  // Blue
+  blue-tint: #77a4da,
+  blue-light: #3d7dca,
+  blue-medium: #2c498a,
+  blue-dark: #122c54,
+
+  // Purple
+  purple-tint: #b186d7,
+  purple-light: #9053c6,
+  purple-medium: #592c82,
+  purple-dark: #3f0066,
+
+  // Pink
+  pink-tint: #ef4c95,
+  pink-light: #e80068,
+  pink-medium: #7c184f,
+  pink-dark: #511535,
+
+  // Orange
+  orange-tint: #ff994c,
+  orange-light: #ff6d00,
+  orange-medium: #d9541a,
+  orange-dark: #852903,
+
+  // Yellow
+  yellow-tint: #f7d64c,
+  yellow-light: #f4c400,
+  yellow-medium: #edab00,
+  yellow-dark: #7b5c18
 );
 
 $uos-button-palette: (
@@ -137,7 +222,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge);
 
 $global-font-size: 100%;
 $header-font-family: "FSMaja", serif;
-$body-font-family: "Open Sans", sans-serif;
+$body-font-family: "General Sans", "Open Sans", sans-serif;
 $header-font-weight: 300;
 
 // 5. Spacing
@@ -160,6 +245,7 @@ $button-padding-list: (
 @import "settings/functions";
 @import "settings/colors";
 @import "settings/zindex";
+@import "settings/icons";
 
 // NPM STUFF...
 
