@@ -32,8 +32,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  border-top: var(--border-thickness) solid $pink-medium;
-  border-left: var(--border-thickness) solid $pink-medium;
+  border-top: var(--border-thickness) solid $heritage-green;
+  border-left: var(--border-thickness) solid $heritage-green;
 }
 
 // horizontal bit
@@ -53,8 +53,31 @@
   width: 100%;
   bottom: 0;
   right: 0;
-  border-bottom: var(--border-thickness) solid $pink-medium;
-  border-right: var(--border-thickness) solid $pink-medium;
+  border-bottom: var(--border-thickness) solid $heritage-green;
+  border-right: var(--border-thickness) solid $heritage-green;
+}
+
+.u-hook-tl,
+.u-hook-br {
+  @each $name, $color in $uos-colour-group-palette {
+    &.#{$name} {
+      &::after {
+        border-color: map-get($color, "medium");
+      }
+
+      &::after {
+        border-color: map-get($color, "medium");
+      }
+
+      &::before {
+        border-color: map-get($color, "medium");
+      }
+
+      &::before {
+        border-color: map-get($color, "medium");
+      }
+    }
+  }
 }
 
 /*

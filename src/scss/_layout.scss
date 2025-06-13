@@ -150,6 +150,11 @@ hr {
   overflow: visible;
 }
 
+picture {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .u-bg-grey hr {
   border-color: #cacaca;
 }
