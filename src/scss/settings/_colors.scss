@@ -18,9 +18,9 @@
    @return {Color}
 */
 
-@function shade($color, $percentage) {
-  @return mix(black, $color, (100% - $percentage)); //percentage((100-$percentage)/100));
-}
+// @function shade($color, $percentage) {
+//   @return mix(black, $color, (100% - $percentage)); //percentage((100-$percentage)/100));
+// }
 
 // Shorthand colour variables
 $light-mink: map-get($brand-palette, light-mink);
@@ -44,6 +44,7 @@ $heritage-navy: map-get($brand-palette, heritage-navy);
 $heritage-purple: map-get($brand-palette, heritage-purple);
 
 $pink-medium: map-get($brand-palette, pink-medium);
+$pink-tint-40: map-get($brand-palette, pink-tint-40);
 
 // Web versions
 $web-turq: map-get($brand-palette, web-turq);
@@ -71,9 +72,9 @@ $variations: (30, 50, 70);
  */
 @each $name, $hex in $brand-palette {
   // generate the text colour classes  e.g. u-heritage-green
-  //.u-#{$name} {
-  // color: $hex!important;
-  //}
+  .u-#{$name} {
+    color: $hex !important;
+  }
 
   // generate the bg classes e.g. u-bg-heritage-green
   .u-bg-#{$name} {
@@ -85,11 +86,11 @@ $variations: (30, 50, 70);
   }
 
   // generate the bg variation classes e.g. u-heritage-green--30
-  @each $perc in $variations {
-    .u-bg-#{$name}--#{$perc} {
-      background-color: tint($hex, $perc);
-    }
-  }
+  // @each $perc in $variations {
+  //   .u-bg-#{$name}--#{$perc} {
+  //     background-color: tint($hex, $perc);
+  //   }
+  // }
 }
 
 // this is an exception for the grey section backgrounds

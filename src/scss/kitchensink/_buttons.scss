@@ -7,8 +7,7 @@
   Function to map icon filter values based on color
 */
 @function icon-filter($color) {
-  // Map of colors to their filter values. Inverting from white
-  // https://angel-rs.github.io/css-color-filter-generator/
+  // If color is already in our map, use that instead for performance
   $filter-map: (
     $heritage-green: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%),
     $energy-green: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%),
@@ -17,10 +16,20 @@
     $heritage-berry: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%),
     $energy-purple: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%),
     $heritage-purple: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%),
+    // Blue dark Purple dark etc for tinted buttons
+    // #3f0066: invert(100%) brightness(0) saturate(100%) invert(4%) sepia(96%) saturate(7409%) hue-rotate(278deg) brightness(92%) contrast(107%),
+    // #511535: invert(100%) brightness(0) saturate(100%) invert(9%) sepia(27%) saturate(5627%) hue-rotate(305deg) brightness(101%) contrast(93%),
+    #852903: invert(100%) brightness(0) saturate(100%) invert(15%) sepia(83%) saturate(2702%) hue-rotate(15deg) brightness(91%) contrast(98%),
+    #7b5c18: invert(100%) brightness(0) saturate(100%) invert(31%) sepia(58%) saturate(639%) hue-rotate(3deg) brightness(98%) contrast(85%),
+    #122c54: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%),
   );
 
-  // Return the filter value for the given color or a default
-  @return map-get($filter-map, $color) or brightness(0);
+  $mapped-filter: map-get($filter-map, $color);
+  @if $mapped-filter {
+    @return $mapped-filter;
+  }
+  // Return appropriate filter
+  @return map-get($filter-map, $heritage-green);
 }
 
 /* 
@@ -208,6 +217,36 @@ button:focus {
           color: $color;
         }
       }
+    }
+  }
+
+  /* 
+    BRAND 2025 Tinted style buttons 
+  */
+
+  @each $name, $color in $uos-colour-group-palette {
+    &.#{$name} {
+      &.tinted {
+        background-color: map-get($color, "tint");
+        border-color: map-get($color, "tint");
+        color: map-get($color, "dark");
+
+        &::after {
+          filter: icon-filter(map-get($color, "dark"));
+        }
+
+        &:hover {
+          background-color: #ffffff;
+        }
+      }
+    }
+  }
+
+  // overrides for the tinted buttons
+  &.tinted {
+    &.pinks {
+      background-color: $pink-tint-40;
+      border-color: $pink-tint-40;
     }
   }
 
