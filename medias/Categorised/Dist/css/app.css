@@ -7906,6 +7906,33 @@ a[data-mode*="Online"] {
     font-size: 1.6rem;
     line-height: 1; }
 
+[data-module-modal] {
+  max-width: none;
+  min-width: 98vw;
+  min-height: 98vh;
+  padding: 0;
+  margin: 0;
+  -ms-scroll-chaining: none;
+  overscroll-behavior: contain;
+  border-radius: 2px; }
+  [data-module-modal] > button {
+    position: fixed;
+    top: 1rem;
+    right: 2vw; }
+  [data-module-modal] > nav {
+    position: fixed;
+    top: 1rem;
+    left: 1vw;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.85);
+    padding: .5rem 0 .5rem 1rem; }
+  [data-module-modal] > button, [data-module-modal] > nav button {
+    padding: 1rem;
+    background: #006938;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 1rem; }
+
 /* M E D I A   Q U E R I E S */
 @media screen and (max-width: 63.9375em) {
   /** this media query is for screens up to 1024px
@@ -7919,6 +7946,10 @@ a[data-mode*="Online"] {
       width: 100%; } }
 
 @media screen and (min-width: 640px) {
+  [data-module-modal] {
+    max-width: 98vw;
+    padding: 3rem;
+    margin: auto; }
   .c-course-datasheet {
     background-color: #006938;
     /* fallback to solid green */ }
