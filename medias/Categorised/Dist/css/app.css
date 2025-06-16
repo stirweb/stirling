@@ -3948,10 +3948,8 @@ ul .c-link {
 .c-link.no-arrow:after {
   content: ""; }
 
-.c-wysiwyg-content li a,
-.accordion-content li a,
-.tabs-panel li a {
-  border-bottom: 2px solid #006938; }
+.u-white--all .c-link::after {
+  filter: brightness(0) invert(1); }
 
 .c-news-events__title .c-link {
   display: inline; }
@@ -3961,6 +3959,11 @@ ul .c-link {
 
 .u-white--all .c-news-events__title .c-link:hover {
   border-bottom-color: #fff; }
+
+.c-wysiwyg-content li a,
+.accordion-content li a,
+.tabs-panel li a {
+  border-bottom: 2px solid #006938; }
 
 ul.pagination {
   margin: 0;

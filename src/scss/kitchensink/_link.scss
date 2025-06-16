@@ -58,10 +58,8 @@ ul .c-link {
   content: "";
 }
 
-.c-wysiwyg-content li a,
-.accordion-content li a,
-.tabs-panel li a {
-  border-bottom: 2px solid $heritage-green;
+.u-white--all .c-link::after {
+  filter: brightness(0) invert(1);
 }
 
 .c-news-events__title .c-link {
@@ -81,3 +79,9 @@ ul .c-link {
 //   position: relative;
 //   right: 10px;
 // }
+
+.c-wysiwyg-content li a,
+.accordion-content li a,
+.tabs-panel li a {
+  border-bottom: 2px solid $heritage-green;
+}
