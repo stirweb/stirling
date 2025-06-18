@@ -223,6 +223,20 @@
   border-color: map-get($teals, "light");
 }
 
+.u-hook.neutrals {
+  > *::before {
+    border-color: map-get($brand-palette, "light-mink");
+  }
+
+  > *::after {
+    border-color: map-get($brand-palette, "light-mink");
+  }
+}
+
+.u-hook.neutrals.u-hook-full-bleed::before {
+  border-color: map-get($brand-palette, "light-mink");
+}
+
 .pinks {
   a,
   h2,
