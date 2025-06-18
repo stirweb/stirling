@@ -65,7 +65,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -106,7 +106,7 @@ $brand-palette: (
   // energy-green
   //green-light: #76b72a,
   // heritage-green
-  //green-medium: #006938,
+  green-medium: #006938,
   green-dark: #005734,
 
   // Neutral
@@ -120,14 +120,14 @@ $brand-palette: (
   teal-tint-7: #edf7f8,
   teal-tint: #4cacb5,
   //teal-light: #008996,
-  //teal-medium: #005e63,
+  teal-medium: #005e63,
   teal-dark: #003a3d,
 
   // Blue
   blue-tint-7: #f0f2f9,
   blue-tint: #77a4da,
   //blue-light: #3d7dca,
-  //blue-medium: #2c498a,
+  blue-medium: #2c498a,
   blue-dark: #122c54,
 
   // Purple
@@ -258,6 +258,7 @@ $uos-button-palette: (
   pink-dark: map-get($brand-palette, pink-dark),
   // Teal
   energy-teal: map-get($brand-palette, energy-teal),
+  teal-medium: map-get($brand-palette, energy-teal),
   heritage-teal: map-get($brand-palette, heritage-teal),
   // Purple
   heritage-purple: map-get($brand-palette, heritage-purple),
