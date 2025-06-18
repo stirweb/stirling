@@ -1758,7 +1758,7 @@ h2,
 h2 > strong {
   color: #006938;
   font-family: "General Sans", "Open Sans", sans-serif;
-  font-weight: 300; }
+  font-weight: 700; }
 
 h2 a,
 h3 a,
@@ -1840,7 +1840,7 @@ h2.u-header-larger {
     display: none; }
 
 .u-header--secondary-font {
-  font-family: "General Sans", sans-serif;
+  font-family: "General Sans", "Open Sans", sans-serif;
   font-size: 1.875rem;
   /* 30px */
   font-weight: 700; }
