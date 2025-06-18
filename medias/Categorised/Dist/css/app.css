@@ -9496,6 +9496,111 @@ ul.no-bullet {
   .u-hook-bl > .c-wrapper::before {
     left: var(--gutter-offset-large); } }
 
+.u-hook.greens > *::after {
+  border-color: #006938; }
+
+.u-hook.greens > *::after {
+  border-color: #006938; }
+
+.u-hook.greens > *::before {
+  border-color: #006938; }
+
+.u-hook.greens > *::before {
+  border-color: #006938; }
+
+.u-hook.greens.u-hook-full-bleed::before {
+  border-color: #006938; }
+
+.u-hook.pinks > *::after {
+  border-color: #7c184f; }
+
+.u-hook.pinks > *::after {
+  border-color: #7c184f; }
+
+.u-hook.pinks > *::before {
+  border-color: #7c184f; }
+
+.u-hook.pinks > *::before {
+  border-color: #7c184f; }
+
+.u-hook.pinks.u-hook-full-bleed::before {
+  border-color: #7c184f; }
+
+.u-hook.blues > *::after {
+  border-color: #2c498a; }
+
+.u-hook.blues > *::after {
+  border-color: #2c498a; }
+
+.u-hook.blues > *::before {
+  border-color: #2c498a; }
+
+.u-hook.blues > *::before {
+  border-color: #2c498a; }
+
+.u-hook.blues.u-hook-full-bleed::before {
+  border-color: #2c498a; }
+
+.u-hook.yellows > *::after {
+  border-color: #edab00; }
+
+.u-hook.yellows > *::after {
+  border-color: #edab00; }
+
+.u-hook.yellows > *::before {
+  border-color: #edab00; }
+
+.u-hook.yellows > *::before {
+  border-color: #edab00; }
+
+.u-hook.yellows.u-hook-full-bleed::before {
+  border-color: #edab00; }
+
+.u-hook.oranges > *::after {
+  border-color: #d9541a; }
+
+.u-hook.oranges > *::after {
+  border-color: #d9541a; }
+
+.u-hook.oranges > *::before {
+  border-color: #d9541a; }
+
+.u-hook.oranges > *::before {
+  border-color: #d9541a; }
+
+.u-hook.oranges.u-hook-full-bleed::before {
+  border-color: #d9541a; }
+
+.u-hook.teals > *::after {
+  border-color: #005e63; }
+
+.u-hook.teals > *::after {
+  border-color: #005e63; }
+
+.u-hook.teals > *::before {
+  border-color: #005e63; }
+
+.u-hook.teals > *::before {
+  border-color: #005e63; }
+
+.u-hook.teals.u-hook-full-bleed::before {
+  border-color: #005e63; }
+
+.u-hook.purples > *::after {
+  border-color: #592c82; }
+
+.u-hook.purples > *::after {
+  border-color: #592c82; }
+
+.u-hook.purples > *::before {
+  border-color: #592c82; }
+
+.u-hook.purples > *::before {
+  border-color: #592c82; }
+
+.u-hook.purples.u-hook-full-bleed::before {
+  border-color: #592c82; }
+
 .greens a,
 .greens h2,
 .greens h3,
@@ -9616,23 +9721,8 @@ ul.no-bullet {
   background-color: #592c82; }
 
 /* 
-  Hook colours
+  Colour overrides
 */
-.u-hook.greens > *::before {
-  border-color: #006938; }
-
-.u-hook.greens > *::after {
-  border-color: #006938; }
-
-.u-hook.pinks > *::before {
-  border-color: #7c184f; }
-
-.u-hook.pinks > *::after {
-  border-color: #7c184f; }
-
-.u-hook.pinks.u-hook-full-bleed::before {
-  border-color: #7c184f; }
-
 .u-hook.teals > *::before {
   border-color: #008996; }
 
@@ -9641,24 +9731,6 @@ ul.no-bullet {
 
 .u-hook.teals.u-hook-full-bleed::before {
   border-color: #008996; }
-
-.u-hook.blues > *::before {
-  border-color: #2c498a; }
-
-.u-hook.blues > *::after {
-  border-color: #2c498a; }
-
-.u-hook.blues.u-hook-full-bleed::before {
-  border-color: #2c498a; }
-
-.u-hook.purples > *::before {
-  border-color: #592c82; }
-
-.u-hook.purples > *::after {
-  border-color: #592c82; }
-
-.u-hook.purples.u-hook-full-bleed::before {
-  border-color: #592c82; }
 
 .pinks a,
 .pinks h2,
