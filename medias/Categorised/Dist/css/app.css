@@ -9472,23 +9472,12 @@ ul.no-bullet {
   margin-top: var(--border-thickness); }
   .u-hook-tr > .c-wrapper::before {
     right: var(--gutter-offset); }
-  .u-hook-tr > .c-wrapper.u-margin-top {
-    margin-top: 100px; }
-  .u-hook-tr > .c-wrapper.u-margin-bottom {
-    margin-bottom: 100px; }
 
 @media screen and (min-width: 40em) {
   .u-hook-tr > .c-wrapper::before {
     right: var(--gutter-offset-medium); }
   .u-hook-bl > .c-wrapper::before {
-    left: var(--gutter-offset-medium); }
-  .u-margin-top {
-    margin-top: 112px; }
-  .u-margin-bottom {
-    margin-bottom: 112px; }
-  .u-margin-y {
-    margin-bottom: 112px;
-    margin-top: 112px; } }
+    left: var(--gutter-offset-medium); } }
 
 @media screen and (min-width: 64em) {
   .u-hook-tr > .c-wrapper::before {
