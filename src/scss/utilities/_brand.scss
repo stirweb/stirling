@@ -111,12 +111,12 @@
   &::before {
     right: var(--gutter-offset);
   }
-  &.u-margin-top {
-    margin-top: 100px;
-  }
-  &.u-margin-bottom {
-    margin-bottom: 100px;
-  }
+  // &.u-margin-top {
+  //   margin-top: 100px;
+  // }
+  // &.u-margin-bottom {
+  //   margin-bottom: 100px;
+  // }
 }
 
 @include breakpoint(medium up) {
@@ -128,18 +128,18 @@
     left: var(--gutter-offset-medium);
   }
 
-  &.u-margin-top {
-    margin-top: 112px;
-  }
+  // &.u-margin-top {
+  //   margin-top: 112px;
+  // }
 
-  &.u-margin-bottom {
-    margin-bottom: 112px;
-  }
+  // &.u-margin-bottom {
+  //   margin-bottom: 112px;
+  // }
 
-  &.u-margin-y {
-    margin-bottom: 112px;
-    margin-top: 112px;
-  }
+  // &.u-margin-y {
+  //   margin-bottom: 112px;
+  //   margin-top: 112px;
+  // }
 }
 
 @include breakpoint(large up) {
