@@ -178,7 +178,7 @@ h2,
 h2 > strong {
   color: $heritage-green;
   font-family: $body-font-family;
-  font-weight: 300;
+  font-weight: 700;
 }
 
 // h2:after,
@@ -295,7 +295,7 @@ h2.u-header-larger {
 }
 
 .u-header--secondary-font {
-  font-family: "General Sans", sans-serif;
+  font-family: $body-font-family;
   font-size: 1.875rem; /* 30px */
   font-weight: 700;
 }
