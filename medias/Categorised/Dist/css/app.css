@@ -9680,7 +9680,8 @@ ul.no-bullet {
   .u-hook.dark a,
   .u-hook.dark h2,
   .u-hook.dark h3,
-  .u-hook.dark h4 {
+  .u-hook.dark h4,
+  .u-hook.dark h5 {
     color: #fff; }
   .u-hook.dark.greens .c-wrapper {
     background-color: #006938; }
