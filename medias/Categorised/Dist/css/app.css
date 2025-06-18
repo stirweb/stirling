@@ -1705,7 +1705,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "General Sans", sans-serif;
+  font-family: "General Sans", "Open Sans", sans-serif;
   font-weight: 400;
   position: relative;
   line-height: 1.5; }
@@ -1730,7 +1730,7 @@ h6 {
 h2,
 h2 > strong {
   color: #006938;
-  font-family: "FSMaja", serif;
+  font-family: "General Sans", "Open Sans", sans-serif;
   font-weight: 300; }
 
 h2 a,
