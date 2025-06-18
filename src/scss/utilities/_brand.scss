@@ -152,31 +152,31 @@
   }
 }
 
-// .u-hook {
-//   @each $name, $color in $uos-colour-group-palette {
-//     &.#{$name} {
-//       > *::after {
-//         border-color: map-get($color, "light");
-//       }
+.u-hook {
+  @each $name, $color in $uos-colour-group-palette {
+    &.#{$name} {
+      > *::after {
+        border-color: map-get($color, "medium");
+      }
 
-//       > *::after {
-//         border-color: map-get($color, "light");
-//       }
+      > *::after {
+        border-color: map-get($color, "medium");
+      }
 
-//       > *::before {
-//         border-color: map-get($color, "light");
-//       }
+      > *::before {
+        border-color: map-get($color, "medium");
+      }
 
-//       > *::before {
-//         border-color: map-get($color, "light");
-//       }
+      > *::before {
+        border-color: map-get($color, "medium");
+      }
 
-//       &.u-hook-full-bleed::before {
-//         border-color: map-get($color, "light");
-//       }
-//     }
-//   }
-// }
+      &.u-hook-full-bleed::before {
+        border-color: map-get($color, "medium");
+      }
+    }
+  }
+}
 
 @each $name, $color in $uos-colour-group-palette {
   .#{$name} {
@@ -206,32 +206,8 @@
 }
 
 /* 
-  Hook colours
+  Colour overrides
 */
-
-.u-hook.greens {
-  > *::before {
-    border-color: map-get($greens, "medium");
-  }
-
-  > *::after {
-    border-color: map-get($greens, "medium");
-  }
-}
-
-.u-hook.pinks {
-  > *::before {
-    border-color: map-get($pinks, "medium");
-  }
-
-  > *::after {
-    border-color: map-get($pinks, "medium");
-  }
-}
-
-.u-hook.pinks.u-hook-full-bleed::before {
-  border-color: map-get($pinks, "medium");
-}
 
 .u-hook.teals {
   > *::before {
@@ -245,34 +221,6 @@
 
 .u-hook.teals.u-hook-full-bleed::before {
   border-color: map-get($teals, "light");
-}
-
-.u-hook.blues {
-  > *::before {
-    border-color: map-get($blues, "medium");
-  }
-
-  > *::after {
-    border-color: map-get($blues, "medium");
-  }
-}
-
-.u-hook.blues.u-hook-full-bleed::before {
-  border-color: map-get($blues, "medium");
-}
-
-.u-hook.purples {
-  > *::before {
-    border-color: map-get($purples, "medium");
-  }
-
-  > *::after {
-    border-color: map-get($purples, "medium");
-  }
-}
-
-.u-hook.purples.u-hook-full-bleed::before {
-  border-color: map-get($purples, "medium");
 }
 
 .pinks {
