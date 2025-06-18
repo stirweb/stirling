@@ -65,7 +65,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -134,7 +134,7 @@ $brand-palette: (
   purple-tint-7: #f4f0f7,
   purple-tint: #b186d7,
   //purple-light: #9053c6,
-  //purple-medium: #592c82,
+  purple-medium: #592c82,
   purple-dark: #3f0066,
 
   // Pink
@@ -216,7 +216,7 @@ $purples: (
   "tint-7": map-get($brand-palette, purple-tint-7),
   "tint": map-get($brand-palette, purple-tint),
   "light": map-get($brand-palette, energy-purple),
-  "medium": map-get($brand-palette, heritage-purple),
+  "medium": map-get($brand-palette, purple-medium),
   "dark": map-get($brand-palette, purple-dark),
 );
 
@@ -267,6 +267,35 @@ $uos-button-palette: (
   energy-turq: map-get($brand-palette, energy-turq),
   info: map-get($brand-palette, heritage-blue),
 );
+
+/* 
+  Function to map icon filter values based on color
+*/
+@function icon-filter($color) {
+  // If color is already in our map, use that instead for performance
+  $filter-map: (
+    $heritage-green: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%),
+    $energy-green: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%),
+    $energy-pink: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%),
+    $energy-turq: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%),
+    $heritage-berry: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%),
+    $energy-purple: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%),
+    $heritage-purple: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%),
+    // Blue dark Purple dark etc for tinted buttons
+    // #3f0066: invert(100%) brightness(0) saturate(100%) invert(4%) sepia(96%) saturate(7409%) hue-rotate(278deg) brightness(92%) contrast(107%),
+    // #511535: invert(100%) brightness(0) saturate(100%) invert(9%) sepia(27%) saturate(5627%) hue-rotate(305deg) brightness(101%) contrast(93%),
+    #7c184f: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%),
+    #7b5c18: invert(100%) brightness(0) saturate(100%) invert(31%) sepia(58%) saturate(639%) hue-rotate(3deg) brightness(98%) contrast(85%),
+    #122c54: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%),
+  );
+
+  $mapped-filter: map-get($filter-map, $color);
+  @if $mapped-filter {
+    @return $mapped-filter;
+  }
+  // Return appropriate filter
+  @return map-get($filter-map, $heritage-green);
+}
 
 // Widening Participation campaign colours
 $uos-wp-palette: (
