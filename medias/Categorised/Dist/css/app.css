@@ -7985,8 +7985,9 @@ a[data-mode*="Online"] {
     left: 1vw;
     z-index: 1;
     background: rgba(255, 255, 255, 0.85);
-    padding: .5rem 0 .5rem 1rem; }
-  [data-module-modal] > button, [data-module-modal] > nav button {
+    padding: 0.5rem 0 0.5rem 1rem; }
+  [data-module-modal] > button,
+  [data-module-modal] > nav button {
     padding: 1rem;
     background: #006938;
     color: #fff;
@@ -8014,7 +8015,7 @@ a[data-mode*="Online"] {
     background-color: #006938;
     /* fallback to solid green */ }
   .c-course-datasheet[data-accreditation] {
-    background: linear-gradient(90deg, #006938 50%, #f6f5f4 50%);
+    background: linear-gradient(90deg, #006938 50%, #edf4f1 50%);
     /* hard-stop gradient to give the full-width two-colour background */ }
   .c-course-datasheet .c-icon-block {
     margin-left: 1rem; }
@@ -9771,6 +9772,15 @@ ul.no-bullet {
 
 .u-hook.teals.u-hook-full-bleed::before {
   border-color: #008996; }
+
+.u-hook.neutrals > *::before {
+  border-color: #d1d1c9; }
+
+.u-hook.neutrals > *::after {
+  border-color: #d1d1c9; }
+
+.u-hook.neutrals.u-hook-full-bleed::before {
+  border-color: #d1d1c9; }
 
 .pinks a,
 .pinks h2,
