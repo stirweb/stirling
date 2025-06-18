@@ -9645,7 +9645,8 @@ ul.no-bullet {
 .greens a,
 .greens h2,
 .greens h3,
-.greens h4 {
+.greens h4,
+.greens .font-icon {
   color: #006938; }
 
 .greens .c-wrapper {
@@ -9662,7 +9663,8 @@ ul.no-bullet {
 .pinks a,
 .pinks h2,
 .pinks h3,
-.pinks h4 {
+.pinks h4,
+.pinks .font-icon {
   color: #7c184f; }
 
 .pinks .c-wrapper {
@@ -9679,7 +9681,8 @@ ul.no-bullet {
 .blues a,
 .blues h2,
 .blues h3,
-.blues h4 {
+.blues h4,
+.blues .font-icon {
   color: #2c498a; }
 
 .blues .c-wrapper {
@@ -9696,7 +9699,8 @@ ul.no-bullet {
 .yellows a,
 .yellows h2,
 .yellows h3,
-.yellows h4 {
+.yellows h4,
+.yellows .font-icon {
   color: #edab00; }
 
 .yellows .c-wrapper {
@@ -9713,7 +9717,8 @@ ul.no-bullet {
 .oranges a,
 .oranges h2,
 .oranges h3,
-.oranges h4 {
+.oranges h4,
+.oranges .font-icon {
   color: #d9541a; }
 
 .oranges .c-wrapper {
@@ -9730,7 +9735,8 @@ ul.no-bullet {
 .teals a,
 .teals h2,
 .teals h3,
-.teals h4 {
+.teals h4,
+.teals .font-icon {
   color: #005e63; }
 
 .teals .c-wrapper {
@@ -9747,7 +9753,8 @@ ul.no-bullet {
 .purples a,
 .purples h2,
 .purples h3,
-.purples h4 {
+.purples h4,
+.purples .font-icon {
   color: #592c82; }
 
 .purples .c-wrapper {
