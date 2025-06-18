@@ -183,7 +183,8 @@
     a,
     h2,
     h3,
-    h4 {
+    h4,
+    .font-icon {
       color: map-get($color, "medium");
     }
 
