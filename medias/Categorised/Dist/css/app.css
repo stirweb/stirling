@@ -9432,7 +9432,7 @@ ul.no-bullet {
 
 /*
 
-  BRAND 
+  BRAND 2025
   --- 
 
 */
@@ -9456,6 +9456,9 @@ ul.no-bullet {
 .teals h4 {
   color: #008996; }
 
+.teals a {
+  color: #005e63; }
+
 .purples a,
 .purples h2,
 .purples h3,
@@ -9467,6 +9470,104 @@ ul.no-bullet {
 .blues h3,
 .blues h4 {
   color: #2c498a; }
+
+.greens .u-font-icon {
+  color: #006938; }
+
+.greens .c-wrapper-2025 {
+  background-color: #edf4f1; }
+  .greens .c-wrapper-2025.u-bleed {
+    border-image-source: linear-gradient(#edf4f1, #edf4f1); }
+
+.greens .c-link::after {
+  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
+.greens .c-link::before {
+  background-color: #76b72a; }
+
+.pinks .u-font-icon {
+  color: #7c184f; }
+
+.pinks .c-wrapper-2025 {
+  background-color: #f6eff3; }
+  .pinks .c-wrapper-2025.u-bleed {
+    border-image-source: linear-gradient(#f6eff3, #f6eff3); }
+
+.pinks .c-link::after {
+  filter: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%); }
+
+.pinks .c-link::before {
+  background-color: #e80068; }
+
+.blues .u-font-icon {
+  color: #2c498a; }
+
+.blues .c-wrapper-2025 {
+  background-color: #f0f2f9; }
+  .blues .c-wrapper-2025.u-bleed {
+    border-image-source: linear-gradient(#f0f2f9, #f0f2f9); }
+
+.blues .c-link::after {
+  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
+.blues .c-link::before {
+  background-color: #77a4da; }
+
+.yellows .u-font-icon {
+  color: #edab00; }
+
+.yellows .c-wrapper-2025 {
+  background-color: #fdfbef; }
+  .yellows .c-wrapper-2025.u-bleed {
+    border-image-source: linear-gradient(#fdfbef, #fdfbef); }
+
+.yellows .c-link::after {
+  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
+.yellows .c-link::before {
+  background-color: #f4c400; }
+
+.oranges .u-font-icon {
+  color: #d9541a; }
+
+.oranges .c-wrapper-2025 {
+  background-color: #fef6f0; }
+  .oranges .c-wrapper-2025.u-bleed {
+    border-image-source: linear-gradient(#fef6f0, #fef6f0); }
+
+.oranges .c-link::after {
+  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
+.oranges .c-link::before {
+  background-color: #ff6d00; }
+
+.teals .u-font-icon {
+  color: #005e63; }
+
+.teals .c-wrapper-2025 {
+  background-color: #edf7f8; }
+  .teals .c-wrapper-2025.u-bleed {
+    border-image-source: linear-gradient(#edf7f8, #edf7f8); }
+
+.teals .c-link::after {
+  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
+.teals .c-link::before {
+  background-color: #008996; }
+
+.purples .u-font-icon {
+  color: #592c82; }
+
+.purples .c-wrapper-2025 {
+  background-color: #f4f0f7; }
+  .purples .c-wrapper-2025.u-bleed {
+    border-image-source: linear-gradient(#f4f0f7, #f4f0f7); }
+
+.purples .c-link::after {
+  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
+
+.purples .c-link::before {
+  background-color: #592c82; }
 
 .dark {
   color: #fff; }
@@ -9670,104 +9771,6 @@ ul.no-bullet {
 
 .u-hook.purples.u-hook-full-bleed::before {
   border-color: #592c82; }
-
-.greens .font-icon {
-  color: #006938; }
-
-.greens .c-wrapper-2025 {
-  background-color: #edf4f1; }
-  .greens .c-wrapper-2025.u-bleed {
-    border-image-source: linear-gradient(#edf4f1, #edf4f1); }
-
-.greens .c-link::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.greens .c-link::before {
-  background-color: #76b72a; }
-
-.pinks .font-icon {
-  color: #7c184f; }
-
-.pinks .c-wrapper-2025 {
-  background-color: #f6eff3; }
-  .pinks .c-wrapper-2025.u-bleed {
-    border-image-source: linear-gradient(#f6eff3, #f6eff3); }
-
-.pinks .c-link::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%); }
-
-.pinks .c-link::before {
-  background-color: #e80068; }
-
-.blues .font-icon {
-  color: #2c498a; }
-
-.blues .c-wrapper-2025 {
-  background-color: #f0f2f9; }
-  .blues .c-wrapper-2025.u-bleed {
-    border-image-source: linear-gradient(#f0f2f9, #f0f2f9); }
-
-.blues .c-link::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.blues .c-link::before {
-  background-color: #77a4da; }
-
-.yellows .font-icon {
-  color: #edab00; }
-
-.yellows .c-wrapper-2025 {
-  background-color: #fdfbef; }
-  .yellows .c-wrapper-2025.u-bleed {
-    border-image-source: linear-gradient(#fdfbef, #fdfbef); }
-
-.yellows .c-link::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.yellows .c-link::before {
-  background-color: #f4c400; }
-
-.oranges .font-icon {
-  color: #d9541a; }
-
-.oranges .c-wrapper-2025 {
-  background-color: #fef6f0; }
-  .oranges .c-wrapper-2025.u-bleed {
-    border-image-source: linear-gradient(#fef6f0, #fef6f0); }
-
-.oranges .c-link::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.oranges .c-link::before {
-  background-color: #ff6d00; }
-
-.teals .font-icon {
-  color: #005e63; }
-
-.teals .c-wrapper-2025 {
-  background-color: #edf7f8; }
-  .teals .c-wrapper-2025.u-bleed {
-    border-image-source: linear-gradient(#edf7f8, #edf7f8); }
-
-.teals .c-link::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.teals .c-link::before {
-  background-color: #008996; }
-
-.purples .font-icon {
-  color: #592c82; }
-
-.purples .c-wrapper-2025 {
-  background-color: #f4f0f7; }
-  .purples .c-wrapper-2025.u-bleed {
-    border-image-source: linear-gradient(#f4f0f7, #f4f0f7); }
-
-.purples .c-link::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
-
-.purples .c-link::before {
-  background-color: #592c82; }
 
 /* 
   Colour overrides
