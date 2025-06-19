@@ -9648,7 +9648,7 @@ ul.no-bullet {
   width: 50vw; }
 
 .u-hook-br > *::after {
-  height: 100px;
+  height: var(--hook-height);
   width: 100%;
   bottom: 0;
   left: 0;
@@ -10181,6 +10181,12 @@ svg.u-icon {
 .hook-energy-green::after,
 .hook-energy-green::before {
   background-color: #76b72a; }
+
+@media screen and (max-width: 39.99875em) {
+  .remove-hook-for-small > *::after {
+    content: none; }
+  .remove-hook-for-small > *::before {
+    content: none; } }
 
 /*
     Interactivity
