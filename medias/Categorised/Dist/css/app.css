@@ -1014,10 +1014,6 @@ hr {
   height: 0;
   overflow: visible; }
 
-picture {
-  display: inline-block;
-  vertical-align: middle; }
-
 .u-bg-grey hr {
   border-color: #cacaca; }
 
@@ -8015,7 +8011,7 @@ a[data-mode*="Online"] {
     background-color: #006938;
     /* fallback to solid green */ }
   .c-course-datasheet[data-accreditation] {
-    background: linear-gradient(90deg, #006938 50%, #edf4f1 50%);
+    background: linear-gradient(90deg, #006938 50%, rgba(255, 0, 0, 0) 50%);
     /* hard-stop gradient to give the full-width two-colour background */ }
   .c-course-datasheet .c-icon-block {
     margin-left: 1rem; }
@@ -9474,6 +9470,9 @@ ul.no-bullet {
 .greens .u-font-icon {
   color: #006938; }
 
+.greens a:hover {
+  text-decoration-color: #76b72a; }
+
 .greens .c-wrapper-2025 {
   background-color: #edf4f1; }
   .greens .c-wrapper-2025.u-bleed {
@@ -9487,6 +9486,9 @@ ul.no-bullet {
 
 .pinks .u-font-icon {
   color: #7c184f; }
+
+.pinks a:hover {
+  text-decoration-color: #e80068; }
 
 .pinks .c-wrapper-2025 {
   background-color: #f6eff3; }
@@ -9502,6 +9504,9 @@ ul.no-bullet {
 .blues .u-font-icon {
   color: #2c498a; }
 
+.blues a:hover {
+  text-decoration-color: #77a4da; }
+
 .blues .c-wrapper-2025 {
   background-color: #f0f2f9; }
   .blues .c-wrapper-2025.u-bleed {
@@ -9515,6 +9520,9 @@ ul.no-bullet {
 
 .yellows .u-font-icon {
   color: #edab00; }
+
+.yellows a:hover {
+  text-decoration-color: #f4c400; }
 
 .yellows .c-wrapper-2025 {
   background-color: #fdfbef; }
@@ -9530,6 +9538,9 @@ ul.no-bullet {
 .oranges .u-font-icon {
   color: #d9541a; }
 
+.oranges a:hover {
+  text-decoration-color: #ff6d00; }
+
 .oranges .c-wrapper-2025 {
   background-color: #fef6f0; }
   .oranges .c-wrapper-2025.u-bleed {
@@ -9544,6 +9555,9 @@ ul.no-bullet {
 .teals .u-font-icon {
   color: #005e63; }
 
+.teals a:hover {
+  text-decoration-color: #008996; }
+
 .teals .c-wrapper-2025 {
   background-color: #edf7f8; }
   .teals .c-wrapper-2025.u-bleed {
@@ -9557,6 +9571,9 @@ ul.no-bullet {
 
 .purples .u-font-icon {
   color: #592c82; }
+
+.purples a:hover {
+  text-decoration-color: #592c82; }
 
 .purples .c-wrapper-2025 {
   background-color: #f4f0f7; }
