@@ -11,31 +11,25 @@
   }
 
   .c-infographic__image {
-    max-width: 550px;
-    max-height: 250px;
-    height: 100%;
+    max-height: 130px;
     width: 100%;
+    height: 100%;
   }
 
   .c-infographic__header {
     font-family: FSMaja, serif;
     margin: 0 0 5px 0;
     line-height: 1.5;
-    font-size: 4.9375rem; /* 79px */
+    font-size: 2.25rem; /* 36px */
+    border: none;
   }
 
   .c-infographic__line1 {
     font-weight: 700;
     margin: 0 0 15px 0;
     line-height: 1.5;
-    font-size: 2rem; /* 32px */
+    font-size: 1.1875rem; /* 19px */
   }
-
-  // .c-infographic__line2 {
-  //   margin: 0 0 30px 0;
-  //   font-size: 1rem; /* 16px */
-  //   line-height: 1.5;
-  // }
 
   /* 
       Compact style 
@@ -44,34 +38,40 @@
     .c-infographic__header {
       color: #005e63;
       margin: 0 0 8px 0;
-      font-size: 3rem; /* 48px */
     }
 
     .c-infographic__line1 {
       color: #3a3c39;
       margin: 0 0 15px 0;
-      font-size: 1.4375rem; /* 23px */
     }
-
-    // .c-infographic__line2 {
-    //   font-size: 1rem; // 16px;
-    //   color: #3a3c39;
-    // }
   }
 
   &.u-padding-y {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 0rem;
   }
 }
 
-/* X Large down */
-@media screen and (max-width: 1440px) {
-  .c-infographic.u-padding-y {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-  }
+/* Medium up */
+@media screen and (min-width: 640px) {
+  .c-infographic {
+    &.u-padding-y {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
 
+    .c-infographic__image {
+      max-height: 150px;
+    }
+
+    .c-infographic__header {
+      font-size: 2.625rem;
+    }
+  }
+}
+
+/* Large up */
+@media screen and (min-width: 1024px) {
   .c-infographic {
     &.u-padding-y {
       padding-top: 1.5rem;
@@ -83,72 +83,57 @@
       max-height: 200px;
     }
 
-    /* 
-      Compact style 
-    */
-    &.c-infographic-compact .c-infographic__header,
     .c-infographic__header {
       font-size: 2.875rem; /* 46px */
     }
 
-    &.c-infographic-compact .c-infographic__line1,
     .c-infographic__line1 {
       font-size: 1.375rem; /* 22px */
     }
   }
 }
 
-/* Large down */
-@media screen and (max-width: 1024px) {
+/* X Large up */
+@media screen and (min-width: 1440px) {
   .c-infographic {
     &.u-padding-y {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
     }
 
     .c-infographic__image {
-      max-height: 150px;
+      max-width: 550px;
+      max-height: 250px;
     }
 
-    /* 
-      Compact style 
-    */
-    &.c-infographic-compact .c-infographic__header,
     .c-infographic__header {
-      font-size: 2.625rem;
+      font-size: 4.9375rem; /* 79px */
     }
 
-    &.c-infographic-compact .c-infographic__line1,
     .c-infographic__line1 {
-      font-size: 1.1875rem; /* 19px */
+      font-size: 2rem; /* 32px */
+    }
+
+    /* Compact style font sizes differ at largest breakpoint */
+    &.c-infographic-compact {
+      .c-infographic__header {
+        font-size: 3rem; /* 48px */
+      }
+
+      .c-infographic__line1 {
+        font-size: 1.4375rem; /* 23px */
+      }
     }
   }
 }
 
-/* Medium down */
-@media screen and (max-width: 640px) {
-  .c-infographic {
-    &.u-padding-y {
-      padding-top: 1rem;
-      padding-bottom: 0rem;
-    }
+/* 
+  "123" added for Clearing 2024
 
-    .c-infographic__image {
-      max-height: 130px;
-    }
 
-    /* 
-      Compact style 
-    */
-    &.c-infographic-compact .c-infographic__header,
-    .c-infographic__header {
-      font-size: 2.25rem; /* 36px */
-      border: none;
-    }
-  }
-}
 
-/* "123" added for Clearing 2024*/
+
+*/
 .c-123 {
   grid-template-columns: auto;
   gap: 1rem;
@@ -171,14 +156,14 @@
   }
 }
 
-.c-123>a {
+.c-123 > a {
   display: block;
   padding: 2rem;
   text-align: center;
   font-family: "General Sans";
 }
 
-.c-123>a p {
+.c-123 > a p {
   font-size: 1.75rem;
 }
 
@@ -192,9 +177,8 @@
 }
 
 .c-123 a {
-
   border: 2px solid transparent;
-  transition: .2s color, .2s background-color;
+  transition: 0.2s color, 0.2s background-color;
 
   &.energy-pink {
     color: #fff;
