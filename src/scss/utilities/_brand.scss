@@ -320,47 +320,47 @@
 }
 
 .u-border-bleed-right {
-  background-image: linear-gradient(90deg, map-get($greens, "tint-7") 70%, map-get($greens, "medium") 30%);
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($greens, "medium") 30%);
 }
 
 .u-border-bleed-left.teals {
-  background-image: linear-gradient(90deg, map-get($teals, "light") 30%, map-get($teals, "tint-7") 70%);
+  background-image: linear-gradient(90deg, map-get($teals, "light") 30%, rgba(255, 0, 0, 0) 70%);
 }
 
 .u-border-bleed-right.teals {
-  background-image: linear-gradient(90deg, map-get($teals, "tint-7") 70%, map-get($teals, "light") 30%);
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($teals, "light") 30%);
 }
 
 .u-border-bleed-left.pinks {
-  background-image: linear-gradient(90deg, map-get($pinks, "medium") 30%, map-get($pinks, "tint-7") 70%);
+  background-image: linear-gradient(90deg, map-get($pinks, "medium") 30%, rgba(255, 0, 0, 0) 70%);
 }
 
 .u-border-bleed-right.pinks {
-  background-image: linear-gradient(90deg, map-get($pinks, "tint-7") 70%, map-get($pinks, "medium") 30%);
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($pinks, "medium") 30%);
 }
 
 .u-border-bleed-left.blues {
-  background-image: linear-gradient(90deg, map-get($blues, "medium") 30%, map-get($blues, "tint-7") 70%);
+  background-image: linear-gradient(90deg, map-get($blues, "medium") 30%, rgba(255, 0, 0, 0) 70%);
 }
 
 .u-border-bleed-right.blues {
-  background-image: linear-gradient(90deg, map-get($blues, "tint-7") 70%, map-get($blues, "medium") 30%);
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($blues, "medium") 30%);
 }
 
 .u-border-bleed-left.purples {
-  background-image: linear-gradient(90deg, map-get($purples, "medium") 30%, map-get($purples, "tint-7") 70%);
+  background-image: linear-gradient(90deg, map-get($purples, "medium") 30%, rgba(255, 0, 0, 0) 70%);
 }
 
 .u-border-bleed-right.purples {
-  background-image: linear-gradient(90deg, map-get($purples, "tint-7") 70%, map-get($purples, "medium") 30%);
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($purples, "medium") 30%);
 }
 
 .u-border-bleed-left.neutrals {
-  background-image: linear-gradient(90deg, map-get($brand-palette, "light-mink") 30%, $white 70%);
+  background-image: linear-gradient(90deg, map-get($brand-palette, "light-mink") 30%, rgba(255, 0, 0, 0) 70%);
 }
 
 .u-border-bleed-right.neutrals {
-  background-image: linear-gradient(90deg, $white 70%, map-get($brand-palette, "light-mink") 30%);
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($brand-palette, "light-mink") 30%);
 }
 
 /*

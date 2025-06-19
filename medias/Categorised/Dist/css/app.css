@@ -9878,37 +9878,37 @@ ul.no-bullet {
   background-image: linear-gradient(90deg, #006938 30%, #edf4f1 70%); }
 
 .u-border-bleed-right {
-  background-image: linear-gradient(90deg, #edf4f1 70%, #006938 30%); }
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, #006938 30%); }
 
 .u-border-bleed-left.teals {
-  background-image: linear-gradient(90deg, #008996 30%, #edf7f8 70%); }
+  background-image: linear-gradient(90deg, #008996 30%, rgba(255, 0, 0, 0) 70%); }
 
 .u-border-bleed-right.teals {
-  background-image: linear-gradient(90deg, #edf7f8 70%, #008996 30%); }
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, #008996 30%); }
 
 .u-border-bleed-left.pinks {
-  background-image: linear-gradient(90deg, #7c184f 30%, #f6eff3 70%); }
+  background-image: linear-gradient(90deg, #7c184f 30%, rgba(255, 0, 0, 0) 70%); }
 
 .u-border-bleed-right.pinks {
-  background-image: linear-gradient(90deg, #f6eff3 70%, #7c184f 30%); }
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, #7c184f 30%); }
 
 .u-border-bleed-left.blues {
-  background-image: linear-gradient(90deg, #2c498a 30%, #f0f2f9 70%); }
+  background-image: linear-gradient(90deg, #2c498a 30%, rgba(255, 0, 0, 0) 70%); }
 
 .u-border-bleed-right.blues {
-  background-image: linear-gradient(90deg, #f0f2f9 70%, #2c498a 30%); }
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, #2c498a 30%); }
 
 .u-border-bleed-left.purples {
-  background-image: linear-gradient(90deg, #592c82 30%, #f4f0f7 70%); }
+  background-image: linear-gradient(90deg, #592c82 30%, rgba(255, 0, 0, 0) 70%); }
 
 .u-border-bleed-right.purples {
-  background-image: linear-gradient(90deg, #f4f0f7 70%, #592c82 30%); }
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, #592c82 30%); }
 
 .u-border-bleed-left.neutrals {
-  background-image: linear-gradient(90deg, #d1d1c9 30%, #fff 70%); }
+  background-image: linear-gradient(90deg, #d1d1c9 30%, rgba(255, 0, 0, 0) 70%); }
 
 .u-border-bleed-right.neutrals {
-  background-image: linear-gradient(90deg, #fff 70%, #d1d1c9 30%); }
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, #d1d1c9 30%); }
 
 /*
 
