@@ -63,6 +63,10 @@
       color: map-get($color, "medium");
     }
 
+    a:hover {
+      text-decoration-color: map-get($color, "light");
+    }
+
     .c-wrapper-2025 {
       background-color: map-get($color, "tint-7");
 
