@@ -58,6 +58,10 @@ ul .c-link {
   content: "";
 }
 
+.u-white--all .c-link::after {
+  filter: brightness(0) invert(1);
+}
+
 .c-wysiwyg-content li a,
 .accordion-content li a,
 .tabs-panel li a {
