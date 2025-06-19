@@ -6,7 +6,66 @@
 */
 
 /*
-  New brand 2025 bracket hook styles
+  New brand 2025 colour packs
+*/
+
+.pinks {
+  a,
+  h2,
+  h3,
+  h4 {
+    color: map-get($pinks, "medium");
+  }
+}
+
+.greens {
+  a,
+  h2,
+  h3,
+  h4 {
+    color: map-get($greens, "dark");
+  }
+}
+
+.teals {
+  h2,
+  h3,
+  h4 {
+    color: map-get($teals, "light");
+  }
+}
+
+.purples {
+  a,
+  h2,
+  h3,
+  h4 {
+    color: map-get($purples, "light");
+  }
+}
+
+.blues {
+  a,
+  h2,
+  h3,
+  h4 {
+    color: map-get($blues, "medium");
+  }
+}
+
+.dark {
+  color: $white;
+  a,
+  h2,
+  h3,
+  h4,
+  h5 {
+    color: $white;
+  }
+}
+
+/*
+  New brand 2025 hooks
 */
 
 :root {
@@ -36,16 +95,15 @@
   height: 20%;
 }
 
-/* 
-  Top Right 
-*/
+// Top Right
+
 .u-hook-tr > *::before {
   top: calc(0px - var(--border-thickness));
   border-top: var(--border-thickness) solid map-get($greens, "medium");
   border-right: var(--border-thickness) solid map-get($greens, "medium");
 }
 
-// full bleed
+// Top Right full bleed
 .u-hook-tr.u-hook-full-bleed::before {
   content: "";
   position: absolute;
@@ -56,26 +114,21 @@
   width: 50vw;
 }
 
-/* 
-  Top left
-*/
+// Top left
 .u-hook-tl > *::before {
   top: 0;
   border-top: var(--border-thickness) solid map-get($greens, "medium");
   border-left: var(--border-thickness) solid map-get($greens, "medium");
 }
 
-/*  
-  Bottom left 
-*/
-
+// Bottom left
 .u-hook-bl > *::before {
   bottom: calc(0px - var(--border-thickness));
   border-bottom: var(--border-thickness) solid map-get($greens, "medium");
   border-left: var(--border-thickness) solid map-get($greens, "medium");
 }
 
-// full bleed
+// Bottom left full bleed
 .u-hook-bl.u-hook-full-bleed::before {
   content: "";
   position: absolute;
@@ -86,9 +139,7 @@
   width: 50vw;
 }
 
-/* 
-  Bottom right 
-*/
+// Bottom right
 .u-hook-br > *::after {
   height: 100px;
   width: 100%;
@@ -98,15 +149,15 @@
   border-right: var(--border-thickness) solid map-get($greens, "medium");
 }
 
-// Adjust left offset for .c-wrapper specifically
-.u-hook-bl > .c-wrapper {
+// Adjust left offset for wrapper specifically
+.u-hook-bl > .c-wrapper-2025 {
   margin-bottom: var(--border-thickness);
   &::before {
     left: var(--gutter-offset);
   }
 }
 
-.u-hook-tr > .c-wrapper {
+.u-hook-tr > .c-wrapper-2025 {
   margin-top: var(--border-thickness);
   &::before {
     right: var(--gutter-offset);
@@ -114,21 +165,21 @@
 }
 
 @include breakpoint(medium up) {
-  .u-hook-tr > .c-wrapper::before {
+  .u-hook-tr > .c-wrapper-2025::before {
     right: var(--gutter-offset-medium);
   }
 
-  .u-hook-bl > .c-wrapper::before {
+  .u-hook-bl > .c-wrapper-2025::before {
     left: var(--gutter-offset-medium);
   }
 }
 
 @include breakpoint(large up) {
-  .u-hook-tr > .c-wrapper::before {
+  .u-hook-tr > .c-wrapper-2025::before {
     right: var(--gutter-offset-large);
   }
 
-  .u-hook-bl > .c-wrapper::before {
+  .u-hook-bl > .c-wrapper-2025::before {
     left: var(--gutter-offset-large);
   }
 }
@@ -161,15 +212,11 @@
 
 @each $name, $color in $uos-colour-group-palette {
   .#{$name} {
-    a,
-    h2,
-    h3,
-    h4,
     .font-icon {
       color: map-get($color, "medium");
     }
 
-    .c-wrapper {
+    .c-wrapper-2025 {
       background-color: map-get($color, "tint-7");
 
       &.u-bleed {
@@ -219,58 +266,9 @@
   border-color: map-get($brand-palette, "light-mink");
 }
 
-.pinks {
-  a,
-  h2,
-  h3,
-  h4 {
-    color: map-get($pinks, "medium");
-  }
-}
-
-.greens {
-  a,
-  h2,
-  h3,
-  h4 {
-    color: map-get($greens, "dark");
-  }
-}
-
 /*
   Dark themes of the hooks
 */
-
-.u-hook.dark {
-  color: $white;
-  a,
-  h2,
-  h3,
-  h4,
-  h5 {
-    color: $white;
-  }
-
-  @each $name, $color in $uos-colour-group-palette {
-    &.#{$name} {
-      .c-wrapper {
-        background-color: map-get($color, "medium");
-        &.u-bleed {
-          border-image-source: linear-gradient(map-get($color, "medium"), map-get($color, "medium"));
-        }
-      }
-    }
-  }
-}
-
-.u-hook.dark.pinks {
-  .c-wrapper {
-    background-color: map-get($pinks, "dark");
-    &.u-bleed {
-      border-image-source: linear-gradient(map-get($pinks, "dark"), map-get($pinks, "dark"));
-    }
-  }
-}
 
 .u-hook.dark.greens {
   > *::before {
@@ -286,21 +284,42 @@
   border-color: map-get($greens, "dark");
 }
 
-.u-hook.dark.blues {
-  .c-wrapper {
-    background-color: map-get($blues, "dark");
-    &.u-bleed {
-      border-image-source: linear-gradient(map-get($blues, "dark"), map-get($blues, "dark"));
-    }
+/*
+  .c-wrapper-2025
+*/
+
+.c-wrapper-2025.greens.dark {
+  background-color: map-get($greens, "medium");
+  &.u-bleed {
+    border-image-source: linear-gradient(map-get($greens, "medium"), map-get($greens, "medium"));
   }
 }
 
-.u-hook.dark.purples {
-  .c-wrapper {
-    background-color: map-get($purples, "dark");
-    &.u-bleed {
-      border-image-source: linear-gradient(map-get($purples, "dark"), map-get($purples, "dark"));
-    }
+.c-wrapper-2025.teals.dark {
+  background-color: map-get($teals, "medium");
+  &.u-bleed {
+    border-image-source: linear-gradient(map-get($teals, "medium"), map-get($teals, "medium"));
+  }
+}
+
+.c-wrapper-2025.pinks.dark {
+  background-color: map-get($pinks, "dark");
+  &.u-bleed {
+    border-image-source: linear-gradient(map-get($pinks, "dark"), map-get($pinks, "dark"));
+  }
+}
+
+.c-wrapper-2025.purples.dark {
+  background-color: map-get($purples, "dark");
+  &.u-bleed {
+    border-image-source: linear-gradient(map-get($purples, "dark"), map-get($purples, "dark"));
+  }
+}
+
+.c-wrapper-2025.blues.dark {
+  background-color: map-get($blues, "dark");
+  &.u-bleed {
+    border-image-source: linear-gradient(map-get($blues, "dark"), map-get($blues, "dark"));
   }
 }
 
@@ -310,7 +329,7 @@
 
 .u-border-bleed {
   display: block;
-  height: 32px;
+  height: var(--border-thickness);
   background-origin: border-box;
   background-clip: border-box;
 }
