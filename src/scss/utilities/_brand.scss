@@ -1,6 +1,6 @@
 /*
 
-  BRAND 
+  BRAND 2025
   --- 
 
 */
@@ -33,6 +33,10 @@
   h4 {
     color: map-get($teals, "light");
   }
+
+  a {
+    color: map-get($teals, "medium");
+  }
 }
 
 .purples {
@@ -50,6 +54,30 @@
   h3,
   h4 {
     color: map-get($blues, "medium");
+  }
+}
+
+@each $name, $color in $uos-colour-group-palette {
+  .#{$name} {
+    .u-font-icon {
+      color: map-get($color, "medium");
+    }
+
+    .c-wrapper-2025 {
+      background-color: map-get($color, "tint-7");
+
+      &.u-bleed {
+        border-image-source: linear-gradient(map-get($color, "tint-7"), map-get($color, "tint-7"));
+      }
+    }
+
+    .c-link::after {
+      filter: icon-filter(map-get($color, "medium"));
+    }
+
+    .c-link::before {
+      background-color: (map-get($color, "light"));
+    }
   }
 }
 
@@ -206,30 +234,6 @@
       &.u-hook-full-bleed::before {
         border-color: map-get($color, "medium");
       }
-    }
-  }
-}
-
-@each $name, $color in $uos-colour-group-palette {
-  .#{$name} {
-    .font-icon {
-      color: map-get($color, "medium");
-    }
-
-    .c-wrapper-2025 {
-      background-color: map-get($color, "tint-7");
-
-      &.u-bleed {
-        border-image-source: linear-gradient(map-get($color, "tint-7"), map-get($color, "tint-7"));
-      }
-    }
-
-    .c-link::after {
-      filter: icon-filter(map-get($color, "medium"));
-    }
-
-    .c-link::before {
-      background-color: (map-get($color, "light"));
     }
   }
 }
