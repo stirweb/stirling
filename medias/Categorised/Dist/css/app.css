@@ -8167,7 +8167,7 @@ a[data-mode*="Online"] {
     background-color: #006938;
     /* fallback to solid green */ }
   .c-course-datasheet[data-accreditation] {
-    background: linear-gradient(90deg, #006938 50%, rgba(255, 0, 0, 0) 50%);
+    background: linear-gradient(90deg, #006938 50%, #edf4f1 50%);
     /* hard-stop gradient to give the full-width two-colour background */ }
   .c-course-datasheet .c-icon-block {
     margin-left: 1rem; }
