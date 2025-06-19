@@ -111,12 +111,6 @@
   &::before {
     right: var(--gutter-offset);
   }
-  // &.u-margin-top {
-  //   margin-top: 100px;
-  // }
-  // &.u-margin-bottom {
-  //   margin-bottom: 100px;
-  // }
 }
 
 @include breakpoint(medium up) {
@@ -127,19 +121,6 @@
   .u-hook-bl > .c-wrapper::before {
     left: var(--gutter-offset-medium);
   }
-
-  // &.u-margin-top {
-  //   margin-top: 112px;
-  // }
-
-  // &.u-margin-bottom {
-  //   margin-bottom: 112px;
-  // }
-
-  // &.u-margin-y {
-  //   margin-bottom: 112px;
-  //   margin-top: 112px;
-  // }
 }
 
 @include breakpoint(large up) {
@@ -334,12 +315,52 @@
   background-clip: border-box;
 }
 
+.u-border-bleed-left {
+  background-image: linear-gradient(90deg, map-get($greens, "medium") 30%, map-get($greens, "tint-7") 70%);
+}
+
+.u-border-bleed-right {
+  background-image: linear-gradient(90deg, map-get($greens, "tint-7") 70%, map-get($greens, "medium") 30%);
+}
+
 .u-border-bleed-left.teals {
   background-image: linear-gradient(90deg, map-get($teals, "light") 30%, map-get($teals, "tint-7") 70%);
 }
 
 .u-border-bleed-right.teals {
   background-image: linear-gradient(90deg, map-get($teals, "tint-7") 70%, map-get($teals, "light") 30%);
+}
+
+.u-border-bleed-left.pinks {
+  background-image: linear-gradient(90deg, map-get($pinks, "medium") 30%, map-get($pinks, "tint-7") 70%);
+}
+
+.u-border-bleed-right.pinks {
+  background-image: linear-gradient(90deg, map-get($pinks, "tint-7") 70%, map-get($pinks, "medium") 30%);
+}
+
+.u-border-bleed-left.blues {
+  background-image: linear-gradient(90deg, map-get($blues, "medium") 30%, map-get($blues, "tint-7") 70%);
+}
+
+.u-border-bleed-right.blues {
+  background-image: linear-gradient(90deg, map-get($blues, "tint-7") 70%, map-get($blues, "medium") 30%);
+}
+
+.u-border-bleed-left.purples {
+  background-image: linear-gradient(90deg, map-get($purples, "medium") 30%, map-get($purples, "tint-7") 70%);
+}
+
+.u-border-bleed-right.purples {
+  background-image: linear-gradient(90deg, map-get($purples, "tint-7") 70%, map-get($purples, "medium") 30%);
+}
+
+.u-border-bleed-left.neutrals {
+  background-image: linear-gradient(90deg, map-get($brand-palette, "light-mink") 30%, $white 70%);
+}
+
+.u-border-bleed-right.neutrals {
+  background-image: linear-gradient(90deg, $white 70%, map-get($brand-palette, "light-mink") 30%);
 }
 
 /*
