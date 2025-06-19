@@ -82,7 +82,7 @@
 
 // Bottom right
 .u-hook-br > *::after {
-  height: 100px;
+  height: var(--hook-height);
   width: 100%;
   bottom: 0;
   left: 0;
@@ -706,4 +706,15 @@ svg.u-icon {
 .hook-energy-green::after,
 .hook-energy-green::before {
   background-color: $energy-green;
+}
+
+@include breakpoint(small down) {
+  .remove-hook-for-small > * {
+    &::after {
+      content: none;
+    }
+    &::before {
+      content: none;
+    }
+  }
 }
