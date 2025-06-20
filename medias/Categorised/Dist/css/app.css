@@ -891,6 +891,10 @@ a:has(img):hover {
   .dark h4,
   .dark h5 {
     color: #fff; }
+  .dark .c-link::after {
+    filter: brightness(0) invert(1); }
+  .dark .c-link::before {
+    background-color: brightness(0) invert(1); }
 
 /**
  * Because false isn’t a valid value for z-index, we don’t want it in our compiled

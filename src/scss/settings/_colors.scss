@@ -447,4 +447,12 @@ a:has(img):hover {
   h5 {
     color: $white;
   }
+
+  .c-link::after {
+    filter: brightness(0) invert(1);
+  }
+
+  .c-link::before {
+    background-color: brightness(0) invert(1);
+  }
 }
