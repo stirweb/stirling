@@ -2,7 +2,8 @@
 @charset 'utf-8';
 
 /*
-    General Sans
+    Fonts
+    ----------------
 */
 
 @font-face {
@@ -21,9 +22,7 @@
   font-display: swap;
 }
 
-/*
-    FSMaja
-*/
+/* FSMaja */
 
 @font-face {
   font-family: "FSMaja";
@@ -41,20 +40,21 @@ $global-lineheight: 1.5;
 // 2. Colours
 // ---------
 
-$light-gray: #e6e6e6;
-$medium-gray: #cacaca;
-$dark-gray: #8a8a8a;
-$dark-grey: #616361;
-$grey: #bebebe;
-$black: #3a3c39; // Tertiary Colour
-$white: #fff; //fefefe;
+$grey: #f1f1ef; // before bebebe
+$light-gray: #f1f1ef; // before e6e6e6
+$medium-gray: #d1d1c9; // before cacaca
+$dark-gray: #3a3c39; // before 8a8a8a
+$dark-grey: #3a3c39; // before 616361
+
+$black: #000;
+$white: #fff; // before fefefe;
 
 $foundation-palette: (
   primary: #006938,
-  secondary: #767676,
+  secondary: #5f6350,
   success: #006938,
-  warning: #ecaa00,
-  alert: #d10056,
+  warning: #edab00,
+  alert: #e80068,
   black: $black,
   white: $white,
 );
@@ -65,38 +65,180 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
   // Tertiary Colours
-  light-mink: #c5bfb7,
-  medium-mink: #79766f,
-  dark-mink: #373a36,
+  light-mink: #d1d1c9,
+  medium-mink: #97956d,
+  dark-mink: #3a3a26,
+
   // Energy Colours
-  energy: #77bf22,
-  energy-green: #77bf22,
+  energy: #76b72a,
+  energy-green: #76b72a,
   energy-teal: #008996,
   energy-yellow: #f4c400,
   energy-orange: #ff6d00,
-  energy-light-blue: #5fb4e5,
-  energy-blue: #3d7dca,
+  energy-light-blue: #77a4da,
+  energy-blue: #2c498a,
   energy-pink: #e80068,
   energy-purple: #592c82,
   energy-turq: #00a5ac,
+
   // Heritage Colours
   heritage-green: #006938,
   heritage-teal: #005e63,
-  heritage-yellow: #ecaa00,
-  heritage-orange: #e14504,
-  heritage-blue: #385dae,
-  heritage-navy: #14315e,
-  heritage-berry: #9d1e65,
-  heritage-purple: #31006f,
-
+  heritage-yellow: #edab00,
+  heritage-orange: #d9541a,
+  heritage-blue: #122c54,
+  heritage-navy: #122c54,
+  heritage-berry: #511535,
+  // no longer exists. before 7c184f. Mapped to dark pink
+  heritage-purple: #3f0066,
   // Web versions
-  web-turq: #00838a
+  web-turq: #00838a,
+
+  // New 2025 colours
+  // Green
+  green-tint-7: #edf4f1,
+  green-tint: #9fcc69,
+  // energy-green
+  //green-light: #76b72a,
+  // heritage-green
+  green-medium: #006938,
+  green-dark: #005734,
+
+  // Neutral
+  neutral-tint-7: #f1f1ef,
+  neutral-light: #d1d1c9,
+  neutral-medium: #97956d,
+  neutral-medium-dark: #5f6350,
+  neutral-dark: #3a3a26,
+
+  // Teal
+  teal-tint-7: #edf7f8,
+  teal-tint: #4cacb5,
+  //teal-light: #008996,
+  teal-medium: #005e63,
+  teal-dark: #003a3d,
+
+  // Blue
+  blue-tint-7: #f0f2f9,
+  blue-tint: #77a4da,
+  //blue-light: #3d7dca,
+  blue-medium: #2c498a,
+  blue-dark: #122c54,
+
+  // Purple
+  purple-tint-7: #f4f0f7,
+  purple-tint: #b186d7,
+  //purple-light: #9053c6,
+  purple-medium: #592c82,
+  purple-dark: #3f0066,
+
+  // Pink
+  pink-tint-7: #f6eff3,
+  pink-tint-40: #c698b0,
+  pink-tint: #ef4c95,
+  //pink-light: #e80068,
+  pink-medium: #7c184f,
+  pink-dark: #511535,
+
+  // Orange
+  orange-tint: #ff994c,
+  //orange-light: #ff6d00,
+  //orange-medium: #d9541a,
+  orange-dark: #852903,
+
+  // Yellow
+  yellow-tint: #f7d64c,
+  //yellow-light: #f4c400,
+  //yellow-medium: #edab00,
+  yellow-dark: #7b5c18
 );
+
+/*
+  Colour Groups Brand 2025
+*/
+$greens: (
+  "tint-7": map-get($brand-palette, green-tint-7),
+  "tint": map-get($brand-palette, green-tint),
+  "light": map-get($brand-palette, energy-green),
+  "medium": map-get($brand-palette, heritage-green),
+  "dark": map-get($brand-palette, green-dark),
+);
+
+$pinks: (
+  "tint-7": map-get($brand-palette, pink-tint-7),
+  "tint-40": map-get($brand-palette, pink-tint-40),
+  "tint": map-get($brand-palette, pink-tint),
+  "light": map-get($brand-palette, energy-pink),
+  "medium": map-get($brand-palette, pink-medium),
+  "dark": map-get($brand-palette, pink-dark),
+);
+
+$blues: (
+  "tint-7": map-get($brand-palette, blue-tint-7),
+  "tint": map-get($brand-palette, blue-tint),
+  "light": map-get($brand-palette, energy-light-blue),
+  "medium": map-get($brand-palette, energy-blue),
+  "dark": map-get($brand-palette, blue-dark),
+);
+
+$yellows: (
+  "tint-7": #fdfbef,
+  // Assumed or could use a custom light tint
+  "tint": map-get($brand-palette, yellow-tint),
+  "light": map-get($brand-palette, energy-yellow),
+  "medium": map-get($brand-palette, heritage-yellow),
+  "dark": map-get($brand-palette, yellow-dark),
+);
+
+$oranges: (
+  "tint-7": #fef6f0,
+  // Assumed or could use a custom light tint
+  "tint": map-get($brand-palette, orange-tint),
+  "light": map-get($brand-palette, energy-orange),
+  "medium": map-get($brand-palette, heritage-orange),
+  "dark": map-get($brand-palette, orange-dark),
+);
+
+$teals: (
+  "tint-7": map-get($brand-palette, teal-tint-7),
+  "tint": map-get($brand-palette, teal-tint),
+  "light": map-get($brand-palette, energy-teal),
+  "medium": map-get($brand-palette, heritage-teal),
+  "dark": map-get($brand-palette, teal-dark),
+);
+
+$purples: (
+  "tint-7": map-get($brand-palette, purple-tint-7),
+  "tint": map-get($brand-palette, purple-tint),
+  "light": map-get($brand-palette, energy-purple),
+  "medium": map-get($brand-palette, purple-medium),
+  "dark": map-get($brand-palette, purple-dark),
+);
+
+$uos-colour-group-palette: (
+  greens: $greens,
+  pinks: $pinks,
+  blues: $blues,
+  yellows: $yellows,
+  oranges: $oranges,
+  teals: $teals,
+  purples: $purples,
+);
+
+// @debug map-get($purples, "medium");
+
+// @each $name, $color in $uos-colour-group-palette {
+//   @debug map-get($color, "medium");
+// }
+
+/*
+  Button Palette
+*/
 
 $uos-button-palette: (
   primary: map-get($foundation-palette, primary),
@@ -105,46 +247,62 @@ $uos-button-palette: (
   warning: map-get($foundation-palette, warning),
   alert: map-get($foundation-palette, alert),
   // Energy
-  energy-green: map-get($brand-palette, energy-green),
+  // Green
   energy: map-get($brand-palette, energy-green),
-  energy-pink: map-get($brand-palette, energy-pink),
-  energy-turq: map-get($brand-palette, energy-turq),
-  energy-purple: map-get($brand-palette, energy-purple),
-  // Heritage
+  energy-green: map-get($brand-palette, energy-green),
   heritage-green: map-get($brand-palette, heritage-green),
+  // Pink
+  energy-pink: map-get($brand-palette, energy-pink),
+  pink-medium: map-get($brand-palette, pink-medium),
   heritage-berry: map-get($brand-palette, heritage-berry),
+  pink-dark: map-get($brand-palette, pink-dark),
+  // Teal
+  energy-teal: map-get($brand-palette, energy-teal),
+  teal-medium: map-get($brand-palette, energy-teal),
+  heritage-teal: map-get($brand-palette, heritage-teal),
+  // Purple
   heritage-purple: map-get($brand-palette, heritage-purple),
+  energy-purple: map-get($brand-palette, energy-purple),
   // Misc
   dark-mink: map-get($brand-palette, dark-mink),
+  energy-turq: map-get($brand-palette, energy-turq),
   info: map-get($brand-palette, heritage-blue),
 );
+
+/* 
+  Function to map icon filter values based on color
+*/
+@function icon-filter($color) {
+  // If color is already in our map, use that instead for performance
+  $filter-map: (
+    $heritage-green: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%),
+    $energy-green: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%),
+    $energy-pink: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%),
+    $energy-turq: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%),
+    $heritage-berry: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%),
+    $energy-purple: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%),
+    $heritage-purple: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%),
+    // Blue dark Purple dark etc for tinted buttons
+    // #3f0066: invert(100%) brightness(0) saturate(100%) invert(4%) sepia(96%) saturate(7409%) hue-rotate(278deg) brightness(92%) contrast(107%),
+    // #511535: invert(100%) brightness(0) saturate(100%) invert(9%) sepia(27%) saturate(5627%) hue-rotate(305deg) brightness(101%) contrast(93%),
+    #7c184f: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%),
+    #7b5c18: invert(100%) brightness(0) saturate(100%) invert(31%) sepia(58%) saturate(639%) hue-rotate(3deg) brightness(98%) contrast(85%),
+    #122c54: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%),
+  );
+
+  $mapped-filter: map-get($filter-map, $color);
+  @if $mapped-filter {
+    @return $mapped-filter;
+  }
+  // Return appropriate filter
+  @return map-get($filter-map, $heritage-green);
+}
 
 // Widening Participation campaign colours
 $uos-wp-palette: (
   wp-green: #00af99,
   wp-red: #d10056,
   wp-blue: #00a5db,
-);
-
-$uos-button-palette: (
-  primary: map-get($foundation-palette, primary),
-  secondary: map-get($foundation-palette, secondary),
-  success: map-get($foundation-palette, success),
-  warning: map-get($foundation-palette, warning),
-  alert: map-get($foundation-palette, alert),
-  // Energy
-  energy-green: map-get($brand-palette, energy-green),
-  energy: map-get($brand-palette, energy-green),
-  energy-pink: map-get($brand-palette, energy-pink),
-  energy-turq: map-get($brand-palette, energy-turq),
-  energy-purple: map-get($brand-palette, energy-purple),
-  // Heritage
-  heritage-green: map-get($brand-palette, heritage-green),
-  heritage-berry: map-get($brand-palette, heritage-berry),
-  heritage-purple: map-get($brand-palette, heritage-purple),
-  // Misc
-  dark-mink: map-get($brand-palette, dark-mink),
-  info: map-get($brand-palette, heritage-blue),
 );
 
 $button-palette: $uos-button-palette;
