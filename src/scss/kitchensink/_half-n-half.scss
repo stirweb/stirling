@@ -50,6 +50,14 @@
     background-color: $white;
   }
 
+  .u-hook-tr > ::before {
+    top: 0;
+  }
+
+  .u-hook-bl > ::before {
+    bottom: 0;
+  }
+
   .c-half-n-half__header {
     color: $heritage-green !important;
   }
