@@ -973,10 +973,10 @@ a:has(img):hover {
   background-color: #e80068 !important; }
 
 .u-bg-grey {
-  background-color: #f8f8f7 !important; }
+  background-color: #f6f5f4 !important; }
 
 .bg-grey {
-  border-image-source: linear-gradient(#f8f8f7, #f8f8f7); }
+  border-image-source: linear-gradient(#f6f5f4, #f6f5f4); }
 
 .bg-dark-grey {
   border-image-source: linear-gradient(#3a3c39, #3a3c39); }
@@ -2770,7 +2770,7 @@ Bleed Feature Image
   display: flex;
   gap: 1rem;
   position: relative;
-  border: 0 solid #f8f8f7;
+  border: 0 solid #f6f5f4;
   border-width: 1.125rem 0; }
   .breadcrumbs svg.home-icon {
     top: 3px;
@@ -2811,7 +2811,7 @@ Bleed Feature Image
     list-style: none;
     margin: 0;
     padding: 1rem;
-    background-color: #f8f8f7;
+    background-color: #f6f5f4;
     z-index: 11;
     border-bottom: 5px solid #ccc; }
     .breadcrumbs > li ul li {
@@ -4077,7 +4077,7 @@ progress::-moz-progress-bar {
 .c-half-n-half {
   margin: 0 0 40px 0; }
   .c-half-n-half .c-half-n-half__content {
-    background-color: #f8f8f7; }
+    background-color: #f6f5f4; }
   .c-half-n-half.js-animation {
     overflow-x: hidden;
     /* prevent horizontal scroll (before animation is triggered) */ }
@@ -4115,7 +4115,7 @@ progress::-moz-progress-bar {
   background-color: #000 !important; }
 
 .c-wrapper.u-bg-white .c-half-n-half .c-half-n-half__content {
-  background-color: #f8f8f7; }
+  background-color: #f6f5f4; }
 
 /*
     Medium up
@@ -6766,7 +6766,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       display: block;
       margin-right: 10px;
       color: #000;
-      border-bottom: 4px solid #ececeb; }
+      border-bottom: 4px solid #eae9e8; }
       .c-search-filters-menu li a.is-active {
         border-bottom: 4px solid #76b72a;
         color: #006938; }
@@ -6800,7 +6800,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
 .c-search-ordered-filters button {
   display: inline-block;
   padding: 5px 15px 5px 10px;
-  background-color: #ececeb;
+  background-color: #eae9e8;
   border: none;
   margin: 5px;
   margin-bottom: 1rem;
@@ -7057,7 +7057,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   width: calc(100% / 14);
   padding-right: 10px; }
   .c-search-letters__box a {
-    background: #f8f8f7;
+    background: #f6f5f4;
     display: block;
     border: 0;
     padding: 20px;
@@ -7860,7 +7860,7 @@ pre.debug {
   border-top: none; }
   .c-course-modules__table tbody tr {
     background: #fff;
-    border-bottom: 14px solid #f8f8f7; }
+    border-bottom: 14px solid #f6f5f4; }
     .c-course-modules__table tbody tr[data-availability="false"] {
       border: 2px dashed tomato; }
       .c-course-modules__table tbody tr[data-availability="false"]::before {
