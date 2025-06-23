@@ -2772,6 +2772,11 @@ Bleed Feature Image
   position: relative;
   border: 0 solid #f8f8f7;
   border-width: 1.125rem 0; }
+  .breadcrumbs svg.home-icon {
+    top: 3px;
+    position: relative;
+    width: 20px;
+    height: 20px; }
   .breadcrumbs .currentsection {
     font-weight: bold; }
   .breadcrumbs li:empty {

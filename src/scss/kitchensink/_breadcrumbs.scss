@@ -12,6 +12,13 @@
   border: 0 solid $bg-grey;
   border-width: 1.125rem 0;
 
+  svg.home-icon {
+    top: 3px;
+    position: relative;
+    width: 20px;
+    height: 20px;
+  }
+
   .currentsection {
     font-weight: bold;
   }
