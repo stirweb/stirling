@@ -94,19 +94,19 @@
   background-color: #dfdfd9; }
 
 .u-bg-medium-mink {
-  background-color: #97956d !important; }
+  background-color: #5f6350 !important; }
 
 .bg-medium-mink {
-  border-image-source: linear-gradient(#97956d, #97956d); }
+  border-image-source: linear-gradient(#5f6350, #5f6350); }
 
 .u-bg-medium-mink--30 {
-  background-color: #e0dfd3; }
+  background-color: #cfd0cb; }
 
 .u-bg-medium-mink--50 {
-  background-color: #cbcab6; }
+  background-color: #afb1a8; }
 
 .u-bg-medium-mink--70 {
-  background-color: #b6b599; }
+  background-color: #8f9285; }
 
 .u-bg-dark-mink {
   background-color: #3a3a26 !important; }
