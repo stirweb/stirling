@@ -738,11 +738,17 @@ a:has(img):hover {
 .pinks h4 {
   color: #7c184f; }
 
+.pinks a {
+  border-bottom: 2px solid #e80068; }
+
 .greens a,
 .greens h2,
 .greens h3,
 .greens h4 {
   color: #005734; }
+
+.greens a {
+  border-bottom: 2px solid #76b72a; }
 
 .teals h2,
 .teals h3,
@@ -752,17 +758,26 @@ a:has(img):hover {
 .teals a {
   color: #005e63; }
 
+.teals a {
+  border-bottom: 2px solid #008996; }
+
 .purples a,
 .purples h2,
 .purples h3,
 .purples h4 {
   color: #592c82; }
 
+.purples a {
+  border-bottom: 2px solid #592c82; }
+
 .blues a,
 .blues h2,
 .blues h3,
 .blues h4 {
   color: #2c498a; }
+
+.blues a {
+  border-bottom: 2px solid #77a4da; }
 
 .greens .u-font-icon {
   color: #006938; }
@@ -891,6 +906,8 @@ a:has(img):hover {
   .dark h4,
   .dark h5 {
     color: #fff; }
+  .dark a {
+    border-bottom: 2px solid #fff; }
   .dark .c-link::after {
     filter: brightness(0) invert(1); }
   .dark .c-link::before {

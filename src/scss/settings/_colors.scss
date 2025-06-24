@@ -369,6 +369,9 @@ a:has(img):hover {
   h4 {
     color: map-get($pinks, "medium");
   }
+  a {
+    border-bottom: 2px solid map-get($pinks, "light");
+  }
 }
 
 .greens {
@@ -377,6 +380,9 @@ a:has(img):hover {
   h3,
   h4 {
     color: map-get($greens, "dark");
+  }
+  a {
+    border-bottom: 2px solid map-get($greens, "light");
   }
 }
 
@@ -390,6 +396,9 @@ a:has(img):hover {
   a {
     color: map-get($teals, "medium");
   }
+  a {
+    border-bottom: 2px solid map-get($teals, "light");
+  }
 }
 
 .purples {
@@ -399,6 +408,9 @@ a:has(img):hover {
   h4 {
     color: map-get($purples, "light");
   }
+  a {
+    border-bottom: 2px solid map-get($purples, "light");
+  }
 }
 
 .blues {
@@ -407,6 +419,9 @@ a:has(img):hover {
   h3,
   h4 {
     color: map-get($blues, "medium");
+  }
+  a {
+    border-bottom: 2px solid map-get($blues, "light");
   }
 }
 
@@ -446,6 +461,9 @@ a:has(img):hover {
   h4,
   h5 {
     color: $white;
+  }
+  a {
+    border-bottom: 2px solid $white;
   }
 
   .c-link::after {
