@@ -65,13 +65,13 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
   // Tertiary Colours
   light-mink: #d1d1c9,
-  medium-mink: #97956d,
+  medium-mink: #5f6350,
   dark-mink: #3a3a26,
 
   // Energy Colours
@@ -93,7 +93,7 @@ $brand-palette: (
   heritage-orange: #d9541a,
   heritage-blue: #122c54,
   heritage-navy: #122c54,
-  heritage-berry: #511535,
+  heritage-berry: #7c184f,
   // no longer exists. before 7c184f. Mapped to dark pink
   heritage-purple: #3f0066,
   // Web versions
@@ -285,7 +285,7 @@ $uos-button-palette: (
     // Blue dark Purple dark etc for tinted buttons
     // #3f0066: invert(100%) brightness(0) saturate(100%) invert(4%) sepia(96%) saturate(7409%) hue-rotate(278deg) brightness(92%) contrast(107%),
     // #511535: invert(100%) brightness(0) saturate(100%) invert(9%) sepia(27%) saturate(5627%) hue-rotate(305deg) brightness(101%) contrast(93%),
-    #7c184f: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%),
+    //#7c184f: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%),
     #7b5c18: invert(100%) brightness(0) saturate(100%) invert(31%) sepia(58%) saturate(639%) hue-rotate(3deg) brightness(98%) contrast(85%),
     #122c54: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%),
   );
