@@ -16,7 +16,7 @@
   --gutter-offset-medium: -40px;
   --gutter-offset-large: -50px;
   --hook-height: 80px;
-  --hook-height-large: 80px;
+  --hook-height-medium: 100px;
 }
 
 .u-hook {
@@ -107,28 +107,49 @@
 }
 
 @include breakpoint(medium up) {
+  // Define common variables inside the breakpoint
+  $neg-border-medium: calc(0px - var(--border-thickness-medium));
+
+  // Hook height adjustments
+  .u-hook > *::before,
+  .u-hook-br > *::after {
+    height: var(--hook-height-medium);
+  }
+
+  .u-hook-bl > *::after {
+    height: var(--hook-height);
+  }
+
+  // Border width and position adjustments
+  .u-hook-tr > .c-wrapper-2025::before,
+  .u-hook-bl > .c-wrapper-2025::before,
+  .u-hook-bl.u-hook-full-bleed::before,
+  .u-hook-tr.u-hook-full-bleed::before {
+    border-width: var(--border-thickness-medium);
+  }
+
+  // Top right positioning
   .u-hook-tr > .c-wrapper-2025::before {
     right: var(--gutter-offset-medium);
-    top: calc(0px - var(--border-thickness-medium));
-    border-width: var(--border-thickness-medium);
+    top: $neg-border-medium;
   }
 
+  // Bottom left positioning
   .u-hook-bl > .c-wrapper-2025::before {
     left: var(--gutter-offset-medium);
-    bottom: calc(0px - var(--border-thickness-medium));
-    border-width: var(--border-thickness-medium);
+    bottom: $neg-border-medium;
   }
 
+  // Full bleed positioning
   .u-hook-bl.u-hook-full-bleed::before {
-    border-width: var(--border-thickness-medium);
-    bottom: calc(0px - var(--border-thickness-medium));
+    bottom: $neg-border-medium;
   }
 
   .u-hook-tr.u-hook-full-bleed::before {
-    border-width: var(--border-thickness-medium);
-    top: calc(0px - var(--border-thickness-medium));
+    top: $neg-border-medium;
   }
 
+  // Margin adjustments
   .u-hook-bl > .c-wrapper-2025 {
     margin-bottom: 80px;
   }
@@ -139,7 +160,7 @@
 }
 
 @include breakpoint(large up) {
-  .u-hook-tr > .c-wrapper-2025::before {
+  .u-hook_tr > .c-wrapper-2025::before {
     right: var(--gutter-offset-large);
   }
 
