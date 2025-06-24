@@ -114,33 +114,38 @@
   .u-hook > *::before,
   .u-hook-br > *::after {
     height: var(--hook-height-medium);
+    border-width: var(--border-thickness-medium);
   }
 
   .u-hook-bl > *::after {
     height: var(--hook-height);
   }
 
-  // Border width and position adjustments
-  .u-hook-tr > .c-wrapper-2025::before,
-  .u-hook-bl > .c-wrapper-2025::before,
-  .u-hook-bl.u-hook-full-bleed::before,
-  .u-hook-tr.u-hook-full-bleed::before {
-    border-width: var(--border-thickness-medium);
+  .u-hook-tr > *::before {
+    top: $neg-border-medium;
   }
 
-  // Top right positioning
+  .u-hook-bl > *::before {
+    bottom: $neg-border-medium;
+  }
+
+  // wrapper-2025 adjustments
   .u-hook-tr > .c-wrapper-2025::before {
     right: var(--gutter-offset-medium);
     top: $neg-border-medium;
   }
 
-  // Bottom left positioning
   .u-hook-bl > .c-wrapper-2025::before {
     left: var(--gutter-offset-medium);
     bottom: $neg-border-medium;
   }
 
-  // Full bleed positioning
+  // Full bleed adjustments
+  .u-hook-bl.u-hook-full-bleed::before,
+  .u-hook-tr.u-hook-full-bleed::before {
+    border-width: var(--border-thickness-medium);
+  }
+
   .u-hook-bl.u-hook-full-bleed::before {
     bottom: $neg-border-medium;
   }
@@ -293,6 +298,7 @@
   height: var(--border-thickness);
   background-origin: border-box;
   background-clip: border-box;
+  position: relative;
 }
 
 .u-border-bleed-left {
@@ -301,6 +307,18 @@
 
 .u-border-bleed-right {
   background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($greens, "medium") 30%);
+}
+
+@include breakpoint(medium up) {
+  .u-border-bleed {
+    height: var(--border-thickness-medium);
+  }
+  // .u-border-bleed-left {
+  //   top: 10px;
+  // }
+  // .u-border-bleed-right {
+  //   bottom: 10px;
+  // }
 }
 
 .u-border-bleed-left.teals {
