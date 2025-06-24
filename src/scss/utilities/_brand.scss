@@ -10,11 +10,13 @@
 */
 
 :root {
-  --border-thickness: 32px;
+  --border-thickness: 30px;
+  --border-thickness-medium: 40px;
   --gutter-offset: -24px;
-  --gutter-offset-medium: -32px;
-  --gutter-offset-large: -48px;
+  --gutter-offset-medium: -40px;
+  --gutter-offset-large: -50px;
   --hook-height: 80px;
+  --hook-height-large: 80px;
 }
 
 .u-hook {
@@ -37,7 +39,6 @@
 }
 
 // Top Right
-
 .u-hook-tr > *::before {
   top: calc(0px - var(--border-thickness));
   border-top: var(--border-thickness) solid map-get($greens, "medium");
@@ -92,14 +93,14 @@
 
 // Adjust left offset for wrapper specifically
 .u-hook-bl > .c-wrapper-2025 {
-  margin-bottom: var(--border-thickness);
+  margin-bottom: 60px;
   &::before {
     left: var(--gutter-offset);
   }
 }
 
 .u-hook-tr > .c-wrapper-2025 {
-  margin-top: var(--border-thickness);
+  margin-top: 60px;
   &::before {
     right: var(--gutter-offset);
   }
@@ -108,10 +109,32 @@
 @include breakpoint(medium up) {
   .u-hook-tr > .c-wrapper-2025::before {
     right: var(--gutter-offset-medium);
+    top: calc(0px - var(--border-thickness-medium));
+    border-width: var(--border-thickness-medium);
   }
 
   .u-hook-bl > .c-wrapper-2025::before {
     left: var(--gutter-offset-medium);
+    bottom: calc(0px - var(--border-thickness-medium));
+    border-width: var(--border-thickness-medium);
+  }
+
+  .u-hook-bl.u-hook-full-bleed::before {
+    border-width: var(--border-thickness-medium);
+    bottom: calc(0px - var(--border-thickness-medium));
+  }
+
+  .u-hook-tr.u-hook-full-bleed::before {
+    border-width: var(--border-thickness-medium);
+    top: calc(0px - var(--border-thickness-medium));
+  }
+
+  .u-hook-bl > .c-wrapper-2025 {
+    margin-bottom: 80px;
+  }
+
+  .u-hook-tr > .c-wrapper-2025 {
+    margin-top: 80px;
   }
 }
 
