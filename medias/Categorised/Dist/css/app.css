@@ -3976,6 +3976,10 @@ progress::-moz-progress-bar {
 */
 .c-half-n-half {
   margin: 0 0 40px 0; }
+  .c-half-n-half .u-hook-tr > ::before {
+    top: 0; }
+  .c-half-n-half .u-hook-bl > ::before {
+    bottom: 0; }
   .c-half-n-half .c-half-n-half__content {
     background-color: #f6f5f4; }
   .c-half-n-half.js-animation {
@@ -3996,12 +4000,6 @@ progress::-moz-progress-bar {
 */
 .c-wrapper[class*="u-bg-"] .c-half-n-half .c-half-n-half__content {
   background-color: #fff; }
-
-.c-wrapper[class*="u-bg-"] .c-half-n-half .u-hook-tr > ::before {
-  top: 0; }
-
-.c-wrapper[class*="u-bg-"] .c-half-n-half .u-hook-bl > ::before {
-  bottom: 0; }
 
 .c-wrapper[class*="u-bg-"] .c-half-n-half .c-half-n-half__header {
   color: #006938 !important; }
