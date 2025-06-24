@@ -741,7 +741,7 @@ a:has(img):hover {
 .pinks a:not(.c-link) {
   border-bottom: 2px solid #e80068; }
   .pinks a:not(.c-link):hover {
-    border-bottom: 2px solid #ef4c95; }
+    border-bottom: 2px solid #f6eff3; }
 
 .greens a,
 .greens h2,
@@ -752,7 +752,7 @@ a:has(img):hover {
 .greens a:not(.c-link) {
   border-bottom: 2px solid #76b72a; }
   .greens a:not(.c-link):hover {
-    border-bottom: 2px solid #9fcc69; }
+    border-bottom: 2px solid #edf4f1; }
 
 .teals h2,
 .teals h3,
@@ -760,12 +760,12 @@ a:has(img):hover {
   color: #008996; }
 
 .teals a {
-  color: #4cacb5; }
+  color: #005e63; }
 
 .teals a:not(.c-link) {
   border-bottom: 2px solid #008996; }
   .teals a:not(.c-link):hover {
-    border-bottom: 2px solid #4cacb5; }
+    border-bottom: 2px solid #edf7f8; }
 
 .purples a,
 .purples h2,
@@ -776,7 +776,7 @@ a:has(img):hover {
 .purples a:not(.c-link) {
   border-bottom: 2px solid #592c82; }
   .purples a:not(.c-link):hover {
-    border-bottom: 2px solid #b186d7; }
+    border-bottom: 2px solid #f4f0f7; }
 
 .blues a,
 .blues h2,
@@ -787,7 +787,7 @@ a:has(img):hover {
 .blues a:not(.c-link) {
   border-bottom: 2px solid #77a4da; }
   .blues a:not(.c-link):hover {
-    border-bottom: 2px solid #77a4da; }
+    border-bottom: 2px solid #f0f2f9; }
 
 .greens .u-font-icon {
   color: #006938; }
@@ -9913,8 +9913,7 @@ ul.no-bullet {
   display: block;
   height: var(--border-thickness);
   background-origin: border-box;
-  background-clip: border-box;
-  position: relative; }
+  background-clip: border-box; }
 
 .u-border-bleed-left {
   background-image: linear-gradient(90deg, #006938 30%, #edf4f1 70%); }
