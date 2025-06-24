@@ -1382,7 +1382,8 @@ body > nav > a.u-show-on-focus {
   font-size: 1.5rem;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease-in-out; }
+  transition: opacity 0.3s ease-in-out;
+  z-index: 100; }
   .c-scroll-to-top:hover {
     color: #fff; }
   .c-scroll-to-top:focus {
@@ -4069,7 +4070,7 @@ progress::-moz-progress-bar {
     .c-half-n-half:nth-of-type(odd) .c-half-n-half__content {
       margin: 70px 0 70px 50%; }
     .c-half-n-half:nth-of-type(odd) .c-half-n-half__content-2025 {
-      margin: 32px 0 32px 50%; }
+      margin: 40px 0 40px 50%; }
     .c-half-n-half:nth-of-type(even) .c-half-n-half__image {
       right: 0;
       margin-right: 15px; }
@@ -9707,20 +9708,23 @@ ul.no-bullet {
 @media screen and (min-width: 40em) {
   .u-hook > *::before,
   .u-hook-br > *::after {
-    height: var(--hook-height-medium); }
+    height: var(--hook-height-medium);
+    border-width: var(--border-thickness-medium); }
   .u-hook-bl > *::after {
     height: var(--hook-height); }
-  .u-hook-tr > .c-wrapper-2025::before,
-  .u-hook-bl > .c-wrapper-2025::before,
-  .u-hook-bl.u-hook-full-bleed::before,
-  .u-hook-tr.u-hook-full-bleed::before {
-    border-width: var(--border-thickness-medium); }
+  .u-hook-tr > *::before {
+    top: calc(0px - var(--border-thickness-medium)); }
+  .u-hook-bl > *::before {
+    bottom: calc(0px - var(--border-thickness-medium)); }
   .u-hook-tr > .c-wrapper-2025::before {
     right: var(--gutter-offset-medium);
     top: calc(0px - var(--border-thickness-medium)); }
   .u-hook-bl > .c-wrapper-2025::before {
     left: var(--gutter-offset-medium);
     bottom: calc(0px - var(--border-thickness-medium)); }
+  .u-hook-bl.u-hook-full-bleed::before,
+  .u-hook-tr.u-hook-full-bleed::before {
+    border-width: var(--border-thickness-medium); }
   .u-hook-bl.u-hook-full-bleed::before {
     bottom: calc(0px - var(--border-thickness-medium)); }
   .u-hook-tr.u-hook-full-bleed::before {
@@ -9909,13 +9913,18 @@ ul.no-bullet {
   display: block;
   height: var(--border-thickness);
   background-origin: border-box;
-  background-clip: border-box; }
+  background-clip: border-box;
+  position: relative; }
 
 .u-border-bleed-left {
   background-image: linear-gradient(90deg, #006938 30%, #edf4f1 70%); }
 
 .u-border-bleed-right {
   background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, #006938 30%); }
+
+@media screen and (min-width: 40em) {
+  .u-border-bleed {
+    height: var(--border-thickness-medium); } }
 
 .u-border-bleed-left.teals {
   background-image: linear-gradient(90deg, #008996 30%, rgba(255, 0, 0, 0) 70%); }
