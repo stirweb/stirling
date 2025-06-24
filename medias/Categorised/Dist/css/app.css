@@ -738,8 +738,10 @@ a:has(img):hover {
 .pinks h4 {
   color: #7c184f; }
 
-.pinks a {
+.pinks a:not(.c-link) {
   border-bottom: 2px solid #e80068; }
+  .pinks a:not(.c-link):hover {
+    border-bottom: 2px solid #ef4c95; }
 
 .greens a,
 .greens h2,
@@ -747,8 +749,10 @@ a:has(img):hover {
 .greens h4 {
   color: #005734; }
 
-.greens a {
+.greens a:not(.c-link) {
   border-bottom: 2px solid #76b72a; }
+  .greens a:not(.c-link):hover {
+    border-bottom: 2px solid #9fcc69; }
 
 .teals h2,
 .teals h3,
@@ -756,10 +760,12 @@ a:has(img):hover {
   color: #008996; }
 
 .teals a {
-  color: #005e63; }
+  color: #4cacb5; }
 
-.teals a {
+.teals a:not(.c-link) {
   border-bottom: 2px solid #008996; }
+  .teals a:not(.c-link):hover {
+    border-bottom: 2px solid #4cacb5; }
 
 .purples a,
 .purples h2,
@@ -767,8 +773,10 @@ a:has(img):hover {
 .purples h4 {
   color: #592c82; }
 
-.purples a {
+.purples a:not(.c-link) {
   border-bottom: 2px solid #592c82; }
+  .purples a:not(.c-link):hover {
+    border-bottom: 2px solid #b186d7; }
 
 .blues a,
 .blues h2,
@@ -776,8 +784,10 @@ a:has(img):hover {
 .blues h4 {
   color: #2c498a; }
 
-.blues a {
+.blues a:not(.c-link) {
   border-bottom: 2px solid #77a4da; }
+  .blues a:not(.c-link):hover {
+    border-bottom: 2px solid #77a4da; }
 
 .greens .u-font-icon {
   color: #006938; }
