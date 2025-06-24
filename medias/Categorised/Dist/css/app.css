@@ -2686,6 +2686,9 @@ Bleed Feature Image
     Default Button Style Component
     Also .expanded
 */
+:root {
+  --button-border-width: 4px; }
+
 /* 
   Actual button 
 */
@@ -2709,7 +2712,7 @@ button:focus {
   background-color: #006938;
   color: #fff;
   text-decoration: none;
-  border: 4px solid transparent;
+  border: var(--button-border-width) solid transparent;
   cursor: pointer;
   display: inline-block;
   font-family: "General Sans", "Open Sans", sans-serif !important;
@@ -2730,7 +2733,7 @@ button:focus {
   */ }
   .button:hover {
     background-color: #fff;
-    border: 4px solid #006938;
+    border: var(--button-border-width) solid #006938;
     color: #006938; }
   .button a {
     color: #fff; }
@@ -2981,252 +2984,252 @@ button:focus {
   .button.hollow {
     background: transparent;
     color: #006938;
-    border: 3px solid #006938; }
+    border: var(--button-border-width) solid #006938; }
     .button.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.hollow:hover {
       background-color: transparent;
-      border: 3px solid #80b49c; }
+      border: var(--button-border-width) solid #80b49c; }
     .button.hollow:focus {
       background-color: transparent;
       color: #006938; }
   .button.primary.hollow {
     background: transparent;
     color: #006938;
-    border: 3px solid #006938; }
+    border: var(--button-border-width) solid #006938; }
     .button.primary.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.primary.hollow:hover {
       background-color: transparent;
-      border: 3px solid #80b49c; }
+      border: var(--button-border-width) solid #80b49c; }
     .button.primary.hollow:focus {
       background-color: transparent;
       color: #006938; }
   .button.secondary.hollow {
     background: transparent;
     color: #5f6350;
-    border: 3px solid #5f6350; }
+    border: var(--button-border-width) solid #5f6350; }
     .button.secondary.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.secondary.hollow:hover {
       background-color: transparent;
-      border: 3px solid #afb1a8; }
+      border: var(--button-border-width) solid #afb1a8; }
     .button.secondary.hollow:focus {
       background-color: transparent;
       color: #5f6350; }
   .button.success.hollow {
     background: transparent;
     color: #006938;
-    border: 3px solid #006938; }
+    border: var(--button-border-width) solid #006938; }
     .button.success.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.success.hollow:hover {
       background-color: transparent;
-      border: 3px solid #80b49c; }
+      border: var(--button-border-width) solid #80b49c; }
     .button.success.hollow:focus {
       background-color: transparent;
       color: #006938; }
   .button.warning.hollow {
     background: transparent;
     color: #edab00;
-    border: 3px solid #edab00; }
+    border: var(--button-border-width) solid #edab00; }
     .button.warning.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.warning.hollow:hover {
       background-color: transparent;
-      border: 3px solid #f6d580; }
+      border: var(--button-border-width) solid #f6d580; }
     .button.warning.hollow:focus {
       background-color: transparent;
       color: #edab00; }
   .button.alert.hollow {
     background: transparent;
     color: #e80068;
-    border: 3px solid #e80068; }
+    border: var(--button-border-width) solid #e80068; }
     .button.alert.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
     .button.alert.hollow:hover {
       background-color: transparent;
-      border: 3px solid #f480b4; }
+      border: var(--button-border-width) solid #f480b4; }
     .button.alert.hollow:focus {
       background-color: transparent;
       color: #e80068; }
   .button.energy.hollow {
     background: transparent;
     color: #76b72a;
-    border: 3px solid #76b72a; }
+    border: var(--button-border-width) solid #76b72a; }
     .button.energy.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
     .button.energy.hollow:hover {
       background-color: transparent;
-      border: 3px solid #bbdb95; }
+      border: var(--button-border-width) solid #bbdb95; }
     .button.energy.hollow:focus {
       background-color: transparent;
       color: #76b72a; }
   .button.energy-green.hollow {
     background: transparent;
     color: #76b72a;
-    border: 3px solid #76b72a; }
+    border: var(--button-border-width) solid #76b72a; }
     .button.energy-green.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
     .button.energy-green.hollow:hover {
       background-color: transparent;
-      border: 3px solid #bbdb95; }
+      border: var(--button-border-width) solid #bbdb95; }
     .button.energy-green.hollow:focus {
       background-color: transparent;
       color: #76b72a; }
   .button.heritage-green.hollow {
     background: transparent;
     color: #006938;
-    border: 3px solid #006938; }
+    border: var(--button-border-width) solid #006938; }
     .button.heritage-green.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.heritage-green.hollow:hover {
       background-color: transparent;
-      border: 3px solid #80b49c; }
+      border: var(--button-border-width) solid #80b49c; }
     .button.heritage-green.hollow:focus {
       background-color: transparent;
       color: #006938; }
   .button.energy-pink.hollow {
     background: transparent;
     color: #e80068;
-    border: 3px solid #e80068; }
+    border: var(--button-border-width) solid #e80068; }
     .button.energy-pink.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
     .button.energy-pink.hollow:hover {
       background-color: transparent;
-      border: 3px solid #f480b4; }
+      border: var(--button-border-width) solid #f480b4; }
     .button.energy-pink.hollow:focus {
       background-color: transparent;
       color: #e80068; }
   .button.pink-medium.hollow {
     background: transparent;
     color: #7c184f;
-    border: 3px solid #7c184f; }
+    border: var(--button-border-width) solid #7c184f; }
     .button.pink-medium.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
     .button.pink-medium.hollow:hover {
       background-color: transparent;
-      border: 3px solid #be8ca7; }
+      border: var(--button-border-width) solid #be8ca7; }
     .button.pink-medium.hollow:focus {
       background-color: transparent;
       color: #7c184f; }
   .button.heritage-berry.hollow {
     background: transparent;
     color: #7c184f;
-    border: 3px solid #7c184f; }
+    border: var(--button-border-width) solid #7c184f; }
     .button.heritage-berry.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
     .button.heritage-berry.hollow:hover {
       background-color: transparent;
-      border: 3px solid #be8ca7; }
+      border: var(--button-border-width) solid #be8ca7; }
     .button.heritage-berry.hollow:focus {
       background-color: transparent;
       color: #7c184f; }
   .button.pink-dark.hollow {
     background: transparent;
     color: #511535;
-    border: 3px solid #511535; }
+    border: var(--button-border-width) solid #511535; }
     .button.pink-dark.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.pink-dark.hollow:hover {
       background-color: transparent;
-      border: 3px solid #a88a9a; }
+      border: var(--button-border-width) solid #a88a9a; }
     .button.pink-dark.hollow:focus {
       background-color: transparent;
       color: #511535; }
   .button.energy-teal.hollow {
     background: transparent;
     color: #008996;
-    border: 3px solid #008996; }
+    border: var(--button-border-width) solid #008996; }
     .button.energy-teal.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.energy-teal.hollow:hover {
       background-color: transparent;
-      border: 3px solid #80c4cb; }
+      border: var(--button-border-width) solid #80c4cb; }
     .button.energy-teal.hollow:focus {
       background-color: transparent;
       color: #008996; }
   .button.teal-medium.hollow {
     background: transparent;
     color: #008996;
-    border: 3px solid #008996; }
+    border: var(--button-border-width) solid #008996; }
     .button.teal-medium.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.teal-medium.hollow:hover {
       background-color: transparent;
-      border: 3px solid #80c4cb; }
+      border: var(--button-border-width) solid #80c4cb; }
     .button.teal-medium.hollow:focus {
       background-color: transparent;
       color: #008996; }
   .button.heritage-teal.hollow {
     background: transparent;
     color: #005e63;
-    border: 3px solid #005e63; }
+    border: var(--button-border-width) solid #005e63; }
     .button.heritage-teal.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.heritage-teal.hollow:hover {
       background-color: transparent;
-      border: 3px solid #80afb1; }
+      border: var(--button-border-width) solid #80afb1; }
     .button.heritage-teal.hollow:focus {
       background-color: transparent;
       color: #005e63; }
   .button.heritage-purple.hollow {
     background: transparent;
     color: #3f0066;
-    border: 3px solid #3f0066; }
+    border: var(--button-border-width) solid #3f0066; }
     .button.heritage-purple.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%); }
     .button.heritage-purple.hollow:hover {
       background-color: transparent;
-      border: 3px solid #9f80b3; }
+      border: var(--button-border-width) solid #9f80b3; }
     .button.heritage-purple.hollow:focus {
       background-color: transparent;
       color: #3f0066; }
   .button.energy-purple.hollow {
     background: transparent;
     color: #592c82;
-    border: 3px solid #592c82; }
+    border: var(--button-border-width) solid #592c82; }
     .button.energy-purple.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
     .button.energy-purple.hollow:hover {
       background-color: transparent;
-      border: 3px solid #ac96c1; }
+      border: var(--button-border-width) solid #ac96c1; }
     .button.energy-purple.hollow:focus {
       background-color: transparent;
       color: #592c82; }
   .button.dark-mink.hollow {
     background: transparent;
     color: #3a3a26;
-    border: 3px solid #3a3a26; }
+    border: var(--button-border-width) solid #3a3a26; }
     .button.dark-mink.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.dark-mink.hollow:hover {
       background-color: transparent;
-      border: 3px solid #9d9d93; }
+      border: var(--button-border-width) solid #9d9d93; }
     .button.dark-mink.hollow:focus {
       background-color: transparent;
       color: #3a3a26; }
   .button.energy-turq.hollow {
     background: transparent;
     color: #00a5ac;
-    border: 3px solid #00a5ac; }
+    border: var(--button-border-width) solid #00a5ac; }
     .button.energy-turq.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%); }
     .button.energy-turq.hollow:hover {
       background-color: transparent;
-      border: 3px solid #80d2d6; }
+      border: var(--button-border-width) solid #80d2d6; }
     .button.energy-turq.hollow:focus {
       background-color: transparent;
       color: #00a5ac; }
   .button.info.hollow {
     background: transparent;
     color: #122c54;
-    border: 3px solid #122c54; }
+    border: var(--button-border-width) solid #122c54; }
     .button.info.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%); }
     .button.info.hollow:hover {
       background-color: transparent;
-      border: 3px solid #8996aa; }
+      border: var(--button-border-width) solid #8996aa; }
     .button.info.hollow:focus {
       background-color: transparent;
       color: #122c54; }
@@ -3334,13 +3337,13 @@ button:focus {
 
 .button.outine-button {
   background: transparent;
-  border: 3px solid #006938;
+  border: var(--button-border-width) solid #006938;
   color: #006938; }
   .button.outine-button::after {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .button.outine-button:hover {
     background-color: transparent;
-    border: 3px solid #80b49c; }
+    border: var(--button-border-width) solid #80b49c; }
   .button.outine-button:focus {
     background-color: transparent;
     color: #006938; }
@@ -3354,7 +3357,7 @@ button:focus {
   border-color: #fff; }
   .u-white--all .button.hollow,
   .darkmode .button.hollow {
-    border-width: 3px; }
+    border-width: var(--button-border-width); }
   .u-white--all .button:hover,
   .darkmode .button:hover {
     background-color: transparent;
@@ -3378,7 +3381,7 @@ button:focus {
   background-color: #7c184f; }
 
 .u-white--all button:focus {
-  outline: 3px solid #fff; }
+  outline: 2px solid #fff; }
 
 /* 
     label/input[type=radio|checkbox] combos that should display as buttons
