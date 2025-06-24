@@ -372,7 +372,7 @@ a:has(img):hover {
   a:not(.c-link) {
     border-bottom: 2px solid map-get($pinks, "light");
     &:hover {
-      border-bottom: 2px solid map-get($pinks, "tint");
+      border-bottom: 2px solid map-get($pinks, "tint-7");
     }
   }
 }
@@ -387,7 +387,7 @@ a:has(img):hover {
   a:not(.c-link) {
     border-bottom: 2px solid map-get($greens, "light");
     &:hover {
-      border-bottom: 2px solid map-get($greens, "tint");
+      border-bottom: 2px solid map-get($greens, "tint-7");
     }
   }
 }
@@ -400,12 +400,12 @@ a:has(img):hover {
   }
 
   a {
-    color: map-get($teals, "tint");
+    color: map-get($teals, "medium");
   }
   a:not(.c-link) {
     border-bottom: 2px solid map-get($teals, "light");
     &:hover {
-      border-bottom: 2px solid map-get($teals, "tint");
+      border-bottom: 2px solid map-get($teals, "tint-7");
     }
   }
 }
@@ -415,12 +415,12 @@ a:has(img):hover {
   h2,
   h3,
   h4 {
-    color: map-get($purples, "light");
+    color: map-get($purples, "medium");
   }
   a:not(.c-link) {
     border-bottom: 2px solid map-get($purples, "light");
     &:hover {
-      border-bottom: 2px solid map-get($purples, "tint");
+      border-bottom: 2px solid map-get($purples, "tint-7");
     }
   }
 }
@@ -435,7 +435,7 @@ a:has(img):hover {
   a:not(.c-link) {
     border-bottom: 2px solid map-get($blues, "light");
     &:hover {
-      border-bottom: 2px solid map-get($blues, "tint");
+      border-bottom: 2px solid map-get($blues, "tint-7");
     }
   }
 }

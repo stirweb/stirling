@@ -298,7 +298,6 @@
   height: var(--border-thickness);
   background-origin: border-box;
   background-clip: border-box;
-  position: relative;
 }
 
 .u-border-bleed-left {
@@ -313,12 +312,6 @@
   .u-border-bleed {
     height: var(--border-thickness-medium);
   }
-  // .u-border-bleed-left {
-  //   top: 10px;
-  // }
-  // .u-border-bleed-right {
-  //   bottom: 10px;
-  // }
 }
 
 .u-border-bleed-left.teals {
