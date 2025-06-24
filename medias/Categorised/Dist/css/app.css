@@ -250,13 +250,13 @@
   border-image-source: linear-gradient(#122c54, #122c54); }
 
 .u-heritage-berry {
-  color: #511535 !important; }
+  color: #7c184f !important; }
 
 .u-bg-heritage-berry {
-  background-color: #511535 !important; }
+  background-color: #7c184f !important; }
 
 .bg-heritage-berry {
-  border-image-source: linear-gradient(#511535, #511535); }
+  border-image-source: linear-gradient(#7c184f, #7c184f); }
 
 .u-heritage-purple {
   color: #3f0066 !important; }
@@ -721,7 +721,7 @@ a:has(img):hover {
   color: #76b72a; }
 
 .u-heritage-berry {
-  color: #511535; }
+  color: #7c184f; }
 
 .u-energy-turq {
   color: #00a5ac; }
@@ -793,7 +793,7 @@ a:has(img):hover {
     border-image-source: linear-gradient(#f6eff3, #f6eff3); }
 
 .pinks .c-link::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%); }
+  filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
 
 .pinks .c-link::before {
   background-color: #e80068; }
@@ -2877,15 +2877,15 @@ button:focus {
       border-color: #7c184f;
       color: #7c184f; }
       .button.pink-medium:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
   .button.heritage-berry {
-    background-color: #511535;
-    border-color: #511535;
+    background-color: #7c184f;
+    border-color: #7c184f;
     color: #ffffff; }
     .button.heritage-berry:hover {
       background-color: #ffffff;
-      border-color: #511535;
-      color: #511535; }
+      border-color: #7c184f;
+      color: #7c184f; }
       .button.heritage-berry:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
   .button.pink-dark {
@@ -2897,7 +2897,7 @@ button:focus {
       border-color: #511535;
       color: #511535; }
       .button.pink-dark:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .button.energy-teal {
     background-color: #008996;
     border-color: #008996;
@@ -3103,7 +3103,7 @@ button:focus {
     color: #7c184f;
     border: 1px solid #7c184f; }
     .button.pink-medium.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
     .button.pink-medium.hollow:hover {
       background-color: transparent;
       border: 1px solid #be8ca7; }
@@ -3112,22 +3112,22 @@ button:focus {
       color: #7c184f; }
   .button.heritage-berry.hollow {
     background: transparent;
-    color: #511535;
-    border: 1px solid #511535; }
+    color: #7c184f;
+    border: 1px solid #7c184f; }
     .button.heritage-berry.hollow::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
     .button.heritage-berry.hollow:hover {
       background-color: transparent;
-      border: 1px solid #a88a9a; }
+      border: 1px solid #be8ca7; }
     .button.heritage-berry.hollow:focus {
       background-color: transparent;
-      color: #511535; }
+      color: #7c184f; }
   .button.pink-dark.hollow {
     background: transparent;
     color: #511535;
     border: 1px solid #511535; }
     .button.pink-dark.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.pink-dark.hollow:hover {
       background-color: transparent;
       border: 1px solid #a88a9a; }
@@ -3243,7 +3243,7 @@ button:focus {
     border-color: #ef4c95;
     color: #511535; }
     .button.pinks.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.pinks.tinted:hover {
       background-color: #ffffff; }
   .button.blues.tinted {
@@ -3375,7 +3375,7 @@ button:focus {
   opacity: 0.9; }
 
 .u-white--all.button.heritage-berry:hover {
-  background-color: #511535; }
+  background-color: #7c184f; }
 
 .u-white--all button:focus {
   outline: 1px solid #fff; }
@@ -3410,7 +3410,7 @@ input:checked + label.button {
   input:checked + label.button.pink-medium {
     background-color: #671441; }
   input:checked + label.button.heritage-berry {
-    background-color: #3d1028; }
+    background-color: #671441; }
   input:checked + label.button.pink-dark {
     background-color: #3d1028; }
   input:checked + label.button.energy-teal {
@@ -4478,7 +4478,7 @@ ul.pagination {
   background-color: #005e63; }
 
 .c-promo-box_category[data-category="Impact"] {
-  background-color: #511535; }
+  background-color: #7c184f; }
 
 /*
  * Now Tiny Slider (NO LONGER IN USE OCT 2023)
@@ -7231,10 +7231,10 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
         .c-search-results-area .c-search-result.c-popout-result a > div:nth-of-type(3) {
           align-self: center; }
       .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a {
-        border-color: #511535;
-        color: #511535; }
+        border-color: #7c184f;
+        color: #7c184f; }
         .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a > div > p:first-of-type {
-          border-color: #511535; }
+          border-color: #7c184f; }
       .c-search-results-area .c-search-result.c-popout-result.u-web-turq a {
         border-color: #00838a;
         color: #00838a; }
@@ -8295,7 +8295,7 @@ a[data-mode*="Online"] {
   .c-category-label[data-category="Research Spotlight"] {
     background-color: #005e63; }
   .c-category-label[data-category="Impact"] {
-    background-color: #511535; }
+    background-color: #7c184f; }
 
 blockquote.c-pullquote {
   border: 0;
@@ -8322,9 +8322,9 @@ blockquote.c-pullquote {
     border-color: #006938;
     border-width: 4px 4px 0 0; }
   blockquote.c-pullquote.u-pquote-heritage-berry p {
-    color: #511535; }
+    color: #7c184f; }
   blockquote.c-pullquote.u-pquote-heritage-berry::before {
-    border-color: #511535; }
+    border-color: #7c184f; }
   blockquote.c-pullquote p {
     background-color: #f6f7f6;
     color: #006938;
@@ -9996,10 +9996,10 @@ ul.no-bullet {
   Heritage berry 
 */
 .u-heritage-berry-line-top {
-  border-top: 3px solid #511535; }
+  border-top: 3px solid #7c184f; }
 
 .u-heritage-berry-line-left {
-  border-left: 3px solid #511535; }
+  border-left: 3px solid #7c184f; }
 
 /* 
   Grey 
