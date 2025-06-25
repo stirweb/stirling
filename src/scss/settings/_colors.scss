@@ -362,36 +362,6 @@ a:has(img):hover {
   New brand 2025 colour packs
 */
 
-// .pinks {
-//   a,
-//   h2,
-//   h3,
-//   h4 {
-//     color: map-get($pinks, "hook");
-//   }
-//   a:not(.c-link) {
-//     border-bottom: 2px solid map-get($pinks, "light");
-//     &:hover {
-//       border-bottom: 2px solid map-get($pinks, "tint-7");
-//     }
-//   }
-// }
-
-// .greens {
-//   a,
-//   h2,
-//   h3,
-//   h4 {
-//     color: map-get($greens, "hook");
-//   }
-//   a:not(.c-link) {
-//     border-bottom: 2px solid map-get($greens, "light");
-//     &:hover {
-//       border-bottom: 2px solid map-get($greens, "tint-7");
-//     }
-//   }
-// }
-
 // .teals {
 //   h2,
 //   h3,
@@ -406,36 +376,6 @@ a:has(img):hover {
 //     border-bottom: 2px solid map-get($teals, "light");
 //     &:hover {
 //       border-bottom: 2px solid map-get($teals, "tint-7");
-//     }
-//   }
-// }
-
-// .purples {
-//   a,
-//   h2,
-//   h3,
-//   h4 {
-//     color: map-get($purples, "hook");
-//   }
-//   a:not(.c-link) {
-//     border-bottom: 2px solid map-get($purples, "light");
-//     &:hover {
-//       border-bottom: 2px solid map-get($purples, "tint-7");
-//     }
-//   }
-// }
-
-// .blues {
-//   a,
-//   h2,
-//   h3,
-//   h4 {
-//     color: map-get($blues, "hook");
-//   }
-//   a:not(.c-link) {
-//     border-bottom: 2px solid map-get($blues, "light");
-//     &:hover {
-//       border-bottom: 2px solid map-get($blues, "tint-7");
 //     }
 //   }
 // }
@@ -495,6 +435,14 @@ a:has(img):hover {
   }
   .u-font-icon {
     color: map-get($greens, "medium");
+  }
+
+  .c-wrapper-2025 {
+    background-color: map-get($neutrals, "tint-7");
+
+    &.u-bleed {
+      border-image-source: linear-gradient(map-get($neutrals, "tint-7"), map-get($neutrals, "tint-7"));
+    }
   }
 }
 
@@ -579,45 +527,3 @@ a:has(img):hover {
     }
   }
 }
-
-// .c-wrapper-2025.greens.dark {
-//   background-color: map-get($greens, "darkbg");
-//   &.u-bleed {
-//     border-image-source: linear-gradient(map-get($greens, "darkbg"), map-get($greens, "darkbg"));
-//   }
-// }
-
-// .c-wrapper-2025.teals.dark {
-//   background-color: map-get($teals, "darkbg");
-//   &.u-bleed {
-//     border-image-source: linear-gradient(map-get($teals, "darkbg"), map-get($teals, "darkbg"));
-//   }
-// }
-
-// .c-wrapper-2025.pinks.dark {
-//   background-color: map-get($pinks, "darkbg");
-//   &.u-bleed {
-//     border-image-source: linear-gradient(map-get($pinks, "darkbg"), map-get($pinks, "darkbg"));
-//   }
-// }
-
-// .c-wrapper-2025.purples.dark {
-//   background-color: map-get($purples, "darkbg");
-//   &.u-bleed {
-//     border-image-source: linear-gradient(map-get($purples, "darkbg"), map-get($purples, "darkbg"));
-//   }
-// }
-
-// .c-wrapper-2025.blues.dark {
-//   background-color: map-get($blues, "darkbg");
-//   &.u-bleed {
-//     border-image-source: linear-gradient(map-get($blues, "darkbg"), map-get($blues, "darkbg"));
-//   }
-// }
-
-// .c-wrapper-2025.neutrals.dark {
-//   background-color: map-get($neutrals, "darkbg");
-//   &.u-bleed {
-//     border-image-source: linear-gradient(map-get($neutrals, "darkbg"), map-get($neutrals, "darkbg"));
-//   }
-// }
