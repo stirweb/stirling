@@ -9916,6 +9916,15 @@ ul.no-bullet {
 .u-hook.dark.greens.u-hook-full-bleed::before {
   border-color: #005734; }
 
+.u-hook.dark.neutrals > *::before {
+  border-color: #97956d; }
+
+.u-hook.dark.neutrals > *::after {
+  border-color: #97956d; }
+
+.u-hook.dark.neutrals.u-hook-full-bleed::before {
+  border-color: #97956d; }
+
 /*
   .c-wrapper-2025
 */
@@ -9944,10 +9953,22 @@ ul.no-bullet {
   .c-wrapper-2025.blues.dark.u-bleed {
     border-image-source: linear-gradient(#122c54, #122c54); }
 
-.c-wrapper-2025.neutrals.dark {
+.c-wrapper-2025.neutrals.dark,
+.neutrals.dark .c-wrapper-2025.u-bleed.u-bleed {
   background-color: #5f6350; }
-  .c-wrapper-2025.neutrals.dark.u-bleed {
+  .c-wrapper-2025.neutrals.dark.u-bleed,
+  .neutrals.dark .c-wrapper-2025.u-bleed.u-bleed.u-bleed {
     border-image-source: linear-gradient(#5f6350, #5f6350); }
+
+.neutrals .c-wrapper-2025.u-bleed {
+  background-color: white; }
+  .neutrals .c-wrapper-2025.u-bleed.u-bleed {
+    border-image-source: linear-gradient(#fff, white); }
+
+.neutral-green .c-wrapper-2025.u-bleed {
+  background-color: #f1f1ef; }
+  .neutral-green .c-wrapper-2025.u-bleed.u-bleed {
+    border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
 
 /*
 

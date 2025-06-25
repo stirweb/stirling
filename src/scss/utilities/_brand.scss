@@ -220,16 +220,16 @@
 
 .u-hook.neutrals {
   > *::before {
-    border-color: map-get($brand-palette, "light-mink");
+    border-color: map-get($neutrals, "light");
   }
 
   > *::after {
-    border-color: map-get($brand-palette, "light-mink");
+    border-color: map-get($neutrals, "light");
   }
 }
 
 .u-hook.neutrals.u-hook-full-bleed::before {
-  border-color: map-get($brand-palette, "light-mink");
+  border-color: map-get($neutrals, "light");
 }
 
 /*
@@ -248,6 +248,20 @@
 
 .u-hook.dark.greens.u-hook-full-bleed::before {
   border-color: map-get($greens, "dark");
+}
+
+.u-hook.dark.neutrals {
+  > *::before {
+    border-color: map-get($neutrals, "medium");
+  }
+
+  > *::after {
+    border-color: map-get($neutrals, "medium");
+  }
+}
+
+.u-hook.dark.neutrals.u-hook-full-bleed::before {
+  border-color: map-get($neutrals, "medium");
 }
 
 /*
@@ -289,10 +303,25 @@
   }
 }
 
-.c-wrapper-2025.neutrals.dark {
+.c-wrapper-2025.neutrals.dark,
+.neutrals.dark .c-wrapper-2025.u-bleed.u-bleed {
   background-color: map-get($neutrals, "dark");
   &.u-bleed {
     border-image-source: linear-gradient(map-get($neutrals, "dark"), map-get($neutrals, "dark"));
+  }
+}
+
+.neutrals .c-wrapper-2025.u-bleed {
+  background-color: white;
+  &.u-bleed {
+    border-image-source: linear-gradient($white, white);
+  }
+}
+
+.neutral-green .c-wrapper-2025.u-bleed {
+  background-color: map-get($neutrals, "tint-7");
+  &.u-bleed {
+    border-image-source: linear-gradient(map-get($neutrals, "tint-7"), map-get($neutrals, "tint-7"));
   }
 }
 
