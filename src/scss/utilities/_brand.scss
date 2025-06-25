@@ -10,8 +10,8 @@
 */
 
 :root {
-  --border-thickness: 30px;
-  --border-thickness-medium: 40px;
+  --hook-border-thickness: 30px;
+  --hook-border-thickness-medium: 40px;
   --gutter-offset: -24px;
   --gutter-offset-medium: -40px;
   --gutter-offset-large: -50px;
@@ -40,18 +40,18 @@
 
 // Top Right
 .u-hook-tr > *::before {
-  top: calc(0px - var(--border-thickness));
-  border-top: var(--border-thickness) solid map-get($greens, "medium");
-  border-right: var(--border-thickness) solid map-get($greens, "medium");
+  top: calc(0px - var(--hook-border-thickness));
+  border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-right: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
 
 // Top Right full bleed
 .u-hook-tr.u-hook-full-bleed::before {
   content: "";
   position: absolute;
-  border-top: var(--border-thickness) solid map-get($greens, "medium");
-  border-left: var(--border-thickness) solid map-get($greens, "medium");
-  top: calc(0px - var(--border-thickness));
+  border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
+  top: calc(0px - var(--hook-border-thickness));
   left: 0;
   width: 50vw;
 }
@@ -59,24 +59,24 @@
 // Top leftsad
 .u-hook-tl > *::before {
   top: 0;
-  border-top: var(--border-thickness) solid map-get($greens, "medium");
-  border-left: var(--border-thickness) solid map-get($greens, "medium");
+  border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
 
 // Bottom left
 .u-hook-bl > *::before {
-  bottom: calc(0px - var(--border-thickness));
-  border-bottom: var(--border-thickness) solid map-get($greens, "medium");
-  border-left: var(--border-thickness) solid map-get($greens, "medium");
+  bottom: calc(0px - var(--hook-border-thickness));
+  border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
 
 // Bottom left full bleed
 .u-hook-bl.u-hook-full-bleed::before {
   content: "";
   position: absolute;
-  border-bottom: var(--border-thickness) solid map-get($greens, "medium");
-  border-left: var(--border-thickness) solid map-get($greens, "medium");
-  bottom: calc(0px - var(--border-thickness));
+  border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
+  bottom: calc(0px - var(--hook-border-thickness));
   right: 0;
   width: 50vw;
 }
@@ -87,8 +87,8 @@
   width: 100%;
   bottom: 0;
   left: 0;
-  border-bottom: var(--border-thickness) solid map-get($greens, "medium");
-  border-right: var(--border-thickness) solid map-get($greens, "medium");
+  border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-right: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
 
 // Adjust left offset for wrapper specifically
@@ -108,13 +108,13 @@
 
 @include breakpoint(medium up) {
   // Define common variables inside the breakpoint
-  $neg-border-medium: calc(0px - var(--border-thickness-medium));
+  $neg-border-medium: calc(0px - var(--hook-border-thickness-medium));
 
   // Hook height adjustments
   .u-hook > *::before,
   .u-hook-br > *::after {
     height: var(--hook-height-medium);
-    border-width: var(--border-thickness-medium);
+    border-width: var(--hook-border-thickness-medium);
   }
 
   .u-hook-bl > *::after {
@@ -143,7 +143,7 @@
   // Full bleed adjustments
   .u-hook-bl.u-hook-full-bleed::before,
   .u-hook-tr.u-hook-full-bleed::before {
-    border-width: var(--border-thickness-medium);
+    border-width: var(--hook-border-thickness-medium);
   }
 
   .u-hook-bl.u-hook-full-bleed::before {
@@ -295,7 +295,7 @@
 
 .u-border-bleed {
   display: block;
-  height: var(--border-thickness);
+  height: var(--hook-border-thickness);
   background-origin: border-box;
   background-clip: border-box;
 }
@@ -310,7 +310,7 @@
 
 @include breakpoint(medium up) {
   .u-border-bleed {
-    height: var(--border-thickness-medium);
+    height: var(--hook-border-thickness-medium);
   }
 }
 
@@ -354,35 +354,19 @@
   background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($brand-palette, "light-mink") 30%);
 }
 
-/*
-
-*/
-
-// .u-arrow:after {
-//   content: "\e97b";
-//   font-family: "uos";
-//   margin: 0 0 0 10px;
-//   position: relative;
-// }
-
-// .u-header-line::after {
-//   content: "";
-//   background-color: $energy-green;
-//   bottom: -20px;
-//   left: 0;
-//   position: absolute;
-//   width: 60px;
-//   height: 8px;
-// }
-
 /* 
-  Brand border lines 
-*/
 
-/* 
+  BRAND BORDERS
+  ---
+ 
   Used on promo boxes
   in conjunction with u-relative u-overflow-hidden on the parent
+
 */
+
+:root {
+  --border-thickness: 3px;
+}
 
 .u-energy-line-bottom-float:after {
   content: "";
@@ -406,7 +390,7 @@
 */
 
 .u-white-line-top {
-  border-top: 3px solid #fff;
+  border-top: var(--border-thickness) solid #fff;
 }
 
 /* 
@@ -415,34 +399,38 @@
 
 .u-energy-line-top,
 .u-green-line-top {
-  border-top: 3px solid $energy-green;
+  border-top: var(--border-thickness) solid $energy-green;
 }
 
 .u-energy-line-bottom {
-  border-bottom: 3px solid $energy-green;
+  border-bottom: var(--border-thickness) solid $energy-green;
 }
 
 .u-energy-line-left {
-  border-left: 3px solid $energy-green;
+  border-left: var(--border-thickness) solid $energy-green;
 }
 
 /* 
   Heritage green
 */
 
+.u-heritage-line {
+  border: var(--border-thickness) solid map-get($greens, "medium") !important;
+}
+
 .u-heritage-line-top,
 .u-heritage-green-line-top {
-  border-top: 3px solid map-get($greens, "medium");
+  border-top: var(--border-thickness) solid map-get($greens, "medium");
 }
 
 .u-heritage-line-bottom,
 .u-heritage-green-line-bottom {
-  border-bottom: 3px solid map-get($greens, "medium");
+  border-bottom: var(--border-thickness) solid map-get($greens, "medium");
 }
 
 .u-heritage-line-left,
 .u-heritage-green-line-left {
-  border-left: 3px solid map-get($greens, "medium");
+  border-left: var(--border-thickness) solid map-get($greens, "medium");
 }
 
 /* 
@@ -450,15 +438,15 @@
 */
 
 .u-energy-pink-line-top {
-  border-top: 3px solid $energy-pink;
+  border-top: var(--border-thickness) solid $energy-pink;
 }
 
 .u-energy-pink-line-bottom {
-  border-bottom: 3px solid $energy-pink;
+  border-bottom: var(--border-thickness) solid $energy-pink;
 }
 
 .u-energy-pink-line-left {
-  border-left: 3px solid $energy-pink;
+  border-left: var(--border-thickness) solid $energy-pink;
 }
 
 /* 
@@ -466,15 +454,15 @@
 */
 
 .u-energy-turq-line-top {
-  border-top: 3px solid $energy-turq;
+  border-top: var(--border-thickness) solid $energy-turq;
 }
 
 // .u-energy-turq-line-bottom {
-//   border-bottom: 3px solid $energy-turq;
+//   border-bottom: var(--border-thickness) solid $energy-turq;
 // }
 
 .u-energy-turq-line-left {
-  border-left: 3px solid $energy-turq;
+  border-left: var(--border-thickness) solid $energy-turq;
 }
 
 /* 
@@ -482,15 +470,15 @@
 */
 
 .u-energy-purple-line-top {
-  border-top: 3px solid $energy-purple;
+  border-top: var(--border-thickness) solid $energy-purple;
 }
 
 // .u-energy-purple-line-bottom {
-//   border-bottom: 3px solid $energy-purple;
+//   border-bottom: var(--border-thickness) solid $energy-purple;
 // }
 
 .u-energy-purple-line-left {
-  border-left: 3px solid $energy-purple;
+  border-left: var(--border-thickness) solid $energy-purple;
 }
 
 /* 
@@ -498,7 +486,7 @@
 */
 
 .u-heritage-purple-line-left {
-  border-left: 3px solid $heritage-purple;
+  border-left: var(--border-thickness) solid $heritage-purple;
 }
 
 /* 
@@ -506,15 +494,15 @@
 */
 
 .u-heritage-berry-line-top {
-  border-top: 3px solid $heritage-berry;
+  border-top: var(--border-thickness) solid $heritage-berry;
 }
 
 // .u-heritage-berry-line-bottom {
-//   border-bottom: 3px solid $energy-berry;
+//   border-bottom: var(--border-thickness) solid $energy-berry;
 // }
 
 .u-heritage-berry-line-left {
-  border-left: 3px solid $heritage-berry;
+  border-left: var(--border-thickness) solid $heritage-berry;
 }
 
 /* 
@@ -522,15 +510,15 @@
 */
 
 .u-grey-line-bottom {
-  border-bottom: 3px solid #f6f5f4;
+  border-bottom: var(--border-thickness) solid $light-gray-2;
 }
 
 .u-grey-line-left {
-  border-left: 1px solid #f6f5f4;
+  border-left: 1px solid $light-gray-2;
 }
 
 .u-medium-grey-line {
-  border: 1px solid #d5d4d4;
+  border: 1px solid $medium-gray;
 }
 
 /*

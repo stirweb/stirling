@@ -94,7 +94,7 @@ $variations: (30, 50, 70);
 }
 
 // this is an exception for the grey section backgrounds
-$bg-grey: #f6f5f4; //tint($light-mink, 15%);
+$bg-grey: $light-gray-2; //tint($light-mink, 15%);
 
 // Used for full width wrappers
 .u-bleed {
