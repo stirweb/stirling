@@ -9904,6 +9904,15 @@ ul.no-bullet {
 .u-hook.neutrals.u-hook-full-bleed::before {
   border-color: #d1d1c9; }
 
+.u-hook.neutral-green > *::before {
+  border-color: #006938; }
+
+.u-hook.neutral-green > *::after {
+  border-color: #006938; }
+
+.u-hook.neutral-green.u-hook-full-bleed::before {
+  border-color: #006938; }
+
 /*
   Dark themes of the hooks
 */
@@ -9960,6 +9969,9 @@ ul.no-bullet {
   .neutrals.dark .c-wrapper-2025.u-bleed.u-bleed.u-bleed {
     border-image-source: linear-gradient(#5f6350, #5f6350); }
 
+/*
+
+*/
 .neutrals .c-wrapper-2025.u-bleed {
   background-color: white; }
   .neutrals .c-wrapper-2025.u-bleed.u-bleed {
@@ -9969,6 +9981,9 @@ ul.no-bullet {
   background-color: #f1f1ef; }
   .neutral-green .c-wrapper-2025.u-bleed.u-bleed {
     border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
+
+.neutral-green .c-wrapper-2025 {
+  background-color: #f1f1ef; }
 
 /*
 
@@ -9980,7 +9995,7 @@ ul.no-bullet {
   background-clip: border-box; }
 
 .u-border-bleed-left {
-  background-image: linear-gradient(90deg, #006938 30%, #edf4f1 70%); }
+  background-image: linear-gradient(90deg, #006938 30%, rgba(255, 0, 0, 0) 70%); }
 
 .u-border-bleed-right {
   background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, #006938 30%); }
@@ -10018,6 +10033,12 @@ ul.no-bullet {
 
 .u-border-bleed-right.neutrals {
   background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, #d1d1c9 30%); }
+
+.u-border-bleed-left.dark.neutrals {
+  background-image: linear-gradient(90deg, #97956d 30%, rgba(255, 0, 0, 0) 70%); }
+
+.u-border-bleed-right.dark.neutrals {
+  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, #97956d 30%); }
 
 /* 
 
