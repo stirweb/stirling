@@ -954,6 +954,57 @@ a:has(img):hover {
   .dark .c-link::before {
     background-color: brightness(0) invert(1); }
 
+/*
+  .c-wrapper-2025 dark 
+*/
+.c-wrapper-2025.greens.dark {
+  background-color: #006938; }
+  .c-wrapper-2025.greens.dark.u-bleed {
+    border-image-source: linear-gradient(#006938, #006938); }
+
+.c-wrapper-2025.teals.dark {
+  background-color: #005e63; }
+  .c-wrapper-2025.teals.dark.u-bleed {
+    border-image-source: linear-gradient(#005e63, #005e63); }
+
+.c-wrapper-2025.pinks.dark {
+  background-color: #511535; }
+  .c-wrapper-2025.pinks.dark.u-bleed {
+    border-image-source: linear-gradient(#511535, #511535); }
+
+.c-wrapper-2025.purples.dark {
+  background-color: #3f0066; }
+  .c-wrapper-2025.purples.dark.u-bleed {
+    border-image-source: linear-gradient(#3f0066, #3f0066); }
+
+.c-wrapper-2025.blues.dark {
+  background-color: #122c54; }
+  .c-wrapper-2025.blues.dark.u-bleed {
+    border-image-source: linear-gradient(#122c54, #122c54); }
+
+.c-wrapper-2025.neutrals.dark,
+.neutrals.dark .c-wrapper-2025.u-bleed.u-bleed {
+  background-color: #5f6350; }
+  .c-wrapper-2025.neutrals.dark.u-bleed,
+  .neutrals.dark .c-wrapper-2025.u-bleed.u-bleed.u-bleed {
+    border-image-source: linear-gradient(#5f6350, #5f6350); }
+
+/*
+  .c-wrapper-2025 light overrides/additions
+*/
+.neutrals .c-wrapper-2025.u-bleed {
+  background-color: white; }
+  .neutrals .c-wrapper-2025.u-bleed.u-bleed {
+    border-image-source: linear-gradient(#fff, white); }
+
+.neutral-green .c-wrapper-2025.u-bleed {
+  background-color: #f1f1ef; }
+  .neutral-green .c-wrapper-2025.u-bleed.u-bleed {
+    border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
+
+.neutral-green .c-wrapper-2025 {
+  background-color: #f1f1ef; }
+
 /**
  * Because false isn’t a valid value for z-index, we don’t want it in our compiled
  * code. We can stop this from happening by making a custom function that acts as
@@ -9947,57 +9998,6 @@ ul.no-bullet {
 
 .u-hook.dark.neutrals.u-hook-full-bleed::before {
   border-color: #97956d; }
-
-/*
-  .c-wrapper-2025 dark overrides & additions
-*/
-.c-wrapper-2025.greens.dark {
-  background-color: #006938; }
-  .c-wrapper-2025.greens.dark.u-bleed {
-    border-image-source: linear-gradient(#006938, #006938); }
-
-.c-wrapper-2025.teals.dark {
-  background-color: #005e63; }
-  .c-wrapper-2025.teals.dark.u-bleed {
-    border-image-source: linear-gradient(#005e63, #005e63); }
-
-.c-wrapper-2025.pinks.dark {
-  background-color: #511535; }
-  .c-wrapper-2025.pinks.dark.u-bleed {
-    border-image-source: linear-gradient(#511535, #511535); }
-
-.c-wrapper-2025.purples.dark {
-  background-color: #3f0066; }
-  .c-wrapper-2025.purples.dark.u-bleed {
-    border-image-source: linear-gradient(#3f0066, #3f0066); }
-
-.c-wrapper-2025.blues.dark {
-  background-color: #122c54; }
-  .c-wrapper-2025.blues.dark.u-bleed {
-    border-image-source: linear-gradient(#122c54, #122c54); }
-
-.c-wrapper-2025.neutrals.dark,
-.neutrals.dark .c-wrapper-2025.u-bleed.u-bleed {
-  background-color: #5f6350; }
-  .c-wrapper-2025.neutrals.dark.u-bleed,
-  .neutrals.dark .c-wrapper-2025.u-bleed.u-bleed.u-bleed {
-    border-image-source: linear-gradient(#5f6350, #5f6350); }
-
-/*
-.c-wrapper-2025 light additions
-*/
-.neutrals .c-wrapper-2025.u-bleed {
-  background-color: white; }
-  .neutrals .c-wrapper-2025.u-bleed.u-bleed {
-    border-image-source: linear-gradient(#fff, white); }
-
-.neutral-green .c-wrapper-2025.u-bleed {
-  background-color: #f1f1ef; }
-  .neutral-green .c-wrapper-2025.u-bleed.u-bleed {
-    border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
-
-.neutral-green .c-wrapper-2025 {
-  background-color: #f1f1ef; }
 
 /*
   u-border bleed
