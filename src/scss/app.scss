@@ -66,7 +66,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -169,6 +169,7 @@ $greens: (
   "medium": map-get($brand-palette, heritage-green),
   "dark": map-get($brand-palette, green-dark),
   "hook": map-get($brand-palette, heritage-green),
+  "darkbg": map-get($brand-palette, heritage-green),
 );
 
 $pinks: (
@@ -179,6 +180,7 @@ $pinks: (
   "medium": map-get($brand-palette, pink-medium),
   "dark": map-get($brand-palette, pink-dark),
   "hook": map-get($brand-palette, pink-medium),
+  "darkbg": map-get($brand-palette, pink-dark),
 );
 
 $blues: (
@@ -188,6 +190,7 @@ $blues: (
   "medium": map-get($brand-palette, energy-blue),
   "dark": map-get($brand-palette, blue-dark),
   "hook": map-get($brand-palette, energy-blue),
+  "darkbg": map-get($brand-palette, blue-dark),
 );
 
 $yellows: (
@@ -198,6 +201,7 @@ $yellows: (
   "medium": map-get($brand-palette, heritage-yellow),
   "dark": map-get($brand-palette, yellow-dark),
   "hook": map-get($brand-palette, heritage-yellow),
+  "darkbg": map-get($brand-palette, yellow-dark),
 );
 
 $oranges: (
@@ -208,6 +212,7 @@ $oranges: (
   "medium": map-get($brand-palette, heritage-orange),
   "dark": map-get($brand-palette, orange-dark),
   "hook": map-get($brand-palette, heritage-orange),
+  "darkbg": map-get($brand-palette, orange-dark),
 );
 
 $teals: (
@@ -217,6 +222,7 @@ $teals: (
   "medium": map-get($brand-palette, heritage-teal),
   "dark": map-get($brand-palette, teal-dark),
   "hook": map-get($brand-palette, energy-teal),
+  "darkbg": map-get($brand-palette, heritage-teal),
 );
 
 $purples: (
@@ -226,6 +232,7 @@ $purples: (
   "medium": map-get($brand-palette, purple-medium),
   "dark": map-get($brand-palette, purple-dark),
   "hook": map-get($brand-palette, purple-medium),
+  "darkbg": map-get($brand-palette, purple-dark),
 );
 
 $neutrals: (
@@ -235,6 +242,7 @@ $neutrals: (
   "medium": map-get($brand-palette, neutral-medium),
   "dark": map-get($brand-palette, neutral-dark),
   "hook": map-get($brand-palette, neutral-light),
+  "darkbg": map-get($brand-palette, neutral-dark),
 );
 
 $uos-colour-group-palette: (

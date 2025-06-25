@@ -362,106 +362,100 @@ a:has(img):hover {
   New brand 2025 colour packs
 */
 
-.pinks {
-  a,
-  h2,
-  h3,
-  h4 {
-    color: map-get($pinks, "medium");
-  }
-  a:not(.c-link) {
-    border-bottom: 2px solid map-get($pinks, "light");
-    &:hover {
-      border-bottom: 2px solid map-get($pinks, "tint-7");
-    }
-  }
-}
+// .pinks {
+//   a,
+//   h2,
+//   h3,
+//   h4 {
+//     color: map-get($pinks, "hook");
+//   }
+//   a:not(.c-link) {
+//     border-bottom: 2px solid map-get($pinks, "light");
+//     &:hover {
+//       border-bottom: 2px solid map-get($pinks, "tint-7");
+//     }
+//   }
+// }
 
-.greens {
-  a,
-  h2,
-  h3,
-  h4 {
-    color: map-get($greens, "dark");
-  }
-  a:not(.c-link) {
-    border-bottom: 2px solid map-get($greens, "light");
-    &:hover {
-      border-bottom: 2px solid map-get($greens, "tint-7");
-    }
-  }
-}
+// .greens {
+//   a,
+//   h2,
+//   h3,
+//   h4 {
+//     color: map-get($greens, "hook");
+//   }
+//   a:not(.c-link) {
+//     border-bottom: 2px solid map-get($greens, "light");
+//     &:hover {
+//       border-bottom: 2px solid map-get($greens, "tint-7");
+//     }
+//   }
+// }
 
-.teals {
-  h2,
-  h3,
-  h4 {
-    color: map-get($teals, "light");
-  }
+// .teals {
+//   h2,
+//   h3,
+//   h4 {
+//     color: map-get($teals, "hook");
+//   }
 
-  a {
-    color: map-get($teals, "medium");
-  }
-  a:not(.c-link) {
-    border-bottom: 2px solid map-get($teals, "light");
-    &:hover {
-      border-bottom: 2px solid map-get($teals, "tint-7");
-    }
-  }
-}
+//   a {
+//     color: map-get($teals, "medium");
+//   }
+//   a:not(.c-link) {
+//     border-bottom: 2px solid map-get($teals, "light");
+//     &:hover {
+//       border-bottom: 2px solid map-get($teals, "tint-7");
+//     }
+//   }
+// }
 
-.purples {
-  a,
-  h2,
-  h3,
-  h4 {
-    color: map-get($purples, "medium");
-  }
-  a:not(.c-link) {
-    border-bottom: 2px solid map-get($purples, "light");
-    &:hover {
-      border-bottom: 2px solid map-get($purples, "tint-7");
-    }
-  }
-}
+// .purples {
+//   a,
+//   h2,
+//   h3,
+//   h4 {
+//     color: map-get($purples, "hook");
+//   }
+//   a:not(.c-link) {
+//     border-bottom: 2px solid map-get($purples, "light");
+//     &:hover {
+//       border-bottom: 2px solid map-get($purples, "tint-7");
+//     }
+//   }
+// }
 
-.blues {
-  a,
-  h2,
-  h3,
-  h4 {
-    color: map-get($blues, "medium");
-  }
-  a:not(.c-link) {
-    border-bottom: 2px solid map-get($blues, "light");
-    &:hover {
-      border-bottom: 2px solid map-get($blues, "tint-7");
-    }
-  }
-}
-
-.neutral-green {
-  a,
-  h2,
-  h3,
-  h4 {
-    color: map-get($greens, "dark");
-  }
-  a:not(.c-link) {
-    border-bottom: 2px solid map-get($greens, "light");
-    &:hover {
-      border-bottom: 2px solid map-get($greens, "tint-7");
-    }
-  }
-  .u-font-icon {
-    color: map-get($greens, "medium");
-  }
-}
+// .blues {
+//   a,
+//   h2,
+//   h3,
+//   h4 {
+//     color: map-get($blues, "hook");
+//   }
+//   a:not(.c-link) {
+//     border-bottom: 2px solid map-get($blues, "light");
+//     &:hover {
+//       border-bottom: 2px solid map-get($blues, "tint-7");
+//     }
+//   }
+// }
 
 @each $name, $color in $uos-colour-group-palette {
   .#{$name} {
-    .u-font-icon {
-      color: map-get($color, "medium");
+    a,
+    h2,
+    h3,
+    h4,
+    .u-font-icon,
+    .u-theme-header {
+      color: map-get($color, "hook");
+    }
+
+    a:not(.c-link) {
+      border-bottom: 2px solid map-get($color, "light");
+      &:hover {
+        border-bottom: 2px solid map-get($color, "tint-7");
+      }
     }
 
     a:hover {
@@ -486,6 +480,50 @@ a:has(img):hover {
   }
 }
 
+.neutral-green {
+  a,
+  h2,
+  h3,
+  h4 {
+    color: map-get($greens, "hook");
+  }
+  a:not(.c-link) {
+    border-bottom: 2px solid map-get($greens, "light");
+    &:hover {
+      border-bottom: 2px solid map-get($greens, "tint-7");
+    }
+  }
+  .u-font-icon {
+    color: map-get($greens, "medium");
+  }
+}
+
+.neutrals {
+  a,
+  h2,
+  h3,
+  h4 {
+    color: map-get($greens, "hook");
+  }
+  a:not(.c-link) {
+    border-bottom: 2px solid map-get($greens, "light");
+    &:hover {
+      border-bottom: 2px solid map-get($greens, "tint-7");
+    }
+  }
+  .u-font-icon {
+    color: map-get($greens, "medium");
+  }
+
+  .c-wrapper-2025 {
+    background-color: $white;
+
+    &.u-bleed {
+      border-image-source: linear-gradient($white, $white);
+    }
+  }
+}
+
 .dark {
   color: $white;
   a,
@@ -495,6 +533,7 @@ a:has(img):hover {
   h5 {
     color: $white;
   }
+
   a {
     border-bottom: 2px solid $white;
   }
@@ -513,9 +552,9 @@ a:has(img):hover {
 */
 
 .c-wrapper-2025.u-bleed.neutrals {
-  background-color: white;
+  background-color: $white;
   &.u-bleed {
-    border-image-source: linear-gradient($white, white);
+    border-image-source: linear-gradient($white, $white);
   }
 }
 
@@ -530,44 +569,55 @@ a:has(img):hover {
   .c-wrapper-2025 dark 
 */
 
-.c-wrapper-2025.greens.dark {
-  background-color: map-get($greens, "medium");
-  &.u-bleed {
-    border-image-source: linear-gradient(map-get($greens, "medium"), map-get($greens, "medium"));
+@each $name, $color in $uos-colour-group-palette {
+  .#{$name} {
+    &.c-wrapper-2025.dark {
+      background-color: map-get($color, "darkbg");
+      &.u-bleed {
+        border-image-source: linear-gradient(map-get($color, "darkbg"), map-get($color, "darkbg"));
+      }
+    }
   }
 }
 
-.c-wrapper-2025.teals.dark {
-  background-color: map-get($teals, "medium");
-  &.u-bleed {
-    border-image-source: linear-gradient(map-get($teals, "medium"), map-get($teals, "medium"));
-  }
-}
+// .c-wrapper-2025.greens.dark {
+//   background-color: map-get($greens, "darkbg");
+//   &.u-bleed {
+//     border-image-source: linear-gradient(map-get($greens, "darkbg"), map-get($greens, "darkbg"));
+//   }
+// }
 
-.c-wrapper-2025.pinks.dark {
-  background-color: map-get($pinks, "dark");
-  &.u-bleed {
-    border-image-source: linear-gradient(map-get($pinks, "dark"), map-get($pinks, "dark"));
-  }
-}
+// .c-wrapper-2025.teals.dark {
+//   background-color: map-get($teals, "darkbg");
+//   &.u-bleed {
+//     border-image-source: linear-gradient(map-get($teals, "darkbg"), map-get($teals, "darkbg"));
+//   }
+// }
 
-.c-wrapper-2025.purples.dark {
-  background-color: map-get($purples, "dark");
-  &.u-bleed {
-    border-image-source: linear-gradient(map-get($purples, "dark"), map-get($purples, "dark"));
-  }
-}
+// .c-wrapper-2025.pinks.dark {
+//   background-color: map-get($pinks, "darkbg");
+//   &.u-bleed {
+//     border-image-source: linear-gradient(map-get($pinks, "darkbg"), map-get($pinks, "darkbg"));
+//   }
+// }
 
-.c-wrapper-2025.blues.dark {
-  background-color: map-get($blues, "dark");
-  &.u-bleed {
-    border-image-source: linear-gradient(map-get($blues, "dark"), map-get($blues, "dark"));
-  }
-}
+// .c-wrapper-2025.purples.dark {
+//   background-color: map-get($purples, "darkbg");
+//   &.u-bleed {
+//     border-image-source: linear-gradient(map-get($purples, "darkbg"), map-get($purples, "darkbg"));
+//   }
+// }
 
-.c-wrapper-2025.neutrals.dark {
-  background-color: map-get($neutrals, "dark");
-  &.u-bleed {
-    border-image-source: linear-gradient(map-get($neutrals, "dark"), map-get($neutrals, "dark"));
-  }
-}
+// .c-wrapper-2025.blues.dark {
+//   background-color: map-get($blues, "darkbg");
+//   &.u-bleed {
+//     border-image-source: linear-gradient(map-get($blues, "darkbg"), map-get($blues, "darkbg"));
+//   }
+// }
+
+// .c-wrapper-2025.neutrals.dark {
+//   background-color: map-get($neutrals, "darkbg");
+//   &.u-bleed {
+//     border-image-source: linear-gradient(map-get($neutrals, "darkbg"), map-get($neutrals, "darkbg"));
+//   }
+// }
