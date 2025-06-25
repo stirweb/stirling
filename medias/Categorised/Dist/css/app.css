@@ -339,22 +339,22 @@
 .bg-neutral-medium {
   border-image-source: linear-gradient(#97956d, #97956d); }
 
-.u-neutral-medium-dark {
+.u-neutral-dark {
   color: #5f6350 !important; }
 
-.u-bg-neutral-medium-dark {
+.u-bg-neutral-dark {
   background-color: #5f6350 !important; }
 
-.bg-neutral-medium-dark {
+.bg-neutral-dark {
   border-image-source: linear-gradient(#5f6350, #5f6350); }
 
-.u-neutral-dark {
+.u-neutral-darker {
   color: #3a3a26 !important; }
 
-.u-bg-neutral-dark {
+.u-bg-neutral-darker {
   background-color: #3a3a26 !important; }
 
-.bg-neutral-dark {
+.bg-neutral-darker {
   border-image-source: linear-gradient(#3a3a26, #3a3a26); }
 
 .u-teal-tint-7 {
@@ -852,7 +852,7 @@ a:has(img):hover {
     border-image-source: linear-gradient(#fdfbef, #fdfbef); }
 
 .yellows .c-link::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
 
 .yellows .c-link::before {
   background-color: #f4c400; }
@@ -869,7 +869,7 @@ a:has(img):hover {
     border-image-source: linear-gradient(#fef6f0, #fef6f0); }
 
 .oranges .c-link::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
 
 .oranges .c-link::before {
   background-color: #ff6d00; }
@@ -907,6 +907,23 @@ a:has(img):hover {
 
 .purples .c-link::before {
   background-color: #592c82; }
+
+.neutrals .u-font-icon {
+  color: #97956d; }
+
+.neutrals a:hover {
+  text-decoration-color: #d1d1c9; }
+
+.neutrals .c-wrapper-2025 {
+  background-color: #f1f1ef; }
+  .neutrals .c-wrapper-2025.u-bleed {
+    border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
+
+.neutrals .c-link::after {
+  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
+.neutrals .c-link::before {
+  background-color: #d1d1c9; }
 
 .dark {
   color: #fff; }
@@ -2848,7 +2865,7 @@ button:focus {
       border-color: #edab00;
       color: #edab00; }
       .button.warning:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+        filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
   .button.alert {
     background-color: #e80068;
     border-color: #e80068;
@@ -3062,7 +3079,7 @@ button:focus {
     color: #edab00;
     border: var(--button-border-width) solid #edab00; }
     .button.warning.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
     .button.warning.hollow:hover {
       background-color: transparent;
       border: var(--button-border-width) solid #f6d580; }
@@ -3274,7 +3291,7 @@ button:focus {
     border-color: #ef4c95;
     color: #511535; }
     .button.pinks.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
     .button.pinks.tinted:hover {
       background-color: #ffffff; }
   .button.blues.tinted {
@@ -3282,7 +3299,7 @@ button:focus {
     border-color: #77a4da;
     color: #122c54; }
     .button.blues.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .button.blues.tinted:hover {
       background-color: #ffffff; }
   .button.yellows.tinted {
@@ -3290,7 +3307,7 @@ button:focus {
     border-color: #f7d64c;
     color: #7b5c18; }
     .button.yellows.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(31%) sepia(58%) saturate(639%) hue-rotate(3deg) brightness(98%) contrast(85%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
     .button.yellows.tinted:hover {
       background-color: #ffffff; }
   .button.oranges.tinted {
@@ -3298,7 +3315,7 @@ button:focus {
     border-color: #ff994c;
     color: #852903; }
     .button.oranges.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
     .button.oranges.tinted:hover {
       background-color: #ffffff; }
   .button.teals.tinted {
@@ -3314,8 +3331,14 @@ button:focus {
     border-color: #b186d7;
     color: #3f0066; }
     .button.purples.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%); }
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
     .button.purples.tinted:hover {
+      background-color: #ffffff; }
+  .button.neutrals.tinted {
+    color: #5f6350; }
+    .button.neutrals.tinted::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+    .button.neutrals.tinted:hover {
       background-color: #ffffff; }
   .button.tinted.pinks {
     background-color: #c698b0;
@@ -9845,6 +9868,21 @@ ul.no-bullet {
 .u-hook.purples.u-hook-full-bleed::before {
   border-color: #592c82; }
 
+.u-hook.neutrals > *::after {
+  border-color: #97956d; }
+
+.u-hook.neutrals > *::after {
+  border-color: #97956d; }
+
+.u-hook.neutrals > *::before {
+  border-color: #97956d; }
+
+.u-hook.neutrals > *::before {
+  border-color: #97956d; }
+
+.u-hook.neutrals.u-hook-full-bleed::before {
+  border-color: #97956d; }
+
 /* 
   Colour overrides
 */
@@ -9905,6 +9943,11 @@ ul.no-bullet {
   background-color: #122c54; }
   .c-wrapper-2025.blues.dark.u-bleed {
     border-image-source: linear-gradient(#122c54, #122c54); }
+
+.c-wrapper-2025.neutrals.dark {
+  background-color: #5f6350; }
+  .c-wrapper-2025.neutrals.dark.u-bleed {
+    border-image-source: linear-gradient(#5f6350, #5f6350); }
 
 /*
 
