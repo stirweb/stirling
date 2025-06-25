@@ -207,7 +207,7 @@ button:focus {
         color: map-get($color, "dark");
 
         &::after {
-          filter: icon-filter(map-get($color, "dark"));
+          filter: icon-filter(map-get($color, "medium"));
         }
 
         &:hover {

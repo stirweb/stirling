@@ -66,7 +66,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -114,8 +114,8 @@ $brand-palette: (
   neutral-tint-7: #f1f1ef,
   neutral-light: #d1d1c9,
   neutral-medium: #97956d,
-  neutral-medium-dark: #5f6350,
-  neutral-dark: #3a3a26,
+  neutral-dark: #5f6350,
+  neutral-darker: #3a3a26,
 
   // Teal
   teal-tint-7: #edf7f8,
@@ -221,6 +221,14 @@ $purples: (
   "dark": map-get($brand-palette, purple-dark),
 );
 
+$neutrals: (
+  "tint-7": map-get($brand-palette, neutral-tint-7),
+  "tint": map-get($brand-palette, neutral-tint),
+  "light": map-get($brand-palette, neutral-light),
+  "medium": map-get($brand-palette, neutral-medium),
+  "dark": map-get($brand-palette, neutral-dark),
+);
+
 $uos-colour-group-palette: (
   greens: $greens,
   pinks: $pinks,
@@ -229,6 +237,7 @@ $uos-colour-group-palette: (
   oranges: $oranges,
   teals: $teals,
   purples: $purples,
+  neutrals: $neutrals,
 );
 
 // @debug map-get($purples, "medium");
@@ -283,10 +292,8 @@ $uos-button-palette: (
     $heritage-berry: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%),
     $energy-purple: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%),
     $heritage-purple: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%),
-    // Blue dark Purple dark etc for tinted buttons
-    // #3f0066: invert(100%) brightness(0) saturate(100%) invert(4%) sepia(96%) saturate(7409%) hue-rotate(278deg) brightness(92%) contrast(107%),
-    // #511535: invert(100%) brightness(0) saturate(100%) invert(9%) sepia(27%) saturate(5627%) hue-rotate(305deg) brightness(101%) contrast(93%),
-    //#7c184f: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%),
+    #d9541a: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%),
+    #edab00: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%),
     #7b5c18: invert(100%) brightness(0) saturate(100%) invert(31%) sepia(58%) saturate(639%) hue-rotate(3deg) brightness(98%) contrast(85%),
     #122c54: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%),
   );
