@@ -955,6 +955,19 @@ a:has(img):hover {
     background-color: brightness(0) invert(1); }
 
 /*
+  .c-wrapper-2025 light overrides/additions
+*/
+.c-wrapper-2025.u-bleed.neutrals {
+  background-color: white; }
+  .c-wrapper-2025.u-bleed.neutrals.u-bleed {
+    border-image-source: linear-gradient(#fff, white); }
+
+.c-wrapper-2025.u-bleed.neutral-green {
+  background-color: #f1f1ef; }
+  .c-wrapper-2025.u-bleed.neutral-green.u-bleed {
+    border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
+
+/*
   .c-wrapper-2025 dark 
 */
 .c-wrapper-2025.greens.dark {
@@ -982,28 +995,10 @@ a:has(img):hover {
   .c-wrapper-2025.blues.dark.u-bleed {
     border-image-source: linear-gradient(#122c54, #122c54); }
 
-.c-wrapper-2025.neutrals.dark,
-.neutrals.dark .c-wrapper-2025.u-bleed.u-bleed {
+.c-wrapper-2025.neutrals.dark {
   background-color: #5f6350; }
-  .c-wrapper-2025.neutrals.dark.u-bleed,
-  .neutrals.dark .c-wrapper-2025.u-bleed.u-bleed.u-bleed {
+  .c-wrapper-2025.neutrals.dark.u-bleed {
     border-image-source: linear-gradient(#5f6350, #5f6350); }
-
-/*
-  .c-wrapper-2025 light overrides/additions
-*/
-.neutrals .c-wrapper-2025.u-bleed {
-  background-color: white; }
-  .neutrals .c-wrapper-2025.u-bleed.u-bleed {
-    border-image-source: linear-gradient(#fff, white); }
-
-.neutral-green .c-wrapper-2025.u-bleed {
-  background-color: #f1f1ef; }
-  .neutral-green .c-wrapper-2025.u-bleed.u-bleed {
-    border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
-
-.neutral-green .c-wrapper-2025 {
-  background-color: #f1f1ef; }
 
 /**
  * Because false isn’t a valid value for z-index, we don’t want it in our compiled
@@ -9904,19 +9899,19 @@ ul.no-bullet {
   border-color: #d9541a; }
 
 .u-hook.teals > *::after {
-  border-color: #005e63; }
+  border-color: #008996; }
 
 .u-hook.teals > *::after {
-  border-color: #005e63; }
+  border-color: #008996; }
 
 .u-hook.teals > *::before {
-  border-color: #005e63; }
+  border-color: #008996; }
 
 .u-hook.teals > *::before {
-  border-color: #005e63; }
+  border-color: #008996; }
 
 .u-hook.teals.u-hook-full-bleed::before {
-  border-color: #005e63; }
+  border-color: #008996; }
 
 .u-hook.purples > *::after {
   border-color: #592c82; }
@@ -9934,41 +9929,52 @@ ul.no-bullet {
   border-color: #592c82; }
 
 .u-hook.neutrals > *::after {
-  border-color: #97956d; }
+  border-color: #d1d1c9; }
 
 .u-hook.neutrals > *::after {
-  border-color: #97956d; }
+  border-color: #d1d1c9; }
 
 .u-hook.neutrals > *::before {
-  border-color: #97956d; }
+  border-color: #d1d1c9; }
 
 .u-hook.neutrals > *::before {
-  border-color: #97956d; }
+  border-color: #d1d1c9; }
 
 .u-hook.neutrals.u-hook-full-bleed::before {
-  border-color: #97956d; }
+  border-color: #d1d1c9; }
 
 /* 
   Colour overrides
-*/
-.u-hook.teals > *::before {
-  border-color: #008996; }
 
-.u-hook.teals > *::after {
-  border-color: #008996; }
+
+.u-hook.teals {
+  > *::before {
+    border-color: map-get($teals, "light");
+  }
+
+  > *::after {
+    border-color: map-get($teals, "light");
+  }
+}
 
 .u-hook.teals.u-hook-full-bleed::before {
-  border-color: #008996; }
+  border-color: map-get($teals, "light");
+}
 
-.u-hook.neutrals > *::before {
-  border-color: #d1d1c9; }
+.u-hook.neutrals {
+  > *::before {
+    border-color: map-get($neutrals, "light");
+  }
 
-.u-hook.neutrals > *::after {
-  border-color: #d1d1c9; }
+  > *::after {
+    border-color: map-get($neutrals, "light");
+  }
+}
 
 .u-hook.neutrals.u-hook-full-bleed::before {
-  border-color: #d1d1c9; }
-
+  border-color: map-get($neutrals, "light");
+}
+*/
 .u-hook.neutral-green > *::before {
   border-color: #006938; }
 

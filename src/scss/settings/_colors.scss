@@ -509,6 +509,24 @@ a:has(img):hover {
 }
 
 /*
+  .c-wrapper-2025 light overrides/additions
+*/
+
+.c-wrapper-2025.u-bleed.neutrals {
+  background-color: white;
+  &.u-bleed {
+    border-image-source: linear-gradient($white, white);
+  }
+}
+
+.c-wrapper-2025.u-bleed.neutral-green {
+  background-color: map-get($neutrals, "tint-7");
+  &.u-bleed {
+    border-image-source: linear-gradient(map-get($neutrals, "tint-7"), map-get($neutrals, "tint-7"));
+  }
+}
+
+/*
   .c-wrapper-2025 dark 
 */
 
@@ -547,32 +565,9 @@ a:has(img):hover {
   }
 }
 
-.c-wrapper-2025.neutrals.dark,
-.neutrals.dark .c-wrapper-2025.u-bleed.u-bleed {
+.c-wrapper-2025.neutrals.dark {
   background-color: map-get($neutrals, "dark");
   &.u-bleed {
     border-image-source: linear-gradient(map-get($neutrals, "dark"), map-get($neutrals, "dark"));
   }
-}
-
-/*
-  .c-wrapper-2025 light overrides/additions
-*/
-
-.neutrals .c-wrapper-2025.u-bleed {
-  background-color: white;
-  &.u-bleed {
-    border-image-source: linear-gradient($white, white);
-  }
-}
-
-.neutral-green .c-wrapper-2025.u-bleed {
-  background-color: map-get($neutrals, "tint-7");
-  &.u-bleed {
-    border-image-source: linear-gradient(map-get($neutrals, "tint-7"), map-get($neutrals, "tint-7"));
-  }
-}
-
-.neutral-green .c-wrapper-2025 {
-  background-color: map-get($neutrals, "tint-7");
 }

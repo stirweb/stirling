@@ -178,23 +178,23 @@
   @each $name, $color in $uos-colour-group-palette {
     &.#{$name} {
       > *::after {
-        border-color: map-get($color, "medium");
+        border-color: map-get($color, "hook");
       }
 
       > *::after {
-        border-color: map-get($color, "medium");
+        border-color: map-get($color, "hook");
       }
 
       > *::before {
-        border-color: map-get($color, "medium");
+        border-color: map-get($color, "hook");
       }
 
       > *::before {
-        border-color: map-get($color, "medium");
+        border-color: map-get($color, "hook");
       }
 
       &.u-hook-full-bleed::before {
-        border-color: map-get($color, "medium");
+        border-color: map-get($color, "hook");
       }
     }
   }
@@ -202,7 +202,7 @@
 
 /* 
   Colour overrides
-*/
+
 
 .u-hook.teals {
   > *::before {
@@ -231,7 +231,7 @@
 .u-hook.neutrals.u-hook-full-bleed::before {
   border-color: map-get($neutrals, "light");
 }
-
+*/
 .u-hook.neutral-green {
   > *::before {
     border-color: map-get($greens, "medium");
@@ -281,7 +281,7 @@
 /*
   u-border bleed
 */
-// Create a mixin for border-bleed gradients
+// mixin for border-bleed gradients
 @mixin border-bleed($direction, $color) {
   @if $direction == "left" {
     background-image: linear-gradient(90deg, $color 30%, transparent 70%);
