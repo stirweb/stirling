@@ -440,6 +440,24 @@ a:has(img):hover {
   }
 }
 
+.neutral-green {
+  a,
+  h2,
+  h3,
+  h4 {
+    color: map-get($greens, "dark");
+  }
+  a:not(.c-link) {
+    border-bottom: 2px solid map-get($greens, "light");
+    &:hover {
+      border-bottom: 2px solid map-get($greens, "tint-7");
+    }
+  }
+  .u-font-icon {
+    color: map-get($greens, "medium");
+  }
+}
+
 @each $name, $color in $uos-colour-group-palette {
   .#{$name} {
     .u-font-icon {

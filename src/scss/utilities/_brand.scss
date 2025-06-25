@@ -279,7 +279,7 @@
 }
 
 /*
-  .c-wrapper-2025
+  .c-wrapper-2025 dark overrides & additions
 */
 
 .c-wrapper-2025.greens.dark {
@@ -326,7 +326,7 @@
 }
 
 /*
-
+.c-wrapper-2025 light additions
 */
 
 .neutrals .c-wrapper-2025.u-bleed {
@@ -348,8 +348,16 @@
 }
 
 /*
-
+  u-border bleed
 */
+// Create a mixin for border-bleed gradients
+@mixin border-bleed($direction, $color) {
+  @if $direction == "left" {
+    background-image: linear-gradient(90deg, $color 30%, transparent 70%);
+  } @else if $direction == "right" {
+    background-image: linear-gradient(90deg, transparent 70%, $color 30%);
+  }
+}
 
 .u-border-bleed {
   display: block;
@@ -358,66 +366,66 @@
   background-clip: border-box;
 }
 
-.u-border-bleed-left {
-  background-image: linear-gradient(90deg, map-get($greens, "medium") 30%, rgba(255, 0, 0, 0) 70%);
-}
-
-.u-border-bleed-right {
-  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($greens, "medium") 30%);
-}
-
 @include breakpoint(medium up) {
   .u-border-bleed {
     height: var(--hook-border-thickness-medium);
   }
 }
 
+.u-border-bleed-left {
+  @include border-bleed("left", map-get($greens, "medium"));
+}
+
+.u-border-bleed-right {
+  @include border-bleed("right", map-get($greens, "medium"));
+}
+
 .u-border-bleed-left.teals {
-  background-image: linear-gradient(90deg, map-get($teals, "light") 30%, rgba(255, 0, 0, 0) 70%);
+  @include border-bleed("left", map-get($teals, "light"));
 }
 
 .u-border-bleed-right.teals {
-  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($teals, "light") 30%);
+  @include border-bleed("right", map-get($teals, "light"));
 }
 
 .u-border-bleed-left.pinks {
-  background-image: linear-gradient(90deg, map-get($pinks, "medium") 30%, rgba(255, 0, 0, 0) 70%);
+  @include border-bleed("left", map-get($pinks, "medium"));
 }
 
 .u-border-bleed-right.pinks {
-  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($pinks, "medium") 30%);
+  @include border-bleed("right", map-get($pinks, "medium"));
 }
 
 .u-border-bleed-left.blues {
-  background-image: linear-gradient(90deg, map-get($blues, "medium") 30%, rgba(255, 0, 0, 0) 70%);
+  @include border-bleed("left", map-get($blues, "medium"));
 }
 
 .u-border-bleed-right.blues {
-  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($blues, "medium") 30%);
+  @include border-bleed("right", map-get($blues, "medium"));
 }
 
 .u-border-bleed-left.purples {
-  background-image: linear-gradient(90deg, map-get($purples, "medium") 30%, rgba(255, 0, 0, 0) 70%);
+  @include border-bleed("left", map-get($purples, "medium"));
 }
 
 .u-border-bleed-right.purples {
-  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($purples, "medium") 30%);
+  @include border-bleed("right", map-get($purples, "medium"));
 }
 
 .u-border-bleed-left.neutrals {
-  background-image: linear-gradient(90deg, map-get($brand-palette, "light-mink") 30%, rgba(255, 0, 0, 0) 70%);
+  @include border-bleed("left", map-get($brand-palette, "light-mink"));
 }
 
 .u-border-bleed-right.neutrals {
-  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($brand-palette, "light-mink") 30%);
+  @include border-bleed("right", map-get($brand-palette, "light-mink"));
 }
 
 .u-border-bleed-left.dark.neutrals {
-  background-image: linear-gradient(90deg, map-get($neutrals, "medium") 30%, rgba(255, 0, 0, 0) 70%);
+  @include border-bleed("left", map-get($neutrals, "medium"));
 }
 
 .u-border-bleed-right.dark.neutrals {
-  background-image: linear-gradient(90deg, rgba(255, 0, 0, 0) 70%, map-get($neutrals, "medium") 30%);
+  @include border-bleed("right", map-get($neutrals, "medium"));
 }
 
 /* 
