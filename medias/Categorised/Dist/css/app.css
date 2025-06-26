@@ -747,8 +747,7 @@ a:has(img):hover {
 .greens h2,
 .greens h3,
 .greens h4,
-.greens .u-font-icon,
-.greens .u-theme-header {
+.greens .u-font-icon {
   color: #006938; }
 
 .greens a:not(.c-link) {
@@ -774,8 +773,7 @@ a:has(img):hover {
 .pinks h2,
 .pinks h3,
 .pinks h4,
-.pinks .u-font-icon,
-.pinks .u-theme-header {
+.pinks .u-font-icon {
   color: #7c184f; }
 
 .pinks a:not(.c-link) {
@@ -801,8 +799,7 @@ a:has(img):hover {
 .blues h2,
 .blues h3,
 .blues h4,
-.blues .u-font-icon,
-.blues .u-theme-header {
+.blues .u-font-icon {
   color: #2c498a; }
 
 .blues a:not(.c-link) {
@@ -828,8 +825,7 @@ a:has(img):hover {
 .yellows h2,
 .yellows h3,
 .yellows h4,
-.yellows .u-font-icon,
-.yellows .u-theme-header {
+.yellows .u-font-icon {
   color: #edab00; }
 
 .yellows a:not(.c-link) {
@@ -855,8 +851,7 @@ a:has(img):hover {
 .oranges h2,
 .oranges h3,
 .oranges h4,
-.oranges .u-font-icon,
-.oranges .u-theme-header {
+.oranges .u-font-icon {
   color: #d9541a; }
 
 .oranges a:not(.c-link) {
@@ -882,8 +877,7 @@ a:has(img):hover {
 .teals h2,
 .teals h3,
 .teals h4,
-.teals .u-font-icon,
-.teals .u-theme-header {
+.teals .u-font-icon {
   color: #008996; }
 
 .teals a:not(.c-link) {
@@ -909,8 +903,7 @@ a:has(img):hover {
 .purples h2,
 .purples h3,
 .purples h4,
-.purples .u-font-icon,
-.purples .u-theme-header {
+.purples .u-font-icon {
   color: #592c82; }
 
 .purples a:not(.c-link) {
@@ -936,8 +929,7 @@ a:has(img):hover {
 .neutrals h2,
 .neutrals h3,
 .neutrals h4,
-.neutrals .u-font-icon,
-.neutrals .u-theme-header {
+.neutrals .u-font-icon {
   color: #d1d1c9; }
 
 .neutrals a:not(.c-link) {

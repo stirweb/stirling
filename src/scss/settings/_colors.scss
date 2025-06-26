@@ -370,8 +370,7 @@ a:has(img):hover {
     h2,
     h3,
     h4,
-    .u-font-icon,
-    .u-theme-header {
+    .u-font-icon {
       color: map-get($color, "hook");
     }
 
