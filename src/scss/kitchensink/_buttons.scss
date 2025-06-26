@@ -133,23 +133,24 @@ button:focus {
         Button Colors - this will handle each color variation (e.g. heritage-green, enery-pink, ...)
   */
 
-  // @each $name, $color in $button-palette {
-  //   &.#{$name} {
-  //     background-color: $color;
-  //     border-color: $color;
-  //     color: #ffffff;
+  // Deprecated - for Brand 2025 its defined in colours.scss
+  @each $name, $color in $button-palette {
+    &.#{$name} {
+      background-color: $color;
+      border-color: $color;
+      color: #ffffff;
 
-  //     &:hover {
-  //       background-color: #ffffff;
-  //       border-color: $color;
-  //       color: $color;
+      &:hover {
+        background-color: #ffffff;
+        border-color: $color;
+        color: $color;
 
-  //       &::after {
-  //         filter: icon-filter($color);
-  //       }
-  //     }
-  //   }
-  // }
+        &::after {
+          filter: icon-filter($color);
+        }
+      }
+    }
+  }
 
   // &.hollow {
   //   background: transparent;
@@ -194,36 +195,6 @@ button:focus {
   //     }
   //   }
   // }
-
-  /* 
-    BRAND 2025 Tinted style buttons 
-  */
-
-  @each $name, $color in $uos-colour-group-palette {
-    &.#{$name} {
-      &.tinted {
-        background-color: map-get($color, "tint");
-        border-color: map-get($color, "tint");
-        color: map-get($color, "dark");
-
-        &::after {
-          filter: icon-filter(map-get($color, "medium"));
-        }
-
-        &:hover {
-          background-color: #ffffff;
-        }
-      }
-    }
-  }
-
-  // overrides for the tinted buttons
-  &.tinted {
-    &.pinks {
-      background-color: $pink-tint-40;
-      border-color: $pink-tint-40;
-    }
-  }
 
   &.clear {
     border-color: transparent;

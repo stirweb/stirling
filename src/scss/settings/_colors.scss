@@ -398,6 +398,21 @@ a:has(img):hover {
       }
     }
 
+    &.button.tinted,
+    .button.tinted {
+      background-color: map-get($color, "tint");
+      border-color: map-get($color, "tint");
+      color: map-get($color, "dark");
+
+      &::after {
+        filter: icon-filter(map-get($color, "medium"));
+      }
+
+      &:hover {
+        background-color: #ffffff;
+      }
+    }
+
     a:hover {
       text-decoration-color: map-get($color, "light");
     }
@@ -423,6 +438,13 @@ a:has(img):hover {
 // Overrides and additions
 .teals a {
   color: map-get($teals, "safe");
+}
+
+// overrides for the tinted buttons
+.button.tinted.pinks,
+.pinks .button.tinted {
+  background-color: $pink-tint-40;
+  border-color: $pink-tint-40;
 }
 
 .neutral-green {
