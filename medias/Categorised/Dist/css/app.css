@@ -796,6 +796,18 @@ a:has(img):hover {
     .greens a.button:hover::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
+.greens.button.tinted,
+.greens .button.tinted {
+  background-color: #9fcc69;
+  border-color: #9fcc69;
+  color: #005734; }
+  .greens.button.tinted::after,
+  .greens .button.tinted::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .greens.button.tinted:hover,
+  .greens .button.tinted:hover {
+    background-color: #ffffff; }
+
 .greens a:hover {
   text-decoration-color: #76b72a; }
 
@@ -833,6 +845,18 @@ a:has(img):hover {
     border: 4px solid #7c184f; }
     .pinks a.button:hover::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
+
+.pinks.button.tinted,
+.pinks .button.tinted {
+  background-color: #ef4c95;
+  border-color: #ef4c95;
+  color: #511535; }
+  .pinks.button.tinted::after,
+  .pinks .button.tinted::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
+  .pinks.button.tinted:hover,
+  .pinks .button.tinted:hover {
+    background-color: #ffffff; }
 
 .pinks a:hover {
   text-decoration-color: #e80068; }
@@ -872,6 +896,18 @@ a:has(img):hover {
     .blues a.button:hover::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
+.blues.button.tinted,
+.blues .button.tinted {
+  background-color: #77a4da;
+  border-color: #77a4da;
+  color: #122c54; }
+  .blues.button.tinted::after,
+  .blues .button.tinted::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .blues.button.tinted:hover,
+  .blues .button.tinted:hover {
+    background-color: #ffffff; }
+
 .blues a:hover {
   text-decoration-color: #77a4da; }
 
@@ -909,6 +945,18 @@ a:has(img):hover {
     border: 4px solid #edab00; }
     .yellows a.button:hover::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
+
+.yellows.button.tinted,
+.yellows .button.tinted {
+  background-color: #f7d64c;
+  border-color: #f7d64c;
+  color: #7b5c18; }
+  .yellows.button.tinted::after,
+  .yellows .button.tinted::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
+  .yellows.button.tinted:hover,
+  .yellows .button.tinted:hover {
+    background-color: #ffffff; }
 
 .yellows a:hover {
   text-decoration-color: #f4c400; }
@@ -948,6 +996,18 @@ a:has(img):hover {
     .oranges a.button:hover::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
 
+.oranges.button.tinted,
+.oranges .button.tinted {
+  background-color: #ff994c;
+  border-color: #ff994c;
+  color: #852903; }
+  .oranges.button.tinted::after,
+  .oranges .button.tinted::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
+  .oranges.button.tinted:hover,
+  .oranges .button.tinted:hover {
+    background-color: #ffffff; }
+
 .oranges a:hover {
   text-decoration-color: #ff6d00; }
 
@@ -985,6 +1045,18 @@ a:has(img):hover {
     border: 4px solid #008996; }
     .teals a.button:hover::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
+.teals.button.tinted,
+.teals .button.tinted {
+  background-color: #4cacb5;
+  border-color: #4cacb5;
+  color: #003a3d; }
+  .teals.button.tinted::after,
+  .teals .button.tinted::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .teals.button.tinted:hover,
+  .teals .button.tinted:hover {
+    background-color: #ffffff; }
 
 .teals a:hover {
   text-decoration-color: #008996; }
@@ -1024,6 +1096,18 @@ a:has(img):hover {
     .purples a.button:hover::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
 
+.purples.button.tinted,
+.purples .button.tinted {
+  background-color: #b186d7;
+  border-color: #b186d7;
+  color: #3f0066; }
+  .purples.button.tinted::after,
+  .purples .button.tinted::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
+  .purples.button.tinted:hover,
+  .purples .button.tinted:hover {
+    background-color: #ffffff; }
+
 .purples a:hover {
   text-decoration-color: #592c82; }
 
@@ -1062,6 +1146,18 @@ a:has(img):hover {
     .neutrals a.button:hover::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
+.neutrals.button.tinted,
+.neutrals .button.tinted {
+  background-color: #d1d1c9;
+  border-color: #d1d1c9;
+  color: #5f6350; }
+  .neutrals.button.tinted::after,
+  .neutrals .button.tinted::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .neutrals.button.tinted:hover,
+  .neutrals .button.tinted:hover {
+    background-color: #ffffff; }
+
 .neutrals a:hover {
   text-decoration-color: #d1d1c9; }
 
@@ -1078,6 +1174,11 @@ a:has(img):hover {
 
 .teals a {
   color: #037a80; }
+
+.button.tinted.pinks,
+.pinks .button.tinted {
+  background-color: #c698b0;
+  border-color: #c698b0; }
 
 .neutral-green a,
 .neutral-green h2,
@@ -3079,9 +3180,6 @@ button:focus {
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   /*
         Button Colors - this will handle each color variation (e.g. heritage-green, enery-pink, ...)
-  */
-  /* 
-    BRAND 2025 Tinted style buttons 
   */ }
   .button:hover {
     background-color: #fff;
@@ -3133,73 +3231,76 @@ button:focus {
     margin-left: 30px; }
   .button.button-gap--left:last-child {
     margin-left: 0; }
-  .button.greens.tinted {
-    background-color: #9fcc69;
-    border-color: #9fcc69;
-    color: #005734; }
-    .button.greens.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.greens.tinted:hover {
-      background-color: #ffffff; }
-  .button.pinks.tinted {
-    background-color: #ef4c95;
-    border-color: #ef4c95;
-    color: #511535; }
-    .button.pinks.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
-    .button.pinks.tinted:hover {
-      background-color: #ffffff; }
-  .button.blues.tinted {
-    background-color: #77a4da;
-    border-color: #77a4da;
-    color: #122c54; }
-    .button.blues.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.blues.tinted:hover {
-      background-color: #ffffff; }
-  .button.yellows.tinted {
-    background-color: #f7d64c;
-    border-color: #f7d64c;
-    color: #7b5c18; }
-    .button.yellows.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
-    .button.yellows.tinted:hover {
-      background-color: #ffffff; }
-  .button.oranges.tinted {
-    background-color: #ff994c;
-    border-color: #ff994c;
-    color: #852903; }
-    .button.oranges.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
-    .button.oranges.tinted:hover {
-      background-color: #ffffff; }
-  .button.teals.tinted {
-    background-color: #4cacb5;
-    border-color: #4cacb5;
-    color: #003a3d; }
-    .button.teals.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.teals.tinted:hover {
-      background-color: #ffffff; }
-  .button.purples.tinted {
-    background-color: #b186d7;
-    border-color: #b186d7;
-    color: #3f0066; }
-    .button.purples.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
-    .button.purples.tinted:hover {
-      background-color: #ffffff; }
-  .button.neutrals.tinted {
-    background-color: #d1d1c9;
-    border-color: #d1d1c9;
-    color: #5f6350; }
-    .button.neutrals.tinted::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.neutrals.tinted:hover {
-      background-color: #ffffff; }
-  .button.tinted.pinks {
-    background-color: #c698b0;
-    border-color: #c698b0; }
+  .button.primary {
+    background-color: #006938;
+    border-color: #006938;
+    color: #ffffff; }
+    .button.primary:hover {
+      background-color: #ffffff;
+      border-color: #006938;
+      color: #006938; }
+      .button.primary:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .button.secondary {
+    background-color: #5f6350;
+    border-color: #5f6350;
+    color: #ffffff; }
+    .button.secondary:hover {
+      background-color: #ffffff;
+      border-color: #5f6350;
+      color: #5f6350; }
+      .button.secondary:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .button.success {
+    background-color: #006938;
+    border-color: #006938;
+    color: #ffffff; }
+    .button.success:hover {
+      background-color: #ffffff;
+      border-color: #006938;
+      color: #006938; }
+      .button.success:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .button.warning {
+    background-color: #edab00;
+    border-color: #edab00;
+    color: #ffffff; }
+    .button.warning:hover {
+      background-color: #ffffff;
+      border-color: #edab00;
+      color: #edab00; }
+      .button.warning:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
+  .button.alert {
+    background-color: #e80068;
+    border-color: #e80068;
+    color: #ffffff; }
+    .button.alert:hover {
+      background-color: #ffffff;
+      border-color: #e80068;
+      color: #e80068; }
+      .button.alert:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
+  .button.black {
+    background-color: #000;
+    border-color: #000;
+    color: #ffffff; }
+    .button.black:hover {
+      background-color: #ffffff;
+      border-color: #000;
+      color: #000; }
+      .button.black:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .button.white {
+    background-color: #fff;
+    border-color: #fff;
+    color: #ffffff; }
+    .button.white:hover {
+      background-color: #ffffff;
+      border-color: #fff;
+      color: #fff; }
+      .button.white:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .button.clear {
     border-color: transparent;
     background-color: transparent;
