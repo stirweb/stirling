@@ -371,7 +371,6 @@ a:has(img):hover {
     h3,
     h4,
     .u-font-icon,
-    .c-infographic-header,
     .u-theme-header {
       color: map-get($color, "hook");
     }
@@ -425,7 +424,7 @@ a:has(img):hover {
     }
   }
   .u-font-icon {
-    color: map-get($greens, "medium");
+    color: map-get($greens, "hook");
   }
 
   .c-wrapper-2025 {
@@ -452,7 +451,7 @@ a:has(img):hover {
     }
   }
   .u-font-icon {
-    color: map-get($greens, "medium");
+    color: map-get($greens, "hook");
   }
 
   .c-wrapper-2025 {
@@ -517,9 +516,10 @@ a:has(img):hover {
       &.u-bleed {
         border-image-source: linear-gradient(map-get($color, "darkbg"), map-get($color, "darkbg"));
       }
-    }
-    .u-font-icon {
-      color: map-get($color, "tint");
+
+      .u-font-icon {
+        color: map-get($color, "tint");
+      }
     }
   }
 }
