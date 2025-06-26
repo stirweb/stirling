@@ -559,12 +559,6 @@ a:has(img):hover {
       border-color: rgba(255, 255, 255, 0.5);
     }
 
-    &:focus {
-      background-color: transparent;
-      color: $white;
-      outline: 2px solid $white !important;
-    }
-
     &::after {
       filter: brightness(0) invert(1);
     }
@@ -572,6 +566,12 @@ a:has(img):hover {
     &:hover::after {
       filter: brightness(0) invert(1);
     }
+  }
+
+  a:focus {
+    background-color: transparent;
+    color: $white;
+    outline: 1px solid $white !important;
   }
 
   .c-link::after {

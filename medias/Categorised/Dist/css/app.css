@@ -1257,14 +1257,14 @@ a:has(img):hover {
       background-color: transparent;
       color: #fff;
       border-color: rgba(255, 255, 255, 0.5); }
-    .dark a.button:focus {
-      background-color: transparent;
-      color: #fff;
-      outline: 2px solid #fff !important; }
     .dark a.button::after {
       filter: brightness(0) invert(1); }
     .dark a.button:hover::after {
       filter: brightness(0) invert(1); }
+  .dark a:focus {
+    background-color: transparent;
+    color: #fff;
+    outline: 1px solid #fff !important; }
   .dark .c-link::after {
     filter: brightness(0) invert(1); }
   .dark .c-link::before {
