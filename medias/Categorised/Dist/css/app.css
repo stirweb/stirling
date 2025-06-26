@@ -321,6 +321,15 @@
 .bg-neutral-tint-7 {
   border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
 
+.u-neutral-tint {
+  color: #d1d1c9 !important; }
+
+.u-bg-neutral-tint {
+  background-color: #d1d1c9 !important; }
+
+.bg-neutral-tint {
+  border-image-source: linear-gradient(#d1d1c9, #d1d1c9); }
+
 .u-neutral-light {
   color: #d1d1c9 !important; }
 
@@ -1039,7 +1048,7 @@ a:has(img):hover {
     border-image-source: linear-gradient(#006938, #006938); }
 
 .greens .u-font-icon {
-  color: #76b72a; }
+  color: #9fcc69; }
 
 .pinks.c-wrapper-2025.dark {
   background-color: #511535; }
@@ -1047,7 +1056,7 @@ a:has(img):hover {
     border-image-source: linear-gradient(#511535, #511535); }
 
 .pinks .u-font-icon {
-  color: #e80068; }
+  color: #ef4c95; }
 
 .blues.c-wrapper-2025.dark {
   background-color: #122c54; }
@@ -1063,7 +1072,7 @@ a:has(img):hover {
     border-image-source: linear-gradient(#7b5c18, #7b5c18); }
 
 .yellows .u-font-icon {
-  color: #f4c400; }
+  color: #f7d64c; }
 
 .oranges.c-wrapper-2025.dark {
   background-color: #852903; }
@@ -1071,7 +1080,7 @@ a:has(img):hover {
     border-image-source: linear-gradient(#852903, #852903); }
 
 .oranges .u-font-icon {
-  color: #ff6d00; }
+  color: #ff994c; }
 
 .teals.c-wrapper-2025.dark {
   background-color: #005e63; }
@@ -1079,7 +1088,7 @@ a:has(img):hover {
     border-image-source: linear-gradient(#005e63, #005e63); }
 
 .teals .u-font-icon {
-  color: #008996; }
+  color: #4cacb5; }
 
 .purples.c-wrapper-2025.dark {
   background-color: #3f0066; }
@@ -1087,7 +1096,7 @@ a:has(img):hover {
     border-image-source: linear-gradient(#3f0066, #3f0066); }
 
 .purples .u-font-icon {
-  color: #592c82; }
+  color: #b186d7; }
 
 .neutrals.c-wrapper-2025.dark {
   background-color: #5f6350; }
@@ -1096,9 +1105,6 @@ a:has(img):hover {
 
 .neutrals .u-font-icon {
   color: #d1d1c9; }
-
-.c-wrapper-2025.dark.purples .u-font-icon {
-  color: #b186d7; }
 
 /**
  * Because false isn’t a valid value for z-index, we don’t want it in our compiled
@@ -3495,6 +3501,8 @@ button:focus {
     .button.purples.tinted:hover {
       background-color: #ffffff; }
   .button.neutrals.tinted {
+    background-color: #d1d1c9;
+    border-color: #d1d1c9;
     color: #5f6350; }
     .button.neutrals.tinted::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
