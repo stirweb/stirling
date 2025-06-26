@@ -561,6 +561,8 @@ a:has(img):hover {
 
     &:focus {
       background-color: transparent;
+      color: $white;
+      outline: 2px solid $white !important;
     }
 
     &::after {
@@ -600,13 +602,14 @@ a:has(img):hover {
 }
 
 /*
-   dark 
+   Dark colour overides for the 2025 colour packs
 */
 
 @each $name, $color in $uos-colour-group-palette {
   .#{$name} {
     &.c-wrapper-2025.dark {
       background-color: map-get($color, "darkbg");
+
       &.u-bleed {
         border-image-source: linear-gradient(map-get($color, "darkbg"), map-get($color, "darkbg"));
       }
@@ -617,16 +620,18 @@ a:has(img):hover {
       }
     }
 
-    &.button.tinted,
-    .button.tinted {
-      &::after {
-        filter: icon-filter(map-get($color, "medium"));
-      }
-
-      &:hover {
-        color: map-get($color, "dark");
+    &.dark {
+      &.button.tinted,
+      .button.tinted {
         &::after {
           filter: icon-filter(map-get($color, "medium"));
+        }
+
+        &:hover {
+          color: map-get($color, "dark");
+          &::after {
+            filter: icon-filter(map-get($color, "medium"));
+          }
         }
       }
     }
