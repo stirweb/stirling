@@ -371,6 +371,7 @@ a:has(img):hover {
     h3,
     h4,
     .u-font-icon,
+    .c-infographic-header,
     .u-theme-header {
       color: map-get($color, "hook");
     }
