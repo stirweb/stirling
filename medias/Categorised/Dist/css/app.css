@@ -964,6 +964,7 @@ a:has(img):hover {
 .neutral-green a,
 .neutral-green h2,
 .neutral-green h3,
+.neutral-green .c-infographic-header,
 .neutral-green h4 {
   color: #006938; }
 
@@ -983,6 +984,7 @@ a:has(img):hover {
 .neutrals a,
 .neutrals h2,
 .neutrals h3,
+.neutrals .c-infographic-header,
 .neutrals h4 {
   color: #006938; }
 
@@ -1005,6 +1007,7 @@ a:has(img):hover {
   .dark h2,
   .dark h3,
   .dark h4,
+  .dark .c-infographic-header,
   .dark h5 {
     color: #fff; }
   .dark a {
