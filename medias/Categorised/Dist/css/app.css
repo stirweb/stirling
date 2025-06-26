@@ -1038,6 +1038,9 @@ a:has(img):hover {
 .u-energy-turq {
   color: #00a5ac; }
 
+.u-opacity-10 {
+  opacity: 10%; }
+
 .u-opacity-20 {
   opacity: 20%; }
 
@@ -1333,7 +1336,10 @@ hr {
   border-color: #595858; }
 
 .hr-1 {
-  border-bottom: 1px solid; }
+  border-bottom-width: 1px; }
+
+.hr-2 {
+  border-bottom-width: 2px; }
 
 #cookiebanner {
   display: flex;
