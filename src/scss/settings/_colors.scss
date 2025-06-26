@@ -406,7 +406,7 @@ a:has(img):hover {
 
 // Overrides and additions
 .teals a {
-  color: #037a80; // map-get($teals, "medium");
+  color: map-get($teals, "safe");
 }
 
 .neutral-green {
