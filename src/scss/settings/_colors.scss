@@ -473,7 +473,7 @@ a:has(img):hover {
     color: $white;
   }
 
-  a {
+  a:not(.c-link) {
     border-bottom: 2px solid $white;
   }
 
