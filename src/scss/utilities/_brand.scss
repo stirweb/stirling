@@ -41,16 +41,16 @@
 // Top Right
 .u-hook-tr > *::before {
   top: calc(0px - var(--hook-border-thickness));
-  border-top: var(--hook-border-thickness) solid map-get($greens, "hook");
-  border-right: var(--hook-border-thickness) solid map-get($greens, "hook");
+  border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-right: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
 
 // Top Right full bleed
 .u-hook-tr.u-hook-full-bleed::before {
   content: "";
   position: absolute;
-  border-top: var(--hook-border-thickness) solid map-get($greens, "hook");
-  border-left: var(--hook-border-thickness) solid map-get($greens, "hook");
+  border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
   top: calc(0px - var(--hook-border-thickness));
   left: 0;
   width: 50vw;
@@ -59,23 +59,23 @@
 // Top leftsad
 .u-hook-tl > *::before {
   top: 0;
-  border-top: var(--hook-border-thickness) solid map-get($greens, "hook");
-  border-left: var(--hook-border-thickness) solid map-get($greens, "hook");
+  border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
 
 // Bottom left
 .u-hook-bl > *::before {
   bottom: calc(0px - var(--hook-border-thickness));
-  border-bottom: var(--hook-border-thickness) solid map-get($greens, "hook");
-  border-left: var(--hook-border-thickness) solid map-get($greens, "hook");
+  border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
 
 // Bottom left full bleed
 .u-hook-bl.u-hook-full-bleed::before {
   content: "";
   position: absolute;
-  border-bottom: var(--hook-border-thickness) solid map-get($greens, "hook");
-  border-left: var(--hook-border-thickness) solid map-get($greens, "hook");
+  border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
   bottom: calc(0px - var(--hook-border-thickness));
   right: 0;
   width: 50vw;
@@ -87,8 +87,8 @@
   width: 100%;
   bottom: 0;
   left: 0;
-  border-bottom: var(--hook-border-thickness) solid map-get($greens, "hook");
-  border-right: var(--hook-border-thickness) solid map-get($greens, "hook");
+  border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-right: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
 
 // Adjust left offset for wrapper specifically
@@ -181,14 +181,6 @@
         border-color: map-get($color, "hook");
       }
 
-      > *::after {
-        border-color: map-get($color, "hook");
-      }
-
-      > *::before {
-        border-color: map-get($color, "hook");
-      }
-
       > *::before {
         border-color: map-get($color, "hook");
       }
@@ -200,6 +192,7 @@
   }
 }
 
+// Colour overrides / additions
 .u-hook.neutral-green {
   > *::before {
     border-color: map-get($greens, "hook");
@@ -215,7 +208,10 @@
 }
 
 /*
-  Dark theme hook overrides
+
+  Dark themes of the hooks
+  ---
+  Used for dark bg hooks, these are the same as the light mode hooks but with a few exceptions
 */
 
 .u-hook.dark.greens {
@@ -249,7 +245,6 @@
 /*
   u-border bleed
 */
-
 // mixin for border-bleed gradients
 @mixin border-bleed($direction, $color) {
   @if $direction == "left" {
@@ -272,7 +267,6 @@
   }
 }
 
-// Defaults
 .u-border-bleed-left {
   @include border-bleed("left", map-get($greens, "hook"));
 }
@@ -281,31 +275,30 @@
   @include border-bleed("right", map-get($greens, "hook"));
 }
 
-@each $name, $color in $uos-colour-group-palette {
-  &.#{$name} {
-    &.u-border-bleed-right {
-      @include border-bleed("right", map-get($color, "hook"));
-    }
-    &.u-border-bleed-left {
-      @include border-bleed("left", map-get($color, "hook"));
-    }
+@each $name, $color-map in $uos-colour-group-palette {
+  .u-border-bleed-left.#{$name} {
+    @include border-bleed("left", map-get($color-map, "hook"));
+  }
+  .u-border-bleed-right.#{$name} {
+    @include border-bleed("right", map-get($color-map, "hook"));
   }
 }
 
 // Dark overrides
-.u-border-bleed-left.dark.greens {
-  @include border-bleed("left", map-get($greens, "dark"));
-}
-.u-border-bleed-right.dark.greens {
-  @include border-bleed("right", map-get($greens, "dark"));
-}
-
 .u-border-bleed-left.dark.neutrals {
   @include border-bleed("left", map-get($neutrals, "medium"));
 }
 
 .u-border-bleed-right.dark.neutrals {
   @include border-bleed("right", map-get($neutrals, "medium"));
+}
+
+.u-border-bleed-left.dark.greens {
+  @include border-bleed("left", map-get($greens, "dark"));
+}
+
+.u-border-bleed-right.dark.greens {
+  @include border-bleed("right", map-get($greens, "dark"));
 }
 
 /* 
