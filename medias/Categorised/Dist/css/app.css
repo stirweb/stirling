@@ -1003,7 +1003,7 @@ a:has(img):hover {
   .dark .c-infographic-header,
   .dark h5 {
     color: #fff; }
-  .dark a {
+  .dark a:not(.c-link) {
     border-bottom: 2px solid #fff; }
   .dark .c-link::after {
     filter: brightness(0) invert(1); }
