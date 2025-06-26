@@ -625,6 +625,9 @@ a:has(img):hover {
 
       &:hover {
         color: map-get($color, "dark");
+        &::after {
+          filter: icon-filter(map-get($color, "medium"));
+        }
       }
     }
   }

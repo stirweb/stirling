@@ -1299,6 +1299,9 @@ a:has(img):hover {
 .greens.button.tinted:hover,
 .greens .button.tinted:hover {
   color: #005734; }
+  .greens.button.tinted:hover::after,
+  .greens .button.tinted:hover::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .pinks.c-wrapper-2025.dark {
   background-color: #511535; }
@@ -1315,6 +1318,9 @@ a:has(img):hover {
 .pinks.button.tinted:hover,
 .pinks .button.tinted:hover {
   color: #511535; }
+  .pinks.button.tinted:hover::after,
+  .pinks .button.tinted:hover::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
 
 .blues.c-wrapper-2025.dark {
   background-color: #122c54; }
@@ -1331,6 +1337,9 @@ a:has(img):hover {
 .blues.button.tinted:hover,
 .blues .button.tinted:hover {
   color: #122c54; }
+  .blues.button.tinted:hover::after,
+  .blues .button.tinted:hover::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .yellows.c-wrapper-2025.dark {
   background-color: #7b5c18; }
@@ -1347,6 +1356,9 @@ a:has(img):hover {
 .yellows.button.tinted:hover,
 .yellows .button.tinted:hover {
   color: #7b5c18; }
+  .yellows.button.tinted:hover::after,
+  .yellows .button.tinted:hover::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
 
 .oranges.c-wrapper-2025.dark {
   background-color: #852903; }
@@ -1363,6 +1375,9 @@ a:has(img):hover {
 .oranges.button.tinted:hover,
 .oranges .button.tinted:hover {
   color: #852903; }
+  .oranges.button.tinted:hover::after,
+  .oranges .button.tinted:hover::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
 
 .teals.c-wrapper-2025.dark {
   background-color: #005e63; }
@@ -1379,6 +1394,9 @@ a:has(img):hover {
 .teals.button.tinted:hover,
 .teals .button.tinted:hover {
   color: #003a3d; }
+  .teals.button.tinted:hover::after,
+  .teals .button.tinted:hover::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .purples.c-wrapper-2025.dark {
   background-color: #3f0066; }
@@ -1395,6 +1413,9 @@ a:has(img):hover {
 .purples.button.tinted:hover,
 .purples .button.tinted:hover {
   color: #3f0066; }
+  .purples.button.tinted:hover::after,
+  .purples .button.tinted:hover::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
 
 .neutrals.c-wrapper-2025.dark {
   background-color: #5f6350; }
@@ -1411,6 +1432,9 @@ a:has(img):hover {
 .neutrals.button.tinted:hover,
 .neutrals .button.tinted:hover {
   color: #5f6350; }
+  .neutrals.button.tinted:hover::after,
+  .neutrals .button.tinted:hover::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 /**
  * Because false isn’t a valid value for z-index, we don’t want it in our compiled
