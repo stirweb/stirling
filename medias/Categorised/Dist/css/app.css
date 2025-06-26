@@ -747,6 +747,7 @@ a:has(img):hover {
 .greens h2,
 .greens h3,
 .greens h4,
+.greens svg,
 .greens .u-font-icon {
   color: #006938; }
 
@@ -773,6 +774,7 @@ a:has(img):hover {
 .pinks h2,
 .pinks h3,
 .pinks h4,
+.pinks svg,
 .pinks .u-font-icon {
   color: #7c184f; }
 
@@ -799,6 +801,7 @@ a:has(img):hover {
 .blues h2,
 .blues h3,
 .blues h4,
+.blues svg,
 .blues .u-font-icon {
   color: #2c498a; }
 
@@ -825,6 +828,7 @@ a:has(img):hover {
 .yellows h2,
 .yellows h3,
 .yellows h4,
+.yellows svg,
 .yellows .u-font-icon {
   color: #edab00; }
 
@@ -851,6 +855,7 @@ a:has(img):hover {
 .oranges h2,
 .oranges h3,
 .oranges h4,
+.oranges svg,
 .oranges .u-font-icon {
   color: #d9541a; }
 
@@ -877,6 +882,7 @@ a:has(img):hover {
 .teals h2,
 .teals h3,
 .teals h4,
+.teals svg,
 .teals .u-font-icon {
   color: #008996; }
 
@@ -903,6 +909,7 @@ a:has(img):hover {
 .purples h2,
 .purples h3,
 .purples h4,
+.purples svg,
 .purples .u-font-icon {
   color: #592c82; }
 
@@ -929,6 +936,7 @@ a:has(img):hover {
 .neutrals h2,
 .neutrals h3,
 .neutrals h4,
+.neutrals svg,
 .neutrals .u-font-icon {
   color: #d1d1c9; }
 
@@ -957,7 +965,6 @@ a:has(img):hover {
 .neutral-green a,
 .neutral-green h2,
 .neutral-green h3,
-.neutral-green .c-infographic-header,
 .neutral-green h4 {
   color: #006938; }
 
@@ -977,7 +984,6 @@ a:has(img):hover {
 .neutrals a,
 .neutrals h2,
 .neutrals h3,
-.neutrals .c-infographic-header,
 .neutrals h4 {
   color: #006938; }
 
@@ -1000,7 +1006,6 @@ a:has(img):hover {
   .dark h2,
   .dark h3,
   .dark h4,
-  .dark .c-infographic-header,
   .dark h5 {
     color: #fff; }
   .dark a:not(.c-link) {
@@ -1030,56 +1035,64 @@ a:has(img):hover {
   background-color: #006938; }
   .greens.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#006938, #006938); }
-  .greens.c-wrapper-2025.dark .u-font-icon {
+  .greens.c-wrapper-2025.dark .u-font-icon,
+  .greens.c-wrapper-2025.dark svg {
     color: #9fcc69; }
 
 .pinks.c-wrapper-2025.dark {
   background-color: #511535; }
   .pinks.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#511535, #511535); }
-  .pinks.c-wrapper-2025.dark .u-font-icon {
+  .pinks.c-wrapper-2025.dark .u-font-icon,
+  .pinks.c-wrapper-2025.dark svg {
     color: #ef4c95; }
 
 .blues.c-wrapper-2025.dark {
   background-color: #122c54; }
   .blues.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#122c54, #122c54); }
-  .blues.c-wrapper-2025.dark .u-font-icon {
+  .blues.c-wrapper-2025.dark .u-font-icon,
+  .blues.c-wrapper-2025.dark svg {
     color: #77a4da; }
 
 .yellows.c-wrapper-2025.dark {
   background-color: #7b5c18; }
   .yellows.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#7b5c18, #7b5c18); }
-  .yellows.c-wrapper-2025.dark .u-font-icon {
+  .yellows.c-wrapper-2025.dark .u-font-icon,
+  .yellows.c-wrapper-2025.dark svg {
     color: #f7d64c; }
 
 .oranges.c-wrapper-2025.dark {
   background-color: #852903; }
   .oranges.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#852903, #852903); }
-  .oranges.c-wrapper-2025.dark .u-font-icon {
+  .oranges.c-wrapper-2025.dark .u-font-icon,
+  .oranges.c-wrapper-2025.dark svg {
     color: #ff994c; }
 
 .teals.c-wrapper-2025.dark {
   background-color: #005e63; }
   .teals.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#005e63, #005e63); }
-  .teals.c-wrapper-2025.dark .u-font-icon {
+  .teals.c-wrapper-2025.dark .u-font-icon,
+  .teals.c-wrapper-2025.dark svg {
     color: #4cacb5; }
 
 .purples.c-wrapper-2025.dark {
   background-color: #3f0066; }
   .purples.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#3f0066, #3f0066); }
-  .purples.c-wrapper-2025.dark .u-font-icon {
+  .purples.c-wrapper-2025.dark .u-font-icon,
+  .purples.c-wrapper-2025.dark svg {
     color: #b186d7; }
 
 .neutrals.c-wrapper-2025.dark {
   background-color: #5f6350; }
   .neutrals.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#5f6350, #5f6350); }
-  .neutrals.c-wrapper-2025.dark .u-font-icon {
+  .neutrals.c-wrapper-2025.dark .u-font-icon,
+  .neutrals.c-wrapper-2025.dark svg {
     color: #d1d1c9; }
 
 /**
