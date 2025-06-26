@@ -30,7 +30,36 @@
 */
 /*
   Button Palette
-*/
+
+
+$uos-button-palette: (
+  primary: map-get($foundation-palette, primary),
+  secondary: map-get($foundation-palette, secondary),
+  success: map-get($foundation-palette, success),
+  warning: map-get($foundation-palette, warning),
+  alert: map-get($foundation-palette, alert),
+  // Energy
+  // Green
+  energy: map-get($brand-palette, energy-green),
+  energy-green: map-get($brand-palette, energy-green),
+  heritage-green: map-get($brand-palette, heritage-green),
+  // Pink
+  energy-pink: map-get($brand-palette, energy-pink),
+  pink-medium: map-get($brand-palette, pink-medium),
+  heritage-berry: map-get($brand-palette, heritage-berry),
+  pink-dark: map-get($brand-palette, pink-dark),
+  // Teal
+  energy-teal: map-get($brand-palette, energy-teal),
+  teal-medium: map-get($brand-palette, energy-teal),
+  heritage-teal: map-get($brand-palette, heritage-teal),
+  // Purple
+  heritage-purple: map-get($brand-palette, heritage-purple),
+  energy-purple: map-get($brand-palette, energy-purple),
+  // Misc
+  dark-mink: map-get($brand-palette, dark-mink),
+  energy-turq: map-get($brand-palette, energy-turq),
+  info: map-get($brand-palette, heritage-blue),
+);*/
 /* 
   Function to map icon filter values based on color
 */
@@ -756,6 +785,17 @@ a:has(img):hover {
   .greens a:not(.c-link):hover {
     border-bottom: 2px solid #edf4f1; }
 
+.greens a.button {
+  border: 4px solid #006938;
+  background-color: #006938;
+  color: #fff; }
+  .greens a.button:hover {
+    background-color: #fff;
+    color: #006938;
+    border: 4px solid #006938; }
+    .greens a.button:hover::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
 .greens a:hover {
   text-decoration-color: #76b72a; }
 
@@ -782,6 +822,17 @@ a:has(img):hover {
   border-bottom: 2px solid #e80068; }
   .pinks a:not(.c-link):hover {
     border-bottom: 2px solid #f6eff3; }
+
+.pinks a.button {
+  border: 4px solid #7c184f;
+  background-color: #7c184f;
+  color: #fff; }
+  .pinks a.button:hover {
+    background-color: #fff;
+    color: #7c184f;
+    border: 4px solid #7c184f; }
+    .pinks a.button:hover::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
 
 .pinks a:hover {
   text-decoration-color: #e80068; }
@@ -810,6 +861,17 @@ a:has(img):hover {
   .blues a:not(.c-link):hover {
     border-bottom: 2px solid #f0f2f9; }
 
+.blues a.button {
+  border: 4px solid #2c498a;
+  background-color: #2c498a;
+  color: #fff; }
+  .blues a.button:hover {
+    background-color: #fff;
+    color: #2c498a;
+    border: 4px solid #2c498a; }
+    .blues a.button:hover::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
 .blues a:hover {
   text-decoration-color: #77a4da; }
 
@@ -836,6 +898,17 @@ a:has(img):hover {
   border-bottom: 2px solid #f4c400; }
   .yellows a:not(.c-link):hover {
     border-bottom: 2px solid #fdfbef; }
+
+.yellows a.button {
+  border: 4px solid #edab00;
+  background-color: #edab00;
+  color: #fff; }
+  .yellows a.button:hover {
+    background-color: #fff;
+    color: #edab00;
+    border: 4px solid #edab00; }
+    .yellows a.button:hover::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
 
 .yellows a:hover {
   text-decoration-color: #f4c400; }
@@ -864,6 +937,17 @@ a:has(img):hover {
   .oranges a:not(.c-link):hover {
     border-bottom: 2px solid #fef6f0; }
 
+.oranges a.button {
+  border: 4px solid #d9541a;
+  background-color: #d9541a;
+  color: #fff; }
+  .oranges a.button:hover {
+    background-color: #fff;
+    color: #d9541a;
+    border: 4px solid #d9541a; }
+    .oranges a.button:hover::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
+
 .oranges a:hover {
   text-decoration-color: #ff6d00; }
 
@@ -890,6 +974,17 @@ a:has(img):hover {
   border-bottom: 2px solid #008996; }
   .teals a:not(.c-link):hover {
     border-bottom: 2px solid #edf7f8; }
+
+.teals a.button {
+  border: 4px solid #008996;
+  background-color: #008996;
+  color: #fff; }
+  .teals a.button:hover {
+    background-color: #fff;
+    color: #008996;
+    border: 4px solid #008996; }
+    .teals a.button:hover::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .teals a:hover {
   text-decoration-color: #008996; }
@@ -918,6 +1013,17 @@ a:has(img):hover {
   .purples a:not(.c-link):hover {
     border-bottom: 2px solid #f4f0f7; }
 
+.purples a.button {
+  border: 4px solid #592c82;
+  background-color: #592c82;
+  color: #fff; }
+  .purples a.button:hover {
+    background-color: #fff;
+    color: #592c82;
+    border: 4px solid #592c82; }
+    .purples a.button:hover::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
+
 .purples a:hover {
   text-decoration-color: #592c82; }
 
@@ -944,6 +1050,17 @@ a:has(img):hover {
   border-bottom: 2px solid #d1d1c9; }
   .neutrals a:not(.c-link):hover {
     border-bottom: 2px solid #f1f1ef; }
+
+.neutrals a.button {
+  border: 4px solid #97956d;
+  background-color: #97956d;
+  color: #fff; }
+  .neutrals a.button:hover {
+    background-color: #fff;
+    color: #97956d;
+    border: 4px solid #97956d; }
+    .neutrals a.button:hover::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .neutrals a:hover {
   text-decoration-color: #d1d1c9; }
@@ -973,6 +1090,17 @@ a:has(img):hover {
   .neutral-green a:not(.c-link):hover {
     border-bottom: 2px solid #edf4f1; }
 
+.neutral-green a.button {
+  border: 4px solid #006938;
+  background-color: #006938;
+  color: #fff; }
+  .neutral-green a.button:hover {
+    background-color: #fff;
+    color: #006938;
+    border: 4px solid #006938; }
+    .neutral-green a.button:hover::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
 .neutral-green .u-font-icon {
   color: #006938; }
 
@@ -992,6 +1120,17 @@ a:has(img):hover {
   .neutrals a:not(.c-link):hover {
     border-bottom: 2px solid #edf4f1; }
 
+.neutrals a.button {
+  border: 4px solid #006938;
+  background-color: #006938;
+  color: #fff; }
+  .neutrals a.button:hover {
+    background-color: #fff;
+    color: #006938;
+    border: 4px solid #006938; }
+    .neutrals a.button:hover::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
 .neutrals .u-font-icon {
   color: #006938; }
 
@@ -1010,6 +1149,19 @@ a:has(img):hover {
     color: #fff; }
   .dark a:not(.c-link) {
     border-bottom: 2px solid #fff; }
+  .dark a.button {
+    background-color: transparent;
+    border: 4px solid #fff; }
+    .dark a.button:hover {
+      background-color: transparent;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.5); }
+    .dark a.button:focus {
+      background-color: transparent; }
+    .dark a.button::after {
+      filter: brightness(0) invert(1); }
+    .dark a.button:hover::after {
+      filter: brightness(0) invert(1); }
   .dark .c-link::after {
     filter: brightness(0) invert(1); }
   .dark .c-link::before {
@@ -2981,458 +3133,6 @@ button:focus {
     margin-left: 30px; }
   .button.button-gap--left:last-child {
     margin-left: 0; }
-  .button.primary {
-    background-color: #006938;
-    border-color: #006938;
-    color: #ffffff; }
-    .button.primary:hover {
-      background-color: #ffffff;
-      border-color: #006938;
-      color: #006938; }
-      .button.primary:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.secondary {
-    background-color: #5f6350;
-    border-color: #5f6350;
-    color: #ffffff; }
-    .button.secondary:hover {
-      background-color: #ffffff;
-      border-color: #5f6350;
-      color: #5f6350; }
-      .button.secondary:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.success {
-    background-color: #006938;
-    border-color: #006938;
-    color: #ffffff; }
-    .button.success:hover {
-      background-color: #ffffff;
-      border-color: #006938;
-      color: #006938; }
-      .button.success:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.warning {
-    background-color: #edab00;
-    border-color: #edab00;
-    color: #ffffff; }
-    .button.warning:hover {
-      background-color: #ffffff;
-      border-color: #edab00;
-      color: #edab00; }
-      .button.warning:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
-  .button.alert {
-    background-color: #e80068;
-    border-color: #e80068;
-    color: #ffffff; }
-    .button.alert:hover {
-      background-color: #ffffff;
-      border-color: #e80068;
-      color: #e80068; }
-      .button.alert:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
-  .button.energy {
-    background-color: #76b72a;
-    border-color: #76b72a;
-    color: #ffffff; }
-    .button.energy:hover {
-      background-color: #ffffff;
-      border-color: #76b72a;
-      color: #76b72a; }
-      .button.energy:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
-  .button.energy-green {
-    background-color: #76b72a;
-    border-color: #76b72a;
-    color: #ffffff; }
-    .button.energy-green:hover {
-      background-color: #ffffff;
-      border-color: #76b72a;
-      color: #76b72a; }
-      .button.energy-green:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
-  .button.heritage-green {
-    background-color: #006938;
-    border-color: #006938;
-    color: #ffffff; }
-    .button.heritage-green:hover {
-      background-color: #ffffff;
-      border-color: #006938;
-      color: #006938; }
-      .button.heritage-green:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.energy-pink {
-    background-color: #e80068;
-    border-color: #e80068;
-    color: #ffffff; }
-    .button.energy-pink:hover {
-      background-color: #ffffff;
-      border-color: #e80068;
-      color: #e80068; }
-      .button.energy-pink:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
-  .button.pink-medium {
-    background-color: #7c184f;
-    border-color: #7c184f;
-    color: #ffffff; }
-    .button.pink-medium:hover {
-      background-color: #ffffff;
-      border-color: #7c184f;
-      color: #7c184f; }
-      .button.pink-medium:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
-  .button.heritage-berry {
-    background-color: #7c184f;
-    border-color: #7c184f;
-    color: #ffffff; }
-    .button.heritage-berry:hover {
-      background-color: #ffffff;
-      border-color: #7c184f;
-      color: #7c184f; }
-      .button.heritage-berry:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
-  .button.pink-dark {
-    background-color: #511535;
-    border-color: #511535;
-    color: #ffffff; }
-    .button.pink-dark:hover {
-      background-color: #ffffff;
-      border-color: #511535;
-      color: #511535; }
-      .button.pink-dark:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.energy-teal {
-    background-color: #008996;
-    border-color: #008996;
-    color: #ffffff; }
-    .button.energy-teal:hover {
-      background-color: #ffffff;
-      border-color: #008996;
-      color: #008996; }
-      .button.energy-teal:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.teal-medium {
-    background-color: #008996;
-    border-color: #008996;
-    color: #ffffff; }
-    .button.teal-medium:hover {
-      background-color: #ffffff;
-      border-color: #008996;
-      color: #008996; }
-      .button.teal-medium:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.heritage-teal {
-    background-color: #005e63;
-    border-color: #005e63;
-    color: #ffffff; }
-    .button.heritage-teal:hover {
-      background-color: #ffffff;
-      border-color: #005e63;
-      color: #005e63; }
-      .button.heritage-teal:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.heritage-purple {
-    background-color: #3f0066;
-    border-color: #3f0066;
-    color: #ffffff; }
-    .button.heritage-purple:hover {
-      background-color: #ffffff;
-      border-color: #3f0066;
-      color: #3f0066; }
-      .button.heritage-purple:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%); }
-  .button.energy-purple {
-    background-color: #592c82;
-    border-color: #592c82;
-    color: #ffffff; }
-    .button.energy-purple:hover {
-      background-color: #ffffff;
-      border-color: #592c82;
-      color: #592c82; }
-      .button.energy-purple:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
-  .button.dark-mink {
-    background-color: #3a3a26;
-    border-color: #3a3a26;
-    color: #ffffff; }
-    .button.dark-mink:hover {
-      background-color: #ffffff;
-      border-color: #3a3a26;
-      color: #3a3a26; }
-      .button.dark-mink:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.energy-turq {
-    background-color: #00a5ac;
-    border-color: #00a5ac;
-    color: #ffffff; }
-    .button.energy-turq:hover {
-      background-color: #ffffff;
-      border-color: #00a5ac;
-      color: #00a5ac; }
-      .button.energy-turq:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%); }
-  .button.info {
-    background-color: #122c54;
-    border-color: #122c54;
-    color: #ffffff; }
-    .button.info:hover {
-      background-color: #ffffff;
-      border-color: #122c54;
-      color: #122c54; }
-      .button.info:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%); }
-  .button.hollow {
-    background: transparent;
-    color: #006938;
-    border: var(--button-border-width) solid #006938; }
-    .button.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #80b49c; }
-    .button.hollow:focus {
-      background-color: transparent;
-      color: #006938; }
-  .button.primary.hollow {
-    background: transparent;
-    color: #006938;
-    border: var(--button-border-width) solid #006938; }
-    .button.primary.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.primary.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #80b49c; }
-    .button.primary.hollow:focus {
-      background-color: transparent;
-      color: #006938; }
-  .button.secondary.hollow {
-    background: transparent;
-    color: #5f6350;
-    border: var(--button-border-width) solid #5f6350; }
-    .button.secondary.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.secondary.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #afb1a8; }
-    .button.secondary.hollow:focus {
-      background-color: transparent;
-      color: #5f6350; }
-  .button.success.hollow {
-    background: transparent;
-    color: #006938;
-    border: var(--button-border-width) solid #006938; }
-    .button.success.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.success.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #80b49c; }
-    .button.success.hollow:focus {
-      background-color: transparent;
-      color: #006938; }
-  .button.warning.hollow {
-    background: transparent;
-    color: #edab00;
-    border: var(--button-border-width) solid #edab00; }
-    .button.warning.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
-    .button.warning.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #f6d580; }
-    .button.warning.hollow:focus {
-      background-color: transparent;
-      color: #edab00; }
-  .button.alert.hollow {
-    background: transparent;
-    color: #e80068;
-    border: var(--button-border-width) solid #e80068; }
-    .button.alert.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
-    .button.alert.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #f480b4; }
-    .button.alert.hollow:focus {
-      background-color: transparent;
-      color: #e80068; }
-  .button.energy.hollow {
-    background: transparent;
-    color: #76b72a;
-    border: var(--button-border-width) solid #76b72a; }
-    .button.energy.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
-    .button.energy.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #bbdb95; }
-    .button.energy.hollow:focus {
-      background-color: transparent;
-      color: #76b72a; }
-  .button.energy-green.hollow {
-    background: transparent;
-    color: #76b72a;
-    border: var(--button-border-width) solid #76b72a; }
-    .button.energy-green.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
-    .button.energy-green.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #bbdb95; }
-    .button.energy-green.hollow:focus {
-      background-color: transparent;
-      color: #76b72a; }
-  .button.heritage-green.hollow {
-    background: transparent;
-    color: #006938;
-    border: var(--button-border-width) solid #006938; }
-    .button.heritage-green.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.heritage-green.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #80b49c; }
-    .button.heritage-green.hollow:focus {
-      background-color: transparent;
-      color: #006938; }
-  .button.energy-pink.hollow {
-    background: transparent;
-    color: #e80068;
-    border: var(--button-border-width) solid #e80068; }
-    .button.energy-pink.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
-    .button.energy-pink.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #f480b4; }
-    .button.energy-pink.hollow:focus {
-      background-color: transparent;
-      color: #e80068; }
-  .button.pink-medium.hollow {
-    background: transparent;
-    color: #7c184f;
-    border: var(--button-border-width) solid #7c184f; }
-    .button.pink-medium.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
-    .button.pink-medium.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #be8ca7; }
-    .button.pink-medium.hollow:focus {
-      background-color: transparent;
-      color: #7c184f; }
-  .button.heritage-berry.hollow {
-    background: transparent;
-    color: #7c184f;
-    border: var(--button-border-width) solid #7c184f; }
-    .button.heritage-berry.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
-    .button.heritage-berry.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #be8ca7; }
-    .button.heritage-berry.hollow:focus {
-      background-color: transparent;
-      color: #7c184f; }
-  .button.pink-dark.hollow {
-    background: transparent;
-    color: #511535;
-    border: var(--button-border-width) solid #511535; }
-    .button.pink-dark.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.pink-dark.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #a88a9a; }
-    .button.pink-dark.hollow:focus {
-      background-color: transparent;
-      color: #511535; }
-  .button.energy-teal.hollow {
-    background: transparent;
-    color: #008996;
-    border: var(--button-border-width) solid #008996; }
-    .button.energy-teal.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.energy-teal.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #80c4cb; }
-    .button.energy-teal.hollow:focus {
-      background-color: transparent;
-      color: #008996; }
-  .button.teal-medium.hollow {
-    background: transparent;
-    color: #008996;
-    border: var(--button-border-width) solid #008996; }
-    .button.teal-medium.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.teal-medium.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #80c4cb; }
-    .button.teal-medium.hollow:focus {
-      background-color: transparent;
-      color: #008996; }
-  .button.heritage-teal.hollow {
-    background: transparent;
-    color: #005e63;
-    border: var(--button-border-width) solid #005e63; }
-    .button.heritage-teal.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.heritage-teal.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #80afb1; }
-    .button.heritage-teal.hollow:focus {
-      background-color: transparent;
-      color: #005e63; }
-  .button.heritage-purple.hollow {
-    background: transparent;
-    color: #3f0066;
-    border: var(--button-border-width) solid #3f0066; }
-    .button.heritage-purple.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%); }
-    .button.heritage-purple.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #9f80b3; }
-    .button.heritage-purple.hollow:focus {
-      background-color: transparent;
-      color: #3f0066; }
-  .button.energy-purple.hollow {
-    background: transparent;
-    color: #592c82;
-    border: var(--button-border-width) solid #592c82; }
-    .button.energy-purple.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
-    .button.energy-purple.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #ac96c1; }
-    .button.energy-purple.hollow:focus {
-      background-color: transparent;
-      color: #592c82; }
-  .button.dark-mink.hollow {
-    background: transparent;
-    color: #3a3a26;
-    border: var(--button-border-width) solid #3a3a26; }
-    .button.dark-mink.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-    .button.dark-mink.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #9d9d93; }
-    .button.dark-mink.hollow:focus {
-      background-color: transparent;
-      color: #3a3a26; }
-  .button.energy-turq.hollow {
-    background: transparent;
-    color: #00a5ac;
-    border: var(--button-border-width) solid #00a5ac; }
-    .button.energy-turq.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%); }
-    .button.energy-turq.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #80d2d6; }
-    .button.energy-turq.hollow:focus {
-      background-color: transparent;
-      color: #00a5ac; }
-  .button.info.hollow {
-    background: transparent;
-    color: #122c54;
-    border: var(--button-border-width) solid #122c54; }
-    .button.info.hollow::after {
-      filter: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%); }
-    .button.info.hollow:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid #8996aa; }
-    .button.info.hollow:focus {
-      background-color: transparent;
-      color: #122c54; }
   .button.greens.tinted {
     background-color: #9fcc69;
     border-color: #9fcc69;
@@ -3543,19 +3243,26 @@ button:focus {
 .button--left-align {
   text-align: left; }
 
+/*
 .button.outine-button {
   background: transparent;
-  border: var(--button-border-width) solid #006938;
-  color: #006938; }
-  .button.outine-button::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.outine-button:hover {
-    background-color: transparent;
-    border: var(--button-border-width) solid #80b49c; }
-  .button.outine-button:focus {
-    background-color: transparent;
-    color: #006938; }
+  border: var(--button-border-width) solid $heritage-green;
+  color: $heritage-green;
 
+  &::after {
+    filter: icon-filter($heritage-green);
+  }
+
+  &:hover {
+    background-color: transparent;
+    border: var(--button-border-width) solid tint($heritage-green, 50%);
+  }
+
+  &:focus {
+    background-color: transparent;
+    color: $heritage-green;
+  }
+}*/
 /* 
     Overides for white--all
  */
@@ -3610,36 +3317,10 @@ input:checked + label.button {
     background-color: #d49900; }
   input:checked + label.button.alert {
     background-color: #cf005d; }
-  input:checked + label.button.energy {
-    background-color: #69a225; }
-  input:checked + label.button.energy-green {
-    background-color: #69a225; }
-  input:checked + label.button.heritage-green {
-    background-color: #00502a; }
-  input:checked + label.button.energy-pink {
-    background-color: #cf005d; }
-  input:checked + label.button.pink-medium {
-    background-color: #671441; }
-  input:checked + label.button.heritage-berry {
-    background-color: #671441; }
-  input:checked + label.button.pink-dark {
-    background-color: #3d1028; }
-  input:checked + label.button.energy-teal {
-    background-color: #00727d; }
-  input:checked + label.button.teal-medium {
-    background-color: #00727d; }
-  input:checked + label.button.heritage-teal {
-    background-color: #00464a; }
-  input:checked + label.button.heritage-purple {
-    background-color: #2f004d; }
-  input:checked + label.button.energy-purple {
-    background-color: #4c266f; }
-  input:checked + label.button.dark-mink {
-    background-color: #2b2b1c; }
-  input:checked + label.button.energy-turq {
-    background-color: #008d93; }
-  input:checked + label.button.info {
-    background-color: #0e213f; }
+  input:checked + label.button.black {
+    background-color: black; }
+  input:checked + label.button.white {
+    background-color: #f2f2f2; }
 
 /* 
     Button style that can have a icomoon span icon in it 
