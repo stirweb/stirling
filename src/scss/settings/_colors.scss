@@ -600,7 +600,7 @@ a:has(img):hover {
 }
 
 /*
-  .c-wrapper-2025 dark 
+   dark 
 */
 
 @each $name, $color in $uos-colour-group-palette {
@@ -614,6 +614,17 @@ a:has(img):hover {
       .u-font-icon,
       svg {
         color: map-get($color, "tint");
+      }
+    }
+
+    &.button.tinted,
+    .button.tinted {
+      &::after {
+        filter: icon-filter(map-get($color, "medium"));
+      }
+
+      &:hover {
+        color: map-get($color, "dark");
       }
     }
   }
