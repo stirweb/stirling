@@ -370,6 +370,7 @@ a:has(img):hover {
     h2,
     h3,
     h4,
+    svg,
     .u-font-icon {
       color: map-get($color, "hook");
     }
@@ -412,7 +413,6 @@ a:has(img):hover {
   a,
   h2,
   h3,
-  .c-infographic-header,
   h4 {
     color: map-get($greens, "hook");
   }
@@ -439,7 +439,6 @@ a:has(img):hover {
   a,
   h2,
   h3,
-  .c-infographic-header,
   h4 {
     color: map-get($greens, "hook");
   }
@@ -468,7 +467,6 @@ a:has(img):hover {
   h2,
   h3,
   h4,
-  .c-infographic-header,
   h5 {
     color: $white;
   }
@@ -516,7 +514,8 @@ a:has(img):hover {
         border-image-source: linear-gradient(map-get($color, "darkbg"), map-get($color, "darkbg"));
       }
 
-      .u-font-icon {
+      .u-font-icon,
+      svg {
         color: map-get($color, "tint");
       }
     }
