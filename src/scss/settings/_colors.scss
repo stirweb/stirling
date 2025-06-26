@@ -519,13 +519,7 @@ a:has(img):hover {
       }
     }
     .u-font-icon {
-      color: map-get($color, "light");
+      color: map-get($color, "tint");
     }
-  }
-}
-
-.c-wrapper-2025.dark.purples {
-  .u-font-icon {
-    color: map-get($purples, "tint");
   }
 }
