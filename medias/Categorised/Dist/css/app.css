@@ -1038,40 +1038,67 @@ a:has(img):hover {
   .greens.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#006938, #006938); }
 
+.greens .u-font-icon {
+  color: #76b72a; }
+
 .pinks.c-wrapper-2025.dark {
   background-color: #511535; }
   .pinks.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#511535, #511535); }
+
+.pinks .u-font-icon {
+  color: #e80068; }
 
 .blues.c-wrapper-2025.dark {
   background-color: #122c54; }
   .blues.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#122c54, #122c54); }
 
+.blues .u-font-icon {
+  color: #77a4da; }
+
 .yellows.c-wrapper-2025.dark {
   background-color: #7b5c18; }
   .yellows.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#7b5c18, #7b5c18); }
+
+.yellows .u-font-icon {
+  color: #f4c400; }
 
 .oranges.c-wrapper-2025.dark {
   background-color: #852903; }
   .oranges.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#852903, #852903); }
 
+.oranges .u-font-icon {
+  color: #ff6d00; }
+
 .teals.c-wrapper-2025.dark {
   background-color: #005e63; }
   .teals.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#005e63, #005e63); }
+
+.teals .u-font-icon {
+  color: #008996; }
 
 .purples.c-wrapper-2025.dark {
   background-color: #3f0066; }
   .purples.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#3f0066, #3f0066); }
 
+.purples .u-font-icon {
+  color: #592c82; }
+
 .neutrals.c-wrapper-2025.dark {
   background-color: #5f6350; }
   .neutrals.c-wrapper-2025.dark.u-bleed {
     border-image-source: linear-gradient(#5f6350, #5f6350); }
+
+.neutrals .u-font-icon {
+  color: #d1d1c9; }
+
+.c-wrapper-2025.dark.purples .u-font-icon {
+  color: #b186d7; }
 
 /**
  * Because false isn’t a valid value for z-index, we don’t want it in our compiled
