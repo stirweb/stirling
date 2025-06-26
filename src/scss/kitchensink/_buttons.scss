@@ -133,67 +133,67 @@ button:focus {
         Button Colors - this will handle each color variation (e.g. heritage-green, enery-pink, ...)
   */
 
-  @each $name, $color in $button-palette {
-    &.#{$name} {
-      background-color: $color;
-      border-color: $color;
-      color: #ffffff;
+  // @each $name, $color in $button-palette {
+  //   &.#{$name} {
+  //     background-color: $color;
+  //     border-color: $color;
+  //     color: #ffffff;
 
-      &:hover {
-        background-color: #ffffff;
-        border-color: $color;
-        color: $color;
+  //     &:hover {
+  //       background-color: #ffffff;
+  //       border-color: $color;
+  //       color: $color;
 
-        &::after {
-          filter: icon-filter($color);
-        }
-      }
-    }
-  }
+  //       &::after {
+  //         filter: icon-filter($color);
+  //       }
+  //     }
+  //   }
+  // }
 
-  &.hollow {
-    background: transparent;
-    color: $heritage-green;
-    border: var(--button-border-width) solid $heritage-green;
+  // &.hollow {
+  //   background: transparent;
+  //   color: $heritage-green;
+  //   border: var(--button-border-width) solid $heritage-green;
 
-    &::after {
-      filter: icon-filter($heritage-green);
-    }
+  //   &::after {
+  //     filter: icon-filter($heritage-green);
+  //   }
 
-    &:hover {
-      background-color: transparent;
-      border: var(--button-border-width) solid tint($heritage-green, 50%);
-    }
+  //   &:hover {
+  //     background-color: transparent;
+  //     border: var(--button-border-width) solid tint($heritage-green, 50%);
+  //   }
 
-    &:focus {
-      background-color: transparent;
-      color: $heritage-green;
-    }
-  }
+  //   &:focus {
+  //     background-color: transparent;
+  //     color: $heritage-green;
+  //   }
+  // }
 
-  @each $name, $color in $button-palette {
-    &.#{$name} {
-      &.hollow {
-        background: transparent;
-        color: $color;
-        border: var(--button-border-width) solid $color;
+  // @each $name, $color in $button-palette {
+  //   &.#{$name} {
+  //     &.hollow {
+  //       background: transparent;
+  //       color: $color;
+  //       border: var(--button-border-width) solid $color;
 
-        &::after {
-          filter: icon-filter($color);
-        }
+  //       &::after {
+  //         filter: icon-filter($color);
+  //       }
 
-        &:hover {
-          background-color: transparent;
-          border: var(--button-border-width) solid tint($color, 50%);
-        }
+  //       &:hover {
+  //         background-color: transparent;
+  //         border: var(--button-border-width) solid tint($color, 50%);
+  //       }
 
-        &:focus {
-          background-color: transparent;
-          color: $color;
-        }
-      }
-    }
-  }
+  //       &:focus {
+  //         background-color: transparent;
+  //         color: $color;
+  //       }
+  //     }
+  //   }
+  // }
 
   /* 
     BRAND 2025 Tinted style buttons 
@@ -296,6 +296,7 @@ button:focus {
 }
 
 // outline ghost style
+/*
 .button.outine-button {
   background: transparent;
   border: var(--button-border-width) solid $heritage-green;
@@ -314,7 +315,7 @@ button:focus {
     background-color: transparent;
     color: $heritage-green;
   }
-}
+}*/
 
 /* 
     Overides for white--all
