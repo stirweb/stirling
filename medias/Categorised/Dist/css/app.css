@@ -739,6 +739,7 @@ a:has(img):hover {
 .greens h3,
 .greens h4,
 .greens .u-font-icon,
+.greens .c-infographic-header,
 .greens .u-theme-header {
   color: #006938; }
 
@@ -766,6 +767,7 @@ a:has(img):hover {
 .pinks h3,
 .pinks h4,
 .pinks .u-font-icon,
+.pinks .c-infographic-header,
 .pinks .u-theme-header {
   color: #7c184f; }
 
@@ -793,6 +795,7 @@ a:has(img):hover {
 .blues h3,
 .blues h4,
 .blues .u-font-icon,
+.blues .c-infographic-header,
 .blues .u-theme-header {
   color: #2c498a; }
 
@@ -820,6 +823,7 @@ a:has(img):hover {
 .yellows h3,
 .yellows h4,
 .yellows .u-font-icon,
+.yellows .c-infographic-header,
 .yellows .u-theme-header {
   color: #edab00; }
 
@@ -847,6 +851,7 @@ a:has(img):hover {
 .oranges h3,
 .oranges h4,
 .oranges .u-font-icon,
+.oranges .c-infographic-header,
 .oranges .u-theme-header {
   color: #d9541a; }
 
@@ -874,6 +879,7 @@ a:has(img):hover {
 .teals h3,
 .teals h4,
 .teals .u-font-icon,
+.teals .c-infographic-header,
 .teals .u-theme-header {
   color: #008996; }
 
@@ -901,6 +907,7 @@ a:has(img):hover {
 .purples h3,
 .purples h4,
 .purples .u-font-icon,
+.purples .c-infographic-header,
 .purples .u-theme-header {
   color: #592c82; }
 
@@ -928,6 +935,7 @@ a:has(img):hover {
 .neutrals h3,
 .neutrals h4,
 .neutrals .u-font-icon,
+.neutrals .c-infographic-header,
 .neutrals .u-theme-header {
   color: #d1d1c9; }
 
@@ -9307,12 +9315,15 @@ svg.u-svg-40,
 .text-lg {
   font-size: 1.875rem; }
 
+.text-xlg-fixed {
+  font-size: 2.25rem; }
+
 .text-xlg {
   font-size: 2.25rem; }
 
 @media screen and (min-width: 40em) {
   .text-xlg {
-    font-size: 3.125rem; } }
+    font-size: 3.25rem; } }
 
 /* Transforms */
 .u-uppercase {
