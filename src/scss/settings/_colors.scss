@@ -518,5 +518,14 @@ a:has(img):hover {
         border-image-source: linear-gradient(map-get($color, "darkbg"), map-get($color, "darkbg"));
       }
     }
+    .u-font-icon {
+      color: map-get($color, "light");
+    }
+  }
+}
+
+.c-wrapper-2025.dark.purples {
+  .u-font-icon {
+    color: map-get($purples, "tint");
   }
 }
