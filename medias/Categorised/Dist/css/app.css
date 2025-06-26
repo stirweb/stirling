@@ -951,7 +951,7 @@ a:has(img):hover {
   background-color: #d1d1c9; }
 
 .teals a {
-  color: #005e63; }
+  color: #037a80; }
 
 .neutral-green a,
 .neutral-green h2,
@@ -9767,309 +9767,10 @@ ul.no-bullet {
 
 /*
 
-  BRAND 2025
+  BRAND STYLES
   --- 
 
-*/
-/*
-  New brand 2025 hooks
-*/
-:root {
-  --hook-border-thickness: 30px;
-  --hook-border-thickness-medium: 40px;
-  --gutter-offset: -24px;
-  --gutter-offset-medium: -40px;
-  --gutter-offset-large: -50px;
-  --hook-height: 80px;
-  --hook-height-medium: 100px; }
-
-.u-hook {
-  position: relative; }
-
-.u-hook > *::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  height: var(--hook-height);
-  width: 100%; }
-
-.u-hook > *::after {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  height: 20%; }
-
-.u-hook-tr > *::before {
-  top: calc(0px - var(--hook-border-thickness));
-  border-top: var(--hook-border-thickness) solid #006938;
-  border-right: var(--hook-border-thickness) solid #006938; }
-
-.u-hook-tr.u-hook-full-bleed::before {
-  content: "";
-  position: absolute;
-  border-top: var(--hook-border-thickness) solid #006938;
-  border-left: var(--hook-border-thickness) solid #006938;
-  top: calc(0px - var(--hook-border-thickness));
-  left: 0;
-  width: 50vw; }
-
-.u-hook-tl > *::before {
-  top: 0;
-  border-top: var(--hook-border-thickness) solid #006938;
-  border-left: var(--hook-border-thickness) solid #006938; }
-
-.u-hook-bl > *::before {
-  bottom: calc(0px - var(--hook-border-thickness));
-  border-bottom: var(--hook-border-thickness) solid #006938;
-  border-left: var(--hook-border-thickness) solid #006938; }
-
-.u-hook-bl.u-hook-full-bleed::before {
-  content: "";
-  position: absolute;
-  border-bottom: var(--hook-border-thickness) solid #006938;
-  border-left: var(--hook-border-thickness) solid #006938;
-  bottom: calc(0px - var(--hook-border-thickness));
-  right: 0;
-  width: 50vw; }
-
-.u-hook-br > *::after {
-  height: var(--hook-height);
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  border-bottom: var(--hook-border-thickness) solid #006938;
-  border-right: var(--hook-border-thickness) solid #006938; }
-
-.u-hook-bl > .c-wrapper-2025 {
-  margin-bottom: 60px; }
-  .u-hook-bl > .c-wrapper-2025::before {
-    left: var(--gutter-offset); }
-
-.u-hook-tr > .c-wrapper-2025 {
-  margin-top: 60px; }
-  .u-hook-tr > .c-wrapper-2025::before {
-    right: var(--gutter-offset); }
-
-@media screen and (min-width: 40em) {
-  .u-hook > *::before,
-  .u-hook-br > *::after {
-    height: var(--hook-height-medium);
-    border-width: var(--hook-border-thickness-medium); }
-  .u-hook-bl > *::after {
-    height: var(--hook-height); }
-  .u-hook-tr > *::before {
-    top: calc(0px - var(--hook-border-thickness-medium)); }
-  .u-hook-bl > *::before {
-    bottom: calc(0px - var(--hook-border-thickness-medium)); }
-  .u-hook-tr > .c-wrapper-2025::before {
-    right: var(--gutter-offset-medium);
-    top: calc(0px - var(--hook-border-thickness-medium)); }
-  .u-hook-bl > .c-wrapper-2025::before {
-    left: var(--gutter-offset-medium);
-    bottom: calc(0px - var(--hook-border-thickness-medium)); }
-  .u-hook-bl.u-hook-full-bleed::before,
-  .u-hook-tr.u-hook-full-bleed::before {
-    border-width: var(--hook-border-thickness-medium); }
-  .u-hook-bl.u-hook-full-bleed::before {
-    bottom: calc(0px - var(--hook-border-thickness-medium)); }
-  .u-hook-tr.u-hook-full-bleed::before {
-    top: calc(0px - var(--hook-border-thickness-medium)); }
-  .u-hook-bl > .c-wrapper-2025 {
-    margin-bottom: 80px; }
-  .u-hook-tr > .c-wrapper-2025 {
-    margin-top: 80px; } }
-
-@media screen and (min-width: 64em) {
-  .u-hook_tr > .c-wrapper-2025::before {
-    right: var(--gutter-offset-large); }
-  .u-hook-bl > .c-wrapper-2025::before {
-    left: var(--gutter-offset-large); } }
-
-.u-hook.greens > *::after {
-  border-color: #006938; }
-
-.u-hook.greens > *::before {
-  border-color: #006938; }
-
-.u-hook.greens.u-hook-full-bleed::before {
-  border-color: #006938; }
-
-.u-hook.pinks > *::after {
-  border-color: #7c184f; }
-
-.u-hook.pinks > *::before {
-  border-color: #7c184f; }
-
-.u-hook.pinks.u-hook-full-bleed::before {
-  border-color: #7c184f; }
-
-.u-hook.blues > *::after {
-  border-color: #2c498a; }
-
-.u-hook.blues > *::before {
-  border-color: #2c498a; }
-
-.u-hook.blues.u-hook-full-bleed::before {
-  border-color: #2c498a; }
-
-.u-hook.yellows > *::after {
-  border-color: #edab00; }
-
-.u-hook.yellows > *::before {
-  border-color: #edab00; }
-
-.u-hook.yellows.u-hook-full-bleed::before {
-  border-color: #edab00; }
-
-.u-hook.oranges > *::after {
-  border-color: #d9541a; }
-
-.u-hook.oranges > *::before {
-  border-color: #d9541a; }
-
-.u-hook.oranges.u-hook-full-bleed::before {
-  border-color: #d9541a; }
-
-.u-hook.teals > *::after {
-  border-color: #008996; }
-
-.u-hook.teals > *::before {
-  border-color: #008996; }
-
-.u-hook.teals.u-hook-full-bleed::before {
-  border-color: #008996; }
-
-.u-hook.purples > *::after {
-  border-color: #592c82; }
-
-.u-hook.purples > *::before {
-  border-color: #592c82; }
-
-.u-hook.purples.u-hook-full-bleed::before {
-  border-color: #592c82; }
-
-.u-hook.neutrals > *::after {
-  border-color: #d1d1c9; }
-
-.u-hook.neutrals > *::before {
-  border-color: #d1d1c9; }
-
-.u-hook.neutrals.u-hook-full-bleed::before {
-  border-color: #d1d1c9; }
-
-.u-hook.neutral-green > *::before {
-  border-color: #006938; }
-
-.u-hook.neutral-green > *::after {
-  border-color: #006938; }
-
-.u-hook.neutral-green.u-hook-full-bleed::before {
-  border-color: #006938; }
-
-/*
-
-  Dark themes of the hooks
-  ---
-  Used for dark bg hooks, these are the same as the light mode hooks but with a few exceptions
-*/
-.u-hook.dark.greens > *::before {
-  border-color: #005734; }
-
-.u-hook.dark.greens > *::after {
-  border-color: #005734; }
-
-.u-hook.dark.greens.u-hook-full-bleed::before {
-  border-color: #005734; }
-
-.u-hook.dark.neutrals > *::before {
-  border-color: #97956d; }
-
-.u-hook.dark.neutrals > *::after {
-  border-color: #97956d; }
-
-.u-hook.dark.neutrals.u-hook-full-bleed::before {
-  border-color: #97956d; }
-
-/*
-  u-border bleed
-*/
-.u-border-bleed {
-  display: block;
-  height: var(--hook-border-thickness);
-  background-origin: border-box;
-  background-clip: border-box; }
-
-@media screen and (min-width: 40em) {
-  .u-border-bleed {
-    height: var(--hook-border-thickness-medium); } }
-
-.u-border-bleed-left {
-  background-image: linear-gradient(90deg, #006938 30%, transparent 70%); }
-
-.u-border-bleed-right {
-  background-image: linear-gradient(90deg, transparent 70%, #006938 30%); }
-
-.u-border-bleed-left.greens {
-  background-image: linear-gradient(90deg, #006938 30%, transparent 70%); }
-
-.u-border-bleed-right.greens {
-  background-image: linear-gradient(90deg, transparent 70%, #006938 30%); }
-
-.u-border-bleed-left.pinks {
-  background-image: linear-gradient(90deg, #7c184f 30%, transparent 70%); }
-
-.u-border-bleed-right.pinks {
-  background-image: linear-gradient(90deg, transparent 70%, #7c184f 30%); }
-
-.u-border-bleed-left.blues {
-  background-image: linear-gradient(90deg, #2c498a 30%, transparent 70%); }
-
-.u-border-bleed-right.blues {
-  background-image: linear-gradient(90deg, transparent 70%, #2c498a 30%); }
-
-.u-border-bleed-left.yellows {
-  background-image: linear-gradient(90deg, #edab00 30%, transparent 70%); }
-
-.u-border-bleed-right.yellows {
-  background-image: linear-gradient(90deg, transparent 70%, #edab00 30%); }
-
-.u-border-bleed-left.oranges {
-  background-image: linear-gradient(90deg, #d9541a 30%, transparent 70%); }
-
-.u-border-bleed-right.oranges {
-  background-image: linear-gradient(90deg, transparent 70%, #d9541a 30%); }
-
-.u-border-bleed-left.teals {
-  background-image: linear-gradient(90deg, #008996 30%, transparent 70%); }
-
-.u-border-bleed-right.teals {
-  background-image: linear-gradient(90deg, transparent 70%, #008996 30%); }
-
-.u-border-bleed-left.purples {
-  background-image: linear-gradient(90deg, #592c82 30%, transparent 70%); }
-
-.u-border-bleed-right.purples {
-  background-image: linear-gradient(90deg, transparent 70%, #592c82 30%); }
-
-.u-border-bleed-left.neutrals {
-  background-image: linear-gradient(90deg, #d1d1c9 30%, transparent 70%); }
-
-.u-border-bleed-right.neutrals {
-  background-image: linear-gradient(90deg, transparent 70%, #d1d1c9 30%); }
-
-.u-border-bleed-left.dark.neutrals {
-  background-image: linear-gradient(90deg, #97956d 30%, transparent 70%); }
-
-.u-border-bleed-right.dark.neutrals {
-  background-image: linear-gradient(90deg, transparent 70%, #97956d 30%); }
-
-.u-border-bleed-left.dark.greens {
-  background-image: linear-gradient(90deg, #005734 30%, transparent 70%); }
-
-.u-border-bleed-right.dark.greens {
-  background-image: linear-gradient(90deg, transparent 70%, #005734 30%); }
-
-/* 
+/*  
 
   BRAND BORDERS
   ---
@@ -10373,6 +10074,305 @@ svg.u-icon {
     content: none; }
   .remove-hook-for-small > *::before {
     content: none; } }
+
+/*
+
+    New brand 2025 hooks
+    ---
+    These are used to create a hook effect on the top right, top left, bottom left and bottom right of a component.
+*/
+:root {
+  --hook-border-thickness: 30px;
+  --hook-border-thickness-medium: 40px;
+  --gutter-offset: -24px;
+  --gutter-offset-medium: -40px;
+  --gutter-offset-large: -50px;
+  --hook-height: 80px;
+  --hook-height-medium: 100px; }
+
+.u-hook {
+  position: relative; }
+
+.u-hook > *::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  height: var(--hook-height);
+  width: 100%; }
+
+.u-hook > *::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  height: 20%; }
+
+.u-hook-full-bleed::before {
+  content: "";
+  position: absolute;
+  width: 50vw; }
+
+.u-hook-tr > *::before {
+  top: calc(0px - var(--hook-border-thickness));
+  border-top: var(--hook-border-thickness) solid #006938;
+  border-right: var(--hook-border-thickness) solid #006938; }
+
+.u-hook-tr.u-hook-full-bleed::before {
+  border-top: var(--hook-border-thickness) solid #006938;
+  border-left: var(--hook-border-thickness) solid #006938;
+  top: calc(0px - var(--hook-border-thickness));
+  left: 0; }
+
+.u-hook-bl > *::before {
+  bottom: calc(0px - var(--hook-border-thickness));
+  border-bottom: var(--hook-border-thickness) solid #006938;
+  border-left: var(--hook-border-thickness) solid #006938; }
+
+.u-hook-bl.u-hook-full-bleed::before {
+  border-bottom: var(--hook-border-thickness) solid #006938;
+  border-left: var(--hook-border-thickness) solid #006938;
+  bottom: calc(0px - var(--hook-border-thickness));
+  right: 0; }
+
+.u-hook-tl > *::before {
+  top: 0;
+  border-top: var(--hook-border-thickness) solid #006938;
+  border-left: var(--hook-border-thickness) solid #006938; }
+
+.u-hook-br > *::after {
+  height: var(--hook-height);
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  border-bottom: var(--hook-border-thickness) solid #006938;
+  border-right: var(--hook-border-thickness) solid #006938; }
+
+.u-hook-bl > .c-wrapper-2025 {
+  margin-bottom: 60px; }
+  .u-hook-bl > .c-wrapper-2025::before {
+    left: var(--gutter-offset); }
+
+.u-hook-tr > .c-wrapper-2025 {
+  margin-top: 60px; }
+  .u-hook-tr > .c-wrapper-2025::before {
+    right: var(--gutter-offset); }
+
+@media screen and (min-width: 40em) {
+  .u-hook > *::before,
+  .u-hook-br > *::after {
+    height: var(--hook-height-medium);
+    border-width: var(--hook-border-thickness-medium); }
+  .u-hook-bl > *::after {
+    height: var(--hook-height); }
+  .u-hook-tr > *::before {
+    top: calc(0px - var(--hook-border-thickness-medium)); }
+  .u-hook-bl > *::before {
+    bottom: calc(0px - var(--hook-border-thickness-medium)); }
+  .u-hook-tr > .c-wrapper-2025::before {
+    right: var(--gutter-offset-medium);
+    top: calc(0px - var(--hook-border-thickness-medium)); }
+  .u-hook-bl > .c-wrapper-2025::before {
+    left: var(--gutter-offset-medium);
+    bottom: calc(0px - var(--hook-border-thickness-medium)); }
+  .u-hook-bl.u-hook-full-bleed::before,
+  .u-hook-tr.u-hook-full-bleed::before {
+    border-width: var(--hook-border-thickness-medium); }
+  .u-hook-bl.u-hook-full-bleed::before {
+    bottom: calc(0px - var(--hook-border-thickness-medium)); }
+  .u-hook-tr.u-hook-full-bleed::before {
+    top: calc(0px - var(--hook-border-thickness-medium)); }
+  .u-hook-bl > .c-wrapper-2025 {
+    margin-bottom: 80px; }
+  .u-hook-tr > .c-wrapper-2025 {
+    margin-top: 80px; } }
+
+@media screen and (min-width: 64em) {
+  .u-hook-tr > .c-wrapper-2025::before {
+    right: var(--gutter-offset-large); }
+  .u-hook-bl > .c-wrapper-2025::before {
+    left: var(--gutter-offset-large); } }
+
+.u-hook.greens > *::after {
+  border-color: #006938; }
+
+.u-hook.greens > *::before {
+  border-color: #006938; }
+
+.u-hook.greens.u-hook-full-bleed::before {
+  border-color: #006938; }
+
+.u-hook.pinks > *::after {
+  border-color: #7c184f; }
+
+.u-hook.pinks > *::before {
+  border-color: #7c184f; }
+
+.u-hook.pinks.u-hook-full-bleed::before {
+  border-color: #7c184f; }
+
+.u-hook.blues > *::after {
+  border-color: #2c498a; }
+
+.u-hook.blues > *::before {
+  border-color: #2c498a; }
+
+.u-hook.blues.u-hook-full-bleed::before {
+  border-color: #2c498a; }
+
+.u-hook.yellows > *::after {
+  border-color: #edab00; }
+
+.u-hook.yellows > *::before {
+  border-color: #edab00; }
+
+.u-hook.yellows.u-hook-full-bleed::before {
+  border-color: #edab00; }
+
+.u-hook.oranges > *::after {
+  border-color: #d9541a; }
+
+.u-hook.oranges > *::before {
+  border-color: #d9541a; }
+
+.u-hook.oranges.u-hook-full-bleed::before {
+  border-color: #d9541a; }
+
+.u-hook.teals > *::after {
+  border-color: #008996; }
+
+.u-hook.teals > *::before {
+  border-color: #008996; }
+
+.u-hook.teals.u-hook-full-bleed::before {
+  border-color: #008996; }
+
+.u-hook.purples > *::after {
+  border-color: #592c82; }
+
+.u-hook.purples > *::before {
+  border-color: #592c82; }
+
+.u-hook.purples.u-hook-full-bleed::before {
+  border-color: #592c82; }
+
+.u-hook.neutrals > *::after {
+  border-color: #d1d1c9; }
+
+.u-hook.neutrals > *::before {
+  border-color: #d1d1c9; }
+
+.u-hook.neutrals.u-hook-full-bleed::before {
+  border-color: #d1d1c9; }
+
+.u-hook.neutral-green > *::before {
+  border-color: #006938; }
+
+.u-hook.neutral-green > *::after {
+  border-color: #006938; }
+
+.u-hook.neutral-green.u-hook-full-bleed::before {
+  border-color: #006938; }
+
+.u-hook.dark.greens > *::before {
+  border-color: #005734; }
+
+.u-hook.dark.greens > *::after {
+  border-color: #005734; }
+
+.u-hook.dark.greens.u-hook-full-bleed::before {
+  border-color: #005734; }
+
+.u-hook.dark.neutrals > *::before {
+  border-color: #97956d; }
+
+.u-hook.dark.neutrals > *::after {
+  border-color: #97956d; }
+
+.u-hook.dark.neutrals.u-hook-full-bleed::before {
+  border-color: #97956d; }
+
+/*
+
+    Border Bleed (u-border bleed)
+    ---
+    This utility is used to create a border bleed effect on the left or right side of a full width component.
+    It uses a gradient background to create the effect of a border that fades into the content bg
+   
+*/
+.u-border-bleed {
+  display: block;
+  height: var(--hook-border-thickness);
+  background-origin: border-box;
+  background-clip: border-box; }
+
+@media screen and (min-width: 40em) {
+  .u-border-bleed {
+    height: var(--hook-border-thickness-medium); } }
+
+.u-border-bleed-left {
+  background-image: linear-gradient(90deg, #006938 30%, transparent 70%); }
+
+.u-border-bleed-right {
+  background-image: linear-gradient(90deg, transparent 70%, #006938 30%); }
+
+.u-border-bleed-left.greens {
+  background-image: linear-gradient(90deg, #006938 30%, transparent 70%); }
+
+.u-border-bleed-right.greens {
+  background-image: linear-gradient(90deg, transparent 70%, #006938 30%); }
+
+.u-border-bleed-left.pinks {
+  background-image: linear-gradient(90deg, #7c184f 30%, transparent 70%); }
+
+.u-border-bleed-right.pinks {
+  background-image: linear-gradient(90deg, transparent 70%, #7c184f 30%); }
+
+.u-border-bleed-left.blues {
+  background-image: linear-gradient(90deg, #2c498a 30%, transparent 70%); }
+
+.u-border-bleed-right.blues {
+  background-image: linear-gradient(90deg, transparent 70%, #2c498a 30%); }
+
+.u-border-bleed-left.yellows {
+  background-image: linear-gradient(90deg, #edab00 30%, transparent 70%); }
+
+.u-border-bleed-right.yellows {
+  background-image: linear-gradient(90deg, transparent 70%, #edab00 30%); }
+
+.u-border-bleed-left.oranges {
+  background-image: linear-gradient(90deg, #d9541a 30%, transparent 70%); }
+
+.u-border-bleed-right.oranges {
+  background-image: linear-gradient(90deg, transparent 70%, #d9541a 30%); }
+
+.u-border-bleed-left.teals {
+  background-image: linear-gradient(90deg, #008996 30%, transparent 70%); }
+
+.u-border-bleed-right.teals {
+  background-image: linear-gradient(90deg, transparent 70%, #008996 30%); }
+
+.u-border-bleed-left.purples {
+  background-image: linear-gradient(90deg, #592c82 30%, transparent 70%); }
+
+.u-border-bleed-right.purples {
+  background-image: linear-gradient(90deg, transparent 70%, #592c82 30%); }
+
+.u-border-bleed-left.neutrals {
+  background-image: linear-gradient(90deg, #d1d1c9 30%, transparent 70%); }
+
+.u-border-bleed-right.neutrals {
+  background-image: linear-gradient(90deg, transparent 70%, #d1d1c9 30%); }
+
+.u-border-bleed-left.dark.neutrals {
+  background-image: linear-gradient(90deg, #97956d 30%, transparent 70%); }
+
+.u-border-bleed-right.dark.neutrals {
+  background-image: linear-gradient(90deg, transparent 70%, #97956d 30%); }
+
+.u-border-bleed-left.dark.greens {
+  background-image: linear-gradient(90deg, #005734 30%, transparent 70%); }
+
+.u-border-bleed-right.dark.greens {
+  background-image: linear-gradient(90deg, transparent 70%, #005734 30%); }
 
 /*
     Interactivity
