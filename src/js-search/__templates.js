@@ -533,7 +533,7 @@ stir.templates.search = (() => {
 						</p> -->
 					</div>
 					<div class=c-search-result__image>
-						<img src="https://www.stir.ac.uk${item.metaData.thumbnail}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
+						<img src="${item.metaData.thumbnail}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
 					</div>
 				</div>`;
     },

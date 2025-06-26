@@ -154,7 +154,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 						</p> -->
 					</div>
 					<div class=c-search-result__image>
-						<img src="https://www.stir.ac.uk${e.metaData.thumbnail}" alt="${e.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
+						<img src="${e.metaData.thumbnail}" alt="${e.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
 					</div>
 				</div>`,gallery:e=>{return`
 				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${e.rank} data-result-type=news>
