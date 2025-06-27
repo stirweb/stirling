@@ -4578,7 +4578,7 @@ updated Aug 2022 for clearing homepage banner
   .c-promo-strip > img,
   .c-promo-strip > picture {
     grid-row: 2;
-    max-height: 20rem; }
+    max-height: 25rem; }
   .c-promo-strip > div {
     grid-column: 2 / span 1;
     grid-row: 1/-1;
