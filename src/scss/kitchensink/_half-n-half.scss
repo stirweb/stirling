@@ -18,7 +18,7 @@
   }
 
   &.js-animation {
-    overflow-x: hidden; /* prevent horizontal scroll (before animation is triggered) */
+    overflow-x: hidden; /* proddt horizontal scroll (before animation is triggered) */
   }
 
   &:first-of-type {
@@ -108,8 +108,8 @@
       min-height: 333px;
     }
 
-    /* odd and even swaps */
-    &:nth-of-type(odd) {
+    /* even and odd swaps */
+    &:nth-of-type(even) {
       .c-half-n-half__image {
         left: 0;
         margin-left: 15px;
@@ -124,7 +124,7 @@
       }
     }
 
-    &:nth-of-type(even) {
+    &:nth-of-type(odd) {
       .c-half-n-half__image {
         right: 0;
         margin-right: 15px;
