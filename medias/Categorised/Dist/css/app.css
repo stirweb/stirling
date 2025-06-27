@@ -4567,9 +4567,10 @@ updated Aug 2022 for clearing homepage banner
     display: flex;
     flex-direction: column;
     justify-content: space-between; }
-  .c-promo-strip:not(.rightify) > div {
-    position: relative;
-    top: -40px; }
+  .c-promo-strip > .u-hook-tr > ::before {
+    top: 0; }
+  .c-promo-strip > .u-hook-bl > ::before {
+    bottom: 0; }
   .c-promo-strip img {
     object-fit: cover;
     width: 100%;
