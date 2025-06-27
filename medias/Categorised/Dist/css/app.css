@@ -31,35 +31,7 @@
 /*
   Button Palette
 
-
-$uos-button-palette: (
-  primary: map-get($foundation-palette, primary),
-  secondary: map-get($foundation-palette, secondary),
-  success: map-get($foundation-palette, success),
-  warning: map-get($foundation-palette, warning),
-  alert: map-get($foundation-palette, alert),
-  // Energy
-  // Green
-  energy: map-get($brand-palette, energy-green),
-  energy-green: map-get($brand-palette, energy-green),
-  heritage-green: map-get($brand-palette, heritage-green),
-  // Pink
-  energy-pink: map-get($brand-palette, energy-pink),
-  pink-medium: map-get($brand-palette, pink-medium),
-  heritage-berry: map-get($brand-palette, heritage-berry),
-  pink-dark: map-get($brand-palette, pink-dark),
-  // Teal
-  energy-teal: map-get($brand-palette, energy-teal),
-  teal-medium: map-get($brand-palette, energy-teal),
-  heritage-teal: map-get($brand-palette, heritage-teal),
-  // Purple
-  heritage-purple: map-get($brand-palette, heritage-purple),
-  energy-purple: map-get($brand-palette, energy-purple),
-  // Misc
-  dark-mink: map-get($brand-palette, dark-mink),
-  energy-turq: map-get($brand-palette, energy-turq),
-  info: map-get($brand-palette, heritage-blue),
-);*/
+*/
 /* 
   Function to map icon filter values based on color
 */
@@ -3371,26 +3343,156 @@ button:focus {
       color: #e80068; }
       .button.alert:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
-  .button.black {
-    background-color: #000;
-    border-color: #000;
+  .button.energy {
+    background-color: #76b72a;
+    border-color: #76b72a;
     color: #ffffff; }
-    .button.black:hover {
+    .button.energy:hover {
       background-color: #ffffff;
-      border-color: #000;
-      color: #000; }
-      .button.black:hover::after {
-        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-  .button.white {
-    background-color: #fff;
-    border-color: #fff;
+      border-color: #76b72a;
+      color: #76b72a; }
+      .button.energy:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
+  .button.energy-green {
+    background-color: #76b72a;
+    border-color: #76b72a;
     color: #ffffff; }
-    .button.white:hover {
+    .button.energy-green:hover {
       background-color: #ffffff;
-      border-color: #fff;
-      color: #fff; }
-      .button.white:hover::after {
+      border-color: #76b72a;
+      color: #76b72a; }
+      .button.energy-green:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%); }
+  .button.heritage-green {
+    background-color: #006938;
+    border-color: #006938;
+    color: #ffffff; }
+    .button.heritage-green:hover {
+      background-color: #ffffff;
+      border-color: #006938;
+      color: #006938; }
+      .button.heritage-green:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .button.energy-pink {
+    background-color: #e80068;
+    border-color: #e80068;
+    color: #ffffff; }
+    .button.energy-pink:hover {
+      background-color: #ffffff;
+      border-color: #e80068;
+      color: #e80068; }
+      .button.energy-pink:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%); }
+  .button.pink-medium {
+    background-color: #7c184f;
+    border-color: #7c184f;
+    color: #ffffff; }
+    .button.pink-medium:hover {
+      background-color: #ffffff;
+      border-color: #7c184f;
+      color: #7c184f; }
+      .button.pink-medium:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
+  .button.heritage-berry {
+    background-color: #7c184f;
+    border-color: #7c184f;
+    color: #ffffff; }
+    .button.heritage-berry:hover {
+      background-color: #ffffff;
+      border-color: #7c184f;
+      color: #7c184f; }
+      .button.heritage-berry:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
+  .button.pink-dark {
+    background-color: #511535;
+    border-color: #511535;
+    color: #ffffff; }
+    .button.pink-dark:hover {
+      background-color: #ffffff;
+      border-color: #511535;
+      color: #511535; }
+      .button.pink-dark:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .button.energy-teal {
+    background-color: #008996;
+    border-color: #008996;
+    color: #ffffff; }
+    .button.energy-teal:hover {
+      background-color: #ffffff;
+      border-color: #008996;
+      color: #008996; }
+      .button.energy-teal:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .button.teal-medium {
+    background-color: #008996;
+    border-color: #008996;
+    color: #ffffff; }
+    .button.teal-medium:hover {
+      background-color: #ffffff;
+      border-color: #008996;
+      color: #008996; }
+      .button.teal-medium:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .button.heritage-teal {
+    background-color: #005e63;
+    border-color: #005e63;
+    color: #ffffff; }
+    .button.heritage-teal:hover {
+      background-color: #ffffff;
+      border-color: #005e63;
+      color: #005e63; }
+      .button.heritage-teal:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .button.heritage-purple {
+    background-color: #3f0066;
+    border-color: #3f0066;
+    color: #ffffff; }
+    .button.heritage-purple:hover {
+      background-color: #ffffff;
+      border-color: #3f0066;
+      color: #3f0066; }
+      .button.heritage-purple:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%); }
+  .button.energy-purple {
+    background-color: #592c82;
+    border-color: #592c82;
+    color: #ffffff; }
+    .button.energy-purple:hover {
+      background-color: #ffffff;
+      border-color: #592c82;
+      color: #592c82; }
+      .button.energy-purple:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
+  .button.dark-mink {
+    background-color: #3a3a26;
+    border-color: #3a3a26;
+    color: #ffffff; }
+    .button.dark-mink:hover {
+      background-color: #ffffff;
+      border-color: #3a3a26;
+      color: #3a3a26; }
+      .button.dark-mink:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .button.energy-turq {
+    background-color: #00a5ac;
+    border-color: #00a5ac;
+    color: #ffffff; }
+    .button.energy-turq:hover {
+      background-color: #ffffff;
+      border-color: #00a5ac;
+      color: #00a5ac; }
+      .button.energy-turq:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%); }
+  .button.info {
+    background-color: #122c54;
+    border-color: #122c54;
+    color: #ffffff; }
+    .button.info:hover {
+      background-color: #ffffff;
+      border-color: #122c54;
+      color: #122c54; }
+      .button.info:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%); }
   .button.clear {
     border-color: transparent;
     background-color: transparent;
@@ -3508,10 +3610,36 @@ input:checked + label.button {
     background-color: #d49900; }
   input:checked + label.button.alert {
     background-color: #cf005d; }
-  input:checked + label.button.black {
-    background-color: black; }
-  input:checked + label.button.white {
-    background-color: #f2f2f2; }
+  input:checked + label.button.energy {
+    background-color: #69a225; }
+  input:checked + label.button.energy-green {
+    background-color: #69a225; }
+  input:checked + label.button.heritage-green {
+    background-color: #00502a; }
+  input:checked + label.button.energy-pink {
+    background-color: #cf005d; }
+  input:checked + label.button.pink-medium {
+    background-color: #671441; }
+  input:checked + label.button.heritage-berry {
+    background-color: #671441; }
+  input:checked + label.button.pink-dark {
+    background-color: #3d1028; }
+  input:checked + label.button.energy-teal {
+    background-color: #00727d; }
+  input:checked + label.button.teal-medium {
+    background-color: #00727d; }
+  input:checked + label.button.heritage-teal {
+    background-color: #00464a; }
+  input:checked + label.button.heritage-purple {
+    background-color: #2f004d; }
+  input:checked + label.button.energy-purple {
+    background-color: #4c266f; }
+  input:checked + label.button.dark-mink {
+    background-color: #2b2b1c; }
+  input:checked + label.button.energy-turq {
+    background-color: #008d93; }
+  input:checked + label.button.info {
+    background-color: #0e213f; }
 
 /* 
     Button style that can have a icomoon span icon in it 

@@ -66,7 +66,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -276,7 +276,7 @@ $uos-colour-group-palette: (
 /*
   Button Palette
 
-
+*/
 $uos-button-palette: (
   primary: map-get($foundation-palette, primary),
   secondary: map-get($foundation-palette, secondary),
@@ -304,7 +304,7 @@ $uos-button-palette: (
   dark-mink: map-get($brand-palette, dark-mink),
   energy-turq: map-get($brand-palette, energy-turq),
   info: map-get($brand-palette, heritage-blue),
-);*/
+);
 
 /* 
   Function to map icon filter values based on color
@@ -340,7 +340,7 @@ $uos-wp-palette: (
   wp-blue: #00a5db,
 );
 
-//$button-palette: $uos-button-palette;
+$button-palette: $uos-button-palette;
 $body-background: $white;
 $body-font-color: $black;
 
