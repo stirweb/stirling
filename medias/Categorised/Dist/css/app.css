@@ -1232,6 +1232,14 @@ a:has(img):hover {
   .neutrals .c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#fff, #fff); }
 
+/*
+  .c-wrapper-2025 light overrides/additions
+*/
+.c-wrapper-2025.u-bleed.neutral-green {
+  background-color: #f1f1ef; }
+  .c-wrapper-2025.u-bleed.neutral-green.u-bleed {
+    border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
+
 .dark {
   color: #fff; }
   .dark a,
@@ -1261,19 +1269,6 @@ a:has(img):hover {
     filter: brightness(0) invert(1); }
   .dark .c-link::before {
     background-color: brightness(0) invert(1); }
-
-/*
-  .c-wrapper-2025 light overrides/additions
-*/
-.c-wrapper-2025.u-bleed.neutrals {
-  background-color: #fff; }
-  .c-wrapper-2025.u-bleed.neutrals.u-bleed {
-    border-image-source: linear-gradient(#fff, #fff); }
-
-.c-wrapper-2025.u-bleed.neutral-green {
-  background-color: #f1f1ef; }
-  .c-wrapper-2025.u-bleed.neutral-green.u-bleed {
-    border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
 
 /*
    Dark colour overides for the 2025 colour packs
