@@ -1144,24 +1144,18 @@ a:has(img):hover {
 .neutrals .c-link::before {
   background-color: #d1d1c9; }
 
-.teals a {
-  color: #037a80; }
-
-.button.tinted.pinks,
-.pinks .button.tinted {
-  background-color: #c698b0;
-  border-color: #c698b0; }
-
 .neutral-green a,
 .neutral-green h2,
 .neutral-green h3,
-.neutral-green h4 {
+.neutral-green h4,
+.neutral-green svg,
+.neutral-green .u-font-icon {
   color: #006938; }
 
 .neutral-green a:not(.c-link) {
-  border-bottom: 2px solid #76b72a; }
+  border-bottom: 2px solid #d1d1c9; }
   .neutral-green a:not(.c-link):hover {
-    border-bottom: 2px solid #edf4f1; }
+    border-bottom: 2px solid #f1f1ef; }
 
 .neutral-green a.button {
   border: 4px solid #006938;
@@ -1174,13 +1168,39 @@ a:has(img):hover {
     .neutral-green a.button:hover::after {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
-.neutral-green .u-font-icon {
-  color: #006938; }
+.neutral-green.button.tinted,
+.neutral-green .button.tinted {
+  background-color: #d1d1c9;
+  border-color: #d1d1c9;
+  color: #5f6350; }
+  .neutral-green.button.tinted::after,
+  .neutral-green .button.tinted::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .neutral-green.button.tinted:hover,
+  .neutral-green .button.tinted:hover {
+    background-color: #ffffff; }
+
+.neutral-green a:hover {
+  text-decoration-color: #d1d1c9; }
 
 .neutral-green .c-wrapper-2025 {
   background-color: #f1f1ef; }
   .neutral-green .c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
+
+.neutral-green .c-link::after {
+  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
+.neutral-green .c-link::before {
+  background-color: #d1d1c9; }
+
+.teals a {
+  color: #037a80; }
+
+.button.tinted.pinks,
+.pinks .button.tinted {
+  background-color: #c698b0;
+  border-color: #c698b0; }
 
 .neutrals a,
 .neutrals h2,
@@ -1408,6 +1428,25 @@ a:has(img):hover {
   color: #5f6350; }
   .neutrals.dark.button.tinted:hover::after,
   .neutrals.dark .button.tinted:hover::after {
+    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
+.neutral-green.c-wrapper-2025.dark {
+  background-color: #5f6350; }
+  .neutral-green.c-wrapper-2025.dark.u-bleed {
+    border-image-source: linear-gradient(#5f6350, #5f6350); }
+  .neutral-green.c-wrapper-2025.dark .u-font-icon,
+  .neutral-green.c-wrapper-2025.dark svg {
+    color: #d1d1c9; }
+
+.neutral-green.dark.button.tinted::after,
+.neutral-green.dark .button.tinted::after {
+  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+
+.neutral-green.dark.button.tinted:hover,
+.neutral-green.dark .button.tinted:hover {
+  color: #5f6350; }
+  .neutral-green.dark.button.tinted:hover::after,
+  .neutral-green.dark .button.tinted:hover::after {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 /**
@@ -10305,6 +10344,15 @@ svg.u-icon {
 .u-hook.neutrals.u-hook-full-bleed::before {
   border-color: #d1d1c9; }
 
+.u-hook.neutral-green > *::after {
+  border-color: #006938; }
+
+.u-hook.neutral-green > *::before {
+  border-color: #006938; }
+
+.u-hook.neutral-green.u-hook-full-bleed::before {
+  border-color: #006938; }
+
 .u-hook.neutral-green > *::before {
   border-color: #006938; }
 
@@ -10403,6 +10451,12 @@ svg.u-icon {
 
 .u-border-bleed-right.neutrals {
   background-image: linear-gradient(90deg, transparent 70%, #d1d1c9 30%); }
+
+.u-border-bleed-left.neutral-green {
+  background-image: linear-gradient(90deg, #006938 30%, transparent 70%); }
+
+.u-border-bleed-right.neutral-green {
+  background-image: linear-gradient(90deg, transparent 70%, #006938 30%); }
 
 .u-border-bleed-left.dark.neutrals {
   background-image: linear-gradient(90deg, #97956d 30%, transparent 70%); }
