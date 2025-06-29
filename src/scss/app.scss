@@ -66,7 +66,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -256,6 +256,17 @@ $neutrals: (
   "darkbg": map-get($brand-palette, neutral-dark),
 );
 
+$neutral-green: (
+  "tint-7": map-get($brand-palette, neutral-tint-7),
+  "tint": map-get($brand-palette, neutral-tint),
+  "light": map-get($brand-palette, neutral-light),
+  "medium": map-get($brand-palette, neutral-medium),
+  "dark": map-get($brand-palette, neutral-dark),
+  "hook": map-get($brand-palette, heritage-green),
+  "button": map-get($brand-palette, heritage-green),
+  "darkbg": map-get($brand-palette, neutral-dark),
+);
+
 $uos-colour-group-palette: (
   greens: $greens,
   pinks: $pinks,
@@ -265,6 +276,7 @@ $uos-colour-group-palette: (
   teals: $teals,
   purples: $purples,
   neutrals: $neutrals,
+  neutral-green: $neutral-green,
 );
 
 // @debug map-get($purples, "medium");
