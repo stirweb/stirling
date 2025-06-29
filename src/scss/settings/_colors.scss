@@ -491,6 +491,17 @@ a:has(img):hover {
   }
 }
 
+/*
+  .c-wrapper-2025 light overrides/additions
+*/
+
+.c-wrapper-2025.u-bleed.neutral-green {
+  background-color: map-get($neutrals, "tint-7");
+  &.u-bleed {
+    border-image-source: linear-gradient(map-get($neutrals, "tint-7"), map-get($neutrals, "tint-7"));
+  }
+}
+
 .dark {
   color: $white;
   a,
@@ -536,24 +547,6 @@ a:has(img):hover {
 
   .c-link::before {
     background-color: brightness(0) invert(1);
-  }
-}
-
-/*
-  .c-wrapper-2025 light overrides/additions
-*/
-
-.c-wrapper-2025.u-bleed.neutrals {
-  background-color: $white;
-  &.u-bleed {
-    border-image-source: linear-gradient($white, $white);
-  }
-}
-
-.c-wrapper-2025.u-bleed.neutral-green {
-  background-color: map-get($neutrals, "tint-7");
-  &.u-bleed {
-    border-image-source: linear-gradient(map-get($neutrals, "tint-7"), map-get($neutrals, "tint-7"));
   }
 }
 
