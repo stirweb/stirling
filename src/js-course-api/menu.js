@@ -8,13 +8,10 @@
 (function() {
 
 	const el = document.querySelector("main#content > .grid-container");
-//	const host = window.location.hostname;
-//	const path = '/data/pd-api-dev/';
-//	const ppth = 'terminalfour/preview/1/en/35030';
-//	const code = 'UCX12-BUSLAW';
-//	const sess = '2024/5';
-//	const seme = 'SPR';
-//	const query = `programme=${code}/${sess}/${seme}`;
+	const host = window.location.hostname;
+	const path = '/data/pd-api-dev/';
+	const ppth = 'terminalfour/preview/1/en/35030';
+	const query = 'menu';
 
 	const apiUrl = (()=>{
 		switch (UoS_env.name) {
@@ -22,187 +19,72 @@
 				return '/pages/data/akari/menu.json';
 			case "qa":
 				return '/stirling/pages/data/akari/menu.json';
-//			case "preview":
-//			case "appdev-preview":
-//				return `https://${host}/${ppth}?${query}`;
-//			case "pub":
-//				return `https://${host}${path}?${query}`;
+			case "preview":
+			case "appdev-preview":
+				return `https://${host}/${ppth}?${query}`;
+			case "pub":
+				return `https://${host}${path}?${query}`;
 
 		}
 	})();
 
 	const templates = {
-		menu: data => `
+		menu: data => { 
+			console.info(data);
+			
+			if(!data || !data.academicYears) return;
+
+			console.info(Object.keys(data.academicYears).map(year => Object.keys(data.academicYears[year].faculties).map(faculty => Object.keys(data.academicYears[year].faculties[faculty].divisions).map(division => data.academicYears[year].faculties[faculty].divisions[division].routes))));
+
+			return `
 				<div class="grid-container u-px-1">
 					<div class="grid-x">
 						<div class=cell>
-							<h1 class=c-course-heading>Courses</h1>
-							<p>${data.map(year => `
-								<details>
-									<summary>${year.academicYear}</summary>
+							<p>${Object.keys(data.academicYears).map(year => {
+								const faculties = Object.keys(data.academicYears[year].faculties);
+								return `<details class=u-accordion>
+									<summary>${year}</summary>
 									<div class=u-px-1>
-										${year.faculties.map(faculty => `
-										<details>
-											<summary>${faculty.name}</summary>
+										${faculties.map(faculty => {
+											const divisions = Object.keys(data.academicYears[year].faculties[faculty].divisions);
+											return `<details>
+											<summary>${faculty}</summary>
 											<div class=u-px-1>
-												${faculty.divisions.map(division => `
+												${divisions.map(division => `
 												<details>
-													<summary>${division.name}</summary>
+													<summary>${division}</summary>
 													<div class=u-px-1>
-														${division.routes.map(route => `
-														<p>${route.name} <small>${route.code}</small>
-															<a href="/pages/courses/api/course.html?session=${year.academicYear}&route=${route.code}&semester=AUT">Autumn</a> | 
-															<a href="/pages/courses/api/course.html?session=${year.academicYear}&route=${route.code}&semester=SPR">Spring</a> | 
-															<a href="/pages/courses/api/course.html?session=${year.academicYear}&route=${route.code}&semester=SUM">Summer</a>
-														</p>
+														<table>
+															<thead>
+																<tr>
+																	<th>Route code</th><th>Course name</th><th>More information</th>
+																</tr>
+															</thead>
+															<caption>${faculty} (${division}) routes for ${year}:</caption>
+															${data.academicYears[year].faculties[faculty].divisions[division].routes.map(route => `
+															<tr><td><small>${route.routeCode}</small></td><td>${route.routeName}</td><td>
+																<a href="/pages/courses/api/course.html?session=${year}&route=${route.routeCode}&semester=AUT">Autumn</a> | 
+																<a href="/pages/courses/api/course.html?session=${year}&route=${route.routeCode}&semester=SPR">Spring</a> | 
+																<a href="/pages/courses/api/course.html?session=${year}&route=${route.routeCode}&semester=SUM">Summer</a>
+															</td></tr>
 														`).join('')}
+														</table>
 													</div>
 												</details>
 												`).join('')}
 											</div>
-										</details>`).join('')}
+										</details>`;
+									}).join('')}
 									</div>
-								</details>
-								`).join('')}</p>
+								</details>`;
+							}).join('')}</p>
 						</div>
 					</div>
-				</div>`
+				</div>`;}
 	};
 
-//	fetch(apiUrl)
-//		.then( (response) => response.json() )
-//		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data)) );
-
-	el.insertAdjacentHTML("beforeend",templates.menu([
-	{
-		"academicYear": "2023/4",
-		"faculties": [
-			{
-				"name": "Arts & Humanities",
-				"divisions": [
-					{
-						"routes": [
-							{
-								"code": "UCX12-BUSFMS",
-								"name": "BA (Hons) Film and Media"
-							}
-						],
-						"name": "Communications, Media and Culture"
-					},
-					{
-						"routes": [
-							{
-								"code": "UCX12-HISHER",
-								"name": "BA (Hons) History and Heritage"
-							},
-							{
-								"code": "UHX12-HIT",
-								"name": "BA (Hons) Heritage and Tourism"
-							}
-						],
-						"name": "History, Heritage and Politics"
-					},
-					{
-						"routes": [
-							{
-								"code": "UHX12-BSL",
-								"name": "BA (Hons) Business Law"
-							}
-						],
-						"name": "Law and Philosophy"
-					},
-					{
-						"routes": [
-							{
-								"code": "TXX43-CRW",
-								"name": "MLitt Creative Writing"
-							}
-						],
-						"name": "Literature and Languages"
-					}
-				]
-			},
-			{
-				"name": "Faculty of Social Sciences",
-				"divisions": [
-					{
-						"routes": [
-							{
-								"code": "TXO45-DEM",
-								"name": "MSc Dementia Studies (Online)"
-							}
-						],
-						"name": "Dementia and Ageing"
-					}
-				]
-			}
-		]
-	},
-	{
-		"academicYear": "2024/5",
-		"faculties": [
-			{
-				"name": "Arts & Humanities",
-				"divisions": [
-					{
-						"routes": [
-							{
-								"code": "UCX12-BUSFMS",
-								"name": "BA (Hons) Film and Media 2024/5 (test)"
-							}
-						],
-						"name": "Communications, Media and Culture"
-					},
-					{
-						"routes": [
-							{
-								"code": "UCX12-HISHER",
-								"name": "BA (Hons) History and Heritage"
-							},
-							{
-								"code": "UHX12-HIT",
-								"name": "BA (Hons) Heritage and Tourism"
-							}
-						],
-						"name": "History, Heritage and Politics"
-					},
-					{
-						"routes": [
-							{
-								"code": "UHX12-BSL",
-								"name": "BA (Hons) Business Law"
-							}
-						],
-						"name": "Law and Philosophy"
-					},
-					{
-						"routes": [
-							{
-								"code": "TXX43-CRW",
-								"name": "MLitt Creative Writing"
-							}
-						],
-						"name": "Literature and Languages"
-					}
-				]
-			},
-			{
-				"name": "Faculty of Social Sciences",
-				"divisions": [
-					{
-						"routes": [
-							{
-								"code": "TXO45-DEM",
-								"name": "MSc Dementia Studies (Online)"
-							}
-						],
-						"name": "Dementia and Ageing"
-					}
-				]
-			}
-		]
-	}
-]));
-
+	fetch(apiUrl)
+		.then( (response) => response.json() )
+		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data)) );
 
 })();
