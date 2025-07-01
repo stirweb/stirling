@@ -97,7 +97,7 @@ stir.templates.course.module = (boilerplates, count, data) => {
 	if (!boilerplates) return 'no data';
 	if (!data || !data.moduleTitle || !data.moduleCode || !data.moduleLevel || !data.moduleCredits || !data.moduleOverview || !data.learningOutcomes) {
 		console.error('[stir.templates.course.module] data error',data);
-		return 'data error';
+		return '<div class=u-my-2><p>Sorry, there was an error fetching the module details. Please try again later.</p></div>';
 	}
 
 	var otherInfo,additionalCosts;
