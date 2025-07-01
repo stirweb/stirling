@@ -1,44 +1,36 @@
 /**
  * 
- * This file will replace JS-COURSE/MODULES.JS
  * 
  */
 
 var stir = stir || {};
-stir.templates = stir.templates || {};
-
-
-stir.templates.course = {
-	link: (text,href) => `<a href="${href}">${text}</a>`,
-	para: content => `<p>${content}</p>`,
-	option: option => `Starting ${option[3]}, ${option[1].toLowerCase()} (${option[4]})`,
-	div: (id,onclick) => {
-		const div = document.createElement('div');
-		div.id = id; div.onclick = onclick;
-		return div;
-	},
-	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,
-
-	offline: `<p class="text-center c-callout">Module information is temporarily unavailable.</p>`,
-
-	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2025. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
-};
-
 
 stir.course = (function() {
 
+	const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
 	const na = {auto: new Function()};
 
 	if(!stir.dpt) return na;
+	if(!stir.akari) return na;
+	if(!stir.templates.course) return na;
 
 	const container = document.getElementById('course-modules-container');
 	const el = document.querySelector("[data-modules-route-code][data-modules-course-type]");
 	if(!container || !el) return na;
 	
-	const routeChooser = stir.templates.course.div('routeBrowser');
+	const routeChooser  = stir.templates.course.div('routeBrowser');
 	const optionChooser = stir.templates.course.div('optionBrowser');
 	const moduleBrowser = stir.templates.course.div('moduleBrowser');
+	const moduleViewer  = stir.templates.course.dialogue('moduleViewer');
+	const moduleInfo    = stir.templates.course.div('moduleInfo');
 	const version = document.querySelector('time[data-sits]');
+	const spinner = new stir.Spinner(moduleViewer);
+	
+	// used to track modal/url changes
+	const status = { 
+		uid: 0,
+		total: 0
+	};
 
 	let initialised = false;
 
@@ -48,38 +40,102 @@ stir.course = (function() {
 		auto: true
 	};
 
-	// initialise any new accords just added to DOM
+	// initialise any accordions newly added to the DOM
 	const reflow = () => {
 		Array.prototype.forEach.call(container.querySelectorAll(".stir-accordion"), function (accordion) {
 			new stir.accord(accordion, true);
 		});
 	};
 
+	const render = data => {
+		// Boilerplate text neccessary for module "page" popup
+		if(!boilerplates) return console.error('Boilerplate text not loaded!');
+
+		spinner.hide();
+		
+		// Render module information HTML:
+		moduleInfo.innerHTML = stir.templates.course.module(boilerplates, status.total, data);
+		
+		// Find and activate any animated bar graphs:
+		stir.templates.course.barcharts( moduleInfo.querySelectorAll(".barchart") )
+	};
+
+	/**
+	 * External "handler" functions that will be called by
+	 * the API wrapper (i.e. DPT, Akari).
+	 */
+
+	// DOM Reset functions
+	const reset = {
+		modules: ()=>moduleBrowser.innerHTML='',
+		module: ()=>moduleInfo.innerHTML='',
+		options: ()=>optionChooser.innerHTML=''
+	};
+
+	// DOM disaplay/callback functions
 	const handle = {
 		routes: frag => routeChooser.append(frag),
 		options: frag => optionChooser.append(frag),
-		modules: frag => {moduleBrowser.append(frag);reflow()},
+		modules: (frag,count) => {
+			status.total = count;
+			moduleBrowser.append(frag);
+			reflow();
+		},
+		module: (id,url) => {
+			reset.module();
+			spinner.show();
+			stir.akari.get.module( id, render );
+			moduleViewer.showModal();
+			if(url) {
+				history.pushState({uid:++status.uid},"",url);
+			}
+		},
 		version: frag => version && frag && (version.textContent = frag)
 	};
-
-	const reset = {
-		modules: ()=>moduleBrowser.innerHTML='',
-		options: ()=>optionChooser.innerHTML=''
-	};
+	/** **/	
 	
-	// Set up the DOM
+	// Set up the DOM:
 	container.insertAdjacentHTML("beforeend",stir.templates.course.disclaimer);
 	container.append( routeChooser, optionChooser, moduleBrowser );
+	document.body.append(moduleViewer);
+	moduleViewer.append(moduleInfo);
 	
-	// Set up data callback/handlers
-	stir.dpt.set.show.routes( handle.routes );
-	stir.dpt.set.show.options( handle.options );
-	stir.dpt.set.show.modules( handle.modules );
-	stir.dpt.set.show.version( handle.version );
-	stir.dpt.set.reset.modules( reset.modules );
-	stir.dpt.set.reset.options( reset.options );
+	// Hook up the data callback handlers:
+	stir.dpt.set.show.routes  ( handle.routes  );
+	stir.dpt.set.show.options ( handle.options );
+	stir.dpt.set.show.modules ( handle.modules );
+	stir.dpt.set.show.module  ( handle.module  );
+	stir.dpt.set.show.version ( handle.version );
+	stir.dpt.set.reset.modules( reset.modules  );
+	stir.dpt.set.reset.module ( reset.module   );
+	stir.dpt.set.reset.options( reset.options  );
 
-	const _auto = () => {
+	window.addEventListener("popstate",e=>{
+		if(e.state && e.state.uid){
+			status.uid = e.state.uid;
+		}
+
+		let params = new URLSearchParams(document.location.search);
+		let modurl = params.has("code") && params.has("session") && params.has("semester") && params.has("occurrence");
+
+		if(modurl) {
+			handle.module(`${params.get("code")}/${params.get("session")}/${params.get("semester")}`,null);
+		} else {
+			if (moduleViewer.open) {
+				status.uid = 0; // reset counter
+				moduleViewer.close();
+			}
+		}
+	});
+	
+	moduleViewer.addEventListener("close", e=>{
+		if(status.uid>0) {
+			history.go(0-status.uid);
+			status.uid = 0; // reset prev/next counter
+		}
+	});
+
+	function _auto() {
 		if(!initialised) {
 			initialised = true;
 			version && stir.dpt.get.version(parameter.level);
@@ -89,7 +145,11 @@ stir.course = (function() {
 				stir.dpt.get.options(parameter.level, parameter.route, parameter.auto);
 			}
 		}
-	};
+	}
+
+	function _init(data) {
+		boilerplates = data;
+	}
 
 	// STIR TABS AWARE
 	//const panel = container.closest && container.closest('[role=tabpanel]');
@@ -104,11 +164,14 @@ stir.course = (function() {
 	// todo: empty the queue?
 
 	return {
-		auto: _auto
+		init: _init,	// get module boilerplate text
+		auto: _auto,	// initialise and begin
 	};
 
 })();
 
+// Get boilerplate text first, then initialise the course page scripts:
+stir.getJSON('https://www.stir.ac.uk/data/modules/boilerplate/', data=>stir.course.init(data));
 
 // TEMPORARY ONLY UNTIL T4 REPUBLISHES THE COURSE PAGES
 // 2024-02-07 r.w.morrison@stir.ac.uk
