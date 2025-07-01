@@ -1,6 +1,5 @@
 /**
  * 
- * This file will replace JS-COURSE/MODULES.JS
  * 
  */
 
@@ -41,7 +40,7 @@ stir.course = (function() {
 		auto: true
 	};
 
-	// initialise any new accords just added to DOM
+	// initialise any accordions newly added to the DOM
 	const reflow = () => {
 		Array.prototype.forEach.call(container.querySelectorAll(".stir-accordion"), function (accordion) {
 			new stir.accord(accordion, true);
@@ -49,23 +48,31 @@ stir.course = (function() {
 	};
 
 	const render = data => {
+		// Boilerplate text neccessary for module "page" popup
 		if(!boilerplates) return console.error('Boilerplate text not loaded!');
+
 		spinner.hide();
 		
 		// Render module information HTML:
 		moduleInfo.innerHTML = stir.templates.course.module(boilerplates, status.total, data);
 		
-		// Find and activate animated bar graphs:
+		// Find and activate any animated bar graphs:
 		stir.templates.course.barcharts( moduleInfo.querySelectorAll(".barchart") )
-		
 	};
 
+	/**
+	 * External "handler" functions that will be called by
+	 * the API wrapper (i.e. DPT, Akari).
+	 */
+
+	// DOM Reset functions
 	const reset = {
 		modules: ()=>moduleBrowser.innerHTML='',
 		module: ()=>moduleInfo.innerHTML='',
 		options: ()=>optionChooser.innerHTML=''
 	};
 
+	// DOM disaplay/callback functions
 	const handle = {
 		routes: frag => routeChooser.append(frag),
 		options: frag => optionChooser.append(frag),
@@ -79,22 +86,21 @@ stir.course = (function() {
 			spinner.show();
 			stir.akari.get.module( id, render );
 			moduleViewer.showModal();
-			//status.moduleViewer = true;
 			if(url) {
 				history.pushState({uid:++status.uid},"",url);
 			}
 		},
 		version: frag => version && frag && (version.textContent = frag)
 	};
+	/** **/	
 	
-	
-	// Set up the DOM
+	// Set up the DOM:
 	container.insertAdjacentHTML("beforeend",stir.templates.course.disclaimer);
 	container.append( routeChooser, optionChooser, moduleBrowser );
 	document.body.append(moduleViewer);
 	moduleViewer.append(moduleInfo);
 	
-	// Set up data callback/handlers
+	// Hook up the data callback handlers:
 	stir.dpt.set.show.routes  ( handle.routes  );
 	stir.dpt.set.show.options ( handle.options );
 	stir.dpt.set.show.modules ( handle.modules );
@@ -125,7 +131,7 @@ stir.course = (function() {
 	moduleViewer.addEventListener("close", e=>{
 		if(status.uid>0) {
 			history.go(0-status.uid);
-			status.uid = 0; // reset counter
+			status.uid = 0; // reset prev/next counter
 		}
 	});
 

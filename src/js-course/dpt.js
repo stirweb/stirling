@@ -1,3 +1,7 @@
+/**
+ * API wrapper for the Degree Programme Tables
+ */
+
 var stir = stir || {};
 
 stir.dpt = (function () {
