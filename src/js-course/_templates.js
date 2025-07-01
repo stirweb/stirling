@@ -211,7 +211,7 @@ stir.templates.course.module = (boilerplates, count, data) => {
 	<div class="grid-container">
 		<div class="grid-x grid-padding-x start">
 			<div class="cell medium-9 bg-grey u-bleed u-p-2">
-				<p>The module information below is for the 2024/5 intake and may be subject to change, including in
+				<p>The module information below is for the 2025/6 intake and may be subject to change, including in
 					response to student feedback and continuous innovation development. See our 
 					<a href="/study/important-information-for-applicants/terms-conditions/2023-24-student-terms-and-conditions/">
 					terms and conditions</a> for more information.</p>
