@@ -64,10 +64,10 @@
   background-color: #fff !important; }
 
 .u-dark-grey {
-  color: #3a3c39 !important; }
+  color: #5f6350 !important; }
 
 .u-bg-dark-grey {
-  background-color: #3a3c39 !important; }
+  background-color: #5f6350 !important; }
 
 .u-heritage-green-a11y {
   color: #006636 !important; }
@@ -979,19 +979,19 @@ a:has(img):hover {
   border-image-source: linear-gradient(#f6f5f4, #f6f5f4); }
 
 .bg-dark-grey {
-  border-image-source: linear-gradient(#3a3c39, #3a3c39); }
+  border-image-source: linear-gradient(#5f6350, #5f6350); }
 
 .u-bg-medium-dark-grey {
   background-color: #aeacac; }
 
 .u-bg-medium-grey {
-  background-color: #d5d4d4; }
+  background-color: #d1d1c9; }
 
 .u-bg-light-medium-grey {
   background-color: #eeeeee; }
 
 .u-bg-light-grey {
-  background-color: #f9f9f9; }
+  background-color: #f1f1ef; }
 
 /*
     Extended palette colours - Text 
@@ -1019,7 +1019,7 @@ a:has(img):hover {
 
 .u-dark-grey,
 .u-grey--dark {
-  color: #3a3c39; }
+  color: #5f6350; }
 
 /* [a11y] darker dark-grey text when on grey background */
 .bg-grey .u-dark-grey,
@@ -1587,7 +1587,7 @@ body > nav > a.u-show-on-focus {
     margin-bottom: 1rem;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #3a3c39;
+    color: #5f6350;
     box-shadow: none;
     border: none; }
   .c-header-search input + button[type="submit"] {
@@ -7020,7 +7020,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
 
 .loader {
   border: 6px solid #f1f1ef;
-  border-top: 6px solid #3a3c39;
+  border-top: 6px solid #5f6350;
   border-radius: 50%;
   width: 50px;
   height: 50px;
