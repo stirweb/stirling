@@ -349,7 +349,7 @@ stir.templates.search = (() => {
 
     clearing: (item) => {
       if (Object.keys && item.metaData && Object.keys(item.metaData).join().indexOf("clearing") >= 0) {
-        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2024: places may be available on this course.</strong></p>`;
+        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p>`;
       }
     },
     combos: (item) => {
