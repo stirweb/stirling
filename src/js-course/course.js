@@ -80,8 +80,8 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
   var widgets = [];
 
   if (debug) {
-    console.info("[Discover Uni] kiscodes:", kiscodes, kiscodes.length);
-    console.info("[Discover Uni] kiswidget:", kiswidget);
+    console.info("[Course] kiscodes:", kiscodes, kiscodes.length);
+    console.info("[Course] kiswidget:", kiswidget);
   }
 
   if (kiswidget && kiscodes) {
@@ -188,6 +188,8 @@ var KISWidgetCaller = function () {
  * Clearing
  */
 (function () {
+  const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
+
   function swapCourseNavForClearingBannerSticky() {
     var clearingBannerTemplate = document.getElementById("clearing-banner-template");
     var courseStickyNav = document.querySelector(".c-course-title-sticky-menu");
@@ -222,14 +224,24 @@ var KISWidgetCaller = function () {
     }
   }
 
+  function activateLiveChat() {
+    window.__lc = window.__lc || {};
+    window.__lc.license = 9913300;
+    window.__lc.integration_name = "manual_channels";
+    window.__lc.product_name = "livechat";
+    ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice));
+  }
+
   if (self.stir && stir.t4Globals && stir.t4Globals.clearing) {
     // If we are in Clearing AND promos may be shown, then swap-out sticky nav:
     if (stir.t4Globals.clearing.open && stir.t4Globals.clearing.showPromos) {
+      debug && console.info("[Course] Clearing is open");
       swapCourseNavForClearingBannerSticky();
       addCoursePageAdvert(document.getElementById("clearing-advert-template"));
       new UoS_StickyWidget(document.querySelector(".u-sticky"));
       relocateCTA(); // During Clearing, shunt normal CTAs to the bottom of the page so they are out of the way.
       unshiftStirTabsOverlap(); // stylistic tab ovelap not compatible with sticky/z-index etc. disable it during clearing.
+      activateLiveChat();
     }
   }
 })();
