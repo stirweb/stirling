@@ -12,6 +12,7 @@
 	const path = '/data/pd-api-dev/';
 	const ppth = 'terminalfour/preview/1/en/35030';
 	const query = 'menu';
+	const spec = "dev"===UoS_env.name?'course.html':'<t4 type="navigation" name="Helper: Path to programme specification" id="5300" />';
 
 	const apiUrl = (()=>{
 		switch (UoS_env.name) {
@@ -63,9 +64,9 @@
 															<caption>${faculty} (${division}) routes for ${year}:</caption>
 															${data.academicYears[year].faculties[faculty].divisions[division].routes.map(route => `
 															<tr><td><small>${route.routeCode}</small></td><td>${route.routeName}</td><td>
-																<a href="/pages/courses/api/course.html?session=${year}&route=${route.routeCode}&semester=AUT">Autumn</a> | 
-																<a href="/pages/courses/api/course.html?session=${year}&route=${route.routeCode}&semester=SPR">Spring</a> | 
-																<a href="/pages/courses/api/course.html?session=${year}&route=${route.routeCode}&semester=SUM">Summer</a>
+																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=AUT" target=_blank>Autumn</a> | 
+																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SPR" target=_blank>Spring</a> | 
+																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SUM" target=_blank>Summer</a>
 															</td></tr>
 														`).join('')}
 														</table>
