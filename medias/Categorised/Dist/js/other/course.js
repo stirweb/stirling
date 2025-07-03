@@ -741,8 +741,8 @@ stir.dpt = (function () {
     PG: "opt=runpgcode&ct=PG",
   };
   const currentVersion = {
-    UG: 436, //362
-    PG: 417  //357
+    UG: "",//436, //362
+    PG: "" //417  //357
   };
 
   const PORTAL = "https://portal.stir.ac.uk";
