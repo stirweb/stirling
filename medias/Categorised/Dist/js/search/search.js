@@ -1101,7 +1101,7 @@ stir.courses = (() => {
   /**
    * C L E A R I N G
    */
-  const CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
+  const CLEARING = true; // set TRUE if Clearing is OPEN; otherwise FALSE
   /*
    **/
 
