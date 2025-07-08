@@ -47,7 +47,8 @@
 	};
 	const categories = {
 		FT: "Full time",
-		PTO: "Part time"
+		PTO: "Part time",
+		SW: "Sandwich"
 	};
 
 	const modules = module => `
