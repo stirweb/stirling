@@ -7427,6 +7427,10 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
         .c-search-results-area aside.search-filters-area .stir-accordion ul li input,
         .c-search-results-area aside.c-search-results-filters .stir-accordion ul li input {
           margin-right: 10px; }
+  .c-search-results-area aside.search-filters-area form[data-filters] [data-facet] [role="region"] ul:empty::after,
+  .c-search-results-area aside.c-search-results-filters form[data-filters] [data-facet] [role="region"] ul:empty::after {
+    content: "No filter options available";
+    font-size: 1rem; }
   .c-search-results-area aside.search-filters-area form[data-filters] label > span:last-of-type,
   .c-search-results-area aside.c-search-results-filters form[data-filters] label > span:last-of-type {
     /* number-of-results label for facets: */
