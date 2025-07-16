@@ -85,3 +85,9 @@ ul .c-link {
 //   position: relative;
 //   right: 10px;
 // }
+
+.c-wysiwyg-content li a,
+.accordion-content li a,
+.tabs-panel li a {
+  border-bottom: 2px solid $heritage-green;
+}

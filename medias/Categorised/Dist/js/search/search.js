@@ -366,7 +366,7 @@ stir.templates.search = (() => {
 
     clearing: (item) => {
       if (Object.keys && item.metaData && Object.keys(item.metaData).join().indexOf("clearing") >= 0) {
-        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2024: places may be available on this course.</strong></p>`;
+        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p>`;
       }
     },
     combos: (item) => {
@@ -550,7 +550,7 @@ stir.templates.search = (() => {
 						</p> -->
 					</div>
 					<div class=c-search-result__image>
-						<img src="https://www.stir.ac.uk${item.metaData.thumbnail}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
+						<img src="${item.metaData.thumbnail}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
 					</div>
 				</div>`;
     },
@@ -1101,7 +1101,7 @@ stir.courses = (() => {
   /**
    * C L E A R I N G
    */
-  const CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
+  const CLEARING = true; // set TRUE if Clearing is OPEN; otherwise FALSE
   /*
    **/
 

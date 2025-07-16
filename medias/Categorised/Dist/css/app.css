@@ -677,19 +677,19 @@ a:has(img):hover {
   border-image-source: linear-gradient(#f6f5f4, #f6f5f4); }
 
 .bg-dark-grey {
-  border-image-source: linear-gradient(#3a3c39, #3a3c39); }
+  border-image-source: linear-gradient(, ); }
 
 .u-bg-medium-dark-grey {
   background-color: #aeacac; }
 
 .u-bg-medium-grey {
-  background-color: #d5d4d4; }
+  background-color: #d1d1c9; }
 
 .u-bg-light-medium-grey {
   background-color: #eeeeee; }
 
 .u-bg-light-grey {
-  background-color: #f9f9f9; }
+  background-color: #f1f1ef; }
 
 /*
     Extended palette colours - Text 
@@ -735,6 +735,9 @@ a:has(img):hover {
 
 .u-energy-turq {
   color: #00a5ac; }
+
+.u-opacity-10 {
+  opacity: 10%; }
 
 .u-opacity-20 {
   opacity: 20%; }
@@ -1736,7 +1739,10 @@ hr {
   border-color: #595858; }
 
 .hr-1 {
-  border-bottom: 1px solid; }
+  border-bottom-width: 1px; }
+
+.hr-2 {
+  border-bottom-width: 2px; }
 
 #cookiebanner {
   display: flex;
@@ -3165,6 +3171,11 @@ Bleed Feature Image
   position: relative;
   border: 0 solid #f6f5f4;
   border-width: 1.125rem 0; }
+  .breadcrumbs svg.home-icon {
+    top: 3px;
+    position: relative;
+    width: 20px;
+    height: 20px; }
   .breadcrumbs .currentsection {
     font-weight: bold; }
   .breadcrumbs li:empty {
@@ -4682,6 +4693,11 @@ ul .c-link {
 
 .u-white--all .c-news-events__title .c-link:hover {
   border-bottom-color: #fff; }
+
+.c-wysiwyg-content li a,
+.accordion-content li a,
+.tabs-panel li a {
+  border-bottom: 2px solid #006938; }
 
 ul.pagination {
   margin: 0;
@@ -7556,6 +7572,10 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
         .c-search-results-area aside.search-filters-area .stir-accordion ul li input,
         .c-search-results-area aside.c-search-results-filters .stir-accordion ul li input {
           margin-right: 10px; }
+  .c-search-results-area aside.search-filters-area form[data-filters] [data-facet] [role="region"] ul:empty::after,
+  .c-search-results-area aside.c-search-results-filters form[data-filters] [data-facet] [role="region"] ul:empty::after {
+    content: "No filter options available";
+    font-size: 1rem; }
   .c-search-results-area aside.search-filters-area form[data-filters] label > span:last-of-type,
   .c-search-results-area aside.c-search-results-filters form[data-filters] label > span:last-of-type {
     /* number-of-results label for facets: */
@@ -8386,7 +8406,8 @@ a[data-mode*="Online"] {
   [data-module-modal] > button {
     position: fixed;
     top: 1rem;
-    right: 2vw; }
+    right: 2vw;
+    z-index: 1; }
   [data-module-modal] > nav {
     position: fixed;
     top: 1rem;
@@ -8985,6 +9006,9 @@ article.c-convo small {
 
 .u-flex1 {
   flex: 1; }
+
+.u-flex1-1 {
+  flex: 1 1; }
 
 .u-grid {
   display: grid; }

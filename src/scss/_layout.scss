@@ -159,7 +159,10 @@ hr {
 }
 
 .hr-1 {
-  border-bottom: 1px solid;
+  border-bottom-width: 1px;
+}
+.hr-2 {
+  border-bottom-width: 2px;
 }
 
 @import "layout/cookies-banner";
