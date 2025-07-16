@@ -42,9 +42,10 @@ $global-lineheight: 1.5;
 
 $grey: #f1f1ef; // before bebebe
 $light-gray: #f1f1ef; // before e6e6e6
+$light-gray-2: #f6f5f4;
 $medium-gray: #d1d1c9; // before cacaca
-$dark-gray: #5f6350; // before 8a8a8a
-$dark-grey: #5f6350; // before 616361
+$dark-gray: #3a3c39; // before 8a8a8a
+$dark-grey: #3a3c39; // before 616361
 
 $black: #000;
 $white: #fff; // before fefefe;
@@ -65,7 +66,7 @@ $uos-web-supplementary: (
   black: $black,
   white: $white,
   dark-grey: $dark-grey,
-  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  heritage-green-a11y: #006636 //Added for WCAG-AAA contrast (against white bg),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 );
 
 $brand-palette: (
@@ -111,10 +112,11 @@ $brand-palette: (
 
   // Neutral
   neutral-tint-7: #f1f1ef,
+  neutral-tint: #d1d1c9,
   neutral-light: #d1d1c9,
   neutral-medium: #97956d,
-  neutral-medium-dark: #5f6350,
-  neutral-dark: #3a3a26,
+  neutral-dark: #5f6350,
+  neutral-darker: #3a3a26,
 
   // Teal
   teal-tint-7: #edf7f8,
@@ -167,6 +169,9 @@ $greens: (
   "light": map-get($brand-palette, energy-green),
   "medium": map-get($brand-palette, heritage-green),
   "dark": map-get($brand-palette, green-dark),
+  "hook": map-get($brand-palette, heritage-green),
+  "darkbg": map-get($brand-palette, heritage-green),
+  "button": map-get($brand-palette, heritage-green),
 );
 
 $pinks: (
@@ -176,6 +181,9 @@ $pinks: (
   "light": map-get($brand-palette, energy-pink),
   "medium": map-get($brand-palette, pink-medium),
   "dark": map-get($brand-palette, pink-dark),
+  "hook": map-get($brand-palette, pink-medium),
+  "darkbg": map-get($brand-palette, pink-dark),
+  "button": map-get($brand-palette, pink-medium),
 );
 
 $blues: (
@@ -184,6 +192,9 @@ $blues: (
   "light": map-get($brand-palette, energy-light-blue),
   "medium": map-get($brand-palette, energy-blue),
   "dark": map-get($brand-palette, blue-dark),
+  "hook": map-get($brand-palette, energy-blue),
+  "darkbg": map-get($brand-palette, blue-dark),
+  "button": map-get($brand-palette, energy-blue),
 );
 
 $yellows: (
@@ -193,6 +204,9 @@ $yellows: (
   "light": map-get($brand-palette, energy-yellow),
   "medium": map-get($brand-palette, heritage-yellow),
   "dark": map-get($brand-palette, yellow-dark),
+  "hook": map-get($brand-palette, yellow-dark),
+  "darkbg": map-get($brand-palette, yellow-dark),
+  "button": map-get($brand-palette, heritage-yellow),
 );
 
 $oranges: (
@@ -202,6 +216,9 @@ $oranges: (
   "light": map-get($brand-palette, energy-orange),
   "medium": map-get($brand-palette, heritage-orange),
   "dark": map-get($brand-palette, orange-dark),
+  "hook": map-get($brand-palette, heritage-orange),
+  "darkbg": map-get($brand-palette, orange-dark),
+  "button": map-get($brand-palette, heritage-orange),
 );
 
 $teals: (
@@ -210,6 +227,11 @@ $teals: (
   "light": map-get($brand-palette, energy-teal),
   "medium": map-get($brand-palette, heritage-teal),
   "dark": map-get($brand-palette, teal-dark),
+  "hook": map-get($brand-palette, energy-teal),
+  "darkbg": map-get($brand-palette, heritage-teal),
+  "button": map-get($brand-palette, energy-teal),
+  "safe": #037a80,
+  // Specific colour for teal links (a11y version)
 );
 
 $purples: (
@@ -218,6 +240,31 @@ $purples: (
   "light": map-get($brand-palette, energy-purple),
   "medium": map-get($brand-palette, purple-medium),
   "dark": map-get($brand-palette, purple-dark),
+  "hook": map-get($brand-palette, purple-medium),
+  "button": map-get($brand-palette, energy-purple),
+  "darkbg": map-get($brand-palette, purple-dark),
+);
+
+$neutrals: (
+  "tint-7": map-get($brand-palette, neutral-tint-7),
+  "tint": map-get($brand-palette, neutral-tint),
+  "light": map-get($brand-palette, neutral-light),
+  "medium": map-get($brand-palette, neutral-medium),
+  "dark": map-get($brand-palette, neutral-dark),
+  "hook": map-get($brand-palette, neutral-light),
+  "button": map-get($brand-palette, neutral-medium),
+  "darkbg": map-get($brand-palette, neutral-dark),
+);
+
+$neutral-green: (
+  "tint-7": map-get($brand-palette, neutral-tint-7),
+  "tint": map-get($brand-palette, neutral-tint),
+  "light": map-get($brand-palette, neutral-light),
+  "medium": map-get($brand-palette, neutral-medium),
+  "dark": map-get($brand-palette, neutral-dark),
+  "hook": map-get($brand-palette, heritage-green),
+  "button": map-get($brand-palette, heritage-green),
+  "darkbg": map-get($brand-palette, neutral-dark),
 );
 
 $uos-colour-group-palette: (
@@ -228,6 +275,8 @@ $uos-colour-group-palette: (
   oranges: $oranges,
   teals: $teals,
   purples: $purples,
+  neutrals: $neutrals,
+  neutral-green: $neutral-green,
 );
 
 // @debug map-get($purples, "medium");
@@ -238,8 +287,8 @@ $uos-colour-group-palette: (
 
 /*
   Button Palette
-*/
 
+*/
 $uos-button-palette: (
   primary: map-get($foundation-palette, primary),
   secondary: map-get($foundation-palette, secondary),
@@ -282,10 +331,8 @@ $uos-button-palette: (
     $heritage-berry: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%),
     $energy-purple: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%),
     $heritage-purple: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%),
-    // Blue dark Purple dark etc for tinted buttons
-    // #3f0066: invert(100%) brightness(0) saturate(100%) invert(4%) sepia(96%) saturate(7409%) hue-rotate(278deg) brightness(92%) contrast(107%),
-    // #511535: invert(100%) brightness(0) saturate(100%) invert(9%) sepia(27%) saturate(5627%) hue-rotate(305deg) brightness(101%) contrast(93%),
-    //#7c184f: invert(100%) brightness(0) saturate(100%) invert(14%) sepia(49%) saturate(4147%) hue-rotate(308deg) brightness(89%) contrast(93%),
+    #d9541a: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%),
+    #edab00: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%),
     #7b5c18: invert(100%) brightness(0) saturate(100%) invert(31%) sepia(58%) saturate(639%) hue-rotate(3deg) brightness(98%) contrast(85%),
     #122c54: invert(100%) brightness(0) saturate(100%) invert(10%) sepia(39%) saturate(3473%) hue-rotate(204deg) brightness(102%) contrast(91%),
   );

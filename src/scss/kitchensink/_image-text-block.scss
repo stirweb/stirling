@@ -118,45 +118,53 @@ updated Aug 2022 for clearing homepage banner
  * Date: 2023-05-12
  **/
 
-.c-promo-strip {
-  display: grid;
-  padding: 0;
-  grid-template-rows: 2rem auto 2rem;
-  grid-template-columns: 3rem 1fr 1fr 1fr 3rem;
-}
-
-.c-promo-strip > img,
-.c-promo-strip > picture {
-  grid-column: 1/-1;
-  grid-row: 1/-1;
-}
-
-.c-promo-strip img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-
-.c-promo-strip > div {
-  background-color: #f5f5f5;
-  grid-column: 2/-2;
-  grid-row: 2/-2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .c-promo-strip > div > h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
 }
 
 /* Medium up */
 @media screen and (min-width: 640px) {
+  .c-promo-strip {
+    display: grid;
+    padding: 0;
+    grid-template-rows: 2rem auto 2rem;
+    grid-template-columns: 3rem 1fr 1fr 1fr 3rem;
+  }
+
+  .c-promo-strip > img,
+  .c-promo-strip > picture {
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+  }
+
+  .c-promo-strip > div {
+    background-color: #f5f5f5;
+    grid-column: 2/-2;
+    grid-row: 2/-2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .c-promo-strip > .u-hook-tr > ::before {
+    top: 0;
+  }
+
+  .c-promo-strip > .u-hook-bl > ::before {
+    bottom: 0;
+  }
+
+  .c-promo-strip img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
   .c-promo-strip > img,
   .c-promo-strip > picture {
     grid-row: 2;
-    max-height: 20rem;
+    max-height: 25rem;
   }
   .c-promo-strip > div {
     grid-column: 2 / span 1;

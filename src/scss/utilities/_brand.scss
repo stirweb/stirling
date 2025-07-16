@@ -1,38 +1,21 @@
 /*
-  BRAND
+
+  BRAND STYLES
   --- 
 
-  Also
+/*  
 
-  button.no-arrow
-
-*/
-
-.u-arrow:after {
-  content: "\e97b";
-  font-family: "uos";
-  margin: 0 0 0 10px;
-  position: relative;
-}
-
-.u-header-line::after {
-  content: "";
-  background-color: $energy-green;
-  bottom: -20px;
-  left: 0;
-  position: absolute;
-  width: 60px;
-  height: 8px;
-}
-
-/* 
-  Brand border lines 
-*/
-
-/* 
+  BRAND BORDERS
+  ---
+ 
   Used on promo boxes
   in conjunction with u-relative u-overflow-hidden on the parent
+
 */
+
+:root {
+  --border-thickness: 3px;
+}
 
 .u-energy-line-bottom-float:after {
   content: "";
@@ -56,7 +39,7 @@
 */
 
 .u-white-line-top {
-  border-top: 3px solid #fff;
+  border-top: var(--border-thickness) solid #fff;
 }
 
 /* 
@@ -65,34 +48,38 @@
 
 .u-energy-line-top,
 .u-green-line-top {
-  border-top: 3px solid $energy-green;
+  border-top: var(--border-thickness) solid $energy-green;
 }
 
 .u-energy-line-bottom {
-  border-bottom: 3px solid $energy-green;
+  border-bottom: var(--border-thickness) solid $energy-green;
 }
 
 .u-energy-line-left {
-  border-left: 3px solid $energy-green;
+  border-left: var(--border-thickness) solid $energy-green;
 }
 
 /* 
   Heritage green
 */
 
+.u-heritage-line {
+  border: var(--border-thickness) solid map-get($greens, "medium") !important;
+}
+
 .u-heritage-line-top,
 .u-heritage-green-line-top {
-  border-top: 3px solid $heritage-green;
+  border-top: var(--border-thickness) solid map-get($greens, "medium");
 }
 
 .u-heritage-line-bottom,
 .u-heritage-green-line-bottom {
-  border-bottom: 3px solid $heritage-green;
+  border-bottom: var(--border-thickness) solid map-get($greens, "medium");
 }
 
 .u-heritage-line-left,
 .u-heritage-green-line-left {
-  border-left: 3px solid $heritage-green;
+  border-left: var(--border-thickness) solid map-get($greens, "medium");
 }
 
 /* 
@@ -100,15 +87,15 @@
 */
 
 .u-energy-pink-line-top {
-  border-top: 3px solid $energy-pink;
+  border-top: var(--border-thickness) solid $energy-pink;
 }
 
 .u-energy-pink-line-bottom {
-  border-bottom: 3px solid $energy-pink;
+  border-bottom: var(--border-thickness) solid $energy-pink;
 }
 
 .u-energy-pink-line-left {
-  border-left: 3px solid $energy-pink;
+  border-left: var(--border-thickness) solid $energy-pink;
 }
 
 /* 
@@ -116,15 +103,15 @@
 */
 
 .u-energy-turq-line-top {
-  border-top: 3px solid $energy-turq;
+  border-top: var(--border-thickness) solid $energy-turq;
 }
 
 // .u-energy-turq-line-bottom {
-//   border-bottom: 3px solid $energy-turq;
+//   border-bottom: var(--border-thickness) solid $energy-turq;
 // }
 
 .u-energy-turq-line-left {
-  border-left: 3px solid $energy-turq;
+  border-left: var(--border-thickness) solid $energy-turq;
 }
 
 /* 
@@ -132,15 +119,15 @@
 */
 
 .u-energy-purple-line-top {
-  border-top: 3px solid $energy-purple;
+  border-top: var(--border-thickness) solid $energy-purple;
 }
 
 // .u-energy-purple-line-bottom {
-//   border-bottom: 3px solid $energy-purple;
+//   border-bottom: var(--border-thickness) solid $energy-purple;
 // }
 
 .u-energy-purple-line-left {
-  border-left: 3px solid $energy-purple;
+  border-left: var(--border-thickness) solid $energy-purple;
 }
 
 /* 
@@ -148,7 +135,7 @@
 */
 
 .u-heritage-purple-line-left {
-  border-left: 3px solid $heritage-purple;
+  border-left: var(--border-thickness) solid $heritage-purple;
 }
 
 /* 
@@ -156,15 +143,15 @@
 */
 
 .u-heritage-berry-line-top {
-  border-top: 3px solid $heritage-berry;
+  border-top: var(--border-thickness) solid $heritage-berry;
 }
 
 // .u-heritage-berry-line-bottom {
-//   border-bottom: 3px solid $energy-berry;
+//   border-bottom: var(--border-thickness) solid $energy-berry;
 // }
 
 .u-heritage-berry-line-left {
-  border-left: 3px solid $heritage-berry;
+  border-left: var(--border-thickness) solid $heritage-berry;
 }
 
 /* 
@@ -172,15 +159,15 @@
 */
 
 .u-grey-line-bottom {
-  border-bottom: 3px solid #f6f5f4;
+  border-bottom: var(--border-thickness) solid $light-gray-2;
 }
 
 .u-grey-line-left {
-  border-left: 1px solid #f6f5f4;
+  border-left: 1px solid $light-gray-2;
 }
 
 .u-medium-grey-line {
-  border: 1px solid #d5d4d4;
+  border: 1px solid $medium-gray;
 }
 
 /*
@@ -255,11 +242,11 @@
 */
 
 .u-icon {
-  color: $heritage-green;
+  color: map-get($greens, "medium");
   margin: 0;
 
   &::before {
-    color: $heritage-green;
+    color: map-get($greens, "medium");
   }
 }
 
@@ -299,7 +286,7 @@ svg.u-icon {
   position: absolute;
   left: -32px;
   color: #fff;
-  background-color: $heritage-green;
+  background-color: map-get($greens, "medium");
   top: 0;
   padding: 0.3rem 0;
   text-align: center;
@@ -411,4 +398,15 @@ svg.u-icon {
 .hook-energy-green::after,
 .hook-energy-green::before {
   background-color: $energy-green;
+}
+
+@include breakpoint(small down) {
+  .remove-hook-for-small > * {
+    &::after {
+      content: none;
+    }
+    &::before {
+      content: none;
+    }
+  }
 }

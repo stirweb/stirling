@@ -33,6 +33,7 @@ stir.dpt = (function () {
     UG: "",//436, //362
     PG: "" //417  //357
   };
+  debug && console.info(`[DPT] using versions `, currentVersion);
 
   const PORTAL = "https://portal.stir.ac.uk";
 
@@ -104,7 +105,7 @@ stir.dpt = (function () {
 	  return availability(data) ? link : fallback;
 	
     // LINK TO OLD DEGREE PROGRAM TABLES
-    //return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
+    // return `${stir.templates.course.link(data.modName,`${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`)}`;
   };
 
   const template = {
