@@ -9139,6 +9139,13 @@ article.c-convo small {
 .u-top-0 {
   top: 0; }
 
+/* hooks uses these */
+.u-top-2 {
+  top: 2px; }
+
+.u-bottom-2 {
+  bottom: 2px; }
+
 .u-top-16 {
   top: 16px; }
 
@@ -10423,7 +10430,8 @@ svg.u-icon {
   display: block;
   height: var(--hook-border-thickness);
   background-origin: border-box;
-  background-clip: border-box; }
+  background-clip: border-box;
+  position: relative; }
 
 @media screen and (min-width: 40em) {
   .u-border-bleed {
