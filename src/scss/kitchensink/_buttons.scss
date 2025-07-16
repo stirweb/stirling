@@ -3,24 +3,8 @@
     Also .expanded
 */
 
-/* 
-  Function to map icon filter values based on color
-*/
-@function icon-filter($color) {
-  // Map of colors to their filter values. Inverting from white
-  // https://angel-rs.github.io/css-color-filter-generator/
-  $filter-map: (
-    $heritage-green: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%),
-    $energy-green: invert(100%) brightness(0) saturate(100%) invert(64%) sepia(19%) saturate(1648%) hue-rotate(45deg) brightness(99%) contrast(88%),
-    $energy-pink: invert(100%) brightness(0) saturate(100%) invert(12%) sepia(75%) saturate(7483%) hue-rotate(326deg) brightness(90%) contrast(103%),
-    $energy-turq: invert(100%) brightness(0) saturate(100%) invert(47%) sepia(25%) saturate(7128%) hue-rotate(153deg) brightness(96%) contrast(101%),
-    $heritage-berry: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%),
-    $energy-purple: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%),
-    $heritage-purple: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(26%) saturate(7255%) hue-rotate(258deg) brightness(69%) contrast(128%),
-  );
-
-  // Return the filter value for the given color or a default
-  @return map-get($filter-map, $color) or brightness(0);
+:root {
+  --button-border-width: 4px;
 }
 
 /* 
@@ -47,7 +31,7 @@ button:focus {
   background-color: $heritage-green;
   color: $white;
   text-decoration: none;
-  border: 2px solid transparent;
+  border: var(--button-border-width) solid transparent;
   cursor: pointer;
   display: inline-block;
   font-family: $body-font-family !important;
@@ -60,12 +44,11 @@ button:focus {
   margin-bottom: 1rem;
   min-width: 14rem;
 
-  border: 2px solid transparent;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 
   &:hover {
     background-color: $white;
-    border: 2px solid $heritage-green;
+    border: var(--button-border-width) solid $heritage-green;
     color: $heritage-green;
   }
 
@@ -150,6 +133,7 @@ button:focus {
         Button Colors - this will handle each color variation (e.g. heritage-green, enery-pink, ...)
   */
 
+  // Deprecated - for Brand 2025 its defined in colours.scss
   @each $name, $color in $button-palette {
     &.#{$name} {
       background-color: $color;
@@ -168,49 +152,49 @@ button:focus {
     }
   }
 
-  &.hollow {
-    background: transparent;
-    color: $heritage-green;
-    border: 1px solid $heritage-green;
+  // &.hollow {
+  //   background: transparent;
+  //   color: $heritage-green;
+  //   border: var(--button-border-width) solid $heritage-green;
 
-    &::after {
-      filter: icon-filter($heritage-green);
-    }
+  //   &::after {
+  //     filter: icon-filter($heritage-green);
+  //   }
 
-    &:hover {
-      background-color: transparent;
-      border: 1px solid tint($heritage-green, 50%);
-    }
+  //   &:hover {
+  //     background-color: transparent;
+  //     border: var(--button-border-width) solid tint($heritage-green, 50%);
+  //   }
 
-    &:focus {
-      background-color: transparent;
-      color: $heritage-green;
-    }
-  }
+  //   &:focus {
+  //     background-color: transparent;
+  //     color: $heritage-green;
+  //   }
+  // }
 
-  @each $name, $color in $button-palette {
-    &.#{$name} {
-      &.hollow {
-        background: transparent;
-        color: $color;
-        border: 1px solid $color;
+  // @each $name, $color in $button-palette {
+  //   &.#{$name} {
+  //     &.hollow {
+  //       background: transparent;
+  //       color: $color;
+  //       border: var(--button-border-width) solid $color;
 
-        &::after {
-          filter: icon-filter($color);
-        }
+  //       &::after {
+  //         filter: icon-filter($color);
+  //       }
 
-        &:hover {
-          background-color: transparent;
-          border: 1px solid tint($color, 50%);
-        }
+  //       &:hover {
+  //         background-color: transparent;
+  //         border: var(--button-border-width) solid tint($color, 50%);
+  //       }
 
-        &:focus {
-          background-color: transparent;
-          color: $color;
-        }
-      }
-    }
-  }
+  //       &:focus {
+  //         background-color: transparent;
+  //         color: $color;
+  //       }
+  //     }
+  //   }
+  // }
 
   &.clear {
     border-color: transparent;
@@ -283,9 +267,10 @@ button:focus {
 }
 
 // outline ghost style
+/*
 .button.outine-button {
   background: transparent;
-  border: 2px solid $heritage-green;
+  border: var(--button-border-width) solid $heritage-green;
   color: $heritage-green;
 
   &::after {
@@ -294,14 +279,14 @@ button:focus {
 
   &:hover {
     background-color: transparent;
-    border: 2px solid tint($heritage-green, 50%);
+    border: var(--button-border-width) solid tint($heritage-green, 50%);
   }
 
   &:focus {
     background-color: transparent;
     color: $heritage-green;
   }
-}
+}*/
 
 /* 
     Overides for white--all
@@ -313,7 +298,7 @@ button:focus {
   border-color: #fff;
 
   &.hollow {
-    border-width: 1px;
+    border-width: var(--button-border-width);
   }
 
   &:hover {
@@ -345,7 +330,7 @@ button:focus {
 }
 
 .u-white--all button:focus {
-  outline: 1px solid $white;
+  outline: 2px solid $white;
 }
 
 /* 

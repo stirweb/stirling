@@ -751,17 +751,17 @@ a[data-mode*="Online"] {
     top: 1rem;
     left: 1vw;
     z-index: 1;
-    background: rgba(255,255,255,.85);
-    padding: .5rem 0 .5rem 1rem;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 0.5rem 0 0.5rem 1rem;
   }
-  > button, > nav button {
+  > button,
+  > nav button {
     padding: 1rem;
     background: $heritage-green;
     color: $white;
     cursor: pointer;
     margin-right: 1rem;
   }
-
 }
 
 /* M E D I A   Q U E R I E S */
@@ -794,7 +794,7 @@ a[data-mode*="Online"] {
     background-color: $heritage-green; /* fallback to solid green */
   }
   .c-course-datasheet[data-accreditation] {
-    background: linear-gradient(90deg, #006938 50%, #f6f5f4 50%); /* hard-stop gradient to give the full-width two-colour background */
+    background: linear-gradient(90deg, map-get($greens, "medium") 50%, map-get($greens, "tint-7") 50%); /* hard-stop gradient to give the full-width two-colour background */
   }
   .c-course-datasheet .c-icon-block {
     margin-left: 1rem;
