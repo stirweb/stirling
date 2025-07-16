@@ -900,7 +900,7 @@ a:has(img):hover {
 .yellows h4,
 .yellows svg,
 .yellows .u-font-icon {
-  color: #edab00; }
+  color: #7b5c18; }
 
 .yellows a:not(.c-link) {
   border-bottom: 2px solid #f4c400; }
@@ -10295,13 +10295,13 @@ svg.u-icon {
   border-color: #2c498a; }
 
 .u-hook.yellows > *::after {
-  border-color: #edab00; }
+  border-color: #7b5c18; }
 
 .u-hook.yellows > *::before {
-  border-color: #edab00; }
+  border-color: #7b5c18; }
 
 .u-hook.yellows.u-hook-full-bleed::before {
-  border-color: #edab00; }
+  border-color: #7b5c18; }
 
 .u-hook.oranges > *::after {
   border-color: #d9541a; }
@@ -10418,10 +10418,10 @@ svg.u-icon {
   background-image: linear-gradient(90deg, transparent 70%, #2c498a 30%); }
 
 .u-border-bleed-left.yellows {
-  background-image: linear-gradient(90deg, #edab00 30%, transparent 70%); }
+  background-image: linear-gradient(90deg, #7b5c18 30%, transparent 70%); }
 
 .u-border-bleed-right.yellows {
-  background-image: linear-gradient(90deg, transparent 70%, #edab00 30%); }
+  background-image: linear-gradient(90deg, transparent 70%, #7b5c18 30%); }
 
 .u-border-bleed-left.oranges {
   background-image: linear-gradient(90deg, #d9541a 30%, transparent 70%); }

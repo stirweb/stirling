@@ -443,6 +443,10 @@
         <div class="c-wrapper grid-container grid-x u-bleed u-bg-grey u-bleed bg-grey u-padding-bottom"
             data-ct="wrapper">
 
+            <div>
+                <h2>hello</h2>
+            </div>
+
             <!-- Block: Text with image aside -->
             <div class="cell c-half-n-half u-relative purples" data-name="Which research degree is for me?">
                 <div class="c-half-n-half__image u-absolute-large-up u-top-0 u-hook u-hook-tr purples "
@@ -522,11 +526,21 @@
             </div>
         </div>
 
-
+        <style>
+            .c-half-n-half:nth-last-of-type(odd) {
+                outline: 2px solid red;
+            }
+        </style>
 
         <!-- Half n half 2025 -->
 
         <div class="grid-x grid-container ">
+
+            <div>
+                <h2>hello</h2>
+                <h3>hello</h3>
+            </div>
+
             <div class="cell c-half-n-half u-relative pinks" data-name="Which research degree is for me?">
 
                 <div class="c-half-n-half__image u-absolute-large-up u-top-0 u-hook u-hook-tr pinks "
@@ -591,7 +605,7 @@
 
         <script>
             (function () {
-                document.querySelectorAll('.c-half-n-half:nth-child(even)').forEach(elem => {
+                document.querySelectorAll('.c-half-n-half:nth-of-type(even)').forEach(elem => {
                     const e = elem.querySelector('.u-hook');
                     e.classList.add('u-hook-bl');
                     e.classList.remove('u-hook-tr');
