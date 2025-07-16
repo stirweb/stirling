@@ -13,6 +13,7 @@
   --gutter-offset-large: -50px;
   --hook-height: 80px;
   --hook-height-medium: 100px;
+  --hook-offset: 2px;
 }
 
 .u-hook {
@@ -38,11 +39,12 @@
   content: "";
   position: absolute;
   width: 50vw;
+  z-index: 3;
 }
 
 // Top Right positioning
 .u-hook-tr > *::before {
-  top: calc(0px - var(--hook-border-thickness));
+  top: calc(var(--hook-offset) - var(--hook-border-thickness)); // changed
   border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
   border-right: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
@@ -50,14 +52,14 @@
 // Top Right full bleed positiong
 .u-hook-tr.u-hook-full-bleed::before {
   border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
-  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
-  top: calc(0px - var(--hook-border-thickness));
+  //border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
+  top: calc(var(--hook-offset) - var(--hook-border-thickness)); // changed
   left: 0;
 }
 
 // Bottom left positioning
 .u-hook-bl > *::before {
-  bottom: calc(0px - var(--hook-border-thickness));
+  bottom: calc(var(--hook-offset) - var(--hook-border-thickness));
   border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
   border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
@@ -65,8 +67,8 @@
 // Bottom left full bleed positiong
 .u-hook-bl.u-hook-full-bleed::before {
   border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
-  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
-  bottom: calc(0px - var(--hook-border-thickness));
+  //border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
+  bottom: calc(var(--hook-offset) - var(--hook-border-thickness)); // changed
   right: 0;
 }
 
@@ -105,7 +107,7 @@
 // Media queries for responsive adjustments - Medium up
 @include breakpoint(medium up) {
   // Define common variables inside the breakpoint
-  $neg-border-medium: calc(0px - var(--hook-border-thickness-medium));
+  $neg-border-medium: calc(var(--hook-offset) - var(--hook-border-thickness-medium));
 
   // Hook height adjustments
   .u-hook > *::before,
