@@ -1335,7 +1335,7 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .greens.dark .u-text-coloured {
-  color: #9fcc69; }
+  color: #edf4f1; }
 
 .pinks.c-wrapper-2025.dark {
   background-color: #511535; }
@@ -1357,7 +1357,7 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
 
 .pinks.dark .u-text-coloured {
-  color: #ef4c95; }
+  color: #f6eff3; }
 
 .blues.c-wrapper-2025.dark {
   background-color: #122c54; }
@@ -1379,7 +1379,7 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .blues.dark .u-text-coloured {
-  color: #77a4da; }
+  color: #f0f2f9; }
 
 .yellows.c-wrapper-2025.dark {
   background-color: #7b5c18; }
@@ -1401,7 +1401,7 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
 
 .yellows.dark .u-text-coloured {
-  color: #f7d64c; }
+  color: #fdfbef; }
 
 .oranges.c-wrapper-2025.dark {
   background-color: #852903; }
@@ -1423,7 +1423,7 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
 
 .oranges.dark .u-text-coloured {
-  color: #ff994c; }
+  color: #fef6f0; }
 
 .teals.c-wrapper-2025.dark {
   background-color: #005e63; }
@@ -1445,7 +1445,7 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .teals.dark .u-text-coloured {
-  color: #4cacb5; }
+  color: #edf7f8; }
 
 .purples.c-wrapper-2025.dark {
   background-color: #3f0066; }
@@ -1467,7 +1467,7 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
 
 .purples.dark .u-text-coloured {
-  color: #b186d7; }
+  color: #f4f0f7; }
 
 .neutrals.c-wrapper-2025.dark {
   background-color: #5f6350; }
@@ -1489,7 +1489,7 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .neutrals.dark .u-text-coloured {
-  color: #d1d1c9; }
+  color: #f1f1ef; }
 
 .neutral-green.c-wrapper-2025.dark {
   background-color: #5f6350; }
@@ -1511,7 +1511,7 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
 
 .neutral-green.dark .u-text-coloured {
-  color: #d1d1c9; }
+  color: #f1f1ef; }
 
 /**
  * Because false isn’t a valid value for z-index, we don’t want it in our compiled

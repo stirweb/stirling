@@ -595,7 +595,7 @@ a:has(img):hover {
       }
 
       .u-text-coloured {
-        color: map-get($color, "tint");
+        color: map-get($color, "tint-7");
       }
     }
   }
