@@ -58,11 +58,17 @@
 .u-bg-black {
   background-color: #000 !important; }
 
+.bg-black {
+  border-image-source: linear-gradient(#000, #000); }
+
 .u-white {
   color: #fff !important; }
 
 .u-bg-white {
   background-color: #fff !important; }
+
+.bg-white {
+  border-image-source: linear-gradient(#fff, #fff); }
 
 .u-dark-grey {
   color: #3a3c39 !important; }
@@ -70,11 +76,17 @@
 .u-bg-dark-grey {
   background-color: #3a3c39 !important; }
 
+.bg-dark-grey {
+  border-image-source: linear-gradient(#3a3c39, #3a3c39); }
+
 .u-heritage-green-a11y {
   color: #006636 !important; }
 
 .u-bg-heritage-green-a11y {
   background-color: #006636 !important; }
+
+.bg-heritage-green-a11y {
+  border-image-source: linear-gradient(#006636, #006636); }
 
 /*
    University of Stirling brand palette colours
