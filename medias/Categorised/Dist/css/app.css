@@ -4361,10 +4361,8 @@ progress::-moz-progress-bar {
     font-size: 1.1875rem;
     /* 19px */ }
   .c-infographic.c-infographic-compact .c-infographic__header {
-    color: #005e63;
     margin: 0 0 8px 0; }
   .c-infographic.c-infographic-compact .c-infographic__line1 {
-    color: #3a3c39;
     margin: 0 0 15px 0; }
   .c-infographic.u-padding-y {
     padding-top: 1rem;
