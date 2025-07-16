@@ -65,6 +65,9 @@ $variations: (30, 50, 70);
   .u-bg-#{$name} {
     background-color: $hex !important;
   }
+  .bg-#{$name} {
+    border-image-source: linear-gradient($hex, $hex);
+  }
 }
 
 /*

@@ -172,7 +172,7 @@ stir.search = () => {
     courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
     clearing: CLEARING ? ["clearing"] : [],
     scholarships: ["value", "status", "number"],
-    news: ["c", "d", "h1", "image", "imagealt", "tags", "tag", "thumbnail"],
+    news: ["abstract", "c", "d", "h1", "image", "imagealt", "tags", "tag", "thumbnail"],
   };
 
   //console.info("Clearing is " + (CLEARING ? "open" : "closed"));
