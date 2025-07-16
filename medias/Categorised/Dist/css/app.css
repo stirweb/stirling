@@ -809,6 +809,9 @@ a:has(img):hover {
 .greens .c-link::before {
   background-color: #76b72a; }
 
+.greens .u-text-coloured {
+  color: #006938; }
+
 .pinks a,
 .pinks h2,
 .pinks h3,
@@ -858,6 +861,9 @@ a:has(img):hover {
 
 .pinks .c-link::before {
   background-color: #e80068; }
+
+.pinks .u-text-coloured {
+  color: #7c184f; }
 
 .blues a,
 .blues h2,
@@ -909,6 +915,9 @@ a:has(img):hover {
 .blues .c-link::before {
   background-color: #77a4da; }
 
+.blues .u-text-coloured {
+  color: #2c498a; }
+
 .yellows a,
 .yellows h2,
 .yellows h3,
@@ -958,6 +967,9 @@ a:has(img):hover {
 
 .yellows .c-link::before {
   background-color: #f4c400; }
+
+.yellows .u-text-coloured {
+  color: #7b5c18; }
 
 .oranges a,
 .oranges h2,
@@ -1009,6 +1021,9 @@ a:has(img):hover {
 .oranges .c-link::before {
   background-color: #ff6d00; }
 
+.oranges .u-text-coloured {
+  color: #d9541a; }
+
 .teals a,
 .teals h2,
 .teals h3,
@@ -1058,6 +1073,9 @@ a:has(img):hover {
 
 .teals .c-link::before {
   background-color: #008996; }
+
+.teals .u-text-coloured {
+  color: #008996; }
 
 .purples a,
 .purples h2,
@@ -1109,6 +1127,9 @@ a:has(img):hover {
 .purples .c-link::before {
   background-color: #592c82; }
 
+.purples .u-text-coloured {
+  color: #592c82; }
+
 .neutrals a,
 .neutrals h2,
 .neutrals h3,
@@ -1159,6 +1180,9 @@ a:has(img):hover {
 .neutrals .c-link::before {
   background-color: #d1d1c9; }
 
+.neutrals .u-text-coloured {
+  color: #d1d1c9; }
+
 .neutral-green a,
 .neutral-green h2,
 .neutral-green h3,
@@ -1208,6 +1232,9 @@ a:has(img):hover {
 
 .neutral-green .c-link::before {
   background-color: #d1d1c9; }
+
+.neutral-green .u-text-coloured {
+  color: #006938; }
 
 .teals a {
   color: #037a80; }
@@ -4361,10 +4388,8 @@ progress::-moz-progress-bar {
     font-size: 1.1875rem;
     /* 19px */ }
   .c-infographic.c-infographic-compact .c-infographic__header {
-    color: #005e63;
     margin: 0 0 8px 0; }
   .c-infographic.c-infographic-compact .c-infographic__line1 {
-    color: #3a3c39;
     margin: 0 0 15px 0; }
   .c-infographic.u-padding-y {
     padding-top: 1rem;

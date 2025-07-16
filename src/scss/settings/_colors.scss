@@ -438,6 +438,10 @@ a:has(img):hover {
     .c-link::before {
       background-color: (map-get($color, "light"));
     }
+
+    .u-text-coloured {
+      color: map-get($color, "hook");
+    }
   }
 }
 
