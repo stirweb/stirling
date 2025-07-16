@@ -107,7 +107,7 @@
 // Media queries for responsive adjustments - Medium up
 @include breakpoint(medium up) {
   // Define common variables inside the breakpoint
-  $neg-border-medium: calc(0px - var(--hook-border-thickness-medium));
+  $neg-border-medium: calc(var(--hook-offset) - var(--hook-border-thickness-medium));
 
   // Hook height adjustments
   .u-hook > *::before,
