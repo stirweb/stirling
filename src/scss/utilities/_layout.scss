@@ -40,6 +40,9 @@
 .u-flex1 {
   flex: 1;
 }
+.u-flex1-1 {
+  flex: 1 1;
+}
 
 .u-grid {
   display: grid;
@@ -207,6 +210,14 @@
 
 .u-top-0 {
   top: 0;
+}
+
+/* hooks uses these */
+.u-top-2 {
+  top: 2px;
+}
+.u-bottom-2 {
+  bottom: 2px;
 }
 
 .u-top-16 {

@@ -237,20 +237,26 @@
         }
       }
     }
-    form[data-filters] label > span:last-of-type {
-      /* number-of-results label for facets: */
-      margin-left: auto;
-      background: #14315e;
-      color: white;
-      text-align: center;
-      padding: 0.5rem;
-      font-size: 0.5rem;
-      border-radius: 50%;
-      min-width: 1.5rem;
-      height: 1.5rem;
-      line-height: 0.5rem;
-      font-weight: bold;
-    }
+    form[data-filters] {
+		[data-facet] [role="region"] ul:empty::after {
+			content: "No filter options available";
+			font-size: 1rem;
+		}
+		label > span:last-of-type {
+			/* number-of-results label for facets: */
+			margin-left: auto;
+			background: #14315e;
+			color: white;
+			text-align: center;
+			padding: 0.5rem;
+			font-size: 0.5rem;
+			border-radius: 50%;
+			min-width: 1.5rem;
+			height: 1.5rem;
+			line-height: 0.5rem;
+			font-weight: bold;
+		}
+	}
   }
 
   span.c-search-tag {

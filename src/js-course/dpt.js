@@ -1,3 +1,7 @@
+/**
+ * API wrapper for the Degree Programme Tables
+ */
+
 var stir = stir || {};
 
 stir.dpt = (function () {
@@ -26,8 +30,8 @@ stir.dpt = (function () {
     PG: "opt=runpgcode&ct=PG",
   };
   const currentVersion = {
-    UG: 436, //362
-    PG: 417  //357
+    UG: "",//436, //362
+    PG: "" //417  //357
   };
   debug && console.info(`[DPT] using versions `, currentVersion);
 
