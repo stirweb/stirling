@@ -9007,6 +9007,9 @@ article.c-convo small {
 .u-flex1 {
   flex: 1; }
 
+.u-flex1-1 {
+  flex: 1 1; }
+
 .u-grid {
   display: grid; }
 

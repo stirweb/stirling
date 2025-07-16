@@ -1,4 +1,5 @@
 (function () {
+  var version = '2025-07-16 10.24am';
   var items = [];
   var galleryEl, galleryTemplate, galleryID, photo, x, url, frag;
 
