@@ -1780,6 +1780,10 @@ body .grid-container {
 
 @media screen and (min-width: 40em) {
   body .grid-container {
+    margin: 0 40px; } }
+
+@media screen and (min-width: 64em) {
+  body .grid-container {
     width: clamp(20rem, 90vw, 77.5rem);
     margin: 0 auto; } }
 
