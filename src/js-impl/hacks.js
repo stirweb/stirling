@@ -11,8 +11,10 @@
 (function () {
   document.querySelectorAll(".c-half-n-half:nth-of-type(even)").forEach((elem) => {
     const e = elem.querySelector(".u-hook");
-    e.classList.add("u-hook-bl");
-    e.classList.remove("u-hook-tr");
+    if(e) {
+      e.classList.add("u-hook-bl");
+      e.classList.remove("u-hook-tr");
+    }
   });
 })();
 

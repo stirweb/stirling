@@ -212,8 +212,6 @@ var KISWidgetCaller = function () {
     var whatnext = document.querySelector(".c-whats-next");
     if (callstoact && whatnext) {
       whatnext.insertAdjacentElement("beforebegin", callstoact);
-      whatnext.classList.remove("u-margin-top");
-      callstoact.classList.add("u-margin-top");
     }
   }
 
