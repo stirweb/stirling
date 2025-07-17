@@ -109,6 +109,17 @@ html {
   box-sizing: border-box;
 }
 
+:root {
+  --hook-border-thickness: 30px;
+  --hook-border-thickness-medium: 40px;
+  --gutter-offset: -24px;
+  --gutter-offset-medium: -40px;
+  --gutter-offset-large: -50px;
+  --hook-height: 80px;
+  --hook-height-medium: 100px;
+  --hook-offset: 2px;
+}
+
 /* Template */
 
 body {
@@ -125,12 +136,12 @@ body {
 }
 
 body .grid-container {
-  margin: 0 24px;
+  margin: 0 calc(var(--gutter-offset) * -1);
 }
 
 @media screen and #{breakpoint(medium up)} {
   body .grid-container {
-    margin: 0 40px;
+    margin: 0 calc(var(--gutter-offset-medium) * -1);
   }
 }
 
