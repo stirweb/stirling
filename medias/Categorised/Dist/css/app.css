@@ -3152,9 +3152,9 @@ h3.c-tab-accord-group-head {
   right: -2px;
   bottom: -8px; }
 
-/***
-Bleed Feature Image
-***/
+/**
+  Bleed Feature Image
+*/
 .c-bleed-feature__text-container {
   background-color: #ffffff;
   position: relative;
@@ -3163,9 +3163,6 @@ Bleed Feature Image
   max-width: 534px;
   font-size: 1.25rem;
   float: right; }
-
-.c-bleed-feature__text-container h2 {
-  margin: 0 0 40px 0; }
 
 .c-bleed-feature--image-right .c-bleed-feature__text-container {
   float: left; }
