@@ -1,0 +1,82 @@
+[data-open="shareSheet"] {
+	&::after {
+		content: none;
+	}
+
+	>svg {
+		width: 1.4em;
+		height: 1.4em;
+		margin-left: .3125rem;
+		vertical-align: bottom;
+	}
+}
+
+.copy-link-box {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	padding: 0.3em 0.5em;
+	margin-bottom: 1rem;
+
+	p,
+	button {
+		margin: 0;
+	}
+
+	p {
+		display: flex;
+		align-items: center;
+		margin-right: 1rem;
+		font-size: 1rem;
+		font-family: 'Courier New', Courier, monospace;
+	}
+
+	.tooltip__link-copied {
+		position: absolute;
+		justify-content: center;
+		align-items: center;
+		display: none;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		background-color: #333;
+		color: #FFF;
+		text-align: center;
+	}
+}
+
+.sharesheet {
+	button[data-copy]::after {
+		content: none;
+	}
+
+	button[data-copy]>svg {
+		width: 1rem;
+		height: 1rem;
+		margin-left: .3125rem
+	}
+
+	ul.barnacles {
+		list-style: none;
+		display: flex;
+		justify-content: flex-start;
+		margin-left: 0;
+		padding-bottom: 1em;
+		margin-bottom: 1em;
+
+		li {
+			display: inline-block;
+			margin-right: 3em;
+
+			span[class*="uos-"] {
+				font-size: 2em;
+			}
+		}
+
+		svg {
+			display: inline-block;
+			width: 40px;
+		}
+	}
+}
