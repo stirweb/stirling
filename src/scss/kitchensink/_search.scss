@@ -1,0 +1,24 @@
+/*
+ * Homepage search box
+ */
+
+.u-hero-search {
+    background-image: url('https://pxl-v6-stiracuk.terminalfour.net/fit-in/1900x689/filters:quality(88)/filters:format(webp)/prod01/cdn/media/stirling/global-assets/homepage-banner-images/homepage.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 50vh;
+    max-height: 689px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-bottom: 5rem;
+
+
+
+    &:focus-within{
+        background-image: linear-gradient(rgba(0,0,0,0.3)), url('https://pxl-v6-stiracuk.terminalfour.net/fit-in/1900x689/filters:quality(88)/filters:format(webp)/prod01/cdn/media/stirling/global-assets/homepage-banner-images/homepage.jpg');
+        background-blend-mode: multiply;
+    }
+
+}
