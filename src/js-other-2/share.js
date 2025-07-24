@@ -1,6 +1,8 @@
 var stir = stir || {};
 
-stir.share = (() => {
+stir.share = stir.share || {};
+
+stir.share.fallback = (() => {
 
 	const icons = {
 		close: '<span aria-hidden=true>×</span>',
@@ -15,41 +17,47 @@ stir.share = (() => {
 			title: encodeURIComponent(data.title)
 		};
 		return `
-		<h3 class="header-stripped">Share a link</h3>
+		<h3 class="header-stripped">Share this ${data.entity||'page'}</h3>
+		<div class="copy-link-box">
+			<div>
+				<p>${data.title}</p>
+				<p>${data.url}</p>
+			</div>
+			<div class=tooltip__link-copied>Link copied to clipboard</div>
+		</div>
 		<ul class="barnacles">
-			<li>
+			<li title="Copy to clipboard">
+				<a href="#copy" data-copy="${data.url}">${icons.copy}</a>
+			</li>
+			<li title="Share with Facebook">
 				<a href="https://www.facebook.com/sharer.php?u=${enc.url}" title="Share this page on Facebook" class="fbc-has-badge fbc-UID_1">
 					<span class="uos-facebook"></span>
 				</a>
 			</li>
-			<li>
+			<li title="Share with LinkedIn">
 				<a href="https://www.linkedin.com/shareArticle?url=${enc.url}&amp;title=${enc.title}" title="Share this page on LinkedIn">
 					<span class="uos-linkedin"></span>
 				</a>
 			</li>
-			<li>
-				<a href="https://bsky.app/intent/compose?text=${enc.title}%0A${enc.url}" title="Share this page on X">${icons.bsky}</a>
+			<li title="Share with Bluesky">
+				<a href="https://bsky.app/intent/compose?text=${enc.title}%0A${enc.url}" title="Share this page on Bluesky">${icons.bsky}</a>
 			</li>
-			<li>
+			<li title="Share with X the everything app™">
 				<a href="https://x.com/intent/tweet?url=${enc.url}&amp;text=${enc.title}&amp;via=StirUni" title="Share this page on X">${icons.x}</a>
 			</li>
-			<li>
+			<li title="Share with Weibo">
 				<a href="http://service.weibo.com/share/share.php?url=${enc.url}&amp;title=${enc.title}" title="Share this page on Weibo">
 					<span class="uos-weibo"></span>
 				</a>
 			</li>
 		</ul>
-		<div class="copy-link-box">
-			<p>${data.url}</p>
-			<button title="Copy this link to your clipboard" data-copy="${data.url}" class="button tiny">Copy ${icons.copy}</button>
-			<div class=tooltip__link-copied>Link copied to clipboard</div>
-		</div>
 		`;
 	};
 
 	const button = document.querySelector('[data-open="shareSheet"]');
 	const shareSheet = document.createElement('dialog');
 	const close = document.createElement("button");
+	const shareData = stir.share.getShareData(button);
 	
 	close.innerHTML = icons.close;
 	close.classList.add("close-button");
@@ -57,12 +65,18 @@ stir.share = (() => {
 	close.addEventListener("click", event => shareSheet.close());
 	shareSheet.append(close);
 	shareSheet.classList.add("sharesheet");
-	shareSheet.innerHTML = template({
-		url: button.dataset.url || document.location.href,
-		title: button.dataset.title || 'University of Stirling'
-	});
-	const copy = shareSheet.querySelector("button[data-copy]");
+	console.info("shareData",shareData)
+	shareSheet.innerHTML = template(shareData);
+	const copy = shareSheet.querySelector("[data-copy]");
+	const copylinkbox = shareSheet.querySelector(".copy-link-box");
 	const tooltip = shareSheet.querySelector(".tooltip__link-copied");
+
+	if(shareData.image) {
+		const thumb = document.createElement('img');
+		thumb.src = shareData.image;
+		thumb.alt = shareData.description;
+		copylinkbox.prepend(thumb);
+	}
 
 	document.body.append(shareSheet);
 
@@ -71,11 +85,9 @@ stir.share = (() => {
 	});
 
 	copy.addEventListener("click", event => {
-		if (event.target) {
-			const text = event.target.hasAttribute("data-copy") ? event.target.getAttribute("data-copy") || window.location.href : window.location.href;
-			copyTextToClipboard(text);
-			event.target.focus();
-		}
+		copyTextToClipboard(copy.getAttribute("data-copy") || window.location.href);
+		copy.focus();
+		event.preventDefault();
 	})
 
 	function copyTextToClipboard(text) {
