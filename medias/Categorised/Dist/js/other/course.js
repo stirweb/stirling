@@ -273,7 +273,7 @@ stir.akari = (() => {
 
     const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
 	const domain = 'www.stir.ac.uk';
-	const path = '/data/pd-akari-qa/?module=';
+	const path = '/data/pd-akari/?module=';
 	const url = `https://${domain}${path}`;
 
     const get = {
