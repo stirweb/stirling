@@ -104,7 +104,7 @@ var stir=stir||{};stir.templates=stir.templates||{},stir.templates.course={colou
 
 				<h3 class="header-stripped u-bg-${o[1]}--10 u-p-1 u-${o[1]}-line-left u-border-width-5 u-text-regular u-mt-3">Assessment overview</h3>
 
-				<div class="grid-x grid-padding-x" id="assessments"> ${c=r.assessments[0].tabAssessments,t=c.map(e=>e.category).filter(a).map(t=>({category:t,value:c.filter(e=>t===e.category).map(l).reduce(n,0)})),100===c.map(l).reduce(n,0)?`<div class="cell large-12 u-mb-1">${t.map(d).join("")}</div>`:""} </div>
+				${c=r.assessments,c&&c[0]&&c[0].tabAssessments?(t=(c=c[0].tabAssessments).map(e=>e.category).filter(a).map(t=>({category:t,value:c.filter(e=>t===e.category).map(l).reduce(n,0)})),100===c.map(l).reduce(n,0)?`<div class="grid-x grid-padding-x" id="assessments"><div class="cell large-12 u-mb-1">${t.map(d).join("")}</div></div>`:""):"<p>Assessment information is not available for this module.</p>"}
 
 				${e.teachingTimetableInfo||""}
 
