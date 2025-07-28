@@ -135,6 +135,8 @@ stir.templates.course.module = (boilerplates, count, data) => {
 			</div>`;
 
 	function assessments(data) {
+		if(!data || !data[0] || !data[0]["tabAssessments"]) return '<p>Assessment information is not available for this module.</p>';
+		data = data[0]["tabAssessments"];
 		const categories = data.map((item) => item.category).filter(onlyUnique);
 		const width = 12; //categories.length<2?12:6;
 		const AssessmentCategorySummaries = categories.map((category) => {
@@ -144,7 +146,7 @@ stir.templates.course.module = (boilerplates, count, data) => {
 				};
 			});
 	  
-		return 100===assessmentPercentTotal(data)?`<div class="cell large-${width} u-mb-1">${AssessmentCategorySummaries.map(assessment).join('')}</div>`:'';
+		return 100===assessmentPercentTotal(data)?`<div class="grid-x grid-padding-x" id="assessments"><div class="cell large-${width} u-mb-1">${AssessmentCategorySummaries.map(assessment).join('')}</div></div>`:'';
 	}
 
 	const discoverLink = "UG"===data.moduleLevelDescription?boilerplates.awardsCtaUG:boilerplates.awardsCtaPG;
@@ -240,7 +242,7 @@ stir.templates.course.module = (boilerplates, count, data) => {
 
 				<h3 class="header-stripped u-bg-${colour[1]}--10 u-p-1 u-${colour[1]}-line-left u-border-width-5 u-text-regular u-mt-3">Assessment overview</h3>
 
-				<div class="grid-x grid-padding-x" id="assessments"> ${assessments(data.assessments[0]["tabAssessments"])} </div>
+				${assessments(data.assessments)}
 
 				${boilerplates["teachingTimetableInfo"]||""}
 
@@ -271,7 +273,7 @@ stir.akari = (() => {
 
     const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
 	const domain = 'www.stir.ac.uk';
-	const path = '/data/pd-akari-qa/?module=';
+	const path = '/data/pd-akari/?module=';
 	const url = `https://${domain}${path}`;
 
     const get = {
