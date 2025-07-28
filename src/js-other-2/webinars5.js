@@ -62,7 +62,7 @@ const renderSummary = (num) => (Number(num) === 0 ? `<p class="u-pb-2 text-sm"><
 
 const renderPaginationSummary = (start, end, total) => `<p class="u-pb-2 text-sm text-center"><strong>Displaying ${start + 1} to ${end} of ${total} results</strong></p>`;
 
-const renderLoadMoreButon = () => `<div class="text-center"><button class="button tiny " data-loadmore>Load more results</button></div>`;
+const renderLoadMoreButon = () => `<div class="text-center"><button class="button tiny" data-loadmore>Load more results</button></div>`;
 
 const renderNoData = (text) => `<p class="text-center text-sm">${text}</p>`;
 
