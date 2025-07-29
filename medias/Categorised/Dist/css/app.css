@@ -796,7 +796,8 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .greens.button.tinted:hover,
   .greens .button.tinted:hover {
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    border-color: #9fcc69; }
 
 .greens a:hover {
   text-decoration-color: #76b72a; }
@@ -849,7 +850,8 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
   .pinks.button.tinted:hover,
   .pinks .button.tinted:hover {
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    border-color: #ef4c95; }
 
 .pinks a:hover {
   text-decoration-color: #e80068; }
@@ -902,7 +904,8 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .blues.button.tinted:hover,
   .blues .button.tinted:hover {
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    border-color: #77a4da; }
 
 .blues a:hover {
   text-decoration-color: #77a4da; }
@@ -955,7 +958,8 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
   .yellows.button.tinted:hover,
   .yellows .button.tinted:hover {
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    border-color: #f7d64c; }
 
 .yellows a:hover {
   text-decoration-color: #f4c400; }
@@ -1008,7 +1012,8 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
   .oranges.button.tinted:hover,
   .oranges .button.tinted:hover {
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    border-color: #ff994c; }
 
 .oranges a:hover {
   text-decoration-color: #ff6d00; }
@@ -1061,7 +1066,8 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .teals.button.tinted:hover,
   .teals .button.tinted:hover {
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    border-color: #4cacb5; }
 
 .teals a:hover {
   text-decoration-color: #008996; }
@@ -1114,7 +1120,8 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
   .purples.button.tinted:hover,
   .purples .button.tinted:hover {
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    border-color: #b186d7; }
 
 .purples a:hover {
   text-decoration-color: #592c82; }
@@ -1167,7 +1174,8 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .neutrals.button.tinted:hover,
   .neutrals .button.tinted:hover {
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    border-color: #d1d1c9; }
 
 .neutrals a:hover {
   text-decoration-color: #d1d1c9; }
@@ -1220,7 +1228,8 @@ a:has(img):hover {
     filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .neutral-green.button.tinted:hover,
   .neutral-green .button.tinted:hover {
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    border-color: #d1d1c9; }
 
 .neutral-green a:hover {
   text-decoration-color: #d1d1c9; }
@@ -1328,7 +1337,8 @@ a:has(img):hover {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .greens.dark.button:hover,
     .greens.dark .button:hover {
-      color: #005734; }
+      color: #005734;
+      border-color: #9fcc69; }
       .greens.dark.button:hover::after,
       .greens.dark .button:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
@@ -1356,7 +1366,8 @@ a:has(img):hover {
       filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
     .pinks.dark.button:hover,
     .pinks.dark .button:hover {
-      color: #511535; }
+      color: #511535;
+      border-color: #ef4c95; }
       .pinks.dark.button:hover::after,
       .pinks.dark .button:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
@@ -1384,7 +1395,8 @@ a:has(img):hover {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .blues.dark.button:hover,
     .blues.dark .button:hover {
-      color: #122c54; }
+      color: #122c54;
+      border-color: #77a4da; }
       .blues.dark.button:hover::after,
       .blues.dark .button:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
@@ -1412,7 +1424,8 @@ a:has(img):hover {
       filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
     .yellows.dark.button:hover,
     .yellows.dark .button:hover {
-      color: #7b5c18; }
+      color: #7b5c18;
+      border-color: #f7d64c; }
       .yellows.dark.button:hover::after,
       .yellows.dark .button:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
@@ -1440,7 +1453,8 @@ a:has(img):hover {
       filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
     .oranges.dark.button:hover,
     .oranges.dark .button:hover {
-      color: #852903; }
+      color: #852903;
+      border-color: #ff994c; }
       .oranges.dark.button:hover::after,
       .oranges.dark .button:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
@@ -1468,7 +1482,8 @@ a:has(img):hover {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .teals.dark.button:hover,
     .teals.dark .button:hover {
-      color: #003a3d; }
+      color: #003a3d;
+      border-color: #4cacb5; }
       .teals.dark.button:hover::after,
       .teals.dark .button:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
@@ -1496,7 +1511,8 @@ a:has(img):hover {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
     .purples.dark.button:hover,
     .purples.dark .button:hover {
-      color: #3f0066; }
+      color: #3f0066;
+      border-color: #b186d7; }
       .purples.dark.button:hover::after,
       .purples.dark .button:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
@@ -1524,7 +1540,8 @@ a:has(img):hover {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .neutrals.dark.button:hover,
     .neutrals.dark .button:hover {
-      color: #5f6350; }
+      color: #5f6350;
+      border-color: #d1d1c9; }
       .neutrals.dark.button:hover::after,
       .neutrals.dark .button:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
@@ -1552,7 +1569,8 @@ a:has(img):hover {
       filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
     .neutral-green.dark.button:hover,
     .neutral-green.dark .button:hover {
-      color: #5f6350; }
+      color: #5f6350;
+      border-color: #d1d1c9; }
       .neutral-green.dark.button:hover::after,
       .neutral-green.dark .button:hover::after {
         filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
