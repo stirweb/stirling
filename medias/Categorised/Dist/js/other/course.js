@@ -1815,7 +1815,7 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 
   var showPosition = buttonBox ? buttonBox.offsetTop + buttonBox.offsetHeight : 0;
 
-  if (stir.MediaQuery.current !== "small") {
+//  if (stir.MediaQuery.current !== "small") {
     stickyMenu.classList.add("stir__slideup");
     stickyMenu.style.display = "block";
 
@@ -1831,7 +1831,7 @@ StirUniModules.initialisationRoutine = stir.course.auto;
         e.preventDefault();
       };
     }
-  }
+//  }
 
   /* -----------------------------------------------
    * Decides whether to how or hide the sticky based on scroll position
