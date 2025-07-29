@@ -1293,7 +1293,7 @@ a:has(img):hover {
   .dark h4,
   .dark h5 {
     color: #fff; }
-  .dark a {
+  .dark a:not(.c-link) {
     border-bottom: 2px solid #fff; }
   .dark a:focus {
     background-color: transparent;
@@ -1321,6 +1321,7 @@ a:has(img):hover {
   .greens.dark .button {
     background-color: #9fcc69;
     border-color: #9fcc69;
+    border-bottom: 4px solid #9fcc69;
     color: #005734; }
     .greens.dark.button::after,
     .greens.dark .button::after {
@@ -1348,6 +1349,7 @@ a:has(img):hover {
   .pinks.dark .button {
     background-color: #ef4c95;
     border-color: #ef4c95;
+    border-bottom: 4px solid #ef4c95;
     color: #511535; }
     .pinks.dark.button::after,
     .pinks.dark .button::after {
@@ -1375,6 +1377,7 @@ a:has(img):hover {
   .blues.dark .button {
     background-color: #77a4da;
     border-color: #77a4da;
+    border-bottom: 4px solid #77a4da;
     color: #122c54; }
     .blues.dark.button::after,
     .blues.dark .button::after {
@@ -1402,6 +1405,7 @@ a:has(img):hover {
   .yellows.dark .button {
     background-color: #f7d64c;
     border-color: #f7d64c;
+    border-bottom: 4px solid #f7d64c;
     color: #7b5c18; }
     .yellows.dark.button::after,
     .yellows.dark .button::after {
@@ -1429,6 +1433,7 @@ a:has(img):hover {
   .oranges.dark .button {
     background-color: #ff994c;
     border-color: #ff994c;
+    border-bottom: 4px solid #ff994c;
     color: #852903; }
     .oranges.dark.button::after,
     .oranges.dark .button::after {
@@ -1456,6 +1461,7 @@ a:has(img):hover {
   .teals.dark .button {
     background-color: #4cacb5;
     border-color: #4cacb5;
+    border-bottom: 4px solid #4cacb5;
     color: #003a3d; }
     .teals.dark.button::after,
     .teals.dark .button::after {
@@ -1483,6 +1489,7 @@ a:has(img):hover {
   .purples.dark .button {
     background-color: #b186d7;
     border-color: #b186d7;
+    border-bottom: 4px solid #b186d7;
     color: #3f0066; }
     .purples.dark.button::after,
     .purples.dark .button::after {
@@ -1510,6 +1517,7 @@ a:has(img):hover {
   .neutrals.dark .button {
     background-color: #d1d1c9;
     border-color: #d1d1c9;
+    border-bottom: 4px solid #d1d1c9;
     color: #5f6350; }
     .neutrals.dark.button::after,
     .neutrals.dark .button::after {
@@ -1537,6 +1545,7 @@ a:has(img):hover {
   .neutral-green.dark .button {
     background-color: #d1d1c9;
     border-color: #d1d1c9;
+    border-bottom: 4px solid #d1d1c9;
     color: #5f6350; }
     .neutral-green.dark.button::after,
     .neutral-green.dark .button::after {
