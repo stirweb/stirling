@@ -527,7 +527,7 @@ a:has(img):hover {
     color: $white;
   }
 
-  a:not(.c-link, .button) {
+  a:not(.c-link) {
     border-bottom: 2px solid $white;
   }
 
@@ -590,6 +590,7 @@ a:has(img):hover {
       .button {
         background-color: map-get($color, "tint");
         border-color: map-get($color, "tint");
+        border-bottom: 4px solid map-get($color, "tint");
         color: map-get($color, "dark");
 
         &::after {
