@@ -1293,19 +1293,8 @@ a:has(img):hover {
   .dark h4,
   .dark h5 {
     color: #fff; }
-  .dark a:not(.c-link) {
+  .dark a {
     border-bottom: 2px solid #fff; }
-  .dark a.button {
-    background-color: transparent;
-    border: 4px solid #fff; }
-    .dark a.button:hover {
-      background-color: transparent;
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.5); }
-    .dark a.button::after {
-      filter: brightness(0) invert(1); }
-    .dark a.button:hover::after {
-      filter: brightness(0) invert(1); }
   .dark a:focus {
     background-color: transparent;
     color: #fff;
@@ -1326,19 +1315,24 @@ a:has(img):hover {
   .greens.c-wrapper-2025.dark svg {
     color: #9fcc69; }
 
-.greens.dark.button.tinted::after,
-.greens.dark .button.tinted::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.greens.dark.button.tinted:hover,
-.greens.dark .button.tinted:hover {
-  color: #005734; }
-  .greens.dark.button.tinted:hover::after,
-  .greens.dark .button.tinted:hover::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.greens.dark .u-text-coloured {
-  color: #edf4f1; }
+.greens.dark {
+  /* Tinted by default */ }
+  .greens.dark.button,
+  .greens.dark .button {
+    background-color: #9fcc69;
+    border-color: #9fcc69;
+    color: #005734; }
+    .greens.dark.button::after,
+    .greens.dark .button::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+    .greens.dark.button:hover,
+    .greens.dark .button:hover {
+      color: #005734; }
+      .greens.dark.button:hover::after,
+      .greens.dark .button:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .greens.dark .u-text-coloured {
+    color: #edf4f1; }
 
 .pinks.c-wrapper-2025.dark {
   background-color: #511535; }
@@ -1348,19 +1342,24 @@ a:has(img):hover {
   .pinks.c-wrapper-2025.dark svg {
     color: #ef4c95; }
 
-.pinks.dark.button.tinted::after,
-.pinks.dark .button.tinted::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
-
-.pinks.dark.button.tinted:hover,
-.pinks.dark .button.tinted:hover {
-  color: #511535; }
-  .pinks.dark.button.tinted:hover::after,
-  .pinks.dark .button.tinted:hover::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
-
-.pinks.dark .u-text-coloured {
-  color: #f6eff3; }
+.pinks.dark {
+  /* Tinted by default */ }
+  .pinks.dark.button,
+  .pinks.dark .button {
+    background-color: #ef4c95;
+    border-color: #ef4c95;
+    color: #511535; }
+    .pinks.dark.button::after,
+    .pinks.dark .button::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
+    .pinks.dark.button:hover,
+    .pinks.dark .button:hover {
+      color: #511535; }
+      .pinks.dark.button:hover::after,
+      .pinks.dark .button:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(17%) sepia(73%) saturate(2628%) hue-rotate(305deg) brightness(95%) contrast(94%); }
+  .pinks.dark .u-text-coloured {
+    color: #f6eff3; }
 
 .blues.c-wrapper-2025.dark {
   background-color: #122c54; }
@@ -1370,19 +1369,24 @@ a:has(img):hover {
   .blues.c-wrapper-2025.dark svg {
     color: #77a4da; }
 
-.blues.dark.button.tinted::after,
-.blues.dark .button.tinted::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.blues.dark.button.tinted:hover,
-.blues.dark .button.tinted:hover {
-  color: #122c54; }
-  .blues.dark.button.tinted:hover::after,
-  .blues.dark .button.tinted:hover::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.blues.dark .u-text-coloured {
-  color: #f0f2f9; }
+.blues.dark {
+  /* Tinted by default */ }
+  .blues.dark.button,
+  .blues.dark .button {
+    background-color: #77a4da;
+    border-color: #77a4da;
+    color: #122c54; }
+    .blues.dark.button::after,
+    .blues.dark .button::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+    .blues.dark.button:hover,
+    .blues.dark .button:hover {
+      color: #122c54; }
+      .blues.dark.button:hover::after,
+      .blues.dark .button:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .blues.dark .u-text-coloured {
+    color: #f0f2f9; }
 
 .yellows.c-wrapper-2025.dark {
   background-color: #7b5c18; }
@@ -1392,19 +1396,24 @@ a:has(img):hover {
   .yellows.c-wrapper-2025.dark svg {
     color: #f7d64c; }
 
-.yellows.dark.button.tinted::after,
-.yellows.dark .button.tinted::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
-
-.yellows.dark.button.tinted:hover,
-.yellows.dark .button.tinted:hover {
-  color: #7b5c18; }
-  .yellows.dark.button.tinted:hover::after,
-  .yellows.dark .button.tinted:hover::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
-
-.yellows.dark .u-text-coloured {
-  color: #fdfbef; }
+.yellows.dark {
+  /* Tinted by default */ }
+  .yellows.dark.button,
+  .yellows.dark .button {
+    background-color: #f7d64c;
+    border-color: #f7d64c;
+    color: #7b5c18; }
+    .yellows.dark.button::after,
+    .yellows.dark .button::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
+    .yellows.dark.button:hover,
+    .yellows.dark .button:hover {
+      color: #7b5c18; }
+      .yellows.dark.button:hover::after,
+      .yellows.dark .button:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(67%) sepia(46%) saturate(1954%) hue-rotate(4deg) brightness(97%) contrast(102%); }
+  .yellows.dark .u-text-coloured {
+    color: #fdfbef; }
 
 .oranges.c-wrapper-2025.dark {
   background-color: #852903; }
@@ -1414,19 +1423,24 @@ a:has(img):hover {
   .oranges.c-wrapper-2025.dark svg {
     color: #ff994c; }
 
-.oranges.dark.button.tinted::after,
-.oranges.dark .button.tinted::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
-
-.oranges.dark.button.tinted:hover,
-.oranges.dark .button.tinted:hover {
-  color: #852903; }
-  .oranges.dark.button.tinted:hover::after,
-  .oranges.dark .button.tinted:hover::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
-
-.oranges.dark .u-text-coloured {
-  color: #fef6f0; }
+.oranges.dark {
+  /* Tinted by default */ }
+  .oranges.dark.button,
+  .oranges.dark .button {
+    background-color: #ff994c;
+    border-color: #ff994c;
+    color: #852903; }
+    .oranges.dark.button::after,
+    .oranges.dark .button::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
+    .oranges.dark.button:hover,
+    .oranges.dark .button:hover {
+      color: #852903; }
+      .oranges.dark.button:hover::after,
+      .oranges.dark .button:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(36%) sepia(93%) saturate(529%) hue-rotate(337deg) brightness(101%) contrast(106%); }
+  .oranges.dark .u-text-coloured {
+    color: #fef6f0; }
 
 .teals.c-wrapper-2025.dark {
   background-color: #005e63; }
@@ -1436,19 +1450,24 @@ a:has(img):hover {
   .teals.c-wrapper-2025.dark svg {
     color: #4cacb5; }
 
-.teals.dark.button.tinted::after,
-.teals.dark .button.tinted::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.teals.dark.button.tinted:hover,
-.teals.dark .button.tinted:hover {
-  color: #003a3d; }
-  .teals.dark.button.tinted:hover::after,
-  .teals.dark .button.tinted:hover::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.teals.dark .u-text-coloured {
-  color: #edf7f8; }
+.teals.dark {
+  /* Tinted by default */ }
+  .teals.dark.button,
+  .teals.dark .button {
+    background-color: #4cacb5;
+    border-color: #4cacb5;
+    color: #003a3d; }
+    .teals.dark.button::after,
+    .teals.dark .button::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+    .teals.dark.button:hover,
+    .teals.dark .button:hover {
+      color: #003a3d; }
+      .teals.dark.button:hover::after,
+      .teals.dark .button:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .teals.dark .u-text-coloured {
+    color: #edf7f8; }
 
 .purples.c-wrapper-2025.dark {
   background-color: #3f0066; }
@@ -1458,19 +1477,24 @@ a:has(img):hover {
   .purples.c-wrapper-2025.dark svg {
     color: #b186d7; }
 
-.purples.dark.button.tinted::after,
-.purples.dark .button.tinted::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
-
-.purples.dark.button.tinted:hover,
-.purples.dark .button.tinted:hover {
-  color: #3f0066; }
-  .purples.dark.button.tinted:hover::after,
-  .purples.dark .button.tinted:hover::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
-
-.purples.dark .u-text-coloured {
-  color: #f4f0f7; }
+.purples.dark {
+  /* Tinted by default */ }
+  .purples.dark.button,
+  .purples.dark .button {
+    background-color: #b186d7;
+    border-color: #b186d7;
+    color: #3f0066; }
+    .purples.dark.button::after,
+    .purples.dark .button::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
+    .purples.dark.button:hover,
+    .purples.dark .button:hover {
+      color: #3f0066; }
+      .purples.dark.button:hover::after,
+      .purples.dark .button:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(28%) saturate(4096%) hue-rotate(252deg) brightness(92%) contrast(92%); }
+  .purples.dark .u-text-coloured {
+    color: #f4f0f7; }
 
 .neutrals.c-wrapper-2025.dark {
   background-color: #5f6350; }
@@ -1480,19 +1504,24 @@ a:has(img):hover {
   .neutrals.c-wrapper-2025.dark svg {
     color: #d1d1c9; }
 
-.neutrals.dark.button.tinted::after,
-.neutrals.dark .button.tinted::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.neutrals.dark.button.tinted:hover,
-.neutrals.dark .button.tinted:hover {
-  color: #5f6350; }
-  .neutrals.dark.button.tinted:hover::after,
-  .neutrals.dark .button.tinted:hover::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.neutrals.dark .u-text-coloured {
-  color: #f1f1ef; }
+.neutrals.dark {
+  /* Tinted by default */ }
+  .neutrals.dark.button,
+  .neutrals.dark .button {
+    background-color: #d1d1c9;
+    border-color: #d1d1c9;
+    color: #5f6350; }
+    .neutrals.dark.button::after,
+    .neutrals.dark .button::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+    .neutrals.dark.button:hover,
+    .neutrals.dark .button:hover {
+      color: #5f6350; }
+      .neutrals.dark.button:hover::after,
+      .neutrals.dark .button:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .neutrals.dark .u-text-coloured {
+    color: #f1f1ef; }
 
 .neutral-green.c-wrapper-2025.dark {
   background-color: #5f6350; }
@@ -1502,19 +1531,24 @@ a:has(img):hover {
   .neutral-green.c-wrapper-2025.dark svg {
     color: #d1d1c9; }
 
-.neutral-green.dark.button.tinted::after,
-.neutral-green.dark .button.tinted::after {
-  filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.neutral-green.dark.button.tinted:hover,
-.neutral-green.dark .button.tinted:hover {
-  color: #5f6350; }
-  .neutral-green.dark.button.tinted:hover::after,
-  .neutral-green.dark .button.tinted:hover::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
-
-.neutral-green.dark .u-text-coloured {
-  color: #f1f1ef; }
+.neutral-green.dark {
+  /* Tinted by default */ }
+  .neutral-green.dark.button,
+  .neutral-green.dark .button {
+    background-color: #d1d1c9;
+    border-color: #d1d1c9;
+    color: #5f6350; }
+    .neutral-green.dark.button::after,
+    .neutral-green.dark .button::after {
+      filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+    .neutral-green.dark.button:hover,
+    .neutral-green.dark .button:hover {
+      color: #5f6350; }
+      .neutral-green.dark.button:hover::after,
+      .neutral-green.dark .button:hover::after {
+        filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+  .neutral-green.dark .u-text-coloured {
+    color: #f1f1ef; }
 
 /**
  * Because false isn’t a valid value for z-index, we don’t want it in our compiled
