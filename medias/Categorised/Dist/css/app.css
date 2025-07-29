@@ -3220,7 +3220,7 @@ h3.c-tab-accord-group-head {
   left: -15px; }
 
 .c-bleed-feature--image-right .c-bleed-feature__image {
-  right: -15px;
+  right: auto;
   left: auto; }
 
 .c-bleed-feature__text-container {
