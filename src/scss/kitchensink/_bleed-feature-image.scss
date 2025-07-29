@@ -2,124 +2,111 @@
   Bleed Feature Image
 */
 
-.c-bleed-feature__text-container {
-  background-color: #ffffff;
-  position: relative;
-  padding: 40px 33px;
-  margin: 150px 15px 0;
-  max-width: 534px;
-  font-size: 1.25rem; // 20px;
-  float: right;
-}
-
-// .c-bleed-feature__text-container h2 {
-//   margin: 0 0 40px 0;
-// }
-
-.c-bleed-feature--image-right .c-bleed-feature__text-container {
-  float: left;
-}
-
-.c-bleed-feature__image {
-  // background-position: top center;
-  // background-repeat: no-repeat;
-  // background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 50px;
-  width: 73%;
-}
-
-// .c-bleed-feature__image:before {
-//   content: "";
-//   position: absolute;
-//   height: 31px;
-//   width: 100%;
-//   top: 0;
-//   left: 0;
-//   border-right: 7px solid #3b6938;
-//   border-top: 7px solid #3b6938;
-// }
-
-.c-bleed-feature--image-right .c-bleed-feature__image {
-  right: 0;
-  left: auto;
-}
-
-// .c-bleed-feature--image-right .c-bleed-feature__image:before {
-//   border-right: none;
-//   border-left: 7px solid #3b6938;
-//   border-top: 7px solid #3b6938;
-// }
-
 .c-bleed-feature__container {
-  min-height: 750px;
   position: relative;
   overflow: hidden;
+  min-height: auto;
+  padding: 0 0 15px 0;
 }
 
 .c-bleed-feature__container:before {
   content: "";
   position: absolute;
-  top: 100px;
   left: 0;
   bottom: 0;
   width: 100%;
+  top: 150px;
   background-color: $energy-green;
 }
 
+.c-bleed-feature__image {
+  position: relative;
+  height: 400px;
+  width: 100%;
+  left: -15px;
+}
+
+.c-bleed-feature--image-right .c-bleed-feature__image {
+  right: auto;
+  left: auto;
+}
+
+.c-bleed-feature__text-container {
+  background-color: #ffffff;
+  position: relative;
+  font-size: 1.25rem; // 20px;
+  margin: -50px 15px 0;
+  padding: 30px 40px;
+  float: none;
+}
+
+@each $name, $color in $uos-colour-group-palette {
+  .#{$name}.c-bleed-feature__container:before {
+    background-color: map-get($color, "light");
+  }
+  .#{$name}.darkify.c-bleed-feature__container:before {
+    background-color: map-get($color, "darkbg");
+  }
+}
+
+// DEPRECATED
 .c-bleed-feature__heritage-green:before {
   background-color: $heritage-green;
 }
 
-@media screen and (max-width: 1023px) {
+// Medium screens
+@media screen and (min-width: 640px) {
   .c-bleed-feature__container {
     min-height: 520px;
-  }
-
-  .c-bleed-feature__image {
-    bottom: 65px;
-    width: 72%;
+    padding: 0;
   }
 
   .c-bleed-feature__container:before {
     top: 50px;
   }
 
-  .c-bleed-feature__text-container {
-    margin: 80px 15px 0;
-  }
-}
-
-@media screen and (max-width: 639px) {
-  .c-bleed-feature__container {
-    min-height: auto;
-    padding: 0 0 15px 0;
-  }
-
-  .c-bleed-feature__container:before {
-    top: 150px;
-  }
-
   .c-bleed-feature__image {
-    position: relative;
-    height: 400px;
-    width: 100%;
-    left: -15px;
+    position: absolute;
+    height: auto;
+    top: 0;
+    left: 0;
+    bottom: 65px;
+    width: 72%;
   }
 
   .c-bleed-feature--image-right .c-bleed-feature__image {
-    right: -15px;
+    right: 0;
     left: auto;
   }
 
-  .c-bleed-feature--image-right .c-bleed-feature__text-container,
   .c-bleed-feature__text-container {
-    min-width: inherit;
-    max-width: inherit;
-    margin: -50px 15px 0;
-    padding: 30px 40px;
-    float: none;
+    float: right;
+    padding: 40px 33px;
+    margin: 80px 15px 0;
+    max-width: 534px;
+  }
+
+  .c-bleed-feature--image-right .c-bleed-feature__text-container {
+    float: left;
+  }
+}
+
+// Large screens
+@media screen and (min-width: 1024px) {
+  .c-bleed-feature__container {
+    min-height: 750px;
+  }
+
+  .c-bleed-feature__container:before {
+    top: 100px;
+  }
+
+  .c-bleed-feature__image {
+    bottom: 50px;
+    width: 73%;
+  }
+
+  .c-bleed-feature__text-container {
+    margin: 150px 15px 0;
   }
 }
