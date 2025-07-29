@@ -360,8 +360,13 @@ a:has(img):hover {
 .u-opacity-10 {
   opacity: 10%;
 }
+
 .u-opacity-20 {
   opacity: 20%;
+}
+
+.u-font-icon {
+  color: $heritage-green; // default
 }
 
 /*
@@ -526,24 +531,24 @@ a:has(img):hover {
     border-bottom: 2px solid $white;
   }
 
-  a.button {
-    background-color: transparent;
-    border: 4px solid #fff;
+  // a.button {
+  //   background-color: transparent;
+  //   border: 4px solid #fff;
 
-    &:hover {
-      background-color: transparent;
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.5);
-    }
+  //   &:hover {
+  //     background-color: transparent;
+  //     color: #fff;
+  //     border-color: rgba(255, 255, 255, 0.5);
+  //   }
 
-    &::after {
-      filter: brightness(0) invert(1);
-    }
+  //   &::after {
+  //     filter: brightness(0) invert(1);
+  //   }
 
-    &:hover::after {
-      filter: brightness(0) invert(1);
-    }
-  }
+  //   &:hover::after {
+  //     filter: brightness(0) invert(1);
+  //   }
+  // }
 
   a:focus {
     background-color: transparent;
@@ -580,8 +585,14 @@ a:has(img):hover {
     }
 
     &.dark {
-      &.button.tinted,
-      .button.tinted {
+      /* Tinted by default */
+      &.button,
+      .button {
+        background-color: map-get($color, "tint");
+        border-color: map-get($color, "tint");
+        border-bottom: 4px solid map-get($color, "tint");
+        color: map-get($color, "dark");
+
         &::after {
           filter: icon-filter(map-get($color, "medium"));
         }
