@@ -456,13 +456,6 @@ a:has(img):hover {
   color: map-get($teals, "safe");
 }
 
-// overrides for the tinted buttons
-.button.tinted.pinks,
-.pinks .button.tinted {
-  background-color: $pink-tint-40;
-  border-color: $pink-tint-40;
-}
-
 .neutrals {
   a,
   h2,
@@ -612,4 +605,12 @@ a:has(img):hover {
       }
     }
   }
+}
+
+// overrides for the buttons
+.button.tinted.pinks,
+.pinks .button.tinted,
+.dark.pinks .button {
+  background-color: $pink-tint-40;
+  border-color: $pink-tint-40;
 }

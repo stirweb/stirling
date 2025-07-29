@@ -1251,11 +1251,6 @@ a:has(img):hover {
 .teals a {
   color: #037a80; }
 
-.button.tinted.pinks,
-.pinks .button.tinted {
-  background-color: #c698b0;
-  border-color: #c698b0; }
-
 .neutrals a,
 .neutrals h2,
 .neutrals h3,
@@ -1576,6 +1571,12 @@ a:has(img):hover {
         filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
   .neutral-green.dark .u-text-coloured {
     color: #f1f1ef; }
+
+.button.tinted.pinks,
+.pinks .button.tinted,
+.dark.pinks .button {
+  background-color: #c698b0;
+  border-color: #c698b0; }
 
 /**
  * Because false isn’t a valid value for z-index, we don’t want it in our compiled
