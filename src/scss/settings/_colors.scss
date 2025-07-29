@@ -421,6 +421,7 @@ a:has(img):hover {
 
       &:hover {
         background-color: #ffffff;
+        border-color: map-get($color, "tint");
       }
     }
 
@@ -599,6 +600,7 @@ a:has(img):hover {
 
         &:hover {
           color: map-get($color, "dark");
+          border-color: map-get($color, "tint");
           &::after {
             filter: icon-filter(map-get($color, "medium"));
           }
