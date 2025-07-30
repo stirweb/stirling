@@ -802,9 +802,9 @@ a:has(img):hover {
 .greens a:hover {
   text-decoration-color: #76b72a; }
 
-.greens .c-wrapper-2025 {
+.greens .c-wrapper-2025, .greens.c-wrapper-2025 {
   background-color: #edf4f1; }
-  .greens .c-wrapper-2025.u-bleed {
+  .greens .c-wrapper-2025.u-bleed, .greens.c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#edf4f1, #edf4f1); }
 
 .greens .c-link::after {
@@ -856,9 +856,9 @@ a:has(img):hover {
 .pinks a:hover {
   text-decoration-color: #e80068; }
 
-.pinks .c-wrapper-2025 {
+.pinks .c-wrapper-2025, .pinks.c-wrapper-2025 {
   background-color: #f6eff3; }
-  .pinks .c-wrapper-2025.u-bleed {
+  .pinks .c-wrapper-2025.u-bleed, .pinks.c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#f6eff3, #f6eff3); }
 
 .pinks .c-link::after {
@@ -910,9 +910,9 @@ a:has(img):hover {
 .blues a:hover {
   text-decoration-color: #77a4da; }
 
-.blues .c-wrapper-2025 {
+.blues .c-wrapper-2025, .blues.c-wrapper-2025 {
   background-color: #f0f2f9; }
-  .blues .c-wrapper-2025.u-bleed {
+  .blues .c-wrapper-2025.u-bleed, .blues.c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#f0f2f9, #f0f2f9); }
 
 .blues .c-link::after {
@@ -964,9 +964,9 @@ a:has(img):hover {
 .yellows a:hover {
   text-decoration-color: #f4c400; }
 
-.yellows .c-wrapper-2025 {
+.yellows .c-wrapper-2025, .yellows.c-wrapper-2025 {
   background-color: #fdfbef; }
-  .yellows .c-wrapper-2025.u-bleed {
+  .yellows .c-wrapper-2025.u-bleed, .yellows.c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#fdfbef, #fdfbef); }
 
 .yellows .c-link::after {
@@ -1018,9 +1018,9 @@ a:has(img):hover {
 .oranges a:hover {
   text-decoration-color: #ff6d00; }
 
-.oranges .c-wrapper-2025 {
+.oranges .c-wrapper-2025, .oranges.c-wrapper-2025 {
   background-color: #fef6f0; }
-  .oranges .c-wrapper-2025.u-bleed {
+  .oranges .c-wrapper-2025.u-bleed, .oranges.c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#fef6f0, #fef6f0); }
 
 .oranges .c-link::after {
@@ -1072,9 +1072,9 @@ a:has(img):hover {
 .teals a:hover {
   text-decoration-color: #008996; }
 
-.teals .c-wrapper-2025 {
+.teals .c-wrapper-2025, .teals.c-wrapper-2025 {
   background-color: #edf7f8; }
-  .teals .c-wrapper-2025.u-bleed {
+  .teals .c-wrapper-2025.u-bleed, .teals.c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#edf7f8, #edf7f8); }
 
 .teals .c-link::after {
@@ -1126,9 +1126,9 @@ a:has(img):hover {
 .purples a:hover {
   text-decoration-color: #592c82; }
 
-.purples .c-wrapper-2025 {
+.purples .c-wrapper-2025, .purples.c-wrapper-2025 {
   background-color: #f4f0f7; }
-  .purples .c-wrapper-2025.u-bleed {
+  .purples .c-wrapper-2025.u-bleed, .purples.c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#f4f0f7, #f4f0f7); }
 
 .purples .c-link::after {
@@ -1180,9 +1180,9 @@ a:has(img):hover {
 .neutrals a:hover {
   text-decoration-color: #d1d1c9; }
 
-.neutrals .c-wrapper-2025 {
+.neutrals .c-wrapper-2025, .neutrals.c-wrapper-2025 {
   background-color: #f1f1ef; }
-  .neutrals .c-wrapper-2025.u-bleed {
+  .neutrals .c-wrapper-2025.u-bleed, .neutrals.c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
 
 .neutrals .c-link::after {
@@ -1234,9 +1234,9 @@ a:has(img):hover {
 .neutral-green a:hover {
   text-decoration-color: #d1d1c9; }
 
-.neutral-green .c-wrapper-2025 {
+.neutral-green .c-wrapper-2025, .neutral-green.c-wrapper-2025 {
   background-color: #f1f1ef; }
-  .neutral-green .c-wrapper-2025.u-bleed {
+  .neutral-green .c-wrapper-2025.u-bleed, .neutral-green.c-wrapper-2025.u-bleed {
     border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
 
 .neutral-green .c-link::after {
