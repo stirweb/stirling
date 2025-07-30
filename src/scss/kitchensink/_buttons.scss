@@ -297,10 +297,6 @@ button:focus {
   background-color: transparent;
   border-color: #fff;
 
-  &.hollow {
-    border-width: var(--button-border-width);
-  }
-
   &:hover {
     background-color: transparent;
     color: #fff;
@@ -318,6 +314,10 @@ button:focus {
   &:hover::after {
     filter: brightness(0) invert(1);
   }
+}
+
+.dark .darkmode .button:hover {
+  background-color: $white; // New wrapper darkmode fix
 }
 
 .u-white--all.button:hover {

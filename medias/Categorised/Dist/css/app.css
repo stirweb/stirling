@@ -3791,9 +3791,6 @@ button:focus {
 .darkmode .button {
   background-color: transparent;
   border-color: #fff; }
-  .u-white--all .button.hollow,
-  .darkmode .button.hollow {
-    border-width: var(--button-border-width); }
   .u-white--all .button:hover,
   .darkmode .button:hover {
     background-color: transparent;
@@ -3808,6 +3805,9 @@ button:focus {
   .u-white--all .button:hover::after,
   .darkmode .button:hover::after {
     filter: brightness(0) invert(1); }
+
+.dark .darkmode .button:hover {
+  background-color: #fff; }
 
 .u-white--all.button:hover {
   background-color: #006938;
