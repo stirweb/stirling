@@ -429,7 +429,8 @@ a:has(img):hover {
       text-decoration-color: map-get($color, "light");
     }
 
-    .c-wrapper-2025 {
+    .c-wrapper-2025,
+    &.c-wrapper-2025 {
       background-color: map-get($color, "tint-7");
 
       &.u-bleed {
