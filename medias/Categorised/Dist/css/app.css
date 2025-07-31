@@ -4818,7 +4818,8 @@ updated Aug 2022 for clearing homepage banner
   font-size: 1.25rem;
   max-width: max-content;
   position: relative;
-  text-decoration: none; }
+  text-decoration: none;
+  text-wrap: pretty; }
   .c-link:before {
     content: "";
     position: absolute;
