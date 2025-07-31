@@ -12,6 +12,7 @@
 */
 button {
   cursor: pointer;
+  text-wrap: pretty;
   border-style: none;
   background: none;
   font-size: inherit;
@@ -29,6 +30,7 @@ button:focus {
 */
 .button {
   background-color: $heritage-green;
+  text-wrap: pretty;
   color: $white;
   text-decoration: none;
   border: var(--button-border-width) solid transparent;
