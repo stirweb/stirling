@@ -200,7 +200,7 @@ var stir = stir || {};
       <${node} class="small-12 cell ${classes}">
         <div class="u-aspect-ratio-16-9 "><a href="${item.url}"><img class=" u-object-cover" src="${item.image}" alt="${item.imagealt}" loading="lazy"></a></div>
         <h3 class="header-stripped u-my-1 u-font-normal u-compress-line-height">
-        <a href="${item.url}" class="c-link u-inline">${item.title}</a>
+        <a href="${item.url}" class="c-link ">${item.title}</a>
       </h3>
         ${item._uos.location ? `<strong>${item._uos.location}</strong>` : ``}
         ${renderTime(item._uos)} 
