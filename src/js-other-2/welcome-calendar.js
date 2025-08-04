@@ -51,7 +51,11 @@
 
   const renderThemeFilter = (selected) => (item) => `<option value="${item.theme}" ${selected === item.theme ? "selected" : ""}>${item.theme}</option>`;
 
-  const renderSelectFilter = (html, title) => `<select id="${title.toLowerCase().replaceAll(" ", "-")}"><option value="">${title}</option>${html}</select>`;
+  const renderSelectFilter = (html, title) => {
+    const id = title.toLowerCase().replaceAll(" ", "-");
+    const optionAll = title.replace("Filter by", "All");
+    return `<label for="${id}" class="u-show-for-sr">${title}</label><select id="${id}"><option value="">${optionAll}s</option>${html}</select>`;
+  };
 
   const renderClearFiltersBtn = () => `<button id="clearfilters" class="button no-arrow tiny hollow expanded u-font-bold">Clear all filters</button>`;
 
@@ -213,7 +217,9 @@
   */
 
   const renderAudienceFilter = (selected) => {
-    return `<select id="filter-by-audience">
+    const id = "filter-by-audience";
+    return `<label for="${id}" class="u-show-for-sr">Filter by audience</label>
+            <select id="${id}">
               <option value="students" ${selected === "students" ? "selected" : ""}>All Students</option>
               <option value="ug" ${selected === "ug" ? "selected" : ""}>Undergraduate</option>
               <option value="pg" ${selected === "pg" ? "selected" : ""}>Postgraduate</option>
