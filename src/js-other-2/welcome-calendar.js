@@ -222,7 +222,7 @@
             <select id="${id}">
               <option value="students" ${selected === "students" ? "selected" : ""}>All Students</option>
               <option value="ug" ${selected === "ug" ? "selected" : ""}>Undergraduate</option>
-              <option value="pg" ${selected === "pg" ? "selected" : ""}>Postgraduate</option>
+              <option value="pgt" ${selected === "pgt" ? "selected" : ""}>Postgraduate</option>
           </select>`;
   };
 

@@ -40,5 +40,5 @@
             <select id="${w}">
               <option value="students" ${"students"===y?"selected":""}>All Students</option>
               <option value="ug" ${"ug"===y?"selected":""}>Undergraduate</option>
-              <option value="pg" ${"pg"===y?"selected":""}>Postgraduate</option>
+              <option value="pgt" ${"pgt"===y?"selected":""}>Postgraduate</option>
           </select>`+s(x,"Filter by date")+s($,"Filter by theme")+'<button id="clearfilters" class="button no-arrow tiny hollow expanded u-font-bold">Clear all filters</button>');{var F=e;const L=stir.node("#filter-by-date"),P=stir.node("#filter-by-theme"),I=stir.node("#filter-by-audience");F.resultsArea.addEventListener("click",e=>{"submit"===e.target.type&&(c(e.target.closest(".loadmorebtn"),""),e=Number(l.get("page"))+1,l.set("page",String(e)),n(F,e,i(),L.value,P.value,I.value,o))}),F.filtersArea.addEventListener("click",e=>{"BUTTON"===e.target.nodeName&&(l.set("page",String(1)),l.remove("theme"),l.remove("audience"),L.value="",P.value="",I.value="students",n(F,1,i(),"","","students",o),e.preventDefault())}),r=()=>{l.set("page",String(1)),l.set("theme",P.value),l.set("audience",I.value),n(F,1,i(),L.value,P.value,I.value,o)},L.addEventListener("change",r),P.addEventListener("change",r),I.addEventListener("change",r)}}(stir.node("#welcomeevents"));
