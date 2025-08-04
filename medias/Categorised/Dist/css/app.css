@@ -816,6 +816,10 @@ a:has(img):hover {
 .greens .u-text-coloured {
   color: #006938; }
 
+.greens [data-behaviour="accordion"] > h3,
+.greens [data-behaviour="accordion"] > h2 {
+  color: #000; }
+
 .pinks a,
 .pinks h2,
 .pinks h3,
@@ -869,6 +873,10 @@ a:has(img):hover {
 
 .pinks .u-text-coloured {
   color: #7c184f; }
+
+.pinks [data-behaviour="accordion"] > h3,
+.pinks [data-behaviour="accordion"] > h2 {
+  color: #000; }
 
 .blues a,
 .blues h2,
@@ -924,6 +932,10 @@ a:has(img):hover {
 .blues .u-text-coloured {
   color: #2c498a; }
 
+.blues [data-behaviour="accordion"] > h3,
+.blues [data-behaviour="accordion"] > h2 {
+  color: #000; }
+
 .yellows a,
 .yellows h2,
 .yellows h3,
@@ -977,6 +989,10 @@ a:has(img):hover {
 
 .yellows .u-text-coloured {
   color: #7b5c18; }
+
+.yellows [data-behaviour="accordion"] > h3,
+.yellows [data-behaviour="accordion"] > h2 {
+  color: #000; }
 
 .oranges a,
 .oranges h2,
@@ -1032,6 +1048,10 @@ a:has(img):hover {
 .oranges .u-text-coloured {
   color: #d9541a; }
 
+.oranges [data-behaviour="accordion"] > h3,
+.oranges [data-behaviour="accordion"] > h2 {
+  color: #000; }
+
 .teals a,
 .teals h2,
 .teals h3,
@@ -1085,6 +1105,10 @@ a:has(img):hover {
 
 .teals .u-text-coloured {
   color: #008996; }
+
+.teals [data-behaviour="accordion"] > h3,
+.teals [data-behaviour="accordion"] > h2 {
+  color: #000; }
 
 .purples a,
 .purples h2,
@@ -1140,6 +1164,10 @@ a:has(img):hover {
 .purples .u-text-coloured {
   color: #592c82; }
 
+.purples [data-behaviour="accordion"] > h3,
+.purples [data-behaviour="accordion"] > h2 {
+  color: #000; }
+
 .neutrals a,
 .neutrals h2,
 .neutrals h3,
@@ -1194,6 +1222,10 @@ a:has(img):hover {
 .neutrals .u-text-coloured {
   color: #d1d1c9; }
 
+.neutrals [data-behaviour="accordion"] > h3,
+.neutrals [data-behaviour="accordion"] > h2 {
+  color: #000; }
+
 .neutral-green a,
 .neutral-green h2,
 .neutral-green h3,
@@ -1247,6 +1279,10 @@ a:has(img):hover {
 
 .neutral-green .u-text-coloured {
   color: #006938; }
+
+.neutral-green [data-behaviour="accordion"] > h3,
+.neutral-green [data-behaviour="accordion"] > h2 {
+  color: #000; }
 
 .teals a {
   color: #037a80; }
@@ -1307,6 +1343,15 @@ a:has(img):hover {
     filter: brightness(0) invert(1); }
   .dark .c-link::before {
     background-color: brightness(0) invert(1); }
+  .dark .stir-accordion {
+    border-bottom: 1px solid #fff; }
+    .dark .stir-accordion:last-child {
+      border-bottom: 1px solid #fff !important; }
+    .dark .stir-accordion > h3,
+    .dark .stir-accordion > h2 {
+      color: #fff; }
+    .dark .stir-accordion button:focus {
+      outline: 1px solid #fff !important; }
 
 /*
    Dark colour overides for the 2025 colour packs
