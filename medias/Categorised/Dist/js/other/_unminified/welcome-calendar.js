@@ -21,6 +21,13 @@
         </div>`
       : ``;
 
+  const renderAudience = (value) => {
+    if (!value || value === "students") return "All Students";
+    if (value === "ug") return "Undergraduate";
+    if (value === "pgt") return "Postgraduate";
+    return ``;
+  };
+
   const renderEvent = (item) => `
     <div class="grid-x u-bg-white u-mb-2 u-energy-line-left u-border-width-5">
       <div class="cell u-p-2 small-12">
@@ -43,7 +50,10 @@
           ${renderLink(item.link)}
         </div>
         <p class="text-sm">${item.description}</p>
-        <p class="u-m-0 text-sm"><strong>Theme:</strong> ${item.theme} <br /><strong>Attendance:</strong> ${item.attendance}</p>
+        <p class="u-m-0 text-sm"><strong>Theme:</strong> ${item.theme} <br />
+        <strong>Attendance:</strong> ${item.attendance} <br />
+        <strong>Student type:</strong> ${renderAudience(item.audience)} <br />
+        </p>
       </div>
     </div>`;
 
