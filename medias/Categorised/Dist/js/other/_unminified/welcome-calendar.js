@@ -228,7 +228,7 @@
 
   const renderAudienceFilter = (selected) => {
     const id = "filter-by-audience";
-    return `<label for="${id}" class="u-show-for-sr">Filter by audience</label>
+    return `<label for="${id}" class="u-show-for-sr">Filter by student type</label>
             <select id="${id}">
               <option value="students" ${selected === "students" ? "selected" : ""}>All Students</option>
               <option value="ug" ${selected === "ug" ? "selected" : ""}>Undergraduate</option>

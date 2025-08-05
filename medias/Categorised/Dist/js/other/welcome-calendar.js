@@ -39,7 +39,7 @@
       <div class="cell u-p-2 small-12  ">
         <p>No events have been found for the criteria selected</p>
       </div>
-    </div>`)}const u=stir.feeds.events.filter(e=>e.id);var $,y=n.get("theme")||"",w=n.get("audience")||"students",x=(n.set("page",String(1)),o(e,1,a(),"",y,w,u),stir.filter(b(a()))),A=stir.map(e=>`<option value="${e.startIntFull}">${e.stirStart}</option>`),S=stir.sort(g),P=stir.map(e=>({startIntFull:e.startInt,stirStart:e.stirStart})),A=stir.compose(p,A,i("startIntFull"),P,S,x)(u),P=stir.map(e=>({theme:e.theme})),S=stir.filter(e=>e.theme),x=stir.map(($=y,e=>`<option value="${e.theme}" ${$===e.theme?"selected":""}>${e.theme}</option>`)),y=stir.compose(p,x,i("theme"),S,P)(u);c(e.filtersArea)(`<label for="${x="filter-by-audience"}" class="u-show-for-sr">Filter by audience</label>
+    </div>`)}const u=stir.feeds.events.filter(e=>e.id);var $,y=n.get("theme")||"",w=n.get("audience")||"students",x=(n.set("page",String(1)),o(e,1,a(),"",y,w,u),stir.filter(b(a()))),A=stir.map(e=>`<option value="${e.startIntFull}">${e.stirStart}</option>`),S=stir.sort(g),P=stir.map(e=>({startIntFull:e.startInt,stirStart:e.stirStart})),A=stir.compose(p,A,i("startIntFull"),P,S,x)(u),P=stir.map(e=>({theme:e.theme})),S=stir.filter(e=>e.theme),x=stir.map(($=y,e=>`<option value="${e.theme}" ${$===e.theme?"selected":""}>${e.theme}</option>`)),y=stir.compose(p,x,i("theme"),S,P)(u);c(e.filtersArea)(`<label for="${x="filter-by-audience"}" class="u-show-for-sr">Filter by student type</label>
             <select id="${x}">
               <option value="students" ${"students"===w?"selected":""}>All Students</option>
               <option value="ug" ${"ug"===w?"selected":""}>Undergraduate</option>
