@@ -1307,7 +1307,6 @@
                                         <option value="jan-28">Jan-28</option>
                                         <option value="sep-28">Sep-28</option>
                                     </select>
-
                                 </div>
 
                                 <div>
@@ -1700,12 +1699,17 @@
                 "subject": "Politics",
                 "qsSubject": "History, Heritage and Politics",
                 "courses": [{
-                    "newName": "MSc International Conflict and Cooperation"
-                }, {
-                    "newName": "MPP Public Policy"
-                }, {
-                    "newName": "MSc Global Politics"
-                }]
+                        "newName": "MSc International Conflict and Cooperation"
+                    },
+                    {
+                        "newName": "MSc Global Environmental Sustainability"
+                    },
+                    {
+                        "newName": "MPP Public Policy"
+                    }, {
+                        "newName": "MSc Global Politics"
+                    }
+                ]
             },
             {
                 "id": 13,
