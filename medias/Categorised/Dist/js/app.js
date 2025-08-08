@@ -3947,7 +3947,7 @@ stir.share = (()=>{
 	function _getShareData(el) {
 		return {
 			title: (el&&el.hasAttribute("data-title")&&el.getAttribute("data-title"))||document.head.querySelector('[property="og:title"]')?.getAttribute('content')||document.head.querySelector("title").textContent,
-			url: (el&&el.hasAttribute("data-url")&&el.getAttribute("data-url"))||document.head.querySelector('[property="og:url"]')?.getAttribute('content')||document.location.href,
+			url: ((el&&el.hasAttribute("data-url")&&el.getAttribute("data-url"))||document.head.querySelector('[property="og:url"]')?.getAttribute('content')||document.location.href).replace('https://www.stir.ac.ukhttp','http'),
 			description: document.head.querySelector('[property="og:description"],[name="description"]')?.getAttribute('content'),
 			entity: (document.head.querySelector('[name="stir.type"]')?.getAttribute('content')||"").toLowerCase(),
 			image: document.head.querySelector('[name="og:image"],[property="og:image"]')?.getAttribute('content')
