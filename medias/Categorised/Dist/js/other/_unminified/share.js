@@ -62,10 +62,11 @@ stir.share.fallback = (() => {
 	close.classList.add("close-button");
 	close.setAttribute("aria-label", "Close modal");
 	close.addEventListener("click", event => shareSheet.close());
-	shareSheet.append(close);
+
 	shareSheet.classList.add("sharesheet");
-	console.info("shareData",shareData)
 	shareSheet.innerHTML = template(shareData);
+	shareSheet.append(close);
+	
 	const copy = shareSheet.querySelector("[data-copy]");
 	const copylinkbox = shareSheet.querySelector(".copy-link-box");
 	const tooltip = shareSheet.querySelector(".tooltip__link-copied");
