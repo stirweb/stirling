@@ -5722,7 +5722,8 @@ li.c-colour-swatch__pms:before {
   width: 1.4em;
   height: 1.4em;
   margin-left: .3125rem;
-  vertical-align: bottom; }
+  vertical-align: bottom;
+  stroke-width: 1.3; }
 
 [data-open="shareSheet"].button.tiny {
   min-width: auto;
