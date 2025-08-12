@@ -9,7 +9,8 @@ stir.templates = stir.templates || {};
 stir.templates.course = {
 	colours: {
 		UG: ["heritage-green","energy-turq","energy-purple"],
-		PGT: ["heritage-purple","heritage-purple","heritage-green"]
+		PGT: ["heritage-purple","heritage-purple","heritage-green"],
+		PGR: ["heritage-purple","heritage-purple","heritage-green"]
 	},
 	link: (text,href) => `<a href="${href}">${text}</a>`,
 	para: content => `<p>${content}</p>`,
@@ -95,14 +96,13 @@ stir.templates.course.barcharts = (barcharts) => {
 
 stir.templates.course.module = (boilerplates, count, data) => {
 	if (!boilerplates) return 'no data';
-	if (!data || !data.moduleTitle || !data.moduleCode || !data.moduleLevel || !data.moduleCredits || !data.moduleOverview || !data.learningOutcomes) {
-		console.error('[stir.templates.course.module] data error',data);
+	if (!data || undefined===data.moduleTitle || undefined===data.moduleCode || undefined===data.moduleLevel || undefined===data.moduleCredits || undefined===data.moduleOverview || undefined===data.learningOutcomes) {
 		return '<div class=u-my-2><p>Sorry, there was an error fetching the module details. Please try again later.</p></div>';
 	}
 
 	var otherInfo,additionalCosts;
 
-	const colour = stir.templates.course.colours[data.moduleLevelDescription];
+	const colour = stir.templates.course.colours[data.moduleLevelDescription||"UG"]||stir.templates.course.colours["UG"];
 
 	const studyAbroad = (()=>{
 		if (data.studyAbroad !== "Yes") return;
@@ -191,7 +191,7 @@ stir.templates.course.module = (boilerplates, count, data) => {
 										transform="translate(0.579 5.573)" stroke-linecap="round"
 										stroke-linejoin="round"></path>
 								</svg></span>
-							<span><strong>SCQF level:</strong><br>${data.moduleLevel}</span>
+							<span><strong>SCQF level:</strong><br>${data.moduleLevel&&data.moduleLevel.replace('SCQF LEVEL ','')}</span>
 						</div>
 						<div class="cell medium-6 flex-container u-gap u-p-1">
 							<span class="u-heritage-green u-inline-block u-width-48"><svg
