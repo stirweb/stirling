@@ -91,7 +91,7 @@
 
 	spinner.show();
 
-	el.insertAdjacentHTML("beforeend",`<div class=cell><pre>🤖 ${apiUrl}</pre></div>`);
+	console.info("[Module]",apiUrl);
 
 	fetch(apiUrl)
 		.then((response) => {
@@ -119,13 +119,13 @@
 								<p><strong>Division</strong> ${data.owningDivision}</p>
 								<p><strong>Award</strong> ${data.award}</p>
 								<p><strong>Programme route code</strong> ${data.programmeCode}</p>
-								<p><strong>Level</strong> ${data.programmeLevel}</p>
+								<p><strong>Level</strong> ${data.programmeLevel&&data.programmeLevel.replace('Level ','')}</p>
 								<p><strong>Credits</strong> ${data.creditPoints}</p>
 								<p><strong>ECTS</strong> ${data.ectsCredits}</p>
 								<p><strong>UCAS</strong> ${data.ucasCode}</p>
 							</div>
 
-							${ order.map(el => `<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]} [${typeof data[el]}]</p><br>`).join("") }
+							${ order.map(el => `<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]}</p><br>`).join("") }
 
 							<!-- AUTO -->
 							<!--  -->
@@ -136,22 +136,34 @@
 									console.info(el,typeof data[el], data[el]);
 									return false;
 								}
-							}).map(el => `<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]} [${typeof data[el]}]</p><br>`).join("") }
+							}).map(el => `<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]}</p></div>`).join("") }
 							<!-- AUTO -->
-
-							<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">QAA benchmarks</h3>
-							<ul>${data.qaaBenchmarks.map(benchmark).join('')}</ul>
-							<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Learning outcomes and graduate attributes</h3>
-							<ul>
-								${data.learningOutcomes.map(outcome => `<li>${outcome.description} ${Object.keys(outcome.graduateAttributes).map(id=>`<strong>${outcome.graduateAttributes[id]}</strong>`).join(", ")}</li>`).join('')}
-							</ul>
-							<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3>
-							<ul>${data.programmeAvailabilities.map(availability).join('')}</ul>
-							<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme structure</h3>
-							<p>The programme structures contained within the programme specifications are full-time structures. Where a student is taking the programme on a part-time basis the modules may be taken in an alternative sequence.</p>
-							<div class="u-p-2 u-mb-2" style="background: #f6f5f4">
-								${data.programmeStructure.map(structure).join('')}
+							
+							<div class=u-mb-2>
+								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">QAA benchmarks</h3>
+								<ul>${data.qaaBenchmarks.map(benchmark).join('')}</ul>
 							</div>
+
+							<div class=u-mb-2>
+								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Learning outcomes and graduate attributes</h3>
+								<ul>
+									${data.learningOutcomes.map(outcome => `<li class="u-initcap u-mb-1">${outcome.description} <br><span class="text-xsm">Graduate attributes: ${Object.keys(outcome.graduateAttributes).map(id=>`<a class=x-tag-link href="https://www.stir.ac.uk/student-life/careers/careers-advice-for-students/graduate-attributes/#:~:text=${outcome.graduateAttributes[id]}">${outcome.graduateAttributes[id]}</a>`).join(', ')}</li>`).join('')}
+								</ul>
+							</div>
+
+							<div class=u-mb-2>
+								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3>
+								<ul>${data.programmeAvailabilities.map(availability).join('')}</ul>
+							</div>
+
+							<div class=u-mb-2>
+								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme structure</h3>
+								<p>The programme structures contained within the programme specifications are full-time structures. Where a student is taking the programme on a part-time basis the modules may be taken in an alternative sequence.</p>
+								<div class="u-p-2 u-mb-2" style="background: #f6f5f4">
+									${data.programmeStructure.map(structure).join('')}
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>`);
