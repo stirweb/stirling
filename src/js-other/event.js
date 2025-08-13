@@ -323,7 +323,6 @@
       stir.map(getEventDays)
     )(upcomingEvents);
 
-    console.log(dates);
 
     return stir.compose(
       joiner,
