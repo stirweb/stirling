@@ -28,7 +28,12 @@
 
 (function () {
   const seriesEventsArea = stir.node("#seriesevents");
-  const seriesId = seriesEventsArea && seriesEventsArea.dataset && seriesEventsArea.dataset.seriesid ? seriesEventsArea.dataset.seriesid : null;
+  const seriesId =
+    seriesEventsArea &&
+    seriesEventsArea.dataset &&
+    seriesEventsArea.dataset.seriesid
+      ? seriesEventsArea.dataset.seriesid
+      : null;
   const seriesDateFilter = stir.node("#seriesdatefilter");
   const moreEventsArea = stir.node("#moreevents");
 
@@ -38,13 +43,17 @@
        Renderers
   */
 
-  const renderHeader = (text, classes) => (text ? `<h3 class="header-stripped ${classes}">${text}</h3>` : ``);
+  const renderHeader = (text, classes) =>
+    text ? `<h3 class="header-stripped ${classes}">${text}</h3>` : ``;
 
   const renderAudience = (audience) => {
-    return !audience.trim ? `` : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
+    return !audience.trim
+      ? ``
+      : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
   };
 
-  const renderInfoTag = (info) => `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span><br/>`;
+  const renderInfoTag = (info) =>
+    `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span><br/>`;
 
   const renderLink = (item) => {
     if (!item.url) return `${item.title}<br />`;
@@ -53,35 +62,67 @@
 
   const renderEvent = (item, index) => {
     return `
-        <div class="${index % 2 === 1 ? `` : `u-bg-grey`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : ``} u-p-1 c-event-list u-gap">
+        <div class="${index % 2 === 1 ? `` : `u-bg-grey`} ${
+      index === 0 ? `u-heritage-line-top u-border-width-5` : ``
+    } u-p-1 c-event-list u-gap">
           <div >
-            ${item.cancelled ? renderInfoTag("Cancelled") : ``}${item.rescheduled ? renderInfoTag("Rescheduled") : ``} 
+            ${item.cancelled ? renderInfoTag("Cancelled") : ``}${
+      item.rescheduled ? renderInfoTag("Rescheduled") : ``
+    } 
             <span class="u-inline-block u-mb-1"><strong>Event</strong><br />
            ${renderLink(item)}
-            <strong >Date:</strong> ${item.stirStart} ${item.stirEnd !== item.stirStart ? ` - ` + item.stirEnd : ``} <br />
+            <strong >Date:</strong> ${item.stirStart} ${
+      item.stirEnd !== item.stirStart ? ` - ` + item.stirEnd : ``
+    } <br />
             <strong>Time:</strong> ${item.startTime} - ${item.endTime}
           </div>
-          <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${item.summary}<br /><strong>Location</strong><br />${item.location}.</span></div>
-          <div><span class="u-inline-block u-mb-1">${renderAudience(item.audience)}</span></div>
-          <div><span class="u-inline-block u-mb-1">${item.recording ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>` : ``}</span></div>
+          <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${
+            item.summary
+          }<br /><strong>Location</strong><br />${item.location}.</span></div>
+          <div><span class="u-inline-block u-mb-1">${renderAudience(
+            item.audience
+          )}</span></div>
+          <div><span class="u-inline-block u-mb-1">${
+            item.recording
+              ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>`
+              : ``
+          }</span></div>
         </div>`;
   };
 
   const renderReadableDate = (date) => {
     const d = new Date(date);
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
 
     return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
   };
 
-  const renderDates = (item) => `<option value="${item}">${renderReadableDate(item)}</option>`;
+  const renderDates = (item) =>
+    `<option value="${item}">${renderReadableDate(item)}</option>`;
 
-  const renderOptionOne = () => `<option value="">Filter by upcoming date</option>`;
+  const renderOptionOne = () =>
+    `<option value="">Filter by upcoming date</option>`;
 
-  const renderEndDate = (item) => (item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`);
+  const renderEndDate = (item) =>
+    item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`;
 
   const renderMoreEvent = (item) => {
-    return `<a href="${item.url}" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
+    return `<a href="${
+      item.url
+    }" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
                 <span class="u-flex1"><strong>${item.title}</strong></span>
                 <span class="flex-container align-middle u-gap u-dark-grey">
                     <strong>${item.stirStart} ${renderEndDate(item)}</strong>
@@ -94,7 +135,8 @@
             </a>`;
   };
 
-  const renderNoEvents = () => "<p><strong>No events on date selected</strong></p>";
+  const renderNoEvents = () =>
+    "<p><strong>No events on date selected</strong></p>";
 
   /*
     Helpers
@@ -131,27 +173,37 @@
 
   const getNow = () => {
     let yourDate = new Date();
-    return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
+    return Number(
+      yourDate.toISOString().split("T")[0].split("-").join("") +
+        ("0" + yourDate.getHours()).slice(-2) +
+        ("0" + yourDate.getMinutes()).slice(-2)
+    );
   };
 
   const sortByStartDate = (a, b) => a.startInt - b.startInt;
   //const sortByEndDateDesc = (a, b) => b.endInt - a.endInt;
 
-  const isUpcoming = (item) => item.endInt >= getNow();
+  const isUpcoming = (item) => {
+    return item.endInt >= getNow();
+  };
 
   const isUpcomingFilter = stir.filter(isUpcoming);
 
-  const isPassed = (item) => Number(item.endInt) < getNow() && item.archive.length;
+  const isPassed = (item) =>
+    Number(item.endInt) < getNow() && item.archive.length;
 
   const isPassedFilter = stir.filter(isPassed);
 
-  const isSeriesChildFilter = stir.filter((item) => item.isSeriesChild === seriesId);
+  const isSeriesChildFilter = stir.filter(
+    (item) => item.isSeriesChild === seriesId
+  );
 
   const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
 
   const getJSONUrl = (env) => {
     if (env === "dev") return "../index.json";
-    if (env === "preview" || env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; //5222 for limited archive
+    if (env === "preview" || env === "appdev-preview")
+      return '<t4 type="navigation" id="5214" />'; //5222 for limited archive
 
     return `/data/events/revamp/json/index.json`;
   };
@@ -197,14 +249,30 @@
     return a;
   };
 
+  const isDateInFuture = (dateStr) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return new Date(dateStr) >= today;
+  };
+
   const getEventDays = (event) => getDaysArray(event.start, event.end);
 
   const getPastSeriesEvents = (events) => {
-    return stir.compose(isPassedFilter, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(events);
+    return stir.compose(
+      isPassedFilter,
+      stir.sort(sortByStartDate),
+      isSeriesChildFilter,
+      stir.filter(filterEmpties)
+    )(events);
   };
 
   const getUpcomingSeriesEvents = (events) => {
-    return stir.compose(isUpcomingFilter, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(events);
+    return stir.compose(
+      isUpcomingFilter,
+      stir.sort(sortByStartDate),
+      isSeriesChildFilter,
+      stir.filter(filterEmpties)
+    )(events);
   };
 
   /*
@@ -215,16 +283,30 @@
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
     const passedEvents = getPastSeriesEvents(initialData);
-    const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry)(passedEvents);
-    return seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
+    const seriesPastData = stir.compose(
+      joiner,
+      renderEventsMapper,
+      stir.sort(sortByStartDate),
+      dateUserFilterCurry
+    )(passedEvents);
+    return seriesPastData.length
+      ? renderHeader("Passed", "u-mt-2") + seriesPastData
+      : ``;
   };
 
   const doUpcomingSeries = (date, initialData) => {
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
     const upcomingEvents = getUpcomingSeriesEvents(initialData);
-    const seriesUpcomingData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry)(upcomingEvents);
-    const upcomingHtml = seriesUpcomingData.length ? renderHeader("Upcoming", "") + seriesUpcomingData : ``;
+    const seriesUpcomingData = stir.compose(
+      joiner,
+      renderEventsMapper,
+      stir.sort(sortByStartDate),
+      dateUserFilterCurry
+    )(upcomingEvents);
+    const upcomingHtml = seriesUpcomingData.length
+      ? renderHeader("Upcoming", "") + seriesUpcomingData
+      : ``;
 
     return upcomingHtml;
   };
@@ -233,15 +315,35 @@
     const passedEvents = getPastSeriesEvents(initialData);
     const upcomingEvents = getUpcomingSeriesEvents(initialData);
     const allSeriesEvents = [...passedEvents, ...upcomingEvents];
+    const isDateInFutureFilter = stir.filter(isDateInFuture);
 
-    return stir.compose(joiner, stir.map(renderDates), stir.removeDuplicates, stir.flatten, stir.map(getEventDays))(upcomingEvents);
+    const dates = stir.compose(
+      stir.removeDuplicates,
+      stir.flatten,
+      stir.map(getEventDays)
+    )(upcomingEvents);
+
+    console.log(dates);
+
+    return stir.compose(
+      joiner,
+      stir.map(renderDates),
+      isDateInFutureFilter,
+      stir.removeDuplicates,
+      stir.flatten,
+      stir.map(getEventDays)
+    )(upcomingEvents);
   };
 
   const doMoreEvents = (initialData) => {
     const removeDupsById = removeDuplicateObjectFromArray("id");
 
-    const currentId = moreEventsArea.dataset.currentid ? moreEventsArea.dataset.currentid : null;
-    const currents = currentId ? stir.filter((item) => item.id === Number(currentId), initialData) : null;
+    const currentId = moreEventsArea.dataset.currentid
+      ? moreEventsArea.dataset.currentid
+      : null;
+    const currents = currentId
+      ? stir.filter((item) => item.id === Number(currentId), initialData)
+      : null;
     const current = currents.length ? currents[0] : null;
 
     // Priority 1: events with same tag
@@ -249,13 +351,29 @@
     const filterByTagCurry = stir.filter(filterByTag(tags));
     const filterCurrent = stir.filter((item) => item.id !== Number(currentId));
 
-    const tagItems = stir.compose(filterCurrent, filterByTagCurry, stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
+    const tagItems = stir.compose(
+      filterCurrent,
+      filterByTagCurry,
+      stir.sort(sortByStartDate),
+      isUpcomingFilter
+    )(initialData);
 
     // Priority 2: pinned events then Priority 3: most imminent events
-    const items = stir.compose(filterCurrent, stir.sort(sortByPin), stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
+    const items = stir.compose(
+      filterCurrent,
+      stir.sort(sortByPin),
+      stir.sort(sortByStartDate),
+      isUpcomingFilter
+    )(initialData);
     const allItems = [...tagItems, ...items];
 
-    stir.compose(setDOMContent(moreEventsArea), joiner, renderMoreEventsMapper, limitTo3, removeDupsById)(allItems);
+    stir.compose(
+      setDOMContent(moreEventsArea),
+      joiner,
+      renderMoreEventsMapper,
+      limitTo3,
+      removeDupsById
+    )(allItems);
   };
 
   /*
@@ -272,17 +390,32 @@
 
     if (seriesEventsArea && seriesDateFilter) {
       const pastHtml = doPastSeries("", initialData);
-      setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData) + pastHtml);
+      setDOMContent(
+        seriesEventsArea,
+        doUpcomingSeries("", initialData) + pastHtml
+      );
 
       // Add Series filter
-      setDOMContent(seriesDateFilter, renderOptionOne() + doDateFilter(initialData));
+      setDOMContent(
+        seriesDateFilter,
+        renderOptionOne() + doDateFilter(initialData)
+      );
 
       // Event Listener
       seriesDateFilter.addEventListener("change", (event) => {
-        const upcomingHtml = doUpcomingSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
-        const pastHtml = doPastSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
+        const upcomingHtml = doUpcomingSeries(
+          seriesDateFilter.options[seriesDateFilter.selectedIndex].value,
+          initialData
+        );
+        const pastHtml = doPastSeries(
+          seriesDateFilter.options[seriesDateFilter.selectedIndex].value,
+          initialData
+        );
 
-        const html = upcomingHtml + pastHtml === "" ? renderNoEvents() : upcomingHtml + pastHtml;
+        const html =
+          upcomingHtml + pastHtml === ""
+            ? renderNoEvents()
+            : upcomingHtml + pastHtml;
         setDOMContent(seriesEventsArea, html);
       });
     }
@@ -331,5 +464,8 @@
             </div>`;
   };
 
-  setDOMContent(scope, gallery.map(renderImage).join("") + renderCTA(galleryId));
+  setDOMContent(
+    scope,
+    gallery.map(renderImage).join("") + renderCTA(galleryId)
+  );
 })(stir.node("#flickrgallery"));
