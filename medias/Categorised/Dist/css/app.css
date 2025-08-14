@@ -10220,6 +10220,9 @@ ul.no-bullet {
 /* 
   Grey 
 */
+.u-grey-line-top {
+  border-top: var(--border-thickness) solid #f6f5f4; }
+
 .u-grey-line-bottom {
   border-bottom: var(--border-thickness) solid #f6f5f4; }
 
