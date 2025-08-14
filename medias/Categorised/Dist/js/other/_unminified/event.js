@@ -43,53 +43,71 @@
        Renderers
   */
 
-  const renderHeader = (text, classes) =>
-    text ? `<h3 class="header-stripped ${classes}">${text}</h3>` : ``;
+  /* renderHeader*/
+  //const renderHeader = (text, classes) => text ? `<h3 class="header-stripped ${classes}">${text}</h3>` : ``;
+  const renderHeader = (text, classes) => ``;
 
+  /* renderAudience*/
   const renderAudience = (audience) => {
     return !audience.trim
       ? ``
       : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
   };
 
+  /* renderInfoTag*/
   const renderInfoTag = (info) =>
     `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span><br/>`;
 
+  /* renderLink*/
   const renderLink = (item) => {
     if (!item.url) return `${item.title}<br />`;
     return `<a href="${item.url}" class="u-underline">${item.title}</a><br />`;
   };
 
+  /* renderEvent*/
   const renderEvent = (item, index) => {
     return `
-        <div class="${index % 2 === 1 ? `` : `u-bg-grey`} ${
+      <div class="${index % 2 === 0 ? `u-bg-white` : ``} ${
       index === 0 ? `u-heritage-line-top u-border-width-5` : ``
     } u-p-1 c-event-list u-gap">
-          <div >
-            ${item.cancelled ? renderInfoTag("Cancelled") : ``}${
-      item.rescheduled ? renderInfoTag("Rescheduled") : ``
-    } 
-            <span class="u-inline-block u-mb-1"><strong>Event</strong><br />
-           ${renderLink(item)}
-            <strong >Date:</strong> ${item.stirStart} ${
+        <div>
+          ${item.cancelled ? renderInfoTag("Cancelled") : ``}
+          ${item.rescheduled ? renderInfoTag("Rescheduled") : ``}
+          <span class="u-inline-block u-mb-1">
+            <strong>Event</strong><br />
+            ${renderLink(item)}
+            <strong>Date:</strong> ${item.stirStart} ${
       item.stirEnd !== item.stirStart ? ` - ` + item.stirEnd : ``
-    } <br />
+    }<br />
             <strong>Time:</strong> ${item.startTime} - ${item.endTime}
-          </div>
-          <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${
-            item.summary
-          }<br /><strong>Location</strong><br />${item.location}.</span></div>
-          <div><span class="u-inline-block u-mb-1">${renderAudience(
-            item.audience
-          )}</span></div>
-          <div><span class="u-inline-block u-mb-1">${
-            item.recording
-              ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>`
-              : ``
-          }</span></div>
-        </div>`;
+          </span>
+        </div>
+        <div>
+          <span class="u-inline-block u-mb-1">
+            <strong>Description</strong><br />
+            ${item.summary}<br />
+            <strong>Location</strong><br />
+            ${item.location}.
+          </span>
+        </div>
+        <div>
+          <span class="u-inline-block u-mb-1">
+            ${renderAudience(item.audience)}
+          </span>
+        </div>
+        <div>
+          <span class="u-inline-block u-mb-1">
+            ${
+              item.recording
+                ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>`
+                : ``
+            }
+          </span>
+        </div>
+      </div>`;
   };
 
+  /* renderReadableDate*/
   const renderReadableDate = (date) => {
     const d = new Date(date);
     const months = [
@@ -110,15 +128,19 @@
     return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
   };
 
+  /* renderDates*/
   const renderDates = (item) =>
     `<option value="${item}">${renderReadableDate(item)}</option>`;
 
+  /* renderOptionOne*/
   const renderOptionOne = () =>
     `<option value="">Filter by upcoming date</option>`;
 
+  /* renderEndDate*/
   const renderEndDate = (item) =>
     item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`;
 
+  /* renderMoreEvent*/
   const renderMoreEvent = (item) => {
     return `<a href="${
       item.url
@@ -135,6 +157,7 @@
             </a>`;
   };
 
+  /* renderNoEvents*/
   const renderNoEvents = () =>
     "<p><strong>No events on date selected</strong></p>";
 
@@ -323,7 +346,6 @@
       stir.map(getEventDays)
     )(upcomingEvents);
 
-
     return stir.compose(
       joiner,
       stir.map(renderDates),
@@ -387,12 +409,13 @@
   stir.getJSON(url, (initialData) => {
     if (initialData.error) return;
 
+    const seriesEventsAreaPast = stir.node("#serieseventspast");
+
     if (seriesEventsArea && seriesDateFilter) {
-      const pastHtml = doPastSeries("", initialData);
-      setDOMContent(
-        seriesEventsArea,
-        doUpcomingSeries("", initialData) + pastHtml
-      );
+      seriesEventsAreaPast &&
+        setDOMContent(seriesEventsAreaPast, doPastSeries("", initialData));
+
+      setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData));
 
       // Add Series filter
       setDOMContent(
@@ -411,10 +434,7 @@
           initialData
         );
 
-        const html =
-          upcomingHtml + pastHtml === ""
-            ? renderNoEvents()
-            : upcomingHtml + pastHtml;
+        const html = upcomingHtml === "" ? renderNoEvents() : upcomingHtml;
         setDOMContent(seriesEventsArea, html);
       });
     }
