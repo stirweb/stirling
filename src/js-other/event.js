@@ -332,7 +332,7 @@
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
     const passedEvents = getPastSeriesEvents(initialData);
-    console.log(passedEvents);
+
     const seriesPastData = stir.compose(
       joiner,
       renderEventsMapper,
