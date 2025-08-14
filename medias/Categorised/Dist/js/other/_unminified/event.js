@@ -60,7 +60,7 @@
   // Renders the HTML for a single event
   const renderEvent = (item, index) => {
     return `
-      <div class="${index % 2 === 0 ? `u-bg-white` : ``} ${index === 0 ? `u-heritage-line-top u-border-width-5` : ``} u-p-1 c-event-list u-gap">
+      <div class="${index % 2 === 0 ? `u-bg-white` : `u-bg-white`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : `u-grey-line-top `} u-p-1 c-event-list u-gap">
         <div>
           ${item.cancelled ? renderInfoTag("Cancelled") : ``}
           ${item.rescheduled ? renderInfoTag("Rescheduled") : ``}

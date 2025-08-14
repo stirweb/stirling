@@ -158,6 +158,10 @@
   Grey 
 */
 
+.u-grey-line-top {
+  border-top: var(--border-thickness) solid $light-gray-2;
+}
+
 .u-grey-line-bottom {
   border-bottom: var(--border-thickness) solid $light-gray-2;
 }
