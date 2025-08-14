@@ -13,6 +13,7 @@
 
   const copyUrlBtn = stir.node("#copyurl");
 
+  // Copies the current URL to the clipboard
   const copyUrl = async () => {
     await navigator.clipboard.writeText(window.location.href);
   };
@@ -43,28 +44,28 @@
        Renderers
   */
 
-  /* renderHeader*/
   //const renderHeader = (text, classes) => text ? `<h3 class="header-stripped ${classes}">${text}</h3>` : ``;
+  // Renders a header (currently disabled)
   const renderHeader = (text, classes) => ``;
 
-  /* renderAudience*/
+  // Renders the audience information for an event
   const renderAudience = (audience) => {
     return !audience.trim
       ? ``
       : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
   };
 
-  /* renderInfoTag*/
+  // Renders an information tag (e.g., "Cancelled")
   const renderInfoTag = (info) =>
     `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span><br/>`;
 
-  /* renderLink*/
+  // Renders a link for an event item
   const renderLink = (item) => {
     if (!item.url) return `${item.title}<br />`;
     return `<a href="${item.url}" class="u-underline">${item.title}</a><br />`;
   };
 
-  /* renderEvent*/
+  // Renders the HTML for a single event
   const renderEvent = (item, index) => {
     return `
       <div class="${index % 2 === 0 ? `u-bg-white` : ``} ${
@@ -107,7 +108,7 @@
       </div>`;
   };
 
-  /* renderReadableDate*/
+  // Formats a date string into a readable format (e.g., "14 August 2025")
   const renderReadableDate = (date) => {
     const d = new Date(date);
     const months = [
@@ -128,19 +129,19 @@
     return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
   };
 
-  /* renderDates*/
+  // Renders a date as an <option> element
   const renderDates = (item) =>
     `<option value="${item}">${renderReadableDate(item)}</option>`;
 
-  /* renderOptionOne*/
+  // Renders the default "Filter by" option for a select dropdown
   const renderOptionOne = () =>
     `<option value="">Filter by upcoming date</option>`;
 
-  /* renderEndDate*/
+  // Renders the end date of an event if it differs from the start date
   const renderEndDate = (item) =>
     item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`;
 
-  /* renderMoreEvent*/
+  // Renders the HTML for an event in the "more events" section
   const renderMoreEvent = (item) => {
     return `<a href="${
       item.url
@@ -157,7 +158,7 @@
             </a>`;
   };
 
-  /* renderNoEvents*/
+  // Renders a message indicating no events were found for the selected date
   const renderNoEvents = () =>
     "<p><strong>No events on date selected</strong></p>";
 
@@ -165,10 +166,13 @@
     Helpers
   */
 
+  // Maps over events to render them for the "more events" section
   const renderMoreEventsMapper = stir.map(renderMoreEvent);
 
+  // Filters an array to the first 3 items
   const limitTo3 = stir.filter((item, index) => index < 3);
 
+  // Curried function to filter events by a user-selected date
   const dateUserFilter = stir.curry((d, item) => {
     if (d === ``) return item;
 
@@ -176,6 +180,7 @@
     if (inDateRange(itemDays, d)) return item;
   });
 
+  // Curried function to remove duplicate objects from an array based on a key
   const removeDuplicateObjectFromArray = stir.curry((key, array) => {
     let check = {};
     let res = [];
@@ -188,12 +193,16 @@
     return res;
   });
 
+  // Filters out events that do not have a start date
   const filterEmpties = (item) => item.start;
 
+  // Maps over events to render them
   const renderEventsMapper = stir.map(renderEvent);
 
+  // Joins an array of strings into a single string
   const joiner = stir.join("");
 
+  // Gets the current date and time as a comparable number
   const getNow = () => {
     let yourDate = new Date();
     return Number(
@@ -203,26 +212,34 @@
     );
   };
 
+  // Sort comparator for sorting events by start date (ascending)
   const sortByStartDate = (a, b) => a.startInt - b.startInt;
   //const sortByEndDateDesc = (a, b) => b.endInt - a.endInt;
 
+  // Checks if an event is upcoming
   const isUpcoming = (item) => {
     return item.endInt >= getNow();
   };
 
+  // Filter function to get only upcoming events
   const isUpcomingFilter = stir.filter(isUpcoming);
 
+  // Checks if an event has passed and has an archive link
   const isPassed = (item) =>
     Number(item.endInt) < getNow() && item.archive.length;
 
+  // Filter function to get only passed events
   const isPassedFilter = stir.filter(isPassed);
 
+  // Filter function to get events that are children of the current series
   const isSeriesChildFilter = stir.filter(
     (item) => item.isSeriesChild === seriesId
   );
 
+  // Sort comparator for sorting events by a "pin" property
   const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
 
+  // Gets the JSON data URL based on the environment
   const getJSONUrl = (env) => {
     if (env === "dev") return "../index.json";
     if (env === "preview" || env === "appdev-preview")
@@ -231,6 +248,7 @@
     return `/data/events/revamp/json/index.json`;
   };
 
+  // Curried function to set the inner HTML of a DOM element
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
@@ -239,6 +257,7 @@
   /* 
       filterByTag : Returns a boolean
   */
+  // Curried function to filter events by tags
   const filterByTag = stir.curry((tags_, item) => {
     const isTrue = (bol) => bol;
     const tags = tags_.split(", ");
@@ -255,6 +274,7 @@
   /* 
       inDateRange : Returns a boolean
   */
+  // Curried function to check if a date is within a given range
   const inDateRange = stir.curry((filterRange, date) => {
     const matches = filterRange.filter((day) => day === date);
     return matches.length ? true : false; // Only need one match
@@ -263,6 +283,7 @@
   /* 
       getDaysArray : Returns an array of date strings eg 2023-07-24
   */
+  // Generates an array of date strings between a start and end date
   const getDaysArray = (s, e) => {
     let a = [];
 
@@ -272,14 +293,17 @@
     return a;
   };
 
+  // Checks if a date string is today or in the future
   const isDateInFuture = (dateStr) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return new Date(dateStr) >= today;
   };
 
+  // Gets all the days an event spans
   const getEventDays = (event) => getDaysArray(event.start, event.end);
 
+  // Gets all past events for the current series
   const getPastSeriesEvents = (events) => {
     return stir.compose(
       isPassedFilter,
@@ -289,6 +313,7 @@
     )(events);
   };
 
+  // Gets all upcoming events for the current series
   const getUpcomingSeriesEvents = (events) => {
     return stir.compose(
       isUpcomingFilter,
@@ -302,21 +327,25 @@
       Controllers
   */
 
+  // Fetches and renders past series events based on a date filter
   const doPastSeries = (date, initialData) => {
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
     const passedEvents = getPastSeriesEvents(initialData);
+
     const seriesPastData = stir.compose(
       joiner,
       renderEventsMapper,
       stir.sort(sortByStartDate),
       dateUserFilterCurry
     )(passedEvents);
+
     return seriesPastData.length
       ? renderHeader("Passed", "u-mt-2") + seriesPastData
       : ``;
   };
 
+  // Fetches and renders upcoming series events based on a date filter
   const doUpcomingSeries = (date, initialData) => {
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
@@ -334,6 +363,7 @@
     return upcomingHtml;
   };
 
+  // Generates and renders the date filter options for the series
   const doDateFilter = (initialData) => {
     const passedEvents = getPastSeriesEvents(initialData);
     const upcomingEvents = getUpcomingSeriesEvents(initialData);
@@ -356,6 +386,7 @@
     )(upcomingEvents);
   };
 
+  // Fetches and renders the "more events" section
   const doMoreEvents = (initialData) => {
     const removeDupsById = removeDuplicateObjectFromArray("id");
 
@@ -409,12 +440,13 @@
   stir.getJSON(url, (initialData) => {
     if (initialData.error) return;
 
+    // Passed events
     const seriesEventsAreaPast = stir.node("#serieseventspast");
+    seriesEventsAreaPast &&
+      setDOMContent(seriesEventsAreaPast, doPastSeries("", initialData));
 
+    // Upcoming events
     if (seriesEventsArea && seriesDateFilter) {
-      seriesEventsAreaPast &&
-        setDOMContent(seriesEventsAreaPast, doPastSeries("", initialData));
-
       setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData));
 
       // Add Series filter
@@ -455,16 +487,19 @@
 
   if (!gallery || !galleryId) return;
 
+  // Curried function to set the inner HTML of a DOM element
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
   });
 
+  // Renders an image from Flickr data
   const renderImage = (item) => {
     const alt = item.title.length ? item.title : "Flickr image " + item.id;
     return `<img alt="${alt}" class="u-object-cover"  src="https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}_c.jpg" width="${item.o_width}" height="${item.o_height}"></img>`;
   };
 
+  // Renders a call-to-action to view the album on Flickr
   const renderCTA = (galleryId) => {
     return `<div>
               <svg width="70px" height="70px" viewBox="0 -13 47 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
