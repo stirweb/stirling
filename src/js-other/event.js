@@ -29,12 +29,7 @@
 
 (function () {
   const seriesEventsArea = stir.node("#seriesevents");
-  const seriesId =
-    seriesEventsArea &&
-    seriesEventsArea.dataset &&
-    seriesEventsArea.dataset.seriesid
-      ? seriesEventsArea.dataset.seriesid
-      : null;
+  const seriesId = seriesEventsArea && seriesEventsArea.dataset && seriesEventsArea.dataset.seriesid ? seriesEventsArea.dataset.seriesid : null;
   const seriesDateFilter = stir.node("#seriesdatefilter");
   const moreEventsArea = stir.node("#moreevents");
 
@@ -50,14 +45,11 @@
 
   // Renders the audience information for an event
   const renderAudience = (audience) => {
-    return !audience.trim
-      ? ``
-      : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
+    return !audience.trim ? `` : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
   };
 
   // Renders an information tag (e.g., "Cancelled")
-  const renderInfoTag = (info) =>
-    `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span><br/>`;
+  const renderInfoTag = (info) => `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span><br/>`;
 
   // Renders a link for an event item
   const renderLink = (item) => {
@@ -68,18 +60,14 @@
   // Renders the HTML for a single event
   const renderEvent = (item, index) => {
     return `
-      <div class="${index % 2 === 0 ? `u-bg-white` : ``} ${
-      index === 0 ? `u-heritage-line-top u-border-width-5` : ``
-    } u-p-1 c-event-list u-gap">
+      <div class="${index % 2 === 0 ? `u-bg-white` : ``} ${index === 0 ? `u-heritage-line-top u-border-width-5` : ``} u-p-1 c-event-list u-gap">
         <div>
           ${item.cancelled ? renderInfoTag("Cancelled") : ``}
           ${item.rescheduled ? renderInfoTag("Rescheduled") : ``}
           <span class="u-inline-block u-mb-1">
             <strong>Event</strong><br />
             ${renderLink(item)}
-            <strong>Date:</strong> ${item.stirStart} ${
-      item.stirEnd !== item.stirStart ? ` - ` + item.stirEnd : ``
-    }<br />
+            <strong>Date:</strong> ${item.stirStart} ${item.stirEnd !== item.stirStart ? ` - ` + item.stirEnd : ``}<br />
             <strong>Time:</strong> ${item.startTime} - ${item.endTime}
           </span>
         </div>
@@ -98,11 +86,7 @@
         </div>
         <div>
           <span class="u-inline-block u-mb-1">
-            ${
-              item.recording
-                ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>`
-                : ``
-            }
+            ${item.recording ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>` : ``}
           </span>
         </div>
       </div>`;
@@ -111,41 +95,23 @@
   // Formats a date string into a readable format (e.g., "14 August 2025")
   const renderReadableDate = (date) => {
     const d = new Date(date);
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
   };
 
   // Renders a date as an <option> element
-  const renderDates = (item) =>
-    `<option value="${item}">${renderReadableDate(item)}</option>`;
+  const renderDates = (item) => `<option value="${item}">${renderReadableDate(item)}</option>`;
 
   // Renders the default "Filter by" option for a select dropdown
-  const renderOptionOne = () =>
-    `<option value="">Filter by upcoming date</option>`;
+  const renderOptionOne = () => `<option value="">Filter by upcoming date</option>`;
 
   // Renders the end date of an event if it differs from the start date
-  const renderEndDate = (item) =>
-    item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`;
+  const renderEndDate = (item) => (item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`);
 
   // Renders the HTML for an event in the "more events" section
   const renderMoreEvent = (item) => {
-    return `<a href="${
-      item.url
-    }" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
+    return `<a href="${item.url}" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
                 <span class="u-flex1"><strong>${item.title}</strong></span>
                 <span class="flex-container align-middle u-gap u-dark-grey">
                     <strong>${item.stirStart} ${renderEndDate(item)}</strong>
@@ -159,8 +125,7 @@
   };
 
   // Renders a message indicating no events were found for the selected date
-  const renderNoEvents = () =>
-    "<p><strong>No events on date selected</strong></p>";
+  const renderNoEvents = () => "<p><strong>No events on date selected</strong></p>";
 
   /*
     Helpers
@@ -205,11 +170,7 @@
   // Gets the current date and time as a comparable number
   const getNow = () => {
     let yourDate = new Date();
-    return Number(
-      yourDate.toISOString().split("T")[0].split("-").join("") +
-        ("0" + yourDate.getHours()).slice(-2) +
-        ("0" + yourDate.getMinutes()).slice(-2)
-    );
+    return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
   };
 
   // Sort comparator for sorting events by start date (ascending)
@@ -225,16 +186,13 @@
   const isUpcomingFilter = stir.filter(isUpcoming);
 
   // Checks if an event has passed and has an archive link
-  const isPassed = (item) =>
-    Number(item.endInt) < getNow() && item.archive.length;
+  const isPassed = (item) => Number(item.endInt) < getNow() && item.archive.length;
 
   // Filter function to get only passed events
   const isPassedFilter = stir.filter(isPassed);
 
   // Filter function to get events that are children of the current series
-  const isSeriesChildFilter = stir.filter(
-    (item) => item.isSeriesChild === seriesId
-  );
+  const isSeriesChildFilter = stir.filter((item) => item.isSeriesChild === seriesId);
 
   // Sort comparator for sorting events by a "pin" property
   const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
@@ -242,8 +200,7 @@
   // Gets the JSON data URL based on the environment
   const getJSONUrl = (env) => {
     if (env === "dev") return "../index.json";
-    if (env === "preview" || env === "appdev-preview")
-      return '<t4 type="navigation" id="5214" />'; //5222 for limited archive
+    if (env === "preview" || env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; //5222 for limited archive
 
     return `/data/events/revamp/json/index.json`;
   };
@@ -305,22 +262,12 @@
 
   // Gets all past events for the current series
   const getPastSeriesEvents = (events) => {
-    return stir.compose(
-      isPassedFilter,
-      stir.sort(sortByStartDate),
-      isSeriesChildFilter,
-      stir.filter(filterEmpties)
-    )(events);
+    return stir.compose(isPassedFilter, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(events);
   };
 
   // Gets all upcoming events for the current series
   const getUpcomingSeriesEvents = (events) => {
-    return stir.compose(
-      isUpcomingFilter,
-      stir.sort(sortByStartDate),
-      isSeriesChildFilter,
-      stir.filter(filterEmpties)
-    )(events);
+    return stir.compose(isUpcomingFilter, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(events);
   };
 
   /*
@@ -333,16 +280,9 @@
 
     const passedEvents = getPastSeriesEvents(initialData);
 
-    const seriesPastData = stir.compose(
-      joiner,
-      renderEventsMapper,
-      stir.sort(sortByStartDate),
-      dateUserFilterCurry
-    )(passedEvents);
+    const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry)(passedEvents);
 
-    return seriesPastData.length
-      ? renderHeader("Passed", "u-mt-2") + seriesPastData
-      : ``;
+    return seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
   };
 
   // Fetches and renders upcoming series events based on a date filter
@@ -350,15 +290,8 @@
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
     const upcomingEvents = getUpcomingSeriesEvents(initialData);
-    const seriesUpcomingData = stir.compose(
-      joiner,
-      renderEventsMapper,
-      stir.sort(sortByStartDate),
-      dateUserFilterCurry
-    )(upcomingEvents);
-    const upcomingHtml = seriesUpcomingData.length
-      ? renderHeader("Upcoming", "") + seriesUpcomingData
-      : ``;
+    const seriesUpcomingData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry)(upcomingEvents);
+    const upcomingHtml = seriesUpcomingData.length ? renderHeader("Upcoming", "") + seriesUpcomingData : ``;
 
     return upcomingHtml;
   };
@@ -370,32 +303,17 @@
     const allSeriesEvents = [...passedEvents, ...upcomingEvents];
     const isDateInFutureFilter = stir.filter(isDateInFuture);
 
-    const dates = stir.compose(
-      stir.removeDuplicates,
-      stir.flatten,
-      stir.map(getEventDays)
-    )(upcomingEvents);
+    const dates = stir.compose(stir.removeDuplicates, stir.flatten, stir.map(getEventDays))(upcomingEvents);
 
-    return stir.compose(
-      joiner,
-      stir.map(renderDates),
-      isDateInFutureFilter,
-      stir.removeDuplicates,
-      stir.flatten,
-      stir.map(getEventDays)
-    )(upcomingEvents);
+    return stir.compose(joiner, stir.map(renderDates), isDateInFutureFilter, stir.removeDuplicates, stir.flatten, stir.map(getEventDays))(upcomingEvents);
   };
 
   // Fetches and renders the "more events" section
   const doMoreEvents = (initialData) => {
     const removeDupsById = removeDuplicateObjectFromArray("id");
 
-    const currentId = moreEventsArea.dataset.currentid
-      ? moreEventsArea.dataset.currentid
-      : null;
-    const currents = currentId
-      ? stir.filter((item) => item.id === Number(currentId), initialData)
-      : null;
+    const currentId = moreEventsArea.dataset.currentid ? moreEventsArea.dataset.currentid : null;
+    const currents = currentId ? stir.filter((item) => item.id === Number(currentId), initialData) : null;
     const current = currents.length ? currents[0] : null;
 
     // Priority 1: events with same tag
@@ -403,29 +321,13 @@
     const filterByTagCurry = stir.filter(filterByTag(tags));
     const filterCurrent = stir.filter((item) => item.id !== Number(currentId));
 
-    const tagItems = stir.compose(
-      filterCurrent,
-      filterByTagCurry,
-      stir.sort(sortByStartDate),
-      isUpcomingFilter
-    )(initialData);
+    const tagItems = stir.compose(filterCurrent, filterByTagCurry, stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
 
     // Priority 2: pinned events then Priority 3: most imminent events
-    const items = stir.compose(
-      filterCurrent,
-      stir.sort(sortByPin),
-      stir.sort(sortByStartDate),
-      isUpcomingFilter
-    )(initialData);
+    const items = stir.compose(filterCurrent, stir.sort(sortByPin), stir.sort(sortByStartDate), isUpcomingFilter)(initialData);
     const allItems = [...tagItems, ...items];
 
-    stir.compose(
-      setDOMContent(moreEventsArea),
-      joiner,
-      renderMoreEventsMapper,
-      limitTo3,
-      removeDupsById
-    )(allItems);
+    stir.compose(setDOMContent(moreEventsArea), joiner, renderMoreEventsMapper, limitTo3, removeDupsById)(allItems);
   };
 
   /*
@@ -442,29 +344,25 @@
 
     // Passed events
     const seriesEventsAreaPast = stir.node("#serieseventspast");
-    seriesEventsAreaPast &&
-      setDOMContent(seriesEventsAreaPast, doPastSeries("", initialData));
+
+    const passedEvents = doPastSeries("", initialData);
+
+    if (seriesEventsAreaPast) {
+      const html = passedEvents === "" ? "No passed events found" : passedEvents;
+      setDOMContent(seriesEventsAreaPast, html);
+    }
 
     // Upcoming events
     if (seriesEventsArea && seriesDateFilter) {
       setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData));
 
       // Add Series filter
-      setDOMContent(
-        seriesDateFilter,
-        renderOptionOne() + doDateFilter(initialData)
-      );
+      setDOMContent(seriesDateFilter, renderOptionOne() + doDateFilter(initialData));
 
       // Event Listener
       seriesDateFilter.addEventListener("change", (event) => {
-        const upcomingHtml = doUpcomingSeries(
-          seriesDateFilter.options[seriesDateFilter.selectedIndex].value,
-          initialData
-        );
-        const pastHtml = doPastSeries(
-          seriesDateFilter.options[seriesDateFilter.selectedIndex].value,
-          initialData
-        );
+        const upcomingHtml = doUpcomingSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
+        const pastHtml = doPastSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
 
         const html = upcomingHtml === "" ? renderNoEvents() : upcomingHtml;
         setDOMContent(seriesEventsArea, html);
@@ -518,8 +416,5 @@
             </div>`;
   };
 
-  setDOMContent(
-    scope,
-    gallery.map(renderImage).join("") + renderCTA(galleryId)
-  );
+  setDOMContent(scope, gallery.map(renderImage).join("") + renderCTA(galleryId));
 })(stir.node("#flickrgallery"));
