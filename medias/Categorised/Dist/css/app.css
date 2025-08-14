@@ -5135,8 +5135,10 @@ table caption {
     color: #000;
     padding: 1rem 0;
     font-weight: 700;
-    font-size: 1.625rem; }
+    font-size: 1.625rem;
+    margin-top: 2rem; }
   .stir-tabs [role="tabpanel"] > h3 {
+    margin-top: 2rem;
     font-size: 1.5rem; }
   .stir-tabs [role="region"] {
     padding: 1rem; }
