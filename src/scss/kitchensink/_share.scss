@@ -8,8 +8,9 @@
 		height: 1.4em;
 		margin-left: .3125rem;
 		vertical-align: bottom;
-		stroke-width:1.3
-		/* stroke-linecap="round" stroke-linejoin="round" */
+		stroke-width:1.3;
+		stroke: currentColor;
+		fill: none;
 	}
 
 	&.button.tiny{
@@ -70,9 +71,10 @@
 	}
 }
 
-.sharesheet {
+dialog.sharesheet {
 
 	padding: 2rem;
+	max-width: 38rem;
 
 	button[data-copy]::after {
 		content: none;
