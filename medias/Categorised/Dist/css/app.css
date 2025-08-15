@@ -5723,7 +5723,9 @@ li.c-colour-swatch__pms:before {
   height: 1.4em;
   margin-left: .3125rem;
   vertical-align: bottom;
-  stroke-width: 1.3; }
+  stroke-width: 1.3;
+  stroke: currentColor;
+  fill: none; }
 
 [data-open="shareSheet"].button.tiny {
   min-width: auto;
@@ -5768,15 +5770,16 @@ li.c-colour-swatch__pms:before {
     color: #FFF;
     text-align: center; }
 
-.sharesheet {
-  padding: 2rem; }
-  .sharesheet button[data-copy]::after {
+dialog.sharesheet {
+  padding: 2rem;
+  max-width: 38rem; }
+  dialog.sharesheet button[data-copy]::after {
     content: none; }
-  .sharesheet button[data-copy] > svg {
+  dialog.sharesheet button[data-copy] > svg {
     width: 1rem;
     height: 1rem;
     margin-left: .3125rem; }
-  .sharesheet ul.barnacles {
+  dialog.sharesheet ul.barnacles {
     position: relative;
     list-style: none;
     display: flex;
@@ -5785,12 +5788,12 @@ li.c-colour-swatch__pms:before {
     margin-left: 0;
     padding-bottom: 2em;
     margin-bottom: 0; }
-    .sharesheet ul.barnacles li {
+    dialog.sharesheet ul.barnacles li {
       display: inline-block; }
-      .sharesheet ul.barnacles li span[class*="uos-"] {
+      dialog.sharesheet ul.barnacles li span[class*="uos-"] {
         font-size: 2em;
         display: block; }
-    .sharesheet ul.barnacles svg {
+    dialog.sharesheet ul.barnacles svg {
       display: block;
       width: 40px; }
 
