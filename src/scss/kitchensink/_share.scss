@@ -71,9 +71,10 @@
 	}
 }
 
-.sharesheet {
+dialog.sharesheet {
 
 	padding: 2rem;
+	max-width: 38rem;
 
 	button[data-copy]::after {
 		content: none;
