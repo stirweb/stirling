@@ -1,7 +1,4 @@
 (function () {
-  //const debug   = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-  //const preview = UoS_env.name === "preview" ? true : false;
-  //if(!(debug||preview)) return;
 
   const date_elements = Array.prototype.slice.call(document.querySelectorAll("[name=meta_startval]"));
   if (!date_elements.length) return;
