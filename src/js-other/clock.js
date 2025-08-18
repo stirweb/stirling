@@ -61,7 +61,7 @@ var UoS_ClearingClock = (function () {
     if (7 != month) return false; // ignore any dates not in August
     if (day <= 3) return false; // no calls at all before 4 August
     if (day <= 13 && !sqa) return false; // Aug 5–14 only allowed for Scotland region (SQA results)
-    if (day >= 17) return false; // no calls after 16 August
+    if (day >= 26) return false; // no calls after 25 August
 
     // :: TIME OF DAY HANDLING ::
 
