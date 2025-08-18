@@ -125,12 +125,11 @@
 								<p><strong>UCAS</strong> ${data.ucasCode}</p>
 							</div>
 
-							${ order.map(el => `<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]}</p><br>`).join("") }
+							${ order.filter(el => (("string"===typeof data[el]||"number"===typeof data[el]) && data[el].length>0)).map(el => `<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]} [${typeof data[el]}] [${data[el].length}]</p><br>`).join("") }
 
 							<!-- AUTO -->
-							<!--  -->
 							${ Object.keys(data).filter(skips).filter(el=>{
-								if ("string"===typeof data[el]||"number"===typeof data[el]) {
+								if (("string"===typeof data[el]||"number"===typeof data[el]) && data[el].length>0) {
 									return true;
 								} else {
 									console.info(el,typeof data[el], data[el]);
@@ -139,17 +138,13 @@
 							}).map(el => `<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]}</p></div>`).join("") }
 							<!-- AUTO -->
 							
-							<div class=u-mb-2>
-								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">QAA benchmarks</h3>
-								<ul>${data.qaaBenchmarks.map(benchmark).join('')}</ul>
-							</div>
+							${data.qaaBenchmarks.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">QAA benchmarks</h3><ul>':''}
+							${data.qaaBenchmarks.map(benchmark).join('')}
+							${data.qaaBenchmarks.length>0?'</ul></div>':''}
 
-							<div class=u-mb-2>
-								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Learning outcomes and graduate attributes</h3>
-								<ul>
-									${data.learningOutcomes.map(outcome => `<li class="u-initcap u-mb-1">${outcome.description} <br><span class="text-xsm">Graduate attributes: ${Object.keys(outcome.graduateAttributes).map(id=>`<a class=x-tag-link href="https://www.stir.ac.uk/student-life/careers/careers-advice-for-students/graduate-attributes/#:~:text=${outcome.graduateAttributes[id]}">${outcome.graduateAttributes[id]}</a>`).join(', ')}</li>`).join('')}
-								</ul>
-							</div>
+							${data.learningOutcomes.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Learning outcomes and graduate attributes</h3><ul>':''}
+							${data.learningOutcomes.map(outcome => `	<li class="u-initcap u-mb-1">${outcome.description} <br><span class="text-xsm">Graduate attributes: ${Object.keys(outcome.graduateAttributes).map(id=>`<a class=x-tag-link href="https://www.stir.ac.uk/student-life/careers/careers-advice-for-students/graduate-attributes/#:~:text=${outcome.graduateAttributes[id]}">${outcome.graduateAttributes[id]}</a>`).join(', ')}</li>`).join('')}
+							${data.learningOutcomes.length>0?'</ul></div>':''}
 
 							<div class=u-mb-2>
 								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3>
