@@ -125,7 +125,7 @@
 								<p><strong>UCAS</strong> ${data.ucasCode}</p>
 							</div>
 
-							${ order.filter(el => (("string"===typeof data[el]||"number"===typeof data[el]) && data[el].length>0)).map(el => `<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]} [${typeof data[el]}] [${data[el].length}]</p><br>`).join("") }
+							${ order.filter(el => (("string"===typeof data[el]||"number"===typeof data[el]) && data[el].length>0)).map(el => `<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]}</p><br>`).join("") }
 
 							<!-- AUTO -->
 							${ Object.keys(data).filter(skips).filter(el=>{
