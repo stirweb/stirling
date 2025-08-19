@@ -23,7 +23,7 @@
 			case "preview":
 			case "appdev-preview":
 				return `https://${host}/${ppth}?${query}`;
-			case "pub":
+			case "prod":
 				return `https://${host}${path}?${query}`;
 
 		}

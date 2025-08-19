@@ -23,7 +23,7 @@
 			case "preview":
 			case "appdev-preview":
 				return `https://${host}/${ppth}?${query}`;
-			case "pub":
+			case "prod":
 				return `https://${host}${path}?${query}`;
 
 		}
@@ -145,10 +145,12 @@
 							${data.learningOutcomes.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Learning outcomes and graduate attributes</h3><ul>':''}
 							${data.learningOutcomes.map(outcome => `	<li class="u-initcap u-mb-1">${outcome.description} <br><span class="text-xsm">Graduate attributes: ${Object.keys(outcome.graduateAttributes).map(id=>`<a class=x-tag-link href="https://www.stir.ac.uk/student-life/careers/careers-advice-for-students/graduate-attributes/#:~:text=${outcome.graduateAttributes[id]}">${outcome.graduateAttributes[id]}</a>`).join(', ')}</li>`).join('')}
 							${data.learningOutcomes.length>0?'</ul></div>':''}
-
+							
+							<!-- 
 							${data.programmeAvailabilities.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3><ul>':''}
 							${data.programmeAvailabilities.map(availability).join('')}
 							${data.programmeAvailabilities.length>0?'</ul></div>':''}
+							 -->
 
 							<div class=u-mb-2>
 								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme structure</h3>
