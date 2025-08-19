@@ -53,26 +53,26 @@
 
 	const modules = module => `
 		<tr>
-			<td><a href="#">${module.title}</a> <span class="c-course-modules__module-code">(${module.code||module.moduleCode})</span></td>
+			<td><a target=_blank href="https://www.stir.ac.uk/courses/module/?code=${module.code||module.moduleCode}&session=${sess}&semester=${seme}" data-notused="occurrence=A">${module.title}</a> <span class="c-course-modules__module-code">(${module.code||module.moduleCode})</span></td>
 			<td>${module.credits?module.credits:'XX'} credits</td></tr>
 		`; //ask peter to rename option module `moduleCode` to `code` so its same as normal modules
-	const collections = collection => `
+	const collections = collection => collection.collectionElements.length>0?`
+		<p>Collections</p>
 		<details>
 			<summary style="cursor:pointer">${collection.title}</summary>
 			<table class=c-course-modules__table>
 				${collection.collectionElements.map(modules).join('')}
 			</table>
 		</details>
-	`;
+	`:'<!-- no collections for this semester -->';
 	const semester = semester => `
 		<details class="u-border-bottom-solid u-pb-1 u-mb-1">
 			<summary style="cursor:pointer" class="text-md u-font-bold">${semester.semesterDescription}</summary>
-			<div class="u-mx-1 u-mb-2">
+			<div class="u-mx-1 u-mb-1">
 				<p>Modules</p>
 				<table class=c-course-modules__table>
 					${semester.items.modules.map(modules).join('')}
 				</table>
-				<p>Collections</p>
 				${semester.items.collections.map(collections).join('')}
 			</div>
 		</details>`;
@@ -146,16 +146,15 @@
 							${data.learningOutcomes.map(outcome => `	<li class="u-initcap u-mb-1">${outcome.description} <br><span class="text-xsm">Graduate attributes: ${Object.keys(outcome.graduateAttributes).map(id=>`<a class=x-tag-link href="https://www.stir.ac.uk/student-life/careers/careers-advice-for-students/graduate-attributes/#:~:text=${outcome.graduateAttributes[id]}">${outcome.graduateAttributes[id]}</a>`).join(', ')}</li>`).join('')}
 							${data.learningOutcomes.length>0?'</ul></div>':''}
 
-							<div class=u-mb-2>
-								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3>
-								<ul>${data.programmeAvailabilities.map(availability).join('')}</ul>
-							</div>
+							${data.programmeAvailabilities.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3><ul>':''}
+							${data.programmeAvailabilities.map(availability).join('')}
+							${data.programmeAvailabilities.length>0?'</ul></div>':''}
 
 							<div class=u-mb-2>
 								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme structure</h3>
 								<p>The programme structures contained within the programme specifications are full-time structures. Where a student is taking the programme on a part-time basis the modules may be taken in an alternative sequence.</p>
 								<div class="u-p-2 u-mb-2" style="background: #f6f5f4">
-									${data.programmeStructure.map(structure).join('')}
+									${data.programmeStructure.length>0?data.programmeStructure.map(structure).join(''):'<p>No data available.</p>'}
 								</div>
 							</div>
 
