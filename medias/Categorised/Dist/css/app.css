@@ -5766,6 +5766,23 @@ li.c-colour-swatch__pms:before {
     .c-facts__course-leaflet-link a:hover {
       text-decoration: underline; }
 
+[data-open="shareSheet"]::after {
+  content: none; }
+
+[data-open="shareSheet"] > svg {
+  width: 1.4em;
+  height: 1.4em;
+  margin-left: .3125rem;
+  vertical-align: bottom;
+  stroke-width: 1.3;
+  stroke: currentColor;
+  fill: none; }
+
+[data-open="shareSheet"].button.tiny {
+  min-width: auto;
+  padding: .3rem 1rem;
+  border-radius: 2px; }
+
 /* 
   New version Aug 2022
   Mostly uses utils now
