@@ -1308,8 +1308,6 @@ stir.load = function (url, callback) {
   return request;
 };
 
-stir.getJSONp = stir.addScript;
-
 stir.loadAuthenticated = function (url, callback) {
   if (typeof url == "undefined") return;
   if (typeof callback != "function") callback = function () {};
@@ -1678,6 +1676,9 @@ stir.addScript = (src, onload, onerror) => {
   script.src = src;
   document.head.append(script);
 };
+
+stir.getJSONp = stir.addScript;
+
 /* function (src) {
   var script = document.createElement("script");
   script.src = src;
