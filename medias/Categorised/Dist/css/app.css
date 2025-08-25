@@ -7681,10 +7681,10 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   max-height: 689px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-bottom: 5rem; }
+  justify-content: center; }
   .u-hero-search.has-promobar {
-    justify-content: end; }
+    justify-content: end;
+    margin-bottom: 5rem; }
   .u-hero-search button {
     background-color: #006938;
     position: relative;
