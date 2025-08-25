@@ -45,7 +45,7 @@
  **/
 
 .u-hero-search {
-		background-image: url('https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn/media/stirling/global-assets/homepage-banner-images/homepage.jpg');
+		background-image: url('<t4 type="content" name="Image" output="normal" formatter="path/*" cdn="true" pxl-filter-id="2" />');
 		background-position: center;
 		background-size: cover;
 		background-repeat: no-repeat;
@@ -57,7 +57,7 @@
 		margin-bottom: 5rem;
 
 		&.has-promobar {
-			justify-content: flex-end;
+			justify-content: end;
 		}
 
 		button {
@@ -85,7 +85,7 @@
 		}
 
 		&:focus-within{
-			background-image: linear-gradient(rgba(0,0,0,0.3)), url('https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn/media/stirling/global-assets/homepage-banner-images/homepage.jpg');
+			background-image: linear-gradient(rgba(0,0,0,0.3)), url('<t4 type="content" name="Image" output="normal" formatter="path/*" cdn="true" pxl-filter-id="2" />');
 			background-blend-mode: multiply;
 		}
 
