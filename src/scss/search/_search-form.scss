@@ -1,5 +1,5 @@
 /*
-	Widget used on homepage etc
+	General search forms
 */
 
 .c-search-form {
@@ -25,7 +25,7 @@
   }
 }
 @media only screen and (min-width: 720px) {
-  .c-search-form .search-input-area div {
+  .c-search-form .search-input-area > div {
     display: grid;
     grid-template-columns: 5fr 1fr;
   }
@@ -34,4 +34,115 @@
   .c-search-form.u-trans-up {
     transform: translateY(-200%);
   }
+}
+
+
+
+/**
+ * Homepage search box
+ *
+ * Combined banner image, search box and (optional) promo bar
+ **/
+
+.u-hero-search {
+		background-image: url('https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn/media/stirling/global-assets/homepage-banner-images/homepage.jpg');
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		height: 30rem;
+		max-height: 689px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin-bottom: 5rem;
+
+		&.has-promobar {
+			justify-content: flex-end;
+		}
+
+		button {
+			background-color: map-get($greens, "medium");
+			position: relative;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			width: 4rem;
+
+			svg {
+				width: 32px;
+				height: 32px;
+				stroke-width:1.5;
+				stroke-linecap:round;
+				stroke:#fff;
+				fill:none;
+			}
+		}
+
+		input[name="query"]:focus-visible {
+			outline: 2px transparent solid;
+			box-shadow: 0 0 0 2px #fff,0 0 0 4px #006938,0 0 0 6px #fff;
+			z-index: 1;
+		}
+
+		&:focus-within{
+			background-image: linear-gradient(rgba(0,0,0,0.3)), url('https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn/media/stirling/global-assets/homepage-banner-images/homepage.jpg');
+			background-blend-mode: multiply;
+		}
+
+}
+
+.x-promobar-bg {
+	background: linear-gradient(transparent 50%, white 50%);
+
+	p.u-font-primary {
+		font-size: 1.625rem;
+		transform: translate(0, -.5rem);
+	}
+}
+
+.x-promobar-video {
+	max-width: 100%;
+	height: auto;
+	overflow: hidden;
+	margin: 0 auto;
+	z-index: 1;
+	transform: translateY(50%);
+
+	a {
+		display: block;
+	}
+
+	video {
+		display: block;
+		max-width: 100%;
+		min-height: 4rem;
+		object-fit: cover;
+	}
+
+	.u-safety-glass {
+		position: absolute;
+		background: none;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		top: 0;
+	}
+}
+
+@media screen and (min-width: 640px) {
+	.x-promobar-bg {
+		p.u-font-primary {
+			font-size: 2rem;
+			transform: translate(0, -1.333rem);
+		}
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	.x-promobar-bg {
+		p.u-font-primary {
+			font-size: 3rem;
+			transform: translate(0, -0.333rem);
+		}
+	}
 }
