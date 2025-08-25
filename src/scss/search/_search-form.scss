@@ -49,7 +49,7 @@
 		background-position: center;
 		background-size: cover;
 		background-repeat: no-repeat;
-		height: 30rem;
+		height: 20rem;
 		max-height: 689px;
 		display: flex;
 		flex-direction: column;
@@ -139,10 +139,19 @@
 }
 
 @media screen and (min-width: 1024px) {
+  .u-hero-search {
+    height: 24rem;
+  }
 	.x-promobar-bg {
 		p.u-font-primary {
 			font-size: 3rem;
 			transform: translate(0, -0.333rem);
 		}
 	}
+}
+
+@media screen and (min-width: 1240px) {
+  .u-hero-search {
+    height: 30rem;
+  }
 }
