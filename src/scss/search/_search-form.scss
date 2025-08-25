@@ -45,7 +45,7 @@
  **/
 
 .u-hero-search {
-		background-image: url('<t4 type="content" name="Image" output="normal" formatter="path/*" cdn="true" pxl-filter-id="2" />');
+		background-image: url('<t4 type="media" id="158519" formatter="path/*" cdn="true" pxl-filter-id="2" />');
 		background-position: center;
 		background-size: cover;
 		background-repeat: no-repeat;
@@ -85,7 +85,7 @@
 		}
 
 		&:focus-within{
-			background-image: linear-gradient(rgba(0,0,0,0.3)), url('<t4 type="content" name="Image" output="normal" formatter="path/*" cdn="true" pxl-filter-id="2" />');
+			background-image: linear-gradient(rgba(0,0,0,0.3)), url('<t4 type="media" id="158519" formatter="path/*" cdn="true" pxl-filter-id="2" />');
 			background-blend-mode: multiply;
 		}
 

@@ -7673,7 +7673,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
  * Combined banner image, search box and (optional) promo bar
  **/
 .u-hero-search {
-  background-image: url('<t4 type="content" name="Image" output="normal" formatter="path/*" cdn="true" pxl-filter-id="2" />');
+  background-image: url('<t4 type="media" id="158519" formatter="path/*" cdn="true" pxl-filter-id="2" />');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -7704,7 +7704,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     box-shadow: 0 0 0 2px #fff,0 0 0 4px #006938,0 0 0 6px #fff;
     z-index: 1; }
   .u-hero-search:focus-within {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3)), url('<t4 type="content" name="Image" output="normal" formatter="path/*" cdn="true" pxl-filter-id="2" />');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3)), url('<t4 type="media" id="158519" formatter="path/*" cdn="true" pxl-filter-id="2" />');
     background-blend-mode: multiply; }
 
 .x-promobar-bg {
