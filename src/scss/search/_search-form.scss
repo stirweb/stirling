@@ -45,23 +45,24 @@
  **/
 
 .u-hero-search {
+		background-color: map-get($neutrals, dark);
 		background-image: url('<t4 type="media" id="158519" formatter="path/*" cdn="true" pxl-filter-id="2" />');
 		background-position: center;
-		background-size: cover;
 		background-repeat: no-repeat;
-		height: 20rem;
-		max-height: 689px;
+		background-size: cover;
 		display: flex;
 		flex-direction: column;
+		height: 20rem;
 		justify-content: center;
+		max-height: 689px;
 
 		&.has-promobar {
 			justify-content: end;
-      margin-bottom: 5rem;
+			margin-bottom: 5rem;
 		}
 
 		button {
-			background-color: map-get($greens, "medium");
+			background-color: map-get($greens, medium);
 			position: relative;
 			display: flex;
 			justify-content: space-around;
@@ -85,7 +86,6 @@
 		}
 
 		&:focus-within{
-			background-image: linear-gradient(rgba(0,0,0,0.3)), url('<t4 type="media" id="158519" formatter="path/*" cdn="true" pxl-filter-id="2" />');
 			background-blend-mode: multiply;
 		}
 
