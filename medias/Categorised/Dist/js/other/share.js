@@ -20,7 +20,7 @@ var stir=stir||{};stir.share=stir.share||{},stir.share.fallback=(()=>{const t="p
 			<li title="Share with Bluesky">
 				<a href="https://bsky.app/intent/compose?text=${i}%0A${t}" title="Share this page on Bluesky">${o.bs}</a>
 			</li>
-			<li title="Share with X the everything app™">
+			<li title="Share with X">
 				<a href="https://x.com/intent/tweet?url=${t}&amp;text=${i}&amp;via=StirUni" title="Share this page on X">${o.x}</a>
 			</li>
 			<li title="Share with Weibo">

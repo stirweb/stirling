@@ -5,11 +5,17 @@ stir.share = (()=>{
 	const button = document.querySelector('[data-open="shareSheet"]');
 	if(!button) return;
 
-	const scripts = {
-		dev:'/medias/Categorised/Dist/js/other/share.js',
-		'appdev-preview': '<t4 type="media" id="190308" formatter="path/*" />',
-		preview: '<t4 type="media" id="192023" formatter="path/*" />',
-		prod: '<t4 type="media" id="192023" formatter="path/*" />'
+	const res = {
+		script: {
+			dev:'/medias/Categorised/Dist/js/other/share.js',
+			preview: '<t4 type="media" id="192023" formatter="path/*" />',
+			prod: '<t4 type="media" id="192023" formatter="path/*" />'
+		},
+		styles: {
+			dev:'/medias/Categorised/Dist/css/campaigns/share.css',
+			preview: '<t4 type="media" id="195920" formatter="path/*" />',
+			prod: '<t4 type="media" id="195920" formatter="path/*" />'
+		}
 	};
 
 	function _getShareData(el) {
@@ -28,7 +34,8 @@ stir.share = (()=>{
 			catch (error) { /* console.error(error.message); */ }
 		});
 	} else {
-		stir.addScript(scripts[UoS_env.name]||'');
+		res.styles[UoS_env.name] && stir.addStyle(res.styles[UoS_env.name]);
+		res.script[UoS_env.name] && stir.addScript(res.script[UoS_env.name]);
 	}
 
 	return {

@@ -429,7 +429,8 @@ a:has(img):hover {
       text-decoration-color: map-get($color, "light");
     }
 
-    .c-wrapper-2025 {
+    .c-wrapper-2025,
+    &.c-wrapper-2025 {
       background-color: map-get($color, "tint-7");
 
       &.u-bleed {
@@ -448,19 +449,17 @@ a:has(img):hover {
     .u-text-coloured {
       color: map-get($color, "hook");
     }
+
+    [data-behaviour="accordion"] > h3,
+    [data-behaviour="accordion"] > h2 {
+      color: $black;
+    }
   }
 }
 
 // Overrides and additions
 .teals a {
   color: map-get($teals, "safe");
-}
-
-// overrides for the tinted buttons
-.button.tinted.pinks,
-.pinks .button.tinted {
-  background-color: $pink-tint-40;
-  border-color: $pink-tint-40;
 }
 
 .neutrals {
@@ -532,25 +531,6 @@ a:has(img):hover {
     border-bottom: 2px solid $white;
   }
 
-  // a.button {
-  //   background-color: transparent;
-  //   border: 4px solid #fff;
-
-  //   &:hover {
-  //     background-color: transparent;
-  //     color: #fff;
-  //     border-color: rgba(255, 255, 255, 0.5);
-  //   }
-
-  //   &::after {
-  //     filter: brightness(0) invert(1);
-  //   }
-
-  //   &:hover::after {
-  //     filter: brightness(0) invert(1);
-  //   }
-  // }
-
   a:focus {
     background-color: transparent;
     color: $white;
@@ -563,6 +543,22 @@ a:has(img):hover {
 
   .c-link::before {
     background-color: brightness(0) invert(1);
+  }
+
+  .stir-accordion {
+    border-bottom: 1px solid $white;
+    &:last-child {
+      border-bottom: 1px solid $white !important;
+    }
+
+    > h3,
+    > h2 {
+      color: $white;
+    }
+
+    button:focus {
+      outline: 1px solid $white !important;
+    }
   }
 }
 
@@ -612,4 +608,12 @@ a:has(img):hover {
       }
     }
   }
+}
+
+// overrides for the buttons
+.button.tinted.pinks,
+.pinks .button.tinted,
+.dark.pinks .button {
+  background-color: $pink-tint-40;
+  border-color: $pink-tint-40;
 }

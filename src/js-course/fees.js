@@ -150,6 +150,7 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 	const modes = {
 		"FT":"full time",
 		"PTO":"part time",
+		"SW":"sandwich"
 	}
 
 	const formatter = new Intl.NumberFormat('en-GB', {

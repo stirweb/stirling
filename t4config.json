@@ -328,6 +328,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/searchpage-canuser.js"
       },
       {
+        "id": 192023,
+        "description": "share.js",
+        "projectPath": "medias/Categorised/Dist/js/other/share.js"
+      },
+      {
         "id": 158089,
         "description": "snow.js",
         "projectPath": "medias/Categorised/Dist/js/other/snow.js"
@@ -1686,6 +1691,11 @@
         "id": 174821,
         "description": "merry-christmas.css",
         "projectPath": "medias/Categorised/Dist/css/campaigns/merry-christmas.css"
+      },
+      {
+        "id": 195920,
+        "description": "share.css",
+        "projectPath": "medias/Categorised/Dist/css/campaigns/share.css"
       },
       {
         "id": 176763,

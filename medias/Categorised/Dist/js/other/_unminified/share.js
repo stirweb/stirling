@@ -43,7 +43,7 @@ stir.share.fallback = (() => {
 			<li title="Share with Bluesky">
 				<a href="https://bsky.app/intent/compose?text=${enc.title}%0A${enc.url}" title="Share this page on Bluesky">${icons.bs}</a>
 			</li>
-			<li title="Share with X the everything app™">
+			<li title="Share with X">
 				<a href="https://x.com/intent/tweet?url=${enc.url}&amp;text=${enc.title}&amp;via=StirUni" title="Share this page on X">${icons.x}</a>
 			</li>
 			<li title="Share with Weibo">

@@ -21,6 +21,13 @@
         </div>`
       : ``;
 
+  const renderAudience = (value) => {
+    if (!value || value === "students") return "All Students";
+    if (value === "ug") return "Undergraduate";
+    if (value === "pgt") return "Postgraduate";
+    return ``;
+  };
+
   const renderEvent = (item) => `
     <div class="grid-x u-bg-white u-mb-2 u-energy-line-left u-border-width-5">
       <div class="cell u-p-2 small-12">
@@ -43,7 +50,10 @@
           ${renderLink(item.link)}
         </div>
         <p class="text-sm">${item.description}</p>
-        <p class="u-m-0 text-sm"><strong>Theme:</strong> ${item.theme} <br /><strong>Attendance:</strong> ${item.attendance}</p>
+        <p class="u-m-0 text-sm"><strong>Theme:</strong> ${item.theme} <br />
+        <strong>Attendance:</strong> ${item.attendance} <br />
+        <strong>Student type:</strong> ${renderAudience(item.audience)} <br />
+        </p>
       </div>
     </div>`;
 
@@ -51,7 +61,11 @@
 
   const renderThemeFilter = (selected) => (item) => `<option value="${item.theme}" ${selected === item.theme ? "selected" : ""}>${item.theme}</option>`;
 
-  const renderSelectFilter = (html, title) => `<select id="${title.toLowerCase().replaceAll(" ", "-")}"><option value="">${title}</option>${html}</select>`;
+  const renderSelectFilter = (html, title) => {
+    const id = title.toLowerCase().replaceAll(" ", "-");
+    const optionAll = title.replace("Filter by", "All");
+    return `<label for="${id}" class="u-show-for-sr">${title}</label><select id="${id}"><option value="">${optionAll}s</option>${html}</select>`;
+  };
 
   const renderClearFiltersBtn = () => `<button id="clearfilters" class="button no-arrow tiny hollow expanded u-font-bold">Clear all filters</button>`;
 
@@ -113,6 +127,11 @@
 
   const filterByTheme = stir.curry((theme, item) => !theme || item.theme === theme);
 
+  const filterByAudience = stir.curry((audience, item) => {
+    if (!audience || audience === "students") return true;
+    return item.audience && item.audience.toLowerCase().includes(audience);
+  });
+
   const getNow = () => Number(new Date().toISOString().split(".")[0].replaceAll(/[-:T]/g, "").slice(0, -2));
 
   const isUpcoming = stir.curry((now, item) => item.endIntFull >= now);
@@ -133,7 +152,7 @@
   /* 
       Controller
   */
-  function doEventsFilter(globals, page_, now, date, theme, data) {
+  function doEventsFilter(globals, page_, now, date, theme, audience, data) {
     const page = Number(page_) || 1;
     const start = globals.itemsPerPage * (page - 1);
     const end = start + globals.itemsPerPage;
@@ -144,11 +163,12 @@
     const isUpcomingFilter = stir.filter(isUpcoming(now));
     const themeFilterer = stir.filter(filterByTheme(theme));
     const dateFilterer = stir.filter(filterByDate(date));
+    const audienceFilterer = stir.filter(filterByAudience(audience));
     const dateSorterer = stir.sort(sortByStartDate);
     const renderer = stir.map(renderEvent);
 
     // Data processing
-    const filteredData = stir.compose(themeFilterer, dateFilterer, dateSorterer, isUpcomingFilter)(data);
+    const filteredData = stir.compose(audienceFilterer, themeFilterer, dateFilterer, dateSorterer, isUpcomingFilter)(data);
     const paginatedData = filteredData.slice(start, end);
 
     const html = stir.compose(joiner, renderer)(paginatedData);
@@ -164,13 +184,14 @@
   function setupEventListeners(globals) {
     const dateFilter = stir.node("#filter-by-date");
     const themeFilter = stir.node("#filter-by-theme");
+    const audienceFilter = stir.node("#filter-by-audience");
 
     globals.resultsArea.addEventListener("click", (event) => {
       if (event.target.type === "submit") {
         setDOMContent(event.target.closest(".loadmorebtn"), "");
         const page = Number(SafeQueryParams.get("page")) + 1;
         SafeQueryParams.set("page", String(page));
-        doEventsFilter(globals, page, getNow(), dateFilter.value, themeFilter.value, initData);
+        doEventsFilter(globals, page, getNow(), dateFilter.value, themeFilter.value, audienceFilter.value, initData);
       }
     });
 
@@ -179,9 +200,11 @@
         const page = 1;
         SafeQueryParams.set("page", String(page));
         SafeQueryParams.remove("theme");
+        SafeQueryParams.remove("audience");
         dateFilter.value = "";
         themeFilter.value = "";
-        doEventsFilter(globals, page, getNow(), "", "", initData);
+        audienceFilter.value = "students";
+        doEventsFilter(globals, page, getNow(), "", "", "students", initData);
         event.preventDefault();
       }
     });
@@ -190,23 +213,36 @@
       const page = 1;
       SafeQueryParams.set("page", String(page));
       SafeQueryParams.set("theme", themeFilter.value);
-      doEventsFilter(globals, page, getNow(), dateFilter.value, themeFilter.value, initData);
+      SafeQueryParams.set("audience", audienceFilter.value);
+      doEventsFilter(globals, page, getNow(), dateFilter.value, themeFilter.value, audienceFilter.value, initData);
     };
 
     dateFilter.addEventListener("change", handleFilterChange);
     themeFilter.addEventListener("change", handleFilterChange);
+    audienceFilter.addEventListener("change", handleFilterChange);
   }
 
   /*
       Initialize
   */
 
+  const renderAudienceFilter = (selected) => {
+    const id = "filter-by-audience";
+    return `<label for="${id}" class="u-show-for-sr">Filter by student type</label>
+            <select id="${id}">
+              <option value="students" ${selected === "students" ? "selected" : ""}>All Students</option>
+              <option value="ug" ${selected === "ug" ? "selected" : ""}>Undergraduate</option>
+              <option value="pgt" ${selected === "pgt" ? "selected" : ""}>Postgraduate</option>
+          </select>`;
+  };
+
   const initData = stir.feeds.events.filter((item) => item.id);
   const theme = SafeQueryParams.get("theme") || "";
+  const audience = SafeQueryParams.get("audience") || "students";
   const page = 1;
 
   SafeQueryParams.set("page", String(page));
-  doEventsFilter(GLOBALS, page, getNow(), "", theme, initData);
+  doEventsFilter(GLOBALS, page, getNow(), "", theme, audience, initData);
 
   // Set up date filter
   const isUpcomingFilter = stir.filter(isUpcoming(getNow()));
@@ -225,7 +261,7 @@
 
   const setDOMFilters = setDOMContent(GLOBALS.filtersArea);
 
-  setDOMFilters(renderSelectFilter(datesFilterHtml, "Filter by date") + renderSelectFilter(themesFilterHtml, "Filter by theme") + renderClearFiltersBtn());
+  setDOMFilters(renderAudienceFilter(audience) + renderSelectFilter(datesFilterHtml, "Filter by date") + renderSelectFilter(themesFilterHtml, "Filter by theme") + renderClearFiltersBtn());
 
   setupEventListeners(GLOBALS);
 })(stir.node("#welcomeevents"));
