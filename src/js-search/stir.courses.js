@@ -68,85 +68,90 @@ stir.courses.startdates = function () {
 	const date_elements = Array.prototype.slice.call(document.querySelectorAll('[name="f.Start date|startval"]'));
 	if (!date_elements || 0 === date_elements.length) return;
 
-	const months = [,"January", , , , , , , ,"September", , ,];
-	//	const months = [, "January","February","March","April","May","June","July","August","September","October","November","December"];
+	const months = [, "January","February","March","April","May","June","July","August","September","October","November","December"];
+	const strings = {
+		'other': "Other",
+		'1st-every-month': "First day of any month"
+	};
 
-
-	const regex = new RegExp(/\d\d\d\d/);
-	const ay = new RegExp(/AY\d\d\d\d\D\d\d/i);
+	const match = new RegExp(/\d{4}-\d{2}ay\d{4}\D\d{2}/i)
+	const regex = new RegExp(/\d{4}/);
+	const ay = new RegExp(/ay\d{4}\D\d{2}/i);
 	const delim = new RegExp(/ay/i);
-	const dates = date_elements.map((date) => {
-		return {
-			data: date.value,
-			date: date.value.replace(ay, ""),
-			month: date.value.indexOf("-") > -1 ? months[parseInt(date.value.split("-")[1])] || "" : "",
-			year: date.value.match(regex) ? date.value.match(regex).shift() : "",
-			acyear: date.value.match(ay) ? date.value.match(ay).shift().replace(delim, "") : "",
-		};
-	});
+	const dates = date_elements
+		.filter(date => date.value.match(match))
+		.map((date) => {
+			return {
+				data: date.value,
+				date: date.value.replace(ay, ""),
+				month: date.value.indexOf("-") > -1 ? months[parseInt(date.value.split("-")[1])] || "" : "",
+				year: date.value.match(regex) ? date.value.match(regex).shift() : "",
+				acyear: date.value.match(ay) ? date.value.match(ay).shift().replace(delim, "") : "",
+				checked: date.checked
+			};
+		});
+	const other = date_elements
+		.filter(date => !date.value.match(match))
+		.map(date => {
+			console.info("OTHER!",date,strings[date.value]||date.value);
+			return {
+				label: strings[date.value]||date.value,
+				value: date.value,
+				checked: date.checked
+			};
+		});
 	const years = dates.map((date) => date.acyear.replace(delim, "")).filter((value, index, self) => self.indexOf(value) === index && value);
-
-	console.info("Dates", dates)
-	console.info("Years", years)
 
 	const root = date_elements[0].parentElement.parentElement.parentElement;
 
-	// remove checkboxes only if the years array is populated
-	if (!years.length) return;
+	// remove checkboxes only if the years (or "other") array is populated
+	if (0===years.length+other.length) return;
 	date_elements.forEach((el) => {
 		el.parentElement.parentElement.remove();
 	});
 
-	const DateInput = (type, name, value) => {
+	const DateInput = (type, name, value, checked) => {
 		const input = document.createElement("input");
 		input.type = type;
 		input.name = name;
 		input.value = value;
+		input.checked = checked
 		return input;
 	};
 
-	const DateLabel = (name, value) => {
-		//<input type="radio" name="f.Start date|startval" value="2026-01ay2025-26">
-		const input = DateInput("radio", "f.Start date|startval", `${value}`);
+	const DateLabel = (name, value, checked) => {
+		const input = DateInput("radio", "f.Start date|startval", `${value}`, checked);
 		const label = document.createElement("label");
 		label.appendChild(input);
 		label.appendChild(document.createTextNode(name));
 		return label;
+		//e.g. <input type="radio" name="f.Start date|startval" value="2026-01ay2025-26">
+	};
+
+	const searchFilterSubgroup = (title,values=[]) => {
+		const set = document.createElement("fieldset");
+		const legend = document.createElement("legend");
+		legend.classList.add("u-mb-tiny","text-xsm");
+		set.appendChild(legend);
+		set.classList.add("u-mb-1","c-search-filters-subgroup");
+		legend.innerText = title;
+		set.append(...values);
+		return set;
 	};
 
 	const picker = document.createElement("li");
 
+	// DOM: show start dates grouped into academic years
 	years.forEach((acyear) => {
-		// Array: get all dates relevant to this academic year
 		const thisyear = dates.filter((date) => date.acyear === acyear);
-
-		// String: create a meta-search parameter of 'other' dates (i.e. neither Sept nor Jan)
-		const other = thisyear
-			.filter((date) => date.date.indexOf("-01") === -1 && date.date.indexOf("-09") === -1)
-			.map((date) => date.data)
-			.join(" ");
-
-		// DOM: show heading
-		const set = document.createElement("fieldset");
-		const legend = document.createElement("legend");
-		legend.classList.add("u-my-1", "text-xsm");
-
-		set.appendChild(legend);
-		set.setAttribute("class", "c-search-filters-subgroup");
-		legend.innerText = `Academic year ${acyear}`;
-		picker.appendChild(set);
-
-		// DOM: show conventional start dates (Sept, Jan)
-		thisyear
-			.filter((date) => date.acyear === acyear) //&& (date.date.indexOf("-01") > -1 || date.date.indexOf("-09") > -1)
-			.map((date) => {
-				console.info(date);
-				set.appendChild(DateLabel(`${date.month} ${date.year}`, date.data));
-			});
-
-		// DOM: lastly show 'other' dates
-		//if (other.length) set.appendChild(DateLabel(`Other ${acyear}`, `${other}`));
+		const values = thisyear
+			.filter((date) => date.acyear === acyear)
+			.map((date) => DateLabel(`${date.month} ${date.year}`, date.data, date.checked));
+		picker.append( searchFilterSubgroup(`Academic year ${acyear}`,values) );
 	});
+
+	// DOM: lastly show 'other' dates
+	if (other.length) picker.append(searchFilterSubgroup("Other", other.map(item => DateLabel(item.label,item.value,item.checked))));
 
 	root.appendChild(picker);
 };
