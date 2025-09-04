@@ -22,8 +22,8 @@
  * Hide elements if JavaScript is enabled. Such as some fallback text
  */
 (function () {
-  document.querySelectorAll(".hide-if-js").forEach((elem) => {
-    elem.classList.add("hide");
+  document.querySelectorAll(".hide-if-js").forEach((el) => {
+    el.classList.add("hide");
   });
 })();
 
