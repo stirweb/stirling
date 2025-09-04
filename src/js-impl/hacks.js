@@ -19,9 +19,11 @@
 })();
 
 /* Hide elements if JavaScript is enabled. Such as some fallback text */
-document.querySelectorAll(".hide-if-js").forEach((elem) => {
-  elem.classList.add("hide");
-});
+(function () {
+  document.querySelectorAll(".hide-if-js").forEach((elem) => {
+    elem.classList.add("hide");
+  });
+})();
 
 /*
  * .c-link fix for Safari chevron
