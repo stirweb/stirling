@@ -2,6 +2,10 @@
 
 	console.info(window.location.search);
 
+	const css = document.createElement('style');
+	document.head.append(css);
+	css.textContent = "span.lc { text-transform: lowercase; }";
+
 	const u = new URL(window.location);
 	const el = document.querySelector("main#content > .grid-container");
 	const spinner = new stir.Spinner(el);
@@ -12,6 +16,8 @@
 	const sess = u.searchParams.has("session") ? u.searchParams.get('session') : '2024/5';
 	const seme = u.searchParams.has("semester") ? u.searchParams.get('semester') :'SPR';
 	const query = `programme=${code}/${sess}/${seme}`;
+	const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
 
 	const apiUrl = (()=>{
 		switch (UoS_env.name) {
@@ -54,7 +60,7 @@
 	const modules = module => `
 		<tr>
 			<td><a target=_blank href="https://www.stir.ac.uk/courses/module/?code=${module.code||module.moduleCode}&session=${sess}&semester=${seme}" data-notused="occurrence=A">${module.title}</a> <span class="c-course-modules__module-code">(${module.code||module.moduleCode})</span></td>
-			<td>${module.credits?module.credits:'XX'} credits</td></tr>
+			<td>${module.credits?module.credits+" credits":''}</td><td>${module.deliveryType||''}</td></tr>
 		`; //ask peter to rename option module `moduleCode` to `code` so its same as normal modules
 	const collections = collection => collection.collectionElements.length>0?`
 		<p>Collections</p>
@@ -69,6 +75,10 @@
 		<details class="u-border-bottom-solid u-pb-1 u-mb-1">
 			<summary style="cursor:pointer" class="text-md u-font-bold">${semester.semesterDescription}</summary>
 			<div class="u-mx-1 u-mb-1">
+				<pre>Options: ${semester.options.length}</pre>
+				<pre>Pathways: ${semester.pathways.length}</pre>
+				<p>Pathways</p>
+				<pre></pre>
 				<p>Modules</p>
 				<table class=c-course-modules__table>
 					${semester.items.modules.map(modules).join('')}
@@ -77,7 +87,7 @@
 			</div>
 		</details>`;
 	
-	const availability = data => `<li>${data.year} ${data.location}, ${data.deliveryMode} ${categories[data.loadCategory]||data.loadCategory} [${data.prospectiveStartDate}]${"Y"===data.isActive?"":' (Inactive)'}</li>`;
+	const availability = data => `<li>${months[parseInt(data.prospectiveStartDate.split('-')[1])]||''} ${data.year}, ${data.location[0]}<span class=lc>${data.location.slice(1)}</span>, <span class=lc>${data.deliveryMode.replace(" UK",'')} ${categories[data.loadCategory]||data.loadCategory}</span>${"Y"===data.isActive?"":' (Inactive)'}.</li>`;
 	const benchmark = data => `<li>${data}</li>`;
 		
 	const structure = data => `<p>${data.entryPointDescription}</p> ${data.years.map(year=>`${year.semesters.map(semester).join('')}`).join('')}`;  
@@ -117,13 +127,17 @@
 							<div class="u-bg-heritage-green--10 u-p-1 u-mb-2" style="column-count:2">
 								<p><strong>Faculty</strong> ${data.owningFaculty}</p>
 								<p><strong>Division</strong> ${data.owningDivision}</p>
-								<p><strong>Award</strong> ${data.award}</p>
+								${data.award ? `<p><strong>Award</strong>${data.award}</p>`:''}
 								<p><strong>Programme route code</strong> ${data.programmeCode}</p>
-								<p><strong>Level</strong> ${data.programmeLevel&&data.programmeLevel.replace('Level ','')}</p>
+								<p><strong>SCQF level</strong> ${data.programmeLevel&&data.programmeLevel.replace('Level ','')}</p>
 								<p><strong>Credits</strong> ${data.creditPoints}</p>
 								<p><strong>ECTS</strong> ${data.ectsCredits}</p>
-								<p><strong>UCAS</strong> ${data.ucasCode}</p>
+								${data.ucasCode ? `<p><strong>UCAS</strong> ${data.ucasCode}</p>`:''}
 							</div>
+
+							${data.programmeAvailabilities.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3><ul>':''}
+							${data.programmeAvailabilities.map(availability).join('')}
+							${data.programmeAvailabilities.length>0?'</ul></div>':''}
 
 							${ order.filter(el => (("string"===typeof data[el]||"number"===typeof data[el]) && data[el].length>0)).map(el => `<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]}</p><br>`).join("") }
 
@@ -145,16 +159,11 @@
 							${data.learningOutcomes.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Learning outcomes and graduate attributes</h3><ul>':''}
 							${data.learningOutcomes.map(outcome => `	<li class="u-initcap u-mb-1">${outcome.description} <br><span class="text-xsm">Graduate attributes: ${Object.keys(outcome.graduateAttributes).map(id=>`<a class=x-tag-link href="https://www.stir.ac.uk/student-life/careers/careers-advice-for-students/graduate-attributes/#:~:text=${outcome.graduateAttributes[id]}">${outcome.graduateAttributes[id]}</a>`).join(', ')}</li>`).join('')}
 							${data.learningOutcomes.length>0?'</ul></div>':''}
-							
-							<!-- 
-							${data.programmeAvailabilities.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3><ul>':''}
-							${data.programmeAvailabilities.map(availability).join('')}
-							${data.programmeAvailabilities.length>0?'</ul></div>':''}
-							 -->
 
 							<div class=u-mb-2>
 								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme structure</h3>
 								<p>The programme structures contained within the programme specifications are full-time structures. Where a student is taking the programme on a part-time basis the modules may be taken in an alternative sequence.</p>
+								<p>The list below shows compulsory and option modules for this programme. Option modules are revised over time and, in some cases, will be dependent upon pre-requisite and/or co-requisites being taken. More information about these requirements can be found in the relevant Module Descriptors. The options available each year can be subject to change due to student demand and availability of teaching staff</p>
 								<div class="u-p-2 u-mb-2" style="background: #f6f5f4">
 									${data.programmeStructure.length>0?data.programmeStructure.map(structure).join(''):'<p>No data available.</p>'}
 								</div>

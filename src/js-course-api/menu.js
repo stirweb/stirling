@@ -91,6 +91,6 @@
 
 	fetch(apiUrl)
 		.then( (response) => response.json() )
-		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data)) );
+		.then( (data) => {el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data));console.info("data",data)} )
 
 })();
