@@ -71,19 +71,20 @@
 			</table>
 		</details>
 	`:'<!-- no collections for this semester -->';
+
+	const pathways = pathway => {
+		return `<details><summary>${pathway.pathwayDescription}</summary>${items(pathway.items)}</details>`;
+	};
+
+	const items = data => data ? `${data.modules.length? `<p>Modules</p><table class=c-course-modules__table>${data.modules.map(modules).join('')}</table>`:''}${data.collections.map(collections).join('')}`:'';
+
 	const semester = semester => `
 		<details class="u-border-bottom-solid u-pb-1 u-mb-1">
 			<summary style="cursor:pointer" class="text-md u-font-bold">${semester.semesterDescription}</summary>
 			<div class="u-mx-1 u-mb-1">
-				<pre>Options: ${semester.options.length}</pre>
-				<pre>Pathways: ${semester.pathways.length}</pre>
-				<p>Pathways</p>
-				<pre></pre>
-				<p>Modules</p>
-				<table class=c-course-modules__table>
-					${semester.items.modules.map(modules).join('')}
-				</table>
-				${semester.items.collections.map(collections).join('')}
+				${semester.pathways.map(pathways).join('')}
+				${items(semester.items)}
+				<!-- Options: ${semester.options.length} -->
 			</div>
 		</details>`;
 	
@@ -127,7 +128,7 @@
 							<div class="u-bg-heritage-green--10 u-p-1 u-mb-2" style="column-count:2">
 								<p><strong>Faculty</strong> ${data.owningFaculty}</p>
 								<p><strong>Division</strong> ${data.owningDivision}</p>
-								${data.award ? `<p><strong>Award</strong>${data.award}</p>`:''}
+								${data.award ? `<p><strong>Award</strong> ${data.award}</p>`:''}
 								<p><strong>Programme route code</strong> ${data.programmeCode}</p>
 								<p><strong>SCQF level</strong> ${data.programmeLevel&&data.programmeLevel.replace('Level ','')}</p>
 								<p><strong>Credits</strong> ${data.creditPoints}</p>
