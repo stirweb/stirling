@@ -64,6 +64,7 @@
 		`; //ask peter to rename option module `moduleCode` to `code` so its same as normal modules
 	const collections = collection => collection.collectionElements.length>0?`
 		<p>Collections</p>
+		<p>Students will choose one (or as indicated) module/credits from a collection.</p>
 		<details>
 			<summary style="cursor:pointer">${collection.title}</summary>
 			<table class=c-course-modules__table>
