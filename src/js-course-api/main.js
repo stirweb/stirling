@@ -63,7 +63,7 @@
 			<td>${module.credits?module.credits+" credits":''}</td><td>${module.deliveryType||''}</td></tr>
 		`; //ask peter to rename option module `moduleCode` to `code` so its same as normal modules
 	const collections = collection => collection.collectionElements.length>0?`
-		<p>Collections</p>
+		<p class=u-m-0><strong>Collections</strong></p>
 		<p>Students will choose one (or as indicated) module/credits from a collection.</p>
 		<details>
 			<summary style="cursor:pointer">${collection.title}</summary>
@@ -74,15 +74,20 @@
 	`:'<!-- no collections for this semester -->';
 
 	const pathways = pathway => {
-		return `<details><summary>${pathway.pathwayDescription}</summary>${items(pathway.items)}</details>`;
+		return `<details class="u-border-bottom-solid u-pb-1 u-mb-1">
+					<summary style="cursor:pointer" class="text-md u-font-bold">${pathway.pathwayDescription}</summary>
+					<div class="u-mx-1 u-mb-1 u-py-1">
+						${items(pathway.items)}
+					</div>
+				</details>`;
 	};
 
-	const items = data => data ? `${data.modules.length? `<p>Modules</p><table class=c-course-modules__table>${data.modules.map(modules).join('')}</table>`:''}${data.collections.map(collections).join('')}`:'';
+	const items = data => data ? `${data.modules.length? `<p class=u-m-0><strong>Modules</strong></p><table class=c-course-modules__table>${data.modules.map(modules).join('')}</table>`:''}${data.collections.length ? data.collections.map(collections).join(''):''}`:'';
 
 	const semester = semester => `
 		<details class="u-border-bottom-solid u-pb-1 u-mb-1">
 			<summary style="cursor:pointer" class="text-md u-font-bold">${semester.semesterDescription}</summary>
-			<div class="u-mx-1 u-mb-1">
+			<div class="u-mx-1 u-mb-1 u-py-1">
 				${semester.pathways.map(pathways).join('')}
 				${items(semester.items)}
 				<!-- Options: ${semester.options.length} -->
@@ -127,13 +132,13 @@
 						<div class="cell u-padding-y">
 							<h1 class="c-course-heading c-course-title__heading u-heritage-green">${data["programmeTitle"]}</h1>
 							<div class="u-bg-heritage-green--10 u-p-1 u-mb-2" style="column-count:2">
-								<p><strong>Faculty</strong> ${data.owningFaculty}</p>
-								<p><strong>Division</strong> ${data.owningDivision}</p>
+								${data.owningFaculty ? `<p><strong>Faculty</strong> ${data.owningFaculty}</p>`:''}
+								${data.owningDivision ? `<p><strong>Division</strong> ${data.owningDivision}</p>`:''}
 								${data.award ? `<p><strong>Award</strong> ${data.award}</p>`:''}
-								<p><strong>Programme route code</strong> ${data.programmeCode}</p>
-								<p><strong>SCQF level</strong> ${data.programmeLevel&&data.programmeLevel.replace('Level ','')}</p>
-								<p><strong>Credits</strong> ${data.creditPoints}</p>
-								<p><strong>ECTS</strong> ${data.ectsCredits}</p>
+								${data.programmeCode ? `<p><strong>Programme route code</strong> ${data.programmeCode}</p>`:''}
+								${data.programmeLevel ? `<p><strong>SCQF level</strong> ${data.programmeLevel&&data.programmeLevel.replace('Level ','')}</p>`:''}
+								${data.creditPoints ? `<p><strong>Credits</strong> ${data.creditPoints}</p>`:''}
+								${data.ectsCredits ? `<p><strong>ECTS</strong> ${data.ectsCredits}</p>`:''}
 								${data.ucasCode ? `<p><strong>UCAS</strong> ${data.ucasCode}</p>`:''}
 							</div>
 
@@ -171,6 +176,22 @@
 								</div>
 							</div>
 
+							<div>
+								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Assessment and feedback</h3>
+								<h4>Academic Integrity</h4>
+								<p><pre>⚠️ Blurb to be added; links below to be checked</pre></p>
+
+								<H4>Feedback on assessment</h4>
+								<p>The University takes feedback very seriously and, along with the Students’ Union, have developed a <a href="https://www.stir.ac.uk/about/professional-services/student-academic-and-corporate-services/academic-registry/feedback-on-student-work/">feedback policy</a> and student guidance on feedback.</p>
+
+								<h4>Assessment Regulations and Policy</h4>
+								<p>The University of Stirling regulations and policy relevant to assessment can be accessed via:</p>
+								<ul>
+									<li><a href="https://www.stir.ac.uk/about/professional-services/student-academic-and-corporate-services/academic-registry/regulations/undergraduate/">Undergraduate</a></li>
+									<li><a href="https://www.stir.ac.uk/about/professional-services/student-academic-and-corporate-services/academic-registry/regulations/postgraduate-taught-regulations/">Postgraduate – Taught</a></li>
+									<li><a href="https://www.stir.ac.uk/about/professional-services/student-academic-and-corporate-services/academic-registry/regulations/postgraduate-research-regulations/">Postgraduate - Research</a></li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>`);
