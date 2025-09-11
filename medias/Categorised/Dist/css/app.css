@@ -1948,7 +1948,7 @@ hr {
   right: 0;
   left: 0;
   padding: 1em;
-  z-index: 14; }
+  z-index: 13; }
   #cookiebanner p {
     margin: 0 1em; }
   #cookiebanner button {
@@ -2161,7 +2161,7 @@ body > nav > a.u-show-on-focus {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 13;
+  z-index: 12;
   /*     visibility: hidden;
     opacity: 0; */ }
   .c-header-search[aria-hidden] {
@@ -2309,7 +2309,7 @@ body > nav > a.u-show-on-focus {
   left: 0;
   top: 100%;
   width: 100%;
-  z-index: 12;
+  z-index: 11;
   /* display: none; */ }
   .megamenu .megamenu__padding {
     padding: 2rem 0; }
@@ -3439,7 +3439,7 @@ h3.c-tab-accord-group-head {
     margin: 0;
     padding: 1rem;
     background-color: #f6f5f4;
-    z-index: 11;
+    z-index: 10;
     border-bottom: 5px solid #ccc; }
     .breadcrumbs > li ul li {
       line-height: 1.4;
@@ -8155,13 +8155,51 @@ pre.debug {
     display: none; } }
 
 /* COURSES */
+.c-course-title {
+  padding-top: 2rem; }
+
 .c-course-heading {
   font-size: 2.75rem;
-  margin-bottom: 40px; }
+  margin-bottom: 40px;
+  transition: font-size .1s linear; }
+
+.c-course-title__buttons {
+  margin: 1rem 0; }
+  .c-course-title__buttons .button {
+    min-width: auto;
+    padding: 1rem;
+    margin: 0;
+    transition: padding .1s linear; }
+
+.u-sticky.stuck .c-course-title {
+  padding-top: 1rem; }
+
+.u-sticky.stuck .c-course-heading {
+  font-size: 1.25rem;
+  margin-bottom: 1rem; }
+
+.u-sticky.stuck .c-course-title__buttons .button {
+  padding: 0 .3rem .3rem;
+  margin-right: 1rem; }
 
 @media screen and (min-width: 40em) {
+  .c-course-title {
+    display: flex;
+    justify-content: space-between; }
   .c-course-heading {
-    font-size: 3.75rem; } }
+    font-size: 3.75rem; }
+  .u-sticky.stuck .c-course-heading {
+    font-size: 1.75rem; }
+  .u-sticky.stuck .c-course-title__buttons .button {
+    min-width: 14rem;
+    /* same as .button */
+    padding: 1.25rem 1.75rem;
+    margin-right: 2rem; }
+  .c-course-title__buttons .button {
+    min-width: 14rem;
+    /* same as .button */
+    padding: 1.25rem 1.75rem;
+    margin-right: 2rem; } }
 
 /* seasonal component, enabled/disabled via JavaScript */
 .c-course-clearing-advert {
@@ -8169,7 +8207,7 @@ pre.debug {
   position: relative;
   position: sticky;
   top: auto;
-  z-index: 6; }
+  z-index: 5; }
   .c-course-clearing-advert p {
     margin: 30px 0; }
     .c-course-clearing-advert p .button {
@@ -8201,19 +8239,12 @@ pre.debug {
   color: #006938;
   text-align: center;
   font-size: 1rem;
-  z-index: 8; }
-
-.c-course-title__buttons {
-  margin: 1rem 0 1rem 0; }
-  .c-course-title__buttons .button {
-    margin-right: 2rem; }
-    .c-course-title__buttons .button:last-child {
-      margin-right: 0; }
+  z-index: 7; }
 
 .c-course-title-sticky-menu {
   display: none;
   position: fixed;
-  z-index: 7;
+  z-index: 6;
   top: 0;
   left: 0;
   width: 100%;
@@ -8252,6 +8283,8 @@ pre.debug {
 .kis-widget {
   margin: 0 0 1em 0;
   /* `revert` so the Discover Uni widget is not affected by our styles */ }
+  .kis-widget a.kis_button {
+    z-index: 1; }
   .kis-widget h3 {
     position: revert;
     padding: revert; }
@@ -10808,10 +10841,10 @@ svg.u-icon {
 */
 .u-sticky-nav {
   position: sticky;
-  top: 0;
+  top: -1px;
   left: 0;
   margin: 0 auto;
-  z-index: 5; }
+  z-index: 4; }
 
 @media screen and (min-width: 64em) {
   .u-sticky-large-up {
@@ -10823,13 +10856,9 @@ svg.u-icon {
 
 /* Courses etc */
 .u-sticky {
-  /* positioning */
   position: sticky;
-  top: 0;
-  right: auto;
-  left: 0%;
-  margin: 0 auto;
-  z-index: 3;
+  top: -1px;
+  z-index: 4;
   /* &.flush {
 		transform: translate(0, 0px);
 	} */
@@ -10838,14 +10867,7 @@ svg.u-icon {
 	  margin-top: var(--offsetup);
   } */ }
   .u-sticky.stuck {
-    position: fixed;
-    /* for IE/Edge */
-    position: sticky;
-    /* for modern browsers */
-    box-shadow: 0 5px 1px rgba(0, 0, 0, 0.2);
-    /* a {
-      padding: 13px 20px;
-    } */ }
+    box-shadow: 0 5px 1px rgba(0, 0, 0, 0.2); }
 
 /* removed 2024-05-15 for Clearing
 @include breakpoint(medium up) {

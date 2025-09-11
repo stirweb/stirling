@@ -266,7 +266,7 @@ var KISWidgetCaller = function () {
       debug && console.info("[Course] Clearing is open");
       swapCourseNavForClearingBannerSticky();
       addCoursePageAdvert(document.getElementById("clearing-advert-template"));
-      new UoS_StickyWidget(document.querySelector(".u-sticky"));
+      //new UoS_StickyWidget(document.querySelector(".u-sticky"));
       relocateCTA(); // During Clearing, shunt normal CTAs to the bottom of the page so they are out of the way.
       unshiftStirTabsOverlap(); // stylistic tab ovelap not compatible with sticky/z-index etc. disable it during clearing.
       activateLiveChat();

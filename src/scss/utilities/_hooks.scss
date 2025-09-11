@@ -24,7 +24,7 @@
 .u-hook > *::before {
   content: "";
   position: absolute;
-  z-index: 2;
+  z-index: z($z-index-elements, hook);
   height: var(--hook-height);
   width: 100%;
 }
@@ -32,7 +32,7 @@
 .u-hook > *::after {
   content: "";
   position: absolute;
-  z-index: 2;
+  z-index: z($z-index-elements, hook);
   height: 20%;
 }
 
@@ -40,7 +40,7 @@
   content: "";
   position: absolute;
   width: 50vw;
-  z-index: 3;
+  z-index: z($z-index-elements, hook-bleed);
 }
 
 // Top Right positioning

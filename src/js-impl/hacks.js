@@ -1,6 +1,6 @@
 /**
  * Hacks for Stirling
- * These are hacks for browsers that do not support certain features or have specific bugs.
+ * Hacks for browsers that do not support certain features or have specific bugs.
  */
 
 /**
@@ -22,8 +22,8 @@
  * Hide elements if JavaScript is enabled. Such as some fallback text
  */
 (function () {
-  document.querySelectorAll(".hide-if-js").forEach((elem) => {
-    elem.classList.add("hide");
+  document.querySelectorAll(".hide-if-js").forEach((el) => {
+    el.classList.add("hide");
   });
 })();
 
