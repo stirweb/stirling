@@ -50,10 +50,10 @@
 
 .u-sticky-nav {
   position: sticky;
-  top: 0;
+  top: -1px;
   left: 0;
   margin: 0 auto;
-  z-index: z($z-index-elements, u-sticky-nav);
+  z-index: z($z-index-elements, u-sticky);
 }
 
 @media screen and #{breakpoint(large up)} {
@@ -62,29 +62,19 @@
     top: 0;
     left: 0;
     margin: 0 auto;
-    z-index: z($z-index-elements, u-sticky-large-up);
+    z-index: z($z-index-elements, u-sticky);
   }
 }
 
 /* Courses etc */
 
 .u-sticky {
-  /* positioning */
   position: sticky;
-  top: 0;
-  right: auto;
-  left: 0%;
-  margin: 0 auto;
+  top: -1px;
   z-index: z($z-index-elements, u-sticky);
 
   &.stuck {
-    position: fixed; /* for IE/Edge */
-    position: sticky; /* for modern browsers */
     box-shadow: 0 5px 1px rgba(0, 0, 0, 0.2);
-
-    /* a {
-      padding: 13px 20px;
-    } */
   }
 
   /* &.flush {
