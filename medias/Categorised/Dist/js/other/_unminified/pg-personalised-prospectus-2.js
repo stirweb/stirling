@@ -309,15 +309,17 @@
     const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
     const { width, height } = firstPageCopy.getSize();
 
-    const largeFontSize = 77;
+    const largeFontSize = 72;
     const secondaryFontSize = 40;
 
-    const fontSize = firstName.length > 11 ? secondaryFontSize : largeFontSize;
+    console.log(firstName.length);
+
+    const fontSize = firstName.length > 8 ? secondaryFontSize : largeFontSize;
     const centre = width / 2;
     const textWidth = customFont.widthOfTextAtSize(firstName, fontSize);
 
     const xPos = centre - textWidth / 2;
-    const yPos = fontSize === largeFontSize ? 330 : 335;
+    const yPos = fontSize === largeFontSize ? 477 : 500;
 
     firstPageCopy.drawText(firstName.toUpperCase(), {
       x: xPos,
@@ -471,7 +473,10 @@
   const generatePDFForm = stir.node("#generatePDFForm");
 
   if (generatePDFForm) {
-    const optionsArray = [{ name: "Select an option", value: "Select an option" }, ...subjectsData.map((item) => ({ name: item.subject, qs: item.qsSubject })).sort((a, b) => a.name.localeCompare(b.name))];
+    const optionsArray = [
+      { name: "Select an option", value: "Select an option" },
+      ...subjectsData.map((item) => ({ name: item.subject, qs: item.qsSubject })).sort((a, b) => a.name.localeCompare(b.name)),
+    ];
     const selects = ["subject_area_0", "subject_area_1", "subject_area_2"].map((id) => document.getElementById(id));
 
     // Function: populateSelect */
