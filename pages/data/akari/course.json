@@ -1,0 +1,4133 @@
+{
+	"assessmentApproach": "Your learning will be assessed against the learning outcomes of each module you take, throughout your degree. These contribute to demonstrating that you have met the overall learning outcomes for your degree.  Assessment requirements for each module will be explained at the outset of the module, so you will know what you need to do, how and when.\n\nAssessments will take a range of styles including online open folder examinations; closed book examinations; reflective writing; essays; reports; presentations; multiple choice tests; and creating digital artefacts like podcasts. A common pattern is to submit a mid-term coursework assessment followed by a further assessment at the end of the module. Some modules will offer formative assessments early in the module, which do not count towards your module grade, but give you the opportunity to practice your technique and test your knowledge.\n\nThe role of feedback in learning cannot be underestimated and you will receive feedback in a range of formal and informal ways.  For example, you will receive formal feedback on all coursework. Informal feedback will be given by tutors and other students during tutorials, you will have opportunities to discuss requirements before completing assignments and will have access to grade descriptors so you understand what is expected of you and you will have the chance to discuss your feedback with your tutors. This helps you understand what you are doing well, where you might improve and take responsibility for your learning. All formal feedback is returned within 15 working days of when you submit work.",
+	"award": "Bachelor of Arts with Honours",
+	"awardBodies": [],
+	"careerAvenues": "A business degree ensures you’re well placed for a variety of jobs across many different sectors. Stirling Management School seeks to directly enhance your opportunities through a range of specialist career services, and we’ve been awarded the Small Business Charter in recognition of our active participation in supporting start-ups, small businesses and student entrepreneurship – connections that directly benefit you as you build towards your future.\n\nFind out more about how we prepare you for the world of work.\n\nBusiness Studies graduates from Stirling are working around the world for companies including Ernst and Young, the Scottish Government, EMI Music Publishing and many more.\nThe ability to pair Business Studies with a wide range of other courses can broaden your expertise and give you a competitive edge in the job market.\nOur Business Studies graduates have gone on to work in communications, banking, insurance, human resources, information management, advertising, retailing international trade, and research and development. They are contributing to the performance of a range of private, public and third sector organisations in various countries around the world including Norway, Kenya, Singapore, Australia and the USA.\n\nRecent Stirling graduates have started their careers in some of the following roles:\n\nAssociate, PwC\nCommercial and Performance Analyst, SSE\nAudit Associate, Deloitte UK\nGraduate Finance Analyst, Aston Martin\nGraduates who left Stirling up to ten years ago have forged careers in the following positions:\n\nNational Marketing Manager, BT\nPartner Relationship Manager, Hewlett-Packard\nInternational Recruitment Consultant, Solutions Driven\nHR Business Partner, Forth Valley College",
+	"creditPoints": 240,
+	"dateOfApproval": "2024-06-13",
+	"dateOfIntroduction": "2024-09-01",
+	"ectsCredits": 120,
+	"learningOutcomes": [
+		{
+			"description": "critically apply a wide knowledge that covers and integrates the principal areas of business and management from both academic and practitioner perspectives;",
+			"graduateAttributes": {
+				"1": "Subject specialist"
+			}
+		},
+		{
+			"description": "communicate ethical and sustainable business and management arguments concisely, comprehensively, and accessibly to a wide audience using appropriate technologies, prepared to contribute positively to industry and society, globally and regionally;",
+			"graduateAttributes": {
+				"3": "Socially intelligent ",
+				"5": "Responsible"
+			}
+		},
+		{
+			"description": "demonstrate the capability to apply quantitative and qualitative techniques, as well as relevant models and tools, to provide ethical and sustainable solutions to multi-business organisations both globally and regionally;",
+			"graduateAttributes": {
+				"2": "Innovative and creative",
+				"4": "Digitally literate "
+			}
+		},
+		{
+			"description": "demonstrate an understanding of the internal and environmental aspects and functions, purposes, structures, governance, operational and management practices associated with contemporary multi-organisations and their stakeholders;",
+			"graduateAttributes": {
+				"1": "Subject specialist",
+				"3": "Socially intelligent ",
+				"5": "Responsible"
+			}
+		},
+		{
+			"description": "critically investigate and resolve, as an individual or as a team, complex problems using core concepts and theories in a creative, ethical and sustainable manner.",
+			"graduateAttributes": {
+				"2": "Innovative and creative",
+				"5": "Responsible"
+			}
+		}
+	],
+	"learnTeachApproach": "You will study during <a\n  href=\"https://www.stir.ac.uk/study/semester-dates/\" rel=\"nofollow\">semesters</a>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n at Stirling. Modules offer a mixture of online content including videos, recorded short lectures, interactive activities and face to face teaching sessions.  Face to face sessions may be online, on or off campus. You will be encouraged to develop as an independent learner, working through reading and tasks set on a weekly basis. You are expected to set aside a substantial part of your week to complete this work.\n\nDuring teaching sessions, you will discuss topics you have been given to prepare in advance, work through tasks in groups and can ask questions. This allows you to consolidate your knowledge, delve into the subject and work with your fellow students, who will come from diverse backgrounds. These activities will help you develop graduate attributes including team working, communication skills and time management. As well as these sessions, you might have to complete tasks outside classes to help your understanding of the subject and develop your skills.\n\nOur learning and teaching approach is not only about transferring knowledge to you, but also about you building confidence to learn independently while developing a wide range of skills.",
+	"owningDivision": "Management, Work and Organisation",
+	"owningFaculty": "Stirling Management School",
+	"partnerInstitutions": [],
+	"programmeAvailabilities": [
+		{
+			"deliveryMode": "On Campus, UK",
+			"isActive": "Y",
+			"loadCategory": "FT",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2025-09-15",
+			"year": 2025
+		},
+		{
+			"deliveryMode": "On Campus, UK",
+			"isActive": "Y",
+			"loadCategory": "PTO",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2025-09-15",
+			"year": 2025
+		},
+		{
+			"deliveryMode": "On Campus, UK",
+			"isActive": "Y",
+			"loadCategory": "FT",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2026-09-14",
+			"year": 2026
+		},
+		{
+			"deliveryMode": "On Campus, UK",
+			"isActive": "Y",
+			"loadCategory": "PTO",
+			"location": "STIRLING",
+			"prospectiveStartDate": "2026-09-14",
+			"year": 2026
+		}
+	],
+	"programmeCode": "UCX12-BUSLAW",
+	"programmeLevel": "Level 10",
+	"programmeOverview": "<p>This business studies degree provides you with a broad foundation in a variety of business-related perspectives such as entrepreneurial thinking, strategic management, sustainability within business, technology within business, and business at the international level. You’ll also learn how organisations are structured, and gain insight into what makes them function best. Speakers from the industry visit regularly to complement our research-led teaching – giving you real-world and rounded knowledge of business and the tools needed to succeed in it. This course will grow your managerial expertise and put foundations in place to ensure you continue developing through your professional life, through the development of your practical skills such as critical thinking, problem-solving, communication, teamwork, and leadership, which are highly valued by employers in the business world. You will graduate with the mindset and skills needed to adapt to the evolving business landscape. This versatility will allow you to pursue diverse career paths across different industries.</p>\n\n\n",
+	"programmeStructure": [
+		{
+			"entryPointDescription": "Full Time, September start, Stirling Campus",
+			"years": [
+				{
+					"semesters": [
+						{
+							"items": {
+								"collections": [
+									{
+										"code": "ANYFSE1",
+										"collectionElements": [
+											{
+												"moduleCode": "HISU9A1",
+												"title": "For the Lion: Scotland in the British Isles and Europe 1100-1542"
+											},
+											{
+												"moduleCode": "HISU9B1",
+												"title": "The Making of Modern Britain 1707 to 2000: An Introduction"
+											},
+											{
+												"moduleCode": "SPCU901",
+												"title": "Introduction to Sociology and Criminology"
+											},
+											{
+												"moduleCode": "BIOU1IE",
+												"title": "Ecology: An Introduction"
+											},
+											{
+												"moduleCode": "ENVU1BP",
+												"title": "Building Planet Earth"
+											},
+											{
+												"moduleCode": "MGTU7S1",
+												"title": "The Global Business Environment: An Introduction"
+											},
+											{
+												"moduleCode": "MGTU7S1",
+												"title": "The Global Business Environment: An Introduction"
+											},
+											{
+												"moduleCode": "EDUU9E1",
+												"title": "Introduction to Education: Philosophy, Psychology and Sociology"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "FREU9B1",
+												"title": "Introductory French 1"
+											},
+											{
+												"moduleCode": "HISU9B1",
+												"title": "The Making of Modern Britain 1707 to 2000: An Introduction"
+											},
+											{
+												"moduleCode": "JOUU9A1",
+												"title": "Introduction to Journalism Studies"
+											},
+											{
+												"moduleCode": "UNIU9A1",
+												"title": "Wicked Problems, Sustainable Solutions"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "FREU9B1",
+												"title": "Introductory French 1"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "HISU9A1",
+												"title": "For the Lion: Scotland in the British Isles and Europe 1100-1542"
+											},
+											{
+												"moduleCode": "AQUU1OP",
+												"title": "Our Blue Planet"
+											},
+											{
+												"moduleCode": "AQUU1OP",
+												"title": "Our Blue Planet"
+											},
+											{
+												"moduleCode": "CSCU9P1",
+												"title": "Introduction to Computing Science"
+											},
+											{
+												"moduleCode": "MATU9N1",
+												"title": "Mathematics I"
+											},
+											{
+												"moduleCode": "SPSU711",
+												"title": "Understanding Sport"
+											},
+											{
+												"moduleCode": "JOUU9A1",
+												"title": "Introduction to Journalism Studies"
+											},
+											{
+												"moduleCode": "POLU9A1",
+												"title": "People and Power: Politics of the British Isles"
+											},
+											{
+												"moduleCode": "POLU9A1",
+												"title": "People, Power, and the State: An Introduction to Politics"
+											},
+											{
+												"moduleCode": "ENGU9A1",
+												"title": "Introduction to Literary Studies: Genre"
+											},
+											{
+												"moduleCode": "ENVU1BP",
+												"title": "Building Planet Earth"
+											},
+											{
+												"moduleCode": "RELU9A1",
+												"title": "Religion in the Modern World"
+											},
+											{
+												"moduleCode": "RELU9A1",
+												"title": "Religion in the Modern World"
+											},
+											{
+												"moduleCode": "FREU9B1",
+												"title": "Introductory French 1"
+											},
+											{
+												"moduleCode": "FREU9B1",
+												"title": "Introductory French 1"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "HISU9B1",
+												"title": "The Making of Modern Britain 1707 to 2000: An Introduction"
+											},
+											{
+												"moduleCode": "JOUU9A1",
+												"title": "Introduction to Journalism Studies"
+											},
+											{
+												"moduleCode": "POLU9A1",
+												"title": "People, Power, and the State: An Introduction to Politics"
+											},
+											{
+												"moduleCode": "ACCU7M1",
+												"title": "Accounting and Finance for Managers"
+											},
+											{
+												"moduleCode": "ECNU101",
+												"title": "Economic Decision Making and Markets"
+											},
+											{
+												"moduleCode": "ECNU101",
+												"title": "Economic Decision Making and Markets"
+											},
+											{
+												"moduleCode": "ENGU9A1",
+												"title": "Introduction to Literary Studies: Genre"
+											},
+											{
+												"moduleCode": "MATU9S1",
+												"title": "Discrete Structures"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "LINU911",
+												"title": "Language and Society"
+											},
+											{
+												"moduleCode": "SPAU9B1",
+												"title": "Introductory Spanish 1"
+											},
+											{
+												"moduleCode": "POLU9A1",
+												"title": "People, Power, and the State: An Introduction to Politics"
+											},
+											{
+												"moduleCode": "BIOU1IE",
+												"title": "Ecology: An Introduction"
+											},
+											{
+												"moduleCode": "ENGU9A1",
+												"title": "Introduction to Literary Studies: Genre"
+											},
+											{
+												"moduleCode": "ENGU9A1",
+												"title": "Introduction to Literary Studies: Genre"
+											},
+											{
+												"moduleCode": "MATU9S1",
+												"title": "Discrete Structures"
+											},
+											{
+												"moduleCode": "PHIU9A1",
+												"title": "Philosophy: What is it all About?"
+											},
+											{
+												"moduleCode": "RELU9A1",
+												"title": "Religion in the Modern World"
+											},
+											{
+												"moduleCode": "RELU9A1",
+												"title": "Religion in the Modern World"
+											},
+											{
+												"moduleCode": "SWKU911",
+												"title": "Foundations of Social Work Theory and Practice"
+											},
+											{
+												"moduleCode": "EDUU9E1",
+												"title": "Introduction to Education: Philosophy, Psychology and Sociology"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "LEIU9LM",
+												"title": "Leisure Management & Consumption"
+											},
+											{
+												"moduleCode": "HISU9A1",
+												"title": "For the Lion: Scotland in the British Isles and Europe 1100-1542"
+											},
+											{
+												"moduleCode": "BIOU1CE",
+												"title": "Introduction to Cell Biology"
+											},
+											{
+												"moduleCode": "ENGU9A1",
+												"title": "Introduction to Literary Studies: Genre"
+											},
+											{
+												"moduleCode": "GEOU1PP",
+												"title": "People and the Environment"
+											},
+											{
+												"moduleCode": "FMSU9A1",
+												"title": "Media 1: An Introduction to Media Studies and Industries"
+											},
+											{
+												"moduleCode": "FMSU9A1",
+												"title": "Media 1: An Introduction to Media Studies and Industries"
+											},
+											{
+												"moduleCode": "PHIU9A1",
+												"title": "Philosophy: What is it all About?"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "FREU9B1",
+												"title": "Introductory French 1"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "SPAU9B1",
+												"title": "Introductory Spanish 1"
+											},
+											{
+												"moduleCode": "SPAU9B1",
+												"title": "Introductory Spanish 1"
+											},
+											{
+												"moduleCode": "HISU9A1",
+												"title": "For the Lion: Scotland in the British Isles and Europe 1100-1542"
+											},
+											{
+												"moduleCode": "SPCU901",
+												"title": "Applying a Sociological Lens"
+											},
+											{
+												"moduleCode": "AQUU1OP",
+												"title": "Our Blue Planet"
+											},
+											{
+												"moduleCode": "CSCU9P1",
+												"title": "Introduction to Computing Science"
+											},
+											{
+												"moduleCode": "ECNU101",
+												"title": "Economic Decision Making and Markets"
+											},
+											{
+												"moduleCode": "FMSU9A1",
+												"title": "Media 1: An Introduction to Media Studies and Industries"
+											},
+											{
+												"moduleCode": "SPAU9B1",
+												"title": "Introductory Spanish 1"
+											}
+										],
+										"collectionVersion": "3.0",
+										"credits": 0,
+										"deliveryType": "Option",
+										"duration": 1,
+										"level": "",
+										"title": "ANYFSE1",
+										"type": "collection"
+									}
+								],
+								"modules": [
+									{
+										"code": "MGTU7S1",
+										"credits": 20,
+										"deliveryType": "Compulsory",
+										"duration": 1,
+										"level": "SCQF LEVEL 7",
+										"title": "The Global Business Environment: An Introduction",
+										"type": "module"
+									},
+									{
+										"code": "LAWU9A1",
+										"credits": 20,
+										"deliveryType": "Compulsory",
+										"duration": 1,
+										"level": "SCQF LEVEL 7",
+										"title": "Law in the 21st Century",
+										"type": "module"
+									}
+								]
+							},
+							"maxCredits": 60,
+							"minCredits": 60,
+							"options": [],
+							"pathways": [],
+							"semester": "1",
+							"semesterDescription": "Yr 1, semester 1 - Autumn"
+						},
+						{
+							"items": {
+								"collections": [
+									{
+										"code": "ANYFSE2",
+										"collectionElements": [
+											{
+												"moduleCode": "AQUU2TP",
+												"title": "Our Thirsty Planet: Man and the Aquatic Environment"
+											},
+											{
+												"moduleCode": "ENVU2LV",
+												"title": "Landscape Evolution"
+											},
+											{
+												"moduleCode": "FMSU9A2",
+												"title": "The Moving Image"
+											},
+											{
+												"moduleCode": "FREU9A2",
+												"title": "The French-Speaking World 2"
+											},
+											{
+												"moduleCode": "LINU912",
+												"title": "Foundations of Language"
+											},
+											{
+												"moduleCode": "MATU9D2",
+												"title": "Practical Statistics"
+											},
+											{
+												"moduleCode": "ENHU2X2",
+												"title": "Environmental History"
+											},
+											{
+												"moduleCode": "HISU9A2",
+												"title": "Renaissance Reformation and Revolution: Scotland 1542-1715"
+											},
+											{
+												"moduleCode": "RELU9A2",
+												"title": "Religion Colonialism and Nationalism"
+											},
+											{
+												"moduleCode": "TRNU901",
+												"title": "Introduction to Chinese Culture and Society"
+											},
+											{
+												"moduleCode": "BIOU2PH",
+												"title": "Introduction to Physiology"
+											},
+											{
+												"moduleCode": "ECNU102",
+												"title": "Understanding the Wider Economy"
+											},
+											{
+												"moduleCode": "ECNU102",
+												"title": "Understanding the Wider Economy"
+											},
+											{
+												"moduleCode": "ENGU9A2",
+												"title": "Introduction to Literary Studies: Theories & Approaches"
+											},
+											{
+												"moduleCode": "ENGU9A2",
+												"title": "Introduction to Literary Studies: Theories & Approaches"
+											},
+											{
+												"moduleCode": "SPAU9B2",
+												"title": "Introductory Spanish 2"
+											},
+											{
+												"moduleCode": "HISU9A2",
+												"title": "Renaissance Reformation and Revolution: Scotland 1542-1715"
+											},
+											{
+												"moduleCode": "RELU9A2",
+												"title": "Religion Colonialism and Nationalism"
+											},
+											{
+												"moduleCode": "AQUU2TP",
+												"title": "Our Thirsty Planet: Man and the Aquatic Environment"
+											},
+											{
+												"moduleCode": "GEOU2GE",
+												"title": "Global Environmental Issues"
+											},
+											{
+												"moduleCode": "PHIU9A2",
+												"title": "How Should We Live?: Philosophy, Ethics, and Life"
+											},
+											{
+												"moduleCode": "SPSU712",
+												"title": "Introduction to Sport & Exercise Science"
+											},
+											{
+												"moduleCode": "FREU9A2",
+												"title": "The French-Speaking World 2"
+											},
+											{
+												"moduleCode": "LINU912",
+												"title": "Foundations of Language"
+											},
+											{
+												"moduleCode": "SPAU9B2",
+												"title": "Introductory Spanish 2"
+											},
+											{
+												"moduleCode": "SPCU902",
+												"title": "Applying a Social Policy Lens"
+											},
+											{
+												"moduleCode": "AQUU2TP",
+												"title": "Our Thirsty Planet: Man and the Aquatic Environment"
+											},
+											{
+												"moduleCode": "CSCU9P2",
+												"title": "Programming and User Interface Design"
+											},
+											{
+												"moduleCode": "HISU9C2",
+												"title": "Concepts of History: Themes and Transformations"
+											},
+											{
+												"moduleCode": "GEOU2GE",
+												"title": "Global Environmental Issues"
+											},
+											{
+												"moduleCode": "MGTU7S2",
+												"title": "The Management Challenge: An Introduction"
+											},
+											{
+												"moduleCode": "SCIU2PS",
+												"title": "Practical Science Skills II: Field Skills"
+											},
+											{
+												"moduleCode": "FMSU9A2",
+												"title": "The Moving Image"
+											},
+											{
+												"moduleCode": "EDUU9E2",
+												"title": "Introduction to Education: Politics, Policy and Practice"
+											},
+											{
+												"moduleCode": "FREU9B2",
+												"title": "Introductory French 2"
+											},
+											{
+												"moduleCode": "FREU9B2",
+												"title": "Introductory French 2"
+											},
+											{
+												"moduleCode": "BIOU2PH",
+												"title": "Introduction to Physiology"
+											},
+											{
+												"moduleCode": "AQUU2TP",
+												"title": "Our Thirsty Planet: Man and the Aquatic Environment"
+											},
+											{
+												"moduleCode": "CSCU9S2",
+												"title": "Introduction to Data Science"
+											},
+											{
+												"moduleCode": "HISU9C2",
+												"title": "Concepts of History: Themes and Transformations"
+											},
+											{
+												"moduleCode": "HISU9C2",
+												"title": "Concepts of History: Themes and Transformations"
+											},
+											{
+												"moduleCode": "JOUU9A2",
+												"title": "Ethical Issues in Journalism"
+											},
+											{
+												"moduleCode": "MATU9N2",
+												"title": "Mathematics II"
+											},
+											{
+												"moduleCode": "PHIU9A2",
+												"title": "How Should We Live?: Philosophy, Ethics, and Life"
+											},
+											{
+												"moduleCode": "EDUU9E2",
+												"title": "Introduction to Education: Politics, Policy and Practice"
+											},
+											{
+												"moduleCode": "FREU9A2",
+												"title": "The French-Speaking World 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9B2",
+												"title": "Introductory Spanish 2"
+											},
+											{
+												"moduleCode": "HISU9A2",
+												"title": "Renaissance Reformation and Revolution: Scotland 1542-1715"
+											},
+											{
+												"moduleCode": "CSCU9S2",
+												"title": "Introduction to Data Science"
+											},
+											{
+												"moduleCode": "CSCU9P2",
+												"title": "Programming and User Interface Design"
+											},
+											{
+												"moduleCode": "HISU9C2",
+												"title": "Concepts of History: Themes and Transformations"
+											},
+											{
+												"moduleCode": "JOUU9A2",
+												"title": "Ethical Issues in Journalism"
+											},
+											{
+												"moduleCode": "FREU9A2",
+												"title": "The French-Speaking World 2"
+											},
+											{
+												"moduleCode": "FREU9A2",
+												"title": "The French-Speaking World 2"
+											},
+											{
+												"moduleCode": "FREU9B2",
+												"title": "Introductory French 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "RELU9A2",
+												"title": "Religion Colonialism and Nationalism"
+											},
+											{
+												"moduleCode": "TRNU901",
+												"title": "Introduction to Chinese Culture and Society"
+											},
+											{
+												"moduleCode": "CSCU9S2",
+												"title": "Introduction to Data Science"
+											},
+											{
+												"moduleCode": "ECNU105",
+												"title": "Introductory Economics"
+											},
+											{
+												"moduleCode": "MGTU7S2",
+												"title": "The Management Challenge: An Introduction"
+											},
+											{
+												"moduleCode": "MGTU7S2",
+												"title": "The Management Challenge: An Introduction"
+											},
+											{
+												"moduleCode": "JOUU9A2",
+												"title": "Ethical Issues in Journalism"
+											},
+											{
+												"moduleCode": "POLU9A2",
+												"title": "Political Concepts and Ideas"
+											},
+											{
+												"moduleCode": "POLU9A2",
+												"title": "Political Concepts and Ideas"
+											},
+											{
+												"moduleCode": "FREU9B2",
+												"title": "Introductory French 2"
+											},
+											{
+												"moduleCode": "RELU9A2",
+												"title": "Religion Colonialism and Nationalism"
+											},
+											{
+												"moduleCode": "RELU9A2",
+												"title": "Religion Colonialism and Nationalism"
+											},
+											{
+												"moduleCode": "CSCU9F2",
+												"title": "Making the Most of the World Wide Web"
+											},
+											{
+												"moduleCode": "CSCU9F2",
+												"title": "Making the Most of the World Wide Web"
+											},
+											{
+												"moduleCode": "CSCU9S2",
+												"title": "Introduction to Data Science"
+											},
+											{
+												"moduleCode": "ECNU105",
+												"title": "Introductory Economics"
+											},
+											{
+												"moduleCode": "ENGU9A2",
+												"title": "Introduction to Literary Studies: Theories & Approaches"
+											},
+											{
+												"moduleCode": "ENVU2LV",
+												"title": "Landscape Evolution"
+											},
+											{
+												"moduleCode": "FMSU9A2",
+												"title": "The Moving Image"
+											},
+											{
+												"moduleCode": "FREU9B2",
+												"title": "Introductory French 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9B2",
+												"title": "Introductory Spanish 2"
+											}
+										],
+										"collectionVersion": "4.0",
+										"credits": 0,
+										"deliveryType": "Option",
+										"duration": 1,
+										"level": "",
+										"title": "ANYFSE2",
+										"type": "collection"
+									}
+								],
+								"modules": [
+									{
+										"code": "MGTU7S2",
+										"credits": 20,
+										"deliveryType": "Compulsory",
+										"duration": 1,
+										"level": "SCQF LEVEL 7",
+										"title": "The Management Challenge: An Introduction",
+										"type": "module"
+									},
+									{
+										"code": "LAWU9CE",
+										"credits": 20,
+										"deliveryType": "Compulsory",
+										"duration": 1,
+										"level": "SCQF LEVEL 8",
+										"title": "Criminal Law and Evidence",
+										"type": "module"
+									}
+								]
+							},
+							"maxCredits": 60,
+							"minCredits": 60,
+							"options": [],
+							"pathways": [],
+							"semester": "2",
+							"semesterDescription": "Yr 1, semester 2 - Spring"
+						}
+					],
+					"year": "1"
+				},
+				{
+					"semesters": [
+						{
+							"items": {
+								"collections": [
+									{
+										"code": "ANYFAS3",
+										"collectionElements": [
+											{
+												"moduleCode": "HISU9A1",
+												"title": "For the Lion: Scotland in the British Isles and Europe 1100-1542"
+											},
+											{
+												"moduleCode": "HISU9B1",
+												"title": "The Making of Modern Britain 1707 to 2000: An Introduction"
+											},
+											{
+												"moduleCode": "MATU9P3",
+												"title": "Programming for Mathematicians"
+											},
+											{
+												"moduleCode": "SPCU901",
+												"title": "Introduction to Sociology and Criminology"
+											},
+											{
+												"moduleCode": "BIOU1IE",
+												"title": "Ecology: An Introduction"
+											},
+											{
+												"moduleCode": "ENVU1BP",
+												"title": "Building Planet Earth"
+											},
+											{
+												"moduleCode": "MGTU7S1",
+												"title": "The Global Business Environment: An Introduction"
+											},
+											{
+												"moduleCode": "MGTU7S1",
+												"title": "The Global Business Environment: An Introduction"
+											},
+											{
+												"moduleCode": "POLU9X3",
+												"title": "Understanding International Politics"
+											},
+											{
+												"moduleCode": "CSCU9A3",
+												"title": "Data Structures, Objects and Algorithms"
+											},
+											{
+												"moduleCode": "EDUU9E1",
+												"title": "Introduction to Education: Philosophy, Psychology and Sociology"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "FINU9F3",
+												"title": "Finance I"
+											},
+											{
+												"moduleCode": "FREU9B1",
+												"title": "Introductory French 1"
+											},
+											{
+												"moduleCode": "FREU9B3",
+												"title": "Intermediate French"
+											},
+											{
+												"moduleCode": "FREU9B3",
+												"title": "Intermediate French"
+											},
+											{
+												"moduleCode": "LINU9L3",
+												"title": "Language and the Brain"
+											},
+											{
+												"moduleCode": "PHIU913",
+												"title": "From Plato to Existentialism"
+											},
+											{
+												"moduleCode": "PHIU913",
+												"title": "From Plato to Existentialism"
+											},
+											{
+												"moduleCode": "RELU913",
+												"title": "Religion and Culture: Problems of Representation"
+											},
+											{
+												"moduleCode": "HISU9B1",
+												"title": "The Making of Modern Britain 1707 to 2000: An Introduction"
+											},
+											{
+												"moduleCode": "JOUU9A1",
+												"title": "Introduction to Journalism Studies"
+											},
+											{
+												"moduleCode": "ECNU202",
+												"title": "Intermediate Macroeconomics"
+											},
+											{
+												"moduleCode": "SPSU813",
+												"title": "Understanding Global Sport"
+											},
+											{
+												"moduleCode": "SPCU934",
+												"title": "Citizens Advice Training"
+											},
+											{
+												"moduleCode": "SPCU934",
+												"title": "Citizens Advice Training"
+											},
+											{
+												"moduleCode": "SPCU9C3",
+												"title": "Social Science Skills"
+											},
+											{
+												"moduleCode": "HISU9S3",
+												"title": "Reputations in History"
+											},
+											{
+												"moduleCode": "HISU9S3",
+												"title": "Reputations in History"
+											},
+											{
+												"moduleCode": "POLU9X3",
+												"title": "Introduction to International Politics"
+											},
+											{
+												"moduleCode": "CSCU9A3",
+												"title": "Data Structures, Objects and Algorithms"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "FREU9A3",
+												"title": "The French-Speaking World 3"
+											},
+											{
+												"moduleCode": "FREU9B1",
+												"title": "Introductory French 1"
+											},
+											{
+												"moduleCode": "FREU9B3",
+												"title": "Intermediate French"
+											},
+											{
+												"moduleCode": "MGTU9S3",
+												"title": "Fundamentals of Sustainability in Management"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "PSYU9A3",
+												"title": "The Social Mind"
+											},
+											{
+												"moduleCode": "SPAU9B3",
+												"title": "Intermediate Spanish and Latin American Studies"
+											},
+											{
+												"moduleCode": "SPAU9B3",
+												"title": "Intermediate Spanish and Latin American Studies"
+											},
+											{
+												"moduleCode": "RELU913",
+												"title": "Religion and Culture: Problems of Representation"
+											},
+											{
+												"moduleCode": "HISU9A1",
+												"title": "For the Lion: Scotland in the British Isles and Europe 1100-1542"
+											},
+											{
+												"moduleCode": "AQUU1OP",
+												"title": "Our Blue Planet"
+											},
+											{
+												"moduleCode": "AQUU1OP",
+												"title": "Our Blue Planet"
+											},
+											{
+												"moduleCode": "CSCU9P1",
+												"title": "Introduction to Computing Science"
+											},
+											{
+												"moduleCode": "MATU9N1",
+												"title": "Mathematics I"
+											},
+											{
+												"moduleCode": "SPSU711",
+												"title": "Understanding Sport"
+											},
+											{
+												"moduleCode": "ARTU9C3",
+												"title": "Arts & Humanities - Career Launch Pad"
+											},
+											{
+												"moduleCode": "ENGU903",
+												"title": "Literary Revolutions"
+											},
+											{
+												"moduleCode": "HRMU9S3",
+												"title": "Fundamentals of Human Resource Management"
+											},
+											{
+												"moduleCode": "MGTU9S3",
+												"title": "Fundamentals of Business and Management"
+											},
+											{
+												"moduleCode": "MKTU9M3",
+												"title": "Fundamentals of Marketing"
+											},
+											{
+												"moduleCode": "MKTU9M3",
+												"title": "Fundamentals of Marketing"
+											},
+											{
+												"moduleCode": "JOUU9A1",
+												"title": "Introduction to Journalism Studies"
+											},
+											{
+												"moduleCode": "POLU9A1",
+												"title": "People and Power: Politics of the British Isles"
+											},
+											{
+												"moduleCode": "POLU9A1",
+												"title": "People, Power, and the State: An Introduction to Politics"
+											},
+											{
+												"moduleCode": "BIOU3GE",
+												"title": "Evolution and Genetics"
+											},
+											{
+												"moduleCode": "CSCU9M3",
+												"title": "Scripting for Data Science"
+											},
+											{
+												"moduleCode": "ENGU9A1",
+												"title": "Introduction to Literary Studies: Genre"
+											},
+											{
+												"moduleCode": "ENVU1BP",
+												"title": "Building Planet Earth"
+											},
+											{
+												"moduleCode": "GEOU3BE",
+												"title": "Biogeography: An Ecological and Evolutionary Approach"
+											},
+											{
+												"moduleCode": "RELU9A1",
+												"title": "Religion in the Modern World"
+											},
+											{
+												"moduleCode": "RELU9A1",
+												"title": "Religion in the Modern World"
+											},
+											{
+												"moduleCode": "SPCU934",
+												"title": "Volunteering: Reflection and Participation"
+											},
+											{
+												"moduleCode": "CSCU9A3",
+												"title": "Data Structures, Objects and Algorithms"
+											},
+											{
+												"moduleCode": "ENGU903",
+												"title": "Literary Revolutions"
+											},
+											{
+												"moduleCode": "ENGU903",
+												"title": "Literary Revolutions"
+											},
+											{
+												"moduleCode": "FREU9A3",
+												"title": "The French-Speaking World 3"
+											},
+											{
+												"moduleCode": "FINU9F3",
+												"title": "Finance I"
+											},
+											{
+												"moduleCode": "FREU9B1",
+												"title": "Introductory French 1"
+											},
+											{
+												"moduleCode": "FREU9B1",
+												"title": "Introductory French 1"
+											},
+											{
+												"moduleCode": "MGTU9S3",
+												"title": "Fundamentals of Business and Management"
+											},
+											{
+												"moduleCode": "MGTU9S3",
+												"title": "Fundamentals of Sustainability in Management"
+											},
+											{
+												"moduleCode": "MATU9M3",
+												"title": "Analysis I"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "SPAU9A3",
+												"title": "Spanish and Latin American Studies 3"
+											},
+											{
+												"moduleCode": "SPAU9A3",
+												"title": "Spanish and Latin American Studies 3"
+											},
+											{
+												"moduleCode": "PSYU9A3",
+												"title": "The Social Mind"
+											},
+											{
+												"moduleCode": "SPAU9B3",
+												"title": "Intermediate Spanish"
+											},
+											{
+												"moduleCode": "HISU9B1",
+												"title": "The Making of Modern Britain 1707 to 2000: An Introduction"
+											},
+											{
+												"moduleCode": "JOUU9A1",
+												"title": "Introduction to Journalism Studies"
+											},
+											{
+												"moduleCode": "POLU9A1",
+												"title": "People, Power, and the State: An Introduction to Politics"
+											},
+											{
+												"moduleCode": "BIOU3GE",
+												"title": "Evolution and Genetics"
+											},
+											{
+												"moduleCode": "ACCU7M1",
+												"title": "Accounting and Finance for Managers"
+											},
+											{
+												"moduleCode": "ECNU101",
+												"title": "Economic Decision Making and Markets"
+											},
+											{
+												"moduleCode": "ECNU101",
+												"title": "Economic Decision Making and Markets"
+											},
+											{
+												"moduleCode": "ENGU9A1",
+												"title": "Introduction to Literary Studies: Genre"
+											},
+											{
+												"moduleCode": "MATU9S1",
+												"title": "Discrete Structures"
+											},
+											{
+												"moduleCode": "ARTU9C3",
+												"title": "Arts & Humanities - Career Launch Pad"
+											},
+											{
+												"moduleCode": "POLU9X3",
+												"title": "Understanding International Politics"
+											},
+											{
+												"moduleCode": "AQUU3AE",
+												"title": "Introduction to Aquatic Environments"
+											},
+											{
+												"moduleCode": "ENGU903",
+												"title": "Literary Revolutions"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "FREU9A3",
+												"title": "The French-Speaking World 3"
+											},
+											{
+												"moduleCode": "FINU9F3",
+												"title": "Finance I"
+											},
+											{
+												"moduleCode": "FREU9B3",
+												"title": "Intermediate French"
+											},
+											{
+												"moduleCode": "LINU911",
+												"title": "Language and Society"
+											},
+											{
+												"moduleCode": "SPAU9A3",
+												"title": "Spanish and Latin American Studies 3"
+											},
+											{
+												"moduleCode": "SPAU9A3",
+												"title": "Spanish and Latin American Studies 3"
+											},
+											{
+												"moduleCode": "SPAU9B1",
+												"title": "Introductory Spanish 1"
+											},
+											{
+												"moduleCode": "SPCU913",
+												"title": "Understanding Social Policy"
+											},
+											{
+												"moduleCode": "RELU913",
+												"title": "Religion and Culture: Problems of Representation"
+											},
+											{
+												"moduleCode": "POLU9A1",
+												"title": "People, Power, and the State: An Introduction to Politics"
+											},
+											{
+												"moduleCode": "BIOU1IE",
+												"title": "Ecology: An Introduction"
+											},
+											{
+												"moduleCode": "BIOU3GE",
+												"title": "Evolution and Genetics"
+											},
+											{
+												"moduleCode": "ENGU9A1",
+												"title": "Introduction to Literary Studies: Genre"
+											},
+											{
+												"moduleCode": "ENGU9A1",
+												"title": "Introduction to Literary Studies: Genre"
+											},
+											{
+												"moduleCode": "MATU9S1",
+												"title": "Discrete Structures"
+											},
+											{
+												"moduleCode": "PHIU9A1",
+												"title": "Philosophy: What is it all About?"
+											},
+											{
+												"moduleCode": "RELU9A1",
+												"title": "Religion in the Modern World"
+											},
+											{
+												"moduleCode": "RELU9A1",
+												"title": "Religion in the Modern World"
+											},
+											{
+												"moduleCode": "SPSU813",
+												"title": "Understanding Global Sport"
+											},
+											{
+												"moduleCode": "HISU9S3",
+												"title": "Reputations in History"
+											},
+											{
+												"moduleCode": "POLU9X3",
+												"title": "Understanding International Politics"
+											},
+											{
+												"moduleCode": "SWKU911",
+												"title": "Foundations of Social Work Theory and Practice"
+											},
+											{
+												"moduleCode": "CSCU9A3",
+												"title": "Data Structures, Objects and Algorithms"
+											},
+											{
+												"moduleCode": "EDUU9E1",
+												"title": "Introduction to Education: Philosophy, Psychology and Sociology"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "LEIU9LM",
+												"title": "Leisure Management & Consumption"
+											},
+											{
+												"moduleCode": "LINU9L3",
+												"title": "Language and the Brain"
+											},
+											{
+												"moduleCode": "HISU9A1",
+												"title": "For the Lion: Scotland in the British Isles and Europe 1100-1542"
+											},
+											{
+												"moduleCode": "BIOU1CE",
+												"title": "Introduction to Cell Biology"
+											},
+											{
+												"moduleCode": "ENGU9A1",
+												"title": "Introduction to Literary Studies: Genre"
+											},
+											{
+												"moduleCode": "GEOU1PP",
+												"title": "People and the Environment"
+											},
+											{
+												"moduleCode": "GEOU3BE",
+												"title": "Biogeography: An Ecological and Evolutionary Approach"
+											},
+											{
+												"moduleCode": "FMSU9A1",
+												"title": "Media 1: An Introduction to Media Studies and Industries"
+											},
+											{
+												"moduleCode": "FMSU9A1",
+												"title": "Media 1: An Introduction to Media Studies and Industries"
+											},
+											{
+												"moduleCode": "FMSU9A3",
+												"title": "Reading Film & Television"
+											},
+											{
+												"moduleCode": "PHIU9A1",
+												"title": "Philosophy: What is it all About?"
+											},
+											{
+												"moduleCode": "HISU9H3",
+												"title": "The key to the kingdom: the history and heritage of Stirling"
+											},
+											{
+												"moduleCode": "FREU9A1",
+												"title": "The French-Speaking World 1"
+											},
+											{
+												"moduleCode": "FREU9A3",
+												"title": "The French-Speaking World 3"
+											},
+											{
+												"moduleCode": "FREU9B1",
+												"title": "Introductory French 1"
+											},
+											{
+												"moduleCode": "MKTU9M3",
+												"title": "Fundamentals of Marketing"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "SPAU9A1",
+												"title": "Spanish and Latin American Studies 1"
+											},
+											{
+												"moduleCode": "SPAU9B1",
+												"title": "Introductory Spanish 1"
+											},
+											{
+												"moduleCode": "SPAU9B1",
+												"title": "Introductory Spanish 1"
+											},
+											{
+												"moduleCode": "RELU913",
+												"title": "Religion and Culture: Problems of Representation"
+											},
+											{
+												"moduleCode": "HISU9A1",
+												"title": "For the Lion: Scotland in the British Isles and Europe 1100-1542"
+											},
+											{
+												"moduleCode": "SPCU901",
+												"title": "Applying a Sociological Lens"
+											},
+											{
+												"moduleCode": "AQUU1OP",
+												"title": "Our Blue Planet"
+											},
+											{
+												"moduleCode": "CSCU9P1",
+												"title": "Introduction to Computing Science"
+											},
+											{
+												"moduleCode": "ECNU101",
+												"title": "Economic Decision Making and Markets"
+											},
+											{
+												"moduleCode": "FMSU9A1",
+												"title": "Media 1: An Introduction to Media Studies and Industries"
+											},
+											{
+												"moduleCode": "FMSU9A3",
+												"title": "Reading Film & Television"
+											},
+											{
+												"moduleCode": "AQUU3AE",
+												"title": "Introduction to Aquatic Environments"
+											},
+											{
+												"moduleCode": "AQUU3AE",
+												"title": "Introduction to Aquatic Environments"
+											},
+											{
+												"moduleCode": "FREU9A3",
+												"title": "The French-Speaking World 3"
+											},
+											{
+												"moduleCode": "FREU9A3",
+												"title": "The French-Speaking World 3"
+											},
+											{
+												"moduleCode": "HRMU9S3",
+												"title": "People Management"
+											},
+											{
+												"moduleCode": "MGTU9S3",
+												"title": "Fundamentals of Sustainability in Management"
+											},
+											{
+												"moduleCode": "MGTU9S3",
+												"title": "Fundamentals of Sustainability in Management"
+											},
+											{
+												"moduleCode": "MKTU9M3",
+												"title": "Fundamentals of Marketing"
+											},
+											{
+												"moduleCode": "SPAU9B1",
+												"title": "Introductory Spanish 1"
+											}
+										],
+										"collectionVersion": "4.0",
+										"credits": 0,
+										"deliveryType": "Option",
+										"duration": 1,
+										"level": "",
+										"title": "any module (Arts & Soc programmes)",
+										"type": "collection"
+									}
+								],
+								"modules": [
+									{
+										"code": "MGTU9S3",
+										"credits": 20,
+										"deliveryType": "Compulsory",
+										"duration": 1,
+										"level": "SCQF LEVEL 8",
+										"title": "Fundamentals of Sustainability in Management",
+										"type": "module"
+									},
+									{
+										"code": "LAWU9L2",
+										"credits": 20,
+										"deliveryType": "Option",
+										"duration": 1,
+										"level": "SCQF LEVEL 8",
+										"title": "Business Law II",
+										"type": "module"
+									}
+								]
+							},
+							"maxCredits": 60,
+							"minCredits": 60,
+							"options": [],
+							"pathways": [],
+							"semester": "3",
+							"semesterDescription": "Yr 2, semester 3 - Autumn"
+						},
+						{
+							"items": {
+								"collections": [
+									{
+										"code": "LAWFSE4",
+										"collectionElements": [
+											{
+												"moduleCode": "LAWU9LF",
+												"title": "Family Law (BA)"
+											},
+											{
+												"moduleCode": "LAWU9C2",
+												"title": "Law of Commerce"
+											},
+											{
+												"moduleCode": "LAWU9LF",
+												"title": "Family Law (BA)"
+											},
+											{
+												"moduleCode": "LAWU9LF",
+												"title": "Family Law (BA)"
+											},
+											{
+												"moduleCode": "LAWU9LF",
+												"title": "Family Law (BA)"
+											}
+										],
+										"collectionVersion": "2.0",
+										"credits": 0,
+										"deliveryType": "Compulsory",
+										"duration": 1,
+										"level": "",
+										"title": "LAWU9C2, LAWU9LF",
+										"type": "collection"
+									},
+									{
+										"code": "ANYFAL4",
+										"collectionElements": [
+											{
+												"moduleCode": "AQUU2TP",
+												"title": "Our Thirsty Planet: Man and the Aquatic Environment"
+											},
+											{
+												"moduleCode": "ENVU2LV",
+												"title": "Landscape Evolution"
+											},
+											{
+												"moduleCode": "MATU9JD",
+												"title": "Numerical Analysis"
+											},
+											{
+												"moduleCode": "PHIU9K4",
+												"title": "Introduction to Epistemology"
+											},
+											{
+												"moduleCode": "SPSU8B4",
+												"title": "Psychology of Sport"
+											},
+											{
+												"moduleCode": "ARTU9B4",
+												"title": "Fact-checking and Fake News"
+											},
+											{
+												"moduleCode": "FMSU9A2",
+												"title": "The Moving Image"
+											},
+											{
+												"moduleCode": "AQUU4DS",
+												"title": "Science of Diving"
+											},
+											{
+												"moduleCode": "FREU9A2",
+												"title": "The French-Speaking World 2"
+											},
+											{
+												"moduleCode": "FREU9A4",
+												"title": "The French-Speaking World 4"
+											},
+											{
+												"moduleCode": "LINU912",
+												"title": "Foundations of Language"
+											},
+											{
+												"moduleCode": "MATU9D2",
+												"title": "Practical Statistics"
+											},
+											{
+												"moduleCode": "LAWU9AL",
+												"title": "Commercial Awareness for Law"
+											},
+											{
+												"moduleCode": "PHIU9C4",
+												"title": "Logic"
+											},
+											{
+												"moduleCode": "PHIU9J4",
+												"title": "Moral Theory"
+											},
+											{
+												"moduleCode": "PSYU914",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "ENHU2X2",
+												"title": "Environmental History"
+											},
+											{
+												"moduleCode": "HISU9A2",
+												"title": "Renaissance Reformation and Revolution: Scotland 1542-1715"
+											},
+											{
+												"moduleCode": "RELU9A2",
+												"title": "Religion Colonialism and Nationalism"
+											},
+											{
+												"moduleCode": "CMCU9DS",
+												"title": "Introduction to Digital Storytelling"
+											},
+											{
+												"moduleCode": "BIOU2PH",
+												"title": "Introduction to Physiology"
+											},
+											{
+												"moduleCode": "ECNU102",
+												"title": "Understanding the Wider Economy"
+											},
+											{
+												"moduleCode": "ECNU102",
+												"title": "Understanding the Wider Economy"
+											},
+											{
+												"moduleCode": "ENGU9A2",
+												"title": "Introduction to Literary Studies: Theories & Approaches"
+											},
+											{
+												"moduleCode": "ENGU9A2",
+												"title": "Introduction to Literary Studies: Theories & Approaches"
+											},
+											{
+												"moduleCode": "PHIU9R4",
+												"title": "Political Philosophy"
+											},
+											{
+												"moduleCode": "SPSU8B4",
+												"title": "Psychology of Sport"
+											},
+											{
+												"moduleCode": "PHIU9T4",
+												"title": "Time and Existence"
+											},
+											{
+												"moduleCode": "ECNU215",
+												"title": "Statistics for Economics, Business and Management"
+											},
+											{
+												"moduleCode": "CSCU9Y4",
+												"title": "Programming Language Paradigms"
+											},
+											{
+												"moduleCode": "ENGU9WL",
+												"title": "Writing and Language"
+											},
+											{
+												"moduleCode": "FREU9A4",
+												"title": "The French-Speaking World 4"
+											},
+											{
+												"moduleCode": "LAWU9AL",
+												"title": "Commercial Awareness for Law"
+											},
+											{
+												"moduleCode": "PHIU9J4",
+												"title": "Moral Theory"
+											},
+											{
+												"moduleCode": "SPAU9B2",
+												"title": "Introductory Spanish 2"
+											},
+											{
+												"moduleCode": "ENGU9WI",
+												"title": "Writing and Theory"
+											},
+											{
+												"moduleCode": "HISU9A2",
+												"title": "Renaissance Reformation and Revolution: Scotland 1542-1715"
+											},
+											{
+												"moduleCode": "RELU9A2",
+												"title": "Religion Colonialism and Nationalism"
+											},
+											{
+												"moduleCode": "LAWU9IN",
+												"title": "Public International Law"
+											},
+											{
+												"moduleCode": "LAWU9IN",
+												"title": "Public International Law"
+											},
+											{
+												"moduleCode": "AQUU2TP",
+												"title": "Our Thirsty Planet: Man and the Aquatic Environment"
+											},
+											{
+												"moduleCode": "GEOU2GE",
+												"title": "Global Environmental Issues"
+											},
+											{
+												"moduleCode": "PHIU9A2",
+												"title": "How Should We Live?: Philosophy, Ethics, and Life"
+											},
+											{
+												"moduleCode": "SPSU712",
+												"title": "Introduction to Sport & Exercise Science"
+											},
+											{
+												"moduleCode": "HISU9S4",
+												"title": "Rebellion and Enlightenment: Scotland 1713 to 1815 "
+											},
+											{
+												"moduleCode": "MKTU9SM",
+												"title": "Socially Responsible Marketing"
+											},
+											{
+												"moduleCode": "BUSU9OB",
+												"title": "The Organisation of Business"
+											},
+											{
+												"moduleCode": "FREU9A2",
+												"title": "The French-Speaking World 2"
+											},
+											{
+												"moduleCode": "FREU9A4",
+												"title": "The French-Speaking World 4"
+											},
+											{
+												"moduleCode": "LAWU9LF",
+												"title": "Family Law (BA)"
+											},
+											{
+												"moduleCode": "LINU912",
+												"title": "Foundations of Language"
+											},
+											{
+												"moduleCode": "SPAU9A4",
+												"title": "Advanced Spanish and Latin American Studies"
+											},
+											{
+												"moduleCode": "SPAU9B2",
+												"title": "Introductory Spanish 2"
+											},
+											{
+												"moduleCode": "LAWU9CE",
+												"title": "Criminal Law and Evidence"
+											},
+											{
+												"moduleCode": "AQUU2TP",
+												"title": "Our Thirsty Planet: Man and the Aquatic Environment"
+											},
+											{
+												"moduleCode": "CSCU9P2",
+												"title": "Programming and User Interface Design"
+											},
+											{
+												"moduleCode": "HISU9C2",
+												"title": "Concepts of History: Themes and Transformations"
+											},
+											{
+												"moduleCode": "GEOU2GE",
+												"title": "Global Environmental Issues"
+											},
+											{
+												"moduleCode": "MGTU7S2",
+												"title": "The Management Challenge: An Introduction"
+											},
+											{
+												"moduleCode": "MATU9JD",
+												"title": "Numerical Analysis"
+											},
+											{
+												"moduleCode": "PHIU9K4",
+												"title": "Advanced Epistemology"
+											},
+											{
+												"moduleCode": "SCIU2PS",
+												"title": "Practical Science Skills II: Field Skills"
+											},
+											{
+												"moduleCode": "FMSU9A2",
+												"title": "The Moving Image"
+											},
+											{
+												"moduleCode": "HISU9Q4",
+												"title": "Scotland in the Age of Wallace and Bruce"
+											},
+											{
+												"moduleCode": "ENGU9WH",
+												"title": "Writing and History: Scotland and Empire"
+											},
+											{
+												"moduleCode": "CSCU9T4",
+												"title": "Managing Information"
+											},
+											{
+												"moduleCode": "EDUU9E2",
+												"title": "Introduction to Education: Politics, Policy and Practice"
+											},
+											{
+												"moduleCode": "FREU9A4",
+												"title": "The French-Speaking World 4"
+											},
+											{
+												"moduleCode": "FREU9B2",
+												"title": "Introductory French 2"
+											},
+											{
+												"moduleCode": "FREU9B2",
+												"title": "Introductory French 2"
+											},
+											{
+												"moduleCode": "MANU9N4",
+												"title": "Operations Management"
+											},
+											{
+												"moduleCode": "POLU9CP",
+												"title": "Comparative Politics - States, People, Power"
+											},
+											{
+												"moduleCode": "SPAU9A4",
+												"title": "Spanish and Latin American Studies 4"
+											},
+											{
+												"moduleCode": "SPSU8FD",
+												"title": "Foundations of Sport Development and Coaching"
+											},
+											{
+												"moduleCode": "LAWU9C2",
+												"title": "Law of Commerce"
+											},
+											{
+												"moduleCode": "BIOU2PH",
+												"title": "Introduction to Physiology"
+											},
+											{
+												"moduleCode": "AQUU2TP",
+												"title": "Our Thirsty Planet: Man and the Aquatic Environment"
+											},
+											{
+												"moduleCode": "CSCU9S2",
+												"title": "Introduction to Data Science"
+											},
+											{
+												"moduleCode": "HISU9C2",
+												"title": "Concepts of History: Themes and Transformations"
+											},
+											{
+												"moduleCode": "HISU9C2",
+												"title": "Concepts of History: Themes and Transformations"
+											},
+											{
+												"moduleCode": "JOUU9A2",
+												"title": "Ethical Issues in Journalism"
+											},
+											{
+												"moduleCode": "MATU9JC",
+												"title": "Optimisation in Theory and Practice"
+											},
+											{
+												"moduleCode": "MATU9N2",
+												"title": "Mathematics II"
+											},
+											{
+												"moduleCode": "PHIU9A2",
+												"title": "How Should We Live?: Philosophy, Ethics, and Life"
+											},
+											{
+												"moduleCode": "GEOU4ER",
+												"title": "Environmental Resilience"
+											},
+											{
+												"moduleCode": "ECNU215",
+												"title": "Statistics for Economics, Business and Management"
+											},
+											{
+												"moduleCode": "FMSU9A4",
+												"title": "Digital Media and Culture"
+											},
+											{
+												"moduleCode": "CSCU9Y4",
+												"title": "Programming Language Paradigms"
+											},
+											{
+												"moduleCode": "EDUU9E2",
+												"title": "Introduction to Education: Politics, Policy and Practice"
+											},
+											{
+												"moduleCode": "ENVU4E4",
+												"title": "The Biosphere"
+											},
+											{
+												"moduleCode": "FREU9A2",
+												"title": "The French-Speaking World 2"
+											},
+											{
+												"moduleCode": "FREU9A4",
+												"title": "The French-Speaking World 4"
+											},
+											{
+												"moduleCode": "FREU9A4",
+												"title": "The French-Speaking World 4"
+											},
+											{
+												"moduleCode": "LAWU9LF",
+												"title": "Family Law (BA)"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9A4",
+												"title": "Advanced Spanish and Latin American Studies"
+											},
+											{
+												"moduleCode": "SPAU9B2",
+												"title": "Introductory Spanish 2"
+											},
+											{
+												"moduleCode": "RELU914",
+												"title": "Inventing Religion: Origins, Methods and Critique"
+											},
+											{
+												"moduleCode": "RELU914",
+												"title": "Inventing Religion: Origins, Methods and Critique"
+											},
+											{
+												"moduleCode": "HISU9A2",
+												"title": "Renaissance Reformation and Revolution: Scotland 1542-1715"
+											},
+											{
+												"moduleCode": "LAWU9IN",
+												"title": "Public International Law"
+											},
+											{
+												"moduleCode": "CSCU9S2",
+												"title": "Introduction to Data Science"
+											},
+											{
+												"moduleCode": "CSCU9P2",
+												"title": "Programming and User Interface Design"
+											},
+											{
+												"moduleCode": "HISU9C2",
+												"title": "Concepts of History: Themes and Transformations"
+											},
+											{
+												"moduleCode": "JOUU9A2",
+												"title": "Ethical Issues in Journalism"
+											},
+											{
+												"moduleCode": "SPCU9JA",
+												"title": "Scottish Society"
+											},
+											{
+												"moduleCode": "PHIU9T4",
+												"title": "Time and Existence"
+											},
+											{
+												"moduleCode": "ARTU9W4",
+												"title": "Putting Arts & Humanities to Work - Work Placement Module"
+											},
+											{
+												"moduleCode": "SPCU9C4",
+												"title": "The Development of Social Theory"
+											},
+											{
+												"moduleCode": "SPCU9C4",
+												"title": "The Development of Social Theory"
+											},
+											{
+												"moduleCode": "BIOU4BD",
+												"title": "Biodiversity"
+											},
+											{
+												"moduleCode": "FREU9A2",
+												"title": "The French-Speaking World 2"
+											},
+											{
+												"moduleCode": "FREU9A2",
+												"title": "The French-Speaking World 2"
+											},
+											{
+												"moduleCode": "FINU9F4",
+												"title": "Finance II"
+											},
+											{
+												"moduleCode": "FREU9B2",
+												"title": "Introductory French 2"
+											},
+											{
+												"moduleCode": "POLU9PG",
+												"title": "Great Political Thinkers"
+											},
+											{
+												"moduleCode": "POLU9PG",
+												"title": "Great Political Thinkers"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "PSYU914",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "PSYU9A4",
+												"title": "Brain and Behaviour"
+											},
+											{
+												"moduleCode": "SCIU4T4",
+												"title": "Statistical Techniques"
+											},
+											{
+												"moduleCode": "RELU9A2",
+												"title": "Religion Colonialism and Nationalism"
+											},
+											{
+												"moduleCode": "CSCU9S2",
+												"title": "Introduction to Data Science"
+											},
+											{
+												"moduleCode": "ECNU105",
+												"title": "Introductory Economics"
+											},
+											{
+												"moduleCode": "MGTU7S2",
+												"title": "The Management Challenge: An Introduction"
+											},
+											{
+												"moduleCode": "MGTU7S2",
+												"title": "The Management Challenge: An Introduction"
+											},
+											{
+												"moduleCode": "JOUU9A2",
+												"title": "Ethical Issues in Journalism"
+											},
+											{
+												"moduleCode": "POLU9A2",
+												"title": "Political Concepts and Ideas"
+											},
+											{
+												"moduleCode": "POLU9A2",
+												"title": "Political Concepts and Ideas"
+											},
+											{
+												"moduleCode": "PHIU9T4",
+												"title": "Time and Existence"
+											},
+											{
+												"moduleCode": "EUCU9DD",
+												"title": "Transnational Identities"
+											},
+											{
+												"moduleCode": "SPCU9C4",
+												"title": "The Development of Social Theory"
+											},
+											{
+												"moduleCode": "BIOU4BD",
+												"title": "Biodiversity"
+											},
+											{
+												"moduleCode": "AQUU4DS",
+												"title": "Science of Diving"
+											},
+											{
+												"moduleCode": "CSCU9Y4",
+												"title": "Programming Language Paradigms"
+											},
+											{
+												"moduleCode": "FREU9B2",
+												"title": "Introductory French 2"
+											},
+											{
+												"moduleCode": "LAWU9LF",
+												"title": "Family Law (BA)"
+											},
+											{
+												"moduleCode": "PHIU9J4",
+												"title": "Moral Theory"
+											},
+											{
+												"moduleCode": "SPAU9A4",
+												"title": "Spanish and Latin American Studies 4"
+											},
+											{
+												"moduleCode": "SPAU9A4",
+												"title": "Spanish and Latin American Studies 4"
+											},
+											{
+												"moduleCode": "RELU914",
+												"title": "Inventing Religion: Origins, Methods and Critique"
+											},
+											{
+												"moduleCode": "ENGU9WI",
+												"title": "Writing and Theory"
+											},
+											{
+												"moduleCode": "PHIU9B4",
+												"title": "Relativism and Reality"
+											},
+											{
+												"moduleCode": "SPSU8FD",
+												"title": "Foundations of Sport Development and Coaching"
+											},
+											{
+												"moduleCode": "RELU9A2",
+												"title": "Religion Colonialism and Nationalism"
+											},
+											{
+												"moduleCode": "RELU9A2",
+												"title": "Religion Colonialism and Nationalism"
+											},
+											{
+												"moduleCode": "CSCU9F2",
+												"title": "Making the Most of the World Wide Web"
+											},
+											{
+												"moduleCode": "CSCU9F2",
+												"title": "Making the Most of the World Wide Web"
+											},
+											{
+												"moduleCode": "CSCU9S2",
+												"title": "Introduction to Data Science"
+											},
+											{
+												"moduleCode": "ECNU105",
+												"title": "Introductory Economics"
+											},
+											{
+												"moduleCode": "ENGU9A2",
+												"title": "Introduction to Literary Studies: Theories & Approaches"
+											},
+											{
+												"moduleCode": "ENVU2LV",
+												"title": "Landscape Evolution"
+											},
+											{
+												"moduleCode": "PHIU9R4",
+												"title": "Political Philosophy"
+											},
+											{
+												"moduleCode": "ARTU9B4",
+												"title": "Fact-checking and Fake News"
+											},
+											{
+												"moduleCode": "GEOU4ER",
+												"title": "Environmental Resilience"
+											},
+											{
+												"moduleCode": "GEOU4ER",
+												"title": "Environmental Resilience"
+											},
+											{
+												"moduleCode": "FMSU9A2",
+												"title": "The Moving Image"
+											},
+											{
+												"moduleCode": "MKTU9SM",
+												"title": "Socially Responsible Marketing"
+											},
+											{
+												"moduleCode": "MANU9MC",
+												"title": "Managing the Consumer Experience"
+											},
+											{
+												"moduleCode": "ARTU9W4",
+												"title": "Putting Arts & Humanities to Work - Work Placement Module"
+											},
+											{
+												"moduleCode": "ENGU9WH",
+												"title": "Writing and History: Scotland and Empire"
+											},
+											{
+												"moduleCode": "ENGU9WH",
+												"title": "Writing and History: Scotland and Empire"
+											},
+											{
+												"moduleCode": "FMSU9A4",
+												"title": "Digital Media and Culture"
+											},
+											{
+												"moduleCode": "CSCU9V4",
+												"title": "Systems"
+											},
+											{
+												"moduleCode": "CSCU9V4",
+												"title": "Systems"
+											},
+											{
+												"moduleCode": "FREU9B2",
+												"title": "Introductory French 2"
+											},
+											{
+												"moduleCode": "LAWU9LF",
+												"title": "Family Law (BA)"
+											},
+											{
+												"moduleCode": "MANU9N4",
+												"title": "Operations Management"
+											},
+											{
+												"moduleCode": "MATU9M4",
+												"title": "Linear Algebra"
+											},
+											{
+												"moduleCode": "POLU9CP",
+												"title": "Comparative Politics - States, People, Power"
+											},
+											{
+												"moduleCode": "POLU9PG",
+												"title": "Great Political Thinkers"
+											},
+											{
+												"moduleCode": "RMKU9R4",
+												"title": "Global Retailing in Society"
+											},
+											{
+												"moduleCode": "RMKU9R4",
+												"title": "Global Retailing in Society"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9A2",
+												"title": "Spanish and Latin American Studies 2"
+											},
+											{
+												"moduleCode": "SPAU9A4",
+												"title": "Spanish and Latin American Studies 4"
+											},
+											{
+												"moduleCode": "SPAU9B2",
+												"title": "Introductory Spanish 2"
+											}
+										],
+										"collectionVersion": "5.0",
+										"credits": 0,
+										"deliveryType": "Option",
+										"duration": 1,
+										"level": "",
+										"title": "any semester 4 - Law programmes",
+										"type": "collection"
+									}
+								],
+								"modules": [
+									{
+										"code": "BUSU9OB",
+										"credits": 20,
+										"deliveryType": "Compulsory",
+										"duration": 1,
+										"level": "SCQF LEVEL 9",
+										"title": "The Organisation of Business",
+										"type": "module"
+									}
+								]
+							},
+							"maxCredits": 60,
+							"minCredits": 60,
+							"options": [],
+							"pathways": [],
+							"semester": "4",
+							"semesterDescription": "Yr 2, semester 4 - Spring"
+						}
+					],
+					"year": "2"
+				},
+				{
+					"semesters": [
+						{
+							"items": {
+								"collections": [
+									{
+										"code": "LAWFELE",
+										"collectionElements": [
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9EN",
+												"title": "Energy Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9JP",
+												"title": "Jurisprudence"
+											},
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9HE",
+												"title": "History of Environmental and Energy Governance"
+											},
+											{
+												"moduleCode": "ARTU9H5",
+												"title": "Death, Disease and Disability:The State and the Hazardous Working Environment 1800-1914"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9JP",
+												"title": "Jurisprudence"
+											}
+										],
+										"collectionVersion": "2.0",
+										"credits": 0,
+										"deliveryType": "Honours Compulsory",
+										"duration": 1,
+										"level": "",
+										"title": "Level 10 Honours Options in Law",
+										"type": "collection"
+									},
+									{
+										"code": "_G0F198",
+										"collectionElements": [
+											{
+												"moduleCode": "BUSU9PL",
+												"title": "Psychology of Workplace Wellbeing"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "MANU9LM",
+												"title": "Leadership and Management"
+											},
+											{
+												"moduleCode": "MKTU9DE",
+												"title": "Digital and Experiential Marketing"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "ECNU3BP",
+												"title": "Behavioural Economics"
+											},
+											{
+												"moduleCode": "HRMU9LD",
+												"title": "Learning and Development"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "BUSU9MI",
+												"title": "Management and Information Technology"
+											},
+											{
+												"moduleCode": "LAWU9EN",
+												"title": "Energy Law"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "MANU9M6",
+												"title": "Project Management"
+											},
+											{
+												"moduleCode": "MANU9M6",
+												"title": "Project Management"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "MKTU9SM",
+												"title": "Socially Responsible Marketing"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "MANU9LM",
+												"title": "Leadership and Management"
+											},
+											{
+												"moduleCode": "MKTU9DE",
+												"title": "Digital and Experiential Marketing"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "MANU9IM",
+												"title": "Innovation Management"
+											},
+											{
+												"moduleCode": "BUSU9EE",
+												"title": "Business in Europe and the Emerging Economies"
+											},
+											{
+												"moduleCode": "HRMU9LD",
+												"title": "Learning and Development"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "HRMU9RB",
+												"title": "Strategic Human Resource Management"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "BUSU9PL",
+												"title": "The Psychology of Leadership: Health and Wellbeing at Work"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "BUSU9MC",
+												"title": "Managing Change"
+											},
+											{
+												"moduleCode": "HRMU9LD",
+												"title": "Learning and Development"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9JP",
+												"title": "Jurisprudence"
+											},
+											{
+												"moduleCode": "MGTUPDP",
+												"title": "Professional Development and Practice"
+											},
+											{
+												"moduleCode": "MKTU9SP",
+												"title": "Sport Marketing"
+											},
+											{
+												"moduleCode": "ECNU3XP",
+												"title": "Using Experiments in Business and Policy"
+											},
+											{
+												"moduleCode": "MKTU9ES",
+												"title": "The Business of eSports"
+											},
+											{
+												"moduleCode": "MKTU9ES",
+												"title": "The Business of eSports"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "HRMU9ER",
+												"title": "Contemporary Employment Relations"
+											},
+											{
+												"moduleCode": "HRMU9ER",
+												"title": "Contemporary Employment Relations"
+											},
+											{
+												"moduleCode": "RMKU9RO",
+												"title": "Retail Strategy and Operations"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "MANU9DA",
+												"title": "Business Analytics"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "BUSU9RB",
+												"title": "Responsible Business"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "MKTU9SP",
+												"title": "Sport Marketing"
+											},
+											{
+												"moduleCode": "RMKU9MC",
+												"title": "Multi-Channel Retail Marketing"
+											},
+											{
+												"moduleCode": "LAWU9HE",
+												"title": "History of Environmental and Energy Governance"
+											},
+											{
+												"moduleCode": "BUSU9PN",
+												"title": "Public and Non-Profit Sector Management"
+											},
+											{
+												"moduleCode": "MKTU9ES",
+												"title": "The Business of eSports"
+											},
+											{
+												"moduleCode": "ARTU9H5",
+												"title": "Death, Disease and Disability:The State and the Hazardous Working Environment 1800-1914"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "HRMU9ER",
+												"title": "Contemporary Employment Relations"
+											},
+											{
+												"moduleCode": "MKTU9UC",
+												"title": "Understanding Consumers"
+											},
+											{
+												"moduleCode": "MKTU9UC",
+												"title": "Understanding Consumers"
+											},
+											{
+												"moduleCode": "MANU9IM",
+												"title": "Innovation Management"
+											},
+											{
+												"moduleCode": "BUSU9EN",
+												"title": "Entrepreneurship"
+											},
+											{
+												"moduleCode": "BUSU9MC",
+												"title": "Managing Change"
+											},
+											{
+												"moduleCode": "BUSU9RB",
+												"title": "Responsible Business"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "MKTU9SP",
+												"title": "Sport Marketing"
+											},
+											{
+												"moduleCode": "ECNU3NV",
+												"title": "Environmental Economics"
+											},
+											{
+												"moduleCode": "MKTU9MA",
+												"title": "Marketing Analytics and Brand Creation"
+											},
+											{
+												"moduleCode": "MKTU9MA",
+												"title": "Marketing Analytics and Brand Creation"
+											},
+											{
+												"moduleCode": "MKTU9SM",
+												"title": "Socially Responsible Marketing"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "BUSU9MC",
+												"title": "Managing Change"
+											},
+											{
+												"moduleCode": "LAWU9JP",
+												"title": "Jurisprudence"
+											},
+											{
+												"moduleCode": "RMKU9BM",
+												"title": "Buying and Visual Merchandising"
+											},
+											{
+												"moduleCode": "RMKU9RS",
+												"title": "Delivering Value in the Digital Age"
+											},
+											{
+												"moduleCode": "RMKU9RS",
+												"title": "Delivering Value in the Digital Age"
+											}
+										],
+										"collectionVersion": "3.0",
+										"credits": 0,
+										"deliveryType": "Honours Option",
+										"duration": 1,
+										"level": "",
+										"title": "Year 3 Honours options in Business or Law",
+										"type": "collection"
+									}
+								],
+								"modules": [
+									{
+										"code": "BUSU9BI",
+										"credits": 20,
+										"deliveryType": "Honours Compulsory",
+										"duration": 1,
+										"level": "SCQF LEVEL 9",
+										"title": "International Business",
+										"type": "module"
+									}
+								]
+							},
+							"maxCredits": 60,
+							"minCredits": 60,
+							"options": [],
+							"pathways": [],
+							"semester": "5",
+							"semesterDescription": "Yr 3, semester 5 - Autumn"
+						},
+						{
+							"items": {
+								"collections": [
+									{
+										"code": "_G0F198",
+										"collectionElements": [
+											{
+												"moduleCode": "BUSU9PL",
+												"title": "Psychology of Workplace Wellbeing"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "MANU9LM",
+												"title": "Leadership and Management"
+											},
+											{
+												"moduleCode": "MKTU9DE",
+												"title": "Digital and Experiential Marketing"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "ECNU3BP",
+												"title": "Behavioural Economics"
+											},
+											{
+												"moduleCode": "HRMU9LD",
+												"title": "Learning and Development"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "BUSU9MI",
+												"title": "Management and Information Technology"
+											},
+											{
+												"moduleCode": "LAWU9EN",
+												"title": "Energy Law"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "MANU9M6",
+												"title": "Project Management"
+											},
+											{
+												"moduleCode": "MANU9M6",
+												"title": "Project Management"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "MKTU9SM",
+												"title": "Socially Responsible Marketing"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "MANU9LM",
+												"title": "Leadership and Management"
+											},
+											{
+												"moduleCode": "MKTU9DE",
+												"title": "Digital and Experiential Marketing"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "MANU9IM",
+												"title": "Innovation Management"
+											},
+											{
+												"moduleCode": "BUSU9EE",
+												"title": "Business in Europe and the Emerging Economies"
+											},
+											{
+												"moduleCode": "HRMU9LD",
+												"title": "Learning and Development"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "HRMU9RB",
+												"title": "Strategic Human Resource Management"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "BUSU9PL",
+												"title": "The Psychology of Leadership: Health and Wellbeing at Work"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "BUSU9MC",
+												"title": "Managing Change"
+											},
+											{
+												"moduleCode": "HRMU9LD",
+												"title": "Learning and Development"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9JP",
+												"title": "Jurisprudence"
+											},
+											{
+												"moduleCode": "MGTUPDP",
+												"title": "Professional Development and Practice"
+											},
+											{
+												"moduleCode": "MKTU9SP",
+												"title": "Sport Marketing"
+											},
+											{
+												"moduleCode": "ECNU3XP",
+												"title": "Using Experiments in Business and Policy"
+											},
+											{
+												"moduleCode": "MKTU9ES",
+												"title": "The Business of eSports"
+											},
+											{
+												"moduleCode": "MKTU9ES",
+												"title": "The Business of eSports"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "HRMU9ER",
+												"title": "Contemporary Employment Relations"
+											},
+											{
+												"moduleCode": "HRMU9ER",
+												"title": "Contemporary Employment Relations"
+											},
+											{
+												"moduleCode": "RMKU9RO",
+												"title": "Retail Strategy and Operations"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "MANU9DA",
+												"title": "Business Analytics"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "BUSU9RB",
+												"title": "Responsible Business"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "MKTU9SP",
+												"title": "Sport Marketing"
+											},
+											{
+												"moduleCode": "RMKU9MC",
+												"title": "Multi-Channel Retail Marketing"
+											},
+											{
+												"moduleCode": "LAWU9HE",
+												"title": "History of Environmental and Energy Governance"
+											},
+											{
+												"moduleCode": "BUSU9PN",
+												"title": "Public and Non-Profit Sector Management"
+											},
+											{
+												"moduleCode": "MKTU9ES",
+												"title": "The Business of eSports"
+											},
+											{
+												"moduleCode": "ARTU9H5",
+												"title": "Death, Disease and Disability:The State and the Hazardous Working Environment 1800-1914"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "HRMU9ER",
+												"title": "Contemporary Employment Relations"
+											},
+											{
+												"moduleCode": "MKTU9UC",
+												"title": "Understanding Consumers"
+											},
+											{
+												"moduleCode": "MKTU9UC",
+												"title": "Understanding Consumers"
+											},
+											{
+												"moduleCode": "MANU9IM",
+												"title": "Innovation Management"
+											},
+											{
+												"moduleCode": "BUSU9EN",
+												"title": "Entrepreneurship"
+											},
+											{
+												"moduleCode": "BUSU9MC",
+												"title": "Managing Change"
+											},
+											{
+												"moduleCode": "BUSU9RB",
+												"title": "Responsible Business"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "MKTU9SP",
+												"title": "Sport Marketing"
+											},
+											{
+												"moduleCode": "ECNU3NV",
+												"title": "Environmental Economics"
+											},
+											{
+												"moduleCode": "MKTU9MA",
+												"title": "Marketing Analytics and Brand Creation"
+											},
+											{
+												"moduleCode": "MKTU9MA",
+												"title": "Marketing Analytics and Brand Creation"
+											},
+											{
+												"moduleCode": "MKTU9SM",
+												"title": "Socially Responsible Marketing"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "BUSU9MC",
+												"title": "Managing Change"
+											},
+											{
+												"moduleCode": "LAWU9JP",
+												"title": "Jurisprudence"
+											},
+											{
+												"moduleCode": "RMKU9BM",
+												"title": "Buying and Visual Merchandising"
+											},
+											{
+												"moduleCode": "RMKU9RS",
+												"title": "Delivering Value in the Digital Age"
+											},
+											{
+												"moduleCode": "RMKU9RS",
+												"title": "Delivering Value in the Digital Age"
+											}
+										],
+										"collectionVersion": "3.0",
+										"credits": 0,
+										"deliveryType": "Honours Option",
+										"duration": 1,
+										"level": "",
+										"title": "Year 3 Honours options in Business or Law",
+										"type": "collection"
+									},
+									{
+										"code": "BUSFSE6",
+										"collectionElements": [
+											{
+												"moduleCode": "BUSU9RB",
+												"title": "Responsible Business"
+											},
+											{
+												"moduleCode": "BUSU9EN",
+												"title": "Entrepreneurship"
+											},
+											{
+												"moduleCode": "BUSU9RB",
+												"title": "Responsible Business"
+											}
+										],
+										"collectionVersion": "1.0",
+										"credits": 0,
+										"deliveryType": "Honours Option",
+										"duration": 1,
+										"level": "",
+										"title": "BUS9UEN or BUSU9RB",
+										"type": "collection"
+									},
+									{
+										"code": "LAWFELE",
+										"collectionElements": [
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9EN",
+												"title": "Energy Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9JP",
+												"title": "Jurisprudence"
+											},
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9HE",
+												"title": "History of Environmental and Energy Governance"
+											},
+											{
+												"moduleCode": "ARTU9H5",
+												"title": "Death, Disease and Disability:The State and the Hazardous Working Environment 1800-1914"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9JP",
+												"title": "Jurisprudence"
+											}
+										],
+										"collectionVersion": "2.0",
+										"credits": 0,
+										"deliveryType": "Honours Option",
+										"duration": 1,
+										"level": "",
+										"title": "Level 10 Honours Options in Law",
+										"type": "collection"
+									}
+								],
+								"modules": []
+							},
+							"maxCredits": 60,
+							"minCredits": 60,
+							"options": [],
+							"pathways": [],
+							"semester": "6",
+							"semesterDescription": "Yr 3, semester 6 - Spring"
+						}
+					],
+					"year": "3"
+				},
+				{
+					"semesters": [
+						{
+							"items": {
+								"collections": [
+									{
+										"code": "LAWFELE",
+										"collectionElements": [
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9EN",
+												"title": "Energy Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9JP",
+												"title": "Jurisprudence"
+											},
+											{
+												"moduleCode": "LAWU9RL",
+												"title": "Roman Law"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9HE",
+												"title": "History of Environmental and Energy Governance"
+											},
+											{
+												"moduleCode": "ARTU9H5",
+												"title": "Death, Disease and Disability:The State and the Hazardous Working Environment 1800-1914"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "LAWU9RE",
+												"title": "Research Methods"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9JP",
+												"title": "Jurisprudence"
+											}
+										],
+										"collectionVersion": "2.0",
+										"credits": 0,
+										"deliveryType": "Honours Option",
+										"duration": 1,
+										"level": "",
+										"title": "Level 10 Honours Options in Law",
+										"type": "collection"
+									},
+									{
+										"code": "BUSFLAW",
+										"collectionElements": [
+											{
+												"moduleCode": "LAWU9LD",
+												"title": "Law Dissertation"
+											},
+											{
+												"moduleCode": "BUSU9D8",
+												"title": "Dissertation"
+											}
+										],
+										"collectionVersion": "1.0",
+										"credits": 0,
+										"deliveryType": "Dissertation",
+										"duration": 1,
+										"level": "",
+										"title": "BUSU9D8 or LAWU9LD",
+										"type": "collection"
+									}
+								],
+								"modules": [
+									{
+										"code": "BUSU9SM",
+										"credits": 20,
+										"deliveryType": "Honours Compulsory",
+										"duration": 1,
+										"level": "SCQF LEVEL 10",
+										"title": "Strategic Management",
+										"type": "module"
+									}
+								]
+							},
+							"maxCredits": 100,
+							"minCredits": 100,
+							"options": [],
+							"pathways": [],
+							"semester": "7",
+							"semesterDescription": "Yr 4, semester 7 - Autumn"
+						},
+						{
+							"items": {
+								"collections": [
+									{
+										"code": "LAWFSMS",
+										"collectionElements": [
+											{
+												"moduleCode": "HRMU9RP",
+												"title": "Reward in Practice"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "BUSU9BI",
+												"title": "International Business"
+											},
+											{
+												"moduleCode": "MANU9LM",
+												"title": "Leadership and Management"
+											},
+											{
+												"moduleCode": "MKTU9DE",
+												"title": "Digital and Experiential Marketing"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "ECNU3BP",
+												"title": "Behavioural Economics"
+											},
+											{
+												"moduleCode": "HRMU9LD",
+												"title": "Learning and Development"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "BUSU9MI",
+												"title": "Management and Information Technology"
+											},
+											{
+												"moduleCode": "LAWU9EN",
+												"title": "Energy Law"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "MANU9M6",
+												"title": "Project Management"
+											},
+											{
+												"moduleCode": "MANU9M6",
+												"title": "Project Management"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "LAWU9JL",
+												"title": "Media Law"
+											},
+											{
+												"moduleCode": "MKTU9SM",
+												"title": "Socially Responsible Marketing"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "MANU9LM",
+												"title": "Leadership and Management"
+											},
+											{
+												"moduleCode": "MKTU9DE",
+												"title": "Digital and Experiential Marketing"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "MANU9IM",
+												"title": "Innovation Management"
+											},
+											{
+												"moduleCode": "BUSU9EE",
+												"title": "Business in Europe and the Emerging Economies"
+											},
+											{
+												"moduleCode": "BUSU9SM",
+												"title": "Strategic Management"
+											},
+											{
+												"moduleCode": "HRMU9LD",
+												"title": "Learning and Development"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9DR",
+												"title": "Domestic Relations"
+											},
+											{
+												"moduleCode": "HRMU9RB",
+												"title": "Strategic Human Resource Management"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9WP",
+												"title": "Work Placement in Law"
+											},
+											{
+												"moduleCode": "HRMU9TM",
+												"title": "Resourcing and Talent Management"
+											},
+											{
+												"moduleCode": "LAWU9SL",
+												"title": "Sports Law"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "LAWU9EL",
+												"title": "Environmental Law"
+											},
+											{
+												"moduleCode": "BUSU9MC",
+												"title": "Managing Change"
+											},
+											{
+												"moduleCode": "BUSU9SM",
+												"title": "Strategic Management"
+											},
+											{
+												"moduleCode": "HRMU9LD",
+												"title": "Learning and Development"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9IH",
+												"title": "International Human Rights Law"
+											},
+											{
+												"moduleCode": "LAWU9WP",
+												"title": "Work Placement in Law"
+											},
+											{
+												"moduleCode": "MGTUPDP",
+												"title": "Professional Development and Practice"
+											},
+											{
+												"moduleCode": "MKTU9SP",
+												"title": "Sport Marketing"
+											},
+											{
+												"moduleCode": "ECNU3XP",
+												"title": "Using Experiments in Business and Policy"
+											},
+											{
+												"moduleCode": "MKTU9ES",
+												"title": "The Business of eSports"
+											},
+											{
+												"moduleCode": "MKTU9ES",
+												"title": "The Business of eSports"
+											},
+											{
+												"moduleCode": "LAWU9PI",
+												"title": "Private International Commercial Law"
+											},
+											{
+												"moduleCode": "HRMU9ER",
+												"title": "Contemporary Employment Relations"
+											},
+											{
+												"moduleCode": "HRMU9ER",
+												"title": "Contemporary Employment Relations"
+											},
+											{
+												"moduleCode": "RMKU9RO",
+												"title": "Retail Strategy and Operations"
+											},
+											{
+												"moduleCode": "LAWU9LL",
+												"title": "Labour Law"
+											},
+											{
+												"moduleCode": "MANU9DA",
+												"title": "Business Analytics"
+											},
+											{
+												"moduleCode": "LAWU9AC",
+												"title": "Alternative Commercial Dispute Resolution"
+											},
+											{
+												"moduleCode": "BUSU9RB",
+												"title": "Responsible Business"
+											},
+											{
+												"moduleCode": "BUSU9SM",
+												"title": "Strategic Management"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "MKTU9SP",
+												"title": "Sport Marketing"
+											},
+											{
+												"moduleCode": "RMKU9MC",
+												"title": "Multi-Channel Retail Marketing"
+											},
+											{
+												"moduleCode": "LAWU9HE",
+												"title": "History of Environmental and Energy Governance"
+											},
+											{
+												"moduleCode": "HRMU9PP",
+												"title": "HR Professional Practice"
+											},
+											{
+												"moduleCode": "BUSU9PN",
+												"title": "Public and Non-Profit Sector Management"
+											},
+											{
+												"moduleCode": "MKTU9ES",
+												"title": "The Business of eSports"
+											},
+											{
+												"moduleCode": "ARTU9H5",
+												"title": "Death, Disease and Disability:The State and the Hazardous Working Environment 1800-1914"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9E1",
+												"title": "European Law"
+											},
+											{
+												"moduleCode": "HRMU9ER",
+												"title": "Contemporary Employment Relations"
+											},
+											{
+												"moduleCode": "MKTU9UC",
+												"title": "Understanding Consumers"
+											},
+											{
+												"moduleCode": "MKTU9UC",
+												"title": "Understanding Consumers"
+											},
+											{
+												"moduleCode": "MANU9IM",
+												"title": "Innovation Management"
+											},
+											{
+												"moduleCode": "BUSU9EN",
+												"title": "Entrepreneurship"
+											},
+											{
+												"moduleCode": "BUSU9MC",
+												"title": "Managing Change"
+											},
+											{
+												"moduleCode": "BUSU9RB",
+												"title": "Responsible Business"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "LAWU9IP",
+												"title": "Intellectual Property Law"
+											},
+											{
+												"moduleCode": "MKTU9SP",
+												"title": "Sport Marketing"
+											},
+											{
+												"moduleCode": "MANU9FB",
+												"title": "Financial & Business Modelling (Sports)"
+											},
+											{
+												"moduleCode": "HRMU9HC",
+												"title": "HRM in Context"
+											},
+											{
+												"moduleCode": "MKTU9MA",
+												"title": "Marketing Analytics and Brand Creation"
+											},
+											{
+												"moduleCode": "MKTU9MA",
+												"title": "Marketing Analytics and Brand Creation"
+											},
+											{
+												"moduleCode": "MKTU9SM",
+												"title": "Socially Responsible Marketing"
+											},
+											{
+												"moduleCode": "LAWU9PF",
+												"title": "Private International Law of Family and Succession Law"
+											},
+											{
+												"moduleCode": "MANU9MC",
+												"title": "Managing the Consumer Experience"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "LAWU9CH",
+												"title": "Children's Rights"
+											},
+											{
+												"moduleCode": "BUSU9MC",
+												"title": "Managing Change"
+											},
+											{
+												"moduleCode": "LAWU9WP",
+												"title": "Work Placement in Law"
+											},
+											{
+												"moduleCode": "RMKU9BM",
+												"title": "Buying and Visual Merchandising"
+											},
+											{
+												"moduleCode": "RMKU9RS",
+												"title": "Delivering Value in the Digital Age"
+											},
+											{
+												"moduleCode": "RMKU9RS",
+												"title": "Delivering Value in the Digital Age"
+											}
+										],
+										"collectionVersion": "2.0",
+										"credits": 0,
+										"deliveryType": "Option",
+										"duration": 1,
+										"level": "",
+										"title": "Year 4 Management School options and Law",
+										"type": "collection"
+									}
+								],
+								"modules": []
+							},
+							"maxCredits": 20,
+							"minCredits": 20,
+							"options": [],
+							"pathways": [],
+							"semester": "8",
+							"semesterDescription": "Yr 4, semester 8 - Spring"
+						}
+					],
+					"year": "4"
+				}
+			]
+		}
+	],
+	"programmeTitle": "BA (Hons) Business Studies and Law",
+	"qaaBenchmarks": [
+		"Business and Management (2019)",
+		"Law (2019)"
+	],
+	"ucasCode": "MN11",
+	"versionNumber": "2.0"
+}

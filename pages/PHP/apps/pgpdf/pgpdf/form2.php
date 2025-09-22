@@ -1307,7 +1307,6 @@
                                         <option value="jan-28">Jan-28</option>
                                         <option value="sep-28">Sep-28</option>
                                     </select>
-
                                 </div>
 
                                 <div>
@@ -1640,6 +1639,10 @@
                     "newName": "MRes Educational Research"
                 }, {
                     "newName": "MSc Professional Education and Leadership"
+                }, {
+                    "newName": "PGDE Secondary Education: Physics with Science"
+                }, {
+                    "newName": "PGDE Secondary Education: Chemistry with Science"
                 }]
             },
             {
@@ -1647,12 +1650,17 @@
                 "subject": "Environmental Sciences",
                 "qsSubject": "Environmental Sciences",
                 "courses": [{
-                    "newName": "MSc Environmental Management"
-                }, {
-                    "newName": "MSc Environmental Remote Sensing and Geospatial Sciences"
-                }, {
-                    "newName": "LLM Environmental Law and Climate Justice"
-                }]
+                        "newName": "MSc Environmental Management"
+                    }, {
+                        "newName": "MSc Environmental Remote Sensing and Geospatial Sciences"
+                    },
+                    {
+                        "newName": "MSc Global Environmental Sustainability"
+                    },
+                    {
+                        "newName": "LLM Environmental Law and Climate Justice"
+                    }
+                ]
             },
             {
                 "id": 10,
@@ -1691,12 +1699,17 @@
                 "subject": "Politics",
                 "qsSubject": "History, Heritage and Politics",
                 "courses": [{
-                    "newName": "MSc International Conflict and Cooperation"
-                }, {
-                    "newName": "MPP Public Policy"
-                }, {
-                    "newName": "MSc Global Politics"
-                }]
+                        "newName": "MSc International Conflict and Cooperation"
+                    },
+                    {
+                        "newName": "MSc Global Environmental Sustainability"
+                    },
+                    {
+                        "newName": "MPP Public Policy"
+                    }, {
+                        "newName": "MSc Global Politics"
+                    }
+                ]
             },
             {
                 "id": 13,
@@ -1775,10 +1788,15 @@
                 "subject": "Social Work",
                 "qsSubject": "Social Sciences",
                 "courses": [{
-                    "newName": "MSc Social Work Studies"
-                }, {
-                    "newName": "MSc Substance Use (Online)"
-                }]
+                        "newName": "MSc Social Work Studies"
+                    },
+                    {
+                        "newName": "MSc Applied Professional Studies"
+                    },
+                    {
+                        "newName": "MSc Substance Use (Online)"
+                    }
+                ]
             },
             {
                 "id": 19,

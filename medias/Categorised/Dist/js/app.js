@@ -1308,15 +1308,6 @@ stir.load = function (url, callback) {
   return request;
 };
 
-stir.getJSONp = function (url, onload, onerror) {
-  if (typeof url == "undefined") return;
-  const script = document.createElement("script");
-  if ("function" === typeof onload) script.onload = onload;
-  if ("function" === typeof onerror) script.onerror = onerror;
-  script.src = url;
-  document.head.appendChild(script);
-};
-
 stir.loadAuthenticated = function (url, callback) {
   if (typeof url == "undefined") return;
   if (typeof callback != "function") callback = function () {};
@@ -1677,11 +1668,22 @@ stir.createDOMElement = function (htmlStr) {
   return temp;
 };
 
-stir.addScript = function (src) {
+stir.addScript = (src, onload, onerror) => {
+  if (typeof src == "undefined") return;
+  const script = document.createElement("script");
+  if ("function" === typeof onload) script.onload = onload;
+  if ("function" === typeof onerror) script.onerror = onerror;
+  script.src = src;
+  document.head.append(script);
+};
+
+stir.getJSONp = stir.addScript;
+
+/* function (src) {
   var script = document.createElement("script");
   script.src = src;
   document.body.insertAdjacentElement("beforeend", script);
-};
+}; */
 
 stir.addStyle = function (href) {
   var link = document.createElement("link");
@@ -2689,7 +2691,7 @@ stir.MediaQuery = (function () {
         var link = crumb.querySelector("a");
         var subMenu = crumb.querySelector("ul");
 
-        if (subMenu) {
+        if (link && subMenu) {
           crumb.classList.add("breadcrumbs__item--has-submenu");
           // make a copy the breadcrumb link in the submenu so we can still navigate
           // to that page. The original link will be used instead to toggle submenu open/closed.
@@ -2701,7 +2703,7 @@ stir.MediaQuery = (function () {
         }
 
         // Add the data for Schema.org JSON-LD
-        if (useSchemaDotOrg) {
+        if (link && useSchemaDotOrg) {
           schemaData.push({
             "@type": "ListItem",
             position: Array.prototype.indexOf.call(trail.children, crumb) + 1,
@@ -2831,7 +2833,9 @@ var stir = stir || {};
  */
 stir.Concierge = function Concierge(popup) {
   const button = document.querySelector("#header-search__button");
-  if (!popup || !button) return;
+  const buttons = [...document.querySelectorAll(".header-search-button"), ...[button]];
+
+  if (!popup || !buttons.length) return;
 
   var obj2param = this.obj2param;
 
@@ -2875,7 +2879,11 @@ stir.Concierge = function Concierge(popup) {
     results.hide();
 
     // Assign various event handlers
-    button.addEventListener("click", opening);
+
+    buttons.forEach((openButton) => {
+      openButton.addEventListener("click", opening);
+    });
+
     nodes.input.addEventListener("focus", focusing);
     nodes.input.addEventListener("keyup", stir.debounce(handleInput, keyUpTime));
 
@@ -3201,51 +3209,33 @@ stir.Concierge.prototype.obj2param = function (obj) {
     }, false);
 })();
  */
-/*
- * Object Fit hack
- * For browsers that dont support object fit
- * Will remove the image tag and instead add a inline background image style
- * @author: Ryan Kaye
- *
+/**
+ * Hacks for Stirling
+ * Hacks for browsers that do not support certain features or have specific bugs.
+ */
 
+/**
+ * Hacks for Half and Half component
+ * This hack is for browsers that do not support the nth-of-type selector correctly.
+ * It adds a class to the second half of the component to ensure correct styling.
+ */
 (function () {
-  var els = stir.nodes("[data-objectfit]");
-
-  if (!els) return;
-
-  if (els.length > 0 && "objectFit" in document.documentElement.style === false) {
-    for (var i = 0; i < els.length; i++) {
-      if (els[i].children[0]) {
-        var src = els[i].children[0].getAttribute("src");
-        els[i].removeChild(els[i].children[0]);
-        els[i].style.backgroundImage = "url(" + src + ")";
-      }
+  document.querySelectorAll(".c-half-n-half:nth-of-type(even)").forEach((elem) => {
+    const e = elem.querySelector(".u-hook");
+    if (e) {
+      e.classList.add("u-hook-bl");
+      e.classList.remove("u-hook-tr");
     }
-  }
+  });
 })();
 
-/*
- * Pullquote fixes for Old Edge and IE
- * @author: Ryan Kaye
- *
-
+/**
+ * Hide elements if JavaScript is enabled. Such as some fallback text
+ */
 (function () {
-  if (navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Edge") != -1) {
-    var el = stir.nodes(".pullquote");
-
-    if (el) {
-      for (var i = 0; i < el.length; i++) {
-        el[i].style.borderRight = "15px solid #fff";
-      }
-    }
-
-    var el = stir.nodes(".pullquote-vid>div.responsive-embed");
-    if (el) {
-      for (var i = 0; i < el.length; i++) {
-        el[i].style.minHeight = parseInt(el[i].offsetWidth / 1.78 + 20) + "px";
-      }
-    }
-  }
+  document.querySelectorAll(".hide-if-js").forEach((el) => {
+    el.classList.add("hide");
+  });
 })();
 
 /*
@@ -3333,10 +3323,10 @@ stir.Concierge.prototype.obj2param = function (obj) {
  * INTERNAL MENUS
  */
 
-/*
+/**
  * Main Mobile Burger Menu (Internal)
  * Only used by brandbank and Microsites
- */
+ *
 
 (function () {
     var intSideMenu = document.querySelector('.internal-sidebar-menu');
@@ -3353,7 +3343,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
     /**
      * Function: show / hide relavent menu (m) 
      * when burger (b) is clicked
-     */
+     *
     function intMenutoogle(m, b) {
         m.style.display = 'block'; // just in case there is a display none on the el
         if (m.classList.contains("hide")) {
@@ -3367,7 +3357,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
 
     /**
      * Click events
-     */
+     *
     if (intMainMobileBurger && intMainMobileNav) {
         intMainMobileBurger.onclick = function (e) {
             intMenutoogle(intMainMobileNav, intMainMobileBurger)
@@ -3387,75 +3377,71 @@ stir.Concierge.prototype.obj2param = function (obj) {
         }; 
     }*/
 
-    /**
+/**
      * On load events
-     */
+     *
     if (!intSideMenu)
         if (intSubMobileBurger)
             intSubMobileBurger.classList.add('hide'); // remove the sub menu burger if no sub menu
 
 })();
-
+*/
 
 /**
  * INTERNAL SIGNPOST DROPDOWN
  */
 
-var intSignPostBtn = document.getElementById('internal-signpost-dropdown__link');
-var intSignPostMenu = document.getElementById('internal-signpost-dropdown__submenu');
+(function () {
+  var intSignPostBtn = document.getElementById("internal-signpost-dropdown__link");
+  var intSignPostMenu = document.getElementById("internal-signpost-dropdown__submenu");
 
-if (intSignPostBtn && intSignPostMenu) {
+  if (intSignPostBtn && intSignPostMenu) {
     intSignPostBtn.onclick = function (e) {
-        e.stopPropagation();
+      e.stopPropagation();
 
-        if (intSignPostMenu.classList.contains('hide')) {
-            intSignPostMenu.classList.remove('hide');
-            intSignPostBtn.classList.add('is-active');
-        } else {
-            intSignPostMenu.classList.add('hide');
-            intSignPostBtn.classList.remove('is-active');
-        }
+      if (intSignPostMenu.classList.contains("hide")) {
+        intSignPostMenu.classList.remove("hide");
+        intSignPostBtn.classList.add("is-active");
+      } else {
+        intSignPostMenu.classList.add("hide");
+        intSignPostBtn.classList.remove("is-active");
+      }
 
-        // kill other popups
-        UoS_closeAllWidgetsExcept("internalSignpost");
+      // kill other popups
+      UoS_closeAllWidgetsExcept("internalSignpost");
 
-        e.preventDefault();
-        return false;
+      e.preventDefault();
+      return false;
     };
+  }
+})();
 
-    // Not sure if this is needed
-    //intSignPostMenu.onclick = function (e) {
-    //e.preventDefault();  
-    //};
-}
-
-/*
+/**
  * Replacement for Foundation dropdown component
  * Used on Brandbank for file picker
  */
 (function (scope) {
+  if (!scope) return;
 
-    if(!scope) return;
-    
-    var ddPanes = document.querySelectorAll(".dropdown-pane");
-    var ddBtns = document.querySelectorAll(".button--dropdown");
+  var ddPanes = document.querySelectorAll(".dropdown-pane");
+  var ddBtns = document.querySelectorAll(".button--dropdown");
 
-    for (var i = 0; i < ddPanes.length; i++) {
-        ddPanes[i].classList.add('hide');
-    }
+  for (var i = 0; i < ddPanes.length; i++) {
+    ddPanes[i].classList.add("hide");
+  }
 
-    function doClick(el) {
-        el.onclick = function (e) {
-            e.target.nextElementSibling.classList.toggle('hide');
-            e.preventDefault();
-        };
-    }
+  function doClick(el) {
+    el.onclick = function (e) {
+      e.target.nextElementSibling.classList.toggle("hide");
+      e.preventDefault();
+    };
+  }
 
-    for (var i = 0; i < ddPanes.length; i++) {
-        doClick(ddBtns[i]);
-    }
+  for (var i = 0; i < ddPanes.length; i++) {
+    doClick(ddBtns[i]);
+  }
+})(document.querySelector(".c-download-box"));
 
-})( document.querySelector(".c-download-box") );
 /**
  * Lazy loading
  **/
@@ -3907,6 +3893,51 @@ var stir = stir || {};
 
 })(document.querySelector(".c-scroll-to-top"));
 
+var stir = stir || {};
+
+stir.share = (()=>{
+
+	const button = document.querySelector('[data-open="shareSheet"]');
+	if(!button) return;
+
+	const res = {
+		script: {
+			dev:'/medias/Categorised/Dist/js/other/share.js',
+			preview: '<t4 type="media" id="192023" formatter="path/*" />',
+			prod: '<t4 type="media" id="192023" formatter="path/*" />'
+		},
+		styles: {
+			dev:'/medias/Categorised/Dist/css/campaigns/share.css',
+			preview: '<t4 type="media" id="195920" formatter="path/*" />',
+			prod: '<t4 type="media" id="195920" formatter="path/*" />'
+		}
+	};
+
+	function _getShareData(el) {
+		return {
+			title: (el&&el.hasAttribute("data-title")&&el.getAttribute("data-title"))||document.head.querySelector('[property="og:title"]')?.getAttribute('content')||document.head.querySelector("title").textContent,
+			url: ((el&&el.hasAttribute("data-url")&&el.getAttribute("data-url"))||document.head.querySelector('[property="og:url"]')?.getAttribute('content')||document.location.href).replace('https://www.stir.ac.ukhttp','http'),
+			description: document.head.querySelector('[property="og:description"],[name="description"]')?.getAttribute('content'),
+			entity: (document.head.querySelector('[name="stir.type"]')?.getAttribute('content')||"").toLowerCase(),
+			image: document.head.querySelector('[name="og:image"],[property="og:image"]')?.getAttribute('content')
+		};
+	}
+
+	if (navigator.share) {
+		button.addEventListener("click", async (e) => {
+			try { await navigator.share(_getShareData(e.target)); }
+			catch (error) { /* console.error(error.message); */ }
+		});
+	} else {
+		res.styles[UoS_env.name] && stir.addStyle(res.styles[UoS_env.name]);
+		res.script[UoS_env.name] && stir.addScript(res.script[UoS_env.name]);
+	}
+
+	return {
+		getShareData: _getShareData
+	}
+
+})();
 /*
 @author: Ryan Kaye
 @date: March 2022

@@ -1,0 +1,33 @@
+/**
+* Variables for icons used in the application
+* These icons are encoded in base64 format for inline usage
+* This allows for easy embedding of SVG icons without additional HTTP requests
+* Usage: var(--icon-plus), var(--icon-chevron-down), etc.
+* Heritage green by default, but can be overridden in specific contexts
+* eg :hover::after {
+*     filter: brightness(0) invert(1);
+*   }
+*/
+
+:root {
+  --icon-plus: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTEyIDQuNXYxNW03LjUtNy41aC0xNSIgLz4KPC9zdmc+CgoKCgoKCg==");
+  --icon-minus: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTUgMTJoMTQiIC8+Cjwvc3ZnPgoKCgoKCgoK");
+  --icon-chevron-down: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0ibTE5LjUgOC4yNS03LjUgNy41LTcuNS03LjUiIC8+Cjwvc3ZnPgoKCgoKCg==");
+  --icon-chevron-right: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0ibTguMjUgNC41IDcuNSA3LjUtNy41IDcuNSIgLz4KPC9zdmc+CgoKCgo=");
+  --icon-chevron-left: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTE1Ljc1IDE5LjUgOC4yNSAxMmw3LjUtNy41IiAvPgo8L3N2Zz4KCgoKCg==");
+  --icon-lock-open: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iIzAwNjkzOCIgPgogIDxwYXRoIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTEzLjUgMTAuNVY2Ljc1YTQuNSA0LjUgMCAxIDEgOSAwdjMuNzVNMy43NSAyMS43NWgxMC41YTIuMjUgMi4yNSAwIDAgMCAyLjI1LTIuMjV2LTYuNzVhMi4yNSAyLjI1IDAgMCAwLTIuMjUtMi4yNUgzLjc1YTIuMjUgMi4yNSAwIDAgMC0yLjI1IDIuMjV2Ni43NWEyLjI1IDIuMjUgMCAwIDAgMi4yNSAyLjI1WiIgLz4KPC9zdmc+CgoKCgoKCgoKCg==");
+}
+
+/*
+  Utils for icons
+*/
+
+.u-chevron-right::after {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  top: 3px;
+  right: -5px;
+  content: var(--icon-chevron-right);
+}

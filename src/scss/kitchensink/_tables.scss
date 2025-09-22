@@ -113,6 +113,7 @@ table.c-table--unstriped {
 
 .table-scroll table {
   width: 100%;
+  overflow-x: auto;
 }
 .c-table__header,
 table caption {
@@ -127,8 +128,16 @@ table caption {
   background-color: transparent;
   position: relative;
 }
-// @media screen and (max-width: 639px) {
+// 2025-09-12 rwm2 uncomment to reduce font/padding on mobile table-scroll tables
+/* @media screen and (max-width: 639px) {
+  .table-scroll table {
+    overflow-x: auto;
+    th, td {
+      font-size: 1rem;
+      padding: .25rem;
+    }
+  } 
+} */
 // 	table td {
 // 		padding: 0.5rem 0.625rem 0.625rem;
 // 	}
-// }

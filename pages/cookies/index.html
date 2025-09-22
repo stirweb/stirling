@@ -468,14 +468,24 @@
 
     // Check Applier and Provider
     const checkApplier = (provider, applier) => {
+
+        if (!applier) return '';
         if (applier === '') return '';
         if (provider === applier) return '';
         return `(${applier})`;
     };
 
+    const getMoreInfoApplier = (cookie) => {
+        if (cookie.Applier) return cookie.Applier;
+        if (cookie.Provider) return cookie.Provider;
+        return '';
+    };
+
     // Create table HTML
     const createTableHTML = (cookies) => {
         if (!cookies || cookies.length === 0) return '';
+
+
 
         return `
             <table class="u-mb-3" border="1">
@@ -495,7 +505,7 @@
                             <td>${cookie.Provider} ${checkApplier(cookie.Provider, cookie.Applier)}</td>
                             <td>
                                 <p>${cookie.Purpose}</p>
-                                ${cookie.MoreInfoUrl ? `<p><a href="${cookie.MoreInfoUrl}" target="_blank">${cookie.Applier}'s cookie policy</a></p>` : ''}
+                                ${cookie.MoreInfoUrl ? `<p><a href="${cookie.MoreInfoUrl}" target="_blank">${getMoreInfoApplier(cookie)}'s cookie policy</a></p>` : ''}
                             </td>
                             <td>${cookie.Expiry}</td>
                         </tr>
@@ -509,7 +519,18 @@
         On load: Fetch the data from cookies.json and render the tables
     */
 
-    const dataUrl = UoS_env.name === "dev" ? "./cookies.json" : '<t4 type="navigation" id="5290" />';
+    const getDataUrl = (env) => {
+        // Determine the environment and return the appropriate URL
+
+        if (env === "preview" || env === "appdev") return '<t4 type="navigation" id="5290" />';
+
+        if (env === "dev") return "./cookies.json";
+
+        return '<t4 type="navigation" id="5290" />index.json'; // prod by default
+    };
+
+
+    const dataUrl = getDataUrl(UoS_env.name);
 
     fetch(dataUrl)
         .then(response => {

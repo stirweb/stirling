@@ -18,8 +18,8 @@
         </div>`),p=stir.curry((e,a,i)=>`
       <${a} class="small-12 cell ${e}">
         <div class="u-aspect-ratio-16-9 "><a href="${i.url}"><img class=" u-object-cover" src="${i.image}" alt="${i.imagealt}" loading="lazy"></a></div>
-        <h3 class="header-stripped u-my-1 u-font-normal u-compress-line-height">
-        <a href="${i.url}" class="c-link u-inline">${i.title}</a>
+        <h3 class="header-stripped u-my-1 u-font-normal ">
+        <a href="${i.url}" class="c-link ">${i.title}</a>
       </h3>
         ${i._uos.location?`<strong>${i._uos.location}</strong>`:""}
         ${t(i._uos)} 

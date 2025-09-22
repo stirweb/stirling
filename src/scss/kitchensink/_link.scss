@@ -5,6 +5,7 @@
   max-width: max-content;
   position: relative;
   text-decoration: none;
+  text-wrap: pretty;
 
   &:before {
     content: "";
@@ -18,36 +19,50 @@
   }
 
   &:after {
-    content: "\e97b";
-    font-family: "uos";
-    margin: 0 0 0 10px;
-    //position: relative;
-    //right: -10px;
-    //bottom: -1px;
+    //content: "\e97b";
+    //font-family: "uos";
+    content: var(--icon-chevron-right);
+    width: 24px;
+    height: 24px;
+    position: relative;
+    display: inline-block;
+    top: 5px;
+    right: -4px;
   }
 }
 
 .c-link.u-black:hover {
   color: $black;
 }
+
 .c-link.u-black:before {
   background-color: $black;
 }
+
 .c-link.u-white:hover {
   color: $white;
 }
+
 .c-link.u-white:before {
   background-color: $white;
 }
+
 .c-link:hover:before {
   width: 100%;
 }
+
 ul .c-link {
   margin: 0 0 10px 0;
 }
+
 .c-link.no-arrow:after {
   content: "";
 }
+
+.u-white--all .c-link::after {
+  filter: brightness(0) invert(1);
+}
+
 .c-wysiwyg-content li a,
 .accordion-content li a,
 .tabs-panel li a {
@@ -67,7 +82,13 @@ ul .c-link {
   border-bottom-color: #fff;
 }
 
-.c-link.safariFix:after {
-  position: relative;
-  right: 10px;
+// .c-link.safariFix:after {
+//   position: relative;
+//   right: 10px;
+// }
+
+.c-wysiwyg-content li a,
+.accordion-content li a,
+.tabs-panel li a {
+  border-bottom: 2px solid $heritage-green;
 }

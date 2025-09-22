@@ -16,6 +16,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease-in-out;
+  z-index: 100;
 
   &:hover {
     color: $white;
@@ -78,35 +79,36 @@
   }
 
   .site-footer_follow {
-    a {
-      &:hover {
-        text-decoration: none;
-      }
+    gap: 12px;
+    // a {
+    //   &:hover {
+    //     text-decoration: none;
+    //   }
 
-      &[href*="facebook"]:hover {
-        color: #3b5998;
-      }
+    //   &[href*="facebook"]:hover {
+    //     color: #3b5998;
+    //   }
 
-      &[href*="instagram"]:hover {
-        color: #125688;
-      }
+    //   &[href*="instagram"]:hover {
+    //     color: #125688;
+    //   }
 
-      &[href*="twitter"]:hover {
-        color: #1da1f2;
-      }
+    //   &[href*="twitter"]:hover {
+    //     color: #1da1f2;
+    //   }
 
-      &[href*="youtube"]:hover {
-        color: #ff0000;
-      }
+    //   &[href*="youtube"]:hover {
+    //     color: #ff0000;
+    //   }
 
-      &[href*="linkedin"]:hover {
-        color: #007bb5;
-      }
+    //   &[href*="linkedin"]:hover {
+    //     color: #007bb5;
+    //   }
 
-      &[href*="tiktok"]:hover {
-        color: rgb(255, 59, 92);
-      }
-    }
+    //   &[href*="tiktok"]:hover {
+    //     color: rgb(255, 59, 92);
+    //   }
+    // }
   }
 }
 

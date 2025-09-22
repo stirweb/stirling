@@ -36,8 +36,14 @@
   border-bottom: 2px solid $energy-green;
 
   &::after {
-    content: " \e981" !important; // plus
-    font-family: "uos" !important;
+    //content: " \e981" !important; // plus
+    content: var(--icon-plus);
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    position: relative;
+    right: -5px;
+    //font-family: "uos" !important;
     font-size: 0.75rem;
     cursor: pointer;
   }
@@ -48,16 +54,16 @@
 
   &.is-active {
     &::after {
-      content: " \e979" !important; // minus
+      //content: " \e979" !important; // minus
+      content: var(--icon-chevron-down);
     }
   }
 }
 
 .c-internal-signpost-dropdown__submenu {
   position: absolute;
-  top: 100%;
+  top: 38px;
   right: 0;
-  background: $white;
   z-index: 50;
 
   // shadow line beneath the submenu
@@ -88,47 +94,47 @@
   }
 }
 
-.c-internal-signpost-dropdown__link--show-submenu {
-  .c-internal-signpost-dropdown__submenu {
-    display: block !important;
-  }
-}
+// .c-internal-signpost-dropdown__link--show-submenu {
+//   .c-internal-signpost-dropdown__submenu {
+//     display: block !important;
+//   }
+// }
 
 /*
    General internal styles
    class is on the body tag of the template
  */
 
-.internal-pages .intro {
-  margin-top: 60px;
+// .internal-pages .intro {
+//   margin-top: 60px;
 
-  h1 {
-    color: $heritage-green;
-    font-size: 2.25rem;
-  }
+//   h1 {
+//     color: $heritage-green;
+//     font-size: 2.25rem;
+//   }
 
-  p {
-    font-size: 1.625rem;
-  }
-}
+//   p {
+//     font-size: 1.625rem;
+//   }
+// }
 
-@media screen and #{breakpoint(medium down)} {
-  .internal-pages {
-    .intro {
-      h1 {
-        font-size: 1.75rem;
-      }
+//@media screen and #{breakpoint(medium down)} {
+// .internal-pages {
+//   .intro {
+//     h1 {
+//       font-size: 1.75rem;
+//     }
 
-      p {
-        font-size: 1.125rem;
-      }
-    }
+//     p {
+//       font-size: 1.125rem;
+//     }
+//   }
 
-    .placeholder .uos-magnifying-glass {
-      font-size: 1.25rem;
-    }
-  }
-}
+//   .placeholder .uos-magnifying-glass {
+//     font-size: 1.25rem;
+//   }
+// }
+//}
 
 /*
    BRANDBANK
