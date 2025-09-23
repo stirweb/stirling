@@ -312,8 +312,6 @@
     const largeFontSize = 72;
     const secondaryFontSize = 40;
 
-    console.log(firstName.length);
-
     const fontSize = firstName.length > 8 ? secondaryFontSize : largeFontSize;
     const centre = width / 2;
     const textWidth = customFont.widthOfTextAtSize(firstName, fontSize);
@@ -334,35 +332,38 @@
     pdfDoc.addPage(firstPageCopy);
 
     // Intro personalisation
-    const introInsertPdfBytes = await fetch(urlIntroInsert).then((res) => res.arrayBuffer());
-    const introInsertPdf = await PDFLib.PDFDocument.load(introInsertPdfBytes);
-    const [introInsertPageCopy] = await pdfDoc.copyPages(introInsertPdf, [0]);
+    //const introInsertPdfBytes = await fetch(urlIntroInsert).then((res) => res.arrayBuffer());
+    //const introInsertPdf = await PDFLib.PDFDocument.load(introInsertPdfBytes);
+    //const [introInsertPageCopy] = await pdfDoc.copyPages(introInsertPdf, [0]);
 
-    introInsertPageCopy.drawText(firstName.toUpperCase() + ",", {
-      x: 65,
-      y: 767,
-      size: secondaryFontSize,
-      font: customFont,
-      color: PDFLib.rgb(0.0, 0.4, 0.21),
-      rotate: PDFLib.degrees(0),
-    });
-    // pdfDoc.addPage(introInsertPageCopy);
+    // introInsertPageCopy.drawText(firstName.toUpperCase() + ",", {
+    //   x: 65,
+    //   y: 767,
+    //   size: secondaryFontSize,
+    //   font: customFont,
+    //   color: PDFLib.rgb(0.0, 0.4, 0.21),
+    //   rotate: PDFLib.degrees(0),
+    // });
+    //pdfDoc.addPage(introInsertPageCopy);
 
     // Intro merge
-    const introPdfBytes = await fetch(urlIntro).then((res) => res.arrayBuffer());
-    const introPdfDoc = await PDFLib.PDFDocument.load(introPdfBytes);
+    //const introPdfBytes = await fetch(urlIntro).then((res) => res.arrayBuffer());
+    //const introPdfDoc = await PDFLib.PDFDocument.load(introPdfBytes);
 
-    const pagesIntro = introPdfDoc.getPages();
-    var i = 0;
-    while (i < pagesIntro.length) {
-      if (i === 2) {
-        pdfDoc.addPage(introInsertPageCopy);
-      } else {
-        let [p] = await pdfDoc.copyPages(introPdfDoc, [i]);
-        pdfDoc.addPage(p);
-      }
-      i++;
-    }
+    // const pagesIntro = introPdfDoc.getPages();
+    // var i = 0;
+    // while (i < pagesIntro.length) {
+    //   if (i === 2) {
+    //     pdfDoc.addPage(introInsertPageCopy);
+    //   } else {
+    //     let [p] = await pdfDoc.copyPages(introPdfDoc, [i]);
+    //     pdfDoc.addPage(p);
+    //   }
+    //   i++;
+    // }
+
+    // Intro without personalisation
+    await mergePdf(urlIntro, pdfDoc, "Intro");
 
     const errorUrl = server.path + "rawpdfs/.pdf";
 
