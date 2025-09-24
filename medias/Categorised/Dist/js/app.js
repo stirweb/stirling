@@ -1308,15 +1308,6 @@ stir.load = function (url, callback) {
   return request;
 };
 
-stir.getJSONp = function (url, onload, onerror) {
-  if (typeof url == "undefined") return;
-  const script = document.createElement("script");
-  if ("function" === typeof onload) script.onload = onload;
-  if ("function" === typeof onerror) script.onerror = onerror;
-  script.src = url;
-  document.head.appendChild(script);
-};
-
 stir.loadAuthenticated = function (url, callback) {
   if (typeof url == "undefined") return;
   if (typeof callback != "function") callback = function () {};
@@ -1677,11 +1668,22 @@ stir.createDOMElement = function (htmlStr) {
   return temp;
 };
 
-stir.addScript = function (src) {
+stir.addScript = (src, onload, onerror) => {
+  if (typeof src == "undefined") return;
+  const script = document.createElement("script");
+  if ("function" === typeof onload) script.onload = onload;
+  if ("function" === typeof onerror) script.onerror = onerror;
+  script.src = src;
+  document.head.append(script);
+};
+
+stir.getJSONp = stir.addScript;
+
+/* function (src) {
   var script = document.createElement("script");
   script.src = src;
   document.body.insertAdjacentElement("beforeend", script);
-};
+}; */
 
 stir.addStyle = function (href) {
   var link = document.createElement("link");
@@ -3209,7 +3211,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
  */
 /**
  * Hacks for Stirling
- * These are hacks for browsers that do not support certain features or have specific bugs.
+ * Hacks for browsers that do not support certain features or have specific bugs.
  */
 
 /**
@@ -3220,58 +3222,20 @@ stir.Concierge.prototype.obj2param = function (obj) {
 (function () {
   document.querySelectorAll(".c-half-n-half:nth-of-type(even)").forEach((elem) => {
     const e = elem.querySelector(".u-hook");
-    if(e) {
+    if (e) {
       e.classList.add("u-hook-bl");
       e.classList.remove("u-hook-tr");
     }
   });
 })();
 
-/*
- * Object Fit hack
- * For browsers that dont support object fit
- * Will remove the image tag and instead add a inline background image style
- * @author: Ryan Kaye
- *
-
+/**
+ * Hide elements if JavaScript is enabled. Such as some fallback text
+ */
 (function () {
-  var els = stir.nodes("[data-objectfit]");
-
-  if (!els) return;
-
-  if (els.length > 0 && "objectFit" in document.documentElement.style === false) {
-    for (var i = 0; i < els.length; i++) {
-      if (els[i].children[0]) {
-        var src = els[i].children[0].getAttribute("src");
-        els[i].removeChild(els[i].children[0]);
-        els[i].style.backgroundImage = "url(" + src + ")";
-      }
-    }
-  }
-})();
-
-/*
- * Pullquote fixes for Old Edge and IE
- * @author: Ryan Kaye
- *
-
-(function () {
-  if (navigator.userAgent.indexOf("MSIE") != -1 || navigator.userAgent.indexOf("Edge") != -1) {
-    var el = stir.nodes(".pullquote");
-
-    if (el) {
-      for (var i = 0; i < el.length; i++) {
-        el[i].style.borderRight = "15px solid #fff";
-      }
-    }
-
-    var el = stir.nodes(".pullquote-vid>div.responsive-embed");
-    if (el) {
-      for (var i = 0; i < el.length; i++) {
-        el[i].style.minHeight = parseInt(el[i].offsetWidth / 1.78 + 20) + "px";
-      }
-    }
-  }
+  document.querySelectorAll(".hide-if-js").forEach((el) => {
+    el.classList.add("hide");
+  });
 })();
 
 /*
@@ -3929,6 +3893,51 @@ var stir = stir || {};
 
 })(document.querySelector(".c-scroll-to-top"));
 
+var stir = stir || {};
+
+stir.share = (()=>{
+
+	const button = document.querySelector('[data-open="shareSheet"]');
+	if(!button) return;
+
+	const res = {
+		script: {
+			dev:'/medias/Categorised/Dist/js/other/share.js',
+			preview: '<t4 type="media" id="192023" formatter="path/*" />',
+			prod: '<t4 type="media" id="192023" formatter="path/*" />'
+		},
+		styles: {
+			dev:'/medias/Categorised/Dist/css/campaigns/share.css',
+			preview: '<t4 type="media" id="195920" formatter="path/*" />',
+			prod: '<t4 type="media" id="195920" formatter="path/*" />'
+		}
+	};
+
+	function _getShareData(el) {
+		return {
+			title: (el&&el.hasAttribute("data-title")&&el.getAttribute("data-title"))||document.head.querySelector('[property="og:title"]')?.getAttribute('content')||document.head.querySelector("title").textContent,
+			url: ((el&&el.hasAttribute("data-url")&&el.getAttribute("data-url"))||document.head.querySelector('[property="og:url"]')?.getAttribute('content')||document.location.href).replace('https://www.stir.ac.ukhttp','http'),
+			description: document.head.querySelector('[property="og:description"],[name="description"]')?.getAttribute('content'),
+			entity: (document.head.querySelector('[name="stir.type"]')?.getAttribute('content')||"").toLowerCase(),
+			image: document.head.querySelector('[name="og:image"],[property="og:image"]')?.getAttribute('content')
+		};
+	}
+
+	if (navigator.share) {
+		button.addEventListener("click", async (e) => {
+			try { await navigator.share(_getShareData(e.target)); }
+			catch (error) { /* console.error(error.message); */ }
+		});
+	} else {
+		res.styles[UoS_env.name] && stir.addStyle(res.styles[UoS_env.name]);
+		res.script[UoS_env.name] && stir.addScript(res.script[UoS_env.name]);
+	}
+
+	return {
+		getShareData: _getShareData
+	}
+
+})();
 /*
 @author: Ryan Kaye
 @date: March 2022
