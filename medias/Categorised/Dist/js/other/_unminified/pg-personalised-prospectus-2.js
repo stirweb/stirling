@@ -9,6 +9,7 @@
 
   const SERVER = {
     path: UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "",
+    year: `2026`,
     app: useUAT ? "app-uat.php" : "app.php",
     verify: "verify.php",
   };
@@ -276,14 +277,14 @@
     const pdfDoc = await PDFLib.PDFDocument.create();
 
     //const urlFull = server.path + "rawpdfs/full-non-personalised.pdf";
-    const urlFront = server.path + "rawpdfs/Front.pdf";
-    const urlIntro = server.path + "rawpdfs/Intro.pdf";
-    const urlIntroInsert = server.path + "rawpdfs/IntroInsert.pdf";
-    const urlBack = server.path + "rawpdfs/Back.pdf";
+    const urlFront = server.path + "rawpdfs/" + server.year + "/Front.pdf";
+    const urlIntro = server.path + "rawpdfs/" + server.year + "/Intro.pdf";
+    const urlIntroInsert = server.path + "rawpdfs/" + server.year + "/IntroInsert.pdf";
+    const urlBack = server.path + "rawpdfs/" + server.year + "/Back.pdf";
 
-    const url1 = server.path + "rawpdfs/" + subject1.replaceAll(",", "") + ".pdf";
-    const url2 = server.path + "rawpdfs/" + subject2.replaceAll(",", "") + ".pdf";
-    const url3 = server.path + "rawpdfs/" + subject3.replaceAll(",", "") + ".pdf";
+    const url1 = server.path + "rawpdfs/" + server.year + "/" + subject1.replaceAll(",", "") + ".pdf";
+    const url2 = server.path + "rawpdfs/" + server.year + "/" + subject2.replaceAll(",", "") + ".pdf";
+    const url3 = server.path + "rawpdfs/" + server.year + "/" + subject3.replaceAll(",", "") + ".pdf";
 
     // Font
     const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
@@ -296,7 +297,7 @@
     /*  Full unpersonalised PDF */
     if (fullPdf === "1") {
       const pdfPathFull = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&s=&f=1}`;
-      const fileNameFull = server.path + "rawpdfs/full-non-personalised.pdf";
+      const fileNameFull = server.path + "rawpdfs/" + server.year + "/full-non-personalised.pdf";
 
       email && submitData(pdfPathFull, server, data);
       setDOMContent(resultsNode, renderLinkBox(fileNameFull));
@@ -395,6 +396,8 @@
 
     const userSubjects = [getSubjectID(subsData, subject1), getSubjectID(subsData, subject2), getSubjectID(subsData, subject3)].filter((item) => Number(item));
     const pdfPath = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&f=0&s=${userSubjects.join(",")}`;
+
+    console.log(data);
 
     email && submitData(pdfPath, server, data);
 
