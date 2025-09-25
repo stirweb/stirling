@@ -3826,10 +3826,17 @@ var stir = stir || {};
 
 
 (function () {
-  //const resultBox = document.getElementById("resultBox");
   const STORAGE_KEY = "stirsess";
   const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
   const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/big-query/server.php" : "server.php";
+  const CLOSING_DATE = new Date("2025-12-01T23:59:59"); // Example closing date
+
+  const MESSAGES = [
+    { region: "India", message: "£20,000" },
+    { region: "Africa", message: "£30,000" },
+    { region: "Asia", message: "£40,000" },
+    { region: "Southeast Asia", message: "£50,000" },
+  ];
 
   /**
    * Get a cookie value by name
@@ -3844,6 +3851,17 @@ var stir = stir || {};
   }
 
   /**
+   * Get the AID from cookie or return default for non-prod
+   * @returns {string}
+   */
+  function getAID() {
+    if (UoS_env.name !== `prod`) {
+      return "4n72-ke1go-x95i8-r84a";
+    }
+    return getCookie("_a_id") || ``;
+  }
+
+  /**
    * Set a cookie value
    * @param {string} name - The name of the cookie
    * @param {string} value - The value to set (should be encoded)
@@ -3855,17 +3873,37 @@ var stir = stir || {};
   }
 
   /**
-   * Render data into the resultBox
+   * Render data onto the page
    * @param {Array} data - The data to render
    */
-  function renderData(data) {
-    // const html = data.map((event, index) => {
+  function renderData(data, closingDate, message) {
+    if (!data || !data.length) return;
+
+    const event = data[0];
+    const daysLeft = Math.ceil((closingDate - Date.now()) / (1000 * 60 * 60 * 24));
+    const html = `<div class="grid-x grid-container">
+                    <div class="u-my-1 cell  ">
+                        <div class="grid-x flex-dir-column medium-flex-dir-row u-p-2 u-m-0 c-wrapper-2025 purples ">
+                            <p class="cell small-12 large-8 u-m-0 ">
+                                <span class="text-lg u-text-coloured "><b>Applications for January close in ${daysLeft} days</b></span><br>
+                                <span class="text-md  u-font-secondary"><b><a href="${event.p}">${event.prefix} ${event.title}</a></b></span><br>
+                                <span class="text-md  u-font-secondary u-mt-tiny"><b>${message.message}</b> in scholarships available if you are from ${message.region}</span><br>
+                               
+                            </p>
+                            <p class="cell small-12 large-4 u-m-0"> <a class="button expanded" href="${event.p}">Apply now</a></p>
+                        </div>
+                    </div>
+                </div>`;
+
+    // const html = data
+    //   .map((event, index) => {
     //     return `
     //             <div class="event">
     //                 <p>${index} --  ${event.v}  ${event.p}<hr></p>
     //             </div>`;
-    // }).join("");
-    // resultBox.innerHTML = html;
+    //   })
+    //   .join("");
+    return html;
   }
 
   /**
@@ -3901,19 +3939,12 @@ var stir = stir || {};
     })
       .then((response) => response.json())
       .then((data) => {
-        const dataMapped = data.map((item) => {
-          return {
-            v: item.v,
-            s: item.s,
-            p: item.p.replace("/courses", ""),
-          };
-        });
         const stirsess = {
           ts: new Date().toISOString(),
-          data: dataMapped,
+          data: data,
         };
         setCookie(cookieKey, JSON.stringify(stirsess), MAX_AGE_MS);
-        return dataMapped;
+        return data;
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -3921,25 +3952,75 @@ var stir = stir || {};
       });
   }
 
-  // Controller: Fetch new data if needed, otherwise use cached data
-  // Use the _a_id from the cookie, fallback to default if not found
-  const aid = getCookie("_a_id") || ``;
-  //const aid = "4n72-ke1go-x95i8-r84a";
+  /**
+   * Process data to filter for January starts
+   * @param {*} data
+   * @returns {Promise<void>}
+   */
+  function processData(data) {
+    if (!data || !data.length) return Promise.resolve();
 
-  if (!aid.length) return;
-
-  const stored = getCookie(STORAGE_KEY) ? decodeURIComponent(getCookie(STORAGE_KEY)) : null;
-
-  if (shouldFetch(stored, MAX_AGE_MS)) {
-    // Fetch from the server
-    console.log("Fetching from server...");
-    fetchAndStoreData(aid, STORAGE_KEY, SERVER_PATH).then(renderData);
-  } else {
-    // Use cached data
-    //console.log("Fetching data from cookie...");
-    const parsed = JSON.parse(stored);
-    renderData(parsed.data);
+    return fetch("./january-starts.json")
+      .then((response) => response.json())
+      .then((dataJans) => {
+        // Process January starts data
+        const janUrls = dataJans.map((item) => item.url);
+        const filtered = data
+          .filter((event) => {
+            return janUrls.includes(event.p);
+          })
+          .map((event) => {
+            const janItem = dataJans.find((item) => item.url === event.p);
+            return {
+              ...event,
+              ...janItem,
+            };
+          });
+        return filtered;
+      });
   }
+
+  function getMessageForRegion(messages, data) {
+    return messages.find((msg) => msg.region === data.n || msg.region === data.c);
+  }
+
+  /**
+   * Main controller function
+   * @returns {Promise<void>}
+   */
+  async function controller() {
+    const aid = getAID();
+
+    if (!aid.length) return;
+
+    const stored = getCookie(STORAGE_KEY) ? decodeURIComponent(getCookie(STORAGE_KEY)) : null;
+
+    if (shouldFetch(stored, MAX_AGE_MS)) {
+      // Fetch from the server
+      console.log("Fetching from server...");
+      const parsed = await fetchAndStoreData(aid, STORAGE_KEY, SERVER_PATH);
+
+      const dataJans = await processData(parsed);
+      const message = getMessageForRegion(MESSAGES, dataJans[0]);
+      const html = await renderData(dataJans, CLOSING_DATE, message);
+
+      document.querySelector("main").insertAdjacentHTML("afterbegin", html);
+    } else {
+      // Use cached data
+      console.log("Fetching data from cookie...");
+      const parsed = JSON.parse(stored);
+
+      const dataJans = await processData(parsed.data);
+      const message = getMessageForRegion(MESSAGES, dataJans[0]);
+
+      const html = await renderData(dataJans, CLOSING_DATE, message);
+
+      document.querySelector("main").insertAdjacentHTML("afterbegin", html);
+    }
+  }
+
+  /* Away you go */
+  controller();
 })();
 
 (function() {
