@@ -67,7 +67,7 @@
     const formData = new FormData();
     formData.append("aid", aid);
 
-    return fetch("server.php", {
+    return fetch("/research/hub/test/big-query/server.php", {
       method: "POST",
       body: formData,
     })
