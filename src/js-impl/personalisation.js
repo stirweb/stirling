@@ -2,6 +2,7 @@
   //const resultBox = document.getElementById("resultBox");
   const STORAGE_KEY = "stirsess";
   const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
+  const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/big-query/server.php" : "server.php";
 
   /**
    * Get a cookie value by name
@@ -63,11 +64,11 @@
    * @param {string} aid - The aid to send to the server
    * @param {string} cookieKey - The cookie key
    */
-  function fetchAndStoreData(aid, cookieKey) {
+  function fetchAndStoreData(aid, cookieKey, path) {
     const formData = new FormData();
     formData.append("aid", aid);
 
-    return fetch("/research/hub/test/big-query/server.php", {
+    return fetch(path, {
       method: "POST",
       body: formData,
     })
@@ -95,8 +96,8 @@
 
   // Controller: Fetch new data if needed, otherwise use cached data
   // Use the _a_id from the cookie, fallback to default if not found
-  const aid = getCookie("_a_id") || ``;
-  //const aid = '4n72-ke1go-x95i8-r84a';
+  //const aid = getCookie("_a_id") || ``;
+  const aid = "4n72-ke1go-x95i8-r84a";
 
   if (!aid.length) return;
 
@@ -105,7 +106,7 @@
   if (shouldFetch(stored, MAX_AGE_MS)) {
     // Fetch from the server
     console.log("Fetching from server...");
-    fetchAndStoreData(aid, STORAGE_KEY).then(renderData);
+    fetchAndStoreData(aid, STORAGE_KEY, SERVER_PATH).then(renderData);
   } else {
     // Use cached data
     //console.log("Fetching data from cookie...");
