@@ -3923,8 +3923,8 @@ var stir = stir || {};
 
   // Controller: Fetch new data if needed, otherwise use cached data
   // Use the _a_id from the cookie, fallback to default if not found
-  //const aid = getCookie("_a_id") || ``;
-  const aid = "4n72-ke1go-x95i8-r84a";
+  const aid = getCookie("_a_id") || ``;
+  //const aid = "4n72-ke1go-x95i8-r84a";
 
   if (!aid.length) return;
 
