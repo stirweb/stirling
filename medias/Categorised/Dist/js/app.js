@@ -3885,9 +3885,9 @@ var stir = stir || {};
                     <div class="u-my-1 cell  ">
                         <div class="grid-x flex-dir-column medium-flex-dir-row u-p-2 u-m-0 c-wrapper-2025 purples ">
                             <p class="cell small-12 large-8 u-m-0 ">
+                                <span class="text-md  "><b><a href="${event.p}">${event.prefix} ${event.title}</a></b></span><br>
                                 <span class="text-lg u-text-coloured "><b>Applications for January close in ${daysLeft} days</b></span><br>
-                                <span class="text-md  u-font-secondary"><b><a href="${event.p}">${event.prefix} ${event.title}</a></b></span><br>
-                                <span class="text-md  u-font-secondary u-mt-tiny"><b>${message.message}</b> in scholarships available if you are from ${message.region}</span><br>
+                                <span class="text-md u-mt-tiny"><b>${message.message}</b> in scholarships available if you are from ${message.region}</span><br>
                                
                             </p>
                             <p class="cell small-12 large-4 u-m-0"> <a class="button expanded" href="${event.p}">Apply now</a></p>
