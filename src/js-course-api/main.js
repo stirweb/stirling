@@ -1,6 +1,6 @@
 (() => {
 
-	console.info(window.location.search);
+	//console.info(window.location.search);
 
 	const css = document.createElement('style');
 	document.head.append(css);
@@ -39,13 +39,13 @@
 
 	const debug = ["learningOutcomes","programmeAvailabilities","programmeStructure","qaaBenchmarks"];
 	const order = ["programmeOverview","careerAvenues"];
-	const skip = ["programmeTitle","versionNumber","dateOfApproval","dateOfIntroduction","award","programmeCode","owningFaculty","owningDivision","ucasCode","creditPoints","ectsCredits","programmeLevel"].concat(order,debug);
+	const skip  = ["assessmentApproach","learnTeachApproach","programmeTitle","versionNumber","dateOfApproval","dateOfIntroduction","award","programmeCode","owningFaculty","owningDivision","ucasCode","creditPoints","ectsCredits","programmeLevel"].concat(order,debug);
 	const ordered = element => order.indexOf(element) !== -1;
 	const skips = element => skip.indexOf(element) === -1;
 	const labels = {
 		"assessmentApproach": "Approach to assessment",
 		"awardBodies": "Awarding bodies",
-		"careerAvenues": "Career avenues",
+		"careerAvenues": "My future",
 		"learnTeachApproach": "Approach to learning and teaching",
 		"partnerInstitutions": "Partner institutions",
 		"programmeOverview": "Overview",
@@ -93,22 +93,31 @@
 				<!-- Options: ${semester.options.length} -->
 			</div>
 		</details>`;
+	const initCap = text => `${text[0]}${text.slice(1).toLowerCase()}`;
+	const onlyUnique = (value, index, self)  => self.indexOf(value) === index;
+	const avail = (data,exhastive) => {
+		const location = "STIRLING"!==data.location?initCap(data.location):'';
+		const delivery = data.deliveryMode.replace(", UK",'');
+		const mode = (categories[data.loadCategory]||data.loadCategory).toLowerCase();
+		const date = `${months[parseInt(data.prospectiveStartDate.split('-')[1])]||''} ${data.year}`;
+		const active = "Y"===data.isActive?"":' (Inactive)';
+		return `${[location,location?delivery:initCap(delivery),mode,exhastive?date:'',active].filter(el=>el.length).join(', ')}`;
+	};
+	const availability = data => avail(data,false); 
+	const availabilityx = data => avail(data,true); 
+	const li = data => `<li>${data}</li>`;
 	
-	const availability = data => `<li>${months[parseInt(data.prospectiveStartDate.split('-')[1])]||''} ${data.year}, ${data.location[0]}<span class=lc>${data.location.slice(1)}</span>, <span class=lc>${data.deliveryMode.replace(" UK",'')} ${categories[data.loadCategory]||data.loadCategory}</span>${"Y"===data.isActive?"":' (Inactive)'}.</li>`;
-	const benchmark = data => `<li>${data}</li>`;
-		
 	const structure = data => `<p>${data.entryPointDescription}</p> ${data.years.map(year=>`${year.semesters.map(semester).join('')}`).join('')}`;  
+	
+	const empties = el => ("string"===typeof el||"number"===typeof el) && el.length>0;
 
+	const auto = (el,data) => empties(data) ? `<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data}</p></div>`:'';
 
 	if(!el) return console.warn('[Course API] no DOM');
 
-	function element(item) {
-		return
-	}
-
 	spinner.show();
 
-	console.info("[Module]",apiUrl);
+	//console.info("[Module]",apiUrl);
 
 	fetch(apiUrl)
 		.then((response) => {
@@ -124,7 +133,7 @@
 				el.insertAdjacentHTML("beforeend",`<p><strong>Error</strong>: No data!</p>`);
 				return;
 			}
-			console.info(data);
+			//console.info(data);
 			el.insertAdjacentHTML(
 				"beforeend",
 				`<div class="grid-container u-px-1">
@@ -143,24 +152,19 @@
 							</div>
 
 							${data.programmeAvailabilities.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3><ul>':''}
-							${data.programmeAvailabilities.map(availability).join('')}
-							${data.programmeAvailabilities.length>0?'</ul></div>':''}
+							${data.programmeAvailabilities.map(availability).filter(onlyUnique).map(li).join('')}
+							${data.programmeAvailabilities.length>0?'</ul><details style="margin-left:1.5rem;"><summary>Full list of availabilities</summary><ul>':''}
+							${data.programmeAvailabilities.map(availabilityx).filter(onlyUnique).map(li).join('')}
+							${data.programmeAvailabilities.length>0?'</ul></details></div>':''}
 
-							${ order.filter(el => (("string"===typeof data[el]||"number"===typeof data[el]) && data[el].length>0)).map(el => `<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]}</p><br>`).join("") }
+							${ order.map(el=>auto(el,data[el])).join("") }
 
 							<!-- AUTO -->
-							${ Object.keys(data).filter(skips).filter(el=>{
-								if (("string"===typeof data[el]||"number"===typeof data[el]) && data[el].length>0) {
-									return true;
-								} else {
-									console.info(el,typeof data[el], data[el]);
-									return false;
-								}
-							}).map(el => `<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${labels[el]||el}</h3><p>${data[el]}</p></div>`).join("") }
+							${ Object.keys(data).filter(skips).map(el => auto(el,data.el)).join("") }
 							<!-- AUTO -->
 							
 							${data.qaaBenchmarks.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">QAA benchmarks</h3><ul>':''}
-							${data.qaaBenchmarks.map(benchmark).join('')}
+							${data.qaaBenchmarks.map(li).join('')}
 							${data.qaaBenchmarks.length>0?'</ul></div>':''}
 
 							${data.learningOutcomes.length>0?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Learning outcomes and graduate attributes</h3><ul>':''}
@@ -175,11 +179,13 @@
 									${data.programmeStructure.length>0?data.programmeStructure.map(structure).join(''):'<p>No data available.</p>'}
 								</div>
 							</div>
+							
+							${['learnTeachApproach','assessmentApproach'].map(el=>auto(el,data[el])).join('')}
 
 							<div>
 								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Assessment and feedback</h3>
 								<h4>Academic Integrity</h4>
-								<p><pre>⚠️ Blurb to be added; links below to be checked</pre></p>
+								<p>The University of Stirling is committed to protecting the quality and standards of its awards. Consequently, the University seeks to promote and nurture academic integrity, support staff academic integrity, and support students to understand and develop good academic skills that facilitate academic integrity. In addition, the University deals decisively with all forms of academic misconduct.</p>
 
 								<H4>Feedback on assessment</h4>
 								<p>The University takes feedback very seriously and, along with the Students’ Union, have developed a <a href="https://www.stir.ac.uk/about/professional-services/student-academic-and-corporate-services/academic-registry/feedback-on-student-work/">feedback policy</a> and student guidance on feedback.</p>
