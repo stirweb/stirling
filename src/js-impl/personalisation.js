@@ -1,4 +1,6 @@
 (function () {
+  return null; // Disable personalisation for now
+
   //const resultBox = document.getElementById("resultBox");
   const STORAGE_KEY = "stirsess";
   const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
