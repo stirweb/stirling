@@ -2526,6 +2526,9 @@ picture.objfitcover > img,
 body > img.crpb {
   display: none !important; }
 
+.test-class {
+  color: red; }
+
 /*
     Only type spectic stuff in here 
     Otherwise use layout

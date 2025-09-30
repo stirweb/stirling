@@ -2336,12 +2336,11 @@ var UoS_env = (function () {
       wc_path = "/medias/Categorised/Dist/";
       search = funnelback.staging;
       break;
-      
-      case "stiracuk-cms01-production.terminalfour.net":
-        env_name = "preview";
-        wc_path = "";
-        t4_tags = true;
-        search = funnelback.staging;
+
+    case "stiracuk-cms01-production.terminalfour.net":
+      env_name = "preview";
+      wc_path = "";
+      t4_tags = true;
       break;
 
     case "stiracuk-cms01-test.terminalfour.net":
