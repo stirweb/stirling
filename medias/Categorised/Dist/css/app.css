@@ -2527,7 +2527,7 @@ body > img.crpb {
   display: none !important; }
 
 .test-class {
-  color: red; }
+  color: red !important; }
 
 /*
     Only type spectic stuff in here 
