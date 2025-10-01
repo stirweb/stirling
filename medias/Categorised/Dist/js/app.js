@@ -3828,14 +3828,25 @@ var stir = stir || {};
 (function () {
   const STORAGE_KEY = "stirsess";
   const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
-  const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/big-query/server.php" : "server.php";
-  const CLOSING_DATE = new Date("2025-12-01T23:59:59"); // Example closing date
+  const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/personalisation/server.php" : "server.php";
+  const CLOSING_DATE = new Date("2025-11-14T23:59:59");
 
-  const MESSAGES = [
-    { region: "India", message: "£20,000" },
-    { region: "Africa", message: "£30,000" },
-    { region: "Asia", message: "£40,000" },
-    { region: "Southeast Asia", message: "£50,000" },
+  if (Date.now() > CLOSING_DATE.getTime()) {
+    return;
+  }
+
+  const SCHOLARSHIPS = [
+    { region: "India", value: "£4,000" },
+    { region: "Malaysia", value: "£7,000" },
+    { region: "Singapore", value: "£7,000" },
+    { region: "Cambodia", value: "£7,000" },
+    { region: "Indonesia", value: "£7,000" },
+    { region: "Philippines", value: "£7,000" },
+    { region: "Myanmar", value: "£7,000" },
+    { region: "Thailand", value: "£7,000" },
+    { region: "Vietnam", value: "£7,000" },
+    { region: "Africa", value: "£5,000" },
+    { region: "Asia", value: "£8,000" },
   ];
 
   /**
@@ -3856,7 +3867,7 @@ var stir = stir || {};
    */
   function getAID() {
     if (UoS_env.name !== `prod`) {
-      return "4n72-ke1go-x95i8-r84a";
+      return "yvdksi-t77z0d-sykh-8kujo";
     }
     return getCookie("_a_id") || ``;
   }
@@ -3872,23 +3883,28 @@ var stir = stir || {};
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
   }
 
+  function renderMessage(scholarship, region) {
+    if (!scholarship) return " ";
+
+    return `<span class="text-md u-mt-tiny"><b>${scholarship.value}</b> in scholarships available if you are from ${region}</span><br>  `;
+  }
   /**
    * Render data onto the page
    * @param {Array} data - The data to render
    */
-  function renderData(data, closingDate, message) {
+  function renderData(data, closingDate, scholarship) {
     if (!data || !data.length) return;
 
     const event = data[0];
     const daysLeft = Math.ceil((closingDate - Date.now()) / (1000 * 60 * 60 * 24));
+    const humanDate = closingDate.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
     const html = `<div class="grid-x grid-container">
                     <div class="u-my-1 cell  ">
                         <div class="grid-x flex-dir-column medium-flex-dir-row u-p-2 u-m-0 c-wrapper-2025 purples ">
                             <p class="cell small-12 large-8 u-m-0 ">
                                 <span class="text-md  "><b><a href="${event.p}">${event.prefix} ${event.title}</a></b></span><br>
-                                <span class="text-lg u-text-coloured "><b>Applications for January close in ${daysLeft} days</b></span><br>
-                                <span class="text-md u-mt-tiny"><b>${message.message}</b> in scholarships available if you are from ${message.region}</span><br>
-                               
+                                <span class="text-lg u-text-coloured "><b>January application deadline ${humanDate}</b></span><br>
+                                ${renderMessage(scholarship, event.n)}
                             </p>
                             <p class="cell small-12 large-4 u-m-0"> <a class="button expanded" href="${event.p}">Apply now</a></p>
                         </div>
@@ -3897,10 +3913,7 @@ var stir = stir || {};
 
     // const html = data
     //   .map((event, index) => {
-    //     return `
-    //             <div class="event">
-    //                 <p>${index} --  ${event.v}  ${event.p}<hr></p>
-    //             </div>`;
+    //     return ``;
     //   })
     //   .join("");
     return html;
@@ -3962,15 +3975,15 @@ var stir = stir || {};
 
     return fetch("./january-starts.json")
       .then((response) => response.json())
-      .then((dataJans) => {
+      .then((jansData) => {
         // Process January starts data
-        const janUrls = dataJans.map((item) => item.url);
+        const janUrls = jansData.map((item) => item.url);
         const filtered = data
           .filter((event) => {
             return janUrls.includes(event.p);
           })
           .map((event) => {
-            const janItem = dataJans.find((item) => item.url === event.p);
+            const janItem = jansData.find((item) => item.url === event.p);
             return {
               ...event,
               ...janItem,
@@ -3980,8 +3993,56 @@ var stir = stir || {};
       });
   }
 
-  function getMessageForRegion(messages, data) {
-    return messages.find((msg) => msg.region === data.n || msg.region === data.c);
+  /**
+   * Merges local page view data from 'stirsess2' cookie with server data.
+   * @param {Array} serverData - The data fetched from the server.
+   * @returns {Array} - The merged data array.
+
+  function mergeWithLocalData(serverData) {
+    const localDataCookie = getCookie("stirsess2");
+    if (!localDataCookie) return serverData;
+
+    const localData = JSON.parse(decodeURIComponent(localDataCookie));
+    const localPages = localData && Array.isArray(localData.pages) ? localData.pages : [];
+
+    const country = serverData.length && serverData[0].c ? serverData[0].c : null;
+    const nationality = serverData.length && serverData[0].n ? serverData[0].n : null;
+
+    const notFound = localPages
+      .filter((item) => {
+        if (!serverData.find((page) => page.p === item.p)) {
+          return item;
+        }
+      })
+      .map((localItem) => {
+        return { p: localItem.p, v: Number(localItem.v), s: 0, c: country, n: nationality };
+      });
+
+    const found = serverData
+      .filter((item) => {
+        if (localPages.find((page) => page.p === item.p)) {
+          return item;
+        }
+      })
+      .map((serverItem) => {
+        if (localPages.find((page) => page.p === serverItem.p)) {
+          return { p: serverItem.p, v: Number(localPages.find((page) => page.p === serverItem.p).v) + Number(serverItem.v), s: serverItem.s, c: country, n: nationality };
+        }
+      });
+
+    return [...found, ...notFound];
+  }
+  */
+
+  /**
+   * Get the message for the user's region
+   * @param {Array} scholarships - The array of SCHOLARSHIPS with regions
+   * @param {Object} data - The user data with region info
+   * @returns {Object|null}
+   */
+  function getScholarshipForRegion(scholarships, data) {
+    if (!data) return null;
+    return scholarships.find((item) => item.region === data.n || item.region === data.c);
   }
 
   /**
@@ -3999,22 +4060,29 @@ var stir = stir || {};
       // Fetch from the server
       console.log("Fetching from server...");
       const parsed = await fetchAndStoreData(aid, STORAGE_KEY, SERVER_PATH);
+      if (!parsed.length) return;
 
-      const dataJans = await processData(parsed);
-      const message = getMessageForRegion(MESSAGES, dataJans[0]);
-      const html = await renderData(dataJans, CLOSING_DATE, message);
+      //const mergedData = mergeWithLocalData(parsed);
+      const jansData = await processData(parsed);
 
+      if (!jansData || !jansData.length) return;
+      const scholarship = getScholarshipForRegion(SCHOLARSHIPS, jansData[0]);
+
+      const html = await renderData(jansData, CLOSING_DATE, scholarship);
       document.querySelector("main").insertAdjacentHTML("afterbegin", html);
     } else {
       // Use cached data
       console.log("Fetching data from cookie...");
       const parsed = JSON.parse(stored);
+      if (!parsed.data.length) return;
 
-      const dataJans = await processData(parsed.data);
-      const message = getMessageForRegion(MESSAGES, dataJans[0]);
+      //const mergedData = mergeWithLocalData(parsed.data);
+      const jansData = await processData(parsed.data);
 
-      const html = await renderData(dataJans, CLOSING_DATE, message);
+      if (!jansData || !jansData.length) return;
+      const scholarship = getScholarshipForRegion(SCHOLARSHIPS, jansData[0]);
 
+      const html = await renderData(jansData, CLOSING_DATE, scholarship);
       document.querySelector("main").insertAdjacentHTML("afterbegin", html);
     }
   }
