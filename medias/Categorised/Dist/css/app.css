@@ -2524,7 +2524,7 @@ picture.objfitcover > img,
   Hacks 
 */
 body > img.crpb {
-  display: none !important; }
+  display: none; }
 
 /*
     Only type spectic stuff in here 
