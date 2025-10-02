@@ -3,10 +3,9 @@
   const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
   const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/personalisation/server.php" : "server.php";
   const CLOSING_DATE = new Date("2025-11-14T23:59:59");
+  const DEV_MODE = UoS_env.name === `dev`;
 
-  if (Date.now() > CLOSING_DATE.getTime()) {
-    return;
-  }
+  const EXEMPT_LIST = ["/courses/"];
 
   const SCHOLARSHIPS = [
     { region: "India", value: "£4,000" },
@@ -21,6 +20,16 @@
     { region: "Africa", value: "£5,000" },
     { region: "Asia", value: "£8,000" },
   ];
+
+  // Check if we are on a exempt page
+  if (EXEMPT_LIST.some((exempt) => window.location.pathname.startsWith(exempt))) {
+    return;
+  }
+
+  // If past closing date, do nothing
+  if (Date.now() > CLOSING_DATE.getTime()) {
+    return;
+  }
 
   /**
    * Get a cookie value by name
@@ -56,21 +65,30 @@
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
   }
 
+  /**
+   * Render the scholarship message
+   * @param {Object|null} scholarship - The scholarship object or null
+   * @param {string} region - The user's region
+   * @returns {string}
+   */
   function renderMessage(scholarship, region) {
     if (!scholarship) return " ";
-
     return `<span class="text-md u-mt-tiny"><b>${scholarship.value}</b> in scholarships available if you are from ${region}</span><br>  `;
   }
+
   /**
    * Render data onto the page
    * @param {Array} data - The data to render
+   * @param {Date} closingDate - The closing date for applications
+   * @param {Object|null} scholarship - The scholarship object or null
+   * @returns {string|string} - The HTML string to insert
    */
   function renderData(data, closingDate, scholarship) {
-    if (!data || !data.length) return;
+    if (!data || !data.length) return ``;
 
     const event = data[0];
-    const daysLeft = Math.ceil((closingDate - Date.now()) / (1000 * 60 * 60 * 24));
-    const humanDate = closingDate.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
+    //const daysLeft = Math.ceil((closingDate - Date.now()) / (1000 * 60 * 60 * 24));
+    const humanDate = closingDate.toLocaleDateString("en-GB", { month: "long", day: "numeric" });
     const html = `<div class="grid-x grid-container">
                     <div class="u-my-1 cell  ">
                         <div class="grid-x flex-dir-column medium-flex-dir-row u-p-2 u-m-0 c-wrapper-2025 purples ">
@@ -111,11 +129,27 @@
   }
 
   /**
+   * Store data in cookie
+   * @param {string} cookieKey
+   * @param {string} timestamp
+   * @param {Object} data
+   * @param {number} shows
+   */
+  function storeData(cookieKey, timestamp, data, shows) {
+    const stirsess = {
+      ts: timestamp,
+      data: data,
+      shows: shows,
+    };
+    setCookie(cookieKey, JSON.stringify(stirsess), MAX_AGE_MS);
+  }
+
+  /**
    * Fetch data from the API, store with ts, and render
    * @param {string} aid - The aid to send to the server
    * @param {string} cookieKey - The cookie key
    */
-  function fetchAndStoreData(aid, cookieKey, path) {
+  function fetchAndStoreData(aid, cookieKey, path, shows) {
     const formData = new FormData();
     formData.append("aid", aid);
 
@@ -128,19 +162,20 @@
         const stirsess = {
           ts: new Date().toISOString(),
           data: data,
+          shows: shows,
         };
         setCookie(cookieKey, JSON.stringify(stirsess), MAX_AGE_MS);
         return data;
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching  data:", error);
         throw error;
       });
   }
 
   /**
    * Process data to filter for January starts
-   * @param {*} data
+   * @param {Array<Object>} data
    * @returns {Promise<void>}
    */
   function processData(data) {
@@ -219,6 +254,23 @@
   }
 
   /**
+   * Checks if the user has consented to performance cookies.
+   * @param {string} cookieControl - The value of the CookieControl cookie.
+   * @returns {boolean} True if consent is given, false otherwise.
+   */
+  const hasPerformanceCookieConsent = (cookieControl, dev) => {
+    if (dev) return true;
+    try {
+      if (!cookieControl) return false;
+      const consentData = JSON.parse(cookieControl);
+      return consentData?.optionalCookies?.performance === "accepted";
+    } catch (error) {
+      console.error("Error parsing CookieControl cookie:", error);
+      return false;
+    }
+  };
+
+  /**
    * Main controller function
    * @returns {Promise<void>}
    */
@@ -232,7 +284,7 @@
     if (shouldFetch(stored, MAX_AGE_MS)) {
       // Fetch from the server
       console.log("Fetching from server...");
-      const parsed = await fetchAndStoreData(aid, STORAGE_KEY, SERVER_PATH);
+      const parsed = await fetchAndStoreData(aid, STORAGE_KEY, SERVER_PATH, 1);
       if (!parsed.length) return;
 
       //const mergedData = mergeWithLocalData(parsed);
@@ -243,11 +295,18 @@
 
       const html = await renderData(jansData, CLOSING_DATE, scholarship);
       document.querySelector("main").insertAdjacentHTML("afterbegin", html);
+
+      !DEV_MODE && dataLayer.push({ event: "personalisation-janstarts" });
     } else {
       // Use cached data
       console.log("Fetching data from cookie...");
       const parsed = JSON.parse(stored);
       if (!parsed.data.length) return;
+
+      const shows = parsed.shows && Number.isInteger(parsed.shows) ? parsed.shows : 1;
+
+      // Only show 3 times in a day
+      if (shows > 2) return;
 
       //const mergedData = mergeWithLocalData(parsed.data);
       const jansData = await processData(parsed.data);
@@ -257,9 +316,18 @@
 
       const html = await renderData(jansData, CLOSING_DATE, scholarship);
       document.querySelector("main").insertAdjacentHTML("afterbegin", html);
+      storeData(STORAGE_KEY, parsed.ts, parsed.data, shows + 1);
+
+      !DEV_MODE && dataLayer.push({ event: "personalisation-janstarts" });
     }
   }
 
-  /* Away you go */
+  // Check for cookie consent
+  const cookieControl = getCookie("CookieControl");
+  if (!hasPerformanceCookieConsent(cookieControl, DEV_MODE)) {
+    return;
+  }
+
+  // Away you go
   controller();
 })();
