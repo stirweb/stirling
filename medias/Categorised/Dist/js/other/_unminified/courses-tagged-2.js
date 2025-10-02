@@ -72,6 +72,7 @@
   const filterData = stir.curry((filters, course) => {
     const isTrue = (x) => x;
 
+    // Helper function to check if a course matches a single filter
     const matchMapper = (filterItem) => {
       const tempMatches = course[filterItem.name].split(",").map((el) => {
         if (el.trim() === "") return false;
