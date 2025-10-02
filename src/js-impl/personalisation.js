@@ -2,6 +2,7 @@
   const STORAGE_KEY = "stirsess";
   const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
   const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/personalisation/server.php" : "server.php";
+  const JAN_COURSES_PATH = UoS_env.name === `prod` ? "/data/courses/pg/json/january-starts/index.json" : "./january-starts.json";
   const CLOSING_DATE = new Date("2025-11-14T23:59:59");
   const DEV_MODE = UoS_env.name === `dev`;
 
@@ -20,6 +21,11 @@
     { region: "Africa", value: "£5,000" },
     { region: "Asia", value: "£8,000" },
   ];
+
+  // Dont fire on non-dev/prod envs
+  if (UoS_env.name !== `dev` && UoS_env.name !== `prod`) {
+    return;
+  }
 
   // Check if we are on a exempt page
   if (EXEMPT_LIST.some((exempt) => window.location.pathname.startsWith(exempt))) {
@@ -55,7 +61,7 @@
   }
 
   /**
-   * Set a cookie value
+   * Sets a cookie
    * @param {string} name - The name of the cookie
    * @param {string} value - The value to set (should be encoded)
    * @param {number} maxAgeMS - Max age in milliseconds
@@ -134,6 +140,7 @@
    * @param {string} timestamp
    * @param {Object} data
    * @param {number} shows
+   * @return {boolean} True if stored successfully
    */
   function storeData(cookieKey, timestamp, data, shows) {
     const stirsess = {
@@ -142,6 +149,7 @@
       shows: shows,
     };
     setCookie(cookieKey, JSON.stringify(stirsess), MAX_AGE_MS);
+    return true;
   }
 
   /**
@@ -178,20 +186,20 @@
    * @param {Array<Object>} data
    * @returns {Promise<void>}
    */
-  function processData(data) {
+  function processData(janPath, data) {
     if (!data || !data.length) return Promise.resolve();
 
-    return fetch("./january-starts.json")
+    return fetch(janPath)
       .then((response) => response.json())
-      .then((jansData) => {
+      .then((janData) => {
         // Process January starts data
-        const janUrls = jansData.map((item) => item.url);
+        const janUrls = janData.map((item) => item.url);
         const filtered = data
           .filter((event) => {
             return janUrls.includes(event.p);
           })
           .map((event) => {
-            const janItem = jansData.find((item) => item.url === event.p);
+            const janItem = janData.find((item) => item.url === event.p);
             return {
               ...event,
               ...janItem,
@@ -288,12 +296,12 @@
       if (!parsed.length) return;
 
       //const mergedData = mergeWithLocalData(parsed);
-      const jansData = await processData(parsed);
+      const janData = await processData(JAN_COURSES_PATH, parsed);
 
-      if (!jansData || !jansData.length) return;
-      const scholarship = getScholarshipForRegion(SCHOLARSHIPS, jansData[0]);
+      if (!janData || !janData.length) return;
+      const scholarship = getScholarshipForRegion(SCHOLARSHIPS, janData[0]);
 
-      const html = await renderData(jansData, CLOSING_DATE, scholarship);
+      const html = await renderData(janData, CLOSING_DATE, scholarship);
       document.querySelector("main").insertAdjacentHTML("afterbegin", html);
 
       !DEV_MODE && dataLayer.push({ event: "personalisation-janstarts" });
@@ -309,12 +317,12 @@
       if (shows > 2) return;
 
       //const mergedData = mergeWithLocalData(parsed.data);
-      const jansData = await processData(parsed.data);
+      const janData = await processData(JAN_COURSES_PATH, parsed.data);
 
-      if (!jansData || !jansData.length) return;
-      const scholarship = getScholarshipForRegion(SCHOLARSHIPS, jansData[0]);
+      if (!janData || !janData.length) return;
+      const scholarship = getScholarshipForRegion(SCHOLARSHIPS, janData[0]);
 
-      const html = await renderData(jansData, CLOSING_DATE, scholarship);
+      const html = await renderData(janData, CLOSING_DATE, scholarship);
       document.querySelector("main").insertAdjacentHTML("afterbegin", html);
       storeData(STORAGE_KEY, parsed.ts, parsed.data, shows + 1);
 
