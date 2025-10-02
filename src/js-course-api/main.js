@@ -138,7 +138,7 @@
 				"beforeend",
 				`<div class="grid-container u-px-1">
 					<div class="grid-x">
-						<div class="cell u-padding-y">
+						<div class="cell medium-10 medium-offset-1 u-padding-y">
 							<h1 class="c-course-heading c-course-title__heading u-heritage-green">${data["programmeTitle"]}</h1>
 							<div class="u-bg-heritage-green--10 u-p-1 u-mb-2" style="column-count:2">
 								${data.owningFaculty ? `<p><strong>Faculty</strong> ${data.owningFaculty}</p>`:''}
@@ -186,7 +186,7 @@
 								<h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Assessment and feedback</h3>
 								<h4>Academic Integrity</h4>
 								<p>The University of Stirling is committed to protecting the quality and standards of its awards. Consequently, the University seeks to promote and nurture academic integrity, support staff academic integrity, and support students to understand and develop good academic skills that facilitate academic integrity. In addition, the University deals decisively with all forms of academic misconduct.</p>
-
+								<p>More information can be found in the <a href="<t4 type="media" id="191162" formatter="path/*" />">University Academic Integrity Policy</a></p>
 								<H4>Feedback on assessment</h4>
 								<p>The University takes feedback very seriously and, along with the Students’ Union, have developed a <a href="https://www.stir.ac.uk/about/professional-services/student-academic-and-corporate-services/academic-registry/feedback-on-student-work/">feedback policy</a> and student guidance on feedback.</p>
 
