@@ -3854,12 +3854,12 @@ var stir = stir || {};
     return;
   }
 
-  // Check if we are on a exempt page
+  // Dont fire if we are on an exempt page
   if (EXEMPT_LIST.some((exempt) => window.location.pathname.startsWith(exempt))) {
     return;
   }
 
-  // If past closing date, do nothing
+  // Dont fire if past closing date
   if (Date.now() > CLOSING_DATE.getTime()) {
     return;
   }
@@ -4157,7 +4157,7 @@ var stir = stir || {};
     }
   }
 
-  // Check for cookie consent
+  // Dont fire if no cookie consent
   const cookieControl = getCookie("CookieControl");
   if (!hasPerformanceCookieConsent(cookieControl, DEV_MODE)) {
     return;
