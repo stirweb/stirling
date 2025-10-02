@@ -3914,7 +3914,7 @@ var stir = stir || {};
    * @param {Array} data - The data to render
    * @param {Date} closingDate - The closing date for applications
    * @param {Object|null} scholarship - The scholarship object or null
-   * @returns {string|string} - The HTML string to insert
+   * @returns {string} - The HTML string to insert
    */
   function renderData(data, closingDate, scholarship) {
     if (!data || !data.length) return ``;
@@ -3923,7 +3923,7 @@ var stir = stir || {};
     //const daysLeft = Math.ceil((closingDate - Date.now()) / (1000 * 60 * 60 * 24));
     const humanDate = closingDate.toLocaleDateString("en-GB", { month: "long", day: "numeric" });
     const html = `<div class="grid-x grid-container">
-                    <div class="u-my-1 cell  ">
+                    <div class="u-my-2 cell">
                         <div class="grid-x flex-dir-column medium-flex-dir-row u-p-2 u-m-0 c-wrapper-2025 purples ">
                             <p class="cell small-12 large-8 u-m-0 ">
                                 <span class="text-md  "><b><a href="${event.p}">${event.prefix} ${event.title}</a></b></span><br>
