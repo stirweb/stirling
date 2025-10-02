@@ -57,12 +57,6 @@
   };
 
   /**
-   *
-   * @param {*} f
-   * @returns Boolean
-   */
-
-  /**
    * Function: filterData: Returns a Boolean
    * Checks to see if an element matches all the filters provided
    * @param {Array} filters - Array of filter objects with name and  value properties
