@@ -270,7 +270,7 @@ stir.templates.search = (() => {
 			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
 			//summary.append(message);
 			//summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
-			summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, processing_time_ms: ${data.processing_time_ms}, hits: ${data.hits.length}, facets: ${data.facets}, fieldStats: ${data.fieldStats}, rangeFacets: ${data.rangeFacets}, hierarchicalFacets: ${data.hierarchicalFacets}</p>`;
+			if(data) summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, processing_time_ms: ${data.processing_time_ms}, hits: ${data.hits.length}, facets: ${JSON.stringify(data.facets,null,"\t")}, fieldStats: ${data.fieldStats}, rangeFacets: ${data.rangeFacets}, hierarchicalFacets: ${data.hierarchicalFacets}</p>`;
 			return summary;
 		},
 		pagination: (summary) => {
@@ -570,6 +570,9 @@ stir.templates.search = (() => {
 		},
 
 		event: (item) => {
+
+			return stir.templates.search.auto(item); // 2025-10-06 TEMP
+
 			const isWebinar = item.metaData?.tags?.indexOf("Webinar") > -1;
 			const hasThumbnail = item.metaData?.image || isWebinar;
 			const title = item.title.split(" | ")[0];

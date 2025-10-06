@@ -287,7 +287,7 @@ stir.templates.search = (() => {
 			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
 			//summary.append(message);
 			//summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
-			summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, processing_time_ms: ${data.processing_time_ms}, hits: ${data.hits.length}, facets: ${data.facets}, fieldStats: ${data.fieldStats}, rangeFacets: ${data.rangeFacets}, hierarchicalFacets: ${data.hierarchicalFacets}</p>`;
+			if(data) summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, processing_time_ms: ${data.processing_time_ms}, hits: ${data.hits.length}, facets: ${JSON.stringify(data.facets,null,"\t")}, fieldStats: ${data.fieldStats}, rangeFacets: ${data.rangeFacets}, hierarchicalFacets: ${data.hierarchicalFacets}</p>`;
 			return summary;
 		},
 		pagination: (summary) => {
@@ -587,6 +587,9 @@ stir.templates.search = (() => {
 		},
 
 		event: (item) => {
+
+			return stir.templates.search.auto(item); // 2025-10-06 TEMP
+
 			const isWebinar = item.metaData?.tags?.indexOf("Webinar") > -1;
 			const hasThumbnail = item.metaData?.image || isWebinar;
 			const title = item.title.split(" | ")[0];
@@ -1274,14 +1277,16 @@ stir.search = () => {
 				SBL: 450,
 			},
 			event: {
-				collection: "stir-events",
+//				collection: "stir-events",
 				/* meta_type: 'Event', */
 				/* sort: 'metastartDate', */
 				/* meta_d1: stir.Date.funnelbackDate(new Date()), */
-				fmo: true,
-				SF: "[c,d,image,imagealt,online,page,register,startDate,tags,type,venue]",
-				term: "!padrenullquery",
-				num_ranks: NUMRANKS,
+//				fmo: true,
+//				SF: "[c,d,image,imagealt,online,page,register,startDate,tags,type,venue]",
+//				num_ranks: NUMRANKS,
+				term: "event",
+				type: "event",	// [rwm] not sure what this does,
+				facet: "event"	// [rwm]  or whether its working!
 			},
 			gallery: {
 				collection: "stir-www",
@@ -1433,7 +1438,7 @@ stir.search = () => {
 	// enable the "load more" button if there are more results that can be shown
 	const enableLoadMore = stir.curry((button, data) => {
 		if (!button) return data;
-		if (data.total_hits > 0) button.removeAttribute("disabled");
+		if (data && data.total_hits > 0) button.removeAttribute("disabled");
 		//if (data.response.resultPacket.resultsSummary.currEnd === data.response.resultPacket.resultsSummary.totalMatching) button.setAttribute("disabled", true);
 		return data;
 	});
@@ -1482,6 +1487,7 @@ stir.search = () => {
 	};
 
 	const updateFacets = stir.curry((type, data) => {
+		return data; 
 		//if(!preview) return data;
 		const form = document.querySelector(`form[data-filters="${type}"]`);
 		if (form) {
@@ -1525,7 +1531,7 @@ stir.search = () => {
 	const renderResultsWithPagination = stir.curry(
 		(type, data) =>
 //			renderers["cura"](data.response.curator.exhibits) +
-			renderers[type](data.hits)
+			data ? renderers[type](data.hits) : 'NO DATA'
 //			stir.templates.search.pagination({
 //				currEnd: data.response.resultPacket.resultsSummary.currEnd,
 //				totalMatching: data.response.resultPacket.resultsSummary.totalMatching,
@@ -1563,7 +1569,7 @@ stir.search = () => {
 				},
 				getNoQuery(type), // get special "no query" parameters (sorting, etc.)
 				getQueryParameters(), // TEMP get facet parameters
-				preview ? { profile: "_default_preview" } : {} // show unpublished facets
+//				preview ? { profile: "_default_preview" } : {} // show unpublished facets
 			)
 		);
 
