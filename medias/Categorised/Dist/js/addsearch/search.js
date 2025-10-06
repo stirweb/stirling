@@ -1277,16 +1277,8 @@ stir.search = () => {
 				SBL: 450,
 			},
 			event: {
-//				collection: "stir-events",
-				/* meta_type: 'Event', */
-				/* sort: 'metastartDate', */
-				/* meta_d1: stir.Date.funnelbackDate(new Date()), */
-//				fmo: true,
-//				SF: "[c,d,image,imagealt,online,page,register,startDate,tags,type,venue]",
-//				num_ranks: NUMRANKS,
-				term: "event",
-				type: "event",	// [rwm] not sure what this does,
-				facet: "event"	// [rwm]  or whether its working!
+				term: "event", // can't be empty
+				customField: "type=event"
 			},
 			gallery: {
 				collection: "stir-www",
@@ -1563,9 +1555,9 @@ stir.search = () => {
 				{},
 				{
 					// session params:
-					start_rank: getStartRank(type),
+//					start_rank: getStartRank(type),
 					term: getQuery(type), // get actual query, or fallback, etc
-					curator: getStartRank(type) > 1 ? false : true, // only show curator for initial searches
+//					curator: getStartRank(type) > 1 ? false : true, // only show curator for initial searches
 				},
 				getNoQuery(type), // get special "no query" parameters (sorting, etc.)
 				getQueryParameters(), // TEMP get facet parameters
@@ -1590,7 +1582,7 @@ stir.search = () => {
 		const getFBParameters = getParameters(constants.parameters[type]); // curry-in fixed params
 		// TODO: consider passing in the meta fields?
 		const parameters = getFBParameters({
-			start_rank: getStartRank(type),
+//			start_rank: getStartRank(type),
 			term: `[t:${query} c:${query} subject:${query}]`,
 		});
 		const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
