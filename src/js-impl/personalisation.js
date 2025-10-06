@@ -1,10 +1,11 @@
 (function () {
   const STORAGE_KEY = "stirsess";
   const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
-  const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/personalisation/server.php" : "server.php";
+  const SERVER_PATH = UoS_env.name === `§` ? "/research/hub/test/personalisation/server.php" : "server.php";
   const JAN_COURSES_PATH = UoS_env.name === `prod` ? "/data/courses/pg/json/january-starts/index.json" : "./january-starts.json";
   const CLOSING_DATE = new Date("2025-11-14T23:59:59");
   const DEV_MODE = UoS_env.name === `dev`;
+  const PROD_MODE = UoS_env.name === `prod`;
 
   const EXEMPT_LIST = ["/courses/"];
 
@@ -304,7 +305,7 @@
       const html = await renderData(janData, CLOSING_DATE, scholarship);
       document.querySelector("main").insertAdjacentHTML("afterbegin", html);
 
-      !DEV_MODE && dataLayer.push({ event: "personalisation-janstarts" });
+      PROD_MODE && dataLayer.push({ event: "personalisation-janstarts" });
     } else {
       // Use cached data
       console.log("Fetching data from cookie...");
@@ -326,7 +327,7 @@
       document.querySelector("main").insertAdjacentHTML("afterbegin", html);
       storeData(STORAGE_KEY, parsed.ts, parsed.data, shows + 1);
 
-      !DEV_MODE && dataLayer.push({ event: "personalisation-janstarts" });
+      PROD_MODE && dataLayer.push({ event: "personalisation-janstarts" });
     }
   }
 
