@@ -119,4 +119,4 @@
   for (var i = 0; i < ddPanes.length; i++) {
     doClick(ddBtns[i]);
   }
-})(document.querySelector(".c-download-box"));
+})(document.querySelector(".dropdown-pane"));

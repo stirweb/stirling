@@ -3440,7 +3440,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
   for (var i = 0; i < ddPanes.length; i++) {
     doClick(ddBtns[i]);
   }
-})(document.querySelector(".c-download-box"));
+})(document.querySelector(".dropdown-pane"));
 
 /**
  * Lazy loading
@@ -3833,11 +3833,12 @@ var stir = stir || {};
   const CLOSING_DATE = new Date("2025-11-14T23:59:59");
   const DEV_MODE = UoS_env.name === `dev`;
   const PROD_MODE = UoS_env.name === `prod`;
+  const MAX_SHOWS = UoS_env.name === `prod` ? 3 : 1000;
 
   const EXEMPT_LIST = ["/courses/"];
 
   const SCHOLARSHIPS = [
-    { region: "India", value: "£4,000" },
+    { region: "India", value: "£7,000" },
     { region: "Malaysia", value: "£7,000" },
     { region: "Singapore", value: "£7,000" },
     { region: "Cambodia", value: "£7,000" },
@@ -3846,8 +3847,8 @@ var stir = stir || {};
     { region: "Myanmar", value: "£7,000" },
     { region: "Thailand", value: "£7,000" },
     { region: "Vietnam", value: "£7,000" },
-    { region: "Africa", value: "£5,000" },
-    { region: "Asia", value: "£8,000" },
+    { region: "Africa", value: "£7,000" },
+    { region: "Asia", value: "£7,000" },
   ];
 
   // Dont fire on non-dev/prod envs
@@ -3907,7 +3908,31 @@ var stir = stir || {};
    */
   function renderMessage(scholarship, region) {
     if (!scholarship) return " ";
-    return `<span class="text-md u-mt-tiny"><b>${scholarship.value}</b> in scholarships available if you are from ${region}</span><br>  `;
+    return `Up to <b>${scholarship.value}</b> in scholarships are available to you`;
+  }
+
+  /**
+   * Add event listeners to dropdown buttons
+   * @returns {void}
+   */
+  function addListener() {
+    var ddPanes = document.querySelectorAll(".dropdown-pane");
+    var ddBtns = document.querySelectorAll(".button--dropdown");
+
+    for (var i = 0; i < ddPanes.length; i++) {
+      ddPanes[i].classList.add("hide");
+    }
+
+    function doClick(el) {
+      el.onclick = function (e) {
+        e.target.nextElementSibling.classList.toggle("hide");
+        e.preventDefault();
+      };
+    }
+
+    for (var i = 0; i < ddPanes.length; i++) {
+      doClick(ddBtns[i]);
+    }
   }
 
   /**
@@ -3923,7 +3948,8 @@ var stir = stir || {};
     const event = data[0];
     //const daysLeft = Math.ceil((closingDate - Date.now()) / (1000 * 60 * 60 * 24));
     const humanDate = closingDate.toLocaleDateString("en-GB", { month: "long", day: "numeric" });
-    const html = `<div class="grid-x grid-container">
+    /*
+    const html2 = `<div class="grid-x grid-container">
                     <div class="u-my-2 cell">
                         <div class="grid-x flex-dir-column medium-flex-dir-row u-p-2 u-m-0 c-wrapper-2025 purples ">
                             <p class="cell small-12 large-8 u-m-0 ">
@@ -3936,11 +3962,54 @@ var stir = stir || {};
                     </div>
                 </div>`;
 
-    // const html = data
-    //   .map((event, index) => {
-    //     return ``;
-    //   })
-    //   .join("");
+    const html = `<div class="grid-x grid-container">
+                    <div class="u-my-2 cell">
+                        <div class="grid-x flex-dir-column align-middle medium-flex-dir-row u-p-2 u-m-0 c-wrapper-2025 purples u-border-left-solid u-border-width-5 u-border-coloured">
+                            <p class="cell small-12 large-8 u-m-0 ">
+                                <span class="text-lg u-text-coloured u-mb-1 u-inline-block"><b>Welcome back</b></span><br>
+                                Apply by <b>${humanDate}</b> to start your course in January, or check out
+                                our September entry options. Up to ${renderMessage(scholarship, event.n)}.
+                            </p>
+                            <div class="cell small-12 large-4 "> 
+                                  <div class="u-relative purples" >
+                                    <button class="button button--dropdown expanded " type="button" data-toggle="dd-personalisation-janstarts"
+                                        id="btn-personalisation-janstarts">Apply now</button>
+                                    <div class="dropdown-pane u-absolute purples dark u-px-2" id="dd-personalisation-janstarts" data-dropdown="" data-auto-focus="true">
+                                        <ul>
+                                          ${data.map((event) => `<li><a href="${event.p}" class="c-link  ">${event.prefix} ${event.title}</a></li>`).join("")}   
+                                        </ul>
+                                    </div>
+                                  </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>`;*/
+
+    const html = `<div class="grid-x grid-container">
+                    <div class="u-my-2 cell">
+                        <div class="grid-x flex-dir-column align-middle medium-flex-dir-row u-p-2 u-m-0 c-wrapper-2025 purples u-border-left-solid u-border-width-5 u-border-coloured">
+                            <p class="cell small-12 large-8 u-m-0 ">
+                                <span class="text-lg u-text-coloured u-mb-1 u-inline-block"><b>Still interested in postgraduate study?</b></span><br>
+                                ${renderMessage(scholarship, event.n)}. Apply by <b>${humanDate}</b> to start in January, or check out our September options.
+                            </p>
+                            <div class="cell small-12 large-4 "> 
+                                  <div class="u-relative purples" >
+                                    <button class="button button--dropdown expanded " type="button" data-toggle="dd-personalisation-janstarts"
+                                        id="btn-personalisation-janstarts">Apply for...</button>
+                                    <div class="dropdown-pane u-absolute purples dark u-px-2" id="dd-personalisation-janstarts" data-dropdown="" data-auto-focus="true">
+                                        <ul>
+                                          ${data.map((event) => `<li><a href="${event.p}" class="c-link  ">${event.prefix} ${event.title}</a></li>`).join("")}   
+                                          <li><a href="/courses/pg-taught/" class="c-link  ">View all postgraduate courses</a></li>
+                                        </ul>
+                                    </div>
+                                  </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>`;
+
     return html;
   }
 
@@ -4132,6 +4201,7 @@ var stir = stir || {};
       const html = await renderData(janData, CLOSING_DATE, scholarship);
       document.querySelector("main").insertAdjacentHTML("afterbegin", html);
 
+      addListener();
       PROD_MODE && dataLayer.push({ event: "personalisation-janstarts" });
     } else {
       // Use cached data
@@ -4142,7 +4212,7 @@ var stir = stir || {};
       const shows = parsed.shows && Number.isInteger(parsed.shows) ? parsed.shows : 1;
 
       // Only show 3 times in a day
-      if (shows > 2) return;
+      if (shows > MAX_SHOWS) return;
 
       //const mergedData = mergeWithLocalData(parsed.data);
       const janData = await processData(JAN_COURSES_PATH, parsed.data);
@@ -4154,6 +4224,7 @@ var stir = stir || {};
       document.querySelector("main").insertAdjacentHTML("afterbegin", html);
       storeData(STORAGE_KEY, parsed.ts, parsed.data, shows + 1);
 
+      addListener();
       PROD_MODE && dataLayer.push({ event: "personalisation-janstarts" });
     }
   }
