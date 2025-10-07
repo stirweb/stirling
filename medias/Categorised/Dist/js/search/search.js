@@ -45,7 +45,8 @@ stir.templates.search = (() => {
   const userType = isUser ? afce4eafce490574e288574b384ecd87.get("psessv0").split("|")[0] : "EXTERNAL";
   const userAuth = (group) => entitlements[userType.toLowerCase()]?.indexOf(group.toLowerCase()) > -1;
   const authClass = (group) => (userAuth(group) ? " c-internal-search-result" : " c-internal-locked-search-result");
-  const authMessage = (group) => notice(`This page is only available to ${groups[group]}. You will be asked to log in before you can view it, but once you are logged in results will be shown automatically.`);
+  const authMessage = (group) =>
+    notice(`This page is only available to ${groups[group]}. You will be asked to log in before you can view it, but once you are logged in results will be shown automatically.`);
   const internalSummary = (text, group) => (userAuth(group) ? summary(text) : authMessage(group));
 
   // Special handling for documents (PDF, DOC; as opposed to native web results)
@@ -139,7 +140,8 @@ stir.templates.search = (() => {
    * @param {Array} facets
    * @returns {String} HTML click-to-dismiss "tokens"
    */
-  const facetTokens = (facets) => facets.map((facet) => facet.selectedValues.map((value) => paramToken(value.queryStringParamName, value.queryStringParamValue)).join(" ")).join(" ");
+  const facetTokens = (facets) =>
+    facets.map((facet) => facet.selectedValues.map((value) => paramToken(value.queryStringParamName, value.queryStringParamValue)).join(" ")).join(" ");
 
   const paramToken = (name, value) => {
     const el = metaParamElement(name, value);
@@ -328,11 +330,16 @@ stir.templates.search = (() => {
       if (item.metaData.type && item.metaData.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item, trail);
 
       return `
-				<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : ""}${item.metaData.access ? ' data-access="' + item.metaData.access + '"' : ""}>
+				<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${
+        item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : ""
+      }${item.metaData.access ? ' data-access="' + item.metaData.access + '"' : ""}>
 					<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 						${label}
 						${makeBreadcrumbs(trail, item.liveUrl, item.fileSize)}
-						<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
+						<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
+        .split("|")[0]
+        .trim()
+        .replace(/\xA0/g, " ")}</a></strong></p>
 						<p >${item.summary.replace(/\xA0/g, " ")}</p>
 					</div>
 				</div>`;
@@ -343,10 +350,14 @@ stir.templates.search = (() => {
         href: new URL(item.liveUrl).pathname.split("/").filter((n) => n),
       };
 
-      const trail = userAuth(item.metaData.group) ? stir.templates.search.trailstring(crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" })).slice(0, -1)) : `<a href="https://www.stir.ac.uk/${crumbs.href[0]}/">${crumbs.text[0]}</a>`;
+      const trail = userAuth(item.metaData.group)
+        ? stir.templates.search.trailstring(crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" })).slice(0, -1))
+        : `<a href="https://www.stir.ac.uk/${crumbs.href[0]}/">${crumbs.text[0]}</a>`;
 
       return `
-	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""} data-access="${item.metaData.access}">
+	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${
+        item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""
+      } data-access="${item.metaData.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="c-search-result__breadcrumb">${trail}</p>
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
@@ -359,14 +370,16 @@ stir.templates.search = (() => {
     },
 
     combo: (item) => {
-      return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboCourse).join(" and ")}${item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""}${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
+      return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboCourse).join(" and ")}${
+        item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""
+      }${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
     },
 
     comboCourse: (item) => `<a href="${item.url}">${item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, "")}</a>`,
 
     clearing: (item) => {
       if (Object.keys && item.metaData && Object.keys(item.metaData).join().indexOf("clearing") >= 0) {
-        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p>`;
+        return `<!-- <p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p> -->`;
       }
     },
     combos: (item) => {
@@ -380,7 +393,11 @@ stir.templates.search = (() => {
 						<ul class="u-columns-2">
 							${item.combos.map(stir.templates.search.combo).join("")}
 						</ul>
-						${item.combos.map(clearingTest).indexOf(true) >= 0 ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>' : ""}
+						${
+              item.combos.map(clearingTest).indexOf(true) >= 0
+                ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>'
+                : ""
+            }
 					</div>
 				</div>`;
     },
@@ -402,7 +419,13 @@ stir.templates.search = (() => {
 				</div>`;
     },
 
-    courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace(/\|/g, ", ")}</p></div>` : ""),
+    courseFact: (head, body, sentenceCase) =>
+      head && body
+        ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace(
+            /\|/g,
+            ", "
+          )}</p></div>`
+        : "",
 
     course: (item) => {
       //      const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
@@ -413,7 +436,9 @@ stir.templates.search = (() => {
       item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.metaData.sid : item.liveUrl);
       //item.combos = stir.courses.showCombosFor(item.metaData.sid); // this is for debugging t4 preview mode
       return `
-			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.rank} data-sid=${item.metaData.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
+			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.rank} data-sid=${item.metaData.sid} data-result-type=course${
+        isOnline ? " data-delivery=online" : ""
+      }>
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${courseLabel(item.metaData.level || item.metaData.type || "")}</span>
 				</div>
@@ -504,7 +529,10 @@ stir.templates.search = (() => {
 				${stir.templates.search.stag(item.metaData.level ? `Scholarship: ${item.metaData.level.toLowerCase()}` : "")}
 			</div>
 			<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
+				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
+        .split("|")[0]
+        .trim()
+        .replace(/\xA0/g, " ")}</a></strong></p>
 				<p>${item.summary.replace(/\xA0/g, " ")}</p>
 				<div class="c-search-result__meta grid-x">
 					${stir.templates.search.courseFact("Value", item.metaData.value, false)}
@@ -545,7 +573,11 @@ stir.templates.search = (() => {
 						<div>${item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d.split("|")[0])) : ""}</div>
 						<p class="text-sm">${item.metaData.abstract || item.summary}</p>
 						<!-- <p>
-							${item.listMetadata && item.listMetadata.tag ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"></path></svg>` : ""}
+							${
+                item.listMetadata && item.listMetadata.tag
+                  ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"></path></svg>`
+                  : ""
+              }
 							${(item.listMetadata && item.listMetadata.tag && item.listMetadata.tag.map((tag) => `<span>${tag}</span>`).join(", ")) || ""}
 						</p> -->
 					</div>
@@ -581,7 +613,8 @@ stir.templates.search = (() => {
       const isWebinar = item.metaData?.tags?.indexOf("Webinar") > -1;
       const hasThumbnail = item.metaData?.image || isWebinar;
       const title = item.title.split(" | ")[0];
-      const url = item.collection == "stir-events" ? (item.metaData.page ? item.metaData.page : item.metaData.register?item.metaData.register:"#") : FB_BASE() + item.clickTrackingUrl;
+      const url =
+        item.collection == "stir-events" ? (item.metaData.page ? item.metaData.page : item.metaData.register ? item.metaData.register : "#") : FB_BASE() + item.clickTrackingUrl;
 
       return `
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
@@ -615,7 +648,9 @@ stir.templates.search = (() => {
     },
 
     research: (item) => `
-			<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""}>
+			<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${
+      item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""
+    }>
 				<div>
 					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
 					<div class="flex-container flex-dir-column u-gap u-mt-1">
@@ -661,7 +696,9 @@ stir.templates.search = (() => {
       (facet, facetValue) => `
 	<li>
 		<label>
-			<input type=${facetDisplayTypes[facet.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
+			<input type=${facetDisplayTypes[facet.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${
+        facetValue.selected ? "checked" : ""
+      }>
 			${facetCategoryLabel(facet.name, facetValue.label)}
 			<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
 		</label>
