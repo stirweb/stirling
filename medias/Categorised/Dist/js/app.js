@@ -3884,7 +3884,8 @@ var stir = stir || {};
    */
   function getAID() {
     if (UoS_env.name !== `prod`) {
-      return "yvdksi-t77z0d-sykh-8kujo";
+      console.log("Using test AID");
+      return "35yv-3iy1-drhrj-r45x";
     }
 
     // if (getCookie("_a_id") === "663rm-zvd-v9fu9-giaj") {
