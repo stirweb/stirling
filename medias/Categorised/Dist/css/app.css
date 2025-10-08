@@ -10328,6 +10328,11 @@ ul.no-bullet {
   .u-pb-2-small {
     padding-bottom: 32px; } }
 
+/* Padding for medium up only */
+@media screen and (max-width: 63.99875em) {
+  .u-mt-2-medium-down {
+    margin-top: 32px; } }
+
 /* Padding for medium down only */
 @media screen and (max-width: 63.99875em) {
   .u-pt-0-medium-down {
