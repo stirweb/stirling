@@ -5828,7 +5828,8 @@ li.c-colour-swatch__pms:before {
   padding: 10px;
   border: 0px solid #cacaca;
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
-  width: 100%; }
+  width: 100%;
+  z-index: 20; }
   .dropdown-pane ul {
     list-style: none;
     margin: 0;
