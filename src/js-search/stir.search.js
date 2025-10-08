@@ -258,7 +258,7 @@ stir.search = () => {
     let facetParameters = Object.keys(parameters)
       .filter((key) => key.indexOf("f.") === 0)
       .reduce((obj, key) => {
-        return { ...obj, [key]: rwm2.string.urlDecode(parameters[key]) };
+        return { ...obj, [key]: rwm2.string.urlDecode(parameters[key]).toLowerCase() };
       }, {});
     //debug && Object.keys(facetParameters).length && console.info('[Search] facetParameters:',facetParameters);
     return facetParameters;
