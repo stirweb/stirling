@@ -3826,12 +3826,6 @@ var stir = stir || {};
 
 
 (function () {
-<<<<<<< HEAD
-  return null; // Disable personalisation for now
-
-  //const resultBox = document.getElementById("resultBox");
-=======
->>>>>>> personalisation
   const STORAGE_KEY = "stirsess";
   const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
   const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/personalisation/server.php" : "server.php";
@@ -3841,7 +3835,7 @@ var stir = stir || {};
   const PROD_MODE = UoS_env.name === `prod`;
   const MAX_SHOWS = UoS_env.name === `prod` ? 2 : 1000;
 
-  const EXEMPT_LIST = ["/courses/"];
+  const EXEMPT_LIST = ["/courses/", "/shhsge/"]; // Add any paths here that should not show the message
 
   const SCHOLARSHIPS = [
     { region: "India", value: "£7,000" },
@@ -3892,6 +3886,11 @@ var stir = stir || {};
     if (UoS_env.name !== `prod`) {
       return "yvdksi-t77z0d-sykh-8kujo";
     }
+
+    if (getCookie("_a_id") === "663rm-zvd-v9fu9-giaj") {
+      return "yvdksi-t77z0d-sykh-8kujo";
+    }
+
     return getCookie("_a_id") || ``;
   }
 

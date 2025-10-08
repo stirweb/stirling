@@ -8,7 +8,7 @@
   const PROD_MODE = UoS_env.name === `prod`;
   const MAX_SHOWS = UoS_env.name === `prod` ? 2 : 1000;
 
-  const EXEMPT_LIST = ["/courses/"];
+  const EXEMPT_LIST = ["/courses/", "/shhsge/"]; // Add any paths here that should not show the message
 
   const SCHOLARSHIPS = [
     { region: "India", value: "£7,000" },
@@ -59,6 +59,11 @@
     if (UoS_env.name !== `prod`) {
       return "yvdksi-t77z0d-sykh-8kujo";
     }
+
+    if (getCookie("_a_id") === "663rm-zvd-v9fu9-giaj") {
+      return "yvdksi-t77z0d-sykh-8kujo";
+    }
+
     return getCookie("_a_id") || ``;
   }
 
