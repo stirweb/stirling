@@ -17,7 +17,7 @@
 	<meta name="stir.title" content="BAcc (Hons) Accountancy">
 	<meta name="description" content="Study Accountancy at the University of Stirling and discover why our multi-accredited course ranks among the best in the UK." />
 	<meta name="Page last modified" content="2025-09-05" />
-	<link rel="canonical" href="https://www.stir.ac.uk/courses/ug/accountancy/">
+	<link rel="canonical" href="https://www.stir.ac.uk/courses/pg-taught/artificial-intelligence/">
 	<meta name="stir.breadcrumb" content="Home > Find a course > Undergraduate courses > BAcc (Hons) Accountancy">
 	<meta name="sid" content="886">
 	<meta name="chid" content="1">
@@ -1072,14 +1072,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             </svg>
                         </a>
 
-                        <a href="https://www.tiktok.com/@universityofstirling/">
-                            <span class="show-for-sr">TikTok</span>
-                            <svg viewBox="0 0 448 512" width="20" height="20" fill="#fff"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z" />
-                            </svg>
-                        </a>
+                      
 
                     </div>
                 </div>
@@ -1247,5 +1240,162 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 }
 </script>
 		
-    </body>
-</html>
+
+<script>
+    (() => {
+
+        return null; // Disable script
+        const storageKey = "stirsess2";
+
+        // --- Pure Functions ---
+
+        /**
+         * Parses the session data from a JSON string.
+         * @param {string | null} storedData - The JSON string from the cookie.
+         * @returns {object} The parsed session data, or a default object if parsing fails.
+         */
+        const parseSessionData = (storedData) => {
+            try {
+                return storedData ? JSON.parse(decodeURIComponent(storedData)) : { pages: [] };
+            } catch (e) {
+                console.error("Error parsing session data:", e);
+                return { pages: [] };
+            }
+        };
+
+        /**
+         * Gets the start of the tracking window. If the time is before 11:45am UTC, it returns 11:45am UTC yesterday. Otherwise, it returns 11:45am UTC today.
+         * @returns {Date} The start time.
+         */
+        const getTrackingStartTime = () => {
+            const now = new Date();
+            // Create a date object for 11:45 UTC today
+            const trackingTime = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 11, 15, 0));
+
+            // If the current time is before today's tracking time, use yesterday's tracking time instead
+            if (now < trackingTime) {
+                trackingTime.setUTCDate(trackingTime.getUTCDate() - 1);
+            }
+console.log(trackingTime);
+            return trackingTime;
+        };
+
+        /**
+         * Updates the page visit information in the session.
+         * @param {Array} pages - The array of page visit objects.
+         * @param {string} coursePath - The path of the current course.
+         * @param {Date} startTime - The tracking start time.
+         * @returns {Array} The updated array of pages.
+         */
+        const updatePageVisits = (pages, coursePath, startTime) => {
+            const now = new Date();
+            const pageIndex = pages.findIndex(p => p.p === coursePath);
+
+            if (pageIndex > -1) {
+                // Page exists, update it
+                const updatedPages = [...pages];
+                const existingPage = updatedPages[pageIndex];
+                const lastViewDate = new Date(existingPage.d);
+
+                // Reset views if last visit was before the tracking start time
+                const views = lastViewDate < startTime ? 1 : existingPage.v + 1;
+
+                updatedPages[pageIndex] = { ...existingPage, v: views, s: 1, d: now.toISOString() };
+                return updatedPages;
+            } else {
+                // Page doesn't exist, add it
+                const newPage = { p: coursePath, v: 1, d: now.toISOString() };
+                return [...pages, newPage];
+            }
+        };
+
+        /**
+         * Creates the updated session data object.
+         * @param {object} originalData - The original session data.
+         * @param {Array} updatedPages - The new array of pages.
+         * @returns {object} The complete updated session data object.
+         */
+        const createUpdatedData = (originalData, updatedPages) => ({
+            ...originalData,
+            pages: updatedPages
+        });
+
+        // --- Impure Functions (Side Effects) ---
+
+        /**
+         * Retrieves the course path from the canonical link in the DOM.
+         * @returns {string | null} The course path or null if not found.
+         */
+        const getCoursePath = () => {
+            const canonicalLink = document.querySelector('link[rel="canonical"]');
+            if (canonicalLink) {
+                try {
+                    const url = new URL(canonicalLink.href);
+                    return url.pathname;
+                } catch (e) {
+                    console.error("Error parsing canonical URL:", e);
+                    return null;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Gets a cookie by name.
+         * @param {string} name - The name of the cookie.
+         * @returns {string | null} The cookie value.
+         */
+        const getCookie = (name) => {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        };
+
+        /**
+         * Sets a cookie.
+         * @param {string} name - The name of the cookie.
+         * @param {string} value - The value of the cookie.
+         * @param {number} days - The number of days until the cookie expires.
+         */
+        const setCookie = (name, value, days) => {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = `${name}=${value || ""}${expires}; path=/`;
+        };
+
+        // --- Main Execution ---
+
+        const coursePath = getCoursePath();
+        if (!coursePath) {
+            return;
+        }
+
+        try {
+            const storedData = getCookie(storageKey);
+            const sessionData = parseSessionData(storedData);
+            const startTime = getTrackingStartTime();
+            
+            const updatedPages = updatePageVisits(sessionData.pages, coursePath, startTime);
+            const updatedData = createUpdatedData(sessionData, updatedPages);
+
+            console.log(updatedData);
+            const cookieValue = encodeURIComponent(JSON.stringify(updatedData));
+
+            
+
+
+            setCookie(storageKey, cookieValue, 1);
+        } catch (e) {
+            console.error("Error updating session cookie:", e);
+        }
+    })();
+</script>
