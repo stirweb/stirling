@@ -543,25 +543,26 @@ stir.templates.search = (() => {
 		},
 
 		news: (item) => {
+			const hasThumb = true;
 			return `
-				<div class="u-border-width-5 u-heritage-line-left c-search-result${item.metaData.thumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
+				<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumb ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 						<p class="u-text-regular u-m-0">
 							<strong>
-								<a href="${FB_BASE() + item.clickTrackingUrl}">${item.metaData.h1 || item.title.split(" | ")[0].trim()}</a>
+								<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
 							</strong>
 						</p>
-						<div>${item.metaData.d ? stir.Date.newsDate(new Date(item.metaData.d.split("|")[0])) : ""}</div>
-						<p class="text-sm">${item.metaData.abstract || item.summary}</p>
-						<!-- <p>
-							${item.listMetadata && item.listMetadata.tag ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"></path></svg>` : ""}
-							${(item.listMetadata && item.listMetadata.tag && item.listMetadata.tag.map((tag) => `<span>${tag}</span>`).join(", ")) || ""}
-						</p> -->
+						<div>${item.custom_fields.d ? stir.Date.newsDate(new Date(item.custom_fields.d.split("|")[0])) : ""}</div>
+						<p class="text-sm">${item.meta_description}</p>
 					</div>
 					<div class=c-search-result__image>
-						<img src="${item.metaData.thumbnail}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
+						<img src="data:image/jpeg;base64,${item.images.main_b64}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
 					</div>
 				</div>`;
+				/* <!-- <p>
+							${item.listMetadata && item.listMetadata.tag ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"></path></svg>` : ""}
+							${(item.listMetadata && item.listMetadata.tag && item.listMetadata.tag.map((tag) => `<span>${tag}</span>`).join(", ")) || ""}
+						</p> --> */
 		},
 
 		gallery: (item) => {
@@ -1243,7 +1244,7 @@ stir.search = () => {
 		courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
 		clearing: CLEARING ? ["clearing"] : [],
 		scholarships: ["value", "status", "number"],
-		news: ["abstract", "c", "d", "h1", "image", "imagealt", "tags", "tag", "thumbnail"],
+		news: []//["abstract", "c", "d", "h1", "image", "imagealt", "tags", "tag", "thumbnail"],
 	};
 
 	//console.info("Clearing is " + (CLEARING ? "open" : "closed"));
@@ -1255,29 +1256,12 @@ stir.search = () => {
 		input: document.querySelector('form.x-search-redevelopment input[name="term"]'),
 		parameters: {
 			any: {
-//				collection: "stir-main",
-//				SF: `[${meta.main.concat(meta.clearing, meta.scholarships).join(",")}]`,
-//				num_ranks: NUMRANKS,
 				term: "University+of+Stirling",
-//				spelling: true,
-//				explain: true,
-//				sortall: true,
-//				sort: "score_ignoring_tiers",
-//				"cool.21": 0.9,
 			},
 			news: {
-				collection: "stir-www",
-				term: "!padrenullquery",
-				meta_type: "News",
-				meta_v_not: "faculty-news",
-				sort: "date",
-				fmo: "true",
-				SF: `[${meta.news.join(",")}]`,
-				num_ranks: NUMRANKS,
-				SBL: 450,
+				customField: "type=news"
 			},
 			event: {
-				term: "event", // can't be empty
 				customField: "type=event"
 			},
 			gallery: {
@@ -1289,13 +1273,7 @@ stir.search = () => {
 				num_ranks: NUMRANKS,
 			},
 			course: {
-				collection: "stir-courses",
-				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
-				fmo: "true",
-				num_ranks: NUMRANKS,
-				explain: true,
-				term: "!padrenullquery",
-				timestamp: +new Date(),
+				customField: "type=course"
 			},
 			coursemini: {
 				collection: "stir-courses",
@@ -1342,7 +1320,7 @@ stir.search = () => {
 		// extra parameters for no-query searches
 		noquery: {
 			course: {
-				sort: "title", // if no keywords supplied, sort courses
+				//sort: "title", // if no keywords supplied, sort courses
 				// by title instead of "relevance"
 				//		},
 				//		person: {

@@ -125,7 +125,7 @@ stir.search = () => {
 		courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
 		clearing: CLEARING ? ["clearing"] : [],
 		scholarships: ["value", "status", "number"],
-		news: ["abstract", "c", "d", "h1", "image", "imagealt", "tags", "tag", "thumbnail"],
+		news: []//["abstract", "c", "d", "h1", "image", "imagealt", "tags", "tag", "thumbnail"],
 	};
 
 	//console.info("Clearing is " + (CLEARING ? "open" : "closed"));
@@ -137,29 +137,12 @@ stir.search = () => {
 		input: document.querySelector('form.x-search-redevelopment input[name="term"]'),
 		parameters: {
 			any: {
-//				collection: "stir-main",
-//				SF: `[${meta.main.concat(meta.clearing, meta.scholarships).join(",")}]`,
-//				num_ranks: NUMRANKS,
 				term: "University+of+Stirling",
-//				spelling: true,
-//				explain: true,
-//				sortall: true,
-//				sort: "score_ignoring_tiers",
-//				"cool.21": 0.9,
 			},
 			news: {
-				collection: "stir-www",
-				term: "!padrenullquery",
-				meta_type: "News",
-				meta_v_not: "faculty-news",
-				sort: "date",
-				fmo: "true",
-				SF: `[${meta.news.join(",")}]`,
-				num_ranks: NUMRANKS,
-				SBL: 450,
+				customField: "type=news"
 			},
 			event: {
-				term: "event", // can't be empty
 				customField: "type=event"
 			},
 			gallery: {
@@ -171,13 +154,7 @@ stir.search = () => {
 				num_ranks: NUMRANKS,
 			},
 			course: {
-				collection: "stir-courses",
-				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
-				fmo: "true",
-				num_ranks: NUMRANKS,
-				explain: true,
-				term: "!padrenullquery",
-				timestamp: +new Date(),
+				customField: "type=course"
 			},
 			coursemini: {
 				collection: "stir-courses",
@@ -224,7 +201,7 @@ stir.search = () => {
 		// extra parameters for no-query searches
 		noquery: {
 			course: {
-				sort: "title", // if no keywords supplied, sort courses
+				//sort: "title", // if no keywords supplied, sort courses
 				// by title instead of "relevance"
 				//		},
 				//		person: {
