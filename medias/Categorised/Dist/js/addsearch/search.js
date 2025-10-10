@@ -1270,14 +1270,13 @@ stir.search = () => {
 				term: "!padrenullquery",
 				meta_type: "News",
 				meta_v_not: "faculty-news",
-				sort: "date",
+//				sort: "date",
 				fmo: "true",
 				SF: `[${meta.news.join(",")}]`,
 				num_ranks: NUMRANKS,
 				SBL: 450,
 			},
 			event: {
-				term: "event", // can't be empty
 				customField: "type=event"
 			},
 			gallery: {
@@ -1289,13 +1288,14 @@ stir.search = () => {
 				num_ranks: NUMRANKS,
 			},
 			course: {
-				collection: "stir-courses",
-				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
-				fmo: "true",
-				num_ranks: NUMRANKS,
-				explain: true,
-				term: "!padrenullquery",
-				timestamp: +new Date(),
+//				collection: "stir-courses",
+//				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
+//				fmo: "true",
+//				num_ranks: NUMRANKS,
+//				explain: true,
+//				term: "stirling",
+//				timestamp: +new Date(),
+				customField: "type=course"
 			},
 			coursemini: {
 				collection: "stir-courses",
@@ -1342,7 +1342,7 @@ stir.search = () => {
 		// extra parameters for no-query searches
 		noquery: {
 			course: {
-				sort: "title", // if no keywords supplied, sort courses
+				//sort: "title", // if no keywords supplied, sort courses
 				// by title instead of "relevance"
 				//		},
 				//		person: {
