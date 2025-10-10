@@ -4,12 +4,12 @@
  * ------------------------------------------------ */
 
 (function () {
-  /*
-      RENDERERS
+  /**
+   * RENDERERS
    */
 
-  /*
-   * Build the html for an individual student
+  /**
+   * Form the html for an individual student
    * @param {object} item - the student item
    * @param {string} fullname - the full name of the student
    * @param {string} url - the URL to the student's story
@@ -34,7 +34,13 @@
           <!-- End testimonial result -->`;
   };
 
-  /* Build the html for a cell (fake masonry) */
+  /**
+   * Form the html for a cell (fake masonry)
+   * @param {object} element - the student item
+   * @param {number} index - the index of the item in the results array
+   * @param {object} meta - the metadata for the search
+   * @param {number} totalResults - the total number of results
+   */
   const renderCell = (element, index, meta, totalResults) => {
     const newCell = isNewCell(totalResults, meta.mediaquery, index);
 
@@ -75,7 +81,6 @@
   };
 
   const renderVideo = (fullname, media) => {
-    console.log("media:", media);
     return media && media.includes("a_vid")
       ? `
         <div class="u-bg-grey">
@@ -106,7 +111,7 @@
   };
 
   /*
-      HELPERS
+   * HELPERS
    */
 
   /**
@@ -155,7 +160,7 @@
   };
 
   /**
-   *  Returns number of columns required for fake Masonry layout for a specific screen size
+   * Returns the number of columns required for fake Masonry layout for a specific screen size
    * @param {string} mediaquery - the current media query (small, medium, large)
    * @returns {number} - the number of columns
    */
@@ -204,7 +209,6 @@
   };
 
   /**
-   * setDOMContent
    * Sets the inner HTML of the results area
    * If page is 1, it replaces the content, otherwise it appends to it
    * @param {object} nodes - the DOM nodes to update
@@ -221,7 +225,6 @@
   });
 
   /**
-   * getFacetsFromQueryParams
    * Forms the facets object from the query parameters
    * @param {object} consts - constants used in the search
    * @returns {object<Strings>} facets - the facets object
@@ -242,16 +245,17 @@
    * @param {*} postsPerPage
    * @returns {object} - the start and end values for the current page
    */
-  function getPaginationValues(startPage, postsPerPage) {
+  const getPaginationValues = (startPage, postsPerPage) => {
     if (isNaN(startPage) || isNaN(postsPerPage)) return { start: 1, end: 9 };
 
     const start = Number(startPage) === 1 ? 1 : (Number(startPage) - 1) * Number(postsPerPage) + 1;
     const end = start + Number(postsPerPage) - 1;
     return { start, end };
-  }
+  };
 
   /**
-   * processData Controller Function
+   * Process Data
+   * Controller Function
    * @param {object} data - the data returned from the API
    * @param {object} nodes - the DOM nodes to update
    * @param {object} consts - constants used in the search
@@ -263,8 +267,8 @@
     if (!gotSearchData(data)) return setDOMContent(nodes, 1, renderNoResults());
 
     const { start, end } = getPaginationValues(data.page, consts.postsPerPage);
-    const meta2 = { page: data.page, currStart: start, currEnd: end, total: data.total_hits };
-    const meta = { ...meta2, ...consts };
+    const metaTemp = { page: data.page, currStart: start, currEnd: end, total: data.total_hits };
+    const meta = { ...metaTemp, ...consts };
 
     return setDOMContent(nodes, data.page, renderResults(meta, data.hits));
   };
@@ -304,14 +308,14 @@
     fetchData(formSearchUrl(consts.searchUrl, getFacetsFromQueryParams(consts), page), nodes, consts);
   };
 
-  /*
-   * On Laod
+  /**
+   * On Load
    * If there's no results area or search form, exit
    * Otherwise, initialize the search
    * @returns {void}
    */
 
-  /*
+  /**
    * Constants
    */
 
