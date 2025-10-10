@@ -117,7 +117,8 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 						<p class="text-sm">${e.meta_description}</p>
 					</div>
 					<div class=c-search-result__image>
-						<img src="data:image/jpeg;base64,${e.images.main_b64}" alt="${e.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
+						<!-- <img src="data:image/jpeg;base64,${e.images.main_b64}" alt="${e.title.split(" | ")[0].trim()}" height="68" width="68" loading="lazy"> -->
+						<img src="${e.images.main}" alt="${e.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
 					</div>
 				</div>`},gallery:e=>{return`
 				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${e.rank} data-result-type=news>

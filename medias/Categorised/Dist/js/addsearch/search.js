@@ -558,7 +558,8 @@ stir.templates.search = (() => {
 						<p class="text-sm">${item.meta_description}</p>
 					</div>
 					<div class=c-search-result__image>
-						<img src="data:image/jpeg;base64,${item.images.main_b64}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
+						<!-- <img src="data:image/jpeg;base64,${item.images.main_b64}" alt="${item.title.split(" | ")[0].trim()}" height="68" width="68" loading="lazy"> -->
+						<img src="${item.images.main}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
 					</div>
 				</div>`;
 				/* <!-- <p>
