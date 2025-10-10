@@ -397,6 +397,7 @@ stir.templates.search = (() => {
 		courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace(/\|/g, ", ")}</p></div>` : ""),
 
 		course: (item) => {
+			return stir.templates.search.auto(item); // 2025-10-10 TEMP
 			return `<div class="c-search-result u-border-width-5 u-heritage-line-left">COURSE RESULT</div>`;
 			//      const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 			//      const subjectLink = stir.String.slug(subject);

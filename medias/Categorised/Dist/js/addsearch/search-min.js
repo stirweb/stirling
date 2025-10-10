@@ -36,7 +36,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 							${t.map(e=>`<li>${e}</li>`).join("\n\t")}
 						</ul>
 					</div>
-				</div>`},courseFact:(e,t,r)=>e&&t?`<div class="cell medium-4"><strong class="u-heritage-green">${e}</strong><p${r?" class=u-text-sentence-case":""}>${t.replace(/\|/g,", ")}</p></div>`:"",course:e=>{return'<div class="c-search-result u-border-width-5 u-heritage-line-left">COURSE RESULT</div>'},coursemini:e=>`
+				</div>`},courseFact:(e,t,r)=>e&&t?`<div class="cell medium-4"><strong class="u-heritage-green">${e}</strong><p${r?" class=u-text-sentence-case":""}>${t.replace(/\|/g,", ")}</p></div>`:"",course:e=>{return stir.templates.search.auto(e)},coursemini:e=>`
 			<div>
 				<p><strong><a href="${r()+e.clickTrackingUrl}" title="${e.liveUrl}" class="u-border-none">
 					${e.metaData.award||""} ${e.title} ${e.metaData.ucas?" - "+e.metaData.ucas:""} ${e.metaData.code?" - "+e.metaData.code:""}
