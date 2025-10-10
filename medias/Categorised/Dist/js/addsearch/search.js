@@ -317,12 +317,12 @@ stir.templates.search = (() => {
 //			if (item.metaData.type && item.metaData.type.indexOf("profile") > -1) return stir.templates.search.person(item);
 //			if (item.liveUrl.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
 //
-//			const crumbs = {
-//				text: item.metaData?.breadcrumbs?.split(" > ").slice(1, -1) || [],
-//				href: new URL(item.liveUrl).pathname.split("/").slice(1, -1),
-//			};
+			const crumbs = {
+				text: item.categories.slice(1),
+				href: new URL(item.url).pathname.split("/").slice(1, -1),
+			};
 //
-//			const trail = crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" }));
+			const trail = crumbs.text.map((text, index) => ({ text: text.split("x")[1], href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" }));
 //
 //			const label = item.liveUrl.indexOf("policyblog.stir") > -1 ? `<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>` : "";
 //
@@ -330,6 +330,7 @@ stir.templates.search = (() => {
 
 			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}>
 				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
+					${makeBreadcrumbs(trail, item.url,0)}
 					<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
 					<p>${item.meta_description}</p>
 				</div>
@@ -356,7 +357,7 @@ stir.templates.search = (() => {
 			return `
 	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""} data-access="${item.metaData.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-				<p class="c-search-result__breadcrumb">${trail}</p>
+				<p class="c-search-result__breadcrumb">${trail} ..:: INTERNAL ::..</p>
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
 					.replace(/Current S\S+ ?\| ?/, "")
 					.split(" | ")[0]
@@ -490,19 +491,19 @@ stir.templates.search = (() => {
 			return `
 			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=person>
 				<div class=c-search-result__tags>
-					${stir.templates.search.stag(item.metaData.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.metaData.faculty) : "")}
+					${/*stir.templates.search.stag(item.metaData.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.metaData.faculty) : "")*/''}
 				</div>
 				<div class="flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0"><strong>
-						<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
+						<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
 					</strong></p>
-					<div>${item.metaData.role || "<!-- Job title -->"}<br>${item.metaData.faculty || ""}</div>
-					<!-- <p>${item.metaData.c ? (item.metaData.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
+					<div>${item?.metaData?.role || "<!-- Job title -->"}<br>${item?.metaData?.faculty || ""}</div>
+					<!-- <p>${item?.metaData?.c ? (item?.metaData?.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
 				</div>
-				${image(item.metaData.image, item.title.split(" | ")[0].trim(), 400, 400)}
+				${image(`data:image/jpeg;base64,${item.images.main_b64}`, item.title.split(" | ")[0].trim(), 400, 400)}
 				<div class=c-search-result__footer>
-					${stir.funnelback.getTags(item.metaData.category) ? "<p><strong>Research interests</strong></p>" : ""}
-					<p>${stir.funnelback.getTags(item.metaData.category) || ""}</p>
+					${stir.funnelback.getTags(item?.metaData?.category) ? "<p><strong>Research interests</strong></p>" : ""}
+					<p>${stir.funnelback.getTags(item?.metaData?.category) || ""}</p>
 				</div>
 			</div>`;
 		},
@@ -627,8 +628,9 @@ stir.templates.search = (() => {
 			</div>`;
 		},
 
-		research: (item) => `
-			<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""}>
+		research: (item) => stir.templates.search.auto(item), // 2025-10-10 TEMP
+
+			/* `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""}>
 				<div>
 					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
 					<div class="flex-container flex-dir-column u-gap u-mt-1">
@@ -641,7 +643,7 @@ stir.templates.search = (() => {
 						${stir.funnelback.getTags(item.metaData.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.metaData.category) + `</div>` : ""}
 					</div>
 				</div>
-			</div>`,
+			</div>`, */
 
 		cura: (item) =>
 			!item.messageHtml
@@ -1149,8 +1151,8 @@ stir.funnelback = (() => {
 
 	const getCroppedImageElement = (parameters) => {
 		if (!parameters.url) return "<!-- no image -->";
-		const url = resolveHref(getScaleEndpoint(), stir.Object.extend({}, parameters, { type: "crop_center", format: "jpeg" }));
-		return renderImgTag({ src: url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
+		//const url = resolveHref(getScaleEndpoint(), stir.Object.extend({}, parameters, { type: "crop_center", format: "jpeg" }));
+		return renderImgTag({ src: parameters.url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
 	};
 
 	const getTags = (tagMeta) => {
@@ -1265,52 +1267,31 @@ stir.search = () => {
 				customField: "type=event"
 			},
 			gallery: {
-				collection: "stir-www",
-				meta_type: "Gallery",
-				sort: "date",
-				fmo: "true",
-				SF: "[c,d,image]",
-				num_ranks: NUMRANKS,
+				customField: "type=gallery"
 			},
 			course: {
 				customField: "type=course"
 			},
 			coursemini: {
-				collection: "stir-courses",
-				SF: "[c,award,code,delivery,faculty,image,level,modes,sid,start,subject,teaser,ucas]",
-				num_ranks: 3,
-				curator: "off",
-				term: "!padrenullquery",
+				customField: "type=course"
 			},
 			person: {
-				collection: "stir-research",
-				meta_type: "profile",
-				fmo: "true",
-				/* sort: "metalastname", */
-				SF: "[c,d,biogrgaphy,category,faculty,groups,image,imagealt,programme,role,themes]",
-				SM: "meta",
-				MBL: 350, // metadata buffer length
-				num_ranks: NUMRANKS,
+				customField: "type=profile"
 			},
 			research: {
-				collection: "stir-research",
-				SM: "meta",
-				SF: "[c,d,category,groups,output,programme,themes,type]",
-				MBL: 450, // metadata buffer length
-				num_ranks: NUMRANKS,
+				categories: "2xhub",
 			},
 			internal: {
-				collection: "stir-internal",
-				SF: "[c,access,breadcrumbs,group]",
-				term: "!padrenullquery",
+				categories: "1xinternal-staff",
+				//categories: "1xinternal-students"
 			},
 			clearing: {
-				collection: "stir-courses-combos",
-				term: "!padrenullquery",
-				sort: "title",
-				meta_clearing: "[scotland simd rukroi international eu]",
-				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
-				fmo: "true",
+//				collection: "stir-courses-combos",
+//				term: "!padrenullquery",
+//				sort: "title",
+//				meta_clearing: "[scotland simd rukroi international eu]",
+//				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
+//				fmo: "true",
 				num_ranks: NUMRANKS,
 				/* explain: true,
 				query: "!padrenullquery",

@@ -30,8 +30,8 @@ stir.funnelback = (() => {
 
 	const getCroppedImageElement = (parameters) => {
 		if (!parameters.url) return "<!-- no image -->";
-		const url = resolveHref(getScaleEndpoint(), stir.Object.extend({}, parameters, { type: "crop_center", format: "jpeg" }));
-		return renderImgTag({ src: url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
+		//const url = resolveHref(getScaleEndpoint(), stir.Object.extend({}, parameters, { type: "crop_center", format: "jpeg" }));
+		return renderImgTag({ src: parameters.url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
 	};
 
 	const getTags = (tagMeta) => {
@@ -146,52 +146,31 @@ stir.search = () => {
 				customField: "type=event"
 			},
 			gallery: {
-				collection: "stir-www",
-				meta_type: "Gallery",
-				sort: "date",
-				fmo: "true",
-				SF: "[c,d,image]",
-				num_ranks: NUMRANKS,
+				customField: "type=gallery"
 			},
 			course: {
 				customField: "type=course"
 			},
 			coursemini: {
-				collection: "stir-courses",
-				SF: "[c,award,code,delivery,faculty,image,level,modes,sid,start,subject,teaser,ucas]",
-				num_ranks: 3,
-				curator: "off",
-				term: "!padrenullquery",
+				customField: "type=course"
 			},
 			person: {
-				collection: "stir-research",
-				meta_type: "profile",
-				fmo: "true",
-				/* sort: "metalastname", */
-				SF: "[c,d,biogrgaphy,category,faculty,groups,image,imagealt,programme,role,themes]",
-				SM: "meta",
-				MBL: 350, // metadata buffer length
-				num_ranks: NUMRANKS,
+				customField: "type=profile"
 			},
 			research: {
-				collection: "stir-research",
-				SM: "meta",
-				SF: "[c,d,category,groups,output,programme,themes,type]",
-				MBL: 450, // metadata buffer length
-				num_ranks: NUMRANKS,
+				categories: "2xhub",
 			},
 			internal: {
-				collection: "stir-internal",
-				SF: "[c,access,breadcrumbs,group]",
-				term: "!padrenullquery",
+				categories: "1xinternal-staff",
+				//categories: "1xinternal-students"
 			},
 			clearing: {
-				collection: "stir-courses-combos",
-				term: "!padrenullquery",
-				sort: "title",
-				meta_clearing: "[scotland simd rukroi international eu]",
-				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
-				fmo: "true",
+//				collection: "stir-courses-combos",
+//				term: "!padrenullquery",
+//				sort: "title",
+//				meta_clearing: "[scotland simd rukroi international eu]",
+//				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
+//				fmo: "true",
 				num_ranks: NUMRANKS,
 				/* explain: true,
 				query: "!padrenullquery",
