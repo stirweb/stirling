@@ -1,0 +1,21 @@
+[data-open="shareSheet"] {
+	&::after {
+		content: none;
+	}
+
+	>svg {
+		width: 1.4em;
+		height: 1.4em;
+		margin-left: .3125rem;
+		vertical-align: bottom;
+		stroke-width:1.3;
+		stroke: currentColor;
+		fill: none;
+	}
+
+	&.button.tiny{
+		min-width: auto;
+		padding: .3rem 1rem;
+		border-radius: 2px;
+	}
+}

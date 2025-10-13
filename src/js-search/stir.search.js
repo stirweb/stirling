@@ -62,67 +62,6 @@ stir.funnelback = (() => {
 })();
 
 /**
- * Course-specific search results helper
- */
-stir.courses = (() => {
-  const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-
-  /**
-   * C L E A R I N G
-   */
-  const CLEARING = true; // set TRUE if Clearing is OPEN; otherwise FALSE
-  /*
-   **/
-
-  return {
-    clearing: CLEARING,
-    getCombos: () => {
-      if (stir.courses.combos) return;
-
-      const urls = {
-        dev: "combo.json",
-        qa: "combo.json",
-        preview: stir?.t4Globals?.search?.combos || "",
-        prod: "https://www.stir.ac.uk/media/stirling/feeds/combo.json",
-      };
-
-      debug && console.info(`[Search] Getting combo data for ${UoS_env.name} environment (${urls[UoS_env.name]})`);
-      return stir.getJSON(urls[UoS_env.name], (data) => (stir.courses.combos = data && !data.error ? data.slice(0, -1) : []));
-    },
-    showCombosFor: (url) => {
-      if (!url || !stir.courses.combos) return [];
-
-      let pathname = isNaN(url) && new URL(url).pathname;
-      let combos = [];
-
-      for (var i = 0; i < stir.courses.combos.length; i++) {
-        for (var j = 0; j < stir.courses.combos[i].courses.length; j++) {
-          if ((pathname && pathname === stir.courses.combos[i].courses[j].url) || stir.courses.combos[i].courses[j].url.split("/").slice(-1) == url) {
-            let combo = stir.clone(stir.courses.combos[i]);
-            combo.courses.splice(j, 1); // remove matching entry
-            combo.courses = combo.courses.filter((item) => item.text); // filter out empties
-            combos.push(combo);
-            break;
-          }
-        }
-      }
-
-      return combos;
-    },
-    favsUrl: (function () {
-      switch (UoS_env.name) {
-        case "dev": //local
-          return "/pages/search/course-favs/index.html";
-        case "qa": //repo
-          return "/stirling/pages/search/course-favs/";
-        default: //cms
-          return '<t4 type="navigation" name="Helper: Path to Courses Favourites" id="5195" />';
-      }
-    })(),
-  };
-})();
-
-/**
  * Stir Search
  * Created for the Search Revamp project 2022/23
  * @returns Object
@@ -319,7 +258,7 @@ stir.search = () => {
     let facetParameters = Object.keys(parameters)
       .filter((key) => key.indexOf("f.") === 0)
       .reduce((obj, key) => {
-        return { ...obj, [key]: rwm2.string.urlDecode(parameters[key]) };
+        return { ...obj, [key]: rwm2.string.urlDecode(parameters[key]).toLowerCase() };
       }, {});
     //debug && Object.keys(facetParameters).length && console.info('[Search] facetParameters:',facetParameters);
     return facetParameters;
@@ -444,6 +383,9 @@ stir.search = () => {
           metaFilter.parentElement.removeChild(metaFilter);
         } else {
           form.insertAdjacentElement("afterbegin", facetFilter.firstChild);
+        }
+        if("Start date"===facet.name) {
+          stir.courses.startdates();
         }
       });
     }

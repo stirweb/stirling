@@ -5,7 +5,7 @@ session_start();
 $ENV_MODE = 'QA'; // Change to 'PROD' for production or QA for UAT / Test mode
 
 // These only take effect if ENV_MODE is set to QA - in PROD mode everything is active
-$TEST_QS = true; // Set to false to test without sending data to QS
+$TEST_QS = false; // Set to false to test without sending data to QS
 $TEST_MAIL = false; // Set to false to test without sending emails via mailchimp
 
 

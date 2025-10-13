@@ -409,6 +409,27 @@ a:has(img):hover {
       }
     }
 
+    .button--dropdown {
+      border: 4px solid map-get($color, "button");
+      background-color: map-get($color, "button");
+      color: #fff;
+
+      &:hover,
+      &:focus {
+        background-color: $white;
+        color: map-get($color, "button");
+        border: 4px solid map-get($color, "button");
+
+        &::after {
+          filter: icon-filter(map-get($color, "button"));
+        }
+      }
+    }
+
+    .dropdown-pane {
+      background-color: map-get($color, "button");
+    }
+
     &.button.tinted,
     .button.tinted {
       background-color: map-get($color, "tint");
@@ -448,6 +469,11 @@ a:has(img):hover {
 
     .u-text-coloured {
       color: map-get($color, "hook");
+    }
+
+    &.u-border-coloured,
+    .u-border-coloured {
+      border-color: map-get($color, "hook");
     }
 
     [data-behaviour="accordion"] > h3,
@@ -541,8 +567,8 @@ a:has(img):hover {
     filter: brightness(0) invert(1);
   }
 
-  .c-link::before {
-    background-color: brightness(0) invert(1);
+  .c-link:hover::before {
+    filter: brightness(0) invert(1);
   }
 
   .stir-accordion {
@@ -602,6 +628,10 @@ a:has(img):hover {
           }
         }
       }
+
+      // .c-link:hover::before {
+      //   filter: brightness(0) invert(1);
+      // }
 
       .u-text-coloured {
         color: map-get($color, "tint-7");

@@ -1,0 +1,1 @@
+(()=>{var e="aboutSDG";const o=document.getElementById(e);document.querySelector(`[data-open="${e}"]`).onclick=()=>o.showModal()})();

@@ -1,0 +1,959 @@
+{
+  "kind": "youtube#searchListResponse",
+  "etag": "j9G7pGSKFa47q53KW_7LlYivRLo",
+  "nextPageToken": "CDIQAA",
+  "regionCode": "GB",
+  "pageInfo": { "totalResults": 568, "resultsPerPage": 50 },
+  "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "tKhua10cP7C1xFndsYPCFjWvhxw",
+      "id": { "kind": "youtube#video", "videoId": "Fa_0Z3-uFJk" },
+      "snippet": {
+        "publishedAt": "2025-08-26T11:30:20Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Be The One: Lucy Fraser Edmans, Big Data graduate #shorts",
+        "description": "Hear from Lucy Fraser Edmans, our MSc Big Data graduate on how studying at Stirling helped her to become a Data Science ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/Fa_0Z3-uFJk/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/Fa_0Z3-uFJk/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/Fa_0Z3-uFJk/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-26T11:30:20Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "KMGDeaFvLOFPCLSGnBn6PeuvUxA",
+      "id": { "kind": "youtube#video", "videoId": "qm4HkqV49xg" },
+      "snippet": {
+        "publishedAt": "2025-08-25T13:45:05Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Guide to your first week on campus!",
+        "description": "Starting university is a very exciting time, and there will be lots of things to do before you start classes. That's why we've created a ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/qm4HkqV49xg/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/qm4HkqV49xg/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/qm4HkqV49xg/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-25T13:45:05Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "uqw-PelEAnVKuzPiyrBhHtQtjeU",
+      "id": { "kind": "youtube#video", "videoId": "lV19XkHwzXo" },
+      "snippet": {
+        "publishedAt": "2025-08-22T11:01:20Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Current #uofstirling student Daniel visits the Stirling Distillery! #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/lV19XkHwzXo/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/lV19XkHwzXo/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/lV19XkHwzXo/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-22T11:01:20Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "70VL53ZxkZI9fpuZDFM3Aytqf8c",
+      "id": { "kind": "youtube#video", "videoId": "ugG3vuFyws4" },
+      "snippet": {
+        "publishedAt": "2025-08-20T09:40:00Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Current #UofStirling student heads to Madrid with pagoda projects for a internship! #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/ugG3vuFyws4/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/ugG3vuFyws4/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/ugG3vuFyws4/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-20T09:40:00Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "Jzry3lhWOcaViN21f9JN12dey7k",
+      "id": { "kind": "youtube#video", "videoId": "-5q5sWd3HGE" },
+      "snippet": {
+        "publishedAt": "2025-08-18T15:35:15Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Welcome to UofStirling 2025",
+        "description": "Welcome to the University of Stirling! Make sure to join in with Welcome Week activities for the best start to your studies and life at ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/-5q5sWd3HGE/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/-5q5sWd3HGE/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/-5q5sWd3HGE/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-18T15:35:15Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "SmnsEmqWhzFelO5_JCqK8xQpyVE",
+      "id": { "kind": "youtube#video", "videoId": "8Mo6EU-nMDc" },
+      "snippet": {
+        "publishedAt": "2025-08-18T09:30:05Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Study MSc Podiatry (pre-registration) course",
+        "description": "Kick-start your new career with our pre-registration Masters in Podiatry. Be eligible to register with the Health and Care ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/8Mo6EU-nMDc/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/8Mo6EU-nMDc/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/8Mo6EU-nMDc/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-18T09:30:05Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "n7GGROeVQS1k74CNNiDAZksMWQg",
+      "id": { "kind": "youtube#video", "videoId": "Hx6LamvjLdY" },
+      "snippet": {
+        "publishedAt": "2025-08-18T09:00:33Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Summer in Scotland! #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/Hx6LamvjLdY/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/Hx6LamvjLdY/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/Hx6LamvjLdY/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-18T09:00:33Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "eByadQcvttyBo9B0vM7wlCBMV1M",
+      "id": { "kind": "youtube#video", "videoId": "xMLXy0JAQj4" },
+      "snippet": {
+        "publishedAt": "2025-08-13T23:00:59Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "10 Stirling Student Savings Tips\ud83e\udd29 #UofStirling #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/xMLXy0JAQj4/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/xMLXy0JAQj4/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/xMLXy0JAQj4/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-13T23:00:59Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "rMa-iSLyho0pgOBc08fnPQgnrKg",
+      "id": { "kind": "youtube#video", "videoId": "RLb1bQu-lfs" },
+      "snippet": {
+        "publishedAt": "2025-08-13T09:00:06Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "A Levels Results Day 2025",
+        "description": "We know that Results Day can bring a mix of emotions - excitement, nerves, and a whole lot of questions. That's why our team has ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/RLb1bQu-lfs/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/RLb1bQu-lfs/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/RLb1bQu-lfs/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-13T09:00:06Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "3y6ZFhNwOjvJvP1Mm77n5GXygAQ",
+      "id": { "kind": "youtube#video", "videoId": "Ywt2UxyeZZo" },
+      "snippet": {
+        "publishedAt": "2025-08-12T13:01:06Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Don&#39;t get in the picture challenge with our University sports clubs\ud83d\udcf8\ud83d\udc9a #Bleedgreen #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/Ywt2UxyeZZo/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/Ywt2UxyeZZo/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/Ywt2UxyeZZo/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-12T13:01:06Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "NccN5Xl1avNDk8U7sbaTpe_1Cf4",
+      "id": { "kind": "youtube#video", "videoId": "i9xJDrFcK3I" },
+      "snippet": {
+        "publishedAt": "2025-08-04T09:00:06Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "SQA Results Day 2025",
+        "description": "SQA Results Day is here - and yes, it can feel overwhelming. But take a deep breath, you've got this! No matter what your results ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/i9xJDrFcK3I/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/i9xJDrFcK3I/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/i9xJDrFcK3I/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-08-04T09:00:06Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "piNROBQZN0ntH7BCqY_liZdAvQk",
+      "id": { "kind": "youtube#video", "videoId": "dCzNIHwi_Jw" },
+      "snippet": {
+        "publishedAt": "2025-07-22T08:01:53Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Join #UofStirling Mountaineering club! #shorts",
+        "description": "Warning the activities shown in this video are performed by experienced mountaineers. They have received training from ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/dCzNIHwi_Jw/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/dCzNIHwi_Jw/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/dCzNIHwi_Jw/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-07-22T08:01:53Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "7SL72tXraiucnIEbfz01Nx1Mkxc",
+      "id": { "kind": "youtube#video", "videoId": "BQNS_QU4VPI" },
+      "snippet": {
+        "publishedAt": "2025-07-20T09:00:14Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Tennis ball challenge. Who will win?\ud83c\udfbe\ud83c\udfc6",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/BQNS_QU4VPI/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/BQNS_QU4VPI/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/BQNS_QU4VPI/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-07-20T09:00:14Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "rWVpbDiRjtU-57iP73dF_UY9ifg",
+      "id": { "kind": "youtube#video", "videoId": "m2umPJDdhD4" },
+      "snippet": {
+        "publishedAt": "2025-07-18T12:30:57Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Can you guess the #UofStriling courses in emojis? \ud83e\udd29\ud83d\udc9a #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/m2umPJDdhD4/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/m2umPJDdhD4/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/m2umPJDdhD4/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-07-18T12:30:57Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "drT_LZXtFm7DEFXIhnic-mQcfzM",
+      "id": { "kind": "youtube#video", "videoId": "LEZbCNev10w" },
+      "snippet": {
+        "publishedAt": "2025-07-16T10:45:04Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "From USA Scotland: a student&#39;s perspective!",
+        "description": "Thinking about studying abroad from the USA? We sat down with #UofStirling student Kristiine, to hear what the journey has been ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/LEZbCNev10w/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/LEZbCNev10w/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/LEZbCNev10w/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-07-16T10:45:04Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "3nHMdM2jx8pXjA2qaqpkRSiCGeY",
+      "id": { "kind": "youtube#video", "videoId": "7raLyKcpHHo" },
+      "snippet": {
+        "publishedAt": "2025-06-28T11:00:12Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Different supporters at a game! #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/7raLyKcpHHo/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/7raLyKcpHHo/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/7raLyKcpHHo/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-06-28T11:00:12Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "NNktkdkPWwx7g3P250jA-AcNeVc",
+      "id": { "kind": "youtube#video", "videoId": "3DeX5uiYTAo" },
+      "snippet": {
+        "publishedAt": "2025-06-26T22:47:09Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "2025 Summer Graduation  - University of Stirling",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/3DeX5uiYTAo/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/3DeX5uiYTAo/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/3DeX5uiYTAo/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-06-26T22:47:09Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "tvcTVzawjrFkXS8OFvSMlPJd0-o",
+      "id": { "kind": "youtube#video", "videoId": "qDfvug-VfEc" },
+      "snippet": {
+        "publishedAt": "2025-06-26T15:55:00Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Hats off to our University of Stirling students completing their dissertations! #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/qDfvug-VfEc/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/qDfvug-VfEc/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/qDfvug-VfEc/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-06-26T15:55:00Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "fQF1mS80GZdAAfyE43VhxhphjLE",
+      "id": { "kind": "youtube#video", "videoId": "3kidE5RW7cQ" },
+      "snippet": {
+        "publishedAt": "2025-06-26T15:50:56Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "2025 Summer Graduation  - University of Stirling",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/3kidE5RW7cQ/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/3kidE5RW7cQ/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/3kidE5RW7cQ/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-06-26T15:50:56Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "4bOKnVYDOq0LDXyE6porKTB4lOc",
+      "id": { "kind": "youtube#video", "videoId": "ZG6zopL7QwI" },
+      "snippet": {
+        "publishedAt": "2025-06-25T22:19:02Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "2025 Summer Graduation  - University of Stirling",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/ZG6zopL7QwI/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/ZG6zopL7QwI/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/ZG6zopL7QwI/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-06-25T22:19:02Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "Z7LsReEPIRan0zD6pVgfXu7zu5I",
+      "id": { "kind": "youtube#video", "videoId": "7v1SXlcics8" },
+      "snippet": {
+        "publishedAt": "2025-06-16T11:00:13Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "What shocked international students when they first came to Scotland?\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc73\udb40\udc63\udb40\udc74\udb40\udc7f #UofStirling #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/7v1SXlcics8/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/7v1SXlcics8/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/7v1SXlcics8/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-06-16T11:00:13Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "253Pieen_WFbAE96ohY0ytXed-Q",
+      "id": { "kind": "youtube#video", "videoId": "M3RNxDv-JvM" },
+      "snippet": {
+        "publishedAt": "2025-06-12T15:30:10Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Tour the #UofStirling Film and Media facilities!",
+        "description": "Want to see the facilities that you'll use as a Film and Media student? Explore the University's top-notch facilities for Film and ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/M3RNxDv-JvM/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/M3RNxDv-JvM/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/M3RNxDv-JvM/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-06-12T15:30:10Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "7riSdYQ0O8jxsvAGo8-PNaxsxd8",
+      "id": { "kind": "youtube#video", "videoId": "AN-Cckqf20c" },
+      "snippet": {
+        "publishedAt": "2025-05-31T09:00:11Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "POV: you&#39;re in Bridge of Allan! #Shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/AN-Cckqf20c/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/AN-Cckqf20c/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/AN-Cckqf20c/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-05-31T09:00:11Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "NiQVDEfvD9hABYsHR-zxFJoAgiQ",
+      "id": { "kind": "youtube#video", "videoId": "V8ghq2iNzP4" },
+      "snippet": {
+        "publishedAt": "2025-05-30T11:00:50Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Words in different languages! #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/V8ghq2iNzP4/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/V8ghq2iNzP4/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/V8ghq2iNzP4/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-05-30T11:00:50Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "LrnnwnhD-khbjSIv6d7HAnQVzIY",
+      "id": { "kind": "youtube#video", "videoId": "AizxlX_mfdk" },
+      "snippet": {
+        "publishedAt": "2025-05-29T15:15:03Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "#Stirling in Spring! #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/AizxlX_mfdk/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/AizxlX_mfdk/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/AizxlX_mfdk/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-05-29T15:15:03Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "CZbbmPQeIq11SFdqj7deARVNfg8",
+      "id": { "kind": "youtube#video", "videoId": "xzeh8rn1qPY" },
+      "snippet": {
+        "publishedAt": "2025-05-27T16:01:34Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "My favourite picnic spots in Stirling!",
+        "description": "With the sunnier weather finally here, it's the perfect time to enjoy a picnic! #Vlogger Nia shares her favourite picnic spots she's ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/xzeh8rn1qPY/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/xzeh8rn1qPY/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/xzeh8rn1qPY/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-05-27T16:01:34Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "xjEU7YO8_ahxOGPQ2JACVjd8GC0",
+      "id": { "kind": "youtube#video", "videoId": "KrWp9bvyNZ0" },
+      "snippet": {
+        "publishedAt": "2025-05-15T13:00:41Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "From Uni to Career: How the Careers Service Supports Your Journey!",
+        "description": "Our students gain more than a degree from #UofStirling. From internships to helping find a job, the Careers Service gives you the ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/KrWp9bvyNZ0/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/KrWp9bvyNZ0/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/KrWp9bvyNZ0/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-05-15T13:00:41Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "nKZXbzCpSOCxxGyaj0E3yk_IY2o",
+      "id": { "kind": "youtube#video", "videoId": "9X7OUGIS14c" },
+      "snippet": {
+        "publishedAt": "2025-05-14T12:45:01Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Happy International Nurses Day\ud83d\udc9a Thank you for all your years in practice\ud83e\udd70 #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/9X7OUGIS14c/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/9X7OUGIS14c/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/9X7OUGIS14c/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-05-14T12:45:01Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "EPi3pQ1YKBhpaCzIbnnOcEBBhCA",
+      "id": { "kind": "youtube#video", "videoId": "lYdB3UcqUh0" },
+      "snippet": {
+        "publishedAt": "2025-04-30T11:27:30Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "sit down without bending your knees challenge...\ud83d\ude06 #UofStirling #Sportatstirling #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/lYdB3UcqUh0/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/lYdB3UcqUh0/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/lYdB3UcqUh0/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-04-30T11:27:30Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "98YYQJq1FqhTDB5H4xi0JCZnQpA",
+      "id": { "kind": "youtube#video", "videoId": "oLUjRxg_xc0" },
+      "snippet": {
+        "publishedAt": "2025-04-22T12:01:35Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "When all your assignments decide to show up at the same time\u2026 \ud83d\ude05\ud83d\udcda #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/oLUjRxg_xc0/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/oLUjRxg_xc0/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/oLUjRxg_xc0/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-04-22T12:01:35Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "gA3a36dsMm1o4x9T5ipoNRDVGDI",
+      "id": { "kind": "youtube#video", "videoId": "lm4XOBhyQ3Y" },
+      "snippet": {
+        "publishedAt": "2025-04-19T00:00:54Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Pronouncing Scottish place names \ud83d\ude05 \ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc73\udb40\udc63\udb40\udc74\udb40\udc7f #shorts",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/lm4XOBhyQ3Y/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/lm4XOBhyQ3Y/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/lm4XOBhyQ3Y/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-04-19T00:00:54Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "qHlxZhY-WDr0dRpk0Q-7m0nF56M",
+      "id": { "kind": "youtube#video", "videoId": "OAPjOgmJa5g" },
+      "snippet": {
+        "publishedAt": "2025-04-17T09:45:02Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Tour #UofStirling Institute of Aquaculture facilities!",
+        "description": "Want to see the facilities that you'll use as an Institute of Aquaculture student? Watch as Rose takes you on a tour of our labs!",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/OAPjOgmJa5g/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/OAPjOgmJa5g/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/OAPjOgmJa5g/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-04-17T09:45:02Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "gPnTrcf5cusXG9_lAXFf6mksA6I",
+      "id": { "kind": "youtube#video", "videoId": "jD2PXJfdRhc" },
+      "snippet": {
+        "publishedAt": "2025-04-08T15:23:59Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Why I love where I live - student accommodation!",
+        "description": "If you're looking for the perfect place to call home during your studies, we've got you covered! Hear from some of our students as ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/jD2PXJfdRhc/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/jD2PXJfdRhc/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/jD2PXJfdRhc/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-04-08T15:23:59Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "1QFeHN7T1Tu-BdRWFBsUVSLPQzs",
+      "id": { "kind": "youtube#video", "videoId": "-LF-wuMCK8M" },
+      "snippet": {
+        "publishedAt": "2025-03-27T16:00:00Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Visit the best Spring spots in Stirling with me!",
+        "description": "It is finally spring so we asked current #UofStirling student, Daniel, to share his favourite spring spots around Stirling! LIKE IT?",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/-LF-wuMCK8M/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/-LF-wuMCK8M/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/-LF-wuMCK8M/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-03-27T16:00:00Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "mk4H044B3ckN9yxWIH5eoZ0rj70",
+      "id": { "kind": "youtube#video", "videoId": "6LOwgsPV-eI" },
+      "snippet": {
+        "publishedAt": "2025-03-26T16:58:43Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Frequently Asked Questions about University... answered by Uni students!",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/6LOwgsPV-eI/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/6LOwgsPV-eI/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/6LOwgsPV-eI/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-03-26T16:58:43Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "IUR2FcjAbTDQGtWYHeaZVaMQc9Q",
+      "id": { "kind": "youtube#video", "videoId": "kD9kj5kH2Nc" },
+      "snippet": {
+        "publishedAt": "2025-03-08T10:00:48Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Happy International Women&#39;s Day!",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/kD9kj5kH2Nc/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/kD9kj5kH2Nc/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/kD9kj5kH2Nc/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-03-08T10:00:48Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "jr-0u8dvIU1mFqpNhj91g2OubgU",
+      "id": { "kind": "youtube#video", "videoId": "5673mijUaJ4" },
+      "snippet": {
+        "publishedAt": "2025-03-06T15:00:11Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "East Meets West Quiz \ud83c\udde8\ud83c\uddf3\ud83c\uddec\ud83c\udde7\ud83c\uddfa\ud83c\uddf8\ud83d\udc9a",
+        "description": "We test our students to see how well they know traditions between China and the UK! LIKE IT? If you liked this video, please give ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/5673mijUaJ4/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/5673mijUaJ4/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/5673mijUaJ4/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-03-06T15:00:11Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "8WkAzpaJp7ZISyDFSjxX7v011Go",
+      "id": { "kind": "youtube#video", "videoId": "_TClN23eCTs" },
+      "snippet": {
+        "publishedAt": "2025-03-05T16:27:02Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Come to Taylor Swift pilates with me!",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/_TClN23eCTs/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/_TClN23eCTs/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/_TClN23eCTs/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-03-05T16:27:02Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "dLsxqSLR0ny05WwVZ8og3YTfsR8",
+      "id": { "kind": "youtube#video", "videoId": "Ovi4yUcLrco" },
+      "snippet": {
+        "publishedAt": "2025-03-05T09:28:57Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Cocktails based on our University degrees",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/Ovi4yUcLrco/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/Ovi4yUcLrco/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/Ovi4yUcLrco/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-03-05T09:28:57Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "YnlfAiQspAZ1EPFvpCTB8dMZLaw",
+      "id": { "kind": "youtube#video", "videoId": "x0ai34_eSUA" },
+      "snippet": {
+        "publishedAt": "2025-02-22T15:01:16Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "8 tips to help you secure a graduate job",
+        "description": "LIKE IT? If you liked this video, please give it a thumbs up and share it with your friends! Don't forget to subscribe to our YouTube ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/x0ai34_eSUA/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/x0ai34_eSUA/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/x0ai34_eSUA/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-02-22T15:01:16Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "L2lQngfCUxOl9_3O3m-QADaXAuY",
+      "id": { "kind": "youtube#video", "videoId": "T6Ln9wFEuoU" },
+      "snippet": {
+        "publishedAt": "2025-02-20T15:00:40Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Acts of Kindness at #uofstirling \ud83d\udc9a",
+        "description": "UofStirling student, Britney, shows how you can spread love & positivity by doing something kind for someone today! LIKE IT?",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/T6Ln9wFEuoU/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/T6Ln9wFEuoU/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/T6Ln9wFEuoU/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-02-20T15:00:40Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "DUF1QuaTbzz-fmMht_YKCGcRDUY",
+      "id": { "kind": "youtube#video", "videoId": "KhNGYeXFfws" },
+      "snippet": {
+        "publishedAt": "2025-02-12T11:54:07Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Balancing a busy semester at Uni",
+        "description": "Have you wondered what a semester at university is really like? Follow current student Alan as takes you along for a week in his ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/KhNGYeXFfws/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/KhNGYeXFfws/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/KhNGYeXFfws/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-02-12T11:54:07Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "JoUY4RI4kUja8bwv5IrQZiazTAw",
+      "id": { "kind": "youtube#video", "videoId": "yv6xrinBgF8" },
+      "snippet": {
+        "publishedAt": "2025-02-11T15:01:22Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "What biscuits go best with a cup of tea?",
+        "description": "Stirling students put four classic biscuits to the test to decide which goes best with a cup of tea. Custard Cream, Rich Tea, ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/yv6xrinBgF8/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/yv6xrinBgF8/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/yv6xrinBgF8/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-02-11T15:01:22Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "owqL84KWH5zHEkapepMX310UcGE",
+      "id": { "kind": "youtube#video", "videoId": "NGxpLa3AKsk" },
+      "snippet": {
+        "publishedAt": "2025-01-28T15:00:25Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Favourite #uofstirling 2024 Memories",
+        "description": "What's your favourite memory from 2024? Here are some from our students LIKE IT? If you liked this video, please give it a ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/NGxpLa3AKsk/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/NGxpLa3AKsk/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/NGxpLa3AKsk/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-01-28T15:00:25Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "UAgBjSmSP38AZjDAbKsj0FpHJbI",
+      "id": { "kind": "youtube#video", "videoId": "LO-hHUKp9Ig" },
+      "snippet": {
+        "publishedAt": "2025-01-21T15:00:32Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "What I do at the weekend as a #uofstirling student",
+        "description": "Find out what a weekend in Stirling looks like with current student, Cynthia! LIKE IT? If you liked this video, please give it a thumbs ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/LO-hHUKp9Ig/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/LO-hHUKp9Ig/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/LO-hHUKp9Ig/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-01-21T15:00:32Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "eyuelxwL1duVvSeMRCZog-O4V-c",
+      "id": { "kind": "youtube#video", "videoId": "oX6J2vgdwXM" },
+      "snippet": {
+        "publishedAt": "2025-01-03T15:01:04Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Lucy Fraser Edmans, Big Data graduate",
+        "description": "Hear from Lucy Fraser Edmans, our MSc Big Data graduate on how studying at Stirling helped her to become a Data Science ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/oX6J2vgdwXM/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/oX6J2vgdwXM/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/oX6J2vgdwXM/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2025-01-03T15:01:04Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "gRmhd8hVGQ_UAWL3e9Lk0B3w8b4",
+      "id": { "kind": "youtube#video", "videoId": "YFzdlpLb1K8" },
+      "snippet": {
+        "publishedAt": "2024-12-19T15:00:39Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "MSc International Journalism",
+        "description": "Three current International Journalism students tell us why they chose the course and the practical aspects which are developing ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/YFzdlpLb1K8/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/YFzdlpLb1K8/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/YFzdlpLb1K8/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-12-19T15:00:39Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "uKSq5wVWTFLyCktM4DfG_mPozLg",
+      "id": { "kind": "youtube#video", "videoId": "du-k__jQVA0" },
+      "snippet": {
+        "publishedAt": "2024-12-19T15:00:46Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "2024 at #uofstirling",
+        "description": "So many great memories made at #UofStirling this year! We can't wait to see what 2025 holds for us! LIKE IT? If you liked this ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/du-k__jQVA0/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/du-k__jQVA0/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/du-k__jQVA0/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-12-19T15:00:46Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "1yLMCO6RtIQaGoREcn3MMou21S4",
+      "id": { "kind": "youtube#video", "videoId": "hkUATzjJLJ0" },
+      "snippet": {
+        "publishedAt": "2024-12-18T15:00:52Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Christmas Spots in Edinburgh \ud83c\udf84\u2744\ufe0f",
+        "description": "Our student Jody heads to Edinburgh to show you the best Christmas spots! LIKE IT? If you liked this video, please give it a ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/hkUATzjJLJ0/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/hkUATzjJLJ0/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/hkUATzjJLJ0/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-12-18T15:00:52Z"
+      }
+    },
+    {
+      "kind": "youtube#searchResult",
+      "etag": "vU8qbTQiNc8QNJq0QwLWSKuR-UI",
+      "id": { "kind": "youtube#video", "videoId": "w1yk803bwoQ" },
+      "snippet": {
+        "publishedAt": "2024-12-17T15:01:04Z",
+        "channelId": "UCuulvnEIgjx9NLrRca9h9GA",
+        "title": "Moving from USA to Scotland for University",
+        "description": "Wonder what it's like to move from the USA to study in Scotland? Our students Britney, Nia and Ryan share their experience and ...",
+        "thumbnails": {
+          "default": { "url": "https://i.ytimg.com/vi/w1yk803bwoQ/default.jpg", "width": 120, "height": 90 },
+          "medium": { "url": "https://i.ytimg.com/vi/w1yk803bwoQ/mqdefault.jpg", "width": 320, "height": 180 },
+          "high": { "url": "https://i.ytimg.com/vi/w1yk803bwoQ/hqdefault.jpg", "width": 480, "height": 360 }
+        },
+        "channelTitle": "University of Stirling",
+        "liveBroadcastContent": "none",
+        "publishTime": "2024-12-17T15:01:04Z"
+      }
+    }
+  ]
+}
