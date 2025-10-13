@@ -9,6 +9,20 @@
    */
 
   /**
+   * Get the appropriate image from an array of images
+   * If there's no images, return an empty string
+   * If there's one image, return that image
+   * If there's multiple images, return the last image (which should be the largest)
+   * @param {Array<string>} images - array of image URLs
+   * @returns {string} - the selected image URL or an empty string
+   */
+  const getImage = (images) => {
+    if (!images.length) return ``;
+    if (images.length === 1) return images[0];
+    return images[images.length - 1];
+  };
+
+  /**
    * Form the html for an individual student
    * @param {object} item - the student item
    * @param {string} fullname - the full name of the student
@@ -17,17 +31,19 @@
    */
   const renderItem = (item, fullname, url) => {
     const cf = item.custom_fields;
+    const image = cf.image ? getImage(cf.image) : ``;
+    const data = cf.data ? JSON.parse(decodeURIComponent(cf.data)) : {};
     return `
           <!-- Start testimonial result -->
             <div class="u-mb-2 u-bg-grey ">
-              ${renderVideo(fullname, cf.profileMedia) ? renderVideo(fullname, cf.profileMedia) : renderImage(cf.profileImage, fullname)}
+              ${renderVideo(fullname, image) ? renderVideo(fullname, image) : renderImage(image, fullname)}
                 <div class="u-p-2">
                   <p class="u-font-bold ">${fullname}</p>
-                  ${cf.profileCountry || cf.profileDegreeTitle ? `<cite>` : ``}
-                  ${cf.profileCountry ? `<span class="info">${cf.profileCountry} </span><br />` : ``}
-                  ${cf.profileDegreeTitle ? `<span class="info">${cf.profileDegreeTitle}</span>` : ``}
-                  ${cf.profileCountry || cf.degreeTitle ? `</cite>` : ``}
-                  ${cf.profileSnippet ? `<blockquote class="u-border-none u-my-2 u-black u-p-0 u-quote u-text-regular">${cf.profileSnippet}</blockquote>` : ``}
+                  ${cf.country || data.degree ? `<cite>` : ``}
+                  ${cf.country ? `<span class="info">${cf.country} </span><br />` : ``}
+                  ${data.degree ? `<span class="info">${data.degree}</span>` : ``}
+                  ${cf.country || data.degree ? `</cite>` : ``}
+                  ${cf.snippet ? `<blockquote class="u-border-none u-my-2 u-black u-p-0 u-quote u-text-regular">${cf.snippet}</blockquote>` : ``}
                   <a href="${item.url}" class="c-link">View ${pluraliseName(fullname.trim())} story</a>
                 </div> 
             </div> 
@@ -198,7 +214,7 @@
     const faculty = parseSubjectQuery(queryValue, "faculty");
     if (!faculty) return "";
 
-    if (faculty === "Management") return "Stirling Business School";
+    if (faculty === "Business") return "Stirling Business School";
     return `Faculty of ${faculty}`;
   };
 
@@ -231,11 +247,11 @@
    */
   const getFacetsFromQueryParams = (consts) => {
     return {
-      profileCountry: getCountry(QueryParams.get("region"), consts),
-      profileLevel: QueryParams.get("level") ? QueryParams.get("level") : "",
-      profileOnliner: QueryParams.get("mode") === "online" ? "online" : "",
-      profileSubject: getSubject(QueryParams.get("subject")),
-      profileFaculty: getFaculty(QueryParams.get("subject")),
+      country: getCountry(QueryParams.get("region"), consts),
+      level: QueryParams.get("level") ? QueryParams.get("level") : "",
+      delivery: QueryParams.get("mode") === "online" ? "online" : "",
+      subject: getSubject(QueryParams.get("subject")),
+      faculty: getFaculty(QueryParams.get("subject")),
     };
   };
 
@@ -327,7 +343,7 @@
     postsPerPage: postsPerPage,
     macroUK: "United Kingdom|Wales|England|Scotland|Northern Ireland",
     urlBase: "https://www.stir.ac.uk/",
-    searchUrl: `${searchAPI}?term=*&limit=9&customField=stirType%3Dstudentstory&sort=custom_fields.profileSort&${buildCustomFields("profileTags", tags)}&`,
+    searchUrl: `${searchAPI}?term=*&limit=9&customField=type%3Dstudentstory&sort=custom_fields.sort&${buildCustomFields("tag", tags)}&`,
     onlineText: "",
   };
 
