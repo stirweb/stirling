@@ -488,13 +488,13 @@
   stir.getJSON(url, (initialData) => {
     if (initialData.error) return;
 
-    // Passed events
+    // Past events
     const seriesEventsAreaPast = stir.node("#serieseventspast");
 
     const passedEvents = doPastSeries("", initialData);
 
     if (seriesEventsAreaPast) {
-      const html = passedEvents === "" ? "No passed events found" : passedEvents;
+      const html = passedEvents === "" ? "No past events found" : passedEvents;
       setDOMContent(seriesEventsAreaPast, html);
     }
 
