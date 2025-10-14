@@ -416,7 +416,7 @@
 
     const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry)(passedEvents);
 
-    return seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
+    return seriesPastData.length ? renderHeader("Past", "u-mt-2") + seriesPastData : ``;
   };
 
   /**
