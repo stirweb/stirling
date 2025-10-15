@@ -7,19 +7,34 @@
     itemsPerPage: 9,
   };
 
-  /* 
-      Rendering
-  */
-  const renderLink = (link) =>
-    link
+  /**
+   * Rendering functions
+   * Generally take data and return HTML string
+   * @returns {string} HTML string
+   */
+
+  const renderAudienceFilter = (selected) => {
+    const id = "filter-by-audience";
+    return `<label for="${id}" class="u-show-for-sr">Filter by student type</label>
+            <select id="${id}">
+              <option value="students" ${selected === "students" ? "selected" : ""}>All Students</option>
+              <option value="ug" ${selected === "ug" ? "selected" : ""}>Undergraduate</option>
+              <option value="pgt" ${selected === "pgt" ? "selected" : ""}>Postgraduate</option>
+          </select>`;
+  };
+
+  const renderLink = (link, text) => {
+    const linkText = text ? text : "More information";
+    return link
       ? `
       <div class="flex-container u-gap-16 align-middle">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:20px; height: 20px; color: #006938 ">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
           </svg>
-          <a href="${link}">More information</a>
+          <a href="${link}">${linkText}</a>
         </div>`
       : ``;
+  };
 
   const renderAudience = (value) => {
     if (!value || value === "students") return "All Students";
@@ -28,8 +43,8 @@
     return ``;
   };
 
-  const renderEvent = (item) => `
-    <div class="grid-x u-bg-white u-mb-2 u-energy-line-left u-border-width-5">
+  const renderEvent = (item) => {
+    return `<div class="grid-x u-bg-white u-mb-2 u-energy-line-left u-border-width-5">
       <div class="cell u-p-2 small-12">
         <p class="u-text-regular u-mb-2">
           <strong>${item.title}</strong>
@@ -47,7 +62,7 @@
             <span class="u-icon h5 uos-location"></span>
             <span>${item.location}</span>
           </div>
-          ${renderLink(item.link)}
+          ${renderLink(item.link, item.linkText)}
         </div>
         <p class="text-sm">${item.description}</p>
         <p class="u-m-0 text-sm"><strong>Theme:</strong> ${item.theme} <br />
@@ -56,6 +71,7 @@
         </p>
       </div>
     </div>`;
+  };
 
   const renderDateFilter = (item) => `<option value="${item.startIntFull}">${item.stirStart}</option>`;
 
@@ -69,31 +85,40 @@
 
   const renderClearFiltersBtn = () => `<button id="clearfilters" class="button no-arrow tiny hollow expanded u-font-bold">Clear all filters</button>`;
 
-  const renderNoEvents = () =>
-    `<div class="grid-x u-bg-white u-mb-2  u-border-width-5">
+  const renderNoEvents = () => {
+    return `<div class="grid-x u-bg-white u-mb-2  u-border-width-5">
       <div class="cell u-p-2 small-12  ">
         <p>No events have been found for the criteria selected</p>
       </div>
     </div>`;
+  };
 
-  const renderPaginationBtn = (end, noOfResults) =>
-    end >= noOfResults
+  const renderPaginationBtn = (end, noOfResults) => {
+    return end >= noOfResults
       ? ``
       : `<div class="loadmorebtn flex-container align-center u-mb-2">
            <button class="button hollow tiny">Load more results</button>
          </div>`;
+  };
 
-  const renderPageMeta = (start, end, noOfResults) =>
-    start < 2
+  const renderPageMeta = (start, end, noOfResults) => {
+    return start < 2
       ? ``
       : `<div class="flex-container align-center u-mb-2">
            Showing ${start + 1}-${Math.min(end, noOfResults)} of ${noOfResults} results
          </div>`;
+  };
 
-  /*
-      Helper functions
-  */
+  /**
+   * Dom functions
+   */
 
+  /**
+   * Set or append HTML to a DOM node
+   * @param {HTMLElement} node - The DOM node to set or append HTML to
+   * @param {string} html - The HTML string to set or append
+   * @returns {boolean|HTMLElement} - Returns true if setting HTML, or the element if appending
+   */
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
@@ -103,6 +128,10 @@
     elem.insertAdjacentHTML("beforeend", html);
     return elem;
   });
+
+  /**
+   * Data Processing functions
+   */
 
   const joiner = stir.join("");
 
@@ -138,8 +167,7 @@
 
   const cleanQueryParam = (param) => {
     if (typeof param !== "string") return "";
-    // Remove any non-alphanumeric characters except hyphen and underscore
-    return param.replace(/[^a-zA-Z0-9-_]/g, "");
+    return param.replace(/[^a-zA-Z0-9-_]/g, ""); // Remove any non-alphanumeric characters except hyphen and underscore
   };
 
   // Updated QueryParams object with cleaning
@@ -149,9 +177,9 @@
     remove: QueryParams.remove,
   };
 
-  /* 
-      Controller
-  */
+  /**
+   * Controller
+   */
   function doEventsFilter(globals, page_, now, date, theme, audience, data) {
     const page = Number(page_) || 1;
     const start = globals.itemsPerPage * (page - 1);
@@ -179,8 +207,8 @@
   }
 
   /*
-      Event listeners
-  */
+   *  Event listeners
+   */
   function setupEventListeners(globals) {
     const dateFilter = stir.node("#filter-by-date");
     const themeFilter = stir.node("#filter-by-theme");
@@ -223,18 +251,8 @@
   }
 
   /*
-      Initialize
-  */
-
-  const renderAudienceFilter = (selected) => {
-    const id = "filter-by-audience";
-    return `<label for="${id}" class="u-show-for-sr">Filter by student type</label>
-            <select id="${id}">
-              <option value="students" ${selected === "students" ? "selected" : ""}>All Students</option>
-              <option value="ug" ${selected === "ug" ? "selected" : ""}>Undergraduate</option>
-              <option value="pgt" ${selected === "pgt" ? "selected" : ""}>Postgraduate</option>
-          </select>`;
-  };
+   * Initialize
+   */
 
   const initData = stir.feeds.events.filter((item) => item.id);
   const theme = SafeQueryParams.get("theme") || "";
@@ -261,7 +279,9 @@
 
   const setDOMFilters = setDOMContent(GLOBALS.filtersArea);
 
-  setDOMFilters(renderAudienceFilter(audience) + renderSelectFilter(datesFilterHtml, "Filter by date") + renderSelectFilter(themesFilterHtml, "Filter by theme") + renderClearFiltersBtn());
+  setDOMFilters(
+    renderAudienceFilter(audience) + renderSelectFilter(datesFilterHtml, "Filter by date") + renderSelectFilter(themesFilterHtml, "Filter by theme") + renderClearFiltersBtn()
+  );
 
   setupEventListeners(GLOBALS);
 })(stir.node("#welcomeevents"));
