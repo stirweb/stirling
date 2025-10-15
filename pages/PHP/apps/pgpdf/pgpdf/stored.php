@@ -101,7 +101,7 @@
             },
             {
                 "id": 3,
-                "subject": "Business and Management",
+                "subject": "Business, Management, Marketing and Human Resources",
                 "qsSubject": "Business and Management",
                 "courses": [{
                     "newName": "MSc International Business"
@@ -113,8 +113,6 @@
                     "newName": "MSc Marketing Analytics"
                 }, {
                     "newName": "MSc Digital Marketing and Brand Management"
-                }, {
-                    "newName": "MRes Business and Management"
                 }, {
                     "newName": "MSc Behavioural Science"
                 }, {
@@ -140,7 +138,7 @@
                 }, {
                     "newName": "MSc Public Relations and Strategic Communication"
                 }, {
-                    "newName": "MSc Strategic Communication and Public Relations (Joint degree UPF Barcelona)"
+                    "newName": "MSc Strategic Communication and Public Relations (Joint Degree UPF Barcelona)"
                 }, {
                     "newName": "MSc Public Relations and Strategic Communication (Online)"
                 }, {
@@ -175,20 +173,24 @@
             },
             {
                 "id": 7,
-                "subject": "Big Data, Data Science and Analytics",
+                "subject": "Artificial Intelligence, Big Data, Data Science and Analytics",
                 "qsSubject": "Computing, Data Science and Mathematics",
                 "courses": [{
                     "newName": "MSc Artificial Intelligence"
                 }, {
                     "newName": "MSc Big Data"
                 }, {
-                    "newName": "MSc Financial Technology (Fintech)"
+                    "newName": "MSc Financial Technology (FinTech)"
                 }, {
                     "newName": "MSc Mathematics and Data Science"
                 }, {
                     "newName": "MSc Advanced Computing with Artificial Intelligence"
                 }, {
                     "newName": "MSc Big Data (Online)"
+                }, {
+                    "newName": "MSc Marketing Analytics"
+                }, {
+                    "newName": "MSc Finance and Data Analytics"
                 }, {
                     "newName": "MSc Data Science for Business"
                 }, {
@@ -204,30 +206,41 @@
                 }, {
                     "newName": "MSc English Language Teaching and Management"
                 }, {
-                    "newName": "PG Dip Teaching Qualification in Further Education (Pre-Service)"
+                    "newName": "PGDip Tertiary Education with Teaching Qualification (Further Education) - pre-service"
                 }, {
-                    "newName": "PG Cert Teaching Qualification in Further Education (In-Service)"
+                    "newName": "PGCert Tertiary Education with Teaching Qualification (Further Education) - in-service"
                 }, {
                     "newName": "MSc Teaching English to Speakers of Other Languages (TESOL)"
                 }, {
                     "newName": "MSc Teaching English to Speakers of Other Languages (TESOL) (Online)"
                 }, {
-                    "newName": "MSc Educational Leadership"
+                    "newName": "MSc Educational Leadership (Specialist Qualification for Headship)"
                 }, {
                     "newName": "MRes Educational Research"
                 }, {
-                    "newName": "MSc Professional Educational and Leadership"
+                    "newName": "MSc Professional Education and Leadership"
+                }, {
+                    "newName": "PGDE Secondary Education: Physics with Science"
+                }, {
+                    "newName": "PGDE Secondary Education: Chemistry with Science"
                 }]
             },
             {
                 "id": 9,
-                "subject": "Environmental Sciences",
+                "subject": "Environmental Sciences, Law and Sustainability",
                 "qsSubject": "Environmental Sciences",
                 "courses": [{
-                    "newName": "MSc Environmental Management"
-                }, {
-                    "newName": "MSc Environmental Remote Sensing and Geospatial Sciences"
-                }]
+                        "newName": "MSc Environmental Management"
+                    }, {
+                        "newName": "MSc Environmental Remote Sensing and Geospatial Sciences"
+                    },
+                    {
+                        "newName": "MSc Global Environmental Sustainability"
+                    },
+                    {
+                        "newName": "LLM Environmental Law and Climate Justice"
+                    }
+                ]
             },
             {
                 "id": 10,
@@ -236,13 +249,13 @@
                 "courses": [{
                     "newName": "MSc Specialist Community Public Health Nurse (Health Visiting)"
                 }, {
-                    "newName": "MPH Public Health"
+                    "newName": "MPH Master of Public Health"
                 }, {
-                    "newName": "MPH Public Health (Online)"
+                    "newName": "MPH Master of Public Health (Online)"
                 }, {
-                    "newName": "MSc Physiotherapy (Pre registration)"
+                    "newName": "MSc Physiotherapy (pre-registration)"
                 }, {
-                    "newName": "MSc Podiatry (Pre registration)"
+                    "newName": "MSc Podiatry (pre-registration)"
                 }, {
                     "newName": "MSc Advancing Practice"
                 }, {
@@ -263,24 +276,33 @@
             },
             {
                 "id": 12,
-                "subject": "Politics",
+                "subject": "Politics and International Relations",
                 "qsSubject": "History, Heritage and Politics",
                 "courses": [{
-                    "newName": "MSc International Conflict and Cooperation"
-                }, {
-                    "newName": "MPP Public Policy"
-                }, {
-                    "newName": "MSc Global Politics"
-                }]
+                        "newName": "MSc International Conflict and Cooperation"
+                    },
+                    {
+                        "newName": "MSc Global Environmental Sustainability"
+                    },
+                    {
+                        "newName": "MPP Public Policy"
+                    }, {
+                        "newName": "MSc, LLM Human Rights and Diplomacy"
+                    }, {
+                        "newName": "MSc Gender and Diplomatic Practice"
+                    }, {
+                        "newName": "MSc Global Politics"
+                    }
+                ]
             },
             {
                 "id": 13,
                 "subject": "Housing Studies",
                 "qsSubject": "Social Sciences",
                 "courses": [{
-                    "newName": "MSc, PG Dip Housing Studies (Part time) (Online)"
+                    "newName": "MSc / PG Dip Housing Studies (part-time)"
                 }, {
-                    "newName": "MSc, PG Dip Housing Studies (with internship)"
+                    "newName": "MSc / PG Dip Housing Studies (with internship)"
                 }]
             },
             {
@@ -288,13 +310,11 @@
                 "subject": "Law and Philosophy",
                 "qsSubject": "Law and Philosophy",
                 "courses": [{
-                    "newName": "MSc, LLM Human Rights and Diplomacy"
+                    "newName": "LLM, MSc Human Rights and Diplomacy"
                 }, {
                     "newName": "MLitt Philosophy"
                 }, {
                     "newName": "LLM Environmental Law and Climate Justice"
-                }, {
-                    "newName": "MSc Gender and Diplomatic Practice"
                 }]
             },
             {
@@ -310,6 +330,8 @@
                 }, {
                     "newName": "MLitt Publishing Studies"
                 }, {
+                    "newName": "MSc International Journalism"
+                }, {
                     "newName": "MRes Publishing Studies"
                 }]
             },
@@ -318,17 +340,19 @@
                 "subject": "Psychology",
                 "qsSubject": "Psychology",
                 "courses": [{
-                    "newName": "MSc Autism Research"
+                    "newName": "MSc Autism and Neurodevelopmental Conditions Research"
                 }, {
                     "newName": "MSc Health Psychology"
                 }, {
-                    "newName": "MA, MSc Human Animal Interaction"
+                    "newName": "MSc / MA Human Animal Interaction"
                 }, {
                     "newName": "MSc Psychological Research Methods"
                 }, {
                     "newName": "MSc Psychological Therapy in Primary Care"
                 }, {
-                    "newName": "MSc Psychology (Accredited Conversion)"
+                    "newName": "MSc Psychology (accredited conversion course)"
+                }, {
+                    "newName": "MSc Psychology of Sport (Accredited)"
                 }, {
                     "newName": "MSc Behavioural Science"
                 }]
@@ -342,9 +366,7 @@
                 }, {
                     "newName": "MSc Social Statistics and Social Research"
                 }, {
-                    "newName": "MSc Applied Professional Studies (Blended)"
-                }, {
-                    "newName": "MSc Substance Use (Online)"
+                    "newName": "MRes Criminological Research"
                 }]
             },
             {
@@ -352,10 +374,15 @@
                 "subject": "Social Work",
                 "qsSubject": "Social Sciences",
                 "courses": [{
-                    "newName": "MSc Social Work Studies"
-                }, {
-                    "newName": "MSc Substance Use (Online)"
-                }]
+                        "newName": "MSc Social Work Studies"
+                    },
+                    {
+                        "newName": "MSc Applied Professional Studies"
+                    },
+                    {
+                        "newName": "MSc Substance Use (Online)"
+                    }
+                ]
             },
             {
                 "id": 19,
@@ -364,7 +391,7 @@
                 "courses": [{
                     "newName": "MSc Psychology of Sport (Accredited)"
                 }, {
-                    "newName": "MSc Sport Nutrition"
+                    "newName": "MSc Physiotherapy (pre-registration)"
                 }, {
                     "newName": "MSc Sport Management"
                 }, {
@@ -376,7 +403,7 @@
                 "subject": "Gender",
                 "qsSubject": "Communications, Media and Culture",
                 "courses": [{
-                    "newName": "MLitt, MSc Gender and Sexualities"
+                    "newName": "MLitt, MSc Genders and Sexualities"
                 }, {
                     "newName": "MSc Gender and Diplomatic Practice"
                 }]

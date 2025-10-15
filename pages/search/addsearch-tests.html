@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="search-results"></div>
+  </body>
+
+  <script>
+    (function () {
+      /**
+       * Helper to build custom field query strings
+       * @param {string} name - The name of the custom field
+       * @param {Array<string>} values - The values to filter by
+       * @returns {string} - The constructed query string
+       */
+      function buildCustomField(name, values) {
+        return values.map((value) => `customField=${name}%3D${value}`).join("&");
+      }
+
+      function getPaginationValues(startPage, postsPerPage) {
+        const start = startPage === 1 ? 1 : (startPage - 1) * postsPerPage + 1;
+        const end = start + postsPerPage - 1;
+        return { start, end };
+      }
+
+      /**
+       * Away we go
+       */
+
+      console.log(getPaginationValues(1, 9)); // { start: 1, end: 9 }
+      console.log(getPaginationValues(2, 9)); // { start: 10,
+
+      const macroUK = ["United Kingdom", "Wales", "England", "Scotland", "Northern Ireland"];
+      const tags = ["alum", "student"];
+
+      const resultsContainer = document.getElementById("search-results");
+      const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+
+      const searchUrlBase = `${searchAPI}?term=*&limit=9&customField=stirType%3Dstudentstory&sort=custom_fields.profileSort&${buildCustomField("profileTags", tags)}`;
+
+      const searchUrl = `${searchUrlBase}&${buildCustomField("profileCountry", ["Scotland", "China"])}&page=2`;
+
+      console.log(searchUrl);
+
+      fetch(searchUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          const html = data.hits
+            .map(
+              (student) => `
+                <div>
+                    <p>${student.custom_fields.h1_custom || ""}</p>
+                    <p>${student.custom_fields.profileSort || ""}</p>
+                    <p>${student.url || ""}</p>
+                    <hr>
+                </div>
+            `
+            )
+            .join("");
+
+          resultsContainer.innerHTML = html;
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching search results:", error);
+        });
+    })();
+  </script>
+</html>

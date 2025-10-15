@@ -62,6 +62,7 @@ stir.funnelback = (() => {
 })();
 
 /**
+<<<<<<< HEAD
  * Course-specific search results helper
  */
 stir.courses = (() => {
@@ -123,6 +124,8 @@ stir.courses = (() => {
 })();
 
 /**
+=======
+>>>>>>> AddSearch
  * Stir Search
  * Created for the Search Revamp project 2022/23
  * @returns Object
@@ -319,7 +322,7 @@ stir.search = () => {
     let facetParameters = Object.keys(parameters)
       .filter((key) => key.indexOf("f.") === 0)
       .reduce((obj, key) => {
-        return { ...obj, [key]: rwm2.string.urlDecode(parameters[key]) };
+        return { ...obj, [key]: rwm2.string.urlDecode(parameters[key]).toLowerCase() };
       }, {});
     //debug && Object.keys(facetParameters).length && console.info('[Search] facetParameters:',facetParameters);
     return facetParameters;
