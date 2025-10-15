@@ -278,7 +278,7 @@ stir.templates.search = (() => {
           .replace(/^!padrenullquery$/, "")
           .trim() || "";
       const queryEcho = document.createElement("em");
-      const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
+      const message = stir.templates.search.message(totalMatching > 0, totalMatching&&totalMatching.toLocaleString("en"), querySanitised.length > 1);
       const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
       const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
