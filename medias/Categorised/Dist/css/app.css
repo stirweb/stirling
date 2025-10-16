@@ -8407,15 +8407,17 @@ pre.debug {
   font-weight: bold; }
 
 .c-course-title-sticky-menu__buttons {
-  margin-top: 1rem;
+  margin-top: .5rem;
   text-align: right; }
   .c-course-title-sticky-menu__buttons .button {
-    margin: 0 0 1.25rem 0.5rem; }
+    min-width: auto;
+    margin: 0 0 .5rem .5rem;
+    padding: .3rem .5rem .6rem; }
     .c-course-title-sticky-menu__buttons .button:first-child {
       margin-left: 0; }
 
 .course-sticky-close-btn {
-  right: 4rem;
+  right: 1rem;
   top: 1rem; }
   .course-sticky-close-btn > span {
     display: inline-block;
@@ -8953,6 +8955,15 @@ a[data-mode*="Online"] {
   .c-course-related__buttons ul li a {
     /* stop long names overlapping the UCAS code */
     width: 65%; } }
+
+@media screen and (min-width: 40em) {
+  .c-course-title-sticky-menu__buttons .button {
+    min-width: 14rem;
+    /* same as default .button */
+    padding: 20px 28px;
+    /* same as default .button */
+    margin-top: 1rem;
+    margin-bottom: 1.25rem; } }
 
 /*
 	Research Hub Landing Forms
