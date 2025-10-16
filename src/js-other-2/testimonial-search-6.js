@@ -9,17 +9,22 @@
    */
 
   /**
-   * Get the appropriate image from an array of images
+   * Get the appropriate image from an array of images or a single image string
    * If there's no images, return an empty string
    * If there's one image, return that image
    * If there's multiple images, return the last image (which should be the largest)
-   * @param {Array<string>} images - array of image URLs
+   * @param {Array<string> || string} images - array of image URLs
    * @returns {string} - the selected image URL or an empty string
    */
   const getImage = (images) => {
     if (!images.length) return ``;
-    if (images.length === 1) return images[0];
-    return images[images.length - 1];
+
+    if (Array.isArray(images)) {
+      if (images.length === 1) return images[0];
+      return images[images.length - 1];
+    }
+
+    return images;
   };
 
   /**
@@ -30,9 +35,11 @@
    * @returns {string} - the HTML string for the student item
    */
   const renderItem = (item, fullname, url) => {
+    console.log(item);
     const cf = item.custom_fields;
     const image = cf.image ? getImage(cf.image) : ``;
     const data = cf.data ? JSON.parse(decodeURIComponent(cf.data)) : {};
+
     return `
           <!-- Start testimonial result -->
             <div class="u-mb-2 u-bg-grey ">
@@ -113,9 +120,8 @@
 
   const renderImage = (image, fullname) => {
     if (!image) return ``;
-
-    const url = `https://www.stir.ac.uk${image}`;
-    return `<img src="${url}" alt="${fullname}" class="u-object-cover u-aspect-ratio-1-1" loading="lazy" width=500 height=500  />`;
+    //const url = `https://www.stir.ac.uk${image}`;
+    return `<img src="https://www.stir.ac.uk${image}" alt="${fullname}" class="u-object-cover u-aspect-ratio-1-1" loading="lazy" width=500 height=500  />`;
   };
 
   const renderNoResults = () => {
