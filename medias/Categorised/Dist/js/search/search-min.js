@@ -138,7 +138,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 						<p>${e.metaData.profileSnippet?"<q>"+e.metaData.profileSnippet+"</q>":"\x3c!-- 28d3702e2064f72d5dfcba865e3cc5d5 --\x3e"}</p>
 					</div>
 					${e.metaData.profileImage?p("https://www.stir.ac.uk"+e.metaData.profileImage,e.title.split(" | ")[0].trim(),400,400):""}
-				</div>`,news:e=>`
+				</div>`,news:e=>e.metaData.d?`
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${e.metaData.thumbnail?" c-search-result__with-thumbnail":""}" data-rank=${e.rank} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 						<p class="u-text-regular u-m-0">
@@ -156,7 +156,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 					<div class=c-search-result__image>
 						<img src="${e.metaData.thumbnail}" alt="${e.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
 					</div>
-				</div>`,gallery:e=>{return`
+				</div>`:"",gallery:e=>{return`
 				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${e.rank} data-result-type=news>
 					
 					<div class=c-search-result__body>
