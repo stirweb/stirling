@@ -107,7 +107,8 @@ stir.search = () => {
 	const addMoreParameters = (url, formData) => {
 		let a = new URLSearchParams(formData);
 		for (let [key, value] of new URLSearchParams(url.search)) {
-			a.set(key, value);
+			//a.set(key, value); //Funnelback
+			a.append(key, value); //AddSearch
 		}
 		url.search = a;
 		return url;
@@ -149,6 +150,8 @@ stir.search = () => {
 				customField: "type=gallery"
 			},
 			course: {
+				sort: "custom_fields.h1_custom",
+				order: "asc",
 				customField: "type=course"
 			},
 			coursemini: {
@@ -231,6 +234,7 @@ stir.search = () => {
 	const getFormData = (type) => {
 		const form = document.querySelector(".c-search-results-area form[data-filters=" + type + "]");
 		let a = form ? new FormData(form) : new FormData();
+		console.info("[Search] FormData:",a);
 
 		for (var key of a.keys()) {
 			if (key.indexOf("f.") === 0) continue; //ignore any facets
@@ -239,7 +243,7 @@ stir.search = () => {
 				// as used in the Research type filter's "Other" option:
 				// "publication", "contract", "[tag theme programme group]"
 				// will become "[publication contract tag theme programme group]"
-				a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
+				//a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
 			}
 		}
 
@@ -383,6 +387,18 @@ stir.search = () => {
 	};
 
 	const setFBParameters = buildUrl(constants.url);
+
+	// +++ COURSE - subject filter +++
+	{
+		const el = document.getElementById('courseSubjectFilters');
+		if (el && stir.t4Globals.search.facets["Subject"]) {
+			stir.t4Globals.search.facets["Subject"].forEach(subject => {
+				const li = document.createElement('li');
+				li.innerHTML = `<label><input name=customField type=checkbox value="subject=${subject}">${subject}</label>`;
+				el.appendChild(li);
+			});
+		}
+	}
 
 	// This is the core search function that talks to Funnelback
 	const callSearchApi = stir.curry((type, callback) => {

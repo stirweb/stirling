@@ -482,13 +482,10 @@
 												<accordion-summary>Level</accordion-summary>
 												<div>
 													<ul>
-														<li><label><input name="f.Level|level" type="radio"
-																	value="undergraduate"> Undergraduate</label></li>
-														<li><label><input name="f.Level|level" type="radio"
-																	value="postgraduate (taught)"> Postgraduate
-																(taught)</label></li>
-														<li><label><input name="f.Level|level" type="radio"
-																	value="module"> CPD and short courses</label></li>
+														<li><label><input name="customField" type="radio" value="level=undergraduate"> Undergraduate</label></li>
+														<li><label><input name="customField" type="radio" value="level=postgraduate (taught)"> Postgraduate (taught)</label></li>
+														<li><label><input name="customField" type="radio" value="level=postgraduate (research)"> Postgraduate (research)</label></li>
+														<li><label><input name="customField" type="radio"value="level=module"> CPD and short courses</label></li>
 													</ul>
 												</div>
 											</div>
@@ -513,75 +510,33 @@
 												<div>
 
 													<ul id="courseSubjectFilters">
-														<li><label><input name=meta_subject type=checkbox
-																	value="Accounting">Accounting and
-																finance</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Aquaculture">Aquaculture</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Biology">Biology</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Business">Business and
-																management</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Computer">Computer
-																science and software engineering</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Criminology">Criminology</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Data">Data science
-																and
-																data analytics</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Economics">Economics</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="English">English and
-																literature</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Environmental">Environmental
-																science</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Film">Film and media
-																studies</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Geography">Geography</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Health">Health and allied
-																subjects</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="History">History</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Humanities">Humanities</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Journalism">Journalism and
-																publishing</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Languages">Languages and
-																TESOL</label>
-														</li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Law">Law</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Marketing">Marketing and
-																public relations</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Mathematics">Mathematics</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Nursing">Nursing</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Philosophy">Philosophy and
-																religion</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Politics">Politics</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Psychology">Psychology</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Social">Social studies</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Sport">Sport</label></li>
-														<li><label><input name=meta_subject type=checkbox
-																	value="Teaching">Teaching and
-																education</label></li>
+														<!-- <li><label><input name=customField type=checkbox value="subject=Accounting">Accounting and finance</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Aquaculture">Aquaculture</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Biology">Biology</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Business">Business and management</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Computer">Computer science and software engineering</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Criminology">Criminology</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Data">Data science and data analytics</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Economics">Economics</label></li>
+														<li><label><input name=customField type=checkbox value="subject=English">English and literature</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Environmental">Environmental science</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Film">Film and media studies</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Geography">Geography</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Health">Health and allied subjects</label></li>
+														<li><label><input name=customField type=checkbox value="subject=History">History</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Humanities">Humanities</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Journalism">Journalism and publishing</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Languages">Languages and TESOL</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Law">Law</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Marketing">Marketing and public relations</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Mathematics">Mathematics</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Nursing">Nursing</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Philosophy">Philosophy and religion</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Politics">Politics</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Psychology">Psychology</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Social">Social studies</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Sport">Sport</label></li>
+														<li><label><input name=customField type=checkbox value="subject=Teaching">Teaching and education</label></li> -->
 													</ul>
 
 												</div>
@@ -626,18 +581,11 @@
 												<accordion-summary>Faculty</accordion-summary>
 												<div>
 													<ul>
-														<li><label><input name=meta_faculty type=checkbox
-																	value="Arts">Arts and Humanities</label></li>
-														<li><label><input name=meta_faculty type=checkbox
-																	value="Health">Health Sciences and Sport</label>
-														</li>
-														<li><label><input name=meta_faculty type=checkbox
-																	value="Natural">Natural Sciences</label></li>
-														<li><label><input name=meta_faculty type=checkbox
-																	value="Social">Social Sciences</label></li>
-														<li><label><input name=meta_faculty type=checkbox
-																	value="Management">Stirling Management
-																School</label></li>
+														<li><label><input name=customField type=checkbox value="faculty=Arts">Arts and Humanities</label></li>
+														<li><label><input name=customField type=checkbox value="faculty=Health">Health Sciences and Sport</label></li>
+														<li><label><input name=customField type=checkbox value="faculty=Natural">Natural Sciences</label></li>
+														<li><label><input name=customField type=checkbox value="faculty=Social">Social Sciences</label></li>
+														<li><label><input name=customField type=checkbox value="faculty=Management">Stirling Management School</label></li>
 													</ul>
 
 												</div>
