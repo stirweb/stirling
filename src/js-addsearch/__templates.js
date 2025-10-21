@@ -221,6 +221,7 @@ stir.templates.search = (() => {
 	})();
 
 	const facetCategoryLabel = (facet, label) => correctCase(facet, label);
+	const startDateFormatter = date => correctCase("Start date", date);
 	// date labels are handled by `src/js-search/course-start-date.js`
 
 	//	{ return (label.indexOf("ay") === 7 ? readableDate(label.split("ay").shift()) : correctCase(facet, label)); };
@@ -287,18 +288,18 @@ stir.templates.search = (() => {
 		suppressed: (reason) => `<!-- Suppressed search result: ${reason} -->`,
 
 		auto: (item) => {
-//			if (item.liveUrl === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
-//			if (item.metaData.type == "scholarship") return stir.templates.search.scholarship(item);
-//			if (item.metaData.type == "Course" || item.metaData.level) return stir.templates.search.course(item);
-//			if (item.metaData.type == "News") return stir.templates.search.news(item);
-//			if (item.metaData.type == "Gallery") return stir.templates.search.gallery(item);
-//			if (item.metaData.type == "Event") return stir.templates.search.event(item);
+//			if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
+//			if (item.custom_fields.type == "scholarship") return stir.templates.search.scholarship(item);
+//			if (item.custom_fields.type == "Course" || item.custom_fields.level) return stir.templates.search.course(item);
+//			if (item.custom_fields.type == "News") return stir.templates.search.news(item);
+//			if (item.custom_fields.type == "Gallery") return stir.templates.search.gallery(item);
+//			if (item.custom_fields.type == "Event") return stir.templates.search.event(item);
 //			if (item.collection == "stir-events") return stir.templates.search.event(item);
-//			if (item.metaData.access) return stir.templates.search.internal(item);
-//			if (item.metaData.type && item.metaData.type.indexOf("output") > -1) return stir.templates.search.research(item);
-//			if (item.metaData.type && item.metaData.type.indexOf("contract") > -1) return stir.templates.search.research(item);
-//			if (item.metaData.type && item.metaData.type.indexOf("profile") > -1) return stir.templates.search.person(item);
-//			if (item.liveUrl.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
+//			if (item.custom_fields.access) return stir.templates.search.internal(item);
+//			if (item.custom_fields.type && item.custom_fields.type.indexOf("output") > -1) return stir.templates.search.research(item);
+//			if (item.custom_fields.type && item.custom_fields.type.indexOf("contract") > -1) return stir.templates.search.research(item);
+//			if (item.custom_fields.type && item.custom_fields.type.indexOf("profile") > -1) return stir.templates.search.person(item);
+//			if (item.url.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
 //
 			const crumbs = {
 				text: item.categories.slice(1),
@@ -307,45 +308,47 @@ stir.templates.search = (() => {
 //
 			const trail = crumbs.text.map((text, index) => ({ text: text.split("x")[1], href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" }));
 //
-//			const label = item.liveUrl.indexOf("policyblog.stir") > -1 ? `<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>` : "";
+//			const label = item.url.indexOf("policyblog.stir") > -1 ? `<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>` : "";
 //
-//			if (item.metaData.type && item.metaData.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item, trail);
+//			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item, trail);
 
 			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}>
 				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 					${makeBreadcrumbs(trail, item.url,0)}
 					<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
 					<p>${item.meta_description}</p>
+					<p>${item.custom_fields.d||''}</p>
+					<p>${item.custom_fields.sid||''}</p>
 				</div>
 			</div>`;
 
-/* 				<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : ""}${item.metaData.access ? ' data-access="' + item.metaData.access + '"' : ""}>
+/* 				<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.custom_fields.type || isDocUrl(item.url) ? ' data-result-type="' + (item.custom_fields.type || (isDocUrl(item.url) ? "document" : "")).toLowerCase() + '"' : ""}${item.custom_fields.access ? ' data-access="' + item.custom_fields.access + '"' : ""}>
 					<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 						${label}
-						${makeBreadcrumbs(trail, item.liveUrl, item.fileSize)}
+						${makeBreadcrumbs(trail, item.url, item.fileSize)}
 						<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
-						<p>${item.summary.replace(/\xA0/g, " ")}</p>
+						<p>${item.meta_description.replace(/\xA0/g, " ")}</p>
 					</div>
 				</div>
 				 */
 		},
 		internal: (item) => {
 			const crumbs = {
-				text: item.metaData?.breadcrumbs?.split(" > ") || [],
-				href: new URL(item.liveUrl).pathname.split("/").filter((n) => n),
+				text: item.custom_fields?.breadcrumbs?.split(" > ") || [],
+				href: new URL(item.url).pathname.split("/").filter((n) => n),
 			};
 
-			const trail = userAuth(item.metaData.group) ? stir.templates.search.trailstring(crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" })).slice(0, -1)) : `<a href="https://www.stir.ac.uk/${crumbs.href[0]}/">${crumbs.text[0]}</a>`;
+			const trail = userAuth(item.custom_fields.group) ? stir.templates.search.trailstring(crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" })).slice(0, -1)) : `<a href="https://www.stir.ac.uk/${crumbs.href[0]}/">${crumbs.text[0]}</a>`;
 
 			return `
-	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""} data-access="${item.metaData.access}">
+	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.custom_fields.group)}" data-rank=${item.rank}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""} data-access="${item.custom_fields.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="c-search-result__breadcrumb">${trail} ..:: INTERNAL ::..</p>
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
 					.replace(/Current S\S+ ?\| ?/, "")
 					.split(" | ")[0]
 					.trim()}</a></strong></p>
-				${internalSummary(item.summary, item.metaData.group)}
+				${internalSummary(item.meta_description, item.custom_fields.group)}
 			  </div>
 			</div>`;
 		},
@@ -357,7 +360,7 @@ stir.templates.search = (() => {
 		comboCourse: (item) => `<a href="${item.url}">${item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, "")}</a>`,
 
 		clearing: (item) => {
-			if (Object.keys && item.metaData && Object.keys(item.metaData).join().indexOf("clearing") >= 0) {
+			if (Object.keys && item.custom_fields && Object.keys(item.custom_fields).join().indexOf("clearing") >= 0) {
 				return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p>`;
 			}
 		},
@@ -378,8 +381,8 @@ stir.templates.search = (() => {
 		},
 
 		pathways: (item) => {
-			if (!item.metaData.pathways) return "";
-			const paths = item.metaData.pathways.split("|");
+			if (!item.custom_fields.pathways) return "";
+			const paths = item.custom_fields.pathways.split("|");
 			return paths === 0
 				? ""
 				: `
@@ -394,43 +397,42 @@ stir.templates.search = (() => {
 				</div>`;
 		},
 
-		courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace(/\|/g, ", ")}</p></div>` : ""),
+		courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""), //.replace(/\|/g, ", ")
 
 		course: (item) => {
-			return stir.templates.search.auto(item); // 2025-10-10 TEMP
-			return `<div class="c-search-result u-border-width-5 u-heritage-line-left">COURSE RESULT</div>`;
+			//return stir.templates.search.auto(item); // 2025-10-10 TEMP
+			//return `<div class="c-search-result u-border-width-5 u-heritage-line-left">COURSE RESULT</div>`;
 			//      const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 			//      const subjectLink = stir.String.slug(subject);
-			const subject = item.metaData.subject ? item.metaData.subject.split(/,\s?/).slice(0, 1) : "";
-			const isOnline = item.metaData.delivery && item.metaData.delivery.toLowerCase().indexOf("online") > -1 ? true : false;
-			const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.metaData.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
-			item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.metaData.sid : item.liveUrl);
-			//item.combos = stir.courses.showCombosFor(item.metaData.sid); // this is for debugging t4 preview mode
+			//		const subject = typeof item.custom_fields.subject;
+			const isOnline = item.custom_fields.delivery && item.custom_fields.delivery.indexOf("online") > -1 ? true : false;
+			const link = item.url;//UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
+			item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.custom_fields.sid : item.url);
 			return `
-			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.rank} data-sid=${item.metaData.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
+			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.rank} data-sid=${item.custom_fields.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
 				<div class=" c-search-result__tags">
-					<span class="c-search-tag">${courseLabel(item.metaData.level || item.metaData.type || "")}</span>
+					<span class="c-search-tag">${courseLabel(item.custom_fields.level || item.custom_fields.type || "")}</span>
 				</div>
 
 		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
 		  <p class="u-text-regular u-m-0">
-			<strong><a href="${link}" title="${item.liveUrl}">
-			${item.metaData.award || ""} ${item.title}
-			${item.metaData.ucas ? " - " + item.metaData.ucas : ""}
-			${item.metaData.code ? " - " + item.metaData.code : ""}
+			<strong><a href="${link}" title="${item.url}">
+			${item.custom_fields.award || ""} ${item.custom_fields.name || item.title.split("|")[0]}
+			${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""}
+			${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
 			</a></strong>
 		  </p>
-		  <p class="u-m-0 c-course-summary">${item.summary}</p>
+		  <p class="u-m-0 c-course-summary">${item.meta_description}</p>
 		  ${stir.templates.search.clearing(item) || ""}
 		  <div class="c-search-result__meta grid-x">
-			${stir.templates.search.courseFact("Start dates", item.metaData.start, false)}
-			${stir.templates.search.courseFact("Study modes", item.metaData.modes, true)}
-			${stir.templates.search.courseFact("Delivery", item.metaData.delivery, true)}
+			${stir.templates.search.courseFact("Start dates", item.custom_fields.start.map?item.custom_fields.start.map(startDateFormatter).join(", "):startDateFormatter(item.custom_fields.start), false)}
+			${stir.templates.search.courseFact("Study modes", item.custom_fields.mode.join?item.custom_fields.mode.join(", "):item.custom_fields.mode, true)}
+			${stir.templates.search.courseFact("Delivery", item.custom_fields.delivery, true)}
 		  </div>
 		  
 		  <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
 			<div data-nodeid="coursefavsbtn" data-favsurl="/courses/favourites/" class="flex-container u-gap-8" >
-			  ${stir.coursefavs && stir.coursefavs.createCourseBtnHTML(item.metaData.sid, "/courses/favourites/")}
+			  ${stir.coursefavs && stir.coursefavs.createCourseBtnHTML(item.custom_fields.sid, "/courses/favourites/")}
 			</div>
 		  </div>
 		  
@@ -442,10 +444,10 @@ stir.templates.search = (() => {
 
 		coursemini: (item) => `
 			<div>
-				<p><strong><a href="${FB_BASE() + item.clickTrackingUrl}" title="${item.liveUrl}" class="u-border-none">
-					${item.metaData.award || ""} ${item.title} ${item.metaData.ucas ? " - " + item.metaData.ucas : ""} ${item.metaData.code ? " - " + item.metaData.code : ""}
+				<p><strong><a href="${FB_BASE() + item.clickTrackingUrl}" title="${item.url}" class="u-border-none">
+					${item.custom_fields.award || ""} ${item.title} ${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""} ${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
 				</a></strong></p>
-				<p>${item.summary}</p>
+				<p>${item.meta_description}</p>
 			</div>`,
 
 		courseminiFooter: (
@@ -475,19 +477,19 @@ stir.templates.search = (() => {
 			return `
 			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=person>
 				<div class=c-search-result__tags>
-					${/*stir.templates.search.stag(item.metaData.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.metaData.faculty) : "")*/''}
+					${/*stir.templates.search.stag(item.custom_fields.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.custom_fields.faculty) : "")*/''}
 				</div>
 				<div class="flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0"><strong>
 						<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
 					</strong></p>
-					<div>${item?.metaData?.role || "<!-- Job title -->"}<br>${item?.metaData?.faculty || ""}</div>
-					<!-- <p>${item?.metaData?.c ? (item?.metaData?.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
+					<div>${item?.custom_fields?.role || "<!-- Job title -->"}<br>${item?.custom_fields?.faculty || ""}</div>
+					<!-- <p>${item?.custom_fields?.c ? (item?.custom_fields?.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
 				</div>
 				${image(`data:image/jpeg;base64,${item.images.main_b64}`, item.title.split(" | ")[0].trim(), 400, 400)}
 				<div class=c-search-result__footer>
-					${stir.funnelback.getTags(item?.metaData?.category) ? "<p><strong>Research interests</strong></p>" : ""}
-					<p>${stir.funnelback.getTags(item?.metaData?.category) || ""}</p>
+					${stir.funnelback.getTags(item?.custom_fields?.category) ? "<p><strong>Research interests</strong></p>" : ""}
+					<p>${stir.funnelback.getTags(item?.custom_fields?.category) || ""}</p>
 				</div>
 			</div>`;
 		},
@@ -495,15 +497,15 @@ stir.templates.search = (() => {
 			return `
 		<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=scholarship data-rank=${item.rank}>
 			<div class=c-search-result__tags>
-				${stir.templates.search.stag(item.metaData.level ? `Scholarship: ${item.metaData.level.toLowerCase()}` : "")}
+				${stir.templates.search.stag(item.custom_fields.level ? `Scholarship: ${item.custom_fields.level.toLowerCase()}` : "")}
 			</div>
 			<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
-				<p>${item.summary.replace(/\xA0/g, " ")}</p>
+				<p>${item.meta_description.replace(/\xA0/g, " ")}</p>
 				<div class="c-search-result__meta grid-x">
-					${stir.templates.search.courseFact("Value", item.metaData.value, false)}
-					${stir.templates.search.courseFact("Number of awards", item.metaData.number, false)}
-					${stir.templates.search.courseFact("Fee status", item.metaData.status, false)}
+					${stir.templates.search.courseFact("Value", item.custom_fields.value, false)}
+					${stir.templates.search.courseFact("Number of awards", item.custom_fields.number, false)}
+					${stir.templates.search.courseFact("Fee status", item.custom_fields.status, false)}
 				</div>
 			</div>
 		</div>`;
@@ -518,12 +520,12 @@ stir.templates.search = (() => {
 							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
 						</strong></p>
 						<p class="u-m-0">
-						${item.metaData.profileCourse1 ? item.metaData.profileCourse1 + "<br />" : ""}
-						${item.metaData.profileCountry ? item.metaData.profileCountry : ""}
+						${item.custom_fields.profileCourse1 ? item.custom_fields.profileCourse1 + "<br />" : ""}
+						${item.custom_fields.profileCountry ? item.custom_fields.profileCountry : ""}
 						</p>
-						<p>${item.metaData.profileSnippet ? "<q>" + item.metaData.profileSnippet + "</q>" : "<!-- 28d3702e2064f72d5dfcba865e3cc5d5 -->"}</p>
+						<p>${item.custom_fields.profileSnippet ? "<q>" + item.custom_fields.profileSnippet + "</q>" : "<!-- 28d3702e2064f72d5dfcba865e3cc5d5 -->"}</p>
 					</div>
-					${item.metaData.profileImage ? image("https://www.stir.ac.uk" + item.metaData.profileImage, item.title.split(" | ")[0].trim(), 400, 400) : ""}
+					${item.custom_fields.profileImage ? image("https://www.stir.ac.uk" + item.custom_fields.profileImage, item.title.split(" | ")[0].trim(), 400, 400) : ""}
 				</div>`;
 		},
 
@@ -546,8 +548,8 @@ stir.templates.search = (() => {
 					</div>
 				</div>`;
 				/* <!-- <p>
-							${item.listMetadata && item.listMetadata.tag ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"></path></svg>` : ""}
-							${(item.listMetadata && item.listMetadata.tag && item.listMetadata.tag.map((tag) => `<span>${tag}</span>`).join(", ")) || ""}
+							${item.listcustom_fields && item.listcustom_fields.tag ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"></path></svg>` : ""}
+							${(item.listcustom_fields && item.listcustom_fields.tag && item.listcustom_fields.tag.map((tag) => `<span>${tag}</span>`).join(", ")) || ""}
 						</p> --> */
 		},
 
@@ -557,14 +559,14 @@ stir.templates.search = (() => {
 					
 					<div class=c-search-result__body>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.metaData.h1 || item.title.split(" | ")[0].trim()}</a>
+							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.custom_fields.h1 || item.title.split(" | ")[0].trim()}</a>
 						</strong></p>
-						<p class="c-search-result__secondary">${stir.Date.newsDate(new Date(item.metaData.d))}</p>
-						<p >${item.summary}</p>	
+						<p class="c-search-result__secondary">${stir.Date.newsDate(new Date(item.custom_fields.d))}</p>
+						<p >${item.meta_description}</p>	
 					</div>
 					<div class=c-search-result__image>
 						${stir.funnelback.getCroppedImageElement({
-				url: flickrUrl(JSON.parse(item.metaData.custom)),
+				url: flickrUrl(JSON.parse(item.custom_fields.custom)),
 				alt: `Image of ${item.title.split(" | ")[0].trim()}`,
 				width: 550,
 				height: 550,
@@ -577,15 +579,15 @@ stir.templates.search = (() => {
 
 			return stir.templates.search.auto(item); // 2025-10-06 TEMP
 
-			const isWebinar = item.metaData?.tags?.indexOf("Webinar") > -1;
-			const hasThumbnail = item.metaData?.image || isWebinar;
+			const isWebinar = item.custom_fields?.tags?.indexOf("Webinar") > -1;
+			const hasThumbnail = item.custom_fields?.image || isWebinar;
 			const title = item.title.split(" | ")[0];
-			const url = item.collection == "stir-events" ? (item.metaData.page ? item.metaData.page : item.metaData.register ? item.metaData.register : "#") : FB_BASE() + item.clickTrackingUrl;
+			const url = item.collection == "stir-events" ? (item.custom_fields.page ? item.custom_fields.page : item.custom_fields.register ? item.custom_fields.register : "#") : FB_BASE() + item.clickTrackingUrl;
 
 			return `
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
 				<div class=c-search-result__tags>
-					${item.metaData?.tags ? item.metaData.tags.split(",").map(stir.templates.search.stag).join("") : ""}
+					${item.custom_fields?.tags ? item.custom_fields.tags.split(",").map(stir.templates.search.stag).join("") : ""}
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
@@ -594,28 +596,28 @@ stir.templates.search = (() => {
 					<div class="flex-container flex-dir-column u-gap-8">
 						<div class="flex-container u-gap-16 align-middle">
 							<span class="u-icon h5 uos-calendar"></span>
-							<span>${datespan(item.metaData.startDate, item.metaData.d)}</span>
+							<span>${datespan(item.custom_fields.startDate, item.custom_fields.d)}</span>
 						</div>
 						<div class="flex-container u-gap-16 align-middle">
 							<span class="uos-clock u-icon h5"></span>
-							<span>${timespan(item.metaData.startDate, item.metaData.d)}</span>
+							<span>${timespan(item.custom_fields.startDate, item.custom_fields.d)}</span>
 						</div>
 						<div class="flex-container u-gap-16 align-middle">
-							<span class="u-icon h5 uos-${item.metaData.online ? "web" : "location"}"></span>
-							<span>${item.metaData.online ? "Online" : item.metaData.venue ? item.metaData.venue : ""}</span>
+							<span class="u-icon h5 uos-${item.custom_fields.online ? "web" : "location"}"></span>
+							<span>${item.custom_fields.online ? "Online" : item.custom_fields.venue ? item.custom_fields.venue : ""}</span>
 						</div>
 					</div>
-					<p class=text-sm>${item.summary}</p>
-					${item.metaData.register ? `<p class="u-m-0 text-sm"><a href="${item.metaData.register}" class="u-m-0 button hollow tiny">Register now</a></p>` : ""}
+					<p class=text-sm>${item.meta_description}</p>
+					${item.custom_fields.register ? `<p class="u-m-0 text-sm"><a href="${item.custom_fields.register}" class="u-m-0 button hollow tiny">Register now</a></p>` : ""}
 				</div>
-				${image(item.metaData.image && item.metaData.image.split("|")[0], item.title.split(" | ")[0])}
-				${item.metaData?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
+				${image(item.custom_fields.image && item.custom_fields.image.split("|")[0], item.title.split(" | ")[0])}
+				${item.custom_fields?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
 			</div>`;
 		},
 
 		research: (item) => stir.templates.search.auto(item), // 2025-10-10 TEMP
 
-			/* `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""}>
+			/* `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""}>
 				<div>
 					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
 					<div class="flex-container flex-dir-column u-gap u-mt-1">
@@ -624,8 +626,8 @@ stir.templates.search = (() => {
 								${item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title}
 							</a>
 						</strong></p>
-						${stir.String.stripHtml(item.metaData.c || "") ? `<div class="text-sm">` + stir.String.stripHtml(item.metaData.c || "") + `</div>` : ""}
-						${stir.funnelback.getTags(item.metaData.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.metaData.category) + `</div>` : ""}
+						${stir.String.stripHtml(item.custom_fields.c || "") ? `<div class="text-sm">` + stir.String.stripHtml(item.custom_fields.c || "") + `</div>` : ""}
+						${stir.funnelback.getTags(item.custom_fields.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.custom_fields.category) + `</div>` : ""}
 					</div>
 				</div>
 			</div>`, */

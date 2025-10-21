@@ -138,13 +138,25 @@ stir.search = () => {
 		input: document.querySelector('form.x-search-redevelopment input[name="term"]'),
 		parameters: {
 			any: {
-				term: "University+of+Stirling",
+				term: "*",
+/* 				filter: JSON.stringify({
+					range: {
+						"custom_fields.sid": {
+							gt: 500,
+							lt: 10000
+						}
+					}
+				}), */
 			},
 			news: {
 				customField: "type=news"
 			},
 			event: {
-				customField: "type=event"
+				filter: JSON.stringify({
+					and: [
+						{"custom_fields.type": "event"}
+					]
+				})
 			},
 			gallery: {
 				customField: "type=gallery"
@@ -234,7 +246,6 @@ stir.search = () => {
 	const getFormData = (type) => {
 		const form = document.querySelector(".c-search-results-area form[data-filters=" + type + "]");
 		let a = form ? new FormData(form) : new FormData();
-		console.info("[Search] FormData:",a);
 
 		for (var key of a.keys()) {
 			if (key.indexOf("f.") === 0) continue; //ignore any facets
@@ -390,11 +401,33 @@ stir.search = () => {
 
 	// +++ COURSE - subject filter +++
 	{
-		const el = document.getElementById('courseSubjectFilters');
+		let el = document.getElementById('courseSubjectFilters');
 		if (el && stir.t4Globals.search.facets["Subject"]) {
 			stir.t4Globals.search.facets["Subject"].forEach(subject => {
 				const li = document.createElement('li');
 				li.innerHTML = `<label><input name=customField type=checkbox value="subject=${subject}">${subject}</label>`;
+				el.appendChild(li);
+			});
+		}
+		
+		el = document.querySelector('[data-facet="Faculty"] ul');
+		if (el && stir.t4Globals.search.facets["Faculty"]) {
+			el.innerHTML = '';
+			let faculties = stir.t4Globals.search.facets["Faculty"]
+			Object.keys(faculties).forEach(faculty => {
+				const li = document.createElement('li');
+				li.innerHTML = `<label><input name=customField type=checkbox value="faculty=${faculties[faculty]}">${faculties[faculty]}</label>`;
+				el.appendChild(li);
+			});
+		}
+
+		el = document.querySelector('[data-facet="Start date"] ul');
+		if (el && stir.t4Globals.search.facets["Start date"]) {
+			el.innerHTML = '';
+			let dates = stir.t4Globals.search.facets["Start date"]
+			Object.keys(dates).forEach(date => {
+				const li = document.createElement('li');
+				li.innerHTML = `<label><input name=customField type=checkbox value="start=${date}">${dates[date]}</label>`;
 				el.appendChild(li);
 			});
 		}
@@ -423,7 +456,7 @@ stir.search = () => {
 		const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
 		console.info("[Search] Type",type);
 		console.info("[Search] Query",getQuery(type));
-		console.info("[Search] URL",url);
+		console.info("[Search] URL",url.href);
 		//debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
 		stir.getJSON(url, callback);
 	});

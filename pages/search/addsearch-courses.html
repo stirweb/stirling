@@ -47,17 +47,6 @@
 	<link rel="preload" href="../../../medias/Categorised/Dist/css/app.min.css?v=394.1" as="style">
 	<link rel="stylesheet" href="../../../medias/Categorised/Dist/css/app.min.css?v=394.1">
 
-
-	<script>
-		(function (w, d, s, l, i) {
-			w[l] = w[l] || []; w[l].push({
-				'gtm.start':
-					new Date().getTime(), event: 'gtm.js'
-			}); var f = d.getElementsByTagName(s)[0],
-				j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-					'https://load.collect.stir.ac.uk/qguyvksw.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-		})(window, document, 'script', 'dataLayer', 'GTM-NLVN8V');
-	</script>
 </head>
 
 <body class="external-pages">
@@ -549,10 +538,8 @@
 												<accordion-summary>Study mode</accordion-summary>
 												<div>
 													<ul>
-														<li><label><input name=meta_modes type=checkbox value=full>Full
-																time</label></li>
-														<li><label><input name=meta_modes type=checkbox value=part>Part
-																time</label></li>
+														<li><label><input name=customField type=checkbox value="mode=full time">Full time</label></li>
+														<li><label><input name=customField type=checkbox value="mode=part time">Part time</label></li>
 													</ul>
 												</div>
 											</div>
@@ -564,12 +551,10 @@
 												<accordion-summary>Delivery</accordion-summary>
 												<div>
 													<ul>
-														<li><label><input name=meta_delivery type=checkbox
-																	value=campus>On campus</label></li>
-														<li><label><input name=meta_delivery type=checkbox
-																	value=online>Online</label></li>
-														<li><label><input name=meta_delivery type=checkbox
-																	value=hybrid>Hybrid</label></li>
+														<li><label><input name=customField type=checkbox value="delivery=on campus">On campus</label></li>
+														<li><label><input name=customField type=checkbox value="delivery=online">Online</label></li>
+														<li><label><input name=customField type=checkbox value="delivery=hybrid">Hybrid</label></li>
+														<li><label><input name=customField type=checkbox value="delivery=blended">Blended</label></li>
 													</ul>
 												</div>
 											</div>
@@ -842,11 +827,6 @@
 			</svg>
 		</a>
 
-		<!-- Google Tag Manager (noscript) -->
-		<noscript><iframe src=https://load.collect.stir.ac.uk/ns.html?id=GTM-NLVN8V height="0" width="0"
-				style="display:none;visibility:hidden"></iframe></noscript>
-		<!-- End Google Tag Manager (noscript) -->
-
 	</footer>
 	<!--endnoindex-->
 
@@ -861,7 +841,100 @@
 	<script>
 		var stir = stir || {}; stir.t4Globals = stir.t4Globals || {};
 		stir.t4Globals.search = { combos: '/media/stirling/feeds/combo.json' };
-		stir.t4Globals.search.facets = { "Level": { "undergraduate": "Undergraduate", "postgraduate (taught)": "Postgraduate taught", "postgraduate (research)": "Postgraduate research", "module": "CPD and short courses" }, "Delivery mode": { "blended": "Blended", "on campus": "On campus", "online": "Online" }, "Study mode": { "full time": "Full time", "part time": "Part time", "discontinuous": "Discontinuous" }, "Faculty": { "faculty of arts and humanities": "Faculty of Arts and Humanities", "faculty of health sciences and sport": "Faculty of Health Sciences and Sport", "faculty of natural sciences": "Faculty of Natural Sciences", "faculty of social sciences": "Faculty of Social Sciences", "stirling business school": "Stirling Business School", "accounting & finance": "Accounting and Finance", "administration": "Administration", "ah management and support team": "Arts and Humanities (Management and Support)", "biological and environmental sciences": "Biological and Environmental Sciences", "checr": "CHeCR", "communications, media and culture": "Communications, Media and Culture", "computing science": "Computing Science", "computing science and mathematics - division": "Computing Science and Mathematics", "dementia and ageing": "Dementia and Ageing", "dementia services development centre": "Dementia Services Development Centre", "economics": "Economics", "education": "Education", "english studies": "English Studies", "fhss management and support": "Faculty of Health Sciences and Sport (Management and Support)", "french": "French", "health sciences (highland & w.isles)": "Health Sciences (Highland & Western Isles)", "health sciences highland": "Health Sciences (Highland)", "health sciences stirling": "Health Sciences (Stirling)", "history": "History", "history and politics - division": "History and Politics", "housing studies": "Housing Studies", "institute for social marketing": "Institute for Social Marketing", "institute of aquaculture": "Institute of Aquaculture", "law": "Law", "law and philosophy - division": "Law and Philosophy", "library and archives research support": "Library and Archives Research Support", "literature and languages - division": "Literature and Languages", "machrihanish": "Machrihanish", "management, work and organisation": "Management, Work and Organisation", "marketing & retail": "Marketing and Retail", "mathematics": "Mathematics", "nmahp": "NMAHP", "ns management and support": "Natural Sciences (Management and Support)", "philosophy": "Philosophy", "politics": "Politics", "psychology": "Psychology", "religion": "Religion", "sbs management and support": "Stirling Business School (Management and Support)", "scotland's international environment centre": "Scotland's International Environment Centre", "social work": "Social Work", "sociology, social policy & criminology": "Sociology, Social Policy and Criminology", "spanish": "Spanish", "sport": "Sport", "university of stirling": "University of Stirling" }, "Subject": ["Accounting and finance", "Aquaculture", "Biology", "Business and management", "Computer science and software engineering", "Criminology", "Data science and data analytics", "Economics", "English and literature", "Environmental science", "Film and media studies", "Geography", "Health and allied subjects", "History", "Humanities", "Journalism and publishing", "Languages and TESOL", "Law", "Marketing and public relations", "Mathematics", "Nursing", "Philosophy and religion", "Politics", "Psychology", "Social studies", "Sport", "Teaching and education"], "Clearing": { "scotland": "Scotland and EU", "rukroi": "England, Wales, Northern Ireland and the Republic of Ireland", "international": "International", "simd": "SIMD" }, "Topic": { "ageing-dementia": "Ageing and dementia", "alumni": "Alumni", "aqua-food": "Aquaculture, food and farming", "art-collection": "Art Collection", "arts-archives": "Arts and archives", "business-economics": "Business and economics", "covid-19": "COVID-19", "education": "Education", "environment": "Environment, climate change and wildlife", "graduation": "Graduation", "health": "Health", "history": "History", "history-heritage": "History and heritage", "institute-aquaculture": "Institute of Aquaculture", "internal-students": "Internal students", "policy-hub": "Policy Hub", "politics-policy": "Politics, policy and society", "ref-2029": "REF 2029", "research": "Research", "sports": "Sports", "sports-centre": "Sports Centre", "technology": "Technology", "water-quality": "Water quality" } };
+		stir.t4Globals.search.facets = {
+    "Level": {
+        "undergraduate": "Undergraduate",
+        "postgraduate (taught)": "Postgraduate taught",
+        "postgraduate (research)": "Postgraduate research",
+        "module": "CPD and short courses"
+    },
+    "Delivery mode": {
+        "blended": "Blended",
+        "on campus": "On campus",
+        "online": "Online"
+    },
+    "Study mode": {
+        "full time": "Full time",
+        "part time": "Part time",
+        "discontinuous": "Discontinuous"
+    },
+    "Faculty": {
+        "faculty of arts and humanities": "Faculty of Arts and Humanities",
+        "faculty of health sciences and sport": "Faculty of Health Sciences and Sport",
+        "faculty of natural sciences": "Faculty of Natural Sciences",
+        "faculty of social sciences": "Faculty of Social Sciences",
+        "stirling business school": "Stirling Business School"
+    },
+	"Start date": {
+		"2025-10AY2025-26": "October 2025",
+		"2026-01AY2025-26": "January 2026",
+		"2026-06AY2025-26": "June 2026",
+		"2026-08AY2026-27": "August 2026",
+		"2026-09AY2026-27": "September 2026",
+		"2026-10AY2026-27": "October 2026",
+		"2027-01AY2026-27": "January 2027"
+	},
+    "Subject": [
+        "Accounting and finance",
+        "Aquaculture",
+        "Biology",
+        "Business and management",
+        "Computer science and software engineering",
+        "Criminology",
+        "Data science and data analytics",
+        "Economics",
+        "English and literature",
+        "Environmental science",
+        "Film and media studies",
+        "Geography",
+        "Health and allied subjects",
+        "History",
+        "Humanities",
+        "Journalism and publishing",
+        "Languages and TESOL",
+        "Law",
+        "Marketing and public relations",
+        "Mathematics",
+        "Nursing",
+        "Philosophy and religion",
+        "Politics",
+        "Psychology",
+        "Social studies",
+        "Sport",
+        "Teaching and education"
+    ],
+    "Clearing": {
+        "scotland": "Scotland and EU",
+        "rukroi": "England, Wales, Northern Ireland and the Republic of Ireland",
+        "international": "International",
+        "simd": "SIMD"
+    },
+    "Topic": {
+        "ageing-dementia": "Ageing and dementia",
+        "alumni": "Alumni",
+        "aqua-food": "Aquaculture, food and farming",
+        "art-collection": "Art Collection",
+        "arts-archives": "Arts and archives",
+        "business-economics": "Business and economics",
+        "covid-19": "COVID-19",
+        "education": "Education",
+        "environment": "Environment, climate change and wildlife",
+        "graduation": "Graduation",
+        "health": "Health",
+        "history": "History",
+        "history-heritage": "History and heritage",
+        "institute-aquaculture": "Institute of Aquaculture",
+        "internal-students": "Internal students",
+        "policy-hub": "Policy Hub",
+        "politics-policy": "Politics, policy and society",
+        "ref-2029": "REF 2029",
+        "research": "Research",
+        "sports": "Sports",
+        "sports-centre": "Sports Centre",
+        "technology": "Technology",
+        "water-quality": "Water quality"
+    }
+};
 	</script>
 	<script type="text/javascript" src="../../../medias/Categorised/Dist/js/addsearch/search-min.js?v=77.1"></script>
 	<script>
