@@ -1276,7 +1276,8 @@ stir.search = () => {
 				}), */
 			},
 			news: {
-				customField: "type=news"
+				customField: "type=news",
+				sort: "custom_fields.d",
 			},
 			event: {
 				filter: JSON.stringify({
@@ -1597,6 +1598,28 @@ stir.search = () => {
 				el.appendChild(li);
 			});
 		}
+
+		el = document.querySelector('[data-facet="Topic"] ul');
+		if (el && stir.t4Globals.search.facets["Topic"]) {
+			el.innerHTML = '';
+			let dates = stir.t4Globals.search.facets["Topic"]
+			Object.keys(dates).forEach(date => {
+				const li = document.createElement('li');
+				li.innerHTML = `<label><input name=customField type=checkbox value="tag=${date}">${dates[date]}</label>`;
+				el.appendChild(li);
+			});
+		}
+
+		el = document.querySelector('[data-facet="SDGs"] ul');
+		if (el && stir.t4Globals.search.facets["SDGs"]) {
+			el.innerHTML = '';
+			let dates = stir.t4Globals.search.facets["SDGs"]
+			Object.keys(dates).forEach(date => {
+				const li = document.createElement('li');
+				li.innerHTML = `<label><input name=customField type=checkbox value="sdg=${dates[date]}">${dates[date]}</label>`;
+				el.appendChild(li);
+			});
+		}
 	}
 
 	// This is the core search function that talks to Funnelback
@@ -1662,6 +1685,7 @@ stir.search = () => {
 	};
 
 	const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
+	//console.info("searches",searches);
 
 	// group the curried search functions so we can easily refer to them by `type`
 	const searchers = {
