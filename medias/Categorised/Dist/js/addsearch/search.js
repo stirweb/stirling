@@ -594,17 +594,18 @@ stir.templates.search = (() => {
 
 		event: (item) => {
 
-			return stir.templates.search.auto(item); // 2025-10-06 TEMP
 
 			const isWebinar = item.custom_fields?.tags?.indexOf("Webinar") > -1;
 			const hasThumbnail = item.custom_fields?.image || isWebinar;
-			const title = item.title.split(" | ")[0];
-			const url = item.collection == "stir-events" ? (item.custom_fields.page ? item.custom_fields.page : item.custom_fields.register ? item.custom_fields.register : "#") : FB_BASE() + item.clickTrackingUrl;
+			const title = item.custom_fields.name || item.title.split("|")[0].trim();
+			const url = item.url //item.collection == "stir-events" ? (item.custom_fields.page ? item.custom_fields.page : item.custom_fields.register ? item.custom_fields.register : "#") : FB_BASE() + item.clickTrackingUrl;
+			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : {};
+			console.info("barry", data);
 
 			return `
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
 				<div class=c-search-result__tags>
-					${item.custom_fields?.tags ? item.custom_fields.tags.split(",").map(stir.templates.search.stag).join("") : ""}
+					${data.isSeriesChild ? stir.templates.search.stag(data.isSeriesChild) : ""}
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
@@ -613,22 +614,23 @@ stir.templates.search = (() => {
 					<div class="flex-container flex-dir-column u-gap-8">
 						<div class="flex-container u-gap-16 align-middle">
 							<span class="u-icon h5 uos-calendar"></span>
-							<span>${datespan(item.custom_fields.startDate, item.custom_fields.d)}</span>
+							<span>${datespan(item.custom_fields.d, item.custom_fields.e)}</span>
 						</div>
 						<div class="flex-container u-gap-16 align-middle">
 							<span class="uos-clock u-icon h5"></span>
-							<span>${timespan(item.custom_fields.startDate, item.custom_fields.d)}</span>
+							<span>${timespan(item.custom_fields.d, item.custom_fields.e)}</span>
 						</div>
 						<div class="flex-container u-gap-16 align-middle">
 							<span class="u-icon h5 uos-${item.custom_fields.online ? "web" : "location"}"></span>
-							<span>${item.custom_fields.online ? "Online" : item.custom_fields.venue ? item.custom_fields.venue : ""}</span>
+							<span>${data.online ? "Online" : data.location ? data.location : ""}</span>
 						</div>
 					</div>
-					<p class=text-sm>${item.meta_description}</p>
-					${item.custom_fields.register ? `<p class="u-m-0 text-sm"><a href="${item.custom_fields.register}" class="u-m-0 button hollow tiny">Register now</a></p>` : ""}
+					<p class=text-sm>${item.meta_description||"DEBUG: No Description"}</p>
+					${data.register ? `<p class="u-m-0 text-sm"><a href="${data.register}" class="u-m-0 button hollow tiny">Register now</a></p>` : ""}
 				</div>
 				${image(item.custom_fields.image && item.custom_fields.image.split("|")[0], item.title.split(" | ")[0])}
 				${item.custom_fields?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
+				<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre></details>
 			</div>`;
 		},
 
@@ -1279,7 +1281,46 @@ stir.search = () => {
 			event: {
 				filter: JSON.stringify({
 					and: [
-						{"custom_fields.type": "event"}
+						{ "custom_fields.type": "event" },
+						{
+							or: [
+								{
+									/* START this week */
+									range: {
+										"custom_fields.e": {
+											gt: "2025-10-19",
+											lt: "2025-10-27"
+										}
+									}
+								}, {
+									/* OR END this week */
+									range: {
+										"custom_fields.d": {
+											gt: "2025-10-19",
+											lt: "2025-10-27"
+										}
+									}
+								}, {
+									/* OR they START before AND END after this week */
+									and: [
+										{
+											range: {
+												"custom_fields.d": {
+													lt: "2025-10-19"
+												}
+											}
+										},
+										{
+											range: {
+												"custom_fields.e": {
+													gt: "2025-10-27"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
 					]
 				})
 			},

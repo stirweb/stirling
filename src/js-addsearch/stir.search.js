@@ -154,7 +154,46 @@ stir.search = () => {
 			event: {
 				filter: JSON.stringify({
 					and: [
-						{"custom_fields.type": "event"}
+						{ "custom_fields.type": "event" },
+						{
+							or: [
+								{
+									/* START this week */
+									range: {
+										"custom_fields.e": {
+											gt: "2025-10-19",
+											lt: "2025-10-27"
+										}
+									}
+								}, {
+									/* OR END this week */
+									range: {
+										"custom_fields.d": {
+											gt: "2025-10-19",
+											lt: "2025-10-27"
+										}
+									}
+								}, {
+									/* OR they START before AND END after this week */
+									and: [
+										{
+											range: {
+												"custom_fields.d": {
+													lt: "2025-10-19"
+												}
+											}
+										},
+										{
+											range: {
+												"custom_fields.e": {
+													gt: "2025-10-27"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
 					]
 				})
 			},
