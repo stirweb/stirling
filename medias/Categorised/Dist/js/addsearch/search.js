@@ -270,25 +270,58 @@ stir.templates.search = (() => {
 		},
 
 		summary: (data) => {
+			const currEnd = 1 + (data.page * data.hits);
+			const currStart = currEnd - data.hits;
+			const totalMatching = data.total_hits;
 			const summary = document.createElement("div");
+			summary.classList.add("u-py-2");
 			//const { currEnd, totalMatching, currStart } = data.response.resultPacket.resultsSummary;
-			//const querySanitised =
-			//  stir.String.htmlEntities(data.question.originalQuery)
-			//    .replace(/^!padrenullquery$/, "")
-			//    .trim() || "";
-			//const queryEcho = document.createElement("em");
-			//const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
+			const querySanitised = stir.String.htmlEntities("Example query apples fred ninja")
+									.replace(/^!padrenullquery$/, "")
+									.replace(/^\*$/, "")
+									.trim() || "";
+			const queryEcho = document.createElement("em");
+			const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
 			//const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
 			//const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
 			//const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
 
-			//queryEcho.textContent = querySanitised;
-			//if (querySanitised.length > 1) message.append(queryEcho);
-			summary.classList.add("u-py-2");
+			queryEcho.textContent = querySanitised;
+			if (querySanitised.length > 1) message.append(queryEcho);
+
 			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
-			//summary.append(message);
+			
 			//summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
-			if(data) summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, processing_time_ms: ${data.processing_time_ms}, hits: ${data.hits.length}, facets: ${JSON.stringify(data.facets,null,"\t")}, fieldStats: ${data.fieldStats}, rangeFacets: ${data.rangeFacets}, hierarchicalFacets: ${data.hierarchicalFacets}</p>`;
+			
+			/*
+			$$$$$$$\   $$$$$$\        $$\   $$\  $$$$$$\ $$$$$$$$\       $$\   $$\  $$$$$$\  $$$$$$$$\     
+			$$  __$$\ $$  __$$\       $$$\  $$ |$$  __$$\\__$$  __|      $$ |  $$ |$$  __$$\ $$  _____|    
+			$$ |  $$ |$$ /  $$ |      $$$$\ $$ |$$ /  $$ |  $$ |         $$ |  $$ |$$ /  \__|$$ |          
+			$$ |  $$ |$$ |  $$ |      $$ $$\$$ |$$ |  $$ |  $$ |         $$ |  $$ |\$$$$$$\  $$$$$\        
+			$$ |  $$ |$$ |  $$ |      $$ \$$$$ |$$ |  $$ |  $$ |         $$ |  $$ | \____$$\ $$  __|       
+			$$ |  $$ |$$ |  $$ |      $$ |\$$$ |$$ |  $$ |  $$ |         $$ |  $$ |$$\   $$ |$$ |          
+			$$$$$$$  | $$$$$$  |      $$ | \$$ | $$$$$$  |  $$ |         \$$$$$$  |\$$$$$$  |$$$$$$$$\     
+			\_______/  \______/       \__|  \__| \______/   \__|          \______/  \______/ \________|    
+																										   
+																										   
+																										   
+			$$$$$$\ $$\   $$\ $$\   $$\ $$$$$$$$\ $$$$$$$\  $$\   $$\ $$$$$$$$\ $$\      $$\ $$\       $$\ 
+			\_$$  _|$$$\  $$ |$$$\  $$ |$$  _____|$$  __$$\ $$ |  $$ |\__$$  __|$$$\    $$$ |$$ |      $$ |
+			  $$ |  $$$$\ $$ |$$$$\ $$ |$$ |      $$ |  $$ |$$ |  $$ |   $$ |   $$$$\  $$$$ |$$ |      $$ |
+			  $$ |  $$ $$\$$ |$$ $$\$$ |$$$$$\    $$$$$$$  |$$$$$$$$ |   $$ |   $$\$$\$$ $$ |$$ |      $$ |
+			  $$ |  $$ \$$$$ |$$ \$$$$ |$$  __|   $$  __$$< $$  __$$ |   $$ |   $$ \$$$  $$ |$$ |      \__|
+			  $$ |  $$ |\$$$ |$$ |\$$$ |$$ |      $$ |  $$ |$$ |  $$ |   $$ |   $$ |\$  /$$ |$$ |          
+			$$$$$$\ $$ | \$$ |$$ | \$$ |$$$$$$$$\ $$ |  $$ |$$ |  $$ |   $$ |   $$ | \_/ $$ |$$$$$$$$\ $$\ 
+			\______|\__|  \__|\__|  \__|\________|\__|  \__|\__|  \__|   \__|   \__|     \__|\________|\__|
+			*/
+			
+			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
+			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
+			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
+
+			if (data) {summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, hits: ${data.hits.length}</p><details><summary>JSON data</summary><pre>${JSON.stringify(data,null,"\t")}</pre></details>`;}
+			summary.append(message);
+			
 			return summary;
 		},
 		pagination: (summary) => {
@@ -413,6 +446,34 @@ stir.templates.search = (() => {
 					</div>
 				</div>`;
 		},
+		
+		facts: (item) => {
+			let facthtml = [];
+			if(item.custom_fields.start) {
+				if (item.custom_fields.start.map) {
+					facthtml.push(stir.templates.search.courseFact("Start dates", item.custom_fields.start.map(startDateFormatter).join(", "), false));
+				} else {
+					facthtml.push(stir.templates.search.courseFact("Start dates", startDateFormatter(item.custom_fields.start), false));
+				}
+			}
+			if(item.custom_fields.mode) {
+				if(item.custom_fields.mode.join) {
+					facthtml.push(stir.templates.search.courseFact("Study modes", item.custom_fields.mode.join(", "), true));
+				} else {
+					facthtml.push(stir.templates.search.courseFact("Study modes", item.custom_fields.mode, true));
+				}
+			}
+
+			if(item.custom_fields.delivery) {
+				if(item.custom_fields.delivery.join) {
+					facthtml.push(stir.templates.search.courseFact("Delivery", item.custom_fields.delivery.join(", "), true));
+				} else {
+					facthtml.push(stir.templates.search.courseFact("Delivery", item.custom_fields.delivery, true));
+				}
+			}
+						
+			return `<div class="c-search-result__meta grid-x">${facthtml.join("")}</div>`;
+		},
 
 		courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""), //.replace(/\|/g, ", ")
 
@@ -441,12 +502,7 @@ stir.templates.search = (() => {
 		  </p>
 		  <p class="u-m-0 c-course-summary">${item.meta_description}</p>
 		  ${stir.templates.search.clearing(item) || ""}
-		  <div class="c-search-result__meta grid-x">
-			${stir.templates.search.courseFact("Start dates", item.custom_fields.start.map?item.custom_fields.start.map(startDateFormatter).join(", "):startDateFormatter(item.custom_fields.start), false)}
-			${stir.templates.search.courseFact("Study modes", item.custom_fields.mode.join?item.custom_fields.mode.join(", "):item.custom_fields.mode, true)}
-			${stir.templates.search.courseFact("Delivery", item.custom_fields.delivery, true)}
-		  </div>
-		  
+		  ${stir.templates.search.facts(item) || ""}
 		  <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
 			<div data-nodeid="coursefavsbtn" data-favsurl="/courses/favourites/" class="flex-container u-gap-8" >
 			  ${stir.coursefavs && stir.coursefavs.createCourseBtnHTML(item.custom_fields.sid, "/courses/favourites/")}
@@ -491,6 +547,8 @@ stir.templates.search = (() => {
 			</p>`, //:`<p class="text-center"><a href="?tab=courses&query=${query}">View all course results</a></p>`,
 
 		person: (item) => {
+			const id = item.url.split("/").slice(-1);
+			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : {};
 			return `
 			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=person>
 				<div class=c-search-result__tags>
@@ -500,15 +558,15 @@ stir.templates.search = (() => {
 					<p class="u-text-regular u-m-0"><strong>
 						<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
 					</strong></p>
-					<div>${item?.custom_fields?.role || "<!-- Job title -->"}<br>${item?.custom_fields?.faculty || ""}</div>
+					<div>${data.JobTitle || "<!-- Job title -->"}<br>${data.OrgUnitName || "<!-- Department -->"}</div>
 					<!-- <p>${item?.custom_fields?.c ? (item?.custom_fields?.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
 				</div>
-				${image(`data:image/jpeg;base64,${item.images.main_b64}`, item.title.split(" | ")[0].trim(), 400, 400)}
+				${image((item.custom_fields.image?item.custom_fields.image:`https://www.stir.ac.uk/research/hub/image/${id}`), item.title.split(" | ")[0].trim(), 400, 400)}
 				<div class=c-search-result__footer>
 					${stir.funnelback.getTags(item?.custom_fields?.category) ? "<p><strong>Research interests</strong></p>" : ""}
 					<p>${stir.funnelback.getTags(item?.custom_fields?.category) || ""}</p>
 				</div>
-			</div>`;
+			</div>`; //`data:image/jpeg;base64,${item.images.main_b64}`
 		},
 		scholarship: (item) => {
 			return `
@@ -1129,7 +1187,7 @@ var stir = stir || {};
 
 /* ------------------------------------------------
  * @author: Ryan Kaye, Robert Morrison
- * @version: 3
+ * @version: 4 - Migrate to AddSearch
  * ------------------------------------------------ */
 
 /**
@@ -1232,10 +1290,11 @@ stir.search = () => {
 
 	/* this is for adding in the filters (e.g. courses, sorting) */
 	const addMoreParameters = (url, formData) => {
-		let a = new URLSearchParams(formData);
-		for (let [key, value] of new URLSearchParams(url.search)) {
+		let a = new URLSearchParams(url.search);
+		let b = new URLSearchParams(formData);
+		for (let [key, value] of b) {
 			//a.set(key, value); //Funnelback
-			a.append(key, value); //AddSearch
+			"sort"===key? a.set(key, value) : a.append(key, value); //AddSearch
 		}
 		url.search = a;
 		return url;
@@ -1265,7 +1324,7 @@ stir.search = () => {
 		input: document.querySelector('form.x-search-redevelopment input[name="term"]'),
 		parameters: {
 			any: {
-				term: "*",
+				term: "University of Stirling",
 /* 				filter: JSON.stringify({
 					range: {
 						"custom_fields.sid": {
@@ -1379,7 +1438,7 @@ stir.search = () => {
 	if (!constants.form || !constants.form.term) return;
 	debug && console.info("[Search] initialised with host:", constants.url.hostname);
 
-	const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || constants.parameters[type].term || "University of Stirling";
+	const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || constants.parameters[type].term || "*";
 
 	const getNoQuery = (type) => (constants.form.term.value ? {} : constants.noquery[type]);
 
@@ -1392,6 +1451,8 @@ stir.search = () => {
 	const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
 
 	const calcStart = (page, numRanks) => (page - 1) * numRanks + 1;
+
+	const calcEnd = (page, numRanks) => calcStart(page, numRanks) + numRanks - 1;
 
 	const calcPage = (currStart, numRanks) => Math.floor(currStart / numRanks + 1);
 
@@ -1471,11 +1532,10 @@ stir.search = () => {
 	});
 
 	const updateStatus = stir.curry((element, data) => {
-
-		//const start = data.response.resultPacket.resultsSummary.currStart;
-		//const ranks = data.response.resultPacket.resultsSummary.numRanks;
+		const start = 1 + (data.page * data.hits) - data.hits;
+		const ranks = data.total_hits;
 		const summary = element.parentElement.parentElement.querySelector(".c-search-results-summary");
-		//element.setAttribute("data-page", calcPage(start, ranks));
+		element.setAttribute("data-page", calcPage(start, ranks));
 		if (summary) {
 			summary.innerHTML = "";
 			summary.append(stir.templates.search.summary(data));
@@ -1545,12 +1605,12 @@ stir.search = () => {
 	const renderResultsWithPagination = stir.curry(
 		(type, data) =>
 //			renderers["cura"](data.response.curator.exhibits) +
-			data ? renderers[type](data.hits) : 'NO DATA'
-//			stir.templates.search.pagination({
-//				currEnd: data.response.resultPacket.resultsSummary.currEnd,
-//				totalMatching: data.response.resultPacket.resultsSummary.totalMatching,
-//				progress: calcProgress(data.response.resultPacket.resultsSummary.currEnd, data.response.resultPacket.resultsSummary.totalMatching),
-//			}) +
+			(data ? renderers[type](data.hits) : 'NO DATA') +
+			stir.templates.search.pagination({
+				currEnd: calcEnd(data.page, data.hits.length),
+				totalMatching: data.total_hits,
+				progress: calcProgress(10, data.total_hits),
+			})
 //			(footers[type] ? footers[type]() : "")
 //		`<pre>${JSON.stringify(data.hits,null,"\t")}</pre>`
 	);
@@ -1631,9 +1691,9 @@ stir.search = () => {
 		const parameters = getFBParameters(
 			stir.Object.extend(
 				{},
+				// session params:
 				{
-					// session params:
-//					start_rank: getStartRank(type),
+					page: getPage(type),
 					term: getQuery(type), // get actual query, or fallback, etc
 //					curator: getStartRank(type) > 1 ? false : true, // only show curator for initial searches
 				},

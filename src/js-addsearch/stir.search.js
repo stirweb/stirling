@@ -2,7 +2,7 @@ var stir = stir || {};
 
 /* ------------------------------------------------
  * @author: Ryan Kaye, Robert Morrison
- * @version: 3
+ * @version: 4 - Migrate to AddSearch
  * ------------------------------------------------ */
 
 /**
@@ -105,10 +105,11 @@ stir.search = () => {
 
 	/* this is for adding in the filters (e.g. courses, sorting) */
 	const addMoreParameters = (url, formData) => {
-		let a = new URLSearchParams(formData);
-		for (let [key, value] of new URLSearchParams(url.search)) {
+		let a = new URLSearchParams(url.search);
+		let b = new URLSearchParams(formData);
+		for (let [key, value] of b) {
 			//a.set(key, value); //Funnelback
-			a.append(key, value); //AddSearch
+			"sort"===key? a.set(key, value) : a.append(key, value); //AddSearch
 		}
 		url.search = a;
 		return url;
@@ -138,7 +139,7 @@ stir.search = () => {
 		input: document.querySelector('form.x-search-redevelopment input[name="term"]'),
 		parameters: {
 			any: {
-				term: "*",
+				term: "University of Stirling",
 /* 				filter: JSON.stringify({
 					range: {
 						"custom_fields.sid": {
@@ -252,7 +253,7 @@ stir.search = () => {
 	if (!constants.form || !constants.form.term) return;
 	debug && console.info("[Search] initialised with host:", constants.url.hostname);
 
-	const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || constants.parameters[type].term || "University of Stirling";
+	const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || constants.parameters[type].term || "*";
 
 	const getNoQuery = (type) => (constants.form.term.value ? {} : constants.noquery[type]);
 
@@ -265,6 +266,8 @@ stir.search = () => {
 	const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
 
 	const calcStart = (page, numRanks) => (page - 1) * numRanks + 1;
+
+	const calcEnd = (page, numRanks) => calcStart(page, numRanks) + numRanks - 1;
 
 	const calcPage = (currStart, numRanks) => Math.floor(currStart / numRanks + 1);
 
@@ -344,11 +347,10 @@ stir.search = () => {
 	});
 
 	const updateStatus = stir.curry((element, data) => {
-
-		//const start = data.response.resultPacket.resultsSummary.currStart;
-		//const ranks = data.response.resultPacket.resultsSummary.numRanks;
+		const start = 1 + (data.page * data.hits) - data.hits;
+		const ranks = data.total_hits;
 		const summary = element.parentElement.parentElement.querySelector(".c-search-results-summary");
-		//element.setAttribute("data-page", calcPage(start, ranks));
+		element.setAttribute("data-page", calcPage(start, ranks));
 		if (summary) {
 			summary.innerHTML = "";
 			summary.append(stir.templates.search.summary(data));
@@ -418,12 +420,12 @@ stir.search = () => {
 	const renderResultsWithPagination = stir.curry(
 		(type, data) =>
 //			renderers["cura"](data.response.curator.exhibits) +
-			data ? renderers[type](data.hits) : 'NO DATA'
-//			stir.templates.search.pagination({
-//				currEnd: data.response.resultPacket.resultsSummary.currEnd,
-//				totalMatching: data.response.resultPacket.resultsSummary.totalMatching,
-//				progress: calcProgress(data.response.resultPacket.resultsSummary.currEnd, data.response.resultPacket.resultsSummary.totalMatching),
-//			}) +
+			(data ? renderers[type](data.hits) : 'NO DATA') +
+			stir.templates.search.pagination({
+				currEnd: calcEnd(data.page, data.hits.length),
+				totalMatching: data.total_hits,
+				progress: calcProgress(10, data.total_hits),
+			})
 //			(footers[type] ? footers[type]() : "")
 //		`<pre>${JSON.stringify(data.hits,null,"\t")}</pre>`
 	);
@@ -504,9 +506,9 @@ stir.search = () => {
 		const parameters = getFBParameters(
 			stir.Object.extend(
 				{},
+				// session params:
 				{
-					// session params:
-//					start_rank: getStartRank(type),
+					page: getPage(type),
 					term: getQuery(type), // get actual query, or fallback, etc
 //					curator: getStartRank(type) > 1 ? false : true, // only show curator for initial searches
 				},

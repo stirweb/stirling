@@ -562,9 +562,9 @@
                                         data-fallback=search-all-aside-fallback></div>
                                 </div>
                                 <script type="text/html" id=search-all-aside-fallback>
-		<p><a href="/study/undergraduate/">Undergraduate study</a></p>
-<p><a href="/study/postgraduate/">Postgraduate study</a></p>
-      </script>
+                                    <p><a href="/study/undergraduate/">Undergraduate study</a></p>
+                                    <p><a href="/study/postgraduate/">Postgraduate study</a></p>
+                                </script>
                             </aside>
 
                         </div>
@@ -573,39 +573,36 @@
                             Courses Panel 
                         -->
                         <div class="c-search-results-courses c-search-results-panel" data-panel="courses">
-
+                        
                             <!-- SUMMARY -->
                             <div class="c-search-results-summary">
                                 Courses Summary
                             </div>
-
+                        
                             <!-- FILTERS -->
                             <aside class="c-search-results-filters">
                                 <p class="c-search-filters-header u-font-bold">
                                     <span class="uos-shuffle"></span> Filter your results
                                 </p>
-
+                        
                                 <div>
                                     <form data-filters=course action=null>
-
+                        
                                         <fieldset data-facet=Level>
                                             <legend class="show-for-sr">Filter by level</legend>
                                             <div class="stir-accordion--active" data-behaviour=accordion>
                                                 <accordion-summary>Level</accordion-summary>
                                                 <div>
                                                     <ul>
-                                                        <li><label><input name="f.Level|level" type="radio"
-                                                                    value="undergraduate"> Undergraduate</label></li>
-                                                        <li><label><input name="f.Level|level" type="radio"
-                                                                    value="postgraduate (taught)"> Postgraduate
-                                                                (taught)</label></li>
-                                                        <li><label><input name="f.Level|level" type="radio"
-                                                                    value="module"> CPD and short courses</label></li>
+                                                        <li><label><input name="customField" type="radio" value="level=undergraduate"> Undergraduate</label></li>
+                                                        <li><label><input name="customField" type="radio" value="level=postgraduate (taught)"> Postgraduate (taught)</label></li>
+                                                        <li><label><input name="customField" type="radio" value="level=postgraduate (research)"> Postgraduate (research)</label></li>
+                                                        <li><label><input name="customField" type="radio"value="level=module"> CPD and short courses</label></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </fieldset>
-
+                        
                                         <fieldset data-facet="Start date">
                                             <legend class="show-for-sr">Filter by start date</legend>
                                             <div data-behaviour=accordion>
@@ -617,141 +614,88 @@
                                                 </div>
                                             </div>
                                         </fieldset>
-
+                        
                                         <fieldset data-facet=Subject>
                                             <legend class="show-for-sr">Filter by subject</legend>
                                             <div data-behaviour=accordion>
                                                 <accordion-summary data-containtns>Subject</accordion-summary>
                                                 <div>
-
+                        
                                                     <ul id="courseSubjectFilters">
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Accounting">Accounting and
-                                                                finance</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Aquaculture">Aquaculture</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Biology">Biology</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Business">Business and
-                                                                management</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Computer">Computer
-                                                                science and software engineering</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Criminology">Criminology</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Data">Data science
-                                                                and
-                                                                data analytics</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Economics">Economics</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="English">English and
-                                                                literature</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Environmental">Environmental
-                                                                science</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Film">Film and media
-                                                                studies</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Geography">Geography</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Health">Health and allied
-                                                                subjects</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="History">History</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Humanities">Humanities</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Journalism">Journalism and
-                                                                publishing</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Languages">Languages and
-                                                                TESOL</label>
-                                                        </li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Law">Law</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Marketing">Marketing and
-                                                                public relations</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Mathematics">Mathematics</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Nursing">Nursing</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Philosophy">Philosophy and
-                                                                religion</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Politics">Politics</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Psychology">Psychology</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Social">Social studies</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Sport">Sport</label></li>
-                                                        <li><label><input name=meta_subject type=checkbox
-                                                                    value="Teaching">Teaching and
-                                                                education</label></li>
+                                                        <!-- <li><label><input name=customField type=checkbox value="subject=Accounting">Accounting and finance</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Aquaculture">Aquaculture</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Biology">Biology</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Business">Business and management</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Computer">Computer science and software engineering</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Criminology">Criminology</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Data">Data science and data analytics</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Economics">Economics</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=English">English and literature</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Environmental">Environmental science</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Film">Film and media studies</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Geography">Geography</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Health">Health and allied subjects</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=History">History</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Humanities">Humanities</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Journalism">Journalism and publishing</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Languages">Languages and TESOL</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Law">Law</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Marketing">Marketing and public relations</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Mathematics">Mathematics</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Nursing">Nursing</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Philosophy">Philosophy and religion</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Politics">Politics</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Psychology">Psychology</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Social">Social studies</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Sport">Sport</label></li>
+                                                        <li><label><input name=customField type=checkbox value="subject=Teaching">Teaching and education</label></li> -->
                                                     </ul>
-
+                        
                                                 </div>
                                             </div>
                                         </fieldset>
-
+                        
                                         <fieldset data-facet="Study mode">
                                             <legend class="show-for-sr">Filter by study mode</legend>
                                             <div data-behaviour=accordion>
                                                 <accordion-summary>Study mode</accordion-summary>
                                                 <div>
                                                     <ul>
-                                                        <li><label><input name=meta_modes type=checkbox value=full>Full
-                                                                time</label></li>
-                                                        <li><label><input name=meta_modes type=checkbox value=part>Part
-                                                                time</label></li>
+                                                        <li><label><input name=customField type=checkbox value="mode=full time">Full time</label></li>
+                                                        <li><label><input name=customField type=checkbox value="mode=part time">Part time</label></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </fieldset>
-
+                        
                                         <fieldset data-facet="Delivery mode">
                                             <legend class="show-for-sr">Filter by delivery mode</legend>
                                             <div data-behaviour=accordion>
                                                 <accordion-summary>Delivery</accordion-summary>
                                                 <div>
                                                     <ul>
-                                                        <li><label><input name=meta_delivery type=checkbox
-                                                                    value=campus>On campus</label></li>
-                                                        <li><label><input name=meta_delivery type=checkbox
-                                                                    value=online>Online</label></li>
-                                                        <li><label><input name=meta_delivery type=checkbox
-                                                                    value=hybrid>Hybrid</label></li>
+                                                        <li><label><input name=customField type=checkbox value="delivery=on campus">On campus</label></li>
+                                                        <li><label><input name=customField type=checkbox value="delivery=online">Online</label></li>
+                                                        <li><label><input name=customField type=checkbox value="delivery=hybrid">Hybrid</label></li>
+                                                        <li><label><input name=customField type=checkbox value="delivery=blended">Blended</label></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </fieldset>
-
+                        
                                         <fieldset data-facet=Faculty>
                                             <legend class="show-for-sr">Filter by faculty</legend>
                                             <div data-behaviour=accordion>
                                                 <accordion-summary>Faculty</accordion-summary>
                                                 <div>
                                                     <ul>
-                                                        <li><label><input name=meta_faculty type=checkbox
-                                                                    value="Arts">Arts and Humanities</label></li>
-                                                        <li><label><input name=meta_faculty type=checkbox
-                                                                    value="Health">Health Sciences and Sport</label>
-                                                        </li>
-                                                        <li><label><input name=meta_faculty type=checkbox
-                                                                    value="Natural">Natural Sciences</label></li>
-                                                        <li><label><input name=meta_faculty type=checkbox
-                                                                    value="Social">Social Sciences</label></li>
-                                                        <li><label><input name=meta_faculty type=checkbox
-                                                                    value="Management">Stirling Management
-                                                                School</label></li>
+                                                        <li><label><input name=customField type=checkbox value="faculty=Arts">Arts and Humanities</label></li>
+                                                        <li><label><input name=customField type=checkbox value="faculty=Health">Health Sciences and Sport</label></li>
+                                                        <li><label><input name=customField type=checkbox value="faculty=Natural">Natural Sciences</label></li>
+                                                        <li><label><input name=customField type=checkbox value="faculty=Social">Social Sciences</label></li>
+                                                        <li><label><input name=customField type=checkbox value="faculty=Management">Stirling Management School</label></li>
                                                     </ul>
-
+                        
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -760,12 +704,12 @@
                                     </form>
                                 </div>
                             </aside>
-
+                        
                             <!-- RESULTS -->
                             <div class="c-search-results" data-type="course" data-infinite>
-
+                        
                             </div>
-
+                        
                             <!-- ASIDE -->
                             <aside class="c-search-results-asides">
                                 <div class="u-p-2 u-bg-white u-mb-2">
@@ -780,7 +724,7 @@
                                     </p>
                                     <div data-coursefavs class="u-mt-1"></div>
                                 </div>
-
+                        
                                 <div class="u-p-2 u-bg-white">
                                     <p class="u-text-regular u-font-bold flex-container u-gap-8 align-middle">
                                         <span class="uos-pin u-icon h5"></span> Recommended
@@ -812,22 +756,6 @@
                                     your results</p>
                                 <div>
                                     <form data-filters=news action=null>
-                                        <!-- fieldset data-facet="Year">
-					<legend class="show-for-sr">Filter by year</legend>
-					<div class="stir-accordion--active" data-behaviour=accordion>
-						<accordion-summary>Year</accordion-summary>
-						<div>
-							<ul>
-								<script>
-									for(var i=new Date().getFullYear();i>=2017;i--) {
-										document.write('<li><label><input name="meta_dyear" type="radio" value="'+i+'"> '+i+'</label></li>');
-									}
-								</script>
-								<li><label><input name="meta_d1year" type="checkbox" value="31Dec2016" checked> Hide older news</label></li>
-							</ul>
-						</div>
-					</div>
-				</fieldset -->
                                         <input type=reset value="Clear all filters"
                                             class="button tiny hollow expanded u-mt-1">
                                     </form>
@@ -934,8 +862,7 @@
                                             <div class="stir-accordion--active" data-behaviour=accordion>
                                                 <accordion-summary>Sort</accordion-summary>
                                                 <div>
-                                                    <label><input type=checkbox name=sort value=metalastname>Sort by
-                                                        surname</label>
+                                                    <label><input type=checkbox name=sort value="custom_fields.surname">Sort by surname</label>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -1467,7 +1394,15 @@
     <script>
         var stir = stir || {}; stir.t4Globals = stir.t4Globals || {};
         stir.t4Globals.search = { combos: '/media/stirling/feeds/combo.json' };
-        stir.t4Globals.search.facets = { "Level": { "undergraduate": "Undergraduate", "postgraduate (taught)": "Postgraduate taught", "postgraduate (research)": "Postgraduate research", "module": "CPD and short courses" }, "Delivery mode": { "blended": "Blended", "on campus": "On campus", "online": "Online" }, "Study mode": { "full time": "Full time", "part time": "Part time", "discontinuous": "Discontinuous" }, "Faculty": { "faculty of arts and humanities": "Faculty of Arts and Humanities", "faculty of health sciences and sport": "Faculty of Health Sciences and Sport", "faculty of natural sciences": "Faculty of Natural Sciences", "faculty of social sciences": "Faculty of Social Sciences", "stirling business school": "Stirling Business School", "accounting & finance": "Accounting and Finance", "administration": "Administration", "ah management and support team": "Arts and Humanities (Management and Support)", "biological and environmental sciences": "Biological and Environmental Sciences", "checr": "CHeCR", "communications, media and culture": "Communications, Media and Culture", "computing science": "Computing Science", "computing science and mathematics - division": "Computing Science and Mathematics", "dementia and ageing": "Dementia and Ageing", "dementia services development centre": "Dementia Services Development Centre", "economics": "Economics", "education": "Education", "english studies": "English Studies", "fhss management and support": "Faculty of Health Sciences and Sport (Management and Support)", "french": "French", "health sciences (highland & w.isles)": "Health Sciences (Highland & Western Isles)", "health sciences highland": "Health Sciences (Highland)", "health sciences stirling": "Health Sciences (Stirling)", "history": "History", "history and politics - division": "History and Politics", "housing studies": "Housing Studies", "institute for social marketing": "Institute for Social Marketing", "institute of aquaculture": "Institute of Aquaculture", "law": "Law", "law and philosophy - division": "Law and Philosophy", "library and archives research support": "Library and Archives Research Support", "literature and languages - division": "Literature and Languages", "machrihanish": "Machrihanish", "management, work and organisation": "Management, Work and Organisation", "marketing & retail": "Marketing and Retail", "mathematics": "Mathematics", "nmahp": "NMAHP", "ns management and support": "Natural Sciences (Management and Support)", "philosophy": "Philosophy", "politics": "Politics", "psychology": "Psychology", "religion": "Religion", "sbs management and support": "Stirling Business School (Management and Support)", "scotland's international environment centre": "Scotland's International Environment Centre", "social work": "Social Work", "sociology, social policy & criminology": "Sociology, Social Policy and Criminology", "spanish": "Spanish", "sport": "Sport", "university of stirling": "University of Stirling" }, "Subject": ["Accounting and finance", "Aquaculture", "Biology", "Business and management", "Computer science and software engineering", "Criminology", "Data science and data analytics", "Economics", "English and literature", "Environmental science", "Film and media studies", "Geography", "Health and allied subjects", "History", "Humanities", "Journalism and publishing", "Languages and TESOL", "Law", "Marketing and public relations", "Mathematics", "Nursing", "Philosophy and religion", "Politics", "Psychology", "Social studies", "Sport", "Teaching and education"], "Clearing": { "scotland": "Scotland and EU", "rukroi": "England, Wales, Northern Ireland and the Republic of Ireland", "international": "International", "simd": "SIMD" }, "Topic": { "ageing-dementia": "Ageing and dementia", "alumni": "Alumni", "aqua-food": "Aquaculture, food and farming", "art-collection": "Art Collection", "arts-archives": "Arts and archives", "business-economics": "Business and economics", "covid-19": "COVID-19", "education": "Education", "environment": "Environment, climate change and wildlife", "graduation": "Graduation", "health": "Health", "history": "History", "history-heritage": "History and heritage", "institute-aquaculture": "Institute of Aquaculture", "internal-students": "Internal students", "policy-hub": "Policy Hub", "politics-policy": "Politics, policy and society", "ref-2029": "REF 2029", "research": "Research", "sports": "Sports", "sports-centre": "Sports Centre", "technology": "Technology", "water-quality": "Water quality" } };
+        stir.t4Globals.search.facets = {    "Start date": {
+                "2025-10AY2025-26": "October 2025",
+                "2026-01AY2025-26": "January 2026",
+                "2026-06AY2025-26": "June 2026",
+                "2026-08AY2026-27": "August 2026",
+                "2026-09AY2026-27": "September 2026",
+                "2026-10AY2026-27": "October 2026",
+                "2027-01AY2026-27": "January 2027"
+            }, "Level": { "undergraduate": "Undergraduate", "postgraduate (taught)": "Postgraduate taught", "postgraduate (research)": "Postgraduate research", "module": "CPD and short courses" }, "Delivery mode": { "blended": "Blended", "on campus": "On campus", "online": "Online" }, "Study mode": { "full time": "Full time", "part time": "Part time", "discontinuous": "Discontinuous" }, "Faculty": { "faculty of arts and humanities": "Faculty of Arts and Humanities", "faculty of health sciences and sport": "Faculty of Health Sciences and Sport", "faculty of natural sciences": "Faculty of Natural Sciences", "faculty of social sciences": "Faculty of Social Sciences", "stirling business school": "Stirling Business School", "accounting & finance": "Accounting and Finance", "administration": "Administration", "ah management and support team": "Arts and Humanities (Management and Support)", "biological and environmental sciences": "Biological and Environmental Sciences", "checr": "CHeCR", "communications, media and culture": "Communications, Media and Culture", "computing science": "Computing Science", "computing science and mathematics - division": "Computing Science and Mathematics", "dementia and ageing": "Dementia and Ageing", "dementia services development centre": "Dementia Services Development Centre", "economics": "Economics", "education": "Education", "english studies": "English Studies", "fhss management and support": "Faculty of Health Sciences and Sport (Management and Support)", "french": "French", "health sciences (highland & w.isles)": "Health Sciences (Highland & Western Isles)", "health sciences highland": "Health Sciences (Highland)", "health sciences stirling": "Health Sciences (Stirling)", "history": "History", "history and politics - division": "History and Politics", "housing studies": "Housing Studies", "institute for social marketing": "Institute for Social Marketing", "institute of aquaculture": "Institute of Aquaculture", "law": "Law", "law and philosophy - division": "Law and Philosophy", "library and archives research support": "Library and Archives Research Support", "literature and languages - division": "Literature and Languages", "machrihanish": "Machrihanish", "management, work and organisation": "Management, Work and Organisation", "marketing & retail": "Marketing and Retail", "mathematics": "Mathematics", "nmahp": "NMAHP", "ns management and support": "Natural Sciences (Management and Support)", "philosophy": "Philosophy", "politics": "Politics", "psychology": "Psychology", "religion": "Religion", "sbs management and support": "Stirling Business School (Management and Support)", "scotland's international environment centre": "Scotland's International Environment Centre", "social work": "Social Work", "sociology, social policy & criminology": "Sociology, Social Policy and Criminology", "spanish": "Spanish", "sport": "Sport", "university of stirling": "University of Stirling" }, "Subject": ["Accounting and finance", "Aquaculture", "Biology", "Business and management", "Computer science and software engineering", "Criminology", "Data science and data analytics", "Economics", "English and literature", "Environmental science", "Film and media studies", "Geography", "Health and allied subjects", "History", "Humanities", "Journalism and publishing", "Languages and TESOL", "Law", "Marketing and public relations", "Mathematics", "Nursing", "Philosophy and religion", "Politics", "Psychology", "Social studies", "Sport", "Teaching and education"], "Clearing": { "scotland": "Scotland and EU", "rukroi": "England, Wales, Northern Ireland and the Republic of Ireland", "international": "International", "simd": "SIMD" }, "Topic": { "ageing-dementia": "Ageing and dementia", "alumni": "Alumni", "aqua-food": "Aquaculture, food and farming", "art-collection": "Art Collection", "arts-archives": "Arts and archives", "business-economics": "Business and economics", "covid-19": "COVID-19", "education": "Education", "environment": "Environment, climate change and wildlife", "graduation": "Graduation", "health": "Health", "history": "History", "history-heritage": "History and heritage", "institute-aquaculture": "Institute of Aquaculture", "internal-students": "Internal students", "policy-hub": "Policy Hub", "politics-policy": "Politics, policy and society", "ref-2029": "REF 2029", "research": "Research", "sports": "Sports", "sports-centre": "Sports Centre", "technology": "Technology", "water-quality": "Water quality" } };
     </script>
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/addsearch/search-min.js?v=77.1"></script>
     <script>
