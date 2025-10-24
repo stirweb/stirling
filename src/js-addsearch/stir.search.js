@@ -210,7 +210,9 @@ stir.search = () => {
 				customField: "type=course"
 			},
 			person: {
-				customField: "type=profile"
+				customField: "type=profile",
+				sort: "custom_fields.sort",
+				order: "desc",
 			},
 			research: {
 				categories: "2xhub",
