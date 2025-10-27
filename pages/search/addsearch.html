@@ -756,8 +756,27 @@
                                     your results</p>
                                 <div>
                                     <form data-filters=news action=null>
-                                        <input type=reset value="Clear all filters"
-                                            class="button tiny hollow expanded u-mt-1">
+                                        <fieldset data-facet=Topic>
+                                            <legend class="show-for-sr">Filter by topic</legend>
+                                            <div data-behaviour=accordion>
+                                                <accordion-summary data-containtns>Topic</accordion-summary>
+                                                <div>
+                                                    <ul> <!-- dynamic data --> </ul>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        
+                                        <fieldset data-facet=SDGs>
+                                            <legend class="show-for-sr">Filter by SDG</legend>
+                                            <div data-behaviour=accordion>
+                                                <accordion-summary data-containtns>Sustainable Development Goals</accordion-summary>
+                                                <div>
+                                                    <ul> <!-- dynamic data --> </ul>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
+                                        <input type=reset value="Clear all filters" class="button tiny hollow expanded u-mt-1">
                                     </form>
                                 </div>
                             </aside>
@@ -1391,19 +1410,7 @@
     <!-- Favs -->
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/course-favs.js?v=10.1"></script>
     <!-- Course Favs -->
-    <script>
-        var stir = stir || {}; stir.t4Globals = stir.t4Globals || {};
-        stir.t4Globals.search = { combos: '/media/stirling/feeds/combo.json' };
-        stir.t4Globals.search.facets = {    "Start date": {
-                "2025-10AY2025-26": "October 2025",
-                "2026-01AY2025-26": "January 2026",
-                "2026-06AY2025-26": "June 2026",
-                "2026-08AY2026-27": "August 2026",
-                "2026-09AY2026-27": "September 2026",
-                "2026-10AY2026-27": "October 2026",
-                "2027-01AY2026-27": "January 2027"
-            }, "Level": { "undergraduate": "Undergraduate", "postgraduate (taught)": "Postgraduate taught", "postgraduate (research)": "Postgraduate research", "module": "CPD and short courses" }, "Delivery mode": { "blended": "Blended", "on campus": "On campus", "online": "Online" }, "Study mode": { "full time": "Full time", "part time": "Part time", "discontinuous": "Discontinuous" }, "Faculty": { "faculty of arts and humanities": "Faculty of Arts and Humanities", "faculty of health sciences and sport": "Faculty of Health Sciences and Sport", "faculty of natural sciences": "Faculty of Natural Sciences", "faculty of social sciences": "Faculty of Social Sciences", "stirling business school": "Stirling Business School", "accounting & finance": "Accounting and Finance", "administration": "Administration", "ah management and support team": "Arts and Humanities (Management and Support)", "biological and environmental sciences": "Biological and Environmental Sciences", "checr": "CHeCR", "communications, media and culture": "Communications, Media and Culture", "computing science": "Computing Science", "computing science and mathematics - division": "Computing Science and Mathematics", "dementia and ageing": "Dementia and Ageing", "dementia services development centre": "Dementia Services Development Centre", "economics": "Economics", "education": "Education", "english studies": "English Studies", "fhss management and support": "Faculty of Health Sciences and Sport (Management and Support)", "french": "French", "health sciences (highland & w.isles)": "Health Sciences (Highland & Western Isles)", "health sciences highland": "Health Sciences (Highland)", "health sciences stirling": "Health Sciences (Stirling)", "history": "History", "history and politics - division": "History and Politics", "housing studies": "Housing Studies", "institute for social marketing": "Institute for Social Marketing", "institute of aquaculture": "Institute of Aquaculture", "law": "Law", "law and philosophy - division": "Law and Philosophy", "library and archives research support": "Library and Archives Research Support", "literature and languages - division": "Literature and Languages", "machrihanish": "Machrihanish", "management, work and organisation": "Management, Work and Organisation", "marketing & retail": "Marketing and Retail", "mathematics": "Mathematics", "nmahp": "NMAHP", "ns management and support": "Natural Sciences (Management and Support)", "philosophy": "Philosophy", "politics": "Politics", "psychology": "Psychology", "religion": "Religion", "sbs management and support": "Stirling Business School (Management and Support)", "scotland's international environment centre": "Scotland's International Environment Centre", "social work": "Social Work", "sociology, social policy & criminology": "Sociology, Social Policy and Criminology", "spanish": "Spanish", "sport": "Sport", "university of stirling": "University of Stirling" }, "Subject": ["Accounting and finance", "Aquaculture", "Biology", "Business and management", "Computer science and software engineering", "Criminology", "Data science and data analytics", "Economics", "English and literature", "Environmental science", "Film and media studies", "Geography", "Health and allied subjects", "History", "Humanities", "Journalism and publishing", "Languages and TESOL", "Law", "Marketing and public relations", "Mathematics", "Nursing", "Philosophy and religion", "Politics", "Psychology", "Social studies", "Sport", "Teaching and education"], "Clearing": { "scotland": "Scotland and EU", "rukroi": "England, Wales, Northern Ireland and the Republic of Ireland", "international": "International", "simd": "SIMD" }, "Topic": { "ageing-dementia": "Ageing and dementia", "alumni": "Alumni", "aqua-food": "Aquaculture, food and farming", "art-collection": "Art Collection", "arts-archives": "Arts and archives", "business-economics": "Business and economics", "covid-19": "COVID-19", "education": "Education", "environment": "Environment, climate change and wildlife", "graduation": "Graduation", "health": "Health", "history": "History", "history-heritage": "History and heritage", "institute-aquaculture": "Institute of Aquaculture", "internal-students": "Internal students", "policy-hub": "Policy Hub", "politics-policy": "Politics, policy and society", "ref-2029": "REF 2029", "research": "Research", "sports": "Sports", "sports-centre": "Sports Centre", "technology": "Technology", "water-quality": "Water quality" } };
-    </script>
+    <script src=addsearch-values.js></script>
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/addsearch/search-min.js?v=77.1"></script>
     <script>
         stir.t4Globals.search.facets["Delivery mode"]["hybrid"] = "Blended";

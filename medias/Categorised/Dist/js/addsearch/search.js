@@ -658,7 +658,6 @@ stir.templates.search = (() => {
 			const title = item.custom_fields.name || item.title.split("|")[0].trim();
 			const url = item.url //item.collection == "stir-events" ? (item.custom_fields.page ? item.custom_fields.page : item.custom_fields.register ? item.custom_fields.register : "#") : FB_BASE() + item.clickTrackingUrl;
 			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : {};
-			console.info("barry", data);
 
 			return `
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>

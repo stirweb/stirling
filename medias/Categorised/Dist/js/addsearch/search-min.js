@@ -161,7 +161,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 					<div class=c-search-result__image>
 						${stir.funnelback.getCroppedImageElement({url:(t=JSON.parse(e.custom_fields.custom),t.id?`https://farm${t.farm}.staticflickr.com/${t.server}/${t.id}_${t.secret}_c.jpg`:""),alt:"Image of "+e.title.split(" | ")[0].trim(),width:550,height:550})}
 					</div>
-				</div>`;var t},event:e=>{var t,s=-1<e.custom_fields?.tags?.indexOf("Webinar"),s=e.custom_fields?.image||s,r=e.custom_fields.name||e.title.split("|")[0].trim(),a=e.url,i="object"==typeof e.custom_fields.data?Object.assign({},...e.custom_fields.data.map(e=>JSON.parse(decodeURIComponent(e)))):{};return console.info("barry",i),`
+				</div>`;var t},event:e=>{var t,s=-1<e.custom_fields?.tags?.indexOf("Webinar"),s=e.custom_fields?.image||s,r=e.custom_fields.name||e.title.split("|")[0].trim(),a=e.url,i="object"==typeof e.custom_fields.data?Object.assign({},...e.custom_fields.data.map(e=>JSON.parse(decodeURIComponent(e)))):{};return`
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${s?" c-search-result__with-thumbnail":""}" data-rank=${e.rank} data-result-type=event>
 				<div class=c-search-result__tags>
 					${i.isSeriesChild?stir.templates.search.stag(i.isSeriesChild):""}
