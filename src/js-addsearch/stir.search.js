@@ -2,7 +2,7 @@ var stir = stir || {};
 
 /* ------------------------------------------------
  * @author: Ryan Kaye, Robert Morrison
- * @version: 3
+ * @version: 4 - Migrate to AddSearch
  * ------------------------------------------------ */
 
 /**
@@ -105,9 +105,11 @@ stir.search = () => {
 
 	/* this is for adding in the filters (e.g. courses, sorting) */
 	const addMoreParameters = (url, formData) => {
-		let a = new URLSearchParams(formData);
-		for (let [key, value] of new URLSearchParams(url.search)) {
-			a.set(key, value);
+		let a = new URLSearchParams(url.search);
+		let b = new URLSearchParams(formData);
+		for (let [key, value] of b) {
+			//a.set(key, value); //Funnelback
+			"sort"===key? a.set(key, value) : a.append(key, value); //AddSearch
 		}
 		url.search = a;
 		return url;
@@ -137,25 +139,81 @@ stir.search = () => {
 		input: document.querySelector('form.x-search-redevelopment input[name="term"]'),
 		parameters: {
 			any: {
-				term: "University+of+Stirling",
+				term: "University of Stirling",
+/* 				filter: JSON.stringify({
+					range: {
+						"custom_fields.sid": {
+							gt: 500,
+							lt: 10000
+						}
+					}
+				}), */
 			},
 			news: {
-				customField: "type=news"
+				customField: "type=news",
+				sort: "custom_fields.d",
 			},
 			event: {
-				customField: "type=event"
+				filter: JSON.stringify({
+					and: [
+						{ "custom_fields.type": "event" },
+						{
+							or: [
+								{
+									/* START this week */
+									range: {
+										"custom_fields.e": {
+											gt: "2025-10-19",
+											lt: "2025-10-27"
+										}
+									}
+								}, {
+									/* OR END this week */
+									range: {
+										"custom_fields.d": {
+											gt: "2025-10-19",
+											lt: "2025-10-27"
+										}
+									}
+								}, {
+									/* OR they START before AND END after this week */
+									and: [
+										{
+											range: {
+												"custom_fields.d": {
+													lt: "2025-10-19"
+												}
+											}
+										},
+										{
+											range: {
+												"custom_fields.e": {
+													gt: "2025-10-27"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					]
+				})
 			},
 			gallery: {
 				customField: "type=gallery"
 			},
 			course: {
+				sort: "custom_fields.h1_custom",
+				order: "asc",
 				customField: "type=course"
 			},
 			coursemini: {
 				customField: "type=course"
 			},
 			person: {
-				customField: "type=profile"
+				customField: "type=profile",
+				sort: "custom_fields.sort",
+				order: "desc",
 			},
 			research: {
 				categories: "2xhub",
@@ -195,7 +253,7 @@ stir.search = () => {
 	if (!constants.form || !constants.form.term) return;
 	debug && console.info("[Search] initialised with host:", constants.url.hostname);
 
-	const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || constants.parameters[type].term || "University of Stirling";
+	const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || constants.parameters[type].term || "*";
 
 	const getNoQuery = (type) => (constants.form.term.value ? {} : constants.noquery[type]);
 
@@ -208,6 +266,8 @@ stir.search = () => {
 	const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
 
 	const calcStart = (page, numRanks) => (page - 1) * numRanks + 1;
+
+	const calcEnd = (page, numRanks) => calcStart(page, numRanks) + numRanks - 1;
 
 	const calcPage = (currStart, numRanks) => Math.floor(currStart / numRanks + 1);
 
@@ -239,7 +299,7 @@ stir.search = () => {
 				// as used in the Research type filter's "Other" option:
 				// "publication", "contract", "[tag theme programme group]"
 				// will become "[publication contract tag theme programme group]"
-				a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
+				//a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
 			}
 		}
 
@@ -287,11 +347,10 @@ stir.search = () => {
 	});
 
 	const updateStatus = stir.curry((element, data) => {
-
-		//const start = data.response.resultPacket.resultsSummary.currStart;
-		//const ranks = data.response.resultPacket.resultsSummary.numRanks;
+		const start = 1 + (data.page * data.hits) - data.hits;
+		const ranks = data.total_hits;
 		const summary = element.parentElement.parentElement.querySelector(".c-search-results-summary");
-		//element.setAttribute("data-page", calcPage(start, ranks));
+		element.setAttribute("data-page", calcPage(start, ranks));
 		if (summary) {
 			summary.innerHTML = "";
 			summary.append(stir.templates.search.summary(data));
@@ -361,12 +420,12 @@ stir.search = () => {
 	const renderResultsWithPagination = stir.curry(
 		(type, data) =>
 //			renderers["cura"](data.response.curator.exhibits) +
-			data ? renderers[type](data.hits) : 'NO DATA'
-//			stir.templates.search.pagination({
-//				currEnd: data.response.resultPacket.resultsSummary.currEnd,
-//				totalMatching: data.response.resultPacket.resultsSummary.totalMatching,
-//				progress: calcProgress(data.response.resultPacket.resultsSummary.currEnd, data.response.resultPacket.resultsSummary.totalMatching),
-//			}) +
+			(data ? renderers[type](data.hits) : 'NO DATA') +
+			stir.templates.search.pagination({
+				currEnd: calcEnd(data.page, data.hits.length),
+				totalMatching: data.total_hits,
+				progress: calcProgress(10, data.total_hits),
+			})
 //			(footers[type] ? footers[type]() : "")
 //		`<pre>${JSON.stringify(data.hits,null,"\t")}</pre>`
 	);
@@ -384,6 +443,62 @@ stir.search = () => {
 
 	const setFBParameters = buildUrl(constants.url);
 
+	// +++ COURSE - subject filter +++
+	{
+		let el = document.getElementById('courseSubjectFilters');
+		if (el && stir.t4Globals.search.facets["Subject"]) {
+			stir.t4Globals.search.facets["Subject"].forEach(subject => {
+				const li = document.createElement('li');
+				li.innerHTML = `<label><input name=customField type=checkbox value="subject=${subject}">${subject}</label>`;
+				el.appendChild(li);
+			});
+		}
+		
+		el = document.querySelector('[data-facet="Faculty"] ul');
+		if (el && stir.t4Globals.search.facets["Faculty"]) {
+			el.innerHTML = '';
+			let faculties = stir.t4Globals.search.facets["Faculty"]
+			Object.keys(faculties).forEach(faculty => {
+				const li = document.createElement('li');
+				li.innerHTML = `<label><input name=customField type=checkbox value="faculty=${faculties[faculty]}">${faculties[faculty]}</label>`;
+				el.appendChild(li);
+			});
+		}
+
+		el = document.querySelector('[data-facet="Start date"] ul');
+		if (el && stir.t4Globals.search.facets["Start date"]) {
+			el.innerHTML = '';
+			let dates = stir.t4Globals.search.facets["Start date"]
+			Object.keys(dates).forEach(date => {
+				const li = document.createElement('li');
+				li.innerHTML = `<label><input name=customField type=checkbox value="start=${date}">${dates[date]}</label>`;
+				el.appendChild(li);
+			});
+		}
+
+		el = document.querySelector('[data-facet="Topic"] ul');
+		if (el && stir.t4Globals.search.facets["Topic"]) {
+			el.innerHTML = '';
+			let dates = stir.t4Globals.search.facets["Topic"]
+			Object.keys(dates).forEach(date => {
+				const li = document.createElement('li');
+				li.innerHTML = `<label><input name=customField type=checkbox value="tag=${date}">${dates[date]}</label>`;
+				el.appendChild(li);
+			});
+		}
+
+		el = document.querySelector('[data-facet="SDGs"] ul');
+		if (el && stir.t4Globals.search.facets["SDGs"]) {
+			el.innerHTML = '';
+			let dates = stir.t4Globals.search.facets["SDGs"]
+			Object.keys(dates).forEach(date => {
+				const li = document.createElement('li');
+				li.innerHTML = `<label><input name=customField type=checkbox value="sdg=${dates[date]}">${dates[date]}</label>`;
+				el.appendChild(li);
+			});
+		}
+	}
+
 	// This is the core search function that talks to Funnelback
 	const callSearchApi = stir.curry((type, callback) => {
 		debug && console.info()
@@ -391,9 +506,9 @@ stir.search = () => {
 		const parameters = getFBParameters(
 			stir.Object.extend(
 				{},
+				// session params:
 				{
-					// session params:
-//					start_rank: getStartRank(type),
+					page: getPage(type),
 					term: getQuery(type), // get actual query, or fallback, etc
 //					curator: getStartRank(type) > 1 ? false : true, // only show curator for initial searches
 				},
@@ -407,7 +522,7 @@ stir.search = () => {
 		const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
 		console.info("[Search] Type",type);
 		console.info("[Search] Query",getQuery(type));
-		console.info("[Search] URL",url);
+		console.info("[Search] URL",url.href);
 		//debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
 		stir.getJSON(url, callback);
 	});
@@ -447,6 +562,7 @@ stir.search = () => {
 	};
 
 	const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
+	//console.info("searches",searches);
 
 	// group the curried search functions so we can easily refer to them by `type`
 	const searchers = {
