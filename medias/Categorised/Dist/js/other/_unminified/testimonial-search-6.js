@@ -1,6 +1,8 @@
 /* ------------------------------------------------
  * @author: Ryan Kaye
- * @version: 5
+ * @version: 6.0
+ * @date: 2025-10-17
+ * @description: Testimonial Search JS using AddSearch API
  * ------------------------------------------------ */
 
 (function () {
@@ -35,7 +37,6 @@
    * @returns {string} - the HTML string for the student item
    */
   const renderItem = (item, fullname, url) => {
-    console.log(item);
     const cf = item.custom_fields;
     const image = cf.image ? getImage(cf.image) : ``;
     const data = cf.data ? JSON.parse(decodeURIComponent(cf.data)) : {};
@@ -120,7 +121,6 @@
 
   const renderImage = (image, fullname) => {
     if (!image) return ``;
-    //const url = `https://www.stir.ac.uk${image}`;
     return `<img src="https://www.stir.ac.uk${image}" alt="${fullname}" class="u-object-cover u-aspect-ratio-1-1" loading="lazy" width=500 height=500  />`;
   };
 
@@ -349,7 +349,7 @@
     postsPerPage: postsPerPage,
     macroUK: "United Kingdom|Wales|England|Scotland|Northern Ireland",
     urlBase: "https://www.stir.ac.uk/",
-    searchUrl: `${searchAPI}?term=*&limit=9&customField=type%3Dstudentstory&sort=custom_fields.sort&${buildCustomFields("tag", tags)}&`,
+    searchUrl: `${searchAPI}?term=*&limit=9&customField=type%3Dstudentstory&sort=custom_fields.sort&${buildCustomFields("tag", tags)}&categories=1xstudent-stories&`,
     onlineText: "",
   };
 
