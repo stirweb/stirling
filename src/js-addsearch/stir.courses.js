@@ -93,7 +93,7 @@ stir.courses.startdates = function () {
 	const other = date_elements
 		.filter(date => !date.value.match(match))
 		.map(date => {
-			console.info("OTHER!",date,strings[date.value]||date.value);
+			//console.info("OTHER!",date,strings[date.value]||date.value);
 			return {
 				label: strings[date.value]||date.value,
 				value: date.value,

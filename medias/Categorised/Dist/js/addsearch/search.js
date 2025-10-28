@@ -1119,7 +1119,7 @@ stir.courses.startdates = function () {
 	const other = date_elements
 		.filter(date => !date.value.match(match))
 		.map(date => {
-			console.info("OTHER!",date,strings[date.value]||date.value);
+			//console.info("OTHER!",date,strings[date.value]||date.value);
 			return {
 				label: strings[date.value]||date.value,
 				value: date.value,
@@ -1253,9 +1253,32 @@ stir.addSearch = (() => {
 	const url = `https://${server}`;
 
 	const getJsonEndpoint = () => new URL(`/v1/search/${key}`, url);
+	const getSuggestionsEndpoint = () => new URL(`/v1/suggest/${key}`, url);
+	const getAutocompleteEndpoint = () => new URL(`/v1/autocomplete/document-field/${key}`, url);
+	const getRecommendationsEndpoint = (block) => new URL(`/v1/recommendations/index/${key}/block/${block}`, url);
+	
+	const getCompletions = (term="*", source, size=10) => { 
+		// TODO
+	};
+	
+	const getSuggestions = (term,callback) => {
+		if("function" !== typeof callback) return;
+		const url = getSuggestionsEndpoint();
+		url.search = `term=${term}`;
+		stir.getJSON(url,callback);
+	};
+	
+	/* Recommendations - AddSearch extra */
+	const getRecommendations = (block,callback) => {
+		if("function" !== typeof callback) return;
+		stir.getJSON(getRecommendationsEndpoint(block),callback);
+	};
 
 	return {
 		getJsonEndpoint: getJsonEndpoint,
+		getCompletions: getCompletions,
+		getSuggestions: getSuggestions,
+		getRecommendations:getRecommendations
 	};
 })();
 
@@ -1392,7 +1415,8 @@ stir.search = () => {
 				customField: "type=course"
 			},
 			coursemini: {
-				customField: "type=course"
+				customField: "type=course",
+				limit: 5
 			},
 			person: {
 				customField: "type=profile",
@@ -1403,7 +1427,7 @@ stir.search = () => {
 				categories: "2xhub",
 			},
 			internal: {
-				categories: "1xinternal-staff",
+				categories: "1xinternal-staff" //,
 				//categories: "1xinternal-students"
 			},
 			clearing: {
@@ -1457,7 +1481,7 @@ stir.search = () => {
 
 	const calcProgress = (currEnd, fullyMatching) => (currEnd / fullyMatching) * 100;
 
-	const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
+	//const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
 
 	const resetPagination = () => Object.keys(constants.parameters).forEach((key) => QueryParams.remove(key));
 
@@ -1685,7 +1709,6 @@ stir.search = () => {
 
 	// This is the core search function that talks to Funnelback
 	const callSearchApi = stir.curry((type, callback) => {
-		debug && console.info()
 		const getFBParameters = getParameters(constants.parameters[type]); // curry-in fixed params
 		const parameters = getFBParameters(
 			stir.Object.extend(
@@ -1704,10 +1727,6 @@ stir.search = () => {
 
 		//TODO if type==course and query=='!padrenullquery' then sort=title
 		const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
-		console.info("[Search] Type",type);
-		console.info("[Search] Query",getQuery(type));
-		console.info("[Search] URL",url.href);
-		//debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
 		stir.getJSON(url, callback);
 	});
 
@@ -1746,7 +1765,6 @@ stir.search = () => {
 	};
 
 	const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
-	//console.info("searches",searches);
 
 	// group the curried search functions so we can easily refer to them by `type`
 	const searchers = {
@@ -1795,7 +1813,6 @@ stir.search = () => {
 
 	// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
 	const getInitialResults = (element, button) => {
-		debug && console.info("[Search] Getting initial results…");
 		const type = getType(element);
 		if (!searchers[type]) return;
 		const facets = updateFacets(type);
@@ -1806,7 +1823,6 @@ stir.search = () => {
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, replace, render, more, status, facets);
 		const callback = (data) => {
-			debug && console.info("[Search] Request callback",data);
 			if (!element || !element.parentElement) {
 				return debug && console.error("[Search] late callback, element no longer on DOM");
 			}
