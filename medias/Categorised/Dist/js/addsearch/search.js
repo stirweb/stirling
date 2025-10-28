@@ -1,20 +1,3 @@
-/**
- * Just a temp file to add new (or update) functionality of Stir.js etc.
- */
-
-
-/**
- * JSON handling
- */
-
-//var stir = stir||{};
-
-
-
-
-
-
-  
 var stir = stir || {};
 
 stir.templates = stir.templates || {};
@@ -748,7 +731,6 @@ stir.templates.search = (() => {
 	};
 })();
 
-/** 410 GONE -- moved 2025-08-22 by rwm2 */
 /*
   onscrollend Pollyfill for Safari
 */

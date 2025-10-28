@@ -276,7 +276,7 @@ const getUpcomingObject = (from, to, type) => {
   const obj = {
     and: [
       { "custom_fields.tag": type },
-
+      { not: { "custom_fields.tag": "Promo" } },
       {
         range: { "custom_fields.e": { gt: from, lt: to } },
       },
@@ -742,7 +742,7 @@ function loadTab(targetNode, tabmap, seriesData) {
 (async () => {
   const seriesData = await doSeriesSearch();
 
-  const tabmapper = [
+  const tabmap = [
     { id: "panel_1_1", node: staffNode, type: "staff" },
     { id: "panel_1_2", node: publicNode, type: "public" },
     { id: "panel_1_3", node: artNode, type: "art" },
@@ -764,14 +764,14 @@ function loadTab(targetNode, tabmap, seriesData) {
   if (activeTab) {
     const targetId = activeTab.getAttribute("aria-controls");
     const targetNode = document.getElementById(targetId);
-    loadTab(targetNode, tabmapper, seriesData);
+    loadTab(targetNode, tabmap, seriesData);
   }
 
   // Attach event listeners for tab clicks
   tabButtons.forEach((button) => {
     button.addEventListener("click", async (event) => {
       const targetId = event.target.getAttribute("aria-controls");
-      loadTab(document.getElementById(targetId), tabmapper, seriesData);
+      loadTab(document.getElementById(targetId), tabmap, seriesData);
     });
   });
 })();
