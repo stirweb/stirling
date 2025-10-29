@@ -432,10 +432,10 @@
 
   const getWebinarsJSON = (env) => {
     if (env === "dev") return "./webinars.json";
-    if (env === "preview") return '<t4 type="navigation" id="5214" />'; // 5222 for limitrd archive
-    if (env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; // 5222 for limitrd archive
+    if (env === "preview") return '<t4 type="navigation" id="5308" />'; // 5222 for limitrd archive
+    if (env === "appdev-preview") return '<t4 type="navigation" id="5308" />'; // 5222 for limitrd archive
 
-    return `/data/events/revamp/json/index.json`; // live
+    return `/data/webinars/revamp/index.json`; // live
   };
 
   /**
