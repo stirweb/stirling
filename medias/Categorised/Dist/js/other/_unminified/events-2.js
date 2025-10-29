@@ -129,12 +129,13 @@ const renderEvent = stir.curry((series, item) => {
 
   return `
         <div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event"
-        data-label-icon="${data.isSeries ? "startdates" : ""}" data-perf="172580">
-        ${data.isSeries ? renderWeeTab(item) : ""}
+          data-label-icon="${data.isSeries ? "startdates" : ""}" data-perf="172580">
+          ${data.isSeries ? renderWeeTab(item) : ""}
+         
             <div class="u-grid-medium-up u-gap-24 ${cf.image ? "u-grid-cols-3_1" : ""}">
                 <div class=" u-flex flex-dir-column u-gap u-mt-1">
                     <p class="u-text-regular u-m-0">
-                        <strong> <a href="${item.url}">${cf.h1_custom}</a> </strong>
+                        ${renderInfoTag(data.cancelled)} ${renderInfoTag(data.rescheduled)} <strong><a href="${item.url}">${cf.h1_custom}</a></strong>
                     </p>
                     <div class="u-flex flex-dir-column u-gap-8">
                     <div class="u-flex u-gap-16 align-middle">
@@ -230,10 +231,10 @@ const getEventDateTimes = (start, end) => {
   return {
     start: startDate.toLocaleDateString("en-GB", options),
     end: endDate.toLocaleDateString("en-GB", options),
-    startTime: start.split("T")[1].slice(0, 5),
-    endTime: end.split("T")[1].slice(0, 5),
-    startISO: startDate.toISOString().slice(0, 10),
-    endISO: endDate.toISOString().slice(0, 10),
+    // startTime: start.split("T")[1].slice(0, 5),
+    // endTime: end.split("T")[1].slice(0, 5),
+    // startISO: startDate.toISOString().slice(0, 10),
+    // endISO: endDate.toISOString().slice(0, 10),
   };
 };
 
