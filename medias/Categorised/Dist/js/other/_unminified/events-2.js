@@ -430,6 +430,14 @@
     return eventStart <= nextWeekEnd && eventEnd >= nextWeekStart;
   }
 
+  const getWebinarsJSON = (env) => {
+    if (env === "dev") return "./webinars.json";
+    if (env === "preview") return '<t4 type="navigation" id="5214" />'; // 5222 for limitrd archive
+    if (env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; // 5222 for limitrd archive
+
+    return `/data/events/revamp/json/index.json`; // live
+  };
+
   /**
    * Handle Favourite Button clicks
    */
@@ -726,6 +734,76 @@
   }
 
   /*
+   */
+  function doWebinars(node, url) {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        const webinars = data.filter((item) => item.type === "Webinar");
+
+        const html = webinars.map(renderWebinar).join("");
+        node.innerHTML = html;
+
+        /*
+         * DOM Manipulation for filters
+         */
+        const radios = node.parentNode.querySelectorAll("input[type='radio']");
+
+        radios &&
+          radios.forEach((radio) => {
+            radio.checked = false;
+            if (radio.value === "all") {
+              radio.checked = true;
+            }
+          });
+
+        /*
+         * Add event listeners to radio inputs
+         */
+        radios &&
+          radios.forEach((radio) => {
+            radio.addEventListener("click", function (event) {
+              event.stopPropagation();
+
+              const selectedValue = event.target.value;
+
+              if (selectedValue === "thisweek") {
+                const thisWeekEvents = webinars.filter(isThisWeek);
+                const html = thisWeekEvents.map(renderWebinar).join("");
+                node.innerHTML = html;
+              }
+
+              if (selectedValue === "nextweek") {
+                const nextWeekEvents = webinars.filter(isNextWeek);
+                const html = nextWeekEvents.map(renderWebinar).join("");
+                node.innerHTML = html;
+              }
+
+              if (selectedValue === "thismonth") {
+                const thisMonthEvents = webinars.filter(isThisMonth);
+                const html = thisMonthEvents.map(renderWebinar).join("");
+                node.innerHTML = html;
+              }
+
+              if (selectedValue === "nextmonth") {
+                const nextMonthEvents = webinars.filter(isNextMonth);
+                const html = nextMonthEvents.map(renderWebinar).join("");
+                node.innerHTML = html;
+              }
+
+              if (selectedValue === "all") {
+                const html = webinars.map(renderWebinar).join("");
+                node.innerHTML = html;
+              }
+            });
+          });
+
+        node.addEventListener("click", handleFavouriteBtnClick());
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }
+
+  /*
    * Promo Search Controller
    * Fetch and display Promo events
    * @param {string} baseUrl - The base URL for the search API
@@ -779,21 +857,6 @@
     doSearch(searchUrl, tabItem.type, tabItem.node, seriesData);
   }
 
-  /*
-   */
-  function doWebinars(node, seriesData) {
-    fetch("./webinars.json")
-      .then((response) => response.json())
-      .then((data) => {
-        const webinars = data.filter((item) => item.type === "Webinar");
-
-        const html = webinars.map(renderWebinar).join("");
-        node.innerHTML = html;
-        node.addEventListener("click", handleFavouriteBtnClick());
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-  }
-
   /**
    * Initialize
    */
@@ -816,7 +879,7 @@
     archiveNode && (archiveNode.innerHTML = ``);
     webinarsNode && (webinarsNode.innerHTML = ``);
 
-    webinarsNode && doWebinars(webinarsNode, seriesData);
+    webinarsNode && doWebinars(webinarsNode, getWebinarsJSON(UoS_env.name));
 
     // TABS
     const tabButtons = document.querySelectorAll('[data-behaviour="tabs"] [role="tab"]');
