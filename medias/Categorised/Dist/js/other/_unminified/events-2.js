@@ -739,8 +739,12 @@
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        const webinars = data.filter((item) => item.type === "Webinar");
+        if (!data || data.length === 0) {
+          node.innerHTML = renderNoEvents();
+          return;
+        }
 
+        const webinars = data.filter((item) => item.type === "Webinar");
         const html = webinars.map(renderWebinar).join("");
         node.innerHTML = html;
 
