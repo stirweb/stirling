@@ -1802,6 +1802,11 @@
         "id": 187507,
         "description": "email-signature-primary-personal-tutor.html",
         "projectPath": "medias/Categorised/Dist/html/email-signature-primary-personal-tutor.html"
+      },
+      {
+        "id": 198000,
+        "description":"search-min.js",
+        "projectPath":"medias/Categorised/Dist/js/addsearch/search-min.js"
       }
     ]
   }

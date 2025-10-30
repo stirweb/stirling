@@ -5,7 +5,7 @@ stir.const = stir.const || {};
 
 stir.templates.search = (() => {
 	/**
-	 * Some private memebers to help with data processing.
+	 * Some private members to help with data processing.
 	 * They can also be referred to locally, instead of
 	 * invoking the absolute object stir.templates.blah.blah.blah
 	 * */
@@ -24,7 +24,7 @@ stir.templates.search = (() => {
 		student: ["students"],
 	};
 	const afce4eafce490574e288574b384ecd87 = window[["s", "e", "i", "k", "o", "o", "C"].reverse().join("")]; // Just a bit of mild fun to stop anyone text-searching for "Cookies"!
-	const isUser = afce4eafce490574e288574b384ecd87.get("psessv0") ? true : false; // Cookie could be spoofed, but we'll trust it. The Portal will enforce authenticattion anyway.
+	const isUser = afce4eafce490574e288574b384ecd87.get("psessv0") ? true : false; // Cookie could be spoofed, but we'll trust it. The Portal will enforce authentication anyway.
 	const userType = isUser ? afce4eafce490574e288574b384ecd87.get("psessv0").split("|")[0] : "EXTERNAL";
 	const userAuth = (group) => entitlements[userType.toLowerCase()]?.indexOf(group.toLowerCase()) > -1;
 	const authClass = (group) => (userAuth(group) ? " c-internal-search-result" : " c-internal-locked-search-result");
@@ -222,10 +222,17 @@ stir.templates.search = (() => {
 
 	const facetCategoryLabel = (facet, label) => correctCase(facet, label);
 	const startDateFormatter = date => correctCase("Start date", date);
-	// date labels are handled by `src/js-search/course-start-date.js`
 
-	//	{ return (label.indexOf("ay") === 7 ? readableDate(label.split("ay").shift()) : correctCase(facet, label)); };
-	//	const readableDate = (date) => months[date.split("-").pop()] + " " + date.split("-").shift();
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+
 
 	/**
 	 * PUBLIC members that can be called externally.
@@ -234,6 +241,23 @@ stir.templates.search = (() => {
 	 * other types of templates in future, potentially.
 	 */
 	return {
+		strings: {
+			buttons: {
+				more: "Load more results"
+			}
+		},
+		classes: {
+			buttons: {
+				more: "button hollow tiny",
+				wrapper: "c-search-results__loadmore flex-container align-center u-mb-2"
+			},
+		},
+		selector: {
+			form: "form.x-search-redevelopment",
+			query: 'form.x-search-redevelopment input[name="term"]',
+			results: ".c-search-results-area",
+			summary: ".c-search-results-summary"
+		},
 		tag: tag,
 		stag: (tag) => (tag ? `<span class="c-search-tag">${tag}</span>` : ""),
 		tagGroup: (tagGroup) => {

@@ -73,9 +73,15 @@ stir.addSearch = (() => {
 	const getAutocompleteEndpoint = () => new URL(`/v1/autocomplete/document-field/${key}`, url);
 	const getRecommendationsEndpoint = (block) => new URL(`/v1/recommendations/index/${key}/block/${block}`, url);
 	
-	const getCompletions = (term="*", source, size=10) => { 
-		// TODO
+	const getCompletions = (term="unive", source, size=10) => { 
+		const url = getAutocompleteEndpoint();
+		const params = new URLSearchParams({term:term,source:source,size:size});
+		url.search = params;
+		stir.getJSON(url,data=>console.info("getCompletions",data));
+
 	};
+	
+	getCompletions()
 	
 	const getSuggestions = (term,callback) => {
 		if("function" !== typeof callback) return;
@@ -101,76 +107,45 @@ stir.addSearch = (() => {
 /**
  * Stir Search
  * Created for the Search Revamp project 2022/23
+ * Migrated to AddSearch October 2025
  * @returns Object
  */
 stir.search = () => {
 	// abandon before anything breaks in IE
 	if ("undefined" === typeof window.URLSearchParams) {
-		const el = document.querySelector(".c-search-results-area");
+		const el = document.querySelector( stir.templates.search.selector.results );
 		el && el.parentElement.removeChild(el);
 		return;
 	}
+
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	const preview = debug || UoS_env.name === "preview" ? true : false;
+	debug && console.info("[Search] initialising…");
+
 	const NUMRANKS = "small" === stir.MediaQuery.current ? 5 : 10;
 	const MAXQUERY = 256;
 	const CLEARING = stir.courses.clearing; // Clearing is open?
 
-	debug && console.info("[Search] initialising…");
 
 	const buildUrl = stir.curry((url, parameters) => {
 		url.search = new URLSearchParams(parameters);
 		return url;
 	});
 
-	/* this is really the default parameters for a given search type */
-	const getParameters = stir.curry((fixed, state) => stir.Object.extend({}, fixed, state));
-
-	/* this is for adding in the filters (e.g. courses, sorting) */
-	const addMoreParameters = (url, formData) => {
-		let a = new URLSearchParams(url.search);
-		let b = new URLSearchParams(formData);
-		for (let [key, value] of b) {
-			//a.set(key, value); //Funnelback
-			"sort"===key? a.set(key, value) : a.append(key, value); //AddSearch
-		}
-		url.search = a;
-		return url;
-	};
-
 	const LoaderButton = () => {
 		const button = document.createElement("button");
-		button.innerText = "Load more results";
-		button.setAttribute("class", "button hollow tiny");
+		button.innerText = stir.templates.search.strings.buttons.more;
+		button.setAttribute("class", stir.templates.search.classes.buttons.more);
 		return button;
 	};
 
-	const meta = {
-		main: ["c", "d", "access", "award", "biogrgaphy", "breadcrumbs", "category", "custom", "delivery", "faculty", "group", "h1", "image", "imagealt", "level", "modes", "online", "page", "pathways", "role", "register", "sid", "start", "startDate", "subject", "tag", "tags", "thumbnail", "type", "ucas", "venue", "profileCountry", "profileCourse1", "profileImage", "profileSnippet"],
-		courses: ["c", "award", "code", "delivery", "faculty", "image", "level", "modes", "pathways", "sid", "start", "subject", "ucas"],
-		clearing: CLEARING ? ["clearing"] : [],
-		scholarships: ["value", "status", "number"],
-		news: []//["abstract", "c", "d", "h1", "image", "imagealt", "tags", "tag", "thumbnail"],
-	};
-
-	//console.info("Clearing is " + (CLEARING ? "open" : "closed"));
-	//console.info(meta.clearing);
-
 	const constants = {
 		url: stir.addSearch.getJsonEndpoint(),
-		form: document.querySelector("form.x-search-redevelopment"),
-		input: document.querySelector('form.x-search-redevelopment input[name="term"]'),
+		form: document.querySelector( stir.templates.search.selector.form ),
+		input: document.querySelector( stir.templates.search.selector.query ),
 		parameters: {
 			any: {
 				term: "University of Stirling",
-/* 				filter: JSON.stringify({
-					range: {
-						"custom_fields.sid": {
-							gt: 500,
-							lt: 10000
-						}
-					}
-				}), */
+				limit: NUMRANKS
 			},
 			news: {
 				customField: "type=news",
@@ -226,7 +201,7 @@ stir.search = () => {
 				customField: "type=gallery"
 			},
 			course: {
-				sort: "custom_fields.h1_custom",
+				sort: "custom_fields.name",
 				order: "asc",
 				customField: "type=course"
 			},
@@ -247,13 +222,12 @@ stir.search = () => {
 				//categories: "1xinternal-students"
 			},
 			clearing: {
-//				collection: "stir-courses-combos",
+				limit: NUMRANKS
 //				term: "!padrenullquery",
-//				sort: "title",
+//				sort: "custom_fields.name",
 //				meta_clearing: "[scotland simd rukroi international eu]",
 //				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
 //				fmo: "true",
-				num_ranks: NUMRANKS,
 				/* explain: true,
 				query: "!padrenullquery",
 				timestamp: +new Date(), */
@@ -276,6 +250,21 @@ stir.search = () => {
 
 	if (!constants.form || !constants.form.term) return;
 	debug && console.info("[Search] initialised with host:", constants.url.hostname);
+
+	/* Prepare the parameters for a given search type */
+	const getBaseParameters = stir.curry((fixed, state) => stir.Object.extend({}, fixed, state));
+
+	/* Add the filter parameters (e.g. courses, sorting) */
+	const addFilterParameters = (url, formData) => {
+		let a = new URLSearchParams(url.search);
+		let b = new URLSearchParams(formData);
+		for (let [key, value] of b) {
+			//a.set(key, value); //Funnelback
+			"sort"===key? a.set(key, value) : a.append(key, value); //AddSearch
+		}
+		url.search = a;
+		return url;
+	};
 
 	const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || constants.parameters[type].term || "*";
 
@@ -313,7 +302,7 @@ stir.search = () => {
 	};
 
 	const getFormData = (type) => {
-		const form = document.querySelector(".c-search-results-area form[data-filters=" + type + "]");
+		const form = document.querySelector(`${stir.templates.search.selector.results} form[data-filters="${type}"]`);
 		let a = form ? new FormData(form) : new FormData();
 
 		for (var key of a.keys()) {
@@ -373,7 +362,7 @@ stir.search = () => {
 	const updateStatus = stir.curry((element, data) => {
 		const start = 1 + (data.page * data.hits) - data.hits;
 		const ranks = data.total_hits;
-		const summary = element.parentElement.parentElement.querySelector(".c-search-results-summary");
+		const summary = element.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
 		element.setAttribute("data-page", calcPage(start, ranks));
 		if (summary) {
 			summary.innerHTML = "";
@@ -401,7 +390,6 @@ stir.search = () => {
 
 	const updateFacets = stir.curry((type, data) => {
 		return data; 
-		//if(!preview) return data;
 		const form = document.querySelector(`form[data-filters="${type}"]`);
 		if (form) {
 			const parameters = QueryParams.getAll();
@@ -444,7 +432,7 @@ stir.search = () => {
 	const renderResultsWithPagination = stir.curry(
 		(type, data) =>
 //			renderers["cura"](data.response.curator.exhibits) +
-			(data ? renderers[type](data.hits) : 'NO DATA') +
+			(data ? renderers[type](data.hits).join("") : 'NO DATA') +
 			stir.templates.search.pagination({
 				currEnd: calcEnd(data.page, data.hits.length),
 				totalMatching: data.total_hits,
@@ -525,7 +513,7 @@ stir.search = () => {
 
 	// This is the core search function that talks to Funnelback
 	const callSearchApi = stir.curry((type, callback) => {
-		const getFBParameters = getParameters(constants.parameters[type]); // curry-in fixed params
+		const getFBParameters = getBaseParameters(constants.parameters[type]); // curry-in fixed params
 		const parameters = getFBParameters(
 			stir.Object.extend(
 				{},
@@ -533,16 +521,14 @@ stir.search = () => {
 				{
 					page: getPage(type),
 					term: getQuery(type), // get actual query, or fallback, etc
-//					curator: getStartRank(type) > 1 ? false : true, // only show curator for initial searches
 				},
 				getNoQuery(type), // get special "no query" parameters (sorting, etc.)
 				getQueryParameters(), // TEMP get facet parameters
-//				preview ? { profile: "_default_preview" } : {} // show unpublished facets
 			)
 		);
 
 		//TODO if type==course and query=='!padrenullquery' then sort=title
-		const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
+		const url = addFilterParameters(setFBParameters(parameters), getFormData(type));
 		stir.getJSON(url, callback);
 	});
 
@@ -551,16 +537,62 @@ stir.search = () => {
 	// used for the "Looking for…?" sidebar.
 	const callSearchApiMeta = stir.curry((type, callback) => {
 		const query = getQuery(type).trim();
-		const getFBParameters = getParameters(constants.parameters[type]); // curry-in fixed params
+		const getFBParameters = getBaseParameters(constants.parameters[type]); // curry-in fixed params
 		// TODO: consider passing in the meta fields?
 		const parameters = getFBParameters({
 //			start_rank: getStartRank(type),
 			term: `[t:${query} c:${query} subject:${query}]`,
 		});
-		const url = addMoreParameters(setFBParameters(parameters), getFormData(type));
+		const url = addFilterParameters(setFBParameters(parameters), getFormData(type));
 		//debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
 		stir.getJSON(url, callback);
 	});
+	
+	// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
+	const getInitialResults = (element, button) => {
+		const type = getType(element);
+		if (!searchers[type]) return;
+		const facets = updateFacets(type);
+		const status = updateStatus(element);
+		const more = enableLoadMore(button);
+		const replace = replaceHtml(element);
+		const render = renderResultsWithPagination(type);
+		const reflow = flow(element);
+		const composition = stir.compose(reflow, replace, render, more, status, facets);
+		const callback = (data) => {
+			if (!element || !element.parentElement) {
+				return debug && console.error("[Search] late callback, element no longer on DOM");
+			}
+			//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
+			if (!data || data.error) return;
+			if (0 === data.total_hits && fallback(element)) return;
+			return composition(data);
+		};
+		resetPagination();
+	
+		// if necessary do a prefetch and then call-back to the search function.
+		// E.g. Courses needs to prefetch the combinations data
+		if (prefetch[type]) return prefetch[type]((event) => searchers[type](callback));
+		// if no prefetch, just call the search function now:
+		searchers[type](callback);
+	};
+	
+	// triggered by the 'load more' buttons. Fetches new results and APPENDS them.
+	const getMoreResults = (element, button) => {
+		const type = getType(element);
+		if (!searchers[type]) return;
+		const status = updateStatus(element);
+		const append = appendHtml(element);
+		const render = renderResultsWithPagination(type);
+		const reflow = flow(element);
+		const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
+		const callback = (data) => (data && !data.error ? composition(data) : new Function());
+		nextPage(type);
+		searchers[type](callback);
+	};
+	
+	// initialise all search types on the page (e.g. when the query keywords are changed by the user):
+	const initialSearch = () => searches.forEach(search);
 
 	const search = (element) => {
 		element.innerHTML = "";
@@ -573,7 +605,7 @@ stir.search = () => {
 			element.appendChild(resultsWrapper);
 			element.appendChild(buttonWrapper);
 			buttonWrapper.appendChild(button);
-			buttonWrapper.setAttribute("class", "c-search-results__loadmore flex-container align-center u-mb-2");
+			buttonWrapper.setAttribute("class", stir.templates.search.classes.buttons.wrapper);
 			getInitialResults(resultsWrapper, button);
 		} else {
 			getInitialResults(element);
@@ -598,17 +630,17 @@ stir.search = () => {
 
 	// group the renderer functions so we can get them easily by `type`
 	const renderers = {
-		any: (data) => data.map(stir.templates.search.auto).join(""),
-		news: (data) => data.map(stir.templates.search.news).join(""),
-		event: (data) => data.map(stir.templates.search.event).join(""),
-		gallery: (data) => data.map(stir.templates.search.gallery).join(""),
-		course: (data) => data.map(stir.templates.search.course).join(""),
-		coursemini: (data) => data.map(stir.templates.search.coursemini).join(""),
-		person: (data) => data.map(stir.templates.search.person).join(""),
-		research: (data) => data.map(stir.templates.search.research).join(""),
-		cura: (data) => data.map(stir.templates.search.cura).join(""),
-		internal: (data) => data.map(stir.templates.search.auto).join(""),
-		clearing: (data) => data.map(stir.templates.search.auto).join(""),
+		any: (data) => data.map(stir.templates.search.auto),
+		news: (data) => data.map(stir.templates.search.news),
+		event: (data) => data.map(stir.templates.search.event),
+		gallery: (data) => data.map(stir.templates.search.gallery),
+		course: (data) => data.map(stir.templates.search.course),
+		coursemini: (data) => data.map(stir.templates.search.coursemini),
+		person: (data) => data.map(stir.templates.search.person),
+		research: (data) => data.map(stir.templates.search.research),
+		cura: (data) => data.map(stir.templates.search.cura),
+		internal: (data) => data.map(stir.templates.search.auto),
+		clearing: (data) => data.map(stir.templates.search.auto),
 	};
 
 	const footers = {
@@ -626,52 +658,6 @@ stir.search = () => {
 			}
 		},
 	};
-
-	// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
-	const getInitialResults = (element, button) => {
-		const type = getType(element);
-		if (!searchers[type]) return;
-		const facets = updateFacets(type);
-		const status = updateStatus(element);
-		const more = enableLoadMore(button);
-		const replace = replaceHtml(element);
-		const render = renderResultsWithPagination(type);
-		const reflow = flow(element);
-		const composition = stir.compose(reflow, replace, render, more, status, facets);
-		const callback = (data) => {
-			if (!element || !element.parentElement) {
-				return debug && console.error("[Search] late callback, element no longer on DOM");
-			}
-			//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
-			if (!data || data.error) return;
-			if (0 === data.total_hits && fallback(element)) return;
-			return composition(data);
-		};
-		resetPagination();
-
-		// if necessary do a prefetch and then call-back to the search function.
-		// E.g. Courses needs to prefetch the combinations data
-		if (prefetch[type]) return prefetch[type]((event) => searchers[type](callback));
-		// if no prefetch, just call the search function now:
-		searchers[type](callback);
-	};
-
-	// triggered by the 'load more' buttons. Fetches new results and APPENDS them.
-	const getMoreResults = (element, button) => {
-		const type = getType(element);
-		if (!searchers[type]) return;
-		const status = updateStatus(element);
-		const append = appendHtml(element);
-		const render = renderResultsWithPagination(type);
-		const reflow = flow(element);
-		const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
-		const callback = (data) => (data && !data.error ? composition(data) : new Function());
-		nextPage(type);
-		searchers[type](callback);
-	};
-
-	// initialise all search types on the page (e.g. when the query keywords are changed by the user):
-	const initialSearch = () => searches.forEach(search);
 
 	// onCHANGE event handler for search filters.
 	// Also handles the onRESET event.
@@ -730,7 +716,7 @@ stir.search = () => {
 	};
 
 	// Click-delegate for status panel (e.g. misspellings, dismiss filters, etc.)
-	Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-summary"), (statusPanel) => {
+	Array.prototype.forEach.call(document.querySelectorAll(stir.templates.search.selector.summary), (statusPanel) => {
 		statusPanel.addEventListener("click", (event) => {
 			if (event.target.hasAttribute("data-suggest")) {
 				event.preventDefault();

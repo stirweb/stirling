@@ -11,6 +11,7 @@ stir.courses = (() => {
 	 * C L E A R I N G
 	 */
 	const CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
+	debug && console.info("[Search] Clearing is " + (CLEARING ? "open" : "closed"));
 	/*
 	 **/
 
