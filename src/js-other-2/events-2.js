@@ -595,7 +595,7 @@
    * @param {HTMLElement} node - The DOM node to insert results into
    * @return {void}
    */
-  function doSearch(baseUrl, type, node, seriesData) {
+  function doUpcoming(baseUrl, type, node, seriesData) {
     let filterString = getFilterString(type);
     const renderer = renderEvent(seriesData);
 
@@ -620,13 +620,16 @@
                 })
                 .map((item) => JSON.parse(decodeURIComponent(item)));
 
-              perfs.forEach((perf) => {
-                const startTimePerf = perf.start.split("T")[1].split(":")[0] + ":" + perf.start.split("T")[1].split(":")[1];
-                const endTimePerf = perf.end.split("T")[1].split(":")[0] + ":" + perf.end.split("T")[1].split(":")[1];
-                const sortValue = Number(String(perf.pin).substring(0, 10));
-                const extraPerf = { ...item, ...perf, startTime: startTimePerf, endTime: endTimePerf, sort: sortValue, repeater: true };
-                extras.push(extraPerf);
-              });
+              if (perfs.length > 0) {
+                perfs.forEach((perf) => {
+                  const startTimePerf = perf.start.split("T")[1].split(":")[0] + ":" + perf.start.split("T")[1].split(":")[1];
+                  const endTimePerf = perf.end.split("T")[1].split(":")[0] + ":" + perf.end.split("T")[1].split(":")[1];
+                  const sortValue = Number(String(perf.pin).substring(0, 10));
+                  const extraPerf = { ...item, ...perf, startTime: startTimePerf, endTime: endTimePerf, sort: sortValue, repeater: true };
+                  extras.push(extraPerf);
+                });
+                item["hide"] = true; // hide the parent perf event
+              }
 
               // Any repeating events
               const repeat = cf.data
@@ -858,7 +861,7 @@
       return doArchiveSearch(searchUrl, tabItem.node, seriesData);
     }
 
-    doSearch(searchUrl, tabItem.type, tabItem.node, seriesData);
+    doUpcoming(searchUrl, tabItem.type, tabItem.node, seriesData);
   }
 
   /**
