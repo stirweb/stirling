@@ -73,15 +73,13 @@ stir.addSearch = (() => {
 	const getAutocompleteEndpoint = () => new URL(`/v1/autocomplete/document-field/${key}`, url);
 	const getRecommendationsEndpoint = (block) => new URL(`/v1/recommendations/index/${key}/block/${block}`, url);
 	
-	const getCompletions = (term="unive", source, size=10) => { 
+	const getCompletions = (data,callback) => {
+		if("function" !== typeof callback) return;
 		const url = getAutocompleteEndpoint();
-		const params = new URLSearchParams({term:term,source:source,size:size});
+		const params = new URLSearchParams(data);
 		url.search = params;
 		stir.getJSON(url,data=>console.info("getCompletions",data));
-
 	};
-	
-	getCompletions()
 	
 	const getSuggestions = (term,callback) => {
 		if("function" !== typeof callback) return;
