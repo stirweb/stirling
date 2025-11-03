@@ -326,24 +326,30 @@ async function doMoreEvents(baseUrl, node, excludeId) {
  * @returns {void}
  */
 (async () => {
-  const miniEvents = window.miniEvents && window.miniEvents.length ? window.miniEvents.map((item) => JSON.parse(item)) : [];
+  const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+  const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
 
+  const miniEvents = window.miniEvents && window.miniEvents.length ? window.miniEvents.map((item) => JSON.parse(item)) : [];
   const miniEventsFiltered = stir.flatten(miniEvents).filter((item) => item.id);
 
   const upcomingNode = document.getElementById("seriesevents");
-  const pastNode = document.getElementById("serieseventspast");
   const moreEventsNode = document.getElementById("moreevents");
 
-  const seriesId = "SeriesChildof" + upcomingNode.getAttribute("data-seriesid");
+  // Series events
+  if (upcomingNode) {
+    const pastNode = document.getElementById("serieseventspast");
 
-  const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-  const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
-  const baseUrl = searchUrl + "customField=series%3D";
+    const seriesId = "SeriesChildof" + upcomingNode.getAttribute("data-seriesid");
+    const baseUrl = searchUrl + "customField=series%3D";
 
-  upcomingNode && (await doUpcoming(baseUrl, upcomingNode, seriesId, stir.flatten(miniEventsFiltered)));
-  pastNode && (await doPast(baseUrl, pastNode, seriesId));
+    upcomingNode && (await doUpcoming(baseUrl, upcomingNode, seriesId, stir.flatten(miniEventsFiltered)));
+    pastNode && (await doPast(baseUrl, pastNode, seriesId));
+  }
 
-  moreEventsNode && (await doMoreEvents(baseUrl, moreEventsNode, moreEventsNode.getAttribute("data-currentid")));
+  // More events
+  if (moreEventsNode) {
+    doMoreEvents(searchUrl, moreEventsNode, moreEventsNode.getAttribute("data-currentid"));
+  }
 })();
 
 /*
