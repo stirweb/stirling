@@ -108,7 +108,7 @@ const renderMoreEvent = (item) => {
   const dateTimes = getEventDateTimes(cf.d, cf.e);
 
   return `<a href="${item.url}" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
-                <span class="u-flex1"><strong>${item.title}</strong></span>
+                <span class="u-flex1"><strong>${cf.h1_custom}</strong></span>
                 <span class="flex-container align-middle u-gap u-dark-grey">
                     <strong>${dateTimes.start} ${renderEndDate(dateTimes)}</strong>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1080 800"
