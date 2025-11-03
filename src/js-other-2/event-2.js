@@ -326,7 +326,7 @@ async function doMoreEvents(baseUrl, node, excludeId) {
  * @returns {void}
  */
 (async () => {
-  const miniEvents = window.miniEvents.map((item) => JSON.parse(item));
+  const miniEvents = window.miniEvents && window.miniEvents.length ? window.miniEvents.map((item) => JSON.parse(item)) : [];
 
   const miniEventsFiltered = stir.flatten(miniEvents).filter((item) => item.id);
 
