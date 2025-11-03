@@ -249,17 +249,11 @@ stir.search = () => {
 	if (!constants.form || !constants.form.term) return;
 	debug && console.info("[Search] initialised with host:", constants.url.hostname);
 
-	/* Prepare the parameters for a given search type */
-	const getBaseParameters = stir.curry((fixed, state) => stir.Object.extend({}, fixed, state));
-
 	/* Add the filter parameters (e.g. courses, sorting) */
 	const addFilterParameters = (url, formData) => {
 		let a = new URLSearchParams(url.search);
 		let b = new URLSearchParams(formData);
-		for (let [key, value] of b) {
-			//a.set(key, value); //Funnelback
-			"sort"===key? a.set(key, value) : a.append(key, value); //AddSearch
-		}
+		for (let [key, value] of b) { "sort"===key? a.set(key, value) : a.append(key, value); }
 		url.search = a;
 		return url;
 	};
@@ -388,7 +382,7 @@ stir.search = () => {
 
 	const updateFacets = stir.curry((type, data) => {
 		return data; 
-		const form = document.querySelector(`form[data-filters="${type}"]`);
+		/* const form = document.querySelector(`form[data-filters="${type}"]`);
 		if (form) {
 			const parameters = QueryParams.getAll();
 			const active = "stir-accordion--active";
@@ -424,20 +418,18 @@ stir.search = () => {
 				}
 			});
 		}
-		return data; // data pass-thru so we can compose() this function
+		return data; // data pass-thru so we can compose() this function */
 	});
 
 	const renderResultsWithPagination = stir.curry(
 		(type, data) =>
-//			renderers["cura"](data.response.curator.exhibits) +
+			// renderers["cura"](data.response.curator.exhibits) +
 			(data ? renderers[type](data.hits).join("") : 'NO DATA') +
 			stir.templates.search.pagination({
 				currEnd: calcEnd(data.page, data.hits.length),
 				totalMatching: data.total_hits,
 				progress: calcProgress(10, data.total_hits),
-			})
-//			(footers[type] ? footers[type]() : "")
-//		`<pre>${JSON.stringify(data.hits,null,"\t")}</pre>`
+			}) + (footers[type] ? footers[type]() : "")
 	);
 
 	/**
@@ -450,8 +442,6 @@ stir.search = () => {
 		element.innerHTML = html;
 		return true;
 	};
-
-	const setFBParameters = buildUrl(constants.url);
 
 	// +++ COURSE - subject filter +++
 	{
@@ -509,41 +499,17 @@ stir.search = () => {
 		}
 	}
 
-	// This is the core search function that talks to Funnelback
-	const callSearchApi = stir.curry((type, callback) => {
-		const getFBParameters = getBaseParameters(constants.parameters[type]); // curry-in fixed params
-		const parameters = getFBParameters(
+	// This is the core search function that talks to the search API
+	const callSearchApi = stir.curry((type, callback) => {	
+		const parameters = 
 			stir.Object.extend(
-				{},
-				// session params:
-				{
-					page: getPage(type),
-					term: getQuery(type), // get actual query, or fallback, etc
-				},
+				{ },
+				constants.parameters[type],
+				{ page: getPage(type), term: getQuery(type) },
 				getNoQuery(type), // get special "no query" parameters (sorting, etc.)
-				getQueryParameters(), // TEMP get facet parameters
-			)
-		);
-
-		//TODO if type==course and query=='!padrenullquery' then sort=title
-		const url = addFilterParameters(setFBParameters(parameters), getFormData(type));
-		stir.getJSON(url, callback);
-	});
-
-	// A "Meta" version of search() i.e. a search without
-	// a querysting, but with some metadata fields set:
-	// used for the "Looking for…?" sidebar.
-	const callSearchApiMeta = stir.curry((type, callback) => {
-		const query = getQuery(type).trim();
-		const getFBParameters = getBaseParameters(constants.parameters[type]); // curry-in fixed params
-		// TODO: consider passing in the meta fields?
-		const parameters = getFBParameters({
-//			start_rank: getStartRank(type),
-			term: `[t:${query} c:${query} subject:${query}]`,
-		});
-		const url = addFilterParameters(setFBParameters(parameters), getFormData(type));
-		//debug ? stir.getJSONAuthenticated(url, callback) : stir.getJSON(url, callback);
-		stir.getJSON(url, callback);
+				getQueryParameters(), // get facet parameters
+			);
+		stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback);
 	});
 	
 	// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
@@ -619,7 +585,7 @@ stir.search = () => {
 		event: callSearchApi("event"),
 		gallery: callSearchApi("gallery"),
 		course: callSearchApi("course"),
-		coursemini: callSearchApiMeta("coursemini"),
+		coursemini: callSearchApi("coursemini"),
 		person: callSearchApi("person"),
 		research: callSearchApi("research"),
 		internal: callSearchApi("internal"),

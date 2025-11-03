@@ -522,18 +522,16 @@ stir.templates.search = (() => {
 			</div>`;
 		},
 
-		coursemini: (item) => `
-			<div>
+		coursemini: (item) 
+		=> "\t\t\t" + `<div>
 				<p><strong><a href="${FB_BASE() + item.clickTrackingUrl}" title="${item.url}" class="u-border-none">
 					${item.custom_fields.award || ""} ${item.title} ${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""} ${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
 				</a></strong></p>
 				<p>${item.meta_description}</p>
 			</div>`,
 
-		courseminiFooter: (
-			query //debug?`
-		) =>
-			`<p class="u-mb-2 flex-container u-align-items-center u-gap-8">
+		courseminiFooter: (query) 
+			=> `<p class="u-mb-2 flex-container u-align-items-center u-gap-8">
 				<svg class="u-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
 					<title>cap</title>
 					<g fill="currentColor">
