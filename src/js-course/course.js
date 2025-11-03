@@ -308,8 +308,8 @@ if (stir.favourites && stir.coursefavs) {
    */
   const renderButton = (item, colour) => {
     const data = JSON.parse(decodeURIComponent(item.custom_fields.data) || "{}");
-    if (!data.url) return ``;
-    return `<a href="${data.url}" id="cta-pg-webinar" class="button ${colour}"><span class="u-font-bold u-text-regular">Join our webinar</span></a>`;
+    if (!data.register) return ``;
+    return `<a href="${data.register}" id="cta-pg-webinar" class="button ${colour}"><span class="u-font-bold u-text-regular">Join our webinar</span></a>`;
   };
 
   /*
