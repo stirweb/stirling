@@ -621,8 +621,69 @@
 
     <script>
       (function () {
+        /*
+         * Get current date in YYYY-MM-DD format
+         * @returns {string} - Current date
+         */
+        const getNow = () => {
+          return new Date().toISOString();
+        };
+
+        /*
+         * Fetch and display webinars
+         * @param {string} baseUrl - The base URL for the API
+         * @param {HTMLElement} node - The DOM node to display results
+         */
+        async function doListing(baseUrl, node, obj) {
+          const filterString = `&filter=${encodeURIComponent(JSON.stringify(obj))}&sort=custom_fields.e&`;
+
+          fetch(baseUrl + filterString + `page=1`)
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.total_hits > 0) {
+                console.log(data.hits);
+
+                //const html = rendereventsPromo(seriesData, data.hits[0]);
+                //node.innerHTML = html || ``;
+              }
+
+              //node.addEventListener("click", handleFavouriteBtnClick());
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+        }
+
+        /*
+         * Initialize variables
+         */
         const filtersNode = document.getElementById("webinarfilters");
         const resultsNode = document.getElementById("webinarresults");
+
+        const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+        const searchUrl = `${searchAPI}?term=*&customField=type%3Dwebinar&`;
+        const upcomingObj = {
+          and: [
+            {
+              range: { "custom_fields.e": { gt: getNow(), lt: "2099-12-31" } },
+            },
+          ],
+        };
+
+        const onDemandObj = {
+          and: [
+            { "custom_fields.tag": "OnDemand" },
+            {
+              range: { "custom_fields.e": { gt: "2019-12-31", lt: getNow() } },
+            },
+          ],
+        };
+
+        /*
+         * Initialize
+         */
+        (async () => {
+          doListing(searchUrl, resultsNode, upcomingObj);
+          doListing(searchUrl, resultsNode, onDemandObj);
+        })();
       })();
     </script>
   </body>
