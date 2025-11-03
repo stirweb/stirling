@@ -508,7 +508,7 @@
    * @param {HTMLElement} node - The DOM node to insert results into
    * @return {void}
    */
-  function doArchiveSearch(baseUrl, node, seriesData) {
+  function doArchive(baseUrl, node, seriesData) {
     const radios = node.parentNode.querySelectorAll("input[type='radio']");
     const limit = 10;
     const renderer = renderArchiveEvent(seriesData);
@@ -858,7 +858,7 @@
     }
 
     if (tabItem.id === "panel_1_5") {
-      return doArchiveSearch(searchUrl, tabItem.node, seriesData);
+      return doArchive(searchUrl, tabItem.node, seriesData);
     }
 
     doUpcoming(searchUrl, tabItem.type, tabItem.node, seriesData);
