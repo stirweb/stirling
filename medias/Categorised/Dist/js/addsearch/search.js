@@ -1310,13 +1310,6 @@ stir.search = () => {
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 	debug && console.info("[Search] initialising…");
 
-	function myDump(data) {
-		console.info("[AddSearch] auto",data);
-	}
-
-	//stir.addSearch.getCompletions("*",data=>console.info("[AddSearch] suggest",data));
-	stir.addSearch.getCompletions({term:"*",source:"custom_fields.level",size:10},myDump);
-
 	const NUMRANKS = "small" === stir.MediaQuery.current ? 5 : 10;
 	const MAXQUERY = 256;
 	const CLEARING = stir.courses.clearing; // Clearing is open?
