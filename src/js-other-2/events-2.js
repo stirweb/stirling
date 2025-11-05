@@ -848,8 +848,7 @@
    * @return {void}
    */
   function loadTab(targetNode, tabmap, seriesData) {
-    //if (!item.id) return;
-    const tabItem = tabmap.find((item) => item.id === targetNode.id);
+    const tabItem = tabmap.find((item) => targetNode.id.includes(item.id));
 
     if (!tabItem || !tabItem.id) return;
 
@@ -857,7 +856,7 @@
       return;
     }
 
-    if (tabItem.id === "panel_1_5") {
+    if (tabItem.id === "_1_5") {
       return doArchive(searchUrl, tabItem.node, seriesData);
     }
 
@@ -871,10 +870,10 @@
     const seriesData = await doSeriesSearch();
 
     const tabmap = [
-      { id: "panel_1_1", node: staffNode, type: "staff" },
-      { id: "panel_1_2", node: publicNode, type: "public" },
-      { id: "panel_1_3", node: artNode, type: "art" },
-      { id: "panel_1_5", node: archiveNode, type: "archive" },
+      { id: "_1_1", node: staffNode, type: "staff" },
+      { id: "_1_2", node: publicNode, type: "public" },
+      { id: "_1_3", node: artNode, type: "art" },
+      { id: "_1_5", node: archiveNode, type: "archive" },
     ];
 
     // Promo
@@ -889,8 +888,11 @@
     webinarsNode && doWebinars(webinarsNode, getWebinarsJSON(UoS_env.name));
 
     // TABS
-    const tabButtons = document.querySelectorAll('[data-behaviour="tabs"] [role="tab"]');
-    const activeTab = document.querySelector('[data-behaviour="tabs"] [role="tab"][aria-selected="true"]');
+    const tabButtons = document.querySelectorAll('[data-behaviour="tabs"] button');
+
+    const activeTab = document.querySelector('[data-behaviour="tabs"] [role="tab"][aria-selected="true"]')
+      ? document.querySelector('[data-behaviour="tabs"] [role="tab"][aria-selected="true"]')
+      : document.querySelector('.pseudotab[aria-expanded="true"]');
 
     if (activeTab) {
       const targetId = activeTab.getAttribute("aria-controls");
