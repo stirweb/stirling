@@ -737,6 +737,11 @@
   }
 
   /*
+   * Main Webinars Controller
+   * Fetch and display Webinar events
+   * @param {HTMLElement} node - The DOM node to insert results into
+   * @param {string} url - The URL to fetch webinar data from
+   * @return {void}
    */
   function doWebinars(node, url) {
     fetch(url)
