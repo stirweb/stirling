@@ -522,8 +522,8 @@
               <select name="studylevel">
                 <option value="">All student types</option>
                 <option>Undergraduate</option>
-                <option value="Postgraduate-taught">Postgraduate taught</option>
-                <option value="Postgraduate-research">Postgraduate research</option>
+                <option value="Postgraduate (taught)">Postgraduate taught</option>
+                <option value="Postgraduate (research)">Postgraduate research</option>
               </select>
             </div>
 
@@ -533,7 +533,7 @@
                 <option value="">All locations</option>
                 <option>Scotland</option>
                 <option value="RUK">England, Wales, Northern Ireland</option>
-                <option value="All-international">International (including EU)</option>
+                <option value="All international">International (including EU)</option>
               </select>
             </div>
 
@@ -541,67 +541,33 @@
               <label class="u-font-bold text-md" for="search-category">Category</label>
               <select id="search-category" name="category">
                 <option value="">All topics</option>
-                <option value="Course-information">Course information</option>
-                <option value="Student-support-and-experience">Student support and experience</option>
+                <option value="Course information">Course information</option>
+                <option value="Student support and experience">Student support and experience</option>
               </select>
             </div>
 
             <div class="cell small-12 u-mt-3 u-flex relative u-scroll-snap-x">
-              <div class="u-flex relative u-scroll-snap-x" id="radioTabs">
-                <!-- div class="u-border-width-4 u-white-line-top u-bg-medium-grey u-mr-tiny u-box-size-border">
-                      <label for="viewall"
-                          class="u-cursor-pointer u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap ">
-                          <input type="radio" id="viewall" name="view" class="hide" value="" />All
-                          events</label>
-                  </div>
-
-             <div class="u-border-width-4 u-white-line-top u-bg-medium-grey  u-mr-tiny u-box-size-border">
-                      <label for="viewlive"
-                          class="u-cursor-pointer u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
-                          <input type="radio" id="viewlive" name="view" class="hide"
-                              value="live" />Upcoming live</label>
-                  </div>
-
-            <div class=" u-border-width-4 u-white-line-top  u-bg-medium-grey  u-mr-tiny u-box-size-border">
-                      <label for="viewondemand"
-                          class="u-cursor-pointer u-p-1 text-sm inline-block u-w-full u-whitespace-nowrap">
-                          <input type="radio" id="viewondemand" name="view" class="hide"
-                              value="ondemand" />
-                          On demand</label>
-                  </div -->
-              </div>
+              <div class="u-flex relative u-scroll-snap-x" id="radioTabs"></div>
             </div>
           </form>
         </div>
 
-        <!-- Wrapper Start -->
-        <div class="cell u-bg-grey u-bleed bg-grey">
-          <div class="grid-x">
-            <div class="cell u-py-2" id="webinarresults" data-webinar><a href="/events/listings/webinars/">View our webinars listing</a></div>
-          </div>
-        </div>
-        <!-- Wrapper End --><!-- Wrapper -->
-      </div>
-      <div><div id="d.en.58580" class="c-wrapper grid-container grid-x u-bleed u-bg-white u-bleed bg-white u-padding-top" data-ct="wrapper"></div></div>
-      <!-- Wrapper End -->
+        <!-- 
+        
+        
+        Listing -->
+        <div class="cell small-12" id="eventsrevamp" data-tags="">
+          <div data-behaviour="tabs">
+            <h2>Upcoming live</h2>
+            <div id="webinarsUpcoming" class="u-mt-2"><a href="/events/listings/webinars/">View our webinars listing</a></div>
 
-      <div class="grid-container grid-x"><!-- Wrapper --></div>
-      <div>
-        <div id="d.en.41440" class="c-wrapper grid-container grid-x u-bleed u-bg-white u-bleed bg-white u-padding-y" data-ct="wrapper">
-          <!-- Text with Heading -->
-          <div class="cell small-12 medium-10" id="d.en.39512">
-            <h2 class="">Want to know more?</h2>
-            <div class="c-wysiwyg-content">
-              <p>
-                If your course of interest is not listed, or you have any other questions abut applying, please contact us to find out more. We're always happy to help, and can't
-                wait to hear from you!&nbsp;Get in touch.
-              </p>
-              <p style="padding-top: 20px"><a class="button energy-pink" href="mailto: study@stir.ac.uk?subject=Want to know more about Webinars?">Ask us a question</a></p>
-            </div>
+            <h2>On demand</h2>
+            <div id="webinarsOnDemand" class="u-mt-2"><a href="/events/listings/webinars/">View our webinars listing</a></div>
           </div>
-          <!-- End Text with Heading -->
         </div>
-      </div>
+
+
+
       <!-- Wrapper End -->
 
       <div class="grid-container grid-x"></div>
@@ -629,13 +595,50 @@
           return new Date().toISOString();
         };
 
-        const renderItem = (data) => {
+        /*
+         * Parse data field into an object
+         * @param {string|Array} data - Data field from custom fields
+         * @returns {Object} - Parsed data object
+         */
+        const getDataObject = (data) => {
+          if (typeof data === "string") {
+            return JSON.parse(decodeURIComponent(data));
+          }
+          return "object" === typeof data ? Object.assign({}, ...data.map((datum) => JSON.parse(decodeURIComponent(datum)))) : {};
+        };
+
+        /*
+         * Render a webinar item
+         * @param {Object} item - Webinar item data
+         * @returns {string} - HTML string for the webinar item
+         */
+        const renderItem = (item) => {
+          const cf = item.custom_fields;
+          const data = getDataObject(cf.data);
+          const upcoming = new Date(cf.e) > new Date();
+          const type = upcoming ? "Live event" : "OnDemand";
+          const tagColour = type === "OnDemand" ? "berry" : "green";
+          const level = Array.isArray(cf.level) ? cf.level : [cf.level]; // ensure level is an array before accessing
+
+          //console.log(item);
           return `
-            <div class="medium-4 cell">
-              <h3>${data.custom_fields.h1_custom}</h3>
-              <p>Date: ${new Date(data.custom_fields.d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</p>
-              <p>Time: ${new Date(data.custom_fields.d).toLocaleTimeString("en-GB", { hour: "numeric", minute: "numeric", hour12: false })}</p>
-              <p>Type: ${data.custom_fields.snippet}</p>
+            <div class="cell small-12 large-4 medium-6 u-mb-3">
+                <div class="u-border-width-4 u-heritage-${tagColour}-line-left u-p-2 u-relative u-bg-white u-h-full">
+                    <div class="u-absolute u-top--16"><span class="u-bg-heritage-${tagColour} u-white u-px-tiny u-py-xtiny text-xxsm">${type}</span></div>
+                    <h3 class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-2">
+                    <a href="${data.register}" class="u-border-bottom-hover u-border-width-2">${item.custom_fields.h1_custom}</a>
+                    </h3>
+                    <p class="text-sm">
+                        <strong>${new Date(item.custom_fields.d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}, 
+                            ${new Date(item.custom_fields.d).toLocaleTimeString("en-GB", { hour: "numeric", minute: "numeric", hour12: false })} to 
+                            ${new Date(item.custom_fields.e).toLocaleTimeString("en-GB", { hour: "numeric", minute: "numeric", hour12: false, timeZoneName: "short" })}
+                        </strong>
+                    </p>
+                    <p class="text-sm">${item.custom_fields.snippet}</p>
+                    <p class="text-sm">Audience: ${level.join(", ")}</p>
+                    <p>Tags: ${cf.tag}</p>
+                    <div id="favbtns${cf.sid}"></div>
+                </div>
             </div>
           `;
         };
@@ -653,12 +656,9 @@
             .then((data) => {
               if (data.total_hits > 0) {
                 console.log(data);
-
                 const html = data.hits.map(renderItem).join("");
                 node.innerHTML = `<div class="grid-x">${html || ``}</div>`;
               }
-
-              //node.addEventListener("click", handleFavouriteBtnClick());
             })
             .catch((error) => console.error("Error fetching data:", error));
         }
@@ -667,10 +667,15 @@
          * Initialize variables
          */
         const filtersNode = document.getElementById("webinarfilters");
-        const resultsNode = document.getElementById("webinarresults");
+        const upcomingNode = document.getElementById("webinarsUpcoming");
+        const onDemandNode = document.getElementById("webinarsOnDemand");
 
         const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-        const searchUrl = `${searchAPI}?term=*&customField=type%3Dwebinar&`;
+        const searchUrl = `${searchAPI}?term=*&customField=type%3Dwebinar&limit=100&`;
+
+        // onload reset the form
+        filtersNode.reset();
+
         const upcomingObj = {
           and: [
             {
@@ -692,8 +697,44 @@
          * Initialize
          */
         (async () => {
-          doListing(searchUrl, resultsNode, upcomingObj, "asc");
-          //doListing(searchUrl, resultsNode, onDemandObj, "desc");
+          doListing(searchUrl, upcomingNode, upcomingObj, "asc");
+          doListing(searchUrl, onDemandNode, onDemandObj, "desc");
+
+            filtersNode.addEventListener("change", (event) => {
+                event.preventDefault();
+                
+                const formData = new FormData(filtersNode);
+                const studylevel = formData.get("studylevel");
+                const region = formData.get("region");
+                const category = formData.get("category");
+    
+                // Build filter objects
+                const buildFilterObject = () => {
+                    const filterObj = { and: [] };
+        
+                    if (studylevel) {
+                        filterObj.and.push({ "custom_fields.level": studylevel });
+                    }
+                    if (region) {
+                        filterObj.and.push({ "custom_fields.country": region });
+                    }
+                    if (category) {
+                        filterObj.and.push({ "custom_fields.tag": category });
+                    }
+        
+                    return filterObj;
+                };
+    
+                const updatedUpcomingObj = { ...upcomingObj };
+                updatedUpcomingObj.and = [...upcomingObj.and, ...buildFilterObject().and];
+    
+                const updatedOnDemandObj = { ...onDemandObj };
+                updatedOnDemandObj.and = [...onDemandObj.and, ...buildFilterObject().and];
+    
+                // Fetch and display updated listings
+                doListing(searchUrl, upcomingNode, updatedUpcomingObj, "asc");
+                doListing(searchUrl, onDemandNode, updatedOnDemandObj, "desc");
+            });
         })();
       })();
     </script>

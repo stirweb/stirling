@@ -32,6 +32,9 @@
     Return the node id part from a url (#nodeid)
   */
   const getLinkId = (href) => {
+    console.log(href);
+    if (!href) return "";
+
     const contentUris = href.split("#");
     return contentUris.length > 1 ? contentUris[1] : "";
   };
@@ -69,7 +72,11 @@
     Handle click events
    */
   const handleClick = (e) => {
-    const contentId = getLinkId(e.target.href);
+    console.log(e);
+
+    const aTag = e.target.closest("a");
+
+    const contentId = getLinkId(aTag.href);
     if (contentId) {
       const offset = offsets[stir.MediaQuery.current] ? offsets[stir.MediaQuery.current] : 100;
       slideToContent(document.getElementById(contentId), offset);
