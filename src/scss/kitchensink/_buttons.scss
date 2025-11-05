@@ -1,10 +1,18 @@
 /*
     Default Button Style Component
-
     Also .expanded
 */
 
+:root {
+  --button-border-width: 4px;
+}
+
+/* 
+  Actual button 
+*/
 button {
+  cursor: pointer;
+  text-wrap: pretty;
   border-style: none;
   background: none;
   font-size: inherit;
@@ -13,23 +21,20 @@ button {
 }
 
 button:focus {
-  outline: 1px solid $heritage-green;
+  outline: 2px solid $heritage-green;
   outline-offset: 4px;
 }
 
-/* Default */
+/* 
+  Default .button
+*/
 .button {
   background-color: $heritage-green;
+  text-wrap: pretty;
   color: $white;
   text-decoration: none;
+  border: var(--button-border-width) solid transparent;
   cursor: pointer;
-
-  &:hover {
-    background-color: tint($heritage-green, 85%);
-  }
-}
-
-.button {
   display: inline-block;
   font-family: $body-font-family !important;
   font-size: 1.25rem;
@@ -40,6 +45,14 @@ button:focus {
   margin-top: 1rem;
   margin-bottom: 1rem;
   min-width: 14rem;
+
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  &:hover {
+    background-color: $white;
+    border: var(--button-border-width) solid $heritage-green;
+    color: $heritage-green;
+  }
 
   a {
     color: $white;
@@ -52,18 +65,27 @@ button:focus {
     }
   }
 
-  border: 2px solid transparent;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-  &:hover {
-    border-bottom-color: transparent;
+  &:after {
+    // content: "\e97b";
+    // font-family: "uos";
+    // margin: 0 0 0 10px;
+    // position: relative;
+    content: var(--icon-chevron-right);
+    width: 24px;
+    height: 24px;
+    position: relative;
+    right: -4px;
+    top: 5px;
+    display: inline-block;
+    color: #ffff;
   }
 
-  &:after {
-    content: "\e97b";
-    font-family: "uos";
-    margin: 0 0 0 10px;
-    position: relative;
+  &::after {
+    filter: brightness(0) invert(1);
+  }
+
+  &:hover::after {
+    filter: icon-filter($heritage-green);
   }
 
   &.no-arrow:after {
@@ -74,11 +96,23 @@ button:focus {
   &.tiny {
     padding: 1.1em 1em;
     font-size: 0.875rem;
+
+    &:after {
+      width: 16px;
+      height: 16px;
+      top: 3px;
+    }
   }
 
   &.small {
     padding: 1.1em 1em;
     font-size: 1rem;
+
+    &:after {
+      width: 20px;
+      height: 20px;
+      top: 4px;
+    }
   }
 
   &.button-gap--right {
@@ -101,6 +135,7 @@ button:focus {
         Button Colors - this will handle each color variation (e.g. heritage-green, enery-pink, ...)
   */
 
+  // Deprecated - for Brand 2025 its defined in colours.scss
   @each $name, $color in $button-palette {
     &.#{$name} {
       background-color: $color;
@@ -111,45 +146,57 @@ button:focus {
         background-color: #ffffff;
         border-color: $color;
         color: $color;
-      }
-    }
-  }
 
-  &.hollow {
-    background: transparent;
-    color: $heritage-green;
-    border: 1px solid $heritage-green;
-
-    &:hover {
-      background-color: transparent;
-      border: 1px solid tint($heritage-green, 50%);
-    }
-
-    &:focus {
-      background-color: transparent;
-      color: $heritage-green;
-    }
-  }
-
-  @each $name, $color in $button-palette {
-    &.#{$name} {
-      &.hollow {
-        background: transparent;
-        color: $color;
-        border: 1px solid $color;
-
-        &:hover {
-          background-color: transparent;
-          border: 1px solid tint($color, 50%);
-        }
-
-        &:focus {
-          background-color: transparent;
-          color: $color;
+        &::after {
+          filter: icon-filter($color);
         }
       }
     }
   }
+
+  // &.hollow {
+  //   background: transparent;
+  //   color: $heritage-green;
+  //   border: var(--button-border-width) solid $heritage-green;
+
+  //   &::after {
+  //     filter: icon-filter($heritage-green);
+  //   }
+
+  //   &:hover {
+  //     background-color: transparent;
+  //     border: var(--button-border-width) solid tint($heritage-green, 50%);
+  //   }
+
+  //   &:focus {
+  //     background-color: transparent;
+  //     color: $heritage-green;
+  //   }
+  // }
+
+  // @each $name, $color in $button-palette {
+  //   &.#{$name} {
+  //     &.hollow {
+  //       background: transparent;
+  //       color: $color;
+  //       border: var(--button-border-width) solid $color;
+
+  //       &::after {
+  //         filter: icon-filter($color);
+  //       }
+
+  //       &:hover {
+  //         background-color: transparent;
+  //         border: var(--button-border-width) solid tint($color, 50%);
+  //       }
+
+  //       &:focus {
+  //         background-color: transparent;
+  //         color: $color;
+  //       }
+  //     }
+  //   }
+  // }
 
   &.clear {
     border-color: transparent;
@@ -185,99 +232,63 @@ button:focus {
 }
 
 /* 
-    Button pseudo-elements 
+    Button variations
  */
 
-.button--close:after {
-  content: "\e905";
+// Back
+.button--back {
+  &:before {
+    //content: "\e97a";
+    //font-family: "uos";
+    //margin: 0 10px 0 0;
+    content: var(--icon-chevron-left);
+    position: relative;
+    width: 24px;
+    height: 24px;
+    right: 4px;
+    top: 5px;
+    display: inline-block;
+  }
+
+  &:before {
+    filter: brightness(0) invert(1);
+  }
+
+  &:hover:before {
+    filter: icon-filter($heritage-green);
+  }
+
+  &:after {
+    content: "";
+  }
 }
 
-.button--back:before {
-  content: "\e97a";
-  font-family: "uos";
-  margin: 0 10px 0 0;
-  position: relative;
-}
-
-.button--back:after {
-  content: "";
-}
-
-.button--dropdown:after {
-  content: "\e979";
-  font-family: "uos";
-}
-
+// Mobile navigation - replace with utility class
 .button--left-align {
   text-align: left;
 }
 
-@include breakpoint(medium down) {
-  .button {
-    font-size: 1.125rem; // 18px;
-  }
-
-  .button.x-large {
-    padding: 18px;
-  }
-}
-
-/* 
-    Button variations
- */
-
-.c-dropdown-wrapper {
-  display: inline-block;
-  position: relative;
-
-  .button--dropdown {
-    margin: 0;
-
-    &:after {
-      content: "\e979";
-    }
-  }
-
-  .dropdown-pane {
-    position: absolute;
-    background-color: #fff;
-    padding: 10px;
-    border: 0px solid #cacaca;
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.12);
-    width: 100%;
-
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    a {
-      border-bottom: 0px solid $heritage-green;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-/* 
-    Button component variation - outline ghost style
- */
-
+// outline ghost style
+/*
 .button.outine-button {
   background: transparent;
-  border: 2px solid $heritage-green;
+  border: var(--button-border-width) solid $heritage-green;
   color: $heritage-green;
+
+  &::after {
+    filter: icon-filter($heritage-green);
+  }
 
   &:hover {
     background-color: transparent;
-    border: 2px solid tint($heritage-green, 50%);
+    border: var(--button-border-width) solid tint($heritage-green, 50%);
   }
+
   &:focus {
     background-color: transparent;
     color: $heritage-green;
   }
-}
+}*/
 
 /* 
     Overides for white--all
@@ -288,18 +299,27 @@ button:focus {
   background-color: transparent;
   border-color: #fff;
 
-  &.hollow {
-    border-width: 1px;
-  }
-
   &:hover {
     background-color: transparent;
     color: #fff;
     border-color: rgba(255, 255, 255, 0.5);
   }
+
   &:focus {
     background-color: transparent;
   }
+
+  &::after {
+    filter: brightness(0) invert(1);
+  }
+
+  &:hover::after {
+    filter: brightness(0) invert(1);
+  }
+}
+
+.dark .darkmode .button:hover {
+  background-color: $white; // New wrapper darkmode fix
 }
 
 .u-white--all.button:hover {
@@ -312,7 +332,7 @@ button:focus {
 }
 
 .u-white--all button:focus {
-  outline: 1px solid $white;
+  outline: 2px solid $white;
 }
 
 /* 
@@ -335,27 +355,9 @@ input:checked {
   }
 }
 
-/*
-    Button that is styled to look like a link 
-    (see scholarship finder)
-
-
-.c-link-button {
-  background-color: transparent;
-  color: $heritage-green;
-  text-align: left;
-  padding: 1em 0;
-
-  &:hover,
-  &:focus {
-    background-color: transparent;
-    color: $heritage-green;
-  }
-}
-  */
-
 /* 
     Button style that can have a icomoon span icon in it 
+    Only used on virtual tour at the moment
 */
 
 .button-icon span[class^="uos-"] {
@@ -488,6 +490,20 @@ input:checked {
 
   &.u-sticky__small.u-sticky.stuck {
     width: 77%;
+  }
+}
+
+/*
+    Responsive amends
+*/
+
+@include breakpoint(medium down) {
+  .button {
+    font-size: 1.125rem; // 18px;
+  }
+
+  .button.x-large {
+    padding: 18px;
   }
 }
 

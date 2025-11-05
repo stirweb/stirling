@@ -193,6 +193,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/event.js"
       },
       {
+        "id": 198067,
+        "description": "event-2.js",
+        "projectPath": "medias/Categorised/Dist/js/other/event-2.js"
+      },
+      {
         "id": 158062,
         "description": "eventbrite.js",
         "projectPath": "medias/Categorised/Dist/js/other/eventbrite.js"
@@ -328,6 +333,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/searchpage-canuser.js"
       },
       {
+        "id": 192023,
+        "description": "share.js",
+        "projectPath": "medias/Categorised/Dist/js/other/share.js"
+      },
+      {
         "id": 158089,
         "description": "snow.js",
         "projectPath": "medias/Categorised/Dist/js/other/snow.js"
@@ -366,6 +376,11 @@
         "id": 158096,
         "description": "testimonial-search-5.js",
         "projectPath": "medias/Categorised/Dist/js/other/testimonial-search-5.js"
+      },
+      {
+        "id": 198185,
+        "description": "testimonial-search-6.js",
+        "projectPath": "medias/Categorised/Dist/js/other/testimonial-search-6.js"
       },
       {
         "id": 158097,
@@ -1633,6 +1648,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/events.js"
       },
       {
+        "id": 198030,
+        "description": "events-2.js",
+        "projectPath": "medias/Categorised/Dist/js/other/events-2.js"
+      },
+      {
         "id": 164307,
         "description": "index.php",
         "projectPath": "medias/Categorised/Dist/php/experts/index.php"
@@ -1688,6 +1708,11 @@
         "projectPath": "medias/Categorised/Dist/css/campaigns/merry-christmas.css"
       },
       {
+        "id": 195920,
+        "description": "share.css",
+        "projectPath": "medias/Categorised/Dist/css/campaigns/share.css"
+      },
+      {
         "id": 176763,
         "description": "favourites.js",
         "projectPath": "medias/Categorised/Dist/js/other/favourites.js"
@@ -1739,9 +1764,19 @@
         "projectPath": "medias/Categorised/Dist/js/other/pg-personalised-prospectus.js"
       },
       {
+        "id": 189816,
+        "description": "pg-personalised-prospectus-2.js",
+        "projectPath": "medias/Categorised/Dist/js/other/pg-personalised-prospectus-2.js"
+      },
+      {
         "id": 181794,
         "description": "webinars5.js",
         "projectPath": "medias/Categorised/Dist/js/other/webinars5.js"
+      },
+      {
+        "id": 189847,
+        "description": "microsites.js",
+        "projectPath": "medias/Categorised/Dist/js/other/microsites.js"
       },
       {
         "id": 185628,
@@ -1772,6 +1807,11 @@
         "id": 187507,
         "description": "email-signature-primary-personal-tutor.html",
         "projectPath": "medias/Categorised/Dist/html/email-signature-primary-personal-tutor.html"
+      },
+      {
+        "id": 198000,
+        "description": "search-min.js",
+        "projectPath": "medias/Categorised/Dist/js/addsearch/search-min.js"
       }
     ]
   }

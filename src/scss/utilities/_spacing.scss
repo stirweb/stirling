@@ -355,6 +355,10 @@ ul.no-bullet {
   padding-right: 8px;
 }
 
+.u-pr-tiny {
+  padding-right: 8px;
+}
+
 /* Size 1 */
 
 .u-p-1 {
@@ -589,6 +593,14 @@ ul.no-bullet {
 
   .u-pb-2-small {
     padding-bottom: 32px;
+  }
+}
+
+/* Padding for medium up only */
+
+@media screen and #{breakpoint(medium down)} {
+  .u-mt-2-medium-down {
+    margin-top: 32px;
   }
 }
 

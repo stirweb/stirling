@@ -1,3 +1,292 @@
+/**
+ * Support functions for course page and modules
+ * Mainly HTML DOM stuff and hard-coded text.
+ */
+
+var stir = stir || {};
+stir.templates = stir.templates || {};
+
+stir.templates.course = {
+	colours: {
+		UG: ["heritage-green","energy-turq","energy-purple"],
+		PGT: ["heritage-purple","heritage-purple","heritage-green"],
+		PGR: ["heritage-purple","heritage-purple","heritage-green"]
+	},
+	link: (text,href) => `<a href="${href}">${text}</a>`,
+	para: content => `<p>${content}</p>`,
+	option: option => `Starting ${option[3]}, ${option[1].toLowerCase()} (${option[4]})`,
+	div: id => {
+		const div = document.createElement('div');
+		div.id = id; return div;
+	},
+	dialogue: id => {
+		const d = document.createElement('dialog');
+		const x = document.createElement('button');
+		const p = document.createElement('button');
+		const n = document.createElement('button');
+		const w = document.createElement('nav');
+
+		const prev = stir.dpt.show.previous;
+		const next = stir.dpt.show.next;
+
+		id && (d.id = id);
+		d.setAttribute('data-module-modal','');
+		w.setAttribute('aria-label','module navigation');
+		w.append(p,n);
+		d.append(x);
+		d.append(w);
+
+		x.addEventListener("click",e=>d.close());
+		p.addEventListener("click",prev.bind(p));
+		n.addEventListener("click",next.bind(n));
+
+		x.textContent = "Close";
+		p.innerHTML = '<span class="uos-arrows-up"></span> Previous';
+		n.innerHTML = '<span class="uos-arrows-down"></span> Next';
+		return d;
+	},
+
+	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,
+
+	offline: `<p class="text-center c-callout">Module information is temporarily unavailable.</p>`,
+
+	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2025. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
+};
+
+stir.templates.course.barcharts = (barcharts) => {
+	
+	function onIntersection(entries, opts) {
+		
+		entries.forEach((entry) => {
+		  if (entry.isIntersecting) {
+			const value = Number(entry.target.dataset.value);
+			const unit = entry.target.dataset.unit;
+			const max = Number(entry.target.dataset.max);
+			const colour = entry.target.dataset.colour || "energy-turq";
+	
+			const perc = (value / max) * 100;
+			const percInverted = 100 - perc;
+			const percInvertedFixed = percInverted > 98 ? 98 : percInverted;
+	
+			const textPositionInit = perc / 2 - 0.5;
+			const textPosition = textPositionInit === 0 ? 1 : textPositionInit;
+	
+			const frag = stir.createDOMFragment(`<div>
+													<div class="barchart-value u-top-0 u-bottom-0 u-bg-${colour} u-absolute" style="right:${percInvertedFixed}%"></div>
+													<div class="barchart-text u-relative u-white u-font-bold text-md u-z-50" style="left:${Math.abs(textPosition)}%"></div>
+												</div>`);
+			entry.target.append(frag);
+		  } else {
+			entry.target.innerHTML = ``;
+		  }
+		});
+	  }
+	
+	  // define observer instances
+	  const observerBarcharts = new IntersectionObserver(onIntersection, {
+		root: null,
+		threshold: 0.5,
+	  });
+	
+	  barcharts.forEach((el) => {
+		observerBarcharts.observe(el);
+	  });
+
+};
+
+stir.templates.course.module = (boilerplates, count, data) => {
+	if (!boilerplates) return 'no data';
+	if (!data || undefined===data.moduleTitle || undefined===data.moduleCode || undefined===data.moduleLevel || undefined===data.moduleCredits || undefined===data.moduleOverview || undefined===data.learningOutcomes) {
+		return '<div class=u-my-2><p>Sorry, there was an error fetching the module details. Please try again later.</p></div>';
+	}
+
+	var otherInfo,additionalCosts;
+
+	const colour = stir.templates.course.colours[data.moduleLevelDescription||"UG"]||stir.templates.course.colours["UG"];
+
+	const studyAbroad = (()=>{
+		if (data.studyAbroad !== "Yes") return;
+		return `<h3 class="header-stripped u-bg-${colour[0]}--10 u-p-1 u-heritage-line-left u-border-width-5 u-text-regular">Visiting overseas students</h3>
+		${boilerplates["studyAbroad"]?boilerplates["studyAbroad"]:''}
+		${boilerplates["studyAbroadLink"]?`<p><a href="${boilerplates["studyAbroadLink"]}">Find out more about our study abroad opportunities.</a></p>`:''}`;
+	})();
+
+	const furtherDetails = (()=>{
+		if(!otherInfo && !studyAbroad && !additionalCosts) return '';
+		return `<div class="cell u-mt-2">
+				<h2 id="further">Further details</h2>
+				${otherInfo?otherInfo:''}
+				${studyAbroad?studyAbroad:''}
+				${additionalCosts?additionalCosts:''}
+			</div>`;
+	})();
+
+	const onlyUnique = (value, index, self)  => self.indexOf(value) === index;
+	const reducer = (accumulator, currentValue) => accumulator + currentValue;
+	const mapper  = (item) => Number(item.percent);
+	const assessmentPercentTotal = data => data.map(mapper).reduce(reducer, 0);
+	const assessment = item => 
+			`<div>
+				<span class="u-inline-block u-p-tiny u-px-1">${item.category}</span>
+				<div class="u-flex">
+					<div class="barchart u-relative u-flex u-flex1 align-middle u-overflow-hidden u-bg-light-medium-grey" data-value="${item.value}" data-max="100" data-unit="%" data-colour="${colour[1]}"></div>
+					<div class="u-pl-2 text-xlg u-font-primary u-line-height-1 u-${colour[1]} u-top--16 u-relative">${item.value}%</div>
+				</div>
+			</div>`;
+
+	function assessments(data) {
+		if(!data || !data[0] || !data[0]["tabAssessments"]) return '<p>Assessment information is not available for this module.</p>';
+		data = data[0]["tabAssessments"];
+		const categories = data.map((item) => item.category).filter(onlyUnique);
+		const width = 12; //categories.length<2?12:6;
+		const AssessmentCategorySummaries = categories.map((category) => {
+				return {
+					category: category,
+					value: data.filter(item => category===item.category).map(mapper).reduce(reducer, 0)
+				};
+			});
+	  
+		return 100===assessmentPercentTotal(data)?`<div class="grid-x grid-padding-x" id="assessments"><div class="cell large-${width} u-mb-1">${AssessmentCategorySummaries.map(assessment).join('')}</div></div>`:'';
+	}
+
+	const discoverLink = "UG"===data.moduleLevelDescription?boilerplates.awardsCtaUG:boilerplates.awardsCtaPG;
+	const discoverLevel = "UG"===data.moduleLevelDescription?'undergraduates':'postgraduates';
+
+	return `    <style>
+     .barchart {
+            height: 18px;
+        }
+
+     .barchart-value {
+            width: 2400px;
+            right: 100%;
+            animation: 1s u-horz-slide-in-out forwards;
+	}
+	nav[data-mc="0"] button:first-child,
+	nav[data-mc="${count}"] button:last-child {
+		background-color: #666;
+		cursor: not-allowed;
+	}
+	
+	</style>
+<main class="wrapper-content u-padding-bottom" aria-label="Main content" id="content">
+	<div class="grid-container" data-api="PROD">
+		<div class="grid-x grid-padding-x u-my-2 align-middle">
+			<div class="cell large-6 c-course-title u-padding-y">
+				<h1 class="u-header-smaller">${data.moduleTitle}</h1>
+			</div>
+			<div class="cell large-6">
+				<div class="u-border u-border-width-5 flex-container u-px-3 u-py-2">
+					<div class="grid-x grid-padding-x">
+						<div class="cell medium-6 flex-container u-gap u-p-1">
+							<span class="u-heritage-green u-inline-block u-width-48"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="svg-icon"><path d="M.75,0V15M7.417,0V15M9.639,0V15M11.861,0V15M15.194,0V15M16.306,0V15M19.639,0V15M20.75,0V15M4.083,0V15M5.194,0V15" transform="translate(1.25 4.5)" stroke-miterlimit="10"></path></svg></span>
+							<span><strong>Module code:</strong><br>${data.moduleCode}</span>
+						</div>
+						<div class="cell medium-6 flex-container u-gap u-p-1">
+							<span class="u-heritage-green u-inline-block u-width-48"><svg
+									xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"
+									class="svg-icon">
+									<path d="M1.1,11.99,9.422,3.942l4.57,4.57L21.659.845M17.756.75h3.99V4.88"
+										transform="translate(0.579 5.573)" stroke-linecap="round"
+										stroke-linejoin="round"></path>
+								</svg></span>
+							<span><strong>SCQF level:</strong><br>${data.moduleLevel&&data.moduleLevel.replace('SCQF LEVEL ','')}</span>
+						</div>
+						<div class="cell medium-6 flex-container u-gap u-p-1">
+							<span class="u-heritage-green u-inline-block u-width-48"><svg
+									xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+									viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"
+									class="svg-icon">
+									<path
+										d="M6.58.52,8.452,4.314l4.187.608L9.609,7.875l.715,4.171L6.58,10.077,2.835,12.045,3.55,7.875.521,4.922l4.187-.608Zm8.889,8.547-2.574.374,1.863,1.816-.44,2.565,2.3-1.211,2.3,1.211-.44-2.565,1.863-1.816-2.574-.374L16.621,6.734Zm-5.076,7.371-2.21.321,1.6,1.56L9.4,20.52l1.977-1.04,1.977,1.04-.378-2.2,1.6-1.56-2.212-.321-.989-2Z"
+										transform="translate(1.566 1.48)" fill="rgba(255,255,255,0)"
+										stroke-linecap="round" stroke-linejoin="round"></path>
+								</svg></span>
+							<span><strong>SCQF credits:</strong><br>${data.moduleCredits}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="grid-container">
+		<div class="grid-x grid-padding-x start">
+			<div class="cell medium-9 bg-grey u-bleed u-p-2">
+				<p>The module information below is for the 2025/6 intake and may be subject to change, including in
+					response to student feedback and continuous innovation development. See our 
+					<a href="/study/important-information-for-applicants/terms-conditions/2023-24-student-terms-and-conditions/">
+					terms and conditions</a> for more information.</p>
+			</div>
+			<div class="cell u-p-2">
+				<h2 id="contentandaims">Content and aims</h2>
+				<h3 class="header-stripped u-bg-${colour[0]}--10 u-${colour[0]}-line-left u-p-1 u-border-width-5 u-text-regular">
+					Module overview
+				</h3>
+				${data.moduleOverview}
+
+				<h3 class="header-stripped u-bg-${colour[0]}--10 u-${colour[0]}-line-left u-p-1 u-border-width-5 u-text-regular u-mt-2">Learning outcomes</h3>
+				<p><strong>${boilerplates["outcomesIntro"]}</strong></p>
+				<ul>${data.learningOutcomes.map(item=>`<li>${item}</li>`).join('')}</ul>
+			</div>
+			<div class="cell u-p-2">
+				<h2 id="teaching">Teaching and assessment</h2>
+				${boilerplates["teachingIntro"]||"<kbd>NO DATA</kbd>"}
+
+				<h3 class="header-stripped u-bg-${colour[1]}--10 u-p-1 u-${colour[1]}-line-left u-border-width-5 u-text-regular u-mt-2">Engagement overview</h3>
+				<div class="grid-x grid-padding-x" id="deliveries">
+					<div class="cell">
+						<p>Engagement and teaching information isn't currently available, but it will be made clear to you when you make your module selections.</p>
+					</div>
+				</div>
+
+				<h3 class="header-stripped u-bg-${colour[1]}--10 u-p-1 u-${colour[1]}-line-left u-border-width-5 u-text-regular u-mt-3">Assessment overview</h3>
+
+				${assessments(data.assessments)}
+
+				${boilerplates["teachingTimetableInfo"]||""}
+
+			</div>
+
+			<div class="cell u-mt-2">
+				<h2 id="awards">Awards</h2>
+				<h3 class="header-stripped u-bg-${colour[2]}--10 u-p-1 u-${colour[2]}-line-left u-border-width-5 u-text-regular">Credits</h3>
+				<p class="flex-container u-gap align-middle"><img src="https://www.stir.ac.uk/media/dist/images/modules/scotland-flag.png" width="65" height="44" alt="Scotland flag"> This module is worth ${data.moduleCredits} SCQF (Scottish Credit and Qualifications Framework) credits.</p>
+				<p class="flex-container u-gap align-middle"><img src="https://www.stir.ac.uk/media/dist/images/modules/EU-flag.png" width="65" height="44" alt="EU flag"> This equates to ${data.ectsModuleCredits} ECTS (The European Credit Transfer and Accumulation System) credits.</p>
+				<div class="u-mb-2 u-bg-${colour[2]}--10 flex-container align-stretch">
+					<span class="u-bg-${colour[2]} u-white flex-container align-middle u-width-64 u-px-1">
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="svg-icon">
+							<path d="M14.667,4.5,23,12.833m0,0-8.333,8.333M23,12.833H3" transform="translate(-1 -0.833)" stroke-linecap="round" stroke-linejoin="round"></path>
+						</svg>
+					</span>
+					<p class="u-p-1 u-m-0 u-black"><strong>Discover more:</strong> <a href="${discoverLink}" class="u-${colour[2]}">Assessment and award of credit for ${discoverLevel}</a></p>
+				</div>
+			</div>
+			${furtherDetails}
+		</div>
+	</div>
+</main>`;};
+
+var stir = stir||{};
+
+stir.akari = (() => {
+
+    const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
+	const domain = 'www.stir.ac.uk';
+	const path = '/data/pd-akari/?module=';
+	const url = `https://${domain}${path}`;
+
+    const get = {
+		rel: id => path + id,
+		module: (id, callback) => stir.getJSON(url + id, callback)
+	};
+
+
+    return {
+		get: get    // stir.akari.get.module(id,callback)
+	};
+
+})();
 /*
  * Country specific entry requirements select box processes
  * @author: Ryan Kaye
@@ -191,9 +480,9 @@ stir.components.discoveruni.widget = function (options) {
   return widget;
 };
 stir.components.html.details = function (options) {
-    var widget = document.createElement('details');
-    options.summary && (widget.innerHTML = '<summary>' + options.summary + '</summary>');
-    return widget;
+  var widget = document.createElement("details");
+  options.summary && (widget.innerHTML = "<summary>" + options.summary + "</summary>");
+  return widget;
 };
 
 stir.components.accordion = function (options) {
@@ -234,8 +523,8 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
   var widgets = [];
 
   if (debug) {
-    console.info("[Discover Uni] kiscodes:", kiscodes, kiscodes.length);
-    console.info("[Discover Uni] kiswidget:", kiswidget);
+    console.info("[Course] kiscodes:", kiscodes, kiscodes.length);
+    console.info("[Course] kiswidget:", kiswidget);
   }
 
   if (kiswidget && kiscodes) {
@@ -290,7 +579,7 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
             summary: "View more Discover Uni information",
           });
 
-		  contentInsertionNode.classList.add("u-my-2","u-cursor-pointer","u-header--secondary-font","text-larger");
+          contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
           kiswidget.insertAdjacentElement("afterend", contentInsertionNode);
           //new stir.accord(contentInsertionNode);
           //contentInsertionNode = contentInsertionNode.querySelector("[data-tab-content]");
@@ -342,6 +631,8 @@ var KISWidgetCaller = function () {
  * Clearing
  */
 (function () {
+  const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
+
   function swapCourseNavForClearingBannerSticky() {
     var clearingBannerTemplate = document.getElementById("clearing-banner-template");
     var courseStickyNav = document.querySelector(".c-course-title-sticky-menu");
@@ -364,8 +655,6 @@ var KISWidgetCaller = function () {
     var whatnext = document.querySelector(".c-whats-next");
     if (callstoact && whatnext) {
       whatnext.insertAdjacentElement("beforebegin", callstoact);
-      whatnext.classList.remove("u-margin-top");
-      callstoact.classList.add("u-margin-top");
     }
   }
 
@@ -376,14 +665,54 @@ var KISWidgetCaller = function () {
     }
   }
 
+  function activateLiveChat() {
+    window.__lc = window.__lc || {};
+    window.__lc.license = 9913300;
+    window.__lc.integration_name = "manual_channels";
+    window.__lc.product_name = "livechat";
+    (function (n, t, c) {
+      function i(n) {
+        return e._h ? e._h.apply(null, n) : e._q.push(n);
+      }
+      var e = {
+        _q: [],
+        _h: null,
+        _v: "2.0",
+        on: function () {
+          i(["on", c.call(arguments)]);
+        },
+        once: function () {
+          i(["once", c.call(arguments)]);
+        },
+        off: function () {
+          i(["off", c.call(arguments)]);
+        },
+        get: function () {
+          if (!e._h) throw new Error("[LiveChatWidget] You can't use getters before load.");
+          return i(["get", c.call(arguments)]);
+        },
+        call: function () {
+          i(["call", c.call(arguments)]);
+        },
+        init: function () {
+          var n = t.createElement("script");
+          (n.async = !0), (n.type = "text/javascript"), (n.src = "https://cdn.livechatinc.com/tracking.js"), t.head.appendChild(n);
+        },
+      };
+      !n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e);
+    })(window, document, [].slice);
+  }
+
   if (self.stir && stir.t4Globals && stir.t4Globals.clearing) {
     // If we are in Clearing AND promos may be shown, then swap-out sticky nav:
     if (stir.t4Globals.clearing.open && stir.t4Globals.clearing.showPromos) {
+      debug && console.info("[Course] Clearing is open");
       swapCourseNavForClearingBannerSticky();
       addCoursePageAdvert(document.getElementById("clearing-advert-template"));
       new UoS_StickyWidget(document.querySelector(".u-sticky"));
       relocateCTA(); // During Clearing, shunt normal CTAs to the bottom of the page so they are out of the way.
       unshiftStirTabsOverlap(); // stylistic tab ovelap not compatible with sticky/z-index etc. disable it during clearing.
+      activateLiveChat();
     }
   }
 })();
@@ -401,7 +730,7 @@ var KISWidgetCaller = function () {
   }
 })();
 
-/**
+/*
  * Favourites buttons
  * 2023-05-10
  */
@@ -410,12 +739,81 @@ if (stir.favourites && stir.coursefavs) {
   document.querySelectorAll("[data-nodeid=coursefavsbtn]").forEach(stir.coursefavs.doCourseBtn);
 }
 
+/*
+ * Webinars button fetch and render
+ * Uses AddSearch to find upcoming webinars for this course
+ * November 2025
+ */
+
+(function () {
+  /*
+   *  Fetch and render webinar button
+   */
+  const renderButton = (item, colour) => {
+    const data = JSON.parse(decodeURIComponent(item.custom_fields.data) || "{}");
+    if (!data.register) return ``;
+    return `<a href="${data.register}" id="cta-pg-webinar" class="button ${colour}"><span class="u-font-bold u-text-regular">Join our webinar</span></a>`;
+  };
+
+  /*
+   *  Build search object
+   */
+  const getSearchObject = (from, to, filter) => {
+    const obj = {
+      and: [
+        { "custom_fields.tag": filter },
+        {
+          range: { "custom_fields.d": { gt: from, lt: to } },
+        },
+      ],
+    };
+    return obj;
+  };
+
+  /*
+   * Initiate fetch
+   */
+
+  const breadcrumb = document.querySelector("meta[name='stir.breadcrumb']").getAttribute("content");
+  const colour = breadcrumb.includes("Undergraduate") ? "energy-turq" : breadcrumb.includes("Postgraduate") ? "heritage-berry" : "";
+
+  const sid = document.querySelector("meta[name='sid']").getAttribute("content");
+  const suggestedNode = document.getElementById("course-suggested-actions");
+
+  if (!sid || !suggestedNode) return;
+
+  const now = new Date().toISOString();
+  const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+  const searchUrl = `${searchAPI}?term=*&filter=${encodeURIComponent(JSON.stringify(getSearchObject(now, "2099-12-31", "sid" + sid)))}&limit=3`;
+
+  fetch(searchUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.total_hits > 0) {
+        // get the number of a elements already in suggested actions
+        const existingButtons = suggestedNode.querySelectorAll("a.button");
+        // if more then 2 buttons remove the last one then add the webinar button
+        if (existingButtons.length > 2) {
+          suggestedNode.removeChild(existingButtons[existingButtons.length - 1]);
+        }
+        suggestedNode.insertAdjacentHTML("afterbegin", renderButton(data.hits[0], colour));
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching search data:", error);
+    });
+})();
+
+/**
+ * API wrapper for the Degree Programme Tables
+ */
+
 var stir = stir || {};
 
 stir.dpt = (function () {
   const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
   const _semestersPerYear = 2;
-  const viewMoreModulesThreshold = 4;
+  const viewMoreModulesThreshold = 5;
   const config = {
     css: {
       truncateModuleCollection: "c-course-modules__accordion-content--hide-rows",
@@ -426,6 +824,7 @@ stir.dpt = (function () {
     },
   };
   let user = {}, _year=0, _semesterCache=[];
+  let _moduleCache=[],_mcPointer=0;
   let routesCurry;
   
   function resetGlobals() {
@@ -437,15 +836,16 @@ stir.dpt = (function () {
     PG: "opt=runpgcode&ct=PG",
   };
   const currentVersion = {
-    UG: 362,
-    PG: 357
+    UG: "",//436, //362
+    PG: "" //417  //357
   };
+  debug && console.info(`[DPT] using versions `, currentVersion);
 
   const PORTAL = "https://portal.stir.ac.uk";
 
   const urls = {
     // Akari module viewer:
-    viewer: window.location.hostname != "www.stir.ac.uk" ? `https://${window.location.hostname}/terminalfour/preview/1/en/33273` : "/courses/module/",
+    viewer: window.location.hostname.indexOf("stiracuk-cms01") !== -1 ? `/terminalfour/preview/1/en/33273` : "/courses/module/",
     // Portal web frontend:
     calendar: `${PORTAL}/calendar/calendar`,
     // Portal data endpoints:
@@ -470,14 +870,14 @@ stir.dpt = (function () {
   //		user.type=type;
   //	};
 
-  const spitCodes = (csv) => csv.replace(/\s/g, "").split(",");
+  const splitCodes = (csv) => csv.replace(/\s/g, "").split(",");
 
   const getVersion = (type) => stir.getJSONp(`${urls.version[type]}`);
 
   const getRoutes = (type, routesCSV, auto) => {
     user.type = type;
     user.auto = auto;
-    stir.dpt.show.routes = routesCurry(spitCodes(routesCSV));
+    stir.dpt.show.routes = routesCurry(splitCodes(routesCSV));
     stir.getJSONp(`${urls.servlet}${urls.route[type.toUpperCase()]}`);
   };
 
@@ -501,13 +901,17 @@ stir.dpt = (function () {
     return urlBits[urlBits.length - 2];
   };
 
-  const moduleLink = (data) => {
+  const moduleUrl = data => `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
+  const moduleIdentifier = data => `${data.modCode}/${data.mavSemSession}/${data.mavSemCode}`;
+
+  const moduleLink = (data,index) => {
     // LINK TO NEW AKARI MODULE PAGES
-    const url = `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
-	return availability(data) ? `<a href="${url}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
+    const link = `<a href="${moduleUrl(data)}" data-index=${index} data-spa="${moduleIdentifier(data)}">${data.modName}</a>`;
+    const fallback = `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
+	  return availability(data) ? link : fallback;
 	
     // LINK TO OLD DEGREE PROGRAM TABLES
-    //return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
+    // return `${stir.templates.course.link(data.modName,`${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`)}`;
   };
 
   const template = {
@@ -517,10 +921,19 @@ stir.dpt = (function () {
       header: (text) => `<p class=c-course-modules__collection-header>${text}</p>`,
       footer: (text) => `<p class=c-course-modules__pdm-note>${text}</p>`,
     },
-    module: (data) =>
-      `<tr><td>${moduleLink(data)}
+    module: (data) => {
+      // stash a list of modules to facilitate prev/next navigation among them
+      _moduleCache.push({
+          modName:data.modName,
+          modCode:data.modCode,
+          mavSemSession:data.mavSemSession,
+          mavSemCode:data.mavSemCode,
+          mavOccurrence:data.mavOccurrence});
+
+      return `<tr><td>${moduleLink(data,_moduleCache.length)}
 			<span class=c-course-modules__module-code>(${data.modCode})</span>
-			</td><td>${data.modCredit} credits</td></tr>`,
+			</td><td>${data.modCredit} credits</td></tr>`;
+    },
     nodata: `<tr><td colspan=2> no data </td></tr>`,
     container: (text) => `<div class="c-wysiwyg-content ${config.css.truncateModuleCollection}" data-collection-container>${text}</div>`,
   };
@@ -562,7 +975,7 @@ stir.dpt = (function () {
     return "Compulsory module";
   };
 
-  // hide the module if it's unavailable. (This condition was taken from calendar js).
+  // hide the module if it's unavailable. (This logic was taken from Portal calendar.js).
   const availability = (m) => m.mavSemSemester !== null && m.mavSemSemester.length !== 0 && m.mavSemSemester !== "[n]" && m.mavSemSemester !== "Not Available";
 
   const collectionView = stir.curry((semesterID, collection, c) => {
@@ -570,7 +983,6 @@ stir.dpt = (function () {
     let header = template.collection.header(getCollectionHeader(collection.collectionStatusCode));
     let notes = collection.collectionType == "LIST" || collection.collectionType == "CHOICE" ? template.collection.notes(collection.collectionNotes) : "";
     let body = template.collection.table(collectionId, collection.mods.map(moduleView).join(""));
-
     let footer = collection.collectionFootnote ? template.collection.footer(collection.collectionFootnote) : "";
     let more =
       collection.mods.length > viewMoreModulesThreshold
@@ -602,6 +1014,12 @@ stir.dpt = (function () {
     e.preventDefault();
   }
 
+  function viewModule(e) {
+    e.preventDefault();
+    _mcPointer = parseInt(this.getAttribute('data-index'))-1;
+    stir.dpt.show.module( this.getAttribute('data-spa'), this.getAttribute('href') );
+  }
+
   const versionToSession = (data) => {
     if(!data || !data.length) return;
 	// [2024-03-14] rwm2 -- remove DEBUG test to make it live --
@@ -622,6 +1040,7 @@ stir.dpt = (function () {
   };
 
   const modulesOverview = (data) => {
+
     let frag = document.createDocumentFragment();
     data.initialText && frag.append(paragraph(data.initialText));
 
@@ -663,6 +1082,11 @@ stir.dpt = (function () {
       var a = el.querySelector(".c-course-modules__view-more-link a");
       a && a.addEventListener("click", viewMore.bind(el));
     });
+    
+    Array.prototype.forEach.call(frag.querySelectorAll("a[data-spa]"), el => {
+      el.addEventListener("click", viewModule.bind(el));
+    });
+
 
     return frag;
   };
@@ -739,13 +1163,26 @@ stir.dpt = (function () {
 
   ///////////////////////////////////////
 
+  const na = new Function();
+
   return {
     show: {
-      fees: new Function(),
-      routes: new Function(),
-      options: new Function(),
-      modules: new Function(),
-      version: new Function()
+      fees:     na,
+      routes:   na,
+      options:  na,
+      modules:  na,
+      module:   na,
+      version:  na,
+      next: function(e) {
+        if(_mcPointer===_moduleCache.length-1) return;
+        stir.dpt.show.module( moduleIdentifier(_moduleCache[++_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
+        this.parentElement && this.parentElement.setAttribute('data-mc',_mcPointer);
+      },
+      previous: function(e) {
+        if(_mcPointer<=0) return;
+        stir.dpt.show.module( moduleIdentifier(_moduleCache[--_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
+        this.parentElement && this.parentElement.setAttribute('data-mc',_mcPointer);
+      }
     },
     get: {
       options: getOptions,
@@ -754,8 +1191,9 @@ stir.dpt = (function () {
       version: getVersion
     },
     reset: {
-      modules: new Function(),
-      options: new Function()
+      module:  na,
+      modules: na,
+      options: na
     },
     set: {
       viewer: (path) => (urls.viewer = path),
@@ -776,10 +1214,12 @@ stir.dpt = (function () {
               getModules(user.type, user.rouCode, data[0][0], data[0][2]);
             }
           }),
-        modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data))),
+        modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data),_moduleCache.length-1)),
+        module:  (callback) => (stir.dpt.show.module  =  (a,b) => callback(a,b)),
         version: (callback) => (stir.dpt.show.version = (data) => callback(versionToSession(data)))
       },
       reset: {
+        module:  (callback) => (stir.dpt.reset.module = callback),
         modules: (callback) => (stir.dpt.reset.modules = callback),
         options: (callback) => (stir.dpt.reset.options = callback),
       },
@@ -944,6 +1384,7 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 	const modes = {
 		"FT":"full time",
 		"PTO":"part time",
+		"SW":"sandwich"
 	}
 
 	const formatter = new Intl.NumberFormat('en-GB', {
@@ -1062,122 +1503,184 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 
 })(document.getElementById("course-fees-information"));
 /**
- * 
- * This file will replace JS-COURSE/MODULES.JS
- * 
+ *
+ *
  */
 
 var stir = stir || {};
-stir.templates = stir.templates || {};
 
+stir.course = (function () {
+  const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
+  const na = { auto: new Function() };
 
-stir.templates.course = {
-	link: (text,href) => `<a href="${href}">${text}</a>`,
-	para: content => `<p>${content}</p>`,
-	option: option => `Starting ${option[3]}, ${option[1].toLowerCase()} (${option[4]})`,
-	div: (id,onclick) => {
-		const div = document.createElement('div');
-		div.id = id; div.onclick = onclick;
-		return div;
-	},
-	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,
+  if (!stir.dpt) return na;
+  if (!stir.akari) return na;
+  if (!stir.templates.course) return na;
 
-	offline: `<p class="text-center c-callout">Module information is temporarily unavailable.</p>`,
+  const container = document.getElementById("course-modules-container");
+  const el = document.querySelector("[data-modules-route-code][data-modules-course-type]");
+  if (!container || !el) return na;
 
-	disclaimer: `<p><strong>The module information below provides an example of the types of course module you may study. The details listed are for the academic year that starts in September 2024. Modules and start dates are regularly reviewed and may be subject to change in future years.</strong></p>`
-};
+  const routeChooser = stir.templates.course.div("routeBrowser");
+  const optionChooser = stir.templates.course.div("optionBrowser");
+  const moduleBrowser = stir.templates.course.div("moduleBrowser");
+  const moduleViewer = stir.templates.course.dialogue("moduleViewer");
+  const moduleInfo = stir.templates.course.div("moduleInfo");
+  const version = document.querySelector("time[data-sits]");
+  const spinner = new stir.Spinner(moduleViewer);
 
+  // used to track modal/url changes
+  const status = {
+    uid: 0,
+    total: 0,
+  };
 
-stir.course = (function() {
+  let initialised = false;
 
-	const na = {auto: new Function()};
+  const parameter = {
+    route: el.getAttribute("data-modules-route-code"), // i.e. "UHX11-ACCFIN";
+    level: el.getAttribute("data-modules-course-type"), // i.e. "UG";
+    auto: true,
+  };
 
-	if(!stir.dpt) return na;
+  // initialise any accordions newly added to the DOM
+  const reflow = () => {
+    Array.prototype.forEach.call(container.querySelectorAll(".stir-accordion"), function (accordion) {
+      new stir.accord(accordion, true);
+    });
+  };
 
-	const container = document.getElementById('course-modules-container');
-	const el = document.querySelector("[data-modules-route-code][data-modules-course-type]");
-	if(!container || !el) return na;
-	
-	const routeChooser = stir.templates.course.div('routeBrowser');
-	const optionChooser = stir.templates.course.div('optionBrowser');
-	const moduleBrowser = stir.templates.course.div('moduleBrowser');
-	const version = document.querySelector('time[data-sits]');
+  const render = (data) => {
+    // Boilerplate text neccessary for module "page" popup
+    if (!boilerplates) return console.error("Boilerplate text not loaded!");
 
-	let initialised = false;
+    spinner.hide();
 
-	const parameter = {
-		route: el.getAttribute('data-modules-route-code'), // i.e. "UHX11-ACCFIN";
-		level: el.getAttribute('data-modules-course-type'), // i.e. "UG";
-		auto: true
-	};
+    // Render module information HTML:
+    moduleInfo.innerHTML = stir.templates.course.module(boilerplates, status.total, data);
 
-	// initialise any new accords just added to DOM
-	const reflow = () => {
-		Array.prototype.forEach.call(container.querySelectorAll(".stir-accordion"), function (accordion) {
-			new stir.accord(accordion, true);
-		});
-	};
+    // Find and activate any animated bar graphs:
+    stir.templates.course.barcharts(moduleInfo.querySelectorAll(".barchart"));
+  };
 
-	const handle = {
-		routes: frag => routeChooser.append(frag),
-		options: frag => optionChooser.append(frag),
-		modules: frag => {moduleBrowser.append(frag);reflow()},
-		version: frag => version && frag && (version.textContent = frag)
-	};
+  /**
+   * External "handler" functions that will be called by
+   * the API wrapper (i.e. DPT, Akari).
+   */
 
-	const reset = {
-		modules: ()=>moduleBrowser.innerHTML='',
-		options: ()=>optionChooser.innerHTML=''
-	};
-	
-	// Set up the DOM
-	container.insertAdjacentHTML("beforeend",stir.templates.course.disclaimer);
-	container.append( routeChooser, optionChooser, moduleBrowser );
-	
-	// Set up data callback/handlers
-	stir.dpt.set.show.routes( handle.routes );
-	stir.dpt.set.show.options( handle.options );
-	stir.dpt.set.show.modules( handle.modules );
-	stir.dpt.set.show.version( handle.version );
-	stir.dpt.set.reset.modules( reset.modules );
-	stir.dpt.set.reset.options( reset.options );
+  // DOM Reset functions
+  const reset = {
+    modules: () => (moduleBrowser.innerHTML = ""),
+    module: () => (moduleInfo.innerHTML = ""),
+    options: () => (optionChooser.innerHTML = ""),
+  };
 
-	const _auto = () => {
-		if(!initialised) {
-			initialised = true;
-			version && stir.dpt.get.version(parameter.level);
-			if(parameter.route.indexOf(',')>=0) {
-				stir.dpt.get.routes(parameter.level, parameter.route, parameter.auto);
-			} else {
-				stir.dpt.get.options(parameter.level, parameter.route, parameter.auto);
-			}
-		}
-	};
+  // DOM disaplay/callback functions
+  const handle = {
+    routes: (frag) => routeChooser.append(frag),
+    options: (frag) => optionChooser.append(frag),
+    modules: (frag, count) => {
+      status.total = count;
+      moduleBrowser.append(frag);
+      reflow();
+    },
+    module: (id, url) => {
+      reset.module();
+      spinner.show();
+      stir.akari.get.module(id, render);
+      moduleViewer.showModal();
+      if (url) {
+        history.pushState({ uid: ++status.uid }, "", url);
+      }
+    },
+    version: (frag) => version && frag && (version.textContent = frag),
+  };
+  /** **/
 
-	// STIR TABS AWARE
-	//const panel = container.closest && container.closest('[role=tabpanel]');
-	//if(panel && window.location.hash.indexOf(panel.id)===1) _auto();
+  // Set up the DOM:
+  container.insertAdjacentHTML("beforeend", stir.templates.course.disclaimer);
+  container.append(routeChooser, optionChooser, moduleBrowser);
+  document.body.append(moduleViewer);
+  moduleViewer.append(moduleInfo);
 
-	// STIR ACCORDION
-	//const accordion = container.closest && container.closest('[role=dave]');
-	//if(accordion && !accordion.hidden) _auto();
+  // Hook up the data callback handlers:
+  stir.dpt.set.show.routes(handle.routes);
+  stir.dpt.set.show.options(handle.options);
+  stir.dpt.set.show.modules(handle.modules);
+  stir.dpt.set.show.module(handle.module);
+  stir.dpt.set.show.version(handle.version);
+  stir.dpt.set.reset.modules(reset.modules);
+  stir.dpt.set.reset.module(reset.module);
+  stir.dpt.set.reset.options(reset.options);
 
-	// CALLBACK QUEUE - replaces the DOM checking above
-	if(stir.callback && stir.callback.queue && stir.callback.queue.indexOf("stir.course.auto")>-1) _auto();
-	// todo: empty the queue?
+  window.addEventListener("popstate", (e) => {
+    if (e.state && e.state.uid) {
+      status.uid = e.state.uid;
+    }
 
-	return {
-		auto: _auto
-	};
+    let params = new URLSearchParams(document.location.search);
+    let modurl = params.has("code") && params.has("session") && params.has("semester") && params.has("occurrence");
 
+    if (modurl) {
+      handle.module(`${params.get("code")}/${params.get("session")}/${params.get("semester")}`, null);
+    } else {
+      if (moduleViewer.open) {
+        status.uid = 0; // reset counter
+        moduleViewer.close();
+      }
+    }
+  });
+
+  moduleViewer.addEventListener("close", (e) => {
+    if (status.uid > 0) {
+      history.go(0 - status.uid);
+      status.uid = 0; // reset prev/next counter
+    }
+  });
+
+  function _auto() {
+    if (!initialised) {
+      initialised = true;
+      version && stir.dpt.get.version(parameter.level);
+      if (parameter.route.indexOf(",") >= 0) {
+        stir.dpt.get.routes(parameter.level, parameter.route, parameter.auto);
+      } else {
+        stir.dpt.get.options(parameter.level, parameter.route, parameter.auto);
+      }
+    }
+  }
+
+  function _init(data) {
+    boilerplates = data;
+  }
+
+  // STIR TABS AWARE
+  //const panel = container.closest && container.closest('[role=tabpanel]');
+  //if(panel && window.location.hash.indexOf(panel.id)===1) _auto();
+
+  // STIR ACCORDION
+  //const accordion = container.closest && container.closest('[role=dave]');
+  //if(accordion && !accordion.hidden) _auto();
+
+  // CALLBACK QUEUE - replaces the DOM checking above
+  if (stir.callback && stir.callback.queue && stir.callback.queue.indexOf("stir.course.auto") > -1) _auto();
+  // todo: empty the queue?
+
+  return {
+    init: _init, // get module boilerplate text
+    auto: _auto, // initialise and begin
+  };
 })();
 
+// Get boilerplate text first, then initialise the course page scripts:
+stir.getJSON("https://www.stir.ac.uk/data/modules/boilerplate/", (data) => stir.course.init(data));
 
 // TEMPORARY ONLY UNTIL T4 REPUBLISHES THE COURSE PAGES
 // 2024-02-07 r.w.morrison@stir.ac.uk
- 
+
 var StirUniModules = StirUniModules || {};
 StirUniModules.initialisationRoutine = stir.course.auto;
+
 /*
  * Personalisation for course pages
  */
@@ -1378,7 +1881,7 @@ StirUniModules.initialisationRoutine = stir.course.auto;
 
   var showPosition = buttonBox ? buttonBox.offsetTop + buttonBox.offsetHeight : 0;
 
-  if (stir.MediaQuery.current !== "small") {
+//  if (stir.MediaQuery.current !== "small") {
     stickyMenu.classList.add("stir__slideup");
     stickyMenu.style.display = "block";
 
@@ -1394,7 +1897,7 @@ StirUniModules.initialisationRoutine = stir.course.auto;
         e.preventDefault();
       };
     }
-  }
+//  }
 
   /* -----------------------------------------------
    * Decides whether to how or hide the sticky based on scroll position

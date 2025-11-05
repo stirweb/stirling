@@ -1,9 +1,13 @@
+/**
+ * API wrapper for the Degree Programme Tables
+ */
+
 var stir = stir || {};
 
 stir.dpt = (function () {
   const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
   const _semestersPerYear = 2;
-  const viewMoreModulesThreshold = 4;
+  const viewMoreModulesThreshold = 5;
   const config = {
     css: {
       truncateModuleCollection: "c-course-modules__accordion-content--hide-rows",
@@ -14,6 +18,7 @@ stir.dpt = (function () {
     },
   };
   let user = {}, _year=0, _semesterCache=[];
+  let _moduleCache=[],_mcPointer=0;
   let routesCurry;
   
   function resetGlobals() {
@@ -25,15 +30,16 @@ stir.dpt = (function () {
     PG: "opt=runpgcode&ct=PG",
   };
   const currentVersion = {
-    UG: 362,
-    PG: 357
+    UG: "",//436, //362
+    PG: "" //417  //357
   };
+  debug && console.info(`[DPT] using versions `, currentVersion);
 
   const PORTAL = "https://portal.stir.ac.uk";
 
   const urls = {
     // Akari module viewer:
-    viewer: window.location.hostname != "www.stir.ac.uk" ? `https://${window.location.hostname}/terminalfour/preview/1/en/33273` : "/courses/module/",
+    viewer: window.location.hostname.indexOf("stiracuk-cms01") !== -1 ? `/terminalfour/preview/1/en/33273` : "/courses/module/",
     // Portal web frontend:
     calendar: `${PORTAL}/calendar/calendar`,
     // Portal data endpoints:
@@ -58,14 +64,14 @@ stir.dpt = (function () {
   //		user.type=type;
   //	};
 
-  const spitCodes = (csv) => csv.replace(/\s/g, "").split(",");
+  const splitCodes = (csv) => csv.replace(/\s/g, "").split(",");
 
   const getVersion = (type) => stir.getJSONp(`${urls.version[type]}`);
 
   const getRoutes = (type, routesCSV, auto) => {
     user.type = type;
     user.auto = auto;
-    stir.dpt.show.routes = routesCurry(spitCodes(routesCSV));
+    stir.dpt.show.routes = routesCurry(splitCodes(routesCSV));
     stir.getJSONp(`${urls.servlet}${urls.route[type.toUpperCase()]}`);
   };
 
@@ -89,13 +95,17 @@ stir.dpt = (function () {
     return urlBits[urlBits.length - 2];
   };
 
-  const moduleLink = (data) => {
+  const moduleUrl = data => `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
+  const moduleIdentifier = data => `${data.modCode}/${data.mavSemSession}/${data.mavSemCode}`;
+
+  const moduleLink = (data,index) => {
     // LINK TO NEW AKARI MODULE PAGES
-    const url = `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
-	return availability(data) ? `<a href="${url}">${data.modName}</a>` : `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
+    const link = `<a href="${moduleUrl(data)}" data-index=${index} data-spa="${moduleIdentifier(data)}">${data.modName}</a>`;
+    const fallback = `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
+	  return availability(data) ? link : fallback;
 	
     // LINK TO OLD DEGREE PROGRAM TABLES
-    //return `${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`;
+    // return `${stir.templates.course.link(data.modName,`${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`)}`;
   };
 
   const template = {
@@ -105,10 +115,19 @@ stir.dpt = (function () {
       header: (text) => `<p class=c-course-modules__collection-header>${text}</p>`,
       footer: (text) => `<p class=c-course-modules__pdm-note>${text}</p>`,
     },
-    module: (data) =>
-      `<tr><td>${moduleLink(data)}
+    module: (data) => {
+      // stash a list of modules to facilitate prev/next navigation among them
+      _moduleCache.push({
+          modName:data.modName,
+          modCode:data.modCode,
+          mavSemSession:data.mavSemSession,
+          mavSemCode:data.mavSemCode,
+          mavOccurrence:data.mavOccurrence});
+
+      return `<tr><td>${moduleLink(data,_moduleCache.length)}
 			<span class=c-course-modules__module-code>(${data.modCode})</span>
-			</td><td>${data.modCredit} credits</td></tr>`,
+			</td><td>${data.modCredit} credits</td></tr>`;
+    },
     nodata: `<tr><td colspan=2> no data </td></tr>`,
     container: (text) => `<div class="c-wysiwyg-content ${config.css.truncateModuleCollection}" data-collection-container>${text}</div>`,
   };
@@ -150,7 +169,7 @@ stir.dpt = (function () {
     return "Compulsory module";
   };
 
-  // hide the module if it's unavailable. (This condition was taken from calendar js).
+  // hide the module if it's unavailable. (This logic was taken from Portal calendar.js).
   const availability = (m) => m.mavSemSemester !== null && m.mavSemSemester.length !== 0 && m.mavSemSemester !== "[n]" && m.mavSemSemester !== "Not Available";
 
   const collectionView = stir.curry((semesterID, collection, c) => {
@@ -158,7 +177,6 @@ stir.dpt = (function () {
     let header = template.collection.header(getCollectionHeader(collection.collectionStatusCode));
     let notes = collection.collectionType == "LIST" || collection.collectionType == "CHOICE" ? template.collection.notes(collection.collectionNotes) : "";
     let body = template.collection.table(collectionId, collection.mods.map(moduleView).join(""));
-
     let footer = collection.collectionFootnote ? template.collection.footer(collection.collectionFootnote) : "";
     let more =
       collection.mods.length > viewMoreModulesThreshold
@@ -190,6 +208,12 @@ stir.dpt = (function () {
     e.preventDefault();
   }
 
+  function viewModule(e) {
+    e.preventDefault();
+    _mcPointer = parseInt(this.getAttribute('data-index'))-1;
+    stir.dpt.show.module( this.getAttribute('data-spa'), this.getAttribute('href') );
+  }
+
   const versionToSession = (data) => {
     if(!data || !data.length) return;
 	// [2024-03-14] rwm2 -- remove DEBUG test to make it live --
@@ -210,6 +234,7 @@ stir.dpt = (function () {
   };
 
   const modulesOverview = (data) => {
+
     let frag = document.createDocumentFragment();
     data.initialText && frag.append(paragraph(data.initialText));
 
@@ -251,6 +276,11 @@ stir.dpt = (function () {
       var a = el.querySelector(".c-course-modules__view-more-link a");
       a && a.addEventListener("click", viewMore.bind(el));
     });
+    
+    Array.prototype.forEach.call(frag.querySelectorAll("a[data-spa]"), el => {
+      el.addEventListener("click", viewModule.bind(el));
+    });
+
 
     return frag;
   };
@@ -327,13 +357,26 @@ stir.dpt = (function () {
 
   ///////////////////////////////////////
 
+  const na = new Function();
+
   return {
     show: {
-      fees: new Function(),
-      routes: new Function(),
-      options: new Function(),
-      modules: new Function(),
-      version: new Function()
+      fees:     na,
+      routes:   na,
+      options:  na,
+      modules:  na,
+      module:   na,
+      version:  na,
+      next: function(e) {
+        if(_mcPointer===_moduleCache.length-1) return;
+        stir.dpt.show.module( moduleIdentifier(_moduleCache[++_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
+        this.parentElement && this.parentElement.setAttribute('data-mc',_mcPointer);
+      },
+      previous: function(e) {
+        if(_mcPointer<=0) return;
+        stir.dpt.show.module( moduleIdentifier(_moduleCache[--_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
+        this.parentElement && this.parentElement.setAttribute('data-mc',_mcPointer);
+      }
     },
     get: {
       options: getOptions,
@@ -342,8 +385,9 @@ stir.dpt = (function () {
       version: getVersion
     },
     reset: {
-      modules: new Function(),
-      options: new Function()
+      module:  na,
+      modules: na,
+      options: na
     },
     set: {
       viewer: (path) => (urls.viewer = path),
@@ -364,10 +408,12 @@ stir.dpt = (function () {
               getModules(user.type, user.rouCode, data[0][0], data[0][2]);
             }
           }),
-        modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data))),
+        modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data),_moduleCache.length-1)),
+        module:  (callback) => (stir.dpt.show.module  =  (a,b) => callback(a,b)),
         version: (callback) => (stir.dpt.show.version = (data) => callback(versionToSession(data)))
       },
       reset: {
+        module:  (callback) => (stir.dpt.reset.module = callback),
         modules: (callback) => (stir.dpt.reset.modules = callback),
         options: (callback) => (stir.dpt.reset.options = callback),
       },

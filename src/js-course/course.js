@@ -37,9 +37,9 @@ stir.components.discoveruni.widget = function (options) {
   return widget;
 };
 stir.components.html.details = function (options) {
-    var widget = document.createElement('details');
-    options.summary && (widget.innerHTML = '<summary>' + options.summary + '</summary>');
-    return widget;
+  var widget = document.createElement("details");
+  options.summary && (widget.innerHTML = "<summary>" + options.summary + "</summary>");
+  return widget;
 };
 
 stir.components.accordion = function (options) {
@@ -80,8 +80,8 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
   var widgets = [];
 
   if (debug) {
-    console.info("[Discover Uni] kiscodes:", kiscodes, kiscodes.length);
-    console.info("[Discover Uni] kiswidget:", kiswidget);
+    console.info("[Course] kiscodes:", kiscodes, kiscodes.length);
+    console.info("[Course] kiswidget:", kiswidget);
   }
 
   if (kiswidget && kiscodes) {
@@ -136,7 +136,7 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
             summary: "View more Discover Uni information",
           });
 
-		  contentInsertionNode.classList.add("u-my-2","u-cursor-pointer","u-header--secondary-font","text-larger");
+          contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
           kiswidget.insertAdjacentElement("afterend", contentInsertionNode);
           //new stir.accord(contentInsertionNode);
           //contentInsertionNode = contentInsertionNode.querySelector("[data-tab-content]");
@@ -188,6 +188,8 @@ var KISWidgetCaller = function () {
  * Clearing
  */
 (function () {
+  const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
+
   function swapCourseNavForClearingBannerSticky() {
     var clearingBannerTemplate = document.getElementById("clearing-banner-template");
     var courseStickyNav = document.querySelector(".c-course-title-sticky-menu");
@@ -210,8 +212,6 @@ var KISWidgetCaller = function () {
     var whatnext = document.querySelector(".c-whats-next");
     if (callstoact && whatnext) {
       whatnext.insertAdjacentElement("beforebegin", callstoact);
-      whatnext.classList.remove("u-margin-top");
-      callstoact.classList.add("u-margin-top");
     }
   }
 
@@ -222,14 +222,54 @@ var KISWidgetCaller = function () {
     }
   }
 
+  function activateLiveChat() {
+    window.__lc = window.__lc || {};
+    window.__lc.license = 9913300;
+    window.__lc.integration_name = "manual_channels";
+    window.__lc.product_name = "livechat";
+    (function (n, t, c) {
+      function i(n) {
+        return e._h ? e._h.apply(null, n) : e._q.push(n);
+      }
+      var e = {
+        _q: [],
+        _h: null,
+        _v: "2.0",
+        on: function () {
+          i(["on", c.call(arguments)]);
+        },
+        once: function () {
+          i(["once", c.call(arguments)]);
+        },
+        off: function () {
+          i(["off", c.call(arguments)]);
+        },
+        get: function () {
+          if (!e._h) throw new Error("[LiveChatWidget] You can't use getters before load.");
+          return i(["get", c.call(arguments)]);
+        },
+        call: function () {
+          i(["call", c.call(arguments)]);
+        },
+        init: function () {
+          var n = t.createElement("script");
+          (n.async = !0), (n.type = "text/javascript"), (n.src = "https://cdn.livechatinc.com/tracking.js"), t.head.appendChild(n);
+        },
+      };
+      !n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e);
+    })(window, document, [].slice);
+  }
+
   if (self.stir && stir.t4Globals && stir.t4Globals.clearing) {
     // If we are in Clearing AND promos may be shown, then swap-out sticky nav:
     if (stir.t4Globals.clearing.open && stir.t4Globals.clearing.showPromos) {
+      debug && console.info("[Course] Clearing is open");
       swapCourseNavForClearingBannerSticky();
       addCoursePageAdvert(document.getElementById("clearing-advert-template"));
       new UoS_StickyWidget(document.querySelector(".u-sticky"));
       relocateCTA(); // During Clearing, shunt normal CTAs to the bottom of the page so they are out of the way.
       unshiftStirTabsOverlap(); // stylistic tab ovelap not compatible with sticky/z-index etc. disable it during clearing.
+      activateLiveChat();
     }
   }
 })();
@@ -247,7 +287,7 @@ var KISWidgetCaller = function () {
   }
 })();
 
-/**
+/*
  * Favourites buttons
  * 2023-05-10
  */
@@ -255,3 +295,68 @@ if (stir.favourites && stir.coursefavs) {
   stir.coursefavs.attachEventHandlers();
   document.querySelectorAll("[data-nodeid=coursefavsbtn]").forEach(stir.coursefavs.doCourseBtn);
 }
+
+/*
+ * Webinars button fetch and render
+ * Uses AddSearch to find upcoming webinars for this course
+ * November 2025
+ */
+
+(function () {
+  /*
+   *  Fetch and render webinar button
+   */
+  const renderButton = (item, colour) => {
+    const data = JSON.parse(decodeURIComponent(item.custom_fields.data) || "{}");
+    if (!data.register) return ``;
+    return `<a href="${data.register}" id="cta-pg-webinar" class="button ${colour}"><span class="u-font-bold u-text-regular">Join our webinar</span></a>`;
+  };
+
+  /*
+   *  Build search object
+   */
+  const getSearchObject = (from, to, filter) => {
+    const obj = {
+      and: [
+        { "custom_fields.tag": filter },
+        {
+          range: { "custom_fields.d": { gt: from, lt: to } },
+        },
+      ],
+    };
+    return obj;
+  };
+
+  /*
+   * Initiate fetch
+   */
+
+  const breadcrumb = document.querySelector("meta[name='stir.breadcrumb']").getAttribute("content");
+  const colour = breadcrumb.includes("Undergraduate") ? "energy-turq" : breadcrumb.includes("Postgraduate") ? "heritage-berry" : "";
+
+  const sid = document.querySelector("meta[name='sid']").getAttribute("content");
+  const suggestedNode = document.getElementById("course-suggested-actions");
+
+  if (!sid || !suggestedNode) return;
+
+  const now = new Date().toISOString();
+  const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+  const searchUrl = `${searchAPI}?term=*&filter=${encodeURIComponent(JSON.stringify(getSearchObject(now, "2099-12-31", "sid" + sid)))}&limit=3`;
+
+  fetch(searchUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.total_hits > 0) {
+        // get the number of a elements already in suggested actions
+        const existingButtons = suggestedNode.querySelectorAll("a.button");
+        // if more then 2 buttons remove the last one then add the webinar button
+        if (existingButtons.length > 2) {
+          suggestedNode.removeChild(existingButtons[existingButtons.length - 1]);
+        }
+        suggestedNode.insertAdjacentHTML("afterbegin", renderButton(data.hits[0], colour));
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching search data:", error);
+    });
+})();

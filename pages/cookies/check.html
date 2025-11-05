@@ -488,6 +488,7 @@
             const newFileUrl = './new-cookies.json';
 
             const newEntries = await findNewEntries(oldFileUrl, newFileUrl);
+            console.log(newEntries);
             console.log(JSON.stringify(newEntries));
         } catch (error) {
             console.error('Comparison failed:', error);

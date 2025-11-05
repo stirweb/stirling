@@ -98,11 +98,13 @@
 }
 
 .c-course-title-sticky-menu__buttons {
-  margin-top: 1rem;
+  margin-top: .5rem;
   text-align: right;
 
   .button {
-    margin: 0 0 1.25rem 0.5rem;
+	min-width: auto;
+	margin: 0 0 .5rem .5rem;
+	padding: .3rem .5rem .6rem;
     &:first-child {
       margin-left: 0;
     }
@@ -110,7 +112,7 @@
 }
 
 .course-sticky-close-btn {
-  right: 4rem;
+  right: 1rem;
   top: 1rem;
 
   > span {
@@ -730,6 +732,40 @@ a[data-mode*="Online"] {
   }
 }
 
+[data-module-modal] {
+  max-width: none;
+  min-width: 98vw;
+  min-height: 98vh;
+  padding: 0;
+  margin: 0;
+  overscroll-behavior: contain;
+  border-radius: 2px;
+
+  > button {
+    position: fixed;
+    top: 1rem;
+    right: 2vw;
+    z-index: 1;
+  }
+
+  > nav {
+    position: fixed;
+    top: 1rem;
+    left: 1vw;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 0.5rem 0 0.5rem 1rem;
+  }
+  > button,
+  > nav button {
+    padding: 1rem;
+    background: $heritage-green;
+    color: $white;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
+}
+
 /* M E D I A   Q U E R I E S */
 
 @media screen and (max-width: 63.9375em) {
@@ -751,11 +787,16 @@ a[data-mode*="Online"] {
   }
 }
 @media screen and (min-width: 640px) {
+  [data-module-modal] {
+    max-width: 98vw;
+    padding: 3rem;
+    margin: auto;
+  }
   .c-course-datasheet {
     background-color: $heritage-green; /* fallback to solid green */
   }
   .c-course-datasheet[data-accreditation] {
-    background: linear-gradient(90deg, #006938 50%, #f6f5f4 50%); /* hard-stop gradient to give the full-width two-colour background */
+    background: linear-gradient(90deg, map-get($greens, "medium") 50%, map-get($greens, "tint-7") 50%); /* hard-stop gradient to give the full-width two-colour background */
   }
   .c-course-datasheet .c-icon-block {
     margin-left: 1rem;
@@ -826,5 +867,14 @@ a[data-mode*="Online"] {
         }
       }
     }
+  }
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .c-course-title-sticky-menu__buttons .button {
+	min-width: 14rem; /* same as default .button */
+	padding: 20px 28px; /* same as default .button */
+	margin-top: 1rem;
+	margin-bottom: 1.25rem;
   }
 }

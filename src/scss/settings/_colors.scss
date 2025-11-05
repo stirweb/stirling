@@ -18,9 +18,9 @@
    @return {Color}
 */
 
-@function shade($color, $percentage) {
-  @return mix(black, $color, (100% - $percentage)); //percentage((100-$percentage)/100));
-}
+// @function shade($color, $percentage) {
+//   @return mix(black, $color, (100% - $percentage)); //percentage((100-$percentage)/100));
+// }
 
 // Shorthand colour variables
 $light-mink: map-get($brand-palette, light-mink);
@@ -43,6 +43,9 @@ $heritage-blue: map-get($brand-palette, heritage-blue);
 $heritage-navy: map-get($brand-palette, heritage-navy);
 $heritage-purple: map-get($brand-palette, heritage-purple);
 
+$pink-medium: map-get($brand-palette, pink-medium);
+$pink-tint-40: map-get($brand-palette, pink-tint-40);
+
 // Web versions
 $web-turq: map-get($brand-palette, web-turq);
 
@@ -62,6 +65,9 @@ $variations: (30, 50, 70);
   .u-bg-#{$name} {
     background-color: $hex !important;
   }
+  .bg-#{$name} {
+    border-image-source: linear-gradient($hex, $hex);
+  }
 }
 
 /*
@@ -69,9 +75,9 @@ $variations: (30, 50, 70);
  */
 @each $name, $hex in $brand-palette {
   // generate the text colour classes  e.g. u-heritage-green
-  //.u-#{$name} {
-  // color: $hex!important;
-  //}
+  .u-#{$name} {
+    color: $hex !important;
+  }
 
   // generate the bg classes e.g. u-bg-heritage-green
   .u-bg-#{$name} {
@@ -83,15 +89,15 @@ $variations: (30, 50, 70);
   }
 
   // generate the bg variation classes e.g. u-heritage-green--30
-  @each $perc in $variations {
-    .u-bg-#{$name}--#{$perc} {
-      background-color: tint($hex, $perc);
-    }
-  }
+  // @each $perc in $variations {
+  //   .u-bg-#{$name}--#{$perc} {
+  //     background-color: tint($hex, $perc);
+  //   }
+  // }
 }
 
 // this is an exception for the grey section backgrounds
-$bg-grey: tint($light-mink, 15%);
+$bg-grey: $light-gray-2; //tint($light-mink, 15%);
 
 // Used for full width wrappers
 .u-bleed {
@@ -271,7 +277,7 @@ a:has(img):hover {
 }
 
 .bg-dark-grey {
-  border-image-source: linear-gradient($dark-grey, $dark-grey);
+  border-image-source: linear-gradient(map-get($brand-palette, neutral-medium-dark), map-get($brand-palette, neutral-medium-dark));
 }
 
 .u-bg-medium-dark-grey {
@@ -279,7 +285,7 @@ a:has(img):hover {
 }
 
 .u-bg-medium-grey {
-  background-color: #d5d4d4;
+  background-color: map-get($brand-palette, neutral-light);
 }
 
 .u-bg-light-medium-grey {
@@ -287,7 +293,7 @@ a:has(img):hover {
 }
 
 .u-bg-light-grey {
-  background-color: #f9f9f9;
+  background-color: map-get($brand-palette, neutral-tint-7);
 }
 
 /*
@@ -351,6 +357,293 @@ a:has(img):hover {
   color: $energy-turq;
 }
 
+.u-opacity-10 {
+  opacity: 10%;
+}
+
 .u-opacity-20 {
   opacity: 20%;
+}
+
+.u-font-icon {
+  color: $heritage-green; // default
+}
+
+/*
+
+  New brand 2025 colour packs
+  
+*/
+
+@each $name, $color in $uos-colour-group-palette {
+  .#{$name} {
+    a,
+    h2,
+    h3,
+    h4,
+    svg,
+    .u-font-icon {
+      color: map-get($color, "hook");
+    }
+
+    a:not(.c-link) {
+      border-bottom: 2px solid map-get($color, "light");
+      &:hover {
+        border-bottom: 2px solid map-get($color, "tint-7");
+      }
+    }
+
+    a.button {
+      border: 4px solid map-get($color, "button");
+      background-color: map-get($color, "button");
+      color: #fff;
+
+      &:hover {
+        background-color: $white;
+        color: map-get($color, "button");
+        border: 4px solid map-get($color, "button");
+
+        &::after {
+          filter: icon-filter(map-get($color, "button"));
+        }
+      }
+    }
+
+    .button--dropdown {
+      border: 4px solid map-get($color, "button");
+      background-color: map-get($color, "button");
+      color: #fff;
+
+      &:hover,
+      &:focus {
+        background-color: $white;
+        color: map-get($color, "button");
+        border: 4px solid map-get($color, "button");
+
+        &::after {
+          filter: icon-filter(map-get($color, "button"));
+        }
+      }
+    }
+
+    .dropdown-pane {
+      background-color: map-get($color, "button");
+    }
+
+    &.button.tinted,
+    .button.tinted {
+      background-color: map-get($color, "tint");
+      border-color: map-get($color, "tint");
+      color: map-get($color, "dark");
+
+      &::after {
+        filter: icon-filter(map-get($color, "medium"));
+      }
+
+      &:hover {
+        background-color: #ffffff;
+        border-color: map-get($color, "tint");
+      }
+    }
+
+    a:hover {
+      text-decoration-color: map-get($color, "light");
+    }
+
+    .c-wrapper-2025,
+    &.c-wrapper-2025 {
+      background-color: map-get($color, "tint-7");
+
+      &.u-bleed {
+        border-image-source: linear-gradient(map-get($color, "tint-7"), map-get($color, "tint-7"));
+      }
+    }
+
+    .c-link::after {
+      filter: icon-filter(map-get($color, "medium"));
+    }
+
+    .c-link::before {
+      background-color: (map-get($color, "light"));
+    }
+
+    .u-text-coloured {
+      color: map-get($color, "hook");
+    }
+
+    &.u-border-coloured,
+    .u-border-coloured {
+      border-color: map-get($color, "hook");
+    }
+
+    [data-behaviour="accordion"] > h3,
+    [data-behaviour="accordion"] > h2 {
+      color: $black;
+    }
+  }
+}
+
+// Overrides and additions
+.teals a {
+  color: map-get($teals, "safe");
+}
+
+.neutrals {
+  a,
+  h2,
+  h3,
+  h4 {
+    color: map-get($greens, "hook");
+  }
+
+  a:not(.c-link) {
+    border-bottom: 2px solid map-get($greens, "light");
+    &:hover {
+      border-bottom: 2px solid map-get($greens, "tint-7");
+    }
+  }
+
+  a.button {
+    border: 4px solid map-get($greens, "button");
+    background-color: map-get($greens, "button");
+    color: #fff;
+
+    &:hover {
+      background-color: $white;
+      color: map-get($greens, "button");
+      border: 4px solid map-get($greens, "button");
+
+      &::after {
+        filter: icon-filter(map-get($greens, "button"));
+      }
+    }
+  }
+
+  .u-font-icon {
+    color: map-get($greens, "hook");
+  }
+
+  .c-wrapper-2025 {
+    background-color: $white;
+
+    &.u-bleed {
+      border-image-source: linear-gradient($white, $white);
+    }
+  }
+}
+
+/*
+  .c-wrapper-2025 light overrides/additions
+*/
+
+.c-wrapper-2025.u-bleed.neutral-green {
+  background-color: map-get($neutrals, "tint-7");
+  &.u-bleed {
+    border-image-source: linear-gradient(map-get($neutrals, "tint-7"), map-get($neutrals, "tint-7"));
+  }
+}
+
+.dark {
+  color: $white;
+  a,
+  h2,
+  h3,
+  h4,
+  h5 {
+    color: $white;
+  }
+
+  a:not(.c-link) {
+    border-bottom: 2px solid $white;
+  }
+
+  a:focus {
+    background-color: transparent;
+    color: $white;
+    outline: 1px solid $white !important;
+  }
+
+  .c-link::after {
+    filter: brightness(0) invert(1);
+  }
+
+  .c-link:hover::before {
+    filter: brightness(0) invert(1);
+  }
+
+  .stir-accordion {
+    border-bottom: 1px solid $white;
+    &:last-child {
+      border-bottom: 1px solid $white !important;
+    }
+
+    > h3,
+    > h2 {
+      color: $white;
+    }
+
+    button:focus {
+      outline: 1px solid $white !important;
+    }
+  }
+}
+
+/*
+   Dark colour overides for the 2025 colour packs
+*/
+
+@each $name, $color in $uos-colour-group-palette {
+  .#{$name} {
+    &.c-wrapper-2025.dark {
+      background-color: map-get($color, "darkbg");
+
+      &.u-bleed {
+        border-image-source: linear-gradient(map-get($color, "darkbg"), map-get($color, "darkbg"));
+      }
+
+      .u-font-icon,
+      svg {
+        color: map-get($color, "tint");
+      }
+    }
+
+    &.dark {
+      /* Tinted by default */
+      &.button,
+      .button {
+        background-color: map-get($color, "tint");
+        border-color: map-get($color, "tint");
+        border-bottom: 4px solid map-get($color, "tint");
+        color: map-get($color, "dark");
+
+        &::after {
+          filter: icon-filter(map-get($color, "medium"));
+        }
+
+        &:hover {
+          color: map-get($color, "dark");
+          border-color: map-get($color, "tint");
+          &::after {
+            filter: icon-filter(map-get($color, "medium"));
+          }
+        }
+      }
+
+      // .c-link:hover::before {
+      //   filter: brightness(0) invert(1);
+      // }
+
+      .u-text-coloured {
+        color: map-get($color, "tint-7");
+      }
+    }
+  }
+}
+
+// overrides for the buttons
+.button.tinted.pinks,
+.pinks .button.tinted,
+.dark.pinks .button {
+  background-color: $pink-tint-40;
+  border-color: $pink-tint-40;
 }

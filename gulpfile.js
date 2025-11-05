@@ -200,6 +200,22 @@ function jsSearch() {
   );
 }
 
+// JS AddSearch scripts
+function jsAddSearch() {
+  const source = ["src/js-addsearch/*.js"];
+  return (
+    src(source)
+      .pipe(expect(source))
+      .pipe(plumber())
+      .pipe(concat("search.js")) // combine js files unminified
+      .pipe(dest("medias/Categorised/Dist/js/addsearch"))
+      .pipe(uglify())
+      .pipe(concat("search-min.js")) // combine js files
+      .pipe(dest("medias/Categorised/Dist/js/addsearch"))
+      .pipe(browserSync.stream())
+  );
+}
+
 // JS Gallery files
 function jsGallery() {
   const source = ["node_modules/photoswipe/dist/photoswipe.js", "node_modules/photoswipe/dist/photoswipe-ui-default.js", "src/js-other/grid-gallery.js"];
@@ -344,6 +360,7 @@ function watchFiles() {
   watch("src/js-other/*").on("change", jsOther);
   watch("src/js-other-2/*").on("change", jsOther2);
   watch("src/js-search/*").on("change", jsSearch);
+  watch("src/js-addsearch/*").on("change", jsAddSearch);
   watch("src/js-course/*").on("change", jsCourses);
   watch("src/js-other/grid-gallery.js").on("change", jsGallery);
   watch("medias/Categorised/Dist/js/app.js").on("change", jsProd);

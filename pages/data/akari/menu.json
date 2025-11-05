@@ -1,0 +1,1896 @@
+{
+    "academicYears": {
+        "2024/5": {
+            "faculties": {
+                "Stirling Management School": {
+                    "divisions": {
+                        "Management, Work and Organisation": {
+                            "routes": [
+                                {
+                                    "routeCode": "UCX12-BUSFMS",
+                                    "routeName": "BA (Hons) Business and Film & Media"
+                                },
+                                {
+                                    "routeCode": "UHM12-BUS",
+                                    "routeName": "BA (Hons) Business Studies"
+                                },
+                                {
+                                    "routeCode": "UHX12-BUS",
+                                    "routeName": "BA (Hons) Business Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSECN",
+                                    "routeName": "BA (Hons) Business Studies and Economics"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSENG",
+                                    "routeName": "BA (Hons) Business Studies and English Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSFIN",
+                                    "routeName": "BA (Hons) Business Studies and Finance"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSFRE",
+                                    "routeName": "BA (Hons) Business Studies and French"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSHRM",
+                                    "routeName": "BA (Hons) Business Studies and Human Resource Management"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSLAW",
+                                    "routeName": "BA (Hons) Business Studies and Law"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSMAN",
+                                    "routeName": "BA (Hons) Business Studies and Management"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSMKT",
+                                    "routeName": "BA (Hons) Business Studies and Marketing"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSPOL",
+                                    "routeName": "BA (Hons) Business Studies and Politics"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSSPA",
+                                    "routeName": "BA (Hons) Business Studies and Spanish"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSSP",
+                                    "routeName": "BA (Hons) Business Studies and Sport"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSSPS",
+                                    "routeName": "BA (Hons) Business Studies and Sports Studies"
+                                },
+                                {
+                                    "routeCode": "UHS12-EM",
+                                    "routeName": "BA (Hons) Events Management"
+                                },
+                                {
+                                    "routeCode": "UHX12-EM",
+                                    "routeName": "BA (Hons) Events Management"
+                                },
+                                {
+                                    "routeCode": "UHM12-HRM",
+                                    "routeName": "BA (Hons) Human Resource Management"
+                                },
+                                {
+                                    "routeCode": "UHX12-HRM",
+                                    "routeName": "BA (Hons) Human Resource Management"
+                                },
+                                {
+                                    "routeCode": "UCX12-HRMLAW",
+                                    "routeName": "BA (Hons) Human Resource Management and Law"
+                                },
+                                {
+                                    "routeCode": "UCX12-HRMMKT",
+                                    "routeName": "BA (Hons) Human Resource Management and Marketing"
+                                }
+                            ]
+                        },
+                        "Economics": {
+                            "routes": [
+                                {
+                                    "routeCode": "UCX12-ECNFIN",
+                                    "routeName": "BA (Hons) Economics and Finance"
+                                },
+                                {
+                                    "routeCode": "UCX12-ECNMKT",
+                                    "routeName": "BA (Hons) Economics and Marketing"
+                                }
+                            ]
+                        },
+                        "Accounting and Finance": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHM12-ACCBUS",
+                                    "routeName": "BA (Hons) Accountancy and Business Studies"
+                                },
+                                {
+                                    "routeCode": "UHX12-ACCECN",
+                                    "routeName": "BA (Hons) Accountancy and Economics"
+                                },
+                                {
+                                    "routeCode": "UHX12-ACC",
+                                    "routeName": "BA (Hons) Accounting"
+                                },
+                                {
+                                    "routeCode": "UHX12-ACCBUS",
+                                    "routeName": "BA (Hons) Accounting and Business Studies"
+                                },
+                                {
+                                    "routeCode": "UHX12-ACCFIN",
+                                    "routeName": "BA (Hons) Accounting and Finance"
+                                },
+                                {
+                                    "routeCode": "UOV12-ACCFIN",
+                                    "routeName": "BA (Hons) Accounting and Finance"
+                                },
+                                {
+                                    "routeCode": "UHX12-FIN",
+                                    "routeName": "BA (Hons) Finance"
+                                },
+                                {
+                                    "routeCode": "UHX12-FII",
+                                    "routeName": "BA (Hons) Finance and Investment"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "Faculty of Arts and Humanities": {
+                    "divisions": {
+                        "Law and Philosophy": {
+                            "routes": [
+                                {
+                                    "routeCode": "TXX50-ELCEJ",
+                                    "routeName": " LLM Environmental Law and Climate Justice"
+                                },
+                                {
+                                    "routeCode": "UHX12-BSL",
+                                    "routeName": "BA (Hons) Business Law"
+                                }
+                            ]
+                        },
+                        "Communications, Media and Culture": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHX12-ART",
+                                    "routeName": "BA (Hons) Art and Design"
+                                },
+                                {
+                                    "routeCode": "UHX12-DGM",
+                                    "routeName": "BA (Hons) Digital Media"
+                                },
+                                {
+                                    "routeCode": "UHX12-FMS",
+                                    "routeName": "BA (Hons) Film & Media"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSFRE",
+                                    "routeName": "BA (Hons) Film & Media and French"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSHIS",
+                                    "routeName": "BA (Hons) Film & Media and History"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSJOU",
+                                    "routeName": "BA (Hons) Film & Media and Journalism Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSMKT",
+                                    "routeName": "BA (Hons) Film & Media and Marketing"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSPHI",
+                                    "routeName": "BA (Hons) Film & Media and Philosophy"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSPOL",
+                                    "routeName": "BA (Hons) Film & Media and Politics"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSREL",
+                                    "routeName": "BA (Hons) Film & Media and Religious Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSSOC",
+                                    "routeName": "BA (Hons) Film & Media and Sociology"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSSPA",
+                                    "routeName": "BA (Hons) Film & Media and Spanish"
+                                },
+                                {
+                                    "routeCode": "UCX12-JOULAW",
+                                    "routeName": "BA (Hons) Journalism and Law"
+                                },
+                                {
+                                    "routeCode": "UHX12-JOU",
+                                    "routeName": "BA (Hons) Journalism Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-JOUPOL",
+                                    "routeName": "BA (Hons) Journalism Studies and Politics"
+                                },
+                                {
+                                    "routeCode": "UCX12-JOUSPA",
+                                    "routeName": "BA (Hons) Journalism Studies and Spanish"
+                                }
+                            ]
+                        },
+                        "History and Politics": {
+                            "routes": [
+                                {
+                                    "routeCode": "UCX12-ECNPOL",
+                                    "routeName": "BA (Hons) Economics and Politics"
+                                },
+                                {
+                                    "routeCode": "UHX12-HIT",
+                                    "routeName": "BA (Hons) Heritage and Tourism"
+                                },
+                                {
+                                    "routeCode": "UHX12-HIS",
+                                    "routeName": "BA (Hons) History"
+                                },
+                                {
+                                    "routeCode": "UCX12-HISHER",
+                                    "routeName": "BA (Hons) History and Heritage"
+                                },
+                                {
+                                    "routeCode": "UCX12-HISJOU",
+                                    "routeName": "BA (Hons) History and Journalism Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-HISLAW",
+                                    "routeName": "BA (Hons) History and Law"
+                                },
+                                {
+                                    "routeCode": "UCX12-HISPHI",
+                                    "routeName": "BA (Hons) History and Philosophy"
+                                },
+                                {
+                                    "routeCode": "UCX12-HISPOL",
+                                    "routeName": "BA (Hons) History and Politics"
+                                },
+                                {
+                                    "routeCode": "UCX12-HISREG",
+                                    "routeName": "BA (Hons) History and Religion"
+                                },
+                                {
+                                    "routeCode": "UCX12-HISSPA",
+                                    "routeName": "BA (Hons) History and Spanish"
+                                },
+                                {
+                                    "routeCode": "UHX12-IPO",
+                                    "routeName": "BA (Hons) International Politics"
+                                }
+                            ]
+                        },
+                        "Literature and Languages": {
+                            "routes": [
+                                {
+                                    "routeCode": "UCX12-ENGFMS",
+                                    "routeName": "BA (Hons) English and Film & Media"
+                                },
+                                {
+                                    "routeCode": "UHX12-ENG",
+                                    "routeName": "BA (Hons) English Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGFRE",
+                                    "routeName": "BA (Hons) English Studies and French"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGHIS",
+                                    "routeName": "BA (Hons) English Studies and History"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGJOU",
+                                    "routeName": "BA (Hons) English Studies and Journalism Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGPHI",
+                                    "routeName": "BA (Hons) English Studies and Philosophy"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGPOL",
+                                    "routeName": "BA (Hons) English Studies and Politics"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGREG",
+                                    "routeName": "BA (Hons) English Studies and Religion"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGSPA",
+                                    "routeName": "BA (Hons) English Studies and Spanish"
+                                },
+                                {
+                                    "routeCode": "UHX12-ELSIM",
+                                    "routeName": "BA (Hons) European Languages and Society with International Management"
+                                },
+                                {
+                                    "routeCode": "UHX12-FRE",
+                                    "routeName": "BA (Hons) French"
+                                },
+                                {
+                                    "routeCode": "UCX12-FREHIS",
+                                    "routeName": "BA (Hons) French and History"
+                                },
+                                {
+                                    "routeCode": "UCX12-FREHRM",
+                                    "routeName": "BA (Hons) French and Human Resource Management"
+                                },
+                                {
+                                    "routeCode": "UCX12-FREJOU",
+                                    "routeName": "BA (Hons) French and Journalism Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-FRELAW",
+                                    "routeName": "BA (Hons) French and Law"
+                                },
+                                {
+                                    "routeCode": "UCX12-FREMAT",
+                                    "routeName": "BA (Hons) French and Mathematics"
+                                },
+                                {
+                                    "routeCode": "UCX12-FREREG",
+                                    "routeName": "BA (Hons) French and Religion"
+                                },
+                                {
+                                    "routeCode": "UCX12-FRESPA",
+                                    "routeName": "BA (Hons) French and Spanish"
+                                },
+                                {
+                                    "routeCode": "UHX12-IME",
+                                    "routeName": "BA (Hons) International Management with European Languages and Society"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "Faculty of Social Sciences": {
+                    "divisions": {
+                        "Education Studies": {
+                            "routes": [
+                                {
+                                    "routeCode": "UAX24-G",
+                                    "routeName": "Access to Degree Studies"
+                                },
+                                {
+                                    "routeCode": "UAX24-NURS",
+                                    "routeName": "Access to Nursing Studies"
+                                },
+                                {
+                                    "routeCode": "UAX24-SCIS",
+                                    "routeName": "Access to Science Studies"
+                                },
+                                {
+                                    "routeCode": "UHX12-ENGEDU",
+                                    "routeName": "BA (Hons) English Studies and Professional Education (Secondary)"
+                                },
+                                {
+                                    "routeCode": "UHX12-FREEDU",
+                                    "routeName": "BA (Hons) French and Professional Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-FSPEDU",
+                                    "routeName": "BA (Hons) French with Spanish and Professional Education (Secondary)"
+                                },
+                                {
+                                    "routeCode": "UHX12-HIPEDU",
+                                    "routeName": "BA (Hons) History and Politics and Professional Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-HISEDU",
+                                    "routeName": "BA (Hons) History and Professional Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-HSCEDU",
+                                    "routeName": "BA (Hons) History and Sociology and Professional Education (Secondary)"
+                                }
+                            ]
+                        },
+                        "Sociology, Social Policy and Criminology": {
+                            "routes": [
+                                {
+                                    "routeCode": "DXX70-ASRDAS",
+                                    "routeName": "Applied Social Research (Drug and Alcohol Studies)"
+                                },
+                                {
+                                    "routeCode": "UCX12-CRMLAW",
+                                    "routeName": "BA (Hons) Criminology and Law"
+                                },
+                                {
+                                    "routeCode": "UCX12-CRMPHI",
+                                    "routeName": "BA (Hons) Criminology and Philosophy"
+                                },
+                                {
+                                    "routeCode": "UCX12-CRMPOL",
+                                    "routeName": "BA (Hons) Criminology and Politics"
+                                },
+                                {
+                                    "routeCode": "UHX12-CRMSPL",
+                                    "routeName": "BA (Hons) Criminology and Social Policy"
+                                },
+                                {
+                                    "routeCode": "UHX12-CRMSOC",
+                                    "routeName": "BA (Hons) Criminology and Sociology"
+                                },
+                                {
+                                    "routeCode": "UCX12-HISSOC",
+                                    "routeName": "BA (Hons) History and Sociology"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "Faculty of Natural Science": {
+                    "divisions": {
+                        "Psychology": {
+                            "routes": [
+                                {
+                                    "routeCode": "UCX12-BUSPSY",
+                                    "routeName": "BA (Hons) Business Studies and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGPSY",
+                                    "routeName": "BA (Hons) English Studies and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSPSY",
+                                    "routeName": "BA (Hons) Film & Media and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX12-HRMPSY",
+                                    "routeName": "BA (Hons) Human Resource Management and Psychology"
+                                }
+                            ]
+                        },
+                        "Computing Science and Mathematics": {
+                            "routes": [
+                                {
+                                    "routeCode": "UCX12-ECNMAT",
+                                    "routeName": "BA (Hons) Economics and Mathematics"
+                                },
+                                {
+                                    "routeCode": "UCX12-FINMAT",
+                                    "routeName": "BA (Hons) Finance and Mathematics"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "2023/4": {
+            "faculties": {
+                "Stirling Management School": {
+                    "divisions": {
+                        "Management, Work and Organisation": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHM12-BUS",
+                                    "routeName": "BA (Hons) Business Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSENG",
+                                    "routeName": "BA (Hons) Business Studies and English Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSFIN",
+                                    "routeName": "BA (Hons) Business Studies and Finance"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSFRE",
+                                    "routeName": "BA (Hons) Business Studies and French"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSHRM",
+                                    "routeName": "BA (Hons) Business Studies and Human Resource Management"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSMKT",
+                                    "routeName": "BA (Hons) Business Studies and Marketing"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSPOL",
+                                    "routeName": "BA (Hons) Business Studies and Politics"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSSPA",
+                                    "routeName": "BA (Hons) Business Studies and Spanish"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSSP",
+                                    "routeName": "BA (Hons) Business Studies and Sport"
+                                },
+                                {
+                                    "routeCode": "UCX12-BUSSPS",
+                                    "routeName": "BA (Hons) Business Studies and Sports Studies"
+                                },
+                                {
+                                    "routeCode": "UHS12-EM",
+                                    "routeName": "BA (Hons) Events Management"
+                                },
+                                {
+                                    "routeCode": "UHX12-EM",
+                                    "routeName": "BA (Hons) Events Management"
+                                },
+                                {
+                                    "routeCode": "UHM12-HRM",
+                                    "routeName": "BA (Hons) Human Resource Management"
+                                },
+                                {
+                                    "routeCode": "UHS12-SBM",
+                                    "routeName": "BA (Hons) Sport Business Management"
+                                },
+                                {
+                                    "routeCode": "UHX12-SBM",
+                                    "routeName": "BA (Hons) Sport Business Management"
+                                },
+                                {
+                                    "routeCode": "UHX12-SEM",
+                                    "routeName": "BA (Hons) Sustainable Events Management"
+                                },
+                                {
+                                    "routeCode": "UHX12-EDUBUS",
+                                    "routeName": "Bachelor of Arts with Honours Business Studies and Education"
+                                },
+                                {
+                                    "routeCode": "UHX16-BSM",
+                                    "routeName": "BSc (Hons) Management"
+                                },
+                                {
+                                    "routeCode": "DXX70-DBA",
+                                    "routeName": "Doctor of Business Administration"
+                                },
+                                {
+                                    "routeCode": "UCX12-HRMSPA",
+                                    "routeName": "Human Resource Management and Spanish"
+                                },
+                                {
+                                    "routeCode": "TXX41-BUA",
+                                    "routeName": "Master of Business Administration"
+                                },
+                                {
+                                    "routeCode": "RXX61-MAO",
+                                    "routeName": "MPhil Management & Organisation"
+                                },
+                                {
+                                    "routeCode": "TXX44-HRM",
+                                    "routeName": "MSc Human Resource Management"
+                                },
+                                {
+                                    "routeCode": "TXM44-MAN",
+                                    "routeName": "MSc Management (Muscat)"
+                                },
+                                {
+                                    "routeCode": "RXX60-MAO",
+                                    "routeName": "Research Degree Management & Organisation"
+                                }
+                            ]
+                        },
+                        "Stirling Management School": {
+                            "routes": [
+                                {
+                                    "routeCode": "TOV41-BUA",
+                                    "routeName": "Master of Business Administration"
+                                }
+                            ]
+                        },
+                        "Economics": {
+                            "routes": [
+                                {
+                                    "routeCode": "RXX61-ECN",
+                                    "routeName": "MPhil Economics"
+                                },
+                                {
+                                    "routeCode": "TXX44-BHS",
+                                    "routeName": "MSc Behavioural Science for Management"
+                                },
+                                {
+                                    "routeCode": "TXX44-EBP",
+                                    "routeName": "MSc Economics for Business and Policy"
+                                },
+                                {
+                                    "routeCode": "TXX44-FINECN",
+                                    "routeName": "MSc Finance and Economics"
+                                },
+                                {
+                                    "routeCode": "RXX60-ECNFIN",
+                                    "routeName": "Research Degree Banking and Finance"
+                                },
+                                {
+                                    "routeCode": "RXX60-ECN",
+                                    "routeName": "Research Degree Economics"
+                                }
+                            ]
+                        },
+                        "Stirling Management School (Management School)": {
+                            "routes": [
+                                {
+                                    "routeCode": "UDX-SMODMAN",
+                                    "routeName": "UG Single Module Applications"
+                                }
+                            ]
+                        },
+                        "Accounting and Finance": {
+                            "routes": [
+                                {
+                                    "routeCode": "RXX61-ACC",
+                                    "routeName": "MPhil Accountancy and Finance"
+                                },
+                                {
+                                    "routeCode": "RXX61-FIN",
+                                    "routeName": "MPhil Finance"
+                                },
+                                {
+                                    "routeCode": "TOV44-FIN",
+                                    "routeName": "MSc Finance"
+                                },
+                                {
+                                    "routeCode": "TXX44-FIN",
+                                    "routeName": "MSc Finance"
+                                },
+                                {
+                                    "routeCode": "TXX44-FINDA",
+                                    "routeName": "MSc Finance and Data Analytics"
+                                },
+                                {
+                                    "routeCode": "TXX44-FINRM",
+                                    "routeName": "MSc Finance and Risk Management"
+                                },
+                                {
+                                    "routeCode": "TXX44-INV",
+                                    "routeName": "MSc Investment Analysis"
+                                },
+                                {
+                                    "routeCode": "RXX60-ACCFIN",
+                                    "routeName": "Research Degree Accountancy and Finance"
+                                },
+                                {
+                                    "routeCode": "RXX60-FIN",
+                                    "routeName": "Research Degree Finance"
+                                }
+                            ]
+                        },
+                        "Marketing and Retail": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHX12-MKT",
+                                    "routeName": "BA (Hons) Marketing"
+                                },
+                                {
+                                    "routeCode": "UCX12-MKTSPA",
+                                    "routeName": "BA (Hons) Marketing and Spanish"
+                                },
+                                {
+                                    "routeCode": "UHS12-RMK",
+                                    "routeName": "BA (Hons) Retail Marketing"
+                                },
+                                {
+                                    "routeCode": "UHX12-RMK",
+                                    "routeName": "BA (Hons) Retail Marketing"
+                                },
+                                {
+                                    "routeCode": "UCX12-SPSMKT",
+                                    "routeName": "BA (Hons) Sports Studies and Marketing"
+                                },
+                                {
+                                    "routeCode": "UHS12-SPSMKT",
+                                    "routeName": "BA (Hons) Sports Studies and Marketing"
+                                },
+                                {
+                                    "routeCode": "RXX61-MKT",
+                                    "routeName": "MPhil Marketing"
+                                },
+                                {
+                                    "routeCode": "RXX60-MKT",
+                                    "routeName": "Research degree Marketing"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "Faculty of Health Sciences and Sport": {
+                    "divisions": {
+                        "Health Sciences and Sport": {
+                            "routes": [
+                                {
+                                    "routeCode": "UDX-SMODHSS",
+                                    "routeName": "UG Single Module Applications"
+                                }
+                            ]
+                        },
+                        "Sport": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHC12-SPS",
+                                    "routeName": "BA (Hons) Sport Studies"
+                                },
+                                {
+                                    "routeCode": "UHX12-SPS",
+                                    "routeName": "BA (Hons) Sport Studies"
+                                },
+                                {
+                                    "routeCode": "UHX16-EDUPED",
+                                    "routeName": "Bachelor of Science with Honours Sport Studies, Physical Education and Education"
+                                },
+                                {
+                                    "routeCode": "UHX16-SES",
+                                    "routeName": "BSc (Hons) Sport and Exercise Science"
+                                },
+                                {
+                                    "routeCode": "RXX61-SPS",
+                                    "routeName": "MPhil Sports Studies"
+                                },
+                                {
+                                    "routeCode": "TXX44-SPN",
+                                    "routeName": "MSc Sport Nutrition (IOC Diploma)"
+                                },
+                                {
+                                    "routeCode": "TXO46-SPPPFC",
+                                    "routeName": "PGCert Sport Performance Coaching"
+                                },
+                                {
+                                    "routeCode": "TXO45-SPPPFC",
+                                    "routeName": "PGDip Sport Performance Coaching"
+                                },
+                                {
+                                    "routeCode": "RXX60-SPS",
+                                    "routeName": "Research Degree Sports Studies"
+                                }
+                            ]
+                        },
+                        "Health Sciences (Stirling)": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHX16-NURADN",
+                                    "routeName": "BSc (Hons) Nursing (Adult)"
+                                },
+                                {
+                                    "routeCode": "UHX16-NURMHN",
+                                    "routeName": "BSc (Hons) Nursing (Mental Health)"
+                                },
+                                {
+                                    "routeCode": "UBX20-NURADN",
+                                    "routeName": "BSc Nursing (Adult)"
+                                },
+                                {
+                                    "routeCode": "UBX20-NURMHN",
+                                    "routeName": "BSc Nursing (Mental Health)"
+                                },
+                                {
+                                    "routeCode": "UBX16-NURPPR",
+                                    "routeName": "BSc Professional Practice"
+                                },
+                                {
+                                    "routeCode": "DXX70-MID",
+                                    "routeName": "Doctor of Midwifery"
+                                },
+                                {
+                                    "routeCode": "DXX70-NUR",
+                                    "routeName": "Doctor of Nursing"
+                                },
+                                {
+                                    "routeCode": "DXX70-HST",
+                                    "routeName": "Doctor of Professional Health Studies"
+                                },
+                                {
+                                    "routeCode": "TXO40-MPH",
+                                    "routeName": "Master of Public Health"
+                                },
+                                {
+                                    "routeCode": "TXO44-ADP",
+                                    "routeName": "Master of Science Advanced Practice"
+                                },
+                                {
+                                    "routeCode": "TXX44-EYP",
+                                    "routeName": "Master of Science Early Years Practice (HV)"
+                                },
+                                {
+                                    "routeCode": "RXX61-SHS",
+                                    "routeName": "MPhil Health Sciences"
+                                },
+                                {
+                                    "routeCode": "RXX61-NUR",
+                                    "routeName": "MPhil Nursing"
+                                },
+                                {
+                                    "routeCode": "RXX61-NUM",
+                                    "routeName": "MPhil Nursing & Midwifery"
+                                },
+                                {
+                                    "routeCode": "TXO47-HLT",
+                                    "routeName": "MRes Health Research (online)"
+                                },
+                                {
+                                    "routeCode": "TXO44-AVP",
+                                    "routeName": "MSc Advancing Practice"
+                                },
+                                {
+                                    "routeCode": "TXO44-HWO",
+                                    "routeName": "MSc Health and Wellbeing of the Older Person"
+                                },
+                                {
+                                    "routeCode": "TXO46-AVP",
+                                    "routeName": "PGCert  Advancing Practice"
+                                },
+                                {
+                                    "routeCode": "TXO46-HLT",
+                                    "routeName": "PGCert Health Research (online)"
+                                },
+                                {
+                                    "routeCode": "TXX46-MPH",
+                                    "routeName": "PGCert Public Health (online)"
+                                },
+                                {
+                                    "routeCode": "TXO45-AVP",
+                                    "routeName": "PGDip  Advancing Practice"
+                                },
+                                {
+                                    "routeCode": "TXO45-HLT",
+                                    "routeName": "PGDip Health Research (online)"
+                                },
+                                {
+                                    "routeCode": "TXX45-MPH",
+                                    "routeName": "PGDip Public Health (online)"
+                                },
+                                {
+                                    "routeCode": "RXX60-SHS",
+                                    "routeName": "Research Degree Health Sciences"
+                                },
+                                {
+                                    "routeCode": "RXX60-NUM",
+                                    "routeName": "Research Degree Nursing & Midwifery"
+                                },
+                                {
+                                    "routeCode": "UDX-SMODCLIN",
+                                    "routeName": "UG Single Module Applications - Clinical only"
+                                }
+                            ]
+                        },
+                        "unknown": {
+                            "routes": [
+                                {
+                                    "routeCode": "UBX20-PARSCI",
+                                    "routeName": "BSc Paramedic Science"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "Faculty of Social Sciences": {
+                    "divisions": {
+                        "Education Studies": {
+                            "routes": [
+                                {
+                                    "routeCode": "UAX24-G",
+                                    "routeName": "Access to Degree Studies"
+                                },
+                                {
+                                    "routeCode": "UAX24-NURS",
+                                    "routeName": "Access to Nursing Studies"
+                                },
+                                {
+                                    "routeCode": "UAX24-SCIS",
+                                    "routeName": "Access to Science Studies"
+                                },
+                                {
+                                    "routeCode": "UHX12-ENGEDU",
+                                    "routeName": "BA (Hons) English Studies and Professional Education (Secondary)"
+                                },
+                                {
+                                    "routeCode": "UHX12-FREEDU",
+                                    "routeName": "BA (Hons) French and Professional Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-FSPEDU",
+                                    "routeName": "BA (Hons) French with Spanish and Professional Education (Secondary)"
+                                },
+                                {
+                                    "routeCode": "UHX12-HIPEDU",
+                                    "routeName": "BA (Hons) History and Politics and Professional Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-HISEDU",
+                                    "routeName": "BA (Hons) History and Professional Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-HSCEDU",
+                                    "routeName": "BA (Hons) History and Sociology and Prof.Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-SEYEDP",
+                                    "routeName": "BA (Hons) Professional Education (Primary) with specialism in Early Years"
+                                },
+                                {
+                                    "routeCode": "UHX12-INPEDP",
+                                    "routeName": "BA (Hons) Professional Education (Primary) with specialism in Inclusive Practice"
+                                },
+                                {
+                                    "routeCode": "UHX12-LITEDP",
+                                    "routeName": "BA (Hons) Professional Education (Primary) with specialism in Literacy"
+                                },
+                                {
+                                    "routeCode": "UHX12-MLAEDP",
+                                    "routeName": "BA (Hons) Professional Education (Primary) with specialism in Modern Languages"
+                                },
+                                {
+                                    "routeCode": "UHX12-NUMEDP",
+                                    "routeName": "BA (Hons) Professional Education (Primary) with specialism in Numeracy"
+                                },
+                                {
+                                    "routeCode": "UHX12-ENSEDP",
+                                    "routeName": "BA (Hons) Professional Education (Primary) with specialism in The Environment"
+                                },
+                                {
+                                    "routeCode": "UHF12-PEDUSC",
+                                    "routeName": "BA (Hons) Professional Education (Secondary, Chemistry)"
+                                },
+                                {
+                                    "routeCode": "UHX12-PEDUSC",
+                                    "routeName": "BA (Hons) Professional Education (Secondary, Chemistry)"
+                                },
+                                {
+                                    "routeCode": "UHX12-PEDUSP",
+                                    "routeName": "BA (Hons) Professional Education (Secondary, Physics)"
+                                },
+                                {
+                                    "routeCode": "UHX12-REGEDU",
+                                    "routeName": "BA (Hons) Religion and Professional Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-PRGEDU",
+                                    "routeName": "BA Philosophy and Religion and Professional Education (Secondary)"
+                                },
+                                {
+                                    "routeCode": "UBX12-TQFINS",
+                                    "routeName": "BA Teaching Qualification for Further Education (in-service) "
+                                },
+                                {
+                                    "routeCode": "UBX12-TQFPRS",
+                                    "routeName": "BA Teaching Qualification for Further Education (pre-service) "
+                                },
+                                {
+                                    "routeCode": "UHX12-EDPSEY",
+                                    "routeName": "Bachelor of Arts with Honours Education with specialism in Early Years"
+                                },
+                                {
+                                    "routeCode": "UHX12-EDPMLA",
+                                    "routeName": "Bachelor of Arts with Honours Education with specialism in Modern Languages"
+                                },
+                                {
+                                    "routeCode": "UHX12-EDPNUM",
+                                    "routeName": "Bachelor of Arts with Honours Education with specialism in Numeracy"
+                                },
+                                {
+                                    "routeCode": "UHX12-EDPENS",
+                                    "routeName": "Bachelor of Arts with Honours Education with specialism in The Environment"
+                                },
+                                {
+                                    "routeCode": "UHX12-ERGEDU",
+                                    "routeName": "Bachelor of Arts with Honours English Studies and Religion and Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-EDURHE",
+                                    "routeName": "Bachelor of Arts with Honours Religious Studies with History and Education"
+                                },
+                                {
+                                    "routeCode": "UHX16-CHMEDU",
+                                    "routeName": "BSc (Hons) Chemistry and Professional Education"
+                                },
+                                {
+                                    "routeCode": "UHX16-MATEDU",
+                                    "routeName": "BSc (Hons) Mathematics and Professional Education (Secondary)"
+                                },
+                                {
+                                    "routeCode": "UHX16-PHSEDU",
+                                    "routeName": "BSc (Hons) Physics and Professional Education"
+                                },
+                                {
+                                    "routeCode": "UHX16-PSCEDP",
+                                    "routeName": "BSc (Hons) Professional Education (Primary) with specialism in Primary Science"
+                                },
+                                {
+                                    "routeCode": "UHX16-EGEEDU",
+                                    "routeName": "BSc Environmental Geography and Professional Education (Secondary)"
+                                },
+                                {
+                                    "routeCode": "UHX16-PEDEDU",
+                                    "routeName": "BSc Sport Studies, Physical Education and Professional Education"
+                                },
+                                {
+                                    "routeCode": "DXX70-EDU",
+                                    "routeName": "Doctor of Education"
+                                },
+                                {
+                                    "routeCode": "RXX61-EDU",
+                                    "routeName": "MPhil Education"
+                                },
+                                {
+                                    "routeCode": "TXX47-EDU",
+                                    "routeName": "MRes Educational Research"
+                                },
+                                {
+                                    "routeCode": "TXX44-EDT",
+                                    "routeName": "MSc Education Studies and TESOL"
+                                },
+                                {
+                                    "routeCode": "TXX44-ELS",
+                                    "routeName": "MSc Educational Leadership (Specialist QH)"
+                                },
+                                {
+                                    "routeCode": "TXX44-ELM",
+                                    "routeName": "MSc English Language Teaching and Management"
+                                },
+                                {
+                                    "routeCode": "TXX44-MEL",
+                                    "routeName": "MSc Management and English Language Teaching"
+                                },
+                                {
+                                    "routeCode": "TXO44-TIN",
+                                    "routeName": "MSc TESOL online (International)"
+                                },
+                                {
+                                    "routeCode": "TXX46-TQF",
+                                    "routeName": "PgCert Tertiary Education with Teaching Qualification (Further Education)"
+                                },
+                                {
+                                    "routeCode": "TXX45-TQF",
+                                    "routeName": "PgDip Tertiary Education with Teaching Qualification (Further Education)"
+                                },
+                                {
+                                    "routeCode": "RXX60-EDU",
+                                    "routeName": "Research Degree Education"
+                                },
+                                {
+                                    "routeCode": "RXX60-TSL",
+                                    "routeName": "Research Degree TESOL"
+                                },
+                                {
+                                    "routeCode": "UXX31-TQFINS",
+                                    "routeName": "University Diploma Teaching Qualification for Further Education (in-service)"
+                                },
+                                {
+                                    "routeCode": "UXX31-TQFPRS",
+                                    "routeName": "University Diploma Teaching Qualification for Further Education (pre-service)"
+                                }
+                            ]
+                        },
+                        "Social Sciences": {
+                            "routes": [
+                                {
+                                    "routeCode": "UDX-SMODSOC",
+                                    "routeName": "UG Single Module Applications"
+                                }
+                            ]
+                        },
+                        "Sociology, Social Policy and Criminology": {
+                            "routes": [
+                                {
+                                    "routeCode": "DXX70-ASRDAS",
+                                    "routeName": "Applied Social Research (Drug and Alcohol Studies)"
+                                },
+                                {
+                                    "routeCode": "UCX12-CRMPHI",
+                                    "routeName": "BA (Hons) Criminology and Philosophy"
+                                },
+                                {
+                                    "routeCode": "UCX12-CRMPOL",
+                                    "routeName": "BA (Hons) Criminology and Politics"
+                                },
+                                {
+                                    "routeCode": "UHX12-CRMSPL",
+                                    "routeName": "BA (Hons) Criminology and Social Policy"
+                                },
+                                {
+                                    "routeCode": "UHX12-CRMSOC",
+                                    "routeName": "BA (Hons) Criminology and Sociology"
+                                },
+                                {
+                                    "routeCode": "UCX12-HISSOC",
+                                    "routeName": "BA (Hons) History and Sociology"
+                                },
+                                {
+                                    "routeCode": "UCX12-SOCSPA",
+                                    "routeName": "BA (Hons) Sociology and Spanish"
+                                },
+                                {
+                                    "routeCode": "TXO44PHOU",
+                                    "routeName": "Master of Science Housing Studies"
+                                },
+                                {
+                                    "routeCode": "TXO44-HOUINT",
+                                    "routeName": "Master of Science Housing Studies (with internship)"
+                                },
+                                {
+                                    "routeCode": "RXX61-HOU",
+                                    "routeName": "MPhil Housing"
+                                },
+                                {
+                                    "routeCode": "RXX61-SSP",
+                                    "routeName": "MPhil Sociology and Social Policy"
+                                },
+                                {
+                                    "routeCode": "TXX44-ASR",
+                                    "routeName": "MSc Applied Social Research"
+                                },
+                                {
+                                    "routeCode": "TXX44-CRMR",
+                                    "routeName": "MSc Criminological Research"
+                                },
+                                {
+                                    "routeCode": "TXO44-HOU",
+                                    "routeName": "MSc Dissertation only Housing Studies"
+                                },
+                                {
+                                    "routeCode": "TXX44-ASRSSR",
+                                    "routeName": "MSc Social Statistics and Social Research"
+                                },
+                                {
+                                    "routeCode": "TXX44-SU",
+                                    "routeName": "MSc Substance Use"
+                                },
+                                {
+                                    "routeCode": "RXX60-HOU",
+                                    "routeName": "Research Degree Housing"
+                                },
+                                {
+                                    "routeCode": "RXX60-SSP",
+                                    "routeName": "Research Degree Sociology & Social Policy"
+                                }
+                            ]
+                        },
+                        "Social Work Studies": {
+                            "routes": [
+                                {
+                                    "routeCode": "RXX61-SWK",
+                                    "routeName": "MPhil Social Work"
+                                },
+                                {
+                                    "routeCode": "TXX44-SWK",
+                                    "routeName": "MSc Social Work Studies"
+                                },
+                                {
+                                    "routeCode": "RXX60-SWK",
+                                    "routeName": "Research Degree Social Work"
+                                }
+                            ]
+                        },
+                        "Dementia Studies": {
+                            "routes": [
+                                {
+                                    "routeCode": "RXX61-DEM",
+                                    "routeName": "MPhil Dementia"
+                                },
+                                {
+                                    "routeCode": "TXO45-DEM",
+                                    "routeName": "MSc Dementia Studies"
+                                },
+                                {
+                                    "routeCode": "TXO44-GGAG",
+                                    "routeName": "MSc Gerontology and Global Ageing "
+                                },
+                                {
+                                    "routeCode": "TXO44-GA",
+                                    "routeName": "MSc Global Ageing"
+                                },
+                                {
+                                    "routeCode": "RXX60-DEM",
+                                    "routeName": "Research Degree Dementia Studies"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "Faculty of Arts and Humanities": {
+                    "divisions": {
+                        "Law and Philosophy": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHX12-PHI",
+                                    "routeName": "BA (Hons) Philosophy"
+                                },
+                                {
+                                    "routeCode": "UCX12-PHIPOL",
+                                    "routeName": "BA (Hons) Philosophy and Politics"
+                                },
+                                {
+                                    "routeCode": "UCX12-PHIREG",
+                                    "routeName": "BA (Hons) Philosophy and Religion"
+                                },
+                                {
+                                    "routeCode": "RXX60-PHA",
+                                    "routeName": "Doctor of Philosophy Philosophy - St Andrews"
+                                },
+                                {
+                                    "routeCode": "TXX50-EPG",
+                                    "routeName": "LLM Environmental Policy and Governance"
+                                },
+                                {
+                                    "routeCode": "TXX50-IEEL",
+                                    "routeName": "LLM International Energy and Environmental Law"
+                                },
+                                {
+                                    "routeCode": "TXX43-PHA",
+                                    "routeName": "Master of Letters Philosophy - SASP (Stirling)"
+                                },
+                                {
+                                    "routeCode": "RXX61-PHA",
+                                    "routeName": "Master of Philosophy Philosophy - St Andrews"
+                                },
+                                {
+                                    "routeCode": "RXX61-LAW",
+                                    "routeName": "MPhil Law"
+                                },
+                                {
+                                    "routeCode": "TXX44-HUMDIP",
+                                    "routeName": "MSc Human Rights and Diplomacy"
+                                },
+                                {
+                                    "routeCode": "RXX60-LAW",
+                                    "routeName": "Research Degree Law"
+                                },
+                                {
+                                    "routeCode": "RXX61-PHS",
+                                    "routeName": "St Andrews/Stirling Philosophy Research MPhil Prog"
+                                },
+                                {
+                                    "routeCode": "RXX60-PHS",
+                                    "routeName": "St Andrews/Stirling Philosophy Research PhD Prog"
+                                }
+                            ]
+                        },
+                        "Communications, Media and Culture": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHX12-FMS",
+                                    "routeName": "BA (Hons) Film & Media"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSFRE",
+                                    "routeName": "BA (Hons) Film & Media and French"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSREL",
+                                    "routeName": "BA (Hons) Film & Media and Religious Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSSPA",
+                                    "routeName": "BA (Hons) Film & Media and Spanish"
+                                },
+                                {
+                                    "routeCode": "UCX12-JOUPOL",
+                                    "routeName": "BA (Hons) Journalism Studies and Politics"
+                                },
+                                {
+                                    "routeCode": "UCX12-JOUSPS",
+                                    "routeName": "BA (Hons) Journalism Studies and Sports Studies"
+                                },
+                                {
+                                    "routeCode": "UHF12-DGM",
+                                    "routeName": "Bachelor of Arts with Honours Digital Media (year 1 & 2)"
+                                },
+                                {
+                                    "routeCode": "TXX43-GND",
+                                    "routeName": "MLitt Gender Studies (Applied)"
+                                },
+                                {
+                                    "routeCode": "RXX61-FMS",
+                                    "routeName": "MPhil Film & Media Studies"
+                                },
+                                {
+                                    "routeCode": "RXX61-PRE",
+                                    "routeName": "MPhil Public Relations"
+                                },
+                                {
+                                    "routeCode": "TXX44-DMC",
+                                    "routeName": "MSc Digital Media and Communication"
+                                },
+                                {
+                                    "routeCode": "TXX44-FT",
+                                    "routeName": "MSc Factual Television"
+                                },
+                                {
+                                    "routeCode": "TXX44-GND",
+                                    "routeName": "MSc Gender Studies (Applied)"
+                                },
+                                {
+                                    "routeCode": "TXV44-MCM",
+                                    "routeName": "MSc Media and Communications Management"
+                                },
+                                {
+                                    "routeCode": "TXX44-MMA",
+                                    "routeName": "MSc Media Management"
+                                },
+                                {
+                                    "routeCode": "TXX44-PRSC",
+                                    "routeName": "MSc Public Relations and Strategic Communication"
+                                },
+                                {
+                                    "routeCode": "TXX44-SCP",
+                                    "routeName": "MSc Strategic Communication and Public Relations (Joint Degree)"
+                                },
+                                {
+                                    "routeCode": "TXX44-SPR",
+                                    "routeName": "MSc Strategic Public Relations and Communication Management   "
+                                },
+                                {
+                                    "routeCode": "RXX60-ENGFMS",
+                                    "routeName": "PhD English Studies and Film, Media"
+                                },
+                                {
+                                    "routeCode": "RXX60-FMS",
+                                    "routeName": "Research Degree Film & Media Studies"
+                                },
+                                {
+                                    "routeCode": "RXX60-PRE",
+                                    "routeName": "Research Degree Public Relations"
+                                }
+                            ]
+                        },
+                        "History and Politics": {
+                            "routes": [
+                                {
+                                    "routeCode": "UCX12-POLREG",
+                                    "routeName": "BA (Hons) Politics and Religion"
+                                },
+                                {
+                                    "routeCode": "UHX12-EDUHIS",
+                                    "routeName": "Bachelor of Arts with Honours History and Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-EDUHIP",
+                                    "routeName": "Bachelor of Arts with Honours History and Politics and Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-EDUHSC",
+                                    "routeName": "Bachelor of Arts with Honours History and Sociology and Education"
+                                },
+                                {
+                                    "routeCode": "RXX61-HIS",
+                                    "routeName": "MPhil History"
+                                },
+                                {
+                                    "routeCode": "RXX61-POL",
+                                    "routeName": "MPhil Politics"
+                                },
+                                {
+                                    "routeCode": "TXX47-HTR",
+                                    "routeName": "MRes Historical Research"
+                                },
+                                {
+                                    "routeCode": "TXX44-HTR",
+                                    "routeName": "MSc Historical Research"
+                                },
+                                {
+                                    "routeCode": "TXX44-ICC",
+                                    "routeName": "MSc International Conflict and Cooperation"
+                                },
+                                {
+                                    "routeCode": "TXX44-TBC",
+                                    "routeName": "MSc Technical Building Conservation"
+                                },
+                                {
+                                    "routeCode": "RXX60-HIS",
+                                    "routeName": "PhD History"
+                                },
+                                {
+                                    "routeCode": "RXX60-POL",
+                                    "routeName": "Research Degree Politics"
+                                }
+                            ]
+                        },
+                        "Arts and Humanities": {
+                            "routes": [
+                                {
+                                    "routeCode": "UDX-SMODAHM",
+                                    "routeName": "UG Single Module Applications"
+                                }
+                            ]
+                        },
+                        "Literature and Languages": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHX12-ENG",
+                                    "routeName": "BA (Hons) English Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGFRE",
+                                    "routeName": "BA (Hons) English Studies and French"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGHIS",
+                                    "routeName": "BA (Hons) English Studies and History"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGJOU",
+                                    "routeName": "BA (Hons) English Studies and Journalism Studies"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGPHI",
+                                    "routeName": "BA (Hons) English Studies and Philosophy"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGREL",
+                                    "routeName": "BA (Hons) English Studies and Religion"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGSPA",
+                                    "routeName": "BA (Hons) English Studies and Spanish"
+                                },
+                                {
+                                    "routeCode": "UHX12-FRE",
+                                    "routeName": "BA (Hons) French"
+                                },
+                                {
+                                    "routeCode": "UCX12-FREHIS",
+                                    "routeName": "BA (Hons) French and History"
+                                },
+                                {
+                                    "routeCode": "UCX12-FREHRM",
+                                    "routeName": "BA (Hons) French and Human Resource Management"
+                                },
+                                {
+                                    "routeCode": "UCX12-FREMAT",
+                                    "routeName": "BA (Hons) French and Mathematics"
+                                },
+                                {
+                                    "routeCode": "UCX12-FREREG",
+                                    "routeName": "BA (Hons) French and Religion"
+                                },
+                                {
+                                    "routeCode": "UCX12-FRESPA",
+                                    "routeName": "BA (Hons) French and Spanish"
+                                },
+                                {
+                                    "routeCode": "UHC12-TRNINT",
+                                    "routeName": "BA (Hons) Translation and Interpreting"
+                                },
+                                {
+                                    "routeCode": "UHX12-EDUENG",
+                                    "routeName": "Bachelor of Arts with Honours English Studies and Education"
+                                },
+                                {
+                                    "routeCode": "UHX12-EDUFSP",
+                                    "routeName": "Bachelor of Arts with Honours French with Spanish and Education"
+                                },
+                                {
+                                    "routeCode": "TXX43-PUB",
+                                    "routeName": "MLitt Publishing Studies"
+                                },
+                                {
+                                    "routeCode": "RXX61-ENG",
+                                    "routeName": "MPhil English Studies"
+                                },
+                                {
+                                    "routeCode": "RXX61-FRE",
+                                    "routeName": "MPhil French"
+                                },
+                                {
+                                    "routeCode": "RXX61-LCR",
+                                    "routeName": "MPhil Languages, Cultures and Religions"
+                                },
+                                {
+                                    "routeCode": "RXX61-REL",
+                                    "routeName": "MPhil Religious Studies"
+                                },
+                                {
+                                    "routeCode": "RXX61-SPA",
+                                    "routeName": "MPhil Spanish"
+                                },
+                                {
+                                    "routeCode": "TXX47-PUB",
+                                    "routeName": "MRes Publishing Studies"
+                                },
+                                {
+                                    "routeCode": "RXX60-LCR",
+                                    "routeName": "PhD Languages, Cultures and Religions"
+                                },
+                                {
+                                    "routeCode": "RXX60-ENG",
+                                    "routeName": "Research Degree English Studies"
+                                },
+                                {
+                                    "routeCode": "RXX60-FRE",
+                                    "routeName": "Research Degree French"
+                                },
+                                {
+                                    "routeCode": "RXX60-PUB",
+                                    "routeName": "Research Degree Publishing Studies"
+                                },
+                                {
+                                    "routeCode": "RXX60-REL",
+                                    "routeName": "Research Degree Religious Studies"
+                                },
+                                {
+                                    "routeCode": "RXX60-SPA",
+                                    "routeName": "Research Degree Spanish"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "Faculty of Natural Science": {
+                    "divisions": {
+                        "Psychology": {
+                            "routes": [
+                                {
+                                    "routeCode": "UCX12-BUSPSY",
+                                    "routeName": "BA (Hons) Business Studies and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX12-ENGPSY",
+                                    "routeName": "BA (Hons) English Studies and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX12-FMSPSY",
+                                    "routeName": "BA (Hons) Film & Media and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX12-HRMPSY",
+                                    "routeName": "BA (Hons) Human Resource Management and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX12-MKTPSY",
+                                    "routeName": "BA (Hons) Marketing and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX12-PHIPSY",
+                                    "routeName": "BA (Hons) Philosophy and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX12-POLPSY",
+                                    "routeName": "BA (Hons) Politics and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX12-PSYEUL",
+                                    "routeName": "BA (Hons) Psychology and a European Language"
+                                },
+                                {
+                                    "routeCode": "UCX12-PSYSOC",
+                                    "routeName": "BA (Hons) Psychology and Sociology"
+                                },
+                                {
+                                    "routeCode": "UHX12-PSYSPS",
+                                    "routeName": "BA (Hons) Psychology and Sports Studies"
+                                },
+                                {
+                                    "routeCode": "UCX16-BIOPSY",
+                                    "routeName": "BSc (Hons) Biology and Psychology"
+                                },
+                                {
+                                    "routeCode": "UCX16-MATPSY",
+                                    "routeName": "BSc (Hons) Mathematics and Psychology"
+                                },
+                                {
+                                    "routeCode": "TXX52-HAI",
+                                    "routeName": "MA Human Animal Interaction"
+                                },
+                                {
+                                    "routeCode": "TXX44-PTD",
+                                    "routeName": "Master of Science Psychological Therapy in Primary Care"
+                                },
+                                {
+                                    "routeCode": "RXX61-PSY",
+                                    "routeName": "MPhil Psychology"
+                                },
+                                {
+                                    "routeCode": "TXX44-AUR",
+                                    "routeName": "MSc Autism Research"
+                                },
+                                {
+                                    "routeCode": "TXX44-HPS",
+                                    "routeName": "MSc Health Psychology"
+                                },
+                                {
+                                    "routeCode": "TXX44-HPD",
+                                    "routeName": "MSc Health Psychology (Discontinuous)"
+                                },
+                                {
+                                    "routeCode": "TXX44-HAI",
+                                    "routeName": "MSc Human Animal Interaction"
+                                },
+                                {
+                                    "routeCode": "TXX44-PRM",
+                                    "routeName": "MSc Psychological Research Methods"
+                                },
+                                {
+                                    "routeCode": "TXX44-PSY",
+                                    "routeName": "MSc Psychology (accredited conversion course)"
+                                },
+                                {
+                                    "routeCode": "RXX60-PSY",
+                                    "routeName": "Research Degree Psychology"
+                                }
+                            ]
+                        },
+                        "Natural Sciences": {
+                            "routes": [
+                                {
+                                    "routeCode": "UDX-SMODNSC",
+                                    "routeName": "UG Single Module Applications"
+                                }
+                            ]
+                        },
+                        "Biological and Environmental Sciences": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHF16-ABS",
+                                    "routeName": "Bachelor of Science with Honours Applied Biological Sciences (year 1 & 2)"
+                                },
+                                {
+                                    "routeCode": "UHX16-EDUBIO",
+                                    "routeName": "Bachelor of Science with Honours Biology and Education"
+                                },
+                                {
+                                    "routeCode": "UCX16-BIOMAT",
+                                    "routeName": "BSc (Hons) Biology and Mathematics"
+                                },
+                                {
+                                    "routeCode": "UHX16-CELBIO",
+                                    "routeName": "BSc (Hons) Cell Biology"
+                                },
+                                {
+                                    "routeCode": "UCX16-ENSMAT",
+                                    "routeName": "BSc (Hons) Environmental Science and Mathematics"
+                                },
+                                {
+                                    "routeCode": "UCX16-ENSPOL",
+                                    "routeName": "BSc (Hons) Environmental Science and Politics"
+                                },
+                                {
+                                    "routeCode": "RXX61-BIO",
+                                    "routeName": "MPhil Biology"
+                                },
+                                {
+                                    "routeCode": "RXX61-ECO",
+                                    "routeName": "MPhil Ecology"
+                                },
+                                {
+                                    "routeCode": "RXX61-ENS",
+                                    "routeName": "MPhil Environmental Science"
+                                },
+                                {
+                                    "routeCode": "TXX47-CES",
+                                    "routeName": "MRes Conservation and Environmental Science"
+                                },
+                                {
+                                    "routeCode": "TXX44-EHR",
+                                    "routeName": "MSc  Environmental Hazards and Resilience"
+                                },
+                                {
+                                    "routeCode": "TXX44-EPO",
+                                    "routeName": "MSc Earth and Planetary Observation"
+                                },
+                                {
+                                    "routeCode": "TXX44-ENM",
+                                    "routeName": "MSc Environmental Management"
+                                },
+                                {
+                                    "routeCode": "TXX44-ERSGS",
+                                    "routeName": "MSc Environmental Remote Sensing and Geospatial Sciences"
+                                },
+                                {
+                                    "routeCode": "IXX53-ENS",
+                                    "routeName": "MSci Environmental Science"
+                                },
+                                {
+                                    "routeCode": "RXX60-BIO",
+                                    "routeName": "Research Degree Biology"
+                                },
+                                {
+                                    "routeCode": "RXX60-BIOPLC",
+                                    "routeName": "Research Degree Biology with Placement"
+                                },
+                                {
+                                    "routeCode": "RXX60-ECO",
+                                    "routeName": "Research Degree Ecology"
+                                },
+                                {
+                                    "routeCode": "RXX60-ECOPLC",
+                                    "routeName": "Research Degree Ecology with Placement"
+                                },
+                                {
+                                    "routeCode": "RXX60-ENS",
+                                    "routeName": "Research Degree Environmental Science"
+                                },
+                                {
+                                    "routeCode": "RXX60-ENSPLC",
+                                    "routeName": "Research Degree Environmental Science wth Place"
+                                }
+                            ]
+                        },
+                        "Computing Science and Mathematics": {
+                            "routes": [
+                                {
+                                    "routeCode": "UCX12-ECNMAT",
+                                    "routeName": "BA (Hons) Economics and Mathematics"
+                                },
+                                {
+                                    "routeCode": "UCX12-FINMAT",
+                                    "routeName": "BA (Hons) Finance and Mathematics"
+                                },
+                                {
+                                    "routeCode": "UHX16-EDUMAT",
+                                    "routeName": "Bachelor of Science with Honours Mathematics and Education"
+                                },
+                                {
+                                    "routeCode": "UHX16-BSC",
+                                    "routeName": "BSc (Hons) Business Computing"
+                                },
+                                {
+                                    "routeCode": "UHM16-CSC",
+                                    "routeName": "BSc (Hons) Computing Science"
+                                },
+                                {
+                                    "routeCode": "UHX16-CSC",
+                                    "routeName": "BSc (Hons) Computing Science"
+                                },
+                                {
+                                    "routeCode": "UOV16-CSC",
+                                    "routeName": "BSc (Hons) Computing Science"
+                                },
+                                {
+                                    "routeCode": "UCX16-CSCFRE",
+                                    "routeName": "BSc (Hons) Computing Science and French"
+                                },
+                                {
+                                    "routeCode": "UCX16-CSCMAT",
+                                    "routeName": "BSc (Hons) Computing Science and Mathematics"
+                                },
+                                {
+                                    "routeCode": "UCX16-CSCPHI",
+                                    "routeName": "BSc (Hons) Computing Science and Philosophy"
+                                },
+                                {
+                                    "routeCode": "UCX16-CSCSPA",
+                                    "routeName": "BSc (Hons) Computing Science and Spanish"
+                                },
+                                {
+                                    "routeCode": "UHC16-DS",
+                                    "routeName": "BSc (Hons) Data Science"
+                                },
+                                {
+                                    "routeCode": "UHX16-DS",
+                                    "routeName": "BSc (Hons) Data Science"
+                                },
+                                {
+                                    "routeCode": "UHX16-GADS",
+                                    "routeName": "BSc (Hons) Graduate Apprenticeship in Data Science"
+                                },
+                                {
+                                    "routeCode": "UHX16-MAT",
+                                    "routeName": "BSc (Hons) Mathematics"
+                                },
+                                {
+                                    "routeCode": "UHX16-SEN",
+                                    "routeName": "BSc (Hons) Software Engineering"
+                                },
+                                {
+                                    "routeCode": "UHX16-BSCPLC",
+                                    "routeName": "BSc Business Computing with Industrial Place"
+                                },
+                                {
+                                    "routeCode": "UHX16-CSCPLC",
+                                    "routeName": "BSc Computing Science with Industrial Placement"
+                                },
+                                {
+                                    "routeCode": "RXX61-CSC",
+                                    "routeName": "MPhil Computing Science"
+                                },
+                                {
+                                    "routeCode": "RXX61-MAT",
+                                    "routeName": "MPhil Mathematics"
+                                },
+                                {
+                                    "routeCode": "TXX44-AI",
+                                    "routeName": "MSc Artificial Intelligence"
+                                },
+                                {
+                                    "routeCode": "TOV44-FNT",
+                                    "routeName": "MSc Financial Technology (FinTech)"
+                                },
+                                {
+                                    "routeCode": "TXX44-FNT",
+                                    "routeName": "MSc Financial Technology (FinTech)"
+                                },
+                                {
+                                    "routeCode": "DXX70-DS",
+                                    "routeName": "Professional Doctorate Data Science"
+                                },
+                                {
+                                    "routeCode": "RXX60-CSC",
+                                    "routeName": "Research Degree Computing Science"
+                                },
+                                {
+                                    "routeCode": "RXX60-MAT",
+                                    "routeName": "Research Degree Mathematics"
+                                }
+                            ]
+                        },
+                        "Aquaculture": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHX16-AQU",
+                                    "routeName": "BSc (Hons) Aquaculture"
+                                },
+                                {
+                                    "routeCode": "RXX61-AQU",
+                                    "routeName": "MPhil Aquaculture"
+                                },
+                                {
+                                    "routeCode": "RXX61-AVS",
+                                    "routeName": "MPhil Aquatic Veterinary Studies"
+                                },
+                                {
+                                    "routeCode": "TXX44-AQP",
+                                    "routeName": "MSc Aquatic Pathobiology"
+                                },
+                                {
+                                    "routeCode": "TXX44-AVS",
+                                    "routeName": "MSc Aquatic Veterinary Studies"
+                                },
+                                {
+                                    "routeCode": "TXX44-AQU",
+                                    "routeName": "MSc Sustainable Aquaculture"
+                                },
+                                {
+                                    "routeCode": "RXX60-AQU",
+                                    "routeName": "Research Degree Aquaculture"
+                                },
+                                {
+                                    "routeCode": "RXX60-AVS",
+                                    "routeName": "Research Degree Aquatic Veterinary Studies"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "University of Stirling": {
+                    "divisions": {
+                        "ISC Joint Venture Department": {
+                            "routes": [
+                                {
+                                    "routeCode": "UJX33-BFM",
+                                    "routeName": "DIPHE Business, Finance and Sport"
+                                },
+                                {
+                                    "routeCode": "UJX33-BFMEXT",
+                                    "routeName": "DIPHE Business, Finance and Sport"
+                                },
+                                {
+                                    "routeCode": "UJX33IBFM",
+                                    "routeName": "Integrated DIPHE Business, Finance and Sport"
+                                },
+                                {
+                                    "routeCode": "UJX33IBFMEXT",
+                                    "routeName": "Integrated DIPHE Business, Finance and Sport"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "unknown": {
+                    "divisions": {
+                        "unknown": {
+                            "routes": [
+                                {
+                                    "routeCode": "UHX12-RELGED",
+                                    "routeName": "Bachelor of Arts with Honours Religion and Professional Education (Secondary)"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
