@@ -629,22 +629,33 @@
           return new Date().toISOString();
         };
 
+        const renderItem = (data) => {
+          return `
+            <div class="medium-4 cell">
+              <h3>${data.custom_fields.h1_custom}</h3>
+              <p>Date: ${new Date(data.custom_fields.d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</p>
+              <p>Time: ${new Date(data.custom_fields.d).toLocaleTimeString("en-GB", { hour: "numeric", minute: "numeric", hour12: false })}</p>
+              <p>Type: ${data.custom_fields.snippet}</p>
+            </div>
+          `;
+        };
+
         /*
          * Fetch and display webinars
          * @param {string} baseUrl - The base URL for the API
          * @param {HTMLElement} node - The DOM node to display results
          */
-        async function doListing(baseUrl, node, obj) {
-          const filterString = `&filter=${encodeURIComponent(JSON.stringify(obj))}&sort=custom_fields.e&`;
+        async function doListing(baseUrl, node, obj, order) {
+          const filterString = `&filter=${encodeURIComponent(JSON.stringify(obj))}&sort=custom_fields.e&order=${order}&`;
 
           fetch(baseUrl + filterString + `page=1`)
             .then((response) => response.json())
             .then((data) => {
               if (data.total_hits > 0) {
-                console.log(data.hits);
+                console.log(data);
 
-                //const html = rendereventsPromo(seriesData, data.hits[0]);
-                //node.innerHTML = html || ``;
+                const html = data.hits.map(renderItem).join("");
+                node.innerHTML = `<div class="grid-x">${html || ``}</div>`;
               }
 
               //node.addEventListener("click", handleFavouriteBtnClick());
@@ -681,8 +692,8 @@
          * Initialize
          */
         (async () => {
-          doListing(searchUrl, resultsNode, upcomingObj);
-          doListing(searchUrl, resultsNode, onDemandObj);
+          doListing(searchUrl, resultsNode, upcomingObj, "asc");
+          //doListing(searchUrl, resultsNode, onDemandObj, "desc");
         })();
       })();
     </script>
