@@ -72,9 +72,8 @@
     Handle click events
    */
   const handleClick = (e) => {
-    console.log(e);
-
     const aTag = e.target.closest("a");
+    if (!aTag) return;
 
     const contentId = getLinkId(aTag.href);
     if (contentId) {
