@@ -187,7 +187,9 @@ stir.templates.search = (() => {
 	const t4preview = (sid) => (sid ? `/terminalfour/preview/1/en/${sid}` : "#");
 
 	const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
-
+	
+	const unpackData = (data) => "object"===typeof data ? Object.assign({},...data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(data));
+	
 	const facetDisplayTypes = {
 		SINGLE_DRILL_DOWN: undefined,
 		CHECKBOX: "checkbox",
@@ -196,14 +198,6 @@ stir.templates.search = (() => {
 		UNKNOWN: undefined,
 	};
 
-	//	const months = {
-	//		"01": "January",
-	//		"02": "February",
-	//		"05": "May",
-	//		"08": "August",
-	//		"09": "September",
-	//		"10": "October",
-	//	};
 
 	const correctCase = (function () {
 		if (!stir.t4Globals || !stir.t4Globals.search || !stir.t4Globals.search.facets) {
@@ -345,10 +339,11 @@ stir.templates.search = (() => {
 		suppressed: (reason) => `<!-- Suppressed search result: ${reason} -->`,
 
 		auto: (item) => {
+			item && console.info(item);
 //			if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
 //			if (item.custom_fields.type == "scholarship") return stir.templates.search.scholarship(item);
 //			if (item.custom_fields.type == "Course" || item.custom_fields.level) return stir.templates.search.course(item);
-//			if (item.custom_fields.type == "News") return stir.templates.search.news(item);
+			if (item.custom_fields.type == "News") return stir.templates.search.news(item);
 //			if (item.custom_fields.type == "Gallery") return stir.templates.search.gallery(item);
 //			if (item.custom_fields.type == "Event") return stir.templates.search.event(item);
 //			if (item.collection == "stir-events") return stir.templates.search.event(item);
@@ -610,7 +605,10 @@ stir.templates.search = (() => {
 		},
 
 		news: (item) => {
-			const hasThumb = true;
+			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			const hasThumb = data.thumbnail ? true : false;
+			const thumb = data.thumbnail ? `data-original="${data.thumbnail}"` : '';
+			console.info("Thumb",hasThumb,data.thumbnail);
 			return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumb ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
@@ -624,7 +622,7 @@ stir.templates.search = (() => {
 					</div>
 					<div class=c-search-result__image>
 						<!-- <img src="data:image/jpeg;base64,${item.images.main_b64}" alt="${item.title.split(" | ")[0].trim()}" height="68" width="68" loading="lazy"> -->
-						<img src="${item.images.main}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
+						<img src="${item.images.main}" alt="${item.title.split(" | ")[0].trim()}" ${thumb} height=275 width=275 loading=lazy>
 					</div>
 				</div>`;
 				/* <!-- <p>

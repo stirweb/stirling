@@ -39,25 +39,12 @@ stir.funnelback = (() => {
 		return tagGroups && tagGroups.map(stir.templates.search.tagGroup).join("");
 	};
 
-	const imgError = (error) => {
-		//debug && console.error('[Search] There was an error loading a thumbnail image.', error.target.src);
-		if (error.target.getAttribute("data-original") && error.target.getAttribute("src") != error.target.getAttribute("data-original")) {
-			//debug && console.error('[Search] …reverting to original image: ', error.target.getAttribute('data-original'));
-			error.target.src = error.target.getAttribute("data-original");
-		} else {
-			//debug && console.error('[Search] …no alternative image available. It will be removed.');
-			error.target.parentElement.parentElement?.classList?.remove("c-search-result__with-thumbnail");
-			error.target.parentElement.parentElement.removeChild(error.target.parentElement);
-		}
-	};
-
 	return {
 		getHostname: getHostname,
 		getJsonEndpoint: getJsonEndpoint,
 		getScaleEndpoint: getScaleEndpoint,
 		getCroppedImageElement: getCroppedImageElement,
-		getTags: getTags,
-		imgError: imgError,
+		getTags: getTags
 	};
 })();
 
@@ -150,50 +137,51 @@ stir.search = () => {
 				sort: "custom_fields.d",
 			},
 			event: {
-				filter: JSON.stringify({
-					and: [
-						{ "custom_fields.type": "event" },
-						{
-							or: [
-								{
-									/* START this week */
-									range: {
-										"custom_fields.e": {
-											gt: "2025-10-19",
-											lt: "2025-10-27"
-										}
-									}
-								}, {
-									/* OR END this week */
-									range: {
-										"custom_fields.d": {
-											gt: "2025-10-19",
-											lt: "2025-10-27"
-										}
-									}
-								}, {
-									/* OR they START before AND END after this week */
-									and: [
-										{
-											range: {
-												"custom_fields.d": {
-													lt: "2025-10-19"
-												}
-											}
-										},
-										{
-											range: {
-												"custom_fields.e": {
-													gt: "2025-10-27"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					]
-				})
+				customField: "type=event"
+				// filter: JSON.stringify({
+				// 	and: [
+				// 		{ "custom_fields.type": "event" },
+				// 		{
+				// 			or: [
+				// 				{
+				// 					/* START this week */
+				// 					range: {
+				// 						"custom_fields.e": {
+				// 							gt: "2025-10-19",
+				// 							lt: "2025-10-27"
+				// 						}
+				// 					}
+				// 				}, {
+				// 					/* OR END this week */
+				// 					range: {
+				// 						"custom_fields.d": {
+				// 							gt: "2025-10-19",
+				// 							lt: "2025-10-27"
+				// 						}
+				// 					}
+				// 				}, {
+				// 					/* OR they START before AND END after this week */
+				// 					and: [
+				// 						{
+				// 							range: {
+				// 								"custom_fields.d": {
+				// 									lt: "2025-10-19"
+				// 								}
+				// 							}
+				// 						},
+				// 						{
+				// 							range: {
+				// 								"custom_fields.e": {
+				// 									gt: "2025-10-27"
+				// 								}
+				// 							}
+				// 						}
+				// 					]
+				// 				}
+				// 			]
+				// 		}
+				// 	]
+				// })
 			},
 			gallery: {
 				customField: "type=gallery"
@@ -208,9 +196,7 @@ stir.search = () => {
 				limit: 5
 			},
 			person: {
-				customField: "type=profile",
-				sort: "custom_fields.sort",
-				order: "desc",
+				customField: "type=profile"
 			},
 			research: {
 				categories: "2xhub",
@@ -231,18 +217,21 @@ stir.search = () => {
 				timestamp: +new Date(), */
 			},
 		},
-		// extra parameters for no-query searches
+		// +++ Extra parameters for no-query searches +++
+		// E.g. if no keywords supplied; sort by 
+		// title instead of "relevance"
 		noquery: {
 			course: {
-				//sort: "title", // if no keywords supplied, sort courses
-				// by title instead of "relevance"
-				//		},
-				//		person: {
-				//			sort: "meta_surname"	//sort people by surname
-				//		},
-				//		event: {
-				//			sort: "adate"	// sort events by date descending
+				sort: "custom_fields.name",
 			},
+			person: {
+				sort: "custom_fields.sort",
+				order: "desc"
+			},
+			event: {
+				sort: "custom_fields.e",	// sort events by date descending
+				order: "asc"
+			}
 		},
 	};
 
@@ -297,16 +286,16 @@ stir.search = () => {
 		const form = document.querySelector(`${stir.templates.search.selector.results} form[data-filters="${type}"]`);
 		let a = form ? new FormData(form) : new FormData();
 
-		for (var key of a.keys()) {
-			if (key.indexOf("f.") === 0) continue; //ignore any facets
-			if (a.getAll(key).length > 1) {
-				// merge values into one dysjunction operator
-				// as used in the Research type filter's "Other" option:
-				// "publication", "contract", "[tag theme programme group]"
-				// will become "[publication contract tag theme programme group]"
-				//a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
-			}
-		}
+		// for (var key of a.keys()) {
+		// 	if (key.indexOf("f.") === 0) continue; //ignore any facets
+		// 	if (a.getAll(key).length > 1) {
+		// 		// merge values into one dysjunction operator
+		// 		// as used in the Research type filter's "Other" option:
+		// 		// "publication", "contract", "[tag theme programme group]"
+		// 		// will become "[publication contract tag theme programme group]"
+		// 		//a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
+		// 	}
+		// }
 
 		return a;
 	};
@@ -339,7 +328,7 @@ stir.search = () => {
 	});
 
 	const newAccordion = (accordion) => new stir.accord(accordion, false);
-	//const imageErrorHandler = (image) => image.addEventListener("error", stir.funnelback.imgError);
+	const attachImageErrorHandler = (image) => image.addEventListener("error", imgError);
 
 	// "reflow" events and handlers for dynamically added DOM elements
 	const flow = stir.curry((_element, data) => {
@@ -347,8 +336,9 @@ stir.search = () => {
 		const root = _element.closest("[data-panel]");
 		const cords = root.querySelectorAll('[data-behaviour="accordion"]:not(.stir-accordion)');
 		const pics = root.querySelectorAll("img");
+		console.info("PICS +++ ",pics)
 		Array.prototype.forEach.call(cords, newAccordion);
-//		Array.prototype.forEach.call(pics, imageErrorHandler);
+		Array.prototype.forEach.call(pics, attachImageErrorHandler);
 	});
 
 	const updateStatus = stir.curry((element, data) => {
@@ -647,6 +637,18 @@ stir.search = () => {
 			event.preventDefault();
 		});
 	});
+	
+	function imgError(error) {
+		//debug && console.error('[Search] There was an error loading a thumbnail image:', error.target);
+		if (error.target.getAttribute("data-original") && error.target.getAttribute("src") != error.target.getAttribute("data-original")) {
+			 //debug && console.error('[+++] …reverting to original image: ', error.target.getAttribute('data-original'));
+			 error.target.src = error.target.getAttribute("data-original");
+		} else {
+			//debug && console.error('[Search] …no alternative image available. It will be removed.');
+			error.target.parentElement.parentElement?.classList?.remove("c-search-result__with-thumbnail");
+			error.target.parentElement.parentElement.removeChild(error.target.parentElement);
+		}
+	}
 
 	const tokenHandler = (event) => {
 		if (!event || !event.target) return;
