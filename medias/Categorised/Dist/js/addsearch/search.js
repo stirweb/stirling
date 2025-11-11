@@ -10,7 +10,6 @@ stir.templates.search = (() => {
 	 * invoking the absolute object stir.templates.blah.blah.blah
 	 * */
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	const FB_BASE = () => "https://" + stir.funnelback.getHostname();
 	const notice = (text) => `<p class="u-heritage-berry u-border-solid u-p-1"><span class="uos-lightbulb"></span> ${text}</p>`;
 	const summary = (text) => `<p class=c-search-result__summary>${text}</p>`;
 
@@ -260,7 +259,7 @@ stir.templates.search = (() => {
 			return list ? list.map(stir.templates.search.stag).join("") : "";
 		},
 		breadcrumb: (crumbs) => `<p class="u-m-0">${crumbs}</p>`,
-		trailstring: (trail) => (trail.length ? trail.map(anchor).join(" > ") : ""),
+		trailstring: (trail) => (trail.length ? trail.map(anchor).join("<small> &gt; </small> ") : ""),
 
 		message: (hit, count, queried) => {
 			const p = document.createElement("p");
@@ -270,16 +269,14 @@ stir.templates.search = (() => {
 			return p;
 		},
 
-		summary: (data) => {
+		summary: data => {
 			const currEnd = 1 + (data.page * data.hits);
 			const currStart = currEnd - data.hits;
 			const totalMatching = data.total_hits;
 			const summary = document.createElement("div");
-			summary.classList.add("u-py-2");
-			//const { currEnd, totalMatching, currStart } = data.response.resultPacket.resultsSummary;
-			const querySanitised = stir.String.htmlEntities("Example query apples fred ninja")
-									.replace(/^!padrenullquery$/, "")
-									.replace(/^\*$/, "")
+			const querySanitised = stir.String.htmlEntities(data.question.term)
+									.replace(/^!padrenullquery$/, "")	//funnelback
+									.replace(/^\*$/, "")				//addsearch
 									.trim() || "";
 			const queryEcho = document.createElement("em");
 			const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
@@ -287,11 +284,12 @@ stir.templates.search = (() => {
 			//const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
 			//const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
 
+			summary.classList.add("u-py-2");
+
 			queryEcho.textContent = querySanitised;
 			if (querySanitised.length > 1) message.append(queryEcho);
 
 			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
-			
 			//summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
 			
 			/*
@@ -320,7 +318,7 @@ stir.templates.search = (() => {
 			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
 			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
 
-			if (data) {summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, hits: ${data.hits.length}</p><details><summary>JSON data</summary><pre>${JSON.stringify(data,null,"\t")}</pre></details>`;}
+			//if (data) {summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, hits: ${data.hits.length}</p>`;}
 			summary.append(message);
 			
 			return summary;
@@ -342,15 +340,15 @@ stir.templates.search = (() => {
 			item && console.info(item);
 //			if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
 //			if (item.custom_fields.type == "scholarship") return stir.templates.search.scholarship(item);
-//			if (item.custom_fields.type == "Course" || item.custom_fields.level) return stir.templates.search.course(item);
-			if (item.custom_fields.type == "News") return stir.templates.search.news(item);
+			if (item.custom_fields.type == "course") return stir.templates.search.course(item);
+			if (item.custom_fields.type === "news") return stir.templates.search.news(item);
 //			if (item.custom_fields.type == "Gallery") return stir.templates.search.gallery(item);
-//			if (item.custom_fields.type == "Event") return stir.templates.search.event(item);
+			if (item.custom_fields.type == "event") return stir.templates.search.event(item);
 //			if (item.collection == "stir-events") return stir.templates.search.event(item);
-//			if (item.custom_fields.access) return stir.templates.search.internal(item);
+			if (item.custom_fields.access) return stir.templates.search.internal(item);
 //			if (item.custom_fields.type && item.custom_fields.type.indexOf("output") > -1) return stir.templates.search.research(item);
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("contract") > -1) return stir.templates.search.research(item);
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("profile") > -1) return stir.templates.search.person(item);
+			if (item.custom_fields.type && item.custom_fields.type.indexOf("contract") > -1) return stir.templates.search.research(item);
+			if (item.custom_fields.type && item.custom_fields.type.indexOf("profile") > -1) return stir.templates.search.person(item);
 //			if (item.url.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
 //
 			const crumbs = {
@@ -362,15 +360,16 @@ stir.templates.search = (() => {
 //
 //			const label = item.url.indexOf("policyblog.stir") > -1 ? `<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>` : "";
 //
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item, trail);
+			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item, trail);
 
-			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}>
+			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}>
 				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
+				<div class=c-search-result__tags>
+					${stir.templates.search.stag([item.custom_fields.type || "Page"])}
+				</div>
 					${makeBreadcrumbs(trail, item.url,0)}
 					<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
 					<p>${item.meta_description}</p>
-					<p>${item.custom_fields.d||''}</p>
-					<p>${item.custom_fields.sid||''}</p>
 				</div>
 			</div>`;
 
@@ -393,7 +392,7 @@ stir.templates.search = (() => {
 			const trail = userAuth(item.custom_fields.group) ? stir.templates.search.trailstring(crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" })).slice(0, -1)) : `<a href="https://www.stir.ac.uk/${crumbs.href[0]}/">${crumbs.text[0]}</a>`;
 
 			return `
-	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.custom_fields.group)}" data-rank=${item.rank}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""} data-access="${item.custom_fields.access}">
+	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.custom_fields.group)}" data-rank=${item.score}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""} data-access="${item.custom_fields.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="c-search-result__breadcrumb">${trail} ..:: INTERNAL ::..</p>
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
@@ -480,16 +479,14 @@ stir.templates.search = (() => {
 		courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""), //.replace(/\|/g, ", ")
 
 		course: (item) => {
-			//return stir.templates.search.auto(item); // 2025-10-10 TEMP
-			//return `<div class="c-search-result u-border-width-5 u-heritage-line-left">COURSE RESULT</div>`;
-			//      const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-			//      const subjectLink = stir.String.slug(subject);
+			const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 			//		const subject = typeof item.custom_fields.subject;
+			//      const subjectLink = stir.String.slug(subject);
 			const isOnline = item.custom_fields.delivery && item.custom_fields.delivery.indexOf("online") > -1 ? true : false;
-			const link = item.url;//UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
+			const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
 			item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.custom_fields.sid : item.url);
 			return `
-			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.rank} data-sid=${item.custom_fields.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
+			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.score} data-sid=${item.custom_fields.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${courseLabel(item.custom_fields.level || item.custom_fields.type || "")}</span>
 				</div>
@@ -519,8 +516,8 @@ stir.templates.search = (() => {
 
 		coursemini: (item) 
 		=> "\t\t\t" + `<div>
-				<p><strong><a href="${FB_BASE() + item.clickTrackingUrl}" title="${item.url}" class="u-border-none">
-					${item.custom_fields.award || ""} ${item.title} ${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""} ${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
+				<p><strong><a href="${item.url}" title="${item.url}" class="u-border-none">
+					${item.custom_fields.award || ""} ${item.title.split(" | ")[0]} ${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""} ${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
 				</a></strong></p>
 				<p>${item.meta_description}</p>
 			</div>`,
@@ -570,7 +567,7 @@ stir.templates.search = (() => {
 		},
 		scholarship: (item) => {
 			return `
-		<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=scholarship data-rank=${item.rank}>
+		<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=scholarship data-rank=${item.score}>
 			<div class=c-search-result__tags>
 				${stir.templates.search.stag(item.custom_fields.level ? `Scholarship: ${item.custom_fields.level.toLowerCase()}` : "")}
 			</div>
@@ -587,20 +584,22 @@ stir.templates.search = (() => {
 		},
 
 		studentstory: (item, trail) => {
+			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			//<!-- <div><a href="${trail[0].href}">${trail[0].text}</a></div> -->
 			return `
 				<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=studentstory>
-					<div><a href="${trail[0].href}">${trail[0].text}</a></div>
-					<div class="c-search-result__body flex-container flex-dir-column u-gap ">
+					<div class="c-search-result__body flex-container flex-dir-column u-gap">
+						<div class=c-search-result__tags>${stir.templates.search.stag(["Student stories"])}</div>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
+							<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
 						</strong></p>
 						<p class="u-m-0">
-						${item.custom_fields.profileCourse1 ? item.custom_fields.profileCourse1 + "<br />" : ""}
-						${item.custom_fields.profileCountry ? item.custom_fields.profileCountry : ""}
+						${data.degree ? data.degree + "<br />" : ""}
+						${item.custom_fields.country ? item.custom_fields.country : ""}
 						</p>
-						<p>${item.custom_fields.profileSnippet ? "<q>" + item.custom_fields.profileSnippet + "</q>" : "<!-- 28d3702e2064f72d5dfcba865e3cc5d5 -->"}</p>
+						<p>${item.custom_fields.snippet ? "<q>" + item.custom_fields.snippet + "</q>" : "<!-- 28d3702e2064f72d5dfcba865e3cc5d5 -->"}</p>
 					</div>
-					${item.custom_fields.profileImage ? image("https://www.stir.ac.uk" + item.custom_fields.profileImage, item.title.split(" | ")[0].trim(), 400, 400) : ""}
+					${item.custom_fields.image ? image("https://www.stir.ac.uk" + item.custom_fields.image, item.title.split(" | ")[0].trim(), 400, 400) : ""}
 				</div>`;
 		},
 
@@ -608,7 +607,6 @@ stir.templates.search = (() => {
 			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
 			const hasThumb = data.thumbnail ? true : false;
 			const thumb = data.thumbnail ? `data-original="${data.thumbnail}"` : '';
-			console.info("Thumb",hasThumb,data.thumbnail);
 			return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumb ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
@@ -617,11 +615,10 @@ stir.templates.search = (() => {
 								<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
 							</strong>
 						</p>
-						<div>${item.custom_fields.d ? stir.Date.newsDate(new Date(item.custom_fields.d.split("|")[0])) : ""}</div>
+						<div>${stir.Date.newsDate(new Date( item.custom_fields.d ? item.custom_fields.d.split("|")[0] : item.ts ))}</div>
 						<p class="text-sm">${item.meta_description}</p>
 					</div>
 					<div class=c-search-result__image>
-						<!-- <img src="data:image/jpeg;base64,${item.images.main_b64}" alt="${item.title.split(" | ")[0].trim()}" height="68" width="68" loading="lazy"> -->
 						<img src="${item.images.main}" alt="${item.title.split(" | ")[0].trim()}" ${thumb} height=275 width=275 loading=lazy>
 					</div>
 				</div>`;
@@ -631,39 +628,37 @@ stir.templates.search = (() => {
 						</p> --> */
 		},
 
+
 		gallery: (item) => {
 			return `
-				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${item.rank} data-result-type=news>
-					
+				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${item.score} data-result-type=news>
 					<div class=c-search-result__body>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.custom_fields.h1 || item.title.split(" | ")[0].trim()}</a>
+							<a href="${item.url}">${item.custom_fields.h1 || item.title.split(" | ")[0].trim()}</a>
 						</strong></p>
 						<p class="c-search-result__secondary">${stir.Date.newsDate(new Date(item.custom_fields.d))}</p>
 						<p >${item.meta_description}</p>	
 					</div>
 					<div class=c-search-result__image>
 						${stir.funnelback.getCroppedImageElement({
-				url: flickrUrl(JSON.parse(item.custom_fields.custom)),
-				alt: `Image of ${item.title.split(" | ")[0].trim()}`,
-				width: 550,
-				height: 550,
-			})}
+							url: flickrUrl(JSON.parse(item.custom_fields.custom)),
+							alt: `Image of ${item.title.split(" | ")[0].trim()}`,
+							width: 550,
+							height: 550,
+						})}
 					</div>
 				</div>`;
 		},
 
+
 		event: (item) => {
-
-
 			const isWebinar = item.custom_fields?.tags?.indexOf("Webinar") > -1;
 			const hasThumbnail = item.custom_fields?.image || isWebinar;
 			const title = item.custom_fields.name || item.title.split("|")[0].trim();
-			const url = item.url //item.collection == "stir-events" ? (item.custom_fields.page ? item.custom_fields.page : item.custom_fields.register ? item.custom_fields.register : "#") : FB_BASE() + item.clickTrackingUrl;
+			const url = item.url //item.collection == "stir-events" ? (item.custom_fields.page ? item.custom_fields.page : item.custom_fields.register ? item.custom_fields.register : "#") : item.url;
 			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : {};
-
 			return `
-			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
+			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=event>
 				<div class=c-search-result__tags>
 					${data.isSeriesChild ? stir.templates.search.stag(data.isSeriesChild) : ""}
 				</div>
@@ -694,29 +689,28 @@ stir.templates.search = (() => {
 			</div>`;
 		},
 
-		research: (item) => stir.templates.search.auto(item), // 2025-10-10 TEMP
 
-			/* `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""}>
+		research: (item) => 
+			`<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""}>
 				<div>
 					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
 					<div class="flex-container flex-dir-column u-gap u-mt-1">
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">
-								${item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title}
-							</a>
+							<a href="${item.url}">${item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title}</a>
 						</strong></p>
-						${stir.String.stripHtml(item.custom_fields.c || "") ? `<div class="text-sm">` + stir.String.stripHtml(item.custom_fields.c || "") + `</div>` : ""}
+						${stir.String.stripHtml(item.meta_description) ? `<div class="text-sm">` + stir.String.stripHtml(item.meta_description) + `</div>` : ""}
 						${stir.funnelback.getTags(item.custom_fields.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.custom_fields.category) + `</div>` : ""}
 					</div>
 				</div>
-			</div>`, */
+			</div>`,
+
 
 		cura: (item) =>
 			!item.messageHtml
 				? `<div class="c-search-result" data-result-type=curated>
 					<div class=c-search-result__body>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${FB_BASE() + item.linkUrl}" title="${item.displayUrl}">${item.titleHtml}</a><br>
+							<a href="${item.url}">${item.title.split(" | ")[1]}</a><br>
 							<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
 						</strong></p>
 						<p>${item.descriptionHtml}</p>
@@ -725,6 +719,8 @@ stir.templates.search = (() => {
 				: `<div class="c-search-result-curated" data-result-type=curated-message>
 					${item.messageHtml}
 				</div>`,
+
+
 		facet: (item) =>
 			`<fieldset data-facet="${item.name}">
 				<legend class="show-for-sr">Filter by ${item.name}</legend>
@@ -738,15 +734,17 @@ stir.templates.search = (() => {
 					</div>
 				</div>
 			</fieldset>`,
+
+
 		labelledFacetItems: stir.curry(
-			(facet, facetValue) => `
-	<li>
-		<label>
-			<input type=${facetDisplayTypes[facet.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
-			${facetCategoryLabel(facet.name, facetValue.label)}
-			<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
-		</label>
-	</li>`
+			(facet, facetValue) =>
+				`<li>
+					<label>
+						<input type=${facetDisplayTypes[facet.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
+						${facetCategoryLabel(facet.name, facetValue.label)}
+						<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
+					</label>
+				</li>`
 		),
 	};
 })();
@@ -1528,15 +1526,15 @@ stir.search = () => {
 		Array.prototype.forEach.call(pics, attachImageErrorHandler);
 	});
 
-	const updateStatus = stir.curry((element, data) => {
-		const start = 1 + (data.page * data.hits) - data.hits;
+	const updateStatus = stir.curry((wrapper, data) => {
+		const start = 1 + (data.page * data.hits.length) - data.hits.length;
 		const ranks = data.total_hits;
-		const summary = element.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
-		element.setAttribute("data-page", calcPage(start, ranks));
-		if (summary) {
-			summary.innerHTML = "";
-			summary.append(stir.templates.search.summary(data));
+		const el = wrapper.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
+		if (el) {
+			el.innerHTML = "";
+			el.append(stir.templates.search.summary(data));
 		}
+		wrapper.setAttribute("data-page", calcPage(start, ranks));
 		return data; // data pass-thru so we can compose() this function
 	});
 
@@ -1686,7 +1684,7 @@ stir.search = () => {
 				getNoQuery(type), // get special "no query" parameters (sorting, etc.)
 				getQueryParameters(), // get facet parameters
 			);
-		stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback);
+		stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback(parameters));
 	});
 	
 	// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
@@ -1700,15 +1698,18 @@ stir.search = () => {
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, replace, render, more, status, facets);
-		const callback = (data) => {
+		const callback = stir.curry((parameters,data) => {
+			
+			console.info("[Search] API callback with parameters",parameters);
+			
 			if (!element || !element.parentElement) {
 				return debug && console.error("[Search] late callback, element no longer on DOM");
 			}
 			//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
 			if (!data || data.error) return;
 			if (0 === data.total_hits && fallback(element)) return;
-			return composition(data);
-		};
+			return composition( stir.Object.extend({},data,{question:parameters}) );
+		});
 		resetPagination();
 	
 		// if necessary do a prefetch and then call-back to the search function.
@@ -1727,7 +1728,7 @@ stir.search = () => {
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
-		const callback = (data) => (data && !data.error ? composition(data) : new Function());
+		const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
 		nextPage(type);
 		searchers[type](callback);
 	};

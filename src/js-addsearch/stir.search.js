@@ -341,15 +341,15 @@ stir.search = () => {
 		Array.prototype.forEach.call(pics, attachImageErrorHandler);
 	});
 
-	const updateStatus = stir.curry((element, data) => {
-		const start = 1 + (data.page * data.hits) - data.hits;
+	const updateStatus = stir.curry((wrapper, data) => {
+		const start = 1 + (data.page * data.hits.length) - data.hits.length;
 		const ranks = data.total_hits;
-		const summary = element.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
-		element.setAttribute("data-page", calcPage(start, ranks));
-		if (summary) {
-			summary.innerHTML = "";
-			summary.append(stir.templates.search.summary(data));
+		const el = wrapper.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
+		if (el) {
+			el.innerHTML = "";
+			el.append(stir.templates.search.summary(data));
 		}
+		wrapper.setAttribute("data-page", calcPage(start, ranks));
 		return data; // data pass-thru so we can compose() this function
 	});
 
@@ -499,7 +499,7 @@ stir.search = () => {
 				getNoQuery(type), // get special "no query" parameters (sorting, etc.)
 				getQueryParameters(), // get facet parameters
 			);
-		stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback);
+		stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback(parameters));
 	});
 	
 	// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
@@ -513,15 +513,18 @@ stir.search = () => {
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, replace, render, more, status, facets);
-		const callback = (data) => {
+		const callback = stir.curry((parameters,data) => {
+			
+			console.info("[Search] API callback with parameters",parameters);
+			
 			if (!element || !element.parentElement) {
 				return debug && console.error("[Search] late callback, element no longer on DOM");
 			}
 			//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
 			if (!data || data.error) return;
 			if (0 === data.total_hits && fallback(element)) return;
-			return composition(data);
-		};
+			return composition( stir.Object.extend({},data,{question:parameters}) );
+		});
 		resetPagination();
 	
 		// if necessary do a prefetch and then call-back to the search function.
@@ -540,7 +543,7 @@ stir.search = () => {
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
-		const callback = (data) => (data && !data.error ? composition(data) : new Function());
+		const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
 		nextPage(type);
 		searchers[type](callback);
 	};
