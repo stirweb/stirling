@@ -27,7 +27,7 @@
 
   const renderMicro = (item) => {
     if (!item || !item.id) return ``;
-    return `<div class="cell large-3 text-sm u-bg-white u-p-1 u-mb-1" id="microfav-${item.custom_fields.sid}">
+    return `<div class="cell large-3 text-sm u-bg-white u-p-1 u-mb-1" id="microfav-${item.custom_fields.sid}" data-type="${item.custom_fields.type}">
                 <p class="u-text-regular  "><strong><a href="${item.url}">${item.custom_fields.h1_custom}</a></strong></p>
                  <p><strong>${(item.custom_fields.type && stir.capitaliseFirst(item.custom_fields.type)) || ``}</strong></p>
             </div>`;
@@ -238,6 +238,11 @@
 
       const element = document.querySelector(`[data-favtype="${cookieType2}"]`);
       element.innerHTML = renderNoFavs();
+
+      const mircos = document.querySelectorAll(`[data-type="${cookieType2}"]`);
+      mircos.forEach((microelement) => {
+        microelement.remove();
+      });
     }
 
     if (target.dataset.action === "copysharelink") {
