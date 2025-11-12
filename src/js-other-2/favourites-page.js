@@ -320,42 +320,45 @@
 
   /*
    * manageSharePage
+   * @param {Object} sharedArea - The DOM node for the shared area
+   * @param {Object} consts - Configuration constants
+   * @returns {void}
    */
   function manageSharePage(sharedArea, consts) {
     const sharedList = SafeQueryParams.get("s") || "";
 
     if (!sharedList) return setDOMContent(sharedArea, renderNoShared());
 
-    try {
-      const list = sharedList.split("I");
+    const list = sharedList.split("I");
+    const filters = buildFilterObject(list);
 
-      const filters = buildFilterObject(list);
+    const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+    const searchUrl = `${searchAPI}?term=*&limit=100&filter=${encodeURIComponent(JSON.stringify(filters))}&`;
 
-      const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-      const searchUrl = `${searchAPI}?term=*&limit=100&filter=${encodeURIComponent(JSON.stringify(filters))}&`;
+    fetch(searchUrl)
+      .then((response) => response.json())
+      .then((results) => {
+        const arrayResults = results?.hits || [];
 
-      // Funnelback search
-      fetch(searchUrl)
-        .then((response) => response.json())
-        .then((results) => {
-          const arrayResults = results?.hits || [];
+        if (!arrayResults.length) return;
 
-          if (!arrayResults.length) return;
+        const html = arrayResults.map(renderShared).join(``);
+        setDOMContent(sharedArea, html || renderNoShared());
 
-          const html = arrayResults.map(renderShared).join(``);
-          setDOMContent(sharedArea, html || renderNoShared());
-
-          sharedArea.addEventListener("click", handleFavBtnClicks(consts, sharedArea));
-        });
-    } catch (e) {
-      return null;
-    }
+        sharedArea.addEventListener("click", handleFavBtnClicks(consts, sharedArea));
+      })
+      .catch((error) => console.error("Error fetching data:", error));
   }
 
-  function manageFavouritesPage(consts, nodes, action) {
+  /*
+   * manageFavouritesPage
+   * @param {Object} consts - Configuration constants
+   * @param {Object} nodes - DOM elements to interact with
+   * @returns {void}
+   */
+  function manageFavouritesPage(consts, nodes) {
     // Get all favs from the cookie and sort by date Integer
     const favs = stir.favourites.getFavsListAll().sort((a, b) => b.date - a.date);
-
     const tabNodes = Array.from(document.querySelectorAll("[data-favtype]"));
 
     if (!favs || !favs.length) {
@@ -399,7 +402,8 @@
 
         const html = latestFavsData.map(renderMicro).join(``);
         setDOMContent(nodes.latestArea, html || `<div class="cell">No favourites saved.</div>`);
-      });
+      })
+      .catch((error) => console.error("Error fetching data:", error));
   }
 
   /*
@@ -414,7 +418,7 @@
     }
 
     if (consts.activity === "managefavs" || consts.activity === "latestfavs") {
-      manageFavouritesPage(consts, nodes, consts.activity);
+      manageFavouritesPage(consts, nodes);
     }
 
     if (consts.activity === "shared") {
