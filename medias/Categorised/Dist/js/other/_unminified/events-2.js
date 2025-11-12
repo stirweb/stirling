@@ -725,30 +725,30 @@
               if (selectedValue === "thisweek") {
                 const thisWeekEvents = allEvents.filter(isThisWeek);
                 const html = thisWeekEvents.map(renderer).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "nextweek") {
                 const nextWeekEvents = allEvents.filter(isNextWeek);
                 const html = nextWeekEvents.map(renderer).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "thismonth") {
                 const thisMonthEvents = allEvents.filter(isThisMonth);
                 const html = thisMonthEvents.map(renderer).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "nextmonth") {
                 const nextMonthEvents = allEvents.filter(isNextMonth);
                 const html = nextMonthEvents.map(renderer).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "all") {
                 const html = allEvents.map(renderer).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
             });
           });
