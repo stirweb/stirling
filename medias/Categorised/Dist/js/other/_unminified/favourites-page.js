@@ -351,9 +351,14 @@
     // Get all favs from the cookie and sort by date Integer
     const favs = stir.favourites.getFavsListAll().sort((a, b) => b.date - a.date);
 
+    const tabNodes = Array.from(document.querySelectorAll("[data-favtype]"));
+
     if (!favs || !favs.length) {
-      setDOMContent(nodes.resultsArea, renderNoFavs());
-      setDOMContent(nodes.latestArea, `<div class="cell">No favourites saved.</div>`);
+      tabNodes.forEach((node) => {
+        console.log(node);
+        setDOMContent(node, renderNoFavs());
+        setDOMContent(nodes.latestArea, `<div class="cell">No favourites saved.</div>`);
+      });
       return;
     }
 
@@ -367,14 +372,13 @@
       .then((response) => response.json())
       .then((data) => {
         // TABS
-        const typsNodes = Array.from(document.querySelectorAll("[data-favtype]"));
 
-        const types = typsNodes.map((typeNode) => {
+        const types = tabNodes.map((typeNode) => {
           return typeNode.dataset.favtype || "";
         });
 
         types.forEach((type) => {
-          const node = typsNodes.find((n) => n.dataset.favtype === type);
+          const node = tabNodes.find((n) => n.dataset.favtype === type);
           const datafavs = data.hits.filter((item) => {
             return item.custom_fields && item.custom_fields.type && item.custom_fields.type.includes(type);
           });
