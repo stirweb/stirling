@@ -108,7 +108,7 @@ const renderMoreEvent = (item) => {
   const dateTimes = getEventDateTimes(cf.d, cf.e);
 
   return `<a href="${item.url}" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
-                <span class="u-flex1"><strong>${item.title}</strong></span>
+                <span class="u-flex1"><strong>${cf.h1_custom}</strong></span>
                 <span class="flex-container align-middle u-gap u-dark-grey">
                     <strong>${dateTimes.start} ${renderEndDate(dateTimes)}</strong>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1080 800"
@@ -326,24 +326,30 @@ async function doMoreEvents(baseUrl, node, excludeId) {
  * @returns {void}
  */
 (async () => {
-  const miniEvents = window.miniEvents.map((item) => JSON.parse(item));
+  const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+  const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
 
+  const miniEvents = window.miniEvents && window.miniEvents.length ? window.miniEvents.map((item) => JSON.parse(item)) : [];
   const miniEventsFiltered = stir.flatten(miniEvents).filter((item) => item.id);
 
   const upcomingNode = document.getElementById("seriesevents");
-  const pastNode = document.getElementById("serieseventspast");
   const moreEventsNode = document.getElementById("moreevents");
 
-  const seriesId = "SeriesChildof" + upcomingNode.getAttribute("data-seriesid");
+  // Series events
+  if (upcomingNode) {
+    const pastNode = document.getElementById("serieseventspast");
 
-  const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-  const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
-  const baseUrl = searchUrl + "customField=series%3D";
+    const seriesId = "SeriesChildof" + upcomingNode.getAttribute("data-seriesid");
+    const baseUrl = searchUrl + "customField=series%3D";
 
-  upcomingNode && (await doUpcoming(baseUrl, upcomingNode, seriesId, stir.flatten(miniEventsFiltered)));
-  pastNode && (await doPast(baseUrl, pastNode, seriesId));
+    upcomingNode && (await doUpcoming(baseUrl, upcomingNode, seriesId, stir.flatten(miniEventsFiltered)));
+    pastNode && (await doPast(baseUrl, pastNode, seriesId));
+  }
 
-  moreEventsNode && (await doMoreEvents(baseUrl, moreEventsNode, moreEventsNode.getAttribute("data-currentid")));
+  // More events
+  if (moreEventsNode) {
+    doMoreEvents(searchUrl, moreEventsNode, moreEventsNode.getAttribute("data-currentid"));
+  }
 })();
 
 /*

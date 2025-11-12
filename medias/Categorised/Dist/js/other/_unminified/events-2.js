@@ -50,9 +50,9 @@
   const renderSeriesInfo = (seriesName, seriesData) => {
     if (!seriesName) return "";
 
-    const series = seriesData && seriesData.find((seriesItem) => seriesItem.title === seriesName);
+    const series = seriesData && seriesData.find((seriesItem) => seriesItem.title === seriesName); // replace all non alphanumeric characters
 
-    if (!series) return `<p class="text-sm">Part of the ${seriesName} series.</p>`;
+    if (!series) return `<p class="text-sm">Part of the <strong>${seriesName}</strong> series.</p>`;
     return `<p class="text-sm">Part of the <a href="${series ? series.url : "#"}">${seriesName}</a> series.</p>`;
   };
 
@@ -66,7 +66,7 @@
    * @param {Object} item - Event item
    * @returns {string} - HTML string for event
    */
-  const renderArchiveEvent = stir.curry((series, item) => {
+  const renderArchiveEvent = stir.curry((seriesData, item) => {
     const data = "object" === typeof item.custom_fields.data ? Object.assign({}, ...item.custom_fields.data.map((datum) => JSON.parse(decodeURIComponent(datum)))) : {};
     const cf = item.custom_fields;
     const dateTimes = getEventDateTimes(cf.d, cf.e);
@@ -85,7 +85,7 @@
                             </div>
                         </div>
                         <p class="u-m-0">${cf.snippet}</p>
-                        ${renderSeriesInfo(data.isSeriesChild, series)}
+                        ${renderSeriesInfo(data.isSeriesChild, seriesData)}
                     </div>
 
                   </div>
@@ -118,7 +118,7 @@
    * @param {Object} item - Event item
    * @returns {string} - HTML string for event
    */
-  const renderEvent = stir.curry((series, item) => {
+  const renderEvent = stir.curry((seriesData, item) => {
     if (item.hide) return ``;
 
     const data = "object" === typeof item.custom_fields.data ? Object.assign({}, ...item.custom_fields.data.map((datum) => JSON.parse(decodeURIComponent(datum)))) : {};
@@ -151,7 +151,7 @@
                     </div>
                     </div>
                     <p class="u-m-0">${cf.snippet || ""}</p>
-                    ${renderSeriesInfo(data.isSeriesChild, series)}
+                    ${renderSeriesInfo(data.isSeriesChild, seriesData)}
                 </div>
                 ${renderImage(cf.image, cf.h1_custom)}
                 <div class="u-mt-2">
@@ -487,9 +487,9 @@
       const data = await response.json();
 
       const dataCleaned = data.hits.map((item) => {
-        const cf = item.custom_fields;
+        const data2 = "object" === typeof item.custom_fields.data ? Object.assign({}, ...item.custom_fields.data.map((datum) => JSON.parse(decodeURIComponent(datum)))) : {};
         return {
-          title: cf.h1_custom,
+          title: data2.isSeries,
           url: item.url,
         };
       });
@@ -848,8 +848,7 @@
    * @return {void}
    */
   function loadTab(targetNode, tabmap, seriesData) {
-    //if (!item.id) return;
-    const tabItem = tabmap.find((item) => item.id === targetNode.id);
+    const tabItem = tabmap.find((item) => targetNode.id.includes(item.id));
 
     if (!tabItem || !tabItem.id) return;
 
@@ -857,24 +856,24 @@
       return;
     }
 
-    if (tabItem.id === "panel_1_5") {
+    if (tabItem.id === "_1_5") {
       return doArchive(searchUrl, tabItem.node, seriesData);
     }
 
     doUpcoming(searchUrl, tabItem.type, tabItem.node, seriesData);
   }
 
-  /**
+  /*
    * Initialize
    */
   (async () => {
     const seriesData = await doSeriesSearch();
 
     const tabmap = [
-      { id: "panel_1_1", node: staffNode, type: "staff" },
-      { id: "panel_1_2", node: publicNode, type: "public" },
-      { id: "panel_1_3", node: artNode, type: "art" },
-      { id: "panel_1_5", node: archiveNode, type: "archive" },
+      { id: "_1_1", node: staffNode, type: "staff" },
+      { id: "_1_2", node: publicNode, type: "public" },
+      { id: "_1_3", node: artNode, type: "art" },
+      { id: "_1_5", node: archiveNode, type: "archive" },
     ];
 
     // Promo
@@ -889,8 +888,11 @@
     webinarsNode && doWebinars(webinarsNode, getWebinarsJSON(UoS_env.name));
 
     // TABS
-    const tabButtons = document.querySelectorAll('[data-behaviour="tabs"] [role="tab"]');
-    const activeTab = document.querySelector('[data-behaviour="tabs"] [role="tab"][aria-selected="true"]');
+    const tabButtons = document.querySelectorAll('[data-behaviour="tabs"] button');
+
+    const activeTab = document.querySelector('[data-behaviour="tabs"] [role="tab"][aria-selected="true"]')
+      ? document.querySelector('[data-behaviour="tabs"] [role="tab"][aria-selected="true"]')
+      : document.querySelector('.pseudotab[aria-expanded="true"]');
 
     if (activeTab) {
       const targetId = activeTab.getAttribute("aria-controls");
