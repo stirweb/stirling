@@ -405,7 +405,6 @@
    */
   function init(consts, nodes) {
     if (nodes.favBtnsNode) {
-      console.log("favs action btns");
       stir.node("main").addEventListener("click", handleFavActionButtonClick);
     }
 
