@@ -13,6 +13,18 @@
   const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
 
   /*
+   * Parse data field into an object
+   * @param {string|Array} data - Data field from custom fields
+   * @returns {Object} - Parsed data object
+   */
+  const getDataObject = (data) => {
+    if (typeof data === "string") {
+      return JSON.parse(decodeURIComponent(data));
+    }
+    return "object" === typeof data ? Object.assign({}, ...data.map((datum) => JSON.parse(decodeURIComponent(datum)))) : {};
+  };
+
+  /*
    * RENDERERS
    */
 
@@ -217,6 +229,7 @@
    */
   const renderWebinar = (item) => {
     const cf = item.custom_fields;
+    const data = getDataObject(cf.data);
     const cookieType = "webinar";
     const cookie = stir.favourites && stir.favourites.getFav(cf.sid, cookieType);
     const favId = cf.sid;
@@ -232,7 +245,7 @@
                 <div class="u-grid-medium-up u-gap-24  ">
                   <div class=" u-flex flex-dir-column u-gap u-mt-1">
                       <p class="u-text-regular u-m-0">
-                          <strong> <a href="${item.url}">${cf.h1_custom}</a> </strong>
+                          <strong> <a href="${data.register}">${cf.h1_custom}</a> </strong>
                       </p>
                       <div class="u-flex flex-dir-column u-gap-8">
                           <div class="u-flex u-gap-16 align-middle">
