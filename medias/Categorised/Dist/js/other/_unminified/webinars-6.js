@@ -151,7 +151,7 @@
   };
 
   const handleFavouriteBtnClick = (event) => {
-    const cookieType = "event";
+    const cookieType = "webinar";
     const target = event.target.closest("button");
     if (!target || !target.dataset || !target.dataset.action) return;
 
