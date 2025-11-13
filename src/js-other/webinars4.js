@@ -168,6 +168,6 @@
   if (regionFilters.length > 0) {
     filterObj.and.push({ or: regionFilters });
   }
-
+  console.log(regionFilters);
   doListing(searchUrl, webinarsArea, filterObj, "desc");
 })();
