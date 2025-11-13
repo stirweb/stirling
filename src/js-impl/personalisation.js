@@ -3,7 +3,7 @@
   const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
   const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/personalisation/server.php" : "server.php";
   const JAN_COURSES_PATH = UoS_env.name === `prod` ? "/data/courses/pg/json/january-starts/index.json" : "./january-starts.json";
-  const CLOSING_DATE = new Date("2025-11-14T23:59:59");
+  const CLOSING_DATE = new Date("2025-11-27T23:59:59");
   const DEV_MODE = UoS_env.name === `dev`;
   const PROD_MODE = UoS_env.name === `prod`;
   const MAX_SHOWS = UoS_env.name === `prod` ? 2 : 1000;
@@ -39,7 +39,7 @@
     return;
   }
 
-  /**
+  /*
    * Get a cookie value by name
    * @param {string} name - The name of the cookie
    * @returns {string|null}
@@ -51,7 +51,7 @@
     return null;
   }
 
-  /**
+  /*
    * Get the AID from cookie or return default for non-prod
    * @returns {string}
    */
@@ -67,7 +67,7 @@
     return getCookie("_a_id") || ``;
   }
 
-  /**
+  /*
    * Sets a cookie
    * @param {string} name - The name of the cookie
    * @param {string} value - The value to set (should be encoded)
@@ -78,7 +78,7 @@
     document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
   }
 
-  /**
+  /*
    * Render the scholarship message
    * @param {Object|null} scholarship - The scholarship object or null
    * @param {string} region - The user's region
@@ -89,7 +89,7 @@
     return `<b>${scholarship.value}</b> ${region} scholarship`;
   }
 
-  /**
+  /*
    * Add event listeners to dropdown buttons
    * @returns {void}
    */
@@ -113,7 +113,7 @@
     }
   }
 
-  /**
+  /*
    * Render data onto the page
    * @param {Array} data - The data to render
    * @param {Date} closingDate - The closing date for applications
@@ -157,7 +157,7 @@
     return html;
   }
 
-  /**
+  /*
    * Determine if we should fetch new data based on stored data age
    * @param {string|null} stored - The stored cookie value
    * @param {number} maxAgeMS - Max age in milliseconds
@@ -175,7 +175,7 @@
     }
   }
 
-  /**
+  /*
    * Store data in cookie
    * @param {string} cookieKey
    * @param {string} timestamp
@@ -193,7 +193,7 @@
     return true;
   }
 
-  /**
+  /*
    * Fetch data from the API, store with ts, and render
    * @param {string} aid - The aid to send to the server
    * @param {string} cookieKey - The cookie key
@@ -222,7 +222,7 @@
       });
   }
 
-  /**
+  /*
    * Process data to filter for January starts
    * @param {Array<Object>} data
    * @returns {Promise<void>}
@@ -250,7 +250,7 @@
       });
   }
 
-  /**
+  /*
    * Merges local page view data from 'stirsess2' cookie with server data.
    * @param {Array} serverData - The data fetched from the server.
    * @returns {Array} - The merged data array.
@@ -291,7 +291,7 @@
   }
   */
 
-  /**
+  /*
    * Get the message for the user's region
    * @param {Array} scholarships - The array of SCHOLARSHIPS with regions
    * @param {Object} data - The user data with region info
@@ -302,7 +302,7 @@
     return scholarships.find((item) => item.region === data.n || item.region === data.c);
   }
 
-  /**
+  /*
    * Checks if the user has consented to performance cookies.
    * @param {string} cookieControl - The value of the CookieControl cookie.
    * @returns {boolean} True if consent is given, false otherwise.
@@ -319,7 +319,7 @@
     }
   };
 
-  /**
+  /*
    * Main controller function
    * @returns {Promise<void>}
    */
