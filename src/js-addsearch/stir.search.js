@@ -13,24 +13,13 @@ stir.funnelback = (() => {
 	const hostname = UoS_env.search;
 	const url = `https://${hostname}/s/`;
 
-	// alternative public hostname: `shared-15-24-search.clients.uk.funnelback.com`
-
 	const getJsonEndpoint = () => new URL("search.json", url);
 	const getScaleEndpoint = () => new URL("scale", url);
 	const getHostname = () => hostname;
-
 	const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
-
-	const resolveHref = (url, parameters) => {
-		url.search = new URLSearchParams(parameters);
-		return url;
-	};
-	//const resolveHref = stir.curry((url, parameters) => {url.search = new URLSearchParams(parameters); return url});
-	//const resolveImgHref = resolveHref(getScaleEndpoint)
 
 	const getCroppedImageElement = (parameters) => {
 		if (!parameters.url) return "<!-- no image -->";
-		//const url = resolveHref(getScaleEndpoint(), stir.Object.extend({}, parameters, { type: "crop_center", format: "jpeg" }));
 		return renderImgTag({ src: parameters.url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
 	};
 
@@ -110,7 +99,6 @@ stir.search = () => {
 	const MAXQUERY = 256;
 	const CLEARING = stir.courses.clearing; // Clearing is open?
 
-
 	const buildUrl = stir.curry((url, parameters) => {
 		url.search = new URLSearchParams(parameters);
 		return url;
@@ -134,76 +122,52 @@ stir.search = () => {
 			},
 			news: {
 				customField: "type=news",
-				sort: "custom_fields.d",
+				sort: "custom_fields.d"
 			},
 			event: {
-				customField: "type=event"
-				// filter: JSON.stringify({
-				// 	and: [
-				// 		{ "custom_fields.type": "event" },
-				// 		{
-				// 			or: [
-				// 				{
-				// 					/* START this week */
-				// 					range: {
-				// 						"custom_fields.e": {
-				// 							gt: "2025-10-19",
-				// 							lt: "2025-10-27"
-				// 						}
-				// 					}
-				// 				}, {
-				// 					/* OR END this week */
-				// 					range: {
-				// 						"custom_fields.d": {
-				// 							gt: "2025-10-19",
-				// 							lt: "2025-10-27"
-				// 						}
-				// 					}
-				// 				}, {
-				// 					/* OR they START before AND END after this week */
-				// 					and: [
-				// 						{
-				// 							range: {
-				// 								"custom_fields.d": {
-				// 									lt: "2025-10-19"
-				// 								}
-				// 							}
-				// 						},
-				// 						{
-				// 							range: {
-				// 								"custom_fields.e": {
-				// 									gt: "2025-10-27"
-				// 								}
-				// 							}
-				// 						}
-				// 					]
-				// 				}
-				// 			]
-				// 		}
-				// 	]
-				// })
+				filter: JSON.stringify({
+					and: [
+						{
+							or: [
+								{ "custom_fields.type": "event"   },
+								{ "custom_fields.type": "webinar" }
+							]
+						},
+						{
+							range: {
+								"custom_fields.e": {
+									gt: stir.Date.timeElementDatetime( (d => new Date(d.setDate(d.getDate()-1)))(new Date) )
+								}
+							}
+						}
+					]
+				})
 			},
 			gallery: {
 				customField: "type=gallery"
 			},
 			course: {
+				customField: "type=course",
 				sort: "custom_fields.name",
-				order: "asc",
-				customField: "type=course"
+				order: "asc"
 			},
 			coursemini: {
 				customField: "type=course",
 				limit: 5
 			},
 			person: {
-				customField: "type=profile"
+				customField: "type=profile",
 			},
 			research: {
 				categories: "2xhub",
 			},
 			internal: {
-				categories: "1xinternal-staff" //,
-				//categories: "1xinternal-students"
+				filter: JSON.stringify({
+					or: [
+						{ "custom_fields.access": "staff"   },
+						{ "custom_fields.access": "student" }
+					]
+				}),
 			},
 			clearing: {
 				limit: NUMRANKS
@@ -217,9 +181,9 @@ stir.search = () => {
 				timestamp: +new Date(), */
 			},
 		},
-		// +++ Extra parameters for no-query searches +++
-		// E.g. if no keywords supplied; sort by 
-		// title instead of "relevance"
+
+		// +++ Extra/override parameters for no-query searches +++
+		// E.g. if no keywords supplied; sort by title instead of relevance
 		noquery: {
 			course: {
 				sort: "custom_fields.name",
@@ -315,6 +279,7 @@ stir.search = () => {
 		//TODO: un-set any URL params that have corresponding <input> elements that are NOT checked
 		// (but ignore any params that aren't related to the filters)
 	};
+
 	// DOM modifiers:
 	const appendHtml = stir.curry((_element, html) => _element.insertAdjacentHTML("beforeend", html));
 	const replaceHtml = stir.curry((_element, html) => (_element.innerHTML = html));
