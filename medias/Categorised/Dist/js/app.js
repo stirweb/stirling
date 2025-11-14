@@ -3830,7 +3830,7 @@ var stir = stir || {};
   const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
   const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/personalisation/server.php" : "server.php";
   const JAN_COURSES_PATH = UoS_env.name === `prod` ? "/data/courses/pg/json/january-starts/index.json" : "./january-starts.json";
-  const CLOSING_DATE = new Date("2025-11-14T23:59:59");
+  const CLOSING_DATE = new Date("2025-11-27T23:59:59");
   const DEV_MODE = UoS_env.name === `dev`;
   const PROD_MODE = UoS_env.name === `prod`;
   const MAX_SHOWS = UoS_env.name === `prod` ? 2 : 1000;
