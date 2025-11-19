@@ -9,9 +9,6 @@
   const promoNode = document.querySelector("#eventspromo");
   const webinarsNode = document.querySelector("#eventswebinars");
 
-  const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-  const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
-
   /*
    * Parse data field into an object
    * @param {string|Array} data - Data field from custom fields
@@ -238,7 +235,7 @@
     const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
 
     return `<div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" 
-              data-result-type="event" data-label-icon="computer" data-perf="${cf.sid}">
+              data-result-type="event" data-perf="${cf.sid}">
                 <div class="u-absolute u-top--16">
                   <span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">Webinar</span>
                 </div> 
@@ -317,13 +314,20 @@
    * @param {string} selectedValue - Selected filter value
    * @returns {string} - Filter string for query
    */
-  function getArchiveFilterString(selectedValue, limit) {
+  function getArchiveFilterString(selectedValue, limit, maintags) {
     const filterConditions = [
       { "custom_fields.tag": "Archive" },
       {
         range: { "custom_fields.e": { gt: "2015-01-01", lt: getNow() } },
       },
     ];
+
+    // Add maintags array to filter
+    if (maintags && maintags.length > 0) {
+      maintags.forEach((tag) => {
+        filterConditions.push({ "custom_fields.tag": tag });
+      });
+    }
 
     if (selectedValue !== "All") {
       filterConditions.push({ "custom_fields.tag": selectedValue });
@@ -339,7 +343,7 @@
    * @param {string} to - End date
    * @returns {Object} - Upcoming object for query
    */
-  const getUpcomingObject = (from, to, type) => {
+  const getUpcomingObject = (from, to, type, maintags) => {
     const obj = {
       and: [
         { "custom_fields.tag": type },
@@ -349,6 +353,13 @@
         },
       ],
     };
+
+    // Add maintags array to filter
+    if (maintags && maintags.length > 0) {
+      maintags.forEach((tag) => {
+        obj.and.push({ "custom_fields.tag": tag });
+      });
+    }
 
     if (type !== "Art Collection") {
       obj.and.push({ not: { "custom_fields.tag": "Art Collection" } });
@@ -362,17 +373,17 @@
    * @param {string} type - Event type
    * @returns {string} - Filter string for query
    */
-  const getFilterString = (type) => {
+  const getFilterString = (type, maintags) => {
     if (type === "staff") {
-      return `&limit=190&order=asc&filter=${encodeURIComponent(JSON.stringify(getUpcomingObject(getNow(), "2099-12-31", "StaffStudent")))}&sort=custom_fields.sort&`;
+      return `&limit=190&order=asc&filter=${encodeURIComponent(JSON.stringify(getUpcomingObject(getNow(), "2099-12-31", "StaffStudent", maintags)))}&sort=custom_fields.sort&`;
     }
 
     if (type === "art") {
-      return `&limit=190&order=asc&filter=${encodeURIComponent(JSON.stringify(getUpcomingObject(getNow(), "2099-12-31", "Art Collection")))}&sort=custom_fields.sort&`;
+      return `&limit=190&order=asc&filter=${encodeURIComponent(JSON.stringify(getUpcomingObject(getNow(), "2099-12-31", "Art Collection", maintags)))}&sort=custom_fields.sort&`;
     }
 
     if (type === "public") {
-      return `&limit=190&order=asc&filter=${encodeURIComponent(JSON.stringify(getUpcomingObject(getNow(), "2099-12-31", "Public")))}&sort=custom_fields.sort&`;
+      return `&limit=190&order=asc&filter=${encodeURIComponent(JSON.stringify(getUpcomingObject(getNow(), "2099-12-31", "Public", maintags)))}&sort=custom_fields.sort&`;
     }
   };
 
@@ -464,13 +475,13 @@
    * @param {string} env - Current environment
    * @returns {string} - Path to webinars JSON
    */
-  const getWebinarsJSON = (env) => {
-    if (env === "dev") return "./webinars.json";
-    if (env === "preview") return '<t4 type="navigation" id="5308" />'; // 5222 for limitrd archive
-    if (env === "appdev-preview") return '<t4 type="navigation" id="5308" />'; // 5222 for limitrd archive
+  // const getWebinarsJSON = (env) => {
+  //   if (env === "dev") return "./webinars.json";
+  //   if (env === "preview") return '<t4 type="navigation" id="5308" />'; // 5222 for limitrd archive
+  //   if (env === "appdev-preview") return '<t4 type="navigation" id="5308" />'; // 5222 for limitrd archive
 
-    return `/data/webinars/revamp/index.json`; // live
-  };
+  //   return `/data/webinars/revamp/index.json`; // live
+  // };
 
   /*
    * Handle Favourite Button clicks
@@ -507,9 +518,9 @@
    * Fetch series data
    * @returns {Promise<Object>} - Series data
    */
-  async function doSeriesSearch() {
+  async function doSeriesSearch(baseUrl) {
     const seriesQuery =
-      searchUrl +
+      baseUrl +
       `&limit=50&order=asc&filter=${encodeURIComponent(
         JSON.stringify({
           and: [{ "custom_fields.tag": "Series" }],
@@ -542,7 +553,7 @@
    * @param {HTMLElement} node - The DOM node to insert results into
    * @return {void}
    */
-  function doArchive(baseUrl, node, seriesData) {
+  function doArchive(baseUrl, node, seriesData, maintags) {
     const radios = node.parentNode.querySelectorAll("input[type='radio']");
     const limit = 10;
     const renderer = renderArchiveEvent(seriesData);
@@ -556,7 +567,7 @@
       });
 
     // Initial search
-    const filterString = getArchiveFilterString("All", limit);
+    const filterString = getArchiveFilterString("All", limit, maintags);
     let page = 1;
 
     fetch(baseUrl + filterString + `page=${page}`)
@@ -629,8 +640,8 @@
    * @param {HTMLElement} node - The DOM node to insert results into
    * @return {void}
    */
-  function doUpcoming(baseUrl, type, node, seriesData) {
-    let filterString = getFilterString(type);
+  function doUpcoming(baseUrl, type, node, seriesData, maintags) {
+    let filterString = getFilterString(type, maintags);
     const renderer = renderEvent(seriesData);
 
     fetch(baseUrl + filterString + `page=1`)
@@ -776,7 +787,7 @@
    * @param {HTMLElement} node - The DOM node to insert results into
    * @return {void}
    */
-  function doWebinars(node) {
+  function doWebinars(node, maintags) {
     const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
     const searchUrl = `${searchAPI}?term=*&customField=type%3Dwebinar&`;
 
@@ -787,6 +798,14 @@
         },
       ],
     };
+
+    // Add maintags array to filter
+    if (maintags && maintags.length > 0) {
+      maintags.forEach((tag) => {
+        upcomingObj.and.push({ "custom_fields.tag": tag });
+      });
+    }
+
     const filterString = `&limit=90&order=asc&filter=${encodeURIComponent(JSON.stringify(upcomingObj))}&sort=custom_fields.d&`;
 
     fetch(searchUrl + filterString + `page=1`)
@@ -804,7 +823,7 @@
         });
 
         const html = webinars.map(renderWebinar).join("");
-        node.innerHTML = html;
+        node.innerHTML = html || renderNoEvents();
 
         /*
          * DOM Manipulation for filters
@@ -873,7 +892,7 @@
    * @param {HTMLElement} promoNode - The DOM node to insert results into
    * @return {void}
    */
-  function doPromoSearch(baseUrl, node, seriesData) {
+  function doPromoSearch(baseUrl, node, seriesData, maintags) {
     const promoFilter = {
       and: [
         { "custom_fields.tag": "Promo" },
@@ -882,6 +901,14 @@
         },
       ],
     };
+
+    // Add maintags array to filter
+    if (maintags && maintags.length > 0) {
+      maintags.forEach((tag) => {
+        promoFilter.and.push({ "custom_fields.tag": tag });
+      });
+    }
+
     const filterString = `&limit=1&order=asc&filter=${encodeURIComponent(JSON.stringify(promoFilter))}&sort=custom_fields.sort&`;
     fetch(baseUrl + filterString + `page=1`)
       .then((response) => response.json())
@@ -903,7 +930,7 @@
    * @param {Object} seriesData - The series data
    * @return {void}
    */
-  function loadTab(targetNode, tabmap, seriesData) {
+  function loadTab(baseUrl, targetNode, tabmap, seriesData, maintags) {
     const tabItem = tabmap.find((item) => targetNode.id.includes(item.id));
 
     if (!tabItem || !tabItem.id) return;
@@ -913,17 +940,26 @@
     }
 
     if (tabItem.id === "_1_5") {
-      return doArchive(searchUrl, tabItem.node, seriesData);
+      return doArchive(baseUrl, tabItem.node, seriesData, maintags);
     }
 
-    doUpcoming(searchUrl, tabItem.type, tabItem.node, seriesData);
+    doUpcoming(baseUrl, tabItem.type, tabItem.node, seriesData, maintags);
   }
 
   /*
    * Initialize
    */
   (async () => {
-    const seriesData = await doSeriesSearch();
+    const maintags = document
+      .querySelector("#eventsrevamp")
+      .dataset.tags.split(",")
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+
+    const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+    const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
+
+    const seriesData = await doSeriesSearch(searchUrl);
 
     const tabmap = [
       { id: "_1_1", node: staffNode, type: "staff" },
@@ -933,7 +969,7 @@
     ];
 
     // Promo
-    promoNode && doPromoSearch(searchUrl, promoNode, seriesData);
+    promoNode && doPromoSearch(searchUrl, promoNode, seriesData, maintags);
 
     publicNode && (publicNode.innerHTML = ``);
     staffNode && (staffNode.innerHTML = ``);
@@ -941,7 +977,7 @@
     archiveNode && (archiveNode.innerHTML = ``);
     webinarsNode && (webinarsNode.innerHTML = ``);
     //webinarsNode && doWebinars(webinarsNode, getWebinarsJSON(UoS_env.name));
-    webinarsNode && doWebinars(webinarsNode);
+    webinarsNode && doWebinars(webinarsNode, maintags);
 
     // TABS
     const tabButtons = document.querySelectorAll('[data-behaviour="tabs"] button');
@@ -953,14 +989,14 @@
     if (activeTab) {
       const targetId = activeTab.getAttribute("aria-controls");
       const targetNode = document.getElementById(targetId);
-      loadTab(targetNode, tabmap, seriesData);
+      loadTab(searchUrl, targetNode, tabmap, seriesData, maintags);
     }
 
     // Attach event listeners for tab clicks
     tabButtons.forEach((button) => {
       button.addEventListener("click", async (event) => {
         const targetId = event.target.getAttribute("aria-controls");
-        loadTab(document.getElementById(targetId), tabmap, seriesData);
+        loadTab(searchUrl, document.getElementById(targetId), tabmap, seriesData, maintags);
       });
     });
   })();
