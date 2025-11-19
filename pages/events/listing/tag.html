@@ -462,18 +462,16 @@
 	-->
     <main class="wrapper-content" aria-label="Main content" id="content">
       <div class="grid-x grid-container">
-        <!-- 
-
-			<div class="cell medium-10 small-12 u-padding-y"> 
-				<h1 class="u-m-0 u-heritage-green">Events</h1>
-			</div>
-			-->
-        <!-- Alternative Page Heading -->
-        <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
-          <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">University events</h1>
+        <div class="cell medium-10 small-12 u-padding-y">
+          <h1 class="u-m-0 u-heritage-green">What's on</h1>
         </div>
 
-        <form class="u-pb-2 cell u-mb-1" action="/search/?tab=events" data-js-action="/search/?tab=events" method="get">
+        <form
+          class="u-pb-2 cell u-mb-1"
+          action="https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2652?tab=events"
+          data-js-action="https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2652?tab=events"
+          method="get"
+        >
           <input type="hidden" value="events" name="tab" />
           <div class="grid-x">
             <div class="cell large-9 medium-8 small-12">
@@ -491,60 +489,24 @@
 
         <!-- CTAs -->
         <div class="cell u-pb-1">
-          <div class="grid-x grid-padding-x align-center">
-            <div class="cell small-12 large-4"><a class="button expanded heritage-green" href="/events/be-connected/">Be Connected events</a></div>
-            <div class="cell small-12 large-4"><a class="button expanded heritage-berry" href="/events/graduation/">Graduation</a></div>
-            <div class="cell small-12 large-4"><a class="button expanded dark-mink" href="/events/webinars/">Webinars</a></div>
-          </div>
+          <div class="grid-x grid-padding-x align-center"></div>
         </div>
 
         <!-- Listing -->
         <div class="cell small-12 c-course-tabs" id="eventsrevamp" data-tags="Art Collection,">
           <div data-behaviour="tabs">
-            <h2>Staff and student events</h2>
+            <!-- Staff students tab hidden -->
+
+            <!-- Public tab hidden -->
+
+            <h2>Art Collection</h2>
             <div>
-              <div class="u-p-0 u-mt-2 u-bg-grey grid-x grid-padding-x" id="eventsstafftab">
+              <div class="u-p-0 u-mt-2 u-bg-grey u-bleed-null bg-grey-null grid-x grid-padding-x" id="eventsarttab">
                 <aside class="cell small-12 large-4 large-order-2">
-                  <div class="u-bg-white u-p-2">
+                  <div class="u-bg-white u-p-2 u-mb-3">
                     <p class="u-font-bold flex-container u-gap-16 align-middle"><span class="uos-shuffle u-heritage-green"></span> Filter events</p>
 
-                    <form action="null" id="eventsstafffilters">
-                      <fieldset>
-                        <ul class="no-bullet">
-                          <li>
-                            <label><input name="staffeventdates" type="radio" value="all" />All </label>
-                          </li>
-                          <li>
-                            <label><input name="staffeventdates" type="radio" value="thisweek" />This week</label>
-                          </li>
-                          <li>
-                            <label><input name="staffeventdates" type="radio" value="nextweek" />Next week</label>
-                          </li>
-                          <li>
-                            <label><input name="staffeventdates" type="radio" value="thismonth" />This month </label>
-                          </li>
-                          <li>
-                            <label><input name="staffeventdates" type="radio" value="nextmonth" />Next month</label>
-                          </li>
-                        </ul>
-                      </fieldset>
-                    </form>
-                  </div>
-                </aside>
-                <div id="eventsstaff" class="cell large-8 c-search-results-events large-order-1">
-                  <a href="/events/listings/staff-and-students-events/" class="c-link">View staff and student events listing for users with JavaScript disabled</a>
-                </div>
-              </div>
-            </div>
-
-            <h2>Public events</h2>
-            <div>
-              <div class="u-p-0 u-mt-2 u-bg-grey u-bleed-null bg-grey-null grid-x grid-padding-x" id="eventspublictab">
-                <aside class="cell small-12 large-4 large-order-2">
-                  <div class="u-bg-white u-p-2">
-                    <p class="u-font-bold flex-container u-gap-16 align-middle"><span class="uos-shuffle u-heritage-green"></span> Filter events</p>
-
-                    <form action="null" id="eventspublicfilters">
+                    <form action="null" id="eventsartfilters">
                       <fieldset>
                         <ul class="no-bullet">
                           <li>
@@ -567,83 +529,13 @@
                     </form>
                   </div>
                 </aside>
-                <div id="eventspublic" class="cell large-8 small-12 c-search-results-events large-order-1">
-                  <a href="/events/listings/public-events/" class="c-link">View public events listing for users with JavaScript disabled</a>
-                </div>
-              </div>
-            </div>
-
-            <h2>Art Collection</h2>
-            <div>
-              <div class="u-p-0 u-mt-2 u-bg-grey u-bleed-null bg-grey-null grid-x grid-padding-x" id="eventsarttab">
-                <aside class="cell small-12 large-4 large-order-2">
-                  <div class="u-bg-white u-p-2">
-                    <p class="u-font-bold flex-container u-gap-16 align-middle"><span class="uos-shuffle u-heritage-green"></span> Filter events</p>
-
-                    <form action="null" id="eventsartfilters">
-                      <fieldset>
-                        <ul class="no-bullet">
-                          <li>
-                            <label><input name="arteventdates" type="radio" value="all" />All </label>
-                          </li>
-                          <li>
-                            <label><input name="arteventdates" type="radio" value="thisweek" />This week</label>
-                          </li>
-                          <li>
-                            <label><input name="arteventdates" type="radio" value="nextweek" />Next week</label>
-                          </li>
-                          <li>
-                            <label><input name="arteventdates" type="radio" value="thismonth" />This month </label>
-                          </li>
-                          <li>
-                            <label><input name="arteventdates" type="radio" value="nextmonth" />Next month</label>
-                          </li>
-                        </ul>
-                      </fieldset>
-                    </form>
-                  </div>
-                </aside>
                 <div id="eventsart" class="cell large-8 small-12 c-search-results-events large-order-1">
                   <a href="/events/listings/art-collection/" class="c-link">View Art Collection listing events for users with JavaScript disabled</a>
                 </div>
               </div>
             </div>
 
-            <h2>Webinars</h2>
-            <div>
-              <div class="u-p-0 u-mt-2 u-bg-grey u-bleed-null bg-grey-null grid-x grid-padding-x" id="eventswebinarstab">
-                <aside class="cell small-12 large-4 large-order-2">
-                  <div class="u-bg-white u-p-2">
-                    <p class="u-font-bold flex-container u-gap-16 align-middle"><span class="uos-shuffle u-heritage-green"></span> Filter events</p>
-
-                    <form action="null" id="eventswebinarsfilters">
-                      <fieldset>
-                        <ul class="no-bullet">
-                          <li>
-                            <label><input name="webinareventdates" type="radio" value="all" />All </label>
-                          </li>
-                          <li>
-                            <label><input name="webinareventdates" type="radio" value="thisweek" />This week</label>
-                          </li>
-                          <li>
-                            <label><input name="webinareventdates" type="radio" value="nextweek" />Next week</label>
-                          </li>
-                          <li>
-                            <label><input name="webinareventdates" type="radio" value="thismonth" />This month </label>
-                          </li>
-                          <li>
-                            <label><input name="webinareventdates" type="radio" value="nextmonth" />Next month</label>
-                          </li>
-                        </ul>
-                      </fieldset>
-                    </form>
-                  </div>
-                </aside>
-                <div id="eventswebinars" class="cell large-8 small-12 c-search-results-events large-order-1">
-                  <a href="/events/listings/webinars/" class="c-link">View webinars listing for users with JavaScript disabled</a>
-                </div>
-              </div>
-            </div>
+            <!-- Webinars tab hidden -->
 
             <h2>Archive</h2>
             <div>
@@ -666,22 +558,22 @@
                 </div>
 
                 <aside class="cell small-12 large-4 large-order-3" id="eventsarchivefilters">
-                  <div class="u-bg-white u-p-2">
+                  <div class="u-bg-white u-mb-3 u-p-2">
                     <p class="u-font-bold flex-container u-gap-16 align-middle"><span class="uos-shuffle u-heritage-green"></span> Filter events</p>
                     <form action="null" id="eventsstafffilters">
                       <fieldset>
                         <ul class="no-bullet">
                           <li>
-                            <label><input name="archiveeventdates" type="radio" value="All" />All </label>
+                            <label><input name="publiceventdates" type="radio" value="All" />All </label>
                           </li>
                           <li>
-                            <label><input name="archiveeventdates" type="radio" value="Recording" />Recording available</label>
+                            <label><input name="publiceventdates" type="radio" value="Recording" />Recording available</label>
                           </li>
                           <li>
-                            <label><input name="archiveeventdates" type="radio" value="Public" />Public events </label>
+                            <label><input name="publiceventdates" type="radio" value="Public" />Public events </label>
                           </li>
                           <li>
-                            <label><input name="archiveeventdates" type="radio" value="StaffStudent" />Staff and student events</label>
+                            <label><input name="publiceventdates" type="radio" value="StaffStudent" />Staff and student events</label>
                           </li>
                         </ul>
                       </fieldset>
@@ -694,179 +586,6 @@
             </div>
           </div>
         </div>
-        <!-- Wrapper -->
-      </div>
-      <div>
-        <div id="d.en.173702" class="c-wrapper grid-container grid-x u-bleed u-bg-white u-bleed bg-white u-padding-y" data-ct="wrapper">
-          <!-- Promo Box  -->
-          <div class="cell small-12 medium-4 u-my-1 large-6 medium-6" id="d.en.173701" data-component="promo-standard">
-            <div class="flex-container u-gap u-p-1">
-              <div><span class="uos-wheelchair text-lg u-font-icon"></span></div>
-              <div>
-                <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
-                  <div class="u-h-full">
-                    <div class="flex-container u-gap flex-dir-column u-overflow-hidden">
-                      <h2 class="u-header--secondary-font u-text-regular header-stripped u-m-0">Special requirements</h2>
-                      <div class="text-sm u-p-last-mb-0">
-                        <p>
-                          If you or one of your guests have mobility issues or other special requirements, <a href="/events/contact-us/">please let us know </a>as we will make the
-                          necessary arrangements.&nbsp;
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Promo Box --><!-- Promo Box  -->
-          <div class="cell small-12 medium-4 u-my-1 large-6 medium-6" id="d.en.173704" data-component="promo-standard">
-            <div class="flex-container u-gap u-p-1">
-              <div><span class="uos-car text-lg u-font-icon"></span></div>
-              <div>
-                <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
-                  <div class="u-h-full">
-                    <div class="flex-container u-gap flex-dir-column u-overflow-hidden">
-                      <h2 class="u-header--secondary-font u-text-regular header-stripped u-m-0">Parking for visitors</h2>
-                      <div class="text-sm u-p-last-mb-0">
-                        <p>
-                          Parking charges apply to all campus car parks and affect all who park on campus.
-                          <a href="/about/getting-here/parking/">Find out more about visitor parking</a>.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Promo Box --><!-- Promo Box  -->
-          <div class="cell small-12 medium-4 u-my-1 large-6 medium-6" id="d.en.173705" data-component="promo-standard">
-            <div class="flex-container u-gap u-p-1">
-              <div><span class="uos-location text-lg u-font-icon"></span></div>
-              <div>
-                <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
-                  <div class="u-h-full">
-                    <div class="flex-container u-gap flex-dir-column u-overflow-hidden">
-                      <h2 class="u-header--secondary-font u-text-regular header-stripped u-m-0">Accommodation</h2>
-                      <div class="text-sm u-p-last-mb-0">
-                        <p>
-                          Accommodation is available on campus at the <a title="Stirling Court Hotel" href="https://www.stirlingcourthotel.co.uk/">Stirling Court Hotel</a>.&nbsp;
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Promo Box --><!-- Promo Box  -->
-          <div class="cell small-12 medium-4 u-my-1 large-6 medium-6" id="d.en.173706" data-component="promo-standard">
-            <div class="flex-container u-gap u-p-1">
-              <div><span class="uos-coffee text-lg u-font-icon"></span></div>
-              <div>
-                <div class="flex-container u-gap flex-dir-column u-h-full align-stretch">
-                  <div class="u-h-full">
-                    <div class="flex-container u-gap flex-dir-column u-overflow-hidden">
-                      <h2 class="u-header--secondary-font u-text-regular header-stripped u-m-0">Food and drink</h2>
-                      <div class="text-sm u-p-last-mb-0">
-                        <p>Refresh and recharge at one of our many <a href="/student-life/campus-facilities/eating-drinking/">caf&eacute;s and restaurants</a>.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Promo Box -->
-        </div>
-      </div>
-      <!-- Wrapper End -->
-
-      <div class="grid-container grid-x"></div>
-
-      <!-- Block: Feature: Text over Full Width Bg Image -->
-      <section id="d.en.173700" class="c-image-text-block" aria-label="Large image promo: Macrobert Arts Centre (173700)" data-objectfit="true">
-        <picture>
-          <source
-            media="(min-width: 63.75rem)"
-            srcset="
-              https://pxl-v6-stiracuk.terminalfour.net/fit-in/1900x689/filters:quality(88)/filters:format(webp)/prod01/cdn/media/stirling/events/calendar-of-events/images/2023/Macrobert-Art-Centre-Performance-1920X689.jpg
-            "
-          />
-          <source
-            media="(min-width: 40rem)"
-            srcset="
-              https://pxl-v6-stiracuk.terminalfour.net/fit-in/1020x367/filters:quality(88)/filters:format(webp)/prod01/cdn/media/stirling/events/calendar-of-events/images/2023/Macrobert-Art-Centre-Performance-1920X689.jpg
-            "
-          />
-          <source
-            srcset="
-              https://pxl-v6-stiracuk.terminalfour.net/fit-in/640x230/filters:quality(88)/filters:format(webp)/prod01/cdn/media/stirling/events/calendar-of-events/images/2023/Macrobert-Art-Centre-Performance-1920X689.jpg
-            "
-          />
-          <img
-            src="https://pxl-v6-stiracuk.terminalfour.net/fit-in/640x230/filters:quality(88)/filters:format(webp)/prod01/cdn/media/stirling/events/calendar-of-events/images/2023/Macrobert-Art-Centre-Performance-1920X689.jpg"
-            width=""
-            height=""
-            alt="A group of performers singing on a stage"
-            loading="lazy"
-          />
-        </picture>
-
-        <div class="grid-container">
-          <div class="c-image-text-block__content">
-            <!-- HEADER -->
-            <h2>Macrobert Arts Centre</h2>
-            <!-- TEXT -->
-            <div class="c-wysiwyg-content">
-              <p>Discover movies, live theatre and much more at Stirling's cultural hub, right here on campus.&nbsp;</p>
-              <p><sub>Image by Tommy Ga-Ken Wan</sub></p>
-            </div>
-            <div class="flex-container flex-dir-column u-gap">
-              <a class="button heritage-green" href="https://www.macrobertartscentre.org/">Macrobert Arts Centre</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- END Block: Feature: Text over Full Width Bg Image -->
-
-      <div class="grid-x grid-container">
-        <!-- Contact Box -->
-        <div class="cell u-padding-y">
-          <div class="grid-x">
-            <div class="cell large-12 medium-12 small-12 text-center">
-              <h2 class="header-stripped u-mb-2">
-                <!-- Contact us -->
-                Contact the Events team
-              </h2>
-            </div>
-          </div>
-
-          <!-- buttons -->
-          <div class="grid-x">
-            <div class="cell small-12 u-flex align-center">
-              <nav aria-label="Contact us actions" class="u-gap-32 u-grid-equal-cols u-grid">
-                <a class="button no-arrow x-large heritage-green expanded u-flex1 u-w-full" href="tel:+44(0) 1786 466054">
-                  <span class="show-for-small-only">Call</span>
-                  <span class="show-for-medium">
-                    <div class="flex-container align-middle align-center u-gap u-font-normal">
-                      <span class="uos-telephone show-for-medium icon--medium"></span> +44(0) 1786 466054
-                    </div>
-                  </span>
-                </a>
-
-                <a class="button no-arrow x-large heritage-green expanded u-flex1 u-w-full" href="mailto:events@stir.ac.uk" data-component="genericemailbutton">
-                  <span class="show-for-small-only">Email</span>
-                  <span class="show-for-medium">
-                    <div class="flex-container align-middle align-center u-gap u-font-normal"><span class="uos-email show-for-medium icon--medium"></span> events@stir.ac.uk</div>
-                  </span>
-                </a>
-              </nav>
-            </div>
-          </div>
-        </div>
-        <!-- End Contact Box -->
       </div>
     </main>
 

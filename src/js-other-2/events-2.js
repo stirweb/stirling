@@ -641,6 +641,8 @@
    * @return {void}
    */
   function doUpcoming(baseUrl, type, node, seriesData, maintags) {
+    if (!node) return;
+
     let filterString = getFilterString(type, maintags);
     const renderer = renderEvent(seriesData);
 
@@ -721,7 +723,7 @@
         });
 
         const html = allEvents.map(renderer).join("");
-        node.innerHTML = html;
+        node.innerHTML = html || renderNoEvents();
 
         /*
          * DOM Manipulation for filters
@@ -930,20 +932,14 @@
    * @param {Object} seriesData - The series data
    * @return {void}
    */
-  function loadTab(baseUrl, targetNode, tabmap, seriesData, maintags) {
-    const tabItem = tabmap.find((item) => targetNode.id.includes(item.id));
+  function loadTab(baseUrl, tab, seriesData, maintags) {
+    const id = tab.querySelector("h2").innerText.toLowerCase().split(" ")[0];
 
-    if (!tabItem || !tabItem.id) return;
-
-    if (tabItem && tabItem.node.innerHTML.trim() !== "") {
-      return;
+    if (id === "archive") {
+      return doArchive(baseUrl, tab.querySelector(".c-search-results-events "), seriesData, maintags);
     }
 
-    if (tabItem.id === "_1_5") {
-      return doArchive(baseUrl, tabItem.node, seriesData, maintags);
-    }
-
-    doUpcoming(baseUrl, tabItem.type, tabItem.node, seriesData, maintags);
+    doUpcoming(baseUrl, id, tab.querySelector(".c-search-results-events "), seriesData, maintags);
   }
 
   /*
@@ -961,13 +957,6 @@
 
     const seriesData = await doSeriesSearch(searchUrl);
 
-    const tabmap = [
-      { id: "_1_1", node: staffNode, type: "staff" },
-      { id: "_1_2", node: publicNode, type: "public" },
-      { id: "_1_3", node: artNode, type: "art" },
-      { id: "_1_5", node: archiveNode, type: "archive" },
-    ];
-
     // Promo
     promoNode && doPromoSearch(searchUrl, promoNode, seriesData, maintags);
 
@@ -982,21 +971,23 @@
     // TABS
     const tabButtons = document.querySelectorAll('[data-behaviour="tabs"] button');
 
-    const activeTab = document.querySelector('[data-behaviour="tabs"] [role="tab"][aria-selected="true"]')
+    const activeBtn = document.querySelector('[data-behaviour="tabs"] [role="tab"][aria-selected="true"]')
       ? document.querySelector('[data-behaviour="tabs"] [role="tab"][aria-selected="true"]')
       : document.querySelector('.pseudotab[aria-expanded="true"]');
 
-    if (activeTab) {
-      const targetId = activeTab.getAttribute("aria-controls");
+    //console.log(activeBtn);
+    if (activeBtn) {
+      const targetId = activeBtn.getAttribute("aria-controls");
       const targetNode = document.getElementById(targetId);
-      loadTab(searchUrl, targetNode, tabmap, seriesData, maintags);
+      loadTab(searchUrl, targetNode, seriesData, maintags);
     }
 
     // Attach event listeners for tab clicks
     tabButtons.forEach((button) => {
       button.addEventListener("click", async (event) => {
         const targetId = event.target.getAttribute("aria-controls");
-        loadTab(searchUrl, document.getElementById(targetId), tabmap, seriesData, maintags);
+        console.log(targetId);
+        loadTab(searchUrl, document.getElementById(targetId), seriesData, maintags);
       });
     });
   })();
