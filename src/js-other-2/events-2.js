@@ -13,6 +13,18 @@
   const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
 
   /*
+   * Parse data field into an object
+   * @param {string|Array} data - Data field from custom fields
+   * @returns {Object} - Parsed data object
+   */
+  const getDataObject = (data) => {
+    if (typeof data === "string") {
+      return JSON.parse(decodeURIComponent(data));
+    }
+    return "object" === typeof data ? Object.assign({}, ...data.map((datum) => JSON.parse(decodeURIComponent(datum)))) : {};
+  };
+
+  /*
    * RENDERERS
    */
 
@@ -56,6 +68,13 @@
     return `<p class="text-sm">Part of the <a href="${series ? series.url : "#"}">${seriesName}</a> series.</p>`;
   };
 
+  /*
+   * Render favourite buttons
+   * @param {string} showUrlToFavs - Whether to show URL to favourites
+   * @param {Array} cookie - Favourite cookie
+   * @param {string} id - Favourite ID
+   * @returns {string} - HTML string for favourite buttons
+   */
   const renderFavBtns = (showUrlToFavs, cookie, id) => {
     return cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs);
   };
@@ -204,35 +223,45 @@
         </div>`;
   });
 
+  /* Render webinar item
+   * @param {Object} item - Webinar item
+   * @returns {string} - HTML string for webinar
+   */
   const renderWebinar = (item) => {
+    const cf = item.custom_fields;
+    const data = getDataObject(cf.data);
     const cookieType = "webinar";
-    const cookie = stir.favourites && stir.favourites.getFav(item.id, cookieType);
-    const favId = item.id;
+    const cookie = stir.favourites && stir.favourites.getFav(cf.sid, cookieType);
+    const favId = cf.sid;
+    const dateTimes = getEventDateTimes(cf.d, cf.e);
+    const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+
     return `<div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" 
-              data-result-type="event" data-label-icon="computer" data-perf="${item.perfId}">
+              data-result-type="event" data-label-icon="computer" data-perf="${cf.sid}">
                 <div class="u-absolute u-top--16">
                   <span class="u-bg-heritage-green--10 u-px-tiny u-py-xtiny text-xxsm">Webinar</span>
                 </div> 
                 <div class="u-grid-medium-up u-gap-24  ">
                   <div class=" u-flex flex-dir-column u-gap u-mt-1">
                       <p class="u-text-regular u-m-0">
-                          <strong> <a href="${item.url}">${item.title}</a> </strong>
+                          <strong> <a href="${data.register}">${cf.h1_custom}</a> </strong>
                       </p>
                       <div class="u-flex flex-dir-column u-gap-8">
                           <div class="u-flex u-gap-16 align-middle">
                               <span class="u-icon h5 uos-calendar"></span>
-                              <span><time datetime="${item.start}">${item.stirStart}</time> </span>
+                              <span><time datetime="${cf.d}">${dateTimes.start}</time> </span>
                           </div>
                           <div class="u-flex u-gap-16 align-middle">
                             <span class="uos-clock u-icon h5"></span>
-                            <span><time>${item.startTime}</time> – <time>${item.endTime}</time> ${item.timezone}</span>
+                            <span><time>${startTime}</time> – <time>${endTime}</time></span>
                           </div>
                           <div class="u-flex u-gap-16 align-middle">
-                              <span class="u-icon h5 uos-computer "></span>
+                              <span class="u-icon h5 uos-computer"></span>
                               <span>Online</span>
                           </div>
                       </div>
-                      <div class="u-m-0">${item.summary}</div>
+                      <div class="u-m-0">${cf.snippet}</div>
                       <div id="favbtns${favId}">${cookie && renderFavBtns("true", cookie, favId)}</div>
                   </div>
                  </div>
@@ -430,6 +459,11 @@
     return eventStart <= nextWeekEnd && eventEnd >= nextWeekStart;
   }
 
+  /*
+   * Get webinars JSON path based on environment
+   * @param {string} env - Current environment
+   * @returns {string} - Path to webinars JSON
+   */
   const getWebinarsJSON = (env) => {
     if (env === "dev") return "./webinars.json";
     if (env === "preview") return '<t4 type="navigation" id="5308" />'; // 5222 for limitrd archive
@@ -438,7 +472,7 @@
     return `/data/webinars/revamp/index.json`; // live
   };
 
-  /**
+  /*
    * Handle Favourite Button clicks
    */
   const updateFavouriteBtn = (id) => {
@@ -704,30 +738,30 @@
               if (selectedValue === "thisweek") {
                 const thisWeekEvents = allEvents.filter(isThisWeek);
                 const html = thisWeekEvents.map(renderer).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "nextweek") {
                 const nextWeekEvents = allEvents.filter(isNextWeek);
                 const html = nextWeekEvents.map(renderer).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "thismonth") {
                 const thisMonthEvents = allEvents.filter(isThisMonth);
                 const html = thisMonthEvents.map(renderer).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "nextmonth") {
                 const nextMonthEvents = allEvents.filter(isNextMonth);
                 const html = nextMonthEvents.map(renderer).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "all") {
                 const html = allEvents.map(renderer).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
             });
           });
@@ -737,14 +771,25 @@
   }
 
   /*
-   * Main Webinars Controller
-   * Fetch and display Webinar events
+   * Webinars Controller
+   * Fetch and display Webinars
    * @param {HTMLElement} node - The DOM node to insert results into
-   * @param {string} url - The URL to fetch webinar data from
    * @return {void}
    */
-  function doWebinars(node, url) {
-    fetch(url)
+  function doWebinars(node) {
+    const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+    const searchUrl = `${searchAPI}?term=*&customField=type%3Dwebinar&`;
+
+    const upcomingObj = {
+      and: [
+        {
+          range: { "custom_fields.e": { gt: getNow(), lt: "2099-12-31" } },
+        },
+      ],
+    };
+    const filterString = `&limit=90&order=asc&filter=${encodeURIComponent(JSON.stringify(upcomingObj))}&sort=custom_fields.d&`;
+
+    fetch(searchUrl + filterString + `page=1`)
       .then((response) => response.json())
       .then((data) => {
         if (!data || data.length === 0) {
@@ -752,7 +797,12 @@
           return;
         }
 
-        const webinars = data.filter((item) => item.type === "Webinar");
+        const webinars = data.hits.map((item) => {
+          const cf = item.custom_fields;
+          const shortcuts = { start: cf.d, end: cf.e };
+          return { ...item, ...shortcuts };
+        });
+
         const html = webinars.map(renderWebinar).join("");
         node.innerHTML = html;
 
@@ -782,30 +832,31 @@
               if (selectedValue === "thisweek") {
                 const thisWeekEvents = webinars.filter(isThisWeek);
                 const html = thisWeekEvents.map(renderWebinar).join("");
-                node.innerHTML = html;
+
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "nextweek") {
                 const nextWeekEvents = webinars.filter(isNextWeek);
                 const html = nextWeekEvents.map(renderWebinar).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "thismonth") {
                 const thisMonthEvents = webinars.filter(isThisMonth);
                 const html = thisMonthEvents.map(renderWebinar).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "nextmonth") {
                 const nextMonthEvents = webinars.filter(isNextMonth);
                 const html = nextMonthEvents.map(renderWebinar).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
 
               if (selectedValue === "all") {
                 const html = webinars.map(renderWebinar).join("");
-                node.innerHTML = html;
+                node.innerHTML = html || renderNoEvents();
               }
             });
           });
@@ -889,8 +940,8 @@
     artNode && (artNode.innerHTML = ``);
     archiveNode && (archiveNode.innerHTML = ``);
     webinarsNode && (webinarsNode.innerHTML = ``);
-
-    webinarsNode && doWebinars(webinarsNode, getWebinarsJSON(UoS_env.name));
+    //webinarsNode && doWebinars(webinarsNode, getWebinarsJSON(UoS_env.name));
+    webinarsNode && doWebinars(webinarsNode);
 
     // TABS
     const tabButtons = document.querySelectorAll('[data-behaviour="tabs"] button');

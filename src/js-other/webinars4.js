@@ -1,194 +1,173 @@
-/* ------------------------------------------------
-   @author: Ryan Kaye
-   @version: 4
-   @date: Sep 2021
-   @description: Output required webinars based on set of T4 supplied parametres
- * ------------------------------------------------ */
-
-(function (scope) {
-  if (!scope) return;
-
+(function () {
   /*
-      V A R S
+   * Build filter object from form data
+   * @param {FormData} formData - Form data from the filters
+   * @returns {Object} - Filter object for API query
    */
+  const buildFilterObject = (formData) => {
+    const studylevel = formData.get("studylevel");
+    const region = formData.get("region");
+    const category = formData.get("category");
+    const filterObj = { and: [] };
 
-  const webinarAreas = scope;
-  const dataWebinars = stir.t4Globals.webinars || [];
-  const dataSeries = stir.t4Globals.webinarSectionData || {};
-
-  const disclaimer = stir.t4Globals.webinarsdisclaimer || "";
-  const disclaimerArea = stir.node("[data-webinardisclaimer]");
-  /*
-     safeList: ensure we only use params we definitely
-     want to compare against eg data-series="" and nothing else
-   */
-
-  const CONSTANTS = {
-    safeList: ["countries", "series", "subjects", "studylevels", "faculties"],
-    macros:
-      stir.filter((item) => {
-        if (item.tag) return item;
-      }, stir.t4Globals.regionmacros) || [],
-  };
-
-  Object.freeze(CONSTANTS);
-
-  /*
-      C O N T R O L L E R
-   */
-
-  /* Initialise curry functions then run the data through them using composition */
-  const main = (consts, node, webinars, filters) => {
-    const cleanCurry = stir.filter((el) => el.title);
-    const filterCurry = stir.filter(filterer(consts, filters.params));
-
-    const sortCurry = stir.sort((a, b) => (parseInt(a.datetime) > parseInt(b.datetime) ? 1 : parseInt(b.datetime) > parseInt(a.datetime) ? -1 : 0));
-
-    const setDOMResults = setDOMContent(node);
-    const renderCurry = renderAllItems(filters);
-
-    return stir.compose(setDOMResults, renderCurry, sortCurry, filterCurry, cleanCurry)(webinars);
-  };
-
-  /*
-     D A T A   P R O C E S S I N G
-   */
-
-  /*  Filter an item (webinar) based on params (filters) supplied */
-  const filterer = stir.curry((consts, filters, webinar) => {
-    const keys = stir.filter((x) => consts.safeList.includes(x), Object.keys(filters));
-
-    const tempMatches = stir.map((key) => {
-      if (webinar[key]) {
-        const params = webinar[key].split(", ");
-
-        const matchCurry = matcher(consts, filters[key], key);
-        const matches = stir.map(matchCurry, params);
-
-        return stir.any((x) => x === true, matches);
-      }
-      return true;
-    }, keys);
-
-    return stir.all((x) => x === true, tempMatches);
-  });
-
-  /*  Check if match for param to filter - 1 to 1 direct + All foo  */
-  const matcher = stir.curry((consts, filter, type, webinarParam) => {
-    if (filter.includes(webinarParam.trim())) return true;
-    if (webinarParam.trim().includes(filter.trim())) return true;
-
-    if (type && type === "faculties") {
-      if (matchTag(filter, webinarParam, "All Faculties")) return true;
+    if (studylevel) {
+      filterObj.and.push({ "custom_fields.level": studylevel });
     }
-
-    if (type && type === "countries") {
-      if (matchTag(filter, webinarParam, "All nationalities")) return true;
-
-      if (filter.includes("All international")) {
-        if (!getRegionString(consts.macros, "United Kingdom").includes(webinarParam.trim())) return true;
-      }
-
-      if (webinarParam.trim().includes("All international")) {
-        if (!getRegionString(consts.macros, "United Kingdom").includes(filter)) return true;
-      }
+    if (region) {
+      filterObj.and.push({ or: getRegions(region) });
     }
-
-    return false;
-  });
-
-  /* Matcher Helper */
-  const matchTag = (filter, param, tag) => {
-    if (filter.includes(tag)) return true;
-    if (param.trim().includes(tag)) return true;
-
-    return false;
-  };
-
-  /* Matcher Helper - Convert and return region countries array to String */
-  const getRegionString = (macros, tag) => {
-    return macros
-      .filter((item) => item.tag === tag)
-      .map((el) => el.data)
-      .join(", ");
+    if (category) {
+      filterObj.and.push({ "custom_fields.tag": category });
+    }
+    return filterObj;
   };
 
   /*
-      R E N D E R E R S
+   * Get current date in YYYY-MM-DD format
+   * @returns {string} - Current date
    */
-
-  /* Form the HTML to wrap all items   */
-  const renderAllItems = stir.curry((section, items) => {
-    if (!items.length && !section.noItems) return;
-
-    return `
-      <div class="grid-x grid-padding-x" >
-        ${renderHeader(section.head, section.intro)}
-        ${!items.length ? renderNoItemsMessage(section.noItems) : stir.map(renderItem, items).join("")}
-        ${section.divider && section.divider === "no" ? `` : renderDivider()}
-      </div>`;
-  });
-
-  const renderDivider = () => `<div class="cell"><hr /></div>`;
-
-  /* Form the HTML if there is a no items message   */
-  const renderNoItemsMessage = (msg) => `<div class="cell">` + msg + `</div>`;
-
-  /* Form the HTML for the section header   */
-  const renderHeader = (header, intro) => {
-    if (!header && !intro) return ``;
-
-    return `
-        <div class="cell u-mt-2">
-          ${header ? `<h2>` + header + `</h2>` : ""}
-          ${intro}
-        </div>`;
+  const getNow = () => {
+    return new Date().toISOString();
   };
 
-  /* Form the HTML for an individual item   */
+  /*
+   * Parse data field into an object
+   * @param {string|Array} data - Data field from custom fields
+   * @returns {Object} - Parsed data object
+   */
+  const getDataObject = (data) => {
+    if (typeof data === "string") {
+      return JSON.parse(decodeURIComponent(data));
+    }
+    return "object" === typeof data ? Object.assign({}, ...data.map((datum) => JSON.parse(decodeURIComponent(datum)))) : {};
+  };
+
+  /*
+   * Render a webinar item
+   * @param {Object} item - Webinar item data
+   * @returns {string} - HTML string for the webinar item
+   */
   const renderItem = (item) => {
+    const cf = item.custom_fields;
+    const data = getDataObject(cf.data);
+    const upcoming = new Date(cf.e) > new Date();
+    const type = upcoming ? "Live event" : "Watch on-demand";
+    const tagColour = type === "Watch on-demand" ? "berry" : "green";
+    const level = Array.isArray(cf.level) ? cf.level : [cf.level]; // ensure level is an array before accessing
+
+    //const cookieType = "webinar";
+    //const cookie = stir.favourites && stir.favourites.getFav(cf.sid, cookieType);
+    //const favId = cf.sid;
+
     return `
-        <div class="cell small-12 large-4 medium-6 u-my-2" >
-            <div class="u-energy-line-top">
-                  <h3 class="-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-1">
-                  <a href="${item.link}" class="c-link" >${item.title}</a></h3>
-                  ${item.countries ? `<p>For students from: ${item.countries}</p>` : ``}
-                  <div class="text-sm">
-                    <p><strong>${item.date}, ${item.time} (${item.zone})</strong></p>
-                    ${item.faculties ? `<p>${item.faculties}</p>` : ``}
-                    ${item.description}
+            <div class="cell small-12 large-4 medium-6 u-mb-3">
+                <div class="u-border-width-4 u-heritage-${tagColour}-line-left u-p-2 u-relative u-bg-grey u-h-full">
+                    <div class="u-absolute u-top--16"><span class="u-bg-heritage-${tagColour} u-white u-px-tiny u-py-xtiny text-xxsm">${type}</span></div>
+                    <h3 class="u-header--secondary-font u-text-regular u-black header-stripped u-m-0 u-py-2">
+                    <a href="${data.register}" class="u-border-bottom-hover u-border-width-2">${item.custom_fields.h1_custom}</a>
+                    </h3>
+                    <p class="text-sm">
+                        <strong>${new Date(item.custom_fields.d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })},
+                            ${new Date(item.custom_fields.d).toLocaleTimeString("en-GB", { hour: "numeric", minute: "numeric", hour12: false })} to
+                            ${new Date(item.custom_fields.e).toLocaleTimeString("en-GB", { hour: "numeric", minute: "numeric", hour12: false, timeZoneName: "short" })}
+                        </strong>
+                    </p>
+                    <p class="text-sm">${item.custom_fields.snippet}</p>
+                    <p class="text-sm"><b>Audience:</b> <br/>${level.join("<br/>")}<br/>
+                     ${cf.country || ``}</p>
                 </div>
-              </div>
-        </div> `;
+            </div>
+          `;
   };
 
   /*
-     EVENTS: OUTPUT (!!SIDE EFFECTS!!)
+   * Main Controller
+   * Fetch and display webinars
+   * @param {string} baseUrl - The base URL for the API
+   * @param {HTMLElement} node - The DOM node to display results
    */
+  function doListing(baseUrl, node, obj, order) {
+    const limit = 3;
+    const filterString = `&filter=${encodeURIComponent(JSON.stringify(obj))}&sort=custom_fields.e&order=${order}&limit=${limit}&`;
 
-  /* Output html content to the page */
-  const setDOMContent = stir.curry((elem, html) => {
-    stir.setHTML(elem, html);
-    return elem;
-  });
-
-  /*
-     ON LOAD EVENT: INPUT (!!SIDE EFFECTS!!)
-   */
-
-  webinarAreas.forEach((element) => {
-    main(CONSTANTS, element, dataWebinars, dataSeries[element.dataset.webinar]);
-  });
-
-  /*
-    Chek we have content somewhere - if not ouput a disclaimer
-  */
-  if (disclaimerArea) {
-    const contentLength = webinarAreas
-      .map((element) => element.innerText)
-      .join("")
-      .trim().length;
-
-    if (contentLength < 1) setDOMContent(disclaimerArea, disclaimer);
+    fetch(baseUrl + filterString + `page=1`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.total_hits > 0) {
+          const html = data.hits.map(renderItem).join("");
+          node.innerHTML = `
+                <div class="grid-x">
+                    ${html || ``}
+                </div>
+            `;
+        } else {
+          node.innerHTML = `<div class="cell">No results found.</div>`;
+        }
+      })
+      .catch((error) => console.error("Error fetching data:", error));
   }
-})(stir.nodes("[data-webinar]"));
+
+  /*
+   * Get region filter conditions
+   * @param {string} region - The selected region
+   * @returns {Array} - Array of filter conditions
+   */
+  const getRegions = (region, countries) => {
+    const countriesArray = countries ? countries.split(", ").map((country) => country.trim()) : [];
+    const countryConditions = countriesArray.map((country) => ({ "custom_fields.country": country }));
+
+    const europe = [{ "custom_fields.country": "All EU" }];
+    const international = [{ "custom_fields.country": "All international" }, { "custom_fields.country": "All nationalities" }];
+
+    switch (region) {
+      case "All Europe":
+        return [...countryConditions, ...europe, ...international];
+      default:
+        return [...countryConditions, ...international];
+    }
+  };
+
+  /*
+   * On Loading
+   * Initialize and fetch webinars
+   */
+  // "countries": "Austria, Belgium, Bosnia and Herzegovina, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Georgia, Germany, Greece, Hungary, Iceland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Romania, Russia, Serbia, Slovakia, Slovenia, Spain, Sweden, Switzerland, Turkey, Ukraine, All Europe",
+  const region = stir.t4Globals.regions;
+  const countries = stir.t4Globals.countries;
+
+  const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+  const searchUrl = `${searchAPI}?term=*&customField=type%3Dwebinar&`;
+
+  const webinarsArea = document.querySelector("[data-webinar]");
+  webinarsArea.innerHTML = "loading webinars...";
+
+  const onDemandorUpcomingObj = {
+    and: [
+      {
+        or: [
+          {
+            and: [
+              { "custom_fields.tag": "OnDemand" },
+              {
+                range: { "custom_fields.e": { gt: "2019-12-31", lt: getNow() } },
+              },
+            ],
+          },
+          {
+            range: { "custom_fields.e": { gt: getNow(), lt: "2099-12-31" } },
+          },
+        ],
+      },
+    ],
+  };
+
+  // Build updated filter objects
+  const filterObj = { ...onDemandorUpcomingObj };
+  const regionFilters = getRegions(region, countries);
+
+  if (regionFilters.length > 0) {
+    filterObj.and.push({ or: regionFilters });
+  }
+  console.log(filterObj);
+  doListing(searchUrl, webinarsArea, filterObj, "desc");
+})();
