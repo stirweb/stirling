@@ -939,6 +939,10 @@
       return doArchive(baseUrl, tab.querySelector(".c-search-results-events "), seriesData, maintags);
     }
 
+    if (id === "webinars") {
+      return doWebinars(tab.querySelector(".c-search-results-events "), maintags);
+    }
+
     doUpcoming(baseUrl, id, tab.querySelector(".c-search-results-events "), seriesData, maintags);
   }
 
@@ -975,7 +979,6 @@
       ? document.querySelector('[data-behaviour="tabs"] [role="tab"][aria-selected="true"]')
       : document.querySelector('.pseudotab[aria-expanded="true"]');
 
-    //console.log(activeBtn);
     if (activeBtn) {
       const targetId = activeBtn.getAttribute("aria-controls");
       const targetNode = document.getElementById(targetId);
@@ -986,7 +989,6 @@
     tabButtons.forEach((button) => {
       button.addEventListener("click", async (event) => {
         const targetId = event.target.getAttribute("aria-controls");
-        console.log(targetId);
         loadTab(searchUrl, document.getElementById(targetId), seriesData, maintags);
       });
     });
