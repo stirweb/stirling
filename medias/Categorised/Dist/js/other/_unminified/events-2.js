@@ -404,6 +404,7 @@
       }
       currentDate.setDate(currentDate.getDate() + 7);
     }
+
     return dates;
   }
 
@@ -469,19 +470,6 @@
     // Check if the event's date range overlaps with next week
     return eventStart <= nextWeekEnd && eventEnd >= nextWeekStart;
   }
-
-  /*
-   * Get webinars JSON path based on environment
-   * @param {string} env - Current environment
-   * @returns {string} - Path to webinars JSON
-   */
-  // const getWebinarsJSON = (env) => {
-  //   if (env === "dev") return "./webinars.json";
-  //   if (env === "preview") return '<t4 type="navigation" id="5308" />'; // 5222 for limitrd archive
-  //   if (env === "appdev-preview") return '<t4 type="navigation" id="5308" />'; // 5222 for limitrd archive
-
-  //   return `/data/webinars/revamp/index.json`; // live
-  // };
 
   /*
    * Handle Favourite Button clicks
@@ -665,7 +653,11 @@
                   const parsedItem = JSON.parse(decodeURIComponent(item));
                   if (parsedItem.type && parsedItem.type === "perf") return parsedItem;
                 })
-                .map((item) => JSON.parse(decodeURIComponent(item)));
+                .map((item) => JSON.parse(decodeURIComponent(item)))
+                .filter((perf) => new Date(perf.end) > new Date());
+
+              //const upcomingPerfs = perfs.filter((perf) => new Date(perf.end) > new Date());
+              console.log(perfs);
 
               if (perfs.length > 0) {
                 perfs.forEach((perf) => {
