@@ -656,9 +656,6 @@
                 .map((item) => JSON.parse(decodeURIComponent(item)))
                 .filter((perf) => new Date(perf.end) > new Date());
 
-              //const upcomingPerfs = perfs.filter((perf) => new Date(perf.end) > new Date());
-              console.log(perfs);
-
               if (perfs.length > 0) {
                 perfs.forEach((perf) => {
                   const startTimePerf = perf.start.split("T")[1].split(":")[0] + ":" + perf.start.split("T")[1].split(":")[1];
