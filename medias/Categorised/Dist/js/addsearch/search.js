@@ -1673,7 +1673,7 @@ stir.search = () => {
 		const composition = stir.compose(reflow, replace, render, more, status, facets);
 		const callback = stir.curry((parameters,data) => {
 			
-			console.info("[Search] API callback with parameters",parameters);
+			debug && console.info("[Search] API callback with parameters",parameters);
 			
 			if (!element || !element.parentElement) {
 				return debug && console.error("[Search] late callback, element no longer on DOM");
@@ -1681,18 +1681,22 @@ stir.search = () => {
 			//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
 			if (!data || data.error) return;
 			if (0 === data.total_hits && fallback(element)) return;
-			return composition( stir.Object.extend({},data,{question:parameters}) );
+			
+			// Append AddSearch data with `question` object (à la Funnelback)
+			return composition( stir.Object.extend({}, data, {question:parameters}) );
+			
 		});
 		resetPagination();
 	
 		// if necessary do a prefetch and then call-back to the search function.
 		// E.g. Courses needs to prefetch the combinations data
 		if (prefetch[type]) return prefetch[type]((event) => searchers[type](callback));
-		// if no prefetch, just call the search function now:
+		// else (if no prefetch) just call the search function now:
 		searchers[type](callback);
 	};
 	
-	// triggered by the 'load more' buttons. Fetches new results and APPENDS them.
+	// triggered by the 'load more' buttons.
+	// Similar to getResults but APPENDS (rather than replacing).
 	const getMoreResults = (element, button) => {
 		const type = getType(element);
 		if (!searchers[type]) return;
