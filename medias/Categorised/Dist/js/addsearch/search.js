@@ -10,7 +10,6 @@ stir.templates.search = (() => {
 	 * invoking the absolute object stir.templates.blah.blah.blah
 	 * */
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	const FB_BASE = () => "https://" + stir.funnelback.getHostname();
 	const notice = (text) => `<p class="u-heritage-berry u-border-solid u-p-1"><span class="uos-lightbulb"></span> ${text}</p>`;
 	const summary = (text) => `<p class=c-search-result__summary>${text}</p>`;
 
@@ -37,12 +36,18 @@ stir.templates.search = (() => {
 		return docUrlSlashDotSplit.length > 1 && docUrlSlashDotSplit[1].match(/PDF|DOCX?/); // Other types can be added to this list if necessary
 	};
 
-	const makeBreadcrumbs = (trail, liveUrl, fileSize) => {
+	const makeBreadcrumbs = (item) => {
+		const crumbs = {
+			text: item.categories.slice(1),
+			href: new URL(item.url).pathname.split("/").slice(1, -1),
+		};
+		const trail = crumbs.text.map((text, index) => ({ text: text.split("x")[1], href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" }));
+
 		if (trail && trail.length > 0) {
 			return stir.templates.search.breadcrumb(stir.templates.search.trailstring(trail));
 		}
-		if (isDocUrl(liveUrl)) {
-			return `Document: ${isDocUrl(liveUrl)} <small>${stir.Math.fileSize(fileSize || 0, 0)}</small>`;
+		if (isDocUrl(item.url)) {
+			return `Document: ${isDocUrl(item.url)} <small>${stir.Math.fileSize(fileSize || 0, 0)}</small>`;
 		}
 		return "";
 	};
@@ -139,12 +144,19 @@ stir.templates.search = (() => {
 
 	const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
 
-	const courseLabel = (input) => {
+	const label = (input) => {
 		switch (input) {
+			case "staff":
+				return "Staff";
+			case "student":
+				return "Student";
 			case "module":
 				return "CPD and short courses";
 			case "Postgraduate (taught)":
+			case "Postgraduate (research)":
 				return "Postgraduate";
+			case "undergraduate":
+				return "Undergraduate"
 			default:
 				return input;
 		}
@@ -185,9 +197,9 @@ stir.templates.search = (() => {
 	const timespan = (start, end) => (start ? `<time>${stir.Date.time24(new Date(start))}</time>` : "") + (end ? `–<time>${stir.Date.time24(new Date(end))}</time>` : "");
 	const anchor = (crumb) => `<a href="${crumb.href}">${crumb.text}</a>`;
 	const t4preview = (sid) => (sid ? `/terminalfour/preview/1/en/${sid}` : "#");
-
 	const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
-
+	const unpackData = (data) => "object"===typeof data ? Object.assign({},...data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(data));
+	
 	const facetDisplayTypes = {
 		SINGLE_DRILL_DOWN: undefined,
 		CHECKBOX: "checkbox",
@@ -196,14 +208,6 @@ stir.templates.search = (() => {
 		UNKNOWN: undefined,
 	};
 
-	//	const months = {
-	//		"01": "January",
-	//		"02": "February",
-	//		"05": "May",
-	//		"08": "August",
-	//		"09": "September",
-	//		"10": "October",
-	//	};
 
 	const correctCase = (function () {
 		if (!stir.t4Globals || !stir.t4Globals.search || !stir.t4Globals.search.facets) {
@@ -266,7 +270,7 @@ stir.templates.search = (() => {
 			return list ? list.map(stir.templates.search.stag).join("") : "";
 		},
 		breadcrumb: (crumbs) => `<p class="u-m-0">${crumbs}</p>`,
-		trailstring: (trail) => (trail.length ? trail.map(anchor).join(" > ") : ""),
+		trailstring: (trail) => (trail.length ? trail.map(anchor).join("<small> &gt; </small> ") : ""),
 
 		message: (hit, count, queried) => {
 			const p = document.createElement("p");
@@ -276,16 +280,14 @@ stir.templates.search = (() => {
 			return p;
 		},
 
-		summary: (data) => {
+		summary: data => {
 			const currEnd = 1 + (data.page * data.hits);
 			const currStart = currEnd - data.hits;
 			const totalMatching = data.total_hits;
 			const summary = document.createElement("div");
-			summary.classList.add("u-py-2");
-			//const { currEnd, totalMatching, currStart } = data.response.resultPacket.resultsSummary;
-			const querySanitised = stir.String.htmlEntities("Example query apples fred ninja")
-									.replace(/^!padrenullquery$/, "")
-									.replace(/^\*$/, "")
+			const querySanitised = stir.String.htmlEntities(data.question.term)
+									.replace(/^!padrenullquery$/, "")	//funnelback
+									.replace(/^\*$/, "")				//addsearch
 									.trim() || "";
 			const queryEcho = document.createElement("em");
 			const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
@@ -293,11 +295,12 @@ stir.templates.search = (() => {
 			//const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
 			//const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
 
+			summary.classList.add("u-py-2");
+
 			queryEcho.textContent = querySanitised;
 			if (querySanitised.length > 1) message.append(queryEcho);
 
 			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
-			
 			//summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
 			
 			/*
@@ -326,7 +329,7 @@ stir.templates.search = (() => {
 			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
 			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
 
-			if (data) {summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, hits: ${data.hits.length}</p><details><summary>JSON data</summary><pre>${JSON.stringify(data,null,"\t")}</pre></details>`;}
+			//if (data) {summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, hits: ${data.hits.length}</p>`;}
 			summary.append(message);
 			
 			return summary;
@@ -345,37 +348,32 @@ stir.templates.search = (() => {
 		suppressed: (reason) => `<!-- Suppressed search result: ${reason} -->`,
 
 		auto: (item) => {
+			item && console.info(item);
 //			if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
 //			if (item.custom_fields.type == "scholarship") return stir.templates.search.scholarship(item);
-//			if (item.custom_fields.type == "Course" || item.custom_fields.level) return stir.templates.search.course(item);
-//			if (item.custom_fields.type == "News") return stir.templates.search.news(item);
+			if (item.custom_fields.type == "course") return stir.templates.search.course(item);
+			if (item.custom_fields.type === "news") return stir.templates.search.news(item);
 //			if (item.custom_fields.type == "Gallery") return stir.templates.search.gallery(item);
-//			if (item.custom_fields.type == "Event") return stir.templates.search.event(item);
+			if (item.custom_fields.type == "event") return stir.templates.search.event(item);
+			if (item.custom_fields.type == "webinar") return stir.templates.search.event(item);
 //			if (item.collection == "stir-events") return stir.templates.search.event(item);
-//			if (item.custom_fields.access) return stir.templates.search.internal(item);
+			if (item.custom_fields.access) return stir.templates.search.internal(item);
 //			if (item.custom_fields.type && item.custom_fields.type.indexOf("output") > -1) return stir.templates.search.research(item);
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("contract") > -1) return stir.templates.search.research(item);
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("profile") > -1) return stir.templates.search.person(item);
+			if (item.custom_fields.type && item.custom_fields.type.indexOf("contract") > -1) return stir.templates.search.research(item);
+			if (item.custom_fields.type && item.custom_fields.type.indexOf("profile") > -1) return stir.templates.search.person(item);
 //			if (item.url.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
-//
-			const crumbs = {
-				text: item.categories.slice(1),
-				href: new URL(item.url).pathname.split("/").slice(1, -1),
-			};
-//
-			const trail = crumbs.text.map((text, index) => ({ text: text.split("x")[1], href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" }));
-//
 //			const label = item.url.indexOf("policyblog.stir") > -1 ? `<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>` : "";
 //
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item, trail);
+			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item);
 
-			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}>
+			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}>
 				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-					${makeBreadcrumbs(trail, item.url,0)}
+				<div class=c-search-result__tags>
+					${stir.templates.search.stag([item.custom_fields.type || "Page"])}
+				</div>
+					${makeBreadcrumbs(item)}
 					<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
 					<p>${item.meta_description}</p>
-					<p>${item.custom_fields.d||''}</p>
-					<p>${item.custom_fields.sid||''}</p>
 				</div>
 			</div>`;
 
@@ -390,23 +388,25 @@ stir.templates.search = (() => {
 				 */
 		},
 		internal: (item) => {
-			const crumbs = {
-				text: item.custom_fields?.breadcrumbs?.split(" > ") || [],
-				href: new URL(item.url).pathname.split("/").filter((n) => n),
-			};
-
-			const trail = userAuth(item.custom_fields.group) ? stir.templates.search.trailstring(crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" })).slice(0, -1)) : `<a href="https://www.stir.ac.uk/${crumbs.href[0]}/">${crumbs.text[0]}</a>`;
+			// const crumbs = {
+			// 	text: item.categories.slice(1),
+			// 	href: new URL(item.url).pathname.split("/").slice(1, -1),
+			// };
+			// const trail = userAuth(item.custom_fields.access) ? stir.templates.search.trailstring(crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" })).slice(0, -1)) : `<a href="https://www.stir.ac.uk/${crumbs.href[0]}/">${crumbs.text[0]}</a>`;
 
 			return `
-	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.custom_fields.group)}" data-rank=${item.rank}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""} data-access="${item.custom_fields.access}">
+	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.custom_fields.access)}" data-rank=${item.score}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""} data-access="${item.custom_fields.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-				<p class="c-search-result__breadcrumb">${trail} ..:: INTERNAL ::..</p>
+				<div class=" c-search-result__tags">
+					<span class="c-search-tag">${label(item.custom_fields.access)||""}</span>
+				</div>
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
 					.replace(/Current S\S+ ?\| ?/, "")
 					.split(" | ")[0]
 					.trim()}</a></strong></p>
-				${internalSummary(item.meta_description, item.custom_fields.group)}
+				${internalSummary(item.meta_description, item.custom_fields.access)}
 			  </div>
+			  <details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre></details>
 			</div>`;
 		},
 
@@ -485,18 +485,16 @@ stir.templates.search = (() => {
 		courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""), //.replace(/\|/g, ", ")
 
 		course: (item) => {
-			//return stir.templates.search.auto(item); // 2025-10-10 TEMP
-			//return `<div class="c-search-result u-border-width-5 u-heritage-line-left">COURSE RESULT</div>`;
-			//      const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-			//      const subjectLink = stir.String.slug(subject);
+			const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 			//		const subject = typeof item.custom_fields.subject;
+			//      const subjectLink = stir.String.slug(subject);
 			const isOnline = item.custom_fields.delivery && item.custom_fields.delivery.indexOf("online") > -1 ? true : false;
-			const link = item.url;//UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : FB_BASE() + item.clickTrackingUrl; //preview or appdev
+			const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
 			item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.custom_fields.sid : item.url);
 			return `
-			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.rank} data-sid=${item.custom_fields.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
+			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.score} data-sid=${item.custom_fields.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
 				<div class=" c-search-result__tags">
-					<span class="c-search-tag">${courseLabel(item.custom_fields.level || item.custom_fields.type || "")}</span>
+					<span class="c-search-tag">${label(item.custom_fields.level || item.custom_fields.type || "")}</span>
 				</div>
 
 		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
@@ -524,8 +522,8 @@ stir.templates.search = (() => {
 
 		coursemini: (item) 
 		=> "\t\t\t" + `<div>
-				<p><strong><a href="${FB_BASE() + item.clickTrackingUrl}" title="${item.url}" class="u-border-none">
-					${item.custom_fields.award || ""} ${item.title} ${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""} ${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
+				<p><strong><a href="${item.url}" title="${item.url}" class="u-border-none">
+					${item.custom_fields.award || ""} ${item.title.split(" | ")[0]} ${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""} ${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
 				</a></strong></p>
 				<p>${item.meta_description}</p>
 			</div>`,
@@ -553,7 +551,7 @@ stir.templates.search = (() => {
 
 		person: (item) => {
 			const id = item.url.split("/").slice(-1);
-			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : {};
+			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(item.custom_fields.data));
 			return `
 			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=person>
 				<div class=c-search-result__tags>
@@ -575,7 +573,7 @@ stir.templates.search = (() => {
 		},
 		scholarship: (item) => {
 			return `
-		<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=scholarship data-rank=${item.rank}>
+		<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=scholarship data-rank=${item.score}>
 			<div class=c-search-result__tags>
 				${stir.templates.search.stag(item.custom_fields.level ? `Scholarship: ${item.custom_fields.level.toLowerCase()}` : "")}
 			</div>
@@ -591,26 +589,29 @@ stir.templates.search = (() => {
 		</div>`;
 		},
 
-		studentstory: (item, trail) => {
+		studentstory: (item) => {
+			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
 			return `
 				<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=studentstory>
-					<div><a href="${trail[0].href}">${trail[0].text}</a></div>
-					<div class="c-search-result__body flex-container flex-dir-column u-gap ">
+					<div class="c-search-result__body flex-container flex-dir-column u-gap">
+						<div class=c-search-result__tags>${stir.templates.search.stag(["Student stories"])}</div>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.title.split(" | ")[0].trim()}</a>
+							<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
 						</strong></p>
 						<p class="u-m-0">
-						${item.custom_fields.profileCourse1 ? item.custom_fields.profileCourse1 + "<br />" : ""}
-						${item.custom_fields.profileCountry ? item.custom_fields.profileCountry : ""}
+						${data.degree ? data.degree + "<br />" : ""}
+						${item.custom_fields.country ? item.custom_fields.country : ""}
 						</p>
-						<p>${item.custom_fields.profileSnippet ? "<q>" + item.custom_fields.profileSnippet + "</q>" : "<!-- 28d3702e2064f72d5dfcba865e3cc5d5 -->"}</p>
+						<p>${item.custom_fields.snippet ? "<q>" + item.custom_fields.snippet + "</q>" : "<!-- 28d3702e2064f72d5dfcba865e3cc5d5 -->"}</p>
 					</div>
-					${item.custom_fields.profileImage ? image("https://www.stir.ac.uk" + item.custom_fields.profileImage, item.title.split(" | ")[0].trim(), 400, 400) : ""}
+					${item.custom_fields.image ? image("https://www.stir.ac.uk" + item.custom_fields.image, item.title.split(" | ")[0].trim(), 400, 400) : ""}
 				</div>`;
 		},
 
 		news: (item) => {
-			const hasThumb = true;
+			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			const hasThumb = data.thumbnail ? true : false;
+			const thumb = data.thumbnail ? `data-original="${data.thumbnail}"` : '';
 			return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumb ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
@@ -619,12 +620,11 @@ stir.templates.search = (() => {
 								<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
 							</strong>
 						</p>
-						<div>${item.custom_fields.d ? stir.Date.newsDate(new Date(item.custom_fields.d.split("|")[0])) : ""}</div>
+						<div>${stir.Date.newsDate(new Date( item.custom_fields.d ? item.custom_fields.d.split("|")[0] : item.ts ))}</div>
 						<p class="text-sm">${item.meta_description}</p>
 					</div>
 					<div class=c-search-result__image>
-						<!-- <img src="data:image/jpeg;base64,${item.images.main_b64}" alt="${item.title.split(" | ")[0].trim()}" height="68" width="68" loading="lazy"> -->
-						<img src="${item.images.main}" alt="${item.title.split(" | ")[0].trim()}" height="275" width="275" loading="lazy">
+						<img src="${item.images.main}" alt="${item.title.split(" | ")[0].trim()}" ${thumb} height=275 width=275 loading=lazy>
 					</div>
 				</div>`;
 				/* <!-- <p>
@@ -633,39 +633,39 @@ stir.templates.search = (() => {
 						</p> --> */
 		},
 
+
 		gallery: (item) => {
 			return `
-				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${item.rank} data-result-type=news>
-					
+				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${item.score} data-result-type=news>
 					<div class=c-search-result__body>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${FB_BASE() + item.clickTrackingUrl}">${item.custom_fields.h1 || item.title.split(" | ")[0].trim()}</a>
+							<a href="${item.url}">${item.custom_fields.h1 || item.title.split(" | ")[0].trim()}</a>
 						</strong></p>
 						<p class="c-search-result__secondary">${stir.Date.newsDate(new Date(item.custom_fields.d))}</p>
 						<p >${item.meta_description}</p>	
 					</div>
 					<div class=c-search-result__image>
 						${stir.funnelback.getCroppedImageElement({
-				url: flickrUrl(JSON.parse(item.custom_fields.custom)),
-				alt: `Image of ${item.title.split(" | ")[0].trim()}`,
-				width: 550,
-				height: 550,
-			})}
+							url: flickrUrl(JSON.parse(item.custom_fields.custom)),
+							alt: `Image of ${item.title.split(" | ")[0].trim()}`,
+							width: 550,
+							height: 550,
+						})}
 					</div>
 				</div>`;
 		},
 
+
 		event: (item) => {
-
-
-			const isWebinar = item.custom_fields?.tags?.indexOf("Webinar") > -1;
+			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(item.custom_fields.data));
+			const isWebinar = (data.tags && data.tags.indexOf("Webinar") > -1) || "webinar" === item.custom_fields.type;
+			const isOnline = isWebinar || item.custom_fields.online;
 			const hasThumbnail = item.custom_fields?.image || isWebinar;
+			const hasEnded = item.custom_fields.e ? (new Date(item.custom_fields.e) < new Date() ? true:false) : undefined;
 			const title = item.custom_fields.name || item.title.split("|")[0].trim();
-			const url = item.url //item.collection == "stir-events" ? (item.custom_fields.page ? item.custom_fields.page : item.custom_fields.register ? item.custom_fields.register : "#") : FB_BASE() + item.clickTrackingUrl;
-			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : {};
-
+			const url = item.url //item.collection == "stir-events" ? (item.custom_fields.page ? item.custom_fields.page : item.custom_fields.register ? item.custom_fields.register : "#") : item.url;
 			return `
-			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=event>
+			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=event>
 				<div class=c-search-result__tags>
 					${data.isSeriesChild ? stir.templates.search.stag(data.isSeriesChild) : ""}
 				</div>
@@ -680,45 +680,45 @@ stir.templates.search = (() => {
 						</div>
 						<div class="flex-container u-gap-16 align-middle">
 							<span class="uos-clock u-icon h5"></span>
-							<span>${timespan(item.custom_fields.d, item.custom_fields.e)}</span>
+							<span>
+							${hasEnded ? 'This event has ended.' : timespan(item.custom_fields.d, item.custom_fields.e)}
+							</span>
 						</div>
 						<div class="flex-container u-gap-16 align-middle">
-							<span class="u-icon h5 uos-${item.custom_fields.online ? "web" : "location"}"></span>
-							<span>${data.online ? "Online" : data.location ? data.location : ""}</span>
+							<span class="u-icon h5 uos-${isOnline ? "web" : "location"}"></span>
+							<span>${isOnline ? "Online" : data.location ? data.location : ""}</span>
 						</div>
 					</div>
-					<p class=text-sm>${item.meta_description||"DEBUG: No Description"}</p>
+					<p class=text-sm>${item.custom_fields.snippet||item.meta_description}</p>
 					${data.register ? `<p class="u-m-0 text-sm"><a href="${data.register}" class="u-m-0 button hollow tiny">Register now</a></p>` : ""}
 				</div>
 				${image(item.custom_fields.image && item.custom_fields.image.split("|")[0], item.title.split(" | ")[0])}
-				${item.custom_fields?.tags?.indexOf("Webinar") > -1 ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
-				<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre></details>
+				${isWebinar ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
 			</div>`;
-		},
+		},	//<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre><hr><pre>${JSON.stringify(data,null,"\t")}</pre></details>
 
-		research: (item) => stir.templates.search.auto(item), // 2025-10-10 TEMP
 
-			/* `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""}>
+		research: (item) => 
+			`<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""}>
 				<div>
 					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
 					<div class="flex-container flex-dir-column u-gap u-mt-1">
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">
-								${item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title}
-							</a>
+							<a href="${item.url}">${item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title}</a>
 						</strong></p>
-						${stir.String.stripHtml(item.custom_fields.c || "") ? `<div class="text-sm">` + stir.String.stripHtml(item.custom_fields.c || "") + `</div>` : ""}
+						${stir.String.stripHtml(item.meta_description) ? `<div class="text-sm">` + stir.String.stripHtml(item.meta_description) + `</div>` : ""}
 						${stir.funnelback.getTags(item.custom_fields.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.custom_fields.category) + `</div>` : ""}
 					</div>
 				</div>
-			</div>`, */
+			</div>`,
+
 
 		cura: (item) =>
 			!item.messageHtml
 				? `<div class="c-search-result" data-result-type=curated>
 					<div class=c-search-result__body>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${FB_BASE() + item.linkUrl}" title="${item.displayUrl}">${item.titleHtml}</a><br>
+							<a href="${item.url}">${item.title.split(" | ")[1]}</a><br>
 							<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
 						</strong></p>
 						<p>${item.descriptionHtml}</p>
@@ -727,6 +727,8 @@ stir.templates.search = (() => {
 				: `<div class="c-search-result-curated" data-result-type=curated-message>
 					${item.messageHtml}
 				</div>`,
+
+
 		facet: (item) =>
 			`<fieldset data-facet="${item.name}">
 				<legend class="show-for-sr">Filter by ${item.name}</legend>
@@ -740,15 +742,17 @@ stir.templates.search = (() => {
 					</div>
 				</div>
 			</fieldset>`,
+
+
 		labelledFacetItems: stir.curry(
-			(facet, facetValue) => `
-	<li>
-		<label>
-			<input type=${facetDisplayTypes[facet.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
-			${facetCategoryLabel(facet.name, facetValue.label)}
-			<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
-		</label>
-	</li>`
+			(facet, facetValue) =>
+				`<li>
+					<label>
+						<input type=${facetDisplayTypes[facet.guessedDisplayType] || "text"} name="${facetValue.queryStringParamName}" value="${facetValue.queryStringParamValue}" ${facetValue.selected ? "checked" : ""}>
+						${facetCategoryLabel(facet.name, facetValue.label)}
+						<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
+					</label>
+				</li>`
 		),
 	};
 })();
@@ -1202,24 +1206,13 @@ stir.funnelback = (() => {
 	const hostname = UoS_env.search;
 	const url = `https://${hostname}/s/`;
 
-	// alternative public hostname: `shared-15-24-search.clients.uk.funnelback.com`
-
 	const getJsonEndpoint = () => new URL("search.json", url);
 	const getScaleEndpoint = () => new URL("scale", url);
 	const getHostname = () => hostname;
-
 	const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
-
-	const resolveHref = (url, parameters) => {
-		url.search = new URLSearchParams(parameters);
-		return url;
-	};
-	//const resolveHref = stir.curry((url, parameters) => {url.search = new URLSearchParams(parameters); return url});
-	//const resolveImgHref = resolveHref(getScaleEndpoint)
 
 	const getCroppedImageElement = (parameters) => {
 		if (!parameters.url) return "<!-- no image -->";
-		//const url = resolveHref(getScaleEndpoint(), stir.Object.extend({}, parameters, { type: "crop_center", format: "jpeg" }));
 		return renderImgTag({ src: parameters.url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
 	};
 
@@ -1228,25 +1221,12 @@ stir.funnelback = (() => {
 		return tagGroups && tagGroups.map(stir.templates.search.tagGroup).join("");
 	};
 
-	const imgError = (error) => {
-		//debug && console.error('[Search] There was an error loading a thumbnail image.', error.target.src);
-		if (error.target.getAttribute("data-original") && error.target.getAttribute("src") != error.target.getAttribute("data-original")) {
-			//debug && console.error('[Search] …reverting to original image: ', error.target.getAttribute('data-original'));
-			error.target.src = error.target.getAttribute("data-original");
-		} else {
-			//debug && console.error('[Search] …no alternative image available. It will be removed.');
-			error.target.parentElement.parentElement?.classList?.remove("c-search-result__with-thumbnail");
-			error.target.parentElement.parentElement.removeChild(error.target.parentElement);
-		}
-	};
-
 	return {
 		getHostname: getHostname,
 		getJsonEndpoint: getJsonEndpoint,
 		getScaleEndpoint: getScaleEndpoint,
 		getCroppedImageElement: getCroppedImageElement,
-		getTags: getTags,
-		imgError: imgError,
+		getTags: getTags
 	};
 })();
 
@@ -1312,7 +1292,6 @@ stir.search = () => {
 	const MAXQUERY = 256;
 	const CLEARING = stir.courses.clearing; // Clearing is open?
 
-
 	const buildUrl = stir.curry((url, parameters) => {
 		url.search = new URLSearchParams(parameters);
 		return url;
@@ -1336,50 +1315,23 @@ stir.search = () => {
 			},
 			news: {
 				customField: "type=news",
-				sort: "custom_fields.d",
+				sort: "custom_fields.d"
 			},
 			event: {
 				filter: JSON.stringify({
 					and: [
-						{ "custom_fields.type": "event" },
 						{
 							or: [
-								{
-									/* START this week */
-									range: {
-										"custom_fields.e": {
-											gt: "2025-10-19",
-											lt: "2025-10-27"
-										}
-									}
-								}, {
-									/* OR END this week */
-									range: {
-										"custom_fields.d": {
-											gt: "2025-10-19",
-											lt: "2025-10-27"
-										}
-									}
-								}, {
-									/* OR they START before AND END after this week */
-									and: [
-										{
-											range: {
-												"custom_fields.d": {
-													lt: "2025-10-19"
-												}
-											}
-										},
-										{
-											range: {
-												"custom_fields.e": {
-													gt: "2025-10-27"
-												}
-											}
-										}
-									]
-								}
+								{ "custom_fields.type": "event"   },
+								{ "custom_fields.type": "webinar" }
 							]
+						},
+						{
+							range: {
+								"custom_fields.e": {
+									gt: stir.Date.timeElementDatetime( (d => new Date(d.setDate(d.getDate()-1)))(new Date) )
+								}
+							}
 						}
 					]
 				})
@@ -1388,9 +1340,9 @@ stir.search = () => {
 				customField: "type=gallery"
 			},
 			course: {
+				customField: "type=course",
 				sort: "custom_fields.name",
-				order: "asc",
-				customField: "type=course"
+				order: "asc"
 			},
 			coursemini: {
 				customField: "type=course",
@@ -1398,15 +1350,17 @@ stir.search = () => {
 			},
 			person: {
 				customField: "type=profile",
-				sort: "custom_fields.sort",
-				order: "desc",
 			},
 			research: {
 				categories: "2xhub",
 			},
 			internal: {
-				categories: "1xinternal-staff" //,
-				//categories: "1xinternal-students"
+				filter: JSON.stringify({
+					or: [
+						{ "custom_fields.access": "staff"   },
+						{ "custom_fields.access": "student" }
+					]
+				}),
 			},
 			clearing: {
 				limit: NUMRANKS
@@ -1420,18 +1374,21 @@ stir.search = () => {
 				timestamp: +new Date(), */
 			},
 		},
-		// extra parameters for no-query searches
+
+		// +++ Extra/override parameters for no-query searches +++
+		// E.g. if no keywords supplied; sort by title instead of relevance
 		noquery: {
 			course: {
-				//sort: "title", // if no keywords supplied, sort courses
-				// by title instead of "relevance"
-				//		},
-				//		person: {
-				//			sort: "meta_surname"	//sort people by surname
-				//		},
-				//		event: {
-				//			sort: "adate"	// sort events by date descending
+				sort: "custom_fields.name",
 			},
+			person: {
+				sort: "custom_fields.sort",
+				order: "desc"
+			},
+			event: {
+				sort: "custom_fields.e",	// sort events by date descending
+				order: "asc"
+			}
 		},
 	};
 
@@ -1486,16 +1443,16 @@ stir.search = () => {
 		const form = document.querySelector(`${stir.templates.search.selector.results} form[data-filters="${type}"]`);
 		let a = form ? new FormData(form) : new FormData();
 
-		for (var key of a.keys()) {
-			if (key.indexOf("f.") === 0) continue; //ignore any facets
-			if (a.getAll(key).length > 1) {
-				// merge values into one dysjunction operator
-				// as used in the Research type filter's "Other" option:
-				// "publication", "contract", "[tag theme programme group]"
-				// will become "[publication contract tag theme programme group]"
-				//a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
-			}
-		}
+		// for (var key of a.keys()) {
+		// 	if (key.indexOf("f.") === 0) continue; //ignore any facets
+		// 	if (a.getAll(key).length > 1) {
+		// 		// merge values into one dysjunction operator
+		// 		// as used in the Research type filter's "Other" option:
+		// 		// "publication", "contract", "[tag theme programme group]"
+		// 		// will become "[publication contract tag theme programme group]"
+		// 		//a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
+		// 	}
+		// }
 
 		return a;
 	};
@@ -1515,6 +1472,7 @@ stir.search = () => {
 		//TODO: un-set any URL params that have corresponding <input> elements that are NOT checked
 		// (but ignore any params that aren't related to the filters)
 	};
+
 	// DOM modifiers:
 	const appendHtml = stir.curry((_element, html) => _element.insertAdjacentHTML("beforeend", html));
 	const replaceHtml = stir.curry((_element, html) => (_element.innerHTML = html));
@@ -1528,7 +1486,7 @@ stir.search = () => {
 	});
 
 	const newAccordion = (accordion) => new stir.accord(accordion, false);
-	//const imageErrorHandler = (image) => image.addEventListener("error", stir.funnelback.imgError);
+	const attachImageErrorHandler = (image) => image.addEventListener("error", imgError);
 
 	// "reflow" events and handlers for dynamically added DOM elements
 	const flow = stir.curry((_element, data) => {
@@ -1536,19 +1494,20 @@ stir.search = () => {
 		const root = _element.closest("[data-panel]");
 		const cords = root.querySelectorAll('[data-behaviour="accordion"]:not(.stir-accordion)');
 		const pics = root.querySelectorAll("img");
+		console.info("PICS +++ ",pics)
 		Array.prototype.forEach.call(cords, newAccordion);
-//		Array.prototype.forEach.call(pics, imageErrorHandler);
+		Array.prototype.forEach.call(pics, attachImageErrorHandler);
 	});
 
-	const updateStatus = stir.curry((element, data) => {
-		const start = 1 + (data.page * data.hits) - data.hits;
+	const updateStatus = stir.curry((wrapper, data) => {
+		const start = 1 + (data.page * data.hits.length) - data.hits.length;
 		const ranks = data.total_hits;
-		const summary = element.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
-		element.setAttribute("data-page", calcPage(start, ranks));
-		if (summary) {
-			summary.innerHTML = "";
-			summary.append(stir.templates.search.summary(data));
+		const el = wrapper.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
+		if (el) {
+			el.innerHTML = "";
+			el.append(stir.templates.search.summary(data));
 		}
+		wrapper.setAttribute("data-page", calcPage(start, ranks));
 		return data; // data pass-thru so we can compose() this function
 	});
 
@@ -1698,7 +1657,7 @@ stir.search = () => {
 				getNoQuery(type), // get special "no query" parameters (sorting, etc.)
 				getQueryParameters(), // get facet parameters
 			);
-		stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback);
+		stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback(parameters));
 	});
 	
 	// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
@@ -1712,25 +1671,32 @@ stir.search = () => {
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, replace, render, more, status, facets);
-		const callback = (data) => {
+		const callback = stir.curry((parameters,data) => {
+			
+			debug && console.info("[Search] API callback with parameters",parameters);
+			
 			if (!element || !element.parentElement) {
 				return debug && console.error("[Search] late callback, element no longer on DOM");
 			}
 			//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
 			if (!data || data.error) return;
 			if (0 === data.total_hits && fallback(element)) return;
-			return composition(data);
-		};
+			
+			// Append AddSearch data with `question` object (à la Funnelback)
+			return composition( stir.Object.extend({}, data, {question:parameters}) );
+			
+		});
 		resetPagination();
 	
 		// if necessary do a prefetch and then call-back to the search function.
 		// E.g. Courses needs to prefetch the combinations data
 		if (prefetch[type]) return prefetch[type]((event) => searchers[type](callback));
-		// if no prefetch, just call the search function now:
+		// else (if no prefetch) just call the search function now:
 		searchers[type](callback);
 	};
 	
-	// triggered by the 'load more' buttons. Fetches new results and APPENDS them.
+	// triggered by the 'load more' buttons.
+	// Similar to getResults but APPENDS (rather than replacing).
 	const getMoreResults = (element, button) => {
 		const type = getType(element);
 		if (!searchers[type]) return;
@@ -1739,7 +1705,7 @@ stir.search = () => {
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
-		const callback = (data) => (data && !data.error ? composition(data) : new Function());
+		const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
 		nextPage(type);
 		searchers[type](callback);
 	};
@@ -1836,6 +1802,18 @@ stir.search = () => {
 			event.preventDefault();
 		});
 	});
+	
+	function imgError(error) {
+		//debug && console.error('[Search] There was an error loading a thumbnail image:', error.target);
+		if (error.target.getAttribute("data-original") && error.target.getAttribute("src") != error.target.getAttribute("data-original")) {
+			 //debug && console.error('[+++] …reverting to original image: ', error.target.getAttribute('data-original'));
+			 error.target.src = error.target.getAttribute("data-original");
+		} else {
+			//debug && console.error('[Search] …no alternative image available. It will be removed.');
+			error.target.parentElement.parentElement?.classList?.remove("c-search-result__with-thumbnail");
+			error.target.parentElement.parentElement.removeChild(error.target.parentElement);
+		}
+	}
 
 	const tokenHandler = (event) => {
 		if (!event || !event.target) return;

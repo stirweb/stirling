@@ -13,24 +13,13 @@ stir.funnelback = (() => {
 	const hostname = UoS_env.search;
 	const url = `https://${hostname}/s/`;
 
-	// alternative public hostname: `shared-15-24-search.clients.uk.funnelback.com`
-
 	const getJsonEndpoint = () => new URL("search.json", url);
 	const getScaleEndpoint = () => new URL("scale", url);
 	const getHostname = () => hostname;
-
 	const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
-
-	const resolveHref = (url, parameters) => {
-		url.search = new URLSearchParams(parameters);
-		return url;
-	};
-	//const resolveHref = stir.curry((url, parameters) => {url.search = new URLSearchParams(parameters); return url});
-	//const resolveImgHref = resolveHref(getScaleEndpoint)
 
 	const getCroppedImageElement = (parameters) => {
 		if (!parameters.url) return "<!-- no image -->";
-		//const url = resolveHref(getScaleEndpoint(), stir.Object.extend({}, parameters, { type: "crop_center", format: "jpeg" }));
 		return renderImgTag({ src: parameters.url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
 	};
 
@@ -39,25 +28,12 @@ stir.funnelback = (() => {
 		return tagGroups && tagGroups.map(stir.templates.search.tagGroup).join("");
 	};
 
-	const imgError = (error) => {
-		//debug && console.error('[Search] There was an error loading a thumbnail image.', error.target.src);
-		if (error.target.getAttribute("data-original") && error.target.getAttribute("src") != error.target.getAttribute("data-original")) {
-			//debug && console.error('[Search] …reverting to original image: ', error.target.getAttribute('data-original'));
-			error.target.src = error.target.getAttribute("data-original");
-		} else {
-			//debug && console.error('[Search] …no alternative image available. It will be removed.');
-			error.target.parentElement.parentElement?.classList?.remove("c-search-result__with-thumbnail");
-			error.target.parentElement.parentElement.removeChild(error.target.parentElement);
-		}
-	};
-
 	return {
 		getHostname: getHostname,
 		getJsonEndpoint: getJsonEndpoint,
 		getScaleEndpoint: getScaleEndpoint,
 		getCroppedImageElement: getCroppedImageElement,
-		getTags: getTags,
-		imgError: imgError,
+		getTags: getTags
 	};
 })();
 
@@ -123,7 +99,6 @@ stir.search = () => {
 	const MAXQUERY = 256;
 	const CLEARING = stir.courses.clearing; // Clearing is open?
 
-
 	const buildUrl = stir.curry((url, parameters) => {
 		url.search = new URLSearchParams(parameters);
 		return url;
@@ -147,50 +122,23 @@ stir.search = () => {
 			},
 			news: {
 				customField: "type=news",
-				sort: "custom_fields.d",
+				sort: "custom_fields.d"
 			},
 			event: {
 				filter: JSON.stringify({
 					and: [
-						{ "custom_fields.type": "event" },
 						{
 							or: [
-								{
-									/* START this week */
-									range: {
-										"custom_fields.e": {
-											gt: "2025-10-19",
-											lt: "2025-10-27"
-										}
-									}
-								}, {
-									/* OR END this week */
-									range: {
-										"custom_fields.d": {
-											gt: "2025-10-19",
-											lt: "2025-10-27"
-										}
-									}
-								}, {
-									/* OR they START before AND END after this week */
-									and: [
-										{
-											range: {
-												"custom_fields.d": {
-													lt: "2025-10-19"
-												}
-											}
-										},
-										{
-											range: {
-												"custom_fields.e": {
-													gt: "2025-10-27"
-												}
-											}
-										}
-									]
-								}
+								{ "custom_fields.type": "event"   },
+								{ "custom_fields.type": "webinar" }
 							]
+						},
+						{
+							range: {
+								"custom_fields.e": {
+									gt: stir.Date.timeElementDatetime( (d => new Date(d.setDate(d.getDate()-1)))(new Date) )
+								}
+							}
 						}
 					]
 				})
@@ -199,9 +147,9 @@ stir.search = () => {
 				customField: "type=gallery"
 			},
 			course: {
+				customField: "type=course",
 				sort: "custom_fields.name",
-				order: "asc",
-				customField: "type=course"
+				order: "asc"
 			},
 			coursemini: {
 				customField: "type=course",
@@ -209,15 +157,17 @@ stir.search = () => {
 			},
 			person: {
 				customField: "type=profile",
-				sort: "custom_fields.sort",
-				order: "desc",
 			},
 			research: {
 				categories: "2xhub",
 			},
 			internal: {
-				categories: "1xinternal-staff" //,
-				//categories: "1xinternal-students"
+				filter: JSON.stringify({
+					or: [
+						{ "custom_fields.access": "staff"   },
+						{ "custom_fields.access": "student" }
+					]
+				}),
 			},
 			clearing: {
 				limit: NUMRANKS
@@ -231,18 +181,21 @@ stir.search = () => {
 				timestamp: +new Date(), */
 			},
 		},
-		// extra parameters for no-query searches
+
+		// +++ Extra/override parameters for no-query searches +++
+		// E.g. if no keywords supplied; sort by title instead of relevance
 		noquery: {
 			course: {
-				//sort: "title", // if no keywords supplied, sort courses
-				// by title instead of "relevance"
-				//		},
-				//		person: {
-				//			sort: "meta_surname"	//sort people by surname
-				//		},
-				//		event: {
-				//			sort: "adate"	// sort events by date descending
+				sort: "custom_fields.name",
 			},
+			person: {
+				sort: "custom_fields.sort",
+				order: "desc"
+			},
+			event: {
+				sort: "custom_fields.e",	// sort events by date descending
+				order: "asc"
+			}
 		},
 	};
 
@@ -297,16 +250,16 @@ stir.search = () => {
 		const form = document.querySelector(`${stir.templates.search.selector.results} form[data-filters="${type}"]`);
 		let a = form ? new FormData(form) : new FormData();
 
-		for (var key of a.keys()) {
-			if (key.indexOf("f.") === 0) continue; //ignore any facets
-			if (a.getAll(key).length > 1) {
-				// merge values into one dysjunction operator
-				// as used in the Research type filter's "Other" option:
-				// "publication", "contract", "[tag theme programme group]"
-				// will become "[publication contract tag theme programme group]"
-				//a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
-			}
-		}
+		// for (var key of a.keys()) {
+		// 	if (key.indexOf("f.") === 0) continue; //ignore any facets
+		// 	if (a.getAll(key).length > 1) {
+		// 		// merge values into one dysjunction operator
+		// 		// as used in the Research type filter's "Other" option:
+		// 		// "publication", "contract", "[tag theme programme group]"
+		// 		// will become "[publication contract tag theme programme group]"
+		// 		//a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
+		// 	}
+		// }
 
 		return a;
 	};
@@ -326,6 +279,7 @@ stir.search = () => {
 		//TODO: un-set any URL params that have corresponding <input> elements that are NOT checked
 		// (but ignore any params that aren't related to the filters)
 	};
+
 	// DOM modifiers:
 	const appendHtml = stir.curry((_element, html) => _element.insertAdjacentHTML("beforeend", html));
 	const replaceHtml = stir.curry((_element, html) => (_element.innerHTML = html));
@@ -339,7 +293,7 @@ stir.search = () => {
 	});
 
 	const newAccordion = (accordion) => new stir.accord(accordion, false);
-	//const imageErrorHandler = (image) => image.addEventListener("error", stir.funnelback.imgError);
+	const attachImageErrorHandler = (image) => image.addEventListener("error", imgError);
 
 	// "reflow" events and handlers for dynamically added DOM elements
 	const flow = stir.curry((_element, data) => {
@@ -347,19 +301,20 @@ stir.search = () => {
 		const root = _element.closest("[data-panel]");
 		const cords = root.querySelectorAll('[data-behaviour="accordion"]:not(.stir-accordion)');
 		const pics = root.querySelectorAll("img");
+		console.info("PICS +++ ",pics)
 		Array.prototype.forEach.call(cords, newAccordion);
-//		Array.prototype.forEach.call(pics, imageErrorHandler);
+		Array.prototype.forEach.call(pics, attachImageErrorHandler);
 	});
 
-	const updateStatus = stir.curry((element, data) => {
-		const start = 1 + (data.page * data.hits) - data.hits;
+	const updateStatus = stir.curry((wrapper, data) => {
+		const start = 1 + (data.page * data.hits.length) - data.hits.length;
 		const ranks = data.total_hits;
-		const summary = element.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
-		element.setAttribute("data-page", calcPage(start, ranks));
-		if (summary) {
-			summary.innerHTML = "";
-			summary.append(stir.templates.search.summary(data));
+		const el = wrapper.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
+		if (el) {
+			el.innerHTML = "";
+			el.append(stir.templates.search.summary(data));
 		}
+		wrapper.setAttribute("data-page", calcPage(start, ranks));
 		return data; // data pass-thru so we can compose() this function
 	});
 
@@ -509,7 +464,7 @@ stir.search = () => {
 				getNoQuery(type), // get special "no query" parameters (sorting, etc.)
 				getQueryParameters(), // get facet parameters
 			);
-		stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback);
+		stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback(parameters));
 	});
 	
 	// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
@@ -523,25 +478,32 @@ stir.search = () => {
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, replace, render, more, status, facets);
-		const callback = (data) => {
+		const callback = stir.curry((parameters,data) => {
+			
+			debug && console.info("[Search] API callback with parameters",parameters);
+			
 			if (!element || !element.parentElement) {
 				return debug && console.error("[Search] late callback, element no longer on DOM");
 			}
 			//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
 			if (!data || data.error) return;
 			if (0 === data.total_hits && fallback(element)) return;
-			return composition(data);
-		};
+			
+			// Append AddSearch data with `question` object (à la Funnelback)
+			return composition( stir.Object.extend({}, data, {question:parameters}) );
+			
+		});
 		resetPagination();
 	
 		// if necessary do a prefetch and then call-back to the search function.
 		// E.g. Courses needs to prefetch the combinations data
 		if (prefetch[type]) return prefetch[type]((event) => searchers[type](callback));
-		// if no prefetch, just call the search function now:
+		// else (if no prefetch) just call the search function now:
 		searchers[type](callback);
 	};
 	
-	// triggered by the 'load more' buttons. Fetches new results and APPENDS them.
+	// triggered by the 'load more' buttons.
+	// Similar to getResults but APPENDS (rather than replacing).
 	const getMoreResults = (element, button) => {
 		const type = getType(element);
 		if (!searchers[type]) return;
@@ -550,7 +512,7 @@ stir.search = () => {
 		const render = renderResultsWithPagination(type);
 		const reflow = flow(element);
 		const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
-		const callback = (data) => (data && !data.error ? composition(data) : new Function());
+		const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
 		nextPage(type);
 		searchers[type](callback);
 	};
@@ -647,6 +609,18 @@ stir.search = () => {
 			event.preventDefault();
 		});
 	});
+	
+	function imgError(error) {
+		//debug && console.error('[Search] There was an error loading a thumbnail image:', error.target);
+		if (error.target.getAttribute("data-original") && error.target.getAttribute("src") != error.target.getAttribute("data-original")) {
+			 //debug && console.error('[+++] …reverting to original image: ', error.target.getAttribute('data-original'));
+			 error.target.src = error.target.getAttribute("data-original");
+		} else {
+			//debug && console.error('[Search] …no alternative image available. It will be removed.');
+			error.target.parentElement.parentElement?.classList?.remove("c-search-result__with-thumbnail");
+			error.target.parentElement.parentElement.removeChild(error.target.parentElement);
+		}
+	}
 
 	const tokenHandler = (event) => {
 		if (!event || !event.target) return;
