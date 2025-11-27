@@ -53,7 +53,7 @@ stir.templates.search = (() => {
 	};
 
 	const checkSpelling = (suggestion) => (suggestion ? `<p>Did you mean <a href="#" data-suggest>${suggestion.text.split(" ")[0]}</a>?</p>` : "");
-
+	
 	/**
 	 *
 	 * @param {String} name
@@ -226,6 +226,8 @@ stir.templates.search = (() => {
 
 	const facetCategoryLabel = (facet, label) => correctCase(facet, label);
 	const startDateFormatter = date => correctCase("Start date", date);
+	
+	const serplink = item => `<a href="${item.url}" data-docid="${item.id}" data-position="${item.position||''}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a>`;
 
 	//
 	//
@@ -347,8 +349,9 @@ stir.templates.search = (() => {
 
 		suppressed: (reason) => `<!-- Suppressed search result: ${reason} -->`,
 
-		auto: (item) => {
-			item && console.info(item);
+		auto: (item, index, context) => {
+
+
 //			if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
 //			if (item.custom_fields.type == "scholarship") return stir.templates.search.scholarship(item);
 			if (item.custom_fields.type == "course") return stir.templates.search.course(item);
@@ -365,15 +368,15 @@ stir.templates.search = (() => {
 //			const label = item.url.indexOf("policyblog.stir") > -1 ? `<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>` : "";
 //
 			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item);
-
+			
 			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}>
 				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<div class=c-search-result__tags>
 					${stir.templates.search.stag([item.custom_fields.type || "Page"])}
 				</div>
 					${makeBreadcrumbs(item)}
-					<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
-					<p>${item.meta_description}</p>
+					<p class="u-text-regular u-m-0"><strong>${serplink(item)}</strong></p>
+					<p>${item.meta_description||''}</p>
 				</div>
 			</div>`;
 
@@ -400,15 +403,14 @@ stir.templates.search = (() => {
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${label(item.custom_fields.access)||""}</span>
 				</div>
-				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
+				<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title
 					.replace(/Current S\S+ ?\| ?/, "")
 					.split(" | ")[0]
 					.trim()}</a></strong></p>
 				${internalSummary(item.meta_description, item.custom_fields.access)}
 			  </div>
-			  <details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre></details>
 			</div>`;
-		},
+		}, //<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre></details>
 
 		combo: (item) => {
 			return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboCourse).join(" and ")}${item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""}${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
@@ -499,7 +501,7 @@ stir.templates.search = (() => {
 
 		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
 		  <p class="u-text-regular u-m-0">
-			<strong><a href="${link}" title="${item.url}">
+			<strong><a href="${link}" title="${item.url}" data-docid="${item.id||''}" data-position="${item.position||''}">
 			${item.custom_fields.award || ""} ${item.custom_fields.name || item.title.split("|")[0]}
 			${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""}
 			${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
@@ -522,7 +524,7 @@ stir.templates.search = (() => {
 
 		coursemini: (item) 
 		=> "\t\t\t" + `<div>
-				<p><strong><a href="${item.url}" title="${item.url}" class="u-border-none">
+				<p><strong><a href="${item.url}" title="${item.url}" data-docid="${item.id||''}" data-position="${item.position||''}" class="u-border-none">
 					${item.custom_fields.award || ""} ${item.title.split(" | ")[0]} ${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""} ${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
 				</a></strong></p>
 				<p>${item.meta_description}</p>
@@ -559,7 +561,7 @@ stir.templates.search = (() => {
 				</div>
 				<div class="flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0"><strong>
-						<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
+						${serplink(item)}
 					</strong></p>
 					<div>${data.JobTitle || "<!-- Job title -->"}<br>${data.OrgUnitName || "<!-- Department -->"}</div>
 					<!-- <p>${item?.custom_fields?.c ? (item?.custom_fields?.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
@@ -596,7 +598,7 @@ stir.templates.search = (() => {
 					<div class="c-search-result__body flex-container flex-dir-column u-gap">
 						<div class=c-search-result__tags>${stir.templates.search.stag(["Student stories"])}</div>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
+							${serplink(item)}
 						</strong></p>
 						<p class="u-m-0">
 						${data.degree ? data.degree + "<br />" : ""}
@@ -617,7 +619,7 @@ stir.templates.search = (() => {
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 						<p class="u-text-regular u-m-0">
 							<strong>
-								<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
+								${serplink(item)}
 							</strong>
 						</p>
 						<div>${stir.Date.newsDate(new Date( item.custom_fields.d ? item.custom_fields.d.split("|")[0] : item.ts ))}</div>
@@ -638,11 +640,9 @@ stir.templates.search = (() => {
 			return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${item.score} data-result-type=news>
 					<div class=c-search-result__body>
-						<p class="u-text-regular u-m-0"><strong>
-							<a href="${item.url}">${item.custom_fields.h1 || item.title.split(" | ")[0].trim()}</a>
-						</strong></p>
+						<p class="u-text-regular u-m-0"><strong>${serplink(item)}</strong></p>
 						<p class="c-search-result__secondary">${stir.Date.newsDate(new Date(item.custom_fields.d))}</p>
-						<p >${item.meta_description}</p>	
+						<p>${item.meta_description||''}</p>	
 					</div>
 					<div class=c-search-result__image>
 						${stir.funnelback.getCroppedImageElement({
@@ -671,7 +671,7 @@ stir.templates.search = (() => {
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
-						<strong>${anchor({ text: title, href: url })}</strong>
+						<strong>${serplink(item)}</strong>
 					</p>
 					<div class="flex-container flex-dir-column u-gap-8">
 						<div class="flex-container u-gap-16 align-middle">
@@ -703,9 +703,7 @@ stir.templates.search = (() => {
 				<div>
 					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
 					<div class="flex-container flex-dir-column u-gap u-mt-1">
-						<p class="u-text-regular u-m-0"><strong>
-							<a href="${item.url}">${item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title}</a>
-						</strong></p>
+						<p class="u-text-regular u-m-0"><strong>${serplink(item)}</strong></p>
 						${stir.String.stripHtml(item.meta_description) ? `<div class="text-sm">` + stir.String.stripHtml(item.meta_description) + `</div>` : ""}
 						${stir.funnelback.getTags(item.custom_fields.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.custom_fields.category) + `</div>` : ""}
 					</div>
@@ -718,7 +716,7 @@ stir.templates.search = (() => {
 				? `<div class="c-search-result" data-result-type=curated>
 					<div class=c-search-result__body>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${item.url}">${item.title.split(" | ")[1]}</a><br>
+							${serplink(item)}<br>
 							<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
 						</strong></p>
 						<p>${item.descriptionHtml}</p>
