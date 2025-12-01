@@ -70,10 +70,10 @@ stir.addSearch = (() => {
 	// e.g. https://api.addsearch.com/v1/search/cfa10522e4ae6987c390ab72e9393908?term=rest+api
 
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	const REPORTING = false; //click tracking etc.
 	const KEY = "dbe6bc5995c4296d93d74b99ab0ad7de"; //public site key
 	const _server = "api.addsearch.com";
 	const _url = `https://${_server}`;
-	const REPORTING = false; //click tracking etc.
 
 	const getJsonEndpoint = () => new URL(`/v1/search/${KEY}`, _url);
 	const getSuggestionsEndpoint = () => new URL(`/v1/suggest/${KEY}`, _url);
@@ -102,34 +102,22 @@ stir.addSearch = (() => {
 		stir.getJSON(getRecommendationsEndpoint(block),callback);
 	};
 	
-	const putReport = (data,callback) => {
+	// Used to report Click and Search user actions back to AddSearch analytics
+	// (Returns a PROMISE object that may be async'd or chained)
+	const putReport = (data) => {
 		
 		if(!REPORTING) {
-			debug && console.info("[AddSearch] reporting is disabled");
-			if("function" === typeof callback) callback();
-			return;
+			debug && console.info("[AddSearch] reporting is disabled",data);
+			return new Promise((resolve,reject)=>{resolve(data)});
 		}
-		
-		const req = new Request(getReportingEndpoint(),{
-			method: "POST",
-			body: JSON.stringify(data)
-		});
 		
 		debug && console.info("[AddSearch] Report",data);
 		
-		fetch(req)
-			.then((response) => {
-				if(response.status !== 200) {
-					throw new Error("Oops!");
-				}
-				return response;
-			})
-			.then((response) => {
-				if("function" === typeof callback) callback.call(null,response);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
+		const input   = 'http://researchhub.test/responder.php'; //getReportingEndpoint();
+		const options = {method:"POST", body:JSON.stringify(data)};
+		
+		return fetch( new Request(input, options) );
+
 	};
 
 	return {
@@ -161,6 +149,8 @@ stir.search = (() => {
 		const NUMRANKS = "small" === stir.MediaQuery.current ? 5 : 10;
 		const MAXQUERY = 256;
 		const CLEARING = stir.courses.clearing; // Clearing is open?
+		
+		let clickReporting = true;
 	
 		const buildUrl = stir.curry((url, parameters) => {
 			url.search = new URLSearchParams(parameters);
@@ -181,13 +171,16 @@ stir.search = (() => {
 			parameters: {
 				any: {
 					term: "University of Stirling",
-					limit: NUMRANKS
+					limit: NUMRANKS,
+					collectAnalytics: false
 				},
 				news: {
 					customField: "type=news",
-					sort: "custom_fields.d"
+					sort: "custom_fields.d",
+					collectAnalytics: false
 				},
 				event: {
+					collectAnalytics: false,
 					filter: JSON.stringify({
 						and: [
 							{
@@ -207,22 +200,28 @@ stir.search = (() => {
 					})
 				},
 				gallery: {
-					customField: "type=gallery"
+					customField: "type=gallery",
+					collectAnalytics: false
 				},
 				course: {
-					customField: "type=course"
+					customField: "type=course",
+					collectAnalytics: false
 				},
 				coursemini: {
 					customField: "type=course",
-					limit: 5
+					limit: 5,
+					collectAnalytics: false
 				},
 				person: {
 					customField: "type=profile",
+					collectAnalytics: false
 				},
 				research: {
 					categories: "2xhub",
+					collectAnalytics: false
 				},
 				internal: {
+					collectAnalytics: false,
 					filter: JSON.stringify({
 						or: [
 							{ "custom_fields.access": "staff"   },
@@ -231,6 +230,7 @@ stir.search = (() => {
 					}),
 				},
 				clearing: {
+					collectAnalytics: false,
 					limit: NUMRANKS
 	//				term: "!padrenullquery",
 	//				sort: "custom_fields.name",
@@ -352,7 +352,11 @@ stir.search = (() => {
 		const enableLoadMore = stir.curry((button, data) => {
 			if (!button) return data;
 			if (data && data.total_hits > 0) button.removeAttribute("disabled");
-			//if (data.response.resultPacket.resultsSummary.currEnd === data.response.resultPacket.resultsSummary.totalMatching) button.setAttribute("disabled", true);
+			console.info('[AddSearch] data',data);
+			const perPage = (data.question && data.question.limit) ? data.question.limit : 10;
+			const pages = Math.ceil(data.total_hits / perPage);
+			console.info(`[AddSearch] page ${data.page} of ${pages}. [${perPage}]`);
+			if (data.page >= pages) button.setAttribute("disabled", true);
 			return data;
 		});
 	
@@ -538,7 +542,14 @@ stir.search = (() => {
 					getNoQuery(type), // get special "no query" parameters (sorting, etc.)
 					getQueryParameters(), // get facet parameters
 				);
-			stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback(parameters));
+			const url = addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) );
+			const reportAndCallback = data => {
+				searchReporter(data.total_hits);
+				callback(parameters,data);
+			};
+
+			stir.getJSON(url, reportAndCallback);
+
 		});
 		
 		// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
@@ -659,9 +670,21 @@ stir.search = (() => {
 			},
 		};
 	
+		async function reporter(payload) {
+			try {	
+				//const report = await stir.addSearch.putReport(payload);
+				const report = await fetch('http://localhost:8000/manifest.json');
+				const data = await report.text();
+				console.info("ASYNC",data);
+				return data;
+			} catch(error) {
+				console.error("[AddSearch]",error);
+			}
+		}
 	
 		// CLICK delegate for link tracking
-		const clickReporter = event => {
+		const clickReporter = async event => {
+			if (!clickReporting) return true;
 			if (!event || !event.target || !event.target.hasAttribute("href")) return;
 			
 			const href     = event.target.getAttribute("href");
@@ -675,14 +698,43 @@ stir.search = (() => {
 				docid: docid,
 				position: position
 			};
+			
 
 			if(href && query && position && docid) {
 				event.preventDefault();
-				stir.addSearch.putReport(payload,(response)=> window.location=href );
+				//reporter(payload);
+				fetch('/manifest.json')
+					.then(response=>console.info(response))
+					.then(()=>{
+						clickReporting = false;
+						event.target.dispatchEvent(new MouseEvent('click', { bubbles: true, shiftKey: event.shiftKey, altKey: event.altKey, ctrlKey: event.ctrlKey,metaKey: event.metaKey}));
+						//event.target.dispatchEvent(event);
+						console.info(event);
+						clickReporting = true;						
+					})
+					.catch(error => console.error("[AddSearch] fetch error",error));
+				//window.location.href = href;
+				//debug && !confirm("Click!") && event.preventDefault();
 			} else {
 				debug && console.error("Error tracking click:", event, payload);
 			}
-	
+
+		};
+
+		const searchReporter = async (total,callback) => {
+			const query    = getQuery();
+			const payload  = {
+			  action: "search",
+			  session: stir.session.id,
+			  keyword: query,
+			  numberOfResults: total
+			};
+
+			//reporter(payload);
+			//const report = await fetch('/manifest.json');
+			const report = await stir.addSearch.putReport(payload);
+			console.info('SEARCH report sent',report);
+
 		};
 		
 		document.querySelectorAll("[data-panel]").forEach(panel => panel.addEventListener("click",clickReporter) );

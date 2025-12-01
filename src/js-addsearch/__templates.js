@@ -16,7 +16,7 @@ stir.templates.search = (() => {
 	// STAFF / STUDENT status checking
 	const groups = {
 		staff: "University of Stirling staff",
-		students: "current students and staff",
+		student: "current students and staff",
 	};
 	const entitlements = {
 		staff: ["staff", "students"],
@@ -27,7 +27,7 @@ stir.templates.search = (() => {
 	const userType = isUser ? afce4eafce490574e288574b384ecd87.get("psessv0").split("|")[0] : "EXTERNAL";
 	const userAuth = (group) => entitlements[userType.toLowerCase()]?.indexOf(group.toLowerCase()) > -1;
 	const authClass = (group) => (userAuth(group) ? " c-internal-search-result" : " c-internal-locked-search-result");
-	const authMessage = (group) => notice(`This page is only available to ${groups[group]}. You will be asked to log in before you can view it, but once you are logged in results will be shown automatically.`);
+	const authMessage = (group) => notice(`This page is only available to ${groups[group]||group}. You will be asked to log in before you can view it, but once you are logged in results will be shown automatically.`);
 	const internalSummary = (text, group) => (userAuth(group) ? summary(text) : authMessage(group));
 
 	// Special handling for documents (PDF, DOC; as opposed to native web results)
