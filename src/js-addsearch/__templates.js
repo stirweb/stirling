@@ -38,10 +38,11 @@ stir.templates.search = (() => {
 
 	const makeBreadcrumbs = (item) => {
 		const crumbs = {
-			text: item.categories.slice(1),
+			text: item.custom_fields.breadcrumb ? item.custom_fields.breadcrumb.split(" > ").slice(1, -1) : item.categories.slice?item.categories.slice(1,-1).map(crumb=>crumb.split("x")[1]):[''],
 			href: new URL(item.url).pathname.split("/").slice(1, -1),
 		};
-		const trail = crumbs.text.map((text, index) => ({ text: text.split("x")[1], href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" }));
+		
+		const trail = crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" }));
 
 		if (trail && trail.length > 0) {
 			return stir.templates.search.breadcrumb(stir.templates.search.trailstring(trail));

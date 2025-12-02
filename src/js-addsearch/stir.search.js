@@ -113,7 +113,7 @@ stir.addSearch = (() => {
 		
 		debug && console.info("[AddSearch] Report",data);
 		
-		const input   = 'http://researchhub.test/responder.php'; //getReportingEndpoint();
+		const input   = getReportingEndpoint();
 		const options = {method:"POST", body:JSON.stringify(data)};
 		
 		return fetch( new Request(input, options) );
@@ -150,7 +150,7 @@ stir.search = (() => {
 		const MAXQUERY = 256;
 		const CLEARING = stir.courses.clearing; // Clearing is open?
 		
-		let clickReporting = true;
+		let clickReporting = true; // temporary flag. see REPORTING to enable/disable reporting
 	
 		const buildUrl = stir.curry((url, parameters) => {
 			url.search = new URLSearchParams(parameters);
@@ -352,11 +352,10 @@ stir.search = (() => {
 		const enableLoadMore = stir.curry((button, data) => {
 			if (!button) return data;
 			if (data && data.total_hits > 0) button.removeAttribute("disabled");
-			console.info('[AddSearch] data',data);
 			const perPage = (data.question && data.question.limit) ? data.question.limit : 10;
 			const pages = Math.ceil(data.total_hits / perPage);
-			console.info(`[AddSearch] page ${data.page} of ${pages}. [${perPage}]`);
 			if (data.page >= pages) button.setAttribute("disabled", true);
+			debug && console.info(`[AddSearch] page ${data.page} of ${pages}. [${perPage}]`);
 			return data;
 		});
 	
@@ -366,12 +365,11 @@ stir.search = (() => {
 		// "reflow" events and handlers for dynamically added DOM elements
 		const flow = stir.curry((_element, data) => {
 			if (!_element.closest) return;
-			const root = _element.closest("[data-panel]");
+			const root  = _element.closest("[data-panel]");
 			const cords = root.querySelectorAll('[data-behaviour="accordion"]:not(.stir-accordion)');
-			const pics = root.querySelectorAll("img");
-			console.info("PICS +++ ",pics)
-			Array.prototype.forEach.call(cords, newAccordion);
-			Array.prototype.forEach.call(pics, attachImageErrorHandler);
+			const pics  = root.querySelectorAll("img");
+			cords && Array.prototype.forEach.call(cords, newAccordion);
+			pics  && Array.prototype.forEach.call(pics, attachImageErrorHandler);
 		});
 	
 		const updateStatus = stir.curry((wrapper, data) => {
@@ -534,17 +532,18 @@ stir.search = (() => {
 	
 		// This is the core search function that talks to the search API
 		const callSearchApi = stir.curry((type, callback) => {	
+			const query = getQuery(type);
 			const parameters = 
 				stir.Object.extend(
 					{ },
 					constants.parameters[type],
-					{ page: getPage(type), term: getQuery(type) },
+					{ page: getPage(type), term: query },
 					getNoQuery(type), // get special "no query" parameters (sorting, etc.)
 					getQueryParameters(), // get facet parameters
 				);
 			const url = addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) );
 			const reportAndCallback = data => {
-				searchReporter(data.total_hits);
+				searchReporter(query, data.total_hits);
 				callback(parameters,data);
 			};
 
@@ -687,10 +686,12 @@ stir.search = (() => {
 			if (!clickReporting) return true;
 			if (!event || !event.target || !event.target.hasAttribute("href")) return;
 			
+			const results  = event.target.closest('.c-search-results');
+			const type     = results && results.getAttribute("data-type");
 			const href     = event.target.getAttribute("href");
 			const docid    = event.target.getAttribute('data-docid');
 			const position = event.target.getAttribute('data-position');
-			const query    = getQuery();
+			const query    = type && getQuery(type);
 			const payload  = {
 				action: "click",
 				session: stir.session.id,
@@ -698,31 +699,38 @@ stir.search = (() => {
 				docid: docid,
 				position: position
 			};
-			
 
 			if(href && query && position && docid) {
 				event.preventDefault();
-				//reporter(payload);
-				fetch('/manifest.json')
-					.then(response=>console.info(response))
-					.then(()=>{
-						clickReporting = false;
-						event.target.dispatchEvent(new MouseEvent('click', { bubbles: true, shiftKey: event.shiftKey, altKey: event.altKey, ctrlKey: event.ctrlKey,metaKey: event.metaKey}));
-						//event.target.dispatchEvent(event);
-						console.info(event);
-						clickReporting = true;						
+				stir.addSearch.putReport(payload)
+					.then((response)=>{
+						let go = true;
+						if(debug) go = confirm('Check console for click reporting.');
+						// we're going to re-dispatch the event, so this flag 
+						// stops it being reported and re-dispatched again!
+						clickReporting = false; 
+						// now re-dispatch the event using the same key
+						// presses (in case user is opening in a new tab etc.)
+						// better than doing a location.href, for example.
+						go && event.target.dispatchEvent(new MouseEvent('click', {
+							bubbles: true,
+							shiftKey: event.shiftKey,
+							altKey: event.altKey,
+							ctrlKey: event.ctrlKey,
+							metaKey: event.metaKey
+						}));
+						// re-enable click reporting in case the 
+						// page is still alive
+						clickReporting = true; 
 					})
 					.catch(error => console.error("[AddSearch] fetch error",error));
-				//window.location.href = href;
-				//debug && !confirm("Click!") && event.preventDefault();
 			} else {
 				debug && console.error("Error tracking click:", event, payload);
 			}
 
 		};
 
-		const searchReporter = async (total,callback) => {
-			const query    = getQuery();
+		const searchReporter = async (query, total) => {
 			const payload  = {
 			  action: "search",
 			  session: stir.session.id,
@@ -730,11 +738,8 @@ stir.search = (() => {
 			  numberOfResults: total
 			};
 
-			//reporter(payload);
-			//const report = await fetch('/manifest.json');
-			const report = await stir.addSearch.putReport(payload);
-			console.info('SEARCH report sent',report);
-
+			stir.addSearch.putReport(payload)
+				.catch(error => console.error(error));
 		};
 		
 		document.querySelectorAll("[data-panel]").forEach(panel => panel.addEventListener("click",clickReporter) );
