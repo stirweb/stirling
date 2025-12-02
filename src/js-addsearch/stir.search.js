@@ -12,7 +12,18 @@ var stir = stir || {};
  stir.session = (()=>{
 	 
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	const session = {};	
+	const session = {};
+	const ccc = window.Cookies && Cookies.getJSON("CookieControl");
+	const consent = ccc && ccc.optionalCookies && ccc.optionalCookies.performance === "accepted";
+	
+	if(!consent) {
+		debug && console.info("[Session] performance cookie consent: not given");
+		window.sessionStorage && sessionStorage.removeItem("session"); // remove any existing
+		session.id = generateID();
+		return session;
+	}
+
+	debug && console.info("[Session] performance cookie consent: given");
 	
 	function generateID() {
 		const time = Date.now();
@@ -70,7 +81,7 @@ stir.addSearch = (() => {
 	// e.g. https://api.addsearch.com/v1/search/cfa10522e4ae6987c390ab72e9393908?term=rest+api
 
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	const REPORTING = false; //click tracking etc.
+	const REPORTING = true; //click tracking etc.
 	const KEY = "dbe6bc5995c4296d93d74b99ab0ad7de"; //public site key
 	const _server = "api.addsearch.com";
 	const _url = `https://${_server}`;
@@ -231,15 +242,11 @@ stir.search = (() => {
 				},
 				clearing: {
 					collectAnalytics: false,
-					limit: NUMRANKS
-	//				term: "!padrenullquery",
+					limit: NUMRANKS,
+					term: "*",
 	//				sort: "custom_fields.name",
-	//				meta_clearing: "[scotland simd rukroi international eu]",
-	//				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
-	//				fmo: "true",
-					/* explain: true,
-					query: "!padrenullquery",
-					timestamp: +new Date(), */
+	//				filter: something something clearing only...?
+	//				timestamp: +new Date()
 				},
 			},
 	
@@ -312,20 +319,7 @@ stir.search = (() => {
 	
 		const getFormData = (type) => {
 			const form = document.querySelector(`${stir.templates.search.selector.results} form[data-filters="${type}"]`);
-			let a = form ? new FormData(form) : new FormData();
-	
-			// for (var key of a.keys()) {
-			// 	if (key.indexOf("f.") === 0) continue; //ignore any facets
-			// 	if (a.getAll(key).length > 1) {
-			// 		// merge values into one dysjunction operator
-			// 		// as used in the Research type filter's "Other" option:
-			// 		// "publication", "contract", "[tag theme programme group]"
-			// 		// will become "[publication contract tag theme programme group]"
-			// 		//a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
-			// 	}
-			// }
-	
-			return a;
+			return form ? new FormData(form) : new FormData();
 		};
 	
 		const getInboundQuery = () => {
@@ -575,7 +569,6 @@ stir.search = (() => {
 				
 				// Append AddSearch data with `question` object (à la Funnelback)
 				return composition( stir.Object.extend({}, data, {question:parameters}) );
-				
 			});
 			resetPagination();
 		
@@ -662,24 +655,23 @@ stir.search = (() => {
 				stir.coursefavs && stir.coursefavs.attachEventHandlers(); // listen for Favs events
 				let xmlHttpRequest = stir.courses.getCombos();
 				if (xmlHttpRequest) {
-					xmlHttpRequest.addEventListener("loadend", callback); // loadend should fire after load OR error
+					xmlHttpRequest.addEventListener("loadend", callback); // load-end should fire after load OR error
 				} else {
 					callback.call();
 				}
 			},
 		};
 	
-		async function reporter(payload) {
-			try {	
-				//const report = await stir.addSearch.putReport(payload);
-				const report = await fetch('http://localhost:8000/manifest.json');
-				const data = await report.text();
-				console.info("ASYNC",data);
-				return data;
-			} catch(error) {
-				console.error("[AddSearch]",error);
-			}
-		}
+		// async function reporter(payload) {
+		// 	try {	
+		// 		const report = await stir.addSearch.putReport(payload);
+		// 		const data = await report.text();
+		// 		console.info("ASYNC",data);
+		// 		return data;
+		// 	} catch(error) {
+		// 		console.error("[AddSearch]",error);
+		// 	}
+		// }
 	
 		// CLICK delegate for link tracking
 		const clickReporter = async event => {
@@ -791,7 +783,7 @@ stir.search = (() => {
 			 * 			should contain the search tokens, results and filters) in
 			 * 			other words only look among the filters for the current
 			 * 			search panel, and don't toggle any filters in other panels!
-			 * 			(Noticed this becuase `faculty` is common to courses and news)
+			 * 			(Noticed this because `faculty` is common to courses and news)
 			 * input	the input element we want to toggle
 			 */
 			const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
