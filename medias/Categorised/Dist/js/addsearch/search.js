@@ -352,6 +352,7 @@ stir.templates.search = (() => {
 
 		auto: (item, index, context) => {
 
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 
 //			if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
 //			if (item.custom_fields.type == "scholarship") return stir.templates.search.scholarship(item);
@@ -371,10 +372,10 @@ stir.templates.search = (() => {
 			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item);
 			
 			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}>
-				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-				<div class=c-search-result__tags>
-					${stir.templates.search.stag([item.custom_fields.type || "Page"])}
-				</div>
+				<div class="c-search-result__body flex-container flex-dir-column u-gap">
+				${item.custom_fields.type ? '<div class=c-search-result__tags>':''}
+					${item.custom_fields.type ? stir.templates.search.stag([item.custom_fields.type]) : ''}
+				${item.custom_fields.type ? '</div>':''}
 					${makeBreadcrumbs(item)}
 					<p class="u-text-regular u-m-0"><strong>${serplink(item)}</strong></p>
 					<p>${item.meta_description||''}</p>
@@ -523,13 +524,15 @@ stir.templates.search = (() => {
 			</div>`;
 		},
 
-		coursemini: (item) 
-		=> "\t\t\t" + `<div>
+		coursemini: (item) => {
+			if(!item.custom_fields) return '';
+			return "\t\t\t" + `<div>
 				<p><strong><a href="${item.url}" title="${item.url}" data-docid="${item.id||''}" data-position="${item.position||''}" class="u-border-none">
 					${item.custom_fields.award || ""} ${item.title.split(" | ")[0]} ${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""} ${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
 				</a></strong></p>
 				<p>${item.meta_description}</p>
-			</div>`,
+			</div>`
+		},
 
 		courseminiFooter: (query) 
 			=> `<p class="u-mb-2 flex-container u-align-items-center u-gap-8">
@@ -669,6 +672,7 @@ stir.templates.search = (() => {
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=event>
 				<div class=c-search-result__tags>
 					${data.isSeriesChild ? stir.templates.search.stag(data.isSeriesChild) : ""}
+					${isWebinar ? stir.templates.search.stag("Webinar") : ""}
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
@@ -713,18 +717,17 @@ stir.templates.search = (() => {
 
 
 		cura: (item) =>
-			!item.messageHtml
-				? `<div class="c-search-result" data-result-type=curated>
-					<div class=c-search-result__body>
-						<p class="u-text-regular u-m-0"><strong>
-							${serplink(item)}<br>
-							<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
-						</strong></p>
-						<p>${item.descriptionHtml}</p>
-					</div>
-				</div>`
-				: `<div class="c-search-result-curated" data-result-type=curated-message>
-					${item.messageHtml}
+			 // `<div class="c-search-result" data-result-type=curated>
+				// 	<div class=c-search-result__body>
+				// 		<p class="u-text-regular u-m-0"><strong>
+				// 			${serplink(item)}<br>
+				// 			<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
+				// 		</strong></p>
+				// 		<p>${item.descriptionHtml}</p>
+				// 	</div>
+				// </div>`
+				`<div class="c-search-result-curated" data-result-type=curated>
+					<a href="${item.url}" data-docid=${item.id} data-position=${item.position}><img src="${item.images.main}" alt="${item.title}"></a>
 				</div>`,
 
 
@@ -1269,7 +1272,7 @@ stir.funnelback = (() => {
 	};
 })();
 
-stir.addSearch = (() => {
+stir.addSearch = stir.addSearch || (() => {
 	// e.g. https://api.addsearch.com/v1/search/cfa10522e4ae6987c390ab72e9393908?term=rest+api
 
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
@@ -1304,6 +1307,8 @@ stir.addSearch = (() => {
 		if("function" !== typeof callback) return;
 		stir.getJSON(getRecommendationsEndpoint(block),callback);
 	};
+	
+	const getResults = options => fetch( new Request(getJsonEndpoint(),options) );
 	
 	// Used to report Click and Search user actions back to AddSearch analytics
 	// (Returns a PROMISE object that may be async'd or chained)
@@ -1868,13 +1873,19 @@ stir.search = (() => {
 		// CLICK delegate for link tracking
 		const clickReporter = async event => {
 			if (!clickReporting) return true;
-			if (!event || !event.target || !event.target.hasAttribute("href")) return;
+	
+	event.preventDefault();		
+	console.info(event);
+	
+			if (!event || !event.target) return;
 			
-			const results  = event.target.closest('.c-search-results');
+			const el = event.target.hasAttribute("href") ? event.target : event.target.parentElement
+			
+			const results  = el.closest('.c-search-results');
 			const type     = results && results.getAttribute("data-type");
-			const href     = event.target.getAttribute("href");
-			const docid    = event.target.getAttribute('data-docid');
-			const position = event.target.getAttribute('data-position');
+			const href     = el.getAttribute("href");
+			const docid    = el.getAttribute('data-docid');
+			const position = el.getAttribute('data-position');
 			const query    = type && getQuery(type);
 			const payload  = {
 				action: "click",
@@ -1896,7 +1907,7 @@ stir.search = (() => {
 						// now re-dispatch the event using the same key
 						// presses (in case user is opening in a new tab etc.)
 						// better than doing a location.href, for example.
-						go && event.target.dispatchEvent(new MouseEvent('click', {
+						go && el.dispatchEvent(new MouseEvent('click', {
 							bubbles: true,
 							shiftKey: event.shiftKey,
 							altKey: event.altKey,

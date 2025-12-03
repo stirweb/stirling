@@ -77,7 +77,7 @@ stir.funnelback = (() => {
 	};
 })();
 
-stir.addSearch = (() => {
+stir.addSearch = stir.addSearch || (() => {
 	// e.g. https://api.addsearch.com/v1/search/cfa10522e4ae6987c390ab72e9393908?term=rest+api
 
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
@@ -112,6 +112,8 @@ stir.addSearch = (() => {
 		if("function" !== typeof callback) return;
 		stir.getJSON(getRecommendationsEndpoint(block),callback);
 	};
+	
+	const getResults = options => fetch( new Request(getJsonEndpoint(),options) );
 	
 	// Used to report Click and Search user actions back to AddSearch analytics
 	// (Returns a PROMISE object that may be async'd or chained)
@@ -676,13 +678,19 @@ stir.search = (() => {
 		// CLICK delegate for link tracking
 		const clickReporter = async event => {
 			if (!clickReporting) return true;
-			if (!event || !event.target || !event.target.hasAttribute("href")) return;
+	
+	event.preventDefault();		
+	console.info(event);
+	
+			if (!event || !event.target) return;
 			
-			const results  = event.target.closest('.c-search-results');
+			const el = event.target.hasAttribute("href") ? event.target : event.target.parentElement
+			
+			const results  = el.closest('.c-search-results');
 			const type     = results && results.getAttribute("data-type");
-			const href     = event.target.getAttribute("href");
-			const docid    = event.target.getAttribute('data-docid');
-			const position = event.target.getAttribute('data-position');
+			const href     = el.getAttribute("href");
+			const docid    = el.getAttribute('data-docid');
+			const position = el.getAttribute('data-position');
 			const query    = type && getQuery(type);
 			const payload  = {
 				action: "click",
@@ -704,7 +712,7 @@ stir.search = (() => {
 						// now re-dispatch the event using the same key
 						// presses (in case user is opening in a new tab etc.)
 						// better than doing a location.href, for example.
-						go && event.target.dispatchEvent(new MouseEvent('click', {
+						go && el.dispatchEvent(new MouseEvent('click', {
 							bubbles: true,
 							shiftKey: event.shiftKey,
 							altKey: event.altKey,

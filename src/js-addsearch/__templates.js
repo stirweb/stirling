@@ -352,6 +352,7 @@ stir.templates.search = (() => {
 
 		auto: (item, index, context) => {
 
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 
 //			if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
 //			if (item.custom_fields.type == "scholarship") return stir.templates.search.scholarship(item);
@@ -371,10 +372,10 @@ stir.templates.search = (() => {
 			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item);
 			
 			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}>
-				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-				<div class=c-search-result__tags>
-					${stir.templates.search.stag([item.custom_fields.type || "Page"])}
-				</div>
+				<div class="c-search-result__body flex-container flex-dir-column u-gap">
+				${item.custom_fields.type ? '<div class=c-search-result__tags>':''}
+					${item.custom_fields.type ? stir.templates.search.stag([item.custom_fields.type]) : ''}
+				${item.custom_fields.type ? '</div>':''}
 					${makeBreadcrumbs(item)}
 					<p class="u-text-regular u-m-0"><strong>${serplink(item)}</strong></p>
 					<p>${item.meta_description||''}</p>
@@ -523,13 +524,15 @@ stir.templates.search = (() => {
 			</div>`;
 		},
 
-		coursemini: (item) 
-		=> "\t\t\t" + `<div>
+		coursemini: (item) => {
+			if(!item.custom_fields) return '';
+			return "\t\t\t" + `<div>
 				<p><strong><a href="${item.url}" title="${item.url}" data-docid="${item.id||''}" data-position="${item.position||''}" class="u-border-none">
 					${item.custom_fields.award || ""} ${item.title.split(" | ")[0]} ${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""} ${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
 				</a></strong></p>
 				<p>${item.meta_description}</p>
-			</div>`,
+			</div>`
+		},
 
 		courseminiFooter: (query) 
 			=> `<p class="u-mb-2 flex-container u-align-items-center u-gap-8">
@@ -669,6 +672,7 @@ stir.templates.search = (() => {
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=event>
 				<div class=c-search-result__tags>
 					${data.isSeriesChild ? stir.templates.search.stag(data.isSeriesChild) : ""}
+					${isWebinar ? stir.templates.search.stag("Webinar") : ""}
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
@@ -713,18 +717,17 @@ stir.templates.search = (() => {
 
 
 		cura: (item) =>
-			!item.messageHtml
-				? `<div class="c-search-result" data-result-type=curated>
-					<div class=c-search-result__body>
-						<p class="u-text-regular u-m-0"><strong>
-							${serplink(item)}<br>
-							<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
-						</strong></p>
-						<p>${item.descriptionHtml}</p>
-					</div>
-				</div>`
-				: `<div class="c-search-result-curated" data-result-type=curated-message>
-					${item.messageHtml}
+			 // `<div class="c-search-result" data-result-type=curated>
+				// 	<div class=c-search-result__body>
+				// 		<p class="u-text-regular u-m-0"><strong>
+				// 			${serplink(item)}<br>
+				// 			<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
+				// 		</strong></p>
+				// 		<p>${item.descriptionHtml}</p>
+				// 	</div>
+				// </div>`
+				`<div class="c-search-result-curated" data-result-type=curated>
+					<a href="${item.url}" data-docid=${item.id} data-position=${item.position}><img src="${item.images.main}" alt="${item.title}"></a>
 				</div>`,
 
 
