@@ -489,9 +489,10 @@ stir.templates.search = (() => {
 		courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""), //.replace(/\|/g, ", ")
 
 		course: (item) => {
-			const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			//		const subject = typeof item.custom_fields.subject;
 			//      const subjectLink = stir.String.slug(subject);
+			const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 			const isOnline = item.custom_fields.delivery && item.custom_fields.delivery.indexOf("online") > -1 ? true : false;
 			const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
 			item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.custom_fields.sid : item.url);
@@ -556,6 +557,7 @@ stir.templates.search = (() => {
 			</p>`, //:`<p class="text-center"><a href="?tab=courses&query=${query}">View all course results</a></p>`,
 
 		person: (item) => {
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			const id = item.url.split("/").slice(-1);
 			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(item.custom_fields.data));
 			return `
@@ -615,6 +617,7 @@ stir.templates.search = (() => {
 		},
 
 		news: (item) => {
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
 			const hasThumb = data.thumbnail ? true : false;
 			const thumb = data.thumbnail ? `data-original="${data.thumbnail}"` : '';
@@ -661,6 +664,7 @@ stir.templates.search = (() => {
 
 
 		event: (item) => {
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(item.custom_fields.data));
 			const isWebinar = (data.tags && data.tags.indexOf("Webinar") > -1) || "webinar" === item.custom_fields.type;
 			const isOnline = isWebinar || item.custom_fields.online;
@@ -703,8 +707,9 @@ stir.templates.search = (() => {
 		},	//<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre><hr><pre>${JSON.stringify(data,null,"\t")}</pre></details>
 
 
-		research: (item) => 
-			`<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""}>
+		research: (item) => {
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
+			return	`<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""}>
 				<div>
 					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
 					<div class="flex-container flex-dir-column u-gap u-mt-1">
@@ -713,7 +718,8 @@ stir.templates.search = (() => {
 						${stir.funnelback.getTags(item.custom_fields.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.custom_fields.category) + `</div>` : ""}
 					</div>
 				</div>
-			</div>`,
+			</div>`
+		},
 
 
 		cura: (item) =>
