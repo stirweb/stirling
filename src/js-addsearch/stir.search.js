@@ -259,6 +259,9 @@ stir.search = (() => {
 			// +++ Extra/override parameters for no-query searches +++
 			// E.g. if no keywords supplied; sort by title instead of relevance
 			noquery: {
+				any: {
+					dateFrom: stir.Date.timeElementDatetime( (d => new Date(d.setFullYear(d.getFullYear()-1)))(new Date) )
+				},
 				course: {
 					sort: "custom_fields.name",
 					order: "asc"
