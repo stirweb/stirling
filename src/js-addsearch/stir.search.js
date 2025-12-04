@@ -688,7 +688,11 @@ stir.search = (() => {
 			if (!clickReporting) return true;
 			if (!event || !event.target) return;
 			
-			const el = event.target.hasAttribute("href") ? event.target : event.target.parentElement
+			// get the main result links for click-tracking:
+			// (somewhat complicated due to "promoted" item image links)
+			const el = event.target.hasAttribute("data-docid") ? event.target : (event.target.parentElement.hasAttribute("data-docid") ? event.target.parentElement : null);
+			
+			if(!el) return;
 			
 			const results  = el.closest('.c-search-results');
 			const type     = results && results.getAttribute("data-type");
