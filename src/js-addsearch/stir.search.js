@@ -678,10 +678,6 @@ stir.search = (() => {
 		// CLICK delegate for link tracking
 		const clickReporter = async event => {
 			if (!clickReporting) return true;
-	
-	event.preventDefault();		
-	console.info(event);
-	
 			if (!event || !event.target) return;
 			
 			const el = event.target.hasAttribute("href") ? event.target : event.target.parentElement
