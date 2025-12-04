@@ -19,8 +19,8 @@ stir.templates.search = (() => {
 		student: "current students and staff",
 	};
 	const entitlements = {
-		staff: ["staff", "students"],
-		student: ["students"],
+		staff: ["staff", "student"],
+		student: ["student"],
 	};
 	const afce4eafce490574e288574b384ecd87 = window[["s", "e", "i", "k", "o", "o", "C"].reverse().join("")]; // Just a bit of mild fun to stop anyone text-searching for "Cookies"!
 	const isUser = afce4eafce490574e288574b384ecd87.get("psessv0") ? true : false; // Cookie could be spoofed, but we'll trust it. The Portal will enforce authentication anyway.
