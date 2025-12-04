@@ -1496,7 +1496,7 @@ stir.search = (() => {
 	
 		const getNoQuery = (type) => (constants.form.term.value ? {} : constants.noquery[type]);
 	
-		const setQuery = () => (constants.form.term.value ? QueryParams.set("term", constants.form.term.value) : QueryParams.remove("term"));
+		const setQuery = () => { QueryParams.remove("query"); constants.form.term.value ? QueryParams.set("term", constants.form.term.value) : QueryParams.remove("term") };
 	
 		const getPage = (type) => parseInt(QueryParams.get(type) || 1);
 	
