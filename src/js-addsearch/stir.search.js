@@ -81,7 +81,7 @@ stir.addSearch = stir.addSearch || (() => {
 	// e.g. https://api.addsearch.com/v1/search/cfa10522e4ae6987c390ab72e9393908?term=rest+api
 
 	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	const REPORTING = true; //click tracking etc.
+	const REPORTING = debug ? false : true; //click tracking etc.
 	const KEY = "dbe6bc5995c4296d93d74b99ab0ad7de"; //public site key
 	const _server = "api.addsearch.com";
 	const _url = `https://${_server}`;
@@ -190,7 +190,8 @@ stir.search = (() => {
 				news: {
 					customField: "type=news",
 					sort: "custom_fields.d",
-					collectAnalytics: false
+					collectAnalytics: false,
+					resultType: "organic"
 				},
 				event: {
 					collectAnalytics: false,
@@ -223,11 +224,13 @@ stir.search = (() => {
 				coursemini: {
 					customField: "type=course",
 					limit: 5,
-					collectAnalytics: false
+					collectAnalytics: false,
+					resultType: "organic"
 				},
 				person: {
 					customField: "type=profile",
-					collectAnalytics: false
+					collectAnalytics: false,
+					resultType: "organic"
 				},
 				research: {
 					categories: "2xhub",
@@ -235,6 +238,7 @@ stir.search = (() => {
 				},
 				internal: {
 					collectAnalytics: false,
+					resultType: "organic",
 					filter: JSON.stringify({
 						or: [
 							{ "custom_fields.access": "staff"   },
@@ -328,8 +332,12 @@ stir.search = (() => {
 			if (undefined !== QueryParams.get("term")) constants.form.term.value = QueryParams.get("term").substring(0, MAXQUERY);
 			const parameters = QueryParams.getAll();
 			for (const name in parameters) {
-				const el = document.querySelector(`input[name="${encodeURIComponent(name)}"][value="${encodeURIComponent(parameters[name])}"]`);
-				if (el) el.checked = true;
+				if(name.indexOf("|")) {
+					const selector = `input[name="customField"][value="${name.split('|')[1]}=${(parameters[name])}"i]`;
+					const el = document.querySelector(selector);
+					if (el) el.checked = true;
+					debug && console.info("[Search] query parameter",selector,el);
+				}
 			}
 		};
 	
