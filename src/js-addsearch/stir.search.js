@@ -291,7 +291,7 @@ stir.search = (() => {
 		
 		const getDefaultQueryForType = type => type && constants.parameters[type] ? constants.parameters[type].term : undefined;
 	
-		const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || getDefaultQueryForType(type) || "*";
+		const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || QueryParams.get("query") || getDefaultQueryForType(type) || "*";
 	
 		const getNoQuery = (type) => (constants.form.term.value ? {} : constants.noquery[type]);
 	
@@ -332,7 +332,8 @@ stir.search = (() => {
 		};
 	
 		const getInboundQuery = () => {
-			if (undefined !== QueryParams.get("term")) constants.form.term.value = QueryParams.get("term").substring(0, MAXQUERY);
+			const term = QueryParams.get("term") || QueryParams.get("query");
+			if (undefined !== term) constants.form.term.value = term.substring(0, MAXQUERY);
 			const parameters = QueryParams.getAll();
 			for (const name in parameters) {
 				if(name.indexOf("|")) {
