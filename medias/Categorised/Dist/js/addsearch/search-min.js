@@ -49,11 +49,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 
 		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
 		  <p class="u-text-regular u-m-0">
-			<strong><a href="${s}" title="${e.url}" data-docid="${e.id||""}" data-position="${e.position||""}">
-			${e.custom_fields.award||""} ${e.custom_fields.name||e.title.split("|")[0]}
-			${e.custom_fields.ucas?" - "+e.custom_fields.ucas:""}
-			${e.custom_fields.code?" - "+e.custom_fields.code:""}
-			</a></strong>
+			<strong><a href="${s}" title="${e.url}" data-docid="${e.id||""}" data-position="${e.position||""}">${e.title.split("|")[0]}</a></strong>
 		  </p>
 		  <p class="u-m-0 c-course-summary">${e.meta_description}</p>
 		  ${stir.templates.search.clearing(e)||""}
