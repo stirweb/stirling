@@ -322,7 +322,6 @@ stir.search = (() => {
 				.reduce((obj, key) => {
 					return { ...obj, [key]: rwm2.string.urlDecode(parameters[key]).toLowerCase() };
 				}, {});
-			//debug && Object.keys(facetParameters).length && console.info('[Search] facetParameters:',facetParameters);
 			return facetParameters;
 		};
 	
@@ -336,7 +335,7 @@ stir.search = (() => {
 			if (undefined !== term) constants.form.term.value = term.substring(0, MAXQUERY);
 			const parameters = QueryParams.getAll();
 			for (const name in parameters) {
-				if(name.indexOf("|")) {
+				if(name.indexOf("|")>0) {
 					const selector = `input[name="customField"][value="${name.split('|')[1]}=${(parameters[name])}"i]`;
 					const el = document.querySelector(selector);
 					if (el) el.checked = true;

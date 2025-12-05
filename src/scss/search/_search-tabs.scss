@@ -333,6 +333,10 @@
       display: grid;
       gap: 20px 30px;
     }
+    
+    [data-as-type="PINNED"]::before {
+      content: "\e964"
+    }
 
     .c-course-search-result::before,
     [data-result-type="course"]::before {
