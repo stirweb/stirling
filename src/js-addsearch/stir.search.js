@@ -552,7 +552,7 @@ stir.search = (() => {
 			const url = addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) );
 			const reportAndCallback = data => {
 				searchReporter(query, data.total_hits);
-				callback(parameters,data);
+				callback(url.searchParams,data);
 			};
 
 			stir.getJSON(url, reportAndCallback);

@@ -122,6 +122,8 @@ stir.templates.search = (() => {
 			})
 			.join(" ");
 	};
+	
+	const searchParamTokens = parameters => Array.from(parameters.entries()).map( item=>paramToken(item[0],item[1])||'').join(' ');
 
 	/**
 	 *
@@ -288,23 +290,21 @@ stir.templates.search = (() => {
 			const currStart = currEnd - data.hits;
 			const totalMatching = data.total_hits;
 			const summary = document.createElement("div");
-			const querySanitised = stir.String.htmlEntities(data.question.term)
+			const querySanitised = data.question && stir.String.htmlEntities(data.question.get("term"))
 									.replace(/^!padrenullquery$/, "")	//funnelback
 									.replace(/^\*$/, "")				//addsearch
 									.trim() || "";
 			const queryEcho = document.createElement("em");
 			const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
 			//const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
-			//const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
+			const tokens = searchParamTokens(data.question);
+			const spelling = '';//querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
 			//const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
 
 			summary.classList.add("u-py-2");
 
 			queryEcho.textContent = querySanitised;
 			if (querySanitised.length > 1) message.append(queryEcho);
-
-			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
-			//summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
 			
 			/*
 			$$$$$$$\   $$$$$$\        $$\   $$\  $$$$$$\ $$$$$$$$\       $$\   $$\  $$$$$$\  $$$$$$$$\     
@@ -332,8 +332,9 @@ stir.templates.search = (() => {
 			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
 			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
 
-			//if (data) {summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, hits: ${data.hits.length}</p>`;}
+			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
 			summary.append(message);
+			summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
 			
 			return summary;
 		},
@@ -496,7 +497,7 @@ stir.templates.search = (() => {
 			const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 			const isOnline = item.custom_fields.delivery && item.custom_fields.delivery.indexOf("online") > -1 ? true : false;
 			const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
-			const title = item.custom_fields.name ? `${data["Award"]||''} ${item.custom_fields.name} - ${data["UCAS Code"]}` : item.title.split("|")[0];
+			const title = item.custom_fields.name ? `${data["Award"]||''} ${item.custom_fields.name}${data["UCAS Code"]?' - '+data["UCAS Code"]:''}` : item.title.split("|")[0];
 			item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.custom_fields.sid : item.url);
 			return `
 			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.score} data-sid=${item.custom_fields.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
