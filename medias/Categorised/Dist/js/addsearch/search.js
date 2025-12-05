@@ -492,9 +492,11 @@ stir.templates.search = (() => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			//		const subject = typeof item.custom_fields.subject;
 			//      const subjectLink = stir.String.slug(subject);
+			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
 			const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 			const isOnline = item.custom_fields.delivery && item.custom_fields.delivery.indexOf("online") > -1 ? true : false;
 			const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
+			const title = item.custom_fields.name ? `${data["Award"]||''} ${item.custom_fields.name} - ${data["UCAS Code"]}` : item.title.split("|")[0];
 			item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.custom_fields.sid : item.url);
 			return `
 			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.score} data-sid=${item.custom_fields.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
@@ -504,7 +506,7 @@ stir.templates.search = (() => {
 
 		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
 		  <p class="u-text-regular u-m-0">
-			<strong><a href="${link}" title="${item.url}" data-docid="${item.id||''}" data-position="${item.position||''}">${item.title.split("|")[0]}</a></strong>
+			<strong><a href="${link}" title="${item.url}" data-docid="${item.id||''}" data-position="${item.position||''}">${title}</a></strong>
 		  </p>
 		  <p class="u-m-0 c-course-summary">${item.meta_description}</p>
 		  ${stir.templates.search.clearing(item) || ""}
@@ -555,7 +557,7 @@ stir.templates.search = (() => {
 		person: (item) => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			const id = item.url.split("/").slice(-1);
-			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(item.custom_fields.data));
+			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
 			return `
 			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=person>
 				<div class=c-search-result__tags>
@@ -573,7 +575,7 @@ stir.templates.search = (() => {
 					${stir.funnelback.getTags(item?.custom_fields?.category) ? "<p><strong>Research interests</strong></p>" : ""}
 					<p>${stir.funnelback.getTags(item?.custom_fields?.category) || ""}</p>
 				</div>
-			</div>`; //`data:image/jpeg;base64,${item.images.main_b64}`
+			</div>`;
 		},
 		scholarship: (item) => {
 			return `
@@ -661,7 +663,7 @@ stir.templates.search = (() => {
 
 		event: (item) => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
-			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(item.custom_fields.data));
+			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
 			const isWebinar = (data.tags && data.tags.indexOf("Webinar") > -1) || "webinar" === item.custom_fields.type;
 			const isOnline = isWebinar || item.custom_fields.online;
 			const hasThumbnail = item.custom_fields?.image || isWebinar;
