@@ -504,11 +504,7 @@ stir.templates.search = (() => {
 
 		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
 		  <p class="u-text-regular u-m-0">
-			<strong><a href="${link}" title="${item.url}" data-docid="${item.id||''}" data-position="${item.position||''}">
-			${item.custom_fields.award || ""} ${item.custom_fields.name || item.title.split("|")[0]}
-			${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""}
-			${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
-			</a></strong>
+			<strong><a href="${link}" title="${item.url}" data-docid="${item.id||''}" data-position="${item.position||''}">${item.title.split("|")[0]}</a></strong>
 		  </p>
 		  <p class="u-m-0 c-course-summary">${item.meta_description}</p>
 		  ${stir.templates.search.clearing(item) || ""}
