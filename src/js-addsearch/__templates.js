@@ -63,7 +63,12 @@ stir.templates.search = (() => {
 	 *
 	 * For a given name and value, return the first matching HTML <input> or <option> element.
 	 */
-	const metaParamElement = (name, value) => document.querySelector(`form[data-filters] input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]`);
+	const metaParamElement = (name, value) => {
+		const selector = `form[data-filters] input[name="${name}"][value="${value}"]`; //,select[name="${name}"] option[value="${value}"]
+		try {
+			return document.querySelector(selector);
+		} catch(e) { }
+	};
 
 	//	const metaParamToken = (name, values) => {
 	//		if (name === "meta_type") return; // ignore `type`
@@ -123,7 +128,7 @@ stir.templates.search = (() => {
 			.join(" ");
 	};
 	
-	const searchParamTokens = parameters => Array.from(parameters.entries()).map( item=>paramToken(item[0],item[1])||'').join(' ');
+	const searchParamTokens = parameters => Array.from(parameters.entries()).map( item=> item[1] && item[1].indexOf('"')>=0 ? '' : (paramToken(item[0],item[1])||'') ).join(' ');
 
 	/**
 	 *
