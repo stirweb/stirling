@@ -377,7 +377,7 @@ stir.templates.search = (() => {
 //
 			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item);
 			
-			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}>
+			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}${item.type?` data-as-type="${item.type}"`:''}>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap">
 				${item.custom_fields.type ? '<div class=c-search-result__tags>':''}
 					${item.custom_fields.type ? stir.templates.search.stag([item.custom_fields.type]) : ''}
@@ -1527,7 +1527,6 @@ stir.search = (() => {
 				.reduce((obj, key) => {
 					return { ...obj, [key]: rwm2.string.urlDecode(parameters[key]).toLowerCase() };
 				}, {});
-			//debug && Object.keys(facetParameters).length && console.info('[Search] facetParameters:',facetParameters);
 			return facetParameters;
 		};
 	
@@ -1541,7 +1540,7 @@ stir.search = (() => {
 			if (undefined !== term) constants.form.term.value = term.substring(0, MAXQUERY);
 			const parameters = QueryParams.getAll();
 			for (const name in parameters) {
-				if(name.indexOf("|")) {
+				if(name.indexOf("|")>0) {
 					const selector = `input[name="customField"][value="${name.split('|')[1]}=${(parameters[name])}"i]`;
 					const el = document.querySelector(selector);
 					if (el) el.checked = true;
