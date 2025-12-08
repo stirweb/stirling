@@ -632,7 +632,9 @@
     return stir.map((el) => `<li ><a href="${el.scholarship.url}">${el.scholarship.title}</a> ${debug ? el.rank : ""}</li>`, data);
   });
 
-  const renderWrapper = stir.curry((data) => `<ul class="u-mb-0"> ${data.join("\n")}</ul>`);
+  const renderWrapper = stir.curry((data) => {
+    return data?.length ? `<ul class="u-mb-0"> ${data.join("\n")}</ul>` : ``;
+  });
 
   /* 
     This version loads the data async so we need a url to the data
