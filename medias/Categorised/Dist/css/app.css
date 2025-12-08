@@ -8141,6 +8141,8 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   .c-search-results-area .c-search-results-all .c-course-search-result > div {
     display: grid;
     gap: 20px 30px; }
+  .c-search-results-area .c-search-results-all [data-as-type="PINNED"]::before {
+    content: "\e964"; }
   .c-search-results-area .c-search-results-all .c-course-search-result::before,
   .c-search-results-area .c-search-results-all [data-result-type="course"]::before {
     content: "\e9a1"; }
