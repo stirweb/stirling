@@ -268,7 +268,7 @@ stir.search = (() => {
 				},
 				person: {
 					sort: "custom_fields.sort",
-					order: "desc"
+					order: "asc"
 				},
 				event: {
 					sort: "custom_fields.e",	// sort events by date descending
