@@ -7808,7 +7808,8 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       font-size: 1rem; }
     .c-search-results-area .c-search-result[data-result-type="person"] .c-search-result__image img {
       aspect-ratio: 1;
-      object-fit: cover; }
+      object-fit: cover;
+      /* make images square */ }
     .c-search-results-area .c-search-result.c-popout-result {
       border-left: 0px !important;
       padding: 0;
