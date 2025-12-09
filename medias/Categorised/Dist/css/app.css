@@ -7806,6 +7806,9 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     .c-search-results-area .c-search-result li,
     .c-search-results-area .c-search-result p:not(.u-text-regular) {
       font-size: 1rem; }
+    .c-search-results-area .c-search-result[data-result-type="person"] .c-search-result__image img {
+      aspect-ratio: 1;
+      object-fit: cover; }
     .c-search-results-area .c-search-result.c-popout-result {
       border-left: 0px !important;
       padding: 0;
