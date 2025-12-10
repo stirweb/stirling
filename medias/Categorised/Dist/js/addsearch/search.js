@@ -623,7 +623,7 @@ stir.templates.search = (() => {
 		news: (item) => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
-			const hasThumb = data.thumbnail ? true : false;
+			const hasThumb = data.thumbnail || (item.images&&item.images.main) ? true : false;
 			const thumb = data.thumbnail ? `data-original="${data.thumbnail}"` : '';
 			return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumb ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=news>

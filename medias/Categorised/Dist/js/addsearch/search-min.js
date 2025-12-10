@@ -131,7 +131,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 						<p>${e.custom_fields.snippet?"<q>"+e.custom_fields.snippet+"</q>":"\x3c!-- 28d3702e2064f72d5dfcba865e3cc5d5 --\x3e"}</p>
 					</div>
 					${e.custom_fields.image?m("https://www.stir.ac.uk"+e.custom_fields.image,e.title.split(" | ")[0].trim(),400,400):""}
-				</div>`},news:e=>{var t,s;return e.type&&"PROMOTED"===e.type?stir.templates.search.cura(e):(t=!!(s=e.custom_fields.data?f(e.custom_fields.data):{}).thumbnail,s=s.thumbnail?`data-original="${s.thumbnail}"`:"",`
+				</div>`},news:e=>{var t,s;return e.type&&"PROMOTED"===e.type?stir.templates.search.cura(e):(t=!!((s=e.custom_fields.data?f(e.custom_fields.data):{}).thumbnail||e.images&&e.images.main),s=s.thumbnail?`data-original="${s.thumbnail}"`:"",`
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${t?" c-search-result__with-thumbnail":""}" data-rank=${e.score} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 						<p class="u-text-regular u-m-0">
