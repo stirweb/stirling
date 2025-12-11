@@ -551,8 +551,20 @@
                                     your results</p>
                                 <div>
                                     <form data-filters="internal" action="null">
-                                        <input type=reset value="Clear all filters"
-                                            class="button tiny hollow expanded u-mt-1">
+                                        <fieldset data-facet=Level>
+                                            <legend class="show-for-sr">Filter by type</legend>
+                                            <div class="stir-accordion--active" data-behaviour=accordion>
+                                                <accordion-summary>Type</accordion-summary>
+                                                <div>
+                                                    <ul>
+                                                        <li><label><input name="customField" type="radio" value="access=student"> Student</label></li>
+                                                        <li><label><input name="customField" type="radio" value="access=staff"> Staff</label></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        
+                                        <input type=reset value="Clear all filters" class="button tiny hollow expanded u-mt-1">
                                     </form>
                                 </div>
                             </aside>
