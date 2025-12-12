@@ -12,7 +12,7 @@
           <span>${t}</span>
         </div>`},s=e=>e&&"students"!==e?"ug"===e?"Undergraduate":"pgt"===e?"Postgraduate":"":"All Students",d=e=>(console.log(e),`<div class="grid-x u-bg-white u-mb-2 u-energy-line-left u-border-width-5">
       <div class="cell u-p-2 small-12">
-        <p class="u-text-regular u-mb-2">
+        <p class="u-text-regular u-mb-1">
           <strong>${e.title}</strong>
         </p>
         <div class="flex-container flex-dir-column u-gap-8 u-mb-1">
