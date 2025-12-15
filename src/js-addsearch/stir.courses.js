@@ -10,7 +10,8 @@ stir.courses = (() => {
 	/**
 	 * C L E A R I N G
 	 */
-	const CLEARING = true; // set TRUE if Clearing is OPEN; otherwise FALSE
+	const CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
+	debug && console.info("[Search] Clearing is " + (CLEARING ? "open" : "closed"));
 	/*
 	 **/
 
@@ -93,7 +94,7 @@ stir.courses.startdates = function () {
 	const other = date_elements
 		.filter(date => !date.value.match(match))
 		.map(date => {
-			console.info("OTHER!",date,strings[date.value]||date.value);
+			//console.info("OTHER!",date,strings[date.value]||date.value);
 			return {
 				label: strings[date.value]||date.value,
 				value: date.value,

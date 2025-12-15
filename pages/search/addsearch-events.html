@@ -491,27 +491,31 @@
                                     your results</p>
                                 <div>
                                     <form action="null" data-filters="event">
-                                        <fieldset>
-                                            <legend class="show-for-sr">Filter events by type</legend>
-
-                                            <div data-behaviour=accordion class="stir-accordion--active">
-                                                <accordion-summary>Event type</accordion-summary>
-                                                <div>
-                                                    <ul>
-                                                        <li><label><input type=checkbox value="Yes"
-                                                                    name=meta_online>Online</label></li>
-                                                        <li><label><input type=checkbox value="webinar"
-                                                                    name=meta_tags>Webinar</label></li>
-                                                        <li><label><input type=checkbox value="open" name=meta_tags>Open
-                                                                Day</label></li>
-                                                        <li><label><input type=checkbox value="exhibition"
-                                                                    name=meta_tags>Exhibition</label></li>
-                                                        <li><label><input type=checkbox value="collection"
-                                                                    name=meta_tags>Art Collection</label></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </fieldset>
+				<fieldset>
+					<legend class="show-for-sr">Filter events by type</legend>
+	
+					<div data-behaviour=accordion class="stir-accordion--active">
+						<accordion-summary>Event type</accordion-summary>
+						<div>
+							<ul>
+								<li><label><input type=radio value="type=webinar" name=customField>Webinar</label></li>
+								<li><label><input type=radio value="tag=OnDemand" name=customField><attr title="video on demand">VOD</attr></label></li>
+								<li><label><input type=radio value="delivery=online" name=customField>Online</label></li>
+								<li><label><input type=radio value="tag=Art Collection" name=customField>Art Collection</label></li>
+								<li><label><input type=radio value="tag=Course information" name=customField>Course information</label></li>
+								<li><label><input type=radio value="tag=CEHP" name=customField>CEHP</label></li>
+								<li><label><input type=radio value="tag=Public" name=customField>Public events</label></li>
+								<li><label><input type=radio value="tag=StaffStudent" name=customField>Staff/Student events</label></li>
+							</ul>
+							<p>Not available yet:</p>
+							<ul>
+								<li><label><input disabled type=radio value="exhibition" name=customField>Exhibition</label></li>
+								<li><label><input disabled type=radio value="open" name=customField>Open Day</label></li>
+							</ul>
+						</div>
+					</div>
+				</fieldset>
+                                        <input type=reset value="Clear all filters" class="button tiny hollow expanded u-mt-1">
                                     </form>
                                 </div>
                             </aside>
@@ -537,7 +541,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+				</div>
         </section>
         <!-- End Search -->
         <div class="grid-x grid-container">

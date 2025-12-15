@@ -386,6 +386,14 @@ stir.search = () => {
     Array.prototype.forEach.call(pics, imageErrorHandler);
   });
 
+  const error = (el,data) => {
+	const summary = el.parentElement.parentElement.querySelector(".c-search-results-summary");
+	const button = el.parentElement.querySelector("button[disabled]");
+	el.innerHTML = `<p>${data.response.resultPacket.error.userMsg}</p>`;
+	summary.innerHTML = "<strong>Errror</strong>";
+	button.parentElement.removeChild(button);
+  };
+
   const updateStatus = stir.curry((element, data) => {
     const start = data.response.resultPacket.resultsSummary.currStart;
     const ranks = data.response.resultPacket.resultsSummary.numRanks;
@@ -602,6 +610,7 @@ stir.search = () => {
       //TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
       if (!data || data.error || !data.response || !data.response.resultPacket) return;
       if (0 === data.response.resultPacket.resultsSummary.totalMatching && fallback(element)) return;
+	  if (data.response.returnCode !== 0) return error(element,data);
       return composition(data);
     };
     resetPagination();
