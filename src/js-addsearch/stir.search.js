@@ -166,8 +166,9 @@ stir.search = (() => {
 		let clickReporting = true; // temporary flag. see REPORTING to enable/disable reporting
 	
 		const buildUrl = stir.curry((url, parameters) => {
-			url.search = new URLSearchParams(parameters);
-			return url;
+			const newUrl = new URL(url);
+			newUrl.search = new URLSearchParams(parameters);
+			return newUrl;
 		});
 	
 		const LoaderButton = () => {
@@ -278,7 +279,7 @@ stir.search = (() => {
 		};
 	
 		if (!constants.form || !constants.form.term) return;
-		debug && console.info("[Search] initialised with host:", constants.url.hostname);
+		debug && console.info("[Search] initialised with host:", new URL(constants.url).hostname);
 	
 		/* Add the filter parameters (e.g. courses, sorting) */
 		const addFilterParameters = (url, formData) => {
@@ -538,7 +539,8 @@ stir.search = (() => {
 		}
 	
 		// This is the core search function that talks to the search API
-		const callSearchApi = stir.curry((type, callback) => {	
+		const callSearchApi = stir.curry((type, callback) => {
+			console.info("[Search] callSearchApi",type);
 			const query = getQuery(type);
 			const parameters = 
 				stir.Object.extend(
@@ -550,6 +552,7 @@ stir.search = (() => {
 				);
 			const url = addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) );
 			const reportAndCallback = data => {
+				console.info("[Search] reportAndCallback",type,constants.url.href);
 				searchReporter(query, data.total_hits);
 				callback(url.searchParams,data);
 			};
@@ -569,9 +572,9 @@ stir.search = (() => {
 			const render = renderResultsWithPagination(type);
 			const reflow = flow(element);
 			const composition = stir.compose(reflow, replace, render, more, status, facets);
-			const callback = stir.curry((parameters,data) => {
+			const callback = (parameters,data) => {
 				
-				debug && console.info("[Search] API callback with parameters",parameters);
+				debug && console.info("[Search] API called-back with:",data,parameters);
 				
 				if (!element || !element.parentElement) {
 					return debug && console.error("[Search] late callback, element no longer on DOM");
@@ -582,7 +585,7 @@ stir.search = (() => {
 				
 				// Append AddSearch data with `question` object (à la Funnelback)
 				return composition( stir.Object.extend({}, data, {question:parameters}) );
-			});
+			};
 			resetPagination();
 		
 			// if necessary do a prefetch and then call-back to the search function.
@@ -607,11 +610,25 @@ stir.search = (() => {
 			searchers[type](callback);
 		};
 		
+		const reset = element => element.innerHTML = "";
+		
+		const resetPanel = panel => {
+			panel.results.forEach(reset);
+			panel.summary && reset(panel.summary);
+			panel.init = false;
+		};
+		
+		const notHidden = panel => (!panel.init && !panel.el.closest(".c-search-results-panel").hasAttribute("aria-hidden"));
+		
 		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
-		const initialSearch = () => searches.forEach(search);
-	
-		const search = (element) => {
-			element.innerHTML = "";
+		const initialSearch = () => {
+			panels.filter(notHidden).forEach( panel => {
+				panel.results.forEach(search);
+				panel.init = true;
+			} );
+		};
+
+		const search = (element, index, context) => {
 			if (element.hasAttribute("data-infinite")) {
 				const resultsWrapper = document.createElement("div");
 				const buttonWrapper = document.createElement("div");
@@ -627,8 +644,15 @@ stir.search = (() => {
 				getInitialResults(element);
 			}
 		};
+		
+		const panels = Array.prototype.map.call(document.querySelectorAll("[data-panel]"),el=>{return {
+			el: el,
+			results: Array.prototype.slice.call(el.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]")),
+			summary: el.querySelector(".c-search-results-summary"),
+			init: false
+		}});
 	
-		const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
+		//const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
 	
 		// group the curried search functions so we can easily refer to them by `type`
 		const searchers = {
@@ -693,7 +717,7 @@ stir.search = (() => {
 			
 			// get the main result links for click-tracking:
 			// (somewhat complicated due to "promoted" item image links)
-			const el = event.target.hasAttribute("data-docid") ? event.target : (event.target.parentElement.hasAttribute("data-docid") ? event.target.parentElement : null);
+			const el = event.target.hasAttribute("data-docid") ? event.target : (event.target.parentElement && event.target.parentElement.hasAttribute("data-docid") ? event.target.parentElement : null);
 			
 			if(!el) return;
 			
@@ -860,6 +884,7 @@ stir.search = (() => {
 	
 		const submit = (event) => {
 			setQuery();
+			panels.forEach(resetPanel);
 			initialSearch();
 			event.preventDefault();
 		};
@@ -875,7 +900,9 @@ stir.search = (() => {
 		return {
 			init: init,
 			constants: constants,
-			getPage: getPage
+			getPage: getPage,
+			lazy: initialSearch,
+			initialSearch: initialSearch
 		};
 	})();
 
