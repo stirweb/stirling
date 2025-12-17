@@ -2930,7 +2930,6 @@ stir.Concierge = function Concierge(popup) {
 
 	// Init IIFE 
 	(function init() {
-		console.info(nodes)
 		search  = new stir.ToggleWidget(popup, "stir__fadeIn", "stir__fadeOut");
 		results = new stir.ToggleWidget(nodes.wrapper, "stir__slidedown", "stir__slideup");
 		spinner = new stir.Spinner(nodes.input.parentElement);
