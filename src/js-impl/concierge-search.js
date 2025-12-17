@@ -1,5 +1,5 @@
 /**
- * HEADER CONCIERGE SEARCH ver 4.0 (NOT USING MARTYN'S SEARCHBOX)
+ * HEADER CONCIERGE SEARCH ver 4.0
  * @author: Ryan Kaye <ryan.kaye@stir.ac.uk>, Robert Morrison <r.w.morrison@stir.ac.uk>
  */
 
@@ -24,7 +24,7 @@ stir.Concierge = function Concierge(popup) {
 	// DOM elements
 	const nodes = {
 		overlay: popup.querySelector(".overlay"),
-		input: popup.querySelector('input[name="query"]'),
+		input: popup.querySelector('input[name="query"],input[name="term"]'),
 		submit: popup.querySelector("button"),
 		wrapper: popup.querySelector("#header-search__wrapper"),
 		news: popup.querySelector(".c-header-search__news"),
