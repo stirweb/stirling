@@ -540,7 +540,6 @@ stir.search = (() => {
 	
 		// This is the core search function that talks to the search API
 		const callSearchApi = stir.curry((type, callback) => {
-			console.info("[Search] callSearchApi",type);
 			const query = getQuery(type);
 			const parameters = 
 				stir.Object.extend(
@@ -552,7 +551,7 @@ stir.search = (() => {
 				);
 			const url = addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) );
 			const reportAndCallback = data => {
-				console.info("[Search] reportAndCallback",type,constants.url.href);
+				debug && console.info("[Search] reportAndCallback",type,constants.url.href);
 				searchReporter(query, data.total_hits);
 				callback(url.searchParams,data);
 			};
@@ -698,17 +697,6 @@ stir.search = (() => {
 				}
 			},
 		};
-	
-		// async function reporter(payload) {
-		// 	try {	
-		// 		const report = await stir.addSearch.putReport(payload);
-		// 		const data = await report.text();
-		// 		console.info("ASYNC",data);
-		// 		return data;
-		// 	} catch(error) {
-		// 		console.error("[AddSearch]",error);
-		// 	}
-		// }
 	
 		// CLICK delegate for link tracking
 		const clickReporter = async event => {
