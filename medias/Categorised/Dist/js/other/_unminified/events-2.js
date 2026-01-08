@@ -334,6 +334,7 @@
     }
 
     const filterObject = { and: filterConditions };
+
     return `&limit=${limit}&order=desc&filter=${encodeURIComponent(JSON.stringify(filterObject))}&sort=custom_fields.e&`;
   }
 
@@ -576,7 +577,7 @@
         const nextPage = event.target.getAttribute("data-page");
 
         const selectedValue = node.parentNode.querySelector("input[type='radio']:checked").value;
-        const filterString = getArchiveFilterString(selectedValue, limit);
+        const filterString = getArchiveFilterString(selectedValue, limit, maintags);
 
         fetch(baseUrl + filterString + `page=${nextPage}`)
           .then((response) => response.json())
@@ -603,7 +604,7 @@
           event.stopPropagation();
 
           const selectedValue = event.target.value;
-          const filterString = getArchiveFilterString(selectedValue, limit);
+          const filterString = getArchiveFilterString(selectedValue, limit, maintags);
 
           fetch(baseUrl + filterString + `page=1`)
             .then((response) => response.json())
