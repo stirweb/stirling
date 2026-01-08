@@ -71,6 +71,7 @@ stir.search = (() => {
 			const button = document.createElement("button");
 			button.innerText = stir.templates.search.strings.buttons.more;
 			button.setAttribute("class", stir.templates.search.classes.buttons.more);
+			button.setAttribute("disabled", true);
 			return button;
 		};
 	
@@ -79,7 +80,7 @@ stir.search = (() => {
 			form: document.querySelector( stir.templates.search.selector.form ),
 			input: document.querySelector( stir.templates.search.selector.query ),
 			parameters: {
-				any: {
+				all: {
 					term: "University of Stirling",
 					limit: NUMRANKS,
 					collectAnalytics: false
@@ -156,7 +157,7 @@ stir.search = (() => {
 			// +++ Extra/override parameters for no-query searches +++
 			// E.g. if no keywords supplied; sort by title instead of relevance
 			noquery: {
-				any: {
+				all: {
 					dateFrom: stir.Date.timeElementDatetime( (d => new Date(d.setFullYear(d.getFullYear()-1)))(new Date) )
 				},
 				course: {
@@ -458,12 +459,14 @@ stir.search = (() => {
 		
 		// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
 		const getInitialResults = (element, button) => {
+			debug && console.info('[Search] getInitialResults', getType(element),element);
 			const type = getType(element);
 			if (!searchers[type]) return;
 			const facets = updateFacets(type);
 			const status = updateStatus(element);
 			const more = enableLoadMore(button);
 			const replace = replaceHtml(element);
+			debug && console.info('[Search] replacing ', (element));
 			const render = renderResultsWithPagination(type);
 			const reflow = flow(element);
 			const composition = stir.compose(reflow, replace, render, more, status, facets);
@@ -528,7 +531,6 @@ stir.search = (() => {
 				const resultsWrapper = document.createElement("div");
 				const buttonWrapper = document.createElement("div");
 				const button = LoaderButton();
-				button.setAttribute("disabled", true);
 				button.addEventListener("click", (event) => getMoreResults(resultsWrapper, button));
 				element.appendChild(resultsWrapper);
 				element.appendChild(buttonWrapper);
@@ -542,6 +544,7 @@ stir.search = (() => {
 		
 		const panels = Array.prototype.map.call(document.querySelectorAll("[data-panel]"),el=>{return {
 			el: el,
+			type: el.getAttribute('data-panel'),
 			results: Array.prototype.slice.call(el.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]")),
 			summary: el.querySelector(".c-search-results-summary"),
 			init: false
@@ -551,7 +554,7 @@ stir.search = (() => {
 	
 		// group the curried search functions so we can easily refer to them by `type`
 		const searchers = {
-			any: callSearchApi("any"),
+			all: callSearchApi("all"),
 			news: callSearchApi("news"),
 			event: callSearchApi("event"),
 			gallery: callSearchApi("gallery"),
@@ -565,7 +568,7 @@ stir.search = (() => {
 	
 		// group the renderer functions so we can get them easily by `type`
 		const renderers = {
-			any: data => data.map(stir.templates.search.auto),
+			all: data => data.map(stir.templates.search.auto),
 			news: data => data.map(stir.templates.search.news),
 			event: data => data.map(stir.templates.search.event),
 			gallery: data => data.map(stir.templates.search.gallery),
@@ -579,7 +582,7 @@ stir.search = (() => {
 		};
 	
 		const footers = {
-			coursemini: () => stir.templates.search.courseminiFooter(getQuery("any")),
+			coursemini: () => stir.templates.search.courseminiFooter(getQuery("all")),
 		};
 	
 		const prefetch = {
@@ -669,6 +672,7 @@ stir.search = (() => {
 		Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-area form[data-filters]"), (form) => {
 			const type = form.getAttribute("data-filters");
 			const element = document.querySelector(`.c-search-results[data-type="${type}"]`);
+			const panel = panels.filter(p=>p.type===type)[0];			
 			form.addEventListener("reset", (event) => {
 				// native RESET is async so we need to do it manually
 				// to ensure it's done synchonosly instead…
@@ -678,6 +682,7 @@ stir.search = (() => {
 				search(element);
 			});
 			form.addEventListener("change", (event) => {
+				panel && panel.results.forEach(reset);
 				setUrlToFilters(getType(element));
 				search(element);
 			});
@@ -745,12 +750,13 @@ stir.search = (() => {
 				}
 			});
 		});
-		Array.prototype.forEach.call(document.querySelectorAll(".c-search-results"), (resultsPanel) => {
-			resultsPanel.addEventListener("click", (event) => {
-				if (!event.target.hasAttribute("data-value")) return;
-				tokenHandler(event);
-			});
-		});
+		
+		// Array.prototype.forEach.call(document.querySelectorAll(".c-search-results"), (resultsPanel) => {
+		// 	resultsPanel.addEventListener("click", (event) => {
+		// 		if (!event.target.hasAttribute("data-value")) return;
+		// 		tokenHandler(event);
+		// 	});
+		// });
 	
 		/**
 		 * Running order for search:
