@@ -349,11 +349,11 @@ stir.templates.search = (() => {
 		pagination: (summary) => {
 			const { currEnd, totalMatching, progress } = summary;
 			return totalMatching === 0
-				? ""
+				? "<!-- no results to show -->"
 				: `
 			<div class="cell text-center u-my-2">
 				<progress value="${progress}" max="100"></progress><br />
-				You have viewed ${totalMatching === currEnd ? "all" : currEnd + " of " + totalMatching} results
+				You have viewed ${totalMatching === currEnd ? "all "+(totalMatching>1?totalMatching:'') : currEnd + " of " + totalMatching} results
 			</div>`;
 		},
 

@@ -46,10 +46,10 @@ stir.funnelback = (() => {
  */
 stir.search = (() => {
 		// abandon before anything breaks in IE
-		if ("undefined" === typeof window.URLSearchParams) {
+		if (("undefined" === typeof window.URLSearchParams)||!stir.addSearch) {
 			const el = document.querySelector( stir.templates.search.selector.results );
 			el && el.parentElement.removeChild(el);
-			return;
+			return { init: new Function };
 		}
 	
 		const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
@@ -201,13 +201,13 @@ stir.search = (() => {
 	
 		const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
 	
-		const calcStart = (page, numRanks) => (page - 1) * numRanks + 1;
+		const calcStart = (pageNo, perPage) => (pageNo - 1) * perPage + 1;
 	
-		const calcEnd = (page, numRanks) => calcStart(page, numRanks) + numRanks - 1;
+		const calcEnd = (pageNo, perPage, numRanks) => calcStart(pageNo, perPage) + numRanks - 1;
 	
 		const calcPage = (currStart, numRanks) => Math.floor(currStart / numRanks + 1);
 	
-		const calcProgress = (currEnd, fullyMatching) => (currEnd / fullyMatching) * 100;
+		const calcProgress = (currEnd, fullyMatching) => Math.round((currEnd / fullyMatching) * 100);
 	
 		//const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
 	
@@ -237,7 +237,6 @@ stir.search = (() => {
 					const selector = `input[name="customField"][value="${name.split('|')[1]}=${(parameters[name])}"i]`;
 					const el = document.querySelector(selector);
 					if (el) el.checked = true;
-					debug && console.info("[Search] query parameter",selector,el);
 				}
 			}
 		};
@@ -357,13 +356,13 @@ stir.search = (() => {
 	
 		const renderResultsWithPagination = stir.curry(
 			(type, data) => {
-				
-				// renderers["cura"](data.response.curator.exhibits) +
+				const perPage = constants.parameters[type].limit || 10;
+				const currEnd = calcEnd(data.page, perPage, data.hits.length);
 				return (data ? renderers[type](data.hits.map(addResultItemPosition(type))).join("") : 'NO DATA') +
 				stir.templates.search.pagination({
-					currEnd: calcEnd(data.page, data.hits.length),
+					currEnd: currEnd,
 					totalMatching: data.total_hits,
-					progress: calcProgress(10, data.total_hits),
+					progress: calcProgress(currEnd, data.total_hits),
 				}) + (footers[type] ? footers[type]() : "")
 			}
 		);
@@ -466,7 +465,6 @@ stir.search = (() => {
 			const status = updateStatus(element);
 			const more = enableLoadMore(button);
 			const replace = replaceHtml(element);
-			debug && console.info('[Search] replacing ', (element));
 			const render = renderResultsWithPagination(type);
 			const reflow = flow(element);
 			const composition = stir.compose(reflow, replace, render, more, status, facets);
@@ -509,22 +507,16 @@ stir.search = (() => {
 		};
 		
 		const reset = element => element.innerHTML = "";
+
+		const notHidden = panel => !panel.el.hasAttribute("aria-hidden");
 		
-		const resetPanel = panel => {
-			panel.results.forEach(reset);
-			panel.summary && reset(panel.summary);
-			panel.init = false;
-		};
+		const resetPanel = panel => panel.results.forEach(reset);
 		
-		const notHidden = panel => (!panel.init && !panel.el.closest(".c-search-results-panel").hasAttribute("aria-hidden"));
+		// reset() and search() a given panel
+		const research = panel => (reset(panel),search(panel));
 		
 		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
-		const initialSearch = () => {
-			panels.filter(notHidden).forEach( panel => {
-				panel.results.forEach(search);
-				panel.init = true;
-			} );
-		};
+		const initialSearch = () => panels.filter(notHidden).forEach( panel => panel.results.forEach(research) );
 
 		const search = (element, index, context) => {
 			if (element.hasAttribute("data-infinite")) {
@@ -672,24 +664,22 @@ stir.search = (() => {
 		Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-area form[data-filters]"), (form) => {
 			const type = form.getAttribute("data-filters");
 			const element = document.querySelector(`.c-search-results[data-type="${type}"]`);
-			const panel = panels.filter(p=>p.type===type)[0];			
 			form.addEventListener("reset", (event) => {
 				// native RESET is async so we need to do it manually
 				// to ensure it's done synchonosly instead…
 				Array.prototype.forEach.call(form.querySelectorAll("input"), (input) => (input.checked = false));
 				// Only *after* the form has been reset, we can re-run the
 				// search function. (That's why native RESET is no good).
-				search(element);
+				initialSearch();
 			});
 			form.addEventListener("change", (event) => {
-				panel && panel.results.forEach(reset);
-				setUrlToFilters(getType(element));
-				search(element);
+				setUrlToFilters(type);
+				initialSearch();
 			});
 			// Just in case, we'll also catch any
 			// SUBMIT events that might be triggered:
 			form.addEventListener("submit", (event) => {
-				search(element);
+				initialSearch();
 				event.preventDefault();
 			});
 		});
@@ -708,7 +698,6 @@ stir.search = (() => {
 	
 		const tokenHandler = (event) => {
 			if (!event || !event.target) return;
-	
 			/**
 			 * selector	the CSS selector for the <input> element we want to toggle
 			 * root: 	the "root" element to search within (the closest `data-panel`
@@ -719,22 +708,27 @@ stir.search = (() => {
 			 * input	the input element we want to toggle
 			 */
 			const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
-			const root = event.target.closest("[data-panel]") || document;
+			const panel = event.target.closest("[data-panel]");
+			const root = panel || document;
 			const input = root.querySelector(selector);
+			const type = panel && panel.getAttribute("data-panel");
+			const panelManager = type && panels.filter(p=>p.type===type).shift();
 	
 			if (input) {
 				input.checked = !input.checked; // toggle it
 				event.target.parentElement.removeChild(event.target); // remove the token
 				initialSearch(); // resubmit the search for fresh results
-			} else {
-				const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
-				const select = document.querySelector(sel2);
-				if (select) {
-					select.selectedIndex = 0;
-					event.target.parentElement.removeChild(event.target);
-					initialSearch();
-				}
-			}
+			} 
+			/** Not needed as we have no dropdown filters now */
+			// else {
+			// 	const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
+			// 	const select = document.querySelector(sel2);
+			// 	if (select) {
+			// 		select.selectedIndex = 0;
+			// 		event.target.parentElement.removeChild(event.target);
+			// 		initialSearch();
+			// 	}
+			// }
 		};
 	
 		// Click-delegate for status panel (e.g. misspellings, dismiss filters, etc.)
@@ -774,7 +768,6 @@ stir.search = (() => {
 	
 		const submit = (event) => {
 			setQuery();
-			panels.forEach(resetPanel);
 			initialSearch();
 			event.preventDefault();
 		};
@@ -796,4 +789,4 @@ stir.search = (() => {
 		};
 	})();
 
-stir.search.init();
+stir.search && stir.search.init && stir.search.init();
