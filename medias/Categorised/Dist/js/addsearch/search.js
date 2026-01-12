@@ -1001,11 +1001,12 @@ var scrollend = { __proto__: null };
         // Update URL query parameter if event is user-initiated
         if (event.isTrusted) {
           QueryParams.set("tab", openTabId);
+          btn.hasAttribute("data-tab-callback") && stir.callback.enqueue(btn.getAttribute("data-tab-callback"));
         }
       });
     });
 
-    // Initialize tab panel attributes for accessibility
+    // Initialise tab panel attributes for accessibility
     // (only if there is more than one tab)
     if(tabs && tabs.length > 1) {
       tabs.forEach((tab) => {
@@ -1209,7 +1210,46 @@ var stir = stir || {};
  * @author: Ryan Kaye, Robert Morrison
  * @version: 4 - Migrate to AddSearch
  * ------------------------------------------------ */
+ 
+ 
+ /***
+  * TEMPORARY - move to impl/session.js
+  ***/
+ stir.session = (()=>{
+	 
+	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	const session = {};
+	const ccc = window.Cookies && Cookies.getJSON("CookieControl");
+	const consent = ccc && ccc.optionalCookies && ccc.optionalCookies.performance === "accepted";
+	
+	if(!consent) {
+		debug && console.info("[Session] performance cookie consent: not given");
+		window.sessionStorage && sessionStorage.removeItem("session"); // remove any existing
+		session.id = generateID();
+		return session;
+	}
 
+	debug && console.info("[Session] performance cookie consent: given");
+	
+	function generateID() {
+		const time = Date.now();
+		const randomNumber = Math.floor(Math.random() * 1000000001);
+		return time + "_" + randomNumber;
+	}
+	
+	if (window.sessionStorage && sessionStorage.getItem("session")) {
+		session.id = sessionStorage.getItem("session");
+		debug && console.info("[Session] ongoing session:",session.id);
+	} else {
+		session.id = generateID();
+		window.sessionStorage && sessionStorage.setItem("session",session.id);
+		debug && console.info("[Session] new session:",session.id);
+	}
+	
+	return session;
+	 
+ })();
+ 
 
 /**
  * Search API helper
@@ -1243,6 +1283,71 @@ stir.funnelback = (() => {
 	};
 })();
 
+stir.addSearch = stir.addSearch || (() => {
+	// e.g. https://api.addsearch.com/v1/search/cfa10522e4ae6987c390ab72e9393908?term=rest+api
+
+	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	const REPORTING = debug ? false : true; //click tracking etc.
+	const KEY = "dbe6bc5995c4296d93d74b99ab0ad7de"; //public site key
+	const _server = "api.addsearch.com";
+	const _url = `https://${_server}`;
+
+	const getJsonEndpoint = () => new URL(`/v1/search/${KEY}`, _url);
+	const getSuggestionsEndpoint = () => new URL(`/v1/suggest/${KEY}`, _url);
+	const getAutocompleteEndpoint = () => new URL(`/v1/autocomplete/document-field/${KEY}`, _url);
+	const getRecommendationsEndpoint = (block) => new URL(`/v1/recommendations/index/${KEY}/block/${block}`, _url);
+	const getReportingEndpoint = () => new URL(`/v1/stats/${KEY}`,_url);
+	
+	const getCompletions = (data,callback) => {
+		if("function" !== typeof callback) return;
+		const url = getAutocompleteEndpoint();
+		const params = new URLSearchParams(data);
+		url.search = params;
+		stir.getJSON(url,data=>console.info("getCompletions",data));
+	};
+	
+	const getSuggestions = (term,callback) => {
+		if("function" !== typeof callback) return;
+		const url = getSuggestionsEndpoint();
+		url.search = `term=${term}`;
+		stir.getJSON(url,callback);
+	};
+	
+	/* Recommendations - AddSearch extra */
+	const getRecommendations = (block,callback) => {
+		if("function" !== typeof callback) return;
+		stir.getJSON(getRecommendationsEndpoint(block),callback);
+	};
+	
+	const getResults = options => fetch( new Request(getJsonEndpoint(),options) );
+	
+	// Used to report Click and Search user actions back to AddSearch analytics
+	// (Returns a PROMISE object that may be async'd or chained)
+	const putReport = (data) => {
+		
+		if(!REPORTING) {
+			debug && console.info("[AddSearch] reporting is disabled",data);
+			return new Promise((resolve,reject)=>{resolve(data)});
+		}
+		
+		debug && console.info("[AddSearch] Report",data);
+		
+		const input   = getReportingEndpoint();
+		const options = {method:"POST", body:JSON.stringify(data)};
+		
+		return fetch( new Request(input, options) );
+
+	};
+
+	return {
+		getJsonEndpoint: getJsonEndpoint,
+		getCompletions: getCompletions,
+		getSuggestions: getSuggestions,
+		getRecommendations: getRecommendations,
+		putReport: putReport
+	};
+})();
+
 /**
  * Stir Search
  * Created for the Search Revamp project 2022/23
@@ -1267,8 +1372,9 @@ stir.search = (() => {
 		let clickReporting = true; // temporary flag. see REPORTING to enable/disable reporting
 	
 		const buildUrl = stir.curry((url, parameters) => {
-			url.search = new URLSearchParams(parameters);
-			return url;
+			const newUrl = new URL(url);
+			newUrl.search = new URLSearchParams(parameters);
+			return newUrl;
 		});
 	
 		const LoaderButton = () => {
@@ -1379,7 +1485,7 @@ stir.search = (() => {
 		};
 	
 		if (!constants.form || !constants.form.term) return;
-		debug && console.info("[Search] initialised with host:", constants.url.hostname);
+		debug && console.info("[Search] initialised with host:", new URL(constants.url).hostname);
 	
 		/* Add the filter parameters (e.g. courses, sorting) */
 		const addFilterParameters = (url, formData) => {
@@ -1639,7 +1745,8 @@ stir.search = (() => {
 		}
 	
 		// This is the core search function that talks to the search API
-		const callSearchApi = stir.curry((type, callback) => {	
+		const callSearchApi = stir.curry((type, callback) => {
+			console.info("[Search] callSearchApi",type);
 			const query = getQuery(type);
 			const parameters = 
 				stir.Object.extend(
@@ -1651,6 +1758,7 @@ stir.search = (() => {
 				);
 			const url = addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) );
 			const reportAndCallback = data => {
+				console.info("[Search] reportAndCallback",type,constants.url.href);
 				searchReporter(query, data.total_hits);
 				callback(url.searchParams,data);
 			};
@@ -1670,9 +1778,9 @@ stir.search = (() => {
 			const render = renderResultsWithPagination(type);
 			const reflow = flow(element);
 			const composition = stir.compose(reflow, replace, render, more, status, facets);
-			const callback = stir.curry((parameters,data) => {
+			const callback = (parameters,data) => {
 				
-				debug && console.info("[Search] API callback with parameters",parameters);
+				debug && console.info("[Search] API called-back with:",data,parameters);
 				
 				if (!element || !element.parentElement) {
 					return debug && console.error("[Search] late callback, element no longer on DOM");
@@ -1683,7 +1791,7 @@ stir.search = (() => {
 				
 				// Append AddSearch data with `question` object (à la Funnelback)
 				return composition( stir.Object.extend({}, data, {question:parameters}) );
-			});
+			};
 			resetPagination();
 		
 			// if necessary do a prefetch and then call-back to the search function.
@@ -1708,11 +1816,25 @@ stir.search = (() => {
 			searchers[type](callback);
 		};
 		
+		const reset = element => element.innerHTML = "";
+		
+		const resetPanel = panel => {
+			panel.results.forEach(reset);
+			panel.summary && reset(panel.summary);
+			panel.init = false;
+		};
+		
+		const notHidden = panel => (!panel.init && !panel.el.closest(".c-search-results-panel").hasAttribute("aria-hidden"));
+		
 		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
-		const initialSearch = () => searches.forEach(search);
-	
-		const search = (element) => {
-			element.innerHTML = "";
+		const initialSearch = () => {
+			panels.filter(notHidden).forEach( panel => {
+				panel.results.forEach(search);
+				panel.init = true;
+			} );
+		};
+
+		const search = (element, index, context) => {
 			if (element.hasAttribute("data-infinite")) {
 				const resultsWrapper = document.createElement("div");
 				const buttonWrapper = document.createElement("div");
@@ -1728,8 +1850,15 @@ stir.search = (() => {
 				getInitialResults(element);
 			}
 		};
+		
+		const panels = Array.prototype.map.call(document.querySelectorAll("[data-panel]"),el=>{return {
+			el: el,
+			results: Array.prototype.slice.call(el.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]")),
+			summary: el.querySelector(".c-search-results-summary"),
+			init: false
+		}});
 	
-		const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
+		//const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
 	
 		// group the curried search functions so we can easily refer to them by `type`
 		const searchers = {
@@ -1794,7 +1923,7 @@ stir.search = (() => {
 			
 			// get the main result links for click-tracking:
 			// (somewhat complicated due to "promoted" item image links)
-			const el = event.target.hasAttribute("data-docid") ? event.target : (event.target.parentElement.hasAttribute("data-docid") ? event.target.parentElement : null);
+			const el = event.target.hasAttribute("data-docid") ? event.target : (event.target.parentElement && event.target.parentElement.hasAttribute("data-docid") ? event.target.parentElement : null);
 			
 			if(!el) return;
 			
@@ -1961,6 +2090,7 @@ stir.search = (() => {
 	
 		const submit = (event) => {
 			setQuery();
+			panels.forEach(resetPanel);
 			initialSearch();
 			event.preventDefault();
 		};
@@ -1976,7 +2106,9 @@ stir.search = (() => {
 		return {
 			init: init,
 			constants: constants,
-			getPage: getPage
+			getPage: getPage,
+			lazy: initialSearch,
+			initialSearch: initialSearch
 		};
 	})();
 

@@ -46,10 +46,10 @@ stir.funnelback = (() => {
  */
 stir.search = (() => {
 		// abandon before anything breaks in IE
-		if ("undefined" === typeof window.URLSearchParams) {
+		if (("undefined" === typeof window.URLSearchParams)||!stir.addSearch) {
 			const el = document.querySelector( stir.templates.search.selector.results );
 			el && el.parentElement.removeChild(el);
-			return;
+			return { init: new Function };
 		}
 	
 		const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
@@ -62,14 +62,16 @@ stir.search = (() => {
 		let clickReporting = true; // temporary flag. see REPORTING to enable/disable reporting
 	
 		const buildUrl = stir.curry((url, parameters) => {
-			url.search = new URLSearchParams(parameters);
-			return url;
+			const newUrl = new URL(url);
+			newUrl.search = new URLSearchParams(parameters);
+			return newUrl;
 		});
 	
 		const LoaderButton = () => {
 			const button = document.createElement("button");
 			button.innerText = stir.templates.search.strings.buttons.more;
 			button.setAttribute("class", stir.templates.search.classes.buttons.more);
+			button.setAttribute("disabled", true);
 			return button;
 		};
 	
@@ -78,7 +80,7 @@ stir.search = (() => {
 			form: document.querySelector( stir.templates.search.selector.form ),
 			input: document.querySelector( stir.templates.search.selector.query ),
 			parameters: {
-				any: {
+				all: {
 					term: "University of Stirling",
 					limit: NUMRANKS,
 					collectAnalytics: false
@@ -155,7 +157,7 @@ stir.search = (() => {
 			// +++ Extra/override parameters for no-query searches +++
 			// E.g. if no keywords supplied; sort by title instead of relevance
 			noquery: {
-				any: {
+				all: {
 					dateFrom: stir.Date.timeElementDatetime( (d => new Date(d.setFullYear(d.getFullYear()-1)))(new Date) )
 				},
 				course: {
@@ -174,7 +176,7 @@ stir.search = (() => {
 		};
 	
 		if (!constants.form || !constants.form.term) return;
-		debug && console.info("[Search] initialised with host:", constants.url.hostname);
+		debug && console.info("[Search] initialised with host:", new URL(constants.url).hostname);
 	
 		/* Add the filter parameters (e.g. courses, sorting) */
 		const addFilterParameters = (url, formData) => {
@@ -199,13 +201,13 @@ stir.search = (() => {
 	
 		const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
 	
-		const calcStart = (page, numRanks) => (page - 1) * numRanks + 1;
+		const calcStart = (pageNo, perPage) => (pageNo - 1) * perPage + 1;
 	
-		const calcEnd = (page, numRanks) => calcStart(page, numRanks) + numRanks - 1;
+		const calcEnd = (pageNo, perPage, numRanks) => calcStart(pageNo, perPage) + numRanks - 1;
 	
 		const calcPage = (currStart, numRanks) => Math.floor(currStart / numRanks + 1);
 	
-		const calcProgress = (currEnd, fullyMatching) => (currEnd / fullyMatching) * 100;
+		const calcProgress = (currEnd, fullyMatching) => Math.round((currEnd / fullyMatching) * 100);
 	
 		//const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
 	
@@ -235,7 +237,6 @@ stir.search = (() => {
 					const selector = `input[name="customField"][value="${name.split('|')[1]}=${(parameters[name])}"i]`;
 					const el = document.querySelector(selector);
 					if (el) el.checked = true;
-					debug && console.info("[Search] query parameter",selector,el);
 				}
 			}
 		};
@@ -355,13 +356,13 @@ stir.search = (() => {
 	
 		const renderResultsWithPagination = stir.curry(
 			(type, data) => {
-				
-				// renderers["cura"](data.response.curator.exhibits) +
+				const perPage = constants.parameters[type].limit || 10;
+				const currEnd = calcEnd(data.page, perPage, data.hits.length);
 				return (data ? renderers[type](data.hits.map(addResultItemPosition(type))).join("") : 'NO DATA') +
 				stir.templates.search.pagination({
-					currEnd: calcEnd(data.page, data.hits.length),
+					currEnd: currEnd,
 					totalMatching: data.total_hits,
-					progress: calcProgress(10, data.total_hits),
+					progress: calcProgress(currEnd, data.total_hits),
 				}) + (footers[type] ? footers[type]() : "")
 			}
 		);
@@ -434,7 +435,7 @@ stir.search = (() => {
 		}
 	
 		// This is the core search function that talks to the search API
-		const callSearchApi = stir.curry((type, callback) => {	
+		const callSearchApi = stir.curry((type, callback) => {
 			const query = getQuery(type);
 			const parameters = 
 				stir.Object.extend(
@@ -446,6 +447,7 @@ stir.search = (() => {
 				);
 			const url = addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) );
 			const reportAndCallback = data => {
+				debug && console.info("[Search] reportAndCallback",type,constants.url.href);
 				searchReporter(query, data.total_hits);
 				callback(url.searchParams,data);
 			};
@@ -456,6 +458,7 @@ stir.search = (() => {
 		
 		// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
 		const getInitialResults = (element, button) => {
+			debug && console.info('[Search] getInitialResults', getType(element),element);
 			const type = getType(element);
 			if (!searchers[type]) return;
 			const facets = updateFacets(type);
@@ -465,9 +468,9 @@ stir.search = (() => {
 			const render = renderResultsWithPagination(type);
 			const reflow = flow(element);
 			const composition = stir.compose(reflow, replace, render, more, status, facets);
-			const callback = stir.curry((parameters,data) => {
+			const callback = (parameters,data) => {
 				
-				debug && console.info("[Search] API callback with parameters",parameters);
+				debug && console.info("[Search] API called-back with:",data,parameters);
 				
 				if (!element || !element.parentElement) {
 					return debug && console.error("[Search] late callback, element no longer on DOM");
@@ -478,7 +481,7 @@ stir.search = (() => {
 				
 				// Append AddSearch data with `question` object (à la Funnelback)
 				return composition( stir.Object.extend({}, data, {question:parameters}) );
-			});
+			};
 			resetPagination();
 		
 			// if necessary do a prefetch and then call-back to the search function.
@@ -503,16 +506,23 @@ stir.search = (() => {
 			searchers[type](callback);
 		};
 		
+		const reset = element => element.innerHTML = "";
+
+		const notHidden = panel => !panel.el.hasAttribute("aria-hidden");
+		
+		const resetPanel = panel => panel.results.forEach(reset);
+		
+		// reset() and search() a given panel
+		const research = panel => (reset(panel),search(panel));
+		
 		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
-		const initialSearch = () => searches.forEach(search);
-	
-		const search = (element) => {
-			element.innerHTML = "";
+		const initialSearch = () => panels.filter(notHidden).forEach( panel => panel.results.forEach(research) );
+
+		const search = (element, index, context) => {
 			if (element.hasAttribute("data-infinite")) {
 				const resultsWrapper = document.createElement("div");
 				const buttonWrapper = document.createElement("div");
 				const button = LoaderButton();
-				button.setAttribute("disabled", true);
 				button.addEventListener("click", (event) => getMoreResults(resultsWrapper, button));
 				element.appendChild(resultsWrapper);
 				element.appendChild(buttonWrapper);
@@ -523,12 +533,20 @@ stir.search = (() => {
 				getInitialResults(element);
 			}
 		};
+		
+		const panels = Array.prototype.map.call(document.querySelectorAll("[data-panel]"),el=>{return {
+			el: el,
+			type: el.getAttribute('data-panel'),
+			results: Array.prototype.slice.call(el.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]")),
+			summary: el.querySelector(".c-search-results-summary"),
+			init: false
+		}});
 	
-		const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
+		//const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
 	
 		// group the curried search functions so we can easily refer to them by `type`
 		const searchers = {
-			any: callSearchApi("any"),
+			all: callSearchApi("all"),
 			news: callSearchApi("news"),
 			event: callSearchApi("event"),
 			gallery: callSearchApi("gallery"),
@@ -542,7 +560,7 @@ stir.search = (() => {
 	
 		// group the renderer functions so we can get them easily by `type`
 		const renderers = {
-			any: data => data.map(stir.templates.search.auto),
+			all: data => data.map(stir.templates.search.auto),
 			news: data => data.map(stir.templates.search.news),
 			event: data => data.map(stir.templates.search.event),
 			gallery: data => data.map(stir.templates.search.gallery),
@@ -556,7 +574,7 @@ stir.search = (() => {
 		};
 	
 		const footers = {
-			coursemini: () => stir.templates.search.courseminiFooter(getQuery("any")),
+			coursemini: () => stir.templates.search.courseminiFooter(getQuery("all")),
 		};
 	
 		const prefetch = {
@@ -571,17 +589,6 @@ stir.search = (() => {
 			},
 		};
 	
-		// async function reporter(payload) {
-		// 	try {	
-		// 		const report = await stir.addSearch.putReport(payload);
-		// 		const data = await report.text();
-		// 		console.info("ASYNC",data);
-		// 		return data;
-		// 	} catch(error) {
-		// 		console.error("[AddSearch]",error);
-		// 	}
-		// }
-	
 		// CLICK delegate for link tracking
 		const clickReporter = async event => {
 			if (!clickReporting) return true;
@@ -589,7 +596,7 @@ stir.search = (() => {
 			
 			// get the main result links for click-tracking:
 			// (somewhat complicated due to "promoted" item image links)
-			const el = event.target.hasAttribute("data-docid") ? event.target : (event.target.parentElement.hasAttribute("data-docid") ? event.target.parentElement : null);
+			const el = event.target.hasAttribute("data-docid") ? event.target : (event.target.parentElement && event.target.parentElement.hasAttribute("data-docid") ? event.target.parentElement : null);
 			
 			if(!el) return;
 			
@@ -663,16 +670,16 @@ stir.search = (() => {
 				Array.prototype.forEach.call(form.querySelectorAll("input"), (input) => (input.checked = false));
 				// Only *after* the form has been reset, we can re-run the
 				// search function. (That's why native RESET is no good).
-				search(element);
+				initialSearch();
 			});
 			form.addEventListener("change", (event) => {
-				setUrlToFilters(getType(element));
-				search(element);
+				setUrlToFilters(type);
+				initialSearch();
 			});
 			// Just in case, we'll also catch any
 			// SUBMIT events that might be triggered:
 			form.addEventListener("submit", (event) => {
-				search(element);
+				initialSearch();
 				event.preventDefault();
 			});
 		});
@@ -691,7 +698,6 @@ stir.search = (() => {
 	
 		const tokenHandler = (event) => {
 			if (!event || !event.target) return;
-	
 			/**
 			 * selector	the CSS selector for the <input> element we want to toggle
 			 * root: 	the "root" element to search within (the closest `data-panel`
@@ -702,22 +708,27 @@ stir.search = (() => {
 			 * input	the input element we want to toggle
 			 */
 			const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
-			const root = event.target.closest("[data-panel]") || document;
+			const panel = event.target.closest("[data-panel]");
+			const root = panel || document;
 			const input = root.querySelector(selector);
+			const type = panel && panel.getAttribute("data-panel");
+			const panelManager = type && panels.filter(p=>p.type===type).shift();
 	
 			if (input) {
 				input.checked = !input.checked; // toggle it
 				event.target.parentElement.removeChild(event.target); // remove the token
 				initialSearch(); // resubmit the search for fresh results
-			} else {
-				const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
-				const select = document.querySelector(sel2);
-				if (select) {
-					select.selectedIndex = 0;
-					event.target.parentElement.removeChild(event.target);
-					initialSearch();
-				}
-			}
+			} 
+			/** Not needed as we have no dropdown filters now */
+			// else {
+			// 	const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
+			// 	const select = document.querySelector(sel2);
+			// 	if (select) {
+			// 		select.selectedIndex = 0;
+			// 		event.target.parentElement.removeChild(event.target);
+			// 		initialSearch();
+			// 	}
+			// }
 		};
 	
 		// Click-delegate for status panel (e.g. misspellings, dismiss filters, etc.)
@@ -733,12 +744,13 @@ stir.search = (() => {
 				}
 			});
 		});
-		Array.prototype.forEach.call(document.querySelectorAll(".c-search-results"), (resultsPanel) => {
-			resultsPanel.addEventListener("click", (event) => {
-				if (!event.target.hasAttribute("data-value")) return;
-				tokenHandler(event);
-			});
-		});
+		
+		// Array.prototype.forEach.call(document.querySelectorAll(".c-search-results"), (resultsPanel) => {
+		// 	resultsPanel.addEventListener("click", (event) => {
+		// 		if (!event.target.hasAttribute("data-value")) return;
+		// 		tokenHandler(event);
+		// 	});
+		// });
 	
 		/**
 		 * Running order for search:
@@ -771,8 +783,10 @@ stir.search = (() => {
 		return {
 			init: init,
 			constants: constants,
-			getPage: getPage
+			getPage: getPage,
+			lazy: initialSearch,
+			initialSearch: initialSearch
 		};
 	})();
 
-stir.search.init();
+stir.search && stir.search.init && stir.search.init();
