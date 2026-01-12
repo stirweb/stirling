@@ -8191,6 +8191,9 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     font-size: 6rem;
     color: #838383; }
 
+.c-search-results__loadmore button[disabled] {
+  display: none; }
+
 /* Visual indicator for Clearing courses */
 .c-search-result__seasonal {
   color: #592c82; }
