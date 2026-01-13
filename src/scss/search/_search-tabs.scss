@@ -442,6 +442,10 @@
   }
 }
 
+.c-search-results__loadmore button[disabled] {
+  display: none;
+}
+
 /* Visual indicator for Clearing courses */
 .c-search-result__seasonal {
   color: $energy-purple;
