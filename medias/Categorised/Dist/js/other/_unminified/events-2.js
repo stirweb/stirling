@@ -128,6 +128,10 @@
     return !val ? `` : `<span class="u-bg-heritage-berry u-white text-xxsm u-p-tiny u-mr-1">${val}</span>`;
   };
 
+  const renderTab = (type) => {
+    return type ? `data-label-icon=${type}` : ``;
+  };
+
   /*
    * Render event item
    * @param {Object} series - Series data
@@ -145,9 +149,12 @@
     const cookie = stir.favourites && stir.favourites.getFav(cf.sid, cookieType);
     const favId = item.repeater ? cf.sid + "|" + new Date(item.start).getTime() : cf.sid;
 
+    const isSeries = data.isSeries ? "startdates" : "";
+    const isPinned = data.pin === "Yes" ? "pin" : "";
+
     return `
         <div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event"
-          data-label-icon="${data.isSeries ? "startdates" : ""}" data-perf="172580">
+          ${renderTab(isSeries)} ${renderTab(isPinned)} data-perf="172580">
           ${data.isSeries ? renderWeeTab(item) : ""}
          
             <div class="u-grid-medium-up u-gap-24 ${cf.image ? "u-grid-cols-3_1" : ""}">
@@ -639,6 +646,8 @@
       .then((response) => response.json())
       .then((data) => {
         const extras = []; // Holds any fake extra events
+
+        console.log(data);
 
         let hits = data.hits.map((item) => {
           const cf = item.custom_fields;
