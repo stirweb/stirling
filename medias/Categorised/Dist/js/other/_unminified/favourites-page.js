@@ -373,7 +373,7 @@
     const filters = buildFilterObject(favs.map((fav) => fav.id));
 
     const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-    const searchUrl = `${searchAPI}?term=*&limit=100&filter=${encodeURIComponent(JSON.stringify(filters))}&`;
+    const searchUrl = `${searchAPI}?term=*&resultType=organic&limit=100&filter=${encodeURIComponent(JSON.stringify(filters))}&`;
 
     // Query AddSearch API
     fetch(searchUrl)
