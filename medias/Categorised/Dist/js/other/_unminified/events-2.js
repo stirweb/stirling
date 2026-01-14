@@ -947,7 +947,7 @@
       .filter(Boolean);
 
     const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-    const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
+    const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&resultType=organic&`;
 
     const seriesData = await doSeriesSearch(searchUrl);
 
