@@ -798,7 +798,7 @@
       });
     }
 
-    const filterString = `&limit=90&order=asc&filter=${encodeURIComponent(JSON.stringify(upcomingObj))}&sort=custom_fields.d&`;
+    const filterString = `&limit=90&resultType=organic&order=asc&filter=${encodeURIComponent(JSON.stringify(upcomingObj))}&sort=custom_fields.d&`;
 
     fetch(searchUrl + filterString + `page=1`)
       .then((response) => response.json())
