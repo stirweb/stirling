@@ -327,7 +327,7 @@ async function doMoreEvents(baseUrl, node, excludeId) {
  */
 (async () => {
   const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-  const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
+  const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&resultType=organic&`;
 
   const miniEvents = window.miniEvents && window.miniEvents.length ? window.miniEvents.map((item) => JSON.parse(item)) : [];
   const miniEventsFiltered = stir.flatten(miniEvents).filter((item) => item.id);
