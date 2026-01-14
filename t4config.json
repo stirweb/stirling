@@ -1817,6 +1817,11 @@
         "id": 198000,
         "description": "search-min.js",
         "projectPath": "medias/Categorised/Dist/js/addsearch/search-min.js"
+      },
+      {
+        "id": 199366,
+        "description": "people.js",
+        "projectPath": "medias/Categorised/Dist/js/other/people.js"
       }
     ]
   }

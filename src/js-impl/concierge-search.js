@@ -1,5 +1,5 @@
 /**
- * HEADER CONCIERGE SEARCH ver 4.0 (NOT USING MARTYN'S SEARCHBOX)
+ * HEADER CONCIERGE SEARCH ver 4.0
  * @author: Ryan Kaye <ryan.kaye@stir.ac.uk>, Robert Morrison <r.w.morrison@stir.ac.uk>
  */
 
@@ -11,17 +11,19 @@ var stir = stir || {};
  * Instantiated below with `new stir.Concierge();`
  */
 stir.Concierge = function Concierge(popup) {
+  if (!stir.addSearch) return;
+
   const button = document.querySelector("#header-search__button");
   const buttons = [...document.querySelectorAll(".header-search-button"), ...[button]];
 
   if (!popup || !buttons.length) return;
 
-  var obj2param = this.obj2param;
+  // var obj2param = this.obj2param;
 
   // DOM elements
   const nodes = {
     overlay: popup.querySelector(".overlay"),
-    input: popup.querySelector('input[name="query"]'),
+    input: popup.querySelector('input[name="query"],input[name="term"]'),
     submit: popup.querySelector("button"),
     wrapper: popup.querySelector("#header-search__wrapper"),
     news: popup.querySelector(".c-header-search__news"),
@@ -30,24 +32,15 @@ stir.Concierge = function Concierge(popup) {
     suggestions: popup.querySelector(".c-header-search__suggestions"),
   };
 
-  //Dynamic view managers
-  var search, results, spinner;
-
-  // Settings and data
-  const funnelbackServer = "https://stir-search.clients.uk.funnelback.com";
-  const funnelbackUrl = funnelbackServer + "/s/";
-  const searchFunnelbackUrl = funnelbackUrl + "search.json?";
-  const suggestFunnelbackUrl = funnelbackUrl + "suggest.json?collection=stir-www&show=10&partial_query=";
-
   const courseUrl = "https://www.stir.ac.uk/courses/";
   const searchUrl = "https://www.stir.ac.uk/search/";
 
+  var search, results, spinner; // dynamic view managers
   var prevQuery = "";
+  const keyUpTime = 400; // milliseconds; keystroke idle time, i.e. stopped typing
+  const minQueryLength = 3; // min query length for activating the suggest box
 
-  var keyUpTime = 400; // miliseconds; keystroke idle time, i.e. stopped typing
-  var minQueryLength = 3; // min query length for activating the suggest box
-  var KEY_ESC = 27;
-
+  // Init IIFE
   (function init() {
     search = new stir.ToggleWidget(popup, "stir__fadeIn", "stir__fadeOut");
     results = new stir.ToggleWidget(nodes.wrapper, "stir__slidedown", "stir__slideup");
@@ -58,7 +51,6 @@ stir.Concierge = function Concierge(popup) {
     results.hide();
 
     // Assign various event handlers
-
     buttons.forEach((openButton) => {
       openButton.addEventListener("click", opening);
     });
@@ -74,26 +66,27 @@ stir.Concierge = function Concierge(popup) {
     });
   })();
 
+  const renderSuggestions = parseSuggestions.bind(nodes.suggestions);
+
   //  H E L P E R   F U N C T I O N S
 
   function doSearches(query) {
-    stir.getJSON(suggestFunnelbackUrl + query, parseSuggestions.bind(nodes.suggestions));
+    stir.addSearch.getSuggestions(query, renderSuggestions);
   }
 
   // R E N D E R E R S
 
   function render(label, data) {
     if (this.nodeType !== 1) return;
-
     this.innerHTML = renderHeading(label.heading, label.icon) + "<ul>" + renderBody(label, data) + "</ul>";
   }
 
   const renderHeading = (title, icon) => {
     return `
-        <h3 class="c-header-search__title header-stripped">
-          <span class="${icon}"></span> 
-          ${title}
-        </h3>`;
+				<h3 class="c-header-search__title header-stripped">
+					<span class="${icon}"></span> 
+					${title}
+				</h3>`;
   };
 
   const renderBody = (label, data) => (data.length > 0 ? data.join("") : renderGenericItem(label.none));
@@ -101,55 +94,52 @@ stir.Concierge = function Concierge(popup) {
   const renderGenericItem = (text) => `<li class="c-header-search__item">${text}</li>`;
 
   const renderAllItem = (item) => {
-    const url = item.collection === "stir-events" ? item.metaData.page : funnelbackServer + item.clickTrackingUrl;
     return `
-      <li class="c-header-search__item">
-        <a href="${url}">
-        ${item.title.split(" | ")[0]} - ${item.title.split(" | ")[1] ? item.title.split(" | ")[1] : ""}</a>
-      </li>`;
+			<li class="c-header-search__item">
+				<a href="${item.url}">${item.title.split(" | ")[0]}</a>
+			</li>`;
   };
 
   const renderCourseItem = (item) => {
+    const title = item.title.split(" | ")[0];
+    const award = item.custom_fields.award ? item.custom_fields.award + " " : "";
     return `
-      <li class="c-header-search__item">
-        <a href="${funnelbackServer}${item.clickTrackingUrl}">
-        ${item.metaData.award ? item.metaData.award : ""} 
-        ${item.title.split(" | ")[0]}</a>
-      </li>`;
+			<li class="c-header-search__item">
+				<a href="${item.url}">${award}${title}</a>
+			</li>`;
   };
 
   const renderSuggestItem = (suggest) => {
     return `
-      <li class="c-header-search__item">
-        <a href="${searchUrl}?query=${suggest}">${suggest}</a>
-      </li>`;
+			<li class="c-header-search__item">
+				<a href="${searchUrl}?query=${suggest}">${suggest}</a>
+			</li>`;
   };
 
   // P A R S I N G
 
-  function getSeachParams(query_) {
-    return obj2param({
-      query: query_,
-      SF: "[c,d,access,award,page]",
-      collection: "stir-main",
-      num_ranks: 25,
-      "cool.21": 0.9,
-    });
-  }
-
   function parseSuggestions(suggests) {
+    suggests = suggests.suggestions.map((item) => item.value);
     const max = 5;
 
     if (suggests.length > 0) {
-      // perform search using first suggested term as the query
-      stir.getJSON(searchFunnelbackUrl + getSeachParams(suggests[0]), parseFunnelbackResults);
+      stir.addSearch
+        .getResults({ term: suggests.join(", "), collectAnalytics: false, defaultOperator: "or", fuzzy: "auto" })
+        .then((response) => response.json())
+        .then(parseResults)
+        .catch((e) => console.error(e));
+
       const suggestsUnique = suggests.filter((c, index) => suggests.indexOf(c) === index);
       const suggestsLtd = stir.filter((item, index) => index < max, suggestsUnique);
 
       render.call(nodes.suggestions, { heading: "Suggestions", none: "No suggestions found", icon: "uos-magnifying-glass" }, suggestsLtd.map(renderSuggestItem));
     } else {
       // no suggests so use the raw inputted query to perform the search
-      stir.getJSON(searchFunnelbackUrl + getSeachParams(prevQuery), parseFunnelbackResults);
+      stir.addSearch
+        .getResults({ term: prevQuery, collectAnalytics: false })
+        .then((response) => response.json())
+        .then(parseResults)
+        .catch((e) => console.error(e));
 
       render.call(nodes.suggestions, { heading: "Suggestions", none: "No suggestions found", icon: "uos-magnifying-glass" }, []);
     }
@@ -158,25 +148,24 @@ stir.Concierge = function Concierge(popup) {
     results.show();
   }
 
-  function parseFunnelbackResults(data) {
-    const max = 3;
-    const obj = data.response.resultPacket.results;
+  function parseResults(data) {
+    const max = 4;
+    const obj = data.hits;
 
-    if (data.response.resultPacket.resultsSummary.fullyMatching > 0) {
+    if (data.total_hits > 0) {
       const coursesHtml = stir.compose(
         stir.map(renderCourseItem),
         stir.filter((item, index) => index < max),
-        stir.filter((item) => item.liveUrl.includes(courseUrl))
+        stir.filter((item) => item.url.includes(courseUrl))
       )(obj);
 
       const allHtml = stir.compose(
         stir.map(renderAllItem),
         stir.filter((item, index) => index < max),
-        stir.filter((item) => !item.liveUrl.includes(courseUrl))
+        stir.filter((item) => !item.url.includes(courseUrl))
       )(obj);
 
       render.call(nodes.news, { heading: "All pages", none: "No results found", icon: "uos-all-tab" }, allHtml);
-
       render.call(nodes.courses, { heading: "Courses", none: "No courses found", icon: "uos-course-tab" }, coursesHtml);
     } else {
       render.call(nodes.news, { heading: "All pages", none: "No results found", icon: "uos-all-tab" }, []);
@@ -189,7 +178,7 @@ stir.Concierge = function Concierge(popup) {
   function handleInput(event) {
     if (this.value != prevQuery) {
       results.hide();
-      if (this.value.length >= minQueryLength) {
+      if (this.value.length >= minQueryLength || this.value === "*") {
         spinner.show();
         doSearches(this.value);
         prevQuery = this.value;
@@ -201,7 +190,7 @@ stir.Concierge = function Concierge(popup) {
     }
   }
   /**
-   * If the search recieves focus, also reopen the
+   * If the search receives focus, also reopen the
    * results-panel if there are results to display.
    **/
   function focusing(event) {
@@ -255,23 +244,11 @@ stir.Concierge = function Concierge(popup) {
   }
 
   function escaping(event) {
-    if (event.keyCode === KEY_ESC) closing(event);
+    if ("Escape" === event.code) closing(event);
   }
-};
-
-stir.Concierge.prototype.obj2param = function (obj) {
-  // transform key/value pairs from object to URL formatted
-  // query string, in this case for use with Funnelback.
-  var elements = [];
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      elements.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-    }
-  }
-  return elements.join("&");
 };
 
 (function () {
-  // instantiate a new anonymous concierge
+  if (!window.fetch) return;
   new stir.Concierge(document.getElementById("header-search"));
 })();

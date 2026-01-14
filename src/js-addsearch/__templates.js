@@ -282,10 +282,13 @@ stir.templates.search = (() => {
 		breadcrumb: (crumbs) => `<p class="u-m-0">${crumbs}</p>`,
 		trailstring: (trail) => (trail.length ? trail.map(anchor).join("<small> &gt; </small> ") : ""),
 
-		message: (hit, count, queried) => {
+		message: (totalMatching, queried) => {
 			const p = document.createElement("p");
+			const hit = totalMatching > 0;
+			const pl = hit && totalMatching > 1;
+			const count = totalMatching.toLocaleString("en");
 			p.classList.add(hit ? "text-sm" : "search_summary_noresults");
-			p.innerHTML = hit ? `There are <strong>${count} results</strong>` : "<strong>There are no results</strong>";
+			p.innerHTML = hit ? (pl ? `There are <strong>${count} results</strong>` : `There is <strong>${count} result</strong>`) : "<strong>There are no results</strong>";
 			if (queried) p.insertAdjacentText("beforeend", " for ");
 			return p;
 		},
@@ -300,7 +303,7 @@ stir.templates.search = (() => {
 									.replace(/^\*$/, "")				//addsearch
 									.trim() || "";
 			const queryEcho = document.createElement("em");
-			const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
+			const message = stir.templates.search.message(totalMatching, querySanitised.length > 1);
 			//const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
 			const tokens = searchParamTokens(data.question);
 			const spelling = '';//querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
@@ -346,11 +349,11 @@ stir.templates.search = (() => {
 		pagination: (summary) => {
 			const { currEnd, totalMatching, progress } = summary;
 			return totalMatching === 0
-				? ""
+				? "<!-- no results to show -->"
 				: `
 			<div class="cell text-center u-my-2">
 				<progress value="${progress}" max="100"></progress><br />
-				You have viewed ${totalMatching === currEnd ? "all" : currEnd + " of " + totalMatching} results
+				You have viewed ${totalMatching === currEnd ? "all "+(totalMatching>1?totalMatching:'') : currEnd + " of " + totalMatching} results
 			</div>`;
 		},
 
@@ -736,9 +739,23 @@ stir.templates.search = (() => {
 				// 		<p>${item.descriptionHtml}</p>
 				// 	</div>
 				// </div>`
-				`<div class="c-search-result-curated" data-result-type=curated>
-					<a href="${item.url}" data-docid=${item.id} data-position=${item.position}><img src="${item.images.main}" alt="${item.title}"></a>
-				</div>`,
+				`<div class="c-search-result-curated" data-result-type=curated>` + 
+				((item.images&&item.images.main) ? `<a href="${item.url}" data-docid=${item.id} data-position=${item.position}><img src="${item.images.main}" alt="${item.title}"></a>` : 
+				`<div class="c-search-result c-popout-result u-heritage-berry">
+					<a href="${item.url}">
+						<div>
+							<span class="uos-computer"></span>
+						</div>
+						<div>
+							<p>${item.title}</p>
+							<p>${item.highlight}</p>
+						</div>
+						<div>
+							<span class="uos-chevron-right"></span>
+						</div>
+					</a>
+				</div>`) +
+				`</div>`,
 
 
 		facet: (item) =>
