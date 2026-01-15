@@ -206,8 +206,6 @@
     const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
     const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
 
-    //console.log(startTime);
-
     return `<div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${cf.image ? `medium-8` : ``} ">
                 <div class="u-relative u-p-2 u-flex flex-dir-column u-gap-8 u-h-full">

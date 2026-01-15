@@ -143,6 +143,10 @@ const renderEvent = (item, index) => {
   const data = "object" === typeof item.custom_fields.data ? Object.assign({}, ...item.custom_fields.data.map((datum) => JSON.parse(decodeURIComponent(datum)))) : {};
   const cf = item.custom_fields;
   const dateTimes = getEventDateTimes(item.start, item.end);
+
+  // Get start time from string 2026-03-25T14:00:00.000Z
+  const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+  const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
   return `
             <div class="${index % 2 === 0 ? `u-bg-white` : `u-bg-white`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : `u-grey-line-top `} u-p-1 c-event-list u-gap">
                 <div>
@@ -152,7 +156,7 @@ const renderEvent = (item, index) => {
                         <strong>Event</strong><br />
                         ${renderLink(item)}
                         <strong>Date:</strong> ${dateTimes.start} ${dateTimes.end !== dateTimes.start ? ` - ` + dateTimes.end : ``}<br />
-                        <strong>Time:</strong> ${item.startTime} - ${item.endTime}
+                        <strong>Time:</strong> ${startTime} - ${endTime}
                     </span>
                 </div>
                 <div>
