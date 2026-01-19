@@ -144,9 +144,10 @@ const renderEvent = (item, index) => {
   const cf = item.custom_fields;
   const dateTimes = getEventDateTimes(item.start, item.end);
 
-  // Get start time from string 2026-03-25T14:00:00.000Z
-  const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-  const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+  // Minievents use item.startTime and item.endTime directly
+  const startTime = cf.d ? new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) : item.startTime;
+  const endTime = cf.e ? new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" }) : item.endTime;
+
   return `
             <div class="${index % 2 === 0 ? `u-bg-white` : `u-bg-white`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : `u-grey-line-top `} u-p-1 c-event-list u-gap">
                 <div>
@@ -334,6 +335,7 @@ async function doMoreEvents(baseUrl, node, excludeId) {
   const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&resultType=organic&`;
 
   const miniEvents = window.miniEvents && window.miniEvents.length ? window.miniEvents.map((item) => JSON.parse(item)) : [];
+
   const miniEventsFiltered = stir.flatten(miniEvents).filter((item) => item.id);
 
   const upcomingNode = document.getElementById("seriesevents");
