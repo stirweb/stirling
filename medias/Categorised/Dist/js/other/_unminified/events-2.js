@@ -117,6 +117,7 @@
   };
 
   const renderTimes = (startTime, endTime) => {
+    //console.log(startTime, endTime);
     return `
       <div class="u-flex u-gap-16 align-middle">
         <span class="uos-clock u-icon h5"></span>
@@ -152,6 +153,9 @@
     const isSeries = data.isSeries ? "startdates" : "";
     const isPinned = data.pin === "Yes" ? "pin" : "";
 
+    const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+
     return `
         <div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event"
           ${renderTab(isSeries)} ${renderTab(isPinned)} data-perf="172580">
@@ -167,7 +171,7 @@
                         <span class="u-icon h5 uos-calendar"></span>
                         <span>${renderDates(dateTimes)}</span>
                     </div>
-                    ${showTimes ? renderTimes(item.startTime, item.endTime) : ``}
+                    ${showTimes ? renderTimes(startTime, endTime) : ``}
                     <div class="u-flex u-gap-16 align-middle">
                         <span class="u-icon h5 uos-location "></span>
                         <span>${data.location || ""}</span>
@@ -198,6 +202,10 @@
     const favId = item.repeater ? cf.sid + "|" + new Date(item.start).getTime() : cf.sid;
     const showTimes = dateTimes.start === dateTimes.end ? true : false;
 
+    // Get start time from string 2026-03-25T14:00:00.000Z
+    const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+
     return `<div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${cf.image ? `medium-8` : ``} ">
                 <div class="u-relative u-p-2 u-flex flex-dir-column u-gap-8 u-h-full">
@@ -211,7 +219,7 @@
                           <span class="u-icon h5 uos-calendar"></span>
                           <span>${renderDates(dateTimes)}</span>
                       </div>
-                     ${showTimes ? renderTimes(dateTimes.start, dateTimes.end) : ``}
+                     ${showTimes ? renderTimes(startTime, endTime) : ``}
                       <div class="u-flex u-gap-16 align-middle">
                           <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`}"></span>
                           <span>${data.location}</span>
