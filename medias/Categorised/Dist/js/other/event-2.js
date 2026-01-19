@@ -8,7 +8,7 @@ const getObject=(e,t,r)=>{return{and:[{"custom_fields.tag":r},{range:{"custom_fi
                             d="M315.392 9.728c0 8.192 4.096 16.384 10.24 22.528l413.696 415.744-413.696 415.744c-12.288 12.288-12.288 32.768 0 47.104 12.288 12.288 32.768 12.288 47.104 0l438.272-438.272c12.288-12.288 12.288-34.816 0-47.104l-440.32-438.272c-12.288-12.288-32.768-12.288-47.104 0-6.144 6.144-8.192 14.336-8.192 22.528z" />
                     </svg>
                 </span>
-            </a>`},renderLink=e=>e.url?`<a href="${e.url}" class="u-underline">${e.custom_fields.name}</a><br />`:e.custom_fields.name+"<br />",renderInfoTag=e=>e?`<span class="u-bg-heritage-berry u-white text-xxsm u-p-tiny u-inline-block u-mb-tiny u-mr-1">${e}</span>`:"",renderEvent=(e,t)=>{var r="object"==typeof e.custom_fields.data?Object.assign({},...e.custom_fields.data.map(e=>JSON.parse(decodeURIComponent(e)))):{},n=e.custom_fields,s=getEventDateTimes(e.start,e.end);return`
+            </a>`},renderLink=e=>e.url?`<a href="${e.url}" class="u-underline">${e.custom_fields.name}</a><br />`:e.custom_fields.name+"<br />",renderInfoTag=e=>e?`<span class="u-bg-heritage-berry u-white text-xxsm u-p-tiny u-inline-block u-mb-tiny u-mr-1">${e}</span>`:"",renderEvent=(e,t)=>{var r="object"==typeof e.custom_fields.data?Object.assign({},...e.custom_fields.data.map(e=>JSON.parse(decodeURIComponent(e)))):{},n=e.custom_fields,s=getEventDateTimes(e.start,e.end);return console.log(e.startTime),`
             <div class="u-bg-white ${0===t?"u-heritage-line-top u-border-width-5":"u-grey-line-top "} u-p-1 c-event-list u-gap">
                 <div>
                     ${r.cancelled?renderInfoTag("Cancelled"):""}
