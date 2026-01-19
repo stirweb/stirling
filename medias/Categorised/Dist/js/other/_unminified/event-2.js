@@ -144,6 +144,7 @@ const renderEvent = (item, index) => {
   const cf = item.custom_fields;
   const dateTimes = getEventDateTimes(item.start, item.end);
 
+  // Minievents use item.startTime and item.endTime directly
   const startTime = cf.d ? new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) : item.startTime;
   const endTime = cf.e ? new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" }) : item.endTime;
 
