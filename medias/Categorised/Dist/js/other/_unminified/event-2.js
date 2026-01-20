@@ -88,19 +88,6 @@ const getEventDateTimes = (start, end) => {
   };
 };
 
-/*
- * Render audience tag
- * @param {Array} tag - Audience tags
- * @returns {string} - HTML string for audience tag
- */
-const renderAudience = (tag) => {
-  const audience = tag
-    .filter((item) => item === "Public" || item === "StaffStudent")
-    .map((item) => (item === "StaffStudent" ? "Staff, Students" : item))
-    .join(",");
-  return !audience.trim ? `` : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
-};
-
 const renderEndDate = (item) => (item.start === item.end ? `` : `- ${item.end}`);
 
 const renderMoreEvent = (item) => {
@@ -135,6 +122,27 @@ const renderInfoTag = (val) => {
 };
 
 /*
+ * Render audience tag
+ * @param {Array} tag - Audience tags
+ * @returns {string} - HTML string for audience tag
+ */
+const renderAudience = (tag) => {
+  const audience = tag
+    .filter((item) => item === "Public" || item === "StaffStudent")
+    .map((item) => (item === "StaffStudent" ? "Staff, Students" : item))
+    .join(",");
+  return !audience.trim ? `` : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
+};
+
+/* Render mini audience tag
+ * @param {string} aud - Audience string
+ * @returns {string} - HTML string for audience tag
+ */
+const renderMiniAudience = (aud) => {
+  return `<strong>Audience</strong><br />` + aud.replaceAll(", ", "<br/>");
+};
+
+/*
  * Render event item
  * @param {Object} item - Event item
  * @returns {string} - HTML string for event
@@ -147,6 +155,7 @@ const renderEvent = (item, index) => {
   // Minievents use item.startTime and item.endTime directly
   const startTime = cf.d ? new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) : item.startTime;
   const endTime = cf.e ? new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" }) : item.endTime;
+  const audience = item.audience ? renderMiniAudience(item.audience) : renderAudience(cf.tag);
 
   return `
             <div class="${index % 2 === 0 ? `u-bg-white` : `u-bg-white`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : `u-grey-line-top `} u-p-1 c-event-list u-gap">
@@ -170,7 +179,7 @@ const renderEvent = (item, index) => {
                 </div>
                 <div>
                     <span class="u-inline-block u-mb-1">
-                        ${renderAudience(cf.tag)}
+                        ${audience}
                     </span>
                 </div>
                 <div>
