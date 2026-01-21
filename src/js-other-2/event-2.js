@@ -122,11 +122,11 @@ const renderInfoTag = (val) => {
 };
 
 /*
- * Render audience tag
+ * Render Audience from AddSearch Tag (DEPRECATED)
  * @param {Array} tag - Audience tags
  * @returns {string} - HTML string for audience tag
  */
-const renderAudience = (tag) => {
+const renderTagAudience = (tag) => {
   const audience = tag
     .filter((item) => item === "Public" || item === "StaffStudent")
     .map((item) => (item === "StaffStudent" ? "Staff, Students" : item))
@@ -134,12 +134,24 @@ const renderAudience = (tag) => {
   return !audience.trim ? `` : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
 };
 
-/* Render mini audience tag
+/* Render audience  from a basic string eg MiniEvent, AddSearch metadata
  * @param {string} aud - Audience string
  * @returns {string} - HTML string for audience tag
  */
-const renderMiniAudience = (aud) => {
+const renderStringAudience = (aud) => {
   return `<strong>Audience</strong><br />` + aud.replaceAll(", ", "<br/>");
+};
+
+/* Render audience based on what data we have available
+ * @param {Object} item - Event item
+ * @returns {string} - HTML string for audience
+ */
+const renderAudience = (item, cf) => {
+  if (item.audience) return renderStringAudience(item.audience); // From miniEvent JSON
+  if (cf.audience) return renderStringAudience(cf.audience); // From AddSearch audience metadata
+  if (cf.tag) return renderTagAudience(cf.tag); // From AddSearch tag (shouldnt be needed after Jan 2026)
+
+  return ``;
 };
 
 /*
@@ -155,7 +167,7 @@ const renderEvent = (item, index) => {
   // Minievents use item.startTime and item.endTime directly
   const startTime = cf.d ? new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) : item.startTime;
   const endTime = cf.e ? new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" }) : item.endTime;
-  const audience = item.audience ? renderMiniAudience(item.audience) : renderAudience(cf.tag);
+  const audience = renderAudience(item, cf);
 
   return `
             <div class="${index % 2 === 0 ? `u-bg-white` : `u-bg-white`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : `u-grey-line-top `} u-p-1 c-event-list u-gap">
