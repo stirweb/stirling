@@ -183,8 +183,8 @@ const renderEvent = (item, index) => {
                 </div>
                 <div>
                     <span class="u-inline-block u-mb-1">
-                        <strong>Description</strong><br />
-                        ${cf.snippet}<br />
+                        <strong>Description</strong>
+                        ${cf.snippet.includes("<p") ? cf.snippet : `<p>${cf.snippet}</p>`}
                         <strong>Location</strong><br />
                         ${data.location}.
                     </span>
