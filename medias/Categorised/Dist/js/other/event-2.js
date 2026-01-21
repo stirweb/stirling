@@ -22,8 +22,8 @@ const getObject=(e,t,n)=>{return{and:[{"custom_fields.tag":n},{range:{"custom_fi
                 </div>
                 <div>
                     <span class="u-inline-block u-mb-1">
-                        <strong>Description</strong><br />
-                        ${r.snippet}<br />
+                        <strong>Description</strong>
+                        ${r.snippet.includes("<p")?r.snippet:`<p>${r.snippet}</p>`}
                         <strong>Location</strong><br />
                         ${n.location}.
                     </span>
