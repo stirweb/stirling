@@ -7947,6 +7947,9 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   /* 
       Staff, Events, News panel results
   */ }
+  .c-search-results-area .c-search-results-summary p,
+  .c-search-results-area .c-search-result__body p {
+    margin: 0; }
   .c-search-results-area .c-search-results-summary .c-tag,
   .c-search-results-area .c-search-result__body .c-tag {
     padding: 0.3rem;
@@ -7964,10 +7967,6 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
         POP UP result
     */
     /* End POP UP result */ }
-    .c-search-results-area .c-search-result a {
-      border-bottom: 1px solid #006938; }
-      .c-search-results-area .c-search-result a:hover {
-        border-bottom: 1px solid #9fcd6a; }
     .c-search-results-area .c-search-result li,
     .c-search-results-area .c-search-result p:not(.u-text-regular) {
       font-size: 1rem; }
@@ -7979,6 +7978,17 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       aspect-ratio: 1;
       object-fit: cover;
       /* make images square */ }
+    .c-search-results-area .c-search-result[data-result-group=research] {
+      /* Research Hub lacks proper breadcrumb meta data
+       * and the default data is all lowercase. We can
+       * safely 'Sentence case-ify' it with CSS.
+       * (That is not so true for general pages) .
+      */ }
+      .c-search-results-area .c-search-result[data-result-group=research] .c-search-result__trail a {
+        display: inline-block;
+        /* needed for ::first-letter */ }
+        .c-search-results-area .c-search-result[data-result-group=research] .c-search-result__trail a::first-letter {
+          text-transform: uppercase; }
     .c-search-results-area .c-search-result.c-popout-result {
       border-left: 0px !important;
       padding: 0;
@@ -8021,6 +8031,16 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     .c-search-results-area .c-search-result .c-search-result__tags {
       position: absolute;
       top: -15px; }
+    .c-search-results-area .c-search-result .c-search-result__trail a {
+      border: 0;
+      font-size: .875rem;
+      /* 14px */
+      color: #000;
+      text-decoration-thickness: 1px; }
+      .c-search-results-area .c-search-result .c-search-result__trail a:hover {
+        color: #006938; }
+    .c-search-results-area .c-search-result .c-search-result__trail + .c-search-taggroup {
+      margin-top: 2rem; }
   .c-search-results-area .c-search-result-curated {
     position: relative;
     margin: 0 0 3rem 0; }
