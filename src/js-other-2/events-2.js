@@ -154,7 +154,7 @@
     const isPinned = data.pin === "Yes" ? "pin" : "";
 
     const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
 
     return `
         <div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event"
@@ -247,7 +247,7 @@
     const favId = cf.sid;
     const dateTimes = getEventDateTimes(cf.d, cf.e);
     const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
 
     return `<div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" 
               data-result-type="event" data-perf="${cf.sid}">
@@ -528,7 +528,7 @@
       `&limit=50&order=asc&filter=${encodeURIComponent(
         JSON.stringify({
           and: [{ "custom_fields.tag": "Series" }],
-        })
+        }),
       )}&sort=custom_fields.sort`;
 
     try {
