@@ -144,7 +144,7 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
           // patch DiscoverUniWidget's addCss() function so it only runs once per page (not once per widget!)
           DiscoverUniWidget.prototype._addCss = DiscoverUniWidget.prototype.addCss;
           DiscoverUniWidget.prototype.addCss = function () {
-            widgetStylesAdded || this._addCss(), (widgetStylesAdded = true);
+            (widgetStylesAdded || this._addCss(), (widgetStylesAdded = true));
           };
 
           // patch DiscoverUniWidget's renderWidget() function so that we can manipulate
@@ -253,10 +253,10 @@ var KISWidgetCaller = function () {
         },
         init: function () {
           var n = t.createElement("script");
-          (n.async = !0), (n.type = "text/javascript"), (n.src = "https://cdn.livechatinc.com/tracking.js"), t.head.appendChild(n);
+          ((n.async = !0), (n.type = "text/javascript"), (n.src = "https://cdn.livechatinc.com/tracking.js"), t.head.appendChild(n));
         },
       };
-      !n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e);
+      (!n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e));
     })(window, document, [].slice);
   }
 
@@ -307,7 +307,7 @@ if (stir.favourites && stir.coursefavs) {
    *  Fetch and render webinar button
    */
   const renderButton = (item, colour) => {
-    const data = JSON.parse(decodeURIComponent(item.custom_fields.data) || "{}");
+    const data = JSON.parse(decodeURIComponent(item?.custom_fields?.data) || "{}");
     if (!data.register) return ``;
     return `<a href="${data.register}" id="cta-pg-webinar" class="button ${colour}"><span class="u-font-bold u-text-regular">Join our webinar</span></a>`;
   };
@@ -341,7 +341,7 @@ if (stir.favourites && stir.coursefavs) {
 
   const now = new Date().toISOString();
   const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-  const searchUrl = `${searchAPI}?term=*&filter=${encodeURIComponent(JSON.stringify(getSearchObject(now, "2099-12-31", "sid" + sid)))}&limit=3`;
+  const searchUrl = `${searchAPI}?term=*&resultType=organic&filter=${encodeURIComponent(JSON.stringify(getSearchObject(now, "2099-12-31", "sid" + sid)))}&limit=3`;
 
   fetch(searchUrl)
     .then((response) => response.json())
