@@ -204,7 +204,7 @@
 
     // Get start time from string 2026-03-25T14:00:00.000Z
     const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
 
     return `<div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${cf.image ? `medium-8` : ``} ">
