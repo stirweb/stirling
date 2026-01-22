@@ -338,8 +338,6 @@ if (stir.favourites && stir.coursefavs) {
   const sid = document.querySelector("meta[name='sid']").getAttribute("content");
   const suggestedNode = document.getElementById("course-suggested-actions");
 
-  console.log(sid);
-
   if (!sid || !suggestedNode) return;
 
   const now = new Date().toISOString();
