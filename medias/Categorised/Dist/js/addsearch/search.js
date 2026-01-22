@@ -375,60 +375,42 @@ stir.templates.search = (() => {
 
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			if(item.custom_fields.access) return stir.templates.search.internal(item);
+			// if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
+			// type = isDocUrl(item.url) ? "document" : ""
 
-//			if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
-//			if (item.custom_fields.type == "scholarship") return stir.templates.search.scholarship(item);
 			if(item.custom_fields.type) {
-				switch (item.custom_fields.type) {
-					case "course":		 return stir.templates.search.course(item);
-					case "news":		 return stir.templates.search.news(item);
-					case "event":		 return stir.templates.search.event(item);
-					case "webinar":		 return stir.templates.search.event(item);
-					case "contract":
-					case "area":
-					case "centre":		 return stir.templates.search.research(item);
-					case "profile":		 return stir.templates.search.person(item);
-					case "studentstory": return stir.templates.search.studentstory(item);
-					//case "publication": // not in use
-						
+				if(String === item.custom_fields.type.constructor) {
+					switch (item.custom_fields.type) {
+						case "course":		 return stir.templates.search.course(item);
+						case "news":		 return stir.templates.search.news(item);
+						case "event":		 return stir.templates.search.event(item);
+						case "webinar":		 return stir.templates.search.event(item);
+						case "contract":
+						case "area":
+						case "centre":		 return stir.templates.search.research(item);
+						case "profile":		 return stir.templates.search.person(item);
+						case "studentstory": return stir.templates.search.studentstory(item);
+						//case "publication": // not in use
+						//case "gallery": // not in use
+						//case "scholarship" // not in use
+					}
+				}
+				if(Array === item.custom_fields.type.constructor) {
+					if (item.custom_fields.type.includes("news")) return stir.templates.search.news(item);
 				}
 			}
-//			if (item.custom_fields.type == "course") return stir.templates.search.course(item);
-//			if (item.custom_fields.type === "news") return stir.templates.search.news(item);
-//			if (item.custom_fields.type == "event") return stir.templates.search.event(item);
-//			if (item.custom_fields.type == "webinar") return stir.templates.search.event(item);
-//			if (item.custom_fields.type == "Gallery") return stir.templates.search.gallery(item);
-//			if (item.collection == "stir-events") return stir.templates.search.event(item);
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("output") > -1) return stir.templates.search.research(item);
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("contract") > -1) return stir.templates.search.research(item);
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("publication") > -1) return stir.templates.search.research(item);
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("profile") > -1) return stir.templates.search.person(item);
-//			if (item.url.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
-//			const label = item.url.indexOf("policyblog.stir") > -1 ? `<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>` : "";
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item);
-
-			
 			
 			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}${item.type?` data-as-type="${item.type}"`:''}>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap">
-				${item.custom_fields.type ? '<div class=c-search-result__tags>':''}
-					${item.custom_fields.type ? stir.templates.search.stag(label(item.custom_fields.type)) : ''}
-				${item.custom_fields.type ? '</div>':''}
+					${item.custom_fields.type ? '<div class=c-search-result__tags>':''}
+						${item.custom_fields.type ? stir.templates.search.stag(label(item.custom_fields.type)) : ''}
+					${item.custom_fields.type ? '</div>':''}
 					<p class=u-text-regular><strong>${nameLink(item)}</strong></p>
 					<p>${item.meta_description||''}</p>
 					${makeBreadcrumbs(item)}
 				</div>
 			</div>`;
 
-/* 				<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.custom_fields.type || isDocUrl(item.url) ? ' data-result-type="' + (item.custom_fields.type || (isDocUrl(item.url) ? "document" : "")).toLowerCase() + '"' : ""}${item.custom_fields.access ? ' data-access="' + item.custom_fields.access + '"' : ""}>
-					<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-						${label}
-						${makeBreadcrumbs(trail, item.url, item.fileSize)}
-						<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
-						<p>${item.meta_description.replace(/\xA0/g, " ")}</p>
-					</div>
-				</div>
-				 */
 		},
 		internal: (item) => {
 			// const crumbs = {
@@ -653,7 +635,7 @@ stir.templates.search = (() => {
 			const thumb = data.thumbnail ? `data-original="${data.thumbnail}"` : '';
 			return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumb ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=news>
-					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
+					<div class="c-search-result__body flex-container flex-dir-column u-gap">
 						<p class="u-text-regular u-m-0">
 							<strong>
 								${serplink(item)}
