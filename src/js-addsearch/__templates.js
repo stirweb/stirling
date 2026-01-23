@@ -153,6 +153,13 @@ stir.templates.search = (() => {
 	const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
 
 	const label = (input) => {
+		const labels = {
+			contract: "Research project",
+			publication: "Research output",
+			centre: "Research centre/group",
+			area: "Research programme",
+			scholarship: "Scholarship"
+		};
 		switch (input) {
 			case "staff":
 				return "Staff";
@@ -166,22 +173,16 @@ stir.templates.search = (() => {
 			case "undergraduate":
 				return "Undergraduate"
 			default:
-				return input;
+				return labels[input]||input;
 		}
 	};
 
 	const image = (image, alt, width, height) => {
-		if (!image) return "";
-
+		if (!image) return " <!-- no image --> ";
 		const url = image.indexOf("|") > -1 ? image.split("|")[1] || image.split("|")[0] : image;
-		return `<div class=c-search-result__image>
-			${stir.funnelback.getCroppedImageElement({
-			url: url.trim(),
-			alt: alt || "",
-			width: width || 550,
-			height: height || 550,
-		})}
-			</div>`;
+		const data = {url: url.trim(),alt: alt || "",width: width || 550,height: height || 550};
+		const cropped = getCroppedImageElement(data);
+		return `<div class=c-search-result__image>${cropped}</div>`; 
 	};
 
 	const flickrUrl = (flickr) => (flickr.id ? `https://farm${flickr.farm}.staticflickr.com/${flickr.server}/${flickr.id}_${flickr.secret}_c.jpg` : "");
@@ -235,17 +236,33 @@ stir.templates.search = (() => {
 	const facetCategoryLabel = (facet, label) => correctCase(facet, label);
 	const startDateFormatter = date => correctCase("Start date", date);
 	
-	const serplink = item => `<a href="${item.url}" data-docid="${item.id}" data-position="${item.position||''}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a>`;
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	const serpTitle = item => item.title.split("|")[0].trim().replace(/\xA0/g, " ");
+	
+	const serplink = item => `<a href="${item.url}" data-docid="${item.id}" data-position="${item.position||''}">${serpTitle(item)}</a>`;
+
+	const nameLink = item => `<a href="${item.url}" data-docid="${item.id}" data-position="${item.position||''}">${item.custom_fields.name||serpTitle(item)}</a>`;
+	
+	const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
+	
+	const getCroppedImageElement = (parameters) => {
+		if (!parameters.url) return "<!-- no image -->";
+		return renderImgTag({ src: parameters.url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
+	};
+	
+	const getTags = (tags) => {
+		const html = (Object.values(tags||{})).map(i=>i.map(j=>j.desc?stir.templates.search.stag(j.desc):'').join(' ')).join(' ').trim();
+		return html ? `<p class=c-search-taggroup>${html}</p>` : '';
+	}
+	
+	const getResearchCategories = (raw) => {
+		return Object.keys(raw)
+		  .filter(key => ['ResearchProgrammes','ResearchGroups','ResearchThemes'].includes(key))
+		  .reduce((obj, key) => {
+			obj[key] = raw[key];
+			return obj;
+		  }, {})
+	};
 
 
 	/**
@@ -273,13 +290,8 @@ stir.templates.search = (() => {
 			summary: ".c-search-results-summary"
 		},
 		tag: tag,
-		stag: (tag) => (tag ? `<span class="c-search-tag">${tag}</span>` : ""),
-		tagGroup: (tagGroup) => {
-			const gData = tagGroup.split("=");
-			const list = gData[1] && gData[1].replace(/,([^\s])/gi, "__SPLIT__$&").split("__SPLIT__,");
-			return list ? list.map(stir.templates.search.stag).join("") : "";
-		},
-		breadcrumb: (crumbs) => `<p class="u-m-0">${crumbs}</p>`,
+		stag: (tag) => (tag ? `<span class=c-search-tag>${tag}</span>` : ""),
+		breadcrumb: (crumbs) => `<p class=c-search-result__trail>${crumbs}</p>`,
 		trailstring: (trail) => (trail.length ? trail.map(anchor).join("<small> &gt; </small> ") : ""),
 
 		message: (totalMatching, queried) => {
@@ -362,44 +374,43 @@ stir.templates.search = (() => {
 		auto: (item, index, context) => {
 
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
+			if(item.custom_fields.access) return stir.templates.search.internal(item);
+			// if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
+			// type = isDocUrl(item.url) ? "document" : ""
 
-//			if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
-//			if (item.custom_fields.type == "scholarship") return stir.templates.search.scholarship(item);
-			if (item.custom_fields.type == "course") return stir.templates.search.course(item);
-			if (item.custom_fields.type === "news") return stir.templates.search.news(item);
-//			if (item.custom_fields.type == "Gallery") return stir.templates.search.gallery(item);
-			if (item.custom_fields.type == "event") return stir.templates.search.event(item);
-			if (item.custom_fields.type == "webinar") return stir.templates.search.event(item);
-//			if (item.collection == "stir-events") return stir.templates.search.event(item);
-			if (item.custom_fields.access) return stir.templates.search.internal(item);
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("output") > -1) return stir.templates.search.research(item);
-			if (item.custom_fields.type && item.custom_fields.type.indexOf("contract") > -1) return stir.templates.search.research(item);
-			if (item.custom_fields.type && item.custom_fields.type.indexOf("profile") > -1) return stir.templates.search.person(item);
-//			if (item.url.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
-//			const label = item.url.indexOf("policyblog.stir") > -1 ? `<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>` : "";
-//
-			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item);
+			if(item.custom_fields.type) {
+				if(String === item.custom_fields.type.constructor) {
+					switch (item.custom_fields.type) {
+						case "course":		 return stir.templates.search.course(item);
+						case "news":		 return stir.templates.search.news(item);
+						case "event":		 return stir.templates.search.event(item);
+						case "webinar":		 return stir.templates.search.event(item);
+						case "contract":
+						case "area":
+						case "centre":		 return stir.templates.search.research(item);
+						case "profile":		 return stir.templates.search.person(item);
+						case "studentstory": return stir.templates.search.studentstory(item);
+						//case "publication": // not in use
+						//case "gallery": // not in use
+						//case "scholarship" // not in use
+					}
+				}
+				if(Array === item.custom_fields.type.constructor) {
+					if (item.custom_fields.type.includes("news")) return stir.templates.search.news(item);
+				}
+			}
 			
 			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}${item.type?` data-as-type="${item.type}"`:''}>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap">
-				${item.custom_fields.type ? '<div class=c-search-result__tags>':''}
-					${item.custom_fields.type ? stir.templates.search.stag([item.custom_fields.type]) : ''}
-				${item.custom_fields.type ? '</div>':''}
-					${makeBreadcrumbs(item)}
-					<p class="u-text-regular u-m-0"><strong>${serplink(item)}</strong></p>
+					${item.custom_fields.type ? '<div class=c-search-result__tags>':''}
+						${item.custom_fields.type ? stir.templates.search.stag(label(item.custom_fields.type)) : ''}
+					${item.custom_fields.type ? '</div>':''}
+					<p class=u-text-regular><strong>${nameLink(item)}</strong></p>
 					<p>${item.meta_description||''}</p>
+					${makeBreadcrumbs(item)}
 				</div>
 			</div>`;
 
-/* 				<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.custom_fields.type || isDocUrl(item.url) ? ' data-result-type="' + (item.custom_fields.type || (isDocUrl(item.url) ? "document" : "")).toLowerCase() + '"' : ""}${item.custom_fields.access ? ' data-access="' + item.custom_fields.access + '"' : ""}>
-					<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-						${label}
-						${makeBreadcrumbs(trail, item.url, item.fileSize)}
-						<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
-						<p>${item.meta_description.replace(/\xA0/g, " ")}</p>
-					</div>
-				</div>
-				 */
 		},
 		internal: (item) => {
 			// const crumbs = {
@@ -568,22 +579,16 @@ stir.templates.search = (() => {
 			const id = item.url.split("/").slice(-1);
 			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
 			return `
-			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=person>
-				<div class=c-search-result__tags>
-					${/*stir.templates.search.stag(item.custom_fields.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.custom_fields.faculty) : "")*/''}
-				</div>
-				<div class="flex-container flex-dir-column u-gap u-mt-1">
+			<div class="c-search-result u-border-width-5 u-heritage-line-left c-search-result__with-thumbnail" data-result-type=person>
+				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0"><strong>
 						${serplink(item)}
 					</strong></p>
 					<div>${data.JobTitle || "<!-- Job title -->"}<br>${data.OrgUnitName || "<!-- Department -->"}</div>
 					<!-- <p>${item?.custom_fields?.c ? (item?.custom_fields?.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
 				</div>
-				${image((item.custom_fields.image?item.custom_fields.image:`https://www.stir.ac.uk/research/hub/image/${id}`), item.title.split(" | ")[0].trim(), 400, 400)}
-				<div class=c-search-result__footer>
-					${stir.funnelback.getTags(item?.custom_fields?.category) ? "<p><strong>Research interests</strong></p>" : ""}
-					<p>${stir.funnelback.getTags(item?.custom_fields?.category) || ""}</p>
-				</div>
+				${image(`https://www.stir.ac.uk/research/hub/image/${id}`, item.title.split(" | ")[0].trim(), 400, 400)}
+				<div class=c-search-result__footer> ${getTags(data.Categories)} </div>
 			</div>`;
 		},
 		scholarship: (item) => {
@@ -593,8 +598,8 @@ stir.templates.search = (() => {
 				${stir.templates.search.stag(item.custom_fields.level ? `Scholarship: ${item.custom_fields.level.toLowerCase()}` : "")}
 			</div>
 			<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
-				<p>${item.meta_description.replace(/\xA0/g, " ")}</p>
+				<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
+				<p>${(item.meta_description||'').replace(/\xA0/g, " ")}</p>
 				<div class="c-search-result__meta grid-x">
 					${stir.templates.search.courseFact("Value", item.custom_fields.value, false)}
 					${stir.templates.search.courseFact("Number of awards", item.custom_fields.number, false)}
@@ -630,7 +635,7 @@ stir.templates.search = (() => {
 			const thumb = data.thumbnail ? `data-original="${data.thumbnail}"` : '';
 			return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumb ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=news>
-					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
+					<div class="c-search-result__body flex-container flex-dir-column u-gap">
 						<p class="u-text-regular u-m-0">
 							<strong>
 								${serplink(item)}
@@ -649,7 +654,6 @@ stir.templates.search = (() => {
 						</p> --> */
 		},
 
-
 		gallery: (item) => {
 			return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${item.score} data-result-type=news>
@@ -659,7 +663,7 @@ stir.templates.search = (() => {
 						<p>${item.meta_description||''}</p>	
 					</div>
 					<div class=c-search-result__image>
-						${stir.funnelback.getCroppedImageElement({
+						${getCroppedImageElement({
 							url: flickrUrl(JSON.parse(item.custom_fields.custom)),
 							alt: `Image of ${item.title.split(" | ")[0].trim()}`,
 							width: 550,
@@ -668,7 +672,6 @@ stir.templates.search = (() => {
 					</div>
 				</div>`;
 		},
-
 
 		event: (item) => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
@@ -711,35 +714,31 @@ stir.templates.search = (() => {
 				${image(item.custom_fields.image && item.custom_fields.image.split("|")[0], item.title.split(" | ")[0])}
 				${isWebinar ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
 			</div>`;
-		},	//<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre><hr><pre>${JSON.stringify(data,null,"\t")}</pre></details>
-
+		},
 
 		research: (item) => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
-			return	`<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""}>
+			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			const desc = item.meta_description ? `<p class=text-sm>${stir.String.stripHtml(item.meta_description)}</p>` : '';
+			const type = (item.custom_fields.type||'').toLowerCase();
+			return	`<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score} data-result-type="${type}" data-result-group=research>
 				<div>
-					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
-					<div class="flex-container flex-dir-column u-gap u-mt-1">
-						<p class="u-text-regular u-m-0"><strong>${serplink(item)}</strong></p>
-						${stir.String.stripHtml(item.meta_description) ? `<div class="text-sm">` + stir.String.stripHtml(item.meta_description) + `</div>` : ""}
-						${stir.funnelback.getTags(item.custom_fields.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.custom_fields.category) + `</div>` : ""}
+					<div class="c-search-result__tags">${stir.templates.search.stag(label(item.custom_fields.type))}</div>
+					<div class="c-search-result__body flex-container flex-dir-column u-gap">
+						<p class=u-text-regular><strong>${nameLink(item)}</strong></p>
+						${desc}
+						<div class=c-search-result__footer>
+							${makeBreadcrumbs(item)}
+							${getTags(getResearchCategories(data))}
+						</div>
+						<!-- <pre>${JSON.stringify(item.categories,null,"\t")}</pre> -->
 					</div>
 				</div>
 			</div>`
 		},
 
-
 		cura: (item) =>
-			 // `<div class="c-search-result" data-result-type=curated>
-				// 	<div class=c-search-result__body>
-				// 		<p class="u-text-regular u-m-0"><strong>
-				// 			${serplink(item)}<br>
-				// 			<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
-				// 		</strong></p>
-				// 		<p>${item.descriptionHtml}</p>
-				// 	</div>
-				// </div>`
-				`<div class="c-search-result-curated" data-result-type=curated>` + 
+			`<div class="c-search-result-curated" data-result-type=curated>` + 
 				((item.images&&item.images.main) ? `<a href="${item.url}" data-docid=${item.id} data-position=${item.position}><img src="${item.images.main}" alt="${item.title}"></a>` : 
 				`<div class="c-search-result c-popout-result u-heritage-berry">
 					<a href="${item.url}">
@@ -755,8 +754,7 @@ stir.templates.search = (() => {
 						</div>
 					</a>
 				</div>`) +
-				`</div>`,
-
+			`</div>`,
 
 		facet: (item) =>
 			`<fieldset data-facet="${item.name}">
@@ -771,7 +769,6 @@ stir.templates.search = (() => {
 					</div>
 				</div>
 			</fieldset>`,
-
 
 		labelledFacetItems: stir.curry(
 			(facet, facetValue) =>

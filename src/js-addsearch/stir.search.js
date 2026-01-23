@@ -9,34 +9,19 @@ var stir = stir || {};
 /**
  * Search API helper
  */
-stir.funnelback = (() => {
-	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	const hostname = UoS_env.search;
-	const url = `https://${hostname}/s/`;
-
-	const getJsonEndpoint = () => new URL("search.json", url);
-	const getScaleEndpoint = () => new URL("scale", url);
-	const getHostname = () => hostname;
-	const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
-
-	const getCroppedImageElement = (parameters) => {
-		if (!parameters.url) return "<!-- no image -->";
-		return renderImgTag({ src: parameters.url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
-	};
-
-	const getTags = (tagMeta) => {
-		const tagGroups = tagMeta && tagMeta.split(";");
-		return tagGroups && tagGroups.map(stir.templates.search.tagGroup).join("");
-	};
-
-	return {
-		getHostname: getHostname,
-		getJsonEndpoint: getJsonEndpoint,
-		getScaleEndpoint: getScaleEndpoint,
-		getCroppedImageElement: getCroppedImageElement,
-		getTags: getTags
-	};
-})();
+// stir.funnelback = (() => {
+	// const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	// const hostname = UoS_env.search;
+	// const url = `https://${hostname}/s/`;
+	// const getJsonEndpoint = () => new URL("search.json", url);
+	// const getScaleEndpoint = () => new URL("scale", url);
+	// const getHostname = () => hostname;
+	// return {
+	// 	getHostname: getHostname,
+	// 	getJsonEndpoint: getJsonEndpoint,
+	// 	getScaleEndpoint: getScaleEndpoint
+	// };
+// })();
 
 /**
  * Stir Search
@@ -507,16 +492,22 @@ stir.search = (() => {
 		};
 		
 		const reset = element => element.innerHTML = "";
+		const deInitialise = panel => panel.init = false;
 
 		const notHidden = panel => !panel.el.hasAttribute("aria-hidden");
-		
-		const resetPanel = panel => panel.results.forEach(reset);
+		const notInitialised = panel => !panel.init;
 		
 		// reset() and search() a given panel
-		const research = panel => (reset(panel),search(panel));
+		const research = panel => {
+			panel.init = true;
+			panel.results.forEach(reset);
+			panel.results.forEach(search);
+		};
 		
 		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
-		const initialSearch = () => panels.filter(notHidden).forEach( panel => panel.results.forEach(research) );
+		const initialSearch = () => panels.filter( notHidden ).forEach( research );
+		
+		const lazySearch = () => panels.filter( notHidden ).filter( notInitialised ).forEach( research );
 
 		const search = (element, index, context) => {
 			if (element.hasAttribute("data-infinite")) {
@@ -768,6 +759,7 @@ stir.search = (() => {
 	
 		const submit = (event) => {
 			setQuery();
+			panels.forEach(deInitialise);
 			initialSearch();
 			event.preventDefault();
 		};
@@ -784,7 +776,7 @@ stir.search = (() => {
 			init: init,
 			constants: constants,
 			getPage: getPage,
-			lazy: initialSearch,
+			lazy: lazySearch,
 			initialSearch: initialSearch
 		};
 	})();
