@@ -655,8 +655,6 @@
       .then((data) => {
         const extras = []; // Holds any fake extra events
 
-        console.log(data);
-
         let hits = data.hits.map((item) => {
           const cf = item.custom_fields;
           const startTime = cf.d.split("T")[1].split(":")[0] + ":" + cf.d.split("T")[1].split(":")[1];
