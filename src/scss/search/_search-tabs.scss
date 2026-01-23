@@ -34,6 +34,9 @@
   */
   .c-search-results-summary,
   .c-search-result__body {
+    p {
+      margin: 0;
+    }
     .c-tag {
       padding: 0.3rem;
       border: 1px solid #ccc;
@@ -53,12 +56,12 @@
     position: relative;
     margin: 0 0 3rem 0;
 
-    a {
-      border-bottom: 1px solid $heritage-green;
-      &:hover {
-        border-bottom: 1px solid tint($energy-green, 70%);
-      }
-    }
+    // a {
+    //   border-bottom: 1px solid $heritage-green;
+    //   &:hover {
+    //     border-bottom: 1px solid tint($energy-green, 70%);
+    //   }
+    // }
 
     li,
     p:not(.u-text-regular) {
@@ -80,6 +83,21 @@
           aspect-ratio: 1;
           object-fit: cover;
           /* make images square */
+        }
+      }
+    }
+    &[data-result-group=research] {
+      /* Research Hub lacks proper breadcrumb meta data
+       * and the default data is all lowercase. We can
+       * safely 'Sentence case-ify' it with CSS.
+       * (That is not so true for general pages) .
+      */
+      .c-search-result__trail {
+        a {
+          display: inline-block; /* needed for ::first-letter */
+          &::first-letter {
+            text-transform: uppercase;
+          }
         }
       }
     }
@@ -157,6 +175,23 @@
     .c-search-result__tags {
       position: absolute;
       top: -15px;
+    }
+    
+    .c-search-result__trail {
+      a {
+        border: 0;
+        font-size: .875rem; /* 14px */
+        color: $black;
+        text-decoration-thickness: 1px;
+        
+        &:hover {
+          color: $heritage-green;
+        }
+        
+      }
+      + .c-search-taggroup {
+        margin-top: 2rem;
+      }
     }
   }
 
