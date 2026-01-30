@@ -1552,7 +1552,7 @@ stir.course = (function () {
   };
 
   const render = (data) => {
-    // Boilerplate text neccessary for module "page" popup
+    // Boilerplate text necessary for module "page" popup
     if (!boilerplates) return console.error("Boilerplate text not loaded!");
 
     spinner.hide();
@@ -1576,7 +1576,7 @@ stir.course = (function () {
     options: () => (optionChooser.innerHTML = ""),
   };
 
-  // DOM disaplay/callback functions
+  // DOM display/callback functions
   const handle = {
     routes: (frag) => routeChooser.append(frag),
     options: (frag) => optionChooser.append(frag),
