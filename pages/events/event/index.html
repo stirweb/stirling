@@ -733,5 +733,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/eventbrite.js?v=1.1"></script>
 
 		
+
+    <script>
+    // Test AB testing based on unix time stamp 
+    // Get current unix time stamp
+    const unixTimestamp = Math.floor(Date.now() / 1000);
+    const div = document.createElement("div");
+    div.style.height = "1px";  // make div height 1px
+
+    // if number is odd
+    const id = unixTimestamp % 2 !== 0 ? "ab1" : "ab2";
+    div.id = id;
+    document.querySelector("header").prepend(div);
+    </script>
+
     </body>
 </html>
