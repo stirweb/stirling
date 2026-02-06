@@ -153,12 +153,15 @@ stir.templates.search = (() => {
 	const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
 
 	const label = (input) => {
+		if("undefined"===typeof input) return;
 		const labels = {
 			contract: "Research project",
 			publication: "Research output",
 			centre: "Research centre/group",
 			area: "Research programme",
-			scholarship: "Scholarship"
+			scholarship: "Scholarship",
+			blog: "Blog",
+			policyblog: "Policy blog"
 		};
 		switch (input) {
 			case "staff":
@@ -167,8 +170,8 @@ stir.templates.search = (() => {
 				return "Student";
 			case "module":
 				return "CPD and short courses";
-			case "Postgraduate (taught)":
-			case "Postgraduate (research)":
+			case "postgraduate (taught)":
+			case "postgraduate (research)":
 				return "Postgraduate";
 			case "undergraduate":
 				return "Undergraduate"
@@ -207,7 +210,14 @@ stir.templates.search = (() => {
 	const anchor = (crumb) => `<a href="${crumb.href}">${crumb.text}</a>`;
 	const t4preview = (sid) => (sid ? `/terminalfour/preview/1/en/${sid}` : "#");
 	const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
-	const unpackData = (data) => "object"===typeof data ? Object.assign({},...data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(data));
+	
+	const unpackData = data => {
+		if("undefined"===typeof data)	return {};
+		if(String===data.constructor)	return JSON.parse(decodeURIComponent(data));
+		if(Array===data.constructor)	return Object.assign({},...data.map(datum=>JSON.parse(decodeURIComponent(datum))));
+		if(Object===data.constructor)	return data;
+		return	{};
+	};
 	
 	const facetDisplayTypes = {
 		SINGLE_DRILL_DOWN: undefined,
@@ -224,12 +234,22 @@ stir.templates.search = (() => {
 		}
 		const facets = stir.t4Globals.search.facets;
 		return (facet, label) => {
-			if (!facets[facet]) return label;
+			if (!facets[facet]) return label;		// unknown facet
+
+			const strict = "Start date"===facet;
 			const labels = facets[facet];
+			const finder = (val) => label === val.toLowerCase();
+
+			// `labels` array
 			if (labels.findIndex) {
-				return labels[labels.findIndex((val) => label === val.toLowerCase())] || label;
-			} else if (labels[label]) return labels[label];
-			return label;
+				return labels[labels.findIndex(finder)] || label;
+			}
+			// `labels` object:
+			else if (labels[label]) {
+				return labels[label];
+			}
+			// label not found
+			return strict ? undefined : label;
 		};
 	})();
 
@@ -290,7 +310,8 @@ stir.templates.search = (() => {
 			summary: ".c-search-results-summary"
 		},
 		tag: tag,
-		stag: (tag) => (tag ? `<span class=c-search-tag>${tag}</span>` : ""),
+		stag: (tag) => (tag ? `<span class=c-search-tag>${label(tag)}</span>` : ""),
+		stags: tags => tags ? `<div class=c-search-result__tags>${tags.map(stir.templates.search.stag).join('')}</div>` : '',
 		breadcrumb: (crumbs) => `<p class=c-search-result__trail>${crumbs}</p>`,
 		trailstring: (trail) => (trail.length ? trail.map(anchor).join("<small> &gt; </small> ") : ""),
 
@@ -372,6 +393,8 @@ stir.templates.search = (() => {
 		suppressed: (reason) => `<!-- Suppressed search result: ${reason} -->`,
 
 		auto: (item, index, context) => {
+			
+			const tags = [];
 
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			if(item.custom_fields.access) return stir.templates.search.internal(item);
@@ -390,23 +413,35 @@ stir.templates.search = (() => {
 						case "centre":		 return stir.templates.search.research(item);
 						case "profile":		 return stir.templates.search.person(item);
 						case "studentstory": return stir.templates.search.studentstory(item);
+						case "scholarship": return stir.templates.search.scholarship(item);
 						//case "publication": // not in use
 						//case "gallery": // not in use
-						//case "scholarship" // not in use
 					}
+					tags.push(item.custom_fields.type);
 				}
 				if(Array === item.custom_fields.type.constructor) {
 					if (item.custom_fields.type.includes("news")) return stir.templates.search.news(item);
+					tags.push(item.custom_fields.type.slice(1).pop());
+				}
+			} else {
+				const url = new URL(item.url);
+				if ("blog.stir.ac.uk"===url.hostname || "policyblog.stir.ac.uk"===url.hostname) {
+					tags.push(url.hostname.split('.').shift());
+					item.custom_fields.type = 'blog';
 				}
 			}
 			
-			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}${item.type?` data-as-type="${item.type}"`:''}>
+			const blurb = item.meta_description && item.meta_description.trim().length > 5 ? item.meta_description : `…${item.highlight}`;
+			const attrs = [
+				`data-rank=${item.score||''}`,
+				`data-as-type="${item.type||''}"`,
+				`data-result-type="${item.custom_fields.type||''}"`
+			];
+			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" ${attrs.join(' ')}>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap">
-					${item.custom_fields.type ? '<div class=c-search-result__tags>':''}
-						${item.custom_fields.type ? stir.templates.search.stag(label(item.custom_fields.type)) : ''}
-					${item.custom_fields.type ? '</div>':''}
+					${stir.templates.search.stags(tags)}
 					<p class=u-text-regular><strong>${nameLink(item)}</strong></p>
-					<p>${item.meta_description||''}</p>
+					<p>${blurb||''}</p>
 					${makeBreadcrumbs(item)}
 				</div>
 			</div>`;
@@ -482,7 +517,7 @@ stir.templates.search = (() => {
 			let facthtml = [];
 			if(item.custom_fields.start) {
 				if (item.custom_fields.start.map) {
-					facthtml.push(stir.templates.search.courseFact("Start dates", item.custom_fields.start.map(startDateFormatter).join(", "), false));
+					facthtml.push(stir.templates.search.courseFact("Start dates", item.custom_fields.start.map(startDateFormatter).filter(x=>x).join(", "), false));
 				} else {
 					facthtml.push(stir.templates.search.courseFact("Start dates", startDateFormatter(item.custom_fields.start), false));
 				}
@@ -512,7 +547,7 @@ stir.templates.search = (() => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			//		const subject = typeof item.custom_fields.subject;
 			//      const subjectLink = stir.String.slug(subject);
-			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			const data = unpackData(item.custom_fields.data);
 			const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 			const isOnline = item.custom_fields.delivery && item.custom_fields.delivery.indexOf("online") > -1 ? true : false;
 			const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
@@ -577,7 +612,7 @@ stir.templates.search = (() => {
 		person: (item) => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			const id = item.url.split("/").slice(-1);
-			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			const data = unpackData(item.custom_fields.data);
 			return `
 			<div class="c-search-result u-border-width-5 u-heritage-line-left c-search-result__with-thumbnail" data-result-type=person>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
@@ -592,25 +627,24 @@ stir.templates.search = (() => {
 			</div>`;
 		},
 		scholarship: (item) => {
+			const data = unpackData(item.custom_fields.data);
 			return `
 		<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=scholarship data-rank=${item.score}>
-			<div class=c-search-result__tags>
-				${stir.templates.search.stag(item.custom_fields.level ? `Scholarship: ${item.custom_fields.level.toLowerCase()}` : "")}
-			</div>
+			${stir.templates.search.stags([item.custom_fields.level])}
 			<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
 				<p>${(item.meta_description||'').replace(/\xA0/g, " ")}</p>
 				<div class="c-search-result__meta grid-x">
-					${stir.templates.search.courseFact("Value", item.custom_fields.value, false)}
-					${stir.templates.search.courseFact("Number of awards", item.custom_fields.number, false)}
-					${stir.templates.search.courseFact("Fee status", item.custom_fields.status, false)}
+					${stir.templates.search.courseFact("Value", data.value, false)}
+					${stir.templates.search.courseFact("Number of awards", data.number, false)}
+					${stir.templates.search.courseFact("Fee status", data.status, false)}
 				</div>
 			</div>
 		</div>`;
 		},
 
 		studentstory: (item) => {
-			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			const data = unpackData(item.custom_fields.data);
 			return `
 				<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=studentstory>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap">
@@ -630,7 +664,7 @@ stir.templates.search = (() => {
 
 		news: (item) => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
-			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			const data = unpackData(item.custom_fields.data);
 			const hasThumb = data.thumbnail || (item.images&&item.images.main) ? true : false;
 			const thumb = data.thumbnail ? `data-original="${data.thumbnail}"` : '';
 			return `
@@ -675,7 +709,7 @@ stir.templates.search = (() => {
 
 		event: (item) => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
-			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			const data = unpackData(item.custom_fields.data);
 			const isWebinar = (data.tags && data.tags.indexOf("Webinar") > -1) || "webinar" === item.custom_fields.type;
 			const isOnline = isWebinar || item.custom_fields.online;
 			const hasThumbnail = item.custom_fields?.image || isWebinar;
@@ -718,12 +752,12 @@ stir.templates.search = (() => {
 
 		research: (item) => {
 			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
-			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			const data = unpackData(item.custom_fields.data);
 			const desc = item.meta_description ? `<p class=text-sm>${stir.String.stripHtml(item.meta_description)}</p>` : '';
 			const type = (item.custom_fields.type||'').toLowerCase();
 			return	`<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score} data-result-type="${type}" data-result-group=research>
 				<div>
-					<div class="c-search-result__tags">${stir.templates.search.stag(label(item.custom_fields.type))}</div>
+					<div class="c-search-result__tags">${stir.templates.search.stag(item.custom_fields.type)}</div>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap">
 						<p class=u-text-regular><strong>${nameLink(item)}</strong></p>
 						${desc}
@@ -1223,24 +1257,6 @@ var stir = stir || {};
  * @author: Ryan Kaye, Robert Morrison
  * @version: 4 - Migrate to AddSearch
  * ------------------------------------------------ */
-
-
-/**
- * Search API helper
- */
-// stir.funnelback = (() => {
-	// const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	// const hostname = UoS_env.search;
-	// const url = `https://${hostname}/s/`;
-	// const getJsonEndpoint = () => new URL("search.json", url);
-	// const getScaleEndpoint = () => new URL("scale", url);
-	// const getHostname = () => hostname;
-	// return {
-	// 	getHostname: getHostname,
-	// 	getJsonEndpoint: getJsonEndpoint,
-	// 	getScaleEndpoint: getScaleEndpoint
-	// };
-// })();
 
 /**
  * Stir Search
@@ -1954,13 +1970,6 @@ stir.search = (() => {
 				}
 			});
 		});
-		
-		// Array.prototype.forEach.call(document.querySelectorAll(".c-search-results"), (resultsPanel) => {
-		// 	resultsPanel.addEventListener("click", (event) => {
-		// 		if (!event.target.hasAttribute("data-value")) return;
-		// 		tokenHandler(event);
-		// 	});
-		// });
 	
 		/**
 		 * Running order for search:
@@ -1969,7 +1978,7 @@ stir.search = (() => {
 		 *  - fixed parameters (from form)
 		 *  - variable parameters (from page query string)
 		 * prefetch (e.g. course combo data)
-		 * fetch results from funnelback
+		 * fetch results from search engine
 		 * process and filter data
 		 * render results via templates
 		 * send out to the page DOM

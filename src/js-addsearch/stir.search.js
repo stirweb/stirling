@@ -5,24 +5,6 @@ var stir = stir || {};
  * @version: 4 - Migrate to AddSearch
  * ------------------------------------------------ */
 
-
-/**
- * Search API helper
- */
-// stir.funnelback = (() => {
-	// const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	// const hostname = UoS_env.search;
-	// const url = `https://${hostname}/s/`;
-	// const getJsonEndpoint = () => new URL("search.json", url);
-	// const getScaleEndpoint = () => new URL("scale", url);
-	// const getHostname = () => hostname;
-	// return {
-	// 	getHostname: getHostname,
-	// 	getJsonEndpoint: getJsonEndpoint,
-	// 	getScaleEndpoint: getScaleEndpoint
-	// };
-// })();
-
 /**
  * Stir Search
  * Created for the Search Revamp project 2022/23
@@ -735,13 +717,6 @@ stir.search = (() => {
 				}
 			});
 		});
-		
-		// Array.prototype.forEach.call(document.querySelectorAll(".c-search-results"), (resultsPanel) => {
-		// 	resultsPanel.addEventListener("click", (event) => {
-		// 		if (!event.target.hasAttribute("data-value")) return;
-		// 		tokenHandler(event);
-		// 	});
-		// });
 	
 		/**
 		 * Running order for search:
@@ -750,7 +725,7 @@ stir.search = (() => {
 		 *  - fixed parameters (from form)
 		 *  - variable parameters (from page query string)
 		 * prefetch (e.g. course combo data)
-		 * fetch results from funnelback
+		 * fetch results from search engine
 		 * process and filter data
 		 * render results via templates
 		 * send out to the page DOM
