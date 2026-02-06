@@ -4,7 +4,7 @@
                   <a href="${e.url}" class=" u-inline text-sm">${s.h1_custom}</a>
                 </p>
                 <time class="u-block u-my-1 u-grey--dark">${r(s.d)}</time>
-                <p class="text-sm">${s.snippet}</p>
+                <p class="text-sm">${e.highlight}</p>
               </div>
               
             </div>`}),c=stir.curry((e,s)=>{var t=s.custom_fields;return`<div class="cell small-12 medium-${e}">

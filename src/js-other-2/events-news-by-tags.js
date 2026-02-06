@@ -69,7 +69,7 @@
                   <a href="${item.url}" class=" u-inline text-sm">${cf.h1_custom}</a>
                 </p>
                 <time class="u-block u-my-1 u-grey--dark">${renderDate(cf.d)}</time>
-                <p class="text-sm">${cf.snippet}</p>
+                <p class="text-sm">${item.highlight}</p>
               </div>
               
             </div>`;
