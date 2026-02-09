@@ -60,9 +60,9 @@
    * @param {Object} item - News item data object
    * @returns {string} HTML markup for the full news item
    */
-  const renderNewsItemFull = stir.curry((item) => {
+  const renderNewsFull = stir.curry((item) => {
     const cf = item.custom_fields;
-    //  ${renderImage(item.metaData.thumbnail, item.title)}
+    const data = getDataObject(cf.data);
     return `<div class="cell small-12 u-grid-medium-up u-gap-24 u-grid-cols-2_1 u-mb-2 u-bg-white">
               <div class="u-border-width-5 u-heritage-line-left u-p-2 ">
                <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
@@ -71,7 +71,7 @@
                 <time class="u-block u-my-1 u-grey--dark">${renderDate(cf.d)}</time>
                 <p class="text-sm">${item.highlight}</p>
               </div>
-              
+               ${renderImage(data.thumbnail, cf.h1_custom)}
             </div>`;
   });
 
@@ -82,11 +82,11 @@
    * @param {Object} item - News item data object
    * @returns {string} HTML markup for the news item
    */
-  const renderNewsItem = stir.curry((width, item) => {
+  const renderNewsCompact = stir.curry((width, item) => {
     const cf = item.custom_fields;
-    //  ${renderImage(item.metaData.thumbnail, item.title)}
+    const data = getDataObject(cf.data);
     return `<div class="cell small-12 medium-${width}">
-                
+                ${renderImage(data.thumbnail, cf.h1_custom)}
                 <time class="u-block u-my-1 u-grey--dark">${renderDate(cf.d)}</time>
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
                     <a href="${item.url}" class=" u-inline text-sm">${cf.h1_custom}</a>
@@ -103,18 +103,18 @@
    */
   const renderEventFull = stir.curry((item) => {
     const cf = item.custom_fields;
-    const end = ``; //item.metaData.startDate.split("T")[0] === item.metaData.d.split("T")[0] ? "" : ` - ${renderDate(item.metaData.d.split("T")[0])}`;
-    // ${renderImage(item.metaData.image, item.title)}
+    const s = renderDate(cf.d.split("T")[0]);
+    const e = renderDate(cf.e.split("T")[0]);
 
     return `<div class="cell small-12 u-grid-medium-up u-gap-24 u-grid-cols-2_1 u-mb-2 u-bg-white">
               <div class="u-border-width-5 u-heritage-line-left u-p-2">  
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
                   <a href="${item.url}" class=" u-inline text-sm">${cf.name}</a>
                 </p>
-                 <time class="u-block u-my-1 u-grey--dark">${renderDate(cf.d.split("T")[0])} ${end}</time>
+                 <time class="u-block u-my-1 u-grey--dark">${s} ${e === s ? "" : "-" + e}</time>
                 <p class="text-sm">${cf.snippet}</p>
               </div>
-             
+             ${renderImage(cf.image, cf.name)}
             </div>`;
   });
 
@@ -126,11 +126,12 @@
    */
   const renderEventCompact = stir.curry((item) => {
     const cf = item.custom_fields;
-    const end = ``; // = item.metaData.startDate.split("T")[0] === item.metaData.d.split("T")[0] ? "" : ` - ${renderDate(item.metaData.d.split("T")[0])}`;
-    //${renderImage(item.metaData.image, item.title)}
+    const s = renderDate(cf.d.split("T")[0]);
+    const e = renderDate(cf.e.split("T")[0]);
+
     return `<div class="cell small-12" data-type="compactevent">
-              
-                <time class="u-block u-my-1 u-grey--dark">${renderDate(cf.d.split("T")[0])} ${end}</time>
+              ${renderImage(cf.image, cf.name)}
+                <time class="u-block u-my-1 u-grey--dark">${s} ${e === s ? "" : "-" + e}</time>
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
                     <a href="${item.url}" class=" u-inline text-sm">${cf.name}</a>
                 </p>
@@ -162,39 +163,51 @@
   */
 
   /*
+   * Parse data field into an object
+   * @param {string|Array} data - Data field from custom fields
+   * @returns {Object} - Parsed data object
+   */
+  const getDataObject = (data) => {
+    if (typeof data === "string") {
+      return JSON.parse(decodeURIComponent(data));
+    }
+    return "object" === typeof data ? Object.assign({}, ...data.map((datum) => JSON.parse(decodeURIComponent(datum)))) : {};
+  };
+
+  /*
    * Formats a Date object into a numeric string format (YYYYMMDDHHMMSS)
    * Used for date comparisons
    * @param {Date} d - Date object to format
    * @returns {string} Formatted date as numeric string
    */
-  const getFormattedDate = (d) => d.toISOString().split(".")[0].replaceAll(/[-:T]/g, "").slice(0, -2);
+  //const getFormattedDate = (d) => d.toISOString().split(".")[0].replaceAll(/[-:T]/g, "").slice(0, -2);
 
   /*
    * Gets the current date/time as a numeric string for comparison
    * @returns {number} Current date/time as numeric value
    */
-  const getISONow = () => Number(getFormattedDate(new Date()));
+  // const getISONow = () => Number(getFormattedDate(new Date()));
 
   /*
    * Predicate function that checks if an event is upcoming based on its date
    * @param {number} compareDate - Numeric date to compare against
    * @returns {Function} Function that evaluates if an item is upcoming
    */
-  const isUpcomingByDate = (compareDate) => (item) => Number(getFormattedDate(new Date(item.metaData.d))) > compareDate;
+  // const isUpcomingByDate = (compareDate) => (item) => Number(getFormattedDate(new Date(item.metaData.d))) > compareDate;
 
   /*
    * Decorates an item with an isupcoming property based on its date
    * @param {number} now - Current date as numeric value
    * @returns {Function} Function that adds the isupcoming property to an item
    */
-  const addIsUpcoming = (now) => (item) => ({ ...item, isupcoming: isUpcomingByDate(now)(item) });
+  //const addIsUpcoming = (now) => (item) => ({ ...item, isupcoming: isUpcomingByDate(now)(item) });
 
   /*
    * Filters items to include only those marked as upcoming
    * @param {Object} item - Item to check
    * @returns {boolean} True if item is marked as upcoming
    */
-  const filterUpcomingEvents = (item) => item.isupcoming;
+  //const filterUpcomingEvents = (item) => item.isupcoming;
 
   /*
    * Takes a specific slice of an array
@@ -314,7 +327,6 @@
    * @returns {Object} Object containing HTML content for news and events
    */
   const processData = (dataEvents, dataNews, size) => {
-    //const now = getISONow();
     const noOfEvents = size === "small" ? 1 : 10;
     const eventsWrapperWidth = size === "small" ? 4 : 12;
 
@@ -325,7 +337,7 @@
 
     const { noOfNews, newsCellWidth, newsWrapperWidth } = getNewsSettings(size, event.length);
 
-    const newsRender = size === "small" ? renderNewsItem(newsCellWidth) : renderNewsItemFull();
+    const newsRender = size === "small" ? renderNewsCompact(newsCellWidth) : renderNewsFull();
 
     const start = getNewsOffset(size);
 
@@ -353,13 +365,14 @@
    * Handles faculty-based tags differently from regular tags
    * @param {string} tag - Tag to convert to search parameter
    * @returns {string} Formatted search parameter string
-   */
+
   const getSearchParam = (tag) => {
     if (tag.includes("Faculty of") || tag.includes("Management School") || tag.includes("Business School")) {
       return `meta_faculty=${tag}`;
     }
     return `meta_tags=${tag}`;
   };
+   */
 
   const getNow = () => {
     return new Date().toISOString();
@@ -425,18 +438,11 @@
 
     Promise.all([fetchData(searchEventsUrl), fetchData(searchNewsUrl)])
       .then(([eventsData, newsData]) => {
-        console.log("events");
-        console.log(eventsData.hits);
-        console.log("news");
-        console.log(newsData.hits);
-        const dataEvents = eventsData.hits;
-        const dataNews = newsData.hits;
-
-        const contentSmallListing = processData(dataEvents, dataNews, "small");
-        const contentLargeListing = processData(dataEvents, dataNews, "large");
+        const contentSmallListing = processData(eventsData.hits, newsData.hits, "small");
+        const contentLargeListing = processData(eventsData.hits, newsData.hits, "large");
 
         // if no news dont bother rendering small listing
-        dataNews.length && updateDOM(node, contentSmallListing);
+        newsData.hits.length && updateDOM(node, contentSmallListing);
         updateDOM(node, contentLargeListing);
       })
       .catch((error) => {
