@@ -8187,10 +8187,16 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   .c-search-results-area .c-search-results-all .c-research-search-result::before,
   .c-search-results-area .c-search-results-all [data-result-type*="output"]::before {
     content: "\e9a4"; }
+  .c-search-results-area .c-search-results-all [data-result-type="scholarship"]::before {
+    content: "\e947"; }
   .c-search-results-area .c-search-results-all [data-result-type*="person"]::before {
     content: "\e9a5"; }
+  .c-search-results-area .c-search-results-all [data-result-type="studentstory"]::before {
+    content: "\e991"; }
   .c-search-results-area .c-search-results-all [data-result-type="document"]::before {
     content: "\e92a"; }
+  .c-search-results-area .c-search-results-all [data-result-type="blog"]::before {
+    content: "\e908"; }
   .c-search-results-area .c-search-result[data-delivery="online"]::after {
     /* content: "\e998"; */
     /* videochat */

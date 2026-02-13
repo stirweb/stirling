@@ -19,31 +19,32 @@ stir.templates.course = {
 		const div = document.createElement('div');
 		div.id = id; return div;
 	},
-	dialogue: id => {
+	dialogue: (id, nav) => {
 		const d = document.createElement('dialog');
 		const x = document.createElement('button');
-		const p = document.createElement('button');
-		const n = document.createElement('button');
-		const w = document.createElement('nav');
-
-		const prev = stir.dpt.show.previous;
-		const next = stir.dpt.show.next;
-
 		id && (d.id = id);
 		d.setAttribute('data-module-modal','');
+		d.append(x);
+		d.append(nav);
+		x.addEventListener("click",e=>d.close());
+		x.textContent = "Close";
+		return d;
+	},
+	nav: (prev, next) => {
+		const w = document.createElement('nav');
+		const p = document.createElement('button');
+		const n = document.createElement('button');
 		w.setAttribute('aria-label','module navigation');
 		w.append(p,n);
-		d.append(x);
-		d.append(w);
-
-		x.addEventListener("click",e=>d.close());
-		p.addEventListener("click",prev.bind(p));
-		n.addEventListener("click",next.bind(n));
-
-		x.textContent = "Close";
+		p.addEventListener("click",prev);
+		n.addEventListener("click",next);
 		p.innerHTML = '<span class="uos-arrows-up"></span> Previous';
-		n.innerHTML = '<span class="uos-arrows-down"></span> Next';
-		return d;
+		n.innerHTML = '<span class="uos-arrows-down"></span> Next';		
+		return {
+			el: w,
+			prev: p,
+			next: n
+		}	
 	},
 
 	paths: (paths, year) => `<p class="c-callout info"><strong><span class="uos-shuffle"></span> There are ${paths} alternative paths in year ${year}.  Please review all options carefully.</strong></p>`,

@@ -17,11 +17,14 @@ stir.course = (function () {
   const el = document.querySelector("[data-modules-route-code][data-modules-course-type]");
   if (!container || !el) return na;
 
+  const navManager = stir.templates.course.nav(stir.dpt.show.previous, stir.dpt.show.next);
+
+  // DOM references
+  const moduleViewer = stir.templates.course.dialogue("moduleViewer", navManager.el);
+  const moduleInfo = stir.templates.course.div("moduleInfo");
   const routeChooser = stir.templates.course.div("routeBrowser");
   const optionChooser = stir.templates.course.div("optionBrowser");
   const moduleBrowser = stir.templates.course.div("moduleBrowser");
-  const moduleViewer = stir.templates.course.dialogue("moduleViewer");
-  const moduleInfo = stir.templates.course.div("moduleInfo");
   const version = document.querySelector("time[data-sits]");
   const spinner = new stir.Spinner(moduleViewer);
 
@@ -47,7 +50,7 @@ stir.course = (function () {
   };
 
   const render = (data) => {
-    // Boilerplate text neccessary for module "page" popup
+    // Boilerplate text necessary for module "page" popup
     if (!boilerplates) return console.error("Boilerplate text not loaded!");
 
     spinner.hide();
@@ -71,7 +74,7 @@ stir.course = (function () {
     options: () => (optionChooser.innerHTML = ""),
   };
 
-  // DOM disaplay/callback functions
+  // DOM display/callback functions
   const handle = {
     routes: (frag) => routeChooser.append(frag),
     options: (frag) => optionChooser.append(frag),
@@ -80,16 +83,47 @@ stir.course = (function () {
       moduleBrowser.append(frag);
       reflow();
     },
-    module: (id, url) => {
+    module: (id, url, index) => {
       reset.module();
       spinner.show();
+      stir.dpt.set.pointer(index);
+      navManager.el.setAttribute("data-mc",index);
       stir.akari.get.module(id, render);
       moduleViewer.showModal();
       if (url) {
-        history.pushState({ uid: ++status.uid }, "", url);
+        try {
+          // Error will be thrown if the URL is not of the same origin:
+          history.pushState({ uid: ++status.uid }, "", url); 
+        } catch(e) { }
       }
     },
     version: (frag) => version && frag && (version.textContent = frag),
+    fallback: {
+      options: () => {
+        // FALLBACK if DPT OPTIONS fails to load
+        // 1. Get all links in this tab. (Assumption: parent element).
+        const modLinks = Array.prototype.slice.call( container.parentElement.querySelectorAll('a') )
+          // 2. filter for hard-coded module links
+          .filter(a=>a.pathname==="/courses/module/");
+          
+        // 3. examine each remaining link:
+        modLinks.forEach( (a,i,o)=>{
+          // 3a. Get module details from query parameters
+          const p = new URLSearchParams(a.search)
+          const moduleIdentifier = `${p.get("code")}/${p.get("session")}/${p.get("semester")}`;
+          // 3b. recreate cache and data attributes needed for prev/next action
+          a.setAttribute("data-index",i);
+          a.setAttribute("data-spa",moduleIdentifier);
+          stir.dpt.addToCache({modName:a.textContent, modCode:p.get("code"), mavSemSession:p.get("session"), mavSemCode:p.get("semester"), mavOccurrence:""});
+          //3c. intercept clicks and show modal
+          a.addEventListener("click", e => {
+            e.preventDefault();
+            handle.module(moduleIdentifier,a.href,i);
+          });
+        });
+        status.total = modLinks.length - 1;
+      }
+    }
   };
   /** **/
 
@@ -108,6 +142,8 @@ stir.course = (function () {
   stir.dpt.set.reset.modules(reset.modules);
   stir.dpt.set.reset.module(reset.module);
   stir.dpt.set.reset.options(reset.options);
+  
+  stir.dpt.set.fallback.options(handle.fallback.options);
 
   window.addEventListener("popstate", (e) => {
     if (e.state && e.state.uid) {

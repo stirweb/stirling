@@ -67,6 +67,10 @@ stir.dpt = (function () {
   const splitCodes = (csv) => csv.replace(/\s/g, "").split(",");
 
   const getVersion = (type) => stir.getJSONp(`${urls.version[type]}`);
+  
+  const getPointer = () => _mcPointer;
+  
+  const setPointer = value => _mcPointer = value;
 
   const getRoutes = (type, routesCSV, auto) => {
     user.type = type;
@@ -79,7 +83,9 @@ stir.dpt = (function () {
     user.type = type;
     user.rouCode = roucode;
     user.auto = auto;
-    stir.getJSONp(`${urls.servlet}${urls.option(type, roucode)}`);
+    stir.getJSONp(`${urls.servlet}${urls.option(type, roucode)}`,null,event=>{
+      stir.dpt.fallback.options(event)
+    });
   };
 
   const getModules = (type, roucode, moa, occ) => stir.getJSONp(`${urls.servlet}${urls.modules(type.toLowerCase(), roucode, moa, occ)}`);
@@ -117,14 +123,14 @@ stir.dpt = (function () {
     },
     module: (data) => {
       // stash a list of modules to facilitate prev/next navigation among them
-      _moduleCache.push({
+      addToCache({
           modName:data.modName,
           modCode:data.modCode,
           mavSemSession:data.mavSemSession,
           mavSemCode:data.mavSemCode,
           mavOccurrence:data.mavOccurrence});
 
-      return `<tr><td>${moduleLink(data,_moduleCache.length)}
+      return `<tr><td>${moduleLink(data,_moduleCache.length-1)}
 			<span class=c-course-modules__module-code>(${data.modCode})</span>
 			</td><td>${data.modCredit} credits</td></tr>`;
     },
@@ -210,8 +216,7 @@ stir.dpt = (function () {
 
   function viewModule(e) {
     e.preventDefault();
-    _mcPointer = parseInt(this.getAttribute('data-index'))-1;
-    stir.dpt.show.module( this.getAttribute('data-spa'), this.getAttribute('href') );
+    stir.dpt.show.module( this.getAttribute('data-spa'), this.getAttribute('href'), parseInt(this.getAttribute('data-index')) );
   }
 
   const versionToSession = (data) => {
@@ -354,6 +359,8 @@ stir.dpt = (function () {
     option.textContent = data; // fallback/debug
     return option;
   };
+  
+  const addToCache = obj => _moduleCache.push(obj);
 
   ///////////////////////////////////////
 
@@ -369,12 +376,12 @@ stir.dpt = (function () {
       version:  na,
       next: function(e) {
         if(_mcPointer===_moduleCache.length-1) return;
-        stir.dpt.show.module( moduleIdentifier(_moduleCache[++_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
+        stir.dpt.show.module( moduleIdentifier(_moduleCache[++_mcPointer]), moduleUrl(_moduleCache[_mcPointer]), _mcPointer);
         this.parentElement && this.parentElement.setAttribute('data-mc',_mcPointer);
       },
       previous: function(e) {
         if(_mcPointer<=0) return;
-        stir.dpt.show.module( moduleIdentifier(_moduleCache[--_mcPointer]), moduleUrl(_moduleCache[_mcPointer]));
+        stir.dpt.show.module( moduleIdentifier(_moduleCache[--_mcPointer]), moduleUrl(_moduleCache[_mcPointer]), _mcPointer);
         this.parentElement && this.parentElement.setAttribute('data-mc',_mcPointer);
       }
     },
@@ -382,24 +389,24 @@ stir.dpt = (function () {
       options: getOptions,
       routes: getRoutes,
       viewer: () => urls.viewer,
-      version: getVersion
+      version: getVersion,
+      pointer: getPointer
     },
     reset: {
       module:  na,
       modules: na,
       options: na
     },
+    fallback: {
+      options: na
+    },
     set: {
       viewer: (path) => (urls.viewer = path),
+      pointer: setPointer,
       show: {
         routes: (callback) =>
           (routesCurry = stir.curry((routes, data) =>
-            callback(
-              makeSelector(
-                data.filter((route) => routes.includes(route.rouCode)),
-                "rouCode"
-              )
-            )
+            callback(makeSelector(data.filter((route) => routes.includes(route.rouCode)),"rouCode"))
           )),
         options: (callback) =>
           (stir.dpt.show.options = (data) => {
@@ -408,16 +415,20 @@ stir.dpt = (function () {
               getModules(user.type, user.rouCode, data[0][0], data[0][2]);
             }
           }),
+        module:  (callback) => (stir.dpt.show.module   =  callback),
         modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data),_moduleCache.length-1)),
-        module:  (callback) => (stir.dpt.show.module  =  (a,b) => callback(a,b)),
         version: (callback) => (stir.dpt.show.version = (data) => callback(versionToSession(data)))
       },
       reset: {
-        module:  (callback) => (stir.dpt.reset.module = callback),
+        module:  (callback) => (stir.dpt.reset.module  = callback),
         modules: (callback) => (stir.dpt.reset.modules = callback),
         options: (callback) => (stir.dpt.reset.options = callback),
       },
+      fallback: {
+        options: callback => stir.dpt.fallback.options = callback
+      }
     },
+    addToCache: addToCache,
     debug: {
       version: (data) => {
         console.info(data);
