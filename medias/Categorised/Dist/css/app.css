@@ -7947,6 +7947,9 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   /* 
       Staff, Events, News panel results
   */ }
+  .c-search-results-area .c-search-results-summary p,
+  .c-search-results-area .c-search-result__body p {
+    margin: 0; }
   .c-search-results-area .c-search-results-summary .c-tag,
   .c-search-results-area .c-search-result__body .c-tag {
     padding: 0.3rem;
@@ -7964,13 +7967,28 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
         POP UP result
     */
     /* End POP UP result */ }
-    .c-search-results-area .c-search-result a {
-      border-bottom: 1px solid #006938; }
-      .c-search-results-area .c-search-result a:hover {
-        border-bottom: 1px solid #9fcd6a; }
     .c-search-results-area .c-search-result li,
     .c-search-results-area .c-search-result p:not(.u-text-regular) {
       font-size: 1rem; }
+    .c-search-results-area .c-search-result[data-result-type="news"] .c-search-result__image img {
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      /* make images square */ }
+    .c-search-results-area .c-search-result[data-result-type="person"] .c-search-result__image img {
+      aspect-ratio: 1;
+      object-fit: cover;
+      /* make images square */ }
+    .c-search-results-area .c-search-result[data-result-group=research] {
+      /* Research Hub lacks proper breadcrumb meta data
+       * and the default data is all lowercase. We can
+       * safely 'Sentence case-ify' it with CSS.
+       * (That is not so true for general pages) .
+      */ }
+      .c-search-results-area .c-search-result[data-result-group=research] .c-search-result__trail a {
+        display: inline-block;
+        /* needed for ::first-letter */ }
+        .c-search-results-area .c-search-result[data-result-group=research] .c-search-result__trail a::first-letter {
+          text-transform: uppercase; }
     .c-search-results-area .c-search-result.c-popout-result {
       border-left: 0px !important;
       padding: 0;
@@ -8013,6 +8031,16 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     .c-search-results-area .c-search-result .c-search-result__tags {
       position: absolute;
       top: -15px; }
+    .c-search-results-area .c-search-result .c-search-result__trail a {
+      border: 0;
+      font-size: .875rem;
+      /* 14px */
+      color: #000;
+      text-decoration-thickness: 1px; }
+      .c-search-results-area .c-search-result .c-search-result__trail a:hover {
+        color: #006938; }
+    .c-search-results-area .c-search-result .c-search-result__trail + .c-search-taggroup {
+      margin-top: 2rem; }
   .c-search-results-area .c-search-result-curated {
     position: relative;
     margin: 0 0 3rem 0; }
@@ -8141,6 +8169,8 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   .c-search-results-area .c-search-results-all .c-course-search-result > div {
     display: grid;
     gap: 20px 30px; }
+  .c-search-results-area .c-search-results-all [data-as-type="PINNED"]::before {
+    content: "\e964"; }
   .c-search-results-area .c-search-results-all .c-course-search-result::before,
   .c-search-results-area .c-search-results-all [data-result-type="course"]::before {
     content: "\e9a1"; }
@@ -8157,10 +8187,16 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   .c-search-results-area .c-search-results-all .c-research-search-result::before,
   .c-search-results-area .c-search-results-all [data-result-type*="output"]::before {
     content: "\e9a4"; }
+  .c-search-results-area .c-search-results-all [data-result-type="scholarship"]::before {
+    content: "\e947"; }
   .c-search-results-area .c-search-results-all [data-result-type*="person"]::before {
     content: "\e9a5"; }
+  .c-search-results-area .c-search-results-all [data-result-type="studentstory"]::before {
+    content: "\e991"; }
   .c-search-results-area .c-search-results-all [data-result-type="document"]::before {
     content: "\e92a"; }
+  .c-search-results-area .c-search-results-all [data-result-type="blog"]::before {
+    content: "\e908"; }
   .c-search-results-area .c-search-result[data-delivery="online"]::after {
     /* content: "\e998"; */
     /* videochat */
@@ -8180,6 +8216,9 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     justify-content: center;
     font-size: 6rem;
     color: #838383; }
+
+.c-search-results__loadmore button[disabled] {
+  display: none; }
 
 /* Visual indicator for Clearing courses */
 .c-search-result__seasonal {

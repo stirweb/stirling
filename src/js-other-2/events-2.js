@@ -117,6 +117,7 @@
   };
 
   const renderTimes = (startTime, endTime) => {
+    //console.log(startTime, endTime);
     return `
       <div class="u-flex u-gap-16 align-middle">
         <span class="uos-clock u-icon h5"></span>
@@ -126,6 +127,10 @@
 
   const renderInfoTag = (val) => {
     return !val ? `` : `<span class="u-bg-heritage-berry u-white text-xxsm u-p-tiny u-mr-1">${val}</span>`;
+  };
+
+  const renderTab = (type) => {
+    return type ? `data-label-icon=${type}` : ``;
   };
 
   /*
@@ -145,9 +150,15 @@
     const cookie = stir.favourites && stir.favourites.getFav(cf.sid, cookieType);
     const favId = item.repeater ? cf.sid + "|" + new Date(item.start).getTime() : cf.sid;
 
+    const isSeries = data.isSeries ? "startdates" : "";
+    const isPinned = data.pin === "Yes" ? "pin" : "";
+
+    const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+
     return `
         <div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event"
-          data-label-icon="${data.isSeries ? "startdates" : ""}" data-perf="172580">
+          ${renderTab(isSeries)} ${renderTab(isPinned)} data-perf="172580">
           ${data.isSeries ? renderWeeTab(item) : ""}
          
             <div class="u-grid-medium-up u-gap-24 ${cf.image ? "u-grid-cols-3_1" : ""}">
@@ -160,7 +171,7 @@
                         <span class="u-icon h5 uos-calendar"></span>
                         <span>${renderDates(dateTimes)}</span>
                     </div>
-                    ${showTimes ? renderTimes(item.startTime, item.endTime) : ``}
+                    ${showTimes ? renderTimes(startTime, endTime) : ``}
                     <div class="u-flex u-gap-16 align-middle">
                         <span class="u-icon h5 uos-location "></span>
                         <span>${data.location || ""}</span>
@@ -191,6 +202,10 @@
     const favId = item.repeater ? cf.sid + "|" + new Date(item.start).getTime() : cf.sid;
     const showTimes = dateTimes.start === dateTimes.end ? true : false;
 
+    // Get start time from string 2026-03-25T14:00:00.000Z
+    const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+
     return `<div class="grid-x u-bg-grey u-mb-2 ">
             <div class="cell small-12 ${cf.image ? `medium-8` : ``} ">
                 <div class="u-relative u-p-2 u-flex flex-dir-column u-gap-8 u-h-full">
@@ -204,7 +219,7 @@
                           <span class="u-icon h5 uos-calendar"></span>
                           <span>${renderDates(dateTimes)}</span>
                       </div>
-                     ${showTimes ? renderTimes(dateTimes.start, dateTimes.end) : ``}
+                     ${showTimes ? renderTimes(startTime, endTime) : ``}
                       <div class="u-flex u-gap-16 align-middle">
                           <span class="u-icon h5 ${item.online ? `uos-computer` : `uos-location`}"></span>
                           <span>${data.location}</span>
@@ -232,7 +247,7 @@
     const favId = cf.sid;
     const dateTimes = getEventDateTimes(cf.d, cf.e);
     const startTime = new Date(cf.d).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+    const endTime = new Date(cf.e).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
 
     return `<div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" 
               data-result-type="event" data-perf="${cf.sid}">
@@ -334,6 +349,7 @@
     }
 
     const filterObject = { and: filterConditions };
+
     return `&limit=${limit}&order=desc&filter=${encodeURIComponent(JSON.stringify(filterObject))}&sort=custom_fields.e&`;
   }
 
@@ -512,7 +528,7 @@
       `&limit=50&order=asc&filter=${encodeURIComponent(
         JSON.stringify({
           and: [{ "custom_fields.tag": "Series" }],
-        })
+        }),
       )}&sort=custom_fields.sort`;
 
     try {
@@ -576,7 +592,7 @@
         const nextPage = event.target.getAttribute("data-page");
 
         const selectedValue = node.parentNode.querySelector("input[type='radio']:checked").value;
-        const filterString = getArchiveFilterString(selectedValue, limit);
+        const filterString = getArchiveFilterString(selectedValue, limit, maintags);
 
         fetch(baseUrl + filterString + `page=${nextPage}`)
           .then((response) => response.json())
@@ -603,7 +619,7 @@
           event.stopPropagation();
 
           const selectedValue = event.target.value;
-          const filterString = getArchiveFilterString(selectedValue, limit);
+          const filterString = getArchiveFilterString(selectedValue, limit, maintags);
 
           fetch(baseUrl + filterString + `page=1`)
             .then((response) => response.json())
@@ -797,7 +813,7 @@
       });
     }
 
-    const filterString = `&limit=90&order=asc&filter=${encodeURIComponent(JSON.stringify(upcomingObj))}&sort=custom_fields.d&`;
+    const filterString = `&limit=90&resultType=organic&order=asc&filter=${encodeURIComponent(JSON.stringify(upcomingObj))}&sort=custom_fields.d&`;
 
     fetch(searchUrl + filterString + `page=1`)
       .then((response) => response.json())
@@ -946,7 +962,7 @@
       .filter(Boolean);
 
     const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-    const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&`;
+    const searchUrl = `${searchAPI}?term=*&customField=type%3Devent&resultType=organic&`;
 
     const seriesData = await doSeriesSearch(searchUrl);
 

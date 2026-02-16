@@ -37,8 +37,7 @@
 
     <link rel="preload" href="../../../medias/Categorised/Dist/fonts/fsmaja/FSMajaWeb-Regular.woff" as="font"
         type="font/woff" crossorigin>
-    <link rel="preload" href="../../../medias/Categorised/Dist/fonts/general-sans/GeneralSans-Bold.ttf" as="font"
-        type="font/ttf" crossorigin>
+    <!-- <link rel="preload" href="../../../medias/Categorised/Dist/fonts/general-sans/GeneralSans-Bold.ttf" as="font" type="font/ttf" crossorigin> -->
     <link rel="preload" href="../../../medias/Categorised/Dist/fonts/general-sans/GeneralSans-Regular.ttf" as="font"
         type="font/ttf" crossorigin>
     <link rel="preload" href="../../../medias/Categorised/Dist/fonts/fonts.css?v=7.1" as="style">
@@ -47,17 +46,6 @@
     <link rel="preload" href="../../../medias/Categorised/Dist/css/app.min.css?v=394.1" as="style">
     <link rel="stylesheet" href="../../../medias/Categorised/Dist/css/app.min.css?v=394.1">
 
-
-    <script>
-        (function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://load.collect.stir.ac.uk/qguyvksw.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-NLVN8V');
-    </script>
 </head>
 
 <body class="external-pages">
@@ -405,15 +393,6 @@
                             </span>
                             <span class=show-for-medium>Home</span></a></li>
                     <li><a href="/search/">Search</a></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
                 </ul>
             </div>
         </div>
@@ -472,76 +451,46 @@
         </div>
         <!-- Search  -->
         <section class=" c-search-results-area hide u-margin-top" aria-label="Search results area">
+            
             <div class="c-wrapper u-bg-grey u-padding-bottom ">
                 <div class="grid-x grid-container ">
                     <div class="cell" id="mySlider1">
                         <!-- 
-                        Events Panel 
+                            All Results Panel 
                         -->
-                        <div class="c-search-results-events c-search-results-panel" data-panel=event>
+                        <div class="c-search-results-all c-search-results-panel" data-panel=all>
 
                             <!-- SUMMARY -->
                             <div class="c-search-results-summary">
-                                Events Summary
+                                All Summary
                             </div>
 
                             <!-- FILTERS -->
-                            <aside class="c-search-results-filters">
-                                <p class="c-search-filters-header u-font-bold"><span class="uos-shuffle"></span> Filter
-                                    your results</p>
-                                <div>
-                                    <form action="null" data-filters="event">
-				<fieldset>
-					<legend class="show-for-sr">Filter events by type</legend>
-	
-					<div data-behaviour=accordion class="stir-accordion--active">
-						<accordion-summary>Event type</accordion-summary>
-						<div>
-							<ul>
-								<li><label><input type=radio value="type=webinar" name=customField>Webinar</label></li>
-								<li><label><input type=radio value="tag=OnDemand" name=customField><attr title="video on demand">VOD</attr></label></li>
-								<li><label><input type=radio value="delivery=online" name=customField>Online</label></li>
-								<li><label><input type=radio value="tag=Art Collection" name=customField>Art Collection</label></li>
-								<li><label><input type=radio value="tag=Course information" name=customField>Course information</label></li>
-								<li><label><input type=radio value="tag=CEHP" name=customField>CEHP</label></li>
-								<li><label><input type=radio value="tag=Public" name=customField>Public events</label></li>
-								<li><label><input type=radio value="tag=StaffStudent" name=customField>Staff/Student events</label></li>
-							</ul>
-							<p>Not available yet:</p>
-							<ul>
-								<li><label><input disabled type=radio value="exhibition" name=customField>Exhibition</label></li>
-								<li><label><input disabled type=radio value="open" name=customField>Open Day</label></li>
-							</ul>
-						</div>
-					</div>
-				</fieldset>
-                                        <input type=reset value="Clear all filters" class="button tiny hollow expanded u-mt-1">
-                                    </form>
-                                </div>
-                            </aside>
+                            <!-- <aside class="c-search-results-filters"> </aside> -->
 
                             <!-- RESULTS -->
-                            <div class="c-search-results" data-type="event" data-infinite> </div>
+                            <div class="c-search-results" data-type=all data-infinite> </div>
 
                             <!-- ASIDE -->
                             <aside class="c-search-results-asides">
                                 <div class="u-p-2 u-bg-white">
                                     <p class="u-text-regular u-font-bold flex-container u-gap-8 align-middle">
-                                        <span class="uos-pin u-icon h5"></span> What's happening
+                                        <span class="uos-cap u-icon h5"></span>Looking for a course?
                                     </p>
-
-                                    <p><a href="/events/">See all our public events</a></p>
-                                    <p><a href="/study/visit-us/university-open-days/">Open days</a></p>
-                                    <p><a href="/events/webinars/">Join a webinar</a></p>
-                                    <p><a href="/events/graduation/">Graduation</a></p>
-                                    <p><a href="/about/art-collection/whats-on/">Art Collection</a></p>
-                                    <p>BeConnected events for students and staff</p>
+                                    <div class="c-search-looking-for-panel__results" data-type=coursemini
+                                        data-fallback=search-all-aside-fallback></div>
                                 </div>
+                                <script type="text/html" id=search-all-aside-fallback>
+                                    <p><a href="/study/undergraduate/">Undergraduate study</a></p>
+                                    <p><a href="/study/postgraduate/">Postgraduate study</a></p>
+                                </script>
                             </aside>
+
                         </div>
+                        
                     </div>
                 </div>
-				</div>
+            </div>
         </section>
         <!-- End Search -->
         <div class="grid-x grid-container">
@@ -644,4 +593,134 @@
                     <p class="text-md"><strong>Popular links</strong></p>
                     <nav aria-label="Popular links">
                         <ul class="u-flex flex-dir-column u-gap no-bullet text-sm">
-                            <li><a href="/about/faculties/">Faculties</a></li>
+                            <li><a href="/about/faculties/">Faculties</a></li>
+                            <li><a href="/about/professional-services/">Professional services</a></li>
+                            <li><a href="/about/our-people/alumni/">Alumni</a></li>
+                            <li><a href="/about/work-at-stirling/">Jobs at Stirling</a></li>
+                            <li><a href="/about/getting-here/">Getting here</a></li>
+                            <li><a href="/student-life/students-union/">Students’ Union</a></li>
+                            <li><a href="https://shop.stir.ac.uk/">Online shop</a></li>
+                            <li><a href="https://blog.stir.ac.uk/ ">Blog</a></li>
+                            <li><a aria-label="Information for current students" id="footer-link-students"
+                                    rel="nofollow" href="/internal-students/">Current students</a></li>
+                            <li><a aria-label="Information for current staff" id="footer-link-staff" rel="nofollow"
+                                    href="/internal-staff/">Staff</a></li>
+
+                        </ul>
+                    </nav>
+                </div>
+
+                <div>
+                    <p class="text-md"><strong>Site information</strong></p>
+                    <nav aria-label="Site information">
+                        <ul class="u-flex flex-dir-column u-gap no-bullet text-sm">
+                            <li><a href="/about/policy-legal-and-cookies/">Policy, Legal and Cookies</a></li>
+                            <li><a href="/about/accessibility/">Accessibility statement</a></li>
+                            <li><a href="/sitemap/">Sitemap</a></li>
+                            <li><a href="/about/modern-slavery-statement/">Modern Slavery Statement</a></li>
+                            <li><a href="/about/">Scottish Charity No SC011159</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="hide-for-large"></div>
+
+                <div id="footer-contact">
+                    <p class="text-md"><strong>Contact us</strong></p>
+                    <a href="tel:+44(0)1786473171" class="u-block u-mb-1">Tel: +44 (0) 1786 473171</a>
+
+                    University of Stirling<br>
+                    Stirling<br>
+                    FK9 4LA<br>
+                    Scotland UK<br>
+
+                    <a href="https://portal.stir.ac.uk/student/enquiry/ask.jsp" class="u-block u-mt-1">Ask us a question
+                        &#10217;</a>
+                </div>
+
+                <div>
+                    <figure class="site-footer__map">
+                        <a href="/about/getting-here/">
+                            <img src="../../../medias/Categorised/Dist/css/images/maps/footer-map-scotland.svg"
+                                alt="Map of the UK with a marker indicating the location of the University of Stirling"
+                                loading=lazy>
+                        </a>
+                        <figcaption class="show-for-sr">Map of the United Kingdom of Great Britain and Northern Ireland
+                        </figcaption>
+                    </figure>
+                </div>
+
+            </div>
+
+            <div class="grid-container">
+                <hr class="hr-2 u-opacity-10">
+            </div>
+
+            <div class="grid-container">
+                <div class="u-grid u-grid-equal-cols u-gap ">
+                    <div>
+                        <div class="u-relative u-left--16  u-top-32">
+                            <img src="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn../../../medias/Categorised/Dist/images/accreditations/cred1x.png"
+                                srcset="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn../../../medias/Categorised/Dist/images/accreditations/cred.png 2x"
+                                width="250" height="38" alt="Athena Swan Silver Award, UK QAA, SCQF" loading=lazy
+                                usemap=#accreditations>
+
+                            <map name=accreditations>
+                                <area alt="Athena Swan Silver Award"
+                                    href="/about/professional-services/student-academic-and-corporate-services/policy-and-planning/equality-diversity-and-inclusion/gender-equality/athena-swan-charter/"
+                                    shape=rect coords="18,0,78,38">
+                                <area alt="Facts and Figures" href="/about/our-reputation/facts-and-figures/" shape=rect
+                                    coords="88,0,250,38">
+                            </map>
+                        </div>
+                    </div>
+
+                    <div class=" u-flex items-end flex-dir-column">
+                        <img src="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn../../../medias/Categorised/Dist/images/btd-strap-white.svg"
+                            alt="Be the difference" loading=lazy id="imgBeTheDiff">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright Footer -->
+        <div class="c-copyright u-bg-dark-mink u-white">
+            <div class="grid-x grid-container">
+                <div class="cell large-12 medium-12 small-12 u-white">
+                    <p class="text-sm">&copy; University of Stirling</p>
+                </div>
+            </div>
+        </div>
+        <!-- Back to top button -->
+        <a href="#" id="c-scroll-to-top-button" class="c-scroll-to-top flex-container align-middle align-center"><span
+                class="show-for-sr">Scroll back to the top</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="u-svg-24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+            </svg>
+        </a>
+
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src=https://load.collect.stir.ac.uk/ns.html?id=GTM-NLVN8V height="0" width="0"
+                style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
+    </footer>
+    <!--endnoindex-->
+
+    <!-- app.min.js -->
+    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=142.1"></script>
+
+
+    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/favourites.js?v=9.1"></script>
+    <!-- Favs -->
+    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/other/course-favs.js?v=10.1"></script>
+    <!-- Course Favs -->
+    <script src=addsearch-values.js></script>
+    <script type="text/javascript" src="../../../medias/Categorised/Dist/js/addsearch/search-min.js?v=77.1"></script>
+    <script>
+        stir.t4Globals.search.facets["Delivery mode"]["hybrid"] = "Blended";
+    </script>
+
+</body>
+
+</html>
