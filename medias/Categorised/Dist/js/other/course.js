@@ -1047,7 +1047,7 @@ stir.dpt = (function () {
   };
 
   const modulesOverview = (data) => {
-
+    _moduleCache = [],_mcPointer = 0;
     let frag = document.createDocumentFragment();
     data.initialText && frag.append(paragraph(data.initialText));
 
