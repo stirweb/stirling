@@ -5,14 +5,14 @@
 */
 @font-face {
   font-family: "General Sans";
-  src: url('<t4 type="media" id="173668" formatter="path/*" />') format("OpenType"), url("../fonts/general-sans/GeneralSans-Regular.ttf") format("OpenType");
+  src: url('<t4 type="media" id="173668" formatter="path/*" />') format("truetype"), url("../fonts/general-sans/GeneralSans-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap; }
 
 @font-face {
   font-family: "General Sans";
-  src: url('<t4 type="media" id="179150" formatter="path/*" />') format("OpenType"), url("../fonts/general-sans/GeneralSans-Semibold.ttf") format("OpenType");
+  src: url('<t4 type="media" id="179627" formatter="path/*" />') format("truetype"), url("../fonts/general-sans/GeneralSans-Semibold.ttf") format("truetype");
   font-weight: 700;
   font-style: bold;
   font-display: swap; }
