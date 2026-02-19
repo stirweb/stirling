@@ -1303,7 +1303,8 @@ stir.search = (() => {
 				all: {
 					term: "University of Stirling",
 					limit: NUMRANKS,
-					collectAnalytics: false
+					collectAnalytics: false,
+					fuzzy: "auto"
 				},
 				news: {
 					customField: "type=news",
@@ -1337,7 +1338,8 @@ stir.search = (() => {
 				},
 				course: {
 					customField: "type=course",
-					collectAnalytics: false
+					collectAnalytics: false,
+					fuzzy: "auto"
 				},
 				coursemini: {
 					customField: "type=course",
