@@ -102,7 +102,7 @@ stir.Concierge = function Concierge(popup) {
 
   const renderCourseItem = (item) => {
     const title = item.title.split(" | ")[0];
-    const award = item.custom_fields.award ? item.custom_fields.award + " " : "";
+    const award = item.custom_fields ? item.custom_fields.award ? item.custom_fields.award + " " : "" : "";
     return `
 			<li class="c-header-search__item">
 				<a href="${item.url}">${award}${title}</a>
@@ -117,14 +117,19 @@ stir.Concierge = function Concierge(popup) {
   };
 
   // P A R S I N G
+  
+  const onlyUnique = (value, index, self)  => self.indexOf(value) === index;
+  const noBoolean = value  => ["and","or"].indexOf(value) === -1;
 
   function parseSuggestions(suggests) {
     suggests = suggests.suggestions.map((item) => item.value);
     const max = 5;
 
     if (suggests.length > 0) {
+      // max 20 words and limit of 300 chars
+      const term = (suggests.join(" ").split(" ").filter(noBoolean).filter(onlyUnique).slice(0,20).join(" ")).slice(0,300);
       stir.addSearch
-        .getResults({ term: suggests.join(", "), collectAnalytics: false, defaultOperator: "or", fuzzy: "auto" })
+        .getResults({ term: term, collectAnalytics: false, defaultOperator: "or", fuzzy: "auto", resultType: "organic" })
         .then((response) => response.json())
         .then(parseResults)
         .catch((e) => console.error(e));
@@ -136,7 +141,7 @@ stir.Concierge = function Concierge(popup) {
     } else {
       // no suggests so use the raw inputted query to perform the search
       stir.addSearch
-        .getResults({ term: prevQuery, collectAnalytics: false })
+        .getResults({ term: prevQuery, collectAnalytics: false, resultType: "organic" })
         .then((response) => response.json())
         .then(parseResults)
         .catch((e) => console.error(e));
