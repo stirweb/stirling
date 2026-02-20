@@ -1,3 +1,4 @@
+'t4test';
 /**
  * Support functions for course page and modules
  * Mainly HTML DOM stuff and hard-coded text.
