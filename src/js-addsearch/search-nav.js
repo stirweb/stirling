@@ -230,11 +230,12 @@ var scrollend = { __proto__: null };
         // Update URL query parameter if event is user-initiated
         if (event.isTrusted) {
           QueryParams.set("tab", openTabId);
+          btn.hasAttribute("data-tab-callback") && stir.callback.enqueue(btn.getAttribute("data-tab-callback"));
         }
       });
     });
 
-    // Initialize tab panel attributes for accessibility
+    // Initialise tab panel attributes for accessibility
     // (only if there is more than one tab)
     if(tabs && tabs.length > 1) {
       tabs.forEach((tab) => {

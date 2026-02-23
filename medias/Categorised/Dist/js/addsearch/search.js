@@ -16,18 +16,18 @@ stir.templates.search = (() => {
 	// STAFF / STUDENT status checking
 	const groups = {
 		staff: "University of Stirling staff",
-		students: "current students and staff",
+		student: "current students and staff",
 	};
 	const entitlements = {
-		staff: ["staff", "students"],
-		student: ["students"],
+		staff: ["staff", "student"],
+		student: ["student"],
 	};
 	const afce4eafce490574e288574b384ecd87 = window[["s", "e", "i", "k", "o", "o", "C"].reverse().join("")]; // Just a bit of mild fun to stop anyone text-searching for "Cookies"!
 	const isUser = afce4eafce490574e288574b384ecd87.get("psessv0") ? true : false; // Cookie could be spoofed, but we'll trust it. The Portal will enforce authentication anyway.
 	const userType = isUser ? afce4eafce490574e288574b384ecd87.get("psessv0").split("|")[0] : "EXTERNAL";
 	const userAuth = (group) => entitlements[userType.toLowerCase()]?.indexOf(group.toLowerCase()) > -1;
 	const authClass = (group) => (userAuth(group) ? " c-internal-search-result" : " c-internal-locked-search-result");
-	const authMessage = (group) => notice(`This page is only available to ${groups[group]}. You will be asked to log in before you can view it, but once you are logged in results will be shown automatically.`);
+	const authMessage = (group) => notice(`This page is only available to ${groups[group]||group}. You will be asked to log in before you can view it, but once you are logged in results will be shown automatically.`);
 	const internalSummary = (text, group) => (userAuth(group) ? summary(text) : authMessage(group));
 
 	// Special handling for documents (PDF, DOC; as opposed to native web results)
@@ -38,10 +38,11 @@ stir.templates.search = (() => {
 
 	const makeBreadcrumbs = (item) => {
 		const crumbs = {
-			text: item.categories.slice(1),
+			text: item.custom_fields.breadcrumb ? item.custom_fields.breadcrumb.split(" > ").slice(1, -1) : item.categories.slice?item.categories.slice(1,-1).map(crumb=>crumb.split("x")[1]):[''],
 			href: new URL(item.url).pathname.split("/").slice(1, -1),
 		};
-		const trail = crumbs.text.map((text, index) => ({ text: text.split("x")[1], href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" }));
+		
+		const trail = crumbs.text.map((text, index) => ({ text: text, href: "/" + crumbs.href.slice(0, index + 1).join("/") + "/" }));
 
 		if (trail && trail.length > 0) {
 			return stir.templates.search.breadcrumb(stir.templates.search.trailstring(trail));
@@ -53,7 +54,7 @@ stir.templates.search = (() => {
 	};
 
 	const checkSpelling = (suggestion) => (suggestion ? `<p>Did you mean <a href="#" data-suggest>${suggestion.text.split(" ")[0]}</a>?</p>` : "");
-
+	
 	/**
 	 *
 	 * @param {String} name
@@ -62,7 +63,12 @@ stir.templates.search = (() => {
 	 *
 	 * For a given name and value, return the first matching HTML <input> or <option> element.
 	 */
-	const metaParamElement = (name, value) => document.querySelector(`form[data-filters] input[name="${name}"][value="${value}"],select[name="${name}"] option[value="${value}"]`);
+	const metaParamElement = (name, value) => {
+		const selector = `form[data-filters] input[name="${name}"][value="${value}"]`; //,select[name="${name}"] option[value="${value}"]
+		try {
+			return document.querySelector(selector);
+		} catch(e) { }
+	};
 
 	//	const metaParamToken = (name, values) => {
 	//		if (name === "meta_type") return; // ignore `type`
@@ -121,6 +127,8 @@ stir.templates.search = (() => {
 			})
 			.join(" ");
 	};
+	
+	const searchParamTokens = parameters => Array.from(parameters.entries()).map( item=> item[1] && item[1].indexOf('"')>=0 ? '' : (paramToken(item[0],item[1])||'') ).join(' ');
 
 	/**
 	 *
@@ -145,6 +153,16 @@ stir.templates.search = (() => {
 	const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
 
 	const label = (input) => {
+		if("undefined"===typeof input) return;
+		const labels = {
+			contract: "Research project",
+			publication: "Research output",
+			centre: "Research centre/group",
+			area: "Research programme",
+			scholarship: "Scholarship",
+			blog: "Blog",
+			policyblog: "Policy blog"
+		};
 		switch (input) {
 			case "staff":
 				return "Staff";
@@ -152,28 +170,22 @@ stir.templates.search = (() => {
 				return "Student";
 			case "module":
 				return "CPD and short courses";
-			case "Postgraduate (taught)":
-			case "Postgraduate (research)":
+			case "postgraduate (taught)":
+			case "postgraduate (research)":
 				return "Postgraduate";
 			case "undergraduate":
 				return "Undergraduate"
 			default:
-				return input;
+				return labels[input]||input;
 		}
 	};
 
 	const image = (image, alt, width, height) => {
-		if (!image) return "";
-
+		if (!image) return " <!-- no image --> ";
 		const url = image.indexOf("|") > -1 ? image.split("|")[1] || image.split("|")[0] : image;
-		return `<div class=c-search-result__image>
-			${stir.funnelback.getCroppedImageElement({
-			url: url.trim(),
-			alt: alt || "",
-			width: width || 550,
-			height: height || 550,
-		})}
-			</div>`;
+		const data = {url: url.trim(),alt: alt || "",width: width || 550,height: height || 550};
+		const cropped = getCroppedImageElement(data);
+		return `<div class=c-search-result__image>${cropped}</div>`; 
 	};
 
 	const flickrUrl = (flickr) => (flickr.id ? `https://farm${flickr.farm}.staticflickr.com/${flickr.server}/${flickr.id}_${flickr.secret}_c.jpg` : "");
@@ -198,7 +210,14 @@ stir.templates.search = (() => {
 	const anchor = (crumb) => `<a href="${crumb.href}">${crumb.text}</a>`;
 	const t4preview = (sid) => (sid ? `/terminalfour/preview/1/en/${sid}` : "#");
 	const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
-	const unpackData = (data) => "object"===typeof data ? Object.assign({},...data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(data));
+	
+	const unpackData = data => {
+		if("undefined"===typeof data)	return {};
+		if(String===data.constructor)	return JSON.parse(decodeURIComponent(data));
+		if(Array===data.constructor)	return Object.assign({},...data.map(datum=>JSON.parse(decodeURIComponent(datum))));
+		if(Object===data.constructor)	return data;
+		return	{};
+	};
 	
 	const facetDisplayTypes = {
 		SINGLE_DRILL_DOWN: undefined,
@@ -215,27 +234,55 @@ stir.templates.search = (() => {
 		}
 		const facets = stir.t4Globals.search.facets;
 		return (facet, label) => {
-			if (!facets[facet]) return label;
+			if (!facets[facet]) return label;		// unknown facet
+
+			const strict = "Start date"===facet;
 			const labels = facets[facet];
+			const finder = (val) => label === val.toLowerCase();
+
+			// `labels` array
 			if (labels.findIndex) {
-				return labels[labels.findIndex((val) => label === val.toLowerCase())] || label;
-			} else if (labels[label]) return labels[label];
-			return label;
+				return labels[labels.findIndex(finder)] || label;
+			}
+			// `labels` object:
+			else if (labels[label]) {
+				return labels[label];
+			}
+			// label not found
+			return strict ? undefined : label;
 		};
 	})();
 
 	const facetCategoryLabel = (facet, label) => correctCase(facet, label);
 	const startDateFormatter = date => correctCase("Start date", date);
+	
 
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+	const serpTitle = item => item.title.split("|")[0].trim().replace(/\xA0/g, " ");
+	
+	const serplink = item => `<a href="${item.url}" data-docid="${item.id}" data-position="${item.position||''}">${serpTitle(item)}</a>`;
+
+	const nameLink = item => `<a href="${item.url}" data-docid="${item.id}" data-position="${item.position||''}">${item.custom_fields.name||serpTitle(item)}</a>`;
+	
+	const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
+	
+	const getCroppedImageElement = (parameters) => {
+		if (!parameters.url) return "<!-- no image -->";
+		return renderImgTag({ src: parameters.url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
+	};
+	
+	const getTags = (tags) => {
+		const html = (Object.values(tags||{})).map(i=>i.map(j=>j.desc?stir.templates.search.stag(j.desc):'').join(' ')).join(' ').trim();
+		return html ? `<p class=c-search-taggroup>${html}</p>` : '';
+	}
+	
+	const getResearchCategories = (raw) => {
+		return Object.keys(raw)
+		  .filter(key => ['ResearchProgrammes','ResearchGroups','ResearchThemes'].includes(key))
+		  .reduce((obj, key) => {
+			obj[key] = raw[key];
+			return obj;
+		  }, {})
+	};
 
 
 	/**
@@ -263,19 +310,18 @@ stir.templates.search = (() => {
 			summary: ".c-search-results-summary"
 		},
 		tag: tag,
-		stag: (tag) => (tag ? `<span class="c-search-tag">${tag}</span>` : ""),
-		tagGroup: (tagGroup) => {
-			const gData = tagGroup.split("=");
-			const list = gData[1] && gData[1].replace(/,([^\s])/gi, "__SPLIT__$&").split("__SPLIT__,");
-			return list ? list.map(stir.templates.search.stag).join("") : "";
-		},
-		breadcrumb: (crumbs) => `<p class="u-m-0">${crumbs}</p>`,
+		stag: (tag) => (tag ? `<span class=c-search-tag>${label(tag)}</span>` : ""),
+		stags: tags => tags ? `<div class=c-search-result__tags>${tags.map(stir.templates.search.stag).join('')}</div>` : '',
+		breadcrumb: (crumbs) => `<p class=c-search-result__trail>${crumbs}</p>`,
 		trailstring: (trail) => (trail.length ? trail.map(anchor).join("<small> &gt; </small> ") : ""),
 
-		message: (hit, count, queried) => {
+		message: (totalMatching, queried) => {
 			const p = document.createElement("p");
+			const hit = totalMatching > 0;
+			const pl = hit && totalMatching > 1;
+			const count = totalMatching.toLocaleString("en");
 			p.classList.add(hit ? "text-sm" : "search_summary_noresults");
-			p.innerHTML = hit ? `There are <strong>${count} results</strong>` : "<strong>There are no results</strong>";
+			p.innerHTML = hit ? (pl ? `There are <strong>${count} results</strong>` : `There is <strong>${count} result</strong>`) : "<strong>There are no results</strong>";
 			if (queried) p.insertAdjacentText("beforeend", " for ");
 			return p;
 		},
@@ -285,23 +331,21 @@ stir.templates.search = (() => {
 			const currStart = currEnd - data.hits;
 			const totalMatching = data.total_hits;
 			const summary = document.createElement("div");
-			const querySanitised = stir.String.htmlEntities(data.question.term)
+			const querySanitised = data.question && stir.String.htmlEntities(data.question.get("term"))
 									.replace(/^!padrenullquery$/, "")	//funnelback
 									.replace(/^\*$/, "")				//addsearch
 									.trim() || "";
 			const queryEcho = document.createElement("em");
-			const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
+			const message = stir.templates.search.message(totalMatching, querySanitised.length > 1);
 			//const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
-			//const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
+			const tokens = searchParamTokens(data.question);
+			const spelling = '';//querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
 			//const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
 
 			summary.classList.add("u-py-2");
 
 			queryEcho.textContent = querySanitised;
 			if (querySanitised.length > 1) message.append(queryEcho);
-
-			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
-			//summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
 			
 			/*
 			$$$$$$$\   $$$$$$\        $$\   $$\  $$$$$$\ $$$$$$$$\       $$\   $$\  $$$$$$\  $$$$$$$$\     
@@ -329,63 +373,79 @@ stir.templates.search = (() => {
 			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
 			/*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
 
-			//if (data) {summary.innerHTML = `<p>Page: ${data.page}, total_hits: ${data.total_hits}, hits: ${data.hits.length}</p>`;}
+			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
 			summary.append(message);
+			summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
 			
 			return summary;
 		},
 		pagination: (summary) => {
 			const { currEnd, totalMatching, progress } = summary;
 			return totalMatching === 0
-				? ""
+				? "<!-- no results to show -->"
 				: `
 			<div class="cell text-center u-my-2">
 				<progress value="${progress}" max="100"></progress><br />
-				You have viewed ${totalMatching === currEnd ? "all" : currEnd + " of " + totalMatching} results
+				You have viewed ${totalMatching === currEnd ? "all "+(totalMatching>1?totalMatching:'') : currEnd + " of " + totalMatching} results
 			</div>`;
 		},
 
 		suppressed: (reason) => `<!-- Suppressed search result: ${reason} -->`,
 
-		auto: (item) => {
-			item && console.info(item);
-//			if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
-//			if (item.custom_fields.type == "scholarship") return stir.templates.search.scholarship(item);
-			if (item.custom_fields.type == "course") return stir.templates.search.course(item);
-			if (item.custom_fields.type === "news") return stir.templates.search.news(item);
-//			if (item.custom_fields.type == "Gallery") return stir.templates.search.gallery(item);
-			if (item.custom_fields.type == "event") return stir.templates.search.event(item);
-			if (item.custom_fields.type == "webinar") return stir.templates.search.event(item);
-//			if (item.collection == "stir-events") return stir.templates.search.event(item);
-			if (item.custom_fields.access) return stir.templates.search.internal(item);
-//			if (item.custom_fields.type && item.custom_fields.type.indexOf("output") > -1) return stir.templates.search.research(item);
-			if (item.custom_fields.type && item.custom_fields.type.indexOf("contract") > -1) return stir.templates.search.research(item);
-			if (item.custom_fields.type && item.custom_fields.type.indexOf("profile") > -1) return stir.templates.search.person(item);
-//			if (item.url.indexOf("https://www.stir.ac.uk/news") === 0) return stir.templates.search.news(item);
-//			const label = item.url.indexOf("policyblog.stir") > -1 ? `<div class=" c-search-result__tags"><span class="c-search-tag">Public Policy Blog</span></div>` : "";
-//
-			if (item.custom_fields.type && item.custom_fields.type.indexOf("studentstory") > -1) return stir.templates.search.studentstory(item);
+		auto: (item, index, context) => {
+			
+			const tags = [];
 
-			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score||''}>
-				<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-				<div class=c-search-result__tags>
-					${stir.templates.search.stag([item.custom_fields.type || "Page"])}
-				</div>
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
+			if(item.custom_fields.access) return stir.templates.search.internal(item);
+			// if (item.url === "https://www.stir.ac.uk/") return stir.templates.search.suppressed("homepage");
+			// type = isDocUrl(item.url) ? "document" : ""
+
+			if(item.custom_fields.type) {
+				if(String === item.custom_fields.type.constructor) {
+					switch (item.custom_fields.type) {
+						case "course":		 return stir.templates.search.course(item);
+						case "news":		 return stir.templates.search.news(item);
+						case "event":		 return stir.templates.search.event(item);
+						case "webinar":		 return stir.templates.search.event(item);
+						case "contract":
+						case "area":
+						case "centre":		 return stir.templates.search.research(item);
+						case "profile":		 return stir.templates.search.person(item);
+						case "studentstory": return stir.templates.search.studentstory(item);
+						case "scholarship": return stir.templates.search.scholarship(item);
+						//case "publication": // not in use
+						//case "gallery": // not in use
+					}
+					tags.push(item.custom_fields.type);
+				}
+				if(Array === item.custom_fields.type.constructor) {
+					if (item.custom_fields.type.includes("news")) return stir.templates.search.news(item);
+					tags.push(item.custom_fields.type.slice(1).pop());
+				}
+			} else {
+				const url = new URL(item.url);
+				if ("blog.stir.ac.uk"===url.hostname || "policyblog.stir.ac.uk"===url.hostname) {
+					tags.push(url.hostname.split('.').shift());
+					item.custom_fields.type = 'blog';
+				}
+			}
+			
+			const blurb = item.meta_description && item.meta_description.trim().length > 5 ? item.meta_description : `…${item.highlight}`;
+			const attrs = [
+				`data-rank=${item.score||''}`,
+				`data-as-type="${item.type||''}"`,
+				`data-result-type="${item.custom_fields.type||''}"`
+			];
+			return `<div class="u-border-width-5 u-heritage-line-left c-search-result" ${attrs.join(' ')}>
+				<div class="c-search-result__body flex-container flex-dir-column u-gap">
+					${stir.templates.search.stags(tags)}
+					<p class=u-text-regular><strong>${nameLink(item)}</strong></p>
+					<p>${blurb||''}</p>
 					${makeBreadcrumbs(item)}
-					<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
-					<p>${item.meta_description}</p>
 				</div>
 			</div>`;
 
-/* 				<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.custom_fields.type || isDocUrl(item.url) ? ' data-result-type="' + (item.custom_fields.type || (isDocUrl(item.url) ? "document" : "")).toLowerCase() + '"' : ""}${item.custom_fields.access ? ' data-access="' + item.custom_fields.access + '"' : ""}>
-					<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-						${label}
-						${makeBreadcrumbs(trail, item.url, item.fileSize)}
-						<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
-						<p>${item.meta_description.replace(/\xA0/g, " ")}</p>
-					</div>
-				</div>
-				 */
 		},
 		internal: (item) => {
 			// const crumbs = {
@@ -400,15 +460,14 @@ stir.templates.search = (() => {
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${label(item.custom_fields.access)||""}</span>
 				</div>
-				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
+				<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title
 					.replace(/Current S\S+ ?\| ?/, "")
 					.split(" | ")[0]
 					.trim()}</a></strong></p>
 				${internalSummary(item.meta_description, item.custom_fields.access)}
 			  </div>
-			  <details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre></details>
 			</div>`;
-		},
+		}, //<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre></details>
 
 		combo: (item) => {
 			return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboCourse).join(" and ")}${item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""}${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
@@ -458,7 +517,7 @@ stir.templates.search = (() => {
 			let facthtml = [];
 			if(item.custom_fields.start) {
 				if (item.custom_fields.start.map) {
-					facthtml.push(stir.templates.search.courseFact("Start dates", item.custom_fields.start.map(startDateFormatter).join(", "), false));
+					facthtml.push(stir.templates.search.courseFact("Start dates", item.custom_fields.start.map(startDateFormatter).filter(x=>x).join(", "), false));
 				} else {
 					facthtml.push(stir.templates.search.courseFact("Start dates", startDateFormatter(item.custom_fields.start), false));
 				}
@@ -485,11 +544,14 @@ stir.templates.search = (() => {
 		courseFact: (head, body, sentenceCase) => (head && body ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body}</p></div>` : ""), //.replace(/\|/g, ", ")
 
 		course: (item) => {
-			const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			//		const subject = typeof item.custom_fields.subject;
 			//      const subjectLink = stir.String.slug(subject);
+			const data = unpackData(item.custom_fields.data);
+			const preview = UoS_env.name === "preview" || UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
 			const isOnline = item.custom_fields.delivery && item.custom_fields.delivery.indexOf("online") > -1 ? true : false;
 			const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
+			const title = item.custom_fields.name ? `${data["Award"]||''} ${item.custom_fields.name}${data["UCAS Code"]?' - '+data["UCAS Code"]:''}` : item.title.split("|")[0];
 			item.combos = stir.courses.showCombosFor(UoS_env.name == "preview" ? item.custom_fields.sid : item.url);
 			return `
 			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.score} data-sid=${item.custom_fields.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
@@ -499,11 +561,7 @@ stir.templates.search = (() => {
 
 		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
 		  <p class="u-text-regular u-m-0">
-			<strong><a href="${link}" title="${item.url}">
-			${item.custom_fields.award || ""} ${item.custom_fields.name || item.title.split("|")[0]}
-			${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""}
-			${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
-			</a></strong>
+			<strong><a href="${link}" title="${item.url}" data-docid="${item.id||''}" data-position="${item.position||''}">${title}</a></strong>
 		  </p>
 		  <p class="u-m-0 c-course-summary">${item.meta_description}</p>
 		  ${stir.templates.search.clearing(item) || ""}
@@ -520,13 +578,15 @@ stir.templates.search = (() => {
 			</div>`;
 		},
 
-		coursemini: (item) 
-		=> "\t\t\t" + `<div>
-				<p><strong><a href="${item.url}" title="${item.url}" class="u-border-none">
+		coursemini: (item) => {
+			if(!item.custom_fields) return '';
+			return "\t\t\t" + `<div>
+				<p><strong><a href="${item.url}" title="${item.url}" data-docid="${item.id||''}" data-position="${item.position||''}" class="u-border-none">
 					${item.custom_fields.award || ""} ${item.title.split(" | ")[0]} ${item.custom_fields.ucas ? " - " + item.custom_fields.ucas : ""} ${item.custom_fields.code ? " - " + item.custom_fields.code : ""}
 				</a></strong></p>
 				<p>${item.meta_description}</p>
-			</div>`,
+			</div>`
+		},
 
 		courseminiFooter: (query) 
 			=> `<p class="u-mb-2 flex-container u-align-items-center u-gap-8">
@@ -550,53 +610,47 @@ stir.templates.search = (() => {
 			</p>`, //:`<p class="text-center"><a href="?tab=courses&query=${query}">View all course results</a></p>`,
 
 		person: (item) => {
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
 			const id = item.url.split("/").slice(-1);
-			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(item.custom_fields.data));
+			const data = unpackData(item.custom_fields.data);
 			return `
-			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=person>
-				<div class=c-search-result__tags>
-					${/*stir.templates.search.stag(item.custom_fields.faculty ? stir.research.hub.getFacultyFromOrgUnitName(item.custom_fields.faculty) : "")*/''}
-				</div>
-				<div class="flex-container flex-dir-column u-gap u-mt-1">
+			<div class="c-search-result u-border-width-5 u-heritage-line-left c-search-result__with-thumbnail" data-result-type=person>
+				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0"><strong>
-						<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
+						${serplink(item)}
 					</strong></p>
 					<div>${data.JobTitle || "<!-- Job title -->"}<br>${data.OrgUnitName || "<!-- Department -->"}</div>
 					<!-- <p>${item?.custom_fields?.c ? (item?.custom_fields?.c + ".").replace(" at the University of Stirling", "") : ""}</p> -->
 				</div>
-				${image((item.custom_fields.image?item.custom_fields.image:`https://www.stir.ac.uk/research/hub/image/${id}`), item.title.split(" | ")[0].trim(), 400, 400)}
-				<div class=c-search-result__footer>
-					${stir.funnelback.getTags(item?.custom_fields?.category) ? "<p><strong>Research interests</strong></p>" : ""}
-					<p>${stir.funnelback.getTags(item?.custom_fields?.category) || ""}</p>
-				</div>
-			</div>`; //`data:image/jpeg;base64,${item.images.main_b64}`
+				${image(`https://www.stir.ac.uk/research/hub/image/${id}`, item.title.split(" | ")[0].trim(), 400, 400)}
+				<div class=c-search-result__footer> ${getTags(data.Categories)} </div>
+			</div>`;
 		},
 		scholarship: (item) => {
+			const data = unpackData(item.custom_fields.data);
 			return `
 		<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=scholarship data-rank=${item.score}>
-			<div class=c-search-result__tags>
-				${stir.templates.search.stag(item.custom_fields.level ? `Scholarship: ${item.custom_fields.level.toLowerCase()}` : "")}
-			</div>
+			${stir.templates.search.stags([item.custom_fields.level])}
 			<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
-				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
-				<p>${item.meta_description.replace(/\xA0/g, " ")}</p>
+				<p class="u-text-regular u-m-0"><strong><a href="${item.url}">${item.title.split("|")[0].trim().replace(/\xA0/g, " ")}</a></strong></p>
+				<p>${(item.meta_description||'').replace(/\xA0/g, " ")}</p>
 				<div class="c-search-result__meta grid-x">
-					${stir.templates.search.courseFact("Value", item.custom_fields.value, false)}
-					${stir.templates.search.courseFact("Number of awards", item.custom_fields.number, false)}
-					${stir.templates.search.courseFact("Fee status", item.custom_fields.status, false)}
+					${stir.templates.search.courseFact("Value", data.value, false)}
+					${stir.templates.search.courseFact("Number of awards", data.number, false)}
+					${stir.templates.search.courseFact("Fee status", data.status, false)}
 				</div>
 			</div>
 		</div>`;
 		},
 
 		studentstory: (item) => {
-			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
+			const data = unpackData(item.custom_fields.data);
 			return `
 				<div class="c-search-result u-border-width-5 u-heritage-line-left" data-result-type=studentstory>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap">
 						<div class=c-search-result__tags>${stir.templates.search.stag(["Student stories"])}</div>
 						<p class="u-text-regular u-m-0"><strong>
-							<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
+							${serplink(item)}
 						</strong></p>
 						<p class="u-m-0">
 						${data.degree ? data.degree + "<br />" : ""}
@@ -609,15 +663,16 @@ stir.templates.search = (() => {
 		},
 
 		news: (item) => {
-			const data = item.custom_fields.data ? unpackData(item.custom_fields.data) : {};
-			const hasThumb = data.thumbnail ? true : false;
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
+			const data = unpackData(item.custom_fields.data);
+			const hasThumb = data.thumbnail || (item.images&&item.images.main) ? true : false;
 			const thumb = data.thumbnail ? `data-original="${data.thumbnail}"` : '';
 			return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumb ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=news>
-					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
+					<div class="c-search-result__body flex-container flex-dir-column u-gap">
 						<p class="u-text-regular u-m-0">
 							<strong>
-								<a href="${item.url}">${item.title.split(" | ")[0].trim()}</a>
+								${serplink(item)}
 							</strong>
 						</p>
 						<div>${stir.Date.newsDate(new Date( item.custom_fields.d ? item.custom_fields.d.split("|")[0] : item.ts ))}</div>
@@ -633,19 +688,16 @@ stir.templates.search = (() => {
 						</p> --> */
 		},
 
-
 		gallery: (item) => {
 			return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result c-search-result__with-thumbnail" data-rank=${item.score} data-result-type=news>
 					<div class=c-search-result__body>
-						<p class="u-text-regular u-m-0"><strong>
-							<a href="${item.url}">${item.custom_fields.h1 || item.title.split(" | ")[0].trim()}</a>
-						</strong></p>
+						<p class="u-text-regular u-m-0"><strong>${serplink(item)}</strong></p>
 						<p class="c-search-result__secondary">${stir.Date.newsDate(new Date(item.custom_fields.d))}</p>
-						<p >${item.meta_description}</p>	
+						<p>${item.meta_description||''}</p>	
 					</div>
 					<div class=c-search-result__image>
-						${stir.funnelback.getCroppedImageElement({
+						${getCroppedImageElement({
 							url: flickrUrl(JSON.parse(item.custom_fields.custom)),
 							alt: `Image of ${item.title.split(" | ")[0].trim()}`,
 							width: 550,
@@ -655,9 +707,9 @@ stir.templates.search = (() => {
 				</div>`;
 		},
 
-
 		event: (item) => {
-			const data = "object"===typeof item.custom_fields.data ? Object.assign({},...item.custom_fields.data.map(datum=>JSON.parse(decodeURIComponent(datum)))) : JSON.parse(decodeURIComponent(item.custom_fields.data));
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
+			const data = unpackData(item.custom_fields.data);
 			const isWebinar = (data.tags && data.tags.indexOf("Webinar") > -1) || "webinar" === item.custom_fields.type;
 			const isOnline = isWebinar || item.custom_fields.online;
 			const hasThumbnail = item.custom_fields?.image || isWebinar;
@@ -668,10 +720,11 @@ stir.templates.search = (() => {
 			<div class="u-border-width-5 u-heritage-line-left c-search-result${hasThumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.score} data-result-type=event>
 				<div class=c-search-result__tags>
 					${data.isSeriesChild ? stir.templates.search.stag(data.isSeriesChild) : ""}
+					${isWebinar ? stir.templates.search.stag("Webinar") : ""}
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
-						<strong>${anchor({ text: title, href: url })}</strong>
+						<strong>${serplink(item)}</strong>
 					</p>
 					<div class="flex-container flex-dir-column u-gap-8">
 						<div class="flex-container u-gap-16 align-middle">
@@ -695,39 +748,47 @@ stir.templates.search = (() => {
 				${image(item.custom_fields.image && item.custom_fields.image.split("|")[0], item.title.split(" | ")[0])}
 				${isWebinar ? '<div class=c-search-result__image><div class="c-icon-image"><span class="uos-web"></span></div></div>' : ""}
 			</div>`;
-		},	//<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre><hr><pre>${JSON.stringify(data,null,"\t")}</pre></details>
+		},
 
-
-		research: (item) => 
-			`<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score}${item.custom_fields.type ? ' data-result-type="' + item.custom_fields.type.toLowerCase() + '"' : ""}>
+		research: (item) => {
+			if(item.type && item.type==="PROMOTED") return stir.templates.search.cura(item);
+			const data = unpackData(item.custom_fields.data);
+			const desc = item.meta_description ? `<p class=text-sm>${stir.String.stripHtml(item.meta_description)}</p>` : '';
+			const type = (item.custom_fields.type||'').toLowerCase();
+			return	`<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.score} data-result-type="${type}" data-result-group=research>
 				<div>
-					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
-					<div class="flex-container flex-dir-column u-gap u-mt-1">
-						<p class="u-text-regular u-m-0"><strong>
-							<a href="${item.url}">${item.title.indexOf("|") > -1 ? item.title.split(" | ")[1] : item.title}</a>
-						</strong></p>
-						${stir.String.stripHtml(item.meta_description) ? `<div class="text-sm">` + stir.String.stripHtml(item.meta_description) + `</div>` : ""}
-						${stir.funnelback.getTags(item.custom_fields.category) ? `<div class=c-search-result__footer>` + stir.funnelback.getTags(item.custom_fields.category) + `</div>` : ""}
+					<div class="c-search-result__tags">${stir.templates.search.stag(item.custom_fields.type)}</div>
+					<div class="c-search-result__body flex-container flex-dir-column u-gap">
+						<p class=u-text-regular><strong>${nameLink(item)}</strong></p>
+						${desc}
+						<div class=c-search-result__footer>
+							${makeBreadcrumbs(item)}
+							${getTags(getResearchCategories(data))}
+						</div>
+						<!-- <pre>${JSON.stringify(item.categories,null,"\t")}</pre> -->
 					</div>
 				</div>
-			</div>`,
-
+			</div>`
+		},
 
 		cura: (item) =>
-			!item.messageHtml
-				? `<div class="c-search-result" data-result-type=curated>
-					<div class=c-search-result__body>
-						<p class="u-text-regular u-m-0"><strong>
-							<a href="${item.url}">${item.title.split(" | ")[1]}</a><br>
-							<small class="c-search-result__breadcrumb">${item.displayUrl}</small>
-						</strong></p>
-						<p>${item.descriptionHtml}</p>
-					</div>
-				</div>`
-				: `<div class="c-search-result-curated" data-result-type=curated-message>
-					${item.messageHtml}
-				</div>`,
-
+			`<div class="c-search-result-curated" data-result-type=curated>` + 
+				((item.images&&item.images.main) ? `<a href="${item.url}" data-docid=${item.id} data-position=${item.position}><img src="${item.images.main}" alt="${item.title}"></a>` : 
+				`<div class="c-search-result c-popout-result u-heritage-berry">
+					<a href="${item.url}">
+						<div>
+							<span class="uos-computer"></span>
+						</div>
+						<div>
+							<p>${item.title}</p>
+							<p>${item.highlight}</p>
+						</div>
+						<div>
+							<span class="uos-chevron-right"></span>
+						</div>
+					</a>
+				</div>`) +
+			`</div>`,
 
 		facet: (item) =>
 			`<fieldset data-facet="${item.name}">
@@ -742,7 +803,6 @@ stir.templates.search = (() => {
 					</div>
 				</div>
 			</fieldset>`,
-
 
 		labelledFacetItems: stir.curry(
 			(facet, facetValue) =>
@@ -989,11 +1049,12 @@ var scrollend = { __proto__: null };
         // Update URL query parameter if event is user-initiated
         if (event.isTrusted) {
           QueryParams.set("tab", openTabId);
+          btn.hasAttribute("data-tab-callback") && stir.callback.enqueue(btn.getAttribute("data-tab-callback"));
         }
       });
     });
 
-    // Initialize tab panel attributes for accessibility
+    // Initialise tab panel attributes for accessibility
     // (only if there is more than one tab)
     if(tabs && tabs.length > 1) {
       tabs.forEach((tab) => {
@@ -1128,7 +1189,6 @@ stir.courses.startdates = function () {
 	const other = date_elements
 		.filter(date => !date.value.match(match))
 		.map(date => {
-			//console.info("OTHER!",date,strings[date.value]||date.value);
 			return {
 				label: strings[date.value]||date.value,
 				value: date.value,
@@ -1199,702 +1259,756 @@ var stir = stir || {};
  * ------------------------------------------------ */
 
 /**
- * Search API helper
- */
-stir.funnelback = (() => {
-	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	const hostname = UoS_env.search;
-	const url = `https://${hostname}/s/`;
-
-	const getJsonEndpoint = () => new URL("search.json", url);
-	const getScaleEndpoint = () => new URL("scale", url);
-	const getHostname = () => hostname;
-	const renderImgTag = (image) => `<img src="${image.src}" alt="${image.alt}" height="${image.height}" width="${image.width}" loading=lazy data-original=${image.original}>`;
-
-	const getCroppedImageElement = (parameters) => {
-		if (!parameters.url) return "<!-- no image -->";
-		return renderImgTag({ src: parameters.url, alt: parameters.alt, width: Math.floor(parameters.width / 2), height: Math.floor(parameters.height / 2), original: parameters.url });
-	};
-
-	const getTags = (tagMeta) => {
-		const tagGroups = tagMeta && tagMeta.split(";");
-		return tagGroups && tagGroups.map(stir.templates.search.tagGroup).join("");
-	};
-
-	return {
-		getHostname: getHostname,
-		getJsonEndpoint: getJsonEndpoint,
-		getScaleEndpoint: getScaleEndpoint,
-		getCroppedImageElement: getCroppedImageElement,
-		getTags: getTags
-	};
-})();
-
-stir.addSearch = (() => {
-	// e.g. https://api.addsearch.com/v1/search/cfa10522e4ae6987c390ab72e9393908?term=rest+api
-
-	const server = "api.addsearch.com";
-	const key = "dbe6bc5995c4296d93d74b99ab0ad7de"; //public site key
-	const url = `https://${server}`;
-
-	const getJsonEndpoint = () => new URL(`/v1/search/${key}`, url);
-	const getSuggestionsEndpoint = () => new URL(`/v1/suggest/${key}`, url);
-	const getAutocompleteEndpoint = () => new URL(`/v1/autocomplete/document-field/${key}`, url);
-	const getRecommendationsEndpoint = (block) => new URL(`/v1/recommendations/index/${key}/block/${block}`, url);
-	
-	const getCompletions = (data,callback) => {
-		if("function" !== typeof callback) return;
-		const url = getAutocompleteEndpoint();
-		const params = new URLSearchParams(data);
-		url.search = params;
-		stir.getJSON(url,data=>console.info("getCompletions",data));
-	};
-	
-	const getSuggestions = (term,callback) => {
-		if("function" !== typeof callback) return;
-		const url = getSuggestionsEndpoint();
-		url.search = `term=${term}`;
-		stir.getJSON(url,callback);
-	};
-	
-	/* Recommendations - AddSearch extra */
-	const getRecommendations = (block,callback) => {
-		if("function" !== typeof callback) return;
-		stir.getJSON(getRecommendationsEndpoint(block),callback);
-	};
-
-	return {
-		getJsonEndpoint: getJsonEndpoint,
-		getCompletions: getCompletions,
-		getSuggestions: getSuggestions,
-		getRecommendations:getRecommendations
-	};
-})();
-
-/**
  * Stir Search
  * Created for the Search Revamp project 2022/23
  * Migrated to AddSearch October 2025
  * @returns Object
  */
-stir.search = () => {
-	// abandon before anything breaks in IE
-	if ("undefined" === typeof window.URLSearchParams) {
-		const el = document.querySelector( stir.templates.search.selector.results );
-		el && el.parentElement.removeChild(el);
-		return;
-	}
-
-	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-	debug && console.info("[Search] initialising…");
-
-	const NUMRANKS = "small" === stir.MediaQuery.current ? 5 : 10;
-	const MAXQUERY = 256;
-	const CLEARING = stir.courses.clearing; // Clearing is open?
-
-	const buildUrl = stir.curry((url, parameters) => {
-		url.search = new URLSearchParams(parameters);
-		return url;
-	});
-
-	const LoaderButton = () => {
-		const button = document.createElement("button");
-		button.innerText = stir.templates.search.strings.buttons.more;
-		button.setAttribute("class", stir.templates.search.classes.buttons.more);
-		return button;
-	};
-
-	const constants = {
-		url: stir.addSearch.getJsonEndpoint(),
-		form: document.querySelector( stir.templates.search.selector.form ),
-		input: document.querySelector( stir.templates.search.selector.query ),
-		parameters: {
-			any: {
-				term: "University of Stirling",
-				limit: NUMRANKS
-			},
-			news: {
-				customField: "type=news",
-				sort: "custom_fields.d"
-			},
-			event: {
-				filter: JSON.stringify({
-					and: [
-						{
-							or: [
-								{ "custom_fields.type": "event"   },
-								{ "custom_fields.type": "webinar" }
-							]
-						},
-						{
-							range: {
-								"custom_fields.e": {
-									gt: stir.Date.timeElementDatetime( (d => new Date(d.setDate(d.getDate()-1)))(new Date) )
+stir.search = (() => {
+		// abandon before anything breaks in IE
+		if (("undefined" === typeof window.URLSearchParams)||!stir.addSearch) {
+			const el = document.querySelector( stir.templates.search.selector.results );
+			el && el.parentElement.removeChild(el);
+			return { init: new Function };
+		}
+	
+		const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+		debug && console.info("[Search] initialising…");
+	
+		const NUMRANKS = "small" === stir.MediaQuery.current ? 5 : 10;
+		const MAXQUERY = 256;
+		const CLEARING = stir.courses.clearing; // Clearing is open?
+		
+		let clickReporting = true; // temporary flag. see REPORTING to enable/disable reporting
+	
+		const buildUrl = stir.curry((url, parameters) => {
+			const newUrl = new URL(url);
+			newUrl.search = new URLSearchParams(parameters);
+			return newUrl;
+		});
+	
+		const LoaderButton = () => {
+			const button = document.createElement("button");
+			button.innerText = stir.templates.search.strings.buttons.more;
+			button.setAttribute("class", stir.templates.search.classes.buttons.more);
+			button.setAttribute("disabled", true);
+			return button;
+		};
+	
+		const constants = {
+			url: stir.addSearch.getJsonEndpoint(),
+			form: document.querySelector( stir.templates.search.selector.form ),
+			input: document.querySelector( stir.templates.search.selector.query ),
+			parameters: {
+				all: {
+					term: "University of Stirling",
+					limit: NUMRANKS,
+					collectAnalytics: false,
+					fuzzy: "auto"
+				},
+				news: {
+					customField: "type=news",
+					sort: "custom_fields.d",
+					collectAnalytics: false,
+					resultType: "organic"
+				},
+				event: {
+					collectAnalytics: false,
+					filter: JSON.stringify({
+						and: [
+							{
+								or: [
+									{ "custom_fields.type": "event"   },
+									{ "custom_fields.type": "webinar" }
+								]
+							},
+							{
+								range: {
+									"custom_fields.e": {
+										gt: stir.Date.timeElementDatetime( (d => new Date(d.setDate(d.getDate()-1)))(new Date) )
+									}
 								}
 							}
-						}
-					]
-				})
+						]
+					})
+				},
+				gallery: {
+					customField: "type=gallery",
+					collectAnalytics: false
+				},
+				course: {
+					customField: "type=course",
+					collectAnalytics: false,
+					fuzzy: "auto"
+				},
+				coursemini: {
+					customField: "type=course",
+					limit: 5,
+					collectAnalytics: false,
+					resultType: "organic"
+				},
+				person: {
+					customField: "type=profile",
+					collectAnalytics: false,
+					resultType: "organic"
+				},
+				research: {
+					categories: "2xhub",
+					collectAnalytics: false
+				},
+				internal: {
+					collectAnalytics: false,
+					resultType: "organic",
+					filter: JSON.stringify({
+						or: [
+							{ "custom_fields.access": "staff"   },
+							{ "custom_fields.access": "student" }
+						]
+					}),
+				},
+				clearing: {
+					collectAnalytics: false,
+					limit: NUMRANKS,
+					term: "*",
+	//				sort: "custom_fields.name",
+	//				filter: something something clearing only...?
+	//				timestamp: +new Date()
+				},
 			},
-			gallery: {
-				customField: "type=gallery"
-			},
-			course: {
-				customField: "type=course",
-				sort: "custom_fields.name",
-				order: "asc"
-			},
-			coursemini: {
-				customField: "type=course",
-				limit: 5
-			},
-			person: {
-				customField: "type=profile",
-			},
-			research: {
-				categories: "2xhub",
-			},
-			internal: {
-				filter: JSON.stringify({
-					or: [
-						{ "custom_fields.access": "staff"   },
-						{ "custom_fields.access": "student" }
-					]
-				}),
-			},
-			clearing: {
-				limit: NUMRANKS
-//				term: "!padrenullquery",
-//				sort: "custom_fields.name",
-//				meta_clearing: "[scotland simd rukroi international eu]",
-//				SF: `[${meta.courses.concat(meta.clearing).join(",")}]`,
-//				fmo: "true",
-				/* explain: true,
-				query: "!padrenullquery",
-				timestamp: +new Date(), */
-			},
-		},
-
-		// +++ Extra/override parameters for no-query searches +++
-		// E.g. if no keywords supplied; sort by title instead of relevance
-		noquery: {
-			course: {
-				sort: "custom_fields.name",
-			},
-			person: {
-				sort: "custom_fields.sort",
-				order: "desc"
-			},
-			event: {
-				sort: "custom_fields.e",	// sort events by date descending
-				order: "asc"
-			}
-		},
-	};
-
-	if (!constants.form || !constants.form.term) return;
-	debug && console.info("[Search] initialised with host:", constants.url.hostname);
-
-	/* Add the filter parameters (e.g. courses, sorting) */
-	const addFilterParameters = (url, formData) => {
-		let a = new URLSearchParams(url.search);
-		let b = new URLSearchParams(formData);
-		for (let [key, value] of b) { "sort"===key? a.set(key, value) : a.append(key, value); }
-		url.search = a;
-		return url;
-	};
-
-	const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || constants.parameters[type].term || "*";
-
-	const getNoQuery = (type) => (constants.form.term.value ? {} : constants.noquery[type]);
-
-	const setQuery = () => (constants.form.term.value ? QueryParams.set("term", constants.form.term.value) : QueryParams.remove("term"));
-
-	const getPage = (type) => parseInt(QueryParams.get(type) || 1);
-
-	const getType = (element) => element.getAttribute("data-type") || element.parentElement.getAttribute("data-type");
-
-	const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
-
-	const calcStart = (page, numRanks) => (page - 1) * numRanks + 1;
-
-	const calcEnd = (page, numRanks) => calcStart(page, numRanks) + numRanks - 1;
-
-	const calcPage = (currStart, numRanks) => Math.floor(currStart / numRanks + 1);
-
-	const calcProgress = (currEnd, fullyMatching) => (currEnd / fullyMatching) * 100;
-
-	//const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
-
-	const resetPagination = () => Object.keys(constants.parameters).forEach((key) => QueryParams.remove(key));
-
-	const getQueryParameters = () => {
-		let parameters = QueryParams.getAll();
-		let facetParameters = Object.keys(parameters)
-			.filter((key) => key.indexOf("f.") === 0)
-			.reduce((obj, key) => {
-				return { ...obj, [key]: rwm2.string.urlDecode(parameters[key]).toLowerCase() };
-			}, {});
-		//debug && Object.keys(facetParameters).length && console.info('[Search] facetParameters:',facetParameters);
-		return facetParameters;
-	};
-
-	const getFormData = (type) => {
-		const form = document.querySelector(`${stir.templates.search.selector.results} form[data-filters="${type}"]`);
-		let a = form ? new FormData(form) : new FormData();
-
-		// for (var key of a.keys()) {
-		// 	if (key.indexOf("f.") === 0) continue; //ignore any facets
-		// 	if (a.getAll(key).length > 1) {
-		// 		// merge values into one dysjunction operator
-		// 		// as used in the Research type filter's "Other" option:
-		// 		// "publication", "contract", "[tag theme programme group]"
-		// 		// will become "[publication contract tag theme programme group]"
-		// 		//a.set(key, "[" + a.getAll(key).join(" ").replace(/\[|\]/g, "") + "]");
-		// 	}
-		// }
-
-		return a;
-	};
-
-	const getInboundQuery = () => {
-		if (undefined !== QueryParams.get("term")) constants.form.term.value = QueryParams.get("term").substring(0, MAXQUERY);
-		const parameters = QueryParams.getAll();
-		for (const name in parameters) {
-			const el = document.querySelector(`input[name="${encodeURIComponent(name)}"][value="${encodeURIComponent(parameters[name])}"]`);
-			if (el) el.checked = true;
-		}
-	};
-
-	const setUrlToFilters = (type) => {
-		//const {filters, values} = getFormElementValues(type);
-		//debug && filters.forEach((filter,i)=>QueryParams.set(filter, values[i]));
-		//TODO: un-set any URL params that have corresponding <input> elements that are NOT checked
-		// (but ignore any params that aren't related to the filters)
-	};
-
-	// DOM modifiers:
-	const appendHtml = stir.curry((_element, html) => _element.insertAdjacentHTML("beforeend", html));
-	const replaceHtml = stir.curry((_element, html) => (_element.innerHTML = html));
-
-	// enable the "load more" button if there are more results that can be shown
-	const enableLoadMore = stir.curry((button, data) => {
-		if (!button) return data;
-		if (data && data.total_hits > 0) button.removeAttribute("disabled");
-		//if (data.response.resultPacket.resultsSummary.currEnd === data.response.resultPacket.resultsSummary.totalMatching) button.setAttribute("disabled", true);
-		return data;
-	});
-
-	const newAccordion = (accordion) => new stir.accord(accordion, false);
-	const attachImageErrorHandler = (image) => image.addEventListener("error", imgError);
-
-	// "reflow" events and handlers for dynamically added DOM elements
-	const flow = stir.curry((_element, data) => {
-		if (!_element.closest) return;
-		const root = _element.closest("[data-panel]");
-		const cords = root.querySelectorAll('[data-behaviour="accordion"]:not(.stir-accordion)');
-		const pics = root.querySelectorAll("img");
-		console.info("PICS +++ ",pics)
-		Array.prototype.forEach.call(cords, newAccordion);
-		Array.prototype.forEach.call(pics, attachImageErrorHandler);
-	});
-
-	const updateStatus = stir.curry((wrapper, data) => {
-		const start = 1 + (data.page * data.hits.length) - data.hits.length;
-		const ranks = data.total_hits;
-		const el = wrapper.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
-		if (el) {
-			el.innerHTML = "";
-			el.append(stir.templates.search.summary(data));
-		}
-		wrapper.setAttribute("data-page", calcPage(start, ranks));
-		return data; // data pass-thru so we can compose() this function
-	});
-
-	// maintain compatibility with old meta_ search
-	// parameters with their equivalent facet:
-	const metaToFacet = {
-		meta_level: "f.Level|level",
-		meta_faculty: "f.Faculty|faculty",
-		meta_subject: "f.Subject|subject",
-		meta_delivery: "f.Delivery mode|delivery",
-		meta_modes: "f.Study mode|modes",
-	};
-
-	// TEMP - please move to stir.String when convenient to do so!
-	const rwm2 = {
-		string: {
-			urlDecode: (str) => decodeURIComponent(str.replace(/\+/g, " ")),
-		},
-	};
-
-	const updateFacets = stir.curry((type, data) => {
-		return data; 
-		/* const form = document.querySelector(`form[data-filters="${type}"]`);
-		if (form) {
-			const parameters = QueryParams.getAll();
-			const active = "stir-accordion--active";
-
-			data.response.facets.forEach((facet) => {
-				const metaFilter = form.querySelector(`[data-facet="${facet.name}"]`);
-				const metaAccordion = metaFilter && metaFilter.querySelector("[data-behaviour=accordion]");
-				const open = metaAccordion && metaAccordion.getAttribute("class").indexOf(active) > -1;
-
-				const facetName = facet.categories && facet.categories[0] && facet.categories[0].queryStringParamName;
-				const metaName = facetName && Object.keys(metaToFacet)[Object.values(metaToFacet).indexOf(facetName)];
-				const metaValue = (metaName && parameters[metaName]) || (parameters[facetName] && rwm2.string.urlDecode(parameters[facetName]));
-				const selector = facetName && metaValue && `input[name="${facetName}"][value="${metaValue.toLowerCase()}"]`;
-				const facetFilter = stir.DOM.frag(stir.String.domify(stir.templates.search.facet(facet)));
-				const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
-				facetFilterElements &&
-					facetFilterElements.forEach((el) => {
-						el.checked = true;
-						metaName && QueryParams.remove(metaName, false, null, true); // don't reload window and use replaceState() instead of pushState()
-						facetName && QueryParams.remove(facetName, false, null, true, false); // don't reload window and use replaceState() instead of pushState()
-					});
-
-				const facetAccordion = facetFilter.querySelector("[data-behaviour=accordion]");
-				(open || facetFilterElements) && facetAccordion && facetAccordion.setAttribute("class", active);
-				if (metaFilter) {
-					metaFilter.insertAdjacentElement("afterend", facetFilter.firstChild);
-					metaFilter.parentElement.removeChild(metaFilter);
-				} else {
-					form.insertAdjacentElement("afterbegin", facetFilter.firstChild);
+	
+			// +++ Extra/override parameters for no-query searches +++
+			// E.g. if no keywords supplied; sort by title instead of relevance
+			noquery: {
+				all: {
+					dateFrom: stir.Date.timeElementDatetime( (d => new Date(d.setFullYear(d.getFullYear()-1)))(new Date) )
+				},
+				course: {
+					sort: "custom_fields.name",
+					order: "asc"
+				},
+				person: {
+					sort: "custom_fields.sort",
+					order: "asc"
+				},
+				event: {
+					sort: "custom_fields.e",	// sort events by date descending
+					order: "asc"
 				}
-				if ("Start date" === facet.name) {
-					stir.courses.startdates();
-				}
-			});
-		}
-		return data; // data pass-thru so we can compose() this function */
-	});
-
-	const renderResultsWithPagination = stir.curry(
-		(type, data) =>
-			// renderers["cura"](data.response.curator.exhibits) +
-			(data ? renderers[type](data.hits).join("") : 'NO DATA') +
-			stir.templates.search.pagination({
-				currEnd: calcEnd(data.page, data.hits.length),
-				totalMatching: data.total_hits,
-				progress: calcProgress(10, data.total_hits),
-			}) + (footers[type] ? footers[type]() : "")
-	);
-
-	/**
-	 * Custom behaviour in the event of no results
-	 **/
-	const fallback = (element) => {
-		if (!element || !element.hasAttribute("data-fallback")) return false;
-		const template = document.getElementById(element.getAttribute("data-fallback"));
-		const html = template && (template.innerHTML || "");
-		element.innerHTML = html;
-		return true;
-	};
-
-	// +++ COURSE - subject filter +++
-	{
-		let el = document.getElementById('courseSubjectFilters');
-		if (el && stir.t4Globals.search.facets["Subject"]) {
-			stir.t4Globals.search.facets["Subject"].forEach(subject => {
-				const li = document.createElement('li');
-				li.innerHTML = `<label><input name=customField type=checkbox value="subject=${subject}">${subject}</label>`;
-				el.appendChild(li);
-			});
-		}
+			},
+		};
+	
+		if (!constants.form || !constants.form.term) return;
+		debug && console.info("[Search] initialised with host:", new URL(constants.url).hostname);
+	
+		/* Add the filter parameters (e.g. courses, sorting) */
+		const addFilterParameters = (url, formData) => {
+			let a = new URLSearchParams(url.search);
+			let b = new URLSearchParams(formData);
+			for (let [key, value] of b) { "sort"===key? a.set(key, value) : a.append(key, value); }
+			url.search = a;
+			return url;
+		};
 		
-		el = document.querySelector('[data-facet="Faculty"] ul');
-		if (el && stir.t4Globals.search.facets["Faculty"]) {
-			el.innerHTML = '';
-			let faculties = stir.t4Globals.search.facets["Faculty"]
-			Object.keys(faculties).forEach(faculty => {
-				const li = document.createElement('li');
-				li.innerHTML = `<label><input name=customField type=checkbox value="faculty=${faculties[faculty]}">${faculties[faculty]}</label>`;
-				el.appendChild(li);
-			});
-		}
-
-		el = document.querySelector('[data-facet="Start date"] ul');
-		if (el && stir.t4Globals.search.facets["Start date"]) {
-			el.innerHTML = '';
-			let dates = stir.t4Globals.search.facets["Start date"]
-			Object.keys(dates).forEach(date => {
-				const li = document.createElement('li');
-				li.innerHTML = `<label><input name=customField type=checkbox value="start=${date}">${dates[date]}</label>`;
-				el.appendChild(li);
-			});
-		}
-
-		el = document.querySelector('[data-facet="Topic"] ul');
-		if (el && stir.t4Globals.search.facets["Topic"]) {
-			el.innerHTML = '';
-			let dates = stir.t4Globals.search.facets["Topic"]
-			Object.keys(dates).forEach(date => {
-				const li = document.createElement('li');
-				li.innerHTML = `<label><input name=customField type=checkbox value="tag=${date}">${dates[date]}</label>`;
-				el.appendChild(li);
-			});
-		}
-
-		el = document.querySelector('[data-facet="SDGs"] ul');
-		if (el && stir.t4Globals.search.facets["SDGs"]) {
-			el.innerHTML = '';
-			let dates = stir.t4Globals.search.facets["SDGs"]
-			Object.keys(dates).forEach(date => {
-				const li = document.createElement('li');
-				li.innerHTML = `<label><input name=customField type=checkbox value="sdg=${dates[date]}">${dates[date]}</label>`;
-				el.appendChild(li);
-			});
-		}
-	}
-
-	// This is the core search function that talks to the search API
-	const callSearchApi = stir.curry((type, callback) => {	
-		const parameters = 
-			stir.Object.extend(
-				{ },
-				constants.parameters[type],
-				{ page: getPage(type), term: getQuery(type) },
-				getNoQuery(type), // get special "no query" parameters (sorting, etc.)
-				getQueryParameters(), // get facet parameters
-			);
-		stir.getJSON( addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) ), callback(parameters));
-	});
+		const getDefaultQueryForType = type => type && constants.parameters[type] ? constants.parameters[type].term : undefined;
 	
-	// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
-	const getInitialResults = (element, button) => {
-		const type = getType(element);
-		if (!searchers[type]) return;
-		const facets = updateFacets(type);
-		const status = updateStatus(element);
-		const more = enableLoadMore(button);
-		const replace = replaceHtml(element);
-		const render = renderResultsWithPagination(type);
-		const reflow = flow(element);
-		const composition = stir.compose(reflow, replace, render, more, status, facets);
-		const callback = stir.curry((parameters,data) => {
-			
-			debug && console.info("[Search] API callback with parameters",parameters);
-			
-			if (!element || !element.parentElement) {
-				return debug && console.error("[Search] late callback, element no longer on DOM");
+		const getQuery = (type) => constants.form.term.value || QueryParams.get("term") || QueryParams.get("query") || getDefaultQueryForType(type) || "*";
+	
+		const getNoQuery = (type) => (constants.form.term.value ? {} : constants.noquery[type]);
+	
+		const setQuery = () => { QueryParams.remove("query"); constants.form.term.value ? QueryParams.set("term", constants.form.term.value) : QueryParams.remove("term") };
+	
+		const getPage = (type) => parseInt(QueryParams.get(type) || 1);
+	
+		const getType = (element) => element.getAttribute("data-type") || element.parentElement.getAttribute("data-type");
+	
+		const nextPage = (type) => QueryParams.set(type, parseInt(QueryParams.get(type) || 1) + 1);
+	
+		const calcStart = (pageNo, perPage) => (pageNo - 1) * perPage + 1;
+	
+		const calcEnd = (pageNo, perPage, numRanks) => calcStart(pageNo, perPage) + numRanks - 1;
+	
+		const calcPage = (currStart, numRanks) => Math.floor(currStart / numRanks + 1);
+	
+		const calcProgress = (currEnd, fullyMatching) => Math.round((currEnd / fullyMatching) * 100);
+	
+		//const getStartRank = (type) => calcStart(getPage(type), constants.parameters[type].num_ranks || 20);
+	
+		const resetPagination = () => Object.keys(constants.parameters).forEach((key) => QueryParams.remove(key));
+	
+		const getQueryParameters = () => {
+			let parameters = QueryParams.getAll();
+			let facetParameters = Object.keys(parameters)
+				.filter((key) => key.indexOf("f.") === 0)
+				.reduce((obj, key) => {
+					return { ...obj, [key]: rwm2.string.urlDecode(parameters[key]).toLowerCase() };
+				}, {});
+			return facetParameters;
+		};
+	
+		const getFormData = (type) => {
+			const form = document.querySelector(`${stir.templates.search.selector.results} form[data-filters="${type}"]`);
+			return form ? new FormData(form) : new FormData();
+		};
+	
+		const getInboundQuery = () => {
+			const term = QueryParams.get("term") || QueryParams.get("query");
+			if (undefined !== term) constants.form.term.value = term.substring(0, MAXQUERY);
+			const parameters = QueryParams.getAll();
+			for (const name in parameters) {
+				if(name.indexOf("|")>0) {
+					const selector = `input[name="customField"][value="${name.split('|')[1]}=${(parameters[name])}"i]`;
+					const el = document.querySelector(selector);
+					if (el) el.checked = true;
+				}
 			}
-			//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
-			if (!data || data.error) return;
-			if (0 === data.total_hits && fallback(element)) return;
-			
-			// Append AddSearch data with `question` object (à la Funnelback)
-			return composition( stir.Object.extend({}, data, {question:parameters}) );
-			
+		};
+	
+		const setUrlToFilters = (type) => {
+			//const {filters, values} = getFormElementValues(type);
+			//debug && filters.forEach((filter,i)=>QueryParams.set(filter, values[i]));
+			//TODO: un-set any URL params that have corresponding <input> elements that are NOT checked
+			// (but ignore any params that aren't related to the filters)
+		};
+	
+		// DOM modifiers:
+		const appendHtml = stir.curry((_element, html) => _element.insertAdjacentHTML("beforeend", html));
+		const replaceHtml = stir.curry((_element, html) => (_element.innerHTML = html));
+	
+		// enable the "load more" button if there are more results that can be shown
+		const enableLoadMore = stir.curry((button, data) => {
+			if (!button) return data;
+			if (data && data.total_hits > 0) button.removeAttribute("disabled");
+			const perPage = (data.question && data.question.limit) ? data.question.limit : 10;
+			const pages = Math.ceil(data.total_hits / perPage);
+			if (data.page >= pages) button.setAttribute("disabled", true);
+			debug && console.info(`[AddSearch] page ${data.page} of ${pages}. [${perPage}]`);
+			return data;
 		});
-		resetPagination();
 	
-		// if necessary do a prefetch and then call-back to the search function.
-		// E.g. Courses needs to prefetch the combinations data
-		if (prefetch[type]) return prefetch[type]((event) => searchers[type](callback));
-		// else (if no prefetch) just call the search function now:
-		searchers[type](callback);
-	};
+		const newAccordion = (accordion) => new stir.accord(accordion, false);
+		const attachImageErrorHandler = (image) => image.addEventListener("error", imgError);
 	
-	// triggered by the 'load more' buttons.
-	// Similar to getResults but APPENDS (rather than replacing).
-	const getMoreResults = (element, button) => {
-		const type = getType(element);
-		if (!searchers[type]) return;
-		const status = updateStatus(element);
-		const append = appendHtml(element);
-		const render = renderResultsWithPagination(type);
-		const reflow = flow(element);
-		const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
-		const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
-		nextPage(type);
-		searchers[type](callback);
-	};
+		// "reflow" events and handlers for dynamically added DOM elements
+		const flow = stir.curry((_element, data) => {
+			if (!_element.closest) return;
+			const root  = _element.closest("[data-panel]");
+			const cords = root.querySelectorAll('[data-behaviour="accordion"]:not(.stir-accordion)');
+			const pics  = root.querySelectorAll("img");
+			cords && Array.prototype.forEach.call(cords, newAccordion);
+			pics  && Array.prototype.forEach.call(pics, attachImageErrorHandler);
+		});
 	
-	// initialise all search types on the page (e.g. when the query keywords are changed by the user):
-	const initialSearch = () => searches.forEach(search);
-
-	const search = (element) => {
-		element.innerHTML = "";
-		if (element.hasAttribute("data-infinite")) {
-			const resultsWrapper = document.createElement("div");
-			const buttonWrapper = document.createElement("div");
-			const button = LoaderButton();
-			button.setAttribute("disabled", true);
-			button.addEventListener("click", (event) => getMoreResults(resultsWrapper, button));
-			element.appendChild(resultsWrapper);
-			element.appendChild(buttonWrapper);
-			buttonWrapper.appendChild(button);
-			buttonWrapper.setAttribute("class", stir.templates.search.classes.buttons.wrapper);
-			getInitialResults(resultsWrapper, button);
-		} else {
-			getInitialResults(element);
-		}
-	};
-
-	const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
-
-	// group the curried search functions so we can easily refer to them by `type`
-	const searchers = {
-		any: callSearchApi("any"),
-		news: callSearchApi("news"),
-		event: callSearchApi("event"),
-		gallery: callSearchApi("gallery"),
-		course: callSearchApi("course"),
-		coursemini: callSearchApi("coursemini"),
-		person: callSearchApi("person"),
-		research: callSearchApi("research"),
-		internal: callSearchApi("internal"),
-		clearing: callSearchApi("clearing"),
-	};
-
-	// group the renderer functions so we can get them easily by `type`
-	const renderers = {
-		any: (data) => data.map(stir.templates.search.auto),
-		news: (data) => data.map(stir.templates.search.news),
-		event: (data) => data.map(stir.templates.search.event),
-		gallery: (data) => data.map(stir.templates.search.gallery),
-		course: (data) => data.map(stir.templates.search.course),
-		coursemini: (data) => data.map(stir.templates.search.coursemini),
-		person: (data) => data.map(stir.templates.search.person),
-		research: (data) => data.map(stir.templates.search.research),
-		cura: (data) => data.map(stir.templates.search.cura),
-		internal: (data) => data.map(stir.templates.search.auto),
-		clearing: (data) => data.map(stir.templates.search.auto),
-	};
-
-	const footers = {
-		coursemini: () => stir.templates.search.courseminiFooter(getQuery("any")),
-	};
-
-	const prefetch = {
-		course: (callback) => {
-			stir.coursefavs && stir.coursefavs.attachEventHandlers(); // listen for Favs events
-			let xmlHttpRequest = stir.courses.getCombos();
-			if (xmlHttpRequest) {
-				xmlHttpRequest.addEventListener("loadend", callback); // loadend should fire after load OR error
-			} else {
-				callback.call();
+		const updateStatus = stir.curry((wrapper, data) => {
+			const start = 1 + (data.page * data.hits.length) - data.hits.length;
+			const ranks = data.total_hits;
+			const el = wrapper.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
+			if (el) {
+				el.innerHTML = "";
+				el.append(stir.templates.search.summary(data));
 			}
-		},
-	};
-
-	// onCHANGE event handler for search filters.
-	// Also handles the onRESET event.
-	Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-area form[data-filters]"), (form) => {
-		const type = form.getAttribute("data-filters");
-		const element = document.querySelector(`.c-search-results[data-type="${type}"]`);
-		form.addEventListener("reset", (event) => {
-			// native RESET is async so we need to do it manually
-			// to ensure it's done synchonosly instead…
-			Array.prototype.forEach.call(form.querySelectorAll("input"), (input) => (input.checked = false));
-			// Only *after* the form has been reset, we can re-run the
-			// search function. (That's why native RESET is no good).
-			search(element);
+			wrapper.setAttribute("data-page", calcPage(start, ranks));
+			return data; // data pass-thru so we can compose() this function
 		});
-		form.addEventListener("change", (event) => {
-			setUrlToFilters(getType(element));
-			search(element);
-		});
-		// Just in case, we'll also catch any
-		// SUBMIT events that might be triggered:
-		form.addEventListener("submit", (event) => {
-			search(element);
-			event.preventDefault();
-		});
-	});
 	
-	function imgError(error) {
-		//debug && console.error('[Search] There was an error loading a thumbnail image:', error.target);
-		if (error.target.getAttribute("data-original") && error.target.getAttribute("src") != error.target.getAttribute("data-original")) {
-			 //debug && console.error('[+++] …reverting to original image: ', error.target.getAttribute('data-original'));
-			 error.target.src = error.target.getAttribute("data-original");
-		} else {
-			//debug && console.error('[Search] …no alternative image available. It will be removed.');
-			error.target.parentElement.parentElement?.classList?.remove("c-search-result__with-thumbnail");
-			error.target.parentElement.parentElement.removeChild(error.target.parentElement);
-		}
-	}
-
-	const tokenHandler = (event) => {
-		if (!event || !event.target) return;
-
+		// maintain compatibility with old meta_ search
+		// parameters with their equivalent facet:
+		const metaToFacet = {
+			meta_level: "f.Level|level",
+			meta_faculty: "f.Faculty|faculty",
+			meta_subject: "f.Subject|subject",
+			meta_delivery: "f.Delivery mode|delivery",
+			meta_modes: "f.Study mode|modes",
+		};
+	
+		// TEMP - please move to stir.String when convenient to do so!
+		const rwm2 = {
+			string: {
+				urlDecode: (str) => decodeURIComponent(str.replace(/\+/g, " ")),
+			},
+		};
+	
+		const updateFacets = stir.curry((type, data) => {
+			return data; 
+			/* const form = document.querySelector(`form[data-filters="${type}"]`);
+			if (form) {
+				const parameters = QueryParams.getAll();
+				const active = "stir-accordion--active";
+	
+				data.response.facets.forEach((facet) => {
+					const metaFilter = form.querySelector(`[data-facet="${facet.name}"]`);
+					const metaAccordion = metaFilter && metaFilter.querySelector("[data-behaviour=accordion]");
+					const open = metaAccordion && metaAccordion.getAttribute("class").indexOf(active) > -1;
+	
+					const facetName = facet.categories && facet.categories[0] && facet.categories[0].queryStringParamName;
+					const metaName = facetName && Object.keys(metaToFacet)[Object.values(metaToFacet).indexOf(facetName)];
+					const metaValue = (metaName && parameters[metaName]) || (parameters[facetName] && rwm2.string.urlDecode(parameters[facetName]));
+					const selector = facetName && metaValue && `input[name="${facetName}"][value="${metaValue.toLowerCase()}"]`;
+					const facetFilter = stir.DOM.frag(stir.String.domify(stir.templates.search.facet(facet)));
+					const facetFilterElements = selector && Array.prototype.slice.call(facetFilter.querySelectorAll(selector));
+					facetFilterElements &&
+						facetFilterElements.forEach((el) => {
+							el.checked = true;
+							metaName && QueryParams.remove(metaName, false, null, true); // don't reload window and use replaceState() instead of pushState()
+							facetName && QueryParams.remove(facetName, false, null, true, false); // don't reload window and use replaceState() instead of pushState()
+						});
+	
+					const facetAccordion = facetFilter.querySelector("[data-behaviour=accordion]");
+					(open || facetFilterElements) && facetAccordion && facetAccordion.setAttribute("class", active);
+					if (metaFilter) {
+						metaFilter.insertAdjacentElement("afterend", facetFilter.firstChild);
+						metaFilter.parentElement.removeChild(metaFilter);
+					} else {
+						form.insertAdjacentElement("afterbegin", facetFilter.firstChild);
+					}
+					if ("Start date" === facet.name) {
+						stir.courses.startdates();
+					}
+				});
+			}
+			return data; // data pass-thru so we can compose() this function */
+		});
+		
+		const addResultItemPosition = stir.curry((type,item,index,context) => {
+			const page = getPage(type)-1;
+			const per  = constants.parameters[type].limit || 10;
+			const position = 1 + index + page * per;
+			item.position = item.position || position;
+			return item;
+		});
+	
+		const renderResultsWithPagination = stir.curry(
+			(type, data) => {
+				const perPage = constants.parameters[type].limit || 10;
+				const currEnd = calcEnd(data.page, perPage, data.hits.length);
+				return (data ? renderers[type](data.hits.map(addResultItemPosition(type))).join("") : 'NO DATA') +
+				stir.templates.search.pagination({
+					currEnd: currEnd,
+					totalMatching: data.total_hits,
+					progress: calcProgress(currEnd, data.total_hits),
+				}) + (footers[type] ? footers[type]() : "")
+			}
+		);
+	
 		/**
-		 * selector	the CSS selector for the <input> element we want to toggle
-		 * root: 	the "root" element to search within (the closest `data-panel`
-		 * 			should contain the search tokens, results and filters) in
-		 * 			other words only look among the filters for the current
-		 * 			search panel, and don't toggle any filters in other panels!
-		 * 			(Noticed this becuase `faculty` is common to courses and news)
-		 * input	the input element we want to toggle
-		 */
-		const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
-		const root = event.target.closest("[data-panel]") || document;
-		const input = root.querySelector(selector);
-
-		if (input) {
-			input.checked = !input.checked; // toggle it
-			event.target.parentElement.removeChild(event.target); // remove the token
-			initialSearch(); // resubmit the search for fresh results
-		} else {
-			const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
-			const select = document.querySelector(sel2);
-			if (select) {
-				select.selectedIndex = 0;
-				event.target.parentElement.removeChild(event.target);
-				initialSearch();
+		 * Custom behaviour in the event of no results
+		 **/
+		const fallback = (element) => {
+			if (!element || !element.hasAttribute("data-fallback")) return false;
+			const template = document.getElementById(element.getAttribute("data-fallback"));
+			const html = template && (template.innerHTML || "");
+			element.innerHTML = html;
+			return true;
+		};
+	
+		// +++ COURSE - subject filter +++
+		{
+			let el = document.getElementById('courseSubjectFilters');
+			if (el && stir.t4Globals.search.facets["Subject"]) {
+				stir.t4Globals.search.facets["Subject"].forEach(subject => {
+					const li = document.createElement('li');
+					li.innerHTML = `<label><input name=customField type=checkbox value="subject=${subject}">${subject}</label>`;
+					el.appendChild(li);
+				});
+			}
+			
+			el = document.querySelector('[data-facet="Faculty"] ul');
+			if (el && stir.t4Globals.search.facets["Faculty"]) {
+				el.innerHTML = '';
+				let faculties = stir.t4Globals.search.facets["Faculty"]
+				Object.keys(faculties).forEach(faculty => {
+					const li = document.createElement('li');
+					li.innerHTML = `<label><input name=customField type=checkbox value="faculty=${faculties[faculty]}">${faculties[faculty]}</label>`;
+					el.appendChild(li);
+				});
+			}
+	
+			el = document.querySelector('[data-facet="Start date"] ul');
+			if (el && stir.t4Globals.search.facets["Start date"]) {
+				el.innerHTML = '';
+				let dates = stir.t4Globals.search.facets["Start date"]
+				Object.keys(dates).forEach(date => {
+					const li = document.createElement('li');
+					li.innerHTML = `<label><input name=customField type=checkbox value="start=${date}">${dates[date]}</label>`;
+					el.appendChild(li);
+				});
+			}
+	
+			el = document.querySelector('[data-facet="Topic"] ul');
+			if (el && stir.t4Globals.search.facets["Topic"]) {
+				el.innerHTML = '';
+				let dates = stir.t4Globals.search.facets["Topic"]
+				Object.keys(dates).forEach(date => {
+					const li = document.createElement('li');
+					li.innerHTML = `<label><input name=customField type=checkbox value="tag=${date}">${dates[date]}</label>`;
+					el.appendChild(li);
+				});
+			}
+	
+			el = document.querySelector('[data-facet="SDGs"] ul');
+			if (el && stir.t4Globals.search.facets["SDGs"]) {
+				el.innerHTML = '';
+				let dates = stir.t4Globals.search.facets["SDGs"]
+				Object.keys(dates).forEach(date => {
+					const li = document.createElement('li');
+					li.innerHTML = `<label><input name=customField type=checkbox value="sdg=${dates[date]}">${dates[date]}</label>`;
+					el.appendChild(li);
+				});
 			}
 		}
-	};
+	
+		// This is the core search function that talks to the search API
+		const callSearchApi = stir.curry((type, callback) => {
+			const query = getQuery(type);
+			const parameters = 
+				stir.Object.extend(
+					{ },
+					constants.parameters[type],
+					{ page: getPage(type), term: query },
+					getNoQuery(type), // get special "no query" parameters (sorting, etc.)
+					getQueryParameters(), // get facet parameters
+				);
+			const url = addFilterParameters( buildUrl(constants.url,parameters), getFormData(type) );
+			const reportAndCallback = data => {
+				debug && console.info("[Search] reportAndCallback",type,constants.url.href);
+				searchReporter(query, data.total_hits);
+				callback(url.searchParams,data);
+			};
 
-	// Click-delegate for status panel (e.g. misspellings, dismiss filters, etc.)
-	Array.prototype.forEach.call(document.querySelectorAll(stir.templates.search.selector.summary), (statusPanel) => {
-		statusPanel.addEventListener("click", (event) => {
-			if (event.target.hasAttribute("data-suggest")) {
-				event.preventDefault();
-				constants.input.value = event.target.innerText;
-				setQuery();
-				initialSearch();
-			} else if (event.target.hasAttribute("data-value")) {
-				tokenHandler(event);
+			stir.getJSON(url, reportAndCallback);
+
+		});
+		
+		// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
+		const getInitialResults = (element, button) => {
+			debug && console.info('[Search] getInitialResults', getType(element),element);
+			const type = getType(element);
+			if (!searchers[type]) return;
+			const facets = updateFacets(type);
+			const status = updateStatus(element);
+			const more = enableLoadMore(button);
+			const replace = replaceHtml(element);
+			const render = renderResultsWithPagination(type);
+			const reflow = flow(element);
+			const composition = stir.compose(reflow, replace, render, more, status, facets);
+			const callback = (parameters,data) => {
+				
+				debug && console.info("[Search] API called-back with:",data,parameters);
+				
+				if (!element || !element.parentElement) {
+					return debug && console.error("[Search] late callback, element no longer on DOM");
+				}
+				//TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
+				if (!data || data.error) return;
+				if (0 === data.total_hits && fallback(element)) return;
+				
+				// Append AddSearch data with `question` object (à la Funnelback)
+				return composition( stir.Object.extend({}, data, {question:parameters}) );
+			};
+			resetPagination();
+		
+			// if necessary do a prefetch and then call-back to the search function.
+			// E.g. Courses needs to prefetch the combinations data
+			if (prefetch[type]) return prefetch[type]((event) => searchers[type](callback));
+			// else (if no prefetch) just call the search function now:
+			searchers[type](callback);
+		};
+		
+		// triggered by the 'load more' buttons.
+		// Similar to getResults but APPENDS (rather than replacing).
+		const getMoreResults = (element, button) => {
+			const type = getType(element);
+			if (!searchers[type]) return;
+			const status = updateStatus(element);
+			const append = appendHtml(element);
+			const render = renderResultsWithPagination(type);
+			const reflow = flow(element);
+			const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
+			const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
+			nextPage(type);
+			searchers[type](callback);
+		};
+		
+		const reset = element => element.innerHTML = "";
+		const deInitialise = panel => panel.init = false;
+
+		const notHidden = panel => !panel.el.hasAttribute("aria-hidden");
+		const notInitialised = panel => !panel.init;
+		
+		// reset() and search() a given panel
+		const research = panel => {
+			panel.init = true;
+			panel.results.forEach(reset);
+			panel.results.forEach(search);
+		};
+		
+		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
+		const initialSearch = () => panels.filter( notHidden ).forEach( research );
+		
+		const lazySearch = () => panels.filter( notHidden ).filter( notInitialised ).forEach( research );
+
+		const search = (element, index, context) => {
+			if (element.hasAttribute("data-infinite")) {
+				const resultsWrapper = document.createElement("div");
+				const buttonWrapper = document.createElement("div");
+				const button = LoaderButton();
+				button.addEventListener("click", (event) => getMoreResults(resultsWrapper, button));
+				element.appendChild(resultsWrapper);
+				element.appendChild(buttonWrapper);
+				buttonWrapper.appendChild(button);
+				buttonWrapper.setAttribute("class", stir.templates.search.classes.buttons.wrapper);
+				getInitialResults(resultsWrapper, button);
+			} else {
+				getInitialResults(element);
 			}
+		};
+		
+		const panels = Array.prototype.map.call(document.querySelectorAll("[data-panel]"),el=>{return {
+			el: el,
+			type: el.getAttribute('data-panel'),
+			results: Array.prototype.slice.call(el.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]")),
+			summary: el.querySelector(".c-search-results-summary"),
+			init: false
+		}});
+	
+		//const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
+	
+		// group the curried search functions so we can easily refer to them by `type`
+		const searchers = {
+			all: callSearchApi("all"),
+			news: callSearchApi("news"),
+			event: callSearchApi("event"),
+			gallery: callSearchApi("gallery"),
+			course: callSearchApi("course"),
+			coursemini: callSearchApi("coursemini"),
+			person: callSearchApi("person"),
+			research: callSearchApi("research"),
+			internal: callSearchApi("internal"),
+			clearing: callSearchApi("clearing"),
+		};
+	
+		// group the renderer functions so we can get them easily by `type`
+		const renderers = {
+			all: data => data.map(stir.templates.search.auto),
+			news: data => data.map(stir.templates.search.news),
+			event: data => data.map(stir.templates.search.event),
+			gallery: data => data.map(stir.templates.search.gallery),
+			course: data => data.map(stir.templates.search.course),
+			coursemini: data => data.map(stir.templates.search.coursemini),
+			person: data => data.map(stir.templates.search.person),
+			research: data => data.map(stir.templates.search.research),
+			cura: data => data.map(stir.templates.search.cura),
+			internal: data => data.map(stir.templates.search.auto),
+			clearing: data => data.map(stir.templates.search.auto),
+		};
+	
+		const footers = {
+			coursemini: () => stir.templates.search.courseminiFooter(getQuery("all")),
+		};
+	
+		const prefetch = {
+			course: (callback) => {
+				stir.coursefavs && stir.coursefavs.attachEventHandlers(); // listen for Favs events
+				let xmlHttpRequest = stir.courses.getCombos();
+				if (xmlHttpRequest) {
+					xmlHttpRequest.addEventListener("loadend", callback); // load-end should fire after load OR error
+				} else {
+					callback.call();
+				}
+			},
+		};
+	
+		// CLICK delegate for link tracking
+		const clickReporter = async event => {
+			if (!clickReporting) return true;
+			if (!event || !event.target) return;
+			
+			// get the main result links for click-tracking:
+			// (somewhat complicated due to "promoted" item image links)
+			const el = event.target.hasAttribute("data-docid") ? event.target : (event.target.parentElement && event.target.parentElement.hasAttribute("data-docid") ? event.target.parentElement : null);
+			
+			if(!el) return;
+			
+			const results  = el.closest('.c-search-results');
+			const type     = results && results.getAttribute("data-type");
+			const href     = el.getAttribute("href");
+			const docid    = el.getAttribute('data-docid');
+			const position = el.getAttribute('data-position');
+			const query    = type && getQuery(type);
+			const payload  = {
+				action: "click",
+				session: stir.session.id,
+				keyword: query,
+				docid: docid,
+				position: position
+			};
+
+			if(href && query && position && docid) {
+				event.preventDefault();
+				stir.addSearch.putReport(payload)
+					.then((response)=>{
+						let go = true;
+						if(debug) go = confirm('Check console for click reporting.');
+						// we're going to re-dispatch the event, so this flag 
+						// stops it being reported and re-dispatched again!
+						clickReporting = false; 
+						// now re-dispatch the event using the same key
+						// presses (in case user is opening in a new tab etc.)
+						// better than doing a location.href, for example.
+						go && el.dispatchEvent(new MouseEvent('click', {
+							bubbles: true,
+							shiftKey: event.shiftKey,
+							altKey: event.altKey,
+							ctrlKey: event.ctrlKey,
+							metaKey: event.metaKey
+						}));
+						// re-enable click reporting in case the 
+						// page is still alive
+						clickReporting = true; 
+					})
+					.catch(error => console.error("[AddSearch] fetch error",error));
+			} else {
+				debug && console.error("Error tracking click:", event, payload);
+			}
+
+		};
+
+		const searchReporter = async (query, total) => {
+			const payload  = {
+			  action: "search",
+			  session: stir.session.id,
+			  keyword: query,
+			  numberOfResults: total
+			};
+
+			stir.addSearch.putReport(payload)
+				.catch(error => console.error(error));
+		};
+		
+		document.querySelectorAll("[data-panel]").forEach(panel => panel.addEventListener("click",clickReporter) );
+	
+	
+		// onCHANGE event handler for search filters.
+		// Also handles the onRESET event.
+		Array.prototype.forEach.call(document.querySelectorAll(".c-search-results-area form[data-filters]"), (form) => {
+			const type = form.getAttribute("data-filters");
+			const element = document.querySelector(`.c-search-results[data-type="${type}"]`);
+			form.addEventListener("reset", (event) => {
+				// native RESET is async so we need to do it manually
+				// to ensure it's done synchonosly instead…
+				Array.prototype.forEach.call(form.querySelectorAll("input"), (input) => (input.checked = false));
+				// Only *after* the form has been reset, we can re-run the
+				// search function. (That's why native RESET is no good).
+				initialSearch();
+			});
+			form.addEventListener("change", (event) => {
+				setUrlToFilters(type);
+				initialSearch();
+			});
+			// Just in case, we'll also catch any
+			// SUBMIT events that might be triggered:
+			form.addEventListener("submit", (event) => {
+				initialSearch();
+				event.preventDefault();
+			});
 		});
-	});
-	Array.prototype.forEach.call(document.querySelectorAll(".c-search-results"), (resultsPanel) => {
-		resultsPanel.addEventListener("click", (event) => {
-			if (!event.target.hasAttribute("data-value")) return;
-			tokenHandler(event);
+		
+		function imgError(error) {
+			//debug && console.error('[Search] There was an error loading a thumbnail image:', error.target);
+			if (error.target.getAttribute("data-original") && error.target.getAttribute("src") != error.target.getAttribute("data-original")) {
+				 //debug && console.error('[+++] …reverting to original image: ', error.target.getAttribute('data-original'));
+				 error.target.src = error.target.getAttribute("data-original");
+			} else {
+				//debug && console.error('[Search] …no alternative image available. It will be removed.');
+				error.target.parentElement.parentElement?.classList?.remove("c-search-result__with-thumbnail");
+				error.target.parentElement.parentElement.removeChild(error.target.parentElement);
+			}
+		}
+	
+		const tokenHandler = (event) => {
+			if (!event || !event.target) return;
+			/**
+			 * selector	the CSS selector for the <input> element we want to toggle
+			 * root: 	the "root" element to search within (the closest `data-panel`
+			 * 			should contain the search tokens, results and filters) in
+			 * 			other words only look among the filters for the current
+			 * 			search panel, and don't toggle any filters in other panels!
+			 * 			(Noticed this because `faculty` is common to courses and news)
+			 * input	the input element we want to toggle
+			 */
+			const selector = `input[name="${event.target.getAttribute("data-name")}"][value="${event.target.getAttribute("data-value")}"]`;
+			const panel = event.target.closest("[data-panel]");
+			const root = panel || document;
+			const input = root.querySelector(selector);
+			const type = panel && panel.getAttribute("data-panel");
+			const panelManager = type && panels.filter(p=>p.type===type).shift();
+	
+			if (input) {
+				input.checked = !input.checked; // toggle it
+				event.target.parentElement.removeChild(event.target); // remove the token
+				initialSearch(); // resubmit the search for fresh results
+			} 
+			/** Not needed as we have no dropdown filters now */
+			// else {
+			// 	const sel2 = `select[name="${event.target.getAttribute("data-name")}"]`;
+			// 	const select = document.querySelector(sel2);
+			// 	if (select) {
+			// 		select.selectedIndex = 0;
+			// 		event.target.parentElement.removeChild(event.target);
+			// 		initialSearch();
+			// 	}
+			// }
+		};
+	
+		// Click-delegate for status panel (e.g. misspellings, dismiss filters, etc.)
+		Array.prototype.forEach.call(document.querySelectorAll(stir.templates.search.selector.summary), (statusPanel) => {
+			statusPanel.addEventListener("click", (event) => {
+				if (event.target.hasAttribute("data-suggest")) {
+					event.preventDefault();
+					constants.input.value = event.target.innerText;
+					setQuery();
+					initialSearch();
+				} else if (event.target.hasAttribute("data-value")) {
+					tokenHandler(event);
+				}
+			});
 		});
-	});
+	
+		/**
+		 * Running order for search:
+		 * get url
+		 *  - host
+		 *  - fixed parameters (from form)
+		 *  - variable parameters (from page query string)
+		 * prefetch (e.g. course combo data)
+		 * fetch results from search engine
+		 * process and filter data
+		 * render results via templates
+		 * send out to the page DOM
+		 * load more results on-demand
+		 */
+	
+		const submit = (event) => {
+			setQuery();
+			panels.forEach(deInitialise);
+			initialSearch();
+			event.preventDefault();
+		};
+	
+		const init = (event) => {
+			getInboundQuery();
+			constants.form.addEventListener("submit", submit);
+			initialSearch();
+		};
+	
+		window.addEventListener("popstate", init);
+		
+		return {
+			init: init,
+			constants: constants,
+			getPage: getPage,
+			lazy: lazySearch,
+			initialSearch: initialSearch
+		};
+	})();
 
-	/**
-	 * Running order for search:
-	 * get url
-	 *  - host
-	 *  - fixed parameters (from form)
-	 *  - variable parameters (from page query string)
-	 * prefetch (e.g. course combo data)
-	 * fetch results from funnelback
-	 * process and filter data
-	 * render results via templates
-	 * send out to the page DOM
-	 * load more results on-demand
-	 */
-
-	const submit = (event) => {
-		setQuery();
-		initialSearch();
-		event.preventDefault();
-	};
-
-	const init = (event) => {
-		getInboundQuery();
-		constants.form.addEventListener("submit", submit);
-		initialSearch();
-	};
-
-	init();
-
-	window.addEventListener("popstate", init);
-};
-
-stir.search();
+stir.search && stir.search.init && stir.search.init();

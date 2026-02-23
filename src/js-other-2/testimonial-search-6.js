@@ -349,7 +349,10 @@
     postsPerPage: postsPerPage,
     macroUK: "United Kingdom|Wales|England|Scotland|Northern Ireland",
     urlBase: "https://www.stir.ac.uk/",
-    searchUrl: `${searchAPI}?term=*&limit=9&customField=type%3Dstudentstory&sort=custom_fields.sort&${buildCustomFields("tag", tags)}&categories=1xstudent-stories&`,
+    searchUrl: `${searchAPI}?term=*&resultType=organic&limit=9&customField=type%3Dstudentstory&sort=custom_fields.sort&${buildCustomFields(
+      "tag",
+      tags
+    )}&categories=1xstudent-stories&`,
     onlineText: "",
   };
 

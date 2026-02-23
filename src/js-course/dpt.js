@@ -30,8 +30,8 @@ stir.dpt = (function () {
     PG: "opt=runpgcode&ct=PG",
   };
   const currentVersion = {
-    UG: "",//436, //362
-    PG: "" //417  //357
+    UG: 487, //"",//436, //362
+    PG: 457, //"" //417  //357
   };
   debug && console.info(`[DPT] using versions `, currentVersion);
 

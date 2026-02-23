@@ -1,0 +1,1624 @@
+[
+  {
+    "Name": "WEBSERVERID",
+    "Provider": "University of Stirling",
+    "Purpose": "Session cookie to identify the current web server in use (t4web1 / t4web2) for load balancing.",
+    "Expiry": "End of session",
+    "Type": "Necessary",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "JSESSIONID",
+    "Provider": "University of Stirling",
+    "Purpose": "Session cookie to assist when loading content in the University Portal, including web forms.",
+    "Expiry": "End of session",
+    "Type": "Necessary",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "CookieControl",
+    "Provider": "Civic Cookie Control",
+    "Purpose": "Stores the user's cookie consent state for the current domain.",
+    "Expiry": "90 days",
+    "Type": "Necessary",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".stir.ac.uk"
+  },
+  {
+    "Name": "paok-shib, paokv0, paok, psess-shib, psessv0, psess, athValid",
+    "Provider": "University of Stirling portal authentication",
+    "Purpose": "Records user login status for access to staff and student restricted web pages.",
+    "Expiry": "End of session",
+    "Type": "Necessary",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_____SITEGUID",
+    "Provider": "EFI Digital Storefront",
+    "Purpose": "Used to store information about user preferences and actions for the staff/student print shop.",
+    "Expiry": "1 day",
+    "Type": "Necessary",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "ASP.NET_SessionId",
+    "Provider": "EFI Digital Storefront",
+    "Purpose": "Used to store information about user preferences and actions for the staff/student print shop.",
+    "Expiry": "End of session",
+    "Type": "Necessary",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "DSFPartnerID",
+    "Provider": "EFI Digital Storefront",
+    "Purpose": "Used to store information about user preferences and actions for the staff/student print shop.",
+    "Expiry": "End of session",
+    "Type": "Necessary",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "COMPBRANDjcksjsbopwvonovxpbiq4doi",
+    "Provider": "EFI Digital Storefront",
+    "Purpose": "Used to store information about user preferences and actions for the staff/student print shop.",
+    "Expiry": "1 day",
+    "Type": "Necessary",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "LASTSITEACTIVITY",
+    "Provider": "EFI Digital Storefront",
+    "Purpose": "Used to store information about user preferences and actions for the staff/student print shop.",
+    "Expiry": "40 minutes",
+    "Type": "Necessary",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "favs",
+    "Provider": "University of Stirling",
+    "Purpose": "Used to store user selected list of favourite courses",
+    "Expiry": "365 days",
+    "Type": "Necessary",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_ga",
+    "Provider": "Google Analytics",
+    "Purpose": "Distinguishes users and counts how many people visit our site by tracking if you’ve visited before. ",
+    "Expiry": "2 years",
+    "Type": "Performance",
+    "MoreInfoUrl": "https://policies.google.com/technologies/cookies?hl=en",
+    "Applier": "Google",
+    "Domain": ""
+  },
+  {
+    "Name": "_gid",
+    "Provider": "Google Analytics",
+    "Purpose": "Distinguishes users and counts how many people visit our site by tracking if you’ve visited before.",
+    "Expiry": "1 day",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_dc_gtm_UA-340900-19",
+    "Provider": "Google Analytics",
+    "Purpose": "Used to throttle request rate.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_a_id",
+    "Provider": "University of Stirling",
+    "Purpose": "Stores unique Google Analytics ID",
+    "Expiry": "365 days",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".stir.ac.uk"
+  },
+  {
+    "Name": "_ga_ENJQ0W7S1M",
+    "Provider": "Google Analytics",
+    "Purpose": "Persists session state in Google Analytics 4.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjClosedSurveyInvites",
+    "Provider": "Hotjar",
+    "Purpose": "Hotjar cookie is set once a user interacts with an External Link Survey invitation modal. It is used to ensure that the same invite does not reappear if it has already been shown. ",
+    "Expiry": "365 days",
+    "Type": "Performance",
+    "MoreInfoUrl": "https://help.hotjar.com/hc/en-us/articles/115011789248-Hotjar-Cookies",
+    "Applier": "Hotjar",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjDonePolls",
+    "Provider": "Hotjar",
+    "Purpose": "Hotjar cookie is set once a user completes a survey using the On-site Survey widget. It is used to ensure that the same survey does not reappear if it has already been filled in.",
+    "Expiry": "365 days",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjMinimizedPolls",
+    "Provider": "Hotjar",
+    "Purpose": "Hotjar cookie is set once a user minimizes an On-site Survey widget. It is used to ensure that the widget stays minimized when the user navigates through your site.",
+    "Expiry": "365 days",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjShownFeedbackMessage",
+    "Provider": "Hotjar",
+    "Purpose": "Hotjar cookie is set when a user minimizes or completes Incoming Feedback. This is done so that the Incoming Feedback will load as minimised immediately if the user navigates to another page where it is set to show.",
+    "Expiry": "365 days",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjSessionTooLarge",
+    "Provider": "Hotjar",
+    "Purpose": "Causes Hotjar to stop collecting data if a session becomes too large. This is determined automatically by a signal from the WebSocket server if the session size exceeds the limit.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjSessionRejected",
+    "Provider": "Hotjar",
+    "Purpose": "If present, this cookie will be set to '1' for the duration of a user's session, if Hotjar rejected the session from connecting to our WebSocket due to server overload. This cookie is only applied in extremely rare situations to prevent severe performance issues.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjSessionResumed",
+    "Provider": "Hotjar",
+    "Purpose": "A cookie is set when a session/recording is reconnected to Hotjar servers after a break in connection.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjid",
+    "Provider": "Hotjar",
+    "Purpose": "Hotjar cookie is set when the customer first lands on a page with the Hotjar script. It is used to persist the Hotjar User ID, unique to that site on the browser. This ensures that behaviour in subsequent visits to the same site will be attributed to the same user ID.",
+    "Expiry": "365 days",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjRecordingLastActivity",
+    "Provider": "Hotjar",
+    "Purpose": "This should be found in Session storage (as opposed to cookies). This gets updated when a user recording starts and when data is sent through the WebSocket (the user performs an action that Hotjar records).",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjTLDTest",
+    "Provider": "Hotjar",
+    "Purpose": "When the Hotjar script executes we try to determine the most generic cookie path we should use, instead of the page hostname. This is done so that cookies can be shared across subdomains (where applicable). To determine this, we try to store the _hjTLDTest cookie for different URL substring alternatives until it fails. After this check, the cookie is removed.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjUserAttributesHash",
+    "Provider": "Hotjar",
+    "Purpose": "User Attributes sent through the Hotjar Identify API are cached for the duration of the session in order to know when an attribute has changed and needs to be updated.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjCachedUserAttributes",
+    "Provider": "Hotjar",
+    "Purpose": "This cookie stores User Attributes which are sent through the Hotjar Identify API, whenever the user is not in the sample. Collected attributes will only be saved to Hotjar servers if the user interacts with a Hotjar Feedback tool, but the cookie will be used regardless of whether a Feedback tool is present.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjLocalStorageTest",
+    "Provider": "Hotjar",
+    "Purpose": "This cookie is used to check if the Hotjar Tracking Script can use local storage. If it can, a value of 1 is set in this cookie. The data stored in_hjLocalStorageTest has no expiration time, but it is deleted almost immediately after it is created.",
+    "Expiry": "Under 100ms",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjIncludedInPageviewSample",
+    "Provider": "Hotjar",
+    "Purpose": "This cookie is set to let Hotjar know whether that user is included in the data sampling defined by your site's pageview limit.",
+    "Expiry": "30 minutes",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjIncludedInSessionSample",
+    "Provider": "Hotjar",
+    "Purpose": "This cookie is set to let Hotjar know whether that user is included in the data sampling defined by your site's daily session limit.",
+    "Expiry": "30 minutes",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjAbsoluteSessionInProgress",
+    "Provider": "Hotjar",
+    "Purpose": "This cookie is used to detect the first pageview session of a user. This is a True/False flag set by the cookie.",
+    "Expiry": "30 Minutes",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjFirstSeen",
+    "Provider": "Hotjar",
+    "Purpose": "This is set to identify a new user’s first session. It stores a true/false value, indicating whether this was the first time Hotjar saw this user. It is used by Recording filters to identify new user sessions.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjViewportId",
+    "Provider": "Hotjar",
+    "Purpose": "This stores information about the user viewport such as size and dimensions.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_hjRecordingEnabled",
+    "Provider": "Hotjar",
+    "Purpose": "This is added when a Recording starts and is read when the recording module is initialized to see if the user is already in a recording in a particular session.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "nmstat",
+    "Provider": "Siteimprove",
+    "Purpose": "Set by our website quality assurance tool Siteimprove to give us an overview of visitor behaviour and measure site performance. This cookie contains a randomly generated ID used to recognize the browser when a visitor reads a page. The cookie contains no personal information and is used only for web analytics. ",
+    "Expiry": "1000 days",
+    "Type": "Performance",
+    "MoreInfoUrl": "https://help.siteimprove.com/support/solutions/articles/80000863908-siteimprove-analytics-cookies",
+    "Applier": "Siteimprove",
+    "Domain": ""
+  },
+  {
+    "Name": "AWSELBCORS",
+    "Provider": "Siteimprove",
+    "Purpose": "This enables Siteimprove Analytics to determine the sequence of a user's page views.",
+    "Expiry": "End of session",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "__cf_bm",
+    "Provider": "University of Stirling",
+    "Purpose": "Cloudflare bot protection. Identifies and mitigates automated traffic to protect the site from bad bots.",
+    "Expiry": "30 minutes",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".load.collect.stir.ac.uk"
+  },
+  {
+    "Name": "utm_campaign",
+    "Provider": "University of Stirling",
+    "Purpose": "Captures campaign information provided as visible parameters in the page URL. These parameters are provided as part of the link that you clicked to get to our Website.",
+    "Expiry": "60 days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "utm_medium",
+    "Provider": "University of Stirling",
+    "Purpose": "Captures campaign information provided as visible parameters in the page URL. These parameters are provided as part of the link that you clicked to get to our Website.",
+    "Expiry": "60 days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "utm_source",
+    "Provider": "University of Stirling",
+    "Purpose": "Captures campaign information provided as visible parameters in the page URL. These parameters are provided as part of the link that you clicked to get to our Website.",
+    "Expiry": "60 days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_fbp",
+    "Provider": "Facebook",
+    "Purpose": "Contains a subdomain index, timestamp and random number. Used to identify browsers for the purchases of advertising and site analytics. It is set by Facebook. Facebook cookie information",
+    "Expiry": "3 months",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://en-gb.facebook.com/policy/cookies/",
+    "Applier": "Facebook",
+    "Domain": ".stir.ac.uk"
+  },
+  {
+    "Name": "fr",
+    "Provider": "Facebook",
+    "Purpose": "Contains a User ID, Browser ID and timestamp plus other miscellaneous data. Used to deliver, measure and improve the relevancy of ads. It is set by Facebook.",
+    "Expiry": "3 months",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "personalization_id",
+    "Provider": "X",
+    "Purpose": "This cookie is set by X to measure the performance of advertising campaigns through X across different browsers and devices used by a visitor. ",
+    "Expiry": "2 years",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://help.twitter.com/en/rules-and-policies/twitter-cookies",
+    "Applier": "X",
+    "Domain": ""
+  },
+  {
+    "Name": "_gcl_au",
+    "Provider": "Google Tag Manager",
+    "Purpose": "This is a Conversion linker set by Tag Manager that allows us to track actions taken on the Website through Google Analytics. ",
+    "Expiry": "60 days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://policies.google.com/technologies/cookies?hl=en",
+    "Applier": "Google",
+    "Domain": ""
+  },
+  {
+    "Name": "user-id",
+    "Provider": "Google Analytics",
+    "Purpose": "Persists a unique user ID for remarketing. Google uses cookies to help customize advertising on Google properties, like Google Search. These cookies remember your most recent searches, your previous interactions with our Website, search results, and engagement with our advertising. This helps us to show you customised advertising on Google through re-marketing.",
+    "Expiry": "0 seconds",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://policies.google.com/technologies/cookies?hl=en",
+    "Applier": "Google",
+    "Domain": ""
+  },
+  {
+    "Name": "Hm_lpvt_27da419cc768",
+    "Provider": "Baidu",
+    "Purpose": "Used by Baidu Analytics to limit the frequency of requests and records a unique ID used to generate statistical data on how the visitor uses the Website. Baidu privacy statement",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://ir.baidu.com/baidu-statement-privacy-protection",
+    "Applier": "ir.baidu.com",
+    "Domain": ""
+  },
+  {
+    "Name": "tt_appInfo",
+    "Provider": "TikTok",
+    "Purpose": "These cookies are used by TikTok to assign a unique ID to a user to track them across websites. TikTok cookies policy",
+    "Expiry": "Session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.tiktok.com/legal/cookie-policy?lang=en",
+    "Applier": "TikTok",
+    "Domain": ""
+  },
+  {
+    "Name": "tt_sessionId",
+    "Provider": "TikTok",
+    "Purpose": "Used by the social networking service, TikTok, for tracking the use of embedded services.",
+    "Expiry": "Session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_tt_enable_cookie",
+    "Provider": "TikTok",
+    "Purpose": "Used by the social networking service, TikTok, for tracking the use of embedded services.",
+    "Expiry": "1 year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_ttp",
+    "Provider": "TikTok",
+    "Purpose": "Used by the social networking service, TikTok, for tracking the use of embedded services.",
+    "Expiry": "1 year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "HSID",
+    "Provider": "Doubleclick",
+    "Purpose": "This cookie is set by DoubleClick (which is owned by Google) to build a profile of the website visitor's interests and show relevant ads on other sites. ",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://policies.google.com/technologies/cookies?hl=en",
+    "Applier": "Google",
+    "Domain": ""
+  },
+  {
+    "Name": "SAPISID",
+    "Provider": "Doubleclick",
+    "Purpose": "This DoubleClick cookie is generally set through the site by advertising partners, and used by them to build a profile of the website visitor's interests and show relevant ads on other sites. This cookie works by uniquely identifying your browser and device.",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "APISID",
+    "Provider": "Doubleclick",
+    "Purpose": "This DoubleClick cookie is generally set through the site by advertising partners, and used by them to build a profile of the website visitor's interests and show relevant ads on other sites. This cookie works by uniquely identifying your browser and device.",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "IDE",
+    "Provider": "Doubleclick",
+    "Purpose": "Ads targeting cookie for DoubleClick",
+    "Expiry": "2 Years",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_scid",
+    "Provider": "Snapchat",
+    "Purpose": "Used to save marketing cookie preferences. Snapchat cookie policy",
+    "Expiry": "1 Year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://snap.com/en-GB/cookie-policy",
+    "Applier": "Snapchat",
+    "Domain": ""
+  },
+  {
+    "Name": "_sctr",
+    "Provider": "Snapchat",
+    "Purpose": "Used to determine whether a third party tag will be called in Snap Ads Pixel.",
+    "Expiry": "1 Year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "auid",
+    "Provider": "Snapchat",
+    "Purpose": "Holds the advertising ID of the user in mobile devices. Used for tracking user actions, such as clicks on the recommendations",
+    "Expiry": "90 Days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "lpv",
+    "Provider": "Snapchat",
+    "Purpose": "Distinguishes conversion from Pardot site or advert.",
+    "Expiry": "1 Day",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_gcl_au",
+    "Provider": "Snapchat",
+    "Purpose": "Used to store and track conversions.",
+    "Expiry": "3 Months",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_schn",
+    "Provider": "Snapchat",
+    "Purpose": "This pixel is used to retarget and attribute traffic coming from the social network.",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "leadgen.api_session",
+    "Provider": "LinkedIn",
+    "Purpose": "Stores client ID for Leadgen applications.",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.linkedin.com/legal/cookie-policy",
+    "Applier": "LinkedIn",
+    "Domain": ""
+  },
+  {
+    "Name": "UserMatchHistory",
+    "Provider": "LinkedIn",
+    "Purpose": "LinkedIn Ads ID syncing",
+    "Expiry": "30 Days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "li_fat_id",
+    "Provider": "LinkedIn",
+    "Purpose": "Member indirect identifier for Members for conversion tracking, retargeting, analytics",
+    "Expiry": "30 Days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_guid",
+    "Provider": "LinkedIn",
+    "Purpose": "Used to identify a LinkedIn Member for advertising through Google Ads",
+    "Expiry": "90 Days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "BizographicsOptOut",
+    "Provider": "LinkedIn",
+    "Purpose": "Determine opt-out status for Third-party tracking",
+    "Expiry": "10 Years",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "lms_ads",
+    "Provider": "LinkedIn",
+    "Purpose": " Used to identify LinkedIn Members off LinkedIn in the Designated Countries for advertising",
+    "Expiry": "30 Days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_gcl_au",
+    "Provider": "LinkedIn",
+    "Purpose": "Used through Google Analytics to understand user interaction with the site and advertising",
+    "Expiry": "3 Months",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_gcl_aw",
+    "Provider": "LinkedIn",
+    "Purpose": "Used through Google Ads to understand user interaction with the site and advertising",
+    "Expiry": "3 Months",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "NID",
+    "Provider": "Google",
+    "Purpose": "Targeting/Advertising. Allows our website to remember information that changes the way the site behaves or looks, such as your preferred language or the region you are in. This cookie can also assist you in changing text size, font, and other parts of web pages that you can personalise. It is set by Google. ",
+    "Expiry": "180 Days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://policies.google.com/technologies/cookies?hl=en",
+    "Applier": "Google",
+    "Domain": ""
+  },
+  {
+    "Name": "1P_JAR",
+    "Provider": "Google",
+    "Purpose": "To remember recent searches and interactions to save preferences and customise ads on Google websites. It is set by Google.",
+    "Expiry": "30 Days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_ga",
+    "Provider": "Google",
+    "Purpose": "To calculate visitor, session and campaign data for the website analytics reports. It uses a unique ID for users. The activity tracked for analytical reports includes pageviews, ecommerce (memberships, donations and online shop transactions), downloads, use of search functionality or when a user selects specific links on the website.",
+    "Expiry": "2 years",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".stir.ac.uk"
+  },
+  {
+    "Name": "_gat",
+    "Provider": "Google",
+    "Purpose": "To throttle request rate and limit requests to Google Analytics.",
+    "Expiry": "1 Minute",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_dc_gtm_",
+    "Provider": "Google",
+    "Purpose": "To improve website performance and limit data collection on high traffic websites. It is set by Google.",
+    "Expiry": "1 Minute",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "CONSENT",
+    "Provider": "Google",
+    "Purpose": "To remember recent searches and interactions to save preferences and customise ads on Google websites. It is set by Google.",
+    "Expiry": "1 Year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "SID",
+    "Provider": "Google",
+    "Purpose": "to show customized ads on Google properties",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "NID",
+    "Provider": "Google",
+    "Purpose": "to show customized ads on Google properties",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "IDE",
+    "Provider": "Google",
+    "Purpose": "for personalised advertising served across the web",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "ANID",
+    "Provider": "Google",
+    "Purpose": "for personalised advertising served across the web",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "SIDCC",
+    "Provider": "Google",
+    "Purpose": "This cookie carries out information about how the end user uses the website and any advertising that the end user may have seen before visiting the said website.",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "jvxsync",
+    "Provider": "JIVOX",
+    "Purpose": "This cookie is set by JIVOX audience manager to determine the time and frequencies of visitor data synchronization. JIVOX privacy policy",
+    "Expiry": "6 months",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://jivox.com/privacy/",
+    "Applier": "JIVOX",
+    "Domain": ""
+  },
+  {
+    "Name": "uids",
+    "Provider": "Xandr",
+    "Purpose": "This cookie contains a base This information is used by our Prebid Server demand partners to select advertisements for delivery by the Platform and to measure the performance of, and attribute payment for, those advertisements.64 encoded JSON object which contains external unique randomly generated values that enable other Prebid Server demand partners to distinguish browsers and mobile devices.",
+    "Expiry": "90 days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "sess",
+    "Provider": "Xandr",
+    "Purpose": "The sess cookie is used by the Platform to test whether a browser is configured to accept cookies from Xandr. Xandr privacy policy",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.xandr.com/privacy/platform-privacy-policy/",
+    "Applier": "Xandr",
+    "Domain": ""
+  },
+  {
+    "Name": "icu",
+    "Provider": "Xandr",
+    "Purpose": "The icu cookie is used to select ads and limit the number of times a user sees a particular ad.",
+    "Expiry": "90 days",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "anj",
+    "Provider": "Xandr",
+    "Purpose": "The anj cookie contains data denoting whether a cookie ID is synced with our partners.",
+    "Expiry": "Persistent. 90 days.",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "usersync",
+    "Provider": "Xandr",
+    "Purpose": "The usersync cookie contains data denoting whether a cookie ID is synced with our partners.",
+    "Expiry": "Persistent. 90 days.",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "token",
+    "Provider": "Xandr",
+    "Purpose": "Cookies that start with token are helper cookies used as a security measure with industry opt-out pages. They contain a unique value only to verify the origin of opt-out requests.",
+    "Expiry": "1440 Minutes",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "pses",
+    "Provider": "Xandr",
+    "Purpose": "The pses cookie is used to measure the time a user spends on a site.",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "MUID",
+    "Provider": "Bing",
+    "Purpose": "Microsoft User Identifier tracking cookie used by Bing and placed by embedded Microsoft Forms. Microsoft advertising privacy policy",
+    "Expiry": "1 year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://about.ads.microsoft.com/en-gb/resources/policies/microsoft-advertising-privacy-policy",
+    "Applier": "Microsoft",
+    "Domain": ".office.com"
+  },
+  {
+    "Name": "SRM_B",
+    "Provider": "Bing",
+    "Purpose": "Microsoft User Identifier tracking cookie used by Bing and placed by embedded Microsoft Forms",
+    "Expiry": "1 year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".c.bing.com"
+  },
+  {
+    "Name": "__tmbid",
+    "Provider": "University of Stirling",
+    "Purpose": "Supporting advertisement delivered by Crimtan.",
+    "Expiry": " 1 year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://crimtan.com/privacy-policy/",
+    "Applier": "Crimtan",
+    "Domain": "www.stir.ac.uk"
+  },
+  {
+    "Name": "PREF",
+    "Provider": "YouTube",
+    "Purpose": "To help Google keep statistics of how the visitor uses YouTube videos across different websites by registering a unique ID. It is set by YouTube. ",
+    "Expiry": "8 Months",
+    "Type": "Third-party",
+    "MoreInfoUrl": "https://policies.google.com/technologies/cookies?hl=en",
+    "Applier": "Google",
+    "Domain": ""
+  },
+  {
+    "Name": "VISITOR_INFO1_LIVE",
+    "Provider": "YouTube",
+    "Purpose": "To estimate the users' bandwidth on pages with integrated YouTube videos. It is set by YouTube.",
+    "Expiry": "179 Days",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".youtube.com"
+  },
+  {
+    "Name": "YSC",
+    "Provider": "YouTube",
+    "Purpose": "To keep statistics of which videos from YouTube the user has seen by registering a unique ID. It is set by YouTube.",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".youtube.com"
+  },
+  {
+    "Name": "GPS",
+    "Provider": "YouTube",
+    "Purpose": "To enable tracking based on geographical GPS location by registering a unique ID on mobile devices. It is set by YouTube.",
+    "Expiry": "1 Day",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "VISITOR_PRIVACY_METADATA",
+    "Provider": "YouTube",
+    "Purpose": "Stores the user's cookie consent state for the current domain.",
+    "Expiry": "6 months",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".youtube.com"
+  },
+  {
+    "Name": "csrftoken",
+    "Provider": "Eventbrite",
+    "Purpose": "Used by Eventbrite to store performed actions on the Website. Eventbrite cookie statement",
+    "Expiry": "1 year",
+    "Type": "Third-party",
+    "MoreInfoUrl": "https://www.eventbrite.co.uk/help/en-gb/articles/666792/eventbrite-cookie-policy/",
+    "Applier": "Eventbrite",
+    "Domain": ".eventbrite.co.uk"
+  },
+  {
+    "Name": "G",
+    "Provider": "Eventbrite",
+    "Purpose": "Used by Eventbrite to store performed actions on the Website.",
+    "Expiry": "1 year",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".eventbrite.co.uk"
+  },
+  {
+    "Name": "mgref",
+    "Provider": "Eventbrite",
+    "Purpose": "Used by Eventbrite to store performed actions on the Website.",
+    "Expiry": "1 year",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".eventbrite.co.uk"
+  },
+  {
+    "Name": "AWSALBCORS",
+    "Provider": "Talentlink",
+    "Purpose": "Used by Talentlink in the Jobs section of the Website for load balancing on their servers.",
+    "Expiry": "7 days",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": "emea3.recruitmentplatform.com"
+  },
+  {
+    "Name": "AuthSess",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Microsoft SWAY content embedded on the Website. Microsoft privacy statement",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "https://privacy.microsoft.com/en-gb/privacystatement",
+    "Applier": "Microsoft",
+    "Domain": ""
+  },
+  {
+    "Name": "ai_session",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Sharepoint videos and images embedded on the Website.",
+    "Expiry": "30 minutes",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "RedirectToThinEmbed",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Sharepoint videos and images embedded on the Website.",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "wfeSessionId",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Sharepoint videos and images embedded on the Website.",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "buid",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Sharepoint videos and images embedded on the Website.",
+    "Expiry": "1 month",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "fpc",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Sharepoint videos and images embedded on the Website.",
+    "Expiry": "1 month",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "stsservicecookie",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Sharepoint videos and images embedded on the Website.",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "x-ms-gateway-slice",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Sharepoint videos and images embedded on the Website.",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "MC1",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Sharepoint videos and images embedded on the Website.",
+    "Expiry": "1 year",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "MS0",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Sharepoint videos and images embedded on the Website.",
+    "Expiry": "30 minutes",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "FormsWebSessionId",
+    "Provider": "Microsoft",
+    "Purpose": "Required for functionality of Microsoft forms embedded on the website",
+    "Expiry": "1 month",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": "forms.office.com"
+  },
+  {
+    "Name": "usenewauthrollout",
+    "Provider": "Microsoft",
+    "Purpose": "Required for functionality of Microsoft forms embedded on the website",
+    "Expiry": "1 month",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "usenewrpsauthrollout",
+    "Provider": "Microsoft",
+    "Purpose": "Required for functionality of Microsoft forms embedded on the website",
+    "Expiry": "1 month",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "__RequestVerificationToken",
+    "Provider": "Microsoft",
+    "Purpose": "Required for functionality of Microsoft forms embedded on the website",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": "forms.office.com"
+  },
+  {
+    "Name": "DcLcid",
+    "Provider": "Microsoft",
+    "Purpose": "Required for functionality of Microsoft forms embedded on the website",
+    "Expiry": "3 months",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "MSFPC",
+    "Provider": "Microsoft",
+    "Purpose": "Required for functionality of Microsoft forms embedded on the website",
+    "Expiry": "1 year",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "AADNonce",
+    "Provider": "Microsoft",
+    "Purpose": "Required to display Microsoft SWAY content embedded on the Website.",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "MUID",
+    "Provider": "Microsoft",
+    "Purpose": "Required for functionality of Microsoft documents embedded on the website",
+    "Expiry": "1 year",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".bing.com"
+  },
+  {
+    "Name": "ANONCHK",
+    "Provider": "Microsoft",
+    "Purpose": "Required for functionality of Microsoft documents embedded on the website",
+    "Expiry": "10 minutes",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".c.office.com"
+  },
+  {
+    "Name": "SM",
+    "Provider": "Microsoft",
+    "Purpose": "Required for functionality of Microsoft documents embedded on the website",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".c.office.com"
+  },
+  {
+    "Name": "esctx, esctx-qh6zDqeshmk, fpc",
+    "Provider": "Microsoft",
+    "Purpose": "Web browser cookies used in Microsoft Entra authentication",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_gat",
+    "Provider": "Sterling Digital",
+    "Purpose": "Used to throttle request rate between Gecko and Google Analytics. Sterling privacy policy",
+    "Expiry": "1 minute",
+    "Type": "Third-party",
+    "MoreInfoUrl": "https://www.sterlingsolutions.co.uk/privacy-policy/",
+    "Applier": "Sterling Solutions",
+    "Domain": ""
+  },
+  {
+    "Name": "_ga",
+    "Provider": "Sterling Digital",
+    "Purpose": "Google user ID created by Sterling Digital to calculate visitor, session, and campaign data for the website analytics reports. It uses a unique ID for users.",
+    "Expiry": "2 years",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_gid",
+    "Provider": "Sterling Digital",
+    "Purpose": "Used through Google Analytics to distinguish users of Sterling Digital forms and counts how many people visit our site by tracking if you’ve visited before.",
+    "Expiry": "1 day",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "laravel_session",
+    "Provider": "Sterling Digital",
+    "Purpose": "Required for personalised PG prospectus functionality.",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "XSRF-TOKEN",
+    "Provider": "Sterling Digital",
+    "Purpose": "Required for personalised PG prospectus functionality.",
+    "Expiry": "2 hours",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_gat_geckoClient",
+    "Provider": "Gecko forms",
+    "Purpose": "Used to throttle request rate between Gecko and Google Analytics Gecko privacy policy",
+    "Expiry": "1 minute",
+    "Type": "Third-party",
+    "MoreInfoUrl": "https://geckoengage.com/privacy-policy/",
+    "Applier": "Gecko",
+    "Domain": ""
+  },
+  {
+    "Name": "_ga",
+    "Provider": "Gecko forms",
+    "Purpose": "Google user ID created by Gecko forms to calculate visitor, session, and campaign data for the website analytics reports. It uses a unique ID for users.",
+    "Expiry": "2 years",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "gcl_au",
+    "Provider": "Gecko forms",
+    "Purpose": "Used through Google Analytics to understand Gecko form users’ interaction with the site and advertising",
+    "Expiry": "90 days",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "_gid",
+    "Provider": "Gecko forms",
+    "Purpose": "Used through Google Analytics to distinguish users of Gecko forms and counts how many people visit our site by tracking if you’ve visited before.",
+    "Expiry": "1 day",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "Hm_lpvt_27da419cc76834716b4307af08c3722f",
+    "Provider": "Gecko forms",
+    "Purpose": "Used by Gecko forms to track user interactions from our advertising campaigns through website page views to form submission.",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "Hm_lvt_27da419cc76834716b4307af08c3722f",
+    "Provider": "Gecko forms",
+    "Purpose": "Used by Gecko forms to track user interactions from our advertising campaigns through website page views to form submission.",
+    "Expiry": "1 year",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "__lc_cid",
+    "Provider": "LiveChat",
+    "Purpose": "Necessary for the functionality of the website's chat-box function. LiveChat privacy policy",
+    "Expiry": "3 years",
+    "Type": "Third-party",
+    "MoreInfoUrl": "https://www.livechat.com/legal/privacy-policy/",
+    "Applier": "LiveChat",
+    "Domain": ""
+  },
+  {
+    "Name": "__lc_cst",
+    "Provider": "LiveChat",
+    "Purpose": "Necessary for the functionality of the website's chat-box function.",
+    "Expiry": "3 years",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "__lc2_cid,",
+    "Provider": "LiveChat",
+    "Purpose": "Stores a unique ID string for each chat-box session. This allows the website-support to see previous issues and reconnect with the previous supporter.",
+    "Expiry": "3 years",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "__lc2_cst",
+    "Provider": "LiveChat",
+    "Purpose": "Stores a unique ID string for each chat-box session. This allows the website-support to see previous issues and reconnect with the previous supporter.",
+    "Expiry": "3 years",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "vuid",
+    "Provider": "Vimeo",
+    "Purpose": "Set by Vimeo as part of embedded Vimeo services on our website. They enable Vimeo to play the video and collect analytics data such as how long a viewer has watched the video. Vimeo cookie policy",
+    "Expiry": "2 years",
+    "Type": "Third-party",
+    "MoreInfoUrl": "https://vimeo.com/cookie_policy",
+    "Applier": "Vimeo",
+    "Domain": ".vimeo.com"
+  },
+  {
+    "Name": "__cf_bm",
+    "Provider": "Vimeo",
+    "Purpose": "Cloudflare bot manager, manages incoming traffic that matches criteria associated with bots.",
+    "Expiry": "30 minutes",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".load.collect.stir.ac.uk"
+  },
+  {
+    "Name": "_cfuvid",
+    "Provider": "Vimeo",
+    "Purpose": "Cloudflare cookie used to enforce rate limiting rules.",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".vimeo.com"
+  },
+  {
+    "Name": "_dd_s",
+    "Provider": "Vimeo",
+    "Purpose": "",
+    "Expiry": "15 minutes",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": "player.vimeo.com"
+  },
+  {
+    "Name": "_GRECAPTCHA",
+    "Provider": "Google",
+    "Purpose": "To provide spam protection for some forms.",
+    "Expiry": "6 months",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": "www.google.com"
+  },
+  {
+    "Name": "ar_debug",
+    "Provider": "wearemiq.com",
+    "Purpose": "To measure the effectiveness of advertising campaigns and to personalize online content. These cookies and other technologies may be used to track individuals across different devices.",
+    "Expiry": "6 months",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": "api.edkt.io"
+  },
+  {
+    "Name": "ar_debug_uuid",
+    "Provider": "wearemiq.com",
+    "Purpose": "To measure the effectiveness of advertising campaigns and to personalize online content. These cookies and other technologies may be used to track individuals across different devices.",
+    "Expiry": "6 months",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": "api.edkt.io"
+  },
+  {
+    "Name": "bcookie",
+    "Provider": "linkedin",
+    "Purpose": "Used by linkedin to store browser details",
+    "Expiry": "1 year",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".linkedin.com"
+  },
+  {
+    "Name": "bid",
+    "Provider": "consentag.eu",
+    "Purpose": "Supporting advertisement delivered by Crimtan.",
+    "Expiry": "5 months",
+    "Type": "Third-party",
+    "MoreInfoUrl": "https://crimtan.com/privacy-policy/",
+    "Applier": "Crimtan",
+    "Domain": ".consentag.eu"
+  },
+  {
+    "Name": "cid_[hash]",
+    "Provider": "ctnsnet.com",
+    "Purpose": "Supporting advertisement delivered by Crimtan.",
+    "Expiry": "1 year ",
+    "Type": "Third-party",
+    "MoreInfoUrl": "https://crimtan.com/privacy-policy/",
+    "Applier": "Crimtan",
+    "Domain": ".ctnsnet.com"
+  },
+  {
+    "Name": "__Secure-ROLLOUT_TOKEN",
+    "Provider": ".youtube.com",
+    "Purpose": "",
+    "Expiry": "6 months",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ".youtube.com"
+  },
+  {
+    "Name": "ar_debug",
+    "Provider": "api.edkt.io",
+    "Purpose": "",
+    "Expiry": "1 month",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "ar_debug_uuid",
+    "Provider": "api.edkt.io",
+    "Purpose": "",
+    "Expiry": "6 months",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": ""
+  },
+  {
+    "Name": "AWSALB",
+    "Provider": "University of Stirling",
+    "Purpose": "Used by the website for load balancing servers",
+    "Expiry": "7 days",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": "www.stir.ac.uk"
+  },
+  {
+    "Name": "EXPIRE_TIMESTAMP",
+    "Provider": "emea3.recruitmentplatform.com",
+    "Purpose": "",
+    "Expiry": "End of session",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "",
+    "Domain": "emea3.recruitmentplatform.com"
+  },
+  {
+    "Name": "FPAU",
+    "Provider": "University of Stirling",
+    "Purpose": "Campaign Manager, Display & Video 360, Google Ads, Search Ads 360 ",
+    "Expiry": "3 months",
+    "Type": "Performance",
+    "MoreInfoUrl": "https://business.safety.google/adscookies/",
+    "Applier": "Google",
+    "Domain": ".stir.ac.uk"
+  },
+  {
+    "Name": "FPID",
+    "Provider": "University of Stirling",
+    "Purpose": "Set by the University of Stirling's Google Analytics account.",
+    "Expiry": "1 year",
+    "Type": "Performance",
+    "MoreInfoUrl": "https://business.safety.google/adscookies/",
+    "Applier": "Google",
+    "Domain": ".stir.ac.uk"
+  },
+  {
+    "Name": "FPLC",
+    "Provider": "University of Stirling",
+    "Purpose": "Set by the University of Stirling's Google Analytics account.",
+    "Expiry": "20 hours",
+    "Type": "Performance",
+    "MoreInfoUrl": "https://business.safety.google/adscookies/",
+    "Applier": "Google",
+    "Domain": ".stir.ac.uk"
+  },
+  {
+    "Name": "li_gc",
+    "Provider": ".linkedin.com",
+    "Purpose": "",
+    "Expiry": "6 months",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "Linkedin",
+    "Domain": ".linkedin.com"
+  },
+  {
+    "Name": "lidc",
+    "Provider": ".linkedin.com",
+    "Purpose": "",
+    "Expiry": "1 day",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "Linkedin",
+    "Domain": ".linkedin.com"
+  },
+  {
+    "Name": "MR",
+    "Provider": ".c.bing.com",
+    "Purpose": "",
+    "Expiry": "7 days",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "Microsoft",
+    "Domain": ".c.bing.com"
+  },
+  {
+    "Name": "MR",
+    "Provider": ".c.office.com",
+    "Purpose": "",
+    "Expiry": "7 days",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": "Microsoft",
+    "Domain": ".c.bing.com"
+  },
+  {
+    "Name": "_ga_ENJQ0W7S1M",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "Persists session state in Google Analytics 4.",
+    "Expiry": "1 year",
+    "Set by": "1st party",
+    "Provider": "University of Stirling",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": ""
+  },
+  {
+    "Name": "_gcl_au",
+    "Domain": ".stir.ac.uk",
+    "Purpose": "This is a Conversion linker set by Tag Manager that allows us to track actions taken on the Website through Google Analytics.",
+    "Expiry": "3 months",
+    "Provider": "Google Tag Manager",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": ""
+  },
+  {
+    "Name": "AWSALBCORS",
+    "Domain": "kuula.co",
+    "Purpose": "Used by the kuula virtual tour software for load balancing servers",
+    "Expiry": "7 days",
+    "Provider": "Kuula",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": ""
+  },
+  {
+    "Name": "AWSALBCORS",
+    "Domain": "www.stir.ac.uk",
+    "Purpose": "Used by the website for load balancing servers",
+    "Expiry": "7 days",
+    "Set by": "1st party",
+    "Provider": "University of Stirling",
+    "Type": "Performance",
+    "MoreInfoUrl": "",
+    "Applier": ""
+  },
+  {
+    "Name": "AWSELBCORS",
+    "Domain": "payments.blackbaud.com",
+    "Purpose": "Used by the Blackbaud fundraising software for load balancing servers",
+    "Expiry": "40 minutes",
+    "Provider": "Blackbaud",
+    "Type": "Third-party",
+    "MoreInfoUrl": "",
+    "Applier": ""
+  }
+]
