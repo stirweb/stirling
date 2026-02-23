@@ -179,6 +179,35 @@
         justify-items: center;
       }
     </style>
+
+    <script>
+      var miniEvents = window.miniEvents || [];
+      miniEvents.push(
+        `[{"id":201229,"sid":"36607201229","title":"Global Justice Society free breakfast","url":"","online":"","type":"Event","audience":"Staff, Student","custom_fields":{"name":"Global Justice Society free breakfast","snippet":"<p>Join us this Green Week for a Free Breakfast at the Green &amp; Blue Space, hosted by the <a href=\\\"https://www.stirlingstudentsunion.com/societies/9074/\\\">Global Justice Society</a>.</p><p>On Tuesday from 9 to 11am, we&rsquo;re opening up the Green and Blue Space to create a welcoming, inclusive morning where good food is accessible to everyone at no cost.</p><p>We believe food should never be a barrier. That&rsquo;s why we&rsquo;re providing a range of options to suit all dietary requirements, including vegan, dairy-free, and gluten-free choices.</p><p>Whether you&rsquo;re grabbing a quick bite between lectures or staying to chat, there&rsquo;ll be something for you.</p>","tag":["Sustainability","StaffStudent","StaffStudent"],"data":["%7B%22location%22%3A%22Green%20and%20Blue%20Space%22%7D","%7B%22cancelled%22%3A%22%22%7D","%7B%22rescheduled%22%3A%22%22%7D"]},"perfId":201229,"start":"2026-03-10","end":"2026-03-10","startTime":"09:00","endTime":"11:00","stirStart":"10 March 2026","stirEnd":"10 March 2026","startInt":202603100900,"endInt":202603101100,"timeAdvice":"","pin":202603100900,"eventPromo":""}, {}]`,
+      );
+    </script>
+
+    <script>
+      var miniEvents = window.miniEvents || [];
+      miniEvents.push(
+        `[{"id":201230,"sid":"36607201230","title":"Green and Blue Space kilo sale","url":"","online":"","type":"Event","audience":"Public, Staff, Student","custom_fields":{"name":"Green and Blue Space kilo sale","snippet":"<p>Join us at the Green &amp; Blue Space for the Green &amp; Blue Space Kilo Sale on Tuesday 10th of March from 12:00 to 4:00pm.</p><p>This second-hand sale offers a fantastic opportunity to find great deals on kitchenware, homeware, clothes, and small electronics, all while supporting a more sustainable future.</p><p>By shopping second-hand, you&rsquo;ll save money, reduce waste, and lower your carbon footprint. Our Fair Share project, a key part of our Green and Blue Space circular economy initiative, prevents 2 metric tonnes of goods from going to waste each year.</p><p>Come discover how you can make a positive impact on the planet while picking up some eco-friendly bargains!</p>","tag":["Sustainability","Public","StaffStudent","StaffStudent"],"data":["%7B%22location%22%3A%22Green%20and%20Blue%20Space%22%7D","%7B%22cancelled%22%3A%22%22%7D","%7B%22rescheduled%22%3A%22%22%7D"]},"perfId":201230,"start":"2026-03-10","end":"2026-03-10","startTime":"12:00","endTime":"16:00","stirStart":"10 March 2026","stirEnd":"10 March 2026","startInt":202603101200,"endInt":202603101600,"timeAdvice":"","pin":202603101200,"eventPromo":""}, {}]`,
+      );
+    </script>
+
+    <script>
+      var miniEvents = window.miniEvents || [];
+      miniEvents.push(
+        `[{"id":201231,"sid":"36607201231","title":"MacRoberts The 7X Challenge","url":"","online":"","type":"Event","audience":"Staff, Student","custom_fields":{"name":"MacRoberts The 7X Challenge","snippet":"<p>Why not share your studies with other students?</p><p>The 7X Challenge is a team presentation challenge for students to create a 7-minute presentation using just 7 slides, each of which is shown for only 1 minute.</p><p>The 7X presentations are an opportunity to share an area of course study or ongoing research as it relates to the broad theme sustainability. From how mainstream media frames the narrative of climate change to sustainable sports management, from forestry to fisheries and microbiology to political sciences all relevant topics are welcome in the 7X Challenge. Students are welcome to join the challenge as part of Green Week through their course studies.</p><p>Questions and more info on how to register and create a presentation are available from: contact@macrobertartscentre.org.</p>","tag":["","StaffStudent","StaffStudent"],"data":["%7B%22location%22%3A%22Macrobert%20Arts%20Centre%22%7D","%7B%22cancelled%22%3A%22%22%7D","%7B%22rescheduled%22%3A%22%22%7D"]},"perfId":201231,"start":"2026-03-10","end":"2026-03-10","startTime":"10:30","endTime":"12:30","stirStart":"10 March 2026","stirEnd":"10 March 2026","startInt":202603101030,"endInt":202603101230,"timeAdvice":"","pin":202603101030,"eventPromo":""}, {}]`,
+      );
+    </script>
+
+    <script>
+      var miniEvents = window.miniEvents || [];
+      miniEvents.push(
+        `[{"id":201232,"sid":"36607201232","title":"Repair Cafe","url":"","online":"","type":"Event","audience":"Public, Staff, Student","custom_fields":{"name":"Repair Cafe","snippet":"<p>As part of Green Week, the Green &amp; Blue Space is hosting a Repair Caf&eacute; on Wednesday 11th March from 12 to 2pm in the G&amp;B Space. This drop-in session focuses on clothing repair and mending, giving you the chance to extend the life of the clothes you already own.</p><p>You&rsquo;re welcome to come along at any point during the session, stay for five minutes or the full two hours. Learn new practical skills or simply make use of our equipment and support.</p><p>We can help you fix broken zips, patch holes, repair seams, and carry out simple alterations (within reason). Whether it&rsquo;s a drawer full of socks with holes or a jacket that no longer zips up, bring it along and give it a second life.&nbsp;</p><p>Repairing instead of replacing helps reduce waste, saves money, and supports more sustainable habits.</p><p>No experience needed, just drop in and get stuck in.</p>","tag":["","Public","StaffStudent","StaffStudent"],"data":["%7B%22location%22%3A%22Green%20and%20Blue%20Space%22%7D","%7B%22cancelled%22%3A%22%22%7D","%7B%22rescheduled%22%3A%22%22%7D"]},"perfId":201232,"start":"2026-03-11","end":"2026-03-11","startTime":"12:00","endTime":"14:00","stirStart":"11 March 2026","stirEnd":"11 March 2026","startInt":202603111200,"endInt":202603111400,"timeAdvice":"","pin":202603111200,"eventPromo":""}, {}]`,
+      );
+    </script>
+
     <script>
       var miniEvents = window.miniEvents || [];
       miniEvents.push(
@@ -1079,6 +1108,7 @@
 
     <script>
       miniEvents.forEach((element) => {
+        console.log(element);
         console.log(JSON.parse(element));
       });
     </script>
