@@ -7,7 +7,7 @@ var stir = stir || {};
 
 stir.course = (function () {
   const debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
-  const na = { auto: new Function() };
+  const na = { auto: new Function(), init: new Function() };
 
   if (!stir.dpt) return na;
   if (!stir.akari) return na;
@@ -182,10 +182,6 @@ stir.course = (function () {
     }
   }
 
-  function _init(data) {
-    boilerplates = data;
-  }
-
   // STIR TABS AWARE
   //const panel = container.closest && container.closest('[role=tabpanel]');
   //if(panel && window.location.hash.indexOf(panel.id)===1) _auto();
@@ -199,7 +195,7 @@ stir.course = (function () {
   // todo: empty the queue?
 
   return {
-    init: _init, // get module boilerplate text
+    init: data => boilerplates = data, // get module boilerplate text
     auto: _auto, // initialise and begin
   };
 })();
