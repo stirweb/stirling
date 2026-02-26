@@ -8369,51 +8369,13 @@ pre.debug {
     display: none; } }
 
 /* COURSES */
-.c-course-title {
-  padding-top: 2rem; }
-
 .c-course-heading {
   font-size: 2.75rem;
-  margin-bottom: 40px;
-  transition: font-size .1s linear; }
-
-.c-course-title__buttons {
-  margin: 1rem 0; }
-  .c-course-title__buttons .button {
-    min-width: auto;
-    padding: 1rem;
-    margin: 0;
-    transition: padding .1s linear; }
-
-.u-sticky.stuck .c-course-title {
-  padding-top: 1rem; }
-
-.u-sticky.stuck .c-course-heading {
-  font-size: 1.25rem;
-  margin-bottom: 1rem; }
-
-.u-sticky.stuck .c-course-title__buttons .button {
-  padding: 0 .3rem .3rem;
-  margin-right: 1rem; }
+  margin-bottom: 40px; }
 
 @media screen and (min-width: 40em) {
-  .c-course-title {
-    display: flex;
-    justify-content: space-between; }
   .c-course-heading {
-    font-size: 3.75rem; }
-  .u-sticky.stuck .c-course-heading {
-    font-size: 1.75rem; }
-  .u-sticky.stuck .c-course-title__buttons .button {
-    min-width: 14rem;
-    /* same as .button */
-    padding: 1.25rem 1.75rem;
-    margin-right: 2rem; }
-  .c-course-title__buttons .button {
-    min-width: 14rem;
-    /* same as .button */
-    padding: 1.25rem 1.75rem;
-    margin-right: 2rem; } }
+    font-size: 3.75rem; } }
 
 /* seasonal component, enabled/disabled via JavaScript */
 .c-course-clearing-advert {
@@ -8454,6 +8416,13 @@ pre.debug {
   text-align: center;
   font-size: 1rem;
   z-index: 7; }
+
+.c-course-title__buttons {
+  margin: 1rem 0 1rem 0; }
+  .c-course-title__buttons .button {
+    margin-right: 2rem; }
+    .c-course-title__buttons .button:last-child {
+      margin-right: 0; }
 
 .c-course-title-sticky-menu {
   display: none;
@@ -8499,8 +8468,6 @@ pre.debug {
 .kis-widget {
   margin: 0 0 1em 0;
   /* `revert` so the Discover Uni widget is not affected by our styles */ }
-  .kis-widget a.kis_button {
-    z-index: 1; }
   .kis-widget h3 {
     position: revert;
     padding: revert; }
@@ -8513,7 +8480,7 @@ pre.debug {
   .kis-widget.no-data {
     display: none;
     /*
-	   &::before {
+     &::before {
             content: "Discover Uni data is currently unavailable.";
             display: block;
             text-align: center;
@@ -8522,8 +8489,8 @@ pre.debug {
 
         > div {
             display: none;
-		}
-		*/ }
+    }
+    */ }
 
 .kis-widget__intro {
   line-height: 1.5 !important;
@@ -8607,37 +8574,37 @@ pre.debug {
   margin-bottom: 50px; }
 
 /* .c-local-currency {
-	display: none;
+  display: none;
 }
 
 .c-local-currency__title {
-	font-weight: 700;
+  font-weight: 700;
 }
 
 .c-local-currency__value {
-	font-size: 200%;
+  font-size: 200%;
 }
 
 .c-local-currency__note {
-	font-style: italic;
+  font-style: italic;
 } */
 /* #ug-course-tabs__course-details {
-	.c-section-heading {
-		margin-bottom: 2rem;
-	}
+  .c-section-heading {
+    margin-bottom: 2rem;
+  }
 }
  */
 /* .c-course-fees__table {
-	display: none;
-	tbody {
-		tr {
-			display: none;
-		}
-	}
+  display: none;
+  tbody {
+    tr {
+      display: none;
+    }
+  }
 } */
 /* .course-fees-table__tuition-fee-note {
-	font-size: 0.875rem !important; // 14px
-	margin-top: 2rem !important;
+  font-size: 0.875rem !important; // 14px
+  margin-top: 2rem !important;
 } */
 /* reduce default sizes to preven horizontal scroll (this will be reset for larger screens using a media query below) */
 #course-fees-information th,
@@ -8699,37 +8666,37 @@ pre.debug {
   padding-top: 40px; }
 
 /* .c-course-whats-next__wrapper {
-	background: $heritage-green;
-	color: $white;
-	padding: 16px;
+  background: $heritage-green;
+  color: $white;
+  padding: 16px;
 
-	h3 {
-		margin: 0 0 15px 0;
-		color: $white;
-	}
+  h3 {
+    margin: 0 0 15px 0;
+    color: $white;
+  }
 }
 
 .c-course-whats-next__link {
-	text-align: center;
-	color: $white;
-	font-size: 1rem; // 16px;
-	font-weight: bold;
-	margin: 10px 0;
+  text-align: center;
+  color: $white;
+  font-size: 1rem; // 16px;
+  font-weight: bold;
+  margin: 10px 0;
 
-	&::after {
-		content: " \e97b";
-		font-family: "uos";
-	}
+  &::after {
+    content: " \e97b";
+    font-family: "uos";
+  }
 
-	&:hover {
-		color: $white;
-		text-decoration: underline;
-	}
+  &:hover {
+    color: $white;
+    text-decoration: underline;
+  }
 
-	&:focus {
-		color: $white;
-		text-decoration: underline;
-	}
+  &:focus {
+    color: $white;
+    text-decoration: underline;
+  }
 } */
 svg.icon {
   width: 1.5em;
@@ -8849,8 +8816,8 @@ svg.icon {
   display: inline-block;
   vertical-align: middle;
   /* there is a bug in gulp-css-concat's "rebase" that strips out
-	   quotes from unencoded data-URIs, but we can get around this
-	   by base-64 encoding it. */
+     quotes from unencoded data-URIs, but we can get around this
+     by base-64 encoding it. */
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xOS43MTIgNTkuMzkyYzAtMC41MTIgMC4yNTYtMS4wMjQgMC42NC0xLjQwOGwyNS44NTYtMjUuOTg0LTI1Ljg1Ni0yNS45ODRjLTAuNzY4LTAuNzY4LTAuNzY4LTIuMDQ4IDAtMi45NDQgMC43NjgtMC43NjggMi4wNDgtMC43NjggMi45NDQgMGwyNy4zOTIgMjcuMzkyYzAuNzY4IDAuNzY4IDAuNzY4IDIuMTc2IDAgMi45NDRsLTI3LjUyIDI3LjM5MmMtMC43NjggMC43NjgtMi4wNDggMC43NjgtMi45NDQgMC0wLjM4NC0wLjM4NC0wLjUxMi0wLjg5Ni0wLjUxMi0xLjQwOHoiPjwvcGF0aD48L3N2Zz4="); }
 
 /* C A L L S   T O   A C T I O N */
@@ -8963,8 +8930,8 @@ a[data-mode*="Online"] {
 /* M E D I A   Q U E R I E S */
 @media screen and (max-width: 63.9375em) {
   /** this media query is for screens up to 1024px
-	 * TODO: refactor this to mobile-first?
-	 **/
+   * TODO: refactor this to mobile-first?
+   **/
   .c-course-related__buttons ul li {
     flex-direction: column; }
     .c-course-related__buttons ul li a + strong {
