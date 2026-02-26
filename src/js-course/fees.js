@@ -179,14 +179,7 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 
 	const onlyUnique = (value, index, self)  => self.indexOf(value) === index;
 
-	const feetable = (data, caption) => 
-		//`<table>`+
-		(caption?`<caption>${caption}</caption>`:'')+
-		`<thead><td></td>`+
-		info.theyears.map(th_year).join('')+
-		`</thead><tbody>`+
-		`${data}</tbody>`;
-		//`</table>`;
+
 
 	const th_year = year => `<th scope="col" style="width:20%;">${(year)}</th>`;
 	const td_amount = data => `<td>${formatter.format(data.amount)}</td>`;
@@ -201,8 +194,8 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 	}
 
 	const el = document.querySelector('[data-modules-route-code]');
+	const level = el && el.getAttribute('data-modules-course-type');
 	const routes = (()=>{
-
 		if(!el) return false;
 		if(!el.hasAttribute('data-modules-route-code')) {
 			debug && console.error('[Fee API] No routecode');
@@ -212,57 +205,40 @@ stir.fees.doFeesTable = function doFeesTable (scope) {
 			debug && console.info('[Fee API] Multiple route codes');
 		}
 		return el.getAttribute('data-modules-route-code').split(',').map(item=>item.trim());
-
 	})();
 
-	const updateOldTable = html => {
-		const oldtable = scope.querySelector('table');
-		oldtable && (oldtable.innerHTML = html);
-	};
 
-	const updateOldSelect = data => {
-		info.stata.forEach(status => {
-			const option = document.createElement('option');
-			option.value = regions[level][status];
-			option.textContent = labels[level][status];
-			stuff.select.append(option);
-		});
-	};
-
-	const level = el && el.getAttribute('data-modules-course-type');
 	
 	stir.fees.auto = () => {
-		if(!initialised) {
-			initialised = true;
-
-			stir.fees.doFeesTable(scope);
-			stuff.select  = scope.querySelector('select');
-
-			routes && stir.getJSON(feeapi, data=>{
-				if(data.feeData) {
-					const route = routes.shift();
-					routedata = data.feeData.filter(item=>item.rouCode===route);
-					feedata = routedata.length && routedata[0].feeData
-
-					info.theyears = feedata && feedata.map(data=>data.academicYear).filter(onlyUnique);
-					info.stata = feedata && feedata.map(data=>data.feeStatus).filter(onlyUnique);
-					info.moda = feedata && feedata.map(data=>data.modeOfAttendance).filter(onlyUnique);
-
-					if(!routedata.length) {
-						debug && console.error(`[Fee API] ${route}: no match for this route code found in the fees data`);
-						stuff.select && stuff.select.remove();
+		if(initialised) return;
+		//////////////////////////
+		initialised = true;
+		
+		routes && stir.getJSON(feeapi, data=>{
+			if(data.feeData) {
+				const route = routes.shift();
+				routedata = data.feeData.filter(item=>item.rouCode===route);
+				feedata = routedata.length && routedata[0].feeData
+		
+				info.theyears = feedata && feedata.map(data=>data.academicYear).filter(onlyUnique);
+				info.stata = feedata && feedata.map(data=>data.feeStatus).filter(onlyUnique);
+				info.moda = feedata && feedata.map(data=>data.modeOfAttendance).filter(onlyUnique);
+		
+				if(!routedata.length) {
+					debug && console.error(`[Fee API] ${route}: no match for this route code found in the fees data`);
+					stuff.select && stuff.select.remove();
+				} else {
+					debug && console.info(`${route}: API fee data ${feedata.length>0?'available':'not available'}`);
+					if(feedata.length) {
+						updateOldTable(routedata.map(feetables).join(''));
+						stuff.select && updateOldSelect();
 					} else {
-						debug && console.info(`${route}: API fee data ${feedata.length>0?'available':'not available'}`);
-						if(feedata.length) {
-							updateOldTable(routedata.map(feetables).join(''));
-							stuff.select && updateOldSelect();
-						} else {
-							stuff.select && stuff.select.remove();
-						}
+						stuff.select && stuff.select.remove();
 					}
 				}
-			});
-		}
+			}
+		});
+		//////////////////////////
 	}
 
 	if(stir.callback && stir.callback.queue && stir.callback.queue.indexOf("stir.fees.auto")>-1) stir.fees.auto();
