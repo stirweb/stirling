@@ -20,7 +20,7 @@ $c-course-search-widget__button-min-width: 219px;
   background-color: #fff;
   background-image: url('<t4 type="media" id="163605" formatter="path/*"/>');
   background-repeat: no-repeat;
-  background-position: 5px 17px;
+  background-position: 6px 13px;
   background-size: 20px;
   padding: 7px 0 7px 35px;
   transition: border-bottom 0.3s ease-in-out;
@@ -74,6 +74,7 @@ $c-course-search-widget__button-min-width: 219px;
     font-size: 1.813rem;
     padding: 13px 0 13px 45px;
     background-position-y: 23px;
+    background-position-x: 10px;
   }
 
   .c-course-search-widget__search-input::placeholder {
@@ -111,7 +112,7 @@ $c-course-search-widget__button-min-width: 219px;
   */
   @media screen and #{breakpoint(medium up)} {
     .c-course-search-widget__search-input {
-      padding-left: 50px;
+      padding-left: 47px;
       background-position-y: 22px;
     }
   }
@@ -121,7 +122,6 @@ $c-course-search-widget__button-min-width: 219px;
   */
   @media screen and #{breakpoint(large up)} {
     .c-course-search-widget__search-input {
-      padding-left: 50px;
       background-position-y: 23px;
     }
   }
