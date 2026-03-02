@@ -5,14 +5,14 @@
 */
 @font-face {
   font-family: "General Sans";
-  src: url('<t4 type="media" id="173668" formatter="path/*" />') format("OpenType"), url("../fonts/general-sans/GeneralSans-Regular.ttf") format("OpenType");
+  src: url('<t4 type="media" id="173668" formatter="path/*" />') format("truetype"), url("../fonts/general-sans/GeneralSans-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap; }
 
 @font-face {
   font-family: "General Sans";
-  src: url('<t4 type="media" id="179150" formatter="path/*" />') format("OpenType"), url("../fonts/general-sans/GeneralSans-Semibold.ttf") format("OpenType");
+  src: url('<t4 type="media" id="179627" formatter="path/*" />') format("truetype"), url("../fonts/general-sans/GeneralSans-Semibold.ttf") format("truetype");
   font-weight: 700;
   font-style: bold;
   font-display: swap; }
@@ -7685,7 +7685,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   background-color: #fff;
   background-image: url('<t4 type="media" id="163605" formatter="path/*"/>');
   background-repeat: no-repeat;
-  background-position: 5px 17px;
+  background-position: 6px 13px;
   background-size: 20px;
   padding: 7px 0 7px 35px;
   transition: border-bottom 0.3s ease-in-out; }
@@ -7735,7 +7735,8 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     margin: 0 45px 0 0;
     font-size: 1.813rem;
     padding: 13px 0 13px 45px;
-    background-position-y: 27px; }
+    background-position-y: 23px;
+    background-position-x: 10px; }
   .c-course-search-widget__search-input:-ms-input-placeholder {
     font-size: 1.813rem; }
   .c-course-search-widget__search-input::placeholder {
@@ -7766,12 +7767,11 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     color: rgba(0, 105, 56, 0.7); }
   @media screen and (min-width: 40em) {
     .c-course-search-widget__form.darkmode .c-course-search-widget__search-input {
-      padding-left: 50px;
+      padding-left: 47px;
       background-position-y: 22px; } }
   @media screen and (min-width: 64em) {
     .c-course-search-widget__form.darkmode .c-course-search-widget__search-input {
-      padding-left: 60px;
-      background-position-y: 27px; } }
+      background-position-y: 23px; } }
 
 /*
     New GRID version
@@ -8187,10 +8187,16 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   .c-search-results-area .c-search-results-all .c-research-search-result::before,
   .c-search-results-area .c-search-results-all [data-result-type*="output"]::before {
     content: "\e9a4"; }
+  .c-search-results-area .c-search-results-all [data-result-type="scholarship"]::before {
+    content: "\e947"; }
   .c-search-results-area .c-search-results-all [data-result-type*="person"]::before {
     content: "\e9a5"; }
+  .c-search-results-area .c-search-results-all [data-result-type="studentstory"]::before {
+    content: "\e991"; }
   .c-search-results-area .c-search-results-all [data-result-type="document"]::before {
     content: "\e92a"; }
+  .c-search-results-area .c-search-results-all [data-result-type="blog"]::before {
+    content: "\e908"; }
   .c-search-results-area .c-search-result[data-delivery="online"]::after {
     /* content: "\e998"; */
     /* videochat */

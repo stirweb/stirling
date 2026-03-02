@@ -420,11 +420,24 @@
       content: "\e9a4";
     }
 
+    [data-result-type="scholarship"]::before {
+      content: "\e947";
+    }
+
     [data-result-type*="person"]::before {
       content: "\e9a5";
     }
+
+    [data-result-type="studentstory"]::before {
+      content: "\e991";
+    }
+
     [data-result-type="document"]::before {
       content: "\e92a";
+    }
+
+    [data-result-type="blog"]::before {
+      content: "\e908";
     }
   }
 
