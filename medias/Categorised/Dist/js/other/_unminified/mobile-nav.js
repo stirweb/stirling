@@ -85,7 +85,7 @@
   /* getCurrentUrl */
   const getCurrentUrl = () => {
     if (UoS_env.name === "dev" || UoS_env.name === "qa") {
-      return "/about/professional-services/";
+      return "/scholarships/";
     }
     return window.location.pathname; // live
   };
@@ -160,9 +160,9 @@
     stir.getJSON(ajaxUrl, (initialData) => {
       if (initialData.error) {
         //console.log("error fetching menu data");
-        window.location = currentUrl;
-        //stir.setHTML(menu, menusCache.default);
-        return { action: "go" };
+        //window.location = currentUrl;
+        stir.setHTML(menu, menusCache.default);
+        return { action: "navigate" };
       }
 
       menusCache[baseSection] = initialData; // cache the data
