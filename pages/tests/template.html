@@ -459,9 +459,7 @@
           </div>
         </div>
         <!-- End Text with Heading -->
-
-        
-       
+      </div>
 
       <!-- Wrapper End -->
 
@@ -683,5 +681,103 @@
 
     <!-- app.min.js -->
     <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=150.1"></script>
+
+    <script>
+      const data = [
+        { p: "/study/", t: "Study", u: "" },
+        { p: "/study/courses/", t: "View all courses", u: "/courses/" },
+        { p: "/study/undergraduate/", t: "Undergraduate", u: "" },
+        { p: "/study/undergraduate/how-to-apply/", t: "How to apply for an undergraduate degree", u: "" },
+        { p: "/study/undergraduate/how-to-apply/january-entry/", t: "January entry", u: "" },
+        { p: "/study/undergraduate/how-to-apply/common-application/", t: "Common application", u: "" },
+        { p: "/study/undergraduate/how-to-apply/part-time-application/", t: "Part-time application", u: "" },
+        { p: "/study/undergraduate/how-to-apply/planning-your-personal-statement/", t: "Planning your personal statement", u: "" },
+        { p: "/study/undergraduate/how-to-apply/after-you-apply/", t: "After you apply", u: "" },
+        { p: "/study/undergraduate/how-to-apply/ucas-extra/", t: "UCAS Extra", u: "" },
+        { p: "/study/undergraduate/entry-requirements/", t: "Undergraduate degree entry requirements", u: "" },
+        { p: "/study/undergraduate/entry-requirements/united-kingdom-and-republic-of-ireland-qualifications/", t: "United Kingdom and Republic of Ireland qualifications", u: "" },
+        { p: "/study/undergraduate/entry-requirements/credit-for-previous-qualifications/", t: "Recognition of prior learning", u: "" },
+        { p: "/study/undergraduate/why-stirling-for-undergraduate-study/", t: "Why Stirling for undergraduate study?", u: "" },
+        { p: "/study/undergraduate/why-stirling-for-undergraduate-study/your-study-experience-at-stirling/", t: "Your study experience at Stirling", u: "" },
+        { p: "/study/undergraduate/flexible-undergraduate-degrees/", t: "Flexible undergraduate degrees", u: "" },
+        { p: "/study/undergraduate/flexible-undergraduate-degrees/degree-flexibility/", t: "Degree flexibility", u: "" },
+        { p: "/study/undergraduate/flexible-undergraduate-degrees/our-undergraduate-degree-structure/", t: "Our undergraduate degree structure", u: "" },
+        { p: "/study/undergraduate/flexible-undergraduate-degrees/part-time-study-options/", t: "Part-time study options", u: "" },
+        { p: "/study/undergraduate/advice-for-parents-and-carers/", t: "Advice for parents and carers", u: "" },
+        { p: "/study/undergraduate/advice-for-parents-and-carers/safety-and-welfare/", t: "Safety and wellbeing", u: "" },
+        { p: "/study/undergraduate/teachers-lecturers-and-careers-advisers/", t: "Services for teachers, high school counsellors and career advisers", u: "" },
+        { p: "/study/undergraduate/teachers-lecturers-and-careers-advisers/presentations-and-workshops/", t: "Presentations and workshops", u: "" },
+        { p: "/study/undergraduate/teachers-lecturers-and-careers-advisers/events/", t: "Events", u: "" },
+        { p: "/study/undergraduate/teachers-lecturers-and-careers-advisers/our-recruitment-team/", t: "Our recruitment team", u: "" },
+        { p: "/study/undergraduate/teachers-lecturers-and-careers-advisers/our-recruitment-team/scotland-widening-participation/", t: "Scotland Widening Participation", u: "" },
+        { p: "/study/undergraduate/teachers-lecturers-and-careers-advisers/our-recruitment-team/north-england/", t: "North England", u: "" },
+        { p: "/study/undergraduate/teachers-lecturers-and-careers-advisers/our-recruitment-team/northern-ireland/", t: "Northern Ireland", u: "" },
+        { p: "/study/undergraduate/teachers-lecturers-and-careers-advisers/our-recruitment-team/south-england/", t: "South England", u: "" },
+        { p: "/study/undergraduate/teachers-lecturers-and-careers-advisers/our-recruitment-team/europe/", t: "Europe", u: "" },
+        { p: "/study/undergraduate/widening-participation/", t: "Widening Participation", u: "" },
+        { p: "/study/undergraduate/widening-participation/coming-from-school/", t: "Coming from school", u: "" },
+        { p: "/study/undergraduate/widening-participation/coming-from-college/", t: "Coming from college", u: "" },
+        { p: "/study/undergraduate/widening-participation/coming-from-college/swap-access-courses-for-mature-students/", t: "SWAP access courses for mature students", u: "" },
+        { p: "/study/undergraduate/widening-participation/coming-from-college/hnc-and-hnd-students/", t: "HNC and HND students", u: "" },
+        { p: "/study/undergraduate/widening-participation/coming-from-college/other-college-courses/", t: "Other college courses", u: "" },
+        { p: "/study/undergraduate/widening-participation/coming-from-college/advanced-entry/", t: "Advanced entry from college", u: "" },
+        { p: "/study/undergraduate/widening-participation/coming-from-college/articulation/", t: "Articulation", u: "" },
+        { p: "/study/undergraduate/widening-participation/advice-and-guidance-for-mature-students/", t: "Mature students", u: "" },
+        { p: "/study/undergraduate/widening-participation/care-experienced-applicants/", t: "Care experienced applicants", u: "" },
+        { p: "/study/undergraduate/widening-participation/young-and-adult-carers/", t: "Young and adult carers", u: "" },
+        { p: "/study/undergraduate/widening-participation/young-and-adult-carers/student-carers-policy/", t: "Student Carers Policy", u: "" },
+        { p: "/study/undergraduate/widening-participation/estranged-students/", t: "Estranged students", u: "" },
+        { p: "/study/undergraduate/widening-participation/armed-forces-community/", t: "Armed Forces community", u: "" },
+        { p: "/study/undergraduate/widening-participation/refugee-and-asylum-seekers/", t: "Refugee and asylum seekers", u: "" },
+        { p: "/study/undergraduate/widening-participation/financial-support-for-widening-access-students/", t: "Financial support for widening access students", u: "" },
+        { p: "/study/undergraduate/widening-participation/widening-access-strategy/", t: "Widening access strategy", u: "" },
+        { p: "/study/undergraduate/access-to-degree-studies/", t: "Access courses", u: "" },
+        { p: "/study/undergraduate/access-to-degree-studies/access-to-nursing-studies/", t: "Access to Nursing Studies", u: "" },
+        { p: "/study/undergraduate/access-to-degree-studies/access-to-science-studies/", t: "Access to Science Studies", u: "" },
+        { p: "/study/undergraduate/access-to-degree-studies/access-to-degree-studies/", t: "Access to Degree Studies", u: "" },
+        { p: "/study/undergraduate/access-to-degree-studies/how-do-i-apply/", t: "How do I apply", u: "" },
+        { p: "/study/postgraduate/", t: "Postgraduate", u: "" },
+        { p: "/study/postgraduate/choosing-a-course/", t: "Choosing a postgraduate course", u: "" },
+        { p: "/study/postgraduate/how-to-apply/", t: "How to apply for a postgraduate course", u: "" },
+        { p: "/study/postgraduate/how-to-apply/what-makes-a-good-personal-statement/", t: "What makes a good personal statement", u: "" },
+        { p: "/study/postgraduate/how-to-apply/january-entry-for-postgraduate-courses/", t: "January entry for postgraduate courses", u: "" },
+        { p: "/study/postgraduate/flexible-learning/", t: "Flexible learning", u: "" },
+        { p: "/study/postgraduate/university-of-stirling-postgraduate-progression-courses/", t: "University of Stirling postgraduate progression courses", u: "" },
+        { p: "/study/postgraduate/why-stirling-for-postgraduate-study/", t: "Why Stirling for postgraduate study?", u: "" },
+        { p: "/study/postgraduate/why-stirling-for-postgraduate-study/redefine-your-career/", t: "Be career-ready", u: "" },
+        { p: "/study/postgraduate/create-your-personalised-prospectus/", t: "Create your personalised prospectus", u: "" },
+        { p: "/study/visit-us/postgraduate-open-day/", t: "Postgraduate Open Day", u: "" },
+        { p: "/study/online-learning/", t: "Online learning", u: "" },
+        { p: "/study/online-learning/online-masters-degree-courses/", t: "Online Masters degree courses", u: "" },
+        { p: "/study/online-learning/online-short-courses/", t: "Online short courses", u: "" },
+        { p: "/study/visit-us/", t: "Visit us", u: "" },
+        { p: "/study/visit-us/university-open-days/", t: "University Open Days", u: "" },
+        { p: "/study/visit-us/undergraduate-open-days/", t: "Undergraduate Open Days", u: "" },
+        { p: "/study/visit-us/undergraduate-open-days/what-happens-at-an-on-campus-open-day/", t: "What happens at an on-campus Open Day?", u: "" },
+        { p: "/study/visit-us/undergraduate-open-days/guide-to-open-day-for-parents-and-guardians/", t: "Guide to Open Day for parents and guardians", u: "" },
+        { p: "/study/visit-us/postgraduate-open-day/", t: "Postgraduate Open Day", u: "" },
+        { p: "/study/visit-us/virtualtour/", t: "Virtual Tour", u: "" },
+        { p: "/study/fees-funding/", t: "Fees and funding", u: "" },
+        //        { p: "/study/fees-funding/scholarships/", t: "Scholarships", u: "/scholarships/" },
+        { p: "/study/fees-funding/undergraduate-tuition-fees/", t: "Undergraduate tuition fees", u: "" },
+        { p: "/study/fees-funding/undergraduate-funding/", t: "Undergraduate funding", u: "" },
+        { p: "/study/fees-funding/nursing-and-paramedic-degree-tuition-fees/", t: "Nursing and paramedic science fees", u: "" },
+        { p: "/study/fees-funding/postgraduate-tuition-fees/", t: "Postgraduate tuition fees", u: "" },
+      ];
+
+      const inserts = [
+        { p: "/study/courses/", t: "View all courses", u: "/courses/" },
+        { p: "/study/fees-funding/scholarships/", t: "Scholarships", u: "https://www.stir.ac.uk/scholarships/" },
+      ];
+
+      // filter insets if its not in data
+      const filteredInserts = inserts.filter((insert) => !data.some((item) => item.p === insert.p));
+
+      console.log(filteredInserts);
+
+      let data6 = data.concat(filteredInserts);
+
+      //console.log(data6);
+    </script>
   </body>
 </html>

@@ -52,7 +52,7 @@
     return item
       ? `
         <li class="u-underline u-energy-teal--40 flex-container align-middle">
-            <a class="button no-arrow button--left-align clear expanded u-m-0 text-left" href="${link}">
+            <a class="button no-arrow button--left-align clear expanded u-m-0 text-left" href="${link}" data-action="${item.action ? item.action : ""}">
               <div class="flex-container align-middle u-gap-16"> 
                 <span class="u-flex1">${item.t}</span>
                 <span class="u-chevron-right"></span>
@@ -128,10 +128,6 @@
   const fetchData = (currentUrl, menusCache, evnt) => {
     const baseSection = getParentSection(currentUrl);
     const ajaxUrl = getMenuAjaxUrl(baseSection);
-
-    //console.log(currentUrl);
-
-    console.log(currentUrl);
 
     if (currentUrl.includes("https://")) {
       window.location = currentUrl;
