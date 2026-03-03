@@ -73,7 +73,7 @@
   { "p": "/study/visit-us/postgraduate-open-day/", "t": "Postgraduate Open Day", "u": "" },
   { "p": "/study/visit-us/virtualtour/", "t": "Virtual Tour", "u": "" },
   { "p": "/study/fees-funding/", "t": "Fees and funding", "u": "" },
-  { "p": "/study/fees-funding/scholarships/", "t": "Scholarships", "u": "/scholarships/" },
+  { "p": "/study/fees-funding/scholarships/", "t": "Scholarships", "u": "/scholarships/", "action": "go" },
   { "p": "/study/fees-funding/undergraduate-tuition-fees/", "t": "Undergraduate tuition fees", "u": "" },
   { "p": "/study/fees-funding/undergraduate-funding/", "t": "Undergraduate funding", "u": "" },
   { "p": "/study/fees-funding/nursing-and-paramedic-degree-tuition-fees/", "t": "Nursing and paramedic science fees", "u": "" },
