@@ -131,6 +131,8 @@
 
     //console.log(currentUrl);
 
+    console.log(currentUrl);
+
     if (currentUrl.includes("https://")) {
       window.location = currentUrl;
       return { action: "go " };
@@ -157,8 +159,10 @@
 
     stir.getJSON(ajaxUrl, (initialData) => {
       if (initialData.error) {
-        stir.setHTML(menu, menusCache.default);
-        return { action: "navigate" };
+        //console.log("error fetching menu data");
+        window.location = currentUrl;
+        //stir.setHTML(menu, menusCache.default);
+        return { action: "go" };
       }
 
       menusCache[baseSection] = initialData; // cache the data
