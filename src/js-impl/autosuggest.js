@@ -14,14 +14,18 @@ stir.Suggester = function Suggester(input,output) {
 	if (!stir.addSearch) return;
 	if(!input) return;
 
-	let search, results, spinner; // dynamic view managers
 	let prevQuery = "";
 	let suggestions = [];
 	let spointer = 0;
 	let isSuggesting = false;
 	
-	const keyUpTime = 400; // milliseconds; keystroke idle time, i.e. stopped typing
+	const keyUpTime = 255; // milliseconds; keystroke idle time, i.e. stopped typing
 	const minQueryLength = 3; // min query length for activating the suggest box
+	
+	const announcer = document.createElement('div');
+	announcer.classList.add('show-for-sr'); // screen readers only
+	announcer.setAttribute('aria-live','assertive'); // announce changes immediately
+	input.insertAdjacentElement("afterend",announcer);
 	
 	//input.addEventListener("focus", focusing);
 	input.addEventListener("input", stir.debounce(handleInput, keyUpTime));
@@ -34,17 +38,9 @@ stir.Suggester = function Suggester(input,output) {
 			input.focus();
 		}
 	});
-
-
-	//const renderSuggestions = parseSuggestions.bind(nodes.suggestions);
 	
 	const clamp = (num,min,max) => Math.min(Math.max(num, min), max);
 
-//  H E L P E R   F U N C T I O N S
-
-	function doSearches(query) {
-		stir.addSearch.getSuggestions(query, renderSuggestions);
-	}
 
 // R E N D E R E R S
 
@@ -56,40 +52,31 @@ stir.Suggester = function Suggester(input,output) {
 			suggestions = [...data.suggestions.map(suggestion)];
 			output.append(...suggestions);
 			output.removeAttribute("aria-hidden");
+			announcer.textContent = `${suggestions.length} suggestions found, use up and down arrows to review.`;
 		}
 	}
 	
-	function suggestion(item) {
+	function suggestion(item, index) {
 		const el = document.createElement('li');
+		el.id=`suggestion_${index}`;
 		el.href="#";
 		el.textContent = item.value;
+		el.setAttribute("role","option");
 		return el;
 	}
-
-// P A R S I N G
 
 
 // E V E N T   H A N D L E R   F U N C T I O N S
 	function handleInput(event) {
-		console.info('[Suggester] input',event)
 		if (this.value != prevQuery) {
-
-			if (this.value.length >= minQueryLength || this.value === "*") {
+			if (this.value.length >= minQueryLength) {
 				prevQuery = this.value;
-				doSearches(this.value);
+				stir.addSearch.getSuggestions(this.value, renderSuggestions);
 			}
-//			else {
-//				spinner.hide();
-//				results.hide();
-//				prevQuery = "";
-//			}
 		}
 	}
 
-	
-
 	function escaping(event) {
-		console.info('[Escaping]',event.key);
 		switch (event.key) {
 			case 'Escape':
 				if(!output.hasAttribute("aria-hidden")) {
@@ -119,7 +106,6 @@ stir.Suggester = function Suggester(input,output) {
 					break;
 				}
 		}
-		//if ("Escape" === event.code) closing(event);
 	}
 	
 	function halt(event) {
@@ -128,11 +114,11 @@ stir.Suggester = function Suggester(input,output) {
 	}
 	
 	function highlight() {
-		console.info('[Suggest]',spointer,suggestions[spointer].textContent )
 		if(suggestions[spointer]) {
 			isSuggesting = true;
 			suggestions.forEach(i=>i.removeAttribute("data-hilit"));
 			suggestions[spointer].setAttribute("data-hilit","true");
+			input.setAttribute("aria-activedescendant", `suggestion_${spointer}`);
 		}
 	}
 	
@@ -140,6 +126,7 @@ stir.Suggester = function Suggester(input,output) {
 		isSuggesting = false;
 		spointer = 0;
 		output.setAttribute("aria-hidden","true");
+		output.innerHTML = '';
 	}
 
 };

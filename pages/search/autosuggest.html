@@ -347,15 +347,21 @@
 		MAIN CONTENT 
 	-->
 	<style>
-		[data-suggestions] li {
-			cursor: pointer;
-		}
-		[data-suggestions] li::marker { content: "🔍 "}
+		ul[data-suggestions] { margin: 0; }
+		[data-suggestions] li { cursor: pointer; padding-left: 0.5rem; }
+		[data-suggestions] li::marker { font-family: "uos"; content: "\e93f"; font-size: 1rem;}
 		[data-suggestions][aria-hidden] { display: none;}
 		[data-suggestions] li[data-hilit], 
-		[data-suggestions] li:hover {
-			background: #EEE;
+		[data-suggestions] li:hover { background: #EEE; }
+		.x-search-v3 {
+			display: grid;
+			grid-template-columns: 8fr 1fr;
+			margin-bottom: 1rem;
 		}
+		.x-search-v3 input {
+			margin: 0;
+		}
+		
 	</style>
 	
 	<main class="wrapper-content" aria-label="Main content" id="content">
@@ -364,10 +370,12 @@
 			<div class="cell">
 				<h1 class=u-mt-2>Search</h1>
 				<form method=get action=https://www.stir.ac.uk/search/#mySlider1>
-					<label>Search:
-						<input type="search" data-suggester name=term autocomplete=off role=combobox aria-autocomplete=both aria-activedescendant>
-					</label>	
-					<ul data-suggestions role=listbox>
+					<div class=x-search-v3>
+						<label for=term class=show-for-sr>Search:</label>
+							<input type="search" data-suggester name=term id=term autocomplete=off role=combobox aria-autocomplete=both aria-owns=suggestions>
+						<input type="submit" value="Search" />
+					</div>
+					<ul id=suggestions role=listbox data-suggestions>
 						<!-- <li id=suggestionId role=option>Suggestion</li> -->
 					</ul>
 				</form>
