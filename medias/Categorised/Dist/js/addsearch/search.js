@@ -1345,7 +1345,8 @@ stir.search = (() => {
 					customField: "type=course",
 					limit: 5,
 					collectAnalytics: false,
-					resultType: "organic"
+					resultType: "organic",
+					fuzzy: "auto"
 				},
 				person: {
 					customField: "type=profile",
