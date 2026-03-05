@@ -1279,7 +1279,7 @@ stir.search = (() => {
 		const MAXQUERY = 256;
 		const CLEARING = stir.courses.clearing; // Clearing is open?
 		
-		let clickReporting = true; // temporary flag. see REPORTING to enable/disable reporting
+		let clickReported = false; // temporary flag. see REPORTING (stir.addSearch) to enable/disable reporting
 	
 		const buildUrl = stir.curry((url, parameters) => {
 			const newUrl = new URL(url);
@@ -1345,7 +1345,8 @@ stir.search = (() => {
 					customField: "type=course",
 					limit: 5,
 					collectAnalytics: false,
-					resultType: "organic"
+					resultType: "organic",
+					fuzzy: "auto"
 				},
 				person: {
 					customField: "type=profile",
@@ -1512,13 +1513,13 @@ stir.search = (() => {
 	
 		// maintain compatibility with old meta_ search
 		// parameters with their equivalent facet:
-		const metaToFacet = {
-			meta_level: "f.Level|level",
-			meta_faculty: "f.Faculty|faculty",
-			meta_subject: "f.Subject|subject",
-			meta_delivery: "f.Delivery mode|delivery",
-			meta_modes: "f.Study mode|modes",
-		};
+		// const metaToFacet = {
+		// 	meta_level: "f.Level|level",
+		// 	meta_faculty: "f.Faculty|faculty",
+		// 	meta_subject: "f.Subject|subject",
+		// 	meta_delivery: "f.Delivery mode|delivery",
+		// 	meta_modes: "f.Study mode|modes",
+		// };
 	
 		// TEMP - please move to stir.String when convenient to do so!
 		const rwm2 = {
@@ -1730,17 +1731,16 @@ stir.search = (() => {
 		
 		const reset = element => element.innerHTML = "";
 		const deInitialise = panel => panel.init = false;
-
 		const notHidden = panel => !panel.el.hasAttribute("aria-hidden");
 		const notInitialised = panel => !panel.init;
-		
+
 		// reset() and search() a given panel
 		const research = panel => {
 			panel.init = true;
 			panel.results.forEach(reset);
 			panel.results.forEach(search);
 		};
-		
+	
 		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
 		const initialSearch = () => panels.filter( notHidden ).forEach( research );
 		
@@ -1769,9 +1769,7 @@ stir.search = (() => {
 			summary: el.querySelector(".c-search-results-summary"),
 			init: false
 		}});
-	
-		//const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
-	
+
 		// group the curried search functions so we can easily refer to them by `type`
 		const searchers = {
 			all: callSearchApi("all"),
@@ -1819,7 +1817,7 @@ stir.search = (() => {
 	
 		// CLICK delegate for link tracking
 		const clickReporter = async event => {
-			if (!clickReporting) return true;
+			if (clickReported) return true;	// already reported? then skip it
 			if (!event || !event.target) return;
 			
 			// get the main result links for click-tracking:
@@ -1850,7 +1848,7 @@ stir.search = (() => {
 						if(debug) go = confirm('Check console for click reporting.');
 						// we're going to re-dispatch the event, so this flag 
 						// stops it being reported and re-dispatched again!
-						clickReporting = false; 
+						clickReported = true; 
 						// now re-dispatch the event using the same key
 						// presses (in case user is opening in a new tab etc.)
 						// better than doing a location.href, for example.
@@ -1863,7 +1861,7 @@ stir.search = (() => {
 						}));
 						// re-enable click reporting in case the 
 						// page is still alive
-						clickReporting = true; 
+						clickReported = false; 
 					})
 					.catch(error => console.error("[AddSearch] fetch error",error));
 			} else {
