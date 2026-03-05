@@ -234,12 +234,22 @@ stir.templates.search = (() => {
 		}
 		const facets = stir.t4Globals.search.facets;
 		return (facet, label) => {
-			if (!facets[facet]) return label;
+			if (!facets[facet]) return label;		// unknown facet
+
+			const strict = "Start date"===facet;
 			const labels = facets[facet];
+			const finder = (val) => label === val.toLowerCase();
+
+			// `labels` array
 			if (labels.findIndex) {
-				return labels[labels.findIndex((val) => label === val.toLowerCase())] || label;
-			} else if (labels[label]) return labels[label];
-			return label;
+				return labels[labels.findIndex(finder)] || label;
+			}
+			// `labels` object:
+			else if (labels[label]) {
+				return labels[label];
+			}
+			// label not found
+			return strict ? undefined : label;
 		};
 	})();
 
@@ -507,7 +517,7 @@ stir.templates.search = (() => {
 			let facthtml = [];
 			if(item.custom_fields.start) {
 				if (item.custom_fields.start.map) {
-					facthtml.push(stir.templates.search.courseFact("Start dates", item.custom_fields.start.map(startDateFormatter).join(", "), false));
+					facthtml.push(stir.templates.search.courseFact("Start dates", item.custom_fields.start.map(startDateFormatter).filter(x=>x).join(", "), false));
 				} else {
 					facthtml.push(stir.templates.search.courseFact("Start dates", startDateFormatter(item.custom_fields.start), false));
 				}
