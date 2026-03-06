@@ -323,17 +323,20 @@ stir.search = (() => {
 			item.position = item.position || position;
 			return item;
 		});
+		
+		const renderResults = stir.curry((type, data) => renderers[type](data.hits.map(addResultItemPosition(type))).join("") + (footers[type] ? footers[type]() : ""));
 	
-		const renderResultsWithPagination = stir.curry(
+		const renderPagination = stir.curry(
 			(type, data) => {
-				const perPage = constants.parameters[type].limit || 10;
-				const currEnd = calcEnd(data.page, perPage, data.hits.length);
-				return (data ? renderers[type](data.hits.map(addResultItemPosition(type))).join("") : 'NO DATA') +
-				stir.templates.search.pagination({
+				const currEnd = calcEnd(data.page, (constants.parameters[type].limit || 10), data.hits.length);
+				if(1===data.page) total[type] = data.total_hits; // BUGFIX for AddSearch total_hits
+				const stats = {
 					currEnd: currEnd,
-					totalMatching: data.total_hits,
-					progress: calcProgress(currEnd, data.total_hits),
-				}) + (footers[type] ? footers[type]() : "")
+					totalMatching: total[type],
+					progress: calcProgress(currEnd, total[type]),
+				};
+				DOM[type].pagination.innerHTML = stir.templates.search.pagination(stats);
+				return data; // make this function chainable
 			}
 		);
 	
@@ -435,9 +438,10 @@ stir.search = (() => {
 			const status = updateStatus(element);
 			const more = enableLoadMore(button);
 			const replace = replaceHtml(element);
-			const render = renderResultsWithPagination(type);
+			const render = renderResults(type);
+			const pagination = button ? renderPagination(type) : new Function();
 			const reflow = flow(element);
-			const composition = stir.compose(reflow, replace, render, more, status, facets);
+			const composition = stir.compose(reflow, replace, render, pagination, more, status, facets);
 			const callback = (parameters,data) => {
 				
 				debug && console.info("[Search] API called-back with:",data,parameters);
@@ -468,9 +472,11 @@ stir.search = (() => {
 			if (!searchers[type]) return;
 			const status = updateStatus(element);
 			const append = appendHtml(element);
-			const render = renderResultsWithPagination(type);
+			const render = renderResults(type);
+			const spacer = html => `<hr class=c-search-result-spacer>${html}`;
+			const pagination = button ? renderPagination(type) : new Function();
 			const reflow = flow(element);
-			const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
+			const composition = stir.compose(reflow, append, spacer, render, pagination, enableLoadMore(button), status);
 			const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
 			nextPage(type);
 			searchers[type](callback);
@@ -495,15 +501,21 @@ stir.search = (() => {
 
 		const search = (element, index, context) => {
 			if (element.hasAttribute("data-infinite")) {
-				const resultsWrapper = document.createElement("div");
+				const results = document.createElement("div");
 				const buttonWrapper = document.createElement("div");
+				const pagination = document.createElement("div");
 				const button = LoaderButton();
-				button.addEventListener("click", (event) => getMoreResults(resultsWrapper, button));
-				element.appendChild(resultsWrapper);
+				const type = getType(element);
+				button.addEventListener("click", (event) => getMoreResults(results, button));
+				element.appendChild(results);
+				element.appendChild(pagination);
 				element.appendChild(buttonWrapper);
 				buttonWrapper.appendChild(button);
 				buttonWrapper.setAttribute("class", stir.templates.search.classes.buttons.wrapper);
-				getInitialResults(resultsWrapper, button);
+				DOM[type].button = button;
+				DOM[type].results = results;
+				DOM[type].pagination = pagination;
+				getInitialResults(results, button);
 			} else {
 				getInitialResults(element);
 			}
@@ -544,6 +556,33 @@ stir.search = (() => {
 			cura: data => data.map(stir.templates.search.cura),
 			internal: data => data.map(stir.templates.search.auto),
 			clearing: data => data.map(stir.templates.search.auto),
+		};
+		
+		// somewhere to store dynamic DOM references
+		const DOM = {
+			all: {},
+			news: {},
+			event: {},
+			gallery: {},
+			course: {},
+			coursemini: {},
+			person: {},
+			research: {},
+			internal: {},
+			clearing: {}
+		};
+		
+		const total = {
+			all: 0,
+			news: 0,
+			event: 0,
+			gallery: 0,
+			course: 0,
+			coursemini: 0,
+			person: 0,
+			research: 0,
+			internal: 0,
+			clearing: 0
 		};
 	
 		const footers = {
@@ -740,6 +779,7 @@ stir.search = (() => {
 		};
 	
 		const init = (event) => {
+			event && console.info('[Search] init event',event);
 			getInboundQuery();
 			constants.form.addEventListener("submit", submit);
 			initialSearch();

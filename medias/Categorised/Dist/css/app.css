@@ -8353,6 +8353,9 @@ pre.debug {
     left: 3px;
     font-size: 10px; }
 
+.c-search-results .c-search-result-spacer {
+  margin: 3rem; }
+
 .c-search-results details.debug {
   margin-bottom: 3rem; }
 
