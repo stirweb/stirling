@@ -324,7 +324,14 @@ stir.search = (() => {
 			return item;
 		});
 		
-		const renderResults = stir.curry((type, data) => renderers[type](data.hits.map(addResultItemPosition(type))).join("") + (footers[type] ? footers[type]() : ""));
+		const renderResults = stir.curry((type, data) => {
+			const footer  = footers[type] ? footers[type]() : "";
+			if(data && data.hits && data.hits.map) {
+				const throughput = data.hits.map(addResultItemPosition(type));
+				return renderers[type](throughput).join("") + footer
+			}
+			return footer;
+		});
 	
 		const renderPagination = stir.curry(
 			(type, data) => {
@@ -439,7 +446,7 @@ stir.search = (() => {
 			const more = enableLoadMore(button);
 			const replace = replaceHtml(element);
 			const render = renderResults(type);
-			const pagination = button ? renderPagination(type) : new Function();
+			const pagination = button ? renderPagination(type) : data => data;
 			const reflow = flow(element);
 			const composition = stir.compose(reflow, replace, render, pagination, more, status, facets);
 			const callback = (parameters,data) => {
@@ -474,7 +481,7 @@ stir.search = (() => {
 			const append = appendHtml(element);
 			const render = renderResults(type);
 			const spacer = html => `<hr class=c-search-result-spacer>${html}`;
-			const pagination = button ? renderPagination(type) : new Function();
+			const pagination = button ? renderPagination(type) : data => data;
 			const reflow = flow(element);
 			const composition = stir.compose(reflow, append, spacer, render, pagination, enableLoadMore(button), status);
 			const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
