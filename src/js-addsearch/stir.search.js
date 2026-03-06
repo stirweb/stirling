@@ -326,7 +326,6 @@ stir.search = (() => {
 		
 		const renderResults = stir.curry((type, data) => {
 			const footer  = footers[type] ? footers[type]() : "";
-			console.info(data);
 			if(data && data.hits && data.hits.map) {
 				const throughput = data.hits.map(addResultItemPosition(type));
 				return renderers[type](throughput).join("") + footer
