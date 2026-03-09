@@ -502,7 +502,10 @@ stir.search = (() => {
 		};
 	
 		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
-		const initialSearch = () => panels.filter( notHidden ).forEach( research );
+		const initialSearch = () => {
+			// TODO check spelling here.
+			panels.filter( notHidden ).forEach( research );
+		}
 		
 		const lazySearch = () => panels.filter( notHidden ).filter( notInitialised ).forEach( research );
 
@@ -786,7 +789,6 @@ stir.search = (() => {
 		};
 	
 		const init = (event) => {
-			event && console.info('[Search] init event',event);
 			getInboundQuery();
 			constants.form.addEventListener("submit", submit);
 			initialSearch();
