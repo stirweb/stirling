@@ -26,7 +26,7 @@ stir.search = (() => {
 		const MAXQUERY = 256;
 		const CLEARING = stir.courses.clearing; // Clearing is open?
 		
-		let clickReporting = true; // temporary flag. see REPORTING to enable/disable reporting
+		let clickReported = false; // temporary flag. see REPORTING (stir.addSearch) to enable/disable reporting
 	
 		const buildUrl = stir.curry((url, parameters) => {
 			const newUrl = new URL(url);
@@ -260,13 +260,13 @@ stir.search = (() => {
 	
 		// maintain compatibility with old meta_ search
 		// parameters with their equivalent facet:
-		const metaToFacet = {
-			meta_level: "f.Level|level",
-			meta_faculty: "f.Faculty|faculty",
-			meta_subject: "f.Subject|subject",
-			meta_delivery: "f.Delivery mode|delivery",
-			meta_modes: "f.Study mode|modes",
-		};
+		// const metaToFacet = {
+		// 	meta_level: "f.Level|level",
+		// 	meta_faculty: "f.Faculty|faculty",
+		// 	meta_subject: "f.Subject|subject",
+		// 	meta_delivery: "f.Delivery mode|delivery",
+		// 	meta_modes: "f.Study mode|modes",
+		// };
 	
 		// TEMP - please move to stir.String when convenient to do so!
 		const rwm2 = {
@@ -323,17 +323,27 @@ stir.search = (() => {
 			item.position = item.position || position;
 			return item;
 		});
+		
+		const renderResults = stir.curry((type, data) => {
+			const footer  = footers[type] ? footers[type]() : "";
+			if(data && data.hits && data.hits.map) {
+				const throughput = data.hits.map(addResultItemPosition(type));
+				return renderers[type](throughput).join("") + footer
+			}
+			return footer;
+		});
 	
-		const renderResultsWithPagination = stir.curry(
+		const renderPagination = stir.curry(
 			(type, data) => {
-				const perPage = constants.parameters[type].limit || 10;
-				const currEnd = calcEnd(data.page, perPage, data.hits.length);
-				return (data ? renderers[type](data.hits.map(addResultItemPosition(type))).join("") : 'NO DATA') +
-				stir.templates.search.pagination({
+				const currEnd = calcEnd(data.page, (constants.parameters[type].limit || 10), data.hits.length);
+				if(1===data.page) total[type] = data.total_hits; // BUGFIX for AddSearch total_hits
+				const stats = {
 					currEnd: currEnd,
-					totalMatching: data.total_hits,
-					progress: calcProgress(currEnd, data.total_hits),
-				}) + (footers[type] ? footers[type]() : "")
+					totalMatching: total[type],
+					progress: calcProgress(currEnd, total[type]),
+				};
+				DOM[type].pagination.innerHTML = stir.templates.search.pagination(stats);
+				return data; // make this function chainable
 			}
 		);
 	
@@ -435,9 +445,10 @@ stir.search = (() => {
 			const status = updateStatus(element);
 			const more = enableLoadMore(button);
 			const replace = replaceHtml(element);
-			const render = renderResultsWithPagination(type);
+			const render = renderResults(type);
+			const pagination = button ? renderPagination(type) : data => data;
 			const reflow = flow(element);
-			const composition = stir.compose(reflow, replace, render, more, status, facets);
+			const composition = stir.compose(reflow, replace, render, pagination, more, status, facets);
 			const callback = (parameters,data) => {
 				
 				debug && console.info("[Search] API called-back with:",data,parameters);
@@ -468,9 +479,11 @@ stir.search = (() => {
 			if (!searchers[type]) return;
 			const status = updateStatus(element);
 			const append = appendHtml(element);
-			const render = renderResultsWithPagination(type);
+			const render = renderResults(type);
+			const spacer = html => `<hr class=c-search-result-spacer>${html}`;
+			const pagination = button ? renderPagination(type) : data => data;
 			const reflow = flow(element);
-			const composition = stir.compose(reflow, append, render, enableLoadMore(button), status);
+			const composition = stir.compose(reflow, append, spacer, render, pagination, enableLoadMore(button), status);
 			const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
 			nextPage(type);
 			searchers[type](callback);
@@ -478,33 +491,41 @@ stir.search = (() => {
 		
 		const reset = element => element.innerHTML = "";
 		const deInitialise = panel => panel.init = false;
-
 		const notHidden = panel => !panel.el.hasAttribute("aria-hidden");
 		const notInitialised = panel => !panel.init;
-		
+
 		// reset() and search() a given panel
 		const research = panel => {
 			panel.init = true;
 			panel.results.forEach(reset);
 			panel.results.forEach(search);
 		};
-		
+	
 		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
-		const initialSearch = () => panels.filter( notHidden ).forEach( research );
+		const initialSearch = () => {
+			// TODO check spelling here.
+			panels.filter( notHidden ).forEach( research );
+		}
 		
 		const lazySearch = () => panels.filter( notHidden ).filter( notInitialised ).forEach( research );
 
 		const search = (element, index, context) => {
 			if (element.hasAttribute("data-infinite")) {
-				const resultsWrapper = document.createElement("div");
+				const results = document.createElement("div");
 				const buttonWrapper = document.createElement("div");
+				const pagination = document.createElement("div");
 				const button = LoaderButton();
-				button.addEventListener("click", (event) => getMoreResults(resultsWrapper, button));
-				element.appendChild(resultsWrapper);
+				const type = getType(element);
+				button.addEventListener("click", (event) => getMoreResults(results, button));
+				element.appendChild(results);
+				element.appendChild(pagination);
 				element.appendChild(buttonWrapper);
 				buttonWrapper.appendChild(button);
 				buttonWrapper.setAttribute("class", stir.templates.search.classes.buttons.wrapper);
-				getInitialResults(resultsWrapper, button);
+				DOM[type].button = button;
+				DOM[type].results = results;
+				DOM[type].pagination = pagination;
+				getInitialResults(results, button);
 			} else {
 				getInitialResults(element);
 			}
@@ -517,9 +538,7 @@ stir.search = (() => {
 			summary: el.querySelector(".c-search-results-summary"),
 			init: false
 		}});
-	
-		//const searches = Array.prototype.slice.call(document.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]"));
-	
+
 		// group the curried search functions so we can easily refer to them by `type`
 		const searchers = {
 			all: callSearchApi("all"),
@@ -548,6 +567,33 @@ stir.search = (() => {
 			internal: data => data.map(stir.templates.search.auto),
 			clearing: data => data.map(stir.templates.search.auto),
 		};
+		
+		// somewhere to store dynamic DOM references
+		const DOM = {
+			all: {},
+			news: {},
+			event: {},
+			gallery: {},
+			course: {},
+			coursemini: {},
+			person: {},
+			research: {},
+			internal: {},
+			clearing: {}
+		};
+		
+		const total = {
+			all: 0,
+			news: 0,
+			event: 0,
+			gallery: 0,
+			course: 0,
+			coursemini: 0,
+			person: 0,
+			research: 0,
+			internal: 0,
+			clearing: 0
+		};
 	
 		const footers = {
 			coursemini: () => stir.templates.search.courseminiFooter(getQuery("all")),
@@ -567,7 +613,7 @@ stir.search = (() => {
 	
 		// CLICK delegate for link tracking
 		const clickReporter = async event => {
-			if (!clickReporting) return true;
+			if (clickReported) return true;	// already reported? then skip it
 			if (!event || !event.target) return;
 			
 			// get the main result links for click-tracking:
@@ -598,7 +644,7 @@ stir.search = (() => {
 						if(debug) go = confirm('Check console for click reporting.');
 						// we're going to re-dispatch the event, so this flag 
 						// stops it being reported and re-dispatched again!
-						clickReporting = false; 
+						clickReported = true; 
 						// now re-dispatch the event using the same key
 						// presses (in case user is opening in a new tab etc.)
 						// better than doing a location.href, for example.
@@ -611,7 +657,7 @@ stir.search = (() => {
 						}));
 						// re-enable click reporting in case the 
 						// page is still alive
-						clickReporting = true; 
+						clickReported = false; 
 					})
 					.catch(error => console.error("[AddSearch] fetch error",error));
 			} else {

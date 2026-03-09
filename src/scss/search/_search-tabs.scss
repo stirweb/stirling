@@ -714,6 +714,11 @@ pre.debug {
   }
 }
 
-.c-search-results details.debug {
-  margin-bottom: 3rem;
+.c-search-results {
+  .c-search-result-spacer {
+    margin: 3rem;
+  }
+  details.debug {
+    margin-bottom: 3rem;
+  }
 }
