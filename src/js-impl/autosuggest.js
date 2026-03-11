@@ -25,7 +25,7 @@ stir.Suggester = function Suggester(input,output) {
 	const announcer = document.createElement('div');
 	announcer.classList.add('show-for-sr'); // screen readers only
 	announcer.setAttribute('aria-live','assertive'); // announce changes immediately
-	input.insertAdjacentElement("afterend",announcer);
+	input.parentElement.append(announcer);
 	
 	//input.addEventListener("focus", focusing);
 	input.addEventListener("input", stir.debounce(handleInput, keyUpTime));
@@ -52,6 +52,7 @@ stir.Suggester = function Suggester(input,output) {
 			suggestions = [...data.suggestions.map(suggestion)];
 			output.append(...suggestions);
 			output.removeAttribute("aria-hidden");
+			input.setAttribute("data-suggesting","true")
 			announcer.textContent = `${suggestions.length} suggestions found, use up and down arrows to review.`;
 		}
 	}
@@ -125,6 +126,7 @@ stir.Suggester = function Suggester(input,output) {
 	function close() {
 		isSuggesting = false;
 		spointer = 0;
+		input.removeAttribute('data-suggesting');
 		output.setAttribute("aria-hidden","true");
 		output.innerHTML = '';
 	}
