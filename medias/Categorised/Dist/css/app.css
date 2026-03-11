@@ -2110,7 +2110,7 @@ hr {
   right: 0;
   left: 0;
   padding: 1em;
-  z-index: 13; }
+  z-index: 14; }
   #cookiebanner p {
     margin: 0 1em; }
   #cookiebanner button {
@@ -2323,7 +2323,7 @@ body > nav > a.u-show-on-focus {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 12;
+  z-index: 13;
   /*     visibility: hidden;
     opacity: 0; */ }
   .c-header-search[aria-hidden] {
@@ -2471,7 +2471,7 @@ body > nav > a.u-show-on-focus {
   left: 0;
   top: 100%;
   width: 100%;
-  z-index: 11;
+  z-index: 12;
   /* display: none; */ }
   .megamenu .megamenu__padding {
     padding: 2rem 0; }
@@ -3601,7 +3601,7 @@ h3.c-tab-accord-group-head {
     margin: 0;
     padding: 1rem;
     background-color: #f6f5f4;
-    z-index: 10;
+    z-index: 11;
     border-bottom: 5px solid #ccc; }
     .breadcrumbs > li ul li {
       line-height: 1.4;
@@ -8397,7 +8397,8 @@ pre.debug {
   border-bottom-right-radius: 0; }
 
 .c-search-suggest__suggestions {
-  position: relative; }
+  position: relative;
+  z-index: 4; }
   .c-search-suggest__suggestions [data-suggestions] {
     position: absolute; }
 
@@ -8457,7 +8458,7 @@ ul[data-suggestions] {
   position: relative;
   position: sticky;
   top: auto;
-  z-index: 5; }
+  z-index: 6; }
   .c-course-clearing-advert p {
     margin: 30px 0; }
     .c-course-clearing-advert p .button {
@@ -8489,7 +8490,7 @@ ul[data-suggestions] {
   color: #006938;
   text-align: center;
   font-size: 1rem;
-  z-index: 7; }
+  z-index: 8; }
 
 .c-course-title__buttons {
   margin: 1rem 0 1rem 0; }
@@ -8501,7 +8502,7 @@ ul[data-suggestions] {
 .c-course-title-sticky-menu {
   display: none;
   position: fixed;
-  z-index: 6;
+  z-index: 7;
   top: 0;
   left: 0;
   width: 100%;
@@ -11115,7 +11116,7 @@ svg.u-icon {
   top: -1px;
   left: 0;
   margin: 0 auto;
-  z-index: 4; }
+  z-index: 5; }
 
 @media screen and (min-width: 64em) {
   .u-sticky-large-up {
@@ -11123,13 +11124,13 @@ svg.u-icon {
     top: 0;
     left: 0;
     margin: 0 auto;
-    z-index: 4; } }
+    z-index: 5; } }
 
 /* Courses etc */
 .u-sticky {
   position: sticky;
   top: -1px;
-  z-index: 4;
+  z-index: 5;
   /* &.flush {
 		transform: translate(0, 0px);
 	} */
