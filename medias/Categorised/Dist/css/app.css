@@ -1792,6 +1792,9 @@ a:has(img):hover {
  * has gone wrong.
  * Example usage: z($z-index-elements, homepage-masthead-vide)
  */
+.z-over-hooks {
+  z-index: 4; }
+
 /**
 * Variables for icons used in the application
 * These icons are encoded in base64 format for inline usage
@@ -2110,7 +2113,7 @@ hr {
   right: 0;
   left: 0;
   padding: 1em;
-  z-index: 14; }
+  z-index: 16; }
   #cookiebanner p {
     margin: 0 1em; }
   #cookiebanner button {
@@ -2323,7 +2326,7 @@ body > nav > a.u-show-on-focus {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 13;
+  z-index: 15;
   /*     visibility: hidden;
     opacity: 0; */ }
   .c-header-search[aria-hidden] {
@@ -2471,7 +2474,7 @@ body > nav > a.u-show-on-focus {
   left: 0;
   top: 100%;
   width: 100%;
-  z-index: 12;
+  z-index: 14;
   /* display: none; */ }
   .megamenu .megamenu__padding {
     padding: 2rem 0; }
@@ -3601,7 +3604,7 @@ h3.c-tab-accord-group-head {
     margin: 0;
     padding: 1rem;
     background-color: #f6f5f4;
-    z-index: 11;
+    z-index: 13;
     border-bottom: 5px solid #ccc; }
     .breadcrumbs > li ul li {
       line-height: 1.4;
@@ -8397,8 +8400,7 @@ pre.debug {
   border-bottom-right-radius: 0; }
 
 .c-search-suggest__suggestions {
-  position: relative;
-  z-index: 4; }
+  position: relative; }
   .c-search-suggest__suggestions [data-suggestions] {
     position: absolute; }
 
@@ -8458,7 +8460,7 @@ ul[data-suggestions] {
   position: relative;
   position: sticky;
   top: auto;
-  z-index: 6; }
+  z-index: 8; }
   .c-course-clearing-advert p {
     margin: 30px 0; }
     .c-course-clearing-advert p .button {
@@ -8490,7 +8492,7 @@ ul[data-suggestions] {
   color: #006938;
   text-align: center;
   font-size: 1rem;
-  z-index: 8; }
+  z-index: 10; }
 
 .c-course-title__buttons {
   margin: 1rem 0 1rem 0; }
@@ -8502,7 +8504,7 @@ ul[data-suggestions] {
 .c-course-title-sticky-menu {
   display: none;
   position: fixed;
-  z-index: 7;
+  z-index: 9;
   top: 0;
   left: 0;
   width: 100%;
