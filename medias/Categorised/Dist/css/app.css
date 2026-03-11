@@ -8365,6 +8365,71 @@ pre.debug {
 .c-search-results details.debug {
   margin-bottom: 3rem; }
 
+.u-shadow {
+  filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.1)); }
+  .u-shadow:focus-within {
+    filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.3)); }
+
+.c-search-suggest input {
+  border-color: #d1d1c9; }
+
+.c-search-suggest input[data-suggester] {
+  border-top-left-radius: 10px;
+  background: #fff;
+  border-right: none; }
+
+.c-search-suggest input[type="submit"] {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-left: 0; }
+
+.c-search-suggest input[data-suggester], .c-search-suggest [data-suggestions] {
+  border-bottom-left-radius: 10px; }
+
+.c-search-suggest [data-suggestions] {
+  border-bottom-right-radius: 10px; }
+
+.c-search-suggest input[data-suggester][data-suggesting],
+.c-search-suggest input[data-suggester][data-suggesting] + input[type="submit"] {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
+
+.c-search-suggest__suggestions {
+  position: relative; }
+  .c-search-suggest__suggestions [data-suggestions] {
+    position: absolute; }
+
+ul[data-suggestions] {
+  background: #fff;
+  left: 0;
+  right: 0;
+  margin: 0;
+  border: 1px solid #d1d1c9;
+  border-top: 0;
+  list-style-position: inside;
+  padding: 0; }
+
+[data-suggestions][aria-hidden] {
+  display: none; }
+
+[data-suggestions] li {
+  cursor: pointer;
+  padding-left: 1rem; }
+
+[data-suggestions] li::before {
+  content: "";
+  padding-right: 1rem; }
+
+[data-suggestions] li::marker {
+  font-family: "uos";
+  content: "\e971";
+  font-size: 1rem; }
+
+[data-suggestions] li[data-hilit], [data-suggestions] li:hover, [data-suggestions] li:hover::marker {
+  background: #d1d1c9; }
+
 /*
 		--
 		DEPRECATED AREA
