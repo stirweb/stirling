@@ -1792,8 +1792,8 @@ a:has(img):hover {
  * has gone wrong.
  * Example usage: z($z-index-elements, homepage-masthead-vide)
  */
-.z-over-hooks {
-  z-index: 4; }
+.z-suggest {
+  z-index: 7; }
 
 /**
 * Variables for icons used in the application
@@ -11118,7 +11118,7 @@ svg.u-icon {
   top: -1px;
   left: 0;
   margin: 0 auto;
-  z-index: 5; }
+  z-index: 4; }
 
 @media screen and (min-width: 64em) {
   .u-sticky-large-up {
@@ -11126,13 +11126,13 @@ svg.u-icon {
     top: 0;
     left: 0;
     margin: 0 auto;
-    z-index: 5; } }
+    z-index: 4; } }
 
 /* Courses etc */
 .u-sticky {
   position: sticky;
   top: -1px;
-  z-index: 5;
+  z-index: 4;
   /* &.flush {
 		transform: translate(0, 0px);
 	} */
