@@ -36,6 +36,7 @@
 
 .c-search-suggest__suggestions {
 	position: relative;
+	z-index: z($z-index-elements, over-hooks);
 	
 	[data-suggestions] {
 		position: absolute;
