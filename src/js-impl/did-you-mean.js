@@ -8,9 +8,6 @@ stir.didYouMean = (() => {
 	
 	const check = phrase => {
 		debug && console.info('[Did you mean] phrase',phrase);
-//		if(_server!==window.location.hostname) {
-//			return new Promise((resolve,reject)=>{resolve("oxford"===phrase?'stirling':'')});
-	//	}
 		const input   = getEndpoint();
 		const body = new FormData();
 		body.append('phrase',phrase);

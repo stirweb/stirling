@@ -28,6 +28,7 @@ stir.search = (() => {
 		
 		let clickReported = false; // temporary flag. see REPORTING (stir.addSearch) to enable/disable reporting
 		let didYouMean = '';
+		let lastTerm = '';
 	
 		const buildUrl = stir.curry((url, parameters) => {
 			const newUrl = new URL(url);
@@ -246,16 +247,20 @@ stir.search = (() => {
 			cords && Array.prototype.forEach.call(cords, newAccordion);
 			pics  && Array.prototype.forEach.call(pics, attachImageErrorHandler);
 		});
+		
+		const updateTokens = stir.curry((el, data) => {
+			el && (el.innerHTML = stir.templates.search.tokens(data));
+			return data;
+		});
 	
-		const updateStatus = stir.curry((wrapper, data) => {
+		const updateStatus = stir.curry((el, data) => {
 			const start = 1 + (data.page * data.hits.length) - data.hits.length;
 			const ranks = data.total_hits;
-			const el = wrapper.parentElement.parentElement.querySelector(stir.templates.search.selector.summary);
 			if (el) {
 				el.innerHTML = "";
 				el.append(stir.templates.search.summary(data));
 			}
-			wrapper.setAttribute("data-page", calcPage(start, ranks));
+			//wrapper.setAttribute("data-page", calcPage(start, ranks));
 			return data; // data pass-thru so we can compose() this function
 		});
 	
@@ -438,18 +443,19 @@ stir.search = (() => {
 		});
 		
 		// triggered automatically, and when the search results need re-initialised (filter change, query change etc).
-		const getInitialResults = (element, button) => {
+		const getInitialResults = (element, button, summary) => {
 			debug && console.info('[Search] getInitialResults', getType(element),element);
 			const type = getType(element);
 			if (!searchers[type]) return;
 			const facets = updateFacets(type);
-			const status = updateStatus(element);
+			const status = updateStatus(summary?summary.text:null);
+			const tokens = updateTokens(summary?summary.tokens:null);
 			const more = enableLoadMore(button);
 			const replace = replaceHtml(element);
 			const render = renderResults(type);
 			const pagination = button ? renderPagination(type) : data => data;
 			const reflow = flow(element);
-			const composition = stir.compose(reflow, replace, render, pagination, more, status, facets);
+			const composition = stir.compose(reflow, replace, render, pagination, more, tokens, status, facets);
 			const callback = (parameters,data) => {
 				
 				debug && console.info("[Search] API called-back with:",data,parameters);
@@ -478,14 +484,14 @@ stir.search = (() => {
 		const getMoreResults = (element, button) => {
 			const type = getType(element);
 			if (!searchers[type]) return;
-			const status = updateStatus(element);
+			//const status = updateStatus(element);
 			const append = appendHtml(element);
 			const render = renderResults(type);
 			const spacer = html => `<hr class=c-search-result-spacer>${html}`;
 			const pagination = button ? renderPagination(type) : data => data;
 			const reflow = flow(element);
 			const more = enableLoadMore(button);
-			const composition = stir.compose(reflow, append, spacer, render, pagination, more, status);
+			const composition = stir.compose(reflow, append, spacer, render, pagination, more); //status
 			const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
 			nextPage(type);
 			searchers[type](callback);
@@ -500,17 +506,68 @@ stir.search = (() => {
 		const research = panel => {
 			panel.init = true;
 			panel.results.forEach(reset);
-			panel.results.forEach(search);
+			panel.results.forEach((element) => {
+				if (element.hasAttribute("data-infinite")) {
+					const results = document.createElement("div");
+					const buttonWrapper = document.createElement("div");
+					const pagination = document.createElement("div");
+					const button = LoaderButton();
+					const type = getType(element);
+					button.addEventListener("click", (event) => getMoreResults(results, button));
+					element.appendChild(results);
+					element.appendChild(pagination);
+					element.appendChild(buttonWrapper);
+					buttonWrapper.appendChild(button);
+					buttonWrapper.setAttribute("class", stir.templates.search.classes.buttons.wrapper);
+					DOM[type].button = button;
+					DOM[type].results = results;
+					DOM[type].pagination = pagination;
+					getInitialResults(results, button, panel.summary);
+				} else {
+					getInitialResults(element);
+				}
+			});
+		};
+		
+		const checkForTypos = () => {
+			if(!constants.form.term.value || constants.form.term.value===lastTerm) return;
+			const phrase = constants.form.term.value;
+			
+			// reset some stuff:
+			stir.search.didYouMean = '';
+			panels.forEach(panel => panel.summary.spelling.innerHTML = '');
+			
+			// submit the phrase to be checked:
+			try {
+				stir.didYouMean.check(phrase)
+					.then( response => {
+						if (response.ok) {
+							return response.text();
+						}
+					} )
+					.then(text => {
+						if("noerror"!==text && phrase.toLowerCase()!==text.toLowerCase()) {
+							panels.forEach(panel => {
+								const suggestion = document.createElement('a');
+								suggestion.textContent = text;
+								suggestion.href = `?term=${text}`;
+								panel.summary.spelling.append("Did you mean ",suggestion,"?");
+							});
+						}
+					})
+					.catch(error => console.info(error));
+			}	catch(e) {
+				console.error('[Search] failed to call did-you-mean service.',e);
+			}
+			
+			// remember the phrase so we don't check the same one again
+			lastTerm = constants.form.term.value;
+			
 		};
 	
 		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
 		const initialSearch = () => {
-			try {
-				constants.form.term.value && stir.didYouMean.check(constants.form.term.value)
-					.then(result => stir.search.didYouMean=result, error => console.info(error));
-			} catch(e) {
-				console.error('[Search] failed to call did-you-mean service.',e);
-			}
+			checkForTypos();
 			panels.filter( notHidden ).forEach( research );
 		}
 		
@@ -571,10 +628,28 @@ stir.search = (() => {
 			// TODO BUG type for staff is people
 			const type = el.getAttribute('data-panel');
 			const summary = el.querySelector(".c-search-results-summary") || document.createElement('div');
+			const spelling = document.createElement('p');
+			const text = document.createElement('p');
+			const tokens = document.createElement('div');
+			summary.innerHTML = '';
+			summary.append(text);
+			summary.append(spelling);
+			summary.append(tokens);
+			summary.classList.add('u-my-2');
+			spelling.classList.add('text-sm','u-m-0');
+			text.classList.add('text-sm','u-m-0');
+			tokens.setAttribute('data-tokens','true')
+
 			return {
 				el: el,
 				type: type,
 				results: Array.prototype.slice.call(el.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]")),
+				summary: {
+					el: summary,
+					text: text,
+					spelling: spelling,
+					tokens: tokens
+				},
 				init: false
 			};
 		});
