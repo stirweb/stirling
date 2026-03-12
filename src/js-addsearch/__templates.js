@@ -321,6 +321,7 @@ stir.templates.search = (() => {
 			const pl = hit && totalMatching > 1;
 			const count = totalMatching.toLocaleString("en");
 			p.classList.add(hit ? "text-sm" : "search_summary_noresults");
+			p.classList.add("u-m-0");
 			p.innerHTML = hit ? (pl ? `There are <strong>${count} results</strong>` : `There is <strong>${count} result</strong>`) : "<strong>There are no results</strong>";
 			if (queried) p.insertAdjacentText("beforeend", " for ");
 			return p;
@@ -376,6 +377,7 @@ stir.templates.search = (() => {
 			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
 			summary.append(message);
 			summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
+			if(stir.search.didYouMean && "noerror"!==stir.search.didYouMean) summary.insertAdjacentHTML("beforeend", `Did you mean <em><a href="?term=${stir.search.didYouMean}">${stir.search.didYouMean}</em>?`);
 			
 			return summary;
 		},
