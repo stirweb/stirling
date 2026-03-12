@@ -27,6 +27,7 @@ stir.search = (() => {
 		const CLEARING = stir.courses.clearing; // Clearing is open?
 		
 		let clickReported = false; // temporary flag. see REPORTING (stir.addSearch) to enable/disable reporting
+		let didYouMean = '';
 	
 		const buildUrl = stir.curry((url, parameters) => {
 			const newUrl = new URL(url);
@@ -483,7 +484,8 @@ stir.search = (() => {
 			const spacer = html => `<hr class=c-search-result-spacer>${html}`;
 			const pagination = button ? renderPagination(type) : data => data;
 			const reflow = flow(element);
-			const composition = stir.compose(reflow, append, spacer, render, pagination, enableLoadMore(button), status);
+			const more = enableLoadMore(button);
+			const composition = stir.compose(reflow, append, spacer, render, pagination, more, status);
 			const callback = stir.curry((parameters,data) => (data && !data.error ? composition(stir.Object.extend({},data,{question:parameters})) : new Function()));
 			nextPage(type);
 			searchers[type](callback);
@@ -502,7 +504,15 @@ stir.search = (() => {
 		};
 	
 		// initialise all search types on the page (e.g. when the query keywords are changed by the user):
-		const initialSearch = () => panels.filter( notHidden ).forEach( research );
+		const initialSearch = () => {
+			try {
+				constants.form.term.value && stir.didYouMean.check(constants.form.term.value)
+					.then(result => stir.search.didYouMean=result, error => console.info(error));
+			} catch(e) {
+				console.error('[Search] failed to call did-you-mean service.',e);
+			}
+			panels.filter( notHidden ).forEach( research );
+		}
 		
 		const lazySearch = () => panels.filter( notHidden ).filter( notInitialised ).forEach( research );
 
@@ -528,13 +538,46 @@ stir.search = (() => {
 			}
 		};
 		
-		const panels = Array.prototype.map.call(document.querySelectorAll("[data-panel]"),el=>{return {
-			el: el,
-			type: el.getAttribute('data-panel'),
-			results: Array.prototype.slice.call(el.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]")),
-			summary: el.querySelector(".c-search-results-summary"),
-			init: false
-		}});
+		// somewhere to store dynamic DOM references
+		const DOM = {
+			all: {},
+			news: {},
+			event: {},
+			gallery: {},
+			course: {},
+			coursemini: {},
+			person: {},
+			research: {},
+			internal: {},
+			clearing: {}
+		};
+		
+		// AddSearch bug fix for total_hits issue with pagination.
+		const total = {
+			all: 0,
+			news: 0,
+			event: 0,
+			gallery: 0,
+			course: 0,
+			coursemini: 0,
+			person: 0,
+			research: 0,
+			internal: 0,
+			clearing: 0
+		};
+		
+		// Initial Panel Setup
+		const panels = Array.prototype.map.call(document.querySelectorAll("[data-panel]"),el=>{
+			// TODO BUG type for staff is people
+			const type = el.getAttribute('data-panel');
+			const summary = el.querySelector(".c-search-results-summary") || document.createElement('div');
+			return {
+				el: el,
+				type: type,
+				results: Array.prototype.slice.call(el.querySelectorAll(".c-search-results[data-type],[data-type=coursemini]")),
+				init: false
+			};
+		});
 
 		// group the curried search functions so we can easily refer to them by `type`
 		const searchers = {
@@ -563,33 +606,6 @@ stir.search = (() => {
 			cura: data => data.map(stir.templates.search.cura),
 			internal: data => data.map(stir.templates.search.auto),
 			clearing: data => data.map(stir.templates.search.auto),
-		};
-		
-		// somewhere to store dynamic DOM references
-		const DOM = {
-			all: {},
-			news: {},
-			event: {},
-			gallery: {},
-			course: {},
-			coursemini: {},
-			person: {},
-			research: {},
-			internal: {},
-			clearing: {}
-		};
-		
-		const total = {
-			all: 0,
-			news: 0,
-			event: 0,
-			gallery: 0,
-			course: 0,
-			coursemini: 0,
-			person: 0,
-			research: 0,
-			internal: 0,
-			clearing: 0
 		};
 	
 		const footers = {
@@ -786,7 +802,6 @@ stir.search = (() => {
 		};
 	
 		const init = (event) => {
-			event && console.info('[Search] init event',event);
 			getInboundQuery();
 			constants.form.addEventListener("submit", submit);
 			initialSearch();
@@ -799,7 +814,8 @@ stir.search = (() => {
 			constants: constants,
 			getPage: getPage,
 			lazy: lazySearch,
-			initialSearch: initialSearch
+			initialSearch: initialSearch,
+			didYouMean: didYouMean
 		};
 	})();
 
