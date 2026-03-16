@@ -7,6 +7,7 @@ const AccommodationFinder = (scope) => {
     showUrlToFavs: `true`,
     activity: scope.dataset.activity || ``,
     view: stir.templates?.view || ``,
+    session: scope.dataset.session || ``,
   };
 
   // DOM Elements
@@ -38,11 +39,14 @@ const AccommodationFinder = (scope) => {
 
   const renderStudentTypes = (rooms) => (rooms ? stir.removeDuplicates(rooms.flatMap((item) => item.studType.split(",")).map((item) => item.trim())).join("<br />") : ``);
 
-  const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
+  const renderFavBtns = (showUrlToFavs, cookie, id) =>
+    cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs);
 
   const renderAccom = (consts) => (item) => {
     if (!item) return ``;
     const cookie = stir.favourites.getFav(item.id, consts.cookieType);
+
+    console.log(consts.session);
 
     return `
       <div class="cell" id="fav-${item.id}">
@@ -52,7 +56,7 @@ const AccommodationFinder = (scope) => {
               <p class="u-text-regular u-mb-2 "><strong><a href="${item.url}">${item.title}</a></strong></p>
             </div>
             <div class="cell large-5 text-sm">
-              <p><strong>Price</strong></p> 
+              <p><strong>Prices for ${consts.session}</strong></p> 
               ${renderPrice(item.rooms)}
             </div>
             <div class="cell large-4 text-sm">
@@ -106,7 +110,7 @@ const AccommodationFinder = (scope) => {
     return matches.length ? { ...item, rooms: matches } : {};
   };
 
-  const filterByLocation = (filterValue) => (item) => filterValue === `` || !item.location || filterValue === item.location ? item : null;
+  const filterByLocation = (filterValue) => (item) => (filterValue === `` || !item.location || filterValue === item.location ? item : null);
 
   const filterByStudType = (filterValue) => (item) => {
     if (filterValue === `` || !item.rooms) return item;
@@ -129,7 +133,12 @@ const AccommodationFinder = (scope) => {
   */
 
   function doSearch(consts, filters, data, domElements) {
-    const filteredData = data.map(filterByPrice(filters.price)).map(filterByStudType(filters.studentType)).map(filterByBathroom(filters.bathroom)).filter(filterByLocation(filters.location)).filter(filterEmpties);
+    const filteredData = data
+      .map(filterByPrice(filters.price))
+      .map(filterByStudType(filters.studentType))
+      .map(filterByBathroom(filters.bathroom))
+      .filter(filterByLocation(filters.location))
+      .filter(filterEmpties);
 
     const html = filteredData.map(renderAccom(consts)).join(``);
     return setDOMContent(domElements.resultsArea)(renderNumItems(filteredData.length) + html);
@@ -197,8 +206,15 @@ const AccommodationFinder = (scope) => {
   */
   function init(initialData, consts, domElements) {
     if (consts.activity === "search") {
-      const allRooms = initialData.flatMap((item) => item.rooms);
+      const session = consts.session || ``;
+      console.log(session);
+
+      // ony rooms from session 25/26
+      const allRooms = initialData.flatMap((item) => item.rooms).filter((room) => room.session === session);
       const prices = allRooms.map((item) => Number(item.cost)).sort((a, b) => a - b);
+
+      console.log(allRooms);
+
       const min = Math.ceil(prices[0]);
       const max = Math.ceil(prices[prices.length - 1]);
 
