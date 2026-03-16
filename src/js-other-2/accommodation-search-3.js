@@ -46,8 +46,6 @@ const AccommodationFinder = (scope) => {
     if (!item) return ``;
     const cookie = stir.favourites.getFav(item.id, consts.cookieType);
 
-    console.log(consts.session);
-
     return `
       <div class="cell" id="fav-${item.id}">
         <div class="u-bg-white u-heritage-line-left u-border-width-5 u-mb-3">
@@ -207,13 +205,10 @@ const AccommodationFinder = (scope) => {
   function init(initialData, consts, domElements) {
     if (consts.activity === "search") {
       const session = consts.session || ``;
-      console.log(session);
 
       // ony rooms from session 25/26
       const allRooms = initialData.flatMap((item) => item.rooms).filter((room) => room.session === session);
       const prices = allRooms.map((item) => Number(item.cost)).sort((a, b) => a - b);
-
-      console.log(allRooms);
 
       const min = Math.ceil(prices[0]);
       const max = Math.ceil(prices[prices.length - 1]);
