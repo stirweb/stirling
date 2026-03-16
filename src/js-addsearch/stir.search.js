@@ -249,7 +249,14 @@ stir.search = (() => {
 		});
 		
 		const updateTokens = stir.curry((el, data) => {
-			el && (el.innerHTML = stir.templates.search.tokens(data));
+			const html = stir.templates.search.tokens(data);
+			const len = html.trim().length;
+			el.innerHTML = html;
+			if(len>0) {
+				el.classList.add('u-mt-1');
+			} else {
+				el.classList.remove('u-mt-1');
+			}
 			return data;
 		});
 	
@@ -529,13 +536,17 @@ stir.search = (() => {
 			});
 		};
 		
+		function resetDidYouMean() {
+			stir.search.didYouMean = '';
+			panels.forEach(panel => panel.summary.spelling.innerHTML = '');
+		}
+		
 		const checkForTypos = () => {
 			if(!constants.form.term.value || constants.form.term.value===lastTerm) return;
 			const phrase = constants.form.term.value;
 			
 			// reset some stuff:
-			stir.search.didYouMean = '';
-			panels.forEach(panel => panel.summary.spelling.innerHTML = '');
+			resetDidYouMean();
 			
 			// submit the phrase to be checked:
 			try {
@@ -550,7 +561,8 @@ stir.search = (() => {
 							panels.forEach(panel => {
 								const suggestion = document.createElement('a');
 								suggestion.textContent = text;
-								suggestion.href = `?term=${text}`;
+								suggestion.href = `#`;
+								suggestion.addEventListener("click", acceptSuggestion);
 								panel.summary.spelling.append("Did you mean ",suggestion,"?");
 							});
 						}
@@ -638,7 +650,6 @@ stir.search = (() => {
 			summary.classList.add('u-my-2');
 			spelling.classList.add('text-sm','u-m-0');
 			text.classList.add('text-sm','u-m-0');
-			tokens.setAttribute('data-tokens','true')
 
 			return {
 				el: el,
@@ -840,6 +851,15 @@ stir.search = (() => {
 			// 	}
 			// }
 		};
+		
+		function acceptSuggestion (event) {
+			event.preventDefault();
+			const suggested = event.target.textContent;
+			constants.input.value = suggested;
+			QueryParams.set("term", suggested);
+			resetDidYouMean();
+			panels.filter( notHidden ).forEach( research );
+		}
 	
 		// Click-delegate for status panel (e.g. misspellings, dismiss filters, etc.)
 		Array.prototype.forEach.call(document.querySelectorAll(stir.templates.search.selector.summary), (statusPanel) => {
