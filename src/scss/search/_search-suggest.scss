@@ -1,0 +1,78 @@
+/*
+.u-shadow {
+	filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.1));
+	&:focus-within{
+		filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.3));
+	}
+}
+
+.c-search-suggest {
+	input {
+		border-color: map-get($brand-palette, neutral-light);
+	}
+	input[data-suggester] {
+		border-top-left-radius: 10px;
+		background: $white;
+		border-right: none;
+	}
+	input[type="submit"] {
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+		border-width: 1px;
+		border-style: solid;
+		border-left: 0;
+	}
+	input[data-suggester], [data-suggestions] {
+		border-bottom-left-radius: 10px;
+	}
+	[data-suggestions] {
+		border-bottom-right-radius: 10px;
+	}
+	input[data-suggester][data-suggesting],
+	input[data-suggester][data-suggesting] + input[type="submit"] {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+}
+*/
+
+.c-search-suggest__suggestions {
+	position: relative;
+	
+	[data-suggestions] {
+		position: absolute;
+		padding: .25rem 0 0;
+	}
+}
+
+ul[data-suggestions] {
+	background: $white;
+	left: 0;
+	right:0;
+	margin: 0;
+	border: 1px solid map-get($brand-palette, neutral-light);
+	border-top:0;
+	list-style-position: inside;
+	padding: 0;
+}
+[data-suggestions] {
+	&[aria-hidden] {
+		display: none;
+	}
+	li {
+		cursor: pointer;
+		padding-left: 1rem;
+	}
+	li::before {
+		content: "";
+		padding-right: 1rem;
+	}
+	li::marker {
+		font-family: "uos";
+		content: "\e971";
+		font-size: 1rem;
+	}
+	li[data-hilit],li:hover,li:hover::marker {
+		background: map-get($brand-palette, neutral-light);
+	}
+}
