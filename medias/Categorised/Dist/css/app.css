@@ -7927,8 +7927,6 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     scrollbar-width: none; }
     .slide-tabs-2 .carousel-slides::-webkit-scrollbar {
       display: none; }
-    .slide-tabs-2 .carousel-slides button {
-      width: 100px; }
 
 /*
       SEARCH RESULTS
@@ -7989,16 +7987,16 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       aspect-ratio: 1;
       object-fit: cover;
       /* make images square */ }
-    .c-search-results-area .c-search-result[data-result-group=research] {
+    .c-search-results-area .c-search-result[data-result-group="research"] {
       /* Research Hub lacks proper breadcrumb meta data
        * and the default data is all lowercase. We can
        * safely 'Sentence case-ify' it with CSS.
        * (That is not so true for general pages) .
       */ }
-      .c-search-results-area .c-search-result[data-result-group=research] .c-search-result__trail a {
+      .c-search-results-area .c-search-result[data-result-group="research"] .c-search-result__trail a {
         display: inline-block;
         /* needed for ::first-letter */ }
-        .c-search-results-area .c-search-result[data-result-group=research] .c-search-result__trail a::first-letter {
+        .c-search-results-area .c-search-result[data-result-group="research"] .c-search-result__trail a::first-letter {
           text-transform: uppercase; }
     .c-search-results-area .c-search-result.c-popout-result {
       border-left: 0px !important;
@@ -8015,8 +8013,10 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
         position: relative; }
         .c-search-results-area .c-search-result.c-popout-result a > div > p:first-of-type {
           font-size: 2rem;
-          border-bottom: 1px solid #006938;
-          margin-bottom: 0.5rem;
+          text-decoration: underline;
+          text-decoration-color: #006938;
+          text-decoration-thickness: 2px;
+          text-underline-offset: 10px;
           display: inline-block; }
         .c-search-results-area .c-search-result.c-popout-result a > div [class^="uos-"],
         .c-search-results-area .c-search-result.c-popout-result a > div [class*=" uos-"]::before {
@@ -8031,9 +8031,11 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
           align-self: center; }
       .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a {
         border-color: #7c184f;
+        text-decoration-color: #7c184f;
         color: #7c184f; }
         .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a > div > p:first-of-type {
-          border-color: #7c184f; }
+          border-color: #7c184f;
+          text-decoration-color: #7c184f; }
       .c-search-results-area .c-search-result.c-popout-result.u-web-turq a {
         border-color: #00838a;
         color: #00838a; }
@@ -8044,7 +8046,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       top: -15px; }
     .c-search-results-area .c-search-result .c-search-result__trail a {
       border: 0;
-      font-size: .875rem;
+      font-size: 0.875rem;
       /* 14px */
       color: #000;
       text-decoration-thickness: 1px; }
@@ -10046,6 +10048,9 @@ svg.u-svg-40,
 
 .u-font-bold {
   font-weight: 700; }
+
+.u-text-nowrap {
+  text-wrap: nowrap; }
 
 .u-quote::before {
   content: '"'; }

@@ -18,9 +18,9 @@
       display: none;
     }
 
-    button {
-      width: 100px;
-    }
+    // button {
+    //   width: 100px;
+    // }
   }
 }
 
@@ -86,7 +86,7 @@
         }
       }
     }
-    &[data-result-group=research] {
+    &[data-result-group="research"] {
       /* Research Hub lacks proper breadcrumb meta data
        * and the default data is all lowercase. We can
        * safely 'Sentence case-ify' it with CSS.
@@ -123,8 +123,10 @@
         > div {
           > p:first-of-type {
             font-size: 2rem;
-            border-bottom: 1px solid $heritage-green;
-            margin-bottom: 0.5rem;
+            text-decoration: underline;
+            text-decoration-color: $heritage-green;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 10px;
             display: inline-block;
           }
 
@@ -150,10 +152,12 @@
       &.u-heritage-berry {
         a {
           border-color: $heritage-berry;
+          text-decoration-color: $heritage-berry;
           color: $heritage-berry;
           > div {
             > p:first-of-type {
               border-color: $heritage-berry;
+              text-decoration-color: $heritage-berry;
             }
           }
         }
@@ -176,18 +180,17 @@
       position: absolute;
       top: -15px;
     }
-    
+
     .c-search-result__trail {
       a {
         border: 0;
-        font-size: .875rem; /* 14px */
+        font-size: 0.875rem; /* 14px */
         color: $black;
         text-decoration-thickness: 1px;
-        
+
         &:hover {
           color: $heritage-green;
         }
-        
       }
       + .c-search-taggroup {
         margin-top: 2rem;
@@ -292,25 +295,25 @@
       }
     }
     form[data-filters] {
-		[data-facet] [role="region"] ul:empty::after {
-			content: "No filter options available";
-			font-size: 1rem;
-		}
-		label > span:last-of-type {
-			/* number-of-results label for facets: */
-			margin-left: auto;
-			background: #14315e;
-			color: white;
-			text-align: center;
-			padding: 0.5rem;
-			font-size: 0.5rem;
-			border-radius: 50%;
-			min-width: 1.5rem;
-			height: 1.5rem;
-			line-height: 0.5rem;
-			font-weight: bold;
-		}
-	}
+      [data-facet] [role="region"] ul:empty::after {
+        content: "No filter options available";
+        font-size: 1rem;
+      }
+      label > span:last-of-type {
+        /* number-of-results label for facets: */
+        margin-left: auto;
+        background: #14315e;
+        color: white;
+        text-align: center;
+        padding: 0.5rem;
+        font-size: 0.5rem;
+        border-radius: 50%;
+        min-width: 1.5rem;
+        height: 1.5rem;
+        line-height: 0.5rem;
+        font-weight: bold;
+      }
+    }
   }
 
   span.c-search-tag {
@@ -387,9 +390,9 @@
       display: grid;
       gap: 20px 30px;
     }
-    
+
     [data-as-type="PINNED"]::before {
-      content: "\e964"
+      content: "\e964";
     }
 
     .c-course-search-result::before,
