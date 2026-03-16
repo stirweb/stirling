@@ -45,7 +45,6 @@ stir.addSearch = (() => {
 	const putReport = (data) => {
 		
 		if(!REPORTING) {
-			// debug && console.info("[AddSearch] reporting is disabled",data);
 			return new Promise((resolve,reject)=>{resolve(data)});
 		}
 		const input   = getReportingEndpoint();
