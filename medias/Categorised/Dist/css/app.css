@@ -5641,7 +5641,7 @@ cite:before {
   .c-wysiwyg-content .quote-attribute {
     font-weight: 600;
     margin: 0 auto 32px;
-    display: inline-block;
+    display: block;
     max-width: 960px; }
 
 /*
