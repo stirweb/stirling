@@ -5620,10 +5620,6 @@ cite:before {
   /*
     Blockquote
   */ }
-  .c-wysiwyg-content p + blockquote:not(.c-pullquote) {
-    margin: 60px auto 0; }
-    .c-wysiwyg-content p + blockquote:not(.c-pullquote) + p:not(.quote-attribute) {
-      margin: 60px auto 1rem; }
   .c-wysiwyg-content p img {
     margin: 2rem 0; }
   .c-wysiwyg-content p img:has(+ span.c-image-caption) {
