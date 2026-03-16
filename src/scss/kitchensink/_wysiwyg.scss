@@ -9,13 +9,13 @@
     Blockquote
   */
 
-  p + blockquote:not(.c-pullquote) {
-    margin: 60px auto 0;
+  // p + blockquote:not(.c-pullquote) {
+  //   margin: 60px auto 0;
 
-    + p:not(.quote-attribute) {
-      margin: 60px auto 1rem;
-    }
-  }
+  //   + p:not(.quote-attribute) {
+  //     margin: 60px auto 1rem;
+  //   }
+  // }
 
   p img {
     margin: 2rem 0;
