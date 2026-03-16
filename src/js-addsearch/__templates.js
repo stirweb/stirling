@@ -326,42 +326,31 @@ stir.templates.search = (() => {
     breadcrumb: (crumbs) => `<p class=c-search-result__trail>${crumbs}</p>`,
     trailstring: (trail) => (trail.length ? trail.map(anchor).join("<small> &gt; </small> ") : ""),
 
-    message: (totalMatching, queried) => {
-      const p = document.createElement("p");
-      const hit = totalMatching > 0;
-      const pl = hit && totalMatching > 1;
-      const count = totalMatching.toLocaleString("en");
-      p.classList.add(hit ? "text-sm" : "search_summary_noresults");
-      p.innerHTML = hit ? (pl ? `There are <strong>${count} results</strong>` : `There is <strong>${count} result</strong>`) : "<strong>There are no results</strong>";
-      if (queried) p.insertAdjacentText("beforeend", " for ");
-      return p;
-    },
+		message: (totalMatching, queried) => {
+			const p = document.createElement("p");
+			const hit = totalMatching > 0;
+			const pl = hit && totalMatching > 1;
+			const count = totalMatching.toLocaleString("en");
+			return (hit ? (pl ? `There are <strong>${count} results</strong>` : `There is <strong>${count} result</strong>`) : "<strong>There are no results</strong>") + (queried ? " for " : '');
+		},
+		tokens: data => data.question ? searchParamTokens(data.question) : '',
+		spelling: checkSpelling,
+		summary: data => {
+			const currEnd = 1 + (data.page * data.hits);
+			const currStart = currEnd - data.hits;
+			const totalMatching = data.total_hits;
+			const summary = document.createElement("span");
+			const querySanitised = data.question && stir.String.htmlEntities(data.question.get("term"))
+									.replace(/^!padrenullquery$/, "")	//funnelback
+									.replace(/^\*$/, "")				//addsearch
+									.trim() || "";
+			const queryEcho = document.createElement("em");
+			const message = stir.templates.search.message(totalMatching, querySanitised.length > 1);
 
-    summary: (data) => {
-      const currEnd = 1 + data.page * data.hits;
-      const currStart = currEnd - data.hits;
-      const totalMatching = data.total_hits;
-      const summary = document.createElement("div");
-      const querySanitised =
-        (data.question &&
-          stir.String.htmlEntities(data.question.get("term"))
-            .replace(/^!padrenullquery$/, "") //funnelback
-            .replace(/^\*$/, "") //addsearch
-            .trim()) ||
-        "";
-      const queryEcho = document.createElement("em");
-      const message = stir.templates.search.message(totalMatching, querySanitised.length > 1);
-      //const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
-      const tokens = searchParamTokens(data.question);
-      const spelling = ""; //querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
-      //const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
 
-      summary.classList.add("u-py-2");
-
-      queryEcho.textContent = querySanitised;
-      if (querySanitised.length > 1) message.append(queryEcho);
-
-      /*
+			queryEcho.textContent = querySanitised;
+			
+			/*
 			$$$$$$$\   $$$$$$\        $$\   $$\  $$$$$$\ $$$$$$$$\       $$\   $$\  $$$$$$\  $$$$$$$$\     
 			$$  __$$\ $$  __$$\       $$$\  $$ |$$  __$$\\__$$  __|      $$ |  $$ |$$  __$$\ $$  _____|    
 			$$ |  $$ |$$ /  $$ |      $$$$\ $$ |$$ /  $$ |  $$ |         $$ |  $$ |$$ /  \__|$$ |          
@@ -387,17 +376,18 @@ stir.templates.search = (() => {
       /*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
       /*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
 
-      //summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
-      summary.append(message);
-      summary.insertAdjacentHTML("beforeend", `${tokens} ${spelling}`);
+			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
+			//summary.insertAdjacentHTML("beforeend", spelling);
+			summary.innerHTML = message;
+			if (querySanitised.length > 1) summary.append(queryEcho);
 
-      return summary;
-    },
-    pagination: (summary) => {
-      const { currEnd, totalMatching, progress } = summary;
-      return totalMatching === 0
-        ? "<!-- no results to show -->"
-        : `
+			return summary;
+		},
+		pagination: (summary) => {
+			const { currEnd, totalMatching, progress } = summary;
+			return totalMatching === 0
+				? "<!-- no results to show -->"
+				: `
 			<div class="cell text-center u-my-2">
 				<progress value="${progress}" max="100"></progress><br />
 				You have viewed ${totalMatching === currEnd ? "all " + (totalMatching > 1 ? totalMatching : "") : currEnd + " of " + totalMatching} results
