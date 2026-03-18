@@ -105,6 +105,9 @@
 }
 
 @media screen and #{breakpoint(medium up)} {
+  .text-md-medium {
+    font-size: 1.25rem;
+  }
   .text-xlg {
     font-size: 3.25rem;
   }
@@ -140,6 +143,10 @@
   font-weight: 700;
 }
 
+.u-text-nowrap {
+  text-wrap: nowrap;
+}
+
 .u-quote {
   &::before {
     content: '"';
@@ -148,4 +155,9 @@
   &::after {
     content: '"';
   }
+}
+
+.u-outline-heritage-green {
+  outline: 2px solid #006938;
+  outline-offset: 4px;
 }

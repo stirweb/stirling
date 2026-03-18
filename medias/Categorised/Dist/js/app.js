@@ -2583,6 +2583,71 @@ stir.MediaQuery = (function () {
 
 */
 
+stir.addSearch = (() => {
+	// e.g. https://api.addsearch.com/v1/search/cfa10522e4ae6987c390ab72e9393908?term=rest+api
+
+	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	const REPORTING = debug ? false : true; //click tracking etc.
+	const KEY = "dbe6bc5995c4296d93d74b99ab0ad7de"; //public site key
+	const _server = "api.addsearch.com";
+	const _url = `https://${_server}`;
+
+	const getJsonEndpoint = () => new URL(`/v1/search/${KEY}`, _url);
+	const getSuggestionsEndpoint = () => new URL(`/v1/suggest/${KEY}`, _url);
+	const getAutocompleteEndpoint = () => new URL(`/v1/autocomplete/document-field/${KEY}`, _url);
+	const getReportingEndpoint = () => new URL(`/v1/stats/${KEY}`,_url);
+	//const getRecommendationsEndpoint = (block) => new URL(`/v1/recommendations/index/${KEY}/block/${block}`, _url);
+	
+	const getCompletions = (data,callback) => {
+		if("function" !== typeof callback) return;
+		const url = getAutocompleteEndpoint();
+		const params = new URLSearchParams(data);
+		url.search = params;
+		stir.getJSON(url,data=>console.info("getCompletions",data));
+	};
+	
+	const getSuggestions = (term,callback) => {
+		if("function" !== typeof callback) return;
+		const url = getSuggestionsEndpoint();
+		url.search = `term=${term}`;
+		stir.getJSON(url,callback);
+	};
+	
+	/* Recommendations - AddSearch extra */
+	// const getRecommendations = (block,callback) => {
+	// 	if("function" !== typeof callback) return;
+	// 	stir.getJSON(getRecommendationsEndpoint(block),callback);
+	// };
+	
+	const getResults = parameters => {
+		const url = getJsonEndpoint();
+		url.search = new URLSearchParams(parameters);
+		return fetch( new Request(url) )
+	};
+	
+	// Used to report Click and Search user actions back to AddSearch analytics
+	// (Returns a PROMISE object that may be async'd or chained)
+	const putReport = (data) => {
+		
+		if(!REPORTING) {
+			return new Promise((resolve,reject)=>{resolve(data)});
+		}
+		const input   = getReportingEndpoint();
+		const options = {method:"POST", body:JSON.stringify(data)};
+		
+		return fetch( new Request(input, options) );
+
+	};
+
+	return {
+		getJsonEndpoint: getJsonEndpoint,
+		getCompletions: getCompletions,
+		getSuggestions: getSuggestions,
+		putReport: putReport,
+		getResults: getResults
+		// getRecommendations: getRecommendations,
+	};
+})();
 (function () {
   if (!stir.node(".c-half-n-half.js-animation")) return;
 
@@ -2645,6 +2710,148 @@ stir.MediaQuery = (function () {
 //     disable: "phone",
 //   });
 // })();
+
+/**
+* SEARCH AUTO-SUGGEST
+* @author: Robert Morrison <r.w.morrison@stir.ac.uk>
+* 2026-03-16
+*/
+
+// we will add some new modules to the stir library
+var stir = stir || {};
+
+/**
+* Concierge
+* Instantiated elsewhere with `new stir.Suggester(input, output, announcer);`
+*/
+stir.Suggester = function Suggester(input,output,announcer) {
+	if(!input || !output || !announcer) return;
+	if (!stir.addSearch) return;
+
+	let prevQuery = "";
+	let suggestions = [];
+	let spointer = 0;
+	let isSuggesting = false;
+	
+	const keyUpTime = 255; // milliseconds; keystroke idle time, i.e. stopped typing
+	const minQueryLength = 3; // min query length for activating the suggest box
+	
+	//input.addEventListener("focus", focusing);
+	input.addEventListener("input", stir.debounce(handleInput, keyUpTime));
+	input.addEventListener("keydown", actions);
+	output.addEventListener("click", clicks);
+	
+	const clamp = (num,min,max) => Math.min(Math.max(num, min), max);
+
+// R E N D E R E R S
+
+	function renderSuggestions(data) {
+		output.innerHTML = '';
+		suggestions = [];
+		spointer = 0;
+		if(data.suggestions && data.suggestions.length && data.suggestions.length > 0) {
+			suggestions = [...data.suggestions.map(suggestion)];
+			output.append(...suggestions);
+			output.removeAttribute("aria-hidden");
+			input.setAttribute("data-suggesting","true")
+			announcer.textContent = `${suggestions.length} suggestions found, use up and down arrows to review.`;
+		} else {
+			output.setAttribute("aria-hidden","true");
+			input.removeAttribute("data-suggesting");
+		}
+	}
+	
+	function suggestion(item, index) {
+		const el = document.createElement('li');
+		el.id=`suggestion_${index}`;
+		el.href="#";
+		el.textContent = item.value;
+		el.setAttribute("role","option");
+		return el;
+	}
+
+
+// E V E N T   H A N D L E R   F U N C T I O N S
+
+	function clicks(event) {
+		if("LI"===event.target.tagName) {
+			input.value = event.target.textContent;
+			close();
+			isSuggesting = false;
+			input.focus();
+		}
+	}
+
+	function handleInput(event) {
+		if ("" === this.value) stopSuggesting(event);
+		if (this.value != prevQuery) {
+			if (this.value.length >= minQueryLength) {
+				prevQuery = this.value;
+				isSuggesting = false;
+				stir.addSearch.getSuggestions(this.value, renderSuggestions);
+			}
+		}
+	}
+
+	function actions(event) {
+		switch (event.key) {
+			case 'Escape':
+				if(!output.hasAttribute("aria-hidden")) {
+					stopSuggesting(event);
+					break;
+				}
+				break;
+			case 'ArrowUp':
+				// highlight prev item
+				if(isSuggesting) spointer = clamp(spointer-1, 0, suggestions.length-1);
+				highlight();
+				halt(event);
+				break;
+			case 'ArrowDown':
+				// highlight next item
+				if(isSuggesting) spointer = clamp(spointer+1, 0, suggestions.length-1);;
+				highlight();
+				halt(event);
+				break;
+			case 'Enter':
+				if(isSuggesting) {
+					input.value = suggestions[spointer].textContent;
+					stopSuggesting(event);
+					break;
+				}
+				close();
+		}
+	}
+	
+	function stopSuggesting(event) {
+		close();
+		halt(event);
+		isSuggesting = false;
+	}
+	
+	function halt(event) {
+		event.stopPropagation();
+		event.preventDefault();
+	}
+	
+	function highlight() {
+		if(suggestions[spointer]) {
+			isSuggesting = true;
+			suggestions.forEach(i=>i.removeAttribute("data-hilit"));
+			suggestions[spointer].setAttribute("data-hilit","true");
+			input.setAttribute("aria-activedescendant", `suggestion_${spointer}`);
+		}
+	}
+	
+	function close() {
+		isSuggesting = false;
+		spointer = 0;
+		input.removeAttribute('data-suggesting');
+		output.setAttribute("aria-hidden","true");
+		output.innerHTML = '';
+	}
+
+};
 
 /**
  * BREADCRUMBS
@@ -2820,7 +3027,7 @@ stir.MediaQuery = (function () {
 );
 
 /**
- * HEADER CONCIERGE SEARCH ver 4.0 (NOT USING MARTYN'S SEARCHBOX)
+ * HEADER CONCIERGE SEARCH ver 4.0
  * @author: Ryan Kaye <ryan.kaye@stir.ac.uk>, Robert Morrison <r.w.morrison@stir.ac.uk>
  */
 
@@ -2832,17 +3039,19 @@ var stir = stir || {};
  * Instantiated below with `new stir.Concierge();`
  */
 stir.Concierge = function Concierge(popup) {
+  if (!stir.addSearch) return;
+
   const button = document.querySelector("#header-search__button");
   const buttons = [...document.querySelectorAll(".header-search-button"), ...[button]];
 
   if (!popup || !buttons.length) return;
 
-  var obj2param = this.obj2param;
+  // var obj2param = this.obj2param;
 
   // DOM elements
   const nodes = {
     overlay: popup.querySelector(".overlay"),
-    input: popup.querySelector('input[name="query"]'),
+    input: popup.querySelector('input[name="query"],input[name="term"]'),
     submit: popup.querySelector("button"),
     wrapper: popup.querySelector("#header-search__wrapper"),
     news: popup.querySelector(".c-header-search__news"),
@@ -2851,24 +3060,15 @@ stir.Concierge = function Concierge(popup) {
     suggestions: popup.querySelector(".c-header-search__suggestions"),
   };
 
-  //Dynamic view managers
-  var search, results, spinner;
-
-  // Settings and data
-  const funnelbackServer = "https://stir-search.clients.uk.funnelback.com";
-  const funnelbackUrl = funnelbackServer + "/s/";
-  const searchFunnelbackUrl = funnelbackUrl + "search.json?";
-  const suggestFunnelbackUrl = funnelbackUrl + "suggest.json?collection=stir-www&show=10&partial_query=";
-
   const courseUrl = "https://www.stir.ac.uk/courses/";
   const searchUrl = "https://www.stir.ac.uk/search/";
 
+  var search, results, spinner; // dynamic view managers
   var prevQuery = "";
+  const keyUpTime = 400; // milliseconds; keystroke idle time, i.e. stopped typing
+  const minQueryLength = 3; // min query length for activating the suggest box
 
-  var keyUpTime = 400; // miliseconds; keystroke idle time, i.e. stopped typing
-  var minQueryLength = 3; // min query length for activating the suggest box
-  var KEY_ESC = 27;
-
+  // Init IIFE
   (function init() {
     search = new stir.ToggleWidget(popup, "stir__fadeIn", "stir__fadeOut");
     results = new stir.ToggleWidget(nodes.wrapper, "stir__slidedown", "stir__slideup");
@@ -2879,7 +3079,6 @@ stir.Concierge = function Concierge(popup) {
     results.hide();
 
     // Assign various event handlers
-
     buttons.forEach((openButton) => {
       openButton.addEventListener("click", opening);
     });
@@ -2895,26 +3094,27 @@ stir.Concierge = function Concierge(popup) {
     });
   })();
 
+  const renderSuggestions = parseSuggestions.bind(nodes.suggestions);
+
   //  H E L P E R   F U N C T I O N S
 
   function doSearches(query) {
-    stir.getJSON(suggestFunnelbackUrl + query, parseSuggestions.bind(nodes.suggestions));
+    stir.addSearch.getSuggestions(query, renderSuggestions);
   }
 
   // R E N D E R E R S
 
   function render(label, data) {
     if (this.nodeType !== 1) return;
-
     this.innerHTML = renderHeading(label.heading, label.icon) + "<ul>" + renderBody(label, data) + "</ul>";
   }
 
   const renderHeading = (title, icon) => {
     return `
-        <h3 class="c-header-search__title header-stripped">
-          <span class="${icon}"></span> 
-          ${title}
-        </h3>`;
+				<h3 class="c-header-search__title header-stripped">
+					<span class="${icon}"></span> 
+					${title}
+				</h3>`;
   };
 
   const renderBody = (label, data) => (data.length > 0 ? data.join("") : renderGenericItem(label.none));
@@ -2922,55 +3122,57 @@ stir.Concierge = function Concierge(popup) {
   const renderGenericItem = (text) => `<li class="c-header-search__item">${text}</li>`;
 
   const renderAllItem = (item) => {
-    const url = item.collection === "stir-events" ? item.metaData.page : funnelbackServer + item.clickTrackingUrl;
     return `
-      <li class="c-header-search__item">
-        <a href="${url}">
-        ${item.title.split(" | ")[0]} - ${item.title.split(" | ")[1] ? item.title.split(" | ")[1] : ""}</a>
-      </li>`;
+			<li class="c-header-search__item">
+				<a href="${item.url}">${item.title.split(" | ")[0]}</a>
+			</li>`;
   };
 
   const renderCourseItem = (item) => {
+    const title = item.title.split(" | ")[0];
+    const award = item.custom_fields ? item.custom_fields.award ? item.custom_fields.award + " " : "" : "";
     return `
-      <li class="c-header-search__item">
-        <a href="${funnelbackServer}${item.clickTrackingUrl}">
-        ${item.metaData.award ? item.metaData.award : ""} 
-        ${item.title.split(" | ")[0]}</a>
-      </li>`;
+			<li class="c-header-search__item">
+				<a href="${item.url}">${award}${title}</a>
+			</li>`;
   };
 
   const renderSuggestItem = (suggest) => {
     return `
-      <li class="c-header-search__item">
-        <a href="${searchUrl}?query=${suggest}">${suggest}</a>
-      </li>`;
+			<li class="c-header-search__item">
+				<a href="${searchUrl}?query=${suggest}">${suggest}</a>
+			</li>`;
   };
 
   // P A R S I N G
-
-  function getSeachParams(query_) {
-    return obj2param({
-      query: query_,
-      SF: "[c,d,access,award,page]",
-      collection: "stir-main",
-      num_ranks: 25,
-      "cool.21": 0.9,
-    });
-  }
+  
+  const onlyUnique = (value, index, self)  => self.indexOf(value) === index;
+  const noBoolean = value  => ["and","or"].indexOf(value) === -1;
 
   function parseSuggestions(suggests) {
+    suggests = suggests.suggestions.map((item) => item.value);
     const max = 5;
 
     if (suggests.length > 0) {
-      // perform search using first suggested term as the query
-      stir.getJSON(searchFunnelbackUrl + getSeachParams(suggests[0]), parseFunnelbackResults);
+      // max 20 words and limit of 300 chars
+      const term = (suggests.join(" ").split(" ").filter(noBoolean).filter(onlyUnique).slice(0,20).join(" ")).slice(0,300);
+      stir.addSearch
+        .getResults({ term: term, collectAnalytics: false, defaultOperator: "or", fuzzy: "auto", resultType: "organic" })
+        .then((response) => response.json())
+        .then(parseResults)
+        .catch((e) => console.error(e));
+
       const suggestsUnique = suggests.filter((c, index) => suggests.indexOf(c) === index);
       const suggestsLtd = stir.filter((item, index) => index < max, suggestsUnique);
 
       render.call(nodes.suggestions, { heading: "Suggestions", none: "No suggestions found", icon: "uos-magnifying-glass" }, suggestsLtd.map(renderSuggestItem));
     } else {
       // no suggests so use the raw inputted query to perform the search
-      stir.getJSON(searchFunnelbackUrl + getSeachParams(prevQuery), parseFunnelbackResults);
+      stir.addSearch
+        .getResults({ term: prevQuery, collectAnalytics: false, resultType: "organic" })
+        .then((response) => response.json())
+        .then(parseResults)
+        .catch((e) => console.error(e));
 
       render.call(nodes.suggestions, { heading: "Suggestions", none: "No suggestions found", icon: "uos-magnifying-glass" }, []);
     }
@@ -2979,25 +3181,24 @@ stir.Concierge = function Concierge(popup) {
     results.show();
   }
 
-  function parseFunnelbackResults(data) {
-    const max = 3;
-    const obj = data.response.resultPacket.results;
+  function parseResults(data) {
+    const max = 4;
+    const obj = data.hits;
 
-    if (data.response.resultPacket.resultsSummary.fullyMatching > 0) {
+    if (data.total_hits > 0) {
       const coursesHtml = stir.compose(
         stir.map(renderCourseItem),
         stir.filter((item, index) => index < max),
-        stir.filter((item) => item.liveUrl.includes(courseUrl))
+        stir.filter((item) => item.url.includes(courseUrl))
       )(obj);
 
       const allHtml = stir.compose(
         stir.map(renderAllItem),
         stir.filter((item, index) => index < max),
-        stir.filter((item) => !item.liveUrl.includes(courseUrl))
+        stir.filter((item) => !item.url.includes(courseUrl))
       )(obj);
 
       render.call(nodes.news, { heading: "All pages", none: "No results found", icon: "uos-all-tab" }, allHtml);
-
       render.call(nodes.courses, { heading: "Courses", none: "No courses found", icon: "uos-course-tab" }, coursesHtml);
     } else {
       render.call(nodes.news, { heading: "All pages", none: "No results found", icon: "uos-all-tab" }, []);
@@ -3010,7 +3211,7 @@ stir.Concierge = function Concierge(popup) {
   function handleInput(event) {
     if (this.value != prevQuery) {
       results.hide();
-      if (this.value.length >= minQueryLength) {
+      if (this.value.length >= minQueryLength || this.value === "*") {
         spinner.show();
         doSearches(this.value);
         prevQuery = this.value;
@@ -3022,7 +3223,7 @@ stir.Concierge = function Concierge(popup) {
     }
   }
   /**
-   * If the search recieves focus, also reopen the
+   * If the search receives focus, also reopen the
    * results-panel if there are results to display.
    **/
   function focusing(event) {
@@ -3076,24 +3277,12 @@ stir.Concierge = function Concierge(popup) {
   }
 
   function escaping(event) {
-    if (event.keyCode === KEY_ESC) closing(event);
+    if ("Escape" === event.code) closing(event);
   }
-};
-
-stir.Concierge.prototype.obj2param = function (obj) {
-  // transform key/value pairs from object to URL formatted
-  // query string, in this case for use with Funnelback.
-  var elements = [];
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      elements.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-    }
-  }
-  return elements.join("&");
 };
 
 (function () {
-  // instantiate a new anonymous concierge
+  if (!window.fetch) return;
   new stir.Concierge(document.getElementById("header-search"));
 })();
 
@@ -3175,6 +3364,30 @@ stir.Concierge.prototype.obj2param = function (obj) {
 //   });
 // });
 //})();
+
+stir.didYouMean = (() => {
+
+	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	const _server = "www.stir.ac.uk";
+	const _url = `https://${_server}`;
+
+	const getEndpoint = () => new URL(`/webteam/did-you-mean/`, _url);
+	
+	const check = phrase => {
+		debug && console.info('[Did you mean] phrase',phrase);
+		const input   = getEndpoint();
+		const body = new FormData();
+		body.append('phrase',phrase);
+		const options = {method:"POST", body: body};
+		return fetch( new Request(input, options) );
+	};
+
+	return {
+		check: check
+	};
+})();
+
+// e.g. stir.didYouMean.check('fintecj').then(result => console.info(result))
 
 
 // this will swap the native action for js-action. Useful for search
@@ -3440,7 +3653,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
   for (var i = 0; i < ddPanes.length; i++) {
     doClick(ddBtns[i]);
   }
-})(document.querySelector(".c-download-box"));
+})(document.querySelector(".dropdown-pane"));
 
 /**
  * Lazy loading
@@ -3826,122 +4039,338 @@ var stir = stir || {};
 
 
 (function () {
-  return null; // Disable personalisation for now
-
-  //const resultBox = document.getElementById("resultBox");
-  const STORAGE_KEY = "stirsess";
-  const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
-  const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/big-query/server.php" : "server.php";
-
-  /**
-   * Get a cookie value by name
-   * @param {string} name - The name of the cookie
-   * @returns {string|null}
-   */
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(";").shift();
-    return null;
-  }
-
-  /**
-   * Set a cookie value
-   * @param {string} name - The name of the cookie
-   * @param {string} value - The value to set (should be encoded)
-   * @param {number} maxAgeMS - Max age in milliseconds
-   */
-  function setCookie(name, value, maxAgeMS) {
-    const expires = new Date(Date.now() + maxAgeMS).toUTCString();
-    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
-  }
-
-  /**
-   * Render data into the resultBox
-   * @param {Array} data - The data to render
-   */
-  function renderData(data) {
-    // const html = data.map((event, index) => {
-    //     return `
-    //             <div class="event">
-    //                 <p>${index} --  ${event.v}  ${event.p}<hr></p>
-    //             </div>`;
-    // }).join("");
-    // resultBox.innerHTML = html;
-  }
-
-  /**
-   * Determine if we should fetch new data based on stored data age
-   * @param {string|null} stored - The stored cookie value
-   * @param {number} maxAgeMS - Max age in milliseconds
-   * @returns {boolean}
-   */
-  function shouldFetch(stored, maxAgeMS) {
-    if (!stored) return true;
-    try {
-      const parsed = JSON.parse(stored);
-      if (!parsed.ts) return true;
-      const age = Date.now() - new Date(parsed.ts).getTime();
-      return age > maxAgeMS;
-    } catch {
-      return true;
-    }
-  }
-
-  /**
-   * Fetch data from the API, store with ts, and render
-   * @param {string} aid - The aid to send to the server
-   * @param {string} cookieKey - The cookie key
-   */
-  function fetchAndStoreData(aid, cookieKey, path) {
-    const formData = new FormData();
-    formData.append("aid", aid);
-
-    return fetch(path, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const dataMapped = data.map((item) => {
-          return {
-            v: item.v,
-            s: item.s,
-            p: item.p.replace("/courses", ""),
-          };
-        });
-        const stirsess = {
-          ts: new Date().toISOString(),
-          data: dataMapped,
-        };
-        setCookie(cookieKey, JSON.stringify(stirsess), MAX_AGE_MS);
-        return dataMapped;
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        throw error;
-      });
-  }
-
-  // Controller: Fetch new data if needed, otherwise use cached data
-  // Use the _a_id from the cookie, fallback to default if not found
-  const aid = getCookie("_a_id") || ``;
-  //const aid = "4n72-ke1go-x95i8-r84a";
-
-  if (!aid.length) return;
-
-  const stored = getCookie(STORAGE_KEY) ? decodeURIComponent(getCookie(STORAGE_KEY)) : null;
-
-  if (shouldFetch(stored, MAX_AGE_MS)) {
-    // Fetch from the server
-    console.log("Fetching from server...");
-    fetchAndStoreData(aid, STORAGE_KEY, SERVER_PATH).then(renderData);
-  } else {
-    // Use cached data
-    //console.log("Fetching data from cookie...");
-    const parsed = JSON.parse(stored);
-    renderData(parsed.data);
-  }
+  // const STORAGE_KEY = "stirsess";
+  // const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
+  // const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/personalisation/server.php" : "server.php";
+  // const JAN_COURSES_PATH = UoS_env.name === `prod` ? "/data/courses/pg/json/january-starts/index.json" : "./january-starts.json";
+  // const CLOSING_DATE = new Date("2025-11-27T23:59:59");
+  // const DEV_MODE = UoS_env.name === `dev`;
+  // const PROD_MODE = UoS_env.name === `prod`;
+  // const MAX_SHOWS = UoS_env.name === `prod` ? 2 : 1000;
+  // const EXEMPT_LIST = ["/courses/", "/shhsge/"]; // Add any paths here that should not show the message
+  // const SCHOLARSHIPS = [
+  //   { region: "India", value: "£7,000" },
+  //   { region: "Malaysia", value: "£7,000" },
+  //   { region: "Singapore", value: "£7,000" },
+  //   { region: "Cambodia", value: "£7,000" },
+  //   { region: "Indonesia", value: "£7,000" },
+  //   { region: "Philippines", value: "£7,000" },
+  //   { region: "Myanmar", value: "£7,000" },
+  //   { region: "Thailand", value: "£7,000" },
+  //   { region: "Vietnam", value: "£7,000" },
+  //   { region: "Africa", value: "£7,000" },
+  //   { region: "Asia", value: "£7,000" },
+  // ];
+  // // Dont fire on non-dev/prod envs
+  // if (UoS_env.name !== `dev` && UoS_env.name !== `prod`) {
+  //   return;
+  // }
+  // // Dont fire if we are on an exempt page
+  // if (EXEMPT_LIST.some((exempt) => window.location.pathname.startsWith(exempt))) {
+  //   return;
+  // }
+  // // Dont fire if past closing date
+  // if (Date.now() > CLOSING_DATE.getTime()) {
+  //   return;
+  // }
+  // /*
+  //  * Get a cookie value by name
+  //  * @param {string} name - The name of the cookie
+  //  * @returns {string|null}
+  //  */
+  // function getCookie(name) {
+  //   const value = `; ${document.cookie}`;
+  //   const parts = value.split(`; ${name}=`);
+  //   if (parts.length === 2) return parts.pop().split(";").shift();
+  //   return null;
+  // }
+  // /*
+  //  * Get the AID from cookie or return default for non-prod
+  //  * @returns {string}
+  //  */
+  // function getAID() {
+  //   if (UoS_env.name !== `prod`) {
+  //     return "yvdksi-t77z0d-sykh-8kujo";
+  //   }
+  //   // if (getCookie("_a_id") === "663rm-zvd-v9fu9-giaj") {
+  //   //   return "yvdksi-t77z0d-sykh-8kujo";
+  //   // }
+  //   return getCookie("_a_id") || ``;
+  // }
+  // /*
+  //  * Sets a cookie
+  //  * @param {string} name - The name of the cookie
+  //  * @param {string} value - The value to set (should be encoded)
+  //  * @param {number} maxAgeMS - Max age in milliseconds
+  //  */
+  // function setCookie(name, value, maxAgeMS) {
+  //   const expires = new Date(Date.now() + maxAgeMS).toUTCString();
+  //   document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
+  // }
+  // /*
+  //  * Render the scholarship message
+  //  * @param {Object|null} scholarship - The scholarship object or null
+  //  * @param {string} region - The user's region
+  //  * @returns {string}
+  //  */
+  // function renderMessage(scholarship, region) {
+  //   if (!scholarship) return " ";
+  //   return `<b>${scholarship.value}</b> ${region} scholarship`;
+  // }
+  // /*
+  //  * Add event listeners to dropdown buttons
+  //  * @returns {void}
+  //  */
+  // function addListener() {
+  //   var ddPanes = document.querySelectorAll(".dropdown-pane");
+  //   var ddBtns = document.querySelectorAll(".button--dropdown");
+  //   for (var i = 0; i < ddPanes.length; i++) {
+  //     ddPanes[i].classList.add("hide");
+  //   }
+  //   function doClick(el) {
+  //     el.onclick = function (e) {
+  //       e.target.nextElementSibling.classList.toggle("hide");
+  //       e.preventDefault();
+  //     };
+  //   }
+  //   for (var i = 0; i < ddPanes.length; i++) {
+  //     doClick(ddBtns[i]);
+  //   }
+  // }
+  // /*
+  //  * Render data onto the page
+  //  * @param {Array} data - The data to render
+  //  * @param {Date} closingDate - The closing date for applications
+  //  * @param {Object|null} scholarship - The scholarship object or null
+  //  * @returns {string} - The HTML string to insert
+  //  */
+  // function renderData(data, closingDate, scholarship) {
+  //   if (!data || !data.length) return ``;
+  //   const event = data[0];
+  //   //const daysLeft = Math.ceil((closingDate - Date.now()) / (1000 * 60 * 60 * 24));
+  //   const humanDate = closingDate.toLocaleDateString("en-GB", { month: "long", day: "numeric" });
+  //   const html = `<div class="grid-x grid-container">
+  //                   <div class="u-my-2 cell">
+  //                       <div class="grid-x flex-dir-column align-middle medium-flex-dir-row u-p-2 u-m-0 c-wrapper-2025 purples u-border-left-solid u-border-width-5 u-border-coloured">
+  //                           <p class="cell small-12 large-8 u-m-0 ">
+  //                               <span class="text-lg u-text-coloured u-mb-1 u-inline-block"><b>Still interested in starting a Masters in January 2026?</b></span><br>
+  //                               Apply by <b>${humanDate}</b> - ${renderMessage(scholarship, event.n)}<br /> Or check out our courses starting September 2026
+  //                           </p>
+  //                           <div class="cell small-12 large-4 ">
+  //                                 <div class="u-relative purples u-mt-2-medium-down" >
+  //                                   <button class="button button--dropdown expanded " type="button" data-toggle="dd-personalisation-janstarts"
+  //                                       id="btn-personalisation-janstarts">Apply for </button>
+  //                                   <div class="dropdown-pane u-absolute purples dark u-px-2" id="dd-personalisation-janstarts" data-dropdown="" data-auto-focus="true">
+  //                                       <ul>
+  //                                         ${data
+  //                                           .map(
+  //                                             (event) => `<li><a href="${event.p}" class="c-link text-sm link-personalisation-janstarts">${event.prefix} ${event.title}</a></li>`
+  //                                           )
+  //                                           .join("")}
+  //                                         <li><a href="/courses/pg-taught/" class="c-link text-sm link-personalisation-janstarts">View all postgraduate courses</a></li>
+  //                                       </ul>
+  //                                   </div>
+  //                                 </div>
+  //                           </div>
+  //                       </div>
+  //                   </div>
+  //               </div>`;
+  //   return html;
+  // }
+  // /*
+  //  * Determine if we should fetch new data based on stored data age
+  //  * @param {string|null} stored - The stored cookie value
+  //  * @param {number} maxAgeMS - Max age in milliseconds
+  //  * @returns {boolean}
+  //  */
+  // function shouldFetch(stored, maxAgeMS) {
+  //   if (!stored) return true;
+  //   try {
+  //     const parsed = JSON.parse(stored);
+  //     if (!parsed.ts) return true;
+  //     const age = Date.now() - new Date(parsed.ts).getTime(); // in ms
+  //     return age > maxAgeMS;
+  //   } catch {
+  //     return true;
+  //   }
+  // }
+  // /*
+  //  * Store data in cookie
+  //  * @param {string} cookieKey
+  //  * @param {string} timestamp
+  //  * @param {Object} data
+  //  * @param {number} shows
+  //  * @return {boolean} True if stored successfully
+  //  */
+  // function storeData(cookieKey, timestamp, data, shows) {
+  //   const stirsess = {
+  //     ts: timestamp,
+  //     data: data,
+  //     shows: shows,
+  //   };
+  //   setCookie(cookieKey, JSON.stringify(stirsess), MAX_AGE_MS);
+  //   return true;
+  // }
+  // /*
+  //  * Fetch data from the API, store with ts, and render
+  //  * @param {string} aid - The aid to send to the server
+  //  * @param {string} cookieKey - The cookie key
+  //  */
+  // function fetchAndStoreData(aid, cookieKey, path, shows) {
+  //   const formData = new FormData();
+  //   formData.append("aid", aid);
+  //   return fetch(path, {
+  //     method: "POST",
+  //     body: formData,
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const stirsess = {
+  //         ts: new Date().toISOString(),
+  //         data: data,
+  //         shows: shows,
+  //       };
+  //       setCookie(cookieKey, JSON.stringify(stirsess), MAX_AGE_MS);
+  //       return data;
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching  data:", error);
+  //       throw error;
+  //     });
+  // }
+  // /*
+  //  * Process data to filter for January starts
+  //  * @param {Array<Object>} data
+  //  * @returns {Promise<void>}
+  //  */
+  // function processData(janPath, data) {
+  //   if (!data || !data.length) return Promise.resolve();
+  //   return fetch(janPath)
+  //     .then((response) => response.json())
+  //     .then((janData) => {
+  //       // Process January starts data
+  //       const janUrls = janData.map((item) => item.url);
+  //       const filtered = data
+  //         .filter((event) => {
+  //           return janUrls.includes(event.p);
+  //         })
+  //         .map((event) => {
+  //           const janItem = janData.find((item) => item.url === event.p);
+  //           return {
+  //             ...event,
+  //             ...janItem,
+  //           };
+  //         });
+  //       return filtered;
+  //     });
+  // }
+  // /*
+  //  * Merges local page view data from 'stirsess2' cookie with server data.
+  //  * @param {Array} serverData - The data fetched from the server.
+  //  * @returns {Array} - The merged data array.
+  // function mergeWithLocalData(serverData) {
+  //   const localDataCookie = getCookie("stirsess2");
+  //   if (!localDataCookie) return serverData;
+  //   const localData = JSON.parse(decodeURIComponent(localDataCookie));
+  //   const localPages = localData && Array.isArray(localData.pages) ? localData.pages : [];
+  //   const country = serverData.length && serverData[0].c ? serverData[0].c : null;
+  //   const nationality = serverData.length && serverData[0].n ? serverData[0].n : null;
+  //   const notFound = localPages
+  //     .filter((item) => {
+  //       if (!serverData.find((page) => page.p === item.p)) {
+  //         return item;
+  //       }
+  //     })
+  //     .map((localItem) => {
+  //       return { p: localItem.p, v: Number(localItem.v), s: 0, c: country, n: nationality };
+  //     });
+  //   const found = serverData
+  //     .filter((item) => {
+  //       if (localPages.find((page) => page.p === item.p)) {
+  //         return item;
+  //       }
+  //     })
+  //     .map((serverItem) => {
+  //       if (localPages.find((page) => page.p === serverItem.p)) {
+  //         return { p: serverItem.p, v: Number(localPages.find((page) => page.p === serverItem.p).v) + Number(serverItem.v), s: serverItem.s, c: country, n: nationality };
+  //       }
+  //     });
+  //   return [...found, ...notFound];
+  // }
+  // */
+  // /*
+  //  * Get the message for the user's region
+  //  * @param {Array} scholarships - The array of SCHOLARSHIPS with regions
+  //  * @param {Object} data - The user data with region info
+  //  * @returns {Object|null}
+  //  */
+  // function getScholarshipForRegion(scholarships, data) {
+  //   if (!data) return null;
+  //   return scholarships.find((item) => item.region === data.n || item.region === data.c);
+  // }
+  // /*
+  //  * Checks if the user has consented to performance cookies.
+  //  * @param {string} cookieControl - The value of the CookieControl cookie.
+  //  * @returns {boolean} True if consent is given, false otherwise.
+  //  */
+  // const hasPerformanceCookieConsent = (cookieControl, dev) => {
+  //   if (dev) return true;
+  //   try {
+  //     if (!cookieControl) return false;
+  //     const consentData = JSON.parse(cookieControl);
+  //     return consentData?.optionalCookies?.performance === "accepted";
+  //   } catch (error) {
+  //     console.error("Error parsing CookieControl cookie:", error);
+  //     return false;
+  //   }
+  // };
+  // /*
+  //  * Main controller function
+  //  * @returns {Promise<void>}
+  //  */
+  // async function controller() {
+  //   const aid = getAID();
+  //   if (!aid.length) return;
+  //   const stored = getCookie(STORAGE_KEY) ? decodeURIComponent(getCookie(STORAGE_KEY)) : null;
+  //   if (shouldFetch(stored, MAX_AGE_MS)) {
+  //     // Fetch from the server
+  //     //console.log("Fetching from server...");
+  //     const parsed = await fetchAndStoreData(aid, STORAGE_KEY, SERVER_PATH, 1);
+  //     if (!parsed.length) return;
+  //     //const mergedData = mergeWithLocalData(parsed);
+  //     const janData = await processData(JAN_COURSES_PATH, parsed);
+  //     if (!janData || !janData.length) return;
+  //     const scholarship = getScholarshipForRegion(SCHOLARSHIPS, janData[0]);
+  //     const html = await renderData(janData, CLOSING_DATE, scholarship);
+  //     document.querySelector("main").insertAdjacentHTML("afterbegin", html);
+  //     addListener();
+  //     PROD_MODE && dataLayer.push({ event: "personalisation-janstarts" });
+  //   } else {
+  //     // Use cached data
+  //     //console.log("Fetching data from cookie...");
+  //     const parsed = JSON.parse(stored);
+  //     if (!parsed.data.length) return;
+  //     const shows = parsed.shows && Number.isInteger(parsed.shows) ? parsed.shows : 1;
+  //     // Only show 3 times in a day
+  //     if (shows > MAX_SHOWS) return;
+  //     //const mergedData = mergeWithLocalData(parsed.data);
+  //     const janData = await processData(JAN_COURSES_PATH, parsed.data);
+  //     if (!janData || !janData.length) return;
+  //     const scholarship = getScholarshipForRegion(SCHOLARSHIPS, janData[0]);
+  //     const html = await renderData(janData, CLOSING_DATE, scholarship);
+  //     document.querySelector("main").insertAdjacentHTML("afterbegin", html);
+  //     storeData(STORAGE_KEY, parsed.ts, parsed.data, shows + 1);
+  //     addListener();
+  //     PROD_MODE && dataLayer.push({ event: "personalisation-janstarts" });
+  //   }
+  // }
+  // // Dont fire if no cookie consent
+  // const cookieControl = getCookie("CookieControl");
+  // if (!hasPerformanceCookieConsent(cookieControl, DEV_MODE)) {
+  //   return;
+  // }
+  // // Away you go
+  // controller();
 })();
 
 (function() {
@@ -4012,6 +4441,41 @@ var stir = stir || {};
 
 })(document.querySelector(".c-scroll-to-top"));
 
+
+ stir.session = (()=>{
+	 
+	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	const session = {};
+	const ccc = window.Cookies && Cookies.getJSON("CookieControl");
+	const consent = ccc && ccc.optionalCookies && ccc.optionalCookies.performance === "accepted";
+	
+	if(!consent) {
+		debug && console.info("[Session] performance cookie consent: not given");
+		window.sessionStorage && sessionStorage.removeItem("session"); // remove any existing
+		session.id = generateID();
+		return session;
+	}
+
+	debug && console.info("[Session] performance cookie consent: given");
+	
+	function generateID() {
+		const time = Date.now();
+		const randomNumber = Math.floor(Math.random() * 1000000001);
+		return time + "_" + randomNumber;
+	}
+	
+	if (window.sessionStorage && sessionStorage.getItem("session")) {
+		session.id = sessionStorage.getItem("session");
+		debug && console.info("[Session] ongoing session:",session.id);
+	} else {
+		session.id = generateID();
+		window.sessionStorage && sessionStorage.setItem("session",session.id);
+		debug && console.info("[Session] new session:",session.id);
+	}
+	
+	return session;
+	 
+ })();
 var stir = stir || {};
 
 stir.share = (()=>{

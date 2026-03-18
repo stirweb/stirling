@@ -97,7 +97,7 @@ $variations: (30, 50, 70);
 }
 
 // this is an exception for the grey section backgrounds
-$bg-grey: $light-gray-2; //tint($light-mink, 15%);
+$bg-grey: $light-gray-alt; //tint($light-mink, 15%);
 
 // Used for full width wrappers
 .u-bleed {
@@ -276,10 +276,6 @@ a:has(img):hover {
   border-image-source: linear-gradient($bg-grey, $bg-grey);
 }
 
-.bg-dark-grey {
-  border-image-source: linear-gradient(map-get($brand-palette, neutral-medium-dark), map-get($brand-palette, neutral-medium-dark));
-}
-
 .u-bg-medium-dark-grey {
   background-color: #aeacac;
 }
@@ -292,9 +288,9 @@ a:has(img):hover {
   background-color: #eeeeee;
 }
 
-.u-bg-light-grey {
-  background-color: map-get($brand-palette, neutral-tint-7);
-}
+// .u-bg-light-grey {
+//   background-color: map-get($brand-palette, neutral-tint-7);
+// }
 
 /*
     Extended palette colours - Text 
@@ -409,6 +405,27 @@ a:has(img):hover {
       }
     }
 
+    .button--dropdown {
+      border: 4px solid map-get($color, "button");
+      background-color: map-get($color, "button");
+      color: #fff;
+
+      &:hover,
+      &:focus {
+        background-color: $white;
+        color: map-get($color, "button");
+        border: 4px solid map-get($color, "button");
+
+        &::after {
+          filter: icon-filter(map-get($color, "button"));
+        }
+      }
+    }
+
+    .dropdown-pane {
+      background-color: map-get($color, "button");
+    }
+
     &.button.tinted,
     .button.tinted {
       background-color: map-get($color, "tint");
@@ -448,6 +465,11 @@ a:has(img):hover {
 
     .u-text-coloured {
       color: map-get($color, "hook");
+    }
+
+    &.u-border-coloured,
+    .u-border-coloured {
+      border-color: map-get($color, "hook");
     }
 
     [data-behaviour="accordion"] > h3,
@@ -541,8 +563,8 @@ a:has(img):hover {
     filter: brightness(0) invert(1);
   }
 
-  .c-link::before {
-    background-color: brightness(0) invert(1);
+  .c-link:hover::before {
+    filter: brightness(0) invert(1);
   }
 
   .stir-accordion {
@@ -602,6 +624,10 @@ a:has(img):hover {
           }
         }
       }
+
+      // .c-link:hover::before {
+      //   filter: brightness(0) invert(1);
+      // }
 
       .u-text-coloured {
         color: map-get($color, "tint-7");
