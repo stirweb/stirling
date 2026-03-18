@@ -2739,6 +2739,7 @@ stir.Suggester = function Suggester(input,output,announcer) {
 	//input.addEventListener("focus", focusing);
 	input.addEventListener("input", stir.debounce(handleInput, keyUpTime));
 	input.addEventListener("keydown", actions);
+	input.addEventListener("blur", close);
 	output.addEventListener("click", clicks);
 	
 	const clamp = (num,min,max) => Math.min(Math.max(num, min), max);
@@ -2826,7 +2827,6 @@ stir.Suggester = function Suggester(input,output,announcer) {
 	function stopSuggesting(event) {
 		close();
 		halt(event);
-		isSuggesting = false;
 	}
 	
 	function halt(event) {
@@ -2849,6 +2849,7 @@ stir.Suggester = function Suggester(input,output,announcer) {
 		input.removeAttribute('data-suggesting');
 		output.setAttribute("aria-hidden","true");
 		output.innerHTML = '';
+		announcer.textContent = '';
 	}
 
 };
