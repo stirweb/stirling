@@ -2714,7 +2714,10 @@ stir.addSearch = (() => {
 /**
 * SEARCH AUTO-SUGGEST
 * @author: Robert Morrison <r.w.morrison@stir.ac.uk>
+<<<<<<< HEAD
 * 2026-03-16
+=======
+>>>>>>> origin/t4test
 */
 
 // we will add some new modules to the stir library
@@ -2722,11 +2725,19 @@ var stir = stir || {};
 
 /**
 * Concierge
+<<<<<<< HEAD
 * Instantiated elsewhere with `new stir.Suggester(input, output, announcer);`
 */
 stir.Suggester = function Suggester(input,output,announcer) {
 	if(!input || !output || !announcer) return;
 	if (!stir.addSearch) return;
+=======
+* Instantiated below with `new stir.Concierge();`
+*/
+stir.Suggester = function Suggester(input,output) {
+	if (!stir.addSearch) return;
+	if(!input) return;
+>>>>>>> origin/t4test
 
 	let prevQuery = "";
 	let suggestions = [];
@@ -2736,6 +2747,7 @@ stir.Suggester = function Suggester(input,output,announcer) {
 	const keyUpTime = 255; // milliseconds; keystroke idle time, i.e. stopped typing
 	const minQueryLength = 3; // min query length for activating the suggest box
 	
+<<<<<<< HEAD
 	//input.addEventListener("focus", focusing);
 	input.addEventListener("input", stir.debounce(handleInput, keyUpTime));
 	input.addEventListener("keydown", actions);
@@ -2743,6 +2755,28 @@ stir.Suggester = function Suggester(input,output,announcer) {
 	
 	const clamp = (num,min,max) => Math.min(Math.max(num, min), max);
 
+=======
+	const announcer = document.createElement('div');
+	announcer.classList.add('show-for-sr'); // screen readers only
+	announcer.setAttribute('aria-live','assertive'); // announce changes immediately
+	input.parentElement.append(announcer);
+	
+	//input.addEventListener("focus", focusing);
+	input.addEventListener("input", stir.debounce(handleInput, keyUpTime));
+	input.addEventListener("keydown", escaping);
+	output.addEventListener("click", event => {
+		if("LI"===event.target.tagName) {
+			input.value = event.target.textContent;
+			close();
+			isSuggesting = false;
+			input.focus();
+		}
+	});
+	
+	const clamp = (num,min,max) => Math.min(Math.max(num, min), max);
+
+
+>>>>>>> origin/t4test
 // R E N D E R E R S
 
 	function renderSuggestions(data) {
@@ -2755,9 +2789,12 @@ stir.Suggester = function Suggester(input,output,announcer) {
 			output.removeAttribute("aria-hidden");
 			input.setAttribute("data-suggesting","true")
 			announcer.textContent = `${suggestions.length} suggestions found, use up and down arrows to review.`;
+<<<<<<< HEAD
 		} else {
 			output.setAttribute("aria-hidden","true");
 			input.removeAttribute("data-suggesting");
+=======
+>>>>>>> origin/t4test
 		}
 	}
 	
@@ -2772,6 +2809,7 @@ stir.Suggester = function Suggester(input,output,announcer) {
 
 
 // E V E N T   H A N D L E R   F U N C T I O N S
+<<<<<<< HEAD
 
 	function clicks(event) {
 		if("LI"===event.target.tagName) {
@@ -2788,11 +2826,18 @@ stir.Suggester = function Suggester(input,output,announcer) {
 			if (this.value.length >= minQueryLength) {
 				prevQuery = this.value;
 				isSuggesting = false;
+=======
+	function handleInput(event) {
+		if (this.value != prevQuery) {
+			if (this.value.length >= minQueryLength) {
+				prevQuery = this.value;
+>>>>>>> origin/t4test
 				stir.addSearch.getSuggestions(this.value, renderSuggestions);
 			}
 		}
 	}
 
+<<<<<<< HEAD
 	function actions(event) {
 		switch (event.key) {
 			case 'Escape':
@@ -2801,6 +2846,17 @@ stir.Suggester = function Suggester(input,output,announcer) {
 					break;
 				}
 				break;
+=======
+	function escaping(event) {
+		switch (event.key) {
+			case 'Escape':
+				if(!output.hasAttribute("aria-hidden")) {
+					isSuggesting = false;
+					close();
+					halt(event);
+					break;
+				}
+>>>>>>> origin/t4test
 			case 'ArrowUp':
 				// highlight prev item
 				if(isSuggesting) spointer = clamp(spointer-1, 0, suggestions.length-1);
@@ -2816,6 +2872,7 @@ stir.Suggester = function Suggester(input,output,announcer) {
 			case 'Enter':
 				if(isSuggesting) {
 					input.value = suggestions[spointer].textContent;
+<<<<<<< HEAD
 					stopSuggesting(event);
 					break;
 				}
@@ -2829,6 +2886,16 @@ stir.Suggester = function Suggester(input,output,announcer) {
 		isSuggesting = false;
 	}
 	
+=======
+					isSuggesting = false;
+					close();
+					halt(event);
+					break;
+				}
+		}
+	}
+	
+>>>>>>> origin/t4test
 	function halt(event) {
 		event.stopPropagation();
 		event.preventDefault();

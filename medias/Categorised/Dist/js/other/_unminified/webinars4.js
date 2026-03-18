@@ -136,7 +136,7 @@
   const countries = stir.t4Globals.countries;
 
   const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-  const searchUrl = `${searchAPI}?term=*&resultType=organic&customField=type%3Dwebinar&`;
+  const searchUrl = `${searchAPI}?term=*&customField=type%3Dwebinar&`;
 
   const webinarsArea = document.querySelector("[data-webinar]");
   webinarsArea.innerHTML = "loading webinars...";

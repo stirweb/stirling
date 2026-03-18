@@ -1796,7 +1796,11 @@ a:has(img):hover {
  * Example usage: z($z-index-elements, homepage-masthead-vide)
  */
 .z-suggest {
+<<<<<<< HEAD
   z-index: 6; }
+=======
+  z-index: 7; }
+>>>>>>> origin/t4test
 
 /**
 * Variables for icons used in the application
@@ -2116,7 +2120,11 @@ hr {
   right: 0;
   left: 0;
   padding: 1em;
+<<<<<<< HEAD
   z-index: 15; }
+=======
+  z-index: 16; }
+>>>>>>> origin/t4test
   #cookiebanner p {
     margin: 0 1em; }
   #cookiebanner button {
@@ -2329,7 +2337,11 @@ body > nav > a.u-show-on-focus {
   top: 0;
   left: 0;
   width: 100%;
+<<<<<<< HEAD
   z-index: 14;
+=======
+  z-index: 15;
+>>>>>>> origin/t4test
   /*     visibility: hidden;
     opacity: 0; */ }
   .c-header-search[aria-hidden] {
@@ -2477,7 +2489,11 @@ body > nav > a.u-show-on-focus {
   left: 0;
   top: 100%;
   width: 100%;
+<<<<<<< HEAD
   z-index: 13;
+=======
+  z-index: 14;
+>>>>>>> origin/t4test
   /* display: none; */ }
   .megamenu .megamenu__padding {
     padding: 2rem 0; }
@@ -3607,7 +3623,11 @@ h3.c-tab-accord-group-head {
     margin: 0;
     padding: 1rem;
     background-color: #f6f5f4;
+<<<<<<< HEAD
     z-index: 12;
+=======
+    z-index: 13;
+>>>>>>> origin/t4test
     border-bottom: 5px solid #ccc; }
     .breadcrumbs > li ul li {
       line-height: 1.4;
@@ -5224,6 +5244,12 @@ table {
     /* 16px */
     font-weight: 400;
     color: #3a3c39; }
+
+table.u-stripyrows-pairs tbody tr:nth-child(4n-2), table.u-stripyrows-pairs tbody tr:nth-child(4n-3) {
+  background-color: transparent; }
+
+table.u-stripyrows-pairs tbody tr:nth-child(4n), table.u-stripyrows-pairs tbody tr:nth-child(4n-1) {
+  background-color: #f8f8f7; }
 
 .table--stripped thead,
 .table--stripped tbody,
@@ -8374,6 +8400,72 @@ pre.debug {
 .c-search-results details.debug {
   margin-bottom: 3rem; }
 
+.u-shadow {
+  filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.1)); }
+  .u-shadow:focus-within {
+    filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.3)); }
+
+.c-search-suggest input {
+  border-color: #d1d1c9; }
+
+.c-search-suggest input[data-suggester] {
+  border-top-left-radius: 10px;
+  background: #fff;
+  border-right: none; }
+
+.c-search-suggest input[type="submit"] {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-left: 0; }
+
+.c-search-suggest input[data-suggester], .c-search-suggest [data-suggestions] {
+  border-bottom-left-radius: 10px; }
+
+.c-search-suggest [data-suggestions] {
+  border-bottom-right-radius: 10px; }
+
+.c-search-suggest input[data-suggester][data-suggesting],
+.c-search-suggest input[data-suggester][data-suggesting] + input[type="submit"] {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
+
+.c-search-suggest__suggestions {
+  position: relative; }
+  .c-search-suggest__suggestions [data-suggestions] {
+    position: absolute;
+    padding: .25rem 0 0; }
+
+ul[data-suggestions] {
+  background: #fff;
+  left: 0;
+  right: 0;
+  margin: 0;
+  border: 1px solid #d1d1c9;
+  border-top: 0;
+  list-style-position: inside;
+  padding: 0; }
+
+[data-suggestions][aria-hidden] {
+  display: none; }
+
+[data-suggestions] li {
+  cursor: pointer;
+  padding-left: 1rem; }
+
+[data-suggestions] li::before {
+  content: "";
+  padding-right: 1rem; }
+
+[data-suggestions] li::marker {
+  font-family: "uos";
+  content: "\e971";
+  font-size: 1rem; }
+
+[data-suggestions] li[data-hilit], [data-suggestions] li:hover, [data-suggestions] li:hover::marker {
+  background: #d1d1c9; }
+
 /*
 .u-shadow {
 	filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.1));
@@ -8459,51 +8551,13 @@ ul[data-suggestions] {
     display: none; } }
 
 /* COURSES */
-.c-course-title {
-  padding-top: 2rem; }
-
 .c-course-heading {
   font-size: 2.75rem;
-  margin-bottom: 40px;
-  transition: font-size .1s linear; }
-
-.c-course-title__buttons {
-  margin: 1rem 0; }
-  .c-course-title__buttons .button {
-    min-width: auto;
-    padding: 1rem;
-    margin: 0;
-    transition: padding .1s linear; }
-
-.u-sticky.stuck .c-course-title {
-  padding-top: 1rem; }
-
-.u-sticky.stuck .c-course-heading {
-  font-size: 1.25rem;
-  margin-bottom: 1rem; }
-
-.u-sticky.stuck .c-course-title__buttons .button {
-  padding: 0 .3rem .3rem;
-  margin-right: 1rem; }
+  margin-bottom: 40px; }
 
 @media screen and (min-width: 40em) {
-  .c-course-title {
-    display: flex;
-    justify-content: space-between; }
   .c-course-heading {
-    font-size: 3.75rem; }
-  .u-sticky.stuck .c-course-heading {
-    font-size: 1.75rem; }
-  .u-sticky.stuck .c-course-title__buttons .button {
-    min-width: 14rem;
-    /* same as .button */
-    padding: 1.25rem 1.75rem;
-    margin-right: 2rem; }
-  .c-course-title__buttons .button {
-    min-width: 14rem;
-    /* same as .button */
-    padding: 1.25rem 1.75rem;
-    margin-right: 2rem; } }
+    font-size: 3.75rem; } }
 
 /* seasonal component, enabled/disabled via JavaScript */
 .c-course-clearing-advert {
@@ -8511,7 +8565,11 @@ ul[data-suggestions] {
   position: relative;
   position: sticky;
   top: auto;
+<<<<<<< HEAD
   z-index: 7; }
+=======
+  z-index: 8; }
+>>>>>>> origin/t4test
   .c-course-clearing-advert p {
     margin: 30px 0; }
     .c-course-clearing-advert p .button {
@@ -8543,12 +8601,27 @@ ul[data-suggestions] {
   color: #006938;
   text-align: center;
   font-size: 1rem;
+<<<<<<< HEAD
   z-index: 9; }
+=======
+  z-index: 10; }
+
+.c-course-title__buttons {
+  margin: 1rem 0 1rem 0; }
+  .c-course-title__buttons .button {
+    margin-right: 2rem; }
+    .c-course-title__buttons .button:last-child {
+      margin-right: 0; }
+>>>>>>> origin/t4test
 
 .c-course-title-sticky-menu {
   display: none;
   position: fixed;
+<<<<<<< HEAD
   z-index: 8;
+=======
+  z-index: 9;
+>>>>>>> origin/t4test
   top: 0;
   left: 0;
   width: 100%;
@@ -8601,7 +8674,7 @@ ul[data-suggestions] {
   .kis-widget.no-data {
     display: none;
     /*
-	   &::before {
+     &::before {
             content: "Discover Uni data is currently unavailable.";
             display: block;
             text-align: center;
@@ -8610,8 +8683,8 @@ ul[data-suggestions] {
 
         > div {
             display: none;
-		}
-		*/ }
+    }
+    */ }
 
 .kis-widget__intro {
   line-height: 1.5 !important;
@@ -8695,37 +8768,37 @@ ul[data-suggestions] {
   margin-bottom: 50px; }
 
 /* .c-local-currency {
-	display: none;
+  display: none;
 }
 
 .c-local-currency__title {
-	font-weight: 700;
+  font-weight: 700;
 }
 
 .c-local-currency__value {
-	font-size: 200%;
+  font-size: 200%;
 }
 
 .c-local-currency__note {
-	font-style: italic;
+  font-style: italic;
 } */
 /* #ug-course-tabs__course-details {
-	.c-section-heading {
-		margin-bottom: 2rem;
-	}
+  .c-section-heading {
+    margin-bottom: 2rem;
+  }
 }
  */
 /* .c-course-fees__table {
-	display: none;
-	tbody {
-		tr {
-			display: none;
-		}
-	}
+  display: none;
+  tbody {
+    tr {
+      display: none;
+    }
+  }
 } */
 /* .course-fees-table__tuition-fee-note {
-	font-size: 0.875rem !important; // 14px
-	margin-top: 2rem !important;
+  font-size: 0.875rem !important; // 14px
+  margin-top: 2rem !important;
 } */
 /* reduce default sizes to preven horizontal scroll (this will be reset for larger screens using a media query below) */
 #course-fees-information th,
@@ -8787,37 +8860,37 @@ ul[data-suggestions] {
   padding-top: 40px; }
 
 /* .c-course-whats-next__wrapper {
-	background: $heritage-green;
-	color: $white;
-	padding: 16px;
+  background: $heritage-green;
+  color: $white;
+  padding: 16px;
 
-	h3 {
-		margin: 0 0 15px 0;
-		color: $white;
-	}
+  h3 {
+    margin: 0 0 15px 0;
+    color: $white;
+  }
 }
 
 .c-course-whats-next__link {
-	text-align: center;
-	color: $white;
-	font-size: 1rem; // 16px;
-	font-weight: bold;
-	margin: 10px 0;
+  text-align: center;
+  color: $white;
+  font-size: 1rem; // 16px;
+  font-weight: bold;
+  margin: 10px 0;
 
-	&::after {
-		content: " \e97b";
-		font-family: "uos";
-	}
+  &::after {
+    content: " \e97b";
+    font-family: "uos";
+  }
 
-	&:hover {
-		color: $white;
-		text-decoration: underline;
-	}
+  &:hover {
+    color: $white;
+    text-decoration: underline;
+  }
 
-	&:focus {
-		color: $white;
-		text-decoration: underline;
-	}
+  &:focus {
+    color: $white;
+    text-decoration: underline;
+  }
 } */
 svg.icon {
   width: 1.5em;
@@ -8937,8 +9010,8 @@ svg.icon {
   display: inline-block;
   vertical-align: middle;
   /* there is a bug in gulp-css-concat's "rebase" that strips out
-	   quotes from unencoded data-URIs, but we can get around this
-	   by base-64 encoding it. */
+     quotes from unencoded data-URIs, but we can get around this
+     by base-64 encoding it. */
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xOS43MTIgNTkuMzkyYzAtMC41MTIgMC4yNTYtMS4wMjQgMC42NC0xLjQwOGwyNS44NTYtMjUuOTg0LTI1Ljg1Ni0yNS45ODRjLTAuNzY4LTAuNzY4LTAuNzY4LTIuMDQ4IDAtMi45NDQgMC43NjgtMC43NjggMi4wNDgtMC43NjggMi45NDQgMGwyNy4zOTIgMjcuMzkyYzAuNzY4IDAuNzY4IDAuNzY4IDIuMTc2IDAgMi45NDRsLTI3LjUyIDI3LjM5MmMtMC43NjggMC43NjgtMi4wNDggMC43NjgtMi45NDQgMC0wLjM4NC0wLjM4NC0wLjUxMi0wLjg5Ni0wLjUxMi0xLjQwOHoiPjwvcGF0aD48L3N2Zz4="); }
 
 /* C A L L S   T O   A C T I O N */
@@ -9051,8 +9124,8 @@ a[data-mode*="Online"] {
 /* M E D I A   Q U E R I E S */
 @media screen and (max-width: 63.9375em) {
   /** this media query is for screens up to 1024px
-	 * TODO: refactor this to mobile-first?
-	 **/
+   * TODO: refactor this to mobile-first?
+   **/
   .c-course-related__buttons ul li {
     flex-direction: column; }
     .c-course-related__buttons ul li a + strong {

@@ -244,7 +244,7 @@
   const onDemandNode = document.getElementById("webinarsOnDemand");
 
   const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-  const searchUrl = `${searchAPI}?term=*&customField=type%3Dwebinar&resultType=organic&`;
+  const searchUrl = `${searchAPI}?term=*&customField=type%3Dwebinar&`;
 
   // onload reset the form
   filtersNode.reset();

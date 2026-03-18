@@ -1,7 +1,7 @@
 (function () {
-  /*
-   * News and Events Module -
-   * This module fetches and displays news and events based on specified tags.
+  /**
+   * News and Events Module - Functional Programming Style
+   * Using immutability, pure functions, and function composition
    */
 
   // Configuration (immutable)
@@ -19,8 +19,9 @@
     months: Object.freeze(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]),
   });
 
-  /*
+  /**
    * Formats a date string into a user-friendly format (DD Mon YYYY)
+   *
    * @param {string} dateString - ISO date string to format
    * @returns {string} Formatted date string (e.g., "10 Mar 2025")
    */
@@ -40,9 +41,10 @@
     return `${day} ${month} ${year}`;
   };
 
-  /*
+  /**
    * Renders an image container with responsive classes if an image source is provided
    * Returns empty string if no image source is available
+   *
    * @param {string|null} src - Image source URL
    * @param {string} alt - Alternative text for the image
    * @returns {string} HTML for image container or empty string
@@ -54,93 +56,88 @@
               </div>`;
   };
 
-  /*
+  /**
    * Renders a full-width news item with image and text content
    * Uses curried function pattern for partial application
+   *
    * @param {Object} item - News item data object
    * @returns {string} HTML markup for the full news item
    */
-  const renderNewsFull = stir.curry((item) => {
-    const cf = item.custom_fields;
-    const data = getDataObject(cf.data);
+  const renderNewsItemFull = stir.curry((item) => {
     return `<div class="cell small-12 u-grid-medium-up u-gap-24 u-grid-cols-2_1 u-mb-2 u-bg-white">
               <div class="u-border-width-5 u-heritage-line-left u-p-2 ">
                <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
-                  <a href="${item.url}" class=" u-inline text-sm">${cf.h1_custom}</a>
+                  <a href="${item.displayUrl}" class=" u-inline text-sm">${item.title.split(" | ")[0]}</a>
                 </p>
-                <time class="u-block u-my-1 u-grey--dark">${renderDate(cf.d)}</time>
-                <p class="text-sm">${item.highlight}</p>
+                <time class="u-block u-my-1 u-grey--dark">${renderDate(item.date)}</time>
+                <p class="text-sm">${item.summary}</p>
               </div>
-               ${renderImage(data.thumbnail, cf.h1_custom)}
+               ${renderImage(item.metaData.thumbnail, item.title)}
             </div>`;
   });
 
-  /*
-   * Renders a regular news item with configurable width
-   * Uses curried function pattern for partial application
-   * @param {number} width - Width in grid columns
-   * @param {Object} item - News item data object
-   * @returns {string} HTML markup for the news item
-   */
-  const renderNewsCompact = stir.curry((width, item) => {
-    const cf = item.custom_fields;
-    const data = getDataObject(cf.data);
-    return `<div class="cell small-12 medium-${width}">
-                ${renderImage(data.thumbnail, cf.h1_custom)}
-                <time class="u-block u-my-1 u-grey--dark">${renderDate(cf.d)}</time>
-                <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
-                    <a href="${item.url}" class=" u-inline text-sm">${cf.h1_custom}</a>
-                </p>
-                <p class="text-sm">${item.highlight}</p>
-            </div>`;
-  });
-
-  /*
+  /**
    * Renders a full-width event item with image and date range
    * Uses curried function pattern for partial application
+   *
    * @param {Object} item - Event item data object
    * @returns {string} HTML markup for the full event item
    */
   const renderEventFull = stir.curry((item) => {
-    const cf = item.custom_fields;
-    const s = renderDate(cf.d.split("T")[0]);
-    const e = renderDate(cf.e.split("T")[0]);
-
+    const end = item.metaData.startDate.split("T")[0] === item.metaData.d.split("T")[0] ? "" : ` - ${renderDate(item.metaData.d.split("T")[0])}`;
     return `<div class="cell small-12 u-grid-medium-up u-gap-24 u-grid-cols-2_1 u-mb-2 u-bg-white">
               <div class="u-border-width-5 u-heritage-line-left u-p-2">  
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
-                  <a href="${item.url}" class=" u-inline text-sm">${cf.name}</a>
+                  <a href="${item.metaData.page}" class=" u-inline text-sm">${item.title}</a>
                 </p>
-                 <time class="u-block u-my-1 u-grey--dark">${s} ${e === s ? "" : "-" + e}</time>
-                <p class="text-sm">${cf.snippet}</p>
+                 <time class="u-block u-my-1 u-grey--dark">${renderDate(item.metaData.startDate.split("T")[0])} ${end}</time>
+                <p class="text-sm">${item.summary}</p>
               </div>
-             ${renderImage(cf.image, cf.name)}
+              ${renderImage(item.metaData.image, item.title)}
             </div>`;
   });
 
-  /*
+  /**
    * Renders a compact event item suitable for smaller layouts
    * Uses curried function pattern for partial application
+   *
    * @param {Object} item - Event item data object
    * @returns {string} HTML markup for the compact event item
    */
   const renderEventCompact = stir.curry((item) => {
-    const cf = item.custom_fields;
-    const s = renderDate(cf.d.split("T")[0]);
-    const e = renderDate(cf.e.split("T")[0]);
-
+    const end = item.metaData.startDate.split("T")[0] === item.metaData.d.split("T")[0] ? "" : ` - ${renderDate(item.metaData.d.split("T")[0])}`;
     return `<div class="cell small-12" data-type="compactevent">
-              ${renderImage(cf.image, cf.name)}
-                <time class="u-block u-my-1 u-grey--dark">${s} ${e === s ? "" : "-" + e}</time>
+              ${renderImage(item.metaData.image, item.title)}
+                <time class="u-block u-my-1 u-grey--dark">${renderDate(item.metaData.startDate.split("T")[0])} ${end}</time>
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
-                    <a href="${item.url}" class=" u-inline text-sm">${cf.name}</a>
+                    <a href="${item.metaData.page}" class=" u-inline text-sm">${item.title}</a>
                 </p>
-                <p class="text-sm">${cf.snippet}</p>
+                <p class="text-sm">${item.summary}</p>
             </div>`;
   });
 
-  /*
+  /**
+   * Renders a regular news item with configurable width
+   * Uses curried function pattern for partial application
+   *
+   * @param {number} width - Width in grid columns
+   * @param {Object} item - News item data object
+   * @returns {string} HTML markup for the news item
+   */
+  const renderNewsItem = stir.curry((width, item) => {
+    return `<div class="cell small-12 medium-${width}">
+                 ${renderImage(item.metaData.thumbnail, item.title)}
+                <time class="u-block u-my-1 u-grey--dark">${renderDate(item.date)}</time>
+                <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
+                    <a href="${item.displayUrl}" class=" u-inline text-sm">${item.title.split(" | ")[0]}</a>
+                </p>
+                <p class="text-sm">${item.summary}</p>
+            </div>`;
+  });
+
+  /**
    * Creates a wrapper container for a group of items with a header
+   *
    * @param {number} width - Width in grid columns
    * @param {string} header - Section heading text
    * @param {string} content - HTML content to be wrapped
@@ -157,61 +154,53 @@
   };
 
   /* 
-
     Data Processing Helpers 
-
   */
 
-  /*
-   * Parse data field into an object
-   * @param {string|Array} data - Data field from custom fields
-   * @returns {Object} - Parsed data object
-   */
-  const getDataObject = (data) => {
-    if (typeof data === "string") {
-      return JSON.parse(decodeURIComponent(data));
-    }
-    return "object" === typeof data ? Object.assign({}, ...data.map((datum) => JSON.parse(decodeURIComponent(datum)))) : {};
-  };
-
-  /*
+  /**
    * Formats a Date object into a numeric string format (YYYYMMDDHHMMSS)
    * Used for date comparisons
+   *
    * @param {Date} d - Date object to format
    * @returns {string} Formatted date as numeric string
    */
-  //const getFormattedDate = (d) => d.toISOString().split(".")[0].replaceAll(/[-:T]/g, "").slice(0, -2);
+  const getFormattedDate = (d) => d.toISOString().split(".")[0].replaceAll(/[-:T]/g, "").slice(0, -2);
 
-  /*
+  /**
    * Gets the current date/time as a numeric string for comparison
+   *
    * @returns {number} Current date/time as numeric value
    */
-  // const getISONow = () => Number(getFormattedDate(new Date()));
+  const getISONow = () => Number(getFormattedDate(new Date()));
 
-  /*
+  /**
    * Predicate function that checks if an event is upcoming based on its date
+   *
    * @param {number} compareDate - Numeric date to compare against
    * @returns {Function} Function that evaluates if an item is upcoming
    */
-  // const isUpcomingByDate = (compareDate) => (item) => Number(getFormattedDate(new Date(item.metaData.d))) > compareDate;
+  const isUpcomingByDate = (compareDate) => (item) => Number(getFormattedDate(new Date(item.metaData.d))) > compareDate;
 
-  /*
+  /**
    * Decorates an item with an isupcoming property based on its date
+   *
    * @param {number} now - Current date as numeric value
    * @returns {Function} Function that adds the isupcoming property to an item
    */
-  //const addIsUpcoming = (now) => (item) => ({ ...item, isupcoming: isUpcomingByDate(now)(item) });
+  const addIsUpcoming = (now) => (item) => ({ ...item, isupcoming: isUpcomingByDate(now)(item) });
 
-  /*
+  /**
    * Filters items to include only those marked as upcoming
+   *
    * @param {Object} item - Item to check
    * @returns {boolean} True if item is marked as upcoming
    */
-  //const filterUpcomingEvents = (item) => item.isupcoming;
+  const filterUpcomingEvents = (item) => item.isupcoming;
 
-  /*
+  /**
    * Takes a specific slice of an array
    * Uses curried function pattern for partial application
+   *
    * @param {number} start - Starting index
    * @param {number} num - Number of items to take (end index)
    * @param {Array} items - Array to slice
@@ -219,11 +208,12 @@
    */
   const take = stir.curry((start, num, items) => items.slice(start, num));
 
-  /*
+  /**
    * Determines the starting index for news items based on layout size and event count
    * For small layouts, we always start at 0
    * For larger layouts, we adjust based on how many compact events are displayed in the small layout
    * In the small layout, events will show only 1 or 0
+   *
    * @param {string} size - Layout size ('small' or 'large')
    * @returns {number} The offset index where news items should start
    */
@@ -240,7 +230,7 @@
     return 3;
   };
 
-  /*
+  /**
    * Determines the layout configuration for news items based on the layout size and event count
    *
    * This function calculates three key metrics:
@@ -281,7 +271,7 @@
     };
   };
 
-  /*
+  /**
    *  Retrieves data from a FunnelBack API endpoint or returns an empty result structure if no URL is provided.
    *
    *  @param {string|null} apiUrl - The URL to fetch data from. If null or empty, returns a pre-structured empty response.
@@ -318,26 +308,28 @@
     );
   };
 
-  /*
+  /**
    * Processes events and news data into renderable content
    * Creates different layouts based on the specified size
+   *
    * @param {Array} dataEvents - Array of event data objects
    * @param {Array} dataNews - Array of news data objects
    * @param {string} size - Layout size ('small' or 'large')
    * @returns {Object} Object containing HTML content for news and events
    */
   const processData = (dataEvents, dataNews, size) => {
+    const now = getISONow();
     const noOfEvents = size === "small" ? 1 : 10;
     const eventsWrapperWidth = size === "small" ? 4 : 12;
 
     const eventRender = size === "small" ? renderEventCompact() : renderEventFull();
 
-    const processEvents = stir.pipe(take(0, noOfEvents), stir.map(eventRender));
+    const processEvents = stir.pipe(stir.map(addIsUpcoming(now)), stir.filter(filterUpcomingEvents), take(0, noOfEvents), stir.map(eventRender));
     const event = processEvents(dataEvents);
 
     const { noOfNews, newsCellWidth, newsWrapperWidth } = getNewsSettings(size, event.length);
 
-    const newsRender = size === "small" ? renderNewsCompact(newsCellWidth) : renderNewsFull();
+    const newsRender = size === "small" ? renderNewsItem(newsCellWidth) : renderNewsItemFull();
 
     const start = getNewsOffset(size);
 
@@ -350,9 +342,10 @@
     };
   };
 
-  /*
+  /**
    * Updates the DOM with rendered content
    * This is an impure function as it causes side effects
+   *
    * @param {HTMLElement} node - DOM node to update
    * @param {Object} content - Object containing HTML content to insert
    */
@@ -360,50 +353,38 @@
     node.insertAdjacentHTML("beforeend", content.newsContent + content.eventsContent);
   };
 
-  /*
+  /**
    * Determines the correct search parameter based on tag content
    * Handles faculty-based tags differently from regular tags
+   *
    * @param {string} tag - Tag to convert to search parameter
    * @returns {string} Formatted search parameter string
-
+   */
   const getSearchParam = (tag) => {
     if (tag.includes("Faculty of") || tag.includes("Management School") || tag.includes("Business School")) {
       return `meta_faculty=${tag}`;
     }
     return `meta_tags=${tag}`;
   };
-   */
 
-  const getNow = () => {
-    return new Date().toISOString();
-  };
-
-  /*
+  /**
    * Controller for small listing view
    * Fetches and renders a compact view of news and events
+   *
    * @param {HTMLElement} node - DOM node to update
    */
   function doSmallListing(node) {
+    const fbhost = `https://${UoS_env.search}`;
     const eventtag = node?.dataset.eventtag;
     const newstag = node?.dataset.newstag;
 
-    const obj = {
-      and: [
-        {
-          range: { "custom_fields.e": { gt: getNow(), lt: "2090-12-31" } },
-        },
-      ],
-    };
-    let filterString = `&limit=15&order=asc&filter=${encodeURIComponent(JSON.stringify(obj))}&sort=custom_fields.d&`;
+    const eventsApiUrl = !eventtag ? `` : `${fbhost}/s/search.json?collection=stir-events&SF=[d,startDate,type,tags,page,image]&query=!null&num_ranks=20&sort=date&fmo=true&meta_tags=${eventtag}`;
+    const newsApiUrl = !newstag ? `` : `${fbhost}/s/search.json?collection=stir-main&SF=[d,type,tags,faculty,thumbnail]&query=!null&num_ranks=20&sort=date&fmo=true&meta_type=news&${getSearchParam(newstag)}`;
 
-    const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-    const searchEventsUrl = `${searchAPI}?term=*&customField=type%3Devent&customField=tag%3D${eventtag}&resultType=organic&${filterString}`;
-    const searchNewsUrl = `${searchAPI}?term=*&customField=type%3Dnews&customField=tag%3D${newstag}&resultType=organic&`;
-
-    Promise.all([fetchData(searchEventsUrl), fetchData(searchNewsUrl)])
+    Promise.all([fetchData(eventsApiUrl), fetchData(newsApiUrl)])
       .then(([eventsData, newsData]) => {
-        const dataEvents = eventsData.hits;
-        const dataNews = newsData.hits;
+        const dataEvents = eventsData.response.resultPacket.results;
+        const dataNews = newsData.response.resultPacket.results;
 
         const content = processData(dataEvents, dataNews, "small");
         updateDOM(node, content);
@@ -413,36 +394,30 @@
       });
   }
 
-  /*
+  /**
    * Controller for large listing view
    * Fetches and renders both small and large views of news and events
+   *
    * @param {HTMLElement} node - DOM node to update
    */
   function doLargeListing(node) {
+    const fbhost = `https://${UoS_env.search}`;
     const eventtag = node?.dataset.eventtag;
     const newstag = node?.dataset.newstag;
 
-    const obj = {
-      and: [
-        {
-          range: { "custom_fields.e": { gt: getNow(), lt: "2090-12-31" } },
-        },
-      ],
-    };
-    let filterString = `&limit=15&order=asc&filter=${encodeURIComponent(JSON.stringify(obj))}&`;
+    const eventsApiUrl = !eventtag ? `` : `${fbhost}/s/search.json?collection=stir-events&SF=[d,startDate,type,tags,page,image]&query=!null&num_ranks=20&sort=date&fmo=true&meta_tags=${eventtag}`;
+    const newsApiUrl = !newstag ? `` : `${fbhost}/s/search.json?collection=stir-main&SF=[d,type,tags,faculty,thumbnail]&query=!null&num_ranks=20&sort=date&fmo=true&meta_type=news&${getSearchParam(newstag)}`;
 
-    const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
-
-    const searchEventsUrl = `${searchAPI}?term=*&customField=type%3Devent&customField=tag%3D${eventtag}&resultType=organic&${filterString}&sort=custom_fields.d&`;
-    const searchNewsUrl = `${searchAPI}?term=*&customField=type%3Dnews&customField=tag%3D${newstag}&resultType=organic&sort=custom_fields.d&`;
-
-    Promise.all([fetchData(searchEventsUrl), fetchData(searchNewsUrl)])
+    Promise.all([fetchData(eventsApiUrl), fetchData(newsApiUrl)])
       .then(([eventsData, newsData]) => {
-        const contentSmallListing = processData(eventsData.hits, newsData.hits, "small");
-        const contentLargeListing = processData(eventsData.hits, newsData.hits, "large");
+        const dataEvents = eventsData.response.resultPacket.results;
+        const dataNews = newsData.response.resultPacket.results;
+
+        const contentSmallListing = processData(dataEvents, dataNews, "small");
+        const contentLargeListing = processData(dataEvents, dataNews, "large");
 
         // if no news dont bother rendering small listing
-        newsData.hits.length && updateDOM(node, contentSmallListing);
+        dataNews.length && updateDOM(node, contentSmallListing);
         updateDOM(node, contentLargeListing);
       })
       .catch((error) => {
@@ -450,7 +425,7 @@
       });
   }
 
-  /*
+  /**
    * Main entry point that initializes the module
    * Finds necessary DOM nodes and triggers appropriate controllers
    */

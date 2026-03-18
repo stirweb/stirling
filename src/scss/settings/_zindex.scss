@@ -1,7 +1,11 @@
 // https://www.smashingmagazine.com/2014/06/sassy-z-index-management-for-complex-layouts/
 
 // Elements will get the index in this array as their z-index value
+<<<<<<< HEAD
 $z-index-elements: homepage-masthead-video, hook, u-sticky, u-sticky-large-up, u-sticky-nav, suggest, c-course-clearing-advert, course-sticky-menu, course-options-tooltip, course-search-widget, course-search-widget-view-all, breadcrumbs-submenu, mega-menu, header-search, cookie-banner, mobile-menu-slider;
+=======
+$z-index-elements: homepage-masthead-video, hook, hook-bleed, u-sticky, u-sticky-large-up, u-sticky-nav, suggest, c-course-clearing-advert, course-sticky-menu, course-options-tooltip, course-search-widget, course-search-widget-view-all, breadcrumbs-submenu, mega-menu, header-search, cookie-banner, mobile-menu-slider;
+>>>>>>> origin/t4test
 
 /**
  * Because false isn’t a valid value for z-index, we don’t want it in our compiled
