@@ -79,6 +79,15 @@
 .bg-dark-grey {
   border-image-source: linear-gradient(#3a3c39, #3a3c39); }
 
+.u-light-grey {
+  color: #fbfbfb !important; }
+
+.u-bg-light-grey {
+  background-color: #fbfbfb !important; }
+
+.bg-light-grey {
+  border-image-source: linear-gradient(#fbfbfb, #fbfbfb); }
+
 .u-heritage-green-a11y {
   color: #006636 !important; }
 
@@ -688,9 +697,6 @@ a:has(img):hover {
 .bg-grey {
   border-image-source: linear-gradient(#f6f5f4, #f6f5f4); }
 
-.bg-dark-grey {
-  border-image-source: linear-gradient(, ); }
-
 .u-bg-medium-dark-grey {
   background-color: #aeacac; }
 
@@ -699,9 +705,6 @@ a:has(img):hover {
 
 .u-bg-light-medium-grey {
   background-color: #eeeeee; }
-
-.u-bg-light-grey {
-  background-color: #f1f1ef; }
 
 /*
     Extended palette colours - Text 
@@ -2559,7 +2562,7 @@ body > nav > a.u-show-on-focus {
     top: 50%;
     margin-top: -20px;
     cursor: pointer;
-    background: #f1f1ef;
+    background: #fbfbfb;
     border-radius: 100%;
     font-size: 1.25rem;
     /* 20px */
@@ -2572,7 +2575,7 @@ body > nav > a.u-show-on-focus {
       left: -9999px; }
   .megamenu .megamenu__prev-button:hover,
   .megamenu .megamenu__next-button:hover {
-    background: #e5e5e1;
+    background: #eeeeee;
     color: #fff; }
   .megamenu .megamenu__prev-button {
     left: -70px;
@@ -7597,7 +7600,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   height: 35px; }
 
 .loader {
-  border: 6px solid #f1f1ef;
+  border: 6px solid #fbfbfb;
   border-top: 6px solid #3a3c39;
   border-radius: 50%;
   width: 50px;
@@ -8498,7 +8501,7 @@ ul[data-suggestions] {
   position: absolute;
   width: 250px;
   padding: 10px;
-  background-color: #f1f1ef;
+  background-color: #fbfbfb;
   color: #006938;
   text-align: center;
   font-size: 1rem;
@@ -10059,6 +10062,10 @@ svg.u-svg-40,
 .u-quote::after {
   content: '"'; }
 
+.u-outline-heritage-green {
+  outline: 2px solid #006938;
+  outline-offset: 4px; }
+
 /*
     Margins / Padding
     ---
@@ -10604,13 +10611,13 @@ ul.no-bullet {
   Grey 
 */
 .u-grey-line-top {
-  border-top: var(--border-thickness) solid #f6f5f4; }
+  border-top: var(--border-thickness) solid #f1f1ef; }
 
 .u-grey-line-bottom {
-  border-bottom: var(--border-thickness) solid #f6f5f4; }
+  border-bottom: var(--border-thickness) solid #f1f1ef; }
 
 .u-grey-line-left {
-  border-left: 1px solid #f6f5f4; }
+  border-left: var(--border-thickness) solid #f1f1ef; }
 
 .u-medium-grey-line {
   border: 1px solid #d1d1c9; }

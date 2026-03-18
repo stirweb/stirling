@@ -232,11 +232,7 @@
       <div class="grid-x grid-container">
         <div class="cell large-4 medium-4 small-8">
           <a href="/" title="University of Stirling">
-            <img
-              src="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn../../../medias/Categorised/Dist/css/images/logos/logo.svg"
-              alt="University of Stirling"
-              class="c-site-logo"
-            />
+            <img src="https://pxl-v6-stiracuk.terminalfour.net/prod01/cdn/media/dist/css/images/logos/logo.svg" alt="University of Stirling" class="c-site-logo" />
           </a>
         </div>
         <nav aria-label="primary" class="cell large-8 medium-8 small-4 u-flex align-right">
@@ -375,7 +371,7 @@
 
     <!--
 		BREADCRUMB
-	-->
+
 
     <nav aria-label="breadcrumb" class="breadcrumbs-container u-bg-grey">
       <div class="grid-x grid-container">
@@ -399,7 +395,7 @@
           </ul>
         </div>
       </div>
-    </nav>
+    </nav>	-->
 
     <!--endnoindex-->
 
@@ -410,13 +406,14 @@
       <div class="grid-x grid-container">
         <!-- Alt heading -->
         <!-- Alternative Page Heading -->
-        <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
+        <!-- <div class="cell main-content-header large-10 medium-10 small-12 u-padding-y">
           <h1 class="c-automatic-page-heading c-page-heading u-heritage-green">Search this website</h1>
-        </div>
+        </div> -->
 
         <!-- SEARCH -->
-        <div class="cell u-pb-3 z-suggest" data-search-suggest>
-          <form class="c-search-form x-search-redevelopment u-pb-2" action="https://www.stir.ac.uk/search/" method="get">
+
+        <div class="cell z-suggest u-bg-light-grey u-bleed bg-light-grey" data-search-suggest>
+          <form class="c-search-form x-search-redevelopment u-my-3" action="https://www.stir.ac.uk/search/" method="get">
             <div class="search-input-area">
               <div>
                 <label for="term" class="show-for-sr">Query</label
@@ -439,6 +436,7 @@
             <div class="c-search-suggest__suggestions"><ul id="suggestions" role="listbox" data-suggestions aria-hidden></ul></div>
           </form>
         </div>
+
         <div class="cell u-pb-2 hide-if-js">
           <div class="grid-x">
             <!-- Text with Heading -->
@@ -457,13 +455,13 @@
       </div>
 
       <!-- Search results  -->
-      <section class="c-search-results-area hide u-margin-top" aria-label="Search results area">
+      <section class="c-search-results-area hide" aria-label="Search results area">
         <div class="slide-tabs-2 u-sticky-nav u-z-50 u-top-0">
-          <div class="neutrals">
+          <div class="">
             <div class="grid-x grid-container c-wrapper">
               <div class="cell">
                 <!-- carousel nav -->
-                <nav id="nav-slider" class="u-flex u-gap align-middle carousel u-my-1" aria-label="Search tabs navigation">
+                <nav id="nav-slider" class="u-flex u-gap align-middle carousel" aria-label="Search tabs navigation">
                   <button
                     class="u-cursor-pointer slide-arrow-prev u-grey u-border-right-solid u-block"
                     data-controls="prev"
@@ -480,12 +478,12 @@
                         id="searchtab_all"
                         data-open="all"
                         tabindex="-1"
-                        class="u-cursor-pointer u-p-tiny text-xsm text-center u-flex align-middle"
+                        class="u-cursor-pointer u-px-tiny text-xsm text-center u-flex align-middle"
                         data-tab-callback="stir.search.lazy"
                         type="button"
                         aria-controls="search_results_panel_all"
                       >
-                        <span class="u-svg-24"
+                        <span class="u-svg-24 u-heritage-green align-middle u-flex"
                           ><svg
                             xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -511,12 +509,32 @@
                         id="searchtab_course"
                         data-open="course"
                         tabindex="-1"
-                        class="u-cursor-pointer u-p-tiny text-xsm text-center u-flex align-middle"
+                        class="u-cursor-pointer u-px-tiny text-xsm text-center u-flex align-middle"
                         data-tab-callback="stir.search.lazy"
                         type="button"
                         aria-controls="search_results_panel_course"
                       >
-                        <span class="uos-course-tab text-lg"></span><span class="u-block u-p-tiny u-text-nowrap">Courses</span>
+                        <span class="u-svg-24 u-heritage-green align-middle u-flex"
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.3"
+                            class="svg-icon"
+                          >
+                            <g>
+                              <path
+                                d="M1.089,4.921,6.6,6.933l4.988,1.82,10.5-3.832-10.5-3.832ZM6.6,7.012,5.494,12.218c3.978,2.461,7.862,2.532,12.1.058l.094-.058L16.579,7.09m3.879,3.286a7.658,7.658,0,0,0-3.2-5.077,7.6,7.6,0,0,0-5.331-.956m9.9,7.131a1.1,1.1,0,1,1-1.1-1.1A1.1,1.1,0,0,1,21.831,11.474Z"
+                                transform="translate(0.411 4.406)"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></path>
+                            </g>
+                          </svg>
+                        </span>
+                        <span class="u-block u-p-tiny u-text-nowrap">Courses</span>
                       </button>
                     </h2>
                     <h2 class="header-stripped u-header--secondary-font u-p-0 u-m-0">
@@ -524,12 +542,32 @@
                         id="searchtab_news"
                         data-open="news"
                         tabindex="-1"
-                        class="u-cursor-pointer u-p-tiny text-xsm text-center u-flex align-middle"
+                        class="u-cursor-pointer u-px-tiny text-xsm text-center u-flex align-middle"
                         data-tab-callback="stir.search.lazy"
                         type="button"
                         aria-controls="search_results_panel_news"
                       >
-                        <span class="uos-news-tab text-lg"></span><span class="u-block u-p-tiny u-text-nowrap">News</span>
+                        <span class="u-svg-24 u-heritage-green align-middle u-flex"
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.3"
+                            class="svg-icon"
+                          >
+                            <g>
+                              <path
+                                d="M11.727,7.386h1.455M11.727,10.3h1.455M5.909,13.2h7.273M5.909,16.114h7.273m2.909-8.727h3.273a1.091,1.091,0,0,1,1.091,1.091v9.091a2.182,2.182,0,0,1-2.182,2.182M16.091,7.386V17.568a2.182,2.182,0,0,0,2.182,2.182M16.091,7.386V4.841A1.091,1.091,0,0,0,15,3.75H4.091A1.091,1.091,0,0,0,3,4.841V17.568A2.182,2.182,0,0,0,5.182,19.75H18.273M5.909,7.386H8.818V10.3H5.909Z"
+                                transform="translate(0.273 0.25)"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></path>
+                            </g>
+                          </svg>
+                        </span>
+                        <span class="u-block u-p-tiny u-text-nowrap">News</span>
                       </button>
                     </h2>
                     <h2 class="header-stripped u-header--secondary-font u-p-0 u-m-0">
@@ -537,12 +575,33 @@
                         id="searchtab_event"
                         data-open="event"
                         tabindex="-1"
-                        class="u-cursor-pointer u-p-tiny text-xsm text-center u-flex align-middle"
+                        class="u-cursor-pointer u-px-tiny text-xsm text-center u-flex align-middle"
                         data-tab-callback="stir.search.lazy"
                         type="button"
                         aria-controls="search_results_panel_event"
                       >
-                        <span class="uos-events-tab text-lg"></span><span class="u-block u-p-tiny u-text-nowrap">Events</span>
+                        <span class="u-svg-24 u-heritage-green align-middle u-flex">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.3"
+                            class="svg-icon"
+                          >
+                            <path
+                              id="Path_38"
+                              data-name="Path 38"
+                              d="M7.167,3V5.5M18.833,3V5.5M3,20.5V8A2.5,2.5,0,0,1,5.5,5.5h15A2.5,2.5,0,0,1,23,8V20.5m-20,0A2.5,2.5,0,0,0,5.5,23h15A2.5,2.5,0,0,0,23,20.5m-20,0V12.167a2.5,2.5,0,0,1,2.5-2.5h15a2.5,2.5,0,0,1,2.5,2.5V20.5M13,13.833h.009v.009H13Zm0,2.5h.009v.009H13Zm0,2.5h.009v.009H13Zm-2.5-2.5h.009v.009H10.5Zm0,2.5h.009v.009H10.5ZM8,16.333h.009v.009H8Zm0,2.5h.009v.009H8Zm7.5-5h.009v.009H15.5Zm0,2.5h.009v.009H15.5Zm0,2.5h.009v.009H15.5Zm2.5-5h.009v.009H18Zm0,2.5h.009v.009H18Z"
+                              transform="translate(-1 -1)"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </svg>
+                        </span>
+
+                        <span class="u-block u-p-tiny u-text-nowrap">Events</span>
                       </button>
                     </h2>
                     <h2 class="header-stripped u-header--secondary-font u-p-0 u-m-0">
@@ -550,12 +609,32 @@
                         id="searchtab_staff"
                         data-open="staff"
                         tabindex="-1"
-                        class="u-cursor-pointer u-p-tiny text-xsm text-center u-flex align-middle"
+                        class="u-cursor-pointer u-px-tiny text-xsm text-center u-flex align-middle"
                         data-tab-callback="stir.search.lazy"
                         type="button"
                         aria-controls="search_results_panel_staff"
                       >
-                        <span class="uos-staff-tab text-lg"></span><span class="u-block u-p-tiny u-text-nowrap">Academic Staff</span>
+                        <span class="u-svg-24 u-heritage-green align-middle u-flex"
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.3"
+                            class="svg-icon"
+                          >
+                            <g>
+                              <path
+                                d="M17.981,18.724a7.5,7.5,0,0,0-11.963,0m11.962,0a9,9,0,1,0-11.962,0m11.962,0a9,9,0,0,1-11.962,0M15,9.75a3,3,0,1,1-3-3,3,3,0,0,1,3,3Z"
+                                transform="translate(0.001 0)"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></path>
+                            </g>
+                          </svg>
+                        </span>
+                        <span class="u-block u-p-tiny u-text-nowrap">Academic Staff</span>
                       </button>
                     </h2>
                     <h2 class="header-stripped u-header--secondary-font u-p-0 u-m-0">
@@ -563,12 +642,32 @@
                         id="searchtab_internal"
                         data-open="internal"
                         tabindex="-1"
-                        class="u-cursor-pointer u-p-tiny text-xsm text-center u-flex align-middle"
+                        class="u-cursor-pointer u-px-tiny text-xsm text-center u-flex align-middle"
                         data-tab-callback="stir.search.lazy"
                         type="button"
                         aria-controls="search_results_panel_internal"
                       >
-                        <span class="uos-research-tab text-lg"></span><span class="u-block u-p-tiny u-text-nowrap">Staff and Student</span>
+                        <span class="u-svg-24 u-heritage-green align-middle u-flex"
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.3"
+                            class="svg-icon"
+                          >
+                            <g>
+                              <path
+                                d="M16.5,3.75V16.5L12,14.25,7.5,16.5V3.75m9,0H18A2.25,2.25,0,0,1,20.25,6V18A2.25,2.25,0,0,1,18,20.25H6A2.25,2.25,0,0,1,3.75,18V6A2.25,2.25,0,0,1,6,3.75H7.5m9,0h-9"
+                                transform="translate(0.25 0.25)"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></path>
+                            </g>
+                          </svg>
+                        </span>
+                        <span class="u-block u-p-tiny u-text-nowrap">Staff and Student</span>
                       </button>
                     </h2>
                   </div>
@@ -604,7 +703,29 @@ All Results Panel
                 <!-- ASIDE -->
                 <aside class="c-search-results-asides">
                   <div class="u-p-2 u-bg-white">
-                    <p class="u-text-regular u-font-bold flex-container u-gap-8 align-middle"><span class="uos-cap u-icon h5"></span> Courses</p>
+                    <p class="u-text-regular u-font-bold flex-container u-gap-8">
+                      <span class="u-svg-24 u-heritage-green align-middle u-flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.3"
+                          class="svg-icon"
+                        >
+                          <g>
+                            <path
+                              d="M1.089,4.921,6.6,6.933l4.988,1.82,10.5-3.832-10.5-3.832ZM6.6,7.012,5.494,12.218c3.978,2.461,7.862,2.532,12.1.058l.094-.058L16.579,7.09m3.879,3.286a7.658,7.658,0,0,0-3.2-5.077,7.6,7.6,0,0,0-5.331-.956m9.9,7.131a1.1,1.1,0,1,1-1.1-1.1A1.1,1.1,0,0,1,21.831,11.474Z"
+                              transform="translate(0.411 4.406)"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </span>
+                      Courses
+                    </p>
                     <div class="c-search-looking-for-panel__results" data-type="coursemini" data-fallback="search-all-aside-fallback"></div>
                   </div>
                   <script type="text/html" id="search-all-aside-fallback">
