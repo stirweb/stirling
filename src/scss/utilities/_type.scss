@@ -105,6 +105,9 @@
 }
 
 @media screen and #{breakpoint(medium up)} {
+  .text-md-medium {
+    font-size: 1.25rem;
+  }
   .text-xlg {
     font-size: 3.25rem;
   }
