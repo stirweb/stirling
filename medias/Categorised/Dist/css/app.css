@@ -8014,17 +8014,19 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
         color: #006938;
         position: relative; }
         .c-search-results-area .c-search-result.c-popout-result a > div > p:first-of-type {
-          font-size: 2rem;
-          border-bottom: 1px solid #006938;
-          margin-bottom: 0.5rem;
+          font-size: 1.5rem;
+          font-weight: bold;
+          text-decoration: underline;
+          text-decoration-thickness: 2px;
+          text-underline-offset: 8px;
           display: inline-block; }
         .c-search-results-area .c-search-result.c-popout-result a > div [class^="uos-"],
         .c-search-results-area .c-search-result.c-popout-result a > div [class*=" uos-"]::before {
-          font-size: 3rem;
-          top: 7px;
+          font-size: 2.5rem;
+          top: 4px;
           position: relative; }
         .c-search-results-area .c-search-result.c-popout-result a > div .uos-chevron-right::before {
-          font-size: 3rem; }
+          font-size: 2rem; }
         .c-search-results-area .c-search-result.c-popout-result a > div:nth-of-type(2) {
           flex-grow: 1; }
         .c-search-results-area .c-search-result.c-popout-result a > div:nth-of-type(3) {
@@ -8032,13 +8034,8 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a {
         border-color: #7c184f;
         color: #7c184f; }
-        .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a > div > p:first-of-type {
-          text-decoration: underline;
-          text-decoration-thickness: 2px;
-          text-underline-offset: 10px;
-          border: none; }
-          .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a > div > p:first-of-type:hover {
-            text-decoration-color: #b56c94; }
+        .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a > div > p:first-of-type:hover {
+          text-decoration-color: #b56c94; }
       .c-search-results-area .c-search-result.c-popout-result.u-web-turq a {
         border-color: #00838a;
         color: #00838a; }

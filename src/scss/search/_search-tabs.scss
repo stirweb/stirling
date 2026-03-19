@@ -111,21 +111,23 @@
 
         > div {
           > p:first-of-type {
-            font-size: 2rem;
-            border-bottom: 1px solid $heritage-green;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 8px;
             display: inline-block;
           }
 
           [class^="uos-"],
           [class*=" uos-"]::before {
-            font-size: 3rem;
-            top: 7px;
+            font-size: 2.5rem;
+            top: 4px;
             position: relative;
           }
 
           .uos-chevron-right::before {
-            font-size: 3rem;
+            font-size: 2rem;
           }
         }
 
@@ -142,11 +144,6 @@
           color: $heritage-berry;
           > div {
             > p:first-of-type {
-              text-decoration: underline;
-              text-decoration-thickness: 2px;
-              text-underline-offset: 10px;
-              border: none;
-
               &:hover {
                 text-decoration-color: #b56c94;
               }
