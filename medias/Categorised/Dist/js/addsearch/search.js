@@ -326,31 +326,36 @@ stir.templates.search = (() => {
     breadcrumb: (crumbs) => `<p class=c-search-result__trail>${crumbs}</p>`,
     trailstring: (trail) => (trail.length ? trail.map(anchor).join("<small> &gt; </small> ") : ""),
 
-		message: (totalMatching, queried) => {
-			const p = document.createElement("p");
-			const hit = totalMatching > 0;
-			const pl = hit && totalMatching > 1;
-			const count = totalMatching.toLocaleString("en");
-			return (hit ? (pl ? `There are <strong>${count} results</strong>` : `There is <strong>${count} result</strong>`) : "<strong>There are no results</strong>") + (queried ? " for " : '');
-		},
-		tokens: data => data.question ? searchParamTokens(data.question) : '',
-		spelling: checkSpelling,
-		summary: data => {
-			const currEnd = 1 + (data.page * data.hits);
-			const currStart = currEnd - data.hits;
-			const totalMatching = data.total_hits;
-			const summary = document.createElement("span");
-			const querySanitised = data.question && stir.String.htmlEntities(data.question.get("term"))
-									.replace(/^!padrenullquery$/, "")	//funnelback
-									.replace(/^\*$/, "")				//addsearch
-									.trim() || "";
-			const queryEcho = document.createElement("em");
-			const message = stir.templates.search.message(totalMatching, querySanitised.length > 1);
+    message: (totalMatching, queried) => {
+      const p = document.createElement("p");
+      const hit = totalMatching > 0;
+      const pl = hit && totalMatching > 1;
+      const count = totalMatching.toLocaleString("en");
+      return (
+        (hit ? (pl ? `There are <strong>${count} results</strong>` : `There is <strong>${count} result</strong>`) : "<strong>There are no results</strong>") +
+        (queried ? " for " : "")
+      );
+    },
+    tokens: (data) => (data.question ? searchParamTokens(data.question) : ""),
+    spelling: checkSpelling,
+    summary: (data) => {
+      const currEnd = 1 + data.page * data.hits;
+      const currStart = currEnd - data.hits;
+      const totalMatching = data.total_hits;
+      const summary = document.createElement("span");
+      const querySanitised =
+        (data.question &&
+          stir.String.htmlEntities(data.question.get("term"))
+            .replace(/^!padrenullquery$/, "") //funnelback
+            .replace(/^\*$/, "") //addsearch
+            .trim()) ||
+        "";
+      const queryEcho = document.createElement("em");
+      const message = stir.templates.search.message(totalMatching, querySanitised.length > 1);
 
+      queryEcho.textContent = querySanitised;
 
-			queryEcho.textContent = querySanitised;
-			
-			/*
+      /*
 			$$$$$$$\   $$$$$$\        $$\   $$\  $$$$$$\ $$$$$$$$\       $$\   $$\  $$$$$$\  $$$$$$$$\     
 			$$  __$$\ $$  __$$\       $$$\  $$ |$$  __$$\\__$$  __|      $$ |  $$ |$$  __$$\ $$  _____|    
 			$$ |  $$ |$$ /  $$ |      $$$$\ $$ |$$ /  $$ |  $$ |         $$ |  $$ |$$ /  \__|$$ |          
@@ -376,18 +381,18 @@ stir.templates.search = (() => {
       /*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
       /*   ==> Avoid XSS attacks by not using innerHTML for user query! <==   */
 
-			//summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
-			//summary.insertAdjacentHTML("beforeend", spelling);
-			summary.innerHTML = message;
-			if (querySanitised.length > 1) summary.append(queryEcho);
+      //summary.insertAdjacentHTML("afterbegin", `${hostinfo}`);
+      //summary.insertAdjacentHTML("beforeend", spelling);
+      summary.innerHTML = message;
+      if (querySanitised.length > 1) summary.append(queryEcho);
 
-			return summary;
-		},
-		pagination: (summary) => {
-			const { currEnd, totalMatching, progress } = summary;
-			return totalMatching === 0
-				? "<!-- no results to show -->"
-				: `
+      return summary;
+    },
+    pagination: (summary) => {
+      const { currEnd, totalMatching, progress } = summary;
+      return totalMatching === 0
+        ? "<!-- no results to show -->"
+        : `
 			<div class="cell text-center u-my-2">
 				<progress value="${progress}" max="100"></progress><br />
 				You have viewed ${totalMatching === currEnd ? "all " + (totalMatching > 1 ? totalMatching : "") : currEnd + " of " + totalMatching} results
@@ -607,23 +612,21 @@ stir.templates.search = (() => {
       );
     },
 
-    courseminiFooter: (query) => `<p class="u-mt-2 flex-container align-middle u-gap-8">
-				<svg class="u-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
-					<title>cap</title>
-					<g fill="currentColor">
-						<path d="M32 37.888c-0.128 0-0.384 0-0.512-0.128l-28.16-11.264c-0.512-0.128-0.768-0.64-0.768-1.152s0.256-1.024 0.768-1.152l28.16-11.264c0.256-0.128 0.64-0.128 0.896 0l28.16 11.264c0.512 0.256 0.768 0.64 0.768 1.152s-0.256 1.024-0.768 1.152l-28.16 11.264c0 0.128-0.256 0.128-0.384 0.128zM7.296 25.344l24.704 9.856 24.704-9.856-24.704-9.856-24.704 9.856z"></path>
-						<path d="M32 49.152c-5.888 0-11.776-1.92-17.664-5.888-0.384-0.256-0.512-0.64-0.512-1.024v-11.264c0-0.768 0.512-1.28 1.28-1.28s1.28 0.512 1.28 1.28v10.624c10.496 6.784 20.736 6.784 31.232 0v-10.624c0-0.768 0.512-1.28 1.28-1.28s1.28 0.512 1.28 1.28v11.264c0 0.384-0.256 0.768-0.512 1.024-5.888 3.968-11.776 5.888-17.664 5.888z"></path>
-						<path d="M54.528 40.704c-0.64 0-1.152-0.512-1.28-1.152-0.128-1.408-1.28-8.704-7.936-13.184-5.376-3.584-11.008-3.072-13.184-2.56-0.64 0.128-1.408-0.384-1.536-1.024s0.384-1.408 1.024-1.536c2.432-0.512 8.832-1.024 14.976 2.944 7.552 4.992 8.832 13.44 8.96 14.976 0.128 0.64-0.384 1.28-1.152 1.408 0.256 0.128 0.128 0.128 0.128 0.128z"></path>
-						<path d="M55.936 47.232c-0.896 0-1.792-0.256-2.56-0.896-0.896-0.64-1.408-1.664-1.536-2.688s0.128-2.176 0.896-3.072c1.408-1.792 3.968-2.048 5.76-0.768 1.792 1.408 2.048 3.968 0.768 5.76v0c-0.64 0.896-1.664 1.408-2.688 1.536-0.384 0.128-0.512 0.128-0.64 0.128zM58.112 43.776v0 0zM55.936 41.6c-0.512 0-0.896 0.256-1.28 0.64-0.256 0.384-0.384 0.768-0.256 1.152 0 0.384 0.256 0.768 0.64 1.024 0.64 0.512 1.664 0.384 2.176-0.256s0.384-1.664-0.256-2.176c-0.384-0.256-0.768-0.384-1.024-0.384z"></path>
-					</g>
-				</svg>
-				<a href="?tab=courses&query=${query}">View all course results</a>
+    courseminiFooter: (query) => `<p class="u-mt-2 u-flex align-middle u-gap-8">
+				<span class="u-svg-24 u-heritage-green align-middle u-flex">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="svg-icon"><g><path d="M1.089,4.921,6.6,6.933l4.988,1.82,10.5-3.832-10.5-3.832ZM6.6,7.012,5.494,12.218c3.978,2.461,7.862,2.532,12.1.058l.094-.058L16.579,7.09m3.879,3.286a7.658,7.658,0,0,0-3.2-5.077,7.6,7.6,0,0,0-5.331-.956m9.9,7.131a1.1,1.1,0,1,1-1.1-1.1A1.1,1.1,0,0,1,21.831,11.474Z" transform="translate(0.411 4.406)" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+				</span>
+        <a href="?tab=courses&query=${query}">View all course results </a>
 			</p>
 			<p class="flex-container align-middle u-gap-8">
-				<svg class="u-icon" data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50">
-					<title>heart</title>
-					<path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2c0,0-0.1,0-0.1,0c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16l18.1,18.1c0.5,0.5,1.6,0.5,2.1,0l17.9-17.9c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9 C47.5,15,46.3,12.2,44.1,10.1z M42,24.2l-17,17l-17-17c-3.3-3.3-3.3-8.6,0-11.8c1.6-1.6,3.7-2.4,5.9-2.4c2.2-0.1,4.4,0.8,6,2.5 l4.1,4.1c0.6,0.6,1.5,0.6,2.1,0l4.2-4.2c3.4-3.2,8.5-3.2,11.8,0C45.3,15.6,45.3,20.9,42,24.2z" />
-				</svg>
+      <span class="u-svg-24 u-heritage-green align-middle u-flex">
+				<svg version="1.1" data-stiricon="heart-inactive" fill="currentColor" viewBox="0 0 50 50" class="svg-icon">
+              <path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2c0,0-0.1,0-0.1,0c-3,0-5.8,1.2-7.9,3.4
+               c-4.3,4.5-4.2,11.7,0.2,16l18.1,18.1c0.5,0.5,1.6,0.5,2.1,0l17.9-17.9c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+               C47.5,15,46.3,12.2,44.1,10.1z M42,24.2l-17,17l-17-17c-3.3-3.3-3.3-8.6,0-11.8c1.6-1.6,3.7-2.4,5.9-2.4c2.2-0.1,4.4,0.8,6,2.5
+               l4.1,4.1c0.6,0.6,1.5,0.6,2.1,0l4.2-4.2c3.4-3.2,8.5-3.2,11.8,0C45.3,15.6,45.3,20.9,42,24.2z"></path>
+          </svg>
+        </span>
 				<a href="${stir.courses.favsUrl}">My favourite courses</a>
 			</p>`, //:`<p class="text-center"><a href="?tab=courses&query=${query}">View all course results</a></p>`,
 
