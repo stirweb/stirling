@@ -7920,7 +7920,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     SEARCH NAV TAB BUTTONS
  */
 .slide-tabs-2 {
-  background: whitesmoke; }
+  background: #f6f5f4; }
   .slide-tabs-2 .carousel > button {
     height: 100px; }
   .slide-tabs-2 .carousel-slides {
@@ -8434,11 +8434,11 @@ ul[data-suggestions] {
 
 [data-suggestions] li::before {
   content: "";
-  padding-right: 1rem; }
+  padding-right: .6rem; }
 
 [data-suggestions] li::marker {
   font-family: "uos";
-  content: "\e971";
+  content: "\e93f";
   font-size: 1rem; }
 
 [data-suggestions] li[data-hilit], [data-suggestions] li:hover, [data-suggestions] li:hover::marker {
