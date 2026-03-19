@@ -8015,10 +8015,8 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
         position: relative; }
         .c-search-results-area .c-search-result.c-popout-result a > div > p:first-of-type {
           font-size: 2rem;
-          text-decoration: underline;
-          text-decoration-color: #006938;
-          text-decoration-thickness: 2px;
-          text-underline-offset: 10px;
+          border-bottom: 1px solid #006938;
+          margin-bottom: 0.5rem;
           display: inline-block; }
         .c-search-results-area .c-search-result.c-popout-result a > div [class^="uos-"],
         .c-search-results-area .c-search-result.c-popout-result a > div [class*=" uos-"]::before {
@@ -8033,11 +8031,14 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
           align-self: center; }
       .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a {
         border-color: #7c184f;
-        text-decoration-color: #7c184f;
         color: #7c184f; }
         .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a > div > p:first-of-type {
-          border-color: #7c184f;
-          text-decoration-color: #7c184f; }
+          text-decoration: underline;
+          text-decoration-thickness: 2px;
+          text-underline-offset: 10px;
+          border: none; }
+          .c-search-results-area .c-search-result.c-popout-result.u-heritage-berry a > div > p:first-of-type:hover {
+            text-decoration-color: #b56c94; }
       .c-search-results-area .c-search-result.c-popout-result.u-web-turq a {
         border-color: #00838a;
         color: #00838a; }
@@ -10062,10 +10063,6 @@ svg.u-svg-40,
 .u-quote::after {
   content: '"'; }
 
-.u-outline-heritage-green {
-  outline: 2px solid #006938;
-  outline-offset: 4px; }
-
 /*
     Margins / Padding
     ---
@@ -10669,6 +10666,11 @@ ul.no-bullet {
 @media screen and (max-width: 63.99875em) {
   .u-no-border-medium {
     border: none; } }
+
+/* Outlines */
+.u-outline-heritage-green {
+  outline: 2px solid #006938;
+  outline-offset: 4px; }
 
 /*
   Icons
