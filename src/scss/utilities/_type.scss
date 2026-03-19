@@ -143,6 +143,10 @@
   font-weight: 700;
 }
 
+.u-text-nowrap {
+  text-wrap: nowrap;
+}
+
 .u-quote {
   &::before {
     content: '"';
