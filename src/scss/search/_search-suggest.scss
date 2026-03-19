@@ -65,11 +65,11 @@ ul[data-suggestions] {
 	}
 	li::before {
 		content: "";
-		padding-right: 1rem;
+		padding-right: .6rem;
 	}
 	li::marker {
 		font-family: "uos";
-		content: "\e971";
+		content: "\e93f";
 		font-size: 1rem;
 	}
 	li[data-hilit],li:hover,li:hover::marker {
