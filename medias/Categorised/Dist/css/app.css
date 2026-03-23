@@ -7921,8 +7921,6 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
  */
 .slide-tabs-2 {
   background: #f6f5f4; }
-  .slide-tabs-2 .carousel > button {
-    height: 100px; }
   .slide-tabs-2 .carousel-slides {
     overflow: scroll;
     scroll-behavior: smooth;
