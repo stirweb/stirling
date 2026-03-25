@@ -7917,7 +7917,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     height: 30rem; } }
 
 /*
-    SEARCH NAV TAB BUTTONS
+    TABS
  */
 .slide-tabs-2 {
   background: #f6f5f4; }
@@ -7929,32 +7929,38 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       display: none; }
 
 /*
-      SEARCH RESULTS
-  */
+
+    RESULTS
+
+*/
 .c-search-results-area {
   /*  
-    Results summary  eg Showing 1-10 of 3969 results
+      RESULTS SUMMARY  eg Showing 1-10 of 3969 results
   */
   /*
-       Default result box styles
+       DEFAULT RESULT
   */
   /* 
-      Aside content panel eg recommended panel
+
+      ASIDE CONTENT PANEL
+
   */
   /*  
-    Aside Filters content panel 
+
+    FILTERS
+
   */
   /*
         RESULTS - generic or tab-agnostic stuff
   */
   /* 
-       All results tab
+       ALL RESULTS PANEL
   */
   /* 
-      Courses panel results
+      COURSES PANEL RESULTS
   */
   /* 
-      Staff, Events, News panel results
+      STAFF, EVENTS, NEWS PANEL RESULTS
   */ }
   .c-search-results-area .c-search-results-summary p,
   .c-search-results-area .c-search-result__body p {
@@ -7973,7 +7979,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
     position: relative;
     margin: 0 0 3rem 0;
     /*
-        POP UP result
+        POP UP PROMO
     */
     /* End POP UP result */ }
     .c-search-results-area .c-search-result li,
@@ -8267,7 +8273,7 @@ fieldset[data-facet*="mode"] span::first-letter {
  */
 @media screen and (min-width: 64em) {
   /* 
-        Staff, Events, News panel results
+        STAFF, EVENTS, NEWS PANEL RESULTS
   */
   .c-search-results-area .c-search-results-panel {
     display: grid;

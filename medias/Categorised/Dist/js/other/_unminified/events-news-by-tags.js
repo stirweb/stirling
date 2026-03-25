@@ -398,7 +398,7 @@
 
     const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
     const searchEventsUrl = `${searchAPI}?term=*&customField=type%3Devent&customField=tag%3D${eventtag}&resultType=organic&${filterString}`;
-    const searchNewsUrl = `${searchAPI}?term=*&customField=type%3Dnews&customField=tag%3D${newstag}&resultType=organic&`;
+    const searchNewsUrl = `${searchAPI}?term=*&customField=type%3Dnews&customField=tag%3D${newstag}&resultType=organic&sort=custom_fields.d&`;
 
     Promise.all([fetchData(searchEventsUrl), fetchData(searchNewsUrl)])
       .then(([eventsData, newsData]) => {
