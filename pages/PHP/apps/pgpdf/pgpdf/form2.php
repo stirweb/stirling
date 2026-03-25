@@ -1307,7 +1307,6 @@
                                         <option value="jan-28">Jan-28</option>
                                         <option value="sep-28">Sep-28</option>
                                     </select>
-
                                 </div>
 
                                 <div>
@@ -1526,7 +1525,7 @@
             },
             {
                 "id": 3,
-                "subject": "Business and Management",
+                "subject": "Business, Management, Marketing and Human Resources",
                 "qsSubject": "Business and Management",
                 "courses": [{
                     "newName": "MSc International Business"
@@ -1598,7 +1597,7 @@
             },
             {
                 "id": 7,
-                "subject": "Big Data, Data Science and Analytics",
+                "subject": "Artificial Intelligence, Big Data, Data Science and Analytics",
                 "qsSubject": "Computing, Data Science and Mathematics",
                 "courses": [{
                     "newName": "MSc Artificial Intelligence"
@@ -1612,6 +1611,10 @@
                     "newName": "MSc Advanced Computing with Artificial Intelligence"
                 }, {
                     "newName": "MSc Big Data (Online)"
+                }, {
+                    "newName": "MSc Marketing Analytics"
+                }, {
+                    "newName": "MSc Finance and Data Analytics"
                 }, {
                     "newName": "MSc Data Science for Business"
                 }, {
@@ -1648,7 +1651,7 @@
             },
             {
                 "id": 9,
-                "subject": "Environmental Sciences",
+                "subject": "Environmental Sciences, Law and Sustainability",
                 "qsSubject": "Environmental Sciences",
                 "courses": [{
                         "newName": "MSc Environmental Management"
@@ -1697,15 +1700,24 @@
             },
             {
                 "id": 12,
-                "subject": "Politics",
+                "subject": "Politics and International Relations",
                 "qsSubject": "History, Heritage and Politics",
                 "courses": [{
-                    "newName": "MSc International Conflict and Cooperation"
-                }, {
-                    "newName": "MPP Public Policy"
-                }, {
-                    "newName": "MSc Global Politics"
-                }]
+                        "newName": "MSc International Conflict and Cooperation"
+                    },
+                    {
+                        "newName": "MSc Global Environmental Sustainability"
+                    },
+                    {
+                        "newName": "MPP Public Policy"
+                    }, {
+                        "newName": "MSc, LLM Human Rights and Diplomacy"
+                    }, {
+                        "newName": "MSc Gender and Diplomatic Practice"
+                    }, {
+                        "newName": "MSc Global Politics"
+                    }
+                ]
             },
             {
                 "id": 13,
@@ -1742,6 +1754,8 @@
                 }, {
                     "newName": "MLitt Publishing Studies"
                 }, {
+                    "newName": "MSc International Journalism"
+                }, {
                     "newName": "MRes Publishing Studies"
                 }]
             },
@@ -1750,7 +1764,7 @@
                 "subject": "Psychology",
                 "qsSubject": "Psychology",
                 "courses": [{
-                    "newName": "MSc Autism Research"
+                    "newName": "MSc Autism and Neurodevelopmental Conditions Research"
                 }, {
                     "newName": "MSc Health Psychology"
                 }, {
@@ -1761,6 +1775,8 @@
                     "newName": "MSc Psychological Therapy in Primary Care"
                 }, {
                     "newName": "MSc Psychology (accredited conversion course)"
+                }, {
+                    "newName": "MSc Psychology of Sport (Accredited)"
                 }, {
                     "newName": "MSc Behavioural Science"
                 }]
@@ -1774,9 +1790,7 @@
                 }, {
                     "newName": "MSc Social Statistics and Social Research"
                 }, {
-                    "newName": "MSc Applied Professional Studies"
-                }, {
-                    "newName": "MSc Substance Use (Online)"
+                    "newName": "MRes Criminological Research"
                 }]
             },
             {
@@ -1801,7 +1815,7 @@
                 "courses": [{
                     "newName": "MSc Psychology of Sport (Accredited)"
                 }, {
-                    "newName": "MSc Sport Nutrition"
+                    "newName": "MSc Physiotherapy (pre-registration)"
                 }, {
                     "newName": "MSc Sport Management"
                 }, {

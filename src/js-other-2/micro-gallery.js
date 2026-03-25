@@ -7,11 +7,36 @@
     const startX = rect.left + rect.width / 2;
     const startY = rect.top + rect.height / 2;
     const fullSrc = thumbnail.getAttribute("data-full");
+    const captionText = thumbnail.getAttribute("data-caption");
     const index = Number(thumbnail.getAttribute("data-index"));
 
     fullImage.style.transform = `translate(${startX - window.innerWidth / 2}px, ${startY - window.innerHeight / 2}px) scale(0.2)`;
     fullImage.src = fullSrc;
     fullImage.alt = thumbnail.alt;
+
+    let caption = overlay.querySelector("p");
+
+    // Reset/hide existing caption first
+    if (caption) {
+      caption.style.opacity = "0";
+      caption.textContent = "";
+    }
+
+    if (captionText) {
+      if (!caption) {
+        caption = document.createElement("p");
+        // default styles for dynamic caption
+        caption.style.transition = "opacity 1.5s ease";
+        overlay.appendChild(caption);
+      }
+
+      // small timeout to allow the fade out/reset to take effect visually if switching rapidly,
+      // or just to delay the appearance as requested
+      setTimeout(() => {
+        caption.textContent = captionText;
+        caption.style.opacity = "1";
+      }, 300);
+    }
 
     overlay.style.display = "flex";
     overlay.setAttribute("data-index", index);

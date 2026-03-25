@@ -6,7 +6,8 @@ const renderDivider = () => `<div class="cell"><hr /></div>`;
 
 const renderNoItemsMessage = (msg) => `<div class="cell">${msg}</div>`;
 
-const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
+const renderFavBtns = (showUrlToFavs, cookie, id) =>
+  cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs);
 
 const renderHeader = (header, intro) =>
   !header && !intro
@@ -30,7 +31,12 @@ const renderDateTime = (item) =>
 
 const renderItem = stir.curry((consts, item) => {
   const cookie = stir.favourites && stir.favourites.getFav(item.id, consts.cookieType);
-  const statusTag = item.ondemand && !item.isupcoming ? `<span class="u-bg-heritage-berry u-white u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>` : item.isupcoming ? `<span class="u-bg-heritage-green u-white u-px-tiny u-py-xtiny text-xxsm">Live event</span>` : ``;
+  const statusTag =
+    item.ondemand && !item.isupcoming
+      ? `<span class="u-bg-heritage-berry u-white u-px-tiny u-py-xtiny text-xxsm">Watch on-demand</span>`
+      : item.isupcoming
+      ? `<span class="u-bg-heritage-green u-white u-px-tiny u-py-xtiny text-xxsm">Live event</span>`
+      : ``;
   return `
     <div class="cell small-12 large-4 medium-6 u-mb-3"  >
       <div class="u-border-width-4 ${item.ondemand && !item.isupcoming ? "u-heritage-berry-line-left" : "u-heritage-line-left"} u-p-2 u-relative u-bg-white u-h-full">
@@ -58,11 +64,14 @@ const renderAllItems = stir.curry((consts, section, items) => {
     </div>`;
 });
 
-const renderSummary = (num) => (Number(num) === 0 ? `<p class="u-pb-2 text-sm"><strong>No webinars or information sessions found.</strong></p>` : `<p class="u-pb-2 text-sm">Results based on filters - <strong>${num} webinars</strong></p>`);
+const renderSummary = (num) =>
+  Number(num) === 0
+    ? `<p class="u-pb-2 text-sm"><strong>No webinars or information sessions found.</strong></p>`
+    : `<p class="u-pb-2 text-sm">Results based on filters - <strong>${num} webinars</strong></p>`;
 
 const renderPaginationSummary = (start, end, total) => `<p class="u-pb-2 text-sm text-center"><strong>Displaying ${start + 1} to ${end} of ${total} results</strong></p>`;
 
-const renderLoadMoreButon = () => `<div class="text-center"><button class="button hollow tiny u-bg-white" data-loadmore>Load more results</button></div>`;
+const renderLoadMoreButon = () => `<div class="text-center"><button class="button tiny" data-loadmore>Load more results</button></div>`;
 
 const renderNoData = (text) => `<p class="text-center text-sm">${text}</p>`;
 

@@ -596,6 +596,14 @@ ul.no-bullet {
   }
 }
 
+/* Padding for medium up only */
+
+@media screen and #{breakpoint(medium down)} {
+  .u-mt-2-medium-down {
+    margin-top: 32px;
+  }
+}
+
 /* Padding for medium down only */
 
 @media screen and #{breakpoint(medium down)} {

@@ -93,7 +93,11 @@
 }
 
 .text-lg {
-  font-size: 1.625rem;
+  font-size: 1.875rem;
+}
+
+.text-xlg-fixed {
+  font-size: 2.25rem;
 }
 
 .text-xlg {
@@ -101,8 +105,11 @@
 }
 
 @media screen and #{breakpoint(medium up)} {
+  .text-md-medium {
+    font-size: 1.25rem;
+  }
   .text-xlg {
-    font-size: 3.125rem;
+    font-size: 3.25rem;
   }
 }
 
@@ -134,6 +141,10 @@
 
 .u-font-bold {
   font-weight: 700;
+}
+
+.u-text-nowrap {
+  text-wrap: nowrap;
 }
 
 .u-quote {

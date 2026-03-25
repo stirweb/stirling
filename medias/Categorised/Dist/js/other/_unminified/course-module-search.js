@@ -155,7 +155,7 @@
 
 (function () {
   var debug = window.location.hostname.indexOf("stir.ac.uk") === -1 ? true : false;
-  const FB_SERVER = debug ? "stage-shared-15-24-search.clients.uk.funnelback.com" : "search.stir.ac.uk";
+  const FB_SERVER = UoS_env.search;
   var searchUrl = `https://${FB_SERVER}/s/search.json?`;
   var form = document.querySelector("form#course-search");
   var hidden = form.querySelectorAll('input[type="hidden"]');

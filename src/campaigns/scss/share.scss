@@ -1,0 +1,103 @@
+/**
+ * Fallback styles for browsers without native sharing API
+ **/
+.copy-link-box {
+	position: relative;
+	display: flex;
+	gap: 1rem;
+	padding: 0.5em;
+	margin-bottom: 1rem;
+	border:1px solid #ccc;
+	border-radius: 3px;
+
+	img {
+			width: 4rem;
+			height: 4rem;
+			object-fit: cover;
+			object-position: top;
+		}
+
+	p,
+	button {
+		margin: 0;
+	}
+
+	div {
+		display: flex;
+		flex-direction: column;
+		p:nth-child(1){
+			font-weight: bold;
+		}
+		p:nth-child(2) {
+			font-size: .75rem;
+		}
+	}
+
+	p {
+		font-size: 1rem;
+	}
+
+	.tooltip__link-copied {
+		position: absolute;
+		justify-content: center;
+		align-items: center;
+		display: none;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		background-color: #333;
+		color: #FFF;
+		text-align: center;
+	}
+}
+
+dialog.sharesheet {
+
+	padding: 2rem;
+	max-width: 38rem;
+
+	button[data-copy]::after {
+		content: none;
+	}
+
+	button[data-copy]>svg {
+		width: 1rem;
+		height: 1rem;
+		margin-left: .3125rem
+	}
+
+	ul.barnacles {
+		position: relative;
+		list-style: none;
+		display: flex;
+		gap: 1rem;
+		justify-content: space-between;
+		margin-left: 0;
+		padding-bottom: 2em;
+		margin-bottom: 0;
+
+		li {
+			display: inline-block;
+
+			span[class*="uos-"] {
+				font-size: 2em;
+				display: block;
+			}
+		}
+
+		svg {
+			display: block;
+			width: 40px;
+		}
+	}
+}
+
+[data-whatinput="keyboard"] dialog.sharesheet .barnacles > li:focus-within::after,
+[data-whatinput="mouse"] dialog.sharesheet .barnacles > li:hover::after {
+	font-size: 1rem;
+	content: attr(title);
+	position: absolute; /* relative to parent ul.barnacles */
+	bottom: 0;
+	left: 0;
+}

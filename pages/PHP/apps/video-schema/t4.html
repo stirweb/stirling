@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <p>Hello, World!</p>
+    <div id="container"></div>
+  </body>
+
+  <script>
+    const container = document.getElementById("container");
+
+    const vimeoID = "263161374";
+    const youTubeID = "";
+
+    const schema = `{
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": "Postgraduate Application Process | University of Stirling",
+        "description": "Find out how to apply for a postgraduate degree course at the University of Stirling",
+        "thumbnailUrl": [
+            "https://i.vimeocdn.com/video/1118173440-d66dcb34fdd99e034edc028ccd4c3fc9149fa883aa5a3c013f9b7c5cadbd3ed3-d_1280x720?&r=pad&region=us"
+        ],
+        "uploadDate": "2018-04-04T14:06:49+00:00",
+        "duration": 178,
+        "contentUrl": "https://vimeo.com/263161374",
+        "embedUrl": "https://player.vimeo.com/video/263161374?h=a9bc30311f",
+        "interactionStatistic": {
+            "@type": "InteractionCounter",
+            "interactionType": {
+                "@type": "WatchAction"
+            },
+            "userInteractionCount": null
+        }
+    }`;
+
+    const schema2 = schema.replaceAll("@", " ").trim();
+
+    console.log(schema2);
+
+    const schemaData = JSON.parse(schema);
+    let feedback = "";
+
+    if (!schemaData) {
+      feedback = "No schema data found.";
+    }
+
+    if (schemaData) {
+      console.log(schemaData.contentUrl);
+
+      if (vimeoID) {
+        const url = `https://vimeo.com/${vimeoID}`;
+
+        if (schemaData.contentUrl != url) {
+          feedback = "Vimeo URL does not match schema content URL.";
+        }
+      }
+
+      if (youTubeID) {
+        const url = `https://www.youtube.com/watch?v=${youTubeID}`;
+
+        if (schemaData.contentUrl != url) {
+          feedback = "YouTube URL does not match schema content URL.";
+        }
+      }
+    }
+
+    console.log(feedback);
+  </script>
+</html>

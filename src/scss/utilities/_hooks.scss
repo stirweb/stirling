@@ -1,0 +1,308 @@
+/*
+
+    New brand 2025 hooks
+    ---
+    These are used to create a hook effect on the top right, top left, bottom left and bottom right of a component.
+
+    Vars are in layout.scss
+
+  --hook-border-thickness: 30px;
+  --hook-border-thickness-medium: 40px;
+  --gutter-offset: -24px;
+  --gutter-offset-medium: -40px;
+  --gutter-offset-large: -50px;
+  --hook-height: 80px;
+  --hook-height-medium: 100px;
+  --hook-offset: 2px;
+
+*/
+
+.u-hook {
+  position: relative;
+}
+
+.u-hook > *::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  height: var(--hook-height);
+  width: 100%;
+}
+
+.u-hook > *::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  height: 20%;
+}
+
+.u-hook-full-bleed::before {
+  content: "";
+  position: absolute;
+  width: 50vw;
+  z-index: 3;
+}
+
+// Top Right positioning
+.u-hook-tr > *::before {
+  top: calc(var(--hook-offset) - var(--hook-border-thickness)); // changed
+  border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-right: var(--hook-border-thickness) solid map-get($greens, "medium");
+}
+
+// Top Right full bleed positiong
+.u-hook-tr.u-hook-full-bleed::before {
+  border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
+  //border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
+  top: calc(var(--hook-offset) - var(--hook-border-thickness)); // changed
+  left: 0;
+}
+
+// Bottom left positioning
+.u-hook-bl > *::before {
+  bottom: calc(var(--hook-offset) - var(--hook-border-thickness));
+  border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
+}
+
+// Bottom left full bleed positiong
+.u-hook-bl.u-hook-full-bleed::before {
+  border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
+  //border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
+  bottom: calc(var(--hook-offset) - var(--hook-border-thickness)); // changed
+  right: 0;
+}
+
+// Top left positioning
+.u-hook-tl > *::before {
+  top: 0;
+  border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
+}
+
+// Bottom right positioning
+.u-hook-br > *::after {
+  height: var(--hook-height);
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
+  border-right: var(--hook-border-thickness) solid map-get($greens, "medium");
+}
+
+// Adjust left offset for wrapper specifically
+.u-hook-bl > .c-wrapper-2025 {
+  margin-bottom: 60px;
+  &::before {
+    left: var(--gutter-offset);
+  }
+}
+
+.u-hook-tr > .c-wrapper-2025 {
+  margin-top: 60px;
+  &::before {
+    right: var(--gutter-offset);
+  }
+}
+
+// Media queries for responsive adjustments - Medium up
+@include breakpoint(medium up) {
+  // Define common variables inside the breakpoint
+  $neg-border-medium: calc(var(--hook-offset) - var(--hook-border-thickness-medium));
+
+  // Hook height adjustments
+  .u-hook > *::before,
+  .u-hook-br > *::after {
+    height: var(--hook-height-medium);
+    border-width: var(--hook-border-thickness-medium);
+  }
+
+  .u-hook-bl > *::after {
+    height: var(--hook-height);
+  }
+
+  .u-hook-tr > *::before {
+    top: $neg-border-medium;
+  }
+
+  .u-hook-bl > *::before {
+    bottom: $neg-border-medium;
+  }
+
+  // wrapper-2025 adjustments
+  .u-hook-tr > .c-wrapper-2025::before {
+    right: var(--gutter-offset-medium);
+    top: $neg-border-medium;
+  }
+
+  .u-hook-bl > .c-wrapper-2025::before {
+    left: var(--gutter-offset-medium);
+    bottom: $neg-border-medium;
+  }
+
+  // Full bleed adjustments
+  .u-hook-bl.u-hook-full-bleed::before,
+  .u-hook-tr.u-hook-full-bleed::before {
+    border-width: var(--hook-border-thickness-medium);
+  }
+
+  .u-hook-bl.u-hook-full-bleed::before {
+    bottom: $neg-border-medium;
+  }
+
+  .u-hook-tr.u-hook-full-bleed::before {
+    top: $neg-border-medium;
+  }
+
+  // c-wrapper-2025 Margin adjustments
+  .u-hook-bl > .c-wrapper-2025 {
+    margin-bottom: 80px;
+  }
+
+  .u-hook-tr > .c-wrapper-2025 {
+    margin-top: 80px;
+  }
+}
+
+// Media queries for responsive adjustments - Large up
+@include breakpoint(large up) {
+  .u-hook-tr > .c-wrapper-2025::before {
+    right: var(--gutter-offset-large);
+  }
+
+  .u-hook-bl > .c-wrapper-2025::before {
+    left: var(--gutter-offset-large);
+  }
+}
+
+// Colour generator for hooks
+// This will generate the hooks for each colour in the uos-colour-group-palette
+.u-hook {
+  @each $name, $color in $uos-colour-group-palette {
+    &.#{$name} {
+      > *::after {
+        border-color: map-get($color, "hook");
+      }
+
+      > *::before {
+        border-color: map-get($color, "hook");
+      }
+
+      &.u-hook-full-bleed::before {
+        border-color: map-get($color, "hook");
+      }
+    }
+  }
+}
+
+// Colour overrides / additions
+.u-hook.neutral-green {
+  > *::before {
+    border-color: map-get($greens, "hook");
+  }
+
+  > *::after {
+    border-color: map-get($greens, "hook");
+  }
+}
+
+.u-hook.neutral-green.u-hook-full-bleed::before {
+  border-color: map-get($greens, "hook");
+}
+
+// Dark themes of the hooks
+// Used for dark bg hooks, these are the same as the light mode hooks with a few exceptions below
+
+.u-hook.dark.greens {
+  > *::before {
+    border-color: map-get($greens, "dark");
+  }
+
+  > *::after {
+    border-color: map-get($greens, "dark");
+  }
+}
+
+.u-hook.dark.greens.u-hook-full-bleed::before {
+  border-color: map-get($greens, "dark");
+}
+
+.u-hook.dark.neutrals {
+  > *::before {
+    border-color: map-get($neutrals, "medium");
+  }
+
+  > *::after {
+    border-color: map-get($neutrals, "medium");
+  }
+}
+
+.u-hook.dark.neutrals.u-hook-full-bleed::before {
+  border-color: map-get($neutrals, "medium");
+}
+
+/*
+
+    Border Bleed (u-border bleed)
+    ---
+    This utility is used to create a border bleed effect on the left or right side of a full width component.
+    It uses a gradient background to create the effect of a border that fades into the content bg
+   
+*/
+
+// mixin for border-bleed gradients
+@mixin border-bleed($direction, $color) {
+  @if $direction == "left" {
+    background-image: linear-gradient(90deg, $color 30%, transparent 70%);
+  } @else if $direction == "right" {
+    background-image: linear-gradient(90deg, transparent 70%, $color 30%);
+  }
+}
+
+.u-border-bleed {
+  display: block;
+  height: var(--hook-border-thickness);
+  background-origin: border-box;
+  background-clip: border-box;
+  position: relative;
+}
+
+@include breakpoint(medium up) {
+  .u-border-bleed {
+    height: var(--hook-border-thickness-medium);
+  }
+}
+
+.u-border-bleed-left {
+  @include border-bleed("left", map-get($greens, "hook"));
+}
+
+.u-border-bleed-right {
+  @include border-bleed("right", map-get($greens, "hook"));
+}
+
+@each $name, $color-map in $uos-colour-group-palette {
+  .u-border-bleed-left.#{$name} {
+    @include border-bleed("left", map-get($color-map, "hook"));
+  }
+  .u-border-bleed-right.#{$name} {
+    @include border-bleed("right", map-get($color-map, "hook"));
+  }
+}
+
+// Dark overrides
+.u-border-bleed-left.dark.neutrals {
+  @include border-bleed("left", map-get($neutrals, "medium"));
+}
+
+.u-border-bleed-right.dark.neutrals {
+  @include border-bleed("right", map-get($neutrals, "medium"));
+}
+
+.u-border-bleed-left.dark.greens {
+  @include border-bleed("left", map-get($greens, "dark"));
+}
+
+.u-border-bleed-right.dark.greens {
+  @include border-bleed("right", map-get($greens, "dark"));
+}

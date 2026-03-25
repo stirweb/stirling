@@ -41,15 +41,6 @@ stir.load = function (url, callback) {
   return request;
 };
 
-stir.getJSONp = function (url, onload, onerror) {
-  if (typeof url == "undefined") return;
-  const script = document.createElement("script");
-  if ("function" === typeof onload) script.onload = onload;
-  if ("function" === typeof onerror) script.onerror = onerror;
-  script.src = url;
-  document.head.appendChild(script);
-};
-
 stir.loadAuthenticated = function (url, callback) {
   if (typeof url == "undefined") return;
   if (typeof callback != "function") callback = function () {};
@@ -410,11 +401,22 @@ stir.createDOMElement = function (htmlStr) {
   return temp;
 };
 
-stir.addScript = function (src) {
+stir.addScript = (src, onload, onerror) => {
+  if (typeof src == "undefined") return;
+  const script = document.createElement("script");
+  if ("function" === typeof onload) script.onload = onload;
+  if ("function" === typeof onerror) script.onerror = onerror;
+  script.src = src;
+  document.head.append(script);
+};
+
+stir.getJSONp = stir.addScript;
+
+/* function (src) {
   var script = document.createElement("script");
   script.src = src;
   document.body.insertAdjacentElement("beforeend", script);
-};
+}; */
 
 stir.addStyle = function (href) {
   var link = document.createElement("link");

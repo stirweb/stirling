@@ -147,14 +147,22 @@
   const matchLocation = (scholNation, filterNation, filterRegions, ukroi) => {
     if (filterNation === "Any") return true;
 
-    return scholNation.includes(filterNation) || scholNation.includes("All nationalities") || isInternational(scholNation, filterNation, ukroi) || isRegion(scholNation, filterRegions);
+    return (
+      scholNation.includes(filterNation) || scholNation.includes("All nationalities") || isInternational(scholNation, filterNation, ukroi) || isRegion(scholNation, filterRegions)
+    );
   };
 
   /*
     Determine if a scholarship matches the filters
   */
   const isMatch = (filters, schol, consts) => {
-    const matchFilter = [matchStudyLevel(schol.studyLevel, filters.studyLevel), matchFeeStatus(schol.feeStatus, filters.feeStatus), matchSubject(schol, filters.subject), matchFaculty(schol.faculty, filters.faculty), matchLocation(schol.nationality, filters.nation, filters.regions, consts.regions.ukroi)];
+    const matchFilter = [
+      matchStudyLevel(schol.studyLevel, filters.studyLevel),
+      matchFeeStatus(schol.feeStatus, filters.feeStatus),
+      matchSubject(schol, filters.subject),
+      matchFaculty(schol.faculty, filters.faculty),
+      matchLocation(schol.nationality, filters.nation, filters.regions, consts.regions.ukroi),
+    ];
 
     return stir.all((b) => b, matchFilter);
   };
@@ -278,7 +286,8 @@
         </div> `;
   });
 
-  const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
+  const renderFavBtns = (showUrlToFavs, cookie, id) =>
+    cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs);
 
   /* 
     Form the HTML for an individual result
@@ -623,7 +632,9 @@
     return stir.map((el) => `<li ><a href="${el.scholarship.url}">${el.scholarship.title}</a> ${debug ? el.rank : ""}</li>`, data);
   });
 
-  const renderWrapper = stir.curry((data) => `<ul> ${data.join("\n")}</ul>`);
+  const renderWrapper = stir.curry((data) => {
+    return data?.length ? `<ul class="u-mb-0"> ${data.join("\n")}</ul>` : ``;
+  });
 
   /* 
     This version loads the data async so we need a url to the data
@@ -659,15 +670,19 @@
     Loop the countries and get the matches for each
   */
   const getCountriesData = (consts, element, allData) => {
-    return element.dataset.country.split(", ").map((country) => {
-      const filters = getCountryListingFilters(element, country, consts.regionmacros);
+    const countrires = element.dataset.country + ", All International, All Nationalities";
 
-      const filterDataCurry = stir.filter(filterData(consts, filters));
-      const mapRankCurry = stir.map(mapRank(filters));
-      const limitDataCurry = stir.filter((el) => parseInt(el.rank) < 1000);
+    const schols = stir.flatten(
+      countrires.split(", ").map((country) => {
+        const filters = getCountryListingFilters(element, country, consts.regionmacros);
+        const filterDataCurry = stir.filter(filterData(consts, filters));
+        const mapRankCurry = stir.map(mapRank(filters));
+        const limitDataCurry = stir.filter((el) => parseInt(el.rank) < 1000);
 
-      return stir.compose(limitDataCurry, mapRankCurry, filterDataCurry)(allData);
-    });
+        return stir.compose(limitDataCurry, mapRankCurry, filterDataCurry)(allData);
+      })
+    );
+    return schols;
   };
 
   /*
@@ -682,7 +697,16 @@
         const setDOMResultsCurry = setDOMContent(element);
         const sortCurry = stir.sort((a, b) => (parseInt(a.rank) < parseInt(b.rank) ? -1 : parseInt(a.rank) > parseInt(b.rank) ? 1 : 0));
 
-        return stir.compose(setDOMResultsCurry, renderWrapper, stir.removeDuplicates, renderHardcodedResults, sortCurry)(stir.flatten(getCountriesData(CONSTANTS, element, initialData2)));
+        const limitDataCurry = stir.filter((el, index) => index < 5);
+
+        return stir.compose(
+          setDOMResultsCurry,
+          renderWrapper,
+          limitDataCurry,
+          stir.removeDuplicates,
+          renderHardcodedResults,
+          sortCurry
+        )(stir.flatten(getCountriesData(CONSTANTS, element, initialData2)));
       });
     });
   }

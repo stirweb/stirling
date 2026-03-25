@@ -5,6 +5,7 @@
   max-width: max-content;
   position: relative;
   text-decoration: none;
+  text-wrap: pretty;
 
   &:before {
     content: "";
@@ -58,6 +59,10 @@ ul .c-link {
   content: "";
 }
 
+.u-white--all .c-link::after {
+  filter: brightness(0) invert(1);
+}
+
 .c-wysiwyg-content li a,
 .accordion-content li a,
 .tabs-panel li a {
@@ -81,3 +86,9 @@ ul .c-link {
 //   position: relative;
 //   right: 10px;
 // }
+
+.c-wysiwyg-content li a,
+.accordion-content li a,
+.tabs-panel li a {
+  border-bottom: 2px solid $heritage-green;
+}

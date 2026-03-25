@@ -9,6 +9,7 @@
 
   const SERVER = {
     path: UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "",
+    year: `2026`,
     app: useUAT ? "app-uat.php" : "app.php",
     verify: "verify.php",
   };
@@ -112,6 +113,7 @@
   /* getSubjectFromID */
   const getSubjectFromID = stir.curry((data, id) => {
     const sub = data.filter((item) => item.id === Number(id));
+
     return !sub.length ? `` : sub[0].subject;
   });
 
@@ -276,14 +278,14 @@
     const pdfDoc = await PDFLib.PDFDocument.create();
 
     //const urlFull = server.path + "rawpdfs/full-non-personalised.pdf";
-    const urlFront = server.path + "rawpdfs/Front.pdf";
-    const urlIntro = server.path + "rawpdfs/Intro.pdf";
-    const urlIntroInsert = server.path + "rawpdfs/IntroInsert.pdf";
-    const urlBack = server.path + "rawpdfs/Back.pdf";
+    const urlFront = server.path + "rawpdfs/" + server.year + "/Front.pdf";
+    const urlIntro = server.path + "rawpdfs/" + server.year + "/Intro.pdf";
+    const urlIntroInsert = server.path + "rawpdfs/" + server.year + "/IntroInsert.pdf";
+    const urlBack = server.path + "rawpdfs/" + server.year + "/Back.pdf";
 
-    const url1 = server.path + "rawpdfs/" + subject1.replaceAll(",", "") + ".pdf";
-    const url2 = server.path + "rawpdfs/" + subject2.replaceAll(",", "") + ".pdf";
-    const url3 = server.path + "rawpdfs/" + subject3.replaceAll(",", "") + ".pdf";
+    const url1 = server.path + "rawpdfs/" + server.year + "/" + subject1.replaceAll(",", "") + ".pdf";
+    const url2 = server.path + "rawpdfs/" + server.year + "/" + subject2.replaceAll(",", "") + ".pdf";
+    const url3 = server.path + "rawpdfs/" + server.year + "/" + subject3.replaceAll(",", "") + ".pdf";
 
     // Font
     const fonturl = UoS_env.name === `dev` ? "GeneralSans-Semibold.otf" : '<t4 type="media" id="179150" formatter="path/*"/>';
@@ -296,7 +298,7 @@
     /*  Full unpersonalised PDF */
     if (fullPdf === "1") {
       const pdfPathFull = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&s=&f=1}`;
-      const fileNameFull = server.path + "rawpdfs/full-non-personalised.pdf";
+      const fileNameFull = server.path + "rawpdfs/" + server.year + "/full-non-personalised.pdf";
 
       email && submitData(pdfPathFull, server, data);
       setDOMContent(resultsNode, renderLinkBox(fileNameFull));
@@ -309,15 +311,15 @@
     const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
     const { width, height } = firstPageCopy.getSize();
 
-    const largeFontSize = 77;
+    const largeFontSize = 72;
     const secondaryFontSize = 40;
 
-    const fontSize = firstName.length > 11 ? secondaryFontSize : largeFontSize;
+    const fontSize = firstName.length > 8 ? secondaryFontSize : largeFontSize;
     const centre = width / 2;
     const textWidth = customFont.widthOfTextAtSize(firstName, fontSize);
 
     const xPos = centre - textWidth / 2;
-    const yPos = fontSize === largeFontSize ? 330 : 335;
+    const yPos = fontSize === largeFontSize ? 477 : 500;
 
     firstPageCopy.drawText(firstName.toUpperCase(), {
       x: xPos,
@@ -332,35 +334,38 @@
     pdfDoc.addPage(firstPageCopy);
 
     // Intro personalisation
-    const introInsertPdfBytes = await fetch(urlIntroInsert).then((res) => res.arrayBuffer());
-    const introInsertPdf = await PDFLib.PDFDocument.load(introInsertPdfBytes);
-    const [introInsertPageCopy] = await pdfDoc.copyPages(introInsertPdf, [0]);
+    //const introInsertPdfBytes = await fetch(urlIntroInsert).then((res) => res.arrayBuffer());
+    //const introInsertPdf = await PDFLib.PDFDocument.load(introInsertPdfBytes);
+    //const [introInsertPageCopy] = await pdfDoc.copyPages(introInsertPdf, [0]);
 
-    introInsertPageCopy.drawText(firstName.toUpperCase() + ",", {
-      x: 65,
-      y: 767,
-      size: secondaryFontSize,
-      font: customFont,
-      color: PDFLib.rgb(0.0, 0.4, 0.21),
-      rotate: PDFLib.degrees(0),
-    });
-    // pdfDoc.addPage(introInsertPageCopy);
+    // introInsertPageCopy.drawText(firstName.toUpperCase() + ",", {
+    //   x: 65,
+    //   y: 767,
+    //   size: secondaryFontSize,
+    //   font: customFont,
+    //   color: PDFLib.rgb(0.0, 0.4, 0.21),
+    //   rotate: PDFLib.degrees(0),
+    // });
+    //pdfDoc.addPage(introInsertPageCopy);
 
     // Intro merge
-    const introPdfBytes = await fetch(urlIntro).then((res) => res.arrayBuffer());
-    const introPdfDoc = await PDFLib.PDFDocument.load(introPdfBytes);
+    //const introPdfBytes = await fetch(urlIntro).then((res) => res.arrayBuffer());
+    //const introPdfDoc = await PDFLib.PDFDocument.load(introPdfBytes);
 
-    const pagesIntro = introPdfDoc.getPages();
-    var i = 0;
-    while (i < pagesIntro.length) {
-      if (i === 2) {
-        pdfDoc.addPage(introInsertPageCopy);
-      } else {
-        let [p] = await pdfDoc.copyPages(introPdfDoc, [i]);
-        pdfDoc.addPage(p);
-      }
-      i++;
-    }
+    // const pagesIntro = introPdfDoc.getPages();
+    // var i = 0;
+    // while (i < pagesIntro.length) {
+    //   if (i === 2) {
+    //     pdfDoc.addPage(introInsertPageCopy);
+    //   } else {
+    //     let [p] = await pdfDoc.copyPages(introPdfDoc, [i]);
+    //     pdfDoc.addPage(p);
+    //   }
+    //   i++;
+    // }
+
+    // Intro without personalisation
+    await mergePdf(urlIntro, pdfDoc, "Intro");
 
     const errorUrl = server.path + "rawpdfs/.pdf";
 
@@ -471,7 +476,10 @@
   const generatePDFForm = stir.node("#generatePDFForm");
 
   if (generatePDFForm) {
-    const optionsArray = [{ name: "Select an option", value: "Select an option" }, ...subjectsData.map((item) => ({ name: item.subject, qs: item.qsSubject })).sort((a, b) => a.name.localeCompare(b.name))];
+    const optionsArray = [
+      { name: "Select an option", value: "Select an option" },
+      ...subjectsData.map((item) => ({ name: item.subject, qs: item.qsSubject })).sort((a, b) => a.name.localeCompare(b.name)),
+    ];
     const selects = ["subject_area_0", "subject_area_1", "subject_area_2"].map((id) => document.getElementById(id));
 
     // Function: populateSelect */

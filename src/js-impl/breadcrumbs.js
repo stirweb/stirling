@@ -43,7 +43,7 @@
         var link = crumb.querySelector("a");
         var subMenu = crumb.querySelector("ul");
 
-        if (subMenu) {
+        if (link && subMenu) {
           crumb.classList.add("breadcrumbs__item--has-submenu");
           // make a copy the breadcrumb link in the submenu so we can still navigate
           // to that page. The original link will be used instead to toggle submenu open/closed.
@@ -55,7 +55,7 @@
         }
 
         // Add the data for Schema.org JSON-LD
-        if (useSchemaDotOrg) {
+        if (link && useSchemaDotOrg) {
           schemaData.push({
             "@type": "ListItem",
             position: Array.prototype.indexOf.call(trail.children, crumb) + 1,

@@ -7,3 +7,4 @@ composer.lock
 pages/PHP/**/lib
 pages/PHP/**/vendor
 pages/PHP/apps/pgpdf/pgpdf/form.php
+pages/PHP/apps/pgpdf/pgpdf/rawpdfs

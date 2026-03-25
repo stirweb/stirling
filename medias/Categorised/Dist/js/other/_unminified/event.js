@@ -13,6 +13,9 @@
 
   const copyUrlBtn = stir.node("#copyurl");
 
+  /**
+   * Copies the current URL to the clipboard
+   */
   const copyUrl = async () => {
     await navigator.clipboard.writeText(window.location.href);
   };
@@ -38,35 +41,86 @@
        Renderers
   */
 
-  const renderHeader = (text, classes) => (text ? `<h3 class="header-stripped ${classes}">${text}</h3>` : ``);
+  /**
+   * Renders a header (currently disabled)
+   * @param {string} text
+   * @param {string} classes
+   * @returns {string}
+   */
+  const renderHeader = (text, classes) => ``;
 
+  /**
+   * Renders the audience information for an event
+   *
+   * @param {string} audience - The audience information to render.
+   * @returns {string} The HTML string for the audience information.
+   */
   const renderAudience = (audience) => {
     return !audience.trim ? `` : `<strong>Audience</strong><br />${audience.replaceAll(",", "<br/>")}`;
   };
 
+  /**
+   * Renders an information tag (e.g., "Cancelled")
+   * @param {string} info The text to display in the tag.
+   * @returns {string} The HTML string for the tag.
+   */
   const renderInfoTag = (info) => `<span class="u-bg-heritage-berry u-white c-tag u-mr-1 u-inline-block u-mb-1">${info}</span><br/>`;
 
+  /**
+   * Renders a link for an event item.
+   * @param {object} item The event object.
+   * @returns {string} The HTML string for the link.
+   */
   const renderLink = (item) => {
     if (!item.url) return `${item.title}<br />`;
     return `<a href="${item.url}" class="u-underline">${item.title}</a><br />`;
   };
 
+  /**
+   * Renders the HTML for a single event.
+   * @param {object} item The event object.
+   * @param {number} index The index of the event.
+   * @returns {string} The HTML string for the event.
+   */
   const renderEvent = (item, index) => {
     return `
-        <div class="${index % 2 === 1 ? `` : `u-bg-grey`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : ``} u-p-1 c-event-list u-gap">
-          <div >
-            ${item.cancelled ? renderInfoTag("Cancelled") : ``}${item.rescheduled ? renderInfoTag("Rescheduled") : ``} 
-            <span class="u-inline-block u-mb-1"><strong>Event</strong><br />
-           ${renderLink(item)}
-            <strong >Date:</strong> ${item.stirStart} ${item.stirEnd !== item.stirStart ? ` - ` + item.stirEnd : ``} <br />
+      <div class="${index % 2 === 0 ? `u-bg-white` : `u-bg-white`} ${index === 0 ? `u-heritage-line-top u-border-width-5` : `u-grey-line-top `} u-p-1 c-event-list u-gap">
+        <div>
+          ${item.cancelled ? renderInfoTag("Cancelled") : ``}
+          ${item.rescheduled ? renderInfoTag("Rescheduled") : ``}
+          <span class="u-inline-block u-mb-1">
+            <strong>Event</strong><br />
+            ${renderLink(item)}
+            <strong>Date:</strong> ${item.stirStart} ${item.stirEnd !== item.stirStart ? ` - ` + item.stirEnd : ``}<br />
             <strong>Time:</strong> ${item.startTime} - ${item.endTime}
-          </div>
-          <div><span class="u-inline-block u-mb-1"><strong>Description</strong><br />${item.summary}<br /><strong>Location</strong><br />${item.location}.</span></div>
-          <div><span class="u-inline-block u-mb-1">${renderAudience(item.audience)}</span></div>
-          <div><span class="u-inline-block u-mb-1">${item.recording ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>` : ``}</span></div>
-        </div>`;
+          </span>
+        </div>
+        <div>
+          <span class="u-inline-block u-mb-1">
+            <strong>Description</strong><br />
+            ${item.summary}<br />
+            <strong>Location</strong><br />
+            ${item.location}.
+          </span>
+        </div>
+        <div>
+          <span class="u-inline-block u-mb-1">
+            ${renderAudience(item.audience)}
+          </span>
+        </div>
+        <div>
+          <span class="u-inline-block u-mb-1">
+            ${item.recording ? `<strong>Recording</strong><br /><a href="https://www.youtube.com/watch?v=n_uFzLPYDd8">Available</a>` : ``}
+          </span>
+        </div>
+      </div>`;
   };
 
+  /**
+   * Formats a date string into a readable format (e.g., "14 August 2025").
+   * @param {string} date The date string to format.
+   * @returns {string} The formatted date string.
+   */
   const renderReadableDate = (date) => {
     const d = new Date(date);
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -74,12 +128,31 @@
     return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
   };
 
+  /**
+   * Renders a date as an <option> element.
+   * @param {string} item The date string.
+   * @returns {string} The HTML string for the option.
+   */
   const renderDates = (item) => `<option value="${item}">${renderReadableDate(item)}</option>`;
 
+  /**
+   * Renders the default "Filter by" option for a select dropdown.
+   * @returns {string} The HTML string for the option.
+   */
   const renderOptionOne = () => `<option value="">Filter by upcoming date</option>`;
 
+  /**
+   * Renders the end date of an event if it differs from the start date.
+   * @param {object} item The event object.
+   * @returns {string} The end date string or an empty string.
+   */
   const renderEndDate = (item) => (item.stirStart === item.stirEnd ? `` : `- ${item.stirEnd}`);
 
+  /**
+   * Renders the HTML for an event in the "more events" section.
+   * @param {object} item The event object.
+   * @returns {string} The HTML string for the event link.
+   */
   const renderMoreEvent = (item) => {
     return `<a href="${item.url}" class="u-border u-p-1 u-mb-1 flex-container flex-dir-column large-flex-dir-row   u-gap">
                 <span class="u-flex1"><strong>${item.title}</strong></span>
@@ -94,16 +167,35 @@
             </a>`;
   };
 
+  /**
+   * Renders a message indicating no events were found for the selected date.
+   * @returns {string} The HTML string for the message.
+   */
   const renderNoEvents = () => "<p><strong>No events on date selected</strong></p>";
 
   /*
     Helpers
   */
 
+  /**
+   * Maps over events to render them for the "more events" section.
+   */
   const renderMoreEventsMapper = stir.map(renderMoreEvent);
 
+  /**
+   * Filters an array to the first 3 items.
+   * @param {*} item The item in the array.
+   * @param {number} index The index of the item.
+   * @returns {boolean}
+   */
   const limitTo3 = stir.filter((item, index) => index < 3);
 
+  /**
+   * Curried function to filter events by a user-selected date.
+   * @param {string} d The date to filter by.
+   * @param {object} item The event item.
+   * @returns {object|undefined}
+   */
   const dateUserFilter = stir.curry((d, item) => {
     if (d === ``) return item;
 
@@ -111,6 +203,12 @@
     if (inDateRange(itemDays, d)) return item;
   });
 
+  /**
+   * Curried function to remove duplicate objects from an array based on a key.
+   * @param {string} key The key to check for duplicates.
+   * @param {Array<object>} array The array to filter.
+   * @returns {Array<object>}
+   */
   const removeDuplicateObjectFromArray = stir.curry((key, array) => {
     let check = {};
     let res = [];
@@ -123,32 +221,85 @@
     return res;
   });
 
+  /**
+   * Filters out events that do not have a start date.
+   * @param {object} item The event item.
+   * @returns {string} The start date.
+   */
   const filterEmpties = (item) => item.start;
 
+  /**
+   * Maps over events to render them.
+   */
   const renderEventsMapper = stir.map(renderEvent);
 
+  /**
+   * Joins an array of strings into a single string.
+   */
   const joiner = stir.join("");
 
+  /**
+   * Gets the current date and time as a comparable number.
+   * @returns {number}
+   */
   const getNow = () => {
     let yourDate = new Date();
     return Number(yourDate.toISOString().split("T")[0].split("-").join("") + ("0" + yourDate.getHours()).slice(-2) + ("0" + yourDate.getMinutes()).slice(-2));
   };
 
+  /**
+   * Sort comparator for sorting events by start date (ascending).
+   * @param {object} a The first event.
+   * @param {object} b The second event.
+   * @returns {number}
+   */
   const sortByStartDate = (a, b) => a.startInt - b.startInt;
   //const sortByEndDateDesc = (a, b) => b.endInt - a.endInt;
 
-  const isUpcoming = (item) => item.endInt >= getNow();
+  /**
+   * Checks if an event is upcoming.
+   * @param {object} item The event item.
+   * @returns {boolean}
+   */
+  const isUpcoming = (item) => {
+    return item.endInt >= getNow();
+  };
 
+  /**
+   * Filter function to get only upcoming events.
+   */
   const isUpcomingFilter = stir.filter(isUpcoming);
 
+  /**
+   * Checks if an event has passed and has an archive link.
+   * @param {object} item The event item.
+   * @returns {boolean}
+   */
   const isPassed = (item) => Number(item.endInt) < getNow() && item.archive.length;
 
+  /**
+   * Filter function to get only passed events.
+   */
   const isPassedFilter = stir.filter(isPassed);
 
+  /**
+   * Filter function to get events that are children of the current series.
+   */
   const isSeriesChildFilter = stir.filter((item) => item.isSeriesChild === seriesId);
 
+  /**
+   * Sort comparator for sorting events by a "pin" property.
+   * @param {object} a The first event.
+   * @param {object} b The second event.
+   * @returns {number}
+   */
   const sortByPin = (a, b) => Number(a.pin) - Number(b.pin);
 
+  /**
+   * Gets the JSON data URL based on the environment.
+   * @param {string} env The current environment name.
+   * @returns {string} The URL for the events JSON file.
+   */
   const getJSONUrl = (env) => {
     if (env === "dev") return "../index.json";
     if (env === "preview" || env === "appdev-preview") return '<t4 type="navigation" id="5214" />'; //5222 for limited archive
@@ -156,14 +307,23 @@
     return `/data/events/revamp/json/index.json`;
   };
 
+  /**
+   * Curried function to set the inner HTML of a DOM element.
+   * @param {HTMLElement} node The DOM element.
+   * @param {string} html The HTML to set.
+   * @returns {boolean}
+   */
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
   });
 
-  /* 
-      filterByTag : Returns a boolean
-  */
+  /**
+   * Curried function to filter events by tags.
+   * @param {string} tags_ A comma-separated string of tags.
+   * @param {object} item The event item.
+   * @returns {object|undefined}
+   */
   const filterByTag = stir.curry((tags_, item) => {
     const isTrue = (bol) => bol;
     const tags = tags_.split(", ");
@@ -177,17 +337,23 @@
     if (stir.any(isTrue, matches)) return item;
   });
 
-  /* 
-      inDateRange : Returns a boolean
-  */
+  /**
+   * Curried function to check if a date is within a given range.
+   * @param {Array<string>} filterRange An array of date strings.
+   * @param {string} date The date to check.
+   * @returns {boolean}
+   */
   const inDateRange = stir.curry((filterRange, date) => {
     const matches = filterRange.filter((day) => day === date);
     return matches.length ? true : false; // Only need one match
   });
 
-  /* 
-      getDaysArray : Returns an array of date strings eg 2023-07-24
-  */
+  /**
+   * Generates an array of date strings between a start and end date.
+   * @param {string} s The start date string.
+   * @param {string} e The end date string.
+   * @returns {Array<string>} An array of date strings.
+   */
   const getDaysArray = (s, e) => {
     let a = [];
 
@@ -197,12 +363,38 @@
     return a;
   };
 
+  /**
+   * Checks if a date string is today or in the future.
+   * @param {string} dateStr The date string to check.
+   * @returns {boolean}
+   */
+  const isDateInFuture = (dateStr) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return new Date(dateStr) >= today;
+  };
+
+  /**
+   * Gets all the days an event spans.
+   * @param {object} event The event object.
+   * @returns {Array<string>} An array of date strings.
+   */
   const getEventDays = (event) => getDaysArray(event.start, event.end);
 
+  /**
+   * Gets all past events for the current series.
+   * @param {Array<object>} events An array of event objects.
+   * @returns {Array<object>} An array of past series events.
+   */
   const getPastSeriesEvents = (events) => {
     return stir.compose(isPassedFilter, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(events);
   };
 
+  /**
+   * Gets all upcoming events for the current series.
+   * @param {Array<object>} events An array of event objects.
+   * @returns {Array<object>} An array of upcoming series events.
+   */
   const getUpcomingSeriesEvents = (events) => {
     return stir.compose(isUpcomingFilter, stir.sort(sortByStartDate), isSeriesChildFilter, stir.filter(filterEmpties))(events);
   };
@@ -211,14 +403,28 @@
       Controllers
   */
 
+  /**
+   * Fetches and renders past series events based on a date filter.
+   * @param {string} date The date to filter by.
+   * @param {Array<object>} initialData The initial array of all events.
+   * @returns {string} The HTML string for past events.
+   */
   const doPastSeries = (date, initialData) => {
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
     const passedEvents = getPastSeriesEvents(initialData);
+
     const seriesPastData = stir.compose(joiner, renderEventsMapper, stir.sort(sortByStartDate), dateUserFilterCurry)(passedEvents);
-    return seriesPastData.length ? renderHeader("Passed", "u-mt-2") + seriesPastData : ``;
+
+    return seriesPastData.length ? renderHeader("Past", "u-mt-2") + seriesPastData : ``;
   };
 
+  /**
+   * Fetches and renders upcoming series events based on a date filter.
+   * @param {string} date The date to filter by.
+   * @param {Array<object>} initialData The initial array of all events.
+   * @returns {string} The HTML string for upcoming events.
+   */
   const doUpcomingSeries = (date, initialData) => {
     const dateUserFilterCurry = stir.filter(dateUserFilter(date));
 
@@ -229,14 +435,26 @@
     return upcomingHtml;
   };
 
+  /**
+   * Generates and renders the date filter options for the series.
+   * @param {Array<object>} initialData The initial array of all events.
+   * @returns {string} The HTML string for the date filter options.
+   */
   const doDateFilter = (initialData) => {
     const passedEvents = getPastSeriesEvents(initialData);
     const upcomingEvents = getUpcomingSeriesEvents(initialData);
     const allSeriesEvents = [...passedEvents, ...upcomingEvents];
+    const isDateInFutureFilter = stir.filter(isDateInFuture);
 
-    return stir.compose(joiner, stir.map(renderDates), stir.removeDuplicates, stir.flatten, stir.map(getEventDays))(upcomingEvents);
+    const dates = stir.compose(stir.removeDuplicates, stir.flatten, stir.map(getEventDays))(upcomingEvents);
+
+    return stir.compose(joiner, stir.map(renderDates), isDateInFutureFilter, stir.removeDuplicates, stir.flatten, stir.map(getEventDays))(upcomingEvents);
   };
 
+  /**
+   * Fetches and renders the "more events" section.
+   * @param {Array<object>} initialData The initial array of all events.
+   */
   const doMoreEvents = (initialData) => {
     const removeDupsById = removeDuplicateObjectFromArray("id");
 
@@ -270,9 +488,19 @@
   stir.getJSON(url, (initialData) => {
     if (initialData.error) return;
 
+    // Past events
+    const seriesEventsAreaPast = stir.node("#serieseventspast");
+
+    const passedEvents = doPastSeries("", initialData);
+
+    if (seriesEventsAreaPast) {
+      const html = passedEvents === "" ? "No past events found" : passedEvents;
+      setDOMContent(seriesEventsAreaPast, html);
+    }
+
+    // Upcoming events
     if (seriesEventsArea && seriesDateFilter) {
-      const pastHtml = doPastSeries("", initialData);
-      setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData) + pastHtml);
+      setDOMContent(seriesEventsArea, doUpcomingSeries("", initialData));
 
       // Add Series filter
       setDOMContent(seriesDateFilter, renderOptionOne() + doDateFilter(initialData));
@@ -282,7 +510,7 @@
         const upcomingHtml = doUpcomingSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
         const pastHtml = doPastSeries(seriesDateFilter.options[seriesDateFilter.selectedIndex].value, initialData);
 
-        const html = upcomingHtml + pastHtml === "" ? renderNoEvents() : upcomingHtml + pastHtml;
+        const html = upcomingHtml === "" ? renderNoEvents() : upcomingHtml;
         setDOMContent(seriesEventsArea, html);
       });
     }
@@ -303,16 +531,32 @@
 
   if (!gallery || !galleryId) return;
 
+  /**
+   * Curried function to set the inner HTML of a DOM element.
+   * @param {HTMLElement} node The DOM element.
+   * @param {string} html The HTML to set.
+   * @returns {boolean}
+   */
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
   });
 
+  /**
+   * Renders an image from Flickr data.
+   * @param {object} item The Flickr image object.
+   * @returns {string} The HTML string for the image.
+   */
   const renderImage = (item) => {
     const alt = item.title.length ? item.title : "Flickr image " + item.id;
     return `<img alt="${alt}" class="u-object-cover"  src="https://farm${item.farm}.staticflickr.com/${item.server}/${item.id}_${item.secret}_c.jpg" width="${item.o_width}" height="${item.o_height}"></img>`;
   };
 
+  /**
+   * Renders a call-to-action to view the album on Flickr.
+   * @param {string} galleryId The Flickr gallery ID.
+   * @returns {string} The HTML string for the CTA.
+   */
   const renderCTA = (galleryId) => {
     return `<div>
               <svg width="70px" height="70px" viewBox="0 -13 47 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

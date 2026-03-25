@@ -8,13 +8,11 @@
 (function() {
 
 	const el = document.querySelector("main#content > .grid-container");
-//	const host = window.location.hostname;
-//	const path = '/data/pd-api-dev/';
-//	const ppth = 'terminalfour/preview/1/en/35030';
-//	const code = 'UCX12-BUSLAW';
-//	const sess = '2024/5';
-//	const seme = 'SPR';
-//	const query = `programme=${code}/${sess}/${seme}`;
+	const host = window.location.hostname;
+	const path = '/data/pd-api-dev/';
+	const ppth = 'terminalfour/preview/1/en/35030';
+	const query = 'menu';
+	const spec = "dev"===UoS_env.name?'course.html':'<t4 type="navigation" name="Helper: Path to programme specification" id="5300" />';
 
 	const apiUrl = (()=>{
 		switch (UoS_env.name) {
@@ -22,57 +20,72 @@
 				return '/pages/data/akari/menu.json';
 			case "qa":
 				return '/stirling/pages/data/akari/menu.json';
-//			case "preview":
-//			case "appdev-preview":
-//				return `https://${host}/${ppth}?${query}`;
-//			case "pub":
-//				return `https://${host}${path}?${query}`;
+			case "preview":
+			case "appdev-preview":
+				return `https://${host}/${ppth}?${query}`;
+			case "pub":
+				return `https://${host}${path}?${query}`;
 
 		}
 	})();
 
 	const templates = {
-		menu: data => `
+		menu: data => { 
+			console.info(data);
+			
+			if(!data || !data.academicYears) return;
+
+			console.info(Object.keys(data.academicYears).map(year => Object.keys(data.academicYears[year].faculties).map(faculty => Object.keys(data.academicYears[year].faculties[faculty].divisions).map(division => data.academicYears[year].faculties[faculty].divisions[division].routes))));
+
+			return `
 				<div class="grid-container u-px-1">
 					<div class="grid-x">
 						<div class=cell>
-							<h1 class=c-course-heading>Courses</h1>
-							<p>${data.map(year => `
-								<details>
-									<summary>${year.academicYear}</summary>
+							<p>${Object.keys(data.academicYears).map(year => {
+								const faculties = Object.keys(data.academicYears[year].faculties);
+								return `<details class=u-accordion>
+									<summary>${year}</summary>
 									<div class=u-px-1>
-										${year.faculties.map(faculty => `
-										<details>
-											<summary>${faculty.name}</summary>
+										${faculties.map(faculty => {
+											const divisions = Object.keys(data.academicYears[year].faculties[faculty].divisions);
+											return `<details>
+											<summary>${faculty}</summary>
 											<div class=u-px-1>
-												${faculty.divisions.map(division => `
+												${divisions.map(division => `
 												<details>
-													<summary>${division.name}</summary>
+													<summary>${division}</summary>
 													<div class=u-px-1>
-														${division.routes.map(route => `
-														<p>${route.name} <small>${route.code}</small>
-															<a href="/pages/courses/api/course.html?session=${year.academicYear}&route=${route.code}&semester=AUT">Autumn</a> | 
-															<a href="/pages/courses/api/course.html?session=${year.academicYear}&route=${route.code}&semester=SPR">Spring</a> | 
-															<a href="/pages/courses/api/course.html?session=${year.academicYear}&route=${route.code}&semester=SUM">Summer</a>
-														</p>
+														<table>
+															<thead>
+																<tr>
+																	<th>Route code</th><th>Course name</th><th>More information</th>
+																</tr>
+															</thead>
+															<caption>${faculty} (${division}) routes for ${year}:</caption>
+															${data.academicYears[year].faculties[faculty].divisions[division].routes.map(route => `
+															<tr><td><small>${route.routeCode}</small></td><td>${route.routeName}</td><td>
+																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=AUT" target=_blank>Autumn</a> | 
+																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SPR" target=_blank>Spring</a> | 
+																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SUM" target=_blank>Summer</a>
+															</td></tr>
 														`).join('')}
+														</table>
 													</div>
 												</details>
 												`).join('')}
 											</div>
-										</details>`).join('')}
+										</details>`;
+									}).join('')}
 									</div>
-								</details>
-								`).join('')}</p>
+								</details>`;
+							}).join('')}</p>
 						</div>
 					</div>
-				</div>`
+				</div>`;}
 	};
 
 	fetch(apiUrl)
 		.then( (response) => response.json() )
 		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data)) );
-
-
 
 })();

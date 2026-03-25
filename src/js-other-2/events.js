@@ -110,12 +110,15 @@
     return !isRecurring ? `` : `<div class="u-flex u-gap-16 align-middle"><span class="u-icon h5 uos-timer"></span><span>${item.repeat}</span></div>`;
   };
 
-  const renderFavBtns = (showUrlToFavs, cookie, id) => (cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs));
+  const renderFavBtns = (showUrlToFavs, cookie, id) =>
+    cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs);
 
   const renderEvent = stir.curry((seriesData, item) => {
     const cookieType = "event";
     const cookie = stir.favourites && stir.favourites.getFav(item.sid, cookieType);
-    return `<div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event" ${renderIconTag(item)} data-perf="${item.perfId}" >
+    return `<div class="u-border-width-5 u-heritage-line-left u-p-2 u-bg-white text-sm u-relative u-mb-2" data-result-type="event" ${renderIconTag(item)} data-perf="${
+      item.perfId
+    }" >
                 ${renderLabelTab(item)} 
                 <div class="u-grid-medium-up u-gap-24 ${item.image ? "u-grid-cols-3_1" : ``} ">
                   <div class=" u-flex flex-dir-column u-gap u-mt-1" >
@@ -580,16 +583,18 @@
     }
 
     if (!totalResults) {
-      const tab = node.closest("[role=tabpanel]");
-      if (tab) {
-        const tabId = tab.id;
-        const tabBtn = document.querySelector(`[aria-controls=${tabId}]`);
-        tab.remove();
-        tabBtn && tabBtn.remove();
-      }
+      //const tab = node.closest("[role=tabpanel]");
+      //if (tab) {
+      //const tabId = tab.id;
+      //const tabBtn = document.querySelector(`[aria-controls=${tabId}]`);
+      //tab.remove();
+      //tabBtn && tabBtn.remove();
+
+      return setDOMPublic(renderNoData("No events found."));
+      //}
     }
 
-    totalResults && setDOMPublic(renderPageMeta(start, end, totalResults) + results + renderPaginationBtn(end, totalResults));
+    setDOMPublic(renderPageMeta(start, end, totalResults) + results + renderPaginationBtn(end, totalResults));
   }
 
   /**
