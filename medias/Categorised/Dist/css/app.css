@@ -9630,8 +9630,14 @@ article.c-convo small {
 .u-grid-cols-3_1 {
   grid-template-columns: 3fr 1fr; }
 
+.u-grid-cols-1_3 {
+  grid-template-columns: 1fr 3fr; }
+
 .u-grid-cols-2_1 {
   grid-template-columns: 2fr 1fr; }
+
+.u-grid-cols-1_2 {
+  grid-template-columns: 1fr 2fr; }
 
 .u-justify-content-center {
   justify-content: center; }
