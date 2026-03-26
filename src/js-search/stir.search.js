@@ -62,70 +62,6 @@ stir.funnelback = (() => {
 })();
 
 /**
-<<<<<<< HEAD
- * Course-specific search results helper
- */
-stir.courses = (() => {
-  const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
-
-  /**
-   * C L E A R I N G
-   */
-  const CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
-  /*
-   **/
-
-  return {
-    clearing: CLEARING,
-    getCombos: () => {
-      if (stir.courses.combos) return;
-
-      const urls = {
-        dev: "combo.json",
-        qa: "combo.json",
-        preview: stir?.t4Globals?.search?.combos || "",
-        prod: "https://www.stir.ac.uk/media/stirling/feeds/combo.json",
-      };
-
-      debug && console.info(`[Search] Getting combo data for ${UoS_env.name} environment (${urls[UoS_env.name]})`);
-      return stir.getJSON(urls[UoS_env.name], (data) => (stir.courses.combos = data && !data.error ? data.slice(0, -1) : []));
-    },
-    showCombosFor: (url) => {
-      if (!url || !stir.courses.combos) return [];
-
-      let pathname = isNaN(url) && new URL(url).pathname;
-      let combos = [];
-
-      for (var i = 0; i < stir.courses.combos.length; i++) {
-        for (var j = 0; j < stir.courses.combos[i].courses.length; j++) {
-          if ((pathname && pathname === stir.courses.combos[i].courses[j].url) || stir.courses.combos[i].courses[j].url.split("/").slice(-1) == url) {
-            let combo = stir.clone(stir.courses.combos[i]);
-            combo.courses.splice(j, 1); // remove matching entry
-            combo.courses = combo.courses.filter((item) => item.text); // filter out empties
-            combos.push(combo);
-            break;
-          }
-        }
-      }
-
-      return combos;
-    },
-    favsUrl: (function () {
-      switch (UoS_env.name) {
-        case "dev": //local
-          return "/pages/search/course-favs/index.html";
-        case "qa": //repo
-          return "/stirling/pages/search/course-favs/";
-        default: //cms
-          return '<t4 type="navigation" name="Helper: Path to Courses Favourites" id="5195" />';
-      }
-    })(),
-  };
-})();
-
-/**
-=======
->>>>>>> AddSearch
  * Stir Search
  * Created for the Search Revamp project 2022/23
  * @returns Object
@@ -387,11 +323,11 @@ stir.search = () => {
   });
 
   const error = (el,data) => {
-	const summary = el.parentElement.parentElement.querySelector(".c-search-results-summary");
-	const button = el.parentElement.querySelector("button[disabled]");
-	el.innerHTML = `<p>${data.response.resultPacket.error.userMsg}</p>`;
-	summary.innerHTML = "<strong>Errror</strong>";
-	button.parentElement.removeChild(button);
+  const summary = el.parentElement.parentElement.querySelector(".c-search-results-summary");
+  const button = el.parentElement.querySelector("button[disabled]");
+  el.innerHTML = `<p>${data.response.resultPacket.error.userMsg}</p>`;
+  summary.innerHTML = "<strong>Errror</strong>";
+  button.parentElement.removeChild(button);
   };
 
   const updateStatus = stir.curry((element, data) => {
@@ -610,7 +546,7 @@ stir.search = () => {
       //TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
       if (!data || data.error || !data.response || !data.response.resultPacket) return;
       if (0 === data.response.resultPacket.resultsSummary.totalMatching && fallback(element)) return;
-	  if (data.response.returnCode !== 0) return error(element,data);
+    if (data.response.returnCode !== 0) return error(element,data);
       return composition(data);
     };
     resetPagination();
