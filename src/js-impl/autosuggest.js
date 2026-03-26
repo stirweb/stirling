@@ -2,6 +2,8 @@
 * SEARCH AUTO-SUGGEST
 * @author: Robert Morrison <r.w.morrison@stir.ac.uk>
 * 2026-03-16
+* see: https://uxmastery.com/anatomy-of-an-accessible-auto-suggest/
+* see: https://stackoverflow.com/questions/39439115/how-to-execute-click-function-before-the-blur-function
 */
 
 // we will add some new modules to the stir library
