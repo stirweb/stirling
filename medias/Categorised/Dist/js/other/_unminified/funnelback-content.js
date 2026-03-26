@@ -88,9 +88,9 @@
 
     level && levels[level] && params.append("customField", `level=${levels[level]}`);
     url.search = params;
-
+    
     const callback = (data) => {
-      if (!data) return;
+      if (!data || !data.hits) return;
       el.innerHTML =
         data.hits
           //.filter(noSelfLinks)
