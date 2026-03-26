@@ -325,6 +325,9 @@
   td {
     font-size: 1rem; // 16px;
     padding: 0.333rem;
+    &.note p {
+      font-size: 1rem;
+    }
   }
   label {
     font-size: 1rem;

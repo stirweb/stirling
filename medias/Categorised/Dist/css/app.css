@@ -8707,6 +8707,9 @@ ul[data-suggestions] {
 #course-fees-information td {
   font-size: 1rem;
   padding: 0.333rem; }
+  #course-fees-information th.note p,
+  #course-fees-information td.note p {
+    font-size: 1rem; }
 
 #course-fees-information label {
   font-size: 1rem; }
@@ -10849,7 +10852,8 @@ svg.u-icon {
 .u-hook-full-bleed::before {
   content: "";
   position: absolute;
-  width: 50vw; }
+  width: 50vw;
+  z-index: 10; }
 
 .u-hook-tr > *::before {
   top: calc(var(--hook-offset) - var(--hook-border-thickness));
