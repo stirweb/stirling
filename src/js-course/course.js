@@ -144,7 +144,7 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
           // patch DiscoverUniWidget's addCss() function so it only runs once per page (not once per widget!)
           DiscoverUniWidget.prototype._addCss = DiscoverUniWidget.prototype.addCss;
           DiscoverUniWidget.prototype.addCss = function () {
-            widgetStylesAdded || this._addCss(), (widgetStylesAdded = true);
+            (widgetStylesAdded || this._addCss(), (widgetStylesAdded = true));
           };
 
           // patch DiscoverUniWidget's renderWidget() function so that we can manipulate
@@ -253,10 +253,10 @@ var KISWidgetCaller = function () {
         },
         init: function () {
           var n = t.createElement("script");
-          (n.async = !0), (n.type = "text/javascript"), (n.src = "https://cdn.livechatinc.com/tracking.js"), t.head.appendChild(n);
+          ((n.async = !0), (n.type = "text/javascript"), (n.src = "https://cdn.livechatinc.com/tracking.js"), t.head.appendChild(n));
         },
       };
-      !n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e);
+      (!n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e));
     })(window, document, [].slice);
   }
 
@@ -287,7 +287,7 @@ var KISWidgetCaller = function () {
   }
 })();
 
-/**
+/*
  * Favourites buttons
  * 2023-05-10
  */
@@ -295,3 +295,69 @@ if (stir.favourites && stir.coursefavs) {
   stir.coursefavs.attachEventHandlers();
   document.querySelectorAll("[data-nodeid=coursefavsbtn]").forEach(stir.coursefavs.doCourseBtn);
 }
+
+/*
+ * Webinars button fetch and render
+ * Uses AddSearch to find upcoming webinars for this course
+ * November 2025
+ */
+
+(function () {
+  /*
+   *  Fetch and render webinar button
+   */
+  const renderButton = (item, colour) => {
+    const data = JSON.parse(decodeURIComponent(item?.custom_fields?.data) || "{}");
+
+    if (!data.register) return ``;
+    return `<a href="${data.register}" id="cta-pg-webinar" class="button ${colour}"><span class="u-font-bold u-text-regular">Join our webinar</span></a>`;
+  };
+
+  /*
+   *  Build search object
+   */
+  const getSearchObject = (from, to, filter) => {
+    const obj = {
+      and: [
+        { "custom_fields.tag": filter },
+        {
+          range: { "custom_fields.d": { gt: from, lt: to } },
+        },
+      ],
+    };
+    return obj;
+  };
+
+  /*
+   * Initiate fetch
+   */
+
+  const breadcrumb = document.querySelector("meta[name='stir.breadcrumb']").getAttribute("content");
+  const colour = breadcrumb.includes("Undergraduate") ? "energy-turq" : breadcrumb.includes("Postgraduate") ? "heritage-berry" : "";
+
+  const sid = document.querySelector("meta[name='sid']").getAttribute("content");
+  const suggestedNode = document.getElementById("course-suggested-actions");
+
+  if (!sid || !suggestedNode) return;
+
+  const now = new Date().toISOString();
+  const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+  const searchUrl = `${searchAPI}?term=*&resultType=organic&filter=${encodeURIComponent(JSON.stringify(getSearchObject(now, "2099-12-31", "sid" + sid)))}&limit=3`;
+
+  fetch(searchUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.total_hits > 0) {
+        // get the number of a elements already in suggested actions
+        const existingButtons = suggestedNode.querySelectorAll("a.button");
+        // if more then 2 buttons remove the last one then add the webinar button
+        if (existingButtons.length > 2) {
+          suggestedNode.removeChild(existingButtons[existingButtons.length - 1]);
+        }
+        suggestedNode.insertAdjacentHTML("afterbegin", renderButton(data.hits[0], colour));
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching search data:", error);
+    });
+})();
