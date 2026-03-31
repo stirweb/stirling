@@ -10091,15 +10091,15 @@ svg.u-svg-40,
 
     0 = no margin
 
-    1 (xs) = 16px | | |     
+    1 (xs 1rem) = 16px | | |     
 
-    2 (sm) = 24px | 32px | |  
+    2 (sm 2rem) = 24px | 32px | |  
 
-    3 (md) = 32px | 40px | 56px |  
+    3 (md 3rem) = 32px | 40px | 56px |  
 
-    4 (lg) = 40px | 56px | 64px |
+    4 (lg 4rem) = 40px | 56px | 64px |
 
-    5 = xl = 64px | 80px | 96px | 112px  
+    5 (xl 5rem) = 64px | 80px | 96px | 112px  
 
     IMPORTANT 
 
@@ -10304,6 +10304,9 @@ ul.no-bullet {
 
 .u-mb-fixed-2 {
   margin-bottom: 32px; }
+
+.u-ml-fixed-2 {
+  margin-left: 32px; }
 
 /*
     Padding
