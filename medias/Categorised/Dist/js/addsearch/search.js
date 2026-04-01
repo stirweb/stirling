@@ -23,8 +23,8 @@ stir.templates.search = (() => {
     student: ["student"],
   };
   const afce4eafce490574e288574b384ecd87 = window[["s", "e", "i", "k", "o", "o", "C"].reverse().join("")]; // Just a bit of mild fun to stop anyone text-searching for "Cookies"!
-  const isUser = afce4eafce490574e288574b384ecd87.get("psessv0") ? true : false; // Cookie could be spoofed, but we'll trust it. The Portal will enforce authentication anyway.
-  const userType = isUser ? afce4eafce490574e288574b384ecd87.get("psessv0").split("|")[0] : "EXTERNAL";
+  const isUser = afce4eafce490574e288574b384ecd87.get("psess17") ? true : false; // Cookie could be spoofed, but we'll trust it. The Portal will enforce authentication anyway.
+  const userType = isUser ? afce4eafce490574e288574b384ecd87.get("psess17").split("|")[0] : "EXTERNAL";
   const userAuth = (group) => entitlements[userType.toLowerCase()]?.indexOf(group.toLowerCase()) > -1;
   const authClass = (group) => (userAuth(group) ? " c-internal-search-result" : " c-internal-locked-search-result");
   const authMessage = (group) =>
