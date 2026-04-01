@@ -4217,6 +4217,21 @@ input:checked + label.button {
 .btn-global-search {
   border: 0; }
 
+/*
+    Button with animated gradient background
+*/
+.button--gradient-hover {
+  background: linear-gradient(to top, #006938 50%, #fff 50%);
+  background-size: 100% 200%;
+  background-position: bottom;
+  border: 4px solid #006938;
+  border-radius: 40px;
+  color: #fff;
+  transition: all 0.2s ease-out; }
+  .button--gradient-hover:hover {
+    background-position: top;
+    color: #006938; }
+
 /* 
 	Callouts
 	build with utils eg u-bg-heritage-berry u-white--all u-p-1 u-my-2
