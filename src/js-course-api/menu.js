@@ -7,10 +7,11 @@
 
 (function() {
 
+	const debug = UoS_env.name !== "prod" ? true : false;
 	const el = document.querySelector("main#content > .grid-container");
 	const host = window.location.hostname;
 	const path = '/data/pd-api-dev/';
-	const ppth = 'terminalfour/preview/1/en/35030';
+	const ppth = 'terminalfour/preview/1/en/35030'; // dev
 	const query = 'menu';
 	const spec = "dev"===UoS_env.name?'course.html':'<t4 type="navigation" name="Helper: Path to programme specification" id="5300" />';
 
@@ -23,6 +24,7 @@
 			case "preview":
 			case "appdev-preview":
 				return `https://${host}/${ppth}?${query}`;
+			case "pub":
 			case "prod":
 				return `https://${host}${path}?${query}`;
 
@@ -58,22 +60,24 @@
 														<table>
 															<thead>
 																<tr>
-																	<th>Route code</th>
-																	<th>Course name</th>
+																	<th>Route code</th><th>Course name</th><th>Partner institution</th>
 																</tr>
 															</thead>
 															<caption>${faculty} (${division}) routes for ${year}:</caption>
+															<tbody>
 															${data.academicYears[year].faculties[faculty].divisions[division].routes.map(route => `
 															<tr>
 																<td><small>${route.routeCode}</small></td>
-																<td><a href="${spec}?session=${year}&route=${route.routeCode}&semester=SPR" target=_blank>${route.routeName}</a></td>
-																<!-- <td>
-																	<a href="${spec}?session=${year}&route=${route.routeCode}&semester=AUT" target=_blank>Autumn</a> | 
-																	<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SPR" target=_blank>Spring</a> | 
-																	<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SUM" target=_blank>Summer</a>
-																</td> -->
+																<td><a href="${spec}?session=${year}&route=${route.routeCode}&semester=AUT" target=_blank>${route.routeName}</a></td>
+																<td>
+																<!-- <a href="${spec}?session=${year}&route=${route.routeCode}&semester=AUT" target=_blank>Autumn</a> | 
+																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SPR" target=_blank>Spring</a> | 
+																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SUM" target=_blank>Summer</a> -->
+																${route.partnerInstitution.join(", ")}
+																</td>
 															</tr>
 														`).join('')}
+															</tbody>
 														</table>
 													</div>
 												</details>
@@ -88,9 +92,15 @@
 					</div>
 				</div>`;}
 	};
+	
+	if(debug) {
+		const temp = document.getElementById('debug');
+		temp && temp.classList && temp.classList.add("cell","u-bg-heritage-green--10","u-heritage-green-line-left","u-p-1","u-mb-2");
+		temp && (temp.innerText = `💡Using data from: ${apiUrl}`);
+	}
 
 	fetch(apiUrl)
 		.then( (response) => response.json() )
-		.then( (data) => {el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data));console.info("data",data)} )
+		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data)) );
 
 })();
