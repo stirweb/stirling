@@ -23,7 +23,7 @@
 			case "preview":
 			case "appdev-preview":
 				return `https://${host}/${ppth}?${query}`;
-			case "pub":
+			case "prod":
 				return `https://${host}${path}?${query}`;
 
 		}
@@ -58,16 +58,21 @@
 														<table>
 															<thead>
 																<tr>
-																	<th>Route code</th><th>Course name</th><th>More information</th>
+																	<th>Route code</th>
+																	<th>Course name</th>
 																</tr>
 															</thead>
 															<caption>${faculty} (${division}) routes for ${year}:</caption>
 															${data.academicYears[year].faculties[faculty].divisions[division].routes.map(route => `
-															<tr><td><small>${route.routeCode}</small></td><td>${route.routeName}</td><td>
-																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=AUT" target=_blank>Autumn</a> | 
-																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SPR" target=_blank>Spring</a> | 
-																<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SUM" target=_blank>Summer</a>
-															</td></tr>
+															<tr>
+																<td><small>${route.routeCode}</small></td>
+																<td><a href="${spec}?session=${year}&route=${route.routeCode}&semester=SPR" target=_blank>${route.routeName}</a></td>
+																<!-- <td>
+																	<a href="${spec}?session=${year}&route=${route.routeCode}&semester=AUT" target=_blank>Autumn</a> | 
+																	<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SPR" target=_blank>Spring</a> | 
+																	<a href="${spec}?session=${year}&route=${route.routeCode}&semester=SUM" target=_blank>Summer</a>
+																</td> -->
+															</tr>
 														`).join('')}
 														</table>
 													</div>
@@ -86,6 +91,6 @@
 
 	fetch(apiUrl)
 		.then( (response) => response.json() )
-		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data)) );
+		.then( (data) => {el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data));console.info("data",data)} )
 
 })();
