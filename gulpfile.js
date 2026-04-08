@@ -101,23 +101,22 @@ function jsCourses() {
     src(source)
       .pipe(expect(source))
       .pipe(plumber())
-      // .pipe(
-      //   babel({
-      //     presets: [
-      //       [
-      //         "@babel/env",
-      //         {
-      //           modules: false,
-      //         },
-      //       ],
-      //     ],
-      //   })
-      // )
       .pipe(concat("course.js")) // combine js files unminified
       .pipe(dest("medias/Categorised/Dist/js/other"))
       .pipe(uglify())
       .pipe(concat("course-min.js")) // combine js files
       .pipe(dest("medias/Categorised/Dist/js/other"))
+      .pipe(browserSync.stream())
+  );
+}
+
+function jsCourseApi() {
+  const source = "src/js-course-api/*.js";
+  return (
+    src(source)
+      .pipe(plumber())
+      .pipe(uglify())
+      .pipe(dest("medias/Categorised/Dist/js/api"))
       .pipe(browserSync.stream())
   );
 }
@@ -128,18 +127,6 @@ function jsOther() {
   return (
     src(source)
       .pipe(plumber())
-      // .pipe(
-      //   babel({
-      //     presets: [
-      //       [
-      //         "@babel/env",
-      //         {
-      //           modules: false,
-      //         },
-      //       ],
-      //     ],
-      //   })
-      // )
       .pipe(dest("medias/Categorised/Dist/js/other/_unminified")) // unminified version
       .pipe(uglify())
       .pipe(dest("medias/Categorised/Dist/js/other"))
@@ -147,24 +134,12 @@ function jsOther() {
   );
 }
 
-// JS standalone scripts
+// JS standalone scripts (more)
 function jsOther2() {
   const source = "src/js-other-2/*.js";
   return (
     src(source)
       .pipe(plumber())
-      // .pipe(
-      //   babel({
-      //     presets: [
-      //       [
-      //         "@babel/env",
-      //         {
-      //           modules: false,
-      //         },
-      //       ],
-      //     ],
-      //   })
-      // )
       .pipe(dest("medias/Categorised/Dist/js/other/_unminified")) // unminified version
       .pipe(uglify())
       .pipe(dest("medias/Categorised/Dist/js/other"))
@@ -172,25 +147,13 @@ function jsOther2() {
   );
 }
 
-// JS search scripts
+// JS search scripts (Funnelback)
 function jsSearch() {
   const source = ["src/js-search/*.js"];
   return (
     src(source)
       .pipe(expect(source))
       .pipe(plumber())
-      // .pipe(
-      //   babel({
-      //     presets: [
-      //       [
-      //         "@babel/env",
-      //         {
-      //           modules: false,
-      //         },
-      //       ],
-      //     ],
-      //   })
-      // )
       .pipe(concat("search.js")) // combine js files unminified
       .pipe(dest("medias/Categorised/Dist/js/search"))
       .pipe(uglify())
@@ -223,18 +186,6 @@ function jsGallery() {
     src(source)
       .pipe(expect(source))
       .pipe(plumber())
-      // .pipe(
-      //   babel({
-      //     presets: [
-      //       [
-      //         "@babel/env",
-      //         {
-      //           modules: false,
-      //         },
-      //       ],
-      //     ],
-      //   })
-      // )
       .pipe(concat("gallery.js"))
       .pipe(dest("medias/Categorised/Dist/js/other/_unminified"))
       .pipe(concat("gallery.min.js")) // combine js files
@@ -381,4 +332,4 @@ function startBrowserSync() {
 
 // Tasks to define the execution of the functions simultaneously or in series
 exports.watch = parallel(watchFiles, startBrowserSync);
-exports.default = series(clear, parallel(js, jsProd, jsOther, jsOther2, jsCourses, jsSearch, jsGallery, scssNew, scssCampaigns, scssInfographs, scssGallery, img));
+exports.default = series(clear, parallel(js, jsProd, jsOther, jsOther2, jsCourses, jsCourseApi, jsSearch, jsAddSearch, jsGallery, scssNew, scssCampaigns, scssInfographs, scssGallery, img));
