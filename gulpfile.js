@@ -313,6 +313,7 @@ function watchFiles() {
   watch("src/js-search/*").on("change", jsSearch);
   watch("src/js-addsearch/*").on("change", jsAddSearch);
   watch("src/js-course/*").on("change", jsCourses);
+  watch("src/js-course-api/*").on("change", jsCourseApi);
   watch("src/js-other/grid-gallery.js").on("change", jsGallery);
   watch("medias/Categorised/Dist/js/app.js").on("change", jsProd);
   watch("src/img/*").on("change", img);

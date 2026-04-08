@@ -30,15 +30,13 @@
 
 		}
 	})();
+	
+	debug && console.info('[Menu API] apiUrl:',apiUrl);
 
 	const templates = {
 		menu: data => { 
-			console.info(data);
-			
 			if(!data || !data.academicYears) return;
-
-			console.info(Object.keys(data.academicYears).map(year => Object.keys(data.academicYears[year].faculties).map(faculty => Object.keys(data.academicYears[year].faculties[faculty].divisions).map(division => data.academicYears[year].faculties[faculty].divisions[division].routes))));
-
+			//console.info(Object.keys(data.academicYears).map(year => Object.keys(data.academicYears[year].faculties).map(faculty => Object.keys(data.academicYears[year].faculties[faculty].divisions).map(division => data.academicYears[year].faculties[faculty].divisions[division].routes))));
 			return `
 				<div class="grid-container u-px-1">
 					<div class="grid-x">
@@ -101,6 +99,6 @@
 
 	fetch(apiUrl)
 		.then( (response) => response.json() )
-		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data),console.info(data)) );
+		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data)) );
 
 })();
