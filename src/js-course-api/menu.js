@@ -8,7 +8,7 @@
 (function() {
 
 	const debug = UoS_env.name !== "prod" ? true : false;
-	const el = document.querySelector("main#content > .grid-container");
+	const el = document.querySelector("main#content");
 	const host = window.location.hostname;
 	const path = '/data/pd-api-dev/';
 	const ppth = 'terminalfour/preview/1/en/35030'; // dev
