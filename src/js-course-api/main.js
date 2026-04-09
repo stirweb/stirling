@@ -1,11 +1,4 @@
 (() => {
-
-	//console.info(window.location.search);
-
-	const css = document.createElement('style');
-	document.head.append(css);
-	css.textContent = "span.lc { text-transform: lowercase; }";
-
 	const u = new URL(window.location);
 	const el = document.querySelector("main#content > .grid-container");
 	const spinner = new stir.Spinner(el);
@@ -38,8 +31,9 @@
 	console.info('[Main] apiUrl',apiUrl);
 
 	const debug = ["learningOutcomes","programmeAvailabilities","programmeStructure","qaaBenchmarks"];
-	const order = ["programmeOverview","careerAvenues"];
-	const skip  = ["assessmentApproach","learnTeachApproach","programmeTitle","versionNumber","dateOfApproval","dateOfIntroduction","award","programmeCode","owningFaculty","owningDivision","ucasCode","creditPoints","ectsCredits","programmeLevel"].concat(order,debug);
+	const order = ["programmeOverview"];
+	const skip  = ["careerAvenues","assessmentApproach","learnTeachApproach","programmeTitle","versionNumber","dateOfApproval","dateOfIntroduction","award","programmeCode","owningFaculty","owningDivision","ucasCode","creditPoints","ectsCredits","programmeLevel"]
+					.concat(order,debug);
 	const ordered = element => order.indexOf(element) !== -1;
 	const skips = element => skip.indexOf(element) === -1;
 	const labels = {
@@ -158,6 +152,8 @@
 							${data.programmeAvailabilities.length>0?'</ul></details></div>':''}
 
 							${ order.map(el=>auto(el,data[el])).join("") }
+							${auto("careerAvenues",data["careerAvenues"])}
+							${data.careerAvenues.length>0?'<p><em>Please note this section highlights potential areas of work</em>.</p>':''}
 
 							<!-- AUTO -->
 							${ Object.keys(data).filter(skips).map(el => auto(el,data.el)).join("") }
@@ -203,5 +199,4 @@
 				</div>`);
 			spinner.hide();
 		});
-
 })();
