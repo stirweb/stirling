@@ -1,4 +1,4 @@
-(()=>{var e=document.createElement("style"),e=(document.head.append(e),e.textContent="span.lc { text-transform: lowercase; }",new URL(window.location));const a=document.querySelector("main#content > .grid-container"),r=new stir.Spinner(a),t=window.location.hostname,s="/data/pd-api-dev/";var i=e.searchParams.has("route")?e.searchParams.get("route"):"UCX12-BUSLAW";const o=e.searchParams.has("session")?e.searchParams.get("session"):"2024/5",n=e.searchParams.has("semester")?e.searchParams.get("semester"):"SPR",l=`programme=${i}/${o}/`+n,c=["January","February","March","April","May","June","July","August","September","October","November","December"];e=(()=>{switch(UoS_env.name){case"dev":return`https://www.stir.ac.uk${s}?`+l;case"qa":return"/stirling/pages/data/akari/course.json";case"preview":case"appdev-preview":return`https://${t}/terminalfour/preview/1/en/35030?`+l;case"prod":return`https://${t}${s}?`+l}})();console.info("[Main] apiUrl",e);const d=["programmeOverview","careerAvenues"],u=["assessmentApproach","learnTeachApproach","programmeTitle","versionNumber","dateOfApproval","dateOfIntroduction","award","programmeCode","owningFaculty","owningDivision","ucasCode","creditPoints","ectsCredits","programmeLevel"].concat(d,["learningOutcomes","programmeAvailabilities","programmeStructure","qaaBenchmarks"]);const m=e=>-1===u.indexOf(e),p={assessmentApproach:"Approach to assessment",awardBodies:"Awarding bodies",careerAvenues:"My future",learnTeachApproach:"Approach to learning and teaching",partnerInstitutions:"Partner institutions",programmeOverview:"Overview",qaaBenchmarks:"QAA benchmarks"},g={FT:"Full time",PTO:"Part time",SW:"Sandwich"},h=e=>`
+(()=>{var e=new URL(window.location);const a=document.querySelector("main#content > .grid-container"),r=new stir.Spinner(a),t=window.location.hostname,s="/data/pd-akari/";var i=e.searchParams.has("route")?e.searchParams.get("route"):"UCX12-BUSLAW";const o=e.searchParams.has("session")?e.searchParams.get("session"):"2024/5",n=e.searchParams.has("semester")?e.searchParams.get("semester"):"SPR",l=`programme=${i}/${o}/`+n,c=["January","February","March","April","May","June","July","August","September","October","November","December"];e=(()=>{switch(UoS_env.name){case"dev":return`https://www.stir.ac.uk${s}?`+l;case"qa":return"/stirling/pages/data/akari/course.json";case"preview":case"appdev-preview":return`https://${t}/terminalfour/preview/1/en/35030?`+l;case"prod":return`https://${t}${s}?`+l}})();console.info("[Main] apiUrl",e);const d=["programmeOverview"],u=["careerAvenues","assessmentApproach","learnTeachApproach","programmeTitle","versionNumber","dateOfApproval","dateOfIntroduction","award","programmeCode","owningFaculty","owningDivision","ucasCode","creditPoints","ectsCredits","programmeLevel"].concat(d,["learningOutcomes","programmeAvailabilities","programmeStructure","qaaBenchmarks"]);const m=e=>-1===u.indexOf(e),p={assessmentApproach:"Approach to assessment",awardBodies:"Awarding bodies",careerAvenues:"My future",learnTeachApproach:"Approach to learning and teaching",partnerInstitutions:"Partner institutions",programmeOverview:"Overview",qaaBenchmarks:"QAA benchmarks"},g={FT:"Full time",PTO:"Part time",SW:"Sandwich"},h=e=>`
 		<tr>
 			<td><a target=_blank href="https://www.stir.ac.uk/courses/module/?code=${e.code||e.moduleCode}&session=${o}&semester=${n}" data-notused="occurrence=A">${e.title}</a> <span class="c-course-modules__module-code">(${e.code||e.moduleCode})</span></td>
 			<td>${e.credits?e.credits+" credits":""}</td><td>${e.deliveryType||""}</td></tr>
@@ -24,7 +24,7 @@
 				${f(e.items)}
 				<!-- Options: ${e.options.length} -->
 			</div>
-		</details>`,w=e=>""+e[0]+e.slice(1).toLowerCase(),$=(e,t,a)=>a.indexOf(e)===t,A=(e,t)=>{var a="STIRLING"!==e.location?w(e.location):"",r=e.deliveryMode.replace(", UK",""),s=(g[e.loadCategory]||e.loadCategory).toLowerCase(),i=`${c[parseInt(e.prospectiveStartDate.split("-")[1])]||""} `+e.year,e="Y"===e.isActive?"":" (Inactive)";return""+[a,a?r:w(r),s,t?i:"",e].filter(e=>e.length).join(", ")},k=e=>A(e,!1),C=e=>A(e,!0),j=e=>`<li>${e}</li>`,P=e=>`<p>${e.entryPointDescription}</p> `+e.years.map(e=>""+e.semesters.map(y).join("")).join(""),T=(e,t)=>{return("string"==typeof(a=t)||"number"==typeof a)&&0<a.length?`<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${p[e]||e}</h3><p>${t}</p></div>`:"";var a};if(!a)return console.warn("[Course API] no DOM");r.show(),fetch(e).then(e=>{if(e.ok)return e.json();console.error("Response status: "+e.status)}).then(t=>{!t||t.error?(r.hide(),a.insertAdjacentHTML("beforeend","<p><strong>Error</strong>: No data!</p>")):(a.insertAdjacentHTML("beforeend",`<div class="grid-container u-px-1">
+		</details>`,w=e=>""+e[0]+e.slice(1).toLowerCase(),$=(e,t,a)=>a.indexOf(e)===t,A=(e,t)=>{var a="STIRLING"!==e.location?w(e.location):"",r=e.deliveryMode.replace(", UK",""),s=(g[e.loadCategory]||e.loadCategory).toLowerCase(),i=`${c[parseInt(e.prospectiveStartDate.split("-")[1])]||""} `+e.year,e="Y"===e.isActive?"":" (Inactive)";return""+[a,a?r:w(r),s,t?i:"",e].filter(e=>e.length).join(", ")},k=e=>A(e,!1),j=e=>A(e,!0),C=e=>`<li>${e}</li>`,P=e=>`<p>${e.entryPointDescription}</p> `+e.years.map(e=>""+e.semesters.map(y).join("")).join(""),T=(e,t)=>{return("string"==typeof(a=t)||"number"==typeof a)&&0<a.length?`<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">${p[e]||e}</h3><p>${t}</p></div>`:"";var a};if(!a)return console.warn("[Course API] no DOM");r.show(),fetch(e).then(e=>{if(e.ok)return e.json();console.error("Response status: "+e.status)}).then(t=>{!t||t.error?(r.hide(),a.insertAdjacentHTML("beforeend","<p><strong>Error</strong>: No data!</p>")):(a.insertAdjacentHTML("beforeend",`<div class="grid-container u-px-1">
 					<div class="grid-x">
 						<div class="cell medium-10 medium-offset-1 u-padding-y">
 							<h1 class="c-course-heading c-course-title__heading u-heritage-green">${t.programmeTitle}</h1>
@@ -40,19 +40,21 @@
 							</div>
 
 							${0<t.programmeAvailabilities.length?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Programme availabilities</h3><ul>':""}
-							${t.programmeAvailabilities.map(k).filter($).map(j).join("")}
+							${t.programmeAvailabilities.map(k).filter($).map(C).join("")}
 							${0<t.programmeAvailabilities.length?'</ul><details style="margin-left:1.5rem;"><summary>Full list of availabilities</summary><ul>':""}
-							${t.programmeAvailabilities.map(C).filter($).map(j).join("")}
+							${t.programmeAvailabilities.map(j).filter($).map(C).join("")}
 							${0<t.programmeAvailabilities.length?"</ul></details></div>":""}
 
 							${d.map(e=>T(e,t[e])).join("")}
+							${T("careerAvenues",t.careerAvenues)}
+							${0<t.careerAvenues.length?"<p><em>Please note this section highlights potential areas of work</em>.</p>":""}
 
 							<!-- AUTO -->
 							${Object.keys(t).filter(m).map(e=>T(e,t.el)).join("")}
 							<!-- AUTO -->
 							
 							${0<t.qaaBenchmarks.length?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">QAA benchmarks</h3><ul>':""}
-							${t.qaaBenchmarks.map(j).join("")}
+							${t.qaaBenchmarks.map(C).join("")}
 							${0<t.qaaBenchmarks.length?"</ul></div>":""}
 
 							${0<t.learningOutcomes.length?'<div class=u-mb-2><h3 class="header-stripped u-bg-heritage-green--10 u-heritage-green-line-left u-p-1 u-border-width-5 u-text-regular">Learning outcomes and graduate attributes</h3><ul>':""}

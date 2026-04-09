@@ -3,7 +3,7 @@
 	const el = document.querySelector("main#content > .grid-container");
 	const spinner = new stir.Spinner(el);
 	const host = window.location.hostname;
-	const path = '/data/pd-api-dev/';
+	const path = '/data/pd-akari/';
 	const ppth = 'terminalfour/preview/1/en/35030';
 	const code = u.searchParams.has("route") ? u.searchParams.get('route') : 'UCX12-BUSLAW';
 	const sess = u.searchParams.has("session") ? u.searchParams.get('session') : '2024/5';

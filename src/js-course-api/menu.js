@@ -10,7 +10,7 @@
 	const debug = UoS_env.name !== "prod" ? true : false;
 	const el = document.querySelector("main#content");
 	const host = window.location.hostname;
-	const path = '/data/pd-api-dev/';
+	const path = '/data/pd-akari/';
 	const ppth = 'terminalfour/preview/1/en/35030'; // dev
 	const query = 'menu';
 	const spec = "dev"===UoS_env.name?'course.html':'<t4 type="navigation" name="Helper: Path to programme specification" id="5300" />';
