@@ -9559,6 +9559,9 @@ article.c-convo small {
 .column-gap-none {
   column-gap: 0; }
 
+.column-gap-2 {
+  column-gap: 2rem; }
+
 /*
     UTILITY CLASSES
 
