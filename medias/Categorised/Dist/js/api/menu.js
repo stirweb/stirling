@@ -1,7 +1,7 @@
 !function(){var e="prod"!==UoS_env.name;const a=document.querySelector("main#content"),t=window.location.hostname,r="dev"===UoS_env.name?"course.html":'<t4 type="navigation" name="Helper: Path to programme specification" id="5300" />';var s=(()=>{switch(UoS_env.name){case"dev":return"/pages/data/akari/menu.json";case"qa":return"/stirling/pages/data/akari/menu.json";case"preview":case"appdev-preview":return`https://${t}/terminalfour/preview/1/en/35030?menu`;case"pub":case"prod":return`https://${t}/data/pd-akari/?menu`}})();e&&console.info("[Menu API] apiUrl:",s);const n={menu:s=>{if(s&&s.academicYears)return`
-				<div class="grid-container u-px-1">
+				<div class="grid-container">
 					<div class="grid-x">
-						<div class=cell>
+						<div class="cell u-mb-2">
 							<p>${Object.keys(s.academicYears).map(t=>{var e=Object.keys(s.academicYears[t].faculties);return`<details class=u-accordion>
 									<summary>${t}</summary>
 									<div class=u-px-1>

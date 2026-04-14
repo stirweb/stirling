@@ -38,9 +38,9 @@
 			if(!data || !data.academicYears) return;
 			//console.info(Object.keys(data.academicYears).map(year => Object.keys(data.academicYears[year].faculties).map(faculty => Object.keys(data.academicYears[year].faculties[faculty].divisions).map(division => data.academicYears[year].faculties[faculty].divisions[division].routes))));
 			return `
-				<div class="grid-container u-px-1">
+				<div class="grid-container">
 					<div class="grid-x">
-						<div class=cell>
+						<div class="cell u-mb-2">
 							<p>${Object.keys(data.academicYears).map(year => {
 								const faculties = Object.keys(data.academicYears[year].faculties);
 								return `<details class=u-accordion>
