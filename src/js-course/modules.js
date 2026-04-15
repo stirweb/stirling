@@ -169,7 +169,7 @@ stir.course = (function () {
 })();
 
 // Get boilerplate text first, then initialise the course page scripts:
-stir.getJSON("https://www.stir.ac.uk/data/modules/boilerplate/", (data) => stir.course.init(data));
+stir.getJSON("https://www.stir.ac.uk/data/modules/boilerplate/", (data) => stir.course.init && stir.course.init(data));
 
 // TEMPORARY ONLY UNTIL T4 REPUBLISHES THE COURSE PAGES
 // 2024-02-07 r.w.morrison@stir.ac.uk

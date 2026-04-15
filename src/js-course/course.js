@@ -335,7 +335,7 @@ if (stir.favourites && stir.coursefavs) {
   const breadcrumb = document.querySelector("meta[name='stir.breadcrumb']").getAttribute("content");
   const colour = breadcrumb.includes("Undergraduate") ? "energy-turq" : breadcrumb.includes("Postgraduate") ? "heritage-berry" : "";
 
-  const sid = document.querySelector("meta[name='sid']").getAttribute("content");
+  const sid = document.querySelector("meta[name='sid']") && document.querySelector("meta[name='sid']").getAttribute("content");
   const suggestedNode = document.getElementById("course-suggested-actions");
 
   if (!sid || !suggestedNode) return;
