@@ -1347,6 +1347,25 @@ stir.search = (() => {
         limit: NUMRANKS,
         collectAnalytics: false,
         fuzzy: "auto",
+        filter: JSON.stringify({
+          or: [
+            {
+              and: [{not: { "custom_fields.type": "event" }}, {not: { "custom_fields.type": "webinar" }}],
+            },
+            {
+              and: [
+                { or: [{ "custom_fields.type": "event" }, { "custom_fields.type": "webinar" }]},
+                {
+                  range: {
+                    "custom_fields.e": {
+                      gt: stir.Date.timeElementDatetime(((d) => new Date(d.setDate(d.getDate() - 1)))(new Date())),
+                    },
+                  },
+                }
+              ]
+            },
+          ],
+        }),
       },
       news: {
         customField: "type=news",
