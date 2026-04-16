@@ -2403,13 +2403,13 @@ var UoS_closeAllWidgetsExcept = (function () {
           item.classList.remove("is-active");
         });
     },
-    courseSearchWidget: function () {
-      var cs = document.getElementById("course-search-widget__wrapper");
-      if (cs) {
-        cs.classList.remove("stir__slidedown");
-        cs.classList.add("stir__slideup");
-      }
-    },
+//    courseSearchWidget: function () {
+//      var cs = document.getElementById("course-search-widget__wrapper");
+//      if (cs) {
+//        cs.classList.remove("stir__slidedown");
+//        cs.classList.add("stir__slideup");
+//      }
+//    },
     megamenu: function () {
       var hnp = document.querySelector(".c-header-nav--primary a");
       hnp && hnp.classList.remove("c-header-nav__link--is-active");
