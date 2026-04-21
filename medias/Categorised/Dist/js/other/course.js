@@ -1567,8 +1567,8 @@ stir.course = (function () {
 	// API has been manually overridden by t4 editors for this course:
 	function override() {
 		debug && console.info('[Course] fallback/override invoked!')
-		// 1. Get all links in this tab. (Assumption: parent element).
-		const modLinks = Array.prototype.slice.call( container.parentElement.querySelectorAll('a') )
+		// 1. Get all links in the container element.
+		const modLinks = Array.prototype.slice.call( container.querySelectorAll('a') )
 		  // 2. filter for hard-coded module links
 		  .filter(a=>a.pathname==="/courses/module/");
 		  
