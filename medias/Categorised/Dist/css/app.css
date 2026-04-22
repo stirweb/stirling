@@ -5234,6 +5234,12 @@ table {
     font-weight: 400;
     color: #3a3c39; }
 
+table.u-stripyrows-pairs tbody tr:nth-child(4n-2), table.u-stripyrows-pairs tbody tr:nth-child(4n-3) {
+  background-color: transparent; }
+
+table.u-stripyrows-pairs tbody tr:nth-child(4n), table.u-stripyrows-pairs tbody tr:nth-child(4n-1) {
+  background-color: #f8f8f7; }
+
 .table--stripped thead,
 .table--stripped tbody,
 .table--stripped tfoot {
@@ -8712,6 +8718,9 @@ ul[data-suggestions] {
 #course-fees-information td {
   font-size: 1rem;
   padding: 0.333rem; }
+  #course-fees-information th.note p,
+  #course-fees-information td.note p {
+    font-size: 1rem; }
 
 #course-fees-information label {
   font-size: 1rem; }
