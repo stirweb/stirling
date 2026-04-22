@@ -1342,7 +1342,7 @@ stir.fees = stir.fees || {};
 				const route = routes.shift();
 				routedata = data.feeData.filter(item=>item.rouCode===route);
 				feedata = routedata.length && routedata[0].feeData
-				debug && console.info('[Fees] route',route,routedata);
+				debug && console.info('[Fees] route',route);
 				debug && console.info('[Fees] feedata',feedata);
 		
 				info.theyears = feedata && feedata.map(data=>data.academicYear).filter(onlyUnique);
@@ -1364,7 +1364,7 @@ stir.fees = stir.fees || {};
 								const mode   = row.getAttribute("data-mode");
 								info.theyears.forEach(year => {
 									const fee = feedata.filter(a=>a.feeStatus===status&&a.modeOfAttendance===mode&&a.academicYear===year);
-									row.insertAdjacentHTML("beforeend",fee.map(td_amount).join(''));
+									row.insertAdjacentHTML("beforeend",fee.map(td_amount).join('')||'<td>N/A</td>');
 								});
 							});
 						});
