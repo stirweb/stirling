@@ -94,7 +94,7 @@
 		const location = "STIRLING"!==data.location?initCap(data.location):'';
 		const delivery = data.deliveryMode.replace(", UK",'');
 		const mode = (categories[data.loadCategory]||data.loadCategory).toLowerCase();
-		const date = `${months[parseInt(data.prospectiveStartDate.split('-')[1])]||''} ${data.year}`;
+		const date = `${months[parseInt(data.prospectiveStartDate.split('-')[1])-1]||''} ${data.year}`;
 		const active = "Y"===data.isActive?"":' (Inactive)';
 		return `${[location,location?delivery:initCap(delivery),mode,exhastive?date:'',active].filter(el=>el.length).join(', ')}`;
 	};
