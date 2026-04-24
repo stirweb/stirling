@@ -115,6 +115,8 @@ stir.course = (function () {
 	// Prepare module modal popup viewer
 	document.body.append(moduleViewer);
 	moduleViewer.append(moduleInfo);
+	stir.dpt.set.show.module(handle.module);
+	stir.dpt.set.reset.module(reset.module);
 	
 	if(useAPI) {
 		// Set up the DOM:
@@ -125,10 +127,8 @@ stir.course = (function () {
 		stir.dpt.set.show.routes(handle.routes);
 		stir.dpt.set.show.options(handle.options);
 		stir.dpt.set.show.modules(handle.modules);
-		stir.dpt.set.show.module(handle.module);
 		stir.dpt.set.show.version(handle.version);
 		stir.dpt.set.reset.modules(reset.modules);
-		stir.dpt.set.reset.module(reset.module);
 		stir.dpt.set.reset.options(reset.options);
 		stir.dpt.set.fallback.options(handle.fallback.options);
 	}
@@ -159,7 +159,6 @@ stir.course = (function () {
 	});
 	
 	function _auto() {
-		debug && console.info('[Course] _Auto() initialised:',initialised)
 		if (!initialised) {
 			initialised = true;
 			version && stir.dpt.get.version(parameter.level);
@@ -173,12 +172,11 @@ stir.course = (function () {
 	
 	// API has been manually overridden by t4 editors for this course:
 	function override() {
-		debug && console.info('[Course] fallback/override invoked!')
 		// 1. Get all links in the container element.
 		const modLinks = Array.prototype.slice.call( container.querySelectorAll('a') )
 		  // 2. filter for hard-coded module links
 		  .filter(a=>a.pathname==="/courses/module/");
-		  
+
 		// 3. examine each remaining link:
 		modLinks.forEach( (a,i,o)=>{
 		  // 3a. Get module details from query parameters
