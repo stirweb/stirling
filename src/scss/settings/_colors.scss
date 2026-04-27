@@ -26,23 +26,32 @@
 $light-mink: map-get($brand-palette, light-mink);
 $medium-mink: map-get($brand-palette, medium-mink);
 $dark-mink: map-get($brand-palette, dark-mink);
-$energy-green: map-get($brand-palette, energy);
-$energy-pink: map-get($brand-palette, energy-pink);
+
 $energy-teal: map-get($brand-palette, energy-teal);
 $energy-yellow: map-get($brand-palette, energy-yellow);
 $energy-orange: map-get($brand-palette, energy-orange);
 $energy-blue: map-get($brand-palette, energy-blue);
-$energy-purple: map-get($brand-palette, energy-purple);
 $energy-turq: map-get($brand-palette, energy-turq);
-$heritage-green: map-get($brand-palette, heritage-green);
+
 $heritage-berry: map-get($brand-palette, heritage-berry);
 $heritage-teal: map-get($brand-palette, heritage-teal);
 $heritage-yellow: map-get($brand-palette, heritage-yellow);
 $heritage-orange: map-get($brand-palette, heritage-orange);
 $heritage-blue: map-get($brand-palette, heritage-blue);
 $heritage-navy: map-get($brand-palette, heritage-navy);
+
+// Purples (Important)
+$purple-tint: map-get($brand-palette, purple-tint);
+$energy-purple: map-get($brand-palette, energy-purple);
 $heritage-purple: map-get($brand-palette, heritage-purple);
 
+// Greens
+$tint-green: map-get($brand-palette, green-tint);
+$energy-green: map-get($brand-palette, energy);
+$heritage-green: map-get($brand-palette, heritage-green);
+$dark-green: map-get($brand-palette, green-dark);
+
+$energy-pink: map-get($brand-palette, energy-pink);
 $pink-medium: map-get($brand-palette, pink-medium);
 $pink-tint-40: map-get($brand-palette, pink-tint-40);
 
@@ -367,6 +376,12 @@ a:has(img):hover {
 
 /*
 
+  DEPRCATED 2025 COLOUR PACKS
+
+*/
+
+/*
+
   New brand 2025 colour packs
   
 */
@@ -549,9 +564,9 @@ a:has(img):hover {
     color: $white;
   }
 
-  a:not(.c-link) {
-    border-bottom: 2px solid $white;
-  }
+  // a:not(.c-link) {
+  //   border-bottom: 2px solid $white;
+  // }
 
   a:focus {
     background-color: transparent;
@@ -604,7 +619,7 @@ a:has(img):hover {
     }
 
     &.dark {
-      /* Tinted by default */
+      // Tinted by default
       &.button,
       .button {
         background-color: map-get($color, "tint");
@@ -642,4 +657,174 @@ a:has(img):hover {
 .dark.pinks .button {
   background-color: $pink-tint-40;
   border-color: $pink-tint-40;
+}
+
+/*
+
+  End of DEPRCATED 2025 COLOUR PACKS
+
+  */
+
+.u-hook-bottom-right::after {
+  content: "";
+  position: absolute;
+  right: -24px;
+  bottom: -24px;
+  background-color: $heritage-green;
+  padding: 12px 200px;
+  z-index: 1;
+}
+
+.u-hook-bottom-right::before {
+  content: "";
+  position: absolute;
+  bottom: -24px;
+  right: -24px;
+  background-color: $heritage-green;
+  padding: 40px 12px;
+  z-index: 1;
+}
+
+.u-hook-top-left::after {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 0;
+  background-color: $heritage-green;
+  padding: 12px 200px;
+  z-index: 1;
+}
+
+.u-hook-top-left::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: -24px;
+  background-color: $heritage-green;
+  padding: 40px 12px;
+  z-index: 1;
+}
+
+.u-hook-energy::after,
+.u-hook-energy::before {
+  background-color: $energy-green;
+}
+
+.u-hook-important::after,
+.u-hook-important::before {
+  background-color: $energy-purple;
+}
+
+.c-wrapper-2026 {
+  h2,
+  h3,
+  h4 {
+    color: $black;
+  }
+
+  .u-font-icon,
+  svg {
+    color: $energy-green;
+  }
+
+  // Energy green
+  &.c-wrapper-energy {
+    background-color: $tint-green;
+    border-image-source: linear-gradient($tint-green, $tint-green);
+
+    //.button--gradient-hover {
+    .button {
+      color: $white;
+      &:hover {
+        color: $heritage-green;
+      }
+    }
+
+    .u-font-icon,
+    svg {
+      color: $heritage-green;
+    }
+
+    a {
+      color: $dark-green;
+    }
+  }
+
+  // Heritage green
+  &.c-wrapper-heritage {
+    background-color: $heritage-green;
+    border-image-source: linear-gradient($heritage-green, $heritage-green);
+
+    .button::after {
+      filter: brightness(0);
+    }
+
+    //.button--gradient-hover {
+    .button {
+      border-color: $tint-green;
+      background: linear-gradient(to top, $tint-green 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: bottom;
+      transition: all 0.2s ease-out;
+
+      &:hover {
+        color: $black;
+        border-color: $tint-green;
+        background-position: top;
+      }
+    }
+  }
+
+  // Important - Purple / yellow
+  &.c-wrapper-important {
+    background-color: $heritage-purple;
+    border-image-source: linear-gradient($heritage-purple, $heritage-purple);
+
+    .u-font-icon,
+    svg {
+      color: $white;
+    }
+
+    a:hover {
+      border-color: $purple-tint;
+      text-decoration-color: $purple-tint;
+    }
+
+    .button::after {
+      filter: brightness(0);
+    }
+
+    //.button--gradient-hover {
+    .button {
+      border-color: $energy-yellow;
+      background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: bottom;
+      transition: all 0.2s ease-out;
+
+      &:hover {
+        color: $black;
+        border-color: $energy-yellow;
+        background-position: top;
+      }
+    }
+  }
+
+  // Neutral
+  &.c-wrapper-neutral {
+    background-color: $grey;
+    border-image-source: linear-gradient($grey, $grey);
+  }
+
+  &.dark {
+    color: $white;
+
+    h2,
+    h3,
+    h4 {
+      color: $white;
+    }
+  }
 }

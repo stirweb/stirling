@@ -70,7 +70,7 @@ button:focus {
     // font-family: "uos";
     // margin: 0 0 0 10px;
     // position: relative;
-    content: var(--icon-chevron-right);
+    content: var(--icon-arrow-right-circle);
     width: 24px;
     height: 24px;
     position: relative;
@@ -136,23 +136,23 @@ button:focus {
   */
 
   // Deprecated - for Brand 2025 its defined in colours.scss
-  @each $name, $color in $button-palette {
-    &.#{$name} {
-      background-color: $color;
-      border-color: $color;
-      color: #ffffff;
+  // @each $name, $color in $button-palette {
+  //   &.#{$name} {
+  //     background-color: $color;
+  //     border-color: $color;
+  //     color: #ffffff;
 
-      &:hover {
-        background-color: #ffffff;
-        border-color: $color;
-        color: $color;
+  //     &:hover {
+  //       background-color: #ffffff;
+  //       border-color: $color;
+  //       color: $color;
 
-        &::after {
-          filter: icon-filter($color);
-        }
-      }
-    }
-  }
+  //       &::after {
+  //         filter: icon-filter($color);
+  //       }
+  //     }
+  //   }
+  // }
 
   // &.hollow {
   //   background: transparent;
@@ -534,16 +534,12 @@ input:checked {
   }
 }
 
-.btn-global-search {
-  border: 0;
-}
-
 /*
     Button with animated gradient background
 */
-.button--gradient-hover {
+//.button--gradient-hover {
+.button {
   background: linear-gradient(to top, $heritage-green 50%, $white 50%);
-
   background-size: 100% 200%;
   background-position: bottom;
   padding: 10px 28px;
@@ -554,7 +550,141 @@ input:checked {
 
   &:hover {
     background-position: top;
-
     color: $heritage-green;
   }
+
+  &.hollow {
+    border-color: $heritage-green;
+    background: linear-gradient(to top, $heritage-green 50%, #fff 50%);
+    color: $black;
+    background-size: 100% 200%;
+    background-position: top;
+
+    &::after {
+      filter: brightness(0);
+    }
+
+    &:hover {
+      color: $white;
+      border-color: $heritage-green;
+      background-position: bottom;
+
+      &::after {
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
+
+  &.energy,
+  &.energy-green {
+    border-color: $tint-green;
+    background: linear-gradient(to top, $tint-green 50%, #fff 50%);
+    color: $black;
+    background-size: 100% 200%;
+    background-position: bottom;
+
+    &:hover {
+      color: $black;
+      border-color: $tint-green;
+      background-position: top;
+    }
+
+    &::after {
+      filter: brightness(0);
+    }
+
+    &.hollow {
+      border-color: $tint-green;
+      background: linear-gradient(to top, $tint-green 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: top;
+
+      &::after {
+        filter: brightness(0);
+      }
+
+      &:hover {
+        color: $black;
+        border-color: $tint-green;
+        background-position: bottom;
+      }
+    }
+  }
+
+  &.neutral {
+    border-color: $medium-gray;
+    background: linear-gradient(to top, $medium-gray 50%, #fff 50%);
+    color: $black;
+    background-size: 100% 200%;
+    background-position: bottom;
+
+    &:hover {
+      color: $black;
+      border-color: $medium-gray;
+      background-position: top;
+    }
+
+    &::after {
+      filter: brightness(0);
+    }
+
+    &.hollow {
+      border-color: $medium-gray;
+      background: linear-gradient(to top, $medium-gray 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: top;
+
+      &::after {
+        filter: brightness(0);
+      }
+
+      &:hover {
+        color: $black;
+        border-color: $medium-gray;
+        background-position: bottom;
+      }
+    }
+  }
+
+  &.important {
+    border-color: $energy-yellow;
+    background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
+    color: $black;
+    background-size: 100% 200%;
+    background-position: bottom;
+
+    &:hover {
+      color: $black;
+      border-color: $energy-yellow;
+      background-position: top;
+    }
+
+    &::after {
+      filter: brightness(0);
+    }
+
+    &.hollow {
+      border-color: $energy-yellow;
+      background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: top;
+
+      &::after {
+        filter: brightness(0);
+      }
+
+      &:hover {
+        color: $black;
+        border-color: $energy-yellow;
+        background-position: bottom;
+      }
+    }
+  }
 }
+
+// .btn-global-search {
+//   border: 0;
+// }

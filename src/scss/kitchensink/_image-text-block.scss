@@ -1,20 +1,21 @@
-/***
-Image with text block
-updated Aug 2022 for clearing homepage banner
-***/
+/**
+  Image with text block
+  updated Aug 2022 for clearing homepage banner
+**/
+
 .c-image-text-block {
   position: relative;
-  padding: 100px 0;
+  padding: 96px 0;
   width: 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
   min-height: 7rem;
+  // background-repeat: no-repeat;
+  // background-position: center center;
+  // background-size: cover;
 
-  > .grid-container {
-    display: flex;
-    align-items: center;
-  }
+  // > .grid-container {
+  //   display: flex;
+  //   align-items: center;
+  // }
 
   > img,
   > picture > img {
@@ -27,9 +28,9 @@ updated Aug 2022 for clearing homepage banner
     object-position: center;
   }
 
-  .flex-container.u-gap {
-    gap: 0.5rem; /* 8px */
-  }
+  // .flex-container.u-gap {
+  //   gap: 0.5rem;
+  // }
 }
 
 .c-image-text-block--fixed {
@@ -37,39 +38,39 @@ updated Aug 2022 for clearing homepage banner
   max-width: 1240px;
 }
 
-.c-image-text-block--right {
-  justify-content: flex-end;
-}
+// .c-image-text-block--right {
+//   justify-content: flex-end;
+// }
 
-.c-image-text-block__alt-header {
-  color: $black;
-  font-family: $body-font-family;
-  font-size: 2rem;
-  margin: 0 0 32px 0;
-}
+// .c-image-text-block__alt-header {
+//   color: $black;
+//   font-family: $body-font-family;
+//   font-size: 2rem;
+//   margin: 0 0 32px 0;
+// }
 
 .c-image-text-block__content {
-  position: relative;
+  // position: relative;
   background-color: #ffffff;
-  margin: 0 25px;
-  max-width: 417px;
+  margin: 0 24px;
+  max-width: 416px;
   padding: 1rem;
 
-  .c-wysiwyg-content {
-    margin-bottom: 1rem;
-  }
+  // .c-wysiwyg-content {
+  //   margin-bottom: 1rem;
+  // }
 
-  p {
-    font-size: 1rem;
-  }
+  // p {
+  //   font-size: 1rem;
+  // }
 
-  h2 {
-    margin: 0 0 1rem 0;
-  }
+  // h2 {
+  //   margin: 0 0 1rem 0;
+  // }
 
   .button {
-    padding: 1rem;
-    margin: 0;
+    // padding: 1rem;
+    // margin: 0;
 
     &:not([aria-hidden]) {
       display: block;
@@ -82,9 +83,9 @@ updated Aug 2022 for clearing homepage banner
     vertical-align: middle;
   }
 
-  .c-link {
-    margin-bottom: 1rem;
-  }
+  // .c-link {
+  //   margin-bottom: 1rem;
+  // }
 }
 
 .u-white--all .c-image-text-block__content * {
@@ -99,9 +100,9 @@ updated Aug 2022 for clearing homepage banner
   .c-image-text-block__content {
     padding: 2rem;
 
-    p {
-      font-size: 1.25rem;
-    }
+    // p {
+    //   font-size: 1.25rem;
+    // }
   }
 }
 
@@ -112,10 +113,12 @@ updated Aug 2022 for clearing homepage banner
 }
 
 /**
+ *
  * PROMO STRIP
  * See: https://app.asana.com/0/inbox/247908865349815
  * Author: Robert Morrison <r.w.morrison@stir.ac.uk>
  * Date: 2023-05-12
+ *
  **/
 
 .c-promo-strip > div > h2 {

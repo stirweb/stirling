@@ -32,6 +32,10 @@
     - align-stretch
 */
 
+.u-container {
+  container-type: inline-size;
+}
+
 .u-flex-wrap,
 .flex-wrap {
   flex-wrap: wrap;
@@ -244,6 +248,10 @@
   top: -32px;
 }
 
+.u-top--40 {
+  top: -40px;
+}
+
 .u-top--70 {
   top: -70px;
 }
@@ -287,6 +295,10 @@
 // }
 
 /* Z-indexs */
+
+.u-z--1 {
+  z-index: -1;
+}
 
 .u-z-50 {
   z-index: 50;

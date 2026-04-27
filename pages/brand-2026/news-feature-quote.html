@@ -464,55 +464,235 @@
 		MAIN CONTENT 
 	-->
 
-    <style></style>
-
     <main class="wrapper-content" aria-label="Main content" id="content">
       <div class="grid-x grid-container">
-        <!-- Promo bar -->
-        <div class="cell small-12 c-promo-bar u-flex-medium-up u-gap-24 u-py-2 u-bg-purple-dark u-white u-bleed bg-purple-dark">
-          <div class="u-flex u-gap-24 u-flex1">
-            <div class="u-svg-40 hide-for-small-only u-py-tiny">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.3"
-                class="svg-icon"
-              >
-                <path
-                  id="Path_38"
-                  data-name="Path 38"
-                  d="M7.167,3V5.5M18.833,3V5.5M3,20.5V8A2.5,2.5,0,0,1,5.5,5.5h15A2.5,2.5,0,0,1,23,8V20.5m-20,0A2.5,2.5,0,0,0,5.5,23h15A2.5,2.5,0,0,0,23,20.5m-20,0V12.167a2.5,2.5,0,0,1,2.5-2.5h15a2.5,2.5,0,0,1,2.5,2.5V20.5M13,13.833h.009v.009H13Zm0,2.5h.009v.009H13Zm0,2.5h.009v.009H13Zm-2.5-2.5h.009v.009H10.5Zm0,2.5h.009v.009H10.5ZM8,16.333h.009v.009H8Zm0,2.5h.009v.009H8Zm7.5-5h.009v.009H15.5Zm0,2.5h.009v.009H15.5Zm0,2.5h.009v.009H15.5Zm2.5-5h.009v.009H18Zm0,2.5h.009v.009H18Z"
-                  transform="translate(-1 -1)"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            </div>
-            <div>
-              <p class="u-m-0">
-                <strong>Reserve your place on a tour of the university</strong><br />Lorem ipsum dolor sit amet consectetur assumenda animi. Asperiores aliquid minima tenetur ab
-                libero.
-              </p>
-            </div>
-          </div>
-          <div>
-            <div><a href="#" class="button button--gradient-hover u-m-0">Book now</a></div>
-          </div>
-        </div>
-        <!-- End Promo bar -->
-
-        <div class="cell medium-10 small-12 u-padding-y">
-          <h1>Promo bar</h1>
+        <div class="cell small-12 u-padding-y">
+          <h1>News features</h1>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores aliquid minima tenetur ab libero dolor alias ex animi est, fuga ea eos, provident beatae qui,
             incidunt eius molestias at velit?
           </p>
         </div>
 
-        <!-- end -->
+        <!-- Feature Promos -->
+        <style>
+          .c-feature-promo > div:nth-child(2) {
+            padding: 2rem 0;
+          }
+
+          .grid-x:has(.c-feature-promo) {
+            column-gap: 2rem;
+          }
+
+          /* Full width */
+          @container (min-width: 800px) {
+            .c-feature-promo {
+              display: grid;
+              grid-template-columns: 1fr 2fr;
+
+              > div:nth-child(2) {
+                padding: 2rem;
+              }
+            }
+          }
+        </style>
+
+        <!-- 2 x  -->
+        <div class="u-bg-grey cell u-margin-bottom u-bg-grey u-relative u-hook-bottom-right">
+          <span class="u-absolute u-top--32 u-z--1 u-white u-bg-heritage-green u-px-tiny text-md u-font-primary">Feature Article</span>
+          <div class="grid-x grid-container u-p-2">
+            <div class="cell large-4 u-container">
+              <div class="c-feature-promo u-bg-grey">
+                <div>
+                  <img src="ba.webp" class="u-w-full--2 u-object-cover" width="760" width="447" />
+                </div>
+                <div class="u-relative u-flex flex-dir-column">
+                  <div class="u-flex u-gap-8 cta-link u-mb-1">
+                    <span class="u-svg-24 u-heritage-green">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.3"
+                        class="svg-icon"
+                      >
+                        <path
+                          d="M13.833,16.333,17.167,13m0,0L13.833,9.667M17.167,13H8.833M23,13A10,10,0,1,1,13,3,10,10,0,0,1,23,13Z"
+                          transform="translate(-1 -1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                      </svg>
+                    </span>
+                    <span>
+                      <strong><a href="/study/visit-us/virtualtour/">Organising the game: the analytics in sport business</a></strong>
+                    </span>
+                  </div>
+                  <p>Sport data is more than player performance and tactical insight. We look at how business analytics is transforming sport off the pitch.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="cell large-4 u-container">
+              <div class="c-feature-promo u-bg-grey">
+                <div>
+                  <img src="ba.webp" class="u-w-full--2 u-object-cover" width="760" width="447" />
+                </div>
+                <div class="u-relative u-flex flex-dir-column">
+                  <div class="u-flex u-gap-8 cta-link u-mb-1">
+                    <span class="u-svg-24 u-heritage-green">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.3"
+                        class="svg-icon"
+                      >
+                        <path
+                          d="M13.833,16.333,17.167,13m0,0L13.833,9.667M17.167,13H8.833M23,13A10,10,0,1,1,13,3,10,10,0,0,1,23,13Z"
+                          transform="translate(-1 -1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                      </svg>
+                    </span>
+                    <span>
+                      <strong><a href="/study/visit-us/virtualtour/">Organising the game: the analytics in sport business</a></strong>
+                    </span>
+                  </div>
+                  <p>Sport data is more than player performance and tactical insight. We look at how business analytics is transforming sport off the pitch.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="cell large-4 u-container">
+              <div class="c-feature-promo u-bg-grey">
+                <div>
+                  <img src="ba.webp" class="u-w-full--2 u-object-cover" width="760" width="447" />
+                </div>
+                <div class="u-relative u-flex flex-dir-column">
+                  <!-- <div class="text-center">
+                <span class="u-bg-light-green u-inline-block u-p-tiny text-xxsm u-font-bold">Feature article</span>
+              </div> -->
+                  <div class="u-flex u-gap-8 cta-link u-mb-1">
+                    <span class="u-svg-24 u-heritage-green">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.3"
+                        class="svg-icon"
+                      >
+                        <path
+                          d="M13.833,16.333,17.167,13m0,0L13.833,9.667M17.167,13H8.833M23,13A10,10,0,1,1,13,3,10,10,0,0,1,23,13Z"
+                          transform="translate(-1 -1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                      </svg>
+                    </span>
+                    <span>
+                      <strong><a href="/study/visit-us/virtualtour/">Organising the game: the analytics in sport business</a></strong>
+                    </span>
+                  </div>
+                  <p>Sport data is more than player performance and tactical insight. We look at how business analytics is transforming sport off the pitch.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- full width -->
+        <div class="u-bg-grey cell u-margin-bottom u-bg-grey u-relative u-hook-bottom-right">
+          <span class="u-absolute u-top--32 u-z--1 u-white u-bg-heritage-green u-px-tiny text-md u-font-primary">Feature Article</span>
+          <div class="grid-x grid-container">
+            <div class="cell medium-12 u-container">
+              <div class="c-feature-promo u-bg-grey">
+                <div>
+                  <img src="ba.webp" class="u-w-full--2 u-object-cover" width="760" width="447" />
+                </div>
+                <div class="u-relative u-flex flex-dir-column">
+                  <!-- <div class="text-center">
+                <span class="u-bg-light-green u-inline-block u-p-tiny text-xxsm u-font-bold">Feature article</span>
+              </div> -->
+                  <div class="u-flex u-gap-8 cta-link u-mb-1">
+                    <span class="u-svg-24 u-heritage-green">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.3"
+                        class="svg-icon"
+                      >
+                        <path
+                          d="M13.833,16.333,17.167,13m0,0L13.833,9.667M17.167,13H8.833M23,13A10,10,0,1,1,13,3,10,10,0,0,1,23,13Z"
+                          transform="translate(-1 -1)"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                      </svg>
+                    </span>
+                    <span>
+                      <strong><a href="/study/visit-us/virtualtour/">Organising the game: the analytics in sport business</a></strong>
+                    </span>
+                  </div>
+                  <p>Sport data is more than player performance and tactical insight. We look at how business analytics is transforming sport off the pitch.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cell medium-12 u-margin-top">
+          <p></p>
+        </div>
+
+        <!-- Quote -->
+        <div class="cell small-12 u-bg-grey u-margin-bottom u-hook-bottom-right u-relative">
+          <div class="u-grid-cols-1_2 u-grid-medium-up align-middle">
+            <div class="u-h-full u-relative">
+              <img class="u-object-cover" src="image-medium.jpg" width="" height="" alt="Image of undergraduate student sitting down and smiling" loading="lazy" />
+            </div>
+
+            <div class="u-p-2">
+              <blockquote cite="#" class="text-lg">
+                <q>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt quod repellat, enim ea voluptatem voluptatibus consequuntur accusantium quaerat.</q>
+              </blockquote>
+
+              <cite class="u-mt-1 u-inline-block">
+                <span class="u-font-bold">Robert Morrison</span><br />
+                <span class="info">Web developer</span><br />
+              </cite>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote -->
+        <div class="cell small-12 u-bg-grey u-margin-y u-hook-top-left u-relative">
+          <div class="u-grid-cols-2_1 u-grid-medium-up align-middle">
+            <div class="u-p-2">
+              <blockquote cite="#" class="text-lg">
+                <q>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt quod repellat, enim ea voluptatem voluptatibus consequuntur accusantium quaerat.</q>
+              </blockquote>
+
+              <cite class="u-mt-1 u-inline-block">
+                <span class="u-font-bold">Robert Morrison</span><br />
+                <span class="info">Web developer</span><br />
+              </cite>
+            </div>
+            <div class="u-h-full u-relative">
+              <img class="u-object-cover" src="image-medium.jpg" width="" height="" alt="Image of undergraduate student sitting down and smiling" loading="lazy" />
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
