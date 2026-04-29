@@ -477,19 +477,40 @@
           .c-half-n-half-2026 {
             display: grid;
             position: relative;
+            margin-bottom: 5rem;
+            background-color: #f1f1ef;
+          }
+
+          /* Media query for medium up */
+          @media (max-width: 768px) {
+            .c-half-n-half-2026 {
+              &.u-hook-bottom-right::before,
+              &.u-hook-bottom-right::after {
+                right: 0;
+              }
+
+              &.u-hook-top-left::before,
+              &.u-hook-top-left::after {
+                left: 0;
+              }
+            }
           }
 
           /* Media query for medium up */
           @media (min-width: 768px) {
             .c-half-n-half-2026 {
               grid-template-columns: 1fr 1fr;
-              background-color: #f1f1ef;
+
+              &.u-hook-top-left > div:nth-of-type(1) {
+                order: 2;
+              }
             }
           }
         </style>
 
         <!-- Large -->
-        <div class="cell small-12 u-margin-bottom c-half-n-half-2026 u-hook-top-left">
+        <div class="cell small-12 u-margin-bottom c-half-n-half-2026 u-hook-bottom-right">
+          <div><img src="image-large.jpg" class="u-object-cover" /></div>
           <div class="u-p-2 text-sm">
             <h2 class="u-black">Half and half</h2>
             <p>
@@ -502,11 +523,11 @@
             </p>
             <a href="" class="button button--gradient-hover">Call to action</a>
           </div>
-          <div><img src="image-large.jpg" class="u-object-cover" /></div>
         </div>
 
         <!-- Medium -->
-        <div class="cell small-12 u-margin-bottom c-half-n-half-2026 u-hook-top-left">
+        <div class="cell small-12 u-margin-bottom c-half-n-half-2026 u-hook-bottom-right energy u-hook-energy">
+          <div><img src="image-large.jpg" class="u-object-cover" /></div>
           <div class="u-p-2 text-sm">
             <h2 class="u-black">Half and half</h2>
             <p>
@@ -517,9 +538,25 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint at, corporis error dolor tempora est atque maiores esse ipsam? Fugiat nihil, optio maxime culpa
               laudantium error suscipit ut vitae quod?
             </p>
-            <a href="" class="button button--gradient-hover">Call to action</a>
+            <a href="" class="button energy">Call to action</a>
           </div>
+        </div>
+
+        <!-- Medium -->
+        <div class="cell small-12 u-margin-bottom c-half-n-half-2026 u-hook-bottom-right important u-hook-important">
           <div><img src="image-large.jpg" class="u-object-cover" /></div>
+          <div class="u-p-2 text-sm u-bg-heritage-purple u-white">
+            <h2>Half and half</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint at, corporis error dolor tempora est atque maiores esse ipsam? Fugiat nihil, optio maxime culpa
+              laudantium error suscipit ut vitae quod?
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint at, corporis error dolor tempora est atque maiores esse ipsam? Fugiat nihil, optio maxime culpa
+              laudantium error suscipit ut vitae quod?
+            </p>
+            <a href="" class="button important">Call to action</a>
+          </div>
         </div>
 
         <!-- end -->

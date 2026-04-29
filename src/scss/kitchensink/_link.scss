@@ -96,7 +96,8 @@ CTA Link Brand 2026
     font-size: 1.25rem;
     max-width: max-content;
     position: relative;
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 5px;
     text-wrap: pretty;
     display: inline;
     gap: 0.5rem;
@@ -108,10 +109,28 @@ CTA Link Brand 2026
 
     &:hover {
       color: white;
+      text-decoration-color: $heritage-green;
       background-position: bottom;
     }
   }
   svg {
     margin-top: 5px;
+  }
+}
+
+.dark .cta-link {
+  a {
+    background: linear-gradient(to top, $white 50%, transparent 50%);
+    background-size: 100% 200%;
+  }
+
+  a:hover {
+    color: $heritage-green;
+    text-decoration-color: $white;
+    background-position: bottom;
+  }
+
+  svg {
+    filter: brightness(0) invert(1);
   }
 }

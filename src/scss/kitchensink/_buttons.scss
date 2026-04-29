@@ -651,7 +651,7 @@ input:checked {
   &.important {
     border-color: $energy-yellow;
     background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
-    color: $black;
+    color: $black !important;
     background-size: 100% 200%;
     background-position: bottom;
 

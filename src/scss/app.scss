@@ -93,7 +93,7 @@ $brand-palette: (
   energy-light-blue: #77a4da,
   energy-blue: #2c498a,
   energy-pink: #e80068,
-  energy-purple: #592c82,
+  energy-purple: #9053c6,
   energy-turq: #00a5ac,
 
   // Heritage Colours
@@ -105,7 +105,8 @@ $brand-palette: (
   heritage-navy: #122c54,
   heritage-berry: #7c184f,
   // no longer exists. before 7c184f. Mapped to dark pink
-  heritage-purple: #3f0066,
+  heritage-purple: #592c82,
+  // #3f0066,
   // Web versions
   web-turq: #00838a,
 
@@ -275,16 +276,52 @@ $neutral-green: (
   "darkbg": map-get($brand-palette, neutral-dark),
 );
 
+$heritage-group: (
+  "tint-7": map-get($brand-palette, neutral-tint-7),
+  "tint": map-get($brand-palette, neutral-tint),
+  "light": map-get($brand-palette, neutral-light),
+  "medium": map-get($brand-palette, neutral-medium),
+  "dark": map-get($brand-palette, neutral-dark),
+  "hook": map-get($brand-palette, heritage-green),
+  "button": map-get($brand-palette, heritage-green),
+  "darkbg": map-get($brand-palette, neutral-dark),
+);
+
+$energy-group: (
+  "tint-7": map-get($brand-palette, neutral-tint-7),
+  "tint": map-get($brand-palette, neutral-tint),
+  "light": map-get($brand-palette, neutral-light),
+  "medium": map-get($brand-palette, neutral-medium),
+  "dark": map-get($brand-palette, neutral-dark),
+  "hook": map-get($brand-palette, energy-green),
+  "button": map-get($brand-palette, energy-green),
+  "darkbg": map-get($brand-palette, neutral-dark),
+);
+
+$important-group: (
+  "tint-7": map-get($brand-palette, neutral-tint-7),
+  "tint": map-get($brand-palette, neutral-tint),
+  "light": map-get($brand-palette, neutral-light),
+  "medium": map-get($brand-palette, neutral-medium),
+  "dark": map-get($brand-palette, neutral-dark),
+  "hook": map-get($brand-palette, energy-purple),
+  "button": map-get($brand-palette, energy-purple),
+  "darkbg": map-get($brand-palette, neutral-dark),
+);
+
 $uos-colour-group-palette: (
-  greens: $greens,
-  pinks: $pinks,
-  blues: $blues,
-  yellows: $yellows,
-  oranges: $oranges,
-  teals: $teals,
-  purples: $purples,
-  neutrals: $neutrals,
+  //greens: $greens,
+  //purples: $purples,
+  //neutrals: $neutrals,
   neutral-green: $neutral-green,
+  heritage: $heritage-group,
+  energy: $energy-group,
+  important: $important-group,
+  //pinks: $pinks,
+  //blues: $blues,
+  //yellows: $yellows,
+  //oranges: $oranges,
+   //teals: $teals,
 );
 
 // @debug map-get($purples, "medium");
