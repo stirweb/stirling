@@ -32,6 +32,10 @@
     - align-stretch
 */
 
+.u-container {
+  container-type: inline-size;
+}
+
 .u-flex-wrap,
 .flex-wrap {
   flex-wrap: wrap;
@@ -59,8 +63,16 @@
   grid-template-columns: 3fr 1fr;
 }
 
+.u-grid-cols-1_3 {
+  grid-template-columns: 1fr 3fr;
+}
+
 .u-grid-cols-2_1 {
   grid-template-columns: 2fr 1fr;
+}
+
+.u-grid-cols-1_2 {
+  grid-template-columns: 1fr 2fr;
 }
 
 .u-justify-content-center {
@@ -236,6 +248,10 @@
   top: -32px;
 }
 
+.u-top--40 {
+  top: -40px;
+}
+
 .u-top--70 {
   top: -70px;
 }
@@ -279,6 +295,10 @@
 // }
 
 /* Z-indexs */
+
+.u-z--1 {
+  z-index: -1;
+}
 
 .u-z-50 {
   z-index: 50;

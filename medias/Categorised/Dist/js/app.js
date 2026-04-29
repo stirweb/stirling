@@ -2715,6 +2715,8 @@ stir.addSearch = (() => {
 * SEARCH AUTO-SUGGEST
 * @author: Robert Morrison <r.w.morrison@stir.ac.uk>
 * 2026-03-16
+* see: https://uxmastery.com/anatomy-of-an-accessible-auto-suggest/
+* see: https://stackoverflow.com/questions/39439115/how-to-execute-click-function-before-the-blur-function
 */
 
 // we will add some new modules to the stir library
@@ -2739,7 +2741,7 @@ stir.Suggester = function Suggester(input,output,announcer) {
 	//input.addEventListener("focus", focusing);
 	input.addEventListener("input", stir.debounce(handleInput, keyUpTime));
 	input.addEventListener("keydown", actions);
-	output.addEventListener("click", clicks);
+	input.addEventListener("blur", unfocus); // will also handle mouse clicks
 	
 	const clamp = (num,min,max) => Math.min(Math.max(num, min), max);
 
@@ -2766,21 +2768,13 @@ stir.Suggester = function Suggester(input,output,announcer) {
 		el.id=`suggestion_${index}`;
 		el.href="#";
 		el.textContent = item.value;
-		el.setAttribute("role","option");
+		el.setAttribute("tabindex","-1"); // receive focus but not tabbable
+		el.setAttribute("role","option"); // a11y
 		return el;
 	}
 
 
 // E V E N T   H A N D L E R   F U N C T I O N S
-
-	function clicks(event) {
-		if("LI"===event.target.tagName) {
-			input.value = event.target.textContent;
-			close();
-			isSuggesting = false;
-			input.focus();
-		}
-	}
 
 	function handleInput(event) {
 		if ("" === this.value) stopSuggesting(event);
@@ -2826,7 +2820,6 @@ stir.Suggester = function Suggester(input,output,announcer) {
 	function stopSuggesting(event) {
 		close();
 		halt(event);
-		isSuggesting = false;
 	}
 	
 	function halt(event) {
@@ -2843,12 +2836,23 @@ stir.Suggester = function Suggester(input,output,announcer) {
 		}
 	}
 	
+	function unfocus(event) {
+		if(event.relatedTarget && event.relatedTarget.role) {
+			input.value = event.relatedTarget.textContent;
+			input.focus();
+			close();
+		} else close();
+	}
+	
 	function close() {
-		isSuggesting = false;
-		spointer = 0;
-		input.removeAttribute('data-suggesting');
-		output.setAttribute("aria-hidden","true");
-		output.innerHTML = '';
+		if(!output.hasAttribute("aria-hidden")) {
+			isSuggesting = false;
+			spointer = 0;
+			input.removeAttribute('data-suggesting');
+			output.setAttribute("aria-hidden","true");
+			output.innerHTML = '';
+			announcer.textContent = '';
+		}
 	}
 
 };
@@ -3439,6 +3443,13 @@ stir.didYouMean = (() => {
       e.classList.add("u-hook-bl");
       e.classList.remove("u-hook-tr");
     }
+  });
+})();
+
+(function () {
+  document.querySelectorAll(".c-half-n-half-2026:nth-of-type(odd)").forEach((el) => {
+    el.classList.add("u-hook-top-left");
+    el.classList.remove("u-hook-bottom-right");
   });
 })();
 

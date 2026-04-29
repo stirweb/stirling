@@ -26,23 +26,32 @@
 $light-mink: map-get($brand-palette, light-mink);
 $medium-mink: map-get($brand-palette, medium-mink);
 $dark-mink: map-get($brand-palette, dark-mink);
-$energy-green: map-get($brand-palette, energy);
-$energy-pink: map-get($brand-palette, energy-pink);
+
 $energy-teal: map-get($brand-palette, energy-teal);
 $energy-yellow: map-get($brand-palette, energy-yellow);
 $energy-orange: map-get($brand-palette, energy-orange);
 $energy-blue: map-get($brand-palette, energy-blue);
-$energy-purple: map-get($brand-palette, energy-purple);
 $energy-turq: map-get($brand-palette, energy-turq);
-$heritage-green: map-get($brand-palette, heritage-green);
+
 $heritage-berry: map-get($brand-palette, heritage-berry);
 $heritage-teal: map-get($brand-palette, heritage-teal);
 $heritage-yellow: map-get($brand-palette, heritage-yellow);
 $heritage-orange: map-get($brand-palette, heritage-orange);
 $heritage-blue: map-get($brand-palette, heritage-blue);
 $heritage-navy: map-get($brand-palette, heritage-navy);
+
+// Purples (Important)
+$purple-tint: map-get($brand-palette, purple-tint);
+$energy-purple: map-get($brand-palette, energy-purple);
 $heritage-purple: map-get($brand-palette, heritage-purple);
 
+// Greens
+$tint-green: map-get($brand-palette, green-tint);
+$energy-green: map-get($brand-palette, energy);
+$heritage-green: map-get($brand-palette, heritage-green);
+$dark-green: map-get($brand-palette, green-dark);
+
+$energy-pink: map-get($brand-palette, energy-pink);
 $pink-medium: map-get($brand-palette, pink-medium);
 $pink-tint-40: map-get($brand-palette, pink-tint-40);
 
@@ -281,7 +290,7 @@ a:has(img):hover {
 }
 
 .u-bg-medium-grey {
-  background-color: map-get($brand-palette, neutral-light);
+  background-color: map-get($brand-palette, neutral-light) !important;
 }
 
 .u-bg-light-medium-grey {
@@ -367,279 +376,188 @@ a:has(img):hover {
 
 /*
 
-  New brand 2025 colour packs
-  
+  DEPRCATED 2025 COLOUR PACKS
+
 */
 
-@each $name, $color in $uos-colour-group-palette {
-  .#{$name} {
-    a,
-    h2,
-    h3,
-    h4,
-    svg,
-    .u-font-icon {
-      color: map-get($color, "hook");
-    }
+/*
 
-    a:not(.c-link) {
-      border-bottom: 2px solid map-get($color, "light");
-      &:hover {
-        border-bottom: 2px solid map-get($color, "tint-7");
-      }
-    }
+  End of DEPRCATED 2025 COLOUR PACKS
 
-    a.button {
-      border: 4px solid map-get($color, "button");
-      background-color: map-get($color, "button");
-      color: #fff;
+  */
 
-      &:hover {
-        background-color: $white;
-        color: map-get($color, "button");
-        border: 4px solid map-get($color, "button");
-
-        &::after {
-          filter: icon-filter(map-get($color, "button"));
-        }
-      }
-    }
-
-    .button--dropdown {
-      border: 4px solid map-get($color, "button");
-      background-color: map-get($color, "button");
-      color: #fff;
-
-      &:hover,
-      &:focus {
-        background-color: $white;
-        color: map-get($color, "button");
-        border: 4px solid map-get($color, "button");
-
-        &::after {
-          filter: icon-filter(map-get($color, "button"));
-        }
-      }
-    }
-
-    .dropdown-pane {
-      background-color: map-get($color, "button");
-    }
-
-    &.button.tinted,
-    .button.tinted {
-      background-color: map-get($color, "tint");
-      border-color: map-get($color, "tint");
-      color: map-get($color, "dark");
-
-      &::after {
-        filter: icon-filter(map-get($color, "medium"));
-      }
-
-      &:hover {
-        background-color: #ffffff;
-        border-color: map-get($color, "tint");
-      }
-    }
-
-    a:hover {
-      text-decoration-color: map-get($color, "light");
-    }
-
-    .c-wrapper-2025,
-    &.c-wrapper-2025 {
-      background-color: map-get($color, "tint-7");
-
-      &.u-bleed {
-        border-image-source: linear-gradient(map-get($color, "tint-7"), map-get($color, "tint-7"));
-      }
-    }
-
-    .c-link::after {
-      filter: icon-filter(map-get($color, "medium"));
-    }
-
-    .c-link::before {
-      background-color: (map-get($color, "light"));
-    }
-
-    .u-text-coloured {
-      color: map-get($color, "hook");
-    }
-
-    &.u-border-coloured,
-    .u-border-coloured {
-      border-color: map-get($color, "hook");
-    }
-
-    [data-behaviour="accordion"] > h3,
-    [data-behaviour="accordion"] > h2 {
-      color: $black;
-    }
-  }
+.u-hook-bottom-right::after {
+  content: "";
+  position: absolute;
+  right: -28px;
+  bottom: -28px;
+  background-color: $heritage-green;
+  padding: 14px 200px;
+  z-index: 1;
 }
 
-// Overrides and additions
-.teals a {
-  color: map-get($teals, "safe");
+.u-hook-bottom-right::before {
+  content: "";
+  position: absolute;
+  bottom: -28px;
+  right: -28px;
+  background-color: $heritage-green;
+  padding: 40px 14px;
+  z-index: 1;
 }
 
-.neutrals {
-  a,
+.u-hook-top-left::after {
+  content: "";
+  position: absolute;
+  top: -28px;
+  left: 0;
+  background-color: $heritage-green;
+  padding: 14px 200px;
+  z-index: 1;
+}
+
+.u-hook-top-left::before {
+  content: "";
+  position: absolute;
+  top: -28px;
+  left: -28px;
+  background-color: $heritage-green;
+  padding: 40px 14px;
+  z-index: 1;
+}
+
+.u-hook-energy::after,
+.u-hook-energy::before {
+  background-color: $energy-green;
+}
+
+.u-hook-important::after,
+.u-hook-important::before {
+  background-color: $energy-purple;
+}
+
+.c-wrapper-2026 {
   h2,
   h3,
   h4 {
-    color: map-get($greens, "hook");
+    color: $black;
   }
 
-  a:not(.c-link) {
-    border-bottom: 2px solid map-get($greens, "light");
-    &:hover {
-      border-bottom: 2px solid map-get($greens, "tint-7");
+  .u-font-icon,
+  svg {
+    color: $energy-green;
+  }
+
+  // Energy green
+  &.c-wrapper-energy {
+    background-color: $tint-green;
+    border-image-source: linear-gradient($tint-green, $tint-green);
+
+    //.button--gradient-hover {
+    .button {
+      color: $white;
+      &:hover {
+        color: $heritage-green;
+      }
+    }
+
+    .u-font-icon,
+    svg {
+      color: $heritage-green;
+    }
+
+    a {
+      color: $dark-green;
     }
   }
 
-  a.button {
-    border: 4px solid map-get($greens, "button");
-    background-color: map-get($greens, "button");
-    color: #fff;
+  // Heritage green
+  &.c-wrapper-heritage {
+    background-color: $heritage-green;
+    border-image-source: linear-gradient($heritage-green, $heritage-green);
 
-    &:hover {
-      background-color: $white;
-      color: map-get($greens, "button");
-      border: 4px solid map-get($greens, "button");
+    .button::after {
+      filter: brightness(0);
+    }
 
-      &::after {
-        filter: icon-filter(map-get($greens, "button"));
+    //.button--gradient-hover {
+    .button {
+      border-color: $tint-green;
+      background: linear-gradient(to top, $tint-green 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: bottom;
+      transition: all 0.2s ease-out;
+
+      &:hover {
+        color: $black;
+        border-color: $tint-green;
+        background-position: top;
       }
     }
   }
 
-  .u-font-icon {
-    color: map-get($greens, "hook");
-  }
+  // Important - Purple / yellow
+  &.c-wrapper-important {
+    background-color: $heritage-purple;
+    border-image-source: linear-gradient($heritage-purple, $heritage-purple);
 
-  .c-wrapper-2025 {
-    background-color: $white;
-
-    &.u-bleed {
-      border-image-source: linear-gradient($white, $white);
-    }
-  }
-}
-
-/*
-  .c-wrapper-2025 light overrides/additions
-*/
-
-.c-wrapper-2025.u-bleed.neutral-green {
-  background-color: map-get($neutrals, "tint-7");
-  &.u-bleed {
-    border-image-source: linear-gradient(map-get($neutrals, "tint-7"), map-get($neutrals, "tint-7"));
-  }
-}
-
-.dark {
-  color: $white;
-  a,
-  h2,
-  h3,
-  h4,
-  h5 {
-    color: $white;
-  }
-
-  a:not(.c-link) {
-    border-bottom: 2px solid $white;
-  }
-
-  a:focus {
-    background-color: transparent;
-    color: $white;
-    outline: 1px solid $white !important;
-  }
-
-  .c-link::after {
-    filter: brightness(0) invert(1);
-  }
-
-  .c-link:hover::before {
-    filter: brightness(0) invert(1);
-  }
-
-  .stir-accordion {
-    border-bottom: 1px solid $white;
-    &:last-child {
-      border-bottom: 1px solid $white !important;
-    }
-
-    > h3,
-    > h2 {
+    .u-font-icon,
+    svg {
       color: $white;
     }
 
-    button:focus {
-      outline: 1px solid $white !important;
-    }
-  }
-}
-
-/*
-   Dark colour overides for the 2025 colour packs
-*/
-
-@each $name, $color in $uos-colour-group-palette {
-  .#{$name} {
-    &.c-wrapper-2025.dark {
-      background-color: map-get($color, "darkbg");
-
-      &.u-bleed {
-        border-image-source: linear-gradient(map-get($color, "darkbg"), map-get($color, "darkbg"));
-      }
-
-      .u-font-icon,
-      svg {
-        color: map-get($color, "tint");
-      }
+    a:hover {
+      border-color: $purple-tint;
+      text-decoration-color: $purple-tint;
     }
 
-    &.dark {
-      /* Tinted by default */
-      &.button,
-      .button {
-        background-color: map-get($color, "tint");
-        border-color: map-get($color, "tint");
-        border-bottom: 4px solid map-get($color, "tint");
-        color: map-get($color, "dark");
+    .button::after {
+      filter: brightness(0);
+    }
 
-        &::after {
-          filter: icon-filter(map-get($color, "medium"));
-        }
+    //.button--gradient-hover {
+    .button {
+      border-color: $energy-yellow;
+      background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: bottom;
+      transition: all 0.2s ease-out;
 
-        &:hover {
-          color: map-get($color, "dark");
-          border-color: map-get($color, "tint");
-          &::after {
-            filter: icon-filter(map-get($color, "medium"));
-          }
-        }
-      }
-
-      // .c-link:hover::before {
-      //   filter: brightness(0) invert(1);
-      // }
-
-      .u-text-coloured {
-        color: map-get($color, "tint-7");
+      &:hover {
+        color: $black;
+        border-color: $energy-yellow;
+        background-position: top;
       }
     }
   }
-}
 
-// overrides for the buttons
-.button.tinted.pinks,
-.pinks .button.tinted,
-.dark.pinks .button {
-  background-color: $pink-tint-40;
-  border-color: $pink-tint-40;
+  // Neutral
+  &.c-wrapper-neutral {
+    background-color: $grey;
+    border-image-source: linear-gradient($grey, $grey);
+  }
+
+  &.dark {
+    color: $white;
+
+    h2,
+    h3,
+    h4 {
+      color: $white;
+    }
+
+    a {
+      color: $white;
+
+      &.c-link::before {
+        background-color: #fff;
+      }
+
+      &.c-link::after {
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
 }

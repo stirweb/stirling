@@ -19,8 +19,6 @@
   }
 
   &:after {
-    //content: "\e97b";
-    //font-family: "uos";
     content: var(--icon-chevron-right);
     width: 24px;
     height: 24px;
@@ -82,13 +80,57 @@ ul .c-link {
   border-bottom-color: #fff;
 }
 
-// .c-link.safariFix:after {
-//   position: relative;
-//   right: 10px;
-// }
-
 .c-wysiwyg-content li a,
 .accordion-content li a,
 .tabs-panel li a {
   border-bottom: 2px solid $heritage-green;
+}
+
+/* 
+
+CTA Link Brand 2026
+
+*/
+.cta-link {
+  a {
+    font-size: 1.25rem;
+    max-width: max-content;
+    position: relative;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-wrap: pretty;
+    display: inline;
+    gap: 0.5rem;
+    background: linear-gradient(to top, $heritage-green 50%, transparent 50%);
+    color: $heritage-green;
+    background-size: 100% 200%;
+    background-position: top;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      color: white;
+      text-decoration-color: $heritage-green;
+      background-position: bottom;
+    }
+  }
+  svg {
+    margin-top: 5px;
+  }
+}
+
+.dark .cta-link {
+  a {
+    background: linear-gradient(to top, $white 50%, transparent 50%);
+    background-size: 100% 200%;
+  }
+
+  a:hover {
+    color: $heritage-green;
+    text-decoration-color: $white;
+    background-position: bottom;
+  }
+
+  svg {
+    filter: brightness(0) invert(1);
+  }
 }

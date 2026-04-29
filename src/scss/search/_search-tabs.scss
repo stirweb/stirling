@@ -1,13 +1,9 @@
 /*
-    SEARCH NAV TAB BUTTONS
+    TABS
  */
 
 .slide-tabs-2 {
-  background: rgba(245, 245, 245, 1);
-
-  .carousel > button {
-    height: 100px;
-  }
+  background: $light-gray-alt;
 
   .carousel-slides {
     overflow: scroll;
@@ -17,20 +13,18 @@
     &::-webkit-scrollbar {
       display: none;
     }
-
-    // button {
-    //   width: 100px;
-    // }
   }
 }
 
 /*
-      SEARCH RESULTS
-  */
+
+    RESULTS
+
+*/
 
 .c-search-results-area {
   /*  
-    Results summary  eg Showing 1-10 of 3969 results
+      RESULTS SUMMARY  eg Showing 1-10 of 3969 results
   */
   .c-search-results-summary,
   .c-search-result__body {
@@ -48,20 +42,13 @@
   }
 
   /*
-       Default result box styles
+       DEFAULT RESULT
   */
   .c-search-result {
     background-color: #fff;
     padding: 1.5rem;
     position: relative;
     margin: 0 0 3rem 0;
-
-    // a {
-    //   border-bottom: 1px solid $heritage-green;
-    //   &:hover {
-    //     border-bottom: 1px solid tint($energy-green, 70%);
-    //   }
-    // }
 
     li,
     p:not(.u-text-regular) {
@@ -103,7 +90,7 @@
     }
 
     /*
-        POP UP result
+        POP UP PROMO
     */
     &.c-popout-result {
       border-left: 0px !important;
@@ -122,23 +109,23 @@
 
         > div {
           > p:first-of-type {
-            font-size: 2rem;
+            font-size: 1.5rem;
+            font-weight: bold;
             text-decoration: underline;
-            text-decoration-color: $heritage-green;
             text-decoration-thickness: 2px;
-            text-underline-offset: 10px;
+            text-underline-offset: 8px;
             display: inline-block;
           }
 
           [class^="uos-"],
           [class*=" uos-"]::before {
-            font-size: 3rem;
-            top: 7px;
+            font-size: 2.5rem;
+            top: 4px;
             position: relative;
           }
 
           .uos-chevron-right::before {
-            font-size: 3rem;
+            font-size: 2rem;
           }
         }
 
@@ -152,12 +139,12 @@
       &.u-heritage-berry {
         a {
           border-color: $heritage-berry;
-          text-decoration-color: $heritage-berry;
           color: $heritage-berry;
           > div {
             > p:first-of-type {
-              border-color: $heritage-berry;
-              text-decoration-color: $heritage-berry;
+              &:hover {
+                text-decoration-color: #b56c94;
+              }
             }
           }
         }
@@ -208,7 +195,9 @@
   }
 
   /* 
-      Aside content panel eg recommended panel
+
+      ASIDE CONTENT PANEL
+
   */
   aside.c-search-results-asides {
     p:not(.u-text-regular) {
@@ -217,7 +206,9 @@
   }
 
   /*  
-    Aside Filters content panel 
+
+    FILTERS
+
   */
   aside.search-filters-area,
   aside.c-search-results-filters {
@@ -370,7 +361,7 @@
   }
 
   /* 
-       All results tab
+       ALL RESULTS PANEL
   */
   .c-search-results-all {
     .c-search-result::before {
@@ -445,7 +436,7 @@
   }
 
   /* 
-      Courses panel results
+      COURSES PANEL RESULTS
   */
   .c-search-result[data-delivery="online"] {
     &::after {
@@ -467,7 +458,7 @@
   }
 
   /* 
-      Staff, Events, News panel results
+      STAFF, EVENTS, NEWS PANEL RESULTS
   */
   .c-search-result {
     &[data-result-type="news"],
@@ -547,7 +538,7 @@ fieldset[data-facet*="mode"] span::first-letter {
  */
 @media screen and #{breakpoint(large up)} {
   /* 
-        Staff, Events, News panel results
+        STAFF, EVENTS, NEWS PANEL RESULTS
   */
   .c-search-results-area {
     .c-search-results-panel {

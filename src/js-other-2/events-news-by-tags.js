@@ -381,7 +381,15 @@
     const eventsApiUrl = !eventtag ? `` : `${fbhost}/s/search.json?collection=stir-events&SF=[d,startDate,type,tags,page,image]&query=!null&num_ranks=20&sort=date&fmo=true&meta_tags=${eventtag}`;
     const newsApiUrl = !newstag ? `` : `${fbhost}/s/search.json?collection=stir-main&SF=[d,type,tags,faculty,thumbnail]&query=!null&num_ranks=20&sort=date&fmo=true&meta_type=news&${getSearchParam(newstag)}`;
 
+<<<<<<< HEAD
     Promise.all([fetchData(eventsApiUrl), fetchData(newsApiUrl)])
+=======
+    const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+    const searchEventsUrl = `${searchAPI}?term=*&customField=type%3Devent&customField=tag%3D${eventtag}&resultType=organic&${filterString}`;
+    const searchNewsUrl = `${searchAPI}?term=*&customField=type%3Dnews&customField=tag%3D${newstag}&resultType=organic&sort=custom_fields.d&`;
+
+    Promise.all([fetchData(searchEventsUrl), fetchData(searchNewsUrl)])
+>>>>>>> brand-2025
       .then(([eventsData, newsData]) => {
         const dataEvents = eventsData.response.resultPacket.results;
         const dataNews = newsData.response.resultPacket.results;
