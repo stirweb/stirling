@@ -8,24 +8,24 @@
 
     - Image frame
 
-    Vars are in layout.scss
+*/
 
-  --hook-border-thickness: 30px; // changed 2026
+:root {
+  --hook-border-thickness: 20px; // changed for brand 2026
   --hook-border-thickness-medium: 30px;
   --gutter-offset: -24px;
   --gutter-offset-medium: -40px;
   --gutter-offset-large: -50px;
-  --hook-height: 80px;
-  --hook-height-medium: 100px;
+  --hook-height: 60px;
+  --hook-height-medium: 90px;
   --hook-offset: 2px;
+}
 
-*/
-
-.u-hook {
+.u-hook-bleed {
   position: relative;
 }
 
-.u-hook > *::before {
+.u-hook-bleed > *::before {
   content: "";
   position: absolute;
   z-index: 2;
@@ -33,7 +33,7 @@
   width: 100%;
 }
 
-.u-hook > *::after {
+.u-hook-bleed > *::after {
   content: "";
   position: absolute;
   z-index: 2;
@@ -41,14 +41,14 @@
 }
 
 // Top Right positioning
-.u-hook-tr > *::before {
+.u-hook-bleed-tr > *::before {
   top: calc(var(--hook-offset) - var(--hook-border-thickness)); // changed
   border-top: var(--hook-border-thickness) solid map-get($greens, "medium");
   border-right: var(--hook-border-thickness) solid map-get($greens, "medium");
 }
 
 // Bottom left positioning
-.u-hook-bl > *::before {
+.u-hook-bleed-bl > *::before {
   bottom: calc(var(--hook-offset) - var(--hook-border-thickness));
   border-bottom: var(--hook-border-thickness) solid map-get($greens, "medium");
   border-left: var(--hook-border-thickness) solid map-get($greens, "medium");
@@ -59,22 +59,26 @@
   // Define common variables inside the breakpoint
   $neg-border-medium: calc(var(--hook-offset) - var(--hook-border-thickness-medium));
 
-  .u-hook-bl > *::after {
-    height: var(--hook-height);
+  .u-hook-bleed-bl > *::after {
+    height: var(--hook-height-medium);
   }
 
-  .u-hook-tr > *::before {
+  .u-hook-bleed-tr > *::before {
     top: $neg-border-medium;
+    border-top: var(--hook-border-thickness-medium) solid map-get($greens, "medium");
+    border-right: var(--hook-border-thickness-medium) solid map-get($greens, "medium");
   }
 
-  .u-hook-bl > *::before {
+  .u-hook-bleed-bl > *::before {
     bottom: $neg-border-medium;
+    border-bottom: var(--hook-border-thickness-medium) solid map-get($greens, "medium");
+    border-left: var(--hook-border-thickness-medium) solid map-get($greens, "medium");
   }
 }
 
 // Colour generator for hooks
 // This will generate the hooks for each colour in the uos-colour-group-palette
-.u-hook {
+.u-hook-bleed {
   @each $name, $color in $uos-colour-group-palette {
     &.#{$name} {
       > *::after {
@@ -117,6 +121,10 @@
 @include breakpoint(medium up) {
   .u-border-bleed {
     height: var(--hook-border-thickness-medium);
+  }
+
+  .u-hook-bleed > ::before {
+    height: var(--hook-height-medium);
   }
 }
 

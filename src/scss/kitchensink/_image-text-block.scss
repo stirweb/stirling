@@ -4,33 +4,37 @@
 **/
 
 .c-image-text-block {
+  background-color: $grey;
   position: relative;
-  padding: 96px 0;
+  padding-bottom: 4rem;
   width: 100%;
   min-height: 7rem;
-  // background-repeat: no-repeat;
-  // background-position: center center;
-  // background-size: cover;
-
-  // > .grid-container {
-  //   display: flex;
-  //   align-items: center;
-  // }
 
   > img,
   > picture > img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
+    height: 18rem;
     object-fit: cover;
     object-position: center;
   }
 
-  // .flex-container.u-gap {
-  //   gap: 0.5rem;
-  // }
+  .c-image-text-block__content {
+    background-color: #ffffff;
+    margin: 0 24px;
+    padding: 2rem;
+    top: -2rem;
+
+    .button {
+      &:not([aria-hidden]) {
+        display: block;
+      }
+    }
+
+    .button svg {
+      max-width: 1.5rem;
+      max-height: 1.5rem;
+      vertical-align: middle;
+    }
+  }
 }
 
 .c-image-text-block--fixed {
@@ -38,54 +42,27 @@
   max-width: 1240px;
 }
 
-// .c-image-text-block--right {
-//   justify-content: flex-end;
-// }
+@media screen and #{breakpoint(medium up)} {
+  .c-image-text-block {
+    padding: 96px 0;
 
-// .c-image-text-block__alt-header {
-//   color: $black;
-//   font-family: $body-font-family;
-//   font-size: 2rem;
-//   margin: 0 0 32px 0;
-// }
+    > img,
+    > picture > img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
 
-.c-image-text-block__content {
-  // position: relative;
-  background-color: #ffffff;
-  margin: 0 24px;
-  max-width: 416px;
-  padding: 1rem;
-
-  // .c-wysiwyg-content {
-  //   margin-bottom: 1rem;
-  // }
-
-  // p {
-  //   font-size: 1rem;
-  // }
-
-  // h2 {
-  //   margin: 0 0 1rem 0;
-  // }
-
-  .button {
-    // padding: 1rem;
-    // margin: 0;
-
-    &:not([aria-hidden]) {
-      display: block;
+    .c-image-text-block__content {
+      background-color: #ffffff;
+      margin: 0 24px;
+      max-width: 520px;
     }
   }
-
-  .button svg {
-    max-width: 1.5rem;
-    max-height: 1.5rem;
-    vertical-align: middle;
-  }
-
-  // .c-link {
-  //   margin-bottom: 1rem;
-  // }
 }
 
 .u-white--all .c-image-text-block__content * {
@@ -99,10 +76,6 @@
 
   .c-image-text-block__content {
     padding: 2rem;
-
-    // p {
-    //   font-size: 1.25rem;
-    // }
   }
 }
 

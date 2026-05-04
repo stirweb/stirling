@@ -386,44 +386,67 @@ a:has(img):hover {
 
   */
 
-.u-hook-bottom-right::after {
+.u-hook-top-left::before {
   content: "";
   position: absolute;
-  right: -28px;
-  bottom: -28px;
+  top: -20px;
+  left: 0;
   background-color: $heritage-green;
-  padding: 14px 200px;
-  z-index: 1;
-}
-
-.u-hook-bottom-right::before {
-  content: "";
-  position: absolute;
-  bottom: -28px;
-  right: -28px;
-  background-color: $heritage-green;
-  padding: 40px 14px;
+  padding: 30px 10px;
   z-index: 1;
 }
 
 .u-hook-top-left::after {
   content: "";
   position: absolute;
-  top: -28px;
+  top: -20px;
   left: 0;
   background-color: $heritage-green;
-  padding: 14px 200px;
+  padding: 10px 45%;
   z-index: 1;
 }
 
-.u-hook-top-left::before {
+.u-hook-bottom-right::before {
   content: "";
   position: absolute;
-  top: -28px;
-  left: -28px;
+  bottom: -20px;
+  right: 0px;
   background-color: $heritage-green;
-  padding: 40px 14px;
+  padding: 30px 10px;
   z-index: 1;
+}
+
+.u-hook-bottom-right::after {
+  content: "";
+  position: absolute;
+  right: 0px;
+  bottom: -20px;
+  background-color: $heritage-green;
+  padding: 10px 45%;
+  z-index: 1;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .u-hook-top-left::before {
+    left: -28px;
+    top: -28px;
+    padding: 40px 14px;
+  }
+
+  .u-hook-top-left::after {
+    padding: 14px 100px;
+    top: -28px;
+  }
+
+  .u-hook-bottom-right::before {
+    right: -28px;
+    bottom: -28px;
+    padding: 40px 14px;
+  }
+  .u-hook-bottom-right::after {
+    padding: 14px 240px;
+    bottom: -28px;
+  }
 }
 
 .u-hook-energy::after,

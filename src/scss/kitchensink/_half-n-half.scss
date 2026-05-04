@@ -166,3 +166,40 @@
     }
   }
 }
+
+/*
+  Half n half 2026
+*/
+
+.c-half-n-half-2026 {
+  display: grid;
+  position: relative;
+  margin-bottom: 1rem;
+  background-color: #f1f1ef;
+}
+
+/* Media query for medium up */
+// @media (max-width: 768px) {
+//   .c-half-n-half-2026 {
+//     &.u-hook-bottom-right::before,
+//     &.u-hook-bottom-right::after {
+//       right: 0;
+//     }
+
+//     &.u-hook-top-left::before,
+//     &.u-hook-top-left::after {
+//       left: 0;
+//     }
+//   }
+// }
+
+/* Media query for medium up */
+@media (min-width: 768px) {
+  .c-half-n-half-2026 {
+    grid-template-columns: 1fr 1fr;
+
+    &.u-hook-top-left > div:nth-of-type(1) {
+      order: 2;
+    }
+  }
+}

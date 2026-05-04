@@ -36,3 +36,57 @@
     background-color: $heritage-berry;
   }
 }
+
+/*
+promobar-2026 
+*/
+
+.promobar-2026 {
+  animation: bg-important2grey 2s forwards;
+  animation-timeline: view(30%);
+}
+
+.promobar-2026 svg {
+  animation: text-white2green 2s forwards;
+  animation-timeline: view(30%);
+}
+
+.promobar-2026 .button {
+  animation: btn-important2grey 2s forwards;
+  animation-timeline: view(30%);
+}
+
+@keyframes btn-important2grey {
+  from {
+    background: none;
+    background-color: #f4c400;
+    border-color: #f4c400;
+  }
+  to {
+    border-color: #9e9d9d;
+    background: none;
+    background-color: #dcdbdb;
+  }
+}
+
+@keyframes text-white2green {
+  from {
+    color: #fff;
+  }
+  to {
+    color: #006938;
+  }
+}
+
+@keyframes bg-important2grey {
+  from {
+    background-color: #592c82;
+    border-image-source: linear-gradient(#592c82, #592c82);
+    color: #fff;
+  }
+  to {
+    background-color: #fbfbfb;
+    border-image-source: linear-gradient(#fbfbfb, #fbfbfb);
+    color: #000;
+  }
+}

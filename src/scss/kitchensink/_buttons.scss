@@ -30,21 +30,22 @@ button:focus {
 */
 .button {
   background-color: $heritage-green;
-  text-wrap: pretty;
+  position: relative;
+  //text-wrap: pretty;
   color: $white;
   text-decoration: none;
-  border: var(--button-border-width) solid transparent;
+  //border: var(--button-border-width) solid transparent;
   cursor: pointer;
   display: inline-block;
   font-family: $body-font-family !important;
   font-size: 1.25rem;
-  text-align: center;
+  text-align: left;
   line-height: 1.6;
-  padding: map-get($button-padding-list, default);
+  //padding: map-get($button-padding-list, default);
   font-weight: bold;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  min-width: 14rem;
+  //min-width: 14rem;
 
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 
@@ -59,11 +60,11 @@ button:focus {
   }
 
   // Padding
-  @each $size, $value in map-remove($button-padding-list, default) {
-    &.#{$size} {
-      padding: $value;
-    }
-  }
+  // @each $size, $value in map-remove($button-padding-list, default) {
+  //   &.#{$size} {
+  //     padding: $value;
+  //   }
+  // }
 
   &:after {
     // content: "\e97b";
@@ -73,9 +74,9 @@ button:focus {
     content: var(--icon-arrow-right-circle);
     width: 24px;
     height: 24px;
-    position: relative;
-    right: -4px;
-    top: 5px;
+    position: absolute;
+    right: 20px;
+    top: calc(50% - 12px);
     display: inline-block;
     color: #ffff;
   }
@@ -228,6 +229,157 @@ button:focus {
 
   &.expanded {
     width: 100%;
+  }
+}
+
+/*
+    Button with animated gradient background
+*/
+//.button--gradient-hover {
+.button {
+  background: linear-gradient(to top, $heritage-green 50%, $white 50%);
+  background-size: 100% 200%;
+  background-position: bottom;
+  padding: 12px 52px 12px 28px;
+  border: 4px solid $heritage-green;
+  border-radius: 40px;
+  color: $white;
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    background-position: top;
+    color: $heritage-green;
+  }
+
+  &.hollow {
+    border-color: $heritage-green;
+    background: linear-gradient(to top, $heritage-green 50%, #fff 50%);
+    color: $black;
+    background-size: 100% 200%;
+    background-position: top;
+
+    &::after {
+      filter: brightness(0);
+    }
+
+    &:hover {
+      color: $white;
+      border-color: $heritage-green;
+      background-position: bottom;
+
+      &::after {
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
+
+  &.energy,
+  &.energy-green {
+    border-color: $tint-green;
+    background: linear-gradient(to top, $tint-green 50%, #fff 50%);
+    color: $black;
+    background-size: 100% 200%;
+    background-position: bottom;
+
+    &:hover {
+      color: $black;
+      border-color: $tint-green;
+      background-position: top;
+    }
+
+    &::after {
+      filter: brightness(0);
+    }
+
+    &.hollow {
+      border-color: $tint-green;
+      background: linear-gradient(to top, $tint-green 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: top;
+
+      &::after {
+        filter: brightness(0);
+      }
+
+      &:hover {
+        color: $black;
+        border-color: $tint-green;
+        background-position: bottom;
+      }
+    }
+  }
+
+  &.neutral {
+    border-color: $medium-gray;
+    background: linear-gradient(to top, $medium-gray 50%, #fff 50%);
+    color: $black;
+    background-size: 100% 200%;
+    background-position: bottom;
+
+    &:hover {
+      color: $black;
+      border-color: $medium-gray;
+      background-position: top;
+    }
+
+    &::after {
+      filter: brightness(0);
+    }
+
+    &.hollow {
+      border-color: $medium-gray;
+      background: linear-gradient(to top, $medium-gray 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: top;
+
+      &::after {
+        filter: brightness(0);
+      }
+
+      &:hover {
+        color: $black;
+        border-color: $medium-gray;
+        background-position: bottom;
+      }
+    }
+  }
+
+  &.important {
+    border-color: $energy-yellow;
+    background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
+    color: $black !important;
+    background-size: 100% 200%;
+    background-position: bottom;
+
+    &:hover {
+      color: $black;
+      border-color: $energy-yellow;
+      background-position: top;
+    }
+
+    &::after {
+      filter: brightness(0);
+    }
+
+    &.hollow {
+      border-color: $energy-yellow;
+      background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: top;
+
+      &::after {
+        filter: brightness(0);
+      }
+
+      &:hover {
+        color: $black;
+        border-color: $energy-yellow;
+        background-position: bottom;
+      }
+    }
   }
 }
 
@@ -531,157 +683,6 @@ input:checked {
 @include breakpoint(xxlarge up) {
   .button.u-sticky {
     width: 76.5625rem; /* match grid containr i.e. 77.5rem-0.9375rem */
-  }
-}
-
-/*
-    Button with animated gradient background
-*/
-//.button--gradient-hover {
-.button {
-  background: linear-gradient(to top, $heritage-green 50%, $white 50%);
-  background-size: 100% 200%;
-  background-position: bottom;
-  padding: 10px 28px;
-  border: 4px solid $heritage-green;
-  border-radius: 40px;
-  color: $white;
-  transition: all 0.2s ease-out;
-
-  &:hover {
-    background-position: top;
-    color: $heritage-green;
-  }
-
-  &.hollow {
-    border-color: $heritage-green;
-    background: linear-gradient(to top, $heritage-green 50%, #fff 50%);
-    color: $black;
-    background-size: 100% 200%;
-    background-position: top;
-
-    &::after {
-      filter: brightness(0);
-    }
-
-    &:hover {
-      color: $white;
-      border-color: $heritage-green;
-      background-position: bottom;
-
-      &::after {
-        filter: brightness(0) invert(1);
-      }
-    }
-  }
-
-  &.energy,
-  &.energy-green {
-    border-color: $tint-green;
-    background: linear-gradient(to top, $tint-green 50%, #fff 50%);
-    color: $black;
-    background-size: 100% 200%;
-    background-position: bottom;
-
-    &:hover {
-      color: $black;
-      border-color: $tint-green;
-      background-position: top;
-    }
-
-    &::after {
-      filter: brightness(0);
-    }
-
-    &.hollow {
-      border-color: $tint-green;
-      background: linear-gradient(to top, $tint-green 50%, #fff 50%);
-      color: $black;
-      background-size: 100% 200%;
-      background-position: top;
-
-      &::after {
-        filter: brightness(0);
-      }
-
-      &:hover {
-        color: $black;
-        border-color: $tint-green;
-        background-position: bottom;
-      }
-    }
-  }
-
-  &.neutral {
-    border-color: $medium-gray;
-    background: linear-gradient(to top, $medium-gray 50%, #fff 50%);
-    color: $black;
-    background-size: 100% 200%;
-    background-position: bottom;
-
-    &:hover {
-      color: $black;
-      border-color: $medium-gray;
-      background-position: top;
-    }
-
-    &::after {
-      filter: brightness(0);
-    }
-
-    &.hollow {
-      border-color: $medium-gray;
-      background: linear-gradient(to top, $medium-gray 50%, #fff 50%);
-      color: $black;
-      background-size: 100% 200%;
-      background-position: top;
-
-      &::after {
-        filter: brightness(0);
-      }
-
-      &:hover {
-        color: $black;
-        border-color: $medium-gray;
-        background-position: bottom;
-      }
-    }
-  }
-
-  &.important {
-    border-color: $energy-yellow;
-    background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
-    color: $black !important;
-    background-size: 100% 200%;
-    background-position: bottom;
-
-    &:hover {
-      color: $black;
-      border-color: $energy-yellow;
-      background-position: top;
-    }
-
-    &::after {
-      filter: brightness(0);
-    }
-
-    &.hollow {
-      border-color: $energy-yellow;
-      background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
-      color: $black;
-      background-size: 100% 200%;
-      background-position: top;
-
-      &::after {
-        filter: brightness(0);
-      }
-
-      &:hover {
-        color: $black;
-        border-color: $energy-yellow;
-        background-position: bottom;
-      }
-    }
   }
 }
 
