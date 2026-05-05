@@ -825,10 +825,13 @@ stir.dpt = (function () {
       more: "View all _X_ choices",
     },
   };
-  let user = {}, _year=0, _semesterCache=[];
-  let _moduleCache=[],_mcPointer=0;
+  let user = {},
+    _year = 0,
+    _semesterCache = [];
+  let _moduleCache = [],
+    _mcPointer = 0;
   let routesCurry;
-  
+
   function resetGlobals() {
     _year = 0;
     _semesterCache = [];
@@ -838,8 +841,8 @@ stir.dpt = (function () {
     PG: "opt=runpgcode&ct=PG",
   };
   const currentVersion = {
-    UG: 521, // 487, //"",//436, //362
-    PG: 478, //457, //"" //417  //357
+    UG: "", //521, // 487, //"",//436, //362
+    PG: "", //478, //457, //"" //417  //357
   };
   debug && console.info(`[DPT] using versions `, currentVersion);
 
@@ -853,19 +856,21 @@ stir.dpt = (function () {
     // Portal data endpoints:
     servlet: `${PORTAL}/servlet/CalendarServlet`,
     route: {
-      UG: `?opt=menu&ver=${currentVersion["UG"]}&callback=stir.dpt.show.routes`,//+ (ver?ver:'')
+      UG: `?opt=menu&ver=${currentVersion["UG"]}&callback=stir.dpt.show.routes`, //+ (ver?ver:'')
       PG: `?opt=pgmenu&ver=${currentVersion["PG"]}&ct=PG&callback=stir.dpt.show.routes`, //+ (ver?ver:'')
     },
-    option: (type, roucode) => `?opt=${type.toLowerCase()}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&ver=${currentVersion[type.toUpperCase()]}&callback=stir.dpt.show.options`,
+    option: (type, roucode) =>
+      `?opt=${type.toLowerCase()}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&ver=${currentVersion[type.toUpperCase()]}&callback=stir.dpt.show.options`,
     fees: (type, roucode) => `?opt=${type}-opts&rouCode=${roucode}&ct=${type.toUpperCase()}&ver=${currentVersion[type.toUpperCase()]}&callback=stir.dpt.show.fees`,
-    modules: (type, roucode, moa, occ) => `?${modulesEndpointParams[type.toUpperCase()]}&moa=${moa}&occ=${occ}&rouCode=${roucode}&ver=${currentVersion[type.toUpperCase()]}&callback=stir.dpt.show.modules`,
+    modules: (type, roucode, moa, occ) =>
+      `?${modulesEndpointParams[type.toUpperCase()]}&moa=${moa}&occ=${occ}&rouCode=${roucode}&ver=${currentVersion[type.toUpperCase()]}&callback=stir.dpt.show.modules`,
     module: (mod, year, sem) => stir.akari.get.module([mod, year, sem].join("/")),
   };
 
   urls.version = {
-	  UG: UoS_env.t4_tags ? '<t4 type="media" id="178111" formatter="path/*" />': urls.servlet + "?opt=version-menu&callback=stir.dpt.show.version",
-	  PG: UoS_env.t4_tags ? '<t4 type="media" id="178112" formatter="path/*" />': urls.servlet + "?opt=version-menu&ct=PG&callback=stir.dpt.show.version"
-  }
+    UG: UoS_env.t4_tags ? '<t4 type="media" id="178111" formatter="path/*" />' : urls.servlet + "?opt=version-menu&callback=stir.dpt.show.version",
+    PG: UoS_env.t4_tags ? '<t4 type="media" id="178112" formatter="path/*" />' : urls.servlet + "?opt=version-menu&ct=PG&callback=stir.dpt.show.version",
+  };
 
   //	const getAllRoutes = type => {
   //		stir.getJSONp(`${urls.servlet}${urls.route[type.toUpperCase()]}`);
@@ -875,10 +880,10 @@ stir.dpt = (function () {
   const splitCodes = (csv) => csv.replace(/\s/g, "").split(",");
 
   const getVersion = (type) => stir.getJSONp(`${urls.version[type]}`);
-  
+
   const getPointer = () => _mcPointer;
-  
-  const setPointer = value => _mcPointer = value;
+
+  const setPointer = (value) => (_mcPointer = value);
 
   const getRoutes = (type, routesCSV, auto) => {
     user.type = type;
@@ -891,8 +896,8 @@ stir.dpt = (function () {
     user.type = type;
     user.rouCode = roucode;
     user.auto = auto;
-    stir.getJSONp(`${urls.servlet}${urls.option(type, roucode)}`,null,event=>{
-      stir.dpt.fallback.options(event)
+    stir.getJSONp(`${urls.servlet}${urls.option(type, roucode)}`, null, (event) => {
+      stir.dpt.fallback.options(event);
     });
   };
 
@@ -909,15 +914,16 @@ stir.dpt = (function () {
     return urlBits[urlBits.length - 2];
   };
 
-  const moduleUrl = data => `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
-  const moduleIdentifier = data => `${data.modCode}/${data.mavSemSession}/${data.mavSemCode}`;
+  const moduleUrl = (data) =>
+    `${urls.viewer}?code=${data.modCode}&session=${data.mavSemSession}&semester=${data.mavSemCode}&occurrence=${data.mavOccurrence}&course=${getCurrentUri()}`;
+  const moduleIdentifier = (data) => `${data.modCode}/${data.mavSemSession}/${data.mavSemCode}`;
 
-  const moduleLink = (data,index) => {
+  const moduleLink = (data, index) => {
     // LINK TO NEW AKARI MODULE PAGES
     const link = `<a href="${moduleUrl(data)}" data-index=${index} data-spa="${moduleIdentifier(data)}">${data.modName}</a>`;
     const fallback = `<span data-dpt-unavailable title="Module details for ${data.modCode} are currently unavailable">${data.modName}</span>`;
-	  return availability(data) ? link : fallback;
-	
+    return availability(data) ? link : fallback;
+
     // LINK TO OLD DEGREE PROGRAM TABLES
     // return `${stir.templates.course.link(data.modName,`${urls.calendar}${user.type === "PG" ? "-pg" : ""}.jsp?modCode=${data.modCode}`)}`;
   };
@@ -932,13 +938,14 @@ stir.dpt = (function () {
     module: (data) => {
       // stash a list of modules to facilitate prev/next navigation among them
       addToCache({
-          modName:data.modName,
-          modCode:data.modCode,
-          mavSemSession:data.mavSemSession,
-          mavSemCode:data.mavSemCode,
-          mavOccurrence:data.mavOccurrence});
+        modName: data.modName,
+        modCode: data.modCode,
+        mavSemSession: data.mavSemSession,
+        mavSemCode: data.mavSemCode,
+        mavOccurrence: data.mavOccurrence,
+      });
 
-      return `<tr><td>${moduleLink(data,_moduleCache.length-1)}
+      return `<tr><td>${moduleLink(data, _moduleCache.length - 1)}
 			<span class=c-course-modules__module-code>(${data.modCode})</span>
 			</td><td>${data.modCredit} credits</td></tr>`;
     },
@@ -1003,7 +1010,7 @@ stir.dpt = (function () {
 
   const paragraph = (text) => {
     const p = document.createElement("p");
-    p.innerHTML = stir.String.stripHtml(text.replace(/<\/?(br|p)>/g,"__br__")).replaceAll("__br__","<br>");
+    p.innerHTML = stir.String.stripHtml(text.replace(/<\/?(br|p)>/g, "__br__")).replaceAll("__br__", "<br>");
     return p;
   };
 
@@ -1024,15 +1031,18 @@ stir.dpt = (function () {
 
   function viewModule(e) {
     e.preventDefault();
-    stir.dpt.show.module( this.getAttribute('data-spa'), this.getAttribute('href'), parseInt(this.getAttribute('data-index')) );
+    stir.dpt.show.module(this.getAttribute("data-spa"), this.getAttribute("href"), parseInt(this.getAttribute("data-index")));
   }
 
   const versionToSession = (data) => {
-    if(!data || !data.length) return;
-	// [2024-03-14] rwm2 -- remove DEBUG test to make it live --
-    if(debug) {
+    if (!data || !data.length) return;
+    // [2024-03-14] rwm2 -- remove DEBUG test to make it live --
+    if (debug) {
       try {
-        return data.filter(v=>v.versionActive==="Y").sort(compareVersions).pop().versionName;
+        return data
+          .filter((v) => v.versionActive === "Y")
+          .sort(compareVersions)
+          .pop().versionName;
       } catch (e) {
         console.warn(e);
       }
@@ -1041,13 +1051,13 @@ stir.dpt = (function () {
   };
 
   const compareVersions = (a, b) => {
-    		if (a.versionId < b.versionId) return -1;
-    		if (a.versionId > b.versionId) return 1;
-    		return 0;
+    if (a.versionId < b.versionId) return -1;
+    if (a.versionId > b.versionId) return 1;
+    return 0;
   };
 
   const modulesOverview = (data) => {
-    _moduleCache = [],_mcPointer = 0;
+    ((_moduleCache = []), (_mcPointer = 0));
     let frag = document.createDocumentFragment();
     data.initialText && frag.append(paragraph(data.initialText));
 
@@ -1089,11 +1099,10 @@ stir.dpt = (function () {
       var a = el.querySelector(".c-course-modules__view-more-link a");
       a && a.addEventListener("click", viewMore.bind(el));
     });
-    
-    Array.prototype.forEach.call(frag.querySelectorAll("a[data-spa]"), el => {
+
+    Array.prototype.forEach.call(frag.querySelectorAll("a[data-spa]"), (el) => {
       el.addEventListener("click", viewModule.bind(el));
     });
-
 
     return frag;
   };
@@ -1167,8 +1176,8 @@ stir.dpt = (function () {
     option.textContent = data; // fallback/debug
     return option;
   };
-  
-  const addToCache = obj => _moduleCache.push(obj);
+
+  const addToCache = (obj) => _moduleCache.push(obj);
 
   ///////////////////////////////////////
 
@@ -1176,37 +1185,37 @@ stir.dpt = (function () {
 
   return {
     show: {
-      fees:     na,
-      routes:   na,
-      options:  na,
-      modules:  na,
-      module:   na,
-      version:  na,
-      next: function(e) {
-        if(_mcPointer===_moduleCache.length-1) return;
-        stir.dpt.show.module( moduleIdentifier(_moduleCache[++_mcPointer]), moduleUrl(_moduleCache[_mcPointer]), _mcPointer);
-        this.parentElement && this.parentElement.setAttribute('data-mc',_mcPointer);
+      fees: na,
+      routes: na,
+      options: na,
+      modules: na,
+      module: na,
+      version: na,
+      next: function (e) {
+        if (_mcPointer === _moduleCache.length - 1) return;
+        stir.dpt.show.module(moduleIdentifier(_moduleCache[++_mcPointer]), moduleUrl(_moduleCache[_mcPointer]), _mcPointer);
+        this.parentElement && this.parentElement.setAttribute("data-mc", _mcPointer);
       },
-      previous: function(e) {
-        if(_mcPointer<=0) return;
-        stir.dpt.show.module( moduleIdentifier(_moduleCache[--_mcPointer]), moduleUrl(_moduleCache[_mcPointer]), _mcPointer);
-        this.parentElement && this.parentElement.setAttribute('data-mc',_mcPointer);
-      }
+      previous: function (e) {
+        if (_mcPointer <= 0) return;
+        stir.dpt.show.module(moduleIdentifier(_moduleCache[--_mcPointer]), moduleUrl(_moduleCache[_mcPointer]), _mcPointer);
+        this.parentElement && this.parentElement.setAttribute("data-mc", _mcPointer);
+      },
     },
     get: {
       options: getOptions,
       routes: getRoutes,
       viewer: () => urls.viewer,
       version: getVersion,
-      pointer: getPointer
+      pointer: getPointer,
     },
     reset: {
-      module:  na,
+      module: na,
       modules: na,
-      options: na
+      options: na,
     },
     fallback: {
-      options: na
+      options: na,
     },
     set: {
       viewer: (path) => (urls.viewer = path),
@@ -1214,7 +1223,12 @@ stir.dpt = (function () {
       show: {
         routes: (callback) =>
           (routesCurry = stir.curry((routes, data) =>
-            callback(makeSelector(data.filter((route) => routes.includes(route.rouCode)),"rouCode"))
+            callback(
+              makeSelector(
+                data.filter((route) => routes.includes(route.rouCode)),
+                "rouCode",
+              ),
+            ),
           )),
         options: (callback) =>
           (stir.dpt.show.options = (data) => {
@@ -1223,25 +1237,25 @@ stir.dpt = (function () {
               getModules(user.type, user.rouCode, data[0][0], data[0][2]);
             }
           }),
-        module:  (callback) => (stir.dpt.show.module   =  callback),
-        modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data),_moduleCache.length-1)),
-        version: (callback) => (stir.dpt.show.version = (data) => callback(versionToSession(data)))
+        module: (callback) => (stir.dpt.show.module = callback),
+        modules: (callback) => (stir.dpt.show.modules = (data) => callback(modulesOverview(data), _moduleCache.length - 1)),
+        version: (callback) => (stir.dpt.show.version = (data) => callback(versionToSession(data))),
       },
       reset: {
-        module:  (callback) => (stir.dpt.reset.module  = callback),
+        module: (callback) => (stir.dpt.reset.module = callback),
         modules: (callback) => (stir.dpt.reset.modules = callback),
         options: (callback) => (stir.dpt.reset.options = callback),
       },
       fallback: {
-        options: callback => stir.dpt.fallback.options = callback
-      }
+        options: (callback) => (stir.dpt.fallback.options = callback),
+      },
     },
     addToCache: addToCache,
     debug: {
       version: (data) => {
         console.info(data);
-      }
-    }
+      },
+    },
   };
 })();
 
