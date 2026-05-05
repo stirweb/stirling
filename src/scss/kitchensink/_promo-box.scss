@@ -59,8 +59,8 @@ promobar-2026
 @keyframes btn-important2grey {
   from {
     background: none;
-    background-color: #f4c400;
-    border-color: #f4c400;
+    background-color: $heritage-yellow;
+    border-color: $heritage-yellow;
   }
   to {
     border-color: #9e9d9d;
@@ -74,19 +74,19 @@ promobar-2026
     color: #fff;
   }
   to {
-    color: #006938;
+    color: $heritage-green;
   }
 }
 
 @keyframes bg-important2grey {
   from {
-    background-color: #592c82;
-    border-image-source: linear-gradient(#592c82, #592c82);
-    color: #fff;
+    background-color: $heritage-purple;
+    border-image-source: linear-gradient($heritage-purple, $heritage-purple);
+    color: $white;
   }
   to {
     background-color: #fbfbfb;
     border-image-source: linear-gradient(#fbfbfb, #fbfbfb);
-    color: #000;
+    color: $black;
   }
 }
