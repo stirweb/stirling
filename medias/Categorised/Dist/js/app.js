@@ -4014,7 +4014,8 @@ const TempateFavs = () => {
 		});
 
 		if (!favs.length) return;
-		const iconNodeParent = stir.node("header [data-stiricon=heart-inactive]").parentNode;
+		const iconNode = stir.node("header [data-stiricon=heart-inactive]");
+		const iconNodeParent = iconNode && iconNode.parentNode;
 		iconNodeParent && iconNodeParent.insertAdjacentHTML("beforebegin", `<em data-aos="u-fade-up-out" class=" u-heritage-green text-sm">${favs.length}</em>`);
 	}
 
