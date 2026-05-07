@@ -16,8 +16,7 @@ stir.addSearch = (() => {
 	const getCompletions = (data,callback) => {
 		if("function" !== typeof callback) return;
 		const url = getAutocompleteEndpoint();
-		const params = new URLSearchParams(data);
-		url.search = params;
+		url.search = new URLSearchParams(data);
 		stir.getJSON(url,data=>console.info("getCompletions",data));
 	};
 	

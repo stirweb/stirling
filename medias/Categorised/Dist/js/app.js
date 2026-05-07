@@ -2608,8 +2608,7 @@ stir.addSearch = (() => {
 	const getCompletions = (data,callback) => {
 		if("function" !== typeof callback) return;
 		const url = getAutocompleteEndpoint();
-		const params = new URLSearchParams(data);
-		url.search = params;
+		url.search = new URLSearchParams(data);
 		stir.getJSON(url,data=>console.info("getCompletions",data));
 	};
 	
@@ -3904,12 +3903,11 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
 })();
 
 /*
-Tempate Favourites
+Template Favourites
 */
 
-const TempateFavs = () => {
+const TemplateFavs = () => {
 	const COOKIE_ID = "favs=";
-	const FB_URL = "https://search.stir.ac.uk/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=";
 
 	/* 
 		renderCourseLink: Returns an array of html strings 
@@ -3920,10 +3918,8 @@ const TempateFavs = () => {
 		renderIcon: Returns a html strings 
 	*/
 	const renderIcon = () => {
-		return `<svg version="1.1" data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50" >
-					<path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
-	C47.5,15,46.3,12.2,44.1,10.1z"></path>
-				</svg>`;
+		return `<svg data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50"><path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+	C47.5,15,46.3,12.2,44.1,10.1z"></path></svg>`;
 	};
 
 	/* 
@@ -3958,43 +3954,43 @@ const TempateFavs = () => {
 	/*
 		Controller
 	*/
-	function initMega(cookieId, fbUrl) {
+	function initMega(cookieId) {
 		const favCourses = getFavsList("course", cookieId);
 
 		if (!favCourses.length) return;
 
-		const query = favCourses
-			.filter((item) => Number(item.id))
-			.map((item) => item.id)
-			.join("+");
-		const fbUrlFull = fbUrl + query;
+		const url = stir.addSearch.getJsonEndpoint();
+		const sids = favCourses.filter((item) => Number(item.id)).map((item) => item.id);
+		const filters = {or: sids.map(item => { return {"custom_fields.sid": item} })};
 
-		stir.getJSON(fbUrlFull, (results) => {
-			const arrayResults = results?.response?.resultPacket?.results || [];
-			if (!arrayResults.length) return;
+		url.search = new URLSearchParams({
+			term: "*",
+			customField: "type=course",
+			collectAnalytics: false,
+			resultType: "organic",
+			fuzzy: false,
+			filter: JSON.stringify(filters)
+		});
 
-			const favList = query.split("+").map((item) => {
-				return arrayResults
-					.filter((element) => {
-						if (Number(item) === Number(element.metaData.sid)) {
-							return item;
-						}
-					})
-					.map((element) => {
-						return {
-							id: item,
-							date: favCourses.filter((fav) => fav.id === item)[0].date,
-							title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
-							url: element.liveUrl + `?orgin=datacoursefavs`,
-						};
-					});
-			});
+		stir.getJSON(url, (response) => {
+			if (!response || !response.hits || !response.hits.length) return;
 
-			const courses = stir.flatten(favList).sort((a, b) => b.date - a.date);
+			const courses = response.hits
+				.map(element => {
+					return {
+						id: element.custom_fields.sid,
+						date: favCourses.filter((fav) => fav.id == element.custom_fields.sid)[0].date,
+						title: (element.custom_fields.award ? element.custom_fields.award : "") + " " + element.title.split(" | ")[0],
+						url: element.url + `?origin=datacoursefavs`,
+					};
+				})
+				.sort((a, b) => b.date - a.date)
+				.map(renderCourseLink)
+				.join("");
 
 			// Make sure Megamenu has loaded then insert the links
 			stir.nodes("[data-coursefavs]").forEach((element) => {
-				element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses.map(renderCourseLink).join("")}</ul>`);
+				element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses}</ul>`);
 			});
 		});
 	}
@@ -4029,7 +4025,7 @@ const TempateFavs = () => {
 		for (const mutation of mutationList) {
 			for (const addedNode of mutation.addedNodes) {
 				if (addedNode.id == "mm__study") {
-					initMega(COOKIE_ID, FB_URL);
+					initMega(COOKIE_ID);
 				}
 			}
 		}
@@ -4041,7 +4037,7 @@ const TempateFavs = () => {
 	menucontainer && observer.observe(menucontainer, config);
 };
 
-TempateFavs();
+TemplateFavs();
 var stir = stir || {};
 (function () {
   const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="174054" formatter="path/*" />' : UoS_env.wc_path + "js/other/mobile-nav.js";
