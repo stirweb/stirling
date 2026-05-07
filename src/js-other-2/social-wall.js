@@ -44,15 +44,15 @@
     const service = url.split("/")[2];
 
     if (service === "www.youtube.com") {
-      return `<div class="u-py-1">${renderYouTubeCode(url)}</div>`;
+      return `<div class="u-pb-2">${renderYouTubeCode(url)}</div>`;
     }
 
     if (service === "www.tiktok.com") {
-      return `<div class="u-py-1">${renderTikTokCode(url)}</div>`;
+      return `<div class="u-pb-2">${renderTikTokCode(url)}</div>`;
     }
 
     if (service === "www.instagram.com") {
-      return `<div class="u-py-1">${renderInstagramCode(url)}</div>`;
+      return `<div class="u-pb-2">${renderInstagramCode(url)}</div>`;
     }
   };
 
@@ -85,15 +85,29 @@
   const { noOfColumns, cellSize } = getNoOfColumns(screenWidth);
   const postPerColumn = Math.ceil(urls.length / noOfColumns);
 
-  // lets divide the posts (urls) up by postPerColumn
+  // Divide the posts (urls) up by postPerColumn
   const columns = [];
   for (let i = 0; i < noOfColumns; i++) {
     columns.push(urls.slice(i * postPerColumn, (i + 1) * postPerColumn));
   }
 
+  // 5, 6, 9 posts look better with 4 columns, so we will move some posts around to achieve this
+  if (noOfPosts === 5 && noOfColumns === 4) {
+    columns[3].push(...columns[1].splice(0, 1));
+  }
+
+  if (noOfPosts === 6 && noOfColumns === 4) {
+    columns[3].push(...columns[2].splice(0, 1));
+  }
+
+  if (noOfPosts === 9 && noOfColumns === 4) {
+    columns[3].push(...columns[2].splice(0, 1));
+    columns[3].push(...columns[1].splice(0, 1));
+  }
+
   // now we have the posts divided up into columns, we can render them in the appropriate way
   const html = columns.map((column) => {
-    return `<div class="cell ${cellSize} u-padding-bottom">${column.map(render).join("")}</div>`;
+    return `<div >${column.map(render).join("")}</div>`;
   });
 
   socialWallContainer.innerHTML = `${html.join("")}`;

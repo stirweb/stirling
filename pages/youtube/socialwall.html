@@ -72,6 +72,27 @@
         min-width: 200px !important; /* Set your desired min-width */
         max-width: 100% !important;
       }
+
+      .grid-wall {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      /* medium up */
+      @media (min-width: 640px) {
+        .grid-wall {
+          gap: 24px;
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      /* large  up */
+      @media (min-width: 1024px) {
+        .grid-wall {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+      }
     </style>
   </head>
   <body class="external-pages">
@@ -474,10 +495,10 @@
     <main class="wrapper-content" aria-label="Main content" id="content">
       <div class="grid-x grid-container">
         <div class="cell medium-10 small-12 u-padding-y">
-          <h1 class="u-m-0 u-heritage-green">Video wall</h1>
+          <h1 class="u-m-0 u-heritage-green">Social wall</h1>
         </div>
 
-        <div class="cell"><div class="grid-x" id="socialwall"></div></div>
+        <div class="cell"><div class="grid-wall" id="socialwall"></div></div>
       </div>
     </main>
 
@@ -701,20 +722,16 @@
     <script>
       const socialMediaUrls = [
         "https://www.youtube.com/embed/n7oLcKyXs_Y",
-        "https://www.instagram.com/reel/DO9AS8xDcvG/",
+        "https://www.instagram.com/reel/DO9AS8xDcvG/?utm_source=ig_web_copy_link&amp;igsh=MzRlODBiNWFlZA==",
         "https://www.tiktok.com/@universityofstirling/video/7522815421783887136",
-        "https://www.youtube.com/embed/n7oLcKyXs_Y",
-        "https://www.instagram.com/reel/DO9AS8xDcvG/",
-        "https://www.tiktok.com/@universityofstirling/video/7522815421783887136",
-        "https://www.youtube.com/embed/n7oLcKyXs_Y",
-        "https://www.instagram.com/reel/DO9AS8xDcvG/",
-        "https://www.tiktok.com/@universityofstirling/video/7522815421783887136",
-        "https://www.youtube.com/embed/n7oLcKyXs_Y",
-        "https://www.instagram.com/reel/DO9AS8xDcvG/",
-        "https://www.tiktok.com/@universityofstirling/video/7522815421783887136",
-        "https://www.youtube.com/embed/n7oLcKyXs_Y",
-        "https://www.instagram.com/reel/DO9AS8xDcvG/",
-        "https://www.tiktok.com/@universityofstirling/video/7522815421783887136",
+        "https://www.instagram.com/reel/DMzrXF9u1c_/?utm_source=ig_web_copy_link&amp;igsh=MzRlODBiNWFlZA==",
+        "https://www.instagram.com/reel/DNDO9Lyp7Tm/?utm_source=ig_web_copy_link&amp;igsh=MzRlODBiNWFlZA==",
+        // "https://www.youtube.com/embed/GOD1pfkYZ6U",
+        //"https://www.instagram.com/reel/DUGNcS-lLnp/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA== ",
+
+        //"https://www.youtube.com/embed/n7oLcKyXs_Y",
+        //"https://www.youtube.com/embed/n7oLcKyXs_Y",
+        //        "https://www.youtube.com/embed/n7oLcKyXs_Y",
         "",
       ];
     </script>
