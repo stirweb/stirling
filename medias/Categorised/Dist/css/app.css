@@ -2781,7 +2781,7 @@ button {
   /* default in Webkit/Blink is blue, others black. normalise by inheriting the colour from parent element */ }
 
 button:focus {
-  outline: 2px solid #006938;
+  outline: 2px solid #000;
   outline-offset: 4px; }
 
 /* 
@@ -2808,7 +2808,7 @@ button:focus {
   .button:hover {
     background-color: #fff;
     border: var(--button-border-width) solid #006938;
-    color: #006938; }
+    color: #000; }
   .button a {
     color: #fff; }
   .button:after {
@@ -2823,7 +2823,7 @@ button:focus {
   .button::after {
     filter: brightness(0) invert(1); }
   .button:hover::after {
-    filter: invert(100%) brightness(0) saturate(100%) invert(19%) sepia(56%) saturate(3757%) hue-rotate(146deg) brightness(93%) contrast(101%); }
+    filter: brightness(0); }
   .button.no-arrow:after {
     content: none;
     margin: 0; }
@@ -2860,11 +2860,9 @@ button:focus {
       border-bottom-color: transparent;
       color: #000; }
   .button.energy:hover {
-    color: #006938; }
+    color: #000; }
   .button.energy-green:hover {
-    color: #006938; }
-  .button.energy-turq {
-    color: #fff; }
+    color: #000; }
   .button.expanded {
     width: 100%; }
 
@@ -2882,7 +2880,7 @@ button:focus {
   transition: all 0.2s ease-out; }
   .button:hover {
     background-position: top;
-    color: #006938; }
+    color: #000; }
   .button.hollow {
     border-color: #006938;
     background: linear-gradient(to top, #006938 50%, #fff 50%);

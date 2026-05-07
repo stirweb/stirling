@@ -21,7 +21,7 @@ button {
 }
 
 button:focus {
-  outline: 2px solid $heritage-green;
+  outline: 2px solid $black;
   outline-offset: 4px;
 }
 
@@ -52,7 +52,7 @@ button:focus {
   &:hover {
     background-color: $white;
     border: var(--button-border-width) solid $heritage-green;
-    color: $heritage-green;
+    color: $black;
   }
 
   a {
@@ -86,7 +86,8 @@ button:focus {
   }
 
   &:hover::after {
-    filter: icon-filter($heritage-green);
+    //filter: icon-filter($black);
+    filter: brightness(0);
   }
 
   &.no-arrow:after {
@@ -216,16 +217,16 @@ button:focus {
   }
 
   &.energy:hover {
-    color: $heritage-green;
+    color: $black;
   }
 
   &.energy-green:hover {
-    color: $heritage-green;
+    color: $black;
   }
 
-  &.energy-turq {
-    color: $white;
-  }
+  // &.energy-turq {
+  //   color: $white;
+  // }
 
   &.expanded {
     width: 100%;
@@ -248,7 +249,7 @@ button:focus {
 
   &:hover {
     background-position: top;
-    color: $heritage-green;
+    color: $black;
   }
 
   &.hollow {
