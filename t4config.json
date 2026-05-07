@@ -348,6 +348,11 @@
         "projectPath": "medias/Categorised/Dist/js/other/staff-search.js"
       },
       {
+        "id": 203366,
+        "description": "social-wall.js",
+        "projectPath": "medias/Categorised/Dist/js/other/social-wall.js"
+      },
+      {
         "id": 158091,
         "description": "sticky-form.js",
         "projectPath": "medias/Categorised/Dist/js/other/sticky-form.js"
