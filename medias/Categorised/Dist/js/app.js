@@ -3912,7 +3912,7 @@ const TemplateFavs = () => {
 	/* 
 		renderCourseLink: Returns an array of html strings 
 	*/
-	const renderCourseLink = (item) => `<li><a href="${item.url}">${item.title}</></li>`;
+//	const renderCourseLink = (item) => `<li><a href="${item.url}">${item.title}</></li>`;
 
 	/* 
 		renderIcon: Returns a html strings 
@@ -3937,62 +3937,62 @@ const TemplateFavs = () => {
 	/* 
 		getFavsList: Returns an array of objects. PARAM: cookieType = accomm, course etc 
 	*/
-	function getFavsList(cookieType, cookieId) {
-		const favsCookieAll2 = getfavsCookie(cookieId);
-
-		const favsCookieAll = favsCookieAll2.map((item) => {
-			if (!item.type) item.type = "course";
-			return item;
-		});
-
-		const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
-
-		if (!favsCookie.length || favsCookie.length < 1) return [];
-		return favsCookie.sort((a, b) => b.date - a.date);
-	}
+// 	function getFavsList(cookieType, cookieId) {
+// 		const favsCookieAll2 = getfavsCookie(cookieId);
+// 
+// 		const favsCookieAll = favsCookieAll2.map((item) => {
+// 			if (!item.type) item.type = "course";
+// 			return item;
+// 		});
+// 
+// 		const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
+// 
+// 		if (!favsCookie.length || favsCookie.length < 1) return [];
+// 		return favsCookie.sort((a, b) => b.date - a.date);
+// 	}
 
 	/*
 		Controller
 	*/
 	function initMega(cookieId) {
-		const favCourses = getFavsList("course", cookieId);
-
-		if (!favCourses.length) return;
-
-		const url = stir.addSearch.getJsonEndpoint();
-		const sids = favCourses.filter((item) => Number(item.id)).map((item) => item.id);
-		const filters = {or: sids.map(item => { return {"custom_fields.sid": item} })};
-
-		url.search = new URLSearchParams({
-			term: "*",
-			customField: "type=course",
-			collectAnalytics: false,
-			resultType: "organic",
-			fuzzy: false,
-			filter: JSON.stringify(filters)
-		});
-
-		stir.getJSON(url, (response) => {
-			if (!response || !response.hits || !response.hits.length) return;
-
-			const courses = response.hits
-				.map(element => {
-					return {
-						id: element.custom_fields.sid,
-						date: favCourses.filter((fav) => fav.id == element.custom_fields.sid)[0].date,
-						title: (element.custom_fields.award ? element.custom_fields.award : "") + " " + element.title.split(" | ")[0],
-						url: element.url + `?origin=datacoursefavs`,
-					};
-				})
-				.sort((a, b) => b.date - a.date)
-				.map(renderCourseLink)
-				.join("");
-
-			// Make sure Megamenu has loaded then insert the links
-			stir.nodes("[data-coursefavs]").forEach((element) => {
-				element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses}</ul>`);
-			});
-		});
+// 		const favCourses = getFavsList("course", cookieId);
+// 
+// 		if (!favCourses.length) return;
+// 
+// 		const url = stir.addSearch.getJsonEndpoint();
+// 		const sids = favCourses.filter((item) => Number(item.id)).map((item) => item.id);
+// 		const filters = {or: sids.map(item => { return {"custom_fields.sid": item} })};
+// 
+// 		url.search = new URLSearchParams({
+// 			term: "*",
+// 			customField: "type=course",
+// 			collectAnalytics: false,
+// 			resultType: "organic",
+// 			fuzzy: false,
+// 			filter: JSON.stringify(filters)
+// 		});
+// 
+// 		stir.getJSON(url, (response) => {
+// 			if (!response || !response.hits || !response.hits.length) return;
+// 
+// 			const courses = response.hits
+// 				.map(element => {
+// 					return {
+// 						id: element.custom_fields.sid,
+// 						date: favCourses.filter((fav) => fav.id == element.custom_fields.sid)[0].date,
+// 						title: (element.custom_fields.award ? element.custom_fields.award : "") + " " + element.title.split(" | ")[0],
+// 						url: element.url + `?origin=datacoursefavs`,
+// 					};
+// 				})
+// 				.sort((a, b) => b.date - a.date)
+// 				.map(renderCourseLink)
+// 				.join("");
+// 
+// 			// Make sure Megamenu has loaded then insert the links
+// 			stir.nodes("[data-coursefavs]").forEach((element) => {
+// 				element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses}</ul>`);
+// 			});
+// 		});
 	}
 
 	/*
@@ -4021,20 +4021,20 @@ const TemplateFavs = () => {
 
 	initHeader(COOKIE_ID);
 
-	const callbackMegaMenu = (mutationList, observer) => {
-		for (const mutation of mutationList) {
-			for (const addedNode of mutation.addedNodes) {
-				if (addedNode.id == "mm__study") {
-					initMega(COOKIE_ID);
-				}
-			}
-		}
-	};
-
-	const config = { attributes: true, childList: true, subtree: true };
-	const observer = new MutationObserver(callbackMegaMenu);
-	const menucontainer = stir.node("#megamenu__container");
-	menucontainer && observer.observe(menucontainer, config);
+// 	const callbackMegaMenu = (mutationList, observer) => {
+// 		for (const mutation of mutationList) {
+// 			for (const addedNode of mutation.addedNodes) {
+// 				if (addedNode.id == "mm__study") {
+// 					initMega(COOKIE_ID);
+// 				}
+// 			}
+// 		}
+// 	};
+// 
+// 	const config = { attributes: true, childList: true, subtree: true };
+// 	const observer = new MutationObserver(callbackMegaMenu);
+// 	const menucontainer = stir.node("#megamenu__container");
+// 	menucontainer && observer.observe(menucontainer, config);
 };
 
 TemplateFavs();
