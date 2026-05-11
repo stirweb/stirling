@@ -199,11 +199,10 @@
     });
 
     primaryNav.addEventListener("click", mm_clicked);
-
     loaded = true;
   }
 
-  /**
+  /*
    * Only load the MegaMenu if the viewport is (currently) larger than 1240px.
    */
   var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
@@ -220,28 +219,37 @@
 })();
 
 /*
-Template Favourites
-*/
+ * Template Favourites
+ * This script is responsible for rendering the user's favourite courses in the megamenu and header.
+ * It reads the favs from a cookie, fetches course data from a json file, and renders the links in the appropriate places.
+ * It also updates the heart icon in the header to indicate if there are any favs.
+ */
 
 const TemplateFavs = () => {
-  const COOKIE_ID = "favs=";
+  /*
+   * Helper Function: renderCourseLink
+   * @param {object} item - An object representing a fav course, with id, date, title and url properties
+   * @returns {string} An html string of a list item with a link to the course, used in the megamenu and header favs list
+   */
+  const renderCourseLink = (item) => {
+    return `<li><a href="${item.url}">${item.title}</a></li>`;
+  };
 
-  /* 
-		renderCourseLink: Returns an array of html strings 
-	*/
-//	const renderCourseLink = (item) => `<li><a href="${item.url}">${item.title}</></li>`;
-
-  /* 
-		renderIcon: Returns a html strings 
-	*/
+  /*
+   * Helper Function: renderIcon
+   * @returns {string} An svg string of the heart icon, used in the header and megamenu to indicate a fav
+   */
   const renderIcon = () => {
     return `<svg data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50"><path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
 	C47.5,15,46.3,12.2,44.1,10.1z"></path></svg>`;
   };
 
-  /* 
-		getfavsCookie: Returns an array of objects 
-	*/
+  /*
+   * Helper Function: getfavsCookie
+   * Returns an array of objects from the specified cookie.
+   * @param {string} cookieId - The name of the cookie to read from (e.g. "favs=")
+   * @returns {Array} An array of fav objects
+   */
   function getfavsCookie(cookieId) {
     const favCookie = document.cookie
       .split(";")
@@ -251,73 +259,88 @@ const TemplateFavs = () => {
     return favCookie.length ? JSON.parse(favCookie) : [];
   }
 
-  /* 
-		getFavsList: Returns an array of objects. PARAM: cookieType = accomm, course etc 
-	*/
-// 	function getFavsList(cookieType, cookieId) {
-// 		const favsCookieAll2 = getfavsCookie(cookieId);
-// 
-// 		const favsCookieAll = favsCookieAll2.map((item) => {
-// 			if (!item.type) item.type = "course";
-// 			return item;
-// 		});
-// 
-// 		const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
-// 
-// 		if (!favsCookie.length || favsCookie.length < 1) return [];
-// 		return favsCookie.sort((a, b) => b.date - a.date);
-// 	}
+  /*
+   * Helper Function: getFavsList
+   *
+   * We are storing all favs in one cookie, so this function filters the cookie by type and returns an array of objects of that type.
+   * Each object has an id, date and type property. The date is used to sort the favs in the megamenu and to show the most recent favs in the header.
+   * If the cookie is empty or there are no favs of the specified type, an empty array is returned.
+   * @param {string} cookieType - The type of favs to return (e.g. "course", "accommodation")
+   * @param {string} cookieId - The name of the cookie to read from (e.g. "favs=")
+   * @returns {Array} An array of fav objects of the specified type, sorted by date (most recent first)
+   */
+  function getFavsList(cookieType, cookieId) {
+    const favsCookieAll2 = getfavsCookie(cookieId);
 
-	/*
-		Controller
-	*/
-	function initMega(cookieId) {
-// 		const favCourses = getFavsList("course", cookieId);
-// 
-// 		if (!favCourses.length) return;
-// 
-// 		const url = stir.addSearch.getJsonEndpoint();
-// 		const sids = favCourses.filter((item) => Number(item.id)).map((item) => item.id);
-// 		const filters = {or: sids.map(item => { return {"custom_fields.sid": item} })};
-// 
-// 		url.search = new URLSearchParams({
-// 			term: "*",
-// 			customField: "type=course",
-// 			collectAnalytics: false,
-// 			resultType: "organic",
-// 			fuzzy: false,
-// 			filter: JSON.stringify(filters)
-// 		});
-// 
-// 		stir.getJSON(url, (response) => {
-// 			if (!response || !response.hits || !response.hits.length) return;
-// 
-// 			const courses = response.hits
-// 				.map(element => {
-// 					return {
-// 						id: element.custom_fields.sid,
-// 						date: favCourses.filter((fav) => fav.id == element.custom_fields.sid)[0].date,
-// 						title: (element.custom_fields.award ? element.custom_fields.award : "") + " " + element.title.split(" | ")[0],
-// 						url: element.url + `?origin=datacoursefavs`,
-// 					};
-// 				})
-// 				.sort((a, b) => b.date - a.date)
-// 				.map(renderCourseLink)
-// 				.join("");
-// 
-// 			// Make sure Megamenu has loaded then insert the links
-// 			stir.nodes("[data-coursefavs]").forEach((element) => {
-// 				element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses}</ul>`);
-// 			});
-// 		});
-	}
+    const favsCookieAll = favsCookieAll2.map((item) => {
+      if (!item.type) item.type = "course";
+      return item;
+    });
 
-	/*
-		Controller
-	*/
+    const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
+
+    if (!favsCookie.length || favsCookie.length < 1) return [];
+    return favsCookie.sort((a, b) => b.date - a.date);
+  }
+
+  /*
+   * MegaMenu Controller Function
+   * @param cookieId {string} The name of the cookie to read the favs from (e.g. "favs=")
+   * Reads the favs from the cookie, fetches course data from a json file, and renders the links in the megamenu.
+   * If there are no favs or the json file fails to load, the megamenu will just render without the fav links, but will still function as normal.
+   * @param cookieId {string} The name of the cookie to read the favs from (e.g. "favs=")
+   * @returns {void}
+   */
+  function initMega(cookieId) {
+    const favCourses = getFavsList("course", cookieId);
+
+    if (!favCourses.length) return;
+
+    const jsonUrl = UoS_env.name === "prod" ? "/data/courses/all-courses/course-id-names-json/index.json" : "../../pages/favs/course-id-names.json";
+    const sids = favCourses.filter((item) => Number(item.id)).map((item) => item.id);
+
+    fetch(jsonUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const matches = data.filter((item) => sids.includes(item.id));
+
+        const courses = matches
+          .map((element) => {
+            return {
+              id: element.id,
+              date: favCourses.filter((fav) => fav.id == element.id)[0].date,
+              title: element.title,
+              url: element.url + `?origin=datacoursefavs`,
+            };
+          })
+          .sort((a, b) => b.date - a.date)
+          .map(renderCourseLink)
+          .join("");
+
+        //Make sure Megamenu has loaded then insert the links
+        stir.nodes("[data-coursefavs]").forEach((element) => {
+          element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses}</ul>`);
+        });
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  }
+
+  /*
+   * Header Controller Function
+   * Reads the favs from the cookie and updates the header heart icon to indicate if there are any favs, and shows a count of favs if there are any.
+   * If there are no favs, the header will just render without the fav count, but will still function as normal.
+   * @param cookieId {string} The name of the cookie to read the favs from (e.g. "favs=")
+   * @returns {void}
+   */
   function initHeader(cookieId) {
     const favs = getfavsCookie(cookieId);
-
     const iconNodes = stir.nodes("[data-stiricon=heart-inactive]");
 
     if (!iconNodes.length || !favs.length) return;
@@ -333,25 +356,29 @@ const TemplateFavs = () => {
   }
 
   /*
-		On Load
-	*/
+   * On Load
+   * Header	Favs: Always load the header favs functionality.
+   * Megamenu Course Favs: Only load the course favs functionality if the megamenu is present in the DOM.
+   * @returns {void}
+   */
 
+  const COOKIE_ID = "favs=";
   initHeader(COOKIE_ID);
 
-// 	const callbackMegaMenu = (mutationList, observer) => {
-// 		for (const mutation of mutationList) {
-// 			for (const addedNode of mutation.addedNodes) {
-// 				if (addedNode.id == "mm__study") {
-// 					initMega(COOKIE_ID);
-// 				}
-// 			}
-// 		}
-// 	};
-// 
-// 	const config = { attributes: true, childList: true, subtree: true };
-// 	const observer = new MutationObserver(callbackMegaMenu);
-// 	const menucontainer = stir.node("#megamenu__container");
-// 	menucontainer && observer.observe(menucontainer, config);
+  const callbackMegaMenu = (mutationList, observer) => {
+    for (const mutation of mutationList) {
+      for (const addedNode of mutation.addedNodes) {
+        if (addedNode.id == "mm__study") {
+          initMega(COOKIE_ID);
+        }
+      }
+    }
+  };
+
+  const config = { attributes: true, childList: true, subtree: true };
+  const observer = new MutationObserver(callbackMegaMenu);
+  const menucontainer = stir.node("#megamenu__container");
+  menucontainer && observer.observe(menucontainer, config);
 };
 
 TemplateFavs();
