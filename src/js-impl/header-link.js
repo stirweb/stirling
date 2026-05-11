@@ -49,7 +49,7 @@
   */
   const getUserType = () => {
     if (UoS_env.name === "dev") return "STAFF";
-    return window.Cookies && Cookies.get("psessv0") !== undefined ? Cookies.get("psessv0").split("|")[0] : "";
+    return window.Cookies && Cookies.get("psess17") !== undefined ? Cookies.get("psess17").split("|")[0] : "";
   };
 
   /*

@@ -159,15 +159,15 @@
 */
 
 .u-grey-line-top {
-  border-top: var(--border-thickness) solid $light-gray-2;
+  border-top: var(--border-thickness) solid $grey;
 }
 
 .u-grey-line-bottom {
-  border-bottom: var(--border-thickness) solid $light-gray-2;
+  border-bottom: var(--border-thickness) solid $grey;
 }
 
 .u-grey-line-left {
-  border-left: 1px solid $light-gray-2;
+  border-left: var(--border-thickness) solid $grey;
 }
 
 .u-medium-grey-line {
@@ -237,6 +237,13 @@
   .u-no-border-medium {
     border: none;
   }
+}
+
+/* Outlines */
+
+.u-outline-heritage-green {
+  outline: 2px solid #006938;
+  outline-offset: 4px;
 }
 
 /*

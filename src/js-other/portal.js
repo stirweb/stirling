@@ -2,7 +2,7 @@ var stir = stir || {};
 
 stir.portal = (function () {
   var el = document.getElementById("portal-status");
-  var sessionCookie = getCookie("psessv0");
+  var sessionCookie = getCookie("psess17");
 
   /* legacy function for portal status banner */
   function check() {

@@ -9,13 +9,13 @@
     Blockquote
   */
 
-  p + blockquote:not(.c-pullquote) {
-    margin: 60px auto 0;
+  // p + blockquote:not(.c-pullquote) {
+  //   margin: 60px auto 0;
 
-    + p:not(.quote-attribute) {
-      margin: 60px auto 1rem;
-    }
-  }
+  //   + p:not(.quote-attribute) {
+  //     margin: 60px auto 1rem;
+  //   }
+  // }
 
   p img {
     margin: 2rem 0;
@@ -29,7 +29,7 @@
     border-left: 5px solid $energy-green;
     font-weight: 600;
     max-width: 960px;
-    margin: 0 auto;
+    margin: 32px auto;
     padding: 0 0 0 30px;
 
     p {
@@ -48,7 +48,8 @@
 
   .quote-attribute {
     font-weight: 600;
-    margin: 0 auto 60px;
+    margin: 0 auto 32px;
+    display: block;
     max-width: 960px;
   }
 }

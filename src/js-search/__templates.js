@@ -261,7 +261,7 @@ stir.templates.search = (() => {
           .replace(/^!padrenullquery$/, "")
           .trim() || "";
       const queryEcho = document.createElement("em");
-      const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
+      const message = stir.templates.search.message(totalMatching > 0, totalMatching&&totalMatching.toLocaleString("en"), querySanitised.length > 1);
       const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
       const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
@@ -545,6 +545,7 @@ stir.templates.search = (() => {
     },
 
     news: (item) => {
+		if(!item.metaData.d) return ''; // temp fix 2025-10-18
       return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${item.metaData.thumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">

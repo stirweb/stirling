@@ -278,7 +278,7 @@ stir.templates.search = (() => {
           .replace(/^!padrenullquery$/, "")
           .trim() || "";
       const queryEcho = document.createElement("em");
-      const message = stir.templates.search.message(totalMatching > 0, totalMatching.toLocaleString("en"), querySanitised.length > 1);
+      const message = stir.templates.search.message(totalMatching > 0, totalMatching&&totalMatching.toLocaleString("en"), querySanitised.length > 1);
       const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
       const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
@@ -562,6 +562,7 @@ stir.templates.search = (() => {
     },
 
     news: (item) => {
+		if(!item.metaData.d) return ''; // temp fix 2025-10-18
       return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${item.metaData.thumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
@@ -995,7 +996,7 @@ stir.courses = (() => {
 	/**
 	 * C L E A R I N G
 	 */
-	const CLEARING = true; // set TRUE if Clearing is OPEN; otherwise FALSE
+	const CLEARING = false; // set TRUE if Clearing is OPEN; otherwise FALSE
 	/*
 	 **/
 
@@ -1465,6 +1466,14 @@ stir.search = () => {
     Array.prototype.forEach.call(pics, imageErrorHandler);
   });
 
+  const error = (el,data) => {
+	const summary = el.parentElement.parentElement.querySelector(".c-search-results-summary");
+	const button = el.parentElement.querySelector("button[disabled]");
+	el.innerHTML = `<p>${data.response.resultPacket.error.userMsg}</p>`;
+	summary.innerHTML = "<strong>Errror</strong>";
+	button.parentElement.removeChild(button);
+  };
+
   const updateStatus = stir.curry((element, data) => {
     const start = data.response.resultPacket.resultsSummary.currStart;
     const ranks = data.response.resultPacket.resultsSummary.numRanks;
@@ -1681,6 +1690,7 @@ stir.search = () => {
       //TODO intercept no-results and spelling suggestion here. Automatically display alternative results?
       if (!data || data.error || !data.response || !data.response.resultPacket) return;
       if (0 === data.response.resultPacket.resultsSummary.totalMatching && fallback(element)) return;
+	  if (data.response.returnCode !== 0) return error(element,data);
       return composition(data);
     };
     resetPagination();
