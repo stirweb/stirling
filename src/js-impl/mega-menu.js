@@ -219,7 +219,9 @@
 })();
 
 /*
- * Template Favourites
+ * @author: Ryan Kaye
+ * @date: 2026-05-11 (last updated)
+ * @name: Template Favourites
  * This script is responsible for rendering the user's favourite courses in the megamenu and header.
  * It reads the favs from a cookie, fetches course data from a json file, and renders the links in the appropriate places.
  * It also updates the heart icon in the header to indicate if there are any favs.
@@ -261,7 +263,6 @@ const TemplateFavs = () => {
 
   /*
    * Helper Function: getFavsList
-   *
    * We are storing all favs in one cookie, so this function filters the cookie by type and returns an array of objects of that type.
    * Each object has an id, date and type property. The date is used to sort the favs in the megamenu and to show the most recent favs in the header.
    * If the cookie is empty or there are no favs of the specified type, an empty array is returned.
@@ -296,7 +297,7 @@ const TemplateFavs = () => {
 
     if (!favCourses.length) return;
 
-    const jsonUrl = UoS_env.name === "prod" ? "/data/courses/all-courses/course-id-names-json/index.json" : "../../pages/favs/course-id-names.json";
+    const jsonUrl = UoS_env.name === "prod" ? "/data/courses/all-courses/course-id-names/index.json" : "../../pages/favs/course-id-names.json";
     const sids = favCourses.filter((item) => Number(item.id)).map((item) => item.id);
 
     fetch(jsonUrl)
@@ -322,7 +323,7 @@ const TemplateFavs = () => {
           .map(renderCourseLink)
           .join("");
 
-        //Make sure Megamenu has loaded then insert the links
+        // Make sure Megamenu has loaded then insert the links
         stir.nodes("[data-coursefavs]").forEach((element) => {
           element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses}</ul>`);
         });
