@@ -3690,354 +3690,383 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
  */
 
 (function () {
-	var url;
-	var KEY_ESC = "Escape";
-	var mm = document.getElementById("megamenu__container__dev") || document.getElementById("megamenu__container");
+  var url;
+  var KEY_ESC = "Escape";
+  var mm = document.getElementById("megamenu__container__dev") || document.getElementById("megamenu__container");
 
-	if (!mm) return;
+  if (!mm) return;
 
-	switch (UoS_env.name) {
-		case "dev":
-			url = "/pages/data/awd/megamenu.html";
-			break;
+  switch (UoS_env.name) {
+    case "dev":
+      url = "/pages/data/awd/megamenu.html";
+      break;
 
-		case "qa":
-			url = "/stirling/pages/data/awd/megamenu.html";
-			break;
+    case "qa":
+      url = "/stirling/pages/data/awd/megamenu.html";
+      break;
 
-		case "preview":
-		case "production":
-			url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2834";
-			break;
+    case "preview":
+    case "production":
+      url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2834";
+      break;
 
-		case "app-preview":
-		case "appdev-preview":
-		case "test":
-			url = "https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/2834";
-			break;
+    case "app-preview":
+    case "appdev-preview":
+    case "test":
+      url = "https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/2834";
+      break;
 
-		default: // live
-			url = "/developer-components/includes/template-external/mega-menu/";
-			break;
-	}
+    default: // live
+      url = "/developer-components/includes/template-external/mega-menu/";
+      break;
+  }
 
-	function initMegamenu() {
-		var primaryNav = document.querySelector("#layout-header .c-header-nav--primary");
-		var mainSections = document.querySelectorAll(".megamenu__links > ul > li > a");
-		var megalinks = document.querySelectorAll(".megamenu .megamenu__links");
-		var active_class = "c-header-nav__link--is-active";
-		var activeElement;
+  function initMegamenu() {
+    var primaryNav = document.querySelector("#layout-header .c-header-nav--primary");
+    var mainSections = document.querySelectorAll(".megamenu__links > ul > li > a");
+    var megalinks = document.querySelectorAll(".megamenu .megamenu__links");
+    var active_class = "c-header-nav__link--is-active";
+    var activeElement;
 
-		for (var i = 0; i < mainSections.length; i++) {
-			mainSections[i].insertAdjacentText("afterbegin", "Visit ");
-			mainSections[i].insertAdjacentText("beforeend", " home");
-		}
+    for (var i = 0; i < mainSections.length; i++) {
+      mainSections[i].insertAdjacentText("afterbegin", "Visit ");
+      mainSections[i].insertAdjacentText("beforeend", " home");
+    }
 
-		// prevent click propagating up through to body (which will close the mm)
-		mm.addEventListener("click", function (e) {
-			e.stopPropagation();
-		});
+    // prevent click propagating up through to body (which will close the mm)
+    mm.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
 
-		Array.prototype.forEach.call(document.querySelectorAll(".megamenu"), function (el) {
-			el.classList && el.classList.add("animation-slide");
-			el.setAttribute("tabindex", -1);
-			manageTabIndex(el, false);
-		});
+    Array.prototype.forEach.call(document.querySelectorAll(".megamenu"), function (el) {
+      el.classList && el.classList.add("animation-slide");
+      el.setAttribute("tabindex", -1);
+      manageTabIndex(el, false);
+    });
 
-		const mm_clicked = function (e) {
-			e.preventDefault();
-			e.stopPropagation();
+    const mm_clicked = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-			var id, mm;
-			id = e.target.getAttribute("aria-controls");
-			id && (mm = document.querySelector("#" + id));
+      var id, mm;
+      id = e.target.getAttribute("aria-controls");
+      id && (mm = document.querySelector("#" + id));
 
-			// if related megamenu found, prevent defaults and apply behaviour
-			if (mm) {
-				/**
-				 * If the megamenu related to this link item is already open, close it.
-				 * If it is not already open, close any that are, then open this one.
-				 */
-				if (mm.classList && mm.classList.contains("animation-slide__down")) {
-					mmSlideUp(mm);
-				} else {
-					mmSlideUpAll();
-					mmSlideDown(mm);
-				}
+      // if related megamenu found, prevent defaults and apply behaviour
+      if (mm) {
+        /**
+         * If the megamenu related to this link item is already open, close it.
+         * If it is not already open, close any that are, then open this one.
+         */
+        if (mm.classList && mm.classList.contains("animation-slide__down")) {
+          mmSlideUp(mm);
+        } else {
+          mmSlideUpAll();
+          mmSlideDown(mm);
+        }
 
-				e.target.classList && e.target.classList.toggle(active_class);
-			} else {
-				UoS_closeAllWidgetsExcept();
-			}
-		};
+        e.target.classList && e.target.classList.toggle(active_class);
+      } else {
+        UoS_closeAllWidgetsExcept();
+      }
+    };
 
-		function mmSlideDown(el) {
-			if (!el || !el.classList) return;
-			el.classList.remove("animation-slide__up");
-			el.classList.add("animation-slide__down");
-			manageTabIndex(el, true);
-			mmFocusFirstElement(el);
-			// listen for 'close' requests etc.
-			document.addEventListener("widgetRequestClose", closing);
-			document.addEventListener("keyup", escaping);
-			activeElement = el;
-		}
+    function mmSlideDown(el) {
+      if (!el || !el.classList) return;
+      el.classList.remove("animation-slide__up");
+      el.classList.add("animation-slide__down");
+      manageTabIndex(el, true);
+      mmFocusFirstElement(el);
+      // listen for 'close' requests etc.
+      document.addEventListener("widgetRequestClose", closing);
+      document.addEventListener("keyup", escaping);
+      activeElement = el;
+    }
 
-		function mmSlideUp(el) {
-			if (!el || !el.classList) return;
-			el.classList.add("animation-slide__up");
-			el.classList.remove("animation-slide__down");
-			manageTabIndex(el, false);
-			// stop listening for requests
-			document.removeEventListener("keyup", escaping);
-			document.removeEventListener("widgetRequestClose", closing);
-			el.id && returnFocus(el.id);
-			activeElement = null;
-		}
+    function mmSlideUp(el) {
+      if (!el || !el.classList) return;
+      el.classList.add("animation-slide__up");
+      el.classList.remove("animation-slide__down");
+      manageTabIndex(el, false);
+      // stop listening for requests
+      document.removeEventListener("keyup", escaping);
+      document.removeEventListener("widgetRequestClose", closing);
+      el.id && returnFocus(el.id);
+      activeElement = null;
+    }
 
-		function mmSlideUpAll() {
-			unhighlight();
-			Array.prototype.forEach.call(document.querySelectorAll(".megamenu.animation-slide__down"), function (el) {
-				mmSlideUp(el);
-			});
-		}
+    function mmSlideUpAll() {
+      unhighlight();
+      Array.prototype.forEach.call(document.querySelectorAll(".megamenu.animation-slide__down"), function (el) {
+        mmSlideUp(el);
+      });
+    }
 
-		function mmFocusFirstElement(el) {
-			const focusable = el.querySelector("a,button,input");
-			focusable && focusable.focus();
-		}
+    function mmFocusFirstElement(el) {
+      const focusable = el.querySelector("a,button,input");
+      focusable && focusable.focus();
+    }
 
-		function unhighlight() {
-			Array.prototype.forEach.call(primaryNav.querySelectorAll("." + active_class), function (el) {
-				el.classList && el.classList.remove(active_class);
-			});
-		}
+    function unhighlight() {
+      Array.prototype.forEach.call(primaryNav.querySelectorAll("." + active_class), function (el) {
+        el.classList && el.classList.remove(active_class);
+      });
+    }
 
-		function manageTabIndex(mm, state) {
-			Array.prototype.forEach.call(mm.querySelectorAll("a"), function (el) {
-				state ? el.removeAttribute("tabindex") : el.setAttribute("tabindex", -1);
-			});
-		}
+    function manageTabIndex(mm, state) {
+      Array.prototype.forEach.call(mm.querySelectorAll("a"), function (el) {
+        state ? el.removeAttribute("tabindex") : el.setAttribute("tabindex", -1);
+      });
+    }
 
-		const returnFocus = (id) => {
-			const el = document.querySelector(`[aria-controls="${id}"]`);
-			el && el.focus();
-		};
+    const returnFocus = (id) => {
+      const el = document.querySelector(`[aria-controls="${id}"]`);
+      el && el.focus();
+    };
 
-		function escaping(event) {
-			if (event.code === KEY_ESC) mmSlideUpAll();
-			if (event.code === "ArrowRight" || event.code === "ArrowLeft") panning(event);
-		}
+    function escaping(event) {
+      if (event.code === KEY_ESC) mmSlideUpAll();
+      if (event.code === "ArrowRight" || event.code === "ArrowLeft") panning(event);
+    }
 
-		function closing() {
-			unhighlight();
-			mmSlideUp(document.querySelector(".megamenu.animation-slide__down"));
-		}
+    function closing() {
+      unhighlight();
+      mmSlideUp(document.querySelector(".megamenu.animation-slide__down"));
+    }
 
-		function panning(event) {
-			var dollyTrack = activeElement.querySelector("ul>li>ul");
-			var prev = activeElement.querySelector(".megamenu__prev-button");
-			var next = activeElement.querySelector(".megamenu__next-button");
+    function panning(event) {
+      var dollyTrack = activeElement.querySelector("ul>li>ul");
+      var prev = activeElement.querySelector(".megamenu__prev-button");
+      var next = activeElement.querySelector(".megamenu__next-button");
 
-			if (event.code === "ArrowRight") {
-				dollyTrack && stir.scroll.call(dollyTrack, 0, dollyTrack.scrollWidth - dollyTrack.clientWidth);
-				next.style.display = 'none';
-				prev.style.display = 'block';
-			}
-			if (event.code === "ArrowLeft") {
-				dollyTrack && stir.scroll.call(dollyTrack, 0, 0);
-				prev.style.display = 'none';
-				next.style.display = 'block';
-			}
-		}
+      if (event.code === "ArrowRight") {
+        dollyTrack && stir.scroll.call(dollyTrack, 0, dollyTrack.scrollWidth - dollyTrack.clientWidth);
+        next.style.display = "none";
+        prev.style.display = "block";
+      }
+      if (event.code === "ArrowLeft") {
+        dollyTrack && stir.scroll.call(dollyTrack, 0, 0);
+        prev.style.display = "none";
+        next.style.display = "block";
+      }
+    }
 
-		{
-			/* Megamenu "subpage" scrolling behaviour */
+    {
+      /* Megamenu "subpage" scrolling behaviour */
 
-			function pan(sibling, positive, event) {
-				var dollyTrack = this.parentNode.querySelector("ul > li > ul");
-				var distance = positive ? dollyTrack.scrollWidth - dollyTrack.clientWidth : 0;
-				stir.scroll.call(dollyTrack, 0, distance);
-				this.style.display = "none";
-				sibling && (sibling.style.display = "block");
-				event.preventDefault();
-			}
+      function pan(sibling, positive, event) {
+        var dollyTrack = this.parentNode.querySelector("ul > li > ul");
+        var distance = positive ? dollyTrack.scrollWidth - dollyTrack.clientWidth : 0;
+        stir.scroll.call(dollyTrack, 0, distance);
+        this.style.display = "none";
+        sibling && (sibling.style.display = "block");
+        event.preventDefault();
+      }
 
-			for (var i = 0; i < megalinks.length; i++) {
-				var prev = megalinks[i].querySelector(".megamenu__prev-button");
-				var next = megalinks[i].querySelector(".megamenu__next-button");
-				if (prev && next) {
-					prev.addEventListener("click", pan.bind(prev, next, false));
-					next.addEventListener("click", pan.bind(next, prev, true));
-				}
-			}
-		}
+      for (var i = 0; i < megalinks.length; i++) {
+        var prev = megalinks[i].querySelector(".megamenu__prev-button");
+        var next = megalinks[i].querySelector(".megamenu__next-button");
+        if (prev && next) {
+          prev.addEventListener("click", pan.bind(prev, next, false));
+          next.addEventListener("click", pan.bind(next, prev, true));
+        }
+      }
+    }
 
-		primaryNav.querySelectorAll("[data-menu-id]").forEach((nav) => {
-			const mmid = nav.getAttribute("data-menu-id");
-			const mmel = mm.querySelector(`#${mmid}`);
-			if (mmid && mmel) {
-				nav.setAttribute("aria-controls", mmid);
-			}
-		});
+    primaryNav.querySelectorAll("[data-menu-id]").forEach((nav) => {
+      const mmid = nav.getAttribute("data-menu-id");
+      const mmel = mm.querySelector(`#${mmid}`);
+      if (mmid && mmel) {
+        nav.setAttribute("aria-controls", mmid);
+      }
+    });
 
-		primaryNav.addEventListener("click", mm_clicked);
+    primaryNav.addEventListener("click", mm_clicked);
+    loaded = true;
+  }
 
-		loaded = true;
-	}
-
-	/**
-	 * Only load the MegaMenu if the viewport is (currently) larger than 1240px.
-	 */
-	var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-	if (vw >= 1240) {
-		stir.load(url, function (data) {
-			if (data && !data.error) {
-				mm.innerHTML = data;
-				initMegamenu();
-			} else {
-				console.error("Unable to load MegaMenu");
-			}
-		});
-	}
+  /*
+   * Only load the MegaMenu if the viewport is (currently) larger than 1240px.
+   */
+  var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+  if (vw >= 1240) {
+    stir.load(url, function (data) {
+      if (data && !data.error) {
+        mm.innerHTML = data;
+        initMegamenu();
+      } else {
+        console.error("Unable to load MegaMenu");
+      }
+    });
+  }
 })();
 
 /*
-Template Favourites
-*/
+ * @author: Ryan Kaye
+ * @date: 2026-05-11 (last updated)
+ * @name: Template Favourites
+ * This script is responsible for rendering the user's favourite courses in the megamenu and header.
+ * It reads the favs from a cookie, fetches course data from a json file, and renders the links in the appropriate places.
+ * It also updates the heart icon in the header to indicate if there are any favs.
+ */
 
 const TemplateFavs = () => {
-	const COOKIE_ID = "favs=";
+  /*
+   * Helper Function: renderCourseLink
+   * @param {object} item - An object representing a fav course, with id, date, title and url properties
+   * @returns {string} An html string of a list item with a link to the course, used in the megamenu and header favs list
+   */
+  const renderCourseLink = (item) => {
+    return `<li><a href="${item.url}">${item.title}</a></li>`;
+  };
 
-	/* 
-		renderCourseLink: Returns an array of html strings 
-	*/
-	const renderCourseLink = (item) => `<li><a href="${item.url}">${item.title}</></li>`;
-
-	/* 
-		renderIcon: Returns a html strings 
-	*/
-	const renderIcon = () => {
-		return `<svg data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50"><path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+  /*
+   * Helper Function: renderIcon
+   * @returns {string} An svg string of the heart icon, used in the header and megamenu to indicate a fav
+   */
+  const renderIcon = () => {
+    return `<svg data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50"><path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
 	C47.5,15,46.3,12.2,44.1,10.1z"></path></svg>`;
-	};
+  };
 
-	/* 
-		getfavsCookie: Returns an array of objects 
-	*/
-	function getfavsCookie(cookieId) {
-		const favCookie = document.cookie
-			.split(";")
-			.filter((i) => i.includes(cookieId))
-			.map((i) => i.replace(cookieId, ""));
+  /*
+   * Helper Function: getfavsCookie
+   * Returns an array of objects from the specified cookie.
+   * @param {string} cookieId - The name of the cookie to read from (e.g. "favs=")
+   * @returns {Array} An array of fav objects
+   */
+  function getfavsCookie(cookieId) {
+    const favCookie = document.cookie
+      .split(";")
+      .filter((i) => i.includes(cookieId))
+      .map((i) => i.replace(cookieId, ""));
 
-		return favCookie.length ? JSON.parse(favCookie) : [];
-	}
+    return favCookie.length ? JSON.parse(favCookie) : [];
+  }
 
-	/* 
-		getFavsList: Returns an array of objects. PARAM: cookieType = accomm, course etc 
-	*/
-	function getFavsList(cookieType, cookieId) {
-		const favsCookieAll2 = getfavsCookie(cookieId);
+  /*
+   * Helper Function: getFavsList
+   * We are storing all favs in one cookie, so this function filters the cookie by type and returns an array of objects of that type.
+   * Each object has an id, date and type property. The date is used to sort the favs in the megamenu and to show the most recent favs in the header.
+   * If the cookie is empty or there are no favs of the specified type, an empty array is returned.
+   * @param {string} cookieType - The type of favs to return (e.g. "course", "accommodation")
+   * @param {string} cookieId - The name of the cookie to read from (e.g. "favs=")
+   * @returns {Array} An array of fav objects of the specified type, sorted by date (most recent first)
+   */
+  function getFavsList(cookieType, cookieId) {
+    const favsCookieAll2 = getfavsCookie(cookieId);
 
-		const favsCookieAll = favsCookieAll2.map((item) => {
-			if (!item.type) item.type = "course";
-			return item;
-		});
+    const favsCookieAll = favsCookieAll2.map((item) => {
+      if (!item.type) item.type = "course";
+      return item;
+    });
 
-		const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
+    const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
 
-		if (!favsCookie.length || favsCookie.length < 1) return [];
-		return favsCookie.sort((a, b) => b.date - a.date);
-	}
+    if (!favsCookie.length || favsCookie.length < 1) return [];
+    return favsCookie.sort((a, b) => b.date - a.date);
+  }
 
-	/*
-		Controller
-	*/
-	function initMega(cookieId) {
-		const favCourses = getFavsList("course", cookieId);
+  /*
+   * MegaMenu Controller Function
+   * @param cookieId {string} The name of the cookie to read the favs from (e.g. "favs=")
+   * Reads the favs from the cookie, fetches course data from a json file, and renders the links in the megamenu.
+   * If there are no favs or the json file fails to load, the megamenu will just render without the fav links, but will still function as normal.
+   * @param cookieId {string} The name of the cookie to read the favs from (e.g. "favs=")
+   * @returns {void}
+   */
+  function initMega(cookieId) {
+    const favCourses = getFavsList("course", cookieId);
 
-		if (!favCourses.length) return;
+    if (!favCourses.length) return;
 
-		const url = stir.addSearch.getJsonEndpoint();
-		const sids = favCourses.filter((item) => Number(item.id)).map((item) => item.id);
-		const filters = {or: sids.map(item => { return {"custom_fields.sid": item} })};
+    const jsonUrl = UoS_env.name === "prod" ? "/data/courses/all-courses/course-id-names/index.json" : "../../pages/favs/course-id-names.json";
+    const sids = favCourses.filter((item) => Number(item.id)).map((item) => item.id);
 
-		url.search = new URLSearchParams({
-			term: "*",
-			customField: "type=course",
-			collectAnalytics: false,
-			resultType: "organic",
-			fuzzy: false,
-			filter: JSON.stringify(filters)
-		});
+    fetch(jsonUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const matches = data.filter((item) => sids.includes(item.id));
 
-		stir.getJSON(url, (response) => {
-			if (!response || !response.hits || !response.hits.length) return;
+        const courses = matches
+          .map((element) => {
+            return {
+              id: element.id,
+              date: favCourses.filter((fav) => fav.id == element.id)[0].date,
+              title: element.title,
+              url: element.url + `?origin=datacoursefavs`,
+            };
+          })
+          .sort((a, b) => b.date - a.date)
+          .map(renderCourseLink)
+          .join("");
 
-			const courses = response.hits
-				.map(element => {
-					return {
-						id: element.custom_fields.sid,
-						date: favCourses.filter((fav) => fav.id == element.custom_fields.sid)[0].date,
-						title: (element.custom_fields.award ? element.custom_fields.award : "") + " " + element.title.split(" | ")[0],
-						url: element.url + `?origin=datacoursefavs`,
-					};
-				})
-				.sort((a, b) => b.date - a.date)
-				.map(renderCourseLink)
-				.join("");
+        // Make sure Megamenu has loaded then insert the links
+        stir.nodes("[data-coursefavs]").forEach((element) => {
+          element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses}</ul>`);
+        });
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  }
 
-			// Make sure Megamenu has loaded then insert the links
-			stir.nodes("[data-coursefavs]").forEach((element) => {
-				element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses}</ul>`);
-			});
-		});
-	}
+  /*
+   * Header Controller Function
+   * Reads the favs from the cookie and updates the header heart icon to indicate if there are any favs, and shows a count of favs if there are any.
+   * If there are no favs, the header will just render without the fav count, but will still function as normal.
+   * @param cookieId {string} The name of the cookie to read the favs from (e.g. "favs=")
+   * @returns {void}
+   */
+  function initHeader(cookieId) {
+    const favs = getfavsCookie(cookieId);
+    const iconNodes = stir.nodes("[data-stiricon=heart-inactive]");
 
-	/*
-		Controller
-	*/
-	function initHeader(cookieId) {
-		const favs = getfavsCookie(cookieId);
+    if (!iconNodes.length || !favs.length) return;
 
-		const iconNodes = stir.nodes("[data-stiricon=heart-inactive]");
+    iconNodes.forEach((element) => {
+      stir.setHTML(element, renderIcon());
+    });
 
-		if (!iconNodes.length || !favs.length) return;
+    if (!favs.length) return;
+    const iconNode = stir.node("header [data-stiricon=heart-inactive]");
+    const iconNodeParent = iconNode && iconNode.parentNode;
+    iconNodeParent && iconNodeParent.insertAdjacentHTML("beforebegin", `<em data-aos="u-fade-up-out" class=" u-heritage-green text-sm">${favs.length}</em>`);
+  }
 
-		iconNodes.forEach((element) => {
-			stir.setHTML(element, renderIcon());
-		});
+  /*
+   * On Load
+   * Header	Favs: Always load the header favs functionality.
+   * Megamenu Course Favs: Only load the course favs functionality if the megamenu is present in the DOM.
+   * @returns {void}
+   */
 
-		if (!favs.length) return;
-		const iconNode = stir.node("header [data-stiricon=heart-inactive]");
-		const iconNodeParent = iconNode && iconNode.parentNode;
-		iconNodeParent && iconNodeParent.insertAdjacentHTML("beforebegin", `<em data-aos="u-fade-up-out" class=" u-heritage-green text-sm">${favs.length}</em>`);
-	}
+  const COOKIE_ID = "favs=";
+  initHeader(COOKIE_ID);
 
-	/*
-		On Load
-	*/
+  const callbackMegaMenu = (mutationList, observer) => {
+    for (const mutation of mutationList) {
+      for (const addedNode of mutation.addedNodes) {
+        if (addedNode.id == "mm__study") {
+          initMega(COOKIE_ID);
+        }
+      }
+    }
+  };
 
-	initHeader(COOKIE_ID);
-
-	const callbackMegaMenu = (mutationList, observer) => {
-		for (const mutation of mutationList) {
-			for (const addedNode of mutation.addedNodes) {
-				if (addedNode.id == "mm__study") {
-					initMega(COOKIE_ID);
-				}
-			}
-		}
-	};
-
-	const config = { attributes: true, childList: true, subtree: true };
-	const observer = new MutationObserver(callbackMegaMenu);
-	const menucontainer = stir.node("#megamenu__container");
-	menucontainer && observer.observe(menucontainer, config);
+  const config = { attributes: true, childList: true, subtree: true };
+  const observer = new MutationObserver(callbackMegaMenu);
+  const menucontainer = stir.node("#megamenu__container");
+  menucontainer && observer.observe(menucontainer, config);
 };
 
 TemplateFavs();
+
 var stir = stir || {};
 (function () {
   const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="174054" formatter="path/*" />' : UoS_env.wc_path + "js/other/mobile-nav.js";
