@@ -1384,7 +1384,8 @@ body > nav > a.u-show-on-focus {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease-in-out;
-  z-index: 100; }
+  z-index: 100;
+  border-radius: 100%; }
   .c-scroll-to-top:hover {
     color: #fff; }
   .c-scroll-to-top:focus {
@@ -8977,6 +8978,9 @@ article.c-convo small {
 .u-h-full {
   height: 100%; }
 
+.u-h-72 {
+  height: 72px; }
+
 .u-trans-up {
   transform: translateY(-100%); }
 
@@ -9684,50 +9688,23 @@ ul.no-bullet {
   border-left: var(--border-thickness) solid #006938; }
 
 /* 
-  Energy Pink 
-*/
-.u-energy-pink-line-top {
-  border-top: var(--border-thickness) solid #e80068; }
-
-.u-energy-pink-line-bottom {
-  border-bottom: var(--border-thickness) solid #e80068; }
-
-.u-energy-pink-line-left {
-  border-left: var(--border-thickness) solid #e80068; }
-
-/* 
-  Energy turq 
-*/
-.u-energy-turq-line-top {
-  border-top: var(--border-thickness) solid #00a5ac; }
-
-.u-energy-turq-line-left {
-  border-left: var(--border-thickness) solid #00a5ac; }
-
-/* 
-  Energy purple 
-*/
-.u-energy-purple-line-top {
-  border-top: var(--border-thickness) solid #9053c6; }
-
-.u-energy-purple-line-left {
-  border-left: var(--border-thickness) solid #9053c6; }
-
-/* 
   Heritage purple 
 */
 .u-heritage-purple-line-left {
   border-left: var(--border-thickness) solid #592c82; }
 
 /* 
+  Energy turq 
+*/
+/* 
+  Energy purple 
+*/
+/* 
+  Energy Pink 
+*/
+/* 
   Heritage berry 
 */
-.u-heritage-berry-line-top {
-  border-top: var(--border-thickness) solid #7c184f; }
-
-.u-heritage-berry-line-left {
-  border-left: var(--border-thickness) solid #7c184f; }
-
 /* 
   Grey 
 */
@@ -9778,13 +9755,13 @@ ul.no-bullet {
 
 .u-border-width-2,
 .u-border-width-2:hover {
-  border-width: 2px; }
+  border-width: 2px !important; }
 
 .u-border-width-4 {
-  border-width: 4px; }
+  border-width: 4px !important; }
 
 .u-border-width-5 {
-  border-width: 5px; }
+  border-width: 5px !important; }
 
 /* Borders for medium down */
 @media screen and (max-width: 63.99875em) {
@@ -9874,6 +9851,7 @@ svg.u-icon {
 /*
     HOOK STYLES 
     Styles a hook under the content wrapped with the class '.hook'.
+    NOT Brand 2026 HOOKS
 */
 .hook {
   display: inline-block;

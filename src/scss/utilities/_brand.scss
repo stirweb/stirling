@@ -83,54 +83,6 @@
 }
 
 /* 
-  Energy Pink 
-*/
-
-.u-energy-pink-line-top {
-  border-top: var(--border-thickness) solid $energy-pink;
-}
-
-.u-energy-pink-line-bottom {
-  border-bottom: var(--border-thickness) solid $energy-pink;
-}
-
-.u-energy-pink-line-left {
-  border-left: var(--border-thickness) solid $energy-pink;
-}
-
-/* 
-  Energy turq 
-*/
-
-.u-energy-turq-line-top {
-  border-top: var(--border-thickness) solid $energy-turq;
-}
-
-// .u-energy-turq-line-bottom {
-//   border-bottom: var(--border-thickness) solid $energy-turq;
-// }
-
-.u-energy-turq-line-left {
-  border-left: var(--border-thickness) solid $energy-turq;
-}
-
-/* 
-  Energy purple 
-*/
-
-.u-energy-purple-line-top {
-  border-top: var(--border-thickness) solid $energy-purple;
-}
-
-// .u-energy-purple-line-bottom {
-//   border-bottom: var(--border-thickness) solid $energy-purple;
-// }
-
-.u-energy-purple-line-left {
-  border-left: var(--border-thickness) solid $energy-purple;
-}
-
-/* 
   Heritage purple 
 */
 
@@ -139,20 +91,68 @@
 }
 
 /* 
+  Energy turq 
+*/
+
+// .u-energy-turq-line-top {
+//   border-top: var(--border-thickness) solid $energy-turq;
+// }
+
+// .u-energy-turq-line-bottom {
+//   border-bottom: var(--border-thickness) solid $energy-turq;
+// }
+
+// .u-energy-turq-line-left {
+//   border-left: var(--border-thickness) solid $energy-turq;
+// }
+
+/* 
+  Energy purple 
+*/
+
+// .u-energy-purple-line-top {
+//   border-top: var(--border-thickness) solid $energy-purple;
+// }
+
+// .u-energy-purple-line-bottom {
+//   border-bottom: var(--border-thickness) solid $energy-purple;
+// }
+
+// .u-energy-purple-line-left {
+//   border-left: var(--border-thickness) solid $energy-purple;
+// }
+
+/* 
+  Energy Pink 
+*/
+
+// .u-energy-pink-line-top {
+//   border-top: var(--border-thickness) solid $energy-pink;
+// }
+
+// .u-energy-pink-line-bottom {
+//   border-bottom: var(--border-thickness) solid $energy-pink;
+// }
+
+// .u-energy-pink-line-left {
+//   border-left: var(--border-thickness) solid $energy-pink;
+// }
+
+/* 
   Heritage berry 
 */
 
-.u-heritage-berry-line-top {
-  border-top: var(--border-thickness) solid $heritage-berry;
-}
+// .u-heritage-berry-line-top {
+//   border-top: var(--border-thickness) solid $heritage-berry;
+// }
 
 // .u-heritage-berry-line-bottom {
 //   border-bottom: var(--border-thickness) solid $energy-berry;
 // }
 
-.u-heritage-berry-line-left {
-  border-left: var(--border-thickness) solid $heritage-berry;
-}
+// .u-heritage-berry-line-left {
+//   border-left: var(--border-thickness) solid $heritage-berry;
+// }
 
 /* 
   Grey 
@@ -220,15 +220,15 @@
 
 .u-border-width-2,
 .u-border-width-2:hover {
-  border-width: 2px;
+  border-width: 2px !important;
 }
 
 .u-border-width-4 {
-  border-width: 4px;
+  border-width: 4px !important;
 }
 
 .u-border-width-5 {
-  border-width: 5px;
+  border-width: 5px !important;
 }
 
 /* Borders for medium down */
@@ -343,6 +343,7 @@ svg.u-icon {
 /*
     HOOK STYLES 
     Styles a hook under the content wrapped with the class '.hook'.
+    NOT Brand 2026 HOOKS
 */
 
 .hook {
