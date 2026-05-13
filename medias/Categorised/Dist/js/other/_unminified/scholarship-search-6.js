@@ -101,12 +101,18 @@
     isMatch() helpers
   */
 
+  /*
+   * Helper Function: Determine if a scholarship matches the study level filter
+   */
   const matchStudyLevel = (scholStudyLevel, filterStudyLevel) => {
     if (filterStudyLevel === "Any") return true;
 
     return scholStudyLevel.includes(filterStudyLevel);
   };
 
+  /*
+   * Helper Function: Determine if a scholarship matches the fee status filter
+   */
   const matchFeeStatus = (scholFeeStatus, filterFeeStatus) => {
     //if (filterFeeStatus == "Any" || filterFeeStatus == "International") return true;
     //if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
@@ -120,22 +126,43 @@
     return scholFeeStatus.includes(filterFeeStatus);
   };
 
+  /*
+   * Helper Function: Determine if a scholarship matches the subject filter
+   */
   const matchSubject = (scholData, filterSubject) => {
     if (filterSubject === "Any") return true;
 
     return scholData.otherSubject.toLowerCase().includes(filterSubject.toLowerCase()) || scholData.promotedSubject.toLowerCase().includes(filterSubject.toLowerCase());
   };
 
+  /*
+   * NO LONGER IN USE - Faculty filter has been removed but this function is left in place in case we want to reinstate it at a later date
+   */
   const matchFaculty = (scholFaculty, filterFaculty) => {
     return true; // NO LONGER IN USE
     //return scholFaculty.includes(filterFaculty) || scholFaculty.includes("All Faculties");
   };
 
+  /*
+   * Helper Function: Determine if a scholarship matches the international filters
+   * If the filter nation is included in the ukroi region macro, then we dont want to match "All international" scholarships as these are not available to UK and ROI students
+   * If the filter nation is not included in the ukroi region macro, then we do want to match "All international" scholarships as these are available to students outside of the UK and ROI
+   * @param {String} scholNation - the nationality string from the scholarship data (e.g. "England, Northern Ireland, Scotland, Wales")
+   * @param {String} filterNation - the nation filter value (e.g. "Scotland")
+   * @param {Array} ukroi - the array of countries that are included in the "UK and ROI" region macro
+   * @return {Boolean} isMatch - true if the scholarship matches the international filters, false otherwise
+   */
   const isInternational = (scholNation, filterNation, ukroi) => {
     if (ukroi.includes(filterNation)) return false;
     return scholNation.includes("All international");
   };
 
+  /*
+   * Helper Function: Determine if a scholarship matches the region filters
+   * @param {String} scholNation - the nationality string from the scholarship data (e.g. "England, Northern Ireland, Scotland, Wales")
+   * @param {Array} filterRegions - the region filter values (e.g. ["EU", "Commonwealth"])
+   * @return {Boolean} isMatch - true if the scholarship matches any of the region filters, false otherwise
+   */
   const isRegion = (scholNation, filterRegions) => {
     if (!filterRegions || !filterRegions.length) return false;
 
@@ -144,8 +171,23 @@
     return stir.any((item) => item, hasRegion);
   };
 
+  /*
+   * Helper Function: Determine if a scholarship matches the location filters
+   * This includes the specific nation filter, the international filter and the region filters
+   * @param {String} scholNation - the nationality string from the scholarship data (e.g. "England, Northern Ireland, Scotland, Wales")
+   * @param {String} filterNation - the nation filter value (e.g. "Scotland")
+   * @param {Array} filterRegions - the region filter values (e.g. ["EU", "Commonwealth"])
+   * @param {Array} ukroi - the array of countries that are included in the "UK and ROI" region macro
+   * @return {Boolean} isMatch - true if the scholarship matches the location filters, false otherwisexw
+   */
   const matchLocation = (scholNation, filterNation, filterRegions, ukroi) => {
     if (filterNation === "Any") return true;
+
+    // fix issue where content folk select the individual countries instead of United Kingdom
+    // if scholNation includes England, Northern Ireland, Scotland, Wales append  "United Kingom"
+    if (scholNation.includes("England") && scholNation.includes("Northern Ireland") && scholNation.includes("Scotland") && scholNation.includes("Wales")) {
+      scholNation += ", United Kingdom";
+    }
 
     return (
       scholNation.includes(filterNation) || scholNation.includes("All nationalities") || isInternational(scholNation, filterNation, ukroi) || isRegion(scholNation, filterRegions)
@@ -153,8 +195,13 @@
   };
 
   /*
-    Determine if a scholarship matches the filters
-  */
+   * Helper Function: Determine if a scholarship matches the filters
+   * This is where we call the individual filter matching functions and combine the results to determine if the scholarship matches all filters
+   * &param {Object} filters - the filter object with the current filter values
+   * @param {Object} schol - the scholarship object to compare against the filters
+   * @param {Object} consts - the constants object that includes the region macros and other constants that may be needed for the filter matching functions
+   * @return {Boolean} isMatch - true if the scholarship matches all filters, false otherwise
+   */
   const isMatch = (filters, schol, consts) => {
     const matchFilter = [
       matchStudyLevel(schol.studyLevel, filters.studyLevel),
@@ -516,8 +563,6 @@
     Main controller function  
   */
   const main = (setFiltersFlag, page, consts, initMeta, initData) => {
-    console.log(getFilterVars(consts.nodes, consts.regionmacros));
-
     if (setFiltersFlag) setFormValues(consts.nodes);
 
     const setDOMResults = page === 1 ? setDOMContent(consts.nodes.resultsArea) : appendDOMContent(consts.nodes.resultsArea);
