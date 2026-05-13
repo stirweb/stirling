@@ -167,19 +167,25 @@
     return stir.all((b) => b, matchFilter);
   };
 
-  /* 
-    getRank() helpers
-  */
+  /*
+   * Helper Function: getInitialRank()
+   * Based on the hard coded oredering (ugOrder, pgOrder, ugOrderFaculty, pgOrderFaculty)
+   * Set to -30000 so this will always take precedence
+   * If no order is set, default to 1000 so that it will be ranked below any scholarship with an order but above any scholarship that doesnt match the filters at all (which are set to 10000)
+   * @param {Object} schol - the scholarship object
+   * @param {Object} filters - the filter object with the current filter values
+   * @return {String} rank - the initial rank value based on the order fields
+   */
   const getInitialRank = (schol, filters) => {
     if (!filters.sortBy || filters.sortBy === "") {
-      if (schol.ugOrder !== "") return schol.ugOrder;
-      if (schol.pgOrder !== "") return schol.pgOrder;
+      if (schol.ugOrder !== "") return schol.ugOrder - 30000;
+      if (schol.pgOrder !== "") return schol.pgOrder - 30000;
     }
 
-    if (filters.sortBy === "ugOrder") return schol.ugOrder;
-    if (filters.sortBy === "pgOrder") return schol.pgOrder;
-    if (filters.sortBy === "ugOrderFaculty") return schol.ugOrderFaculty;
-    if (filters.sortBy === "pgOrderFaculty") return schol.pgOrderFaculty;
+    if (filters.sortBy === "ugOrder") if (schol.ugOrder !== "") return schol.ugOrder - 30000;
+    if (filters.sortBy === "pgOrder") if (schol.pgOrder !== "") return schol.pgOrder - 30000;
+    if (filters.sortBy === "ugOrderFaculty") if (schol.ugOrderFaculty !== "") return schol.ugOrderFaculty - 30000;
+    if (filters.sortBy === "pgOrderFaculty") if (schol.pgOrderFaculty !== "") return schol.pgOrderFaculty - 30000;
 
     return "1000";
   };
@@ -191,9 +197,17 @@
     return scholVal.toLowerCase().indexOf(filterVal.toLowerCase()); // TODO Work in String length
   };
 
-  /* 
-    getRankValue: Returns an int
-  */
+  /*
+   * Helper Function: getRankValue()
+   * If the scholarship value matches the filter value, calculate a rank value based on the position of the filter value in the
+   * scholarship value string. This means that if the filter value is at the start of the string it will be ranked higher than if it is at the end.
+   * The weight is used to determine how much influence this factor has on the overall ranking. For example
+   * @param {String} scholVal - the scholarship value to compare (e.g. "England, Northern Ireland, Scotland, Wales")
+   * @param {String} filterVal - the filter value to compare against (e.g. "Scotland")
+   * @param {String} startVal - the current rank value before this factor is applied
+   * @param {Int} weight - the weight to apply to this factor (e.g. -100 for location, -20000 for subject)
+   * @return {String} rank - the new rank value after applying this factor
+   */
   const getRankValue = (scholVal, filterVal, startVal, weight) => {
     if (filterVal !== "" && scholVal.toLowerCase().includes(filterVal.toLowerCase())) {
       return calcRank(startVal, weight, getPos(scholVal, filterVal));
@@ -327,7 +341,7 @@
     return !content
       ? ``
       : `
-        <div class="cell small-12  large-4 ${addDivider ? `u-grey-line-left u-no-border-medium` : ``} ">
+        <div class="cell small-12  large-4 ${addDivider ? `u-grey-line-left u-px-1 u-no-border-medium` : ``} ">
           <div class="u-mb-fixed-1 u-h-full">
             <p class="u-font-bold">${header}</p>
             <p class="u-m-0">${content}</p>
@@ -484,6 +498,8 @@
 
     const regionTagCurry = getRegionTags(getInputValue(nodes.inputNation));
 
+    const nation = getInputValue(nodes.inputNation);
+
     return {
       subjectType: subjectType,
       subject: getSubject(subjectType, getInputValue(nodes.inputSubject)),
@@ -500,6 +516,8 @@
     Main controller function  
   */
   const main = (setFiltersFlag, page, consts, initMeta, initData) => {
+    console.log(getFilterVars(consts.nodes, consts.regionmacros));
+
     if (setFiltersFlag) setFormValues(consts.nodes);
 
     const setDOMResults = page === 1 ? setDOMContent(consts.nodes.resultsArea) : appendDOMContent(consts.nodes.resultsArea);
@@ -584,7 +602,7 @@
           return;
         }
       },
-      false
+      false,
     );
 
     /* 
@@ -680,7 +698,7 @@
         const limitDataCurry = stir.filter((el) => parseInt(el.rank) < 1000);
 
         return stir.compose(limitDataCurry, mapRankCurry, filterDataCurry)(allData);
-      })
+      }),
     );
     return schols;
   };
@@ -705,7 +723,7 @@
           limitDataCurry,
           stir.removeDuplicates,
           renderHardcodedResults,
-          sortCurry
+          sortCurry,
         )(stir.flatten(getCountriesData(CONSTANTS, element, initialData2)));
       });
     });
