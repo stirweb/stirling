@@ -7600,13 +7600,6 @@ ul[data-suggestions] {
   font-size: 1rem;
   z-index: 9; }
 
-.c-course-title__buttons {
-  margin: 1rem 0 1rem 0; }
-  .c-course-title__buttons .button {
-    margin-right: 2rem; }
-    .c-course-title__buttons .button:last-child {
-      margin-right: 0; }
-
 .c-course-title-sticky-menu {
   display: none;
   position: fixed;
@@ -7629,12 +7622,12 @@ ul[data-suggestions] {
   font-weight: bold; }
 
 .c-course-title-sticky-menu__buttons {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   text-align: right; }
   .c-course-title-sticky-menu__buttons .button {
     min-width: auto;
-    margin: 0 0 .5rem .5rem;
-    padding: .3rem .5rem .6rem; }
+    margin: 0 0 0.5rem 0.5rem;
+    padding: 0.3rem 0.5rem 0.6rem; }
     .c-course-title-sticky-menu__buttons .button:first-child {
       margin-left: 0; }
 
