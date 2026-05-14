@@ -508,9 +508,9 @@
    *
    */
 
-  /* 
-    Output the html content to the page 
-  */
+  /*
+   * Output the html content to the page
+   */
   const setDOMContent = stir.curry((elem, html) => {
     elem.innerHTML = html;
     return elem;
@@ -521,9 +521,9 @@
     return elem;
   });
 
-  /* 
-    Populate selects with query params from url string e.g. ?level=ug  
-  */
+  /*
+   * Populate selects with query params from url string e.g. ?level=ug
+   */
   const setFormValues = (nodes) => {
     nodes.inputNation.value = QueryParams.get("nationality") || "Any";
     nodes.inputSubject.value = QueryParams.get("subject") || "!padrenullquery";
@@ -568,9 +568,9 @@
     }
   };
 
-  /* 
-    Filter Helper functions 
-  */
+  /*
+   * Filter Helper functions
+   */
 
   const getRegionTags = stir.curry((scholNation, item) => {
     if (item.data.includes(scholNation)) {
@@ -625,9 +625,9 @@
 
   //const getSubjectType = (value) => (value && value.length > 0 ? value : "");
 
-  /* 
-    Extract filter vars from the form and reconfig them if nec 
-  */
+  /*
+   * Extract filter vars from the form and reconfig them if nec
+   */
   const getFilterVars = (nodes, regionmacros) => {
     const subjectType = "Subject"; // getSubjectType(nodes.inputSubject.options[nodes.inputSubject.selectedIndex].parentNode.label);
     const regionTagCurry = getRegionTags(getInputValue(nodes.inputNation));
@@ -644,17 +644,27 @@
     };
   };
 
-  /* 
-    Main controller function  
-  */
+  /*
+   * Main controller function
+   * This is the main function that is called. It takes filter values, processes the scholarship data through the filter, map and sort functions
+   * to get the final array of scholarship data to render based on the current filters and the ranking algorithm, and then renders the results to the page.
+   * @param {Boolean} setFiltersFlag - whether to set the form values based on the query params in the URL. This is used when the page is first loaded to set the form values based on the URL, but not when the form is submitted as we want to get the filter values directly from the form inputs in that case.
+   * @param {Int} page - the current page number for pagination
+   * @param {Object} consts - the constants object that includes various configuration values
+   * @param {Object} initMeta - the initial meta object that includes the default values for the meta information
+   * @param {Array} initData - the initial array of scholarship data to process and render
+   * @return {Void} This function does not return anything, it has the side effect of rendering the scholarship results to the page based on the current filters and pagination.
+   */
   const main = (setFiltersFlag, page, consts, initMeta, initData) => {
     if (setFiltersFlag) setFormValues(consts.nodes);
 
+    // Currys
     const setDOMResults = page === 1 ? setDOMContent(consts.nodes.resultsArea) : appendDOMContent(consts.nodes.resultsArea);
     const filterDataCurry = stir.filter(filterData(consts, getFilterVars(consts.nodes, consts.regionmacros)));
     const mapRankCurry = stir.map(mapRank(getFilterVars(consts.nodes, consts.regionmacros)));
     const sortDataCurry = stir.sort((a, b) => (parseInt(a.rank) < parseInt(b.rank) ? -1 : parseInt(a.rank) > parseInt(b.rank) ? 1 : 0));
 
+    // Process the data through the filter, map and sort functions to get the final array of scholarship data to render based on the current filters and the ranking algorithm
     const data = stir.compose(sortDataCurry, mapRankCurry, filterDataCurry)(initData);
 
     const newMeta = {
