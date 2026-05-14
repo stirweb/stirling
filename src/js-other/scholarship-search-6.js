@@ -15,7 +15,9 @@
 
 (function () {
   /*
+   *
    * VARS
+   *
    */
 
   const countryNodes = stir.nodes("[data-scholcountrylisting]");
@@ -264,9 +266,14 @@
     return "1000";
   };
 
-  /* 
-    getPos: Returns an int
-  */
+  /*
+   * Helper Function: getPos()
+   * Get the position of the filter value in the scholarship value string. This is used to calculate the rank value in the getRankValue function. The lower the position, the higher the rank as this indicates that the filter value is more prominently featured in the scholarship value string. For example, if the scholarship
+   * value is "England, Northern Ireland, Scotland, Wales" and the filter value is "Scotland", the position would be 25, whereas if the  the filter value was "England", the position would be 0 and the scholarship would be ranked higher as a result.
+   * @param {String} scholVal - the scholarship value to compare (e.g. "England, Northern Ireland, Scotland, Wales")
+   * @param {String} filterVal - the filter value to compare against (e.g. "Scotland")
+   * @return {Int} pos - the position of the filter value in the scholarship value string. The lower the position, the higher the rank as this indicates that the filter value is more prominently featured in the scholarship value string.
+   */
   const getPos = (scholVal, filterVal) => {
     return scholVal.toLowerCase().indexOf(filterVal.toLowerCase()); // TODO Work in String length
   };
