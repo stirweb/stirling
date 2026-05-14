@@ -1,14 +1,20 @@
 !function(){const e=stir.nodes("[data-scholcountrylisting]"),t=stir.nodes("[data-scholsubjectlisting]"),n=!!stir.node("[data-debug]"),r=stir.node("#scholarship-search__nationality"),s=stir.node("#scholarship-search__subject"),a=stir.node("#scholarship-search__level"),i=stir.node("#scholarship-search__feestatus"),l=stir.node("#scholarship-search__form"),o=stir.node("#scholarship-search__results");var u=stir.node("#scholarship-search__clear"),d=stir.t4Globals||{},c=d.regionmacros||[],d=d.feeStatusesAll.feestatuses||[];const p={cookieType:"scholarship",showUrlToFavs:"true",debug:n,regions:{ukroi:stir.flatten(c.filter(e=>"UK and ROI"===e.tag).map(e=>e.data))},regionmacros:stir.filter(e=>{if(e.tag)return e},c)||[],feeStatusesAll:d,feeStatusAllSize:d.map(e=>e.name).join(", ").split(", ").length,nodes:{inputNation:r,inputSubject:s,inputLevel:a,inputFeeStatus:i,searchForm:l,resultsArea:o,searchClearBtn:u}},g={postsPerPage:10,noPageLinks:9},h=stir.curry((e,t,r)=>{if(r.title&&b(t,r,e))return r}),y=stir.curry((e,t)=>{return{rank:A(e,t),scholarship:t}}),v=(e,t,r)=>!r.includes(t)&&e.includes("All international"),f=(t,e)=>{return!(!e||!e.length)&&(e=e.map(e=>t.includes(e)),stir.any(e=>e,e))},b=(e,t,r)=>{var s,a,r=[(s=t.studyLevel,"Any"===(a=e.studyLevel)||s.includes(a)),(s=t.feeStatus,"Any"==(a=e.feeStatus)||s.includes(a)),(s=t,"Any"===(a=e.subject)||s.otherSubject.toLowerCase().includes(a.toLowerCase())||s.promotedSubject.toLowerCase().includes(a.toLowerCase())),(t.faculty,e.faculty,!0),(s=t.nationality,a=e.nation,t=e.regions,e=r.regions.ukroi,"Any"===a||(s.includes("England")&&s.includes("Northern Ireland")&&s.includes("Scotland")&&s.includes("Wales")&&(s+=", United Kingdom"),s.includes(a))||s.includes("All nationalities")||v(s,a,e)||f(s,t))];return stir.all(e=>e,r)},m=(e,t)=>e.toLowerCase().indexOf(t.toLowerCase()),S=(e,t,r,s)=>""!==t&&e.toLowerCase().includes(t.toLowerCase())?j(r,s,m(e,t)):r,j=(e,t,r)=>String(t+parseInt(e)+r),A=(e,t)=>{var r=((e,t)=>{if(!t.sortBy||""===t.sortBy){if(""!==e.ugOrder)return e.ugOrder-3e4;if(""!==e.pgOrder)return e.pgOrder-3e4}return"ugOrder"===t.sortBy&&""!==e.ugOrder?e.ugOrder-3e4:"pgOrder"===t.sortBy&&""!==e.pgOrder?e.pgOrder-3e4:"ugOrderFaculty"===t.sortBy&&""!==e.ugOrderFaculty?e.ugOrderFaculty-3e4:"pgOrderFaculty"===t.sortBy&&""!==e.pgOrderFaculty?e.pgOrderFaculty-3e4:"1000"})(t,e),r=stir.isNumeric(parseInt(r))?r:"1000",r=S(t.nationality,e.nation,r,-1e4),r=f(t.nationality,e.regions)?j(r,-100,0):r,r=S(t.promotedSubject,e.subject,r,-2e4);return S(t.feeStatus,e.feeStatus,r,-1010)},O=(r,e)=>e.split(", ").map(t=>{var e=stir.filter(e=>{if(e.value===t)return e},r);return e[0]?e[0].name:t}),P=stir.curry((t,r,e)=>{return`
         <p class="u-margin-bottom text-center"> Displaying  ${r.start+1} - ${r.last}  of  <strong>${r.totalPosts} results</strong> that match your criteria.</p>
-        ${stir.map(e=>F(t,r,e),e).join("")} 
+        ${stir.map(e=>U(t,r,e),e).join("")} 
         <div class="grid-x " id="pagination-box">
           ${{currentPage:e,totalPosts:s,last:a}=[r][0],s<=a?"":`<div class="cell text-center">
               <button class="button hollow tiny" data-page="${e}">Load more results</button>
         </div>`}
-        </div> `;var s,a}),$=(e,t,r)=>t.length?stir.favourites.renderRemoveBtn(r,t[0].date,e):stir.favourites.renderAddBtn(r,e),F=(e,t,r)=>{var s,a,i=stir.favourites.getFav(r.scholarship.id,e.cookieType);return`
+        </div> `;var s,a}),$=(e,t,r)=>t.length?stir.favourites.renderRemoveBtn(r,t[0].date,e):stir.favourites.renderAddBtn(r,e),F=e=>`<span class="u-bg-heritage-green--10 c-tag u-mr-1 ">${e}</span>`,k=(e,t,r)=>e?`
+        <div class="cell small-12  large-4 ${r?"u-grey-line-left u-px-1 u-no-border-medium":""} ">
+          <div class="u-mb-fixed-1 u-h-full">
+            <p class="u-font-bold">${t}</p>
+            <p class="u-m-0">${e}</p>
+          </div>
+        </div> `:"",U=(e,t,r)=>{var s,a,i=stir.favourites.getFav(r.scholarship.id,e.cookieType);return`
         <div class="u-margin-bottom u-bg-white u-p-2 u-heritage-line-left u-border-width-5 u-relative">
             <div class="u-absolute u-top--16">
-            ${s=r.scholarship.studyLevel,a="desc",("desc"!==a?s.split(", ").sort():s.split(", ").sort().reverse()).map(U).join("")}
+            ${s=r.scholarship.studyLevel,a="desc",("desc"!==a?s.split(", ").sort():s.split(", ").sort().reverse()).map(F).join("")}
             </div>
             <div class="grid-x ">
                 <div class="cell  u-mt-1">
@@ -26,13 +32,7 @@
               ${$(e.showUrlToFavs,i,r.scholarship.id)}
             </div>
             </div>
-        </div>`},U=e=>`<span class="u-bg-heritage-green--10 c-tag u-mr-1 ">${e}</span>`,k=(e,t,r)=>e?`
-        <div class="cell small-12  large-4 ${r?"u-grey-line-left u-px-1 u-no-border-medium":""} ">
-          <div class="u-mb-fixed-1 u-h-full">
-            <p class="u-font-bold">${t}</p>
-            <p class="u-m-0">${e}</p>
-          </div>
-        </div> `:"",C=e=>`
+        </div>`},C=e=>`
         <div class="cell u-mt-2 u-p-2 u-border-solid " >
           <h3>Debugger</h3>
           <b>Weighting: </b> ${e.rank}
