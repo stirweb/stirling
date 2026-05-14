@@ -542,10 +542,7 @@
   */
   const getFilterVars = (nodes, regionmacros) => {
     const subjectType = "Subject"; // getSubjectType(nodes.inputSubject.options[nodes.inputSubject.selectedIndex].parentNode.label);
-
     const regionTagCurry = getRegionTags(getInputValue(nodes.inputNation));
-
-    const nation = getInputValue(nodes.inputNation);
 
     return {
       subjectType: subjectType,
