@@ -1,5 +1,5 @@
 /*
- * @description: Output Fulltime UG course with January start dates as a table
+ * @description: Output Full time UG courses with January start dates as a table
  * @author: Ryan Kaye
  * @version: 2
  * @notes: This version does NOT use FunnelBack or XML - it now uses a JSON feed embedded in html
@@ -22,12 +22,14 @@
   const renderItem = stir.curry((item) => {
     const portalUrl = `https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=`;
 
+    // if item.portalapply has multiple course codes separated by commas, we need to create a link for each one
+    const courseCodes = item.portalapply ? item.portalapply.split(", ").map((code) => code.trim()) : [];
+    const courseLinks = courseCodes.map((code, index) => `<a href="${portalUrl}${code}">${item.prefix.split(" / ")[index]} ${item.title}</a>`).join(", ");
+
     return `
                <tr>
                    <td>
-                   ${item.portalapply ? `<a href="${portalUrl}${item.portalapply}">` : ``}
-                   ${item.prefix} ${item.title}
-                   ${item.portalapply ? `</a>` : ``}
+                    ${item.portalapply ? courseLinks : ``}
                    </td>
                    <td>${item.janfull}</td>
                </tr>`;
