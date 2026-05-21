@@ -12,14 +12,14 @@
     const id = url.split("/")[url.split("/").length - 1];
     const src = "https://www.tiktok.com/player/v1/" + id;
 
-    return `<iframe loading="lazy" src="${src}" style="width: 100%; height: auto; aspect-ratio: 3/6;" ></iframe>`;
+    return `<iframe title="TikTok video" loading="lazy" src="${src}" style="width: 100%; height: auto; aspect-ratio: 3/6;" ></iframe>`;
   };
 
   /*
    * Render the appropriate embed code for a given Instagram URL
    */
   const renderInstagramCode = (url) => {
-    return `<blockquote class="instagram-media" 
+    return `<blockquote class="instagram-media" title="Instagram post" 
                     data-instgrm-captioned  
                     data-instgrm-permalink="${url}" 
                     data-instgrm-version="14">
@@ -31,7 +31,7 @@
    */
   const renderYouTubeCode = (url) => {
     return `<iframe class="vertical-video"  src="${url}" style="width: 100%; height: auto; aspect-ratio: 3/6;" 
-          loading="lazy"  title="YouTube video player" 
+          loading="lazy"  title="YouTube video" 
           frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
           encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" 
           allowfullscreen=""></iframe>`;
