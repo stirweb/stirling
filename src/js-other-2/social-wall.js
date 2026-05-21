@@ -105,6 +105,10 @@
     columns[3].push(...columns[1].splice(0, 1));
   }
 
+  if (noOfPosts === 10 && noOfColumns === 4) {
+    columns[3].push(...columns[2].splice(0, 1));
+  }
+
   // now we have the posts divided up into columns, we can render them in the appropriate way
   const html = columns.map((column) => {
     return `<div >${column.map(render).join("")}</div>`;
