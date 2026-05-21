@@ -26,13 +26,12 @@
     const courseCodes = item.portalapply ? item.portalapply.split(", ").map((code) => code.trim()) : [];
     const courseLinks = courseCodes.map((code, index) => `<a href="${portalUrl}${code}">${item.prefix.split(" / ")[index]} ${item.title}</a>`).join(", ");
 
-    return `
-               <tr>
-                   <td>
-                    ${item.portalapply ? courseLinks : ``}
-                   </td>
-                   <td>${item.janfull}</td>
-               </tr>`;
+    return `<tr>
+                <td>
+                ${item.portalapply ? courseLinks : ``}
+                </td>
+                <td>${item.janfull.split(",").join(", ")}</td>
+            </tr>`;
   });
 
   /*
