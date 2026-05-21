@@ -9,14 +9,11 @@
  * @notes: This version does NOT use FunnelBack or XML - it now uses a JSON feed embedded in html
  */
 
-(function (scope) {
+(function (domElement) {
   // Guard clauses to ensure the DOM element and data exist before proceeding
-  if (!scope) return;
+  if (!domElement) return;
 
-  if (!stir.feeds || !stir.feeds.data) {
-    console.error("Course data feed not found");
-    return;
-  }
+  if (!stir.feeds || !stir.feeds.data) return;
 
   /*
    * Render the html for each course as a table row
@@ -58,12 +55,11 @@
 
   /*
    * On load
-   * Process the data and render the table to the specified DOM element
+   * 1) Process the data - filter out objects without janfull entries and order by title
+   * 2) Render the data to an HTML table
+   * 3) Output the rendered HTML to the DOM element
    */
 
-  const domElement = scope;
-
-  // Filter out janfull objects and order by title
   const filteredData = stir.feeds.data.filter((item) => item.janfull && Object.keys(item.janfull).length > 0).sort((a, b) => a.title.localeCompare(b.title));
   const renderedData = renderTable(filteredData);
 

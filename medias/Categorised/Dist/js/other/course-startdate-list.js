@@ -1,4 +1,4 @@
-!function(t){if(t)if(stir.feeds&&stir.feeds.data){var a=`
+!function(t){if(t&&stir.feeds&&stir.feeds.data){var a=`
              <table>
                  <caption>Full time courses starting in January</caption>
                  <thead>
@@ -12,4 +12,4 @@
                 <td>${e.janfull.split(",").join(", ")}</td>
             </tr>`;var e}).join("")}
                  </tbody>
-             </table>`;t&&(t.innerHTML=a)}else console.error("Course data feed not found")}(stir.node("#course-list"));
+             </table>`;t&&(t.innerHTML=a)}}(stir.node("#course-list"));
