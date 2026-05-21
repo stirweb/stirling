@@ -19,7 +19,7 @@
    * @param {Object} item - The course item to render
    * @returns {string} - The HTML string for the table row
    */
-  const renderItem = stir.curry((item) => {
+  const renderItem = (item) => {
     const portalUrl = `https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=`;
 
     // if item.portalapply has multiple course codes separated by commas, we need to create a link for each one
@@ -32,14 +32,14 @@
                 </td>
                 <td>${item.janfull.split(",").join(", ")}</td>
             </tr>`;
-  });
+  };
 
   /*
    *  Render the course table html
    *  @param {Array} data - The array of course items to render
    *  @returns {string} - The HTML string for the course table
    */
-  const renderTable = stir.curry((data) => {
+  const renderTable = (data) => {
     return `
              <table>
                  <caption>Full time courses starting in January</caption>
@@ -50,7 +50,7 @@
                      ${data.map((el) => renderItem(el)).join("")}
                  </tbody>
              </table>`;
-  });
+  };
 
   /*
    * On load
