@@ -39,7 +39,7 @@
   const renderTable = stir.curry((data) => {
     return `
              <table>
-                 <caption>Fulltime Courses starting in January</caption>
+                 <caption>Full time courses starting in January</caption>
                  <thead>
                      <tr><th>Course</th><th>Year of entry</th></tr>
                  </thead>
