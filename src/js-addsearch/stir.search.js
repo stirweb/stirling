@@ -111,12 +111,14 @@ stir.search = (() => {
         }),
       },
       clearing: {
-        collectAnalytics: false,
-        limit: NUMRANKS,
         term: "*",
-        //				sort: "custom_fields.name",
-        //				filter: something something clearing only...?
-        //				timestamp: +new Date()
+        limit: NUMRANKS,
+        resultType: "organic",
+        collectAnalytics: false,
+        customField: "type=course",
+        customField: "level=undergraduate",
+        sort: "custom_fields.name",
+        order: "asc"
       },
     },
 

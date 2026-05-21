@@ -220,7 +220,7 @@ stir.templates.search = (() => {
   const timespan = (start, end) => (start ? `<time>${stir.Date.time24(new Date(start))}</time>` : "") + (end ? `–<time>${stir.Date.time24(new Date(end))}</time>` : "");
   const anchor = (crumb) => `<a href="${crumb.href}">${crumb.text}</a>`;
   const t4preview = (sid) => (sid ? `/terminalfour/preview/1/en/${sid}` : "#");
-  const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
+  const clearingTest = (item) => stir.courses && stir.courses.clearing && item.custom_fields && item.custom_fields.clearing ? true : false;
 
   const unpackData = (data) => {
     if ("undefined" === typeof data) return {};
@@ -487,8 +487,8 @@ stir.templates.search = (() => {
     comboCourse: (item) => `<a href="${item.url}">${item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, "")}</a>`,
 
     clearing: (item) => {
-      if (Object.keys && item.custom_fields && Object.keys(item.custom_fields).join().indexOf("clearing") >= 0) {
-        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p>`;
+      if (clearingTest(item)) {
+        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2026: places may be available on this course.</strong></p>`;
       }
     },
     combos: (item) => {
