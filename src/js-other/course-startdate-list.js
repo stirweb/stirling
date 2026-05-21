@@ -20,12 +20,14 @@
    * @returns {string} - The HTML string for the table row
    */
   const renderItem = stir.curry((item) => {
+    const portalUrl = `https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=`;
+
     return `
                <tr>
                    <td>
-                   ${item.url ? `<a href="${item.url}">` : ``}
+                   ${item.portalapply ? `<a href="${portalUrl}${item.portalapply}">` : ``}
                    ${item.prefix} ${item.title}
-                   ${item.url ? `</a>` : ``}
+                   ${item.portalapply ? `</a>` : ``}
                    </td>
                    <td>${item.janfull}</td>
                </tr>`;
