@@ -8,7 +8,7 @@
                    <td>${t.janfull}</td>
                </tr>`);var e=stir.curry(t=>`
              <table>
-                 <caption>Fulltime Courses starting in January</caption>
+                 <caption>Full time courses starting in January</caption>
                  <thead>
                      <tr><th>Course</th><th>Year of entry</th></tr>
                  </thead>
