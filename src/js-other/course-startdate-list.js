@@ -1,7 +1,11 @@
 /*
- * @description: Output Full time UG courses with January start dates as a table
+ * Output Full time UG courses with January start dates as a table
+ * JanFull: Some filtering is already done in T4 before it hits the feed eg passed dates are not included, leaving just upcoming years.
+ * This means not much processing needs to be done here
+ *
  * @author: Ryan Kaye
- * @version: 2
+ * @date: 2026-05-21
+ * @version: 3
  * @notes: This version does NOT use FunnelBack or XML - it now uses a JSON feed embedded in html
  */
 
