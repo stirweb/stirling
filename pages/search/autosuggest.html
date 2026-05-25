@@ -363,31 +363,25 @@
 			<div class="cell">
 				<h1 class=u-mt-2>Search</h1>
 				<form class="c-search-form x-search-redevelopment u-my-3" action="https://www.stir.ac.uk/search/" method="get">
-				  <div class="search-input-area">
-					<div>
-					  <label for="term" class="show-for-sr">Query</label>
-					  <div aria-label="search input with suggestions" role=combobox aria-owns=suggestions aria-haspopup=listbox aria-expanded=false>
-						<input type=search name=term id=term maxlength=256 autocomplete=off placeholder="Search the University website for courses and more" aria-autocomplete=both aria-controls=suggestions aria-label="Search our website" class="u-p-2">
-				  </div>
-					  <input type=submit value=Search class="u-bg-heritage-green u-white u-cursor-pointer text-sm u-font-secondary u-font-bold">
-					  <div class="show-for-sr" aria-live="assertive"></div>
+					<div class="search-input-area">
+						<div>
+							<label for="term" class="show-for-sr">Query</label>
+							<div aria-label="search input with suggestions" role=combobox aria-owns=suggestions aria-haspopup=listbox aria-expanded=false>
+								<input type=search name=term id=term maxlength=256 autocomplete=off placeholder="Search the University website for courses and more" aria-autocomplete=both aria-controls=suggestions aria-label="Search our website" class="u-p-2">
+							</div>
+							<input type=submit value=Search class="u-bg-heritage-green u-white u-cursor-pointer text-sm u-font-secondary u-font-bold">
+							<div class="show-for-sr" aria-live="assertive"></div>
+						</div>
 					</div>
-				  </div>
-				  <div class="c-search-suggest__suggestions">
-					<ul id=suggestions role=listbox aria-hidden> </ul>
-				  </div>
+					<div class="c-search-suggest__suggestions">
+						<ul id=suggestions role=listbox aria-hidden> </ul>
+					</div>
 				</form>
 			</div>
 			
-			<div class=cell>
-				<p>Est iste voluptas nostrum sint doloremque repellat incidunt. Iste voluptatem velit ipsam dolorem laboriosam. Consequuntur laudantium sed aut doloremque aut laudantium labore reiciendis.</p>
-				<p>Est iste voluptas nostrum sint doloremque repellat incidunt. Iste voluptatem velit ipsam dolorem laboriosam. Consequuntur laudantium sed aut doloremque aut laudantium labore reiciendis.</p>
-				<p>Est iste voluptas nostrum sint doloremque repellat incidunt. Iste voluptatem velit ipsam dolorem laboriosam. Consequuntur laudantium sed aut doloremque aut laudantium labore reiciendis.</p>
-				<p>Est iste voluptas nostrum sint doloremque repellat incidunt. Iste voluptatem velit ipsam dolorem laboriosam. Consequuntur laudantium sed aut doloremque aut laudantium labore reiciendis.</p>
-				<p>Est iste voluptas nostrum sint doloremque repellat incidunt. Iste voluptatem velit ipsam dolorem laboriosam. Consequuntur laudantium sed aut doloremque aut laudantium labore reiciendis.</p>
-			</div>
 			
 		</div>
+			
 	</main>
 			
 	<!--beginnoindex-->
@@ -592,7 +586,7 @@
 		<!-- app.min.js --> <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.js?v=149.1"></script>
 
 		<script>
-	  (()=>{
+		  (()=>{
 			if(search = document.querySelector('[data-search-suggest]')) {
 				const input = search.querySelector('[role=combobox]');
 				const output = search.querySelector('[role=listbox]');
