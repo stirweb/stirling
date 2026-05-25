@@ -2717,6 +2717,7 @@ stir.addSearch = (() => {
 * 2026-03-16
 * see: https://uxmastery.com/anatomy-of-an-accessible-auto-suggest/
 * see: https://stackoverflow.com/questions/39439115/how-to-execute-click-function-before-the-blur-function
+* see: https://www.w3.org/TR/wai-aria-1.1/#combobox
 */
 
 // we will add some new modules to the stir library
@@ -2726,10 +2727,11 @@ var stir = stir || {};
 * Concierge
 * Instantiated elsewhere with `new stir.Suggester(input, output, announcer);`
 */
-stir.Suggester = function Suggester(input,output,announcer) {
-	if(!input || !output || !announcer) return;
+stir.Suggester = function Suggester(combobox,output,announcer) {
+	if(!combobox || !output || !announcer) return;
 	if (!stir.addSearch) return;
 
+	const input = combobox.querySelector('input');
 	let prevQuery = "";
 	let suggestions = [];
 	let spointer = 0;
@@ -2755,11 +2757,11 @@ stir.Suggester = function Suggester(input,output,announcer) {
 			suggestions = [...data.suggestions.map(suggestion)];
 			output.append(...suggestions);
 			output.removeAttribute("aria-hidden");
-			input.setAttribute("data-suggesting","true")
+			combobox.setAttribute("aria-expanded","true");
 			announcer.textContent = `${suggestions.length} suggestions found, use up and down arrows to review.`;
 		} else {
 			output.setAttribute("aria-hidden","true");
-			input.removeAttribute("data-suggesting");
+			combobox.setAttribute("aria-expanded","false");
 		}
 	}
 	
@@ -2777,6 +2779,7 @@ stir.Suggester = function Suggester(input,output,announcer) {
 // E V E N T   H A N D L E R   F U N C T I O N S
 
 	function handleInput(event) {
+		console.info('[handleInput] this',this)
 		if ("" === this.value) stopSuggesting(event);
 		if (this.value != prevQuery) {
 			if (this.value.length >= minQueryLength) {
@@ -2788,6 +2791,7 @@ stir.Suggester = function Suggester(input,output,announcer) {
 	}
 
 	function actions(event) {
+		if(!combobox.hasAttribute("aria-expanded")) return;
 		switch (event.key) {
 			case 'Escape':
 				if(!output.hasAttribute("aria-hidden")) {
@@ -2848,7 +2852,7 @@ stir.Suggester = function Suggester(input,output,announcer) {
 		if(!output.hasAttribute("aria-hidden")) {
 			isSuggesting = false;
 			spointer = 0;
-			input.removeAttribute('data-suggesting');
+			combobox.setAttribute("aria-expanded","false");
 			output.setAttribute("aria-hidden","true");
 			output.innerHTML = '';
 			announcer.textContent = '';
