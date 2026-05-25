@@ -358,23 +358,24 @@
 	</style>
 	
 	<main class="wrapper-content" aria-label="Main content" id="content">
-		<div class="grid-x grid-container">
+		<div class="grid-x grid-container" data-search-suggest>
 			
 			<div class="cell">
 				<h1 class=u-mt-2>Search</h1>
-				<form method=get action=https://www.stir.ac.uk/search/#mySlider1>
-					<div class="c-search-suggest u-shadow u-mb-2">
-						<div class=x-search-v3>
-							<label for=term class=show-for-sr>Search:</label>
-							<input type="search" data-suggester name=term id=term autocomplete=off role=combobox aria-autocomplete=both aria-owns=suggestions>
-							<input type="submit" value="Search" />
-						</div>
-						<div class="c-search-suggest__suggestions">
-							<ul id=suggestions role=listbox data-suggestions>
-								<!-- <li id=suggestionId role=option>Suggestion</li> -->
-							</ul>
-						</div>
+				<form class="c-search-form x-search-redevelopment u-my-3" action="https://www.stir.ac.uk/search/" method="get">
+				  <div class="search-input-area">
+					<div>
+					  <label for="term" class="show-for-sr">Query</label>
+					  <div aria-label="search input with suggestions" role=combobox aria-owns=suggestions aria-haspopup=listbox aria-expanded=false>
+						<input type=search name=term id=term maxlength=256 autocomplete=off placeholder="Search the University website for courses and more" aria-autocomplete=both aria-controls=suggestions aria-label="Search our website" class="u-p-2">
+				  </div>
+					  <input type=submit value=Search class="u-bg-heritage-green u-white u-cursor-pointer text-sm u-font-secondary u-font-bold">
+					  <div class="show-for-sr" aria-live="assertive"></div>
 					</div>
+				  </div>
+				  <div class="c-search-suggest__suggestions">
+					<ul id=suggestions role=listbox aria-hidden> </ul>
+				  </div>
 				</form>
 			</div>
 			
@@ -588,13 +589,16 @@
 			</footer>
 			<!--endnoindex-->
 
-		<!-- app.min.js --> <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.min.js?v=149.1"></script>
+		<!-- app.min.js --> <script type="text/javascript" src="../../../medias/Categorised/Dist/js/app.js?v=149.1"></script>
 
 		<script>
-		  (()=>{
-			const input = document.querySelector('input[data-suggester]');
-			const output = document.querySelector('[data-suggestions]');
-			const as = new stir.Suggester(input,output);
+	  (()=>{
+			if(search = document.querySelector('[data-search-suggest]')) {
+				const input = search.querySelector('[role=combobox]');
+				const output = search.querySelector('[role=listbox]');
+				const announcer = search.querySelector('[aria-live]');
+				const as = new stir.Suggester(input,output,announcer);
+			}
 		  })();
 		</script>
 
