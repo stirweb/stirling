@@ -8434,7 +8434,7 @@ pre.debug {
     position: absolute;
     padding: .25rem 0 0; }
 
-ul[data-suggestions] {
+[data-search-suggest] [role=listbox] {
   background: #fff;
   left: 0;
   right: 0;
@@ -8443,25 +8443,20 @@ ul[data-suggestions] {
   border-top: 0;
   list-style-position: inside;
   padding: 0; }
-
-[data-suggestions][aria-hidden] {
-  display: none; }
-
-[data-suggestions] li {
-  cursor: pointer;
-  padding-left: 1rem; }
-
-[data-suggestions] li::before {
-  content: "";
-  padding-right: .6rem; }
-
-[data-suggestions] li::marker {
-  font-family: "uos";
-  content: "\e93f";
-  font-size: 1rem; }
-
-[data-suggestions] li[data-hilit], [data-suggestions] li:hover, [data-suggestions] li:hover::marker {
-  background: #d1d1c9; }
+  [data-search-suggest] [role=listbox][aria-hidden] {
+    display: none; }
+  [data-search-suggest] [role=listbox] li {
+    cursor: pointer;
+    padding-left: 1rem; }
+  [data-search-suggest] [role=listbox] li::before {
+    content: "";
+    padding-right: .6rem; }
+  [data-search-suggest] [role=listbox] li::marker {
+    font-family: "uos";
+    content: "\e93f";
+    font-size: 1rem; }
+  [data-search-suggest] [role=listbox] li[data-hilit], [data-search-suggest] [role=listbox] li:hover, [data-search-suggest] [role=listbox] li:hover::marker {
+    background: #d1d1c9; }
 
 /*
 		--
