@@ -2785,7 +2785,6 @@ stir.Suggester = function Suggester(combobox,output,announcer) {
 // E V E N T   H A N D L E R   F U N C T I O N S
 
 	function handleInput(event) {
-		console.info('[handleInput] this',this)
 		if ("" === this.value) stopSuggesting(event);
 		if (this.value != prevQuery) {
 			if (this.value.length >= minQueryLength) {
