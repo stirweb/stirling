@@ -77,7 +77,7 @@ stir.Suggester = function Suggester(combobox,output,announcer) {
 	}
 
 	function actions(event) {
-		if(!combobox.hasAttribute("aria-expanded")) return;
+		if(combobox.getAttribute("aria-expanded")!=="true") return;
 		switch (event.key) {
 			case 'Escape':
 				if(!output.hasAttribute("aria-hidden")) {
