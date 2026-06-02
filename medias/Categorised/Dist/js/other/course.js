@@ -498,9 +498,13 @@ stir.components.discoveruni.widget = function (options) {
 >>>>>>> Stashed changes
   return widget;
 };
+
 stir.components.html.details = function (options) {
-  var widget = document.createElement("details");
-  options.summary && (widget.innerHTML = "<summary>" + options.summary + "</summary>");
+  //var widget = document.createElement("details");
+  //options.summary && (widget.innerHTML = "<summary>" + options.summary + "</summary>");
+
+  //TEMP until we can fix DiscoverUniWidget's script to allow us to insert widgets into an already-rendered <details> element:
+  var widget = document.createElement("div");
   return widget;
 };
 
