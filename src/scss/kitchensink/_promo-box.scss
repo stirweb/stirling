@@ -13,28 +13,29 @@
   text-transform: uppercase;
   font-family: FSMaja, serif;
   font-weight: 100;
+  font-size: 1.125rem;
 
-  &::after {
-    content: "";
-    position: absolute;
-    height: 0.6em;
-    bottom: -0.2em;
-    right: 0;
-    left: 0;
-    width: auto;
-    border: 3px solid white;
-    border-width: 0 0 3px 3px;
-  }
-}
+  //   &::after {
+  //     content: "";
+  //     position: absolute;
+  //     height: 0.6em;
+  //     bottom: -0.2em;
+  //     right: 0;
+  //     left: 0;
+  //     width: auto;
+  //     border: 3px solid white;
+  //     border-width: 0 0 3px 3px;
+  //   }
+  // }
 
-.c-promo-box_category {
-  &[data-category="Research Spotlight"] {
-    background-color: $heritage-teal;
-  }
+  // .c-promo-box_category {
+  //   &[data-category="Research Spotlight"] {
+  //     background-color: $heritage-teal;
+  //   }
 
-  &[data-category="Impact"] {
-    background-color: $heritage-berry;
-  }
+  //   &[data-category="Impact"] {
+  //     background-color: $heritage-berry;
+  //   }
 }
 
 /*

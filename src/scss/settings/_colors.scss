@@ -562,6 +562,47 @@ a:has(img):hover {
     border-image-source: linear-gradient($grey, $grey);
   }
 
+  // secondary button style
+  .button.neutral {
+    border-color: $medium-gray;
+    background: linear-gradient(to top, $medium-gray 50%, #fff 50%);
+    color: $black;
+    background-size: 100% 200%;
+    background-position: bottom;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      color: $black;
+      border-color: $medium-gray;
+      background-position: top;
+    }
+  }
+
+  &.c-wrapper-neutral-strong {
+    background-color: $light-mink;
+    border-image-source: linear-gradient($light-mink, $light-mink);
+
+    .u-font-icon,
+    svg {
+      color: $heritage-green;
+    }
+
+    .button.neutral {
+      border-color: $light-gray-alt;
+      background: linear-gradient(to top, $light-gray-alt 50%, #fff 50%);
+      color: $black;
+      background-size: 100% 200%;
+      background-position: bottom;
+      transition: all 0.2s ease-out;
+
+      &:hover {
+        color: $black;
+        border-color: $light-gray-alt;
+        background-position: top;
+      }
+    }
+  }
+
   &.dark {
     color: $white;
 

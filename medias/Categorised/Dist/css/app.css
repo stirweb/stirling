@@ -896,6 +896,36 @@ a:has(img):hover {
   background-color: #f1f1ef;
   border-image-source: linear-gradient(#f1f1ef, #f1f1ef); }
 
+.c-wrapper-2026 .button.neutral {
+  border-color: #d1d1c9;
+  background: linear-gradient(to top, #d1d1c9 50%, #fff 50%);
+  color: #000;
+  background-size: 100% 200%;
+  background-position: bottom;
+  transition: all 0.2s ease-out; }
+  .c-wrapper-2026 .button.neutral:hover {
+    color: #000;
+    border-color: #d1d1c9;
+    background-position: top; }
+
+.c-wrapper-2026.c-wrapper-neutral-strong {
+  background-color: #d1d1c9;
+  border-image-source: linear-gradient(#d1d1c9, #d1d1c9); }
+  .c-wrapper-2026.c-wrapper-neutral-strong .u-font-icon,
+  .c-wrapper-2026.c-wrapper-neutral-strong svg {
+    color: #006938; }
+  .c-wrapper-2026.c-wrapper-neutral-strong .button.neutral {
+    border-color: #f6f5f4;
+    background: linear-gradient(to top, #f6f5f4 50%, #fff 50%);
+    color: #000;
+    background-size: 100% 200%;
+    background-position: bottom;
+    transition: all 0.2s ease-out; }
+    .c-wrapper-2026.c-wrapper-neutral-strong .button.neutral:hover {
+      color: #000;
+      border-color: #f6f5f4;
+      background-position: top; }
+
 .c-wrapper-2026.dark {
   color: #fff; }
   .c-wrapper-2026.dark h2,
@@ -4000,12 +4030,30 @@ progress::-moz-progress-bar {
     min-height: 30rem; } }
 
 /**
- *
+ * Full bleed image with dynamic promo block
+ * eg PG Open Day promo 
+ **/
+.big-image-dynamic-promo {
+  height: auto; }
+  .big-image-dynamic-promo > div > div::before {
+    content: "";
+    position: absolute;
+    background: #006938;
+    left: -30px;
+    bottom: 40px;
+    width: 30px;
+    height: 100px; }
+
+@media only screen and (min-width: 640px) {
+  .big-image-dynamic-promo {
+    height: 35rem;
+    margin-bottom: 56px; } }
+
+/**
  * PROMO STRIP
  * See: https://app.asana.com/0/inbox/247908865349815
  * Author: Robert Morrison <r.w.morrison@stir.ac.uk>
  * Date: 2023-05-12
- *
  **/
 .c-promo-strip > div > h2 {
   font-size: 1.8rem;
@@ -4183,23 +4231,8 @@ ul.pagination {
   padding: 0.1em 1em 0.2em;
   text-transform: uppercase;
   font-family: FSMaja, serif;
-  font-weight: 100; }
-  .c-promo-box_category::after {
-    content: "";
-    position: absolute;
-    height: 0.6em;
-    bottom: -0.2em;
-    right: 0;
-    left: 0;
-    width: auto;
-    border: 3px solid white;
-    border-width: 0 0 3px 3px; }
-
-.c-promo-box_category[data-category="Research Spotlight"] {
-  background-color: #005e63; }
-
-.c-promo-box_category[data-category="Impact"] {
-  background-color: #7c184f; }
+  font-weight: 100;
+  font-size: 1.125rem; }
 
 /*
 promobar-2026 
@@ -9881,6 +9914,17 @@ svg.u-icon {
     content: none; }
   .remove-hook-for-small > *::before {
     content: none; } }
+
+.border-fade-right::after {
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  right: 0;
+  background: rgba(42, 123, 155, 0.1);
+  background: linear-gradient(90deg, #006938 0%, #006938 9%);
+  width: 80vw;
+  height: 30px; }
 
 /*
 

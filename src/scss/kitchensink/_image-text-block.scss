@@ -86,12 +86,36 @@
 }
 
 /**
- *
+ * Full bleed image with dynamic promo block
+ * eg PG Open Day promo 
+ **/
+
+.big-image-dynamic-promo {
+  height: auto;
+
+  > div > div::before {
+    content: "";
+    position: absolute;
+    background: #006938;
+    left: -30px;
+    bottom: 40px;
+    width: 30px;
+    height: 100px;
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  .big-image-dynamic-promo {
+    height: 35rem;
+    margin-bottom: 56px;
+  }
+}
+
+/**
  * PROMO STRIP
  * See: https://app.asana.com/0/inbox/247908865349815
  * Author: Robert Morrison <r.w.morrison@stir.ac.uk>
  * Date: 2023-05-12
- *
  **/
 
 .c-promo-strip > div > h2 {
