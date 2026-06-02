@@ -470,6 +470,7 @@ stir.components.id = (function () {
 })();
 
 stir.components.discoveruni.widget = function (options) {
+  /*
   var widget = document.createElement("div");
   //add this class if we want DiscoverUniWidget to trigger automatically:
   //widget.classList.add('kis-widget');
@@ -477,7 +478,17 @@ stir.components.discoveruni.widget = function (options) {
   widget.setAttribute("data-course", options.kiscode);
   widget.setAttribute("data-kismode", options.kismode);
   widget.setAttribute("data-orientation", "responsive");
-  widget.setAttribute("data-language", "en-GB");
+  widget.setAttribute("data-language", "en-GB");*/
+
+  var mode = options.kismode === "fulltime" ? "FullTime" : "PartTime";
+
+  var widget = document.createElement("embed");
+  var url = `https://discoveruni.gov.uk/v2/widget/10007804/${options.kiscode}/${mode}/en`;
+  var styles = "width: 100%; height: 100%";
+
+  widget.setAttribute("src", url);
+  widget.setAttribute("style", styles);
+
   return widget;
 };
 stir.components.html.details = function (options) {
