@@ -470,10 +470,7 @@ stir.components.id = (function () {
 })();
 
 stir.components.discoveruni.widget = function (options) {
-<<<<<<< Updated upstream
   /*
-=======
->>>>>>> Stashed changes
   var widget = document.createElement("div");
   //add this class if we want DiscoverUniWidget to trigger automatically:
   //widget.classList.add('kis-widget');
@@ -481,7 +478,6 @@ stir.components.discoveruni.widget = function (options) {
   widget.setAttribute("data-course", options.kiscode);
   widget.setAttribute("data-kismode", options.kismode);
   widget.setAttribute("data-orientation", "responsive");
-<<<<<<< Updated upstream
   widget.setAttribute("data-language", "en-GB");*/
 
   var mode = options.kismode === "fulltime" ? "FullTime" : "PartTime";
@@ -493,9 +489,6 @@ stir.components.discoveruni.widget = function (options) {
   widget.setAttribute("src", url);
   widget.setAttribute("style", styles);
 
-=======
-  widget.setAttribute("data-language", "en-GB");
->>>>>>> Stashed changes
   return widget;
 };
 
