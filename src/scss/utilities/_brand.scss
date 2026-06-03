@@ -422,17 +422,3 @@ svg.u-icon {
     }
   }
 }
-
-// define a border that fades to transparent at 50% of the viewport width, and is solid after that
-.border-fade-right::after {
-  display: block;
-  content: "";
-  position: absolute;
-  bottom: -30px;
-  right: 0;
-  //background: linear-gradient(to left, $heritage-green, transparent);
-  background: rgba(42, 123, 155, 0.1);
-  background: linear-gradient(90deg, #006938 0%, $heritage-green 9%);
-  width: 80vw;
-  height: 30px;
-}

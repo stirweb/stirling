@@ -88,26 +88,67 @@
 /**
  * Full bleed image with dynamic promo block
  * eg PG Open Day promo 
+ * 2026 New brand work
  **/
 
 .big-image-dynamic-promo {
   height: auto;
 
+  picture::after {
+    display: block;
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    background: rgba(42, 123, 155, 0.1);
+    background: linear-gradient(90deg, #006938 0%, $heritage-green 9%);
+    width: 70vw;
+    height: 20px;
+  }
+
   > div > div::before {
     content: "";
     position: absolute;
     background: #006938;
-    left: -30px;
-    bottom: 40px;
-    width: 30px;
-    height: 100px;
+    left: 24px;
+    bottom: 4px;
+    width: 20px;
+    height: 50px;
   }
 }
 
-@media only screen and (min-width: 640px) {
+@include breakpoint(small down) {
+  .big-image-dynamic-promo {
+    picture::after {
+      left: 3rem;
+    }
+
+    > div > div {
+      margin-top: -60px;
+    }
+    img {
+      height: 15rem;
+    }
+  }
+}
+
+@include breakpoint(medium up) {
   .big-image-dynamic-promo {
     height: 35rem;
     margin-bottom: 56px;
+
+    picture::after {
+      width: 80vw;
+      bottom: -30px;
+      height: 30px;
+      right: 0;
+    }
+
+    > div > div::before {
+      left: -30px;
+      width: 30px;
+      height: 100px;
+      bottom: 30px;
+    }
   }
 }
 
