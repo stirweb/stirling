@@ -9830,6 +9830,15 @@ article.c-convo small {
   height: 100%;
   width: 100%; }
 
+@media screen and (min-width: 40em) {
+  .u-object-cover-medium-up,
+  .u-object-cover > img,
+  .u-object-cover > picture img {
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%; } }
+
 .u-object-contain {
   object-fit: contain; }
 
