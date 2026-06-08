@@ -488,7 +488,8 @@ stir.templates.search = (() => {
 
     clearing: (item) => {
       if (Object.keys && item.custom_fields && Object.keys(item.custom_fields).join().indexOf("clearing") >= 0) {
-        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p>`;
+        return ``;
+        //return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p>`;
       }
     },
     combos: (item) => {
@@ -752,7 +753,7 @@ stir.templates.search = (() => {
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
-						<strong>${ isWebinar && data.register ? serplink({url:data.register,id:item.id,position:item.position,title:item.title}) : serplink(item)}</strong>
+						<strong>${isWebinar && data.register ? serplink({ url: data.register, id: item.id, position: item.position, title: item.title }) : serplink(item)}</strong>
 					</p>
 					<div class="flex-container flex-dir-column u-gap-8">
 						<div class="flex-container u-gap-16 align-middle">
