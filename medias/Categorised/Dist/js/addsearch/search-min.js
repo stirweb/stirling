@@ -18,7 +18,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 				<p class="u-text-regular u-m-0"><strong><a href="${e.url}">${e.title.replace(/Current S\S+ ?\| ?/,"").split(" | ")[0].trim()}</a></strong></p>
 				${l(e.meta_description,e.custom_fields.access)}
 			  </div>
-			</div>`;var t},combo:e=>`<li title="${e.prefix} ${e.title}">${e.courses.map(stir.templates.search.comboCourse).join(" and ")}${e?.codes?.ucas?" <small>&hyphen; "+e.codes.ucas+"</small>":""}${g(e)?' <sup class="c-search-result__seasonal">*</sup>':""}</li>`,comboCourse:e=>`<a href="${e.url}">${e.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi,"")}</a>`,clearing:e=>{if(Object.keys&&e.custom_fields&&0<=Object.keys(e.custom_fields).join().indexOf("clearing"))return'<p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p>'},combos:e=>0===e.combos.length?"":`
+			</div>`;var t},combo:e=>`<li title="${e.prefix} ${e.title}">${e.courses.map(stir.templates.search.comboCourse).join(" and ")}${e?.codes?.ucas?" <small>&hyphen; "+e.codes.ucas+"</small>":""}${g(e)?' <sup class="c-search-result__seasonal">*</sup>':""}</li>`,comboCourse:e=>`<a href="${e.url}">${e.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi,"")}</a>`,clearing:e=>{if(Object.keys&&e.custom_fields&&0<=Object.keys(e.custom_fields).join().indexOf("clearing"))return""},combos:e=>0===e.combos.length?"":`
 				<div class="combo-accordion" data-behaviour=accordion>
 					<accordion-summary>Course combinations</accordion-summary>
 					<div>
