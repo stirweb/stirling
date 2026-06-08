@@ -482,11 +482,14 @@ a:has(img):hover {
     background-color: $tint-green;
     border-image-source: linear-gradient($tint-green, $tint-green);
 
-    //.button--gradient-hover {
     .button {
       color: $white;
       &:hover {
         color: $heritage-green;
+      }
+
+      svg {
+        color: $energy-green;
       }
     }
 
@@ -509,7 +512,6 @@ a:has(img):hover {
       filter: brightness(0);
     }
 
-    //.button--gradient-hover {
     .button {
       border-color: $tint-green;
       background: linear-gradient(to top, $tint-green 50%, #fff 50%);
@@ -517,6 +519,10 @@ a:has(img):hover {
       background-size: 100% 200%;
       background-position: bottom;
       transition: all 0.2s ease-out;
+
+      svg {
+        color: $black;
+      }
 
       &:hover {
         color: $black;
@@ -545,7 +551,6 @@ a:has(img):hover {
       filter: brightness(0);
     }
 
-    //.button--gradient-hover {
     .button {
       border-color: $energy-yellow;
       background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
@@ -553,6 +558,10 @@ a:has(img):hover {
       background-size: 100% 200%;
       background-position: bottom;
       transition: all 0.2s ease-out;
+
+      svg {
+        color: $black;
+      }
 
       &:hover {
         color: $black;
@@ -577,6 +586,10 @@ a:has(img):hover {
     background-position: bottom;
     transition: all 0.2s ease-out;
 
+    svg {
+      color: $black;
+    }
+
     &:hover {
       color: $black;
       border-color: $medium-gray;
@@ -584,6 +597,7 @@ a:has(img):hover {
     }
   }
 
+  // Neutral Strong
   &.c-wrapper-neutral-strong {
     background-color: $light-mink;
     border-image-source: linear-gradient($light-mink, $light-mink);
@@ -593,6 +607,12 @@ a:has(img):hover {
       color: $heritage-green;
     }
 
+    .button {
+      svg {
+        color: $energy-green;
+      }
+    }
+
     .button.neutral {
       border-color: $light-gray-alt;
       background: linear-gradient(to top, $light-gray-alt 50%, #fff 50%);
@@ -600,6 +620,10 @@ a:has(img):hover {
       background-size: 100% 200%;
       background-position: bottom;
       transition: all 0.2s ease-out;
+
+      svg {
+        color: $black;
+      }
 
       &:hover {
         color: $black;

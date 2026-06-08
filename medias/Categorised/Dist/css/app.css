@@ -811,6 +811,8 @@ a:has(img):hover {
     color: #fff; }
     .c-wrapper-2026.c-wrapper-energy .button:hover {
       color: #006938; }
+    .c-wrapper-2026.c-wrapper-energy .button svg {
+      color: #76b72a; }
   .c-wrapper-2026.c-wrapper-energy .u-font-icon,
   .c-wrapper-2026.c-wrapper-energy svg {
     color: #006938; }
@@ -829,6 +831,8 @@ a:has(img):hover {
     background-size: 100% 200%;
     background-position: bottom;
     transition: all 0.2s ease-out; }
+    .c-wrapper-2026.c-wrapper-heritage .button svg {
+      color: #000; }
     .c-wrapper-2026.c-wrapper-heritage .button:hover {
       color: #000;
       border-color: #9fcc69;
@@ -852,6 +856,8 @@ a:has(img):hover {
     background-size: 100% 200%;
     background-position: bottom;
     transition: all 0.2s ease-out; }
+    .c-wrapper-2026.c-wrapper-important .button svg {
+      color: #000; }
     .c-wrapper-2026.c-wrapper-important .button:hover {
       color: #000;
       border-color: #f4c400;
@@ -868,6 +874,8 @@ a:has(img):hover {
   background-size: 100% 200%;
   background-position: bottom;
   transition: all 0.2s ease-out; }
+  .c-wrapper-2026 .button.neutral svg {
+    color: #000; }
   .c-wrapper-2026 .button.neutral:hover {
     color: #000;
     border-color: #d1d1c9;
@@ -879,6 +887,8 @@ a:has(img):hover {
   .c-wrapper-2026.c-wrapper-neutral-strong .u-font-icon,
   .c-wrapper-2026.c-wrapper-neutral-strong svg {
     color: #006938; }
+  .c-wrapper-2026.c-wrapper-neutral-strong .button svg {
+    color: #76b72a; }
   .c-wrapper-2026.c-wrapper-neutral-strong .button.neutral {
     border-color: #f6f5f4;
     background: linear-gradient(to top, #f6f5f4 50%, #fff 50%);
@@ -886,6 +896,8 @@ a:has(img):hover {
     background-size: 100% 200%;
     background-position: bottom;
     transition: all 0.2s ease-out; }
+    .c-wrapper-2026.c-wrapper-neutral-strong .button.neutral svg {
+      color: #000; }
     .c-wrapper-2026.c-wrapper-neutral-strong .button.neutral:hover {
       color: #000;
       border-color: #f6f5f4;
@@ -2846,6 +2858,8 @@ button:focus {
   .button.no-border {
     border-color: transparent;
     border-width: 0; }
+  .button.not-rounded {
+    border-radius: 0; }
   .button.tiny {
     padding: 1.1em 1em;
     font-size: 0.875rem; }

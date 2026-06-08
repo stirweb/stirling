@@ -117,6 +117,10 @@ button:focus {
     border-width: 0;
   }
 
+  &.not-rounded {
+    border-radius: 0;
+  }
+
   &.tiny {
     padding: 1.1em 1em;
     font-size: 0.875rem;
