@@ -41,56 +41,12 @@
       // if neither; do nothing!
     });
   }
-
-  // Animate on Scroll. This checks AOS is available before making changes to the DOM.
-  /*
-  if (AOS) {
-    var fast = 1000;
-    var slow = 2000;
-    var right = "fade-right";
-    var left = "fade-left";
-    var up = "fade-up";
-
-    /*
-     * Helper function to set AOS attributes.
-     * @param {string} action the name of an AOS animation
-     * @param {number} duration the duration of the animation
-     *
-    var applyAOS = function applyAOS(action, duration) {
-      if (!this.setAttribute) return;
-      this.setAttribute("data-aos", action);
-      this.setAttribute("data-aos-duration", duration);
-    };
-
-    var animatedDOMElements = [
-      { element: ".c-promo-area--homepage .c-promo-area__content", action: right, duration: fast },
-      { element: ".c-promo-area--homepage .c-promo-area__image", action: left, duration: fast },
-      { element: ".c-research-promo__wrapper", action: up, duration: slow },
-      { element: ".c-international-section .c-bleed-feature__text-container", action: left, duration: fast },
-      { element: ".c-international-section .c-bleed-feature__image", action: right, duration: fast },
-      { element: ".c-homepage-news-events", action: up, duration: slow },
-    ];
-
-    for (var i = 0; i < animatedDOMElements.length; i++) {
-      var element = document.querySelector(animatedDOMElements[i].element);
-      var action = animatedDOMElements[i].action || left;
-      var duration = animatedDOMElements[i].duration || fast;
-      if (element) applyAOS.call(element, action, duration);
-    }
-
-    // this must be run after attaching data-* attributes:
-    AOS.init({
-      once: true, // only animate once per page-load (i.e. not on every scroll-by)
-      disable: "phone", // disabled for phone breakpoint
-    });
-  }
-  */
 })();
 
 /*
-
-   News and Events JSON Loader
-   
+ *
+ *  News and Events JSON Loader
+ *
  */
 
 var stir = stir || {};
@@ -98,6 +54,15 @@ var stir = stir || {};
 (function (scope) {
   if (!scope) return;
 
+  /*
+   * getFeedUrl
+   * A helper function to determine the correct URL for the news and events feed based on the current host and any global variables set by T4
+   * @param {String} host - the hostname of the current page
+   * @param {String} cacheBuster - a string to append to the URL to prevent caching (e.g. "?v=123456789")
+   * @param {Object} globals  - an object containing any global variables set by T4, which may include preview URLs for the feed
+   * @returns {String|null}
+   * Actual feed is at https://www.stir.ac.uk//media/stirling/feeds/homepage.json
+   */
   const getFeedUrl = (host, cacheBuster, globals) => {
     if (host === "localhost" || host === "stirweb.github.io") return "homepage.json" + cacheBuster;
 
@@ -111,26 +76,55 @@ var stir = stir || {};
   };
 
   /*
-    Filter data helper functions
-  */
+   *
+   * Data helper functions
+   *
+   */
 
   const filterEmpties = stir.filter((item) => {
     if (item.id && item.id !== 0) return item;
   });
 
+  /*
+   * filterDuplicates
+   * A helper function to filter out duplicate items based on their IDs
+   * @param {Number} first - the ID of the first item to exclude
+   * @param {Number} second - the ID of the second item to exclude
+   * @param {Object} item - the current item being processed in the array
+   * @returns {Object} - the item if its ID is not equal to the first or second ID, otherwise undefined (which will be filtered out by stir.filter)
+   */
   const filterDuplicates = (first, second, item) => {
     if (item.id !== first && item.id !== second) return item;
   };
 
+  /*
+   * filterLimit
+   * A helper function to filter an array to a certain length, curried to take the max number of items as its first argument
+   * @param {Number} max - the maximum number of items to return
+   * @param {Object} item - the current item being processed in the array
+   * @param {Number} index - the index of the current item being processed in the array
+   * @returns {Object} - the item if its index is less than the max, otherwise undefined (which will be filtered out by stir.filter)
+   */
   const filterLimit = (max, item, index) => {
     if (index < max) return item;
   };
 
+  /*
+   * getAdditionalNews
+   * Filters out the primary and secondary news items from the rest of the news items to avoid duplicates in the display
+   * @param {Array} items - the array of news items to filter through
+   * @param {Number} news1id - the id of the primary news item
+   * @param {Number} news2id - the id of the secondary news item
+   * @returns {Array} - the filtered array of news items with the primary and secondary items removed
+   */
   const getAdditionalNews = (items, news1id, news2id) => stir.filter((item) => filterDuplicates(news1id, news2id, item), items);
 
   /*
-    Extract the news data needed and process it to html
-  */
+   * Extract the news data needed and process it to html
+   * @param {Number} noOfNews - the number of news items to display
+   * @param {Object} data - the JSON data containing the news information
+   * @returns {String} - the HTML for the news section
+   */
   const getNews = (noOfNews, data) => {
     const newsItems1 = filterEmpties(data.news.primary);
     const newsItems2 = filterEmpties(data.news.secondary);
@@ -153,8 +147,12 @@ var stir = stir || {};
   };
 
   /*
-    Extract the events data needed and process it to html
-  */
+   * getEvents
+   * Extract the events data needed and process it to html
+   * @param {Number} noOfEvents - the number of events to display
+   * @param {Object} data - the JSON data containing the events information
+   * @returns {String} - the HTML for the events section
+   */
   const getEvents = (noOfEvents, data) => {
     const limterer = stir.filter((item, index) => filterLimit(noOfEvents, item, index)); // Curry
     const renderer = renderItem("", "div"); // Curry
@@ -167,47 +165,106 @@ var stir = stir || {};
   };
 
   /*
-    Renderers
-  */
+   *
+   * Renderers
+   *
+   */
 
+  /*
+   * renderCTA
+   * Returns the HTML for a call to action link with an arrow icon
+   * @param {String} link - the URL for the call to action link
+   * @param {String} text - the text for the call to action link
+   * @returns {String} - the HTML for the call to action link
+   */
+  const renderCTA = (link, text) => {
+    return `<div class="u-flex u-gap-8 cta-link u-mb-tiny">
+              <span class="u-svg-24 u-heritage-green">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="svg-icon">
+                  <path d="M13.833,16.333,17.167,13m0,0L13.833,9.667M17.167,13H8.833M23,13A10,10,0,1,1,13,3,10,10,0,0,1,23,13Z" transform="translate(-1 -1)" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+              <span>
+                <a href="${link}">${text}</a>
+              </span>
+          </div>`;
+  };
+
+  /*
+   * renderEvents
+   * Returns the HTML for the events section, curried to take the events data as its final argument
+   * @param {String} events - the HTML for the individual events, already processed through renderItem
+   * @returns {String} - the HTML for the whole events section
+   */
   const renderEvents = stir.curry((events) => {
     return `
       <!-- All Events -->
       <div class="cell large-4 medium-6 small-12">
           <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-2 u-items-start-small">
-              <h2 class="header-stripped u-header--margin-stripped">Events</h2>
-              <span class="flex-container u-gap-16 align-middle"><span class="uos-calendar u-icon h5 show-for-small-only"></span><a href="/events/" class="c-link">See all events</a></span>
+              <h2>Events</h2>
+              <span class="flex-container u-gap-16 align-middle">${renderCTA("/events/", "See all events")}</span>
           </div>
-          <div class="grid-x grid-padding-x" >${events}</div>
+          <div class="grid-x " >${events}</div>
       </div>`;
   });
 
+  /*
+   * renderNews
+   * Returns the HTML for the news section, curried to take the news data as its final argument
+   * If there are no events, shows 3 news items, output a simple link to events and makes the news section full width.
+   * If there are events, shows 2 news items and makes the news section 2/3 width to accommodate the events section without an events link
+   * @param {Number} noOfNews - the number of news items to display
+   * @param {String} classes - the CSS classes to apply to the news container
+   * @param {String} news - the HTML for the individual news items, already processed through renderItem
+   * @returns {String} - the HTML for the whole news section
+   */
   const renderNews = stir.curry((noOfNews, classes, news) => {
     return `
         <!-- All News -->
         <div class="cell small-12 ${classes}" >
             <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-2 u-items-start-small">
-                <h2 class="header-stripped u-header--margin-stripped">News</h2>
-                <span class="u-flex1 flex-container u-gap-16 align-middle"><span class="uos-radio-waves u-icon h5 show-for-small-only"></span><a href="/news/" class="c-link">See all articles</a></span>
-                ${noOfNews === 3 ? `<span class="flex-container u-gap-16 align-middle"><span class="uos-calendar u-icon h5"></span><a href="/events/" class="c-link">See our events</a></span>` : ``}
+                <h2>News</h2>
+                <span class="u-flex1 flex-container u-gap-16 align-middle">${renderCTA("/news/", "See all articles")}</span>
+                ${noOfNews === 3 ? renderCTA("/events/", "See our events") : ``}
             </div>
-            <div class="grid-x grid-padding-x " >${news}</div>
+            <div class="grid-x" >${news}</div>
         </div>`;
   });
 
+  /*
+   * renderItem
+   * Returns the HTML for a news or event item, curried to take the item data as its final argument
+   * @param {String} classes - the CSS classes to apply to the item container
+   * @param {String} node - the HTML node to use for the item container (e.g. "article" or "div")
+   * @param {Object} item - the data for the news or event item
+   * @returns {String} - the HTML for the news or event item
+   */
   const renderItem = stir.curry((classes, node, item) => {
     return `
       <${node} class="small-12 cell ${classes}">
         <div class="u-aspect-ratio-16-9 "><a href="${item.url}"><img class=" u-object-cover" src="${item.image}" alt="${item.imagealt}" loading="lazy"></a></div>
-        <h3 class="header-stripped u-my-1 u-font-normal ">
-        <a href="${item.url}" class="c-link ">${item.title}</a>
-      </h3>
+        <div class="u-flex u-gap-8 cta-link u-my-1">
+            <span class="u-svg-24 u-heritage-green">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="svg-icon">
+                <path d="M13.833,16.333,17.167,13m0,0L13.833,9.667M17.167,13H8.833M23,13A10,10,0,1,1,13,3,10,10,0,0,1,23,13Z" transform="translate(-1 -1)" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span>
+              <a href="${item.url}">${item.title}</a>
+            </span>
+        </div>
         ${item._uos.location ? `<strong>${item._uos.location}</strong>` : ``}
         ${renderTime(item._uos)} 
         <p class="text-sm">${item.summary}</p>
       </${node} >`;
   });
 
+  /*
+   * renderTime
+   * Returns the HTML for the time element of a news or event item
+   * @param {Object} meta - the metadata for the news or event item
+   * @returns {String} - the HTML for the time element, or an empty string if there is no start date
+   */
   const renderTime = (meta) => {
     if (!meta.startDate) return "";
 
@@ -215,10 +272,19 @@ var stir = stir || {};
     return `<time class="u-block u-my-1 u-dark-grey">${meta.startDate}${endDate}</time>`;
   };
 
-  const render = (news, events) => `<div class="grid-x grid-padding-x c-news-event__news">${news}${events}</div>`;
+  /*
+   * render
+   * Returns the HTML for the whole news and events section, curried to take the news and events data as its final arguments
+   * @param {String} news - the HTML for the news section, already processed through renderNews
+   * @param {String} events - the HTML for the events section, already processed through renderEvents
+   * @returns {String} - the HTML for the whole news and events section
+   */
+  const render = (news, events) => {
+    return `<div class="grid-x  c-news-event__news">${news}${events}</div>`;
+  };
 
   /*
-      EVENTS: OUTPUT (!!SIDE EFFECTS!!)
+   * EVENTS: OUTPUT (!!SIDE EFFECTS!!)
    */
 
   const setDOMContent = stir.curry((node, html) => {
@@ -227,8 +293,8 @@ var stir = stir || {};
   });
 
   /*
-    On Load
-  */
+   * On Load
+   */
 
   const noOfEvents = 1;
   const noOfItems = 3;
@@ -252,6 +318,10 @@ var stir = stir || {};
   });
 })(stir.node(".c-news-event"));
 
+/*
+ * Mobile search placeholder toggle
+ *
+ */
 (function () {
   const placeholder = document.querySelector("[data-placeholder-mobile]");
   if (placeholder) {

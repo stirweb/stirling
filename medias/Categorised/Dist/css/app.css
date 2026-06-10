@@ -813,6 +813,16 @@ a:has(img):hover {
       color: #006938; }
     .c-wrapper-2026.c-wrapper-energy .button svg {
       color: #76b72a; }
+    .c-wrapper-2026.c-wrapper-energy .button.hollow {
+      color: #000;
+      background: #9fcc69;
+      background: linear-gradient(to top, #006938 50%, #9fcc69 50%);
+      background-position: top;
+      background-size: 100% 200%; }
+      .c-wrapper-2026.c-wrapper-energy .button.hollow:hover {
+        color: #fff;
+        border-color: #006938;
+        background-position: bottom; }
   .c-wrapper-2026.c-wrapper-energy .u-font-icon,
   .c-wrapper-2026.c-wrapper-energy svg {
     color: #006938; }
@@ -837,6 +847,19 @@ a:has(img):hover {
       color: #000;
       border-color: #9fcc69;
       background-position: top; }
+    .c-wrapper-2026.c-wrapper-heritage .button.hollow {
+      color: #fff;
+      background: #006938;
+      background: linear-gradient(to top, #9fcc69 50%, #006938 50%);
+      background-position: top;
+      background-size: 100% 200%; }
+      .c-wrapper-2026.c-wrapper-heritage .button.hollow::after {
+        filter: brightness(1) invert(1); }
+      .c-wrapper-2026.c-wrapper-heritage .button.hollow:hover {
+        color: #000;
+        background-position: bottom; }
+        .c-wrapper-2026.c-wrapper-heritage .button.hollow:hover::after {
+          filter: brightness(1); }
 
 .c-wrapper-2026.c-wrapper-important {
   background-color: #592c82;
@@ -862,6 +885,19 @@ a:has(img):hover {
       color: #000;
       border-color: #f4c400;
       background-position: top; }
+    .c-wrapper-2026.c-wrapper-important .button.hollow {
+      color: #fff;
+      background: #592c82;
+      background: linear-gradient(to top, #f4c400 50%, #592c82 50%);
+      background-position: top;
+      background-size: 100% 200%; }
+      .c-wrapper-2026.c-wrapper-important .button.hollow::after {
+        filter: brightness(1) invert(1); }
+      .c-wrapper-2026.c-wrapper-important .button.hollow:hover {
+        color: #000;
+        background-position: bottom; }
+        .c-wrapper-2026.c-wrapper-important .button.hollow:hover::after {
+          filter: brightness(1); }
 
 .c-wrapper-2026.c-wrapper-neutral {
   background-color: #f1f1ef;
@@ -889,6 +925,18 @@ a:has(img):hover {
     color: #006938; }
   .c-wrapper-2026.c-wrapper-neutral-strong .button svg {
     color: #76b72a; }
+  .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow {
+    background: #d1d1c9;
+    background: linear-gradient(to top, #006938 50%, #d1d1c9 50%);
+    background-position: top;
+    background-size: 100% 200%; }
+    .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow::after {
+      filter: brightness(1); }
+    .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow:hover {
+      color: #fff;
+      background-position: bottom; }
+      .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow:hover::after {
+        filter: brightness(1) invert(1); }
   .c-wrapper-2026.c-wrapper-neutral-strong .button.neutral {
     border-color: #f6f5f4;
     background: linear-gradient(to top, #f6f5f4 50%, #fff 50%);
@@ -2894,15 +2942,6 @@ button:focus {
     border-radius: 0;
     border-color: transparent; }
     .button.subtle:hover {
-      border-bottom-color: transparent;
-      color: #000; }
-  .button.secondary {
-    background-color: #3a3c39;
-    background: linear-gradient(to top, #3a3c39 50%, #3a3c39 50%);
-    color: #fff;
-    border-radius: 0;
-    border-color: transparent; }
-    .button.secondary:hover {
       border-bottom-color: transparent;
       color: #000; }
   .button.energy:hover {

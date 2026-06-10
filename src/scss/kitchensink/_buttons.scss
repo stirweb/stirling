@@ -179,18 +179,18 @@ button:focus {
     }
   }
 
-  &.secondary {
-    background-color: $dark-grey; // energy teal very light
-    background: linear-gradient(to top, $dark-grey 50%, $dark-grey 50%);
-    color: $white;
-    border-radius: 0;
-    border-color: transparent;
+  // Just use neutral now
+  // &.secondary {
+  //   background-color: $dark-grey; // energy teal very light
+  //   background: linear-gradient(to top, $dark-grey 50%, $dark-grey 50%);
+  //   color: $white;
+  //   border-color: transparent;
 
-    &:hover {
-      border-bottom-color: transparent;
-      color: $black;
-    }
-  }
+  //   &:hover {
+  //     border-bottom-color: transparent;
+  //     color: $black;
+  //   }
+  // }
 
   &.energy:hover {
     color: $black;

@@ -491,6 +491,20 @@ a:has(img):hover {
       svg {
         color: $energy-green;
       }
+
+      &.hollow {
+        color: $black;
+        background: $tint-green;
+        background: linear-gradient(to top, $heritage-green 50%, $tint-green 50%);
+        background-position: top;
+        background-size: 100% 200%;
+
+        &:hover {
+          color: $white;
+          border-color: $heritage-green;
+          background-position: bottom;
+        }
+      }
     }
 
     .u-font-icon,
@@ -528,6 +542,27 @@ a:has(img):hover {
         color: $black;
         border-color: $tint-green;
         background-position: top;
+      }
+
+      &.hollow {
+        color: $white;
+        background: $heritage-green;
+        background: linear-gradient(to top, $tint-green 50%, $heritage-green 50%);
+        background-position: top;
+        background-size: 100% 200%;
+
+        &::after {
+          filter: brightness(1) invert(1);
+        }
+
+        &:hover {
+          color: $black;
+          background-position: bottom;
+
+          &::after {
+            filter: brightness(1);
+          }
+        }
       }
     }
   }
@@ -567,6 +602,27 @@ a:has(img):hover {
         color: $black;
         border-color: $energy-yellow;
         background-position: top;
+      }
+
+      &.hollow {
+        color: $white;
+        background: $heritage-purple;
+        background: linear-gradient(to top, $energy-yellow 50%, $heritage-purple 50%);
+        background-position: top;
+        background-size: 100% 200%;
+
+        &::after {
+          filter: brightness(1) invert(1);
+        }
+
+        &:hover {
+          color: $black;
+          background-position: bottom;
+
+          &::after {
+            filter: brightness(1);
+          }
+        }
       }
     }
   }
@@ -610,6 +666,26 @@ a:has(img):hover {
     .button {
       svg {
         color: $energy-green;
+      }
+
+      &.hollow {
+        background: $light-mink;
+        background: linear-gradient(to top, $heritage-green 50%, $light-mink 50%);
+        background-position: top;
+        background-size: 100% 200%;
+
+        &::after {
+          filter: brightness(1);
+        }
+
+        &:hover {
+          color: $white;
+          background-position: bottom;
+
+          &::after {
+            filter: brightness(1) invert(1);
+          }
+        }
       }
     }
 
