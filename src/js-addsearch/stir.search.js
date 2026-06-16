@@ -706,6 +706,8 @@ stir.search = (() => {
       }
     },
   };
+  
+  prefetch.clearing = prefetch.course;
 
   // CLICK delegate for link tracking
   const clickReporter = async (event) => {

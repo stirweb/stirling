@@ -413,7 +413,8 @@ stir.templates.search = (() => {
         if (String === item.custom_fields.type.constructor) {
           switch (item.custom_fields.type) {
             case "course":
-              return stir.templates.search.course(item);
+              //return stir.templates.search.course(item);
+              return stir.templates.search.combo(item);
             case "news":
               return stir.templates.search.news(item);
             case "event":
@@ -480,11 +481,11 @@ stir.templates.search = (() => {
 			</div>`;
     }, //<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre></details>
 
-    combo: (item) => {
-      return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboCourse).join(" and ")}${item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""}${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
+    comboli: (item) => {
+      return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboLink).join(" and ")}${item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""}${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
     },
 
-    comboCourse: (item) => `<a href="${item.url}">${item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, "")}</a>`,
+    comboLink: (item) => `<a href="${item.url}">${item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, "")}</a>`,
 
     clearing: (item) => {
       if (clearingTest(item)) {
@@ -492,6 +493,7 @@ stir.templates.search = (() => {
       }
     },
     combos: (item) => {
+      console.info('[combos]',item.combos)
       return item.combos.length === 0
         ? ""
         : `
@@ -500,7 +502,7 @@ stir.templates.search = (() => {
 					<div>
 						<p>${item.title} can be combined with:</p>
 						<ul class="u-columns-2">
-							${item.combos.map(stir.templates.search.combo).join("")}
+							${item.combos.map(stir.templates.search.comboli).join("")}
 						</ul>
 						${item.combos.map(clearingTest).indexOf(true) >= 0 ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>' : ""}
 					</div>
@@ -578,6 +580,8 @@ stir.templates.search = (() => {
 			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.score} data-sid=${item.custom_fields.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${label(item.custom_fields.level || item.custom_fields.type || "")}</span>
+					<span class="c-search-tag">combined degree</span>
+          
 				</div>
 
 		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
@@ -585,6 +589,7 @@ stir.templates.search = (() => {
 			<strong><a href="${link}" title="${item.url}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</a></strong>
 		  </p>
 		  <p class="u-m-0 c-course-summary">${item.meta_description}</p>
+          ${item.custom_fields.clearing?'':"<p><b>Clearing: No</b></p>"}
 		  ${stir.templates.search.clearing(item) || ""}
 		  ${stir.templates.search.facts(item) || ""}
 		  <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
@@ -597,6 +602,28 @@ stir.templates.search = (() => {
 		  ${stir.templates.search.pathways(item)}
 		</div>
 			</div>`;
+    },
+    
+    combo: (item) => {
+      if (item.type && item.type === "PROMOTED") return stir.templates.search.cura(item);
+      const data = unpackData(item.custom_fields.data);
+      const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
+      const title = item.custom_fields.name ? `${data["Award"] || ""} ${item.custom_fields.name}${data["UCAS Code"] ? " - " + data["UCAS Code"] : ""}` : item.title.split("|")[0];
+      return (
+        `<div class="u-border-width-5 u-heritage-line-left c-search-result">
+          <div class=c-search-result__tags>
+            <span class=c-search-tag>${label(item.custom_fields.level || item.custom_fields.type || "")}</span>
+            <span class=c-search-tag>combined degree</span>
+          </div>
+          <div class="c-search-result__body flex-container flex-dir-column u-gap">
+            <!-- <p class=u-text-regular><strong><a href="${link}" title="${item.url}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</a></strong></p> -->
+            <p class=u-text-regular><strong>BA (Hons) English Studies and French</strong></p>
+            <!-- <p>${item.meta_description || ""}</p> -->
+            <p>Combine English Studies with French and make yourself a powerful asset to employers in an age of global opportunities.</p>
+            <p>See <a href="">BA (Hons) English Studies</a> and <a href="">BA (Hons) French</a></p>
+          </div>
+        </div>`
+      );
     },
 
     coursemini: (item) => {
