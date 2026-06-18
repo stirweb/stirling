@@ -605,7 +605,7 @@ stir.templates.search = (() => {
     },
     
     combo: (item) => {
-      if (item.type && item.type === "PROMOTED") return stir.templates.search.cura(item);
+      if (item.type && item.type === "PROMOTED") return stir.templates.search.cura(item); // ignore promos
       const data = unpackData(item.custom_fields.data);
       const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
       const title = item.custom_fields.name ? `${data["Award"] || ""} ${item.custom_fields.name}${data["UCAS Code"] ? " - " + data["UCAS Code"] : ""}` : item.title.split("|")[0];
@@ -616,11 +616,10 @@ stir.templates.search = (() => {
             <span class=c-search-tag>combined degree</span>
           </div>
           <div class="c-search-result__body flex-container flex-dir-column u-gap">
-            <!-- <p class=u-text-regular><strong><a href="${link}" title="${item.url}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</a></strong></p> -->
-            <p class=u-text-regular><strong>BA (Hons) English Studies and French</strong></p>
-            <!-- <p>${item.meta_description || ""}</p> -->
-            <p>Combine English Studies with French and make yourself a powerful asset to employers in an age of global opportunities.</p>
+            <p class=u-text-regular><strong><a href="${link}" title="${item.url}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</a></strong></p>
+            <p>${item.meta_description || ""}</p>
             <p>See <a href="">BA (Hons) English Studies</a> and <a href="">BA (Hons) French</a></p>
+<pre>${JSON.stringify({item:item,data:data},null,"\t")}</pre>
           </div>
         </div>`
       );
