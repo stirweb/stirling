@@ -83,7 +83,8 @@ stir.search = (() => {
         collectAnalytics: false,
       },
       course: {
-        customField: "type=course",
+        filter: JSON.stringify({ or: [{"custom_fields.type": "course"},{"custom_fields.type": "combination"}]}),
+        //customField: "type=course", // we can put multi types here, but our JS will only accept one
         collectAnalytics: false,
         fuzzy: "auto",
       },
@@ -111,12 +112,21 @@ stir.search = (() => {
         }),
       },
       clearing: {
-        collectAnalytics: false,
-        limit: NUMRANKS,
         term: "*",
-        //				sort: "custom_fields.name",
-        //				filter: something something clearing only...?
-        //				timestamp: +new Date()
+        limit: NUMRANKS,
+        resultType: "organic",
+        collectAnalytics: false,
+        filter: JSON.stringify({
+          and:[
+            {or:[{"custom_fields.type":"course"},{"custom_fields.type":"combination"}]},
+            {"custom_fields.level":"undergraduate"}
+          ]
+        }),
+//      customField: "type=course",
+//      customField: "type=combination",
+//      customField: "level=undergraduate",
+        sort: "custom_fields.name",
+        order: "asc"
       },
     },
 
@@ -704,6 +714,8 @@ stir.search = (() => {
       }
     },
   };
+  
+  prefetch.clearing = prefetch.course;
 
   // CLICK delegate for link tracking
   const clickReporter = async (event) => {

@@ -220,7 +220,7 @@ stir.templates.search = (() => {
   const timespan = (start, end) => (start ? `<time>${stir.Date.time24(new Date(start))}</time>` : "") + (end ? `–<time>${stir.Date.time24(new Date(end))}</time>` : "");
   const anchor = (crumb) => `<a href="${crumb.href}">${crumb.text}</a>`;
   const t4preview = (sid) => (sid ? `/terminalfour/preview/1/en/${sid}` : "#");
-  const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
+  const clearingTest = (item) => stir.courses && stir.courses.clearing && item.custom_fields && item.custom_fields.clearing ? true : false;
 
   const unpackData = (data) => {
     if ("undefined" === typeof data) return {};
@@ -480,16 +480,15 @@ stir.templates.search = (() => {
 			</div>`;
     }, //<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre></details>
 
-    combo: (item) => {
-      return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboCourse).join(" and ")}${item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""}${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
+    comboli: (item) => {
+      return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboLink).join(" and ")}${item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""}${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
     },
 
-    comboCourse: (item) => `<a href="${item.url}">${item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, "")}</a>`,
+    comboLink: (item) => `<a href="${item.url}">${item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, "")}</a>`,
 
     clearing: (item) => {
-      if (Object.keys && item.custom_fields && Object.keys(item.custom_fields).join().indexOf("clearing") >= 0) {
-        return ``;
-        //return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p>`;
+      if (clearingTest(item)) {
+        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2026: places may be available on this course.</strong></p>`;
       }
     },
     combos: (item) => {
@@ -501,7 +500,7 @@ stir.templates.search = (() => {
 					<div>
 						<p>${item.title} can be combined with:</p>
 						<ul class="u-columns-2">
-							${item.combos.map(stir.templates.search.combo).join("")}
+							${item.combos.map(stir.templates.search.comboli).join("")}
 						</ul>
 						${item.combos.map(clearingTest).indexOf(true) >= 0 ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>' : ""}
 					</div>
@@ -580,8 +579,7 @@ stir.templates.search = (() => {
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${label(item.custom_fields.level || item.custom_fields.type || "")}</span>
 				</div>
-
-		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
+		<div class="flex-container flex-dir-column u-gap u-mt-1">
 		  <p class="u-text-regular u-m-0">
 			<strong><a href="${link}" title="${item.url}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</a></strong>
 		  </p>
@@ -598,6 +596,26 @@ stir.templates.search = (() => {
 		  ${stir.templates.search.pathways(item)}
 		</div>
 			</div>`;
+    },
+    
+    combo: (item) => {
+      if (item.type && item.type === "PROMOTED") return stir.templates.search.cura(item); // ignore promos
+      const data = unpackData(item.custom_fields.data);
+      const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
+      const title = item.custom_fields.name ? `${data["Award"] || ""} ${item.custom_fields.name}${data["UCAS Code"] ? " - " + data["UCAS Code"] : ""}` : item.title.split("|")[0];
+      return (
+        `<div class="u-border-width-5 u-heritage-line-left c-search-result">
+          <div class=c-search-result__tags>
+            <span class=c-search-tag>${label(item.custom_fields.level || item.custom_fields.type || "")}</span>
+            <span class=c-search-tag>combined course</span>
+          </div>
+          <div class="c-search-result__body flex-container flex-dir-column u-gap">
+            <p class=u-text-regular><strong><span data-sid="${item.custom_fields.sid}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</span></strong></p>
+            <p>${item.meta_description || ""}</p>
+            ${data.Courses ? ('<p>See: ' + stir.Array.oxfordComma(data.Courses.filter(i=>i.text).map(i=>`<a href="${i.url}">${i.text}</a>`))+'.</p>'):''}
+          </div>
+        </div>`
+      );
     },
 
     coursemini: (item) => {
