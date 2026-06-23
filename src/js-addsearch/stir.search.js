@@ -117,14 +117,11 @@ stir.search = (() => {
         resultType: "organic",
         collectAnalytics: false,
         filter: JSON.stringify({
-          and:[
-            {or:[{"custom_fields.type":"course"},{"custom_fields.type":"combination"}]},
-            {"custom_fields.level":"undergraduate"}
+          or:[
+            {and:[{"custom_fields.type":"course"},{"custom_fields.level":"undergraduate"}]},
+            {"custom_fields.type":"combination"}
           ]
         }),
-//      customField: "type=course",
-//      customField: "type=combination",
-//      customField: "level=undergraduate",
         sort: "custom_fields.name",
         order: "asc"
       },
