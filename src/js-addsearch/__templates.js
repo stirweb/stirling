@@ -413,7 +413,8 @@ stir.templates.search = (() => {
         if (String === item.custom_fields.type.constructor) {
           switch (item.custom_fields.type) {
             case "course":
-              //return stir.templates.search.course(item);
+              return stir.templates.search.course(item);
+            case "combination":
               return stir.templates.search.combo(item);
             case "news":
               return stir.templates.search.news(item);
@@ -568,6 +569,7 @@ stir.templates.search = (() => {
 
     course: (item) => {
       if (item.type && item.type === "PROMOTED") return stir.templates.search.cura(item);
+      if (item.custom_fields.type && item.custom_fields.type === "combination") return stir.templates.search.combo(item);
       //		const subject = typeof item.custom_fields.subject;
       //      const subjectLink = stir.String.slug(subject);
       const data = unpackData(item.custom_fields.data);
@@ -602,14 +604,16 @@ stir.templates.search = (() => {
     
     combo: (item) => {
       if (item.type && item.type === "PROMOTED") return stir.templates.search.cura(item); // ignore promos
+      if (item.custom_fields.type && item.custom_fields.type === "course") return stir.templates.search.course(item);
+
       const data = unpackData(item.custom_fields.data);
       const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
       const title = item.custom_fields.name ? `${data["Award"] || ""} ${item.custom_fields.name}${data["UCAS Code"] ? " - " + data["UCAS Code"] : ""}` : item.title.split("|")[0];
       return (
         `<div class="u-border-width-5 u-heritage-line-left c-search-result">
           <div class=c-search-result__tags>
-            <span class=c-search-tag>${label(item.custom_fields.level || item.custom_fields.type || "")}</span>
-            <span class=c-search-tag>combined course</span>
+            <!-- <span class=c-search-tag>${label(item.custom_fields.level || item.custom_fields.type || "")}</span> -->
+            <span class=c-search-tag>Combined course</span>
           </div>
           <div class="c-search-result__body flex-container flex-dir-column u-gap">
             <p class=u-text-regular><strong><span data-sid="${item.custom_fields.sid}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</span></strong></p>
