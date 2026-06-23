@@ -100,40 +100,40 @@ stir.templates.search = (() => {
    * Create clickable text elements (i.e. "tokens") that represent the active search filters, to give the user the
    * option to dismiss each filter quickly (and a visual reminder of which filters are active).
    *
-   * Becuase the search result data only contains the raw names/values of the filters, we need to derive the correct
+   * Because the search result data only contains the raw names/values of the filters, we need to derive the correct
    * text labels from the form inputs on the page. We also need to unbundle checkbox (multi-select) filters and deal
    * with any other unusual filters (such as Faculty and course Start Date).
    *
    */
-  const metaParamTokens = (tokens) => {
-    const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
-    return metas
-      .map((key) => {
-        // does the name and value exactly match a DOM element?
-        // i.e. an <input> element from which we can grab the text label
-        if ((el = metaParamElement(key, tokens[key]))) {
-          if ("hidden" === el.type) return; // ignore hidden inputs (as they have no text!)
-          return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
-        }
-
-        // if not an exact match, we might have a multi-select filter (e.g. checkbox)
-        // we'll check the constituent values to find matching elements
-        const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
-        const values = tokens[key].toString().replace(tokenex, `$1`).split(/\s/); // values are space-separated
-        return values
-          .map((value) => {
-            const el = metaParamElement(key, value);
-            // The innerText of the <input> element‘s <label> has the text we need
-            if (el) {
-              return tag(el.parentElement.innerText, key, value);
-            }
-            // We will just default to empty string if there is no matching element.
-            return "";
-          })
-          .join(" ");
-      })
-      .join(" ");
-  };
+//   const metaParamTokens = (tokens) => {
+//     const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
+//     return metas
+//       .map((key) => {
+//         // does the name and value exactly match a DOM element?
+//         // i.e. an <input> element from which we can grab the text label
+//         if ((el = metaParamElement(key, tokens[key]))) {
+//           if ("hidden" === el.type) return; // ignore hidden inputs (as they have no text!)
+//           return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
+//         }
+// 
+//         // if not an exact match, we might have a multi-select filter (e.g. checkbox)
+//         // we'll check the constituent values to find matching elements
+//         const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
+//         const values = tokens[key].toString().replace(tokenex, `$1`).split(/\s/); // values are space-separated
+//         return values
+//           .map((value) => {
+//             const el = metaParamElement(key, value);
+//             // The innerText of the <input> element‘s <label> has the text we need
+//             if (el) {
+//               return tag(el.parentElement.innerText, key, value);
+//             }
+//             // We will just default to empty string if there is no matching element.
+//             return "";
+//           })
+//           .join(" ");
+//       })
+//       .join(" ");
+//   };
 
   const searchParamTokens = (parameters) =>
     Array.from(parameters.entries())
@@ -145,12 +145,11 @@ stir.templates.search = (() => {
    * @param {Array} facets
    * @returns {String} HTML click-to-dismiss "tokens"
    */
-  const facetTokens = (facets) =>
-    facets.map((facet) => facet.selectedValues.map((value) => paramToken(value.queryStringParamName, value.queryStringParamValue)).join(" ")).join(" ");
+  //const facetTokens = (facets) => facets.map((facet) => facet.selectedValues.map((value) => paramToken(value.queryStringParamName, value.queryStringParamValue)).join(" ")).join(" ");
 
   const paramToken = (name, value) => {
     const el = metaParamElement(name, value);
-    if (el)
+    if (el && el.type && el.type!=="hidden") {
       return tag(
         Array.prototype.slice
           .call(el.parentElement.childNodes)
@@ -159,6 +158,7 @@ stir.templates.search = (() => {
         name,
         value,
       );
+    }
   };
 
   const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
