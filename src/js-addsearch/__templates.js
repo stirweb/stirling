@@ -580,16 +580,12 @@ stir.templates.search = (() => {
 			<div class="c-search-result u-border-width-5 u-heritage-line-left" data-rank=${item.score} data-sid=${item.custom_fields.sid} data-result-type=course${isOnline ? " data-delivery=online" : ""}>
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${label(item.custom_fields.level || item.custom_fields.type || "")}</span>
-					<span class="c-search-tag">combined degree</span>
-          
 				</div>
-
-		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
+		<div class="flex-container flex-dir-column u-gap u-mt-1">
 		  <p class="u-text-regular u-m-0">
 			<strong><a href="${link}" title="${item.url}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</a></strong>
 		  </p>
 		  <p class="u-m-0 c-course-summary">${item.meta_description}</p>
-          ${item.custom_fields.clearing?'':"<p><b>Clearing: No</b></p>"}
 		  ${stir.templates.search.clearing(item) || ""}
 		  ${stir.templates.search.facts(item) || ""}
 		  <div class="flex-container u-gap u-mb-1 text-xsm flex-dir-column medium-flex-dir-row">
@@ -613,13 +609,12 @@ stir.templates.search = (() => {
         `<div class="u-border-width-5 u-heritage-line-left c-search-result">
           <div class=c-search-result__tags>
             <span class=c-search-tag>${label(item.custom_fields.level || item.custom_fields.type || "")}</span>
-            <span class=c-search-tag>combined degree</span>
+            <span class=c-search-tag>combined course</span>
           </div>
           <div class="c-search-result__body flex-container flex-dir-column u-gap">
-            <p class=u-text-regular><strong><a href="${link}" title="${item.url}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</a></strong></p>
+            <p class=u-text-regular><strong><span data-sid="${item.custom_fields.sid}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</span></strong></p>
             <p>${item.meta_description || ""}</p>
-            <p>See <a href="">BA (Hons) English Studies</a> and <a href="">BA (Hons) French</a></p>
-<pre>${JSON.stringify({item:item,data:data},null,"\t")}</pre>
+            ${data.Courses ? ('<p>See: ' + stir.Array.oxfordComma(data.Courses.filter(i=>i.text).map(i=>`<a href="${i.url}">${i.text}</a>`))+'.</p>'):''}
           </div>
         </div>`
       );

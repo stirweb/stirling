@@ -83,7 +83,8 @@ stir.search = (() => {
         collectAnalytics: false,
       },
       course: {
-        customField: "type=course",
+        filter: JSON.stringify({ or: [{"custom_fields.type": "course"},{"custom_fields.type": "combination"}]}),
+        //customField: "type=course", // we can put multi types here, but our JS will only accept one
         collectAnalytics: false,
         fuzzy: "auto",
       },
@@ -115,8 +116,15 @@ stir.search = (() => {
         limit: NUMRANKS,
         resultType: "organic",
         collectAnalytics: false,
-        customField: "type=course",
-        customField: "level=undergraduate",
+        filter: JSON.stringify({
+          and:[
+            {or:[{"custom_fields.type":"course"},{"custom_fields.type":"combination"}]},
+            {"custom_fields.level":"undergraduate"}
+          ]
+        }),
+//      customField: "type=course",
+//      customField: "type=combination",
+//      customField: "level=undergraduate",
         sort: "custom_fields.name",
         order: "asc"
       },
