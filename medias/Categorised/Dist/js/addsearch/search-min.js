@@ -18,7 +18,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 				<p class="u-text-regular u-m-0"><strong><a href="${e.url}">${e.title.replace(/Current S\S+ ?\| ?/,"").split(" | ")[0].trim()}</a></strong></p>
 				${l(e.meta_description,e.custom_fields.access)}
 			  </div>
-			</div>`;var t},comboli:e=>`<li title="${e.prefix} ${e.title}">${e.courses.map(stir.templates.search.comboLink).join(" and ")}${e?.codes?.ucas?" <small>&hyphen; "+e.codes.ucas+"</small>":""}${v(e)?' <sup class="c-search-result__seasonal">*</sup>':""}</li>`,comboLink:e=>`<a href="${e.url}">${e.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi,"")}</a>`,clearing:e=>{if(v(e))return'<p class="u-m-0"><strong class="u-energy-purple">Clearing 2026: places may be available on this course.</strong></p>'},combos:e=>0===e.combos.length?"":`
+			</div>`;var t},comboli:e=>`<li title="${e.prefix} ${e.title}">${e.courses.map(stir.templates.search.comboLink).join(" and ")}${e?.codes?.ucas?" <small>&hyphen; "+e.codes.ucas+"</small>":""}${v(e)?' <sup class="c-search-result__seasonal">*</sup>':""}</li>`,comboLink:e=>`<a href="${e.url}">${e.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi,"")}</a>`,clearing:e=>{if(v(e))return'<p class="u-m-0"><strong class="u-energy-purple">Clearing 2026: places may be available on this course</strong>.</p>'},combos:e=>0===e.combos.length?"":`
 				<div class="combo-accordion" data-behaviour=accordion>
 					<accordion-summary>Course combinations</accordion-summary>
 					<div>
@@ -54,8 +54,6 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
 			  ${stir.coursefavs&&stir.coursefavs.createCourseBtnHTML(e.custom_fields.sid,"/courses/favourites/")}
 			</div>
 		  </div>
-		  
-		  ${stir.templates.search.combos(e)}
 		  ${stir.templates.search.pathways(e)}
 		</div>
 			</div>`)},combo:e=>{var t,s;return e.type&&"PROMOTED"===e.type?stir.templates.search.cura(e):e.custom_fields.type&&"course"===e.custom_fields.type?stir.templates.search.course(e):(t=y(e.custom_fields.data),-1<UoS_env.name.indexOf("preview")?g(e.custom_fields.sid):e.url,s=e.custom_fields.name?`${t.Award||""} `+e.custom_fields.name+(t["UCAS Code"]?" - "+t["UCAS Code"]:""):e.title.split("|")[0],`<div class="u-border-width-5 u-heritage-line-left c-search-result">
@@ -66,6 +64,7 @@ var stir=stir||{};if(stir.templates=stir.templates||{},stir.const=stir.const||{}
           <div class="c-search-result__body flex-container flex-dir-column u-gap">
             <p class=u-text-regular><strong><span data-sid="${e.custom_fields.sid}" data-docid="${e.id||""}" data-position="${e.position||""}">${s}</span></strong></p>
             <p>${e.meta_description||""}</p>
+            ${stir.templates.search.clearing(e)||""}
             ${t.Courses?"<p>See: "+stir.Array.oxfordComma(t.Courses.filter(e=>e.text).map(e=>`<a href="${e.url}">${e.text}</a>`))+".</p>":""}
           </div>
         </div>`)},coursemini:e=>e.custom_fields?"\t\t\t"+`<div>
