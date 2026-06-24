@@ -1437,8 +1437,6 @@ stir.search = (() => {
             {"custom_fields.type":"combination"}
           ]
         }),
-        sort: "custom_fields.name",
-        order: "asc"
       },
     },
 
@@ -1460,6 +1458,10 @@ stir.search = (() => {
         sort: "custom_fields.e", // sort events by date descending
         order: "asc",
       },
+      clearing: {
+        sort: "custom_fields.name",
+        order: "asc"
+      }
     },
   };
 
