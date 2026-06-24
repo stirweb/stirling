@@ -490,7 +490,8 @@ stir.templates.search = (() => {
 
     clearing: (item) => {
       if (clearingTest(item)) {
-        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2026: places may be available on this course.</strong></p>`;
+        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2026: places may be available on this course</strong>.</p>`;
+        // ${(debug?item.custom_fields.clearing:'')}
       }
     },
     combos: (item) => {
@@ -594,11 +595,9 @@ stir.templates.search = (() => {
 			  ${stir.coursefavs && stir.coursefavs.createCourseBtnHTML(item.custom_fields.sid, "/courses/favourites/")}
 			</div>
 		  </div>
-		  
-		  ${stir.templates.search.combos(item)}
 		  ${stir.templates.search.pathways(item)}
 		</div>
-			</div>`;
+			</div>`; //${stir.templates.search.combos(item)}
     },
     
     combo: (item) => {
@@ -617,6 +616,7 @@ stir.templates.search = (() => {
           <div class="c-search-result__body flex-container flex-dir-column u-gap">
             <p class=u-text-regular><strong><span data-sid="${item.custom_fields.sid}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</span></strong></p>
             <p>${item.meta_description || ""}</p>
+            ${stir.templates.search.clearing(item) || ""}
             ${data.Courses ? ('<p>See: ' + stir.Array.oxfordComma(data.Courses.filter(i=>i.text).map(i=>`<a href="${i.url}">${i.text}</a>`))+'.</p>'):''}
           </div>
         </div>`
