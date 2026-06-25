@@ -818,11 +818,11 @@ a:has(img):hover {
       background: #9fcc69;
       background: linear-gradient(to top, #006938 50%, #9fcc69 50%);
       background-position: top;
-      background-size: 100% 200%; }
+      background-size: 100% 220%; }
       .c-wrapper-2026.c-wrapper-energy .button.hollow:hover {
         color: #fff;
         border-color: #006938;
-        background-position: bottom; }
+        background-position: 0 99%; }
   .c-wrapper-2026.c-wrapper-energy .u-font-icon,
   .c-wrapper-2026.c-wrapper-energy svg {
     color: #006938; }
@@ -838,8 +838,8 @@ a:has(img):hover {
     border-color: #9fcc69;
     background: linear-gradient(to top, #9fcc69 50%, #fff 50%);
     color: #000;
-    background-size: 100% 200%;
-    background-position: bottom;
+    background-size: 100% 220%;
+    background-position: 0 99%;
     transition: all 0.2s ease-out; }
     .c-wrapper-2026.c-wrapper-heritage .button svg {
       color: #000; }
@@ -852,12 +852,12 @@ a:has(img):hover {
       background: #006938;
       background: linear-gradient(to top, #9fcc69 50%, #006938 50%);
       background-position: top;
-      background-size: 100% 200%; }
+      background-size: 100% 220%; }
       .c-wrapper-2026.c-wrapper-heritage .button.hollow::after {
         filter: brightness(1) invert(1); }
       .c-wrapper-2026.c-wrapper-heritage .button.hollow:hover {
         color: #000;
-        background-position: bottom; }
+        background-position: 0 99%; }
         .c-wrapper-2026.c-wrapper-heritage .button.hollow:hover::after {
           filter: brightness(1); }
 
@@ -876,8 +876,8 @@ a:has(img):hover {
     border-color: #f4c400;
     background: linear-gradient(to top, #f4c400 50%, #fff 50%);
     color: #000;
-    background-size: 100% 200%;
-    background-position: bottom;
+    background-size: 100% 220%;
+    background-position: 0 99%;
     transition: all 0.2s ease-out; }
     .c-wrapper-2026.c-wrapper-important .button svg {
       color: #000; }
@@ -890,12 +890,12 @@ a:has(img):hover {
       background: #592c82;
       background: linear-gradient(to top, #f4c400 50%, #592c82 50%);
       background-position: top;
-      background-size: 100% 200%; }
+      background-size: 100% 220%; }
       .c-wrapper-2026.c-wrapper-important .button.hollow::after {
         filter: brightness(1) invert(1); }
       .c-wrapper-2026.c-wrapper-important .button.hollow:hover {
         color: #000;
-        background-position: bottom; }
+        background-position: 0 99%; }
         .c-wrapper-2026.c-wrapper-important .button.hollow:hover::after {
           filter: brightness(1); }
 
@@ -907,8 +907,8 @@ a:has(img):hover {
   border-color: #d1d1c9;
   background: linear-gradient(to top, #d1d1c9 50%, #fff 50%);
   color: #000;
-  background-size: 100% 200%;
-  background-position: bottom;
+  background-size: 100% 220%;
+  background-position: 0 99%;
   transition: all 0.2s ease-out; }
   .c-wrapper-2026 .button.neutral svg {
     color: #000; }
@@ -929,20 +929,20 @@ a:has(img):hover {
     background: #d1d1c9;
     background: linear-gradient(to top, #006938 50%, #d1d1c9 50%);
     background-position: top;
-    background-size: 100% 200%; }
+    background-size: 100% 220%; }
     .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow::after {
       filter: brightness(1); }
     .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow:hover {
       color: #fff;
-      background-position: bottom; }
+      background-position: 0 99%; }
       .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow:hover::after {
         filter: brightness(1) invert(1); }
   .c-wrapper-2026.c-wrapper-neutral-strong .button.neutral {
     border-color: #f6f5f4;
     background: linear-gradient(to top, #f6f5f4 50%, #fff 50%);
     color: #000;
-    background-size: 100% 200%;
-    background-position: bottom;
+    background-size: 100% 220%;
+    background-position: 0 99%;
     transition: all 0.2s ease-out; }
     .c-wrapper-2026.c-wrapper-neutral-strong .button.neutral svg {
       color: #000; }
@@ -2858,8 +2858,8 @@ button:focus {
   margin-bottom: 1rem;
   background-color: #006938;
   background: linear-gradient(to top, #006938 50%, #fff 50%);
-  background-size: 100% 200%;
-  background-position: bottom;
+  background-size: 100% 220%;
+  background-position: 0 99%;
   padding: 12px 52px 12px 28px;
   border: 4px solid #006938;
   border-radius: 40px;
@@ -2890,14 +2890,14 @@ button:focus {
     border-color: #006938;
     background: linear-gradient(to top, #006938 50%, #fff 50%);
     color: #000;
-    background-size: 100% 200%;
+    background-size: 100% 220%;
     background-position: top; }
     .button.hollow::after {
       filter: brightness(0); }
     .button.hollow:hover {
       color: #fff;
       border-color: #006938;
-      background-position: bottom; }
+      background-position: 0 99%; }
       .button.hollow:hover::after {
         filter: brightness(0) invert(1); }
   .button.no-arrow:after {
@@ -2909,12 +2909,12 @@ button:focus {
   .button.not-rounded {
     border-radius: 0; }
   .button.tiny {
-    padding: 1.1em 1em;
+    padding: 1em 3em 1em 1.5em;
     font-size: 0.875rem; }
     .button.tiny:after {
       width: 16px;
       height: 16px;
-      top: 3px; }
+      top: calc(50% - 8px); }
   .button.small {
     padding: 1.1em 1em;
     font-size: 1rem; }
@@ -2954,8 +2954,8 @@ button:focus {
     border-color: #9fcc69;
     background: linear-gradient(to top, #9fcc69 50%, #fff 50%);
     color: #000;
-    background-size: 100% 200%;
-    background-position: bottom; }
+    background-size: 100% 220%;
+    background-position: 0 99%; }
     .button.energy:hover, .button.energy-green:hover {
       color: #000;
       border-color: #9fcc69;
@@ -2966,20 +2966,20 @@ button:focus {
       border-color: #9fcc69;
       background: linear-gradient(to top, #9fcc69 50%, #fff 50%);
       color: #000;
-      background-size: 100% 200%;
+      background-size: 100% 220%;
       background-position: top; }
       .button.energy.hollow::after, .button.energy-green.hollow::after {
         filter: brightness(0); }
       .button.energy.hollow:hover, .button.energy-green.hollow:hover {
         color: #000;
         border-color: #9fcc69;
-        background-position: bottom; }
+        background-position: 0 99%; }
   .button.neutral {
     border-color: #d1d1c9;
     background: linear-gradient(to top, #d1d1c9 50%, #fff 50%);
     color: #000;
-    background-size: 100% 200%;
-    background-position: bottom; }
+    background-size: 100% 220%;
+    background-position: 0 99%; }
     .button.neutral:hover {
       color: #000;
       border-color: #d1d1c9;
@@ -2990,20 +2990,20 @@ button:focus {
       border-color: #d1d1c9;
       background: linear-gradient(to top, #d1d1c9 50%, #fff 50%);
       color: #000;
-      background-size: 100% 200%;
+      background-size: 100% 220%;
       background-position: top; }
       .button.neutral.hollow::after {
         filter: brightness(0); }
       .button.neutral.hollow:hover {
         color: #000;
         border-color: #d1d1c9;
-        background-position: bottom; }
+        background-position: 0 99%; }
   .button.important {
     border-color: #f4c400;
     background: linear-gradient(to top, #f4c400 50%, #fff 50%);
     color: #000 !important;
-    background-size: 100% 200%;
-    background-position: bottom; }
+    background-size: 100% 220%;
+    background-position: 0 99%; }
     .button.important:hover {
       color: #000;
       border-color: #f4c400;
@@ -3014,14 +3014,14 @@ button:focus {
       border-color: #f4c400;
       background: linear-gradient(to top, #f4c400 50%, #fff 50%);
       color: #000;
-      background-size: 100% 200%;
+      background-size: 100% 220%;
       background-position: top; }
       .button.important.hollow::after {
         filter: brightness(0); }
       .button.important.hollow:hover {
         color: #000;
         border-color: #f4c400;
-        background-position: bottom; }
+        background-position: 0 99%; }
 
 /* 
     Button variations
