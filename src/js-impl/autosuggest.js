@@ -127,7 +127,7 @@ stir.Suggester = function Suggester(combobox,output,announcer) {
 	}
 	
 	function unfocus(event) {
-		if(event.relatedTarget && event.relatedTarget.role) {
+		if(event.relatedTarget && event.relatedTarget.role && "option"===event.relatedTarget.role) {
 			input.value = event.relatedTarget.textContent;
 			input.focus();
 			close();
