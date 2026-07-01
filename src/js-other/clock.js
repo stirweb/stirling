@@ -57,7 +57,7 @@ var UoS_ClearingClock = (function () {
 
     // :: DATE HANDLING ::
 
-    if (2025 != date.getUTCFullYear()) return false; // ignore any dates not in 2025
+    if (2026 != date.getUTCFullYear()) return false; // ignore any dates not in 2025
     if (7 != month) return false; // ignore any dates not in August
     if (day <= 3) return false; // no calls at all before 4 August
     if (day <= 13 && !sqa) return false; // Aug 5–14 only allowed for Scotland region (SQA results)
@@ -73,22 +73,22 @@ var UoS_ClearingClock = (function () {
     // ::  E X T E N D E D   H O U R S  ::
     // i.e. Weekends, or other times outwith 9–5…
 
-    // [SQA Results day] August 5: 9am–7pm (8.00–18.00 UTC)
-    if (5==day && hour>=8 && hour<18) {
+    // [SQA Results day] August 4: 9am–7pm (8.00–18.00 UTC)
+    if (4==day && hour>=8 && hour<18) {
 		return true;
     }
 
-	  // [A-Levels Results day] August 14: 8am–7pm (7.00–18.00 UTC)
-    if (14==day && hour>=7 && hour<18) {
+	// [A-Levels Results day] August 13: 8am–7pm (7.00–18.00 UTC)
+    if (13==day && hour>=7 && hour<18) {
       return true;
     }
 
-    // [Results Boxing Days] August 6 & 15: 9am-6pm (8.00–17.00 UTC)
-    if ((6 == day || 16 == day) && hour >= 8 && hour < 17) {
+    // [Results Boxing Days] August 5 & 14: 9am-6pm (8.00–17.00 UTC)
+    if ((5 == day || 14 == day) && hour >= 8 && hour < 17) {
       return true;
     }
     // [Saturday] August 16: 10am-2pm (9.00–13.00 UTC)
-    if (16 == day && hour >= 9 && hour < 13) {
+    if (15 == day && hour >= 9 && hour < 13) {
       return true;
     }
 
