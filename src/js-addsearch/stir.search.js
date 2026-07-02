@@ -118,7 +118,7 @@ stir.search = (() => {
         collectAnalytics: false,
         filter: JSON.stringify({
           or:[
-            {and:[{"custom_fields.type":"course"},{"custom_fields.level":"undergraduate"}]},
+            {"custom_fields.type":"course"},
             {"custom_fields.type":"combination"}
           ]
         }),
