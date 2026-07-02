@@ -582,8 +582,8 @@ a:has(img):hover {
       text-decoration-color: $tint-purple;
     }
 
-    .button::after {
-      filter: brightness(0);
+    .cta-link-icon::before {
+      filter: brightness(0) invert(1);
     }
 
     .button {
@@ -593,6 +593,10 @@ a:has(img):hover {
       background-size: 100% 220%;
       background-position: 0 99%;
       transition: all 0.2s ease-out;
+
+      &::after {
+        filter: brightness(0); // black icon on yellow button
+      }
 
       svg {
         color: $black;
@@ -716,6 +720,10 @@ a:has(img):hover {
     h3,
     h4 {
       color: $white;
+    }
+
+    .cta-link-icon::before {
+      filter: brightness(0) invert(1);
     }
 
     a {

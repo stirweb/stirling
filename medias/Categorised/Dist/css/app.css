@@ -870,8 +870,8 @@ a:has(img):hover {
   .c-wrapper-2026.c-wrapper-important a:hover {
     border-color: #b186d7;
     text-decoration-color: #b186d7; }
-  .c-wrapper-2026.c-wrapper-important .button::after {
-    filter: brightness(0); }
+  .c-wrapper-2026.c-wrapper-important .cta-link-icon::before {
+    filter: brightness(0) invert(1); }
   .c-wrapper-2026.c-wrapper-important .button {
     border-color: #f4c400;
     background: linear-gradient(to top, #f4c400 50%, #fff 50%);
@@ -879,6 +879,8 @@ a:has(img):hover {
     background-size: 100% 220%;
     background-position: 0 99%;
     transition: all 0.2s ease-out; }
+    .c-wrapper-2026.c-wrapper-important .button::after {
+      filter: brightness(0); }
     .c-wrapper-2026.c-wrapper-important .button svg {
       color: #000; }
     .c-wrapper-2026.c-wrapper-important .button:hover {
@@ -957,6 +959,8 @@ a:has(img):hover {
   .c-wrapper-2026.dark h3,
   .c-wrapper-2026.dark h4 {
     color: #fff; }
+  .c-wrapper-2026.dark .cta-link-icon::before {
+    filter: brightness(0) invert(1); }
   .c-wrapper-2026.dark a {
     color: #fff; }
     .c-wrapper-2026.dark a.c-link::before {
@@ -1947,6 +1951,11 @@ li.no-style {
   list-style: none;
   margin: 0;
   padding: 0; }
+
+main li a {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: #76b72a; }
 
 p {
   margin-bottom: 1rem;
@@ -4130,10 +4139,20 @@ ul .c-link {
 CTA Link Brand 2026
 
 */
+.cta-link .cta-link-icon::before {
+  content: var(--icon-arrow-right-circle);
+  display: inline-block;
+  position: relative;
+  top: 6px;
+  left: 0px;
+  width: 24px;
+  filter: invert(22%) sepia(100%) saturate(749%) hue-rotate(90deg) brightness(95%) contrast(92%); }
+
 .cta-link a {
   font-size: 1.25rem;
   max-width: max-content;
   position: relative;
+  left: 4px;
   text-decoration: underline;
   text-underline-offset: 5px;
   text-wrap: pretty;
@@ -4197,16 +4216,16 @@ ul.pagination {
 /*
 promobar-2026 
 */
-.promobar-2026 {
-  animation: bg-important2grey 2s forwards;
+.promobar-2026-fader {
+  animation: bg-important2grey 4s forwards;
   animation-timeline: view(30%); }
 
-.promobar-2026 svg {
-  animation: text-white2green 2s forwards;
+.promobar-2026-fader svg {
+  animation: text-white2green 4s forwards;
   animation-timeline: view(30%); }
 
-.promobar-2026 .button {
-  animation: btn-important2grey 2s forwards;
+.promobar-2026-fader .button {
+  animation: btn-important2grey 4s forwards;
   animation-timeline: view(30%); }
 
 @keyframes btn-important2grey {

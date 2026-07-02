@@ -42,18 +42,18 @@
 promobar-2026 
 */
 
-.promobar-2026 {
-  animation: bg-important2grey 2s forwards;
+.promobar-2026-fader {
+  animation: bg-important2grey 4s forwards;
   animation-timeline: view(30%);
 }
 
-.promobar-2026 svg {
-  animation: text-white2green 2s forwards;
+.promobar-2026-fader svg {
+  animation: text-white2green 4s forwards;
   animation-timeline: view(30%);
 }
 
-.promobar-2026 .button {
-  animation: btn-important2grey 2s forwards;
+.promobar-2026-fader .button {
+  animation: btn-important2grey 4s forwards;
   animation-timeline: view(30%);
 }
 

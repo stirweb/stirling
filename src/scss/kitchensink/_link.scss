@@ -91,11 +91,23 @@ ul .c-link {
 CTA Link Brand 2026
 
 */
+
 .cta-link {
+  .cta-link-icon::before {
+    content: var(--icon-arrow-right-circle);
+    display: inline-block;
+    position: relative;
+    top: 6px;
+    left: 0px;
+    width: 24px;
+    filter: invert(22%) sepia(100%) saturate(749%) hue-rotate(90deg) brightness(95%) contrast(92%); // heritage green
+  }
+
   a {
     font-size: 1.25rem;
     max-width: max-content;
     position: relative;
+    left: 4px;
     text-decoration: underline;
     text-underline-offset: 5px;
     text-wrap: pretty;
