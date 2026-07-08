@@ -40,10 +40,10 @@ stir.components.discoveruni.widget = function (options) {
 
   var widget = document.createElement("embed");
   var url = `https://discoveruni.gov.uk/v2/widget/10007804/${options.kiscode}/${mode}/en`;
-  var styles = "width: 100%; min-height: 400px";
+  //var styles = "width: 100%; min-height: 400px";
 
   widget.setAttribute("src", url);
-  widget.setAttribute("style", styles);
+  //widget.setAttribute("style", styles);
 
   return widget;
 };
@@ -150,10 +150,6 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
       widgetScript.addEventListener("load", function (event) {
         if (widgets.length > 1 && window.DiscoverUniWidget) {
           var widgetStylesAdded = false;
-
-          contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
-          kiswidget.insertAdjacentElement("afterend", contentInsertionNode);
-          new stir.accord(contentInsertionNode);
           //contentInsertionNode = contentInsertionNode.querySelector("[data-tab-content]");
 
           // patch DiscoverUniWidget's addCss() function so it only runs once per page (not once per widget!)
@@ -195,6 +191,9 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
           }
           //new DiscoverUniWidget(widgets[i]);
         }
+        contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
+        kiswidget.append(contentInsertionNode);
+        new stir.accord(contentInsertionNode);
       });
 
       document.head.appendChild(widgetScript);
