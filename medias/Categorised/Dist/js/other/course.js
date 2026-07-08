@@ -635,9 +635,11 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
           }
           //new DiscoverUniWidget(widgets[i]);
         }
-        contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
-        kiswidget.append(contentInsertionNode);
-        new stir.accord(contentInsertionNode);
+        if(widgets.length>1){
+          contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
+          kiswidget.append(contentInsertionNode);
+          new stir.accord(contentInsertionNode);
+        }
       });
 
       document.head.appendChild(widgetScript);
