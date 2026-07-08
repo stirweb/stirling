@@ -8571,6 +8571,9 @@ pre.debug {
 
 .kis-widget {
   margin: 0 0 1em 0;
+  width: 100%;
+  min-height: 580px;
+  /* mobile first */
   /* `revert` so the Discover Uni widget is not affected by our styles */ }
   .kis-widget h3 {
     position: revert;

@@ -40,20 +40,20 @@ stir.components.discoveruni.widget = function (options) {
 
   var widget = document.createElement("embed");
   var url = `https://discoveruni.gov.uk/v2/widget/10007804/${options.kiscode}/${mode}/en`;
-  var styles = "width: 100%; height: 100%";
+  //var styles = "width: 100%; min-height: 400px";
 
   widget.setAttribute("src", url);
-  widget.setAttribute("style", styles);
+  //widget.setAttribute("style", styles);
 
   return widget;
 };
 
 stir.components.html.details = function (options) {
-  //var widget = document.createElement("details");
-  //options.summary && (widget.innerHTML = "<summary>" + options.summary + "</summary>");
+  var widget = document.createElement("details");
+  options.summary && (widget.innerHTML = "<summary>" + options.summary + "</summary>");
 
   //TEMP until we can fix DiscoverUniWidget's script to allow us to insert widgets into an already-rendered <details> element:
-  var widget = document.createElement("div");
+  //var widget = document.createElement("div");
   return widget;
 };
 
@@ -89,7 +89,7 @@ stir.components.accordion = function (options) {
 stir.renderKISWidgets = function (kiscodes, kiswidget) {
   var debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
   var kiswidget = kiswidget || document.querySelector("#kis-widget");
-  var frag = document.createDocumentFragment();
+  //var frag = document.createDocumentFragment();
   var useUnistats = false;
   var pattern = /^U\d{2}-[A-Z]{2,3}([A-Z]{3})?$/;
   var widgets = [];
@@ -129,10 +129,10 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
         widgets.push(widget);
       }
 
-      widget && frag.appendChild(widget);
+      //widget && frag.appendChild(widget);
     }
 
-    kiswidget.appendChild(frag);
+    //kiswidget.appendChild(frag);
 
     (function (d) {
       if (useUnistats || d.getElementById("unistats-widget-script")) {
@@ -140,20 +140,16 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
       }
       var widgetScript = d.createElement("script");
 
+      var contentInsertionNode = new stir.components.html.details({
+        id: "morewidgets",
+        summary: "View more Discover Uni information",
+      });
+
       widgetScript.id = "unistats-widget-script";
       widgetScript.src = "https://widget.discoveruni.gov.uk/widget/embed-script/";
       widgetScript.addEventListener("load", function (event) {
         if (widgets.length > 1 && window.DiscoverUniWidget) {
           var widgetStylesAdded = false;
-          var widgetsReady = 0;
-          var contentInsertionNode = new stir.components.html.details({
-            id: "morewidgets",
-            summary: "View more Discover Uni information",
-          });
-
-          contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
-          kiswidget.insertAdjacentElement("afterend", contentInsertionNode);
-          //new stir.accord(contentInsertionNode);
           //contentInsertionNode = contentInsertionNode.querySelector("[data-tab-content]");
 
           // patch DiscoverUniWidget's addCss() function so it only runs once per page (not once per widget!)
@@ -164,19 +160,19 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
 
           // patch DiscoverUniWidget's renderWidget() function so that we can manipulate
           // widgets *after* they've been initialised
-          DiscoverUniWidget.prototype._renderWidget = DiscoverUniWidget.prototype.renderWidget;
-          DiscoverUniWidget.prototype.renderWidget = function () {
-            // pass-through call to the original renderWidget function
-            this._renderWidget.apply(this, arguments);
-
-            // if the widget has no data we'll do nothing further
-            if (this.targetDiv.classList.contains("no-data")) return;
-
-            // skip the first widget but put the rest into a <details> accordion
-            if (++widgetsReady > 1) {
-              contentInsertionNode.appendChild(this.targetDiv);
-            }
-          };
+//           DiscoverUniWidget.prototype._renderWidget = DiscoverUniWidget.prototype.renderWidget;
+//           DiscoverUniWidget.prototype.renderWidget = function () {
+//             // pass-through call to the original renderWidget function
+//             this._renderWidget.apply(this, arguments);
+// 
+//             // if the widget has no data we'll do nothing further
+//             if (this.targetDiv.classList.contains("no-data")) return;
+// 
+//             // skip the first widget but put the rest into a <details> accordion
+//             if (++widgetsReady > 1) {
+//               contentInsertionNode.appendChild(this.targetDiv);
+//             }
+//           };
 
           // this replaces (rather than patches) DiscoverUniWidget's init()
           // which is called as soon as the script is loaded. But since
@@ -186,8 +182,18 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
         for (var i = 0; i < widgets.length; i++) {
           widgets[i].classList.add("kis-widget");
           widgets[i].id = "kis-widget_" + (i + 1);
-          new DiscoverUniWidget(widgets[i]);
+          if(0===i) {
+            kiswidget.appendChild(widgets[i]);
+          } else {
+            contentInsertionNode.append(widgets[i]);
+            console.info('[Widget]',widget);
+            console.info('[Widget]',widget.contentDocument);
+          }
+          //new DiscoverUniWidget(widgets[i]);
         }
+        contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
+        kiswidget.append(contentInsertionNode);
+        new stir.accord(contentInsertionNode);
       });
 
       document.head.appendChild(widgetScript);
