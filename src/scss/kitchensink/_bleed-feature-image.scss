@@ -120,15 +120,17 @@
 .c-image-two-thirds {
   background-color: $heritage-green;
 
-  img {
-    max-height: 300px;
-  }
-
   .c-image-two-thirds__content > div {
     position: relative;
     top: -32px;
     padding: 24px;
     margin-bottom: 32px;
+  }
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .c-image-two-thirds img {
+    max-height: 300px;
   }
 }
 

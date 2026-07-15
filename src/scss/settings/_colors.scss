@@ -635,6 +635,10 @@ a:has(img):hover {
   &.c-wrapper-neutral {
     background-color: $grey;
     border-image-source: linear-gradient($grey, $grey);
+
+    .c-half-n-half-2026 .u-bg-grey {
+      background-color: $white !important;
+    }
   }
 
   // secondary button style

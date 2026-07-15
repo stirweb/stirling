@@ -324,6 +324,17 @@
 
 /* Object fit */
 
+@media screen and #{breakpoint(medium up)} {
+  .u-object-cover-mediumup,
+  .u-object-cover-mediumup > img,
+  .u-object-cover-mediumup > picture img {
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+  }
+}
+
 .u-object-cover,
 .u-object-cover > img,
 .u-object-cover > picture img {
