@@ -2614,9 +2614,8 @@ body > nav > a.u-show-on-focus {
       border-top: 5px solid #eee;
       padding-top: 1rem; }
       .sitemap > ul > li > a, .sitemap--skip-top-level > ul > li > ul > li > a {
-        font-family: FSMaja, serif;
-        font-weight: 100;
-        font-size: 2.8rem !important; }
+        font-weight: bold;
+        font-size: 2rem !important; }
       .sitemap > ul > li > ul, .sitemap--skip-top-level > ul > li > ul > li > ul {
         list-style: none;
         margin: 0;
