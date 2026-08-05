@@ -1525,7 +1525,7 @@ a:has(img):hover {
     .dark .stir-accordion > h2 {
       color: #fff; }
     .dark .stir-accordion button:focus {
-      outline: 1px solid #fff !important; }
+      outline: 2px solid #fff !important; }
 
 /*
    Dark colour overides for the 2025 colour packs
