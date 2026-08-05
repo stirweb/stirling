@@ -1512,7 +1512,7 @@ a:has(img):hover {
   .dark a:focus {
     background-color: transparent;
     color: #fff;
-    outline: 1px solid #fff !important; }
+    outline: 2px solid #fff !important; }
   .dark .c-link::after {
     filter: brightness(0) invert(1); }
   .dark .c-link:hover::before {
