@@ -2296,7 +2296,7 @@ body > nav > a.u-show-on-focus {
 #site-footer {
   color: #fff; }
   #site-footer *:focus {
-    outline: 1px solid #fff !important; }
+    outline: 2px solid #fff !important; }
   #site-footer a {
     color: #ffffff; }
   #site-footer #footer-contact a {
