@@ -4305,7 +4305,7 @@ textarea:focus,
 select:focus,
 .c-search-ordered-filters button:focus,
 a:focus {
-  outline: 1px solid #006938 !important;
+  outline: 2px solid #006938 !important;
   outline-offset: 4px; }
 
 .u-white--all .button:focus,
@@ -4318,7 +4318,7 @@ a:focus {
 .darkmode textarea:focus,
 .darkmode select:focus,
 .darkmode a:focus {
-  outline: 1px solid #fff !important;
+  outline: 2px solid #fff !important;
   outline-offset: 4px; }
 
 /* Form elements  */
