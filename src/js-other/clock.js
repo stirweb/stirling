@@ -51,16 +51,16 @@ var UoS_ClearingClock = (function () {
     var dayOfWeek = date.getUTCDay();
     var weekday = dayOfWeek > 0 && dayOfWeek < 6 ? true : false;
 
-    // Hotline is available 4–16 August 2025
-    // Scottish results day: 5 Aug
-    // A-Level results day: 14 Aug
+    // Hotline is available 4–26 August 2025
+    // Scottish results day: 4 Aug
+    // A-Level results day: 13 Aug
 
     // :: DATE HANDLING ::
 
-    if (2026 != date.getUTCFullYear()) return false; // ignore any dates not in 2025
+    if (2026 != date.getUTCFullYear()) return false; // ignore any dates not in 2026
     if (7 != month) return false; // ignore any dates not in August
     if (day <= 3) return false; // no calls at all before 4 August
-    if (day <= 13 && !sqa) return false; // Aug 5–14 only allowed for Scotland region (SQA results)
+    if (day <= 12 && !sqa) return false; // Aug 4–12 only allowed for Scotland region (SQA results)
     if (day >= 26) return false; // no calls after 25 August
 
     // :: TIME OF DAY HANDLING ::
