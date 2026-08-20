@@ -178,12 +178,8 @@ var stir = stir || {};
    * @returns {String} - the HTML for the call to action link
    */
   const renderCTA = (link, text) => {
-    return `<div class="u-flex u-gap-8 cta-link u-mb-tiny">
-              <span class="u-svg-24 u-heritage-green">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="svg-icon">
-                  <path d="M13.833,16.333,17.167,13m0,0L13.833,9.667M17.167,13H8.833M23,13A10,10,0,1,1,13,3,10,10,0,0,1,23,13Z" transform="translate(-1 -1)" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-              </span>
+    return `<div class="u-flex u-gap-4 cta-link u-mb-tiny">
+              <span class="cta-link-icon"></span>
               <span>
                 <a href="${link}">${text}</a>
               </span>
@@ -222,7 +218,7 @@ var stir = stir || {};
     return `
         <!-- All News -->
         <div class="cell small-12 ${classes}" >
-            <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-2 u-items-start-small">
+            <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-1 u-items-start-small">
                 <h2>News</h2>
                 <span class="u-flex1 flex-container u-gap-16 align-middle">${renderCTA("/news/", "See all articles")}</span>
                 ${noOfNews === 3 ? renderCTA("/events/", "See our events") : ``}
@@ -244,13 +240,8 @@ var stir = stir || {};
       <${node} class="small-12 cell ${classes}">
         <div class="u-aspect-ratio-16-9 "><a href="${item.url}"><img class=" u-object-cover" src="${item.image}" alt="${item.imagealt}" loading="lazy"></a></div>
         <div class="u-flex u-gap-8 cta-link u-my-1">
-            <span class="u-svg-24 u-heritage-green">
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="svg-icon">
-                <path d="M13.833,16.333,17.167,13m0,0L13.833,9.667M17.167,13H8.833M23,13A10,10,0,1,1,13,3,10,10,0,0,1,23,13Z" transform="translate(-1 -1)" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </span>
             <span>
-              <a href="${item.url}">${item.title}</a>
+              <strong><a href="${item.url}">${item.title}</a></strong>
             </span>
         </div>
         ${item._uos.location ? `<strong>${item._uos.location}</strong>` : ``}
