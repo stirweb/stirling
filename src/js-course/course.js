@@ -160,19 +160,19 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
 
           // patch DiscoverUniWidget's renderWidget() function so that we can manipulate
           // widgets *after* they've been initialised
-//           DiscoverUniWidget.prototype._renderWidget = DiscoverUniWidget.prototype.renderWidget;
-//           DiscoverUniWidget.prototype.renderWidget = function () {
-//             // pass-through call to the original renderWidget function
-//             this._renderWidget.apply(this, arguments);
-// 
-//             // if the widget has no data we'll do nothing further
-//             if (this.targetDiv.classList.contains("no-data")) return;
-// 
-//             // skip the first widget but put the rest into a <details> accordion
-//             if (++widgetsReady > 1) {
-//               contentInsertionNode.appendChild(this.targetDiv);
-//             }
-//           };
+          //           DiscoverUniWidget.prototype._renderWidget = DiscoverUniWidget.prototype.renderWidget;
+          //           DiscoverUniWidget.prototype.renderWidget = function () {
+          //             // pass-through call to the original renderWidget function
+          //             this._renderWidget.apply(this, arguments);
+          //
+          //             // if the widget has no data we'll do nothing further
+          //             if (this.targetDiv.classList.contains("no-data")) return;
+          //
+          //             // skip the first widget but put the rest into a <details> accordion
+          //             if (++widgetsReady > 1) {
+          //               contentInsertionNode.appendChild(this.targetDiv);
+          //             }
+          //           };
 
           // this replaces (rather than patches) DiscoverUniWidget's init()
           // which is called as soon as the script is loaded. But since
@@ -182,16 +182,16 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
         for (var i = 0; i < widgets.length; i++) {
           widgets[i].classList.add("kis-widget");
           widgets[i].id = "kis-widget_" + (i + 1);
-          if(0===i) {
+          if (0 === i) {
             kiswidget.appendChild(widgets[i]);
           } else {
             contentInsertionNode.append(widgets[i]);
-            console.info('[Widget]',widget);
-            console.info('[Widget]',widget.contentDocument);
+            console.info("[Widget]", widget);
+            console.info("[Widget]", widget.contentDocument);
           }
           //new DiscoverUniWidget(widgets[i]);
         }
-        if(widgets.length>1){
+        if (widgets.length > 1) {
           contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
           kiswidget.append(contentInsertionNode);
           new stir.accord(contentInsertionNode);
@@ -371,6 +371,7 @@ if (stir.favourites && stir.coursefavs) {
     .then((response) => response.json())
     .then((data) => {
       if (data.total_hits > 0) {
+        //console.log("[Course] Upcoming webinar found for this course:", data.hits[0]);
         // get the number of a elements already in suggested actions
         const existingButtons = suggestedNode.querySelectorAll("a.button");
         // if more then 2 buttons remove the last one then add the webinar button
