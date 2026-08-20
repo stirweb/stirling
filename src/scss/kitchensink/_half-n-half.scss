@@ -176,6 +176,12 @@
   position: relative;
   margin-bottom: 1rem;
   background-color: #f1f1ef;
+
+  .u-bg-heritage-green {
+    .button.energy {
+      color: $black;
+    }
+  }
 }
 
 /* Media query for medium up */

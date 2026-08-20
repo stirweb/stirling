@@ -466,6 +466,7 @@ a:has(img):hover {
 }
 
 .c-wrapper-2026 {
+  h1,
   h2,
   h3,
   h4 {
@@ -575,6 +576,10 @@ a:has(img):hover {
     .u-font-icon,
     svg {
       color: $white;
+    }
+
+    a:focus {
+      outline: 2px solid #fff !important;
     }
 
     a:hover {
@@ -720,6 +725,7 @@ a:has(img):hover {
   &.dark {
     color: $white;
 
+    h1,
     h2,
     h3,
     h4 {
@@ -732,6 +738,10 @@ a:has(img):hover {
 
     a {
       color: $white;
+
+      &:focus {
+        outline: 2px solid #fff !important;
+      }
 
       &.c-link::before {
         background-color: #fff;
