@@ -371,7 +371,7 @@ if (stir.favourites && stir.coursefavs) {
     .then((response) => response.json())
     .then((data) => {
       if (data.total_hits > 0) {
-        console.log("[Course] Upcoming webinar found for this course:", data.hits[0]);
+        //console.log("[Course] Upcoming webinar found for this course:", data.hits[0]);
         // get the number of a elements already in suggested actions
         const existingButtons = suggestedNode.querySelectorAll("a.button");
         // if more then 2 buttons remove the last one then add the webinar button
