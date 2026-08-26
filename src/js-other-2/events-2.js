@@ -325,6 +325,24 @@
   };
 
   /*
+   * Get promo filter object for query
+   * @param {number} limit - Number of results to limit
+   * @param {Array} maintags - Array of main tags
+   * @returns {Object} - Filter object for query
+   */
+  function getPromoFilterObject() {
+    return {
+      and: [
+        { "custom_fields.tag": "Promo" },
+        { not: { "custom_fields.tag": "Deleted" } },
+        {
+          range: { "custom_fields.e": { gt: getNow(), lt: "2099-12-31" } },
+        },
+      ],
+    };
+  }
+
+  /*
    * Get archive filter string based on selected value
    * @param {string} selectedValue - Selected filter value
    * @returns {string} - Filter string for query
@@ -332,6 +350,7 @@
   function getArchiveFilterString(selectedValue, limit, maintags) {
     const filterConditions = [
       { "custom_fields.tag": "Archive" },
+      { not: { "custom_fields.tag": "Deleted" } },
       {
         range: { "custom_fields.e": { gt: "2015-01-01", lt: getNow() } },
       },
@@ -364,6 +383,7 @@
       and: [
         { "custom_fields.tag": type },
         { not: { "custom_fields.tag": "Promo" } },
+        { not: { "custom_fields.tag": "Deleted" } },
         {
           range: { "custom_fields.e": { gt: from, lt: to } },
         },
@@ -900,14 +920,7 @@
    * @return {void}
    */
   function doPromoSearch(baseUrl, node, seriesData, maintags) {
-    const promoFilter = {
-      and: [
-        { "custom_fields.tag": "Promo" },
-        {
-          range: { "custom_fields.e": { gt: getNow(), lt: "2099-12-31" } },
-        },
-      ],
-    };
+    const promoFilter = getPromoFilterObject();
 
     // Add maintags array to filter
     if (maintags && maintags.length > 0) {
