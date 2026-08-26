@@ -5,33 +5,33 @@
 if ("undefined" != typeof window && !("onscrollend" in window)) {
   const i = new Event("scrollend"),
     s = new Set();
-  document.addEventListener(
+  (document.addEventListener(
     "touchstart",
     (e) => {
       for (let t of e.changedTouches) s.add(t.identifier);
     },
-    { passive: !0 }
+    { passive: !0 },
   ),
     document.addEventListener(
       "touchend",
       (e) => {
         for (let t of e.changedTouches) s.delete(t.identifier);
       },
-      { passive: !0 }
+      { passive: !0 },
     ),
     document.addEventListener(
       "touchcancel",
       (e) => {
         for (let t of e.changedTouches) s.delete(t.identifier);
       },
-      { passive: !0 }
-    );
+      { passive: !0 },
+    ));
   let l = new WeakMap();
   function e(e, t, n) {
     let o = e[t];
     e[t] = function () {
       let e = Array.prototype.slice.apply(arguments, [0]);
-      o.apply(this, e), e.unshift(o), n.apply(this, e);
+      (o.apply(this, e), e.unshift(o), n.apply(this, e));
     };
   }
   function t(e, t, n, o) {
@@ -40,17 +40,17 @@ if ("undefined" != typeof window && !("onscrollend" in window)) {
       d = l.get(r);
     if (void 0 === d) {
       let t = 0;
-      (d = {
+      ((d = {
         scrollListener: (e) => {
-          clearTimeout(t),
+          (clearTimeout(t),
             (t = setTimeout(() => {
               s.size ? setTimeout(d.scrollListener, 100) : (r && r.dispatchEvent(i), (t = 0));
-            }, 100));
+            }, 100)));
         },
         listeners: 0,
       }),
         e.apply(r, ["scroll", d.scrollListener]),
-        l.set(r, d);
+        l.set(r, d));
     }
     d.listeners++;
   }
@@ -60,7 +60,12 @@ if ("undefined" != typeof window && !("onscrollend" in window)) {
       i = l.get(o);
     void 0 !== i && (--i.listeners > 0 || (e.apply(o, ["scroll", i.scrollListener]), l.delete(o)));
   }
-  e(Element.prototype, "addEventListener", t), e(window, "addEventListener", t), e(document, "addEventListener", t), e(Element.prototype, "removeEventListener", n), e(window, "removeEventListener", n), e(document, "removeEventListener", n);
+  (e(Element.prototype, "addEventListener", t),
+    e(window, "addEventListener", t),
+    e(document, "addEventListener", t),
+    e(Element.prototype, "removeEventListener", n),
+    e(window, "removeEventListener", n),
+    e(document, "removeEventListener", n));
 }
 var scrollend = { __proto__: null };
 
@@ -177,9 +182,9 @@ var scrollend = { __proto__: null };
 
     // Show the tabs container
     tabsScope.classList.remove("hide");
-    
+
     // Select buttons and tab panels
-    const nav = tabsScope.querySelector('nav#nav-slider');
+    const nav = tabsScope.querySelector("nav#nav-slider");
     const buttons = nav && nav.querySelectorAll("button");
     const tabs = tabsScope.querySelectorAll("#mySlider1 > div");
 
@@ -198,11 +203,13 @@ var scrollend = { __proto__: null };
       });
 
       // Remove active states from all buttons
-      buttons && buttons.forEach((button) => {
-        if (button) {
-          button.classList.remove("u-white", "u-bg-heritage-green");
-        }
-      });
+      buttons &&
+        buttons.forEach((button) => {
+          if (button) {
+            //button.classList.remove("u-white", "u-bg-heritage-green");
+            button.classList.remove("u-outline-heritage-green");
+          }
+        });
 
       // Find and show the selected tab
       const tabToOpen = tabsScope.querySelector(`[data-panel="${openTabId}"]`);
@@ -214,30 +221,32 @@ var scrollend = { __proto__: null };
       // Activate the corresponding button
       const buttonToActivate = tabsScope.querySelector(`[data-open="${openTabId}"]`);
       if (buttonToActivate) {
-        buttonToActivate.classList.add("u-white", "u-bg-heritage-green");
+        //buttonToActivate.classList.add("u-white", "u-bg-heritage-green");
+        buttonToActivate.classList.add("u-outline-heritage-green");
       }
     };
 
     // Add click event listeners to tab buttons
-    buttons && buttons.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        const btn = event.target.closest("button[data-open]");
-        if (!btn) return;
+    buttons &&
+      buttons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const btn = event.target.closest("button[data-open]");
+          if (!btn) return;
 
-        const openTabId = btn.getAttribute("data-open") || "all";
-        openTab(openTabId, tabs, buttons, tabsScope);
+          const openTabId = btn.getAttribute("data-open") || "all";
+          openTab(openTabId, tabs, buttons, tabsScope);
 
-        // Update URL query parameter if event is user-initiated
-        if (event.isTrusted) {
-          QueryParams.set("tab", openTabId);
-          btn.hasAttribute("data-tab-callback") && stir.callback.enqueue(btn.getAttribute("data-tab-callback"));
-        }
+          // Update URL query parameter if event is user-initiated
+          if (event.isTrusted) {
+            QueryParams.set("tab", openTabId);
+            btn.hasAttribute("data-tab-callback") && stir.callback.enqueue(btn.getAttribute("data-tab-callback"));
+          }
+        });
       });
-    });
 
     // Initialise tab panel attributes for accessibility
     // (only if there is more than one tab)
-    if(tabs && tabs.length > 1) {
+    if (tabs && tabs.length > 1) {
       tabs.forEach((tab) => {
         const panelId = tab.getAttribute("data-panel");
         tab.setAttribute("role", "tabpanel");
@@ -248,7 +257,7 @@ var scrollend = { __proto__: null };
       // Determine initial open tab from URL or default to 'all'
       const initialTabId = QueryParams.get("tab") || "all";
       const initialButton = tabsScope.querySelector(`[data-open="${initialTabId}"]`);
-      
+
       // Open and scroll to the initial tab
       if (initialButton) {
         initialButton.click();

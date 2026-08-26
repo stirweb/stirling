@@ -59,8 +59,16 @@
   grid-template-columns: 3fr 1fr;
 }
 
+.u-grid-cols-1_3 {
+  grid-template-columns: 1fr 3fr;
+}
+
 .u-grid-cols-2_1 {
   grid-template-columns: 2fr 1fr;
+}
+
+.u-grid-cols-1_2 {
+  grid-template-columns: 1fr 2fr;
 }
 
 .u-justify-content-center {
@@ -311,6 +319,17 @@
   object-position: center;
   height: 100%;
   width: 100%;
+}
+
+@media screen and #{breakpoint(medium up)} {
+  .u-object-cover-medium-up,
+  .u-object-cover > img,
+  .u-object-cover > picture img {
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .u-object-contain {

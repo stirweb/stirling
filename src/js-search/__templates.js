@@ -135,7 +135,7 @@ stir.templates.search = (() => {
           .map((node) => (node.nodeType === 3 ? node.textContent : "")) // Type 3 is Node.TEXT_NODE
           .join(""),
         name,
-        value
+        value,
       );
   };
 
@@ -261,7 +261,7 @@ stir.templates.search = (() => {
           .replace(/^!padrenullquery$/, "")
           .trim() || "";
       const queryEcho = document.createElement("em");
-      const message = stir.templates.search.message(totalMatching > 0, totalMatching&&totalMatching.toLocaleString("en"), querySanitised.length > 1);
+      const message = stir.templates.search.message(totalMatching > 0, totalMatching && totalMatching.toLocaleString("en"), querySanitised.length > 1);
       const tokens = [metaParamTokens(data.question.rawInputParameters), facetTokens(data.response.facets || [])].join(" ");
       const spelling = querySanitised ? checkSpelling(data.response.resultPacket.spell) : "";
       const hostinfo = debug ? `<small>${data.question.additionalParameters.HTTP_HOST}</small>` : "";
@@ -314,15 +314,15 @@ stir.templates.search = (() => {
 
       return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${
-        item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : ""
-      }${item.metaData.access ? ' data-access="' + item.metaData.access + '"' : ""}>
+          item.metaData.type || isDocUrl(item.liveUrl) ? ' data-result-type="' + (item.metaData.type || (isDocUrl(item.liveUrl) ? "document" : "")).toLowerCase() + '"' : ""
+        }${item.metaData.access ? ' data-access="' + item.metaData.access + '"' : ""}>
 					<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 						${label}
 						${makeBreadcrumbs(trail, item.liveUrl, item.fileSize)}
 						<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
-        .split("|")[0]
-        .trim()
-        .replace(/\xA0/g, " ")}</a></strong></p>
+              .split("|")[0]
+              .trim()
+              .replace(/\xA0/g, " ")}</a></strong></p>
 						<p >${item.summary.replace(/\xA0/g, " ")}</p>
 					</div>
 				</div>`;
@@ -339,14 +339,14 @@ stir.templates.search = (() => {
 
       return `
 	  <div class="u-border-width-5 u-heritage-line-left c-search-result${authClass(item.metaData.group)}" data-rank=${item.rank}${
-        item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""
-      } data-access="${item.metaData.access}">
+      item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""
+    } data-access="${item.metaData.access}">
 			  <div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="c-search-result__breadcrumb">${trail}</p>
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
-        .replace(/Current S\S+ ?\| ?/, "")
-        .split(" | ")[0]
-        .trim()}</a></strong></p>
+          .replace(/Current S\S+ ?\| ?/, "")
+          .split(" | ")[0]
+          .trim()}</a></strong></p>
 				${internalSummary(item.summary, item.metaData.group)}
 			  </div>
 			</div>`;
@@ -362,7 +362,8 @@ stir.templates.search = (() => {
 
     clearing: (item) => {
       if (Object.keys && item.metaData && Object.keys(item.metaData).join().indexOf("clearing") >= 0) {
-        return `<!-- <p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p> -->`;
+        return ``;
+        //return `<!-- <p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p> -->`;
       }
     },
     combos: (item) => {
@@ -406,7 +407,7 @@ stir.templates.search = (() => {
       head && body
         ? `<div class="cell medium-4"><strong class="u-heritage-green">${head}</strong><p${sentenceCase ? " class=u-text-sentence-case" : ""}>${body.replace(
             /\|/g,
-            ", "
+            ", ",
           )}</p></div>`
         : "",
 
@@ -463,7 +464,7 @@ stir.templates.search = (() => {
 			</div>`,
 
     courseminiFooter: (
-      query //debug?`
+      query, //debug?`
     ) =>
       `<p class="u-mb-2 flex-container u-align-items-center u-gap-8">
 				<svg class="u-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
@@ -513,9 +514,9 @@ stir.templates.search = (() => {
 			</div>
 			<div class="c-search-result__body u-mt-1 flex-container flex-dir-column u-gap">
 				<p class="u-text-regular u-m-0"><strong><a href="${stir.funnelback.getJsonEndpoint().origin + item.clickTrackingUrl}">${item.title
-        .split("|")[0]
-        .trim()
-        .replace(/\xA0/g, " ")}</a></strong></p>
+          .split("|")[0]
+          .trim()
+          .replace(/\xA0/g, " ")}</a></strong></p>
 				<p>${item.summary.replace(/\xA0/g, " ")}</p>
 				<div class="c-search-result__meta grid-x">
 					${stir.templates.search.courseFact("Value", item.metaData.value, false)}
@@ -545,7 +546,7 @@ stir.templates.search = (() => {
     },
 
     news: (item) => {
-		if(!item.metaData.d) return ''; // temp fix 2025-10-18
+      if (!item.metaData.d) return ""; // temp fix 2025-10-18
       return `
 				<div class="u-border-width-5 u-heritage-line-left c-search-result${item.metaData.thumbnail ? " c-search-result__with-thumbnail" : ""}" data-rank=${item.rank} data-result-type=news>
 					<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
@@ -633,8 +634,8 @@ stir.templates.search = (() => {
 
     research: (item) => `
 			<div class="u-border-width-5 u-heritage-line-left c-search-result" data-rank=${item.rank}${
-      item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""
-    }>
+        item.metaData.type ? ' data-result-type="' + item.metaData.type.toLowerCase() + '"' : ""
+      }>
 				<div>
 					<div class="c-search-result__tags"><span class="c-search-tag">${item.title.split(" | ").slice(0, 1).toString()}</span></div>
 					<div class="flex-container flex-dir-column u-gap u-mt-1">
@@ -686,7 +687,7 @@ stir.templates.search = (() => {
 			${facetCategoryLabel(facet.name, facetValue.label)}
 			<!-- <span>${facetValue.count ? facetValue.count : "0"}</span> -->
 		</label>
-	</li>`
+	</li>`,
     ),
   };
 })();

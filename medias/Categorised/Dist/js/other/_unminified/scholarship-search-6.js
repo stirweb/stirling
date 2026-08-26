@@ -15,7 +15,9 @@
 
 (function () {
   /*
-     VARS
+   *
+   * VARS
+   *
    */
 
   const countryNodes = stir.nodes("[data-scholcountrylisting]");
@@ -73,14 +75,19 @@
   };
 
   /*
-   
-    DATA PROCESSING
-   
+   *
+   * DATA PROCESSING
+   *
    */
 
-  /*  
-    Find the results that match the filters and reorder 
-  */
+  /*
+   * Helper Function: filterData
+   * Find the results that match the filters. This is where we call the isMatch function to determine if each scholarship matches the filters and return only the scholarships that match. We also check that the scholarship has a title as some of the data entries are blank and we dont want to include these in the results.
+   * @param {Object} consts - the constants object with various configuration values
+   * @param {Object} filters - the filter object with the current filter values
+   * @param {Object} schol - the scholarship object to filter
+   * @return {Object} filteredSchol - the scholarship object if it matches the filters, undefined otherwise
+   */
   const filterData = stir.curry((consts, filters, schol) => {
     if (schol.title) {
       if (isMatch(filters, schol, consts)) {
@@ -89,24 +96,47 @@
     }
   });
 
-  /*  
-    Return the schol with a ranking 
-  */
+  /*
+   * Helper Function: mapRank
+   * Return the schol object with a ranking attached
+   * @param {Object} filters - the filter object with the current filter values
+   * @param {Object} schol - the scholarship object to calculate the rank for
+   * @return {Object} rankedSchol - the scholarship object with an added rank property that indicates its rank based on how well it matches the filters. The lower the rank value, the better the match.
+   */
   const mapRank = stir.curry((filters, schol) => {
     const rank = getRank(filters, schol);
     return { rank: rank, scholarship: schol };
   });
 
-  /* 
-    isMatch() helpers
-  */
+  /*
+   *
+   * Matching Helpers
+   *
+   */
 
+  /*
+   * Helper Function: matchStudyLevel
+   * Determine if a scholarship matches the study level filter
+   * If the filter study level is included in the scholarship study level string, then we have a match. This allows us to match "Postgraduate Taught" filter value to scholarships that are tagged as "Postgraduate (taught)" for example.
+   * @param {String} scholStudyLevel - the study level string from the scholarship data (e.g. "Postgraduate (taught)")
+   * @param {String} filterStudyLevel - the study level filter value (e.g. "Postgraduate Taught")
+   * @return {Boolean} isMatch - true if the scholarship matches the study level filter, false otherwise
+   */
   const matchStudyLevel = (scholStudyLevel, filterStudyLevel) => {
     if (filterStudyLevel === "Any") return true;
 
     return scholStudyLevel.includes(filterStudyLevel);
   };
 
+  /*
+   * Helper Function: matchFeeStatus
+   * Determine if a scholarship matches the fee status filter
+   * If the filter fee status is included in the scholarship fee status string, then we have a match. This allows us to match "European" filter value to scholarships that are tagged as "European" or "European, International" for example.
+   * We also want to match "All" filter value to any scholarship that has a fee status, even if it doesnt include "All" in the string as this indicates that the scholarship is available to all fee statuses.
+   * @param {String} scholFeeStatus - the fee status string from the scholarship data (e.g. "European, International")
+   * @param {String} filterFeeStatus - the fee status filter value (e.g. "European")
+   * @return {Boolean} isMatch - true if the scholarship matches the fee status filter, false otherwise
+   */
   const matchFeeStatus = (scholFeeStatus, filterFeeStatus) => {
     //if (filterFeeStatus == "Any" || filterFeeStatus == "International") return true;
     //if (scholFeeStatus == "Any" || scholFeeStatus == "International") return true;
@@ -120,22 +150,48 @@
     return scholFeeStatus.includes(filterFeeStatus);
   };
 
+  /*
+   * Helper Function: matchSubject
+   * Determine if a scholarship matches the subject filter
+   * Match the subject filter against both the promoted subject and the other subject fields in the data.
+   * @param {Object} scholData - the scholarship data object that includes the promotedSubject and otherSubject fields
+   * @param {String} filterSubject - the subject filter value (e.g. "Engineering")
+   * @return {Boolean} isMatch - true if the scholarship matches the subject filter, false otherwise
+   */
   const matchSubject = (scholData, filterSubject) => {
     if (filterSubject === "Any") return true;
 
     return scholData.otherSubject.toLowerCase().includes(filterSubject.toLowerCase()) || scholData.promotedSubject.toLowerCase().includes(filterSubject.toLowerCase());
   };
 
+  /*
+   * NO LONGER IN USE - Faculty filter has been removed but this function is left in place in case we want to reinstate it at a later date
+   */
   const matchFaculty = (scholFaculty, filterFaculty) => {
     return true; // NO LONGER IN USE
     //return scholFaculty.includes(filterFaculty) || scholFaculty.includes("All Faculties");
   };
 
+  /*
+   * Helper Function: Determine if a scholarship matches the international filters
+   * If the filter nation is included in the ukroi region macro, then we dont want to match "All international" scholarships as these are not available to UK and ROI students
+   * If the filter nation is not included in the ukroi region macro, then we do want to match "All international" scholarships as these are available to students outside of the UK and ROI
+   * @param {String} scholNation - the nationality string from the scholarship data (e.g. "England, Northern Ireland, Scotland, Wales")
+   * @param {String} filterNation - the nation filter value (e.g. "Scotland")
+   * @param {Array} ukroi - the array of countries that are included in the "UK and ROI" region macro
+   * @return {Boolean} isMatch - true if the scholarship matches the international filters, false otherwise
+   */
   const isInternational = (scholNation, filterNation, ukroi) => {
     if (ukroi.includes(filterNation)) return false;
     return scholNation.includes("All international");
   };
 
+  /*
+   * Helper Function: Determine if a scholarship matches the region filters
+   * @param {String} scholNation - the nationality string from the scholarship data (e.g. "England, Northern Ireland, Scotland, Wales")
+   * @param {Array} filterRegions - the region filter values (e.g. ["EU", "Commonwealth"])
+   * @return {Boolean} isMatch - true if the scholarship matches any of the region filters, false otherwise
+   */
   const isRegion = (scholNation, filterRegions) => {
     if (!filterRegions || !filterRegions.length) return false;
 
@@ -144,8 +200,22 @@
     return stir.any((item) => item, hasRegion);
   };
 
+  /*
+   * Helper Function: Determine if a scholarship matches the location filters
+   * This includes the specific nation filter, the international filter and the region filters
+   * @param {String} scholNation - the nationality string from the scholarship data (e.g. "England, Northern Ireland, Scotland, Wales")
+   * @param {String} filterNation - the nation filter value (e.g. "Scotland")
+   * @param {Array} filterRegions - the region filter values (e.g. ["EU", "Commonwealth"])
+   * @param {Array} ukroi - the array of countries that are included in the "UK and ROI" region macro
+   * @return {Boolean} isMatch - true if the scholarship matches the location filters, false otherwisexw
+   */
   const matchLocation = (scholNation, filterNation, filterRegions, ukroi) => {
     if (filterNation === "Any") return true;
+
+    // fix issue where content folk select the individual countries instead of United Kingdom - if scholNation includes England, Northern Ireland, Scotland, Wales append  "United Kingom"
+    if (scholNation.includes("England") && scholNation.includes("Northern Ireland") && scholNation.includes("Scotland") && scholNation.includes("Wales")) {
+      scholNation += ", United Kingdom";
+    }
 
     return (
       scholNation.includes(filterNation) || scholNation.includes("All nationalities") || isInternational(scholNation, filterNation, ukroi) || isRegion(scholNation, filterRegions)
@@ -153,8 +223,13 @@
   };
 
   /*
-    Determine if a scholarship matches the filters
-  */
+   * Helper Function: Determine if a scholarship matches the filters
+   * This is where we call the individual filter matching functions and combine the results to determine if the scholarship matches all filters
+   * @param {Object} filters - the filter object with the current filter values
+   * @param {Object} schol - the scholarship object to compare against the filters
+   * @param {Object} consts - the constants object that includes the region macros and other constants that may be needed for the filter matching functions
+   * @return {Boolean} isMatch - true if the scholarship matches all filters, false otherwise
+   */
   const isMatch = (filters, schol, consts) => {
     const matchFilter = [
       matchStudyLevel(schol.studyLevel, filters.studyLevel),
@@ -167,33 +242,53 @@
     return stir.all((b) => b, matchFilter);
   };
 
-  /* 
-    getRank() helpers
-  */
+  /*
+   * Helper Function: getInitialRank()
+   * Based on the hard coded oredering (ugOrder, pgOrder, ugOrderFaculty, pgOrderFaculty)
+   * Set to -30000 so this will always take precedence
+   * If no order is set, default to 1000 so that it will be ranked below any scholarship with an order but above any scholarship that doesnt match the filters at all (which are set to 10000)
+   * @param {Object} schol - the scholarship object
+   * @param {Object} filters - the filter object with the current filter values
+   * @return {String} rank - the initial rank value based on the order fields
+   */
   const getInitialRank = (schol, filters) => {
+    // no filters
     if (!filters.sortBy || filters.sortBy === "") {
-      if (schol.ugOrder !== "") return schol.ugOrder;
-      if (schol.pgOrder !== "") return schol.pgOrder;
+      if (schol.ugOrder !== "") return schol.ugOrder - 30000;
+      if (schol.pgOrder !== "") return schol.pgOrder - 30000;
     }
 
-    if (filters.sortBy === "ugOrder") return schol.ugOrder;
-    if (filters.sortBy === "pgOrder") return schol.pgOrder;
-    if (filters.sortBy === "ugOrderFaculty") return schol.ugOrderFaculty;
-    if (filters.sortBy === "pgOrderFaculty") return schol.pgOrderFaculty;
+    if (filters.sortBy === "ugOrder") if (schol.ugOrder !== "") return schol.ugOrder - 30000;
+    if (filters.sortBy === "pgOrder") if (schol.pgOrder !== "") return schol.pgOrder - 30000;
+    if (filters.sortBy === "ugOrderFaculty") if (schol.ugOrderFaculty !== "") return schol.ugOrderFaculty - 30000;
+    if (filters.sortBy === "pgOrderFaculty") if (schol.pgOrderFaculty !== "") return schol.pgOrderFaculty - 30000;
 
     return "1000";
   };
 
-  /* 
-    getPos: Returns an int
-  */
+  /*
+   * Helper Function: getPos()
+   * Get the position of the filter value in the scholarship value string. This is used to calculate the rank value in the getRankValue function. The lower the position, the higher the rank as this indicates that the filter value is more prominently featured in the scholarship value string. For example, if the scholarship
+   * value is "England, Northern Ireland, Scotland, Wales" and the filter value is "Scotland", the position would be 25, whereas if the  the filter value was "England", the position would be 0 and the scholarship would be ranked higher as a result.
+   * @param {String} scholVal - the scholarship value to compare (e.g. "England, Northern Ireland, Scotland, Wales")
+   * @param {String} filterVal - the filter value to compare against (e.g. "Scotland")
+   * @return {Int} pos - the position of the filter value in the scholarship value string. The lower the position, the higher the rank as this indicates that the filter value is more prominently featured in the scholarship value string.
+   */
   const getPos = (scholVal, filterVal) => {
     return scholVal.toLowerCase().indexOf(filterVal.toLowerCase()); // TODO Work in String length
   };
 
-  /* 
-    getRankValue: Returns an int
-  */
+  /*
+   * Helper Function: getRankValue()
+   * If the scholarship value matches the filter value, calculate a rank value based on the position of the filter value in the
+   * scholarship value string. This means that if the filter value is at the start of the string it will be ranked higher than if it is at the end.
+   * The weight is used to determine how much influence this factor has on the overall ranking. For example
+   * @param {String} scholVal - the scholarship value to compare (e.g. "England, Northern Ireland, Scotland, Wales")
+   * @param {String} filterVal - the filter value to compare against (e.g. "Scotland")
+   * @param {String} startVal - the current rank value before this factor is applied
+   * @param {Int} weight - the weight to apply to this factor (e.g. -100 for location, -20000 for subject)
+   * @return {String} rank - the new rank value after applying this factor
+   */
   const getRankValue = (scholVal, filterVal, startVal, weight) => {
     if (filterVal !== "" && scholVal.toLowerCase().includes(filterVal.toLowerCase())) {
       return calcRank(startVal, weight, getPos(scholVal, filterVal));
@@ -201,16 +296,26 @@
     return startVal;
   };
 
-  /* 
-    Determine the final weighting (position) 
-  */
+  /*
+   * Helper Function: calcRank()
+   * Determine the final weighting (position) using the helpers above. The lower the rank value, the higher up the list the scholarship will be.
+   * The rank value is a string to allow for easy concatenation of the different factors that influence the ranking.
+   * @param {String} initialVal - the initial rank value
+   * @param {Int} weight - the weight to apply
+   * @param {Int} stringPos - the position of the filter value in the scholarship value string
+   * @return {String} rank - the final rank value
+   */
   const calcRank = (initialVal, weight, stringPos) => {
     return String(weight + parseInt(initialVal) + stringPos);
   };
 
-  /* 
-    Return the final calculated rank value 
-  */
+  /*
+   * Helper Function: getRank()
+   * Determine the final rank value for a scholarship based on how well it matches the filters. The lower the rank value, the better the match.
+   * @param {Object} filters - the filter object with the current filter values
+   * @param {Object} schol - the scholarship object to calculate the rank for
+   * @return {String} rank - the final rank value for this scholarship based on how well it matches the filters. The lower the rank value, the better the match.
+   */
   const getRank = (filters, schol) => {
     const initrank = getInitialRank(schol, filters);
 
@@ -223,16 +328,24 @@
     return rank5;
   };
 
-  /* 
-    Sorts a comma separated string. Returns an array
-  */
+  /*
+   * Helper Function: getReorderedString()
+   * Reorder a comma separated string alphabetically. This is used to reorder the study level string so that we can match the filter value against it more easily in the matchStudyLevel function. For example, if the scholarship study level is "Postgraduate (taught), Undergraduate" and the filter value is "Undergraduate", we want to reorder the scholarship study level to "Undergraduate, Postgraduate (taught)" so that we can match the filter value against it more easily.
+   * @param {String} str - the comma separated string to reorder (e.g. "Postgraduate (taught), Undergraduate")
+   * @param {String} direction - the direction to reorder the string. If "desc", the string will be reordered in descending order, if "asc" or any other value, the string will be reordered in ascending order.
+   * @return {String} reorderedStr - the reordered comma separated string (e.g. "Undergraduate, Postgraduate (taught)")
+   */
   const getReorderedString = (str, direction) => {
     return direction !== "desc" ? str.split(", ").sort() : str.split(", ").sort().reverse();
   };
 
-  /* 
-    Return Fee Status as an array of full strings 
-  */
+  /*
+   * Helper Function: getFeeStatusFullName()
+   * Return Fee Status as an array of full strings
+   * @param {Array} feeStatusesAll - the array of all possible fee statuses
+   * @param {String} feeStatus - the comma separated string of fee statuses to convert
+   * @return {Array} feeStatusFullNames - the array of full fee status names
+   */
   const getFeeStatusFullName = (feeStatusesAll, feeStatus) => {
     return feeStatus.split(", ").map((schol) => {
       const matched = stir.filter((el) => {
@@ -244,9 +357,16 @@
     });
   };
 
-  /* 
-    Return Fee Status as a full string 
-  */
+  /*
+   * Helper Function: getFeeStatusText()
+   * Return the fee status text to display based on the fee status filter and the scholarship fee status. If the scholarship fee
+   * status includes all possible fee statuses, return "All fee statuses". Otherwise, return the scholarship fee status with the
+   * full names of the fee statuses included in the scholarship fee status. If the scholarship fee status does not include the
+   * fee status filter, include the fee status filter in brackets at the end to indicate that this scholarship is being shown because it matches the other filters even though it doesnt match the fee status filter.
+   * @param {String} feeStatus - the comma separated string of fee statuses from the scholarship data
+   * @param {Object} consts - the constants object that includes the array of all possible fee statuses
+   * @param {String} feeStatusFilter - the fee status filter value (e.g. "European")
+   */
   const getFeeStatusText = (feeStatus, consts, feeStatusFilter) => {
     const feeStatuses = getFeeStatusFullName(consts.feeStatusesAll, feeStatus);
     const feeStatusFilterFull = getFeeStatusFullName(consts.feeStatusesAll, feeStatusFilter);
@@ -258,14 +378,17 @@
   };
 
   /*
-    
-     RENDERERS
-    
+   *
+   * RENDERERS
+   *
    */
 
-  /* 
-    Form the html for the pagination  
-  */
+  /*
+   * Render Function: renderPagination
+   * Render the pagination button if there are more results to show based on the total posts and the last post currently being shown
+   * @param {Object} meta - the meta object that includes the current page, total posts, and last post currently being shown
+   * @return {String} paginationHTML - the HTML string for the pagination button if there are more results to show, an empty string otherwise
+   */
   const renderPagination = ({ currentPage, totalPosts, last }) => {
     return last >= totalPosts
       ? ``
@@ -274,9 +397,14 @@
         </div>`;
   };
 
-  /* 
-    Form the HTML for all results 
-  */
+  /*
+   * Render Function: renderFormResults
+   * Form the HTML wrapper for the results based on the meta information and the array of scholarship data to render. This includes the results count and the pagination button.
+   * @param {Object} consts - the constants object that includes various configuration values
+   * @param {Object} _meta - the meta object that includes the current page, total posts, and last post currently being shown
+   * @param {Array} _data - the array of scholarship data to render
+   * @return {String} formResultsHTML - the HTML string for all results
+   */
   const renderFormResults = stir.curry((consts, _meta, _data) => {
     return `
         <p class="u-margin-bottom text-center"> Displaying  ${_meta.start + 1} - ${_meta.last}  of  <strong>${_meta.totalPosts} results</strong> that match your criteria.</p>
@@ -286,12 +414,54 @@
         </div> `;
   });
 
-  const renderFavBtns = (showUrlToFavs, cookie, id) =>
-    cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs);
+  /*
+   * Helper Function: renderFavBtns
+   * Render the favourite button based on whether the scholarship is already in the favourites or not. If it is in the favourites, render the remove from favourites button, otherwise render the add to favourites button.
+   * @param {Boolean} showUrlToFavs - whether to include the URL to the scholarship in the data attributes of the favourite buttons. This is used in the manage favourites page to allow users to navigate to the scholarship from their favourites list.
+   * @param {Array} cookie - the array returned from the getFav function that indicates whether this scholarship is in the favourites or not. If the array is empty, the scholarship is not in the favourites, if it has a value, it is in the favourites and the date it was added is included in the first element of the array.
+   * @param {String} id - the id of the scholarship to use in the data attributes of the favourite buttons
+   * @return {String} favBtnHTML - the HTML string for the favourite button based on whether the scholarship is in the favourites or not
+   */
+  const renderFavBtns = (showUrlToFavs, cookie, id) => {
+    return cookie.length ? stir.favourites.renderRemoveBtn(id, cookie[0].date, showUrlToFavs) : stir.favourites.renderAddBtn(id, showUrlToFavs);
+  };
 
-  /* 
-    Form the HTML for an individual result
-  */
+  /*
+   * Render Function: renderTag
+   * Render a tag element for the study level tags that appear at the top of each scholarship result. The content of the tag is based on the scholarship study level string.
+   * @param {String} item - the study level string to render as a tag (e.g. "Undergraduate", "Postgraduate (taught)")
+   * @return {String} tagHTML - the HTML string for the tag element with the study level string as its content
+   */
+  const renderTag = (item) => `<span class="u-bg-heritage-green--10 c-tag u-mr-1 ">${item}</span>`;
+
+  /*
+   * Render Function: renderDetail
+   * Form the HTML for the details information snippet that appears under the scholarship teaser in the search results. This is used to display the scholarship value, number of awards and fee status in a consistent format. If there is no content to display, an empty string is returned and the details snippet is not rendered.
+   * @param {String} content - the content to display in the details snippet
+   * @param {String} header - the header for the details snippet
+   * @param {Boolean} addDivider - whether to add a divider to the details snippet
+   * @return {String} detailHTML - the HTML string for the details snippet
+   */
+  const renderDetail = (content, header, addDivider) => {
+    return !content
+      ? ``
+      : `
+        <div class="cell small-12  large-4 ${addDivider ? `u-grey-line-left u-px-1 u-no-border-medium` : ``} ">
+          <div class="u-mb-fixed-1 u-h-full">
+            <p class="u-font-bold">${header}</p>
+            <p class="u-m-0">${content}</p>
+          </div>
+        </div> `;
+  };
+
+  /*
+   * Render Function: renderItem
+   * Form the HTML for an individual scholarship result item based on the scholarship data and the meta information. This includes the scholarship title, teaser, study level tags, value, number of awards, fee status and the favourite button.
+   * @param {Object} consts - the constants object that includes various configuration values
+   * @param {Object} _meta - the meta object that includes the current page, total posts, and last post currently being shown
+   * @param {Object} schol - the scholarship object to render
+   * @return {String} itemHTML - the HTML string for the individual result
+   */
   const renderItem = (consts, _meta, schol) => {
     const cookie = stir.favourites.getFav(schol.scholarship.id, consts.cookieType);
     return `
@@ -318,26 +488,12 @@
         </div>`;
   };
 
-  const renderTag = (item) => `<span class="u-bg-heritage-green--10 c-tag u-mr-1 ">${item}</span>`;
-
-  /* 
-    Form the HTML for the details snippet 
-  */
-  const renderDetail = (content, header, addDivider) => {
-    return !content
-      ? ``
-      : `
-        <div class="cell small-12  large-4 ${addDivider ? `u-grey-line-left u-no-border-medium` : ``} ">
-          <div class="u-mb-fixed-1 u-h-full">
-            <p class="u-font-bold">${header}</p>
-            <p class="u-m-0">${content}</p>
-          </div>
-        </div> `;
-  };
-
-  /* 
-    Form the HTML for debugging info 
-  */
+  /*
+   * Render Function: renderDebug
+   * Form the HTML for debugging info
+   * @param {Object} schol - the scholarship object to render debug info for
+   * @return {String} debugHTML - the HTML string for the debug info
+   */
   const renderDebug = (schol) => {
     return `
         <div class="cell u-mt-2 u-p-2 u-border-solid " >
@@ -354,14 +510,14 @@
   };
 
   /*
-    
-     EVENTS: OUTPUT (!!SIDE EFFECTS!!)
-    
+   *
+   * DOM EVENTS: OUTPUT (!!SIDE EFFECTS!!)
+   *
    */
 
-  /* 
-    Output the html content to the page 
-  */
+  /*
+   * Output the html content to the page
+   */
   const setDOMContent = stir.curry((elem, html) => {
     elem.innerHTML = html;
     return elem;
@@ -372,9 +528,9 @@
     return elem;
   });
 
-  /* 
-    Populate selects with query params from url string e.g. ?level=ug  
-  */
+  /*
+   * Populate selects with query params from url string e.g. ?level=ug
+   */
   const setFormValues = (nodes) => {
     nodes.inputNation.value = QueryParams.get("nationality") || "Any";
     nodes.inputSubject.value = QueryParams.get("subject") || "!padrenullquery";
@@ -385,9 +541,9 @@
   };
 
   /*
-    
-     EVENTS: INPUT (!!SIDE EFFECTS!!)
-    
+   *
+   * DOM EVENTS: USER INPUT (!!SIDE EFFECTS!!)
+   *
    */
 
   const handleSearchResultFavClick = (consts) => (event) => {
@@ -419,9 +575,9 @@
     }
   };
 
-  /* 
-    Filter Helper functions 
-  */
+  /*
+   * Filter Helper functions
+   */
 
   const getRegionTags = stir.curry((scholNation, item) => {
     if (item.data.includes(scholNation)) {
@@ -476,12 +632,11 @@
 
   //const getSubjectType = (value) => (value && value.length > 0 ? value : "");
 
-  /* 
-    Extract filter vars from the form and reconfig them if nec 
-  */
+  /*
+   * Extract filter vars from the form and reconfig them if nec
+   */
   const getFilterVars = (nodes, regionmacros) => {
     const subjectType = "Subject"; // getSubjectType(nodes.inputSubject.options[nodes.inputSubject.selectedIndex].parentNode.label);
-
     const regionTagCurry = getRegionTags(getInputValue(nodes.inputNation));
 
     return {
@@ -496,17 +651,27 @@
     };
   };
 
-  /* 
-    Main controller function  
-  */
+  /*
+   * Main controller function
+   * This is the main function that is called. It takes filter values, processes the scholarship data through the filter, map and sort functions
+   * to get the final array of scholarship data to render based on the current filters and the ranking algorithm, and then renders the results to the page.
+   * @param {Boolean} setFiltersFlag - whether to set the form values based on the query params in the URL. This is used when the page is first loaded to set the form values based on the URL, but not when the form is submitted as we want to get the filter values directly from the form inputs in that case.
+   * @param {Int} page - the current page number for pagination
+   * @param {Object} consts - the constants object that includes various configuration values
+   * @param {Object} initMeta - the initial meta object that includes the default values for the meta information
+   * @param {Array} initData - the initial array of scholarship data to process and render
+   * @return {Void} This function does not return anything, it has the side effect of rendering the scholarship results to the page based on the current filters and pagination.
+   */
   const main = (setFiltersFlag, page, consts, initMeta, initData) => {
     if (setFiltersFlag) setFormValues(consts.nodes);
 
+    // Currys
     const setDOMResults = page === 1 ? setDOMContent(consts.nodes.resultsArea) : appendDOMContent(consts.nodes.resultsArea);
     const filterDataCurry = stir.filter(filterData(consts, getFilterVars(consts.nodes, consts.regionmacros)));
     const mapRankCurry = stir.map(mapRank(getFilterVars(consts.nodes, consts.regionmacros)));
     const sortDataCurry = stir.sort((a, b) => (parseInt(a.rank) < parseInt(b.rank) ? -1 : parseInt(a.rank) > parseInt(b.rank) ? 1 : 0));
 
+    // Process the data through the filter, map and sort functions to get the final array of scholarship data to render based on the current filters and the ranking algorithm
     const data = stir.compose(sortDataCurry, mapRankCurry, filterDataCurry)(initData);
 
     const newMeta = {
@@ -529,9 +694,10 @@
   };
 
   /*
-    
-     Finder
-    
+   * --------------------------------------------------------------------------------------
+   * SCHOLARSHIP FINDER CONTROLLER - THE MAIN MAN
+   * https://www.stir.ac.uk/scholarships/
+   * --------------------------------------------------------------------------------------
    */
 
   if (searchForm && resultsArea) {
@@ -584,7 +750,7 @@
           return;
         }
       },
-      false
+      false,
     );
 
     /* 
@@ -619,10 +785,10 @@
   }
 
   /*
-   
-    Hard Coded Listings
-    eg on the international Pages
-   
+   * --------------------------------------------------------------------------------------
+   * HARD CODED LISTINGS
+   * eg on the international Pages
+   * --------------------------------------------------------------------------------------
    */
 
   /* 
@@ -680,7 +846,7 @@
         const limitDataCurry = stir.filter((el) => parseInt(el.rank) < 1000);
 
         return stir.compose(limitDataCurry, mapRankCurry, filterDataCurry)(allData);
-      })
+      }),
     );
     return schols;
   };
@@ -705,7 +871,7 @@
           limitDataCurry,
           stir.removeDuplicates,
           renderHardcodedResults,
-          sortCurry
+          sortCurry,
         )(stir.flatten(getCountriesData(CONSTANTS, element, initialData2)));
       });
     });

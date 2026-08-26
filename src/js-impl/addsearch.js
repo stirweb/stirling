@@ -16,8 +16,7 @@ stir.addSearch = (() => {
 	const getCompletions = (data,callback) => {
 		if("function" !== typeof callback) return;
 		const url = getAutocompleteEndpoint();
-		const params = new URLSearchParams(data);
-		url.search = params;
+		url.search = new URLSearchParams(data);
 		stir.getJSON(url,data=>console.info("getCompletions",data));
 	};
 	
@@ -45,7 +44,6 @@ stir.addSearch = (() => {
 	const putReport = (data) => {
 		
 		if(!REPORTING) {
-			// debug && console.info("[AddSearch] reporting is disabled",data);
 			return new Promise((resolve,reject)=>{resolve(data)});
 		}
 		const input   = getReportingEndpoint();

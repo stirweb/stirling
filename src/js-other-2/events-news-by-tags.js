@@ -69,7 +69,7 @@
                   <a href="${item.url}" class=" u-inline text-sm">${cf.h1_custom}</a>
                 </p>
                 <time class="u-block u-my-1 u-grey--dark">${renderDate(cf.d)}</time>
-                <p class="text-sm">${item.highlight}</p>
+                <p class="text-sm">${item.meta_description||item.highlight}</p>
               </div>
                ${renderImage(data.thumbnail, cf.h1_custom)}
             </div>`;
@@ -91,7 +91,7 @@
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
                     <a href="${item.url}" class=" u-inline text-sm">${cf.h1_custom}</a>
                 </p>
-                <p class="text-sm">${item.highlight}</p>
+                <p class="text-sm">${item.meta_description||item.highlight}</p>
             </div>`;
   });
 
@@ -398,7 +398,7 @@
 
     const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
     const searchEventsUrl = `${searchAPI}?term=*&customField=type%3Devent&customField=tag%3D${eventtag}&resultType=organic&${filterString}`;
-    const searchNewsUrl = `${searchAPI}?term=*&customField=type%3Dnews&customField=tag%3D${newstag}&resultType=organic&`;
+    const searchNewsUrl = `${searchAPI}?term=*&customField=type%3Dnews&customField=tag%3D${newstag}&resultType=organic&sort=custom_fields.d&`;
 
     Promise.all([fetchData(searchEventsUrl), fetchData(searchNewsUrl)])
       .then(([eventsData, newsData]) => {
