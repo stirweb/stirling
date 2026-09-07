@@ -1,1 +1,72 @@
-@import 'hide-search';
+@import "hide-search";
+
+main {
+  /* Text */
+
+  //   h1 {
+  //     color: $heritage-green;
+  //   }
+
+  /* Wrappers */
+
+  .pg-campaign.dark {
+    border-image-source: linear-gradient(#7c184f, #7c184f);
+    background-color: #7c184f !important;
+  }
+
+  /* Buttons */
+
+  .button {
+    &.u-sticky {
+      border-color: #3f0066;
+      background-color: #3f0066 !important;
+      background: linear-gradient(to top, #3f0066 50%, #3f0066 50%) !important;
+
+      &:hover {
+        border-color: #3f0066;
+        background: linear-gradient(to top, #fff 50%, #fff 50%) !important;
+        color: #3f0066 !important;
+      }
+    }
+
+    &.heritage-berry {
+      border-color: #7c184f;
+      background-color: #7c184f !important;
+      background: linear-gradient(to top, #7c184f 50%, rgb(255, 255, 255) 50%) 0px 99% / 100% 220%;
+
+      &:hover {
+        background-color: rgb(255, 255, 255);
+        background-position: center top;
+      }
+    }
+  }
+
+  /* Course Search widget */
+
+  #course-search-widget {
+    #course-search-widget__search-input {
+      background-image: none !important;
+      border-bottom: 5px solid #cdcdcd !important;
+      border-left-width: 0 !important;
+      border-top-width: 0 !important;
+      border-right-width: 0 !important;
+
+      &:focus {
+        border-bottom: 5px solid #592c82 !important;
+        background-color: #fff !important;
+        outline: 2px solid #fff !important;
+      }
+
+      &::placeholder {
+        text-transform: lowercase;
+      }
+    }
+    button {
+      background-color: #6d6d6d !important;
+
+      &:focus {
+        outline: 2px solid #fff !important;
+      }
+    }
+  }
+}

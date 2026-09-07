@@ -2866,11 +2866,11 @@ button:focus {
   position: relative;
   color: #fff;
   text-decoration: none;
+  text-align: center;
   cursor: pointer;
   display: inline-block;
   font-family: "General Sans", "Open Sans", sans-serif !important;
   font-size: 1.25rem;
-  text-align: left;
   line-height: 1.6;
   font-weight: bold;
   margin-top: 1rem;
@@ -6973,7 +6973,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
       fill: none; }
   .u-hero-search input[name="query"]:focus-visible {
     outline: 2px transparent solid;
-    box-shadow: 0 0 0 2px #fff,0 0 0 4px #006938,0 0 0 6px #fff;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #006938, 0 0 0 6px #fff;
     z-index: 1; }
   .u-hero-search:focus-within {
     background-blend-mode: multiply; }
@@ -6981,8 +6981,9 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
 .x-promobar-bg {
   background: linear-gradient(transparent 50%, white 50%); }
   .x-promobar-bg p.u-font-primary {
-    font-size: 1.625rem;
-    transform: translate(0, -0.5rem); }
+    font-size: 2rem;
+    transform: translate(0, -0.5rem);
+    line-height: 2; }
 
 .x-promobar-video {
   max-width: 100%;
@@ -7008,7 +7009,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
 
 @media screen and (min-width: 640px) {
   .x-promobar-bg p.u-font-primary {
-    font-size: 2rem;
+    font-size: 3rem;
     transform: translate(0, -1.333rem); } }
 
 @media screen and (min-width: 1024px) {

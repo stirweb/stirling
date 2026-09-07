@@ -32,11 +32,11 @@ button:focus {
   position: relative;
   color: $white;
   text-decoration: none;
+  text-align: center;
   cursor: pointer;
   display: inline-block;
   font-family: $body-font-family !important;
   font-size: 1.25rem;
-  text-align: left;
   line-height: 1.6;
   font-weight: bold;
   margin-top: 1rem;

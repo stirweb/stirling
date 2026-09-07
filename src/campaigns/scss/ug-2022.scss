@@ -1,68 +1,79 @@
-@import 'hide-search';
-
-/*
-    General Sans
- */
-
-@font-face {
-  font-family: "General Sans";
-  src: url('<t4 type="media" id="173668" formatter="path/*" />') format("woff"), url("../../fonts/general-sans/GeneralSans-Regular.ttf") format("OpenType");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "General Sans";
-  src: url('<t4 type="media" id="173667" formatter="path/*" />') format("woff"), url("../../fonts/general-sans/GeneralSans-Bold.ttf") format("OpenType");
-  font-weight: 700;
-  font-style: bold;
-  font-display: swap;
-}
+@import "hide-search";
 
 main {
-  font-family: "General Sans", sans-serif !important;
-  h1,
-  h2,
-  h2 strong:not(.u-header--secondary-font),
-  h3,
-  h4,
-  .c-course-search-widget__search-input::placeholder {
-    font-family: "General Sans", sans-serif !important;
-  }
+  /* Text */
 
   h1 {
     font-size: 3.25rem;
-  }
-
-  h2 strong {
-    font-weight: bold;
-  }
-
-  .u-sticky.button {
-    font-weight: normal;
-    font-size: 2.25rem !important;
-    padding: 0.75rem !important;
     font-family: "General Sans", sans-serif !important;
   }
 
-  .u-bg-web-turq button {
-    background-color: #592c82 !important;
-    border-color: #592c82 !important;
-    font-weight: normal;
+  /* Wrappers */
+
+  .ug-campaign.dark {
+    border-image-source: linear-gradient(rgb(0, 94, 99), rgb(0, 94, 99));
+    background-color: rgb(0, 94, 99) !important;
   }
 
-  .c-course-search-widget__search-input {
-    background-image: none !important;
-    border-bottom: 5px solid #cdcdcd !important;
+  /* Buttons */
+
+  .button {
+    &.u-sticky {
+      font-weight: normal;
+      font-size: 2.25rem !important;
+      padding: 0.75rem !important;
+      font-family: "General Sans", sans-serif !important;
+      border-color: rgb(0, 165, 172);
+      background-color: rgb(0, 165, 172) !important;
+      background: linear-gradient(to top, rgb(0, 165, 172) 50%, rgb(0, 165, 172) 50%) !important;
+
+      &:hover {
+        border-color: rgb(0, 165, 172);
+        background: linear-gradient(to top, #fff 50%, #fff 50%) !important;
+        color: rgb(0, 165, 172) !important;
+      }
+    }
+
+    &.energy-teal {
+      border-color: rgb(0, 165, 172);
+      background-color: rgb(0, 165, 172) !important;
+      background: linear-gradient(to top, rgb(0, 165, 172) 50%, rgb(255, 255, 255) 50%) 0px 99% / 100% 220%;
+
+      &:hover {
+        background-color: rgb(255, 255, 255);
+        background-position: center top;
+      }
+    }
   }
 
-  .c-course-search-widget__search-input:focus {
-    border-bottom: 5px solid #592c82 !important;
-  }
+  /* Course Search widget */
 
-  .c-course-search-widget__search-input::placeholder {
-    text-transform: lowercase;
-    color: #00a5ac !important;
+  /* Course Search widget */
+
+  #course-search-widget {
+    #course-search-widget__search-input {
+      background-image: none !important;
+      border-bottom: 5px solid #cdcdcd !important;
+      border-left-width: 0 !important;
+      border-top-width: 0 !important;
+      border-right-width: 0 !important;
+
+      &:focus {
+        border-bottom: 5px solid rgb(0, 165, 172) !important;
+        background-color: #fff !important;
+        outline: 2px solid #fff !important;
+      }
+
+      &::placeholder {
+        text-transform: lowercase;
+      }
+    }
+    button {
+      background-color: #6d6d6d !important;
+
+      &:focus {
+        outline: 2px solid #fff !important;
+      }
+    }
   }
 }
