@@ -10,10 +10,10 @@ main {
 
   /* Wrappers */
 
-  .ug-campaign.dark {
-    border-image-source: linear-gradient(rgb(0, 94, 99), rgb(0, 94, 99));
-    background-color: rgb(0, 94, 99) !important;
-  }
+  //.ug-campaign.dark {
+  //   border-image-source: linear-gradient(rgb(0, 94, 99), rgb(0, 94, 99));
+  //   background-color: rgb(0, 94, 99) !important;
+  // }
 
   /* Buttons */
 
@@ -34,19 +34,17 @@ main {
       }
     }
 
-    &.energy-teal {
-      border-color: rgb(0, 165, 172);
-      background-color: rgb(0, 165, 172) !important;
-      background: linear-gradient(to top, rgb(0, 165, 172) 50%, rgb(255, 255, 255) 50%) 0px 99% / 100% 220%;
+    // &.energy-teal {
+    //   border-color: rgb(0, 165, 172);
+    //   background-color: rgb(0, 165, 172) !important;
+    //   background: linear-gradient(to top, rgb(0, 165, 172) 50%, rgb(255, 255, 255) 50%) 0px 99% / 100% 220%;
 
-      &:hover {
-        background-color: rgb(255, 255, 255);
-        background-position: center top;
-      }
-    }
+    //   &:hover {
+    //     background-color: rgb(255, 255, 255);
+    //     background-position: center top;
+    //   }
+    // }
   }
-
-  /* Course Search widget */
 
   /* Course Search widget */
 

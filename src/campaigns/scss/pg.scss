@@ -9,10 +9,10 @@ main {
 
   /* Wrappers */
 
-  .pg-campaign.dark {
-    border-image-source: linear-gradient(#7c184f, #7c184f);
-    background-color: #7c184f !important;
-  }
+  // .pg-campaign.dark {
+  //   border-image-source: linear-gradient(#7c184f, #7c184f);
+  //   background-color: #7c184f !important;
+  // }
 
   /* Buttons */
 
@@ -29,16 +29,16 @@ main {
       }
     }
 
-    &.heritage-berry {
-      border-color: #7c184f;
-      background-color: #7c184f !important;
-      background: linear-gradient(to top, #7c184f 50%, rgb(255, 255, 255) 50%) 0px 99% / 100% 220%;
+    // &.heritage-berry {
+    //   border-color: #7c184f;
+    //   background-color: #7c184f !important;
+    //   background: linear-gradient(to top, #7c184f 50%, rgb(255, 255, 255) 50%) 0px 99% / 100% 220%;
 
-      &:hover {
-        background-color: rgb(255, 255, 255);
-        background-position: center top;
-      }
-    }
+    //   &:hover {
+    //     background-color: rgb(255, 255, 255);
+    //     background-position: center top;
+    //   }
+    // }
   }
 
   /* Course Search widget */
