@@ -100,33 +100,6 @@
 /*
    University of Stirling brand palette colours
  */
-.u-light-mink {
-  color: #d1d1c9 !important; }
-
-.u-bg-light-mink {
-  background-color: #d1d1c9 !important; }
-
-.bg-light-mink {
-  border-image-source: linear-gradient(#d1d1c9, #d1d1c9); }
-
-.u-medium-mink {
-  color: #5f6350 !important; }
-
-.u-bg-medium-mink {
-  background-color: #5f6350 !important; }
-
-.bg-medium-mink {
-  border-image-source: linear-gradient(#5f6350, #5f6350); }
-
-.u-dark-mink {
-  color: #3a3a26 !important; }
-
-.u-bg-dark-mink {
-  background-color: #3a3a26 !important; }
-
-.bg-dark-mink {
-  border-image-source: linear-gradient(#3a3a26, #3a3a26); }
-
 .u-energy {
   color: #76b72a !important; }
 
@@ -163,42 +136,6 @@
 .bg-energy-yellow {
   border-image-source: linear-gradient(#f4c400, #f4c400); }
 
-.u-energy-orange {
-  color: #ff6d00 !important; }
-
-.u-bg-energy-orange {
-  background-color: #ff6d00 !important; }
-
-.bg-energy-orange {
-  border-image-source: linear-gradient(#ff6d00, #ff6d00); }
-
-.u-energy-light-blue {
-  color: #77a4da !important; }
-
-.u-bg-energy-light-blue {
-  background-color: #77a4da !important; }
-
-.bg-energy-light-blue {
-  border-image-source: linear-gradient(#77a4da, #77a4da); }
-
-.u-energy-blue {
-  color: #2c498a !important; }
-
-.u-bg-energy-blue {
-  background-color: #2c498a !important; }
-
-.bg-energy-blue {
-  border-image-source: linear-gradient(#2c498a, #2c498a); }
-
-.u-energy-pink {
-  color: #e80068 !important; }
-
-.u-bg-energy-pink {
-  background-color: #e80068 !important; }
-
-.bg-energy-pink {
-  border-image-source: linear-gradient(#e80068, #e80068); }
-
 .u-energy-purple {
   color: #9053c6 !important; }
 
@@ -226,15 +163,6 @@
 .bg-heritage-green {
   border-image-source: linear-gradient(#006938, #006938); }
 
-.u-heritage-teal {
-  color: #005e63 !important; }
-
-.u-bg-heritage-teal {
-  background-color: #005e63 !important; }
-
-.bg-heritage-teal {
-  border-image-source: linear-gradient(#005e63, #005e63); }
-
 .u-heritage-yellow {
   color: #edab00 !important; }
 
@@ -244,15 +172,6 @@
 .bg-heritage-yellow {
   border-image-source: linear-gradient(#edab00, #edab00); }
 
-.u-heritage-orange {
-  color: #d9541a !important; }
-
-.u-bg-heritage-orange {
-  background-color: #d9541a !important; }
-
-.bg-heritage-orange {
-  border-image-source: linear-gradient(#d9541a, #d9541a); }
-
 .u-heritage-blue {
   color: #122c54 !important; }
 
@@ -260,15 +179,6 @@
   background-color: #122c54 !important; }
 
 .bg-heritage-blue {
-  border-image-source: linear-gradient(#122c54, #122c54); }
-
-.u-heritage-navy {
-  color: #122c54 !important; }
-
-.u-bg-heritage-navy {
-  background-color: #122c54 !important; }
-
-.bg-heritage-navy {
   border-image-source: linear-gradient(#122c54, #122c54); }
 
 .u-heritage-berry {
@@ -388,78 +298,6 @@
 .bg-neutral-darker {
   border-image-source: linear-gradient(#3a3a26, #3a3a26); }
 
-.u-teal-tint-7 {
-  color: #edf7f8 !important; }
-
-.u-bg-teal-tint-7 {
-  background-color: #edf7f8 !important; }
-
-.bg-teal-tint-7 {
-  border-image-source: linear-gradient(#edf7f8, #edf7f8); }
-
-.u-teal-tint {
-  color: #4cacb5 !important; }
-
-.u-bg-teal-tint {
-  background-color: #4cacb5 !important; }
-
-.bg-teal-tint {
-  border-image-source: linear-gradient(#4cacb5, #4cacb5); }
-
-.u-teal-medium {
-  color: #005e63 !important; }
-
-.u-bg-teal-medium {
-  background-color: #005e63 !important; }
-
-.bg-teal-medium {
-  border-image-source: linear-gradient(#005e63, #005e63); }
-
-.u-teal-dark {
-  color: #003a3d !important; }
-
-.u-bg-teal-dark {
-  background-color: #003a3d !important; }
-
-.bg-teal-dark {
-  border-image-source: linear-gradient(#003a3d, #003a3d); }
-
-.u-blue-tint-7 {
-  color: #f0f2f9 !important; }
-
-.u-bg-blue-tint-7 {
-  background-color: #f0f2f9 !important; }
-
-.bg-blue-tint-7 {
-  border-image-source: linear-gradient(#f0f2f9, #f0f2f9); }
-
-.u-blue-tint {
-  color: #77a4da !important; }
-
-.u-bg-blue-tint {
-  background-color: #77a4da !important; }
-
-.bg-blue-tint {
-  border-image-source: linear-gradient(#77a4da, #77a4da); }
-
-.u-blue-medium {
-  color: #2c498a !important; }
-
-.u-bg-blue-medium {
-  background-color: #2c498a !important; }
-
-.bg-blue-medium {
-  border-image-source: linear-gradient(#2c498a, #2c498a); }
-
-.u-blue-dark {
-  color: #122c54 !important; }
-
-.u-bg-blue-dark {
-  background-color: #122c54 !important; }
-
-.bg-blue-dark {
-  border-image-source: linear-gradient(#122c54, #122c54); }
-
 .u-purple-tint-7 {
   color: #f4f0f7 !important; }
 
@@ -478,6 +316,15 @@
 .bg-purple-tint {
   border-image-source: linear-gradient(#b186d7, #b186d7); }
 
+.u-purple-light {
+  color: #9053c6 !important; }
+
+.u-bg-purple-light {
+  background-color: #9053c6 !important; }
+
+.bg-purple-light {
+  border-image-source: linear-gradient(#9053c6, #9053c6); }
+
 .u-purple-medium {
   color: #592c82 !important; }
 
@@ -495,69 +342,6 @@
 
 .bg-purple-dark {
   border-image-source: linear-gradient(#3f0066, #3f0066); }
-
-.u-pink-tint-7 {
-  color: #f6eff3 !important; }
-
-.u-bg-pink-tint-7 {
-  background-color: #f6eff3 !important; }
-
-.bg-pink-tint-7 {
-  border-image-source: linear-gradient(#f6eff3, #f6eff3); }
-
-.u-pink-tint-40 {
-  color: #c698b0 !important; }
-
-.u-bg-pink-tint-40 {
-  background-color: #c698b0 !important; }
-
-.bg-pink-tint-40 {
-  border-image-source: linear-gradient(#c698b0, #c698b0); }
-
-.u-pink-tint {
-  color: #ef4c95 !important; }
-
-.u-bg-pink-tint {
-  background-color: #ef4c95 !important; }
-
-.bg-pink-tint {
-  border-image-source: linear-gradient(#ef4c95, #ef4c95); }
-
-.u-pink-medium {
-  color: #7c184f !important; }
-
-.u-bg-pink-medium {
-  background-color: #7c184f !important; }
-
-.bg-pink-medium {
-  border-image-source: linear-gradient(#7c184f, #7c184f); }
-
-.u-pink-dark {
-  color: #511535 !important; }
-
-.u-bg-pink-dark {
-  background-color: #511535 !important; }
-
-.bg-pink-dark {
-  border-image-source: linear-gradient(#511535, #511535); }
-
-.u-orange-tint {
-  color: #ff994c !important; }
-
-.u-bg-orange-tint {
-  background-color: #ff994c !important; }
-
-.bg-orange-tint {
-  border-image-source: linear-gradient(#ff994c, #ff994c); }
-
-.u-orange-dark {
-  color: #852903 !important; }
-
-.u-bg-orange-dark {
-  background-color: #852903 !important; }
-
-.bg-orange-dark {
-  border-image-source: linear-gradient(#852903, #852903); }
 
 .u-yellow-tint {
   color: #f7d64c !important; }
@@ -925,16 +709,14 @@ a:has(img):hover {
     background-position: top; }
 
 .c-wrapper-2026.c-wrapper-neutral-strong {
-  background-color: #d1d1c9;
-  border-image-source: linear-gradient(#d1d1c9, #d1d1c9); }
+  border-image-source: linear-gradient(, ); }
   .c-wrapper-2026.c-wrapper-neutral-strong .u-font-icon,
   .c-wrapper-2026.c-wrapper-neutral-strong svg {
     color: #006938; }
   .c-wrapper-2026.c-wrapper-neutral-strong .button svg {
     color: #76b72a; }
   .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow {
-    background: #d1d1c9;
-    background: linear-gradient(to top, #006938 50%, #d1d1c9 50%);
+    background: linear-gradient(to top, #006938 50%, 50%);
     background-position: top;
     background-size: 100% 220%; }
     .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow::after {
@@ -2175,14 +1957,6 @@ span.icon--medium {
 .c-five-tips--hg .c-five-tips__blurb:after {
   background-color: #006938; }
 
-.c-five-tips__blurb,
-.c-five-tips__blurb:before,
-.c-five-tips__no,
-.c-five-tips__item:first-of-type .c-five-tips__no:before,
-.c-five-tips__blurb:before,
-.c-five-tips__blurb:after {
-  background-color: #e80068; }
-
 .c-five-tips__blurb {
   position: relative;
   display: flex;
@@ -3097,28 +2871,8 @@ input:checked + label.button {
     background-color: #69a225; }
   input:checked + label.button.heritage-green {
     background-color: #00502a; }
-  input:checked + label.button.energy-pink {
-    background-color: #cf005d; }
-  input:checked + label.button.pink-medium {
-    background-color: #671441; }
-  input:checked + label.button.heritage-berry {
-    background-color: #671441; }
-  input:checked + label.button.pink-dark {
-    background-color: #3d1028; }
-  input:checked + label.button.energy-teal {
-    background-color: #00727d; }
-  input:checked + label.button.teal-medium {
-    background-color: #00727d; }
-  input:checked + label.button.heritage-teal {
-    background-color: #00464a; }
   input:checked + label.button.heritage-purple {
     background-color: #4c266f; }
-  input:checked + label.button.energy-purple {
-    background-color: #8440c0; }
-  input:checked + label.button.dark-mink {
-    background-color: #2b2b1c; }
-  input:checked + label.button.energy-turq {
-    background-color: #008d93; }
   input:checked + label.button.info {
     background-color: #0e213f; }
 
@@ -3865,14 +3619,11 @@ progress::-moz-progress-bar {
   border: 2px solid transparent;
   transition: 0.2s color, 0.2s background-color; }
   .c-123 a.energy-pink {
-    color: #fff;
-    background-color: #e80068; }
+    color: #fff; }
     .c-123 a.energy-pink:hover {
-      background-color: #fff !important;
-      color: #e80068;
-      border-color: #e80068; }
+      background-color: #fff !important; }
       .c-123 a.energy-pink:hover svg path {
-        fill: #e80068 !important; }
+        fill: !important; }
   .c-123 a.energy-green:hover {
     color: #006938; }
   .c-123 a.heritage-green {
@@ -6433,7 +6184,6 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   .c-tag-list a {
     display: block;
     padding: 10px 15px;
-    background-color: #3a3a26;
     color: #fff;
     font-size: 1rem !important; }
     .c-tag-list a.c-tag-list__all-link {
@@ -7808,7 +7558,6 @@ ul[data-suggestions] {
   margin: 0;
   padding: 0; }
   .c-course-related__buttons ul li {
-    background-color: #3a3a26;
     border: 2px solid transparent;
     color: #fff;
     cursor: pointer;
@@ -7826,11 +7575,7 @@ ul[data-suggestions] {
       top: 11px; }
     .c-course-related__buttons ul li:hover {
       background-color: #fff;
-      border: 2px solid #3a3a26;
-      color: #3a3a26; }
-      .c-course-related__buttons ul li:hover a,
-      .c-course-related__buttons ul li:hover strong {
-        color: #3a3a26; }
+      border: 2px solid; }
     .c-course-related__buttons ul li a {
       color: #fff;
       /* [href] just to increase specificity! */ }
@@ -7889,7 +7634,6 @@ svg.icon {
 .c-course-datasheet {
   background-color: #006938; }
   .c-course-datasheet[data-variant] {
-    background-color: #122c54;
     /* Heritage navy */ }
   .c-course-datasheet .cell {
     padding-top: 3rem;
@@ -8240,8 +7984,6 @@ a[data-mode*="Online"] {
   padding: 0 0.4em 0.2em;
   display: inline-block;
   margin: 1em 0; }
-  .c-category-label[data-category="Research Spotlight"] {
-    background-color: #005e63; }
   .c-category-label[data-category="Impact"] {
     background-color: #7c184f; }
 
