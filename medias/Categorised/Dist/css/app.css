@@ -100,6 +100,33 @@
 /*
    University of Stirling brand palette colours
  */
+.u-light-mink {
+  color: #d1d1c9 !important; }
+
+.u-bg-light-mink {
+  background-color: #d1d1c9 !important; }
+
+.bg-light-mink {
+  border-image-source: linear-gradient(#d1d1c9, #d1d1c9); }
+
+.u-medium-mink {
+  color: #5f6350 !important; }
+
+.u-bg-medium-mink {
+  background-color: #5f6350 !important; }
+
+.bg-medium-mink {
+  border-image-source: linear-gradient(#5f6350, #5f6350); }
+
+.u-dark-mink {
+  color: #3a3a26 !important; }
+
+.u-bg-dark-mink {
+  background-color: #3a3a26 !important; }
+
+.bg-dark-mink {
+  border-image-source: linear-gradient(#3a3a26, #3a3a26); }
+
 .u-energy {
   color: #76b72a !important; }
 
@@ -709,14 +736,16 @@ a:has(img):hover {
     background-position: top; }
 
 .c-wrapper-2026.c-wrapper-neutral-strong {
-  border-image-source: linear-gradient(, ); }
+  background-color: #d1d1c9;
+  border-image-source: linear-gradient(#d1d1c9, #d1d1c9); }
   .c-wrapper-2026.c-wrapper-neutral-strong .u-font-icon,
   .c-wrapper-2026.c-wrapper-neutral-strong svg {
     color: #006938; }
   .c-wrapper-2026.c-wrapper-neutral-strong .button svg {
     color: #76b72a; }
   .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow {
-    background: linear-gradient(to top, #006938 50%, 50%);
+    background: #d1d1c9;
+    background: linear-gradient(to top, #006938 50%, #d1d1c9 50%);
     background-position: top;
     background-size: 100% 220%; }
     .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow::after {
@@ -6189,6 +6218,7 @@ body[data-aos-easing="ease-in-out-quart"] [data-aos], [data-aos][data-aos][data-
   .c-tag-list a {
     display: block;
     padding: 10px 15px;
+    background-color: #3a3a26;
     color: #fff;
     font-size: 1rem !important; }
     .c-tag-list a.c-tag-list__all-link {
@@ -7566,6 +7596,7 @@ pre.debug {
   margin: 0;
   padding: 0; }
   .c-course-related__buttons ul li {
+    background-color: #3a3a26;
     border: 2px solid transparent;
     color: #fff;
     cursor: pointer;
@@ -7583,7 +7614,11 @@ pre.debug {
       top: 11px; }
     .c-course-related__buttons ul li:hover {
       background-color: #fff;
-      border: 2px solid; }
+      border: 2px solid #3a3a26;
+      color: #3a3a26; }
+      .c-course-related__buttons ul li:hover a,
+      .c-course-related__buttons ul li:hover strong {
+        color: #3a3a26; }
     .c-course-related__buttons ul li a {
       color: #fff;
       /* [href] just to increase specificity! */ }
