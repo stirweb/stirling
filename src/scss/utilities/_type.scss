@@ -63,6 +63,13 @@
   }
 }
 
+/* Small only over-rides */
+@include breakpoint(small only) {
+  .text-center-small-only {
+    text-align: center;
+  }
+}
+
 .u-text-regular,
 .u-lead,
 .h5, // DEPRECATED
