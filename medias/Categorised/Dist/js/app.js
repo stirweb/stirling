@@ -2678,6 +2678,23 @@ stir.addSearch = (() => {
   });
 })();
 
+(function () {
+  // Promo bar
+  const promoBar = document.querySelector(".promobar-2026");
+  if (promoBar) {
+    // on scroll add class to the promo bar
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 50) {
+        promoBar.classList.add("promobar-2026-fader");
+      }
+
+      if (window.scrollY < 50) {
+        promoBar.classList.remove("promobar-2026-fader");
+      }
+    });
+  }
+})();
+
 // this is the half n half
 // (function () {
 //   if (!window.AOS) return;
@@ -3452,6 +3469,13 @@ stir.didYouMean = (() => {
       e.classList.add("u-hook-bl");
       e.classList.remove("u-hook-tr");
     }
+  });
+})();
+
+(function () {
+  document.querySelectorAll(".c-half-n-half-2026:nth-of-type(odd)").forEach((el) => {
+    el.classList.add("u-hook-top-left");
+    el.classList.remove("u-hook-bottom-right");
   });
 })();
 

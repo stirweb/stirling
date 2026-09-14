@@ -13,26 +13,81 @@
   text-transform: uppercase;
   font-family: FSMaja, serif;
   font-weight: 100;
+  font-size: 1.125rem;
 
-  &::after {
-    content: "";
-    position: absolute;
-    height: 0.6em;
-    bottom: -0.2em;
-    right: 0;
-    left: 0;
-    width: auto;
-    border: 3px solid white;
-    border-width: 0 0 3px 3px;
+  //   &::after {
+  //     content: "";
+  //     position: absolute;
+  //     height: 0.6em;
+  //     bottom: -0.2em;
+  //     right: 0;
+  //     left: 0;
+  //     width: auto;
+  //     border: 3px solid white;
+  //     border-width: 0 0 3px 3px;
+  //   }
+  // }
+
+  // .c-promo-box_category {
+  //   &[data-category="Research Spotlight"] {
+  //     background-color: $heritage-teal;
+  //   }
+
+  //   &[data-category="Impact"] {
+  //     background-color: $heritage-berry;
+  //   }
+}
+
+/*
+promobar-2026 
+*/
+
+.promobar-2026-fader {
+  animation: bg-important2grey 4s forwards;
+  animation-timeline: view(30%);
+}
+
+.promobar-2026-fader svg {
+  animation: text-white2green 4s forwards;
+  animation-timeline: view(30%);
+}
+
+.promobar-2026-fader .button {
+  animation: btn-important2grey 4s forwards;
+  animation-timeline: view(30%);
+}
+
+@keyframes btn-important2grey {
+  from {
+    background: none;
+    background-color: $heritage-yellow;
+    border-color: $heritage-yellow;
+  }
+  to {
+    border-color: #9e9d9d;
+    background: none;
+    background-color: #dcdbdb;
   }
 }
 
-.c-promo-box_category {
-  &[data-category="Research Spotlight"] {
-    background-color: $heritage-teal;
+@keyframes text-white2green {
+  from {
+    color: #fff;
   }
+  to {
+    color: $heritage-green;
+  }
+}
 
-  &[data-category="Impact"] {
-    background-color: $heritage-berry;
+@keyframes bg-important2grey {
+  from {
+    background-color: $heritage-purple;
+    border-image-source: linear-gradient($heritage-purple, $heritage-purple);
+    color: $white;
+  }
+  to {
+    background-color: #fbfbfb;
+    border-image-source: linear-gradient(#fbfbfb, #fbfbfb);
+    color: $black;
   }
 }
