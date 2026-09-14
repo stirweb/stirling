@@ -348,63 +348,63 @@
   }
 }
 
-.c-course-related__buttons {
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    li {
-      background-color: $dark-mink;
-      border: 2px solid transparent;
-      color: $white;
-      cursor: pointer;
-      padding: 11px 15px;
-      margin: 0 0 12px 0;
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-      &:after {
-        content: "\e97b";
-        font-family: "uos";
-        position: absolute;
-        right: 20px;
-        top: 11px;
-      }
-
-      &:hover {
-        background-color: $white;
-        border: 2px solid $dark-mink;
-        color: $dark-mink;
-
-        a,
-        strong {
-          color: $dark-mink;
-        }
-      }
-
-      a {
-        color: $white;
-
-        /* [href] just to increase specificity! */
-        &[href] {
-          border: 0;
-        }
-
-        + strong {
-          position: absolute;
-          right: 60px;
-        }
-
-        &:focus {
-          outline-color: $white !important; /* ! because `a:focus` is !*/
-        }
-      }
-    }
-  }
-}
+// .c-course-related__buttons {
+//   ul {
+//     list-style: none;
+//     margin: 0;
+//     padding: 0;
+// 
+//     li {
+//       background-color: $dark-mink;
+//       border: 2px solid transparent;
+//       color: $white;
+//       cursor: pointer;
+//       padding: 11px 15px;
+//       margin: 0 0 12px 0;
+//       position: relative;
+//       display: flex;
+//       justify-content: space-between;
+//       transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+// 
+//       &:after {
+//         content: "\e97b";
+//         font-family: "uos";
+//         position: absolute;
+//         right: 20px;
+//         top: 11px;
+//       }
+// 
+//       &:hover {
+//         background-color: $white;
+//         border: 2px solid $dark-mink;
+//         color: $dark-mink;
+// 
+//         a,
+//         strong {
+//           color: $dark-mink;
+//         }
+//       }
+// 
+//       a {
+//         color: $white;
+// 
+//         /* [href] just to increase specificity! */
+//         &[href] {
+//           border: 0;
+//         }
+// 
+//         + strong {
+//           position: absolute;
+//           right: 60px;
+//         }
+// 
+//         &:focus {
+//           outline-color: $white !important; /* ! because `a:focus` is !*/
+//         }
+//       }
+//     }
+//   }
+// }
 
 // You may also be interested in
 // .c-course-related {
@@ -776,24 +776,24 @@ a[data-mode*="Online"] {
 
 /* M E D I A   Q U E R I E S */
 
-@media screen and (max-width: 63.9375em) {
-  /** this media query is for screens up to 1024px
-	 * TODO: refactor this to mobile-first?
-	 **/
-  .c-course-related__buttons {
-    ul {
-      li {
-        flex-direction: column;
-
-        a + strong {
-          position: relative;
-          right: 0;
-          width: 100%;
-        }
-      }
-    }
-  }
-}
+// @media screen and (max-width: 63.9375em) {
+//   /** this media query is for screens up to 1024px
+// 	 * TODO: refactor this to mobile-first?
+// 	 **/
+//   .c-course-related__buttons {
+//     ul {
+//       li {
+//         flex-direction: column;
+// 
+//         a + strong {
+//           position: relative;
+//           right: 0;
+//           width: 100%;
+//         }
+//       }
+//     }
+//   }
+// }
 @media screen and (min-width: 640px) {
   [data-module-modal] {
     max-width: 98vw;
@@ -866,16 +866,16 @@ a[data-mode*="Online"] {
     }
   }
 
-  .c-course-related__buttons {
-    ul {
-      li {
-        a {
-          /* stop long names overlapping the UCAS code */
-          width: 65%;
-        }
-      }
-    }
-  }
+  // .c-course-related__buttons {
+  //   ul {
+  //     li {
+  //       a {
+  //         /* stop long names overlapping the UCAS code */
+  //         width: 65%;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 @media screen and #{breakpoint(medium up)} {
