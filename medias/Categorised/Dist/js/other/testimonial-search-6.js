@@ -9,7 +9,7 @@
                   ${l.degree?`<span class="info">${l.degree}</span>`:""}
                   ${i.country||l.degree?"</cite>":""}
                   ${i.snippet?`<blockquote class="u-border-none u-my-2 u-black u-p-0 u-quote u-text-regular">${i.snippet}</blockquote>`:""}
-                  <a href="${e.url}" class="c-link">View ${a=t.trim(),"s"===a.slice(-1)?a+"’":a+"’s"} story</a>
+                  <a href="${e.url}">View ${a=t.trim(),"s"===a.slice(-1)?a+"’":a+"’s"} story</a>
                 </div> 
             </div> 
           <!-- End testimonial result -->`},u=(e,t,r,a)=>{n=a,s=r.mediaquery;var s,i,n=(i=t)/d(n,s)%1==0||0===i;return`
