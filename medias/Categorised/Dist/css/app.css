@@ -7591,46 +7591,6 @@ pre.debug {
 .c-course-testimonial__wrapper .c-responsive-embed {
   background: #000; }
 
-.c-course-related__buttons ul {
-  list-style: none;
-  margin: 0;
-  padding: 0; }
-  .c-course-related__buttons ul li {
-    background-color: #3a3a26;
-    border: 2px solid transparent;
-    color: #fff;
-    cursor: pointer;
-    padding: 11px 15px;
-    margin: 0 0 12px 0;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
-    .c-course-related__buttons ul li:after {
-      content: "\e97b";
-      font-family: "uos";
-      position: absolute;
-      right: 20px;
-      top: 11px; }
-    .c-course-related__buttons ul li:hover {
-      background-color: #fff;
-      border: 2px solid #3a3a26;
-      color: #3a3a26; }
-      .c-course-related__buttons ul li:hover a,
-      .c-course-related__buttons ul li:hover strong {
-        color: #3a3a26; }
-    .c-course-related__buttons ul li a {
-      color: #fff;
-      /* [href] just to increase specificity! */ }
-      .c-course-related__buttons ul li a[href] {
-        border: 0; }
-      .c-course-related__buttons ul li a + strong {
-        position: absolute;
-        right: 60px; }
-      .c-course-related__buttons ul li a:focus {
-        outline-color: #fff !important;
-        /* ! because `a:focus` is !*/ }
-
 .c-whats-next {
   padding-bottom: 80px;
   padding-top: 40px; }
@@ -7887,17 +7847,6 @@ a[data-mode*="Online"] {
     margin-right: 1rem; }
 
 /* M E D I A   Q U E R I E S */
-@media screen and (max-width: 63.9375em) {
-  /** this media query is for screens up to 1024px
-	 * TODO: refactor this to mobile-first?
-	 **/
-  .c-course-related__buttons ul li {
-    flex-direction: column; }
-    .c-course-related__buttons ul li a + strong {
-      position: relative;
-      right: 0;
-      width: 100%; } }
-
 @media screen and (min-width: 640px) {
   [data-module-modal] {
     max-width: 98vw;
@@ -7949,10 +7898,7 @@ a[data-mode*="Online"] {
     padding: 40px 0; }
     .c-course-ctas nav a:not(.button) {
       line-height: 1;
-      margin: 0; }
-  .c-course-related__buttons ul li a {
-    /* stop long names overlapping the UCAS code */
-    width: 65%; } }
+      margin: 0; } }
 
 @media screen and (min-width: 40em) {
   .c-course-title-sticky-menu__buttons .button span.show-for-medium {
