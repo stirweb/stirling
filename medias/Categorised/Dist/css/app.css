@@ -4930,7 +4930,8 @@ li.c-colour-swatch__pms:before {
     position: relative; }
     .c-cta-listing li a {
       position: relative;
-      border-bottom: 0 !important; }
+      border-bottom: 0 !important;
+      text-decoration: none; }
       .c-cta-listing li a:after {
         content: var(--icon-chevron-right);
         position: relative;
