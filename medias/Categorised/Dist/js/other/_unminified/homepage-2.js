@@ -4,44 +4,44 @@
 
 */
 
-(function () {
-  var elem;
-  if ((elem = document.querySelector("[data-videoId]"))) {
-    elem.addEventListener("ended", function (e) {
-      // check elem has a parent before trying to remove it from the DOM
-      // just in case this gets called more than once!
-      if (!elem.parentNode) return;
-
-      if ((fallback = elem.getAttribute("data-fallback-html"))) {
-        //elem.style.display = 'none';
-        /* var suoty = document.createElement('div');
-                var suotyH1 = document.createElement('h1');
-                var badge = new Image();
-                badge.src = 'https://www.stir.ac.uk/webcomponents/dist/images/accreditations/sport-accolade-times-gug.svg';
-                badge.alt = 'Good University Guide 2020 Sports University of the Year';
-                badge.classList.add('portrait')
-                suoty.classList.add('show-for-medium');
-                suoty.classList.add('masthead_suoty');
-                suotyH1.innerHTML = 'Sports University<br>of&nbsp;the&nbsp;Year <span>2020</span>'
-                suoty.appendChild(suotyH1);
-                suoty.appendChild(badge);
-                elem.insertAdjacentElement("beforebegin", suoty);*/
-        //elem.parentNode.removeChild(elem);
-      } else if ((fallback = elem.getAttribute("data-fallback-image"))) {
-        var image = new Image();
-        (function (elem) {
-          image.addEventListener("load", function (event) {
-            elem.insertAdjacentElement("beforebegin", image);
-            elem.parentNode.removeChild(elem);
-          });
-        })(elem);
-        image.src = fallback;
-      }
-
-      // if neither; do nothing!
-    });
-  }
-})();
+// (function () {
+//   var elem;
+//   if ((elem = document.querySelector("[data-videoId]"))) {
+//     elem.addEventListener("ended", function (e) {
+//       // check elem has a parent before trying to remove it from the DOM
+//       // just in case this gets called more than once!
+//       if (!elem.parentNode) return;
+// 
+//       if ((fallback = elem.getAttribute("data-fallback-html"))) {
+//         //elem.style.display = 'none';
+//         /* var suoty = document.createElement('div');
+//                 var suotyH1 = document.createElement('h1');
+//                 var badge = new Image();
+//                 badge.src = 'https://www.stir.ac.uk/webcomponents/dist/images/accreditations/sport-accolade-times-gug.svg';
+//                 badge.alt = 'Good University Guide 2020 Sports University of the Year';
+//                 badge.classList.add('portrait')
+//                 suoty.classList.add('show-for-medium');
+//                 suoty.classList.add('masthead_suoty');
+//                 suotyH1.innerHTML = 'Sports University<br>of&nbsp;the&nbsp;Year <span>2020</span>'
+//                 suoty.appendChild(suotyH1);
+//                 suoty.appendChild(badge);
+//                 elem.insertAdjacentElement("beforebegin", suoty);*/
+//         //elem.parentNode.removeChild(elem);
+//       } else if ((fallback = elem.getAttribute("data-fallback-image"))) {
+//         var image = new Image();
+//         (function (elem) {
+//           image.addEventListener("load", function (event) {
+//             elem.insertAdjacentElement("beforebegin", image);
+//             elem.parentNode.removeChild(elem);
+//           });
+//         })(elem);
+//         image.src = fallback;
+//       }
+// 
+//       // if neither; do nothing!
+//     });
+//   }
+// })();
 
 /*
  *
@@ -132,7 +132,7 @@ var stir = stir || {};
     const news1 = newsItems1[0] ? newsItems1[0] : { id: 0 };
     const news2 = newsItems2[0] ? newsItems2[0] : { id: 0 };
 
-    // Form a single array ordered by Primary, Seconardy, Other Primaries, Other Secondaries
+    // Form a single array ordered by Primary, Secondary, Other Primaries, Other Secondaries
     const newsComined = [...[news1, news2], ...getAdditionalNews(newsItems1, news1.id, news2.id), ...getAdditionalNews(newsItems2, news1.id, news2.id)];
 
     const gridClasses = noOfNews === 3 ? "medium-12 " : "large-8 medium-6 ";
@@ -200,7 +200,7 @@ var stir = stir || {};
               <h2>Events</h2>
               <span class="flex-container u-gap-16 align-middle">${renderCTA("/events/", "See all events")}</span>
           </div>
-          <div class="grid-x " >${events}</div>
+          <div class="grid-x">${events}</div>
       </div>`;
   });
 
@@ -217,13 +217,13 @@ var stir = stir || {};
   const renderNews = stir.curry((noOfNews, classes, news) => {
     return `
         <!-- All News -->
-        <div class="cell small-12 ${classes}" >
+        <div class="cell small-12 ${classes}">
             <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-1 u-items-start-small">
                 <h2>News</h2>
                 <span class="u-flex1 flex-container u-gap-16 align-middle">${renderCTA("/news/", "See all articles")}</span>
                 ${noOfNews === 3 ? renderCTA("/events/", "See our events") : ``}
             </div>
-            <div class="grid-x" >${news}</div>
+            <div class="grid-x">${news}</div>
         </div>`;
   });
 
@@ -236,9 +236,11 @@ var stir = stir || {};
    * @returns {String} - the HTML for the news or event item
    */
   const renderItem = stir.curry((classes, node, item) => {
+    const placeholder = `<t4 type="media" id="207798" formatter="path/*" />`;
     return `
       <${node} class="small-12 cell ${classes}">
-        <div class="u-aspect-ratio-16-9 "><a href="${item.url}"><img class=" u-object-cover" src="${item.image}" alt="${item.imagealt}" loading="lazy"></a></div>
+        <div class="u-aspect-ratio-16-9">
+          <a href="${item.url}"><img class=" u-object-cover" src="${item.image||placeholder}" alt="${item.imagealt|""}" loading="lazy"></a></div>
         <div class="u-flex u-gap-8 cta-link u-my-1">
             <span>
               <strong><a href="${item.url}">${item.title}</a></strong>
