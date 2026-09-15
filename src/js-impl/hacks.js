@@ -22,6 +22,9 @@
   document.querySelectorAll(".c-half-n-half-2026:nth-of-type(odd)").forEach((el) => {
     el.classList.add("u-hook-top-left");
     el.classList.remove("u-hook-bottom-right");
+
+    el.classList.add("u-margin-top");
+    el.classList.remove("u-margin-bottom");
   });
 })();
 
