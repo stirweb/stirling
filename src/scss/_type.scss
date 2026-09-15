@@ -112,7 +112,11 @@ li.no-style {
 main li a {
   text-decoration: underline;
   text-underline-offset: 5px;
-  text-decoration-color: $energy-green;
+  text-decoration-color: $heritage-green;
+
+  &:hover {
+    text-decoration-color: $energy-green;
+  }
 }
 
 p {

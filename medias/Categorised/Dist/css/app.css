@@ -1773,7 +1773,9 @@ li.no-style {
 main li a {
   text-decoration: underline;
   text-underline-offset: 5px;
-  text-decoration-color: #76b72a; }
+  text-decoration-color: #006938; }
+  main li a:hover {
+    text-decoration-color: #76b72a; }
 
 p {
   margin-bottom: 1rem;
