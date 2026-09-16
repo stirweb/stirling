@@ -2262,7 +2262,7 @@ h3.c-tab-accord-group-head {
   .u-white--all .stir-accordion h6 > button:focus,
   .u-white--all .stir-accordion > p > button:focus,
   .u-white--all .stir-accordion h3 > button:focus {
-    outline: 1px solid #fff !important; }
+    outline: 2px solid #fff !important; }
   .u-white--all .stir-accordion h2 a:before,
   .u-white--all .stir-accordion h4 a:before,
   .u-white--all .stir-accordion h5 a:before,
