@@ -1,57 +1,59 @@
 /**
- * W E L C O M E  t o   t h e  M E N U   A. P. I. 
+ * W E L C O M E  t o   t h e  M E N U   A. P. I.
  * "menu API" for building course lists
  * Started Friday 9 May 2025
  * r.w.morrison@stir.ac.uk
  */
 
-(function() {
+(function () {
+  const debug = UoS_env.name !== "prod" ? true : false;
+  const el = document.querySelector("main#content");
+  const host = window.location.hostname;
+  const path = "/data/pd-akari/";
+  const ppth = "terminalfour/preview/1/en/35030"; // dev
+  const query = "menu";
+  const spec = "dev" === UoS_env.name ? "course.html" : '<t4 type="navigation" name="Helper: Path to programme specification" id="5300" />';
 
-	const debug = UoS_env.name !== "prod" ? true : false;
-	const el = document.querySelector("main#content");
-	const host = window.location.hostname;
-	const path = '/data/pd-akari/';
-	const ppth = 'terminalfour/preview/1/en/35030'; // dev
-	const query = 'menu';
-	const spec = "dev"===UoS_env.name?'course.html':'<t4 type="navigation" name="Helper: Path to programme specification" id="5300" />';
+  const apiUrl = (() => {
+    switch (UoS_env.name) {
+      case "dev":
+        return "/pages/data/akari/menu.json";
+      case "qa":
+        return "/stirling/pages/data/akari/menu.json";
+      case "preview":
+      case "appdev-preview":
+        return `https://${host}/${ppth}?${query}`;
+      case "pub":
+      case "prod":
+        return `https://${host}${path}?${query}`;
+    }
+  })();
 
-	const apiUrl = (()=>{
-		switch (UoS_env.name) {
-			case "dev":
-				return '/pages/data/akari/menu.json';
-			case "qa":
-				return '/stirling/pages/data/akari/menu.json';
-			case "preview":
-			case "appdev-preview":
-				return `https://${host}/${ppth}?${query}`;
-			case "pub":
-			case "prod":
-				return `https://${host}${path}?${query}`;
+  debug && console.info("[Menu API] apiUrl:", apiUrl);
 
-		}
-	})();
-	
-	debug && console.info('[Menu API] apiUrl:',apiUrl);
-
-	const templates = {
-		menu: data => { 
-			if(!data || !data.academicYears) return;
-			//console.info(Object.keys(data.academicYears).map(year => Object.keys(data.academicYears[year].faculties).map(faculty => Object.keys(data.academicYears[year].faculties[faculty].divisions).map(division => data.academicYears[year].faculties[faculty].divisions[division].routes))));
-			return `
+  const templates = {
+    menu: (data) => {
+      if (!data || !data.academicYears) return;
+      //console.info(Object.keys(data.academicYears).map(year => Object.keys(data.academicYears[year].faculties).map(faculty => Object.keys(data.academicYears[year].faculties[faculty].divisions).map(division => data.academicYears[year].faculties[faculty].divisions[division].routes))));
+      return `
 				<div class="grid-container">
 					<div class="grid-x">
 						<div class="cell u-mb-2">
-							<p>${Object.keys(data.academicYears).map(year => {
-								const faculties = Object.keys(data.academicYears[year].faculties);
-								return `<details class=u-accordion>
+							<p>${Object.keys(data.academicYears)
+                .map((year) => {
+                  const faculties = Object.keys(data.academicYears[year].faculties);
+                  return `<details class=u-accordion>
 									<summary>${year}</summary>
 									<div class=u-px-1>
-										${faculties.map(faculty => {
-											const divisions = Object.keys(data.academicYears[year].faculties[faculty].divisions);
-											return `<details>
+										${faculties
+                      .map((faculty) => {
+                        const divisions = Object.keys(data.academicYears[year].faculties[faculty].divisions);
+                        return `<details>
 											<summary>${faculty}</summary>
 											<div class=u-px-1>
-												${divisions.map(division => `
+												${divisions
+                          .map(
+                            (division) => `
 												<details>
 													<summary>${division}</summary>
 													<div class=u-px-1>
@@ -63,7 +65,9 @@
 															</thead>
 															<caption>${faculty} (${division}) routes for ${year}:</caption>
 															<tbody>
-															${data.academicYears[year].faculties[faculty].divisions[division].routes.map(route => `
+															${data.academicYears[year].faculties[faculty].divisions[division].routes
+                                .map(
+                                  (route) => `
 															<tr>
 																<td><small>${route.routeCode}</small></td>
 																<td><a href="${spec}?session=${year}&route=${route.routeCode}&semester=AUT" target=_blank>${route.routeName}</a></td>
@@ -74,31 +78,37 @@
 																${route.partnerInstitution.join(", ")}
 																</td>
 															</tr>
-														`).join('')}
+														`,
+                                )
+                                .join("")}
 															</tbody>
 														</table>
 													</div>
 												</details>
-												`).join('')}
+												`,
+                          )
+                          .join("")}
 											</div>
 										</details>`;
-									}).join('')}
+                      })
+                      .join("")}
 									</div>
 								</details>`;
-							}).join('')}</p>
+                })
+                .join("")}</p>
 						</div>
 					</div>
-				</div>`;}
-	};
-	
-	if(debug) {
-		const temp = document.getElementById('debug');
-		temp && temp.classList && temp.classList.add("cell","u-bg-heritage-green--10","u-heritage-green-line-left","u-p-1","u-mb-2");
-		temp && (temp.innerText = `💡Using data from: ${apiUrl}`);
-	}
+				</div>`;
+    },
+  };
 
-	fetch(apiUrl)
-		.then( (response) => response.json() )
-		.then( (data) => el.insertAdjacentHTML("beforeend",templates.menu(data)) );
+  if (debug) {
+    const temp = document.getElementById("debug");
+    temp && temp.classList && temp.classList.add("cell", "u-bg-heritage-green--10", "u-heritage-green-line-left", "u-p-1", "u-mb-2");
+    temp && (temp.innerText = `💡Using data from: ${apiUrl}`);
+  }
 
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => el.insertAdjacentHTML("beforeend", templates.menu(data)));
 })();

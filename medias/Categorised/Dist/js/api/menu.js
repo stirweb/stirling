@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 !function(){var e="prod"!==UoS_env.name;const a=document.querySelector("main#content"),t=window.location.hostname,r="dev"===UoS_env.name?"course.html":'<t4 type="navigation" name="Helper: Path to programme specification" id="5300" />';var s=(()=>{switch(UoS_env.name){case"dev":return"/pages/data/akari/menu.json";case"qa":return"/stirling/pages/data/akari/menu.json";case"preview":case"appdev-preview":return`https://${t}/terminalfour/preview/1/en/35030?menu`;case"pub":case"prod":return`https://${t}/data/pd-akari/?menu`}})();e&&console.info("[Menu API] apiUrl:",s);const n={menu:s=>{if(s&&s.academicYears)return`
 				<div class="grid-container">
 					<div class="grid-x">
 						<div class="cell u-mb-2">
-=======
-!function(){const a=document.querySelector("main#content > .grid-container"),e=window.location.hostname,i="dev"===UoS_env.name?"course.html":'<t4 type="navigation" name="Helper: Path to programme specification" id="5300" />';var t=(()=>{switch(UoS_env.name){case"dev":return"/pages/data/akari/menu.json";case"qa":return"/stirling/pages/data/akari/menu.json";case"preview":case"appdev-preview":return`https://${e}/terminalfour/preview/1/en/35030?menu`;case"pub":return`https://${e}/data/pd-api-dev/?menu`}})();const s={menu:s=>{if(console.info(s),s&&s.academicYears)return console.info(Object.keys(s.academicYears).map(t=>Object.keys(s.academicYears[t].faculties).map(a=>Object.keys(s.academicYears[t].faculties[a].divisions).map(e=>s.academicYears[t].faculties[a].divisions[e].routes)))),`
-				<div class="grid-container u-px-1">
-					<div class="grid-x">
-						<div class=cell>
->>>>>>> brand-2025
 							<p>${Object.keys(s.academicYears).map(t=>{var e=Object.keys(s.academicYears[t].faculties);return`<details class=u-accordion>
 									<summary>${t}</summary>
 									<div class=u-px-1>
@@ -22,7 +15,6 @@
 														<table>
 															<thead>
 																<tr>
-<<<<<<< HEAD
 																	<th>Route code</th><th>Course name</th><th>Partner institution</th>
 																</tr>
 															</thead>
@@ -41,19 +33,6 @@
 															</tr>
 														`).join("")}
 															</tbody>
-=======
-																	<th>Route code</th><th>Course name</th><th>More information</th>
-																</tr>
-															</thead>
-															<caption>${a} (${e}) routes for ${t}:</caption>
-															${s.academicYears[t].faculties[a].divisions[e].routes.map(e=>`
-															<tr><td><small>${e.routeCode}</small></td><td>${e.routeName}</td><td>
-																<a href="${i}?session=${t}&route=${e.routeCode}&semester=AUT" target=_blank>Autumn</a> | 
-																<a href="${i}?session=${t}&route=${e.routeCode}&semester=SPR" target=_blank>Spring</a> | 
-																<a href="${i}?session=${t}&route=${e.routeCode}&semester=SUM" target=_blank>Summer</a>
-															</td></tr>
-														`).join("")}
->>>>>>> brand-2025
 														</table>
 													</div>
 												</details>
@@ -64,8 +43,4 @@
 								</details>`}).join("")}</p>
 						</div>
 					</div>
-<<<<<<< HEAD
 				</div>`}};e&&((e=document.getElementById("debug"))&&e.classList&&e.classList.add("cell","u-bg-heritage-green--10","u-heritage-green-line-left","u-p-1","u-mb-2"),e)&&(e.innerText="💡Using data from: "+s),fetch(s).then(e=>e.json()).then(e=>a.insertAdjacentHTML("beforeend",n.menu(e)))}();
-=======
-				</div>`}};fetch(t).then(e=>e.json()).then(e=>a.insertAdjacentHTML("beforeend",s.menu(e),console.info(e)))}();
->>>>>>> brand-2025
