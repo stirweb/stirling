@@ -1,7 +1,7 @@
 (function () {
   /*
-    EVENT LISTENERS AND ACTIONS
-  */
+   *  EVENT LISTENERS AND ACTIONS
+   */
   function addEventListeners() {
     /*  Barchart animation trigger */
     function onIntersection(entries, opts) {
@@ -43,30 +43,51 @@
     });
   }
 
-  /* 
-
-        HELPERS
-
-    */
+  /*
+   *
+   *   HELPERS
+   *
+   */
 
   const upperCaseFirstWord = (s) => s[0].toUpperCase() + s.slice(1);
 
-  /* 
+  /*
+   * Function: removeDuplicates
+   * @description: Removes duplicate items from an array.
+   * @param {Array} arr - The array from which duplicates should be removed.
+   * @returns {Array} - A new array with duplicates removed.
+   */
+  const removeDuplicates = (arr) => arr.filter((item, index) => arr.indexOf(item) === index);
 
-        RENDERERS
+  /*
+   *
+   * RENDERERS
+   *
+   */
 
-    */
-
-  /* renderCourseBackBtn */
+  /*
+   *  Function: renderCourseBackBtn
+   *  @description: Renders a back button to the course page if the course parameter is present in the URL.
+   *  @param {string} level - The level of the course (e.g., "pg", "ug").
+   *  @returns {string} - HTML string for the back button or an empty string if no course parameter is present.
+   */
   const renderCourseBackBtn = (level) => {
     const params = new URLSearchParams(document.location.search);
     if (!params.get("course")) return ``;
 
-    const url = stir.isNumeric(params.get("course")) ? `/terminalfour/preview/1/en/${params.get("course")}` : `/courses/${level.replace("pg", "pg-taught")}/${params.get("course")}`;
+    const url = stir.isNumeric(params.get("course"))
+      ? `/terminalfour/preview/1/en/${params.get("course")}`
+      : `/courses/${level.replace("pg", "pg-taught")}/${params.get("course")}`;
     return `<a href="${url}#panel_1_3" id="backtocourseBtn" class="button u-m-0 heritage-green button--back ">Back to course</a>`;
   };
 
-  /* renderDeliverablesTotal */
+  /*
+   * Function: renderDeliverablesTotal
+   * @description: Renders the total workload for deliverables.
+   * @param {number} hours - The total workload in hours.
+   * @param {Array} colourPack - An array containing colour information.
+   * @returns {string} - HTML string for the total workload display.
+   */
   const renderDeliverablesTotal = (hours, colourPack) => {
     return `<div class="u-bg-${colourPack[0].second}--10 u-p-tiny u-p-1 u-text-regular u-mt-1 flex-container u-mb-2">
                 <strong class="u-flex1">Total workload</strong>
@@ -74,27 +95,55 @@
             </div>`;
   };
 
-  /* renderDeliverables */
+  /*
+   * Function: renderDeliverables
+   * @description: Renders individual deliverables with a bar chart representation.
+   * @param {Array} colourPack - An array containing colour information.
+   * @param {number} total - The total workload in hours.
+   * @param {Object} deliverable - An object containing deliverable information (type, hours, typekey, label).
+   * @returns {string} - HTML string for the deliverable display.
+   */
   const renderDeliverables = stir.curry((colourPack, total, { type, hours, typekey, label }) => {
     return typekey === "total"
       ? renderDeliverablesTotal(hours, colourPack)
       : `
         <div>
             <span class="u-inline-block u-p-tiny u-px-1">${label + `: ` + upperCaseFirstWord(type)}</span>
-            <div class="barchart u-relative u-flex align-middle u-overflow-hidden u-bg-medium-grey" data-value="${hours}" data-max="${total}" data-unit="" data-colour="${colourPack[0].second}"></div>
+            <div class="u-flex">
+              <div class="barchart u-relative u-flex u-flex1 align-middle u-overflow-hidden u-bg-medium-grey" data-value="${hours}" data-max="${total}" data-unit="" data-colour="${colourPack[0].second}"></div>
+              <div class="u-pl-2 text-lg u-font-primary u-line-height-1 u-${colourPack[0].second} u-top--16 u-relative"  >${hours} hours</div>
+            </div>
         </div>`;
   });
 
-  /* renderDeliveries */
+  /*
+   *  Function: renderDeliveries
+   *  @description: Renders the deliveries section with a specified width.
+   *  @param {string} width - The width of the deliveries section (e.g., "12", "6").
+   *  @param {string} deliveries - The HTML content for the deliveries.
+   *  @returns {string} - HTML string for the deliveries section or an empty string if no deliveries are provided.
+   */
   const renderDeliveries = (width, deliveries) => (!deliveries ? `` : `<div class="cell large-${width} u-mb-1">${deliveries}</div>`);
 
-  /* renderTeachingDeliveries */
+  /*
+   * Function: renderTeachingDeliveries
+   * @description: Renders the teaching deliveries section, displaying either the provided deliveries or a fallback message if no deliveries are available.
+   * @param {Array} deliveries - An array of delivery items to be rendered.
+   * @param {string} deliveriesFallback - A fallback message to display if no deliveries are available.
+   * @returns {string} - HTML string for the teaching deliveries section.
+   */
   const renderTeachingDeliveries = (deliveries, deliveriesFallback) => {
     const deliveriesHtml = !deliveries.length ? `<div class="cell ">${deliveriesFallback}</div>` : renderDeliveries(`12`, deliveries);
     return `${deliveriesHtml}`;
   };
 
-  /* renderAssessmentItem */
+  /*
+   * Function: renderAssessmentItem
+   * @description: Renders an individual assessment item with a bar chart representation.
+   * @param {Array} colourPack - An array containing colour information.
+   * @param {Object} assessment - An object containing assessment information (name, value).
+   * @returns {string} - HTML string for the assessment item display or an empty string if the value is 0.
+   */
   const renderAssessmentItem = stir.curry((colourPack, { name, value }) => {
     return Number(value) === 0
       ? ``
@@ -107,7 +156,24 @@
         </div>`;
   });
 
-  /* renderAssessments */
+  /*
+   * Function: renderAssessment
+   * @description: Renders an individual assessment item with a specified width.
+   * @param {string} width - The width of the assessment item (e.g., "12", "6").
+   * @param {string} item - The HTML content for the assessment item.
+   * @returns {string} - HTML string for the assessment item or an empty string if no item is provided.
+   */
+
+  const renderAssessment = stir.curry((width, item) => (!item ? `` : `<div class="cell large-${width} u-mb-1">${item}</div>`));
+
+  /*
+   * Function: renderAssessments
+   * @description: Renders the assessments section with a specified colour pack and length.
+   * @param {Array} colourPack - An array containing colour information.
+   * @param {number} length - The number of assessments to be rendered.
+   * @param {Object} item - An object containing assessment information (tab, summary).
+   * @returns {string} - HTML string for the assessments section.
+   */
   const renderAssessments = stir.curry((colourPack, length, item) => {
     const renderAssessmentItemCurry = renderAssessmentItem(colourPack);
     const header = length > 1 ? `<h4 class="u-mt-0">${item.tab}</h4>` : ``;
@@ -115,9 +181,14 @@
     return `${header}<p>${item.summary.map(renderAssessmentItemCurry).join(``)}</p>`;
   });
 
-  const renderAssessment = stir.curry((width, item) => (!item ? `` : `<div class="cell large-${width} u-mb-1">${item}</div>`));
-
-  /* renderTeachingAssessment */
+  /*
+   * Function: renderTeachingAssessment
+   * @description: Renders the teaching assessments section, displaying either the provided assessments or a fallback message if no assessments are available.
+   * @param {Array} assessments - An array of assessment items to be rendered.
+   * @param {string} multipleAssessments - A message to display if there are multiple assessments.
+   * @param {string} assessmentFallback - A fallback message to display if no assessments are available.
+   * @returns {string} - HTML string for the teaching assessments section.
+   */
   const renderTeachingAssessments = (assessments, multipleAssessments, assessmentFallback) => {
     const assessmentWidth = assessments.length < 2 ? `12` : `6`;
     const renderAssessmentCurry = renderAssessment(assessmentWidth);
@@ -126,47 +197,35 @@
     return `${assessments.length > 1 ? multipleAssessments : ``} ${assessmentHtml}`;
   };
 
-  // const renderDebugDataItem = (item) => {
-  //   if (item.category) {
-  //     return `<div class="flex-container u-border-bottom-solid u-p-tiny"><span class="u-flex1">${item.label} (${item.category})</span><span>${item.percent}%</span></div>`;
-  //   }
-  //   return `<div class="flex-container u-border-bottom-solid u-p-tiny"><span class="u-flex1">${item.label} (hours)</span><span>${item.hours}</span></div>`;
-  // };
-
-  // const renderDebug = (total, sum, unit, data) => {
-  //   return `<div class="u-border-solid u-p-1" style="color:#d51212">
-  //             <p><strong>Error with the data</strong></p>
-  //             <p>Reported total: ${total} ${unit}<br>
-  //             Actual sum: ${sum} </p>
-  //             ${data.map(renderDebugDataItem).join(``)}
-  //           </div>`;
-  // };
-
   /*
-        INPUT / OUTPUT EVENTS (SIDE EFFECTS!!)
-  */
+   *
+   * INPUT / OUTPUT EVENTS (SIDE EFFECTS!!)
+   *
+   */
 
   const setDOMContent = stir.curry((node, html) => {
     stir.setHTML(node, html);
     return true;
   });
 
-  /* 
-  
-      HELPERS
-
-  */
+  /*
+   *
+   *  DATA PROCESSING
+   *
+   */
 
   /*
-      DATA PROCESSING
-  */
-
+   * Function: doDeliveries
+   * @description: Processes an array of delivery items, calculating the total workload and rendering the valid deliveries.
+   * @param {Array} deliveries - An array of delivery items to be processed.
+   * @param {Array} colourPack - An array containing colour information.
+   * @returns {string} - HTML string for the rendered deliveries or an empty string if the total workload does not match the sum of individual workloads.
+   */
   const doDeliveries = (deliveries, colourPack) => {
     const deliveriesTotalItem = deliveries.filter((item) => item.typekey === "total");
     const deliveriesTotalValue = deliveriesTotalItem.length ? deliveriesTotalItem[0].hours : null;
 
     const renderDeliverablesCurry = renderDeliverables(colourPack, deliveriesTotalValue);
-    //const deliveriesTotalFiltered = deliveries.filter((item) => item.typekey !== "total");
 
     const total = Number(deliveriesTotalValue);
     const sum = deliveries
@@ -176,16 +235,16 @@
         return accumulator + currentValue;
       }, 0);
 
-    //console.log(deliveries);
-    //console.log(sum);
-
+    // Only render the deliveries data if the total matches the sum of individual workloads, otherwise return an empty string.
     return Number(total) !== sum ? `` : deliveries.map(renderDeliverablesCurry).join(``);
-    //return Number(total) !== sum ? renderDebug(total, sum, `Hours (Total Study Time)`, deliveriesTotalFiltered) : deliveries.map(renderDeliverablesCurry).join(``);
   };
 
-  const removeDuplicates = (arr) => arr.filter((item, index) => arr.indexOf(item) === index);
-
-  /* doAssessmentItem: Return a duplicate of item with aggregated values added */
+  /*
+   * Function: doAssessmentItem
+   * @description: Processes an individual assessment item, calculating the sum of percentages and summarizing the assessments by category.
+   * @param {Object} item - An object containing assessment information (tab, tabAssessments).
+   * @returns {Object} - An object containing the sum of percentages, a summary of assessments by category, and the original tab and tabAssessments.
+   */
   const doAssessmentItem = (item) => {
     // Hide International by making all aggregated values 0 - Quick hack will do for now
     if (item.tab === "International") {
@@ -227,11 +286,16 @@
     };
   };
 
-  /* doAssessments */
+  /*
+   * Function: doAssessments
+   * @description: Processes an array of assessment items, filtering out those that do not sum to 100% and rendering the valid assessments.
+   * @param {Array} assessments - An array of assessment items to be processed.
+   * @param {Array} colourPack - An array containing colour information.
+   * @returns {Array} - An array of rendered assessment items that sum to 100%.
+   */
   const doAssessments = (assessments, colourPack) => {
     const totalPercent = 100;
     const sums = assessments.map(doAssessmentItem).filter((item) => item.sum === totalPercent);
-    //console.log(sums);
     const renderAssessmentsCurry = renderAssessments(colourPack, sums.length);
 
     return sums.map((item) => {
@@ -240,10 +304,21 @@
   };
 
   /*
-      CONTROLLERS
-  */
+   *
+   *  CONTROLLERS
+   *
+   */
 
-  /* Main */
+  /*
+   * Function: main
+   * @description: The main function that initializes the module, processes deliveries and assessments, and sets the content of the page.
+   * @param {Array} colourPack - An array containing colour information.
+   * @param {Array} dataAssessments - An array of assessment items to be processed.
+   * @param {Array} dataDeliveries - An array of delivery items to be processed.
+   * @param {string} multipleAssessmentsText - A message to display if there are multiple assessments.
+   * @param {string} assessmentsFallbackText - A fallback message to display if no assessments are available.
+   * @param {string} deliveriesFallbackText - A fallback message to display if no deliveries are available.
+   */
   const main = (colourPack, dataAssessments, dataDeliveries, multipleAssessmentsText, assessmentsFallbackText, deliveriesFallbackText) => {
     const contentArea = stir.node("#content");
     contentArea && contentArea.classList.add("u-padding-bottom");
@@ -264,8 +339,10 @@
   };
 
   /*
-      ON LOAD
-  */
+   *
+   *  ON LOAD
+   *
+   */
 
   main(JSON.parse(colours), JSON.parse(assessments), JSON.parse(deliveries), multipleAssessmentsText, assessmentsFallbackText, deliveriesFallbackText);
 })();

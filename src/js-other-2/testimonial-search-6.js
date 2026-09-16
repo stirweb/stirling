@@ -52,7 +52,7 @@
                   ${data.degree ? `<span class="info">${data.degree}</span>` : ``}
                   ${cf.country || data.degree ? `</cite>` : ``}
                   ${cf.snippet ? `<blockquote class="u-border-none u-my-2 u-black u-p-0 u-quote u-text-regular">${cf.snippet}</blockquote>` : ``}
-                  <a href="${item.url}" class="c-link">View ${pluraliseName(fullname.trim())} story</a>
+                  <a href="${item.url}">View ${pluraliseName(fullname.trim())} story</a>
                 </div> 
             </div> 
           <!-- End testimonial result -->`;

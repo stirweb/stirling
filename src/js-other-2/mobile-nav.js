@@ -19,13 +19,13 @@
   */
 
   const renderHome = () => {
-    return `<li><a class="button button--left-align expanded button--back secondary u-m-0 text-left" href="/">Home</a>`;
+    return `<li><a class="button button--left-align not-rounded expanded button--back secondary u-m-0 text-left" href="/">Home</a>`;
   };
 
   const renderUpLevel = (item) => {
     return item
-      ? `<li class="u-bg-heritage-green">
-            <a class="button button--left-align heritage-green expanded button--back u-m-0 text-left" href="${item.p}">
+      ? `<li class="u-bg-heritage-purple">
+            <a class="button button--left-align clear u-white expanded button--back u-m-0 text-left" href="${item.p}">
                 ${item.t}
             </a>
         </li>`

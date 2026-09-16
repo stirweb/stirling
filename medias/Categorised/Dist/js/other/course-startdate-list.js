@@ -1,18 +1,15 @@
-!function(t){if(t){const o={applyLinkUG:"https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=",month:t.getAttribute("data-startmonth")},n=(Object.freeze(o),stir.curry((t,r)=>{return`
-        <tr>
-            <td>
-              ${r.url?`<a href="${r.url}">`:""}
-              ${r.prefix} ${r.title} 
-              ${r.url?"</a>":""}
-            </td>
-            <td>${r=r,s=t.month,r.starts?stir.compose(stir.join(", "),stir.map(t=>t.split(" ")[1]),stir.filter(t=>t.includes(s)))(r.starts.split(", ")):""}</td>
-        </tr>`;var s}));var r,s,i=stir.curry((t,r)=>{const s=n(t);return`
-          <table>
-              <caption>Courses starting in ${t.month}</caption>
-              <thead>
-                  <tr><td>Course</td><td>Year of entry</td></tr>
-              </thead>
-              <tbody>
-                  ${r.map(t=>s(t)).join("")}
-              </tbody>
-          </table>`}),e=stir.curry((t,r)=>(t.innerHTML=r,t)),a=stir.feeds.data||[];a.length&&(r=stir.filter(t=>t.starts&&t.starts.includes(o.month)),s=stir.sort((t,r)=>t.title<r.title?-1:t.title>r.title?1:0),e=e(t),t=i(o),stir.compose(e,t,s,s,r,stir.clone)(a))}}(stir.node("#course-list"));
+!function(t){if(t&&stir.feeds&&stir.feeds.data){var a=`
+             <table>
+                 <caption>Full time courses starting in January</caption>
+                 <thead>
+                     <tr><th>Course</th><th>Year of entry</th></tr>
+                 </thead>
+                 <tbody>
+                     ${stir.feeds.data.filter(t=>t.janfull&&0<Object.keys(t.janfull).length).sort((t,a)=>t.title.localeCompare(a.title)).map(t=>{return t=((e=t).portalapply?e.portalapply.split(", ").map(t=>t.trim()):[]).map((t,a)=>`<a href="https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=${t}">${e.prefix.split(" / ")[a]} ${e.title}</a>`).join(", "),`<tr>
+                <td>
+                ${e.portalapply?t:""}
+                </td>
+                <td>${e.janfull.split(",").join(", ")}</td>
+            </tr>`;var e}).join("")}
+                 </tbody>
+             </table>`;t&&(t.innerHTML=a)}}(stir.node("#course-list"));

@@ -23,8 +23,8 @@ stir.templates.search = (() => {
     student: ["student"],
   };
   const afce4eafce490574e288574b384ecd87 = window[["s", "e", "i", "k", "o", "o", "C"].reverse().join("")]; // Just a bit of mild fun to stop anyone text-searching for "Cookies"!
-  const isUser = afce4eafce490574e288574b384ecd87.get("psessv0") ? true : false; // Cookie could be spoofed, but we'll trust it. The Portal will enforce authentication anyway.
-  const userType = isUser ? afce4eafce490574e288574b384ecd87.get("psessv0").split("|")[0] : "EXTERNAL";
+  const isUser = afce4eafce490574e288574b384ecd87.get("psess17") ? true : false; // Cookie could be spoofed, but we'll trust it. The Portal will enforce authentication anyway.
+  const userType = isUser ? afce4eafce490574e288574b384ecd87.get("psess17").split("|")[0] : "EXTERNAL";
   const userAuth = (group) => entitlements[userType.toLowerCase()]?.indexOf(group.toLowerCase()) > -1;
   const authClass = (group) => (userAuth(group) ? " c-internal-search-result" : " c-internal-locked-search-result");
   const authMessage = (group) =>
@@ -100,40 +100,40 @@ stir.templates.search = (() => {
    * Create clickable text elements (i.e. "tokens") that represent the active search filters, to give the user the
    * option to dismiss each filter quickly (and a visual reminder of which filters are active).
    *
-   * Becuase the search result data only contains the raw names/values of the filters, we need to derive the correct
+   * Because the search result data only contains the raw names/values of the filters, we need to derive the correct
    * text labels from the form inputs on the page. We also need to unbundle checkbox (multi-select) filters and deal
    * with any other unusual filters (such as Faculty and course Start Date).
    *
    */
-  const metaParamTokens = (tokens) => {
-    const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
-    return metas
-      .map((key) => {
-        // does the name and value exactly match a DOM element?
-        // i.e. an <input> element from which we can grab the text label
-        if ((el = metaParamElement(key, tokens[key]))) {
-          if ("hidden" === el.type) return; // ignore hidden inputs (as they have no text!)
-          return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
-        }
-
-        // if not an exact match, we might have a multi-select filter (e.g. checkbox)
-        // we'll check the constituent values to find matching elements
-        const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
-        const values = tokens[key].toString().replace(tokenex, `$1`).split(/\s/); // values are space-separated
-        return values
-          .map((value) => {
-            const el = metaParamElement(key, value);
-            // The innerText of the <input> element‘s <label> has the text we need
-            if (el) {
-              return tag(el.parentElement.innerText, key, value);
-            }
-            // We will just default to empty string if there is no matching element.
-            return "";
-          })
-          .join(" ");
-      })
-      .join(" ");
-  };
+//   const metaParamTokens = (tokens) => {
+//     const metas = Object.keys(tokens).filter((key) => key.indexOf("meta_") === 0 && tokens[key][0]);
+//     return metas
+//       .map((key) => {
+//         // does the name and value exactly match a DOM element?
+//         // i.e. an <input> element from which we can grab the text label
+//         if ((el = metaParamElement(key, tokens[key]))) {
+//           if ("hidden" === el.type) return; // ignore hidden inputs (as they have no text!)
+//           return tag(el.innerText || el.parentElement.innerText, key, tokens[key]);
+//         }
+// 
+//         // if not an exact match, we might have a multi-select filter (e.g. checkbox)
+//         // we'll check the constituent values to find matching elements
+//         const tokenex = new RegExp(/\[([^\[^\]]+)\]/); // regex for Funnelback dysjunction operator e.g. [apples oranges]
+//         const values = tokens[key].toString().replace(tokenex, `$1`).split(/\s/); // values are space-separated
+//         return values
+//           .map((value) => {
+//             const el = metaParamElement(key, value);
+//             // The innerText of the <input> element‘s <label> has the text we need
+//             if (el) {
+//               return tag(el.parentElement.innerText, key, value);
+//             }
+//             // We will just default to empty string if there is no matching element.
+//             return "";
+//           })
+//           .join(" ");
+//       })
+//       .join(" ");
+//   };
 
   const searchParamTokens = (parameters) =>
     Array.from(parameters.entries())
@@ -145,12 +145,11 @@ stir.templates.search = (() => {
    * @param {Array} facets
    * @returns {String} HTML click-to-dismiss "tokens"
    */
-  const facetTokens = (facets) =>
-    facets.map((facet) => facet.selectedValues.map((value) => paramToken(value.queryStringParamName, value.queryStringParamValue)).join(" ")).join(" ");
+  //const facetTokens = (facets) => facets.map((facet) => facet.selectedValues.map((value) => paramToken(value.queryStringParamName, value.queryStringParamValue)).join(" ")).join(" ");
 
   const paramToken = (name, value) => {
     const el = metaParamElement(name, value);
-    if (el)
+    if (el && el.type && el.type!=="hidden") {
       return tag(
         Array.prototype.slice
           .call(el.parentElement.childNodes)
@@ -159,6 +158,7 @@ stir.templates.search = (() => {
         name,
         value,
       );
+    }
   };
 
   const tag = (tag, name, value) => `<span class=c-tag data-name="${name}" data-value="${value}">✖️ ${tag}</span>`;
@@ -220,7 +220,7 @@ stir.templates.search = (() => {
   const timespan = (start, end) => (start ? `<time>${stir.Date.time24(new Date(start))}</time>` : "") + (end ? `–<time>${stir.Date.time24(new Date(end))}</time>` : "");
   const anchor = (crumb) => `<a href="${crumb.href}">${crumb.text}</a>`;
   const t4preview = (sid) => (sid ? `/terminalfour/preview/1/en/${sid}` : "#");
-  const clearingTest = (item) => stir.courses && stir.courses.clearing && Object.values && item.clearing && Object.values(item.clearing).join().indexOf("Yes") >= 0;
+  const clearingTest = (item) => stir.courses && stir.courses.clearing && item.custom_fields && item.custom_fields.clearing ? true : false;
 
   const unpackData = (data) => {
     if ("undefined" === typeof data) return {};
@@ -414,6 +414,8 @@ stir.templates.search = (() => {
           switch (item.custom_fields.type) {
             case "course":
               return stir.templates.search.course(item);
+            case "combination":
+              return stir.templates.search.combo(item);
             case "news":
               return stir.templates.search.news(item);
             case "event":
@@ -480,15 +482,16 @@ stir.templates.search = (() => {
 			</div>`;
     }, //<details><summary>JSON data</summary><pre>${JSON.stringify(item.custom_fields,null,"\t")}</pre></details>
 
-    combo: (item) => {
-      return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboCourse).join(" and ")}${item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""}${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
+    comboli: (item) => {
+      return `<li title="${item.prefix} ${item.title}">${item.courses.map(stir.templates.search.comboLink).join(" and ")}${item?.codes?.ucas ? " <small>&hyphen; " + item.codes.ucas + "</small>" : ""}${clearingTest(item) ? ' <sup class="c-search-result__seasonal">*</sup>' : ""}</li>`;
     },
 
-    comboCourse: (item) => `<a href="${item.url}">${item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, "")}</a>`,
+    comboLink: (item) => `<a href="${item.url}">${item.text.replace(/(BAcc \(Hons\))|(BA \(Hons\))|(BSc \(Hons\))|(\/\s)/gi, "")}</a>`,
 
     clearing: (item) => {
-      if (Object.keys && item.custom_fields && Object.keys(item.custom_fields).join().indexOf("clearing") >= 0) {
-        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2025: places may be available on this course.</strong></p>`;
+      if (clearingTest(item)) {
+        return `<p class="u-m-0"><strong class="u-energy-purple">Clearing 2026: places may be available on this course</strong>.</p>`;
+        // ${(debug?item.custom_fields.clearing:'')}
       }
     },
     combos: (item) => {
@@ -500,7 +503,7 @@ stir.templates.search = (() => {
 					<div>
 						<p>${item.title} can be combined with:</p>
 						<ul class="u-columns-2">
-							${item.combos.map(stir.templates.search.combo).join("")}
+							${item.combos.map(stir.templates.search.comboli).join("")}
 						</ul>
 						${item.combos.map(clearingTest).indexOf(true) >= 0 ? '<p class="u-footnote">Combinations marked with <sup class=c-search-result__seasonal>*</sup> may have Clearing places available.</p>' : ""}
 					</div>
@@ -566,6 +569,7 @@ stir.templates.search = (() => {
 
     course: (item) => {
       if (item.type && item.type === "PROMOTED") return stir.templates.search.cura(item);
+      if (item.custom_fields.type && item.custom_fields.type === "combination") return stir.templates.search.combo(item);
       //		const subject = typeof item.custom_fields.subject;
       //      const subjectLink = stir.String.slug(subject);
       const data = unpackData(item.custom_fields.data);
@@ -579,8 +583,7 @@ stir.templates.search = (() => {
 				<div class=" c-search-result__tags">
 					<span class="c-search-tag">${label(item.custom_fields.level || item.custom_fields.type || "")}</span>
 				</div>
-
-		<div class="flex-container flex-dir-column u-gap u-mt-1 ">
+		<div class="flex-container flex-dir-column u-gap u-mt-1">
 		  <p class="u-text-regular u-m-0">
 			<strong><a href="${link}" title="${item.url}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</a></strong>
 		  </p>
@@ -592,11 +595,32 @@ stir.templates.search = (() => {
 			  ${stir.coursefavs && stir.coursefavs.createCourseBtnHTML(item.custom_fields.sid, "/courses/favourites/")}
 			</div>
 		  </div>
-		  
-		  ${stir.templates.search.combos(item)}
 		  ${stir.templates.search.pathways(item)}
 		</div>
-			</div>`;
+			</div>`; //${stir.templates.search.combos(item)}
+    },
+    
+    combo: (item) => {
+      if (item.type && item.type === "PROMOTED") return stir.templates.search.cura(item); // ignore promos
+      if (item.custom_fields.type && item.custom_fields.type === "course") return stir.templates.search.course(item);
+
+      const data = unpackData(item.custom_fields.data);
+      const link = UoS_env.name.indexOf("preview") > -1 ? t4preview(item.custom_fields.sid) : item.url; //preview or appdev
+      const title = item.custom_fields.name ? `${data["Award"] || ""} ${item.custom_fields.name}${data["UCAS Code"] ? " - " + data["UCAS Code"] : ""}` : item.title.split("|")[0];
+      return (
+        `<div class="u-border-width-5 u-heritage-line-left c-search-result">
+          <div class=c-search-result__tags>
+            <!-- <span class=c-search-tag>${label(item.custom_fields.level || item.custom_fields.type || "")}</span> -->
+            <span class=c-search-tag>Combined course</span>
+          </div>
+          <div class="c-search-result__body flex-container flex-dir-column u-gap">
+            <p class=u-text-regular><strong><span data-sid="${item.custom_fields.sid}" data-docid="${item.id || ""}" data-position="${item.position || ""}">${title}</span></strong></p>
+            <p>${item.meta_description || ""}</p>
+            ${stir.templates.search.clearing(item) || ""}
+            ${data.Courses ? ('<p>See: ' + stir.Array.oxfordComma(data.Courses.filter(i=>i.text).map(i=>`<a href="${i.url}">${i.text}</a>`))+'.</p>'):''}
+          </div>
+        </div>`
+      );
     },
 
     coursemini: (item) => {
@@ -752,7 +776,7 @@ stir.templates.search = (() => {
 				</div>
 				<div class="c-search-result__body flex-container flex-dir-column u-gap u-mt-1">
 					<p class="u-text-regular u-m-0">
-						<strong>${ isWebinar && data.register ? serplink({url:data.register,id:item.id,position:item.position,title:item.title}) : serplink(item)}</strong>
+						<strong>${isWebinar && data.register ? serplink({ url: data.register, id: item.id, position: item.position, title: item.title }) : serplink(item)}</strong>
 					</p>
 					<div class="flex-container flex-dir-column u-gap-8">
 						<div class="flex-container u-gap-16 align-middle">
@@ -1374,7 +1398,8 @@ stir.search = (() => {
         collectAnalytics: false,
       },
       course: {
-        customField: "type=course",
+        filter: JSON.stringify({ or: [{"custom_fields.type": "course"},{"custom_fields.type": "combination"}]}),
+        //customField: "type=course", // we can put multi types here, but our JS will only accept one
         collectAnalytics: false,
         fuzzy: "auto",
       },
@@ -1402,12 +1427,16 @@ stir.search = (() => {
         }),
       },
       clearing: {
-        collectAnalytics: false,
-        limit: NUMRANKS,
         term: "*",
-        //				sort: "custom_fields.name",
-        //				filter: something something clearing only...?
-        //				timestamp: +new Date()
+        limit: NUMRANKS,
+        resultType: "organic",
+        collectAnalytics: false,
+        filter: JSON.stringify({
+          or:[
+            {"custom_fields.type":"course"},
+            {"custom_fields.type":"combination"}
+          ]
+        }),
       },
     },
 
@@ -1429,6 +1458,10 @@ stir.search = (() => {
         sort: "custom_fields.e", // sort events by date descending
         order: "asc",
       },
+      clearing: {
+        sort: "custom_fields.name",
+        order: "asc"
+      }
     },
   };
 
@@ -1995,6 +2028,8 @@ stir.search = (() => {
       }
     },
   };
+  
+  prefetch.clearing = prefetch.course;
 
   // CLICK delegate for link tracking
   const clickReporter = async (event) => {

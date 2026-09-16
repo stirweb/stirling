@@ -18,8 +18,8 @@
     return `<label for="${id}" class="u-show-for-sr">Filter by student type</label>
             <select id="${id}">
               <option value="students" ${selected === "students" ? "selected" : ""}>All Students</option>
-              <option value="ug" ${selected === "ug" ? "selected" : ""}>Undergraduate</option>
-              <option value="pgt" ${selected === "pgt" ? "selected" : ""}>Postgraduate</option>
+              <option value="ug" ${selected === "ug" ? "selected" : ""}>Undergraduate only</option>
+              <option value="pgt" ${selected === "pgt" ? "selected" : ""}>Postgraduate only</option>
           </select>`;
   };
 
@@ -162,7 +162,7 @@
         acc.push(curr);
       }
       return acc;
-    }, [])
+    }, []),
   );
 
   const filterByDate = stir.curry((date, item) => !date || item.startInt === Number(date));
@@ -293,7 +293,7 @@
   const setDOMFilters = setDOMContent(GLOBALS.filtersArea);
 
   setDOMFilters(
-    renderAudienceFilter(audience) + renderSelectFilter(datesFilterHtml, "Filter by date") + renderSelectFilter(themesFilterHtml, "Filter by theme") + renderClearFiltersBtn()
+    renderAudienceFilter(audience) + renderSelectFilter(datesFilterHtml, "Filter by date") + renderSelectFilter(themesFilterHtml, "Filter by theme") + renderClearFiltersBtn(),
   );
 
   setupEventListeners(GLOBALS);

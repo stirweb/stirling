@@ -69,7 +69,7 @@
                   <a href="${item.url}" class=" u-inline text-sm">${cf.h1_custom}</a>
                 </p>
                 <time class="u-block u-my-1 u-grey--dark">${renderDate(cf.d)}</time>
-                <p class="text-sm">${item.highlight}</p>
+                <p class="text-sm">${item.meta_description||item.highlight}</p>
               </div>
                ${renderImage(data.thumbnail, cf.h1_custom)}
             </div>`;
@@ -91,7 +91,7 @@
                 <p class="header-stripped u-mb-1 u-font-normal u-compress-line-height">
                     <a href="${item.url}" class=" u-inline text-sm">${cf.h1_custom}</a>
                 </p>
-                <p class="text-sm">${item.highlight}</p>
+                <p class="text-sm">${item.meta_description||item.highlight}</p>
             </div>`;
   });
 

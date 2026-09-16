@@ -1,5 +1,5 @@
-!function(e){if(e){const n=e;var e=stir.node("#open_mobile_menu"),t=stir.node("#close_mobile_menu");const o=stir.node("ul.sitemenu-2"),a=["main","footer","#layout-header",".breadcrumbs-container"],i={default:o.innerHTML},s=()=>'<li><a class="button button--left-align expanded button--back secondary u-m-0 text-left" href="/">Home</a>',r=e=>e?`<li class="u-bg-heritage-green">
-            <a class="button button--left-align heritage-green expanded button--back u-m-0 text-left" href="${e.p}">
+!function(e){if(e){const n=e;var e=stir.node("#open_mobile_menu"),t=stir.node("#close_mobile_menu");const o=stir.node("ul.sitemenu-2"),a=["main","footer","#layout-header",".breadcrumbs-container"],i={default:o.innerHTML},s=()=>'<li><a class="button button--left-align not-rounded expanded button--back secondary u-m-0 text-left" href="/">Home</a>',r=e=>e?`<li class="u-bg-heritage-purple">
+            <a class="button button--left-align clear u-white expanded button--back u-m-0 text-left" href="${e.p}">
                 ${e.t}
             </a>
         </li>`:"",c=e=>e?`<li class="u-underline u-energy-teal--40 ">

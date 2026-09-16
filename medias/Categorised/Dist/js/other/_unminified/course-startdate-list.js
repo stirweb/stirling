@@ -1,138 +1,67 @@
 /*
- * @description: Output courses based on start month eg "January"
+ * Output Full time UG courses with January start dates as a table
+ * JanFull: Some filtering is already done in T4 before it hits the feed eg passed dates are not included, leaving just upcoming years.
+ * This means not much processing needs to be done here
+ *
  * @author: Ryan Kaye
- * @version: 2
+ * @date: 2026-05-21
+ * @version: 3
  * @notes: This version does NOT use FunnelBack or XML - it now uses a JSON feed embedded in html
  */
 
-(function (scope) {
-  if (!scope) return;
+(function (domElement) {
+  // Guard clauses to ensure the DOM element and data exist before proceeding
+  if (!domElement) return;
+
+  if (!stir.feeds || !stir.feeds.data) return;
 
   /*
-
-     GLOBALS
-
+   * Render the html for each course as a table row
+   * @param {Object} item - The course item to render
+   * @returns {string} - The HTML string for the table row
    */
+  const renderItem = (item) => {
+    const portalUrl = `https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=`;
 
-  const resultsArea = scope;
+    // if item.portalapply has multiple course codes separated by commas, we need to create a link for each one
+    const courseCodes = item.portalapply ? item.portalapply.split(", ").map((code) => code.trim()) : [];
+    const courseLinks = courseCodes.map((code, index) => `<a href="${portalUrl}${code}">${item.prefix.split(" / ")[index]} ${item.title}</a>`).join(", ");
 
-  const constants = {
-    applyLinkUG: "https://portal.stir.ac.uk/student/course-application/ugd/application.jsp?crsCode=",
-    month: resultsArea.getAttribute("data-startmonth"),
+    return `<tr>
+                <td>
+                ${item.portalapply ? courseLinks : ``}
+                </td>
+                <td>${item.janfull.split(",").join(", ")}</td>
+            </tr>`;
   };
 
-  Object.freeze(constants);
-
   /*
-   
-    RENDERERS
-   
+   *  Render the course table html
+   *  @param {Array} data - The array of course items to render
+   *  @returns {string} - The HTML string for the course table
    */
-
-  /*
-    Render the html for the UG Apply Link 
-   */
-  // const renderUGApplyLink = stir.curry((consts, item) => {
-  //   // Helper function to form award text
-  //   const getAward = (code) => {
-  //     if (code.includes("UDX12")) return " Apply for BA (Hons)";
-  //     if (code.includes("UDX16")) return " Apply for BSc (Hons)";
-  //     return "Apply";
-  //   };
-
-  //   if (item.portalapply && item.portalapply !== "") {
-  //     return item.portalapply
-  //       .split(",")
-  //       .map((element) => '<a aria-label="' + getAward(element) + " " + item.title + '" href="' + consts.applyLinkUG + element.trim() + '">' + getAward(element) + "</a>")
-  //       .join(" / ");
-  //   }
-
-  //   return "";
-  // });
-
-  /*
-      Return the years for this item as an html string
-   */
-  const getYears = (item, month) => {
-    if (!item.starts) return ``;
-
-    return stir.compose(
-      stir.join(", "),
-      stir.map((element) => element.split(" ")[1]),
-      stir.filter((element) => element.includes(month))
-    )(item.starts.split(", "));
+  const renderTable = (data) => {
+    return `
+             <table>
+                 <caption>Full time courses starting in January</caption>
+                 <thead>
+                     <tr><th>Course</th><th>Year of entry</th></tr>
+                 </thead>
+                 <tbody>
+                     ${data.map((el) => renderItem(el)).join("")}
+                 </tbody>
+             </table>`;
   };
 
-  /* 
-      Render the html for each course as a table row
-   */
-  const renderItem = stir.curry((consts, item) => {
-    //const renderApply = renderApplyLink(consts);
-    return `
-        <tr>
-            <td>
-              ${item.url ? `<a href="${item.url}">` : ``}
-              ${item.prefix} ${item.title} 
-              ${item.url ? `</a>` : ``}
-            </td>
-            <td>${getYears(item, consts.month)}</td>
-        </tr>`;
-  });
-
   /*
-      Render the course table html
-   */
-  const renderTable = stir.curry((consts, data) => {
-    const renderItemCurry = renderItem(consts);
-    return `
-          <table>
-              <caption>Courses starting in ${consts.month}</caption>
-              <thead>
-                  <tr><td>Course</td><td>Year of entry</td></tr>
-              </thead>
-              <tbody>
-                  ${data.map((el) => renderItemCurry(el)).join("")}
-              </tbody>
-          </table>`;
-  });
-
-  /*
-      
-      EVENTS: OUTPUT (!!SIDE EFFECTS!!)
-
+   * On load
+   * 1) Process the data - filter out objects without janfull entries and order by title
+   * 2) Render the data to an HTML table
+   * 3) Output the rendered HTML to the DOM element
    */
 
-  /*
-    Output html content to the page
-   */
+  const filteredData = stir.feeds.data.filter((item) => item.janfull && Object.keys(item.janfull).length > 0).sort((a, b) => a.title.localeCompare(b.title));
+  const renderedData = renderTable(filteredData);
 
-  const setDOMContent = stir.curry((elem, html) => {
-    // !!SIDE EFFECTS!!
-    elem.innerHTML = html;
-    return elem;
-  });
-
-  /*
-
-     EVENTS: INPUT (!!SIDE EFFECTS!!)
-   
-  */
-
-  const initialData = stir.feeds.data || [];
-
-  if (!initialData.length) return;
-
-  /* 
-    Curried functions 
-  */
-
-  const filterMonth = stir.filter((item) => item.starts && item.starts.includes(constants.month));
-  //const filterNoApplyCode = stir.filter((item) => item.portalapply);
-  const sortByTitle = stir.sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
-
-  const setResult = setDOMContent(resultsArea);
-  const renderTableCurry = renderTable(constants);
-
-  // Run the data through the functions until it hits the page
-  stir.compose(setResult, renderTableCurry, sortByTitle, sortByTitle, filterMonth, stir.clone)(initialData);
+  domElement && (domElement.innerHTML = renderedData);
 })(stir.node("#course-list"));
