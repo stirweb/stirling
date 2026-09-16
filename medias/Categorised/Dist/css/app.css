@@ -2158,7 +2158,7 @@ h3.c-tab-accord-group-head {
       .stir-accordion > h6 button:focus,
       .stir-accordion > accordion-summary button:focus,
       .stir-accordion > h2 button:focus {
-        outline: 1px solid #006938 !important;
+        outline: 2px solid #006938 !important;
         outline-offset: 4px; }
     .stir-accordion > h3 a,
     .stir-accordion > h4 a,
