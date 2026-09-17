@@ -186,7 +186,8 @@
     }
   }
 
-  &:last-of-type {
+  // last of this class
+  &:last-child {
     margin-bottom: 72px;
   }
 }
