@@ -2,6 +2,7 @@
     Mobile first
 */
 
+/*
 .c-half-n-half {
   margin: 0 0 40px 0;
 
@@ -18,7 +19,7 @@
   }
 
   &.js-animation {
-    overflow-x: hidden; /* proddt horizontal scroll (before animation is triggered) */
+    overflow-x: hidden; /* proddt horizontal scroll (before animation is triggered) /
   }
 
   &:first-of-type {
@@ -35,7 +36,7 @@
     }
 
     strong {
-      color: currentColor !important; /* needs !i to defeat u-white--all */
+      color: currentColor !important; /* needs !i to defeat u-white--all *
     }
 
     // &.c-wysiwyg-content blockquote p {
@@ -45,13 +46,13 @@
 
   // .c-half-n-half__copy p,
   // .c-half-n-half__copy ul li {
-  //   font-size: 1.125rem; /* 18px */
+  //   font-size: 1.125rem; 
   // }
 }
 
 /* 
     Wrapper overrides 
-*/
+*
 
 .c-wrapper[class*="u-bg-"] .c-half-n-half {
   .c-half-n-half__content {
@@ -81,7 +82,7 @@
 
 /*
     Medium up
-*/
+*
 
 @media screen and #{breakpoint(medium up)} {
   .c-half-n-half .c-half-n-half__image {
@@ -91,7 +92,7 @@
 
 /*
     Large up
-*/
+*
 
 @media screen and #{breakpoint(large up)} {
   .c-half-n-half {
@@ -108,7 +109,7 @@
       min-height: 333px;
     }
 
-    /* even and odd swaps */
+    /* even and odd swaps *
     &:nth-of-type(even) {
       .c-half-n-half__image {
         left: 0;
@@ -147,7 +148,7 @@
 
 /* 
      White out over rides 
- */
+ *
 
 .u-white--all .c-half-n-half .c-half-n-half__content {
   h2 {
@@ -167,6 +168,8 @@
   }
 }
 
+*/
+
 /*
   Half n half 2026
 */
@@ -182,22 +185,11 @@
       color: $black;
     }
   }
+
+  &:last-of-type {
+    margin-bottom: 72px;
+  }
 }
-
-/* Media query for medium up */
-// @media (max-width: 768px) {
-//   .c-half-n-half-2026 {
-//     &.u-hook-bottom-right::before,
-//     &.u-hook-bottom-right::after {
-//       right: 0;
-//     }
-
-//     &.u-hook-top-left::before,
-//     &.u-hook-top-left::after {
-//       left: 0;
-//     }
-//   }
-// }
 
 /* Media query for medium up */
 @media (min-width: 768px) {
