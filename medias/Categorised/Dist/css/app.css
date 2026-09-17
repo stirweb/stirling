@@ -3602,7 +3602,7 @@ progress::-moz-progress-bar {
   background-color: #f1f1ef; }
   .c-half-n-half-2026 .u-bg-heritage-green .button.energy {
     color: #000; }
-  .c-half-n-half-2026:last-of-type {
+  .c-half-n-half-2026:last-child {
     margin-bottom: 72px; }
 
 /* Media query for medium up */
