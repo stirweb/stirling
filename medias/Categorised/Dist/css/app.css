@@ -3060,12 +3060,18 @@ textarea:focus {
 :-ms-input-placeholder {
   color: #777575;
   font-weight: bold;
-  font-size: 1.4rem; }
+  font-size: 1.25rem; }
 
 ::placeholder {
   color: #777575;
   font-weight: bold;
-  font-size: 1.4rem; }
+  font-size: 1.25rem; }
+
+@media screen and (min-width: 64em) {
+  :-ms-input-placeholder {
+    font-size: 1.4rem; }
+  ::placeholder {
+    font-size: 1.4rem; } }
 
 /*  Focus */
 .button:focus,
