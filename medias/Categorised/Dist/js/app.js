@@ -3473,7 +3473,7 @@ stir.didYouMean = (() => {
 })();
 
 (function () {
-  document.querySelectorAll(".c-half-n-half-2026:nth-of-type(odd of .c-half-n-half-2026)").forEach((el) => {
+  document.querySelectorAll(".c-half-n-half-2026:nth-of-type(odd)").forEach((el) => {
     // Make hook top - bottom by default
     el.classList.add("u-hook-top-left");
     el.classList.remove("u-hook-bottom-right");
