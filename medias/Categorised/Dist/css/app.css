@@ -4620,7 +4620,6 @@ cite:before {
     margin: 32px auto;
     padding: 0 0 0 30px; }
     .c-wysiwyg-content blockquote p {
-      color: #006938;
       font-size: 1.25rem !important;
       line-height: 1.5; }
       .c-wysiwyg-content blockquote p::before {
