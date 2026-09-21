@@ -631,9 +631,21 @@ a:has(img):hover {
       background: linear-gradient(to top, #006938 50%, #9fcc69 50%);
       background-position: top;
       background-size: 100% 220%; }
+      .c-wrapper-2026.c-wrapper-energy .button.hollow.important {
+        background: linear-gradient(to top, #f4c400 50%, #9fcc69 50%);
+        background-position: top;
+        background-size: 100% 220%;
+        border-color: #f4c400; }
+        .c-wrapper-2026.c-wrapper-energy .button.hollow.important:hover {
+          color: #000 !important; }
+      .c-wrapper-2026.c-wrapper-energy .button.hollow.neutral {
+        background: linear-gradient(to top, #d1d1c9 50%, #9fcc69 50%);
+        background-position: top;
+        background-size: 100% 220%; }
+        .c-wrapper-2026.c-wrapper-energy .button.hollow.neutral:hover {
+          color: #000 !important; }
       .c-wrapper-2026.c-wrapper-energy .button.hollow:hover {
         color: #fff;
-        border-color: #006938;
         background-position: 0 99%; }
   .c-wrapper-2026.c-wrapper-energy .u-font-icon,
   .c-wrapper-2026.c-wrapper-energy svg {
@@ -665,6 +677,18 @@ a:has(img):hover {
       background: linear-gradient(to top, #9fcc69 50%, #006938 50%);
       background-position: top;
       background-size: 100% 220%; }
+      .c-wrapper-2026.c-wrapper-heritage .button.hollow.important {
+        background: linear-gradient(to top, #f4c400 50%, #006938 50%);
+        background-position: top;
+        background-size: 100% 220%; }
+        .c-wrapper-2026.c-wrapper-heritage .button.hollow.important:hover {
+          color: #000 !important; }
+      .c-wrapper-2026.c-wrapper-heritage .button.hollow.neutral {
+        background: linear-gradient(to top, #d1d1c9 50%, #006938 50%);
+        background-position: top;
+        background-size: 100% 220%; }
+        .c-wrapper-2026.c-wrapper-heritage .button.hollow.neutral:hover {
+          color: #000 !important; }
       .c-wrapper-2026.c-wrapper-heritage .button.hollow::after {
         filter: brightness(1) invert(1); }
       .c-wrapper-2026.c-wrapper-heritage .button.hollow:hover {
@@ -714,6 +738,18 @@ a:has(img):hover {
         background-position: 0 99%; }
         .c-wrapper-2026.c-wrapper-important .button.hollow:hover::after {
           filter: brightness(1); }
+      .c-wrapper-2026.c-wrapper-important .button.hollow.important:hover {
+        color: #000 !important; }
+      .c-wrapper-2026.c-wrapper-important .button.hollow.neutral {
+        background: #592c82;
+        background: linear-gradient(to top, #d1d1c9 50%, #592c82 50%);
+        background-position: top;
+        background-size: 100% 220%; }
+        .c-wrapper-2026.c-wrapper-important .button.hollow.neutral:hover {
+          color: #000 !important;
+          background-position: 0 99%; }
+          .c-wrapper-2026.c-wrapper-important .button.hollow.neutral:hover::after {
+            filter: brightness(1); }
 
 .c-wrapper-2026.c-wrapper-neutral {
   background-color: #f1f1ef;
@@ -755,6 +791,25 @@ a:has(img):hover {
       background-position: 0 99%; }
       .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow:hover::after {
         filter: brightness(1) invert(1); }
+    .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow.important {
+      background: linear-gradient(to top, #f4c400 50%, #d1d1c9 50%);
+      background-position: top;
+      background-size: 100% 220%;
+      border-color: #f4c400; }
+      .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow.important:hover {
+        color: #000 !important;
+        background-position: 0 99%; }
+        .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow.important:hover::after {
+          filter: brightness(1); }
+    .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow.neutral {
+      background: linear-gradient(to top, #f1f1ef 50%, #d1d1c9 50%);
+      background-position: top;
+      background-size: 100% 220%; }
+      .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow.neutral:hover {
+        color: #000 !important;
+        background-position: 0 99%; }
+        .c-wrapper-2026.c-wrapper-neutral-strong .button.hollow.neutral:hover::after {
+          filter: brightness(1); }
   .c-wrapper-2026.c-wrapper-neutral-strong .button.neutral {
     border-color: #f6f5f4;
     background: linear-gradient(to top, #f6f5f4 50%, #fff 50%);
@@ -776,6 +831,8 @@ a:has(img):hover {
   .c-wrapper-2026.dark h3,
   .c-wrapper-2026.dark h4 {
     color: #fff; }
+  .c-wrapper-2026.dark .button.hollow.important {
+    color: #fff !important; }
   .c-wrapper-2026.dark .cta-link-icon::before {
     filter: brightness(0) invert(1); }
   .c-wrapper-2026.dark a {
