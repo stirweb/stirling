@@ -6,10 +6,12 @@ main {
   h1 {
     font-size: 3.25rem;
     font-family: "General Sans", sans-serif !important;
+    color: $heritage-green;
   }
 
   h2 {
-    font-weight: 300;
+    font-weight: bold;
+    color: $heritage-green;
   }
 
   /* Wrappers */
