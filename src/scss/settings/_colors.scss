@@ -566,6 +566,18 @@ a:has(img):hover {
         background-position: top;
       }
 
+      &.important {
+        background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
+        background-position: bottom;
+        background-size: 100% 220%;
+        border-color: $energy-yellow;
+
+        &:hover {
+          color: $black !important;
+          background-position: top;
+        }
+      }
+
       &.hollow {
         color: $white;
         background: $heritage-green;
