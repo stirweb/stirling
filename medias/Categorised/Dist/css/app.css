@@ -671,6 +671,14 @@ a:has(img):hover {
       color: #000;
       border-color: #9fcc69;
       background-position: top; }
+    .c-wrapper-2026.c-wrapper-heritage .button.important {
+      background: linear-gradient(to top, #f4c400 50%, #fff 50%);
+      background-position: bottom;
+      background-size: 100% 220%;
+      border-color: #f4c400; }
+      .c-wrapper-2026.c-wrapper-heritage .button.important:hover {
+        color: #000 !important;
+        background-position: top; }
     .c-wrapper-2026.c-wrapper-heritage .button.hollow {
       color: #fff;
       background: #006938;
