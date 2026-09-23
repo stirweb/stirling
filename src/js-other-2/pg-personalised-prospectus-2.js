@@ -63,7 +63,7 @@
   };
 
   const renderLinkBox = (filePath) => {
-    return `<div class="u-bg-green-tint-7 u-p-3 u-mt-2">
+    return `<div class="u-bg-neutral-tint u-p-3 u-mt-2">
             <h3>Download your postgraduate guide</h3>
             <p class="u-flex u-gap-8 align-middle">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width:24px;height:24px;">
