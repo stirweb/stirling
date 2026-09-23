@@ -1464,6 +1464,29 @@
                                 </div>
                             </div>
 
+                            <div class="u-flex-medium-up  u-gap">
+                                <div class="u-flex1">
+                                    <label class="u-font-bold block u-mb-tiny " for="opt_in_for_whatsapp">
+                                        Opt in for WhatsApp messaging
+                                    </label>
+
+                                    <select data-section="marketing" id="opt_in_for_whatsapp" class="mt-1 block w-full " name="opt_in_for_whatsapp">
+                                        <option value="">Select an option</option>
+                                        <option value="true">Yes please</option>
+                                        <option value="false">No thanks</option>
+                                    </select>
+                                </div>
+
+                                <div class="u-flex1">
+                                    <label class="u-font-bold block u-mb-tiny " for="whatsapp_phone_number">
+                                        WhatsApp phone number
+                                        <span class="u-heritage-berry " data-alertlabel="whatsapp_phone_number"></span>
+                                    </label>
+                                    <input type="text" data-section="marketing" id="whatsapp_phone_number" class="mt-1 block w-full  " name="whatsapp_phone_number">
+                                </div>
+
+                            </div>
+
                             <p class="text-sm text-gray-700 u-mt-1">
                                 You can unsubscribe at any time by emailing: <a href="mailto:study.stirling@stir.ac.uk" class="underline">study.stirling@stir.ac.uk</a>
                             </p>
@@ -1835,7 +1858,7 @@
         ];
     </script>
 
-    <script src="../../../../../../../medias/Categorised/Dist/js/other/pg-personalised-prospectus-2.js"></script>
+    <script src="../../../../../../../medias/Categorised/Dist/js/other/_unminified/pg-personalised-prospectus-2.js"></script>
 
 
 

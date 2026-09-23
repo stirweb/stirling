@@ -2,7 +2,7 @@
 
 session_start();
 
-$ENV_MODE = 'QA'; // Change to 'PROD' for production or QA for UAT / Test mode
+$ENV_MODE = 'PROD'; // Change to 'PROD' for production or QA for UAT / Test mode
 
 // These only take effect if ENV_MODE is set to QA - in PROD mode everything is active
 $TEST_QS = true; // Set to false to test without sending data to QS
@@ -73,6 +73,8 @@ function qs_init($api_url)
         "SubscribedToDirectEmails" => (check_consent($_POST['opt_in_for_email'], $superConsent)),
         "SubscribedToDirectPhoneCalls" => (check_consent($_POST['opt_in_for_phone'], $superConsent)),
         "SubscribedToDirectSms" => (check_consent($_POST['opt_in_for_sms'], $superConsent)),
+        "WhatsApp Consent Given" => (check_consent($_POST['opt_in_for_whatsapp'], $superConsent)),
+        "Mobile Phone Number" => $_POST['whatsapp_phone_number'],
 
         "SubChannel" => "WebEnquiry",
 

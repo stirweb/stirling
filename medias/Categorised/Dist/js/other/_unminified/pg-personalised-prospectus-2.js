@@ -520,7 +520,7 @@
     selects.forEach((select) =>
       select.addEventListener("change", (event) => {
         updateSelects(event.target.id.replace("subject_area_", ""));
-      })
+      }),
     );
 
     // ACTION: Form submit event
@@ -531,6 +531,18 @@
 
         setDOMContent(stir.node("#marketingAlert"), ` `);
         setDOMContent(stir.node("#dataAgreeAlert"), ` `);
+
+        // if opt_in_for_whatsapp is selected, make whatsapp_phone_number a required field
+        if (stir.node("#opt_in_for_whatsapp")) {
+          if (stir.node("#opt_in_for_whatsapp").value === "true") {
+            stir.node("#whatsapp_phone_number").setAttribute("data-required", "true");
+            // the requred label <span class="u-heritage-berry " data-alertlabel="whatsapp_phone_number">*</span>
+            stir.node("[data-alertlabel=whatsapp_phone_number]").innerText = " *";
+          } else {
+            stir.node("#whatsapp_phone_number").removeAttribute("data-required");
+            stir.node("[data-alertlabel=whatsapp_phone_number]").innerText = "";
+          }
+        }
 
         // Required field checks
         const required = stir.nodes("[data-required]");
