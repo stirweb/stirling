@@ -410,15 +410,15 @@
    * @returns {string} - Filter string for query
    */
   const getFilterString = (type, maintags) => {
-    if (type === "staff") {
+    if (type === "eventsstafftab") {
       return `&limit=190&order=asc&filter=${encodeURIComponent(JSON.stringify(getUpcomingObject(getNow(), "2099-12-31", "StaffStudent", maintags)))}&sort=custom_fields.sort&`;
     }
 
-    if (type === "art") {
+    if (type === "eventsarttab") {
       return `&limit=190&order=asc&filter=${encodeURIComponent(JSON.stringify(getUpcomingObject(getNow(), "2099-12-31", "Art Collection", maintags)))}&sort=custom_fields.sort&`;
     }
 
-    if (type === "public") {
+    if (type === "eventspublictab") {
       return `&limit=190&order=asc&filter=${encodeURIComponent(JSON.stringify(getUpcomingObject(getNow(), "2099-12-31", "Public", maintags)))}&sort=custom_fields.sort&`;
     }
   };
@@ -951,13 +951,16 @@
    * @return {void}
    */
   function loadTab(baseUrl, tab, seriesData, maintags) {
-    const id = tab.querySelector("h2").innerText.toLowerCase().split(" ")[0];
+    //console.log(tab.querySelector(".grid-x").id);
+    //const id = tab.querySelector("h2").innerText.toLowerCase().split(" ")[0];
 
-    if (id === "archive") {
+    const id = tab.querySelector(".grid-x").id || "";
+
+    if (id === "eventsarchivetab") {
       return doArchive(baseUrl, tab.querySelector(".c-search-results-events "), seriesData, maintags);
     }
 
-    if (id === "webinars") {
+    if (id === "eventswebinarstab") {
       return doWebinars(tab.querySelector(".c-search-results-events "), maintags);
     }
 
