@@ -954,7 +954,7 @@
     //console.log(tab.querySelector(".grid-x").id);
     //const id = tab.querySelector("h2").innerText.toLowerCase().split(" ")[0];
 
-    const id = tab.querySelector(".grid-x").id || "";
+    const id = tab.querySelector("[data-target='tabid']").id || "";
 
     if (id === "eventsarchivetab") {
       return doArchive(baseUrl, tab.querySelector(".c-search-results-events "), seriesData, maintags);
