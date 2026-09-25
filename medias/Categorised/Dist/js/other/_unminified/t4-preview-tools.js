@@ -3,7 +3,8 @@
     const title = document.querySelector('meta[name="t4name"]');
     const action = createT4EditLink("edit name", "generalInfo");
     if (!title) return;
-    if (title.getAttribute("content").slice(-1) === " " || title.getAttribute("content").substring(0, 1) === " ") editorWarning("Spaces at the start and or end of the section name", action);
+    if (title.getAttribute("content").slice(-1) === " " || title.getAttribute("content").substring(0, 1) === " ")
+      editorWarning("Spaces at the start and or end of the section name", action);
   })();
 
   (function checkPageHasDescription() {
@@ -27,7 +28,12 @@
    */
   function createTopEdgeCallout(html, backgroundColor) {
     var backgroundColor = backgroundColor || "heritage-green";
-    var html = '<div class="callout ' + backgroundColor + '" data-closable style="margin:0"><button class="close-button" aria-label="Dismiss alert" type="button" data-close><span aria-hidden="true">&times;</span></button>' + html + "</div>";
+    var html =
+      '<div class="callout ' +
+      backgroundColor +
+      '" data-closable style="margin:0"><button class="close-button" aria-label="Dismiss alert" type="button" data-close><span aria-hidden="true">&times;</span></button>' +
+      html +
+      "</div>";
     var container = document.getElementById("top-edge-callouts-container") || createTopEdgeCalloutContainer();
     container.innerHTML += html; // this will *not* destroy and replace any previous callouts
     makeSticky(container);
@@ -64,7 +70,7 @@
 
   function editorWarning(message, action) {
     var action = action || "";
-    createTopEdgeCallout('<p><span class="uos-pin"></span> Editor warning: ' + message + ". " + action + "</p>", "u-bg-energy-pink u-white--all");
+    createTopEdgeCallout('<p><span class="uos-pin"></span> Editor warning: ' + message + ". " + action + "</p>", "u-bg-heritage-purple u-white--all");
     console.warn("[HTML styleguide] " + message);
   }
 })();
