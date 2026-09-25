@@ -951,11 +951,7 @@
    * @return {void}
    */
   function loadTab(baseUrl, tab, seriesData, maintags) {
-    //console.log(tab.innerHTML);
-    console.log(tab.querySelector(".grid-x").id);
-
-    //return;
-
+    //console.log(tab.querySelector(".grid-x").id);
     //const id = tab.querySelector("h2").innerText.toLowerCase().split(" ")[0];
 
     const id = tab.querySelector(".grid-x").id || "";
