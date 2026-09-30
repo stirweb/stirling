@@ -843,6 +843,10 @@ a:has(img):hover {
     color: #fff !important; }
   .c-wrapper-2026.dark .cta-link-icon::before {
     filter: brightness(0) invert(1); }
+  .c-wrapper-2026.dark li a {
+    text-decoration-color: #fff; }
+    .c-wrapper-2026.dark li a:hover {
+      text-decoration-color: #76b72a; }
   .c-wrapper-2026.dark a {
     color: #fff; }
     .c-wrapper-2026.dark a:focus {

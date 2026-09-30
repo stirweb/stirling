@@ -850,6 +850,14 @@ a:has(img):hover {
       filter: brightness(0) invert(1);
     }
 
+    li a {
+      text-decoration-color: #fff;
+
+      &:hover {
+        text-decoration-color: #76b72a;
+      }
+    }
+
     a {
       color: $white;
 
