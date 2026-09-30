@@ -846,7 +846,7 @@ a:has(img):hover {
   .c-wrapper-2026.dark li a {
     text-decoration-color: #fff; }
     .c-wrapper-2026.dark li a:hover {
-      text-decoration-color: #76b72a; }
+      text-decoration-color: rgba(255, 255, 255, 0.5); }
   .c-wrapper-2026.dark a {
     color: #fff; }
     .c-wrapper-2026.dark a:focus {
