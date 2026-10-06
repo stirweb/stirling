@@ -746,12 +746,22 @@ a:has(img):hover {
     background-color: $light-mink;
     border-image-source: linear-gradient($light-mink, $light-mink);
 
+    a {
+      color: $dark-green;
+    }
+
     .u-font-icon,
     svg {
       color: $heritage-green;
     }
 
     .button {
+      color: $white;
+
+      &:hover {
+        color: $black;
+      }
+
       svg {
         color: $energy-green;
       }
@@ -761,6 +771,7 @@ a:has(img):hover {
         background: linear-gradient(to top, $heritage-green 50%, $light-mink 50%);
         background-position: top;
         background-size: 100% 220%;
+        color: $black;
 
         &::after {
           filter: brightness(1);
@@ -825,10 +836,6 @@ a:has(img):hover {
         border-color: $light-gray-alt;
         background-position: top;
       }
-    }
-
-    a {
-      color: $dark-green;
     }
   }
 
