@@ -215,7 +215,8 @@ h4 a:hover {
 }
 
 a {
-  color: map-get($uos-web-supplementary, heritage-green-a11y);
+  //color: map-get($uos-web-supplementary, heritage-green-a11y);
+  color: map-get($brand-palette, heritage-green);
 }
 
 p a,

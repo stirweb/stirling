@@ -826,6 +826,10 @@ a:has(img):hover {
         background-position: top;
       }
     }
+
+    a {
+      color: $dark-green;
+    }
   }
 
   &.dark {
