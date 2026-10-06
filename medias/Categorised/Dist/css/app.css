@@ -831,6 +831,8 @@ a:has(img):hover {
       color: #000;
       border-color: #f6f5f4;
       background-position: top; }
+  .c-wrapper-2026.c-wrapper-neutral-strong a {
+    color: #005734; }
 
 .c-wrapper-2026.dark {
   color: #fff; }
@@ -1918,7 +1920,7 @@ h4 a:hover {
   border-bottom-color: currentColor; }
 
 a {
-  color: #006636; }
+  color: #006938; }
 
 p a,
 table a {
