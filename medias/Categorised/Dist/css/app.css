@@ -4077,15 +4077,6 @@ ul .c-link {
 .u-white--all .c-link::after {
   filter: brightness(0) invert(1); }
 
-.c-news-events__title .c-link {
-  display: inline; }
-  .c-news-events__title .c-link:after {
-    position: relative;
-    top: 2px; }
-
-.u-white--all .c-news-events__title .c-link:hover {
-  border-bottom-color: #fff; }
-
 /* 
 
 CTA Link Brand 2026
