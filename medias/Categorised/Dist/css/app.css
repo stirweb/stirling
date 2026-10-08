@@ -7899,8 +7899,7 @@ svg.icon {
   padding-top: 0;
   padding-bottom: 40px; }
   .c-whats-next h3 {
-    font-family: FSMaja, serif;
-    font-weight: 100;
+    font-weight: bold;
     margin: 1em 0; }
   .c-whats-next nav {
     display: flex;
