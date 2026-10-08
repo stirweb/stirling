@@ -8,15 +8,15 @@
    * DOM elements
    */
 
-  var stickyMenu = stir.node(".c-course-title-sticky-menu");
-  var stickyCloseBtn = stir.node("#course-sticky-close-btn");
-  var buttonBox = stir.node(".c-course-title__buttons"); // Once off screen the sticky kicks in
+  const stickyMenu = stir.node(".c-course-title-sticky-menu");
+  const stickyCloseBtn = stir.node("#course-sticky-close-btn");
+  const stickyInitTarget = stir.node("[data-action='activatesticky']"); // Once off screen the sticky kicks in
 
   /*
    * Vars
    */
 
-  var enableSticky = true; // (MUTATIONS!!)
+  let enableSticky = true;
 
   /*
    * ON LOAD
@@ -24,25 +24,25 @@
 
   if (!stickyMenu) return;
 
-  var showPosition = buttonBox ? buttonBox.offsetTop + buttonBox.offsetHeight : 0;
+  const showPosition = stickyInitTarget ? stickyInitTarget.offsetTop + stickyInitTarget.offsetHeight : 0;
 
-//  if (stir.MediaQuery.current !== "small") {
-    stickyMenu.classList.add("stir__slideup");
-    stickyMenu.style.display = "block";
+  //  if (stir.MediaQuery.current !== "small") {
+  stickyMenu.classList.add("stir__slideup");
+  stickyMenu.style.display = "block";
 
-    if (buttonBox) {
-      window.addEventListener("scroll", scrollPositionChecker); // listen for scrolling
-    }
+  if (stickyInitTarget) {
+    window.addEventListener("scroll", scrollPositionChecker); // listen for scrolling
+  }
 
-    if (stickyCloseBtn) {
-      stickyCloseBtn.onclick = function (e) {
-        enableSticky = false;
-        window.removeEventListener("scroll", scrollPositionChecker); // stop listening for scrolling
-        stickyMenu.parentNode.removeChild(stickyMenu);
-        e.preventDefault();
-      };
-    }
-//  }
+  if (stickyCloseBtn) {
+    stickyCloseBtn.onclick = function (e) {
+      enableSticky = false;
+      window.removeEventListener("scroll", scrollPositionChecker); // stop listening for scrolling
+      stickyMenu.parentNode.removeChild(stickyMenu);
+      e.preventDefault();
+    };
+  }
+  //  }
 
   /* -----------------------------------------------
    * Decides whether to how or hide the sticky based on scroll position
