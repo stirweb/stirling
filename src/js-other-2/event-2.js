@@ -209,7 +209,7 @@ const renderEvent = (item, index) => {
  * @param {HTMLElement} node - DOM node to render results
  * @param {string} series - Series name
  */
-async function doPast(baseUrl, node, series) {
+async function doPast(baseUrl, node, series, miniEvents) {
   let filterString = getFilterString(series, "past");
 
   fetch(baseUrl + filterString + `page=1`)
@@ -222,7 +222,20 @@ async function doPast(baseUrl, node, series) {
         const shortcuts = { start: cf.d, end: cf.e, startTime: startTime, endTime: endTime, sort: cf.sort, repeater: null };
         return { ...item, ...shortcuts };
       });
-      const html = searchEvents.map(renderEvent).join("");
+
+      // Process miniEvents
+      const miniEvents2 = miniEvents.map((item) => {
+        const shortcuts = { sort: Number(String(item.pin).slice(0, 10)) };
+        return { ...item, ...shortcuts };
+      });
+
+      // get current dat time in fromat 202510031500
+      const currentTime = Number(getNow().replaceAll("-", "").replaceAll(":", "").replaceAll("T", "").replaceAll("Z", "").slice(0, 12));
+      const pastMiniEvents = miniEvents2.filter((item) => Number(item.endInt) < currentTime);
+
+      const allEvents = searchEvents.concat(pastMiniEvents).sort((a, b) => a.sort - b.sort);
+      const html = allEvents.map(renderEvent).join("");
+
       node.innerHTML = html;
     });
 }
@@ -318,7 +331,11 @@ async function doUpcoming(baseUrl, node, series, miniEvents) {
         return { ...item, ...shortcuts };
       });
 
-      const allEvents = searchEvents.concat(miniEvents2).sort((a, b) => a.sort - b.sort);
+      // get current dat time in fromat 202510031500
+      const currentTime = Number(getNow().replaceAll("-", "").replaceAll(":", "").replaceAll("T", "").replaceAll("Z", "").slice(0, 12));
+      const upcomingMiniEvents = miniEvents2.filter((item) => Number(item.endInt) >= currentTime);
+
+      const allEvents = searchEvents.concat(upcomingMiniEvents).sort((a, b) => a.sort - b.sort);
       const html = allEvents.map(renderEvent).join("");
       node.innerHTML = html;
     });
@@ -370,7 +387,7 @@ async function doMoreEvents(baseUrl, node, excludeId) {
     const baseUrl = searchUrl + "customField=series%3D";
 
     upcomingNode && (await doUpcoming(baseUrl, upcomingNode, seriesId, stir.flatten(miniEventsFiltered)));
-    pastNode && (await doPast(baseUrl, pastNode, seriesId));
+    pastNode && (await doPast(baseUrl, pastNode, seriesId, stir.flatten(miniEventsFiltered)));
   }
 
   // More events
