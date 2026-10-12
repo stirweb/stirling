@@ -18,11 +18,19 @@ const getObject = (from, to, series) => {
 };
 
 /*
- * Get current date in YYYY-MM-DD format
+ * Get current date in ISO format ie YYYY-MM-DDTHH:MM:SS.sssZ
  * @returns {string} - Current date
  */
 const getNow = () => {
   return new Date().toISOString();
+};
+
+/*
+ * Get current date and time in numeric format YYYYMMDDHHMM
+ * @returns {number} - Current date and time as a number
+ */
+const getNumericNow = () => {
+  return Number(new Date().toISOString().replaceAll("-", "").replaceAll(":", "").replaceAll("T", "").replaceAll("Z", "").slice(0, 12));
 };
 
 /*
@@ -229,9 +237,7 @@ async function doPast(baseUrl, node, series, miniEvents) {
         return { ...item, ...shortcuts };
       });
 
-      // get current dat time in fromat 202510031500
-      const currentTime = Number(getNow().replaceAll("-", "").replaceAll(":", "").replaceAll("T", "").replaceAll("Z", "").slice(0, 12));
-      const pastMiniEvents = miniEvents2.filter((item) => Number(item.endInt) < currentTime);
+      const pastMiniEvents = miniEvents2.filter((item) => Number(item.endInt) < getNumericNow());
 
       const allEvents = searchEvents.concat(pastMiniEvents).sort((a, b) => a.sort - b.sort);
       const html = allEvents.map(renderEvent).join("");
@@ -331,9 +337,7 @@ async function doUpcoming(baseUrl, node, series, miniEvents) {
         return { ...item, ...shortcuts };
       });
 
-      // get current dat time in fromat 202510031500
-      const currentTime = Number(getNow().replaceAll("-", "").replaceAll(":", "").replaceAll("T", "").replaceAll("Z", "").slice(0, 12));
-      const upcomingMiniEvents = miniEvents2.filter((item) => Number(item.endInt) >= currentTime);
+      const upcomingMiniEvents = miniEvents2.filter((item) => Number(item.endInt) >= getNumericNow());
 
       const allEvents = searchEvents.concat(upcomingMiniEvents).sort((a, b) => a.sort - b.sort);
       const html = allEvents.map(renderEvent).join("");
