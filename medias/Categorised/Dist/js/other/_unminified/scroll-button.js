@@ -13,12 +13,13 @@
     var myScrollButton = document.querySelector('[data-scrollto]');
     if(!myScrollButton) return;
 	
-    var myTarget         = myScrollButton.getAttribute('data-scrollto') ? document.getElementById(myScrollButton.getAttribute('data-scrollto')) : null;
+    var myTarget         = myScrollButton.hasAttribute('data-scrollto') ? document.getElementById(myScrollButton.getAttribute('data-scrollto')) : null;
     var myTarget2        = stir.t4Globals.myForm;			// DEPRECATED
     var myTargetWrapper  = stir.t4Globals.targetWrapper;	// DEPRECATE?
     var aniSlideInTarget = stir.t4Globals.slideForm;		// DEPRECATE? decide if the form should animate slide in or not
     var embedGCC         = stir.t4Globals.embedGCC;
     var useScroll        = false;    // flag if the target is missing - revert to the default action
+    const spinner = new stir.Spinner(myScrollButton);
 
     // if a page is using the old var make the script work
     if(!myTarget && myTarget2)
@@ -61,18 +62,42 @@
     
     // Sticky Button click - slide the form in
     if(useScroll){ 
-        myScrollButton.onclick = function(e){ 
-            e.preventDefault();
-
-            // animate slide in if enabled
-            if(aniSlideInTarget)
-                myTargetWrapper.classList.toggle("stir__slidedown");
+        myScrollButton.onclick = function(e){
             
-            // slight delay to allow the target element to slide open
-            setTimeout(function() {
-                stir.scrollToElement(myTargetWrapper, 80);
-            }, 200);
-
+            const promises = [];
+            
+            // :: SCROLL-BUTTON CLICK ::
+            // Nudge any not-yet-loaded lazy items to load themselves now.
+            // Wrap that in a Promise so we know when they're finished.
+            // An error also counts as "finished".
+            document.querySelectorAll("[loading=lazy]").forEach(img=>{
+                if(false===img.complete) {
+                    window.Promise && promises.push( new Promise(resolve => img.onerror = img.onload = resolve) );
+                    img.setAttribute("loading","eager");  // trigger loading by changing lazy to eager
+                    spinner.show();                       // user feedback incase there's a delay
+                }
+            });
+            
+            // Wait for all lazy items to finish loading, and then scroll:
+            if(window.Promise) {
+                
+                Promise.all(promises).then(()=>{
+                    spinner.hide();
+                    // animate if enabled
+                    if(aniSlideInTarget)
+                        myTargetWrapper.classList.toggle("stir__slidedown");
+                    // use scrollIntoView if supported
+                    if(myTargetWrapper.scrollIntoView) {
+                        myTargetWrapper.scrollIntoView({behavior: "smooth"});
+                        myTargetWrapper.style.scrollMarginTop = `${this.getBoundingClientRect().height}px`;
+                    } else {
+                        // slight delay to allow the target element to slide open
+                        setTimeout(()=>stir.scrollToElement(myTargetWrapper, offset),200);
+                    }
+                });
+                   
+                e.preventDefault();
+            }
         };
     }
 })();
