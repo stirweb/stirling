@@ -562,7 +562,7 @@ stir.search = (() => {
           }
         })
         .then((text) => {
-          if ("noerror" !== text && phrase.toLowerCase() !== text.toLowerCase()) {
+          if (undefined!==text && "noerror" !== text && phrase.toLowerCase() !== text.toLowerCase()) {
             panels.forEach((panel) => {
               const suggestion = document.createElement("a");
               suggestion.textContent = text;
