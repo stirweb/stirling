@@ -16,7 +16,24 @@ function conversation(data) {
     name = data[i].author.name || "";
     etc = data[i].author.etc || "";
     url = data[i].href || "";
-    html = '<article id="conv' + i + '" class="cell large-4 medium-6 small-12 flex-container flex-dir-column u-gap" aria-label="The Conversation: ' + title + '"><img alt="' + alt + '" src="' + image + '" loading="lazy" /><h3 class="header-stripped u-font-normal u-m-0"><a href="' + url + '" class="c-link ">' + title + '</a></h3><p class="text-sm">' + name + ",  " + etc + "</p></article>";
+    html =
+      '<article id="conv' +
+      i +
+      '" class="cell large-4 medium-6 small-12 flex-container flex-dir-column u-gap" aria-label="The Conversation: ' +
+      title +
+      '"><img alt="' +
+      alt +
+      '" src="' +
+      image +
+      '" loading="lazy" /><h3 class="header-stripped u-font-normal u-m-0"><a href="' +
+      url +
+      '" class="c-link ">' +
+      title +
+      '</a></h3><p class="text-sm">' +
+      name +
+      ",  " +
+      etc +
+      "</p></article>";
     convoEl.insertAdjacentHTML("beforeend", html);
   }
 }
@@ -35,7 +52,7 @@ var stir = stir || {};
 stir.t4Globals = stir.t4Globals || {};
 stir.t4Globals.conversation = stir.t4Globals.conversation || {};
 (function () {
-  const RSS_URL = `<t4 type="navigation" name="Helper: path to The Conversation feed" id="5194" />`;
+  const RSS_URL = `/webteam/data/the-conversation/`; //`<t4 type="navigation" name="Helper: path to The Conversation feed" id="5194" />`;
   const MAX = stir.t4Globals.conversation.max;
   const el = document.querySelector(".u-article-summaries");
   if (!el || !stir.Date.newsDate || !stir.Array.oxfordComma) return;
@@ -64,7 +81,7 @@ stir.t4Globals.conversation = stir.t4Globals.conversation || {};
         "beforeend",
         limit(Array.prototype.slice.call(data.querySelectorAll("entry")))
           .map(article)
-          .join("")
-      )
+          .join(""),
+      ),
     );
 })();

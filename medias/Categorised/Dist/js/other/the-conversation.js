@@ -8,4 +8,4 @@ function conversation(e){var t,r,a,l,n,o,i=document.querySelector(".convo");if(i
 		<!-- <small><time datetime="${e.querySelector("published").textContent}">${stir.Date.newsDate(new Date(e.querySelector("published").textContent))}</time></small> -->
 		<p class="text-sm">${e.querySelector("summary").textContent}</p>
 		<div data-href="$foaf:homepage.attribute[rdf:resource]$"><small>By  ${stir.Array.oxfordComma(Array.prototype.slice.call(e.querySelectorAll("author")).map(e=>`<span>${e.querySelector("name").textContent}</span>`))}</small></div>
-	</article>`;fetch('<t4 type="navigation" name="Helper: path to The Conversation feed" id="5194" />').then(e=>e.text()).then(e=>(new window.DOMParser).parseFromString(e,"text/xml")).then(e=>t.insertAdjacentHTML("beforeend",r(Array.prototype.slice.call(e.querySelectorAll("entry"))).map(a).join("")))}}();
+	</article>`;fetch("/webteam/data/the-conversation/").then(e=>e.text()).then(e=>(new window.DOMParser).parseFromString(e,"text/xml")).then(e=>t.insertAdjacentHTML("beforeend",r(Array.prototype.slice.call(e.querySelectorAll("entry"))).map(a).join("")))}}();
