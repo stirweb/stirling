@@ -52,7 +52,7 @@ var stir = stir || {};
 stir.t4Globals = stir.t4Globals || {};
 stir.t4Globals.conversation = stir.t4Globals.conversation || {};
 (function () {
-  const RSS_URL = `/webteam/data/the-conversation/`; //`<t4 type="navigation" name="Helper: path to The Conversation feed" id="5194" />`;
+  const RSS_URL = `<t4 type="navigation" name="Helper: path to The Conversation feed" id="5194" />`;
   const MAX = stir.t4Globals.conversation.max;
   const el = document.querySelector(".u-article-summaries");
   if (!el || !stir.Date.newsDate || !stir.Array.oxfordComma) return;
