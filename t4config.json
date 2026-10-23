@@ -1837,6 +1837,16 @@
         "id": 202028,
         "description": "main.js",
         "projectPath": "medias/Categorised/Dist/js/api/main.js"
+      },
+      {
+        "id": 200841,
+        "description": "auth.php",
+        "projectPath": "medias/Categorised/Dist/php/portal/auth.php"
+      },
+      {
+        "id": 200842,
+        "description": "access.php",
+        "projectPath": "medias/Categorised/Dist/php/portal/access.php"
       }
     ]
   }
