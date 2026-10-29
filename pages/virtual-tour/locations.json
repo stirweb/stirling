@@ -1,4 +1,20 @@
-[
+[	{
+		"id": "G002",
+		"panorama": "Macrobert-Art-Centre_G002.jpg",
+		"options": {
+			"caption": "Macrobert Art Centre"
+		},
+		"markers": [
+			{
+				"id": "G002-1",
+				"position": {
+					"textureX": 7780,
+					"textureY": 3598
+				},
+				"html": "<div class=\"x-tour--sphere-label\"><p>Filmhouse</p><p>135 seat cinema showing all the latest films<br><a href=\"https://www.macrobertartscentre.org/whats-on\">What's on</a></p></div>"
+			}
+		]
+	},
 	{
 		"id": "G009",
 		"panorama": "Sporte-Centre-Entrance_G009.jpg",
@@ -503,23 +519,6 @@
 					"textureY": 3061
 				},
 				"html": "<div class=\"x-tour--sphere-label\"><p>Playhouse</p><p>80 seat studio theatre for more intimate performances, screenings and talks/presentations<br><a href=\"https://www.macrobertartscentre.org/whats-on\">What's on</a></p></div>"
-			}
-		]
-	},
-	{
-		"id": "G002",
-		"panorama": "Macrobert-Art-Centre_G002.jpg",
-		"options": {
-			"caption": "Macrobert Art Centre"
-		},
-		"markers": [
-			{
-				"id": "G002-1",
-				"position": {
-					"textureX": 7780,
-					"textureY": 3598
-				},
-				"html": "<div class=\"x-tour--sphere-label\"><p>Filmhouse</p><p>135 seat cinema showing all the latest films<br><a href=\"https://www.macrobertartscentre.org/whats-on\">What's on</a></p></div>"
 			}
 		]
 	},
