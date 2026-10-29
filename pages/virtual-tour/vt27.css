@@ -1,0 +1,24 @@
+
+
+.x-tour--sphere-label {
+	background: white;
+	font-size: 1rem;
+	padding: 0.875rem 1rem 1rem 1rem;
+	border-radius: 0 1rem 1rem 1rem;
+}
+.x-tour--sphere-label > p {
+	margin: 0;
+	
+}
+.x-tour--sphere-label > p:first-child {
+	font-weight: bold;
+	font-size: 1.125rem;
+}
+.x-tour--sphere-label > p:nth-child(2) {
+	font-size: 1rem;
+	margin-bottom: .375rem;
+}
+
+.x-tour--sphere-label svg {
+	display: none;
+}

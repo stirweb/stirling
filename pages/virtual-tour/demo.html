@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="../../medias/Categorised/Dist/css/app.css">
+		<meta name="description" content="Find an undergraduate or postgraduate taught course at the University of Stirling" />
+		<!-- for optimal display on high DPI devices -->
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.min.css" />
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin/index.css" />
+			<link rel="stylesheet" href="./vt27.css" />
+			
+		
+			<script type="importmap">
+			{
+				"imports": {
+					"three": "https://cdn.jsdelivr.net/npm/three/build/three.module.js",
+					"@photo-sphere-viewer/core": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.module.js",
+					"@photo-sphere-viewer/markers-plugin": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin/index.module.js"
+				}
+			}
+			</script>
+		
+		<style>
+		</style>
+		<style>
+			main {
+				margin: 2rem;
+			}
+			h1 {
+				margin: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+		<h1>Location marker tool 360&deg;</h1>
+		<p><strong> Photoshpere™ demonstrator </strong></p>
+		<p>Choose a 360&deg; image:</p>
+		<p><select id=chooser>
+			<!-- <option>Airthrey-Castle_G055.jpg</option>
+			<option>Blue-Boy-Sculpture_G030.jpg</option>
+			<option>Box-Office-1_G005.jpg</option>
+			<option>Box-Office-2_G006.jpg</option>
+			<option>Campus-Central-1_G037.jpg</option>
+			<option>Cinema-1_G004.jpg</option>
+			<option>Doctors-Surgery_G053.jpg</option>
+			<option>Entrance-to-Swimming-Academy_G012.jpg</option>
+			<option>Entrance-to-gym_G011.jpg</option>
+			<option>Foyer_G001.jpg</option>
+			<option>Garden-with-pond_G057.jpg</option>
+			<option>Grounds_G032.jpg</option>
+			<option>Gym-1_G015.jpg</option>
+			<option>Gym-2_G016.jpg</option>
+			<option>Gym-3_G017.jpg</option>
+			<option>Gym-4_G018.jpg</option>
+			<option>Gym-5_G025.jpg</option>
+			<option>Gym-6_G026.jpg</option>
+			<option>Gym-7_G027.jpg</option>
+			<option>Gym-8_G028.jpg</option>
+			<option>Japanese-Sculpture_G029.jpg</option>
+			<option>Lecture-Theatre-10_G050.jpg</option>
+			<option>Lecture-Theatre-11_G051.jpg</option>
+			<option>Lecture-Theatre-12_G052.jpg</option>
+			<option>Lecture-Theatre-1_G039.jpg</option>
+			<option>Lecture-Theatre-2_G040.jpg</option>
+			<option>Lecture-Theatre-3_G041.jpg</option>
+			<option>Lecture-Theatre-4_G042.jpg</option>
+			<option>Lecture-Theatre-5_G043.jpg</option>
+			<option>Lecture-Theatre-6_G044.jpg</option>
+			<option>Lecture-Theatre-7_G045.jpg</option>
+			<option>Lecture-Theatre-8_G046.jpg</option>
+			<option>Lecture-Theatre-9_G047.jpg</option>
+			<option>Loch-View_G031.jpg</option>
+			<option>Loch-from-Path_G034.jpg</option>
+			<option>Macrobert-Art-Centre-2_G003.jpg</option>
+			<option>Macrobert-Art-Centre_G002.jpg</option>
+			<option>Main-Entrance1_G049.jpg</option>
+			<option>Outdoor-Pitches-2_G020.jpg</option>
+			<option>Outdoor-Pitches-3_G021.jpg</option>
+			<option>Outdoor-Pitches1_G019.jpg</option>
+			<option>Outdoor-Running-Track_G022.jpg</option>
+			<option>Physio-Room-1_G010.jpg</option>
+			<option>Spin-Studio_G033.jpg</option>
+			<option>Sporte-Centre-Entrance_G009.jpg</option>
+			<option>Sports-Centre-Interior_G036.jpg</option>
+			<option>Sports-Hall-1_G023.jpg</option>
+			<option>Sports-Hall-2_G024.jpg</option>
+			<option>Support-Hub-1_G007.jpg</option>
+			<option>Swimming-Pool-1_G013.jpg</option>
+			<option>Swimming-Pool-2_G014.jpg</option>
+			<option>View-from-Link-Bridge_G054.jpg</option>
+			<option>View-from-UoS-sign_G035.jpg</option>
+			<option>View-of-Link-Bridge_G056.jpg</option>
+			<option>Wellbeing-Suite_G008.jpg</option> -->
+		</select></p>
+
+<!-- -->
+
+	<div style="background: lightblue; padding: 3rem; display:none;">
+		<div class="x-tour--sphere-label poi"><p><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#ohaye"></use></svg> Sports Centre</p></div>
+	</div>
+	
+	<!-- the viewer container must have a defined size -->
+	<div id="viewer" style="width: 100%; height: 60vh;margin-bottom:4rem"></div>
+
+	
+
+<script>
+	async function getData(url) {
+	  try {
+		const response = await fetch(url);
+		if (!response.ok) {
+		  throw new Error(`Response status: ${response.status}`);
+		}
+	
+		const result = await response.json();
+		return result;
+	  } catch (error) {
+		console.error(error.message);
+	  }
+	}
+</script>
+
+<script type="module">
+	import { Viewer } from '@photo-sphere-viewer/core';
+	import { MarkersPlugin } from '@photo-sphere-viewer/markers-plugin';
+	
+	const c=document.getElementById('chooser');
+	
+	getData("./locations.json")
+		.then(locations => {
+			console.info(locations);
+			
+			
+			locations.forEach(location => {
+				const option = document.createElement("option");
+				option.textContent = location.panorama;
+				c.append(option);
+			});
+			
+			const location = locations[0];
+			const viewer = new Viewer({
+				container: document.querySelector('#viewer'),
+				panorama: `./img/${location.panorama}`,
+				defaultYaw: (location.options.defaultYaw||Math.PI/2),
+				defaultZoomLvl: (location.options.defaultZoomLvl||50),
+				loadingTxt: "Loading…",
+				caption:location.options.caption,
+				navbar: ['zoomOut','zoomIn','move','caption','fullscreen'],
+				plugins: [
+					MarkersPlugin.withConfig({
+						markers: location.markers,
+					})
+				]
+			});
+			
+			window.publicViewer = viewer;
+			
+			const markers = viewer.getPlugin(MarkersPlugin);
+			
+			console.info(("Markers",markers))
+			
+			markers.addEventListener('select-marker', ({ marker }) => {
+				if (marker.id === 'video') {
+					if (marker.video.paused) {
+						marker.video.play();
+					} else {
+						marker.video.pause();
+					}
+				}
+				if (marker.data && marker.data.nav) {
+					const location = locations.filter(l=>l.id===marker.data.nav);
+					if(location.length) warpTo(location[0]);
+				}
+			});
+			
+			c.addEventListener("change", e=> {
+				const panorama = e.target.options[e.target.selectedIndex].value;
+				const markerdata = locations[e.target.selectedIndex].markers;
+				const options = locations[e.target.selectedIndex].options;
+				
+				console.info("Location change:",panorama,options);
+				
+				warpTo(locations[e.target.selectedIndex])
+				
+				console.info("Position:",viewer.getPosition());
+			});
+			
+			const warpTo = (location) => {
+				markers.clearMarkers();
+				viewer.setPanorama(`./img/${location.panorama}`, location.options);
+				markers.setMarkers(location.markers);
+				viewer.rotate({"pitch":0,"yaw":location.options.defaultYaw||0});
+				viewer.zoom(location.options.defaultZoomLvl||50);
+			}
+
+			
+		});
+
+
+</script>
+<!-- -->
+
+
+		</main>
+		
+		<script src="../../medias/Categorised/Dist/js/app.js"></script>
+		
+		<svg viewBox="0 0 0 0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<symbol id="ohaye" viewBox="0 0 648 648">
+				<g fill="currentColor">
+				<path d="M245.000000,324.500000 C245.000000,280.593361,280.201611,245.000000,323.625000,245.000000 C367.048389,245.000000,402.250000,280.593361,402.250000,324.500000 C402.250000,368.406639,367.048389,404.000000,323.625000,404.000000 C280.201611,404.000000,245.000000,368.406639,245.000000,324.500000 Z M324.000000,436.000000 C464.750000,436.000000,515.000000,325.000000,515.000000,325.000000 C515.000000,325.000000,452.750000,213.000000,324.000000,213.000000 C195.652573,213.000000,132.000000,325.000000,132.000000,325.000000 C132.000000,325.000000,183.250000,436.000000,324.000000,436.000000 Z "/>
+				  <path d="M278.333329,324.375001 C278.333329,299.177010,298.928229,278.750001,324.333329,278.750001 C328.120249,278.750001,331.800289,279.203871,335.321169,280.059771 C328.699759,284.445701,324.333329,291.962931,324.333329,300.500000 C324.333329,314.030980,335.302349,325.000000,348.833329,325.000000 C357.307229,325.000000,364.776340,320.697940,369.175698,314.158750 C369.933208,317.443210,370.333328,320.862760,370.333328,324.375000 C370.333328,349.572990,349.738428,370.000000,324.333328,370.000000 C298.928228,370.000000,278.333328,349.572990,278.333328,324.375000 Z "/>
+				  <path d="M585.072945,462.683681 C651.547679,332.219671,611.116758,175.391195,495.956863,92.304993 L505.290255,114.158776 L485.932440,114.619720 C588.538340,191.674670,623.945556,333.527344,563.688789,451.787909 C496.116507,584.405980,333.830161,637.136010,201.212091,569.563728 C68.594020,501.991446,15.863990,339.705100,83.436272,207.087030 C145.654470,84.976940,288.172042,30.596599,413.847862,75.772666 C413.847862,75.772666,381.923555,106.713948,381.923555,106.713948 C381.923555,106.713948,479.497611,97.091212,479.497611,97.091212 C479.497611,97.091212,417.879483,10.289729,417.879483,10.289729 L424.700797,54.108533 C287.141546,3.179295,130.273206,62.299830,62.052116,196.191258 C-11.537735,340.619472,45.888105,517.358034,190.316319,590.947884 C334.744533,664.537735,511.483095,607.111895,585.072945,462.683681 Z "/>
+				</g>
+			</symbol>
+		</svg>
+		
+	</body>
+
+</html>

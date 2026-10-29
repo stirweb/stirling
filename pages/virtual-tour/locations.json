@@ -1,0 +1,633 @@
+[
+	{
+		"id": "G009",
+		"panorama": "Sporte-Centre-Entrance_G009.jpg",
+		"options": {
+			"caption": "University of Stirling sports facilities",
+			"defaultYaw": 6
+		},
+		"markers": [
+			{
+				"id": "G009-1",
+				"position": { "textureX": 5920, "textureY": 4000 },
+				"html": "<div class=\"x-tour--sphere-label vr\"><p>Sports Centre</p></div>",
+				"anchor": "top left",
+				"data": {
+					"nav": "G036"
+				}
+			},
+			{
+				"id": "G009-2",
+				"position": { "textureX": 8180, "textureY": 4080 },
+				"html": "<div class=\"x-tour--sphere-label vr\"><p>Swimming Pool</p></div>",
+				"anchor": "top left",
+				"data": {
+					"nav": "G013"
+				}
+			}
+		]
+	},
+	{
+		"id": "G036",
+		"panorama": "Sports-Centre-Interior_G036.jpg",
+		"options": {
+			"defaultYaw": 4.29,
+			"caption": "Sports Centre reception",
+			"description": "Sports Centre reception and Nourish café."
+		},
+		"markers": [
+			{
+				"id": "G036-1",
+				"anchor":"left 50%",
+				"position": {
+					"textureX": 1013,
+					"textureY": 4150
+				},
+				"html": "<p class=x-tour-tooltip>Sports merchandise</p>"
+			},
+			{
+				"id": "G036-2",
+					"position": {
+						"textureX": 863,
+						"textureY": 4081
+					},
+				"circle": 10,
+				"svgStyle": {
+					"fill"		: "#f4c400",
+					"stroke"		: "#ffffff",
+					"strokeWidth"	: "2px"
+				},
+				"size": { "width": 96, "height": 96 },
+				"tooltip": "Merchandise"
+			},
+			{
+				"id": "G036-3",
+				"position": {
+					"textureX": 4734,
+					"textureY": 3966
+				},
+				"circle": 10,
+				"svgStyle": {
+					"fill"		: "#FF6D00",
+					"stroke"		: "#ffffff",
+					"strokeWidth"	: "2px"
+				},
+				"tooltip": "Nourish café"
+			},
+			{
+				"id": "G036-4",
+				"position": {
+					"textureX": 10231,
+					"textureY": 3645
+				},
+				"html": "<div class=\"x-tour--sphere-label vr\"><p>Sports Centre entrance</p></div>",
+				"data": {
+					"nav": "G009"
+				}
+			}
+		]
+	},{
+		"id": "G003",
+		"panorama": "Macrobert-Art-Centre-2_G003.jpg",
+		"options": {		
+			"caption": "Macrobert Arts Centre",
+			"defaultYaw": 3.14
+		},
+		"markers": [
+			{
+				"id": "video",
+				"videoLayer": "https://player.vimeo.com/external/288168131.sd.mp4?s=f21572225ec5606e2914863688904e67b430a7d0&profile_id=164",
+				"position": [
+					{"textureX": 14289, "textureY": 2888},
+					{"textureX": 1500, "textureY": 2905},
+					{"textureX": 1507, "textureY": 4804},
+					{"textureX": 14276, "textureY": 4804}
+				],
+				"tooltip": "Play/Pause"
+			}
+		]
+	},
+	{
+		"id": "G024",
+		"panorama": "Sports-Hall-2_G024.jpg",
+		"options": {
+			"caption": "State of the art tennis courts",
+			"defaultYaw": 0
+		},
+		"markers": [
+			{
+				"id": "G009-2",
+				"position": { 		"textureX": 7925, "textureY": 2759 },
+				"html": "<div class=x-tour--sphere-label><p>State of the art tennis courts</p></div>"
+			}
+		]
+	},
+	{
+		"id": "G033",
+		"panorama": "Spin-Studio_G033.jpg",
+		"options": {
+			"caption": "Spin Studio",
+			"defaultYaw": 0
+		},
+		"markers": [
+			{
+				"id": "G033-1",
+				"position": { 		"textureX": 8039, "textureY": 3841 },
+				"html": "<div class=x-tour--sphere-label><p>Over 70 fitness classes per week</p></div>"
+			},
+			{
+				"id": "video",
+				"videoLayer": "https://player.vimeo.com/external/288168131.sd.mp4?s=f21572225ec5606e2914863688904e67b430a7d0&profile_id=164",
+				"position": [
+					{"textureX": 6660, "textureY": 3764},
+					{"textureX": 6878, "textureY": 3758},
+					{"textureX": 6889, "textureY": 3894},
+					{"textureX": 6670, "textureY": 3893}
+				],
+				"tooltip": "Play/Pause"
+			}
+		]
+	},
+	{
+		"id": "G015",
+		"panorama": "Gym-1_G015.jpg",
+		"options": {
+			"caption": "High performance suite",
+			"defaultYaw": 0
+		},
+		"markers": [
+			{
+				"id": "G015-1",
+				"position": { "textureX": 12469, "textureY": 3323 },
+				"html": "<div class=x-tour--sphere-label><p>High performance suite</p><p>The high performance suite is available to high performance<br>athletes, partners, supported student clubs and external groups.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/high-performance-suite/\">Read more</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G016",
+		"panorama": "Gym-2_G016.jpg",
+		"options": {
+			"caption": "Fitness suite",
+			"defaultYaw": 0
+		},
+		"markers": [
+			{
+				"id": "G016-1",
+				"position": { "textureX": 5329, "textureY": 4792 },
+				"html": "<div class=x-tour--sphere-label><p>Fitness suite</p><p>Equipment includes barbells, discs, dumbbells, functional<br>training equipment and a 60m indoor sprint track.</p></div>"
+			}
+		]
+	},
+	{
+		"id": "G025",
+		"panorama": "Gym-5_G025.jpg",
+		"options": {
+			"caption": "Fitness suite",
+			"defaultYaw": 4
+		},
+		"markers": [
+			{
+				"id": "G025-1",
+				"position": { "textureX": 854, "textureY": 5105 },
+				"html": "<div class=x-tour--sphere-label><p>Fitness suite</p><p>100+ station fitness suite.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/gym/\">Fitness suite details</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G026",
+		"panorama": "Gym-6_G026.jpg",
+		"options": {
+			"caption": "Fitness suite",
+			"defaultYaw": 4
+		},
+		"markers": [
+			{
+				"id": "G026-1",
+				"position": { "textureX": 13414, "textureY": 3345 },
+				"html": "<div class=x-tour--sphere-label><p>Fitness suite</p><p>Technogym's new Excite Live range of equipment.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/gym/\">Gym facilities</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G027",
+		"panorama": "Gym-7_G027.jpg",
+		"options": {
+			"caption": "Fitness suite",
+			"defaultYaw": 4
+		},
+		"markers": [
+			{
+				"id": "G027-1",
+				"position": { "textureX": 2345, "textureY": 5202 },
+				"html": "<div class=x-tour--sphere-label><p>Fitness suite</p><p>Two Outrace functional rigs.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/gym/\">Gym facilities</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G028",
+		"panorama": "Gym-8_G028.jpg",
+		"options": {
+			"caption": "Multi-purpose studio",
+			"defaultYaw": 0
+		},
+		"markers": [
+			{
+				"id": "G028-1",
+				"position": { "textureX": 8176, "textureY": 5315 },
+				"html": "<div class=x-tour--sphere-label><p>Multi-Purpose studio</p><p>Multi-Purpose studio for small group classes and extra gym floor space.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/gym/\">Gym facilities</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G017",
+		"panorama": "Gym-3_G017.jpg",
+		"options": {
+			"caption": "Strength and conditioning studio",
+			"defaultYaw": 0.43
+		},
+		"markers": [
+			{
+				"id": "G017-1",
+				"position": { "textureX": 11296, "textureY": 4416 },
+				"html": "<div class=x-tour--sphere-label><p>Strength and conditioning studio</p><p>Several lifting areas and top-of-the-range<br>Eleiko, Blk Box and Technogym equipment.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/gym/\">Gym facilities</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G018",
+		"panorama": "Gym-4_G018.jpg",
+		"options": {
+			"caption": "Strength and conditioning studio",
+			"defaultYaw": 0.43
+		},
+		"markers": [
+			{
+				"id": "G018-1",
+				"position": { "textureX": 7857, "textureY": 4985 },
+				"html": "<div class=x-tour--sphere-label><p>Strength and conditioning studio</p><p>Several lifting areas and top-of-the-range<br>Eleiko, Blk Box and Technogym equipment.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/gym/\">Gym facilities</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G010",
+		"panorama": "Physio-Room-1_G010.jpg",
+		"options": {
+			"caption": "Physio room",
+			"defaultYaw": 0.43
+		},
+		"markers": [
+			{
+				"id": "G010-1",
+				"position": { "textureX": 7812, "textureY": 2935 },
+				"html": "<div class=x-tour--sphere-label><p>Physio room</p><p>Services include physiotherapy and sports massage.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/sports-clinic/\">Gym facilities</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G023",
+		"panorama": "Sports-Hall-1_G023.jpg",
+		"options": {
+			"caption": "Sports hall",
+			"defaultYaw": 6.27
+		},
+		"markers": [
+			{
+				"id": "G023-1",
+				"position": { "textureX": 8017, "textureY": 2900 },
+				"html": "<div class=x-tour--sphere-label><p>Sports hall</p><p>Our two sports halls are used for a wide variety of sports,<br>including badminton, table tennis, short tennis and basketball.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/sports-hall/\">Gym facilities</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G013",
+		"panorama": "Swimming-Pool-1_G013.jpg",
+		"options": {
+			"caption": "Swimming pool",
+			"defaultYaw": 1.27
+		},
+		"markers": [
+			{
+				"id": "G013-1",
+				"position": {
+					"textureX": 11040,
+					"textureY": 4361
+				},
+				"html": "<div class=x-tour--sphere-label><p>Swimming pool</p><p>50-metre swimming pool available for recreational and<br>lane swimming as well as for competitive use.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/swimming-pool-timetable/\">Pool timetable</a></p></div>"
+			},
+			{
+				"id": "G013-2",
+				"position": {
+					"textureX": 13225,
+					"textureY": 4015
+				},
+				"html": "<div class=\"x-tour--sphere-label vr\"><p>Poolside view</p></div>",
+				"data": {
+					"nav": "G014"
+				}
+			}
+		]
+	},
+	{
+		"id": "G014",
+		"panorama": "Swimming-Pool-2_G014.jpg",
+		"options": {
+			"caption": "Swimming pool",
+			"defaultYaw": 3.27
+		},
+		"markers": [
+			{
+				"id": "G014-1",
+				"position": { "textureX": 300, "textureY": 4074 },
+				"html": "<div class=x-tour--sphere-label><p>Some of our champion swimmers</p><p class=\"cta-link text-xsm\"><span class=cta-link-icon></span> <a style=\"font-size:1rem;\" href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/performance-sport/swimming/\">Performance swimming programme</a></p></div>"
+			},
+			{
+				"id": "G014-2",
+				"position": { "textureX": 9531, "textureY": 3562 },
+				"html": "<div class=x-tour--sphere-label><p>Swimming pool</p><p>Swimming lessons are available for children and adults.<br>The pool is also used for a range of classes including<br>aqua aerobics and group activities such as water polo.</p><p class=cta-link><span class=cta-link-icon></span> <a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/swimming-pool-timetable/\">Pool timetable</a></p></div>"
+			},
+			{
+				"id": "G014-3",
+				"position": {
+					"textureX": 12994,
+					"textureY": 4188
+				},
+				"html": "<div class=\"x-tour--sphere-label vr\"><p>Swimming pool entrance</p></div>",
+				"data": {
+					"nav": "G013"
+				}
+			}
+		]
+	},
+	{
+		"id": "G020",
+		"panorama": "Outdoor-Pitches-2_G020.jpg",
+		"options": {
+			"caption": "Artificial pitch",
+			"defaultYaw": 5.1
+		},
+		"markers": [
+			{
+				"id": "G020-1",
+				"position": { "textureX": 4980, "textureY": 4400 },
+				"html": "<div class=x-tour--sphere-label><p>Artificial pitch</p><p>Full size hockey pitch with a sand-based surface.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/pitches/\">Sports facilities: pitches</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G021",
+		"panorama": "Outdoor-Pitches-3_G021.jpg",
+		"options": {
+			"caption": "3G Artificial pitch"
+		},
+		"markers": [
+			{
+				"id": "G021-1",
+				"position": {
+					"textureX": 8366,
+					"textureY": 4376
+				},
+				"html": "<div class=x-tour--sphere-label><p>3G Artificial pitch</p><p>Full size football pitch. 3G surface is G-Max FIFA and<br>World Rugby tested and certified by Sports Labs.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/pitches/\">Sports facilities: pitches</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G019",
+		"panorama": "Outdoor-Pitches1_G019.jpg",
+		"options": {
+			"caption": "Grass pitch"
+		},
+		"markers": [
+			{
+				"id": "G019-1",
+				"position": {
+					"textureX": 7617,
+					"textureY": 4246
+				},
+				"html": "<div class=x-tour--sphere-label><p>Grass pitch</p><p>Three grass pitches located next to the Sports Centre.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/pitches/\">Sports facilities: pitches</a></p></div>"
+			},
+			{
+				"id": "G019-2",
+				"position": {
+					"textureX": 10010,
+					"textureY": 3790
+				},
+				"html": "<div class=\"x-tour--sphere-label poi\"><p>Sport Centre changing facilities</p></div>"
+			}
+		]
+	},
+	{
+		"id": "G022",
+		"panorama": "Outdoor-Running-Track_G022.jpg",
+		"options": {
+			"caption": "Athletics track",
+			"defaultYaw": 4.12
+		},
+		"markers": [
+			{
+				"id": "G022-1",
+				"position": {
+					"textureX": 1432,
+					"textureY": 4230
+				},
+				"html": "<div class=x-tour--sphere-label><p>Athletics track</p><p>Our athletics track is a six-lane, 400m, polymeric, all-weather surface.<br><a href=\"https://www.stir.ac.uk/student-life/sport-at-stirling/facilities/athletics-track/\">Sports facilities: track</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G005",
+		"panorama": "Box-Office-1_G005.jpg",
+		"options": {
+			"caption": "Macrobert Arts Centre"
+		},
+		"markers": [
+			{
+				"id": "G005-1",
+				"position": {
+					"textureX": 10563,
+					"textureY": 4005
+				},
+				"html": "<div class=\"x-tour--sphere-label poi\"><p>Box Office</p><p>Macrobert Arts Centre delivers an extensive programme of theatre, dance, music, visual arts and film. Student discounts available for certain performances.<br><a href=\"https://www.macrobertartscentre.org/\">Macrobert Arts Centre</a></p></div>",
+				"size": {"width": 450, "height": 100},
+				"anchor": "top left"
+			}
+		]
+	},
+	{
+		"id": "G001",
+		"panorama": "Foyer_G001.jpg",
+		"options": {
+			"caption": "Macrobert Arts Centre foyer"
+		},
+		"markers": [
+			{
+				"id": "G001-1",
+				"position": {
+					"textureX": 1204,
+					"textureY": 4087
+				},
+				"html": "<div class=\"x-tour--sphere-label poi\"><p>Mainhouse theatre auditorium</p><p>Host to an array of theatre, dance, music and visual art events. 447 seats.<br><a href=\"https://www.macrobertartscentre.org/\">Macrobert Arts Centre</a></p></div>",
+				"size": {"width": 450, "height": 100},
+				"anchor": "top left"
+			},
+			{
+				"id": "G001-2",
+				"position": {
+					"textureX": 5322,
+					"textureY": 3948
+				},
+				"html": "<div class=\"x-tour--sphere-label poi\"><p>Backstage Bar & Kitchen</p><p>Fully licenced bar and dining options.<br><a href=\"https://www.macrobertartscentre.org/backstage-bar-kitchen\">View menu</a></p></div>",
+				"anchor": "top left"
+			},
+			{
+				"id": "G001-3",
+				"position": {
+					"textureX": 7845,
+					"textureY": 4233
+				},
+				"html": "<div class=\"x-tour--sphere-label poi\"><p>Cinema</p><p>135 seat cinema showing all the latest films.<br><a href=\"https://www.macrobertartscentre.org/whats-on\">What's on</a></p></div>",
+				"anchor": "top left"
+			}
+		]
+	},
+	{
+		"id": "G003",
+		"panorama": "Macrobert-Art-Centre-2_G003.jpg",
+		"options": {
+			"caption": "Macrobert Art Centre"
+		},
+		"markers": [
+			{
+				"id": "G003-1",
+				"position": {
+					"textureX": 7715,
+					"textureY": 3061
+				},
+				"html": "<div class=\"x-tour--sphere-label\"><p>Playhouse</p><p>80 seat studio theatre for more intimate performances, screenings and talks/presentations<br><a href=\"https://www.macrobertartscentre.org/whats-on\">What's on</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G002",
+		"panorama": "Macrobert-Art-Centre_G002.jpg",
+		"options": {
+			"caption": "Macrobert Art Centre"
+		},
+		"markers": [
+			{
+				"id": "G002-1",
+				"position": {
+					"textureX": 7780,
+					"textureY": 3598
+				},
+				"html": "<div class=\"x-tour--sphere-label\"><p>Filmhouse</p><p>135 seat cinema showing all the latest films<br><a href=\"https://www.macrobertartscentre.org/whats-on\">What's on</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G004",
+		"panorama": "Cinema-1_G004.jpg",
+		"options": {
+			"caption": "Macrobert Arts Centre"
+		},
+		"markers": [
+			{
+				"id": "G004-1",
+				"position": {
+					"textureX": 5873,
+					"textureY": 3488
+				},
+				"html": "<div class=\"x-tour--sphere-label\"><p>Mainhouse</p><p>Mainhouse theatre auditorium with 447 seats.<br>Host to an array of theatre, dance, music and visual art events.<br><a href=\"https://www.macrobertartscentre.org/whats-on\">What's on</a></p></div>"
+			}
+		]
+	},
+	{
+		"id": "G007",
+		"panorama": "Support-Hub-1_G007.jpg",
+		"options": {
+			"caption": "Student Services Hub"
+		},
+		"markers": [
+			{
+				"id": "G007-1",
+				"position": {
+					"textureX": 7015,
+					"textureY": 3126
+				},
+				"html": "<div class=\"x-tour--sphere-label\"><p>Student Services Hub</p><p>The Student Services Hub brings lots of services together to help you resolve a whole range of queries through a single point of contact<br><a href=\"https://www.stir.ac.uk/student-life/support-wellbeing/\">Support and wellbeing</a></p></div>",
+				"size": {"width": 450, "height": 100}
+			},
+			{
+				"id": "G007-2",
+				"position": {
+					"textureX": 12462,
+					"textureY": 4188
+				},
+				"html": "<div class=\"x-tour--sphere-label vr\"><p>Queen's Court</p></div>",
+				"data": {
+					"nav": "G037"
+				}
+			}
+		]
+	},
+	{
+		"id": "G008",
+		"panorama": "Wellbeing-Suite_G008.jpg",
+		"options": {
+			"caption": "Loch View wellbeing suite",
+			"defaultYaw": 1.33
+		},
+		"markers": [
+			{
+				"id": "G008-1",
+				"position": {
+					"textureX": 10091,
+					"textureY": 3956
+				},
+				"html": "<div class=\"x-tour--sphere-label poi\"><p>Wellbeing suite</p><p>Relax in the main space. Enjoy the sofas, beanbag and weighted blankets.<br><a href=\"\"></a></p></div>",
+				"anchor": "top left"
+			},
+			{
+				"id": "G008-2",
+				"position": {
+					"textureX": 3320,
+					"textureY": 4884
+				},
+				"html": "<div class=\"x-tour--sphere-label poi\"><p>Arts and crafts area</p></div>",
+				"anchor": "top left"
+			}
+		]
+	},
+	{
+		"id": "G037",
+		"panorama": "Campus-Central-1_G037.jpg",
+		"options": {
+			"caption": "Queens Court"
+		},
+		"markers": [
+			{
+				"id": "G037-1",
+				"position": {
+					"textureX": 4134,
+					"textureY": 3800
+				},
+				"html": "<div class=\"x-tour--sphere-label vr\"><p>Student Services Hub</p></div>",
+				"anchor": "top left",
+				"data": {
+					"nav": "G007"
+				}
+			},
+			{
+				"id": "G037-2",
+				"position": {
+					"textureX": 7340,
+					"textureY": 3800
+				},
+				"html": "<div class=\"x-tour--sphere-label vr\"><p>Macrobert Arts Centre</p></div>",
+				"anchor": "top left",
+				"data": {
+					"nav": "G005"
+				}
+			}
+		]
+	}
+]
