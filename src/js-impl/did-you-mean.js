@@ -9,9 +9,10 @@ stir.didYouMean = (() => {
 	const check = phrase => {
 		debug && console.info('[Did you mean] phrase',phrase);
 		const input   = getEndpoint();
-		const body = new FormData();
-		body.append('phrase',phrase);
-		const options = {method:"POST", body: body};
+		input.search = new URLSearchParams({phrase: phrase});
+		//const body = new FormData();
+		//body.append('phrase',phrase);
+		const options = {method:"GET"}; //, body: body
 		return fetch( new Request(input, options) );
 	};
 

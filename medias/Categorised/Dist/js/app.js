@@ -3406,9 +3406,10 @@ stir.didYouMean = (() => {
 	const check = phrase => {
 		debug && console.info('[Did you mean] phrase',phrase);
 		const input   = getEndpoint();
-		const body = new FormData();
-		body.append('phrase',phrase);
-		const options = {method:"POST", body: body};
+		input.search = new URLSearchParams({phrase: phrase});
+		//const body = new FormData();
+		//body.append('phrase',phrase);
+		const options = {method:"GET"}; //, body: body
 		return fetch( new Request(input, options) );
 	};
 
@@ -3462,19 +3463,19 @@ stir.didYouMean = (() => {
  * This hack is for browsers that do not support the nth-of-type selector correctly.
  * It adds a class to the second half of the component to ensure correct styling.
  */
-(function () {
-  document.querySelectorAll(".c-half-n-half:nth-of-type(even)").forEach((elem) => {
-    const e = elem.querySelector(".u-hook");
-    if (e) {
-      e.classList.add("u-hook-bl");
-      e.classList.remove("u-hook-tr");
-    }
-  });
-})();
+// (function () {
+//   document.querySelectorAll(".c-half-n-half:nth-of-type(even)").forEach((elem) => {
+//     const e = elem.querySelector(".u-hook");
+//     if (e) {
+//       e.classList.add("u-hook-bl");
+//       e.classList.remove("u-hook-tr");
+//     }
+//   });
+// })();
 
 (function () {
-  document.querySelectorAll(".c-half-n-half-2026:nth-of-type(odd)").forEach((el) => {
-    // Make hook top - bottom by default
+  document.querySelectorAll(".c-half-n-half-2026:nth-child(odd of .c-half-n-half-2026)").forEach((el) => {
+    // Make hook top - its bottom by default
     el.classList.add("u-hook-top-left");
     el.classList.remove("u-hook-bottom-right");
     el.classList.remove("u-margin-bottom");

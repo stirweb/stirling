@@ -500,9 +500,30 @@ a:has(img):hover {
         background-position: top;
         background-size: 100% 220%;
 
+        &.important {
+          background: linear-gradient(to top, $energy-yellow 50%, $tint-green 50%);
+          background-position: top;
+          background-size: 100% 220%;
+          border-color: $energy-yellow;
+
+          &:hover {
+            color: $black !important;
+          }
+        }
+
+        &.neutral {
+          background: linear-gradient(to top, $medium-gray 50%, $tint-green 50%);
+          background-position: top;
+          background-size: 100% 220%;
+
+          &:hover {
+            color: $black !important;
+          }
+        }
+
         &:hover {
           color: $white;
-          border-color: $heritage-green;
+
           background-position: 0 99%;
         }
       }
@@ -545,12 +566,44 @@ a:has(img):hover {
         background-position: top;
       }
 
+      &.important {
+        background: linear-gradient(to top, $energy-yellow 50%, #fff 50%);
+        background-position: bottom;
+        background-size: 100% 220%;
+        border-color: $energy-yellow;
+
+        &:hover {
+          color: $black !important;
+          background-position: top;
+        }
+      }
+
       &.hollow {
         color: $white;
         background: $heritage-green;
         background: linear-gradient(to top, $tint-green 50%, $heritage-green 50%);
         background-position: top;
         background-size: 100% 220%;
+
+        &.important {
+          background: linear-gradient(to top, $energy-yellow 50%, $heritage-green 50%);
+          background-position: top;
+          background-size: 100% 220%;
+
+          &:hover {
+            color: $black !important;
+          }
+        }
+
+        &.neutral {
+          background: linear-gradient(to top, $medium-gray 50%, $heritage-green 50%);
+          background-position: top;
+          background-size: 100% 220%;
+
+          &:hover {
+            color: $black !important;
+          }
+        }
 
         &::after {
           filter: brightness(1) invert(1);
@@ -632,6 +685,28 @@ a:has(img):hover {
             filter: brightness(1);
           }
         }
+
+        &.important {
+          &:hover {
+            color: $black !important;
+          }
+        }
+
+        &.neutral {
+          background: $heritage-purple;
+          background: linear-gradient(to top, $medium-gray 50%, $heritage-purple 50%);
+          background-position: top;
+          background-size: 100% 220%;
+
+          &:hover {
+            color: $black !important;
+            background-position: 0 99%;
+
+            &::after {
+              filter: brightness(1);
+            }
+          }
+        }
       }
     }
   }
@@ -671,12 +746,22 @@ a:has(img):hover {
     background-color: $light-mink;
     border-image-source: linear-gradient($light-mink, $light-mink);
 
+    a {
+      color: $dark-green;
+    }
+
     .u-font-icon,
     svg {
       color: $heritage-green;
     }
 
     .button {
+      color: $white;
+
+      &:hover {
+        color: $black;
+      }
+
       svg {
         color: $energy-green;
       }
@@ -686,6 +771,7 @@ a:has(img):hover {
         background: linear-gradient(to top, $heritage-green 50%, $light-mink 50%);
         background-position: top;
         background-size: 100% 220%;
+        color: $black;
 
         &::after {
           filter: brightness(1);
@@ -697,6 +783,37 @@ a:has(img):hover {
 
           &::after {
             filter: brightness(1) invert(1);
+          }
+        }
+
+        &.important {
+          background: linear-gradient(to top, $energy-yellow 50%, $light-mink 50%);
+          background-position: top;
+          background-size: 100% 220%;
+          border-color: $energy-yellow;
+
+          &:hover {
+            color: $black !important;
+            background-position: 0 99%;
+
+            &::after {
+              filter: brightness(1);
+            }
+          }
+        }
+
+        &.neutral {
+          background: linear-gradient(to top, $grey 50%, $light-mink 50%);
+          background-position: top;
+          background-size: 100% 220%;
+
+          &:hover {
+            color: $black !important;
+            background-position: 0 99%;
+
+            &::after {
+              filter: brightness(1);
+            }
           }
         }
       }
@@ -732,8 +849,24 @@ a:has(img):hover {
       color: $white;
     }
 
+    .button {
+      &.hollow {
+        &.important {
+          color: $white !important;
+        }
+      }
+    }
+
     .cta-link-icon::before {
       filter: brightness(0) invert(1);
+    }
+
+    li a {
+      text-decoration-color: #fff;
+
+      &:hover {
+        text-decoration-color: rgba(255, 255, 255, 0.65);
+      }
     }
 
     a {

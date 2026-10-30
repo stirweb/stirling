@@ -353,7 +353,7 @@
 //     list-style: none;
 //     margin: 0;
 //     padding: 0;
-// 
+//
 //     li {
 //       background-color: $dark-mink;
 //       border: 2px solid transparent;
@@ -365,7 +365,7 @@
 //       display: flex;
 //       justify-content: space-between;
 //       transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-// 
+//
 //       &:after {
 //         content: "\e97b";
 //         font-family: "uos";
@@ -373,31 +373,31 @@
 //         right: 20px;
 //         top: 11px;
 //       }
-// 
+//
 //       &:hover {
 //         background-color: $white;
 //         border: 2px solid $dark-mink;
 //         color: $dark-mink;
-// 
+//
 //         a,
 //         strong {
 //           color: $dark-mink;
 //         }
 //       }
-// 
+//
 //       a {
 //         color: $white;
-// 
+//
 //         /* [href] just to increase specificity! */
 //         &[href] {
 //           border: 0;
 //         }
-// 
+//
 //         + strong {
 //           position: absolute;
 //           right: 60px;
 //         }
-// 
+//
 //         &:focus {
 //           outline-color: $white !important; /* ! because `a:focus` is !*/
 //         }
@@ -569,8 +569,8 @@ svg.icon {
   padding-bottom: 40px;
 
   h3 {
-    font-family: FSMaja, serif;
-    font-weight: 100;
+    //font-family: FSMaja, serif;
+    font-weight: bold;
     margin: 1em 0;
   }
 
@@ -784,7 +784,7 @@ a[data-mode*="Online"] {
 //     ul {
 //       li {
 //         flex-direction: column;
-// 
+//
 //         a + strong {
 //           position: relative;
 //           right: 0;

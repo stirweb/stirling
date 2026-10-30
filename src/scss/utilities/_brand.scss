@@ -64,22 +64,22 @@
 */
 
 .u-heritage-line {
-  border: var(--border-thickness) solid map-get($greens, "medium") !important;
+  border: var(--border-thickness) solid $heritage-green !important;
 }
 
 .u-heritage-line-top,
 .u-heritage-green-line-top {
-  border-top: var(--border-thickness) solid map-get($greens, "medium");
+  border-top: var(--border-thickness) solid $heritage-green;
 }
 
 .u-heritage-line-bottom,
 .u-heritage-green-line-bottom {
-  border-bottom: var(--border-thickness) solid map-get($greens, "medium");
+  border-bottom: var(--border-thickness) solid $heritage-green;
 }
 
 .u-heritage-line-left,
 .u-heritage-green-line-left {
-  border-left: var(--border-thickness) solid map-get($greens, "medium");
+  border-left: var(--border-thickness) solid $heritage-green;
 }
 
 /* 

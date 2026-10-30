@@ -7,7 +7,7 @@
     define("USE_GROUP_ONE", true); // i.e. MD20
     define("USE_GROUP_TWO", false); // MD40
 
-    if(empty($_REQUEST['postcode'])) {
+    if(empty($_GET['postcode'])) {
         header("Content-Type: text/plain", true, 400);
         echo "postcode parameter is required";
         exit;
@@ -69,9 +69,9 @@
         );
     }
 
-    $response = checkPostcodeValidity($_REQUEST['postcode']);
+    $response = checkPostcodeValidity($_GET['postcode']);
 
-    if(!empty($_REQUEST) && !empty($_REQUEST['format']) && $_REQUEST['format']=="json"){
+    if(!empty($_GET) && !empty($_GET['format']) && $_GET['format']=="json"){
         header("Content-Type: application/json");
         header("Access-Control-Allow-Origin: *");
         echo json_encode($response);

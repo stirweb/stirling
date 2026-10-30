@@ -215,7 +215,8 @@ h4 a:hover {
 }
 
 a {
-  color: map-get($uos-web-supplementary, heritage-green-a11y);
+  //color: map-get($uos-web-supplementary, heritage-green-a11y);
+  color: map-get($brand-palette, heritage-green);
 }
 
 p a,
@@ -326,6 +327,10 @@ h2.u-header-larger {
 
 .u-line-height-default {
   line-height: 1.6;
+}
+
+.u-line-height-2 {
+  line-height: 2;
 }
 
 .text-larger,

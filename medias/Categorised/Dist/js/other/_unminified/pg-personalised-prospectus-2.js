@@ -63,7 +63,7 @@
   };
 
   const renderLinkBox = (filePath) => {
-    return `<div class="u-bg-energy-purple--10 u-p-3 u-mt-2">
+    return `<div class="u-bg-neutral-tint u-p-3 u-mt-2">
             <h3>Download your postgraduate guide</h3>
             <p class="u-flex u-gap-8 align-middle">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width:24px;height:24px;">
@@ -520,7 +520,7 @@
     selects.forEach((select) =>
       select.addEventListener("change", (event) => {
         updateSelects(event.target.id.replace("subject_area_", ""));
-      })
+      }),
     );
 
     // ACTION: Form submit event
@@ -531,6 +531,18 @@
 
         setDOMContent(stir.node("#marketingAlert"), ` `);
         setDOMContent(stir.node("#dataAgreeAlert"), ` `);
+
+        // if opt_in_for_whatsapp is selected, make whatsapp_phone_number a required field
+        if (stir.node("#opt_in_for_whatsapp")) {
+          if (stir.node("#opt_in_for_whatsapp").value === "true") {
+            stir.node("#whatsapp_phone_number").setAttribute("data-required", "true");
+            // the requred label <span class="u-heritage-berry " data-alertlabel="whatsapp_phone_number">*</span>
+            stir.node("[data-alertlabel=whatsapp_phone_number]").innerText = " *";
+          } else {
+            stir.node("#whatsapp_phone_number").removeAttribute("data-required");
+            stir.node("[data-alertlabel=whatsapp_phone_number]").innerText = "";
+          }
+        }
 
         // Required field checks
         const required = stir.nodes("[data-required]");
