@@ -113,6 +113,7 @@
   /* getSubjectFromID */
   const getSubjectFromID = stir.curry((data, id) => {
     const sub = data.filter((item) => item.id === Number(id));
+
     return !sub.length ? `` : sub[0].subject;
   });
 
@@ -396,8 +397,6 @@
 
     const userSubjects = [getSubjectID(subsData, subject1), getSubjectID(subsData, subject2), getSubjectID(subsData, subject3)].filter((item) => Number(item));
     const pdfPath = retrieveUrl + `?n=${window.btoa(data.get("first_name"))}&f=0&s=${userSubjects.join(",")}`;
-
-    console.log(data);
 
     email && submitData(pdfPath, server, data);
 

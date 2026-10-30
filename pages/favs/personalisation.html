@@ -518,17 +518,41 @@
       const visitThreshold = 3;
 
       /**
-       * Retrieves the session data from localStorage.
-       * @param {string} key - The key to retrieve from localStorage.
+       * Cookie helper functions
+       */
+      const setCookie = (name, value, days) => {
+        let expires = "";
+        if (days) {
+          const date = new Date();
+          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+          expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+      };
+
+      const getCookie = (name) => {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === " ") c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+      };
+
+      /**
+       * Retrieves the session data from a cookie.
+       * @param {string} key - The name of the cookie.
        * @returns {Array} - The array of page objects from the session data.
        */
       const getSessionData = (key) => {
         try {
-          const storedData = localStorage.getItem(key);
+          const storedData = getCookie(key);
           const parsedData = storedData ? JSON.parse(storedData) : { pages: [] };
           return Array.isArray(parsedData.pages) ? parsedData.pages : [];
         } catch (e) {
-          console.error("Error parsing session data from localStorage:", e);
+          console.error("Error parsing session data from cookie:", e);
           return [];
         }
       };
@@ -754,7 +778,7 @@
         //e.preventDefault();
         const storageKey = "stirsess";
         try {
-          const storedData = localStorage.getItem(storageKey);
+          const storedData = getCookie(storageKey);
           const sessionData = storedData ? JSON.parse(storedData) : { pages: [] };
 
           const newProspectusEntry = {
@@ -767,9 +791,9 @@
 
           const updatedData = { ...sessionData, pages: updatedPages };
 
-          localStorage.setItem(storageKey, JSON.stringify(updatedData));
+          setCookie(storageKey, JSON.stringify(updatedData), 365); // Set cookie for 1 year
         } catch (e) {
-          console.error("Error updating localStorage:", e);
+          console.error("Error updating cookie:", e);
         }
       });
     </script>

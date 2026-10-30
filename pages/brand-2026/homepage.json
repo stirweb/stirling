@@ -1,0 +1,118 @@
+{
+  "news": {
+    "primary": [
+      {
+        "id": "204146",
+        "url": "/news/2026/june-2026-news/youth-mental-health-deepening-in-uk-and-labour-market-could-be-to-blame/",
+        "title": "Youth mental health crisis deepening in UK, and labour market could be to blame",
+        "summary": "The study finds young women and people in Scotland most affected, and raises urgent questions about NEET rates",
+        "image": "https://pxl-v6-stiracuk.terminalfour.net/fit-in/760x470/filters:quality(90)/filters:format(webp)/filters:no_upscale()/prod01/cdn/media/stirling/news/news-centre/2026/jun-26/1200X600-youth-mental-health-banner-image.jpg",
+        "imagealt": "hands scrolling on screen looking for jobs",
+        "date_published": "2026-06-05T09:06:00Z",
+        "date_modified": "2026-06-05T09:06:39Z",
+        "tags": "business-economics, health",
+        "_uos": {
+          "promo": "primary, news",
+          "date": "Fri 5 Jun 2026"
+        }
+      },
+      {
+        "id": "204028",
+        "url": "/news/2026/june-2026-news/bbc-journalists-hail-success-of-university-of-stirling-partnership/",
+        "title": "BBC journalists hail success of University of Stirling partnership",
+        "summary": "Students gained industry experience from award-winning team",
+        "image": "https://pxl-v6-stiracuk.terminalfour.net/fit-in/760x470/filters:quality(90)/filters:format(webp)/filters:no_upscale()/prod01/cdn/media/stirling/news/news-centre/2026/jun-26/(l-r)-Robbie-McAvenue,-Logan-Killiard,-Keeva-Miller,-Ava-Lei-O%E2%80%99Hagan-1200X630.jpg",
+        "imagealt": "(l-r) Robbie McAvenue, Logan Killiard, Keeva Miller, Ava-Lei O’Hagan.jpg",
+        "date_published": "2026-06-01T09:06:00Z",
+        "date_modified": "2026-06-03T15:06:49Z",
+        "tags": "internal-students",
+        "_uos": {
+          "promo": "primary, news",
+          "date": "Mon 1 Jun 2026"
+        }
+      },
+      {
+        "id": "203958",
+        "url": "/news/2026/may-2026-news/stirling-gymnasts-set-for-glasgow-2026-with-team-scotland/",
+        "title": "Stirling gymnasts set for Glasgow 2026 with Team Scotland",
+        "summary": "Latest Stirling athletes selected to compete at this summer's Commonwealth Games",
+        "image": "https://pxl-v6-stiracuk.terminalfour.net/fit-in/760x470/filters:quality(90)/filters:format(webp)/filters:no_upscale()/prod01/cdn/media/stirling/news/news-centre/2026/may-26/Cameron-Lynn-and-Crystelle-Lake-1200X630.jpg",
+        "imagealt": "Cameron Lynn and Crystelle Lake holding Scottish flag",
+        "date_published": "2026-05-27T10:05:00Z",
+        "date_modified": "2026-05-28T15:05:02Z",
+        "tags": "commonwealth-games-2026, sports-centre",
+        "_uos": {
+          "promo": "primary, news",
+          "date": "Wed 27 May 2026"
+        }
+      },
+      []
+    ],
+    "secondary": [
+      {
+        "id": "203341",
+        "url": "/news/2026/may-2026-news/university-of-stirling-golfer-selected-for-arnold-palmer-cup/",
+        "title": "University of Stirling golfer selected for Arnold Palmer Cup",
+        "summary": "George Cannon will be the only Europe-based men’s player to represent Team International",
+        "image": "https://pxl-v6-stiracuk.terminalfour.net/fit-in/760x470/filters:quality(90)/filters:format(webp)/filters:no_upscale()/prod01/cdn/media/stirling/news/news-centre/2026/may-26/GeorgeCannon-1200X630.jpg",
+        "imagealt": "George Cannon hits a golf shot.",
+        "date_published": "2026-05-06T15:05:26Z",
+        "date_modified": "2026-05-06T15:05:19Z",
+        "tags": "sports-centre",
+        "_uos": {
+          "promo": "secondary",
+          "date": "Wed 6 May 2026"
+        }
+      },
+      {
+        "id": "203120",
+        "url": "/news/2026/april-2026-news/soaring-wild-meat-consumption-in-central-africa/",
+        "title": "Soaring wild meat consumption in Central Africa making sustainable wildlife management more critical than ever",
+        "summary": "The research provides the largest quantitative spatial and temporal analysis of wild meat consumption across the Central African region",
+        "image": "https://pxl-v6-stiracuk.terminalfour.net/fit-in/760x470/filters:quality(90)/filters:format(webp)/filters:no_upscale()/prod01/cdn/media/stirling/news/news-centre/2026/apr-26/1200X630Bushmeat.jpg",
+        "imagealt": "Bushmeat cooking in yaselia village, Tshopo Province - DRC.",
+        "date_published": "2026-04-30T09:04:00Z",
+        "date_modified": "2026-04-30T10:04:17Z",
+        "tags": "aqua-food, environment, research",
+        "_uos": {
+          "promo": "secondary, news",
+          "date": "Thu 30 Apr 2026"
+        }
+      },
+      {
+        "id": "202013",
+        "url": "/news/2026/april-2026-news/landmark-study-shows-data-sharing-key-to-reproducibility-across-social-and-behavioural-sciences/",
+        "title": "Landmark study shows data sharing key to reproducibility across social and behavioural sciences",
+        "summary": "Experimental psychologist Dr Arran Reader from the University of Stirling’s Faculty of Natural Sciences was part of an international team of researchers from over 100 institutions involved in the study",
+        "image": "https://pxl-v6-stiracuk.terminalfour.net/fit-in/760x470/filters:quality(90)/filters:format(webp)/filters:no_upscale()/prod01/cdn/media/stirling/news/news-centre/2026/apr-26/1200X630JournalArticle.jpg",
+        "imagealt": "Sections on an academic journal are highlighted",
+        "date_published": "2026-04-02T11:04:00Z",
+        "date_modified": "2026-04-02T12:04:33Z",
+        "tags": "research",
+        "_uos": {
+          "promo": "secondary, news",
+          "date": "Thu 2 Apr 2026"
+        }
+      },
+      []
+    ]
+  },
+  "events": [
+    {
+      "id": "202065",
+      "url": "/events/landmark-study-shows-data-sharing-key-to-reproducibility-across-social-and-behavioural-sciences/",
+      "title": "My event one",
+      "summary": "Experimental psychologist Dr Arran Reader from the University of Stirling’s Faculty of Natural Sciences was part of an international team of researchers from over 100 institutions involved in the study",
+      "image": "https://pxl-v6-stiracuk.terminalfour.net/fit-in/760x470/filters:quality(90)/filters:format(webp)/filters:no_upscale()/prod01/cdn/media/stirling/news/news-centre/2026/apr-26/1200X630JournalArticle.jpg",
+      "imagealt": "Sections on an academic journal are highlighted",
+      "date_published": "2026-04-02T11:04:00Z",
+      "date_modified": "2026-04-02T12:04:33Z",
+      "tags": "research",
+      "_uos": {
+        "promo": "secondary, news",
+        "date": "Thu 2 Apr 2026"
+      }
+    },
+    []
+  ]
+}

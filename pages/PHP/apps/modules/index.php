@@ -54,7 +54,7 @@ function renderListItem($item)
 /* renderContentAims */
 function renderContentAims($moduleOverview, $learningOutcomes, $colourPack, $boilerplates)
 {
-    return '<div class="cell u-p-2">
+    return '<div class="cell u-py-2">
                 <h2 id="contentandaims" >Content and aims</h2>
                 <h3 class="header-stripped u-bg-' . $colourPack[0]->first . '--10 u-' . $colourPack[0]->first . '-line-left u-p-1  u-border-width-5 u-text-regular">
                     Module overview
@@ -234,7 +234,7 @@ function main($data, $colours, $boilerplates)
     $colourPack = getColourPack($studyLevel, $colours);
 
     // Place holder in case we move these into PHP as well but will currently leave in the JS
-    $deliveries = '';
+    $deliveries = ''; // Engagement Overview
     $assessments = '';
 
     // RENDER the content
@@ -265,14 +265,14 @@ $code = isset($_GET['code']) ? $_GET['code'] : '';
 $session = isset($_GET['session']) ? $_GET['session'] : '';
 $semester = isset($_GET['semester']) ? $_GET['semester'] : '';
 
-//$apiUrl = "https://www.stir.ac.uk/data/courses/akari/module/index.php?module=$code/$session/$semester"; // Prod
-$apiUrl = "https://www.stir.ac.uk/data/pd-api-qa/?module=$code/$session/$semester"; // QA
+$api = "https://www.stir.ac.uk/data/pd-akari/?module=$code/$session/$semester"; // Prod
+//$api = "https://www.stir.ac.uk/data/pd-akari-qa/?module=$code/$session/$semester"; // QA
 
-$content = file_get_contents($apiUrl);
+$content = file_get_contents($api);
 $init_data = json_decode($content);
 
 // JSON url
-echo $apiUrl;
+echo $api;
 
 
 

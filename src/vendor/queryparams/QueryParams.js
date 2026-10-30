@@ -29,6 +29,13 @@ var QueryParams = (function () {
   var _setPushStateHandler = function (handler) {
     _pushStateHandler = handler;
   };
+  
+  /**
+   * Improved URL decoding (to handle spaces encoded as "+")
+   */
+   function decodeQueryParam(p) {
+     return decodeURIComponent(p.replace(/\+/g, " "));
+   }
 
   /**
    * Get single query param from url
@@ -44,7 +51,7 @@ var QueryParams = (function () {
       results = regex.exec(url);
     if (!results) return defaultValue;
     if (!results[2]) return "";
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+    return decodeQueryParam(results[2]);
   }
 
   /**
@@ -57,7 +64,7 @@ var QueryParams = (function () {
 
     var obj = {};
     queryString.substring(1).replace(/([^=&]+)=([^&]*)/g, function (m, key, value) {
-      obj[decodeURIComponent(key)] = decodeURIComponent(value);
+      obj[decodeQueryParam(key)] = decodeQueryParam(value);
     });
 
     return obj;
@@ -73,7 +80,7 @@ var QueryParams = (function () {
 
     var arr = [];
     queryString.substring(1).replace(/([^=&]+)=([^&]*)/g, function (m, key, value) {
-      var obj = { name: decodeURIComponent(key), value: decodeURIComponent(value) };
+      var obj = { name: decodeQueryParam(key), value: decodeQueryParam(value) };
       arr.push(obj);
     });
 

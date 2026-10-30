@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=en>
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset=UTF-8>
+	<meta http-equiv=X-UA-Compatible content=IE=edge>
+	<meta name=viewport content=width=device-width,initial-scale=1.0>
 	<title>Document</title>
-	<link rel="stylesheet" href="../../medias/Categorised/Dist/css/app.css">
-	<meta name="stir.tag" content="sports">
-	<meta name="stir.tag" content="sports-centre">
+	<link rel=stylesheet href=../../medias/Categorised/Dist/css/app.css>
+	<meta name=stir.tag content=politics-policy>
+	<meta name=stir.tag content=health>
+	<meta name=stir.tag content=sports>
+	<meta name=stir.tag content=sports-centre>
+	<meta name=stir.subject content="Mathematics">
+	<style>
+		pre { background: #eee; display: inline-block; padding: .875rem; margin: 0 0 1rem 0; border-radius: 3px}
+	</style>
 </head>
 <body>
 	<div class="grid-container">
-		<h2>News (metadata)</h2>
-		<div class="grid-x grid-padding-x c-news-event__news" data-type=relatedNews data-funnelback-inject data-collection="stir-www" data-meta-name="tags" data-meta-value="sports, sports-centre"></div>
-		<h2>News (facet tags)</h2>
-		<div class="grid-x grid-padding-x c-news-event__news" data-type=relatedNews data-funnelback-inject data-collection="stir-www" data-facet-name="f.Tag|tag" data-facet-tag="stir.tag" data-meta-type="News"></div>
-		<h2>Courses</h2>
-		<ul data-type=relatedCourses data-funnelback-inject data-collection="stir-courses" data-meta-name="subject" data-meta-value="biology, accounting"></ul>
-		<!-- <h2>Conversation</h2>
-		<ul data-type=conversation data-funnelback-inject data-collection="stir-conv"></ul> -->
+		<div class=cell>
+			<h1>Related content test page</h1>
+			<h2>News</h2>
+			<div class="grid-x grid-padding-x c-news-event__news" data-type=news data-search-inject data-facet=tag></div>
+			<h2>Courses</h2>
+			<ul data-type=course data-level=PG data-search-inject data-facet="subject"></ul>
+		</div>
 	</div>
-		<!-- funnelback data here -->
 	<script src="../../medias/Categorised/Dist/js/app.js"></script>
 	<script src="../../src/js-other/funnelback-content.js"></script>
 </body>

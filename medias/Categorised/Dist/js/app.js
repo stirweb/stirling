@@ -948,6 +948,13 @@ var QueryParams = (function () {
   var _setPushStateHandler = function (handler) {
     _pushStateHandler = handler;
   };
+  
+  /**
+   * Improved URL decoding (to handle spaces encoded as "+")
+   */
+   function decodeQueryParam(p) {
+     return decodeURIComponent(p.replace(/\+/g, " "));
+   }
 
   /**
    * Get single query param from url
@@ -963,7 +970,7 @@ var QueryParams = (function () {
       results = regex.exec(url);
     if (!results) return defaultValue;
     if (!results[2]) return "";
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+    return decodeQueryParam(results[2]);
   }
 
   /**
@@ -976,7 +983,7 @@ var QueryParams = (function () {
 
     var obj = {};
     queryString.substring(1).replace(/([^=&]+)=([^&]*)/g, function (m, key, value) {
-      obj[decodeURIComponent(key)] = decodeURIComponent(value);
+      obj[decodeQueryParam(key)] = decodeQueryParam(value);
     });
 
     return obj;
@@ -992,7 +999,7 @@ var QueryParams = (function () {
 
     var arr = [];
     queryString.substring(1).replace(/([^=&]+)=([^&]*)/g, function (m, key, value) {
-      var obj = { name: decodeURIComponent(key), value: decodeURIComponent(value) };
+      var obj = { name: decodeQueryParam(key), value: decodeQueryParam(value) };
       arr.push(obj);
     });
 
@@ -2396,13 +2403,13 @@ var UoS_closeAllWidgetsExcept = (function () {
           item.classList.remove("is-active");
         });
     },
-    courseSearchWidget: function () {
-      var cs = document.getElementById("course-search-widget__wrapper");
-      if (cs) {
-        cs.classList.remove("stir__slidedown");
-        cs.classList.add("stir__slideup");
-      }
-    },
+//    courseSearchWidget: function () {
+//      var cs = document.getElementById("course-search-widget__wrapper");
+//      if (cs) {
+//        cs.classList.remove("stir__slidedown");
+//        cs.classList.add("stir__slideup");
+//      }
+//    },
     megamenu: function () {
       var hnp = document.querySelector(".c-header-nav--primary a");
       hnp && hnp.classList.remove("c-header-nav__link--is-active");
@@ -2583,6 +2590,70 @@ stir.MediaQuery = (function () {
 
 */
 
+stir.addSearch = (() => {
+	// e.g. https://api.addsearch.com/v1/search/cfa10522e4ae6987c390ab72e9393908?term=rest+api
+
+	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	const REPORTING = debug ? false : true; //click tracking etc.
+	const KEY = "dbe6bc5995c4296d93d74b99ab0ad7de"; //public site key
+	const _server = "api.addsearch.com";
+	const _url = `https://${_server}`;
+
+	const getJsonEndpoint = () => new URL(`/v1/search/${KEY}`, _url);
+	const getSuggestionsEndpoint = () => new URL(`/v1/suggest/${KEY}`, _url);
+	const getAutocompleteEndpoint = () => new URL(`/v1/autocomplete/document-field/${KEY}`, _url);
+	const getReportingEndpoint = () => new URL(`/v1/stats/${KEY}`,_url);
+	//const getRecommendationsEndpoint = (block) => new URL(`/v1/recommendations/index/${KEY}/block/${block}`, _url);
+	
+	const getCompletions = (data,callback) => {
+		if("function" !== typeof callback) return;
+		const url = getAutocompleteEndpoint();
+		url.search = new URLSearchParams(data);
+		stir.getJSON(url,data=>console.info("getCompletions",data));
+	};
+	
+	const getSuggestions = (term,callback) => {
+		if("function" !== typeof callback) return;
+		const url = getSuggestionsEndpoint();
+		url.search = `term=${term}`;
+		stir.getJSON(url,callback);
+	};
+	
+	/* Recommendations - AddSearch extra */
+	// const getRecommendations = (block,callback) => {
+	// 	if("function" !== typeof callback) return;
+	// 	stir.getJSON(getRecommendationsEndpoint(block),callback);
+	// };
+	
+	const getResults = parameters => {
+		const url = getJsonEndpoint();
+		url.search = new URLSearchParams(parameters);
+		return fetch( new Request(url) )
+	};
+	
+	// Used to report Click and Search user actions back to AddSearch analytics
+	// (Returns a PROMISE object that may be async'd or chained)
+	const putReport = (data) => {
+		
+		if(!REPORTING) {
+			return new Promise((resolve,reject)=>{resolve(data)});
+		}
+		const input   = getReportingEndpoint();
+		const options = {method:"POST", body:JSON.stringify(data)};
+		
+		return fetch( new Request(input, options) );
+
+	};
+
+	return {
+		getJsonEndpoint: getJsonEndpoint,
+		getCompletions: getCompletions,
+		getSuggestions: getSuggestions,
+		putReport: putReport,
+		getResults: getResults
+		// getRecommendations: getRecommendations,
+	};
+})();
 (function () {
   if (!stir.node(".c-half-n-half.js-animation")) return;
 
@@ -2605,6 +2676,23 @@ stir.MediaQuery = (function () {
       },
     });
   });
+})();
+
+(function () {
+  // Promo bar
+  const promoBar = document.querySelector(".promobar-2026");
+  if (promoBar) {
+    // on scroll add class to the promo bar
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 50) {
+        promoBar.classList.add("promobar-2026-fader");
+      }
+
+      if (window.scrollY < 50) {
+        promoBar.classList.remove("promobar-2026-fader");
+      }
+    });
+  }
 })();
 
 // this is the half n half
@@ -2645,6 +2733,155 @@ stir.MediaQuery = (function () {
 //     disable: "phone",
 //   });
 // })();
+
+/**
+* SEARCH AUTO-SUGGEST
+* @author: Robert Morrison <r.w.morrison@stir.ac.uk>
+* 2026-03-16
+* see: https://uxmastery.com/anatomy-of-an-accessible-auto-suggest/
+* see: https://stackoverflow.com/questions/39439115/how-to-execute-click-function-before-the-blur-function
+* see: https://www.w3.org/TR/wai-aria-1.1/#combobox
+*/
+
+// we will add some new modules to the stir library
+var stir = stir || {};
+
+/**
+* Concierge
+* Instantiated elsewhere with `new stir.Suggester(input, output, announcer);`
+*/
+stir.Suggester = function Suggester(combobox,output,announcer) {
+	if(!combobox || !output || !announcer) return;
+	if (!stir.addSearch) return;
+
+	const input = combobox.querySelector('input');
+	let prevQuery = "";
+	let suggestions = [];
+	let spointer = 0;
+	let isSuggesting = false;
+	
+	const keyUpTime = 255; // milliseconds; keystroke idle time, i.e. stopped typing
+	const minQueryLength = 3; // min query length for activating the suggest box
+	
+	//input.addEventListener("focus", focusing);
+	input.addEventListener("input", stir.debounce(handleInput, keyUpTime));
+	input.addEventListener("keydown", actions);
+	input.addEventListener("blur", unfocus); // will also handle mouse clicks
+	
+	const clamp = (num,min,max) => Math.min(Math.max(num, min), max);
+
+// R E N D E R E R S
+
+	function renderSuggestions(data) {
+		output.innerHTML = '';
+		suggestions = [];
+		spointer = 0;
+		if(data.suggestions && data.suggestions.length && data.suggestions.length > 0) {
+			suggestions = [...data.suggestions.map(suggestion)];
+			output.append(...suggestions);
+			output.removeAttribute("aria-hidden");
+			combobox.setAttribute("aria-expanded","true");
+			announcer.textContent = `${suggestions.length} suggestions found, use up and down arrows to review.`;
+		} else {
+			output.setAttribute("aria-hidden","true");
+			combobox.setAttribute("aria-expanded","false");
+		}
+	}
+	
+	function suggestion(item, index) {
+		const el = document.createElement('li');
+		el.id=`suggestion_${index}`;
+		el.href="#";
+		el.textContent = item.value;
+		el.setAttribute("tabindex","-1"); // receive focus but not tabbable
+		el.setAttribute("role","option"); // a11y
+		return el;
+	}
+
+
+// E V E N T   H A N D L E R   F U N C T I O N S
+
+	function handleInput(event) {
+		if ("" === this.value) stopSuggesting(event);
+		if (this.value != prevQuery) {
+			if (this.value.length >= minQueryLength) {
+				prevQuery = this.value;
+				isSuggesting = false;
+				stir.addSearch.getSuggestions(this.value, renderSuggestions);
+			}
+		}
+	}
+
+	function actions(event) {
+		if(combobox.getAttribute("aria-expanded")!=="true") return;
+		switch (event.key) {
+			case 'Escape':
+				if(!output.hasAttribute("aria-hidden")) {
+					stopSuggesting(event);
+					break;
+				}
+				break;
+			case 'ArrowUp':
+				// highlight prev item
+				if(isSuggesting) spointer = clamp(spointer-1, 0, suggestions.length-1);
+				highlight();
+				halt(event);
+				break;
+			case 'ArrowDown':
+				// highlight next item
+				if(isSuggesting) spointer = clamp(spointer+1, 0, suggestions.length-1);;
+				highlight();
+				halt(event);
+				break;
+			case 'Enter':
+				if(isSuggesting) {
+					input.value = suggestions[spointer].textContent;
+					stopSuggesting(event);
+					break;
+				}
+				close();
+		}
+	}
+	
+	function stopSuggesting(event) {
+		close();
+		halt(event);
+	}
+	
+	function halt(event) {
+		event.stopPropagation();
+		event.preventDefault();
+	}
+	
+	function highlight() {
+		if(suggestions[spointer]) {
+			isSuggesting = true;
+			suggestions.forEach(i=>i.removeAttribute("data-hilit"));
+			suggestions[spointer].setAttribute("data-hilit","true");
+			input.setAttribute("aria-activedescendant", `suggestion_${spointer}`);
+		}
+	}
+	
+	function unfocus(event) {
+		if(event.relatedTarget && event.relatedTarget.role && "option"===event.relatedTarget.role) {
+			input.value = event.relatedTarget.textContent;
+			input.focus();
+			close();
+		} else close();
+	}
+	
+	function close() {
+		if(!output.hasAttribute("aria-hidden")) {
+			isSuggesting = false;
+			spointer = 0;
+			combobox.setAttribute("aria-expanded","false");
+			output.setAttribute("aria-hidden","true");
+			output.innerHTML = '';
+			announcer.textContent = '';
+		}
+	}
+
+};
 
 /**
  * BREADCRUMBS
@@ -2820,7 +3057,7 @@ stir.MediaQuery = (function () {
 );
 
 /**
- * HEADER CONCIERGE SEARCH ver 4.0 (NOT USING MARTYN'S SEARCHBOX)
+ * HEADER CONCIERGE SEARCH ver 4.0
  * @author: Ryan Kaye <ryan.kaye@stir.ac.uk>, Robert Morrison <r.w.morrison@stir.ac.uk>
  */
 
@@ -2832,17 +3069,19 @@ var stir = stir || {};
  * Instantiated below with `new stir.Concierge();`
  */
 stir.Concierge = function Concierge(popup) {
+  if (!stir.addSearch) return;
+
   const button = document.querySelector("#header-search__button");
   const buttons = [...document.querySelectorAll(".header-search-button"), ...[button]];
 
   if (!popup || !buttons.length) return;
 
-  var obj2param = this.obj2param;
+  // var obj2param = this.obj2param;
 
   // DOM elements
   const nodes = {
     overlay: popup.querySelector(".overlay"),
-    input: popup.querySelector('input[name="query"]'),
+    input: popup.querySelector('input[name="query"],input[name="term"]'),
     submit: popup.querySelector("button"),
     wrapper: popup.querySelector("#header-search__wrapper"),
     news: popup.querySelector(".c-header-search__news"),
@@ -2851,24 +3090,15 @@ stir.Concierge = function Concierge(popup) {
     suggestions: popup.querySelector(".c-header-search__suggestions"),
   };
 
-  //Dynamic view managers
-  var search, results, spinner;
-
-  // Settings and data
-  const funnelbackServer = "https://stir-search.clients.uk.funnelback.com";
-  const funnelbackUrl = funnelbackServer + "/s/";
-  const searchFunnelbackUrl = funnelbackUrl + "search.json?";
-  const suggestFunnelbackUrl = funnelbackUrl + "suggest.json?collection=stir-www&show=10&partial_query=";
-
   const courseUrl = "https://www.stir.ac.uk/courses/";
   const searchUrl = "https://www.stir.ac.uk/search/";
 
+  var search, results, spinner; // dynamic view managers
   var prevQuery = "";
+  const keyUpTime = 400; // milliseconds; keystroke idle time, i.e. stopped typing
+  const minQueryLength = 3; // min query length for activating the suggest box
 
-  var keyUpTime = 400; // miliseconds; keystroke idle time, i.e. stopped typing
-  var minQueryLength = 3; // min query length for activating the suggest box
-  var KEY_ESC = 27;
-
+  // Init IIFE
   (function init() {
     search = new stir.ToggleWidget(popup, "stir__fadeIn", "stir__fadeOut");
     results = new stir.ToggleWidget(nodes.wrapper, "stir__slidedown", "stir__slideup");
@@ -2879,7 +3109,6 @@ stir.Concierge = function Concierge(popup) {
     results.hide();
 
     // Assign various event handlers
-
     buttons.forEach((openButton) => {
       openButton.addEventListener("click", opening);
     });
@@ -2895,26 +3124,27 @@ stir.Concierge = function Concierge(popup) {
     });
   })();
 
+  const renderSuggestions = parseSuggestions.bind(nodes.suggestions);
+
   //  H E L P E R   F U N C T I O N S
 
   function doSearches(query) {
-    stir.getJSON(suggestFunnelbackUrl + query, parseSuggestions.bind(nodes.suggestions));
+    stir.addSearch.getSuggestions(query, renderSuggestions);
   }
 
   // R E N D E R E R S
 
   function render(label, data) {
     if (this.nodeType !== 1) return;
-
     this.innerHTML = renderHeading(label.heading, label.icon) + "<ul>" + renderBody(label, data) + "</ul>";
   }
 
   const renderHeading = (title, icon) => {
     return `
-        <h3 class="c-header-search__title header-stripped">
-          <span class="${icon}"></span> 
-          ${title}
-        </h3>`;
+				<h3 class="c-header-search__title header-stripped">
+					<span class="${icon}"></span> 
+					${title}
+				</h3>`;
   };
 
   const renderBody = (label, data) => (data.length > 0 ? data.join("") : renderGenericItem(label.none));
@@ -2922,55 +3152,57 @@ stir.Concierge = function Concierge(popup) {
   const renderGenericItem = (text) => `<li class="c-header-search__item">${text}</li>`;
 
   const renderAllItem = (item) => {
-    const url = item.collection === "stir-events" ? item.metaData.page : funnelbackServer + item.clickTrackingUrl;
     return `
-      <li class="c-header-search__item">
-        <a href="${url}">
-        ${item.title.split(" | ")[0]} - ${item.title.split(" | ")[1] ? item.title.split(" | ")[1] : ""}</a>
-      </li>`;
+			<li class="c-header-search__item">
+				<a href="${item.url}">${item.title.split(" | ")[0]}</a>
+			</li>`;
   };
 
   const renderCourseItem = (item) => {
+    const title = item.title.split(" | ")[0];
+    const award = item.custom_fields ? item.custom_fields.award ? item.custom_fields.award + " " : "" : "";
     return `
-      <li class="c-header-search__item">
-        <a href="${funnelbackServer}${item.clickTrackingUrl}">
-        ${item.metaData.award ? item.metaData.award : ""} 
-        ${item.title.split(" | ")[0]}</a>
-      </li>`;
+			<li class="c-header-search__item">
+				<a href="${item.url}">${award}${title}</a>
+			</li>`;
   };
 
   const renderSuggestItem = (suggest) => {
     return `
-      <li class="c-header-search__item">
-        <a href="${searchUrl}?query=${suggest}">${suggest}</a>
-      </li>`;
+			<li class="c-header-search__item">
+				<a href="${searchUrl}?query=${suggest}">${suggest}</a>
+			</li>`;
   };
 
   // P A R S I N G
-
-  function getSeachParams(query_) {
-    return obj2param({
-      query: query_,
-      SF: "[c,d,access,award,page]",
-      collection: "stir-main",
-      num_ranks: 25,
-      "cool.21": 0.9,
-    });
-  }
+  
+  const onlyUnique = (value, index, self)  => self.indexOf(value) === index;
+  const noBoolean = value  => ["and","or"].indexOf(value) === -1;
 
   function parseSuggestions(suggests) {
+    suggests = suggests.suggestions.map((item) => item.value);
     const max = 5;
 
     if (suggests.length > 0) {
-      // perform search using first suggested term as the query
-      stir.getJSON(searchFunnelbackUrl + getSeachParams(suggests[0]), parseFunnelbackResults);
+      // max 20 words and limit of 300 chars
+      const term = (suggests.join(" ").split(" ").filter(noBoolean).filter(onlyUnique).slice(0,20).join(" ")).slice(0,300);
+      stir.addSearch
+        .getResults({ term: term, collectAnalytics: false, defaultOperator: "or", fuzzy: "auto", resultType: "organic" })
+        .then((response) => response.json())
+        .then(parseResults)
+        .catch((e) => console.error(e));
+
       const suggestsUnique = suggests.filter((c, index) => suggests.indexOf(c) === index);
       const suggestsLtd = stir.filter((item, index) => index < max, suggestsUnique);
 
       render.call(nodes.suggestions, { heading: "Suggestions", none: "No suggestions found", icon: "uos-magnifying-glass" }, suggestsLtd.map(renderSuggestItem));
     } else {
       // no suggests so use the raw inputted query to perform the search
-      stir.getJSON(searchFunnelbackUrl + getSeachParams(prevQuery), parseFunnelbackResults);
+      stir.addSearch
+        .getResults({ term: prevQuery, collectAnalytics: false, resultType: "organic" })
+        .then((response) => response.json())
+        .then(parseResults)
+        .catch((e) => console.error(e));
 
       render.call(nodes.suggestions, { heading: "Suggestions", none: "No suggestions found", icon: "uos-magnifying-glass" }, []);
     }
@@ -2979,25 +3211,24 @@ stir.Concierge = function Concierge(popup) {
     results.show();
   }
 
-  function parseFunnelbackResults(data) {
-    const max = 3;
-    const obj = data.response.resultPacket.results;
+  function parseResults(data) {
+    const max = 4;
+    const obj = data.hits;
 
-    if (data.response.resultPacket.resultsSummary.fullyMatching > 0) {
+    if (data.total_hits > 0) {
       const coursesHtml = stir.compose(
         stir.map(renderCourseItem),
         stir.filter((item, index) => index < max),
-        stir.filter((item) => item.liveUrl.includes(courseUrl))
+        stir.filter((item) => item.url.includes(courseUrl))
       )(obj);
 
       const allHtml = stir.compose(
         stir.map(renderAllItem),
         stir.filter((item, index) => index < max),
-        stir.filter((item) => !item.liveUrl.includes(courseUrl))
+        stir.filter((item) => !item.url.includes(courseUrl))
       )(obj);
 
       render.call(nodes.news, { heading: "All pages", none: "No results found", icon: "uos-all-tab" }, allHtml);
-
       render.call(nodes.courses, { heading: "Courses", none: "No courses found", icon: "uos-course-tab" }, coursesHtml);
     } else {
       render.call(nodes.news, { heading: "All pages", none: "No results found", icon: "uos-all-tab" }, []);
@@ -3010,7 +3241,7 @@ stir.Concierge = function Concierge(popup) {
   function handleInput(event) {
     if (this.value != prevQuery) {
       results.hide();
-      if (this.value.length >= minQueryLength) {
+      if (this.value.length >= minQueryLength || this.value === "*") {
         spinner.show();
         doSearches(this.value);
         prevQuery = this.value;
@@ -3022,7 +3253,7 @@ stir.Concierge = function Concierge(popup) {
     }
   }
   /**
-   * If the search recieves focus, also reopen the
+   * If the search receives focus, also reopen the
    * results-panel if there are results to display.
    **/
   function focusing(event) {
@@ -3076,24 +3307,12 @@ stir.Concierge = function Concierge(popup) {
   }
 
   function escaping(event) {
-    if (event.keyCode === KEY_ESC) closing(event);
+    if ("Escape" === event.code) closing(event);
   }
-};
-
-stir.Concierge.prototype.obj2param = function (obj) {
-  // transform key/value pairs from object to URL formatted
-  // query string, in this case for use with Funnelback.
-  var elements = [];
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      elements.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-    }
-  }
-  return elements.join("&");
 };
 
 (function () {
-  // instantiate a new anonymous concierge
+  if (!window.fetch) return;
   new stir.Concierge(document.getElementById("header-search"));
 })();
 
@@ -3176,6 +3395,30 @@ stir.Concierge.prototype.obj2param = function (obj) {
 // });
 //})();
 
+stir.didYouMean = (() => {
+
+	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	const _server = "www.stir.ac.uk";
+	const _url = `https://${_server}`;
+
+	const getEndpoint = () => new URL(`/webteam/did-you-mean/`, _url);
+	
+	const check = phrase => {
+		debug && console.info('[Did you mean] phrase',phrase);
+		const input   = getEndpoint();
+		const body = new FormData();
+		body.append('phrase',phrase);
+		const options = {method:"POST", body: body};
+		return fetch( new Request(input, options) );
+	};
+
+	return {
+		check: check
+	};
+})();
+
+// e.g. stir.didYouMean.check('fintecj').then(result => console.info(result))
+
 
 // this will swap the native action for js-action. Useful for search
 // forms where we want non-js situations to be able to submit
@@ -3226,6 +3469,15 @@ stir.Concierge.prototype.obj2param = function (obj) {
       e.classList.add("u-hook-bl");
       e.classList.remove("u-hook-tr");
     }
+  });
+})();
+
+(function () {
+  document.querySelectorAll(".c-half-n-half-2026:nth-of-type(odd)").forEach((el) => {
+    // Make hook top - bottom by default
+    el.classList.add("u-hook-top-left");
+    el.classList.remove("u-hook-bottom-right");
+    el.classList.remove("u-margin-bottom");
   });
 })();
 
@@ -3303,7 +3555,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
   */
   const getUserType = () => {
     if (UoS_env.name === "dev") return "STAFF";
-    return window.Cookies && Cookies.get("psessv0") !== undefined ? Cookies.get("psessv0").split("|")[0] : "";
+    return window.Cookies && Cookies.get("psess17") !== undefined ? Cookies.get("psess17").split("|")[0] : "";
   };
 
   /*
@@ -3440,7 +3692,7 @@ stir.Concierge.prototype.obj2param = function (obj) {
   for (var i = 0; i < ddPanes.length; i++) {
     doClick(ddBtns[i]);
   }
-})(document.querySelector(".c-download-box"));
+})(document.querySelector(".dropdown-pane"));
 
 /**
  * Lazy loading
@@ -3467,356 +3719,383 @@ stir.lazy(document.querySelectorAll('.stirlazy,[data-lazy-container]'));
  */
 
 (function () {
-	var url;
-	var KEY_ESC = "Escape";
-	var mm = document.getElementById("megamenu__container__dev") || document.getElementById("megamenu__container");
+  var url;
+  var KEY_ESC = "Escape";
+  var mm = document.getElementById("megamenu__container__dev") || document.getElementById("megamenu__container");
 
-	if (!mm) return;
+  if (!mm) return;
 
-	switch (UoS_env.name) {
-		case "dev":
-			url = "/pages/data/awd/megamenu.html";
-			break;
+  switch (UoS_env.name) {
+    case "dev":
+      url = "/pages/data/awd/megamenu.html";
+      break;
 
-		case "qa":
-			url = "/stirling/pages/data/awd/megamenu.html";
-			break;
+    case "qa":
+      url = "/stirling/pages/data/awd/megamenu.html";
+      break;
 
-		case "preview":
-		case "production":
-			url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2834";
-			break;
+    case "preview":
+    case "production":
+      url = "https://stiracuk-cms01-production.terminalfour.net/terminalfour/preview/1/en/2834";
+      break;
 
-		case "app-preview":
-		case "appdev-preview":
-		case "test":
-			url = "https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/2834";
-			break;
+    case "app-preview":
+    case "appdev-preview":
+    case "test":
+      url = "https://stiracuk-cms01-test.terminalfour.net/terminalfour/preview/1/en/2834";
+      break;
 
-		default: // live
-			url = "/developer-components/includes/template-external/mega-menu/";
-			break;
-	}
+    default: // live
+      url = "/developer-components/includes/template-external/mega-menu/";
+      break;
+  }
 
-	function initMegamenu() {
-		var primaryNav = document.querySelector("#layout-header .c-header-nav--primary");
-		var mainSections = document.querySelectorAll(".megamenu__links > ul > li > a");
-		var megalinks = document.querySelectorAll(".megamenu .megamenu__links");
-		var active_class = "c-header-nav__link--is-active";
-		var activeElement;
+  function initMegamenu() {
+    var primaryNav = document.querySelector("#layout-header .c-header-nav--primary");
+    var mainSections = document.querySelectorAll(".megamenu__links > ul > li > a");
+    var megalinks = document.querySelectorAll(".megamenu .megamenu__links");
+    var active_class = "c-header-nav__link--is-active";
+    var activeElement;
 
-		for (var i = 0; i < mainSections.length; i++) {
-			mainSections[i].insertAdjacentText("afterbegin", "Visit ");
-			mainSections[i].insertAdjacentText("beforeend", " home");
-		}
+    for (var i = 0; i < mainSections.length; i++) {
+      mainSections[i].insertAdjacentText("afterbegin", "Visit ");
+      mainSections[i].insertAdjacentText("beforeend", " home");
+    }
 
-		// prevent click propagating up through to body (which will close the mm)
-		mm.addEventListener("click", function (e) {
-			e.stopPropagation();
-		});
+    // prevent click propagating up through to body (which will close the mm)
+    mm.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
 
-		Array.prototype.forEach.call(document.querySelectorAll(".megamenu"), function (el) {
-			el.classList && el.classList.add("animation-slide");
-			el.setAttribute("tabindex", -1);
-			manageTabIndex(el, false);
-		});
+    Array.prototype.forEach.call(document.querySelectorAll(".megamenu"), function (el) {
+      el.classList && el.classList.add("animation-slide");
+      el.setAttribute("tabindex", -1);
+      manageTabIndex(el, false);
+    });
 
-		const mm_clicked = function (e) {
-			e.preventDefault();
-			e.stopPropagation();
+    const mm_clicked = function (e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-			var id, mm;
-			id = e.target.getAttribute("aria-controls");
-			id && (mm = document.querySelector("#" + id));
+      var id, mm;
+      id = e.target.getAttribute("aria-controls");
+      id && (mm = document.querySelector("#" + id));
 
-			// if related megamenu found, prevent defaults and apply behaviour
-			if (mm) {
-				/**
-				 * If the megamenu related to this link item is already open, close it.
-				 * If it is not already open, close any that are, then open this one.
-				 */
-				if (mm.classList && mm.classList.contains("animation-slide__down")) {
-					mmSlideUp(mm);
-				} else {
-					mmSlideUpAll();
-					mmSlideDown(mm);
-				}
+      // if related megamenu found, prevent defaults and apply behaviour
+      if (mm) {
+        /**
+         * If the megamenu related to this link item is already open, close it.
+         * If it is not already open, close any that are, then open this one.
+         */
+        if (mm.classList && mm.classList.contains("animation-slide__down")) {
+          mmSlideUp(mm);
+        } else {
+          mmSlideUpAll();
+          mmSlideDown(mm);
+        }
 
-				e.target.classList && e.target.classList.toggle(active_class);
-			} else {
-				UoS_closeAllWidgetsExcept();
-			}
-		};
+        e.target.classList && e.target.classList.toggle(active_class);
+      } else {
+        UoS_closeAllWidgetsExcept();
+      }
+    };
 
-		function mmSlideDown(el) {
-			if (!el || !el.classList) return;
-			el.classList.remove("animation-slide__up");
-			el.classList.add("animation-slide__down");
-			manageTabIndex(el, true);
-			mmFocusFirstElement(el);
-			// listen for 'close' requests etc.
-			document.addEventListener("widgetRequestClose", closing);
-			document.addEventListener("keyup", escaping);
-			activeElement = el;
-		}
+    function mmSlideDown(el) {
+      if (!el || !el.classList) return;
+      el.classList.remove("animation-slide__up");
+      el.classList.add("animation-slide__down");
+      manageTabIndex(el, true);
+      mmFocusFirstElement(el);
+      // listen for 'close' requests etc.
+      document.addEventListener("widgetRequestClose", closing);
+      document.addEventListener("keyup", escaping);
+      activeElement = el;
+    }
 
-		function mmSlideUp(el) {
-			if (!el || !el.classList) return;
-			el.classList.add("animation-slide__up");
-			el.classList.remove("animation-slide__down");
-			manageTabIndex(el, false);
-			// stop listening for requests
-			document.removeEventListener("keyup", escaping);
-			document.removeEventListener("widgetRequestClose", closing);
-			el.id && returnFocus(el.id);
-			activeElement = null;
-		}
+    function mmSlideUp(el) {
+      if (!el || !el.classList) return;
+      el.classList.add("animation-slide__up");
+      el.classList.remove("animation-slide__down");
+      manageTabIndex(el, false);
+      // stop listening for requests
+      document.removeEventListener("keyup", escaping);
+      document.removeEventListener("widgetRequestClose", closing);
+      el.id && returnFocus(el.id);
+      activeElement = null;
+    }
 
-		function mmSlideUpAll() {
-			unhighlight();
-			Array.prototype.forEach.call(document.querySelectorAll(".megamenu.animation-slide__down"), function (el) {
-				mmSlideUp(el);
-			});
-		}
+    function mmSlideUpAll() {
+      unhighlight();
+      Array.prototype.forEach.call(document.querySelectorAll(".megamenu.animation-slide__down"), function (el) {
+        mmSlideUp(el);
+      });
+    }
 
-		function mmFocusFirstElement(el) {
-			const focusable = el.querySelector("a,button,input");
-			focusable && focusable.focus();
-		}
+    function mmFocusFirstElement(el) {
+      const focusable = el.querySelector("a,button,input");
+      focusable && focusable.focus();
+    }
 
-		function unhighlight() {
-			Array.prototype.forEach.call(primaryNav.querySelectorAll("." + active_class), function (el) {
-				el.classList && el.classList.remove(active_class);
-			});
-		}
+    function unhighlight() {
+      Array.prototype.forEach.call(primaryNav.querySelectorAll("." + active_class), function (el) {
+        el.classList && el.classList.remove(active_class);
+      });
+    }
 
-		function manageTabIndex(mm, state) {
-			Array.prototype.forEach.call(mm.querySelectorAll("a"), function (el) {
-				state ? el.removeAttribute("tabindex") : el.setAttribute("tabindex", -1);
-			});
-		}
+    function manageTabIndex(mm, state) {
+      Array.prototype.forEach.call(mm.querySelectorAll("a"), function (el) {
+        state ? el.removeAttribute("tabindex") : el.setAttribute("tabindex", -1);
+      });
+    }
 
-		const returnFocus = (id) => {
-			const el = document.querySelector(`[aria-controls="${id}"]`);
-			el && el.focus();
-		};
+    const returnFocus = (id) => {
+      const el = document.querySelector(`[aria-controls="${id}"]`);
+      el && el.focus();
+    };
 
-		function escaping(event) {
-			if (event.code === KEY_ESC) mmSlideUpAll();
-			if (event.code === "ArrowRight" || event.code === "ArrowLeft") panning(event);
-		}
+    function escaping(event) {
+      if (event.code === KEY_ESC) mmSlideUpAll();
+      if (event.code === "ArrowRight" || event.code === "ArrowLeft") panning(event);
+    }
 
-		function closing() {
-			unhighlight();
-			mmSlideUp(document.querySelector(".megamenu.animation-slide__down"));
-		}
+    function closing() {
+      unhighlight();
+      mmSlideUp(document.querySelector(".megamenu.animation-slide__down"));
+    }
 
-		function panning(event) {
-			var dollyTrack = activeElement.querySelector("ul>li>ul");
-			var prev = activeElement.querySelector(".megamenu__prev-button");
-			var next = activeElement.querySelector(".megamenu__next-button");
+    function panning(event) {
+      var dollyTrack = activeElement.querySelector("ul>li>ul");
+      var prev = activeElement.querySelector(".megamenu__prev-button");
+      var next = activeElement.querySelector(".megamenu__next-button");
 
-			if (event.code === "ArrowRight") {
-				dollyTrack && stir.scroll.call(dollyTrack, 0, dollyTrack.scrollWidth - dollyTrack.clientWidth);
-				next.style.display = 'none';
-				prev.style.display = 'block';
-			}
-			if (event.code === "ArrowLeft") {
-				dollyTrack && stir.scroll.call(dollyTrack, 0, 0);
-				prev.style.display = 'none';
-				next.style.display = 'block';
-			}
-		}
+      if (event.code === "ArrowRight") {
+        dollyTrack && stir.scroll.call(dollyTrack, 0, dollyTrack.scrollWidth - dollyTrack.clientWidth);
+        next.style.display = "none";
+        prev.style.display = "block";
+      }
+      if (event.code === "ArrowLeft") {
+        dollyTrack && stir.scroll.call(dollyTrack, 0, 0);
+        prev.style.display = "none";
+        next.style.display = "block";
+      }
+    }
 
-		{
-			/* Megamenu "subpage" scrolling behaviour */
+    {
+      /* Megamenu "subpage" scrolling behaviour */
 
-			function pan(sibling, positive, event) {
-				var dollyTrack = this.parentNode.querySelector("ul > li > ul");
-				var distance = positive ? dollyTrack.scrollWidth - dollyTrack.clientWidth : 0;
-				stir.scroll.call(dollyTrack, 0, distance);
-				this.style.display = "none";
-				sibling && (sibling.style.display = "block");
-				event.preventDefault();
-			}
+      function pan(sibling, positive, event) {
+        var dollyTrack = this.parentNode.querySelector("ul > li > ul");
+        var distance = positive ? dollyTrack.scrollWidth - dollyTrack.clientWidth : 0;
+        stir.scroll.call(dollyTrack, 0, distance);
+        this.style.display = "none";
+        sibling && (sibling.style.display = "block");
+        event.preventDefault();
+      }
 
-			for (var i = 0; i < megalinks.length; i++) {
-				var prev = megalinks[i].querySelector(".megamenu__prev-button");
-				var next = megalinks[i].querySelector(".megamenu__next-button");
-				if (prev && next) {
-					prev.addEventListener("click", pan.bind(prev, next, false));
-					next.addEventListener("click", pan.bind(next, prev, true));
-				}
-			}
-		}
+      for (var i = 0; i < megalinks.length; i++) {
+        var prev = megalinks[i].querySelector(".megamenu__prev-button");
+        var next = megalinks[i].querySelector(".megamenu__next-button");
+        if (prev && next) {
+          prev.addEventListener("click", pan.bind(prev, next, false));
+          next.addEventListener("click", pan.bind(next, prev, true));
+        }
+      }
+    }
 
-		primaryNav.querySelectorAll("[data-menu-id]").forEach((nav) => {
-			const mmid = nav.getAttribute("data-menu-id");
-			const mmel = mm.querySelector(`#${mmid}`);
-			if (mmid && mmel) {
-				nav.setAttribute("aria-controls", mmid);
-			}
-		});
+    primaryNav.querySelectorAll("[data-menu-id]").forEach((nav) => {
+      const mmid = nav.getAttribute("data-menu-id");
+      const mmel = mm.querySelector(`#${mmid}`);
+      if (mmid && mmel) {
+        nav.setAttribute("aria-controls", mmid);
+      }
+    });
 
-		primaryNav.addEventListener("click", mm_clicked);
+    primaryNav.addEventListener("click", mm_clicked);
+    loaded = true;
+  }
 
-		loaded = true;
-	}
-
-	/**
-	 * Only load the MegaMenu if the viewport is (currently) larger than 1240px.
-	 */
-	var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-	if (vw >= 1240) {
-		stir.load(url, function (data) {
-			if (data && !data.error) {
-				mm.innerHTML = data;
-				initMegamenu();
-			} else {
-				console.error("Unable to load MegaMenu");
-			}
-		});
-	}
+  /*
+   * Only load the MegaMenu if the viewport is (currently) larger than 1240px.
+   */
+  var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+  if (vw >= 1240) {
+    stir.load(url, function (data) {
+      if (data && !data.error) {
+        mm.innerHTML = data;
+        initMegamenu();
+      } else {
+        console.error("Unable to load MegaMenu");
+      }
+    });
+  }
 })();
 
 /*
-Tempate Favourites
-*/
+ * @author: Ryan Kaye
+ * @date: 2026-05-11 (last updated)
+ * @name: Template Favourites
+ * This script is responsible for rendering the user's favourite courses in the megamenu and header.
+ * It reads the favs from a cookie, fetches course data from a json file, and renders the links in the appropriate places.
+ * It also updates the heart icon in the header to indicate if there are any favs.
+ */
 
-const TempateFavs = () => {
-	const COOKIE_ID = "favs=";
-	const FB_URL = "https://search.stir.ac.uk/s/search.json?collection=stir-main&SF=[sid,type,award]&query=&meta_sid_or=";
+const TemplateFavs = () => {
+  /*
+   * Helper Function: renderCourseLink
+   * @param {object} item - An object representing a fav course, with id, date, title and url properties
+   * @returns {string} An html string of a list item with a link to the course, used in the megamenu and header favs list
+   */
+  const renderCourseLink = (item) => {
+    return `<li><a href="${item.url}">${item.title}</a></li>`;
+  };
 
-	/* 
-		renderCourseLink: Returns an array of html strings 
-	*/
-	const renderCourseLink = (item) => `<li><a href="${item.url}">${item.title}</></li>`;
+  /*
+   * Helper Function: renderIcon
+   * @returns {string} An svg string of the heart icon, used in the header and megamenu to indicate a fav
+   */
+  const renderIcon = () => {
+    return `<svg data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50"><path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
+	C47.5,15,46.3,12.2,44.1,10.1z"></path></svg>`;
+  };
 
-	/* 
-		renderIcon: Returns a html strings 
-	*/
-	const renderIcon = () => {
-		return `<svg version="1.1" data-stiricon="heart-active" fill="currentColor" viewBox="0 0 50 50" >
-					<path d="M44.1,10.1c-4.5-4.3-11.7-4.2-16,0.2L25,13.4l-3.3-3.3c-2.2-2.1-5-3.2-8-3.2h-0.1c-3,0-5.8,1.2-7.9,3.4 c-4.3,4.5-4.2,11.7,0.2,16L24,44.4c0.5,0.5,1.6,0.5,2.1,0L44,26.5c0.1-0.2,0.3-0.4,0.5-0.5c2-2.2,3.1-5,3.1-7.9
-	C47.5,15,46.3,12.2,44.1,10.1z"></path>
-				</svg>`;
-	};
+  /*
+   * Helper Function: getfavsCookie
+   * Returns an array of objects from the specified cookie.
+   * @param {string} cookieId - The name of the cookie to read from (e.g. "favs=")
+   * @returns {Array} An array of fav objects
+   */
+  function getfavsCookie(cookieId) {
+    const favCookie = document.cookie
+      .split(";")
+      .filter((i) => i.includes(cookieId))
+      .map((i) => i.replace(cookieId, ""));
 
-	/* 
-		getfavsCookie: Returns an array of objects 
-	*/
-	function getfavsCookie(cookieId) {
-		const favCookie = document.cookie
-			.split(";")
-			.filter((i) => i.includes(cookieId))
-			.map((i) => i.replace(cookieId, ""));
+    return favCookie.length ? JSON.parse(favCookie) : [];
+  }
 
-		return favCookie.length ? JSON.parse(favCookie) : [];
-	}
+  /*
+   * Helper Function: getFavsList
+   * We are storing all favs in one cookie, so this function filters the cookie by type and returns an array of objects of that type.
+   * Each object has an id, date and type property. The date is used to sort the favs in the megamenu and to show the most recent favs in the header.
+   * If the cookie is empty or there are no favs of the specified type, an empty array is returned.
+   * @param {string} cookieType - The type of favs to return (e.g. "course", "accommodation")
+   * @param {string} cookieId - The name of the cookie to read from (e.g. "favs=")
+   * @returns {Array} An array of fav objects of the specified type, sorted by date (most recent first)
+   */
+  function getFavsList(cookieType, cookieId) {
+    const favsCookieAll2 = getfavsCookie(cookieId);
 
-	/* 
-		getFavsList: Returns an array of objects. PARAM: cookieType = accomm, course etc 
-	*/
-	function getFavsList(cookieType, cookieId) {
-		const favsCookieAll2 = getfavsCookie(cookieId);
+    const favsCookieAll = favsCookieAll2.map((item) => {
+      if (!item.type) item.type = "course";
+      return item;
+    });
 
-		const favsCookieAll = favsCookieAll2.map((item) => {
-			if (!item.type) item.type = "course";
-			return item;
-		});
+    const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
 
-		const favsCookie = favsCookieAll.filter((item) => item.type === cookieType);
+    if (!favsCookie.length || favsCookie.length < 1) return [];
+    return favsCookie.sort((a, b) => b.date - a.date);
+  }
 
-		if (!favsCookie.length || favsCookie.length < 1) return [];
-		return favsCookie.sort((a, b) => b.date - a.date);
-	}
+  /*
+   * MegaMenu Controller Function
+   * @param cookieId {string} The name of the cookie to read the favs from (e.g. "favs=")
+   * Reads the favs from the cookie, fetches course data from a json file, and renders the links in the megamenu.
+   * If there are no favs or the json file fails to load, the megamenu will just render without the fav links, but will still function as normal.
+   * @param cookieId {string} The name of the cookie to read the favs from (e.g. "favs=")
+   * @returns {void}
+   */
+  function initMega(cookieId) {
+    const favCourses = getFavsList("course", cookieId);
 
-	/*
-		Controller
-	*/
-	function initMega(cookieId, fbUrl) {
-		const favCourses = getFavsList("course", cookieId);
+    if (!favCourses.length) return;
 
-		if (!favCourses.length) return;
+    const jsonUrl = UoS_env.name === "prod" ? "/data/courses/all-courses/course-id-names/index.json" : "../../pages/favs/course-id-names.json";
+    const sids = favCourses.filter((item) => Number(item.id)).map((item) => item.id);
 
-		const query = favCourses
-			.filter((item) => Number(item.id))
-			.map((item) => item.id)
-			.join("+");
-		const fbUrlFull = fbUrl + query;
+    fetch(jsonUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const matches = data.filter((item) => sids.includes(item.id));
 
-		stir.getJSON(fbUrlFull, (results) => {
-			const arrayResults = results?.response?.resultPacket?.results || [];
-			if (!arrayResults.length) return;
+        const courses = matches
+          .map((element) => {
+            return {
+              id: element.id,
+              date: favCourses.filter((fav) => fav.id == element.id)[0].date,
+              title: element.title,
+              url: element.url + `?origin=datacoursefavs`,
+            };
+          })
+          .sort((a, b) => b.date - a.date)
+          .map(renderCourseLink)
+          .join("");
 
-			const favList = query.split("+").map((item) => {
-				return arrayResults
-					.filter((element) => {
-						if (Number(item) === Number(element.metaData.sid)) {
-							return item;
-						}
-					})
-					.map((element) => {
-						return {
-							id: item,
-							date: favCourses.filter((fav) => fav.id === item)[0].date,
-							title: (element.metaData.award ? element.metaData.award : "") + " " + element.title.split(" | ")[0],
-							url: element.liveUrl + `?orgin=datacoursefavs`,
-						};
-					});
-			});
+        // Make sure Megamenu has loaded then insert the links
+        stir.nodes("[data-coursefavs]").forEach((element) => {
+          element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses}</ul>`);
+        });
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  }
 
-			const courses = stir.flatten(favList).sort((a, b) => b.date - a.date);
+  /*
+   * Header Controller Function
+   * Reads the favs from the cookie and updates the header heart icon to indicate if there are any favs, and shows a count of favs if there are any.
+   * If there are no favs, the header will just render without the fav count, but will still function as normal.
+   * @param cookieId {string} The name of the cookie to read the favs from (e.g. "favs=")
+   * @returns {void}
+   */
+  function initHeader(cookieId) {
+    const favs = getfavsCookie(cookieId);
+    const iconNodes = stir.nodes("[data-stiricon=heart-inactive]");
 
-			// Make sure Megamenu has loaded then insert the links
-			stir.nodes("[data-coursefavs]").forEach((element) => {
-				element.insertAdjacentHTML("beforeend", `<ul class="no-bullet text-sm">${courses.map(renderCourseLink).join("")}</ul>`);
-			});
-		});
-	}
+    if (!iconNodes.length || !favs.length) return;
 
-	/*
-		Controller
-	*/
-	function initHeader(cookieId) {
-		const favs = getfavsCookie(cookieId);
+    iconNodes.forEach((element) => {
+      stir.setHTML(element, renderIcon());
+    });
 
-		const iconNodes = stir.nodes("[data-stiricon=heart-inactive]");
+    if (!favs.length) return;
+    const iconNode = stir.node("header [data-stiricon=heart-inactive]");
+    const iconNodeParent = iconNode && iconNode.parentNode;
+    iconNodeParent && iconNodeParent.insertAdjacentHTML("beforebegin", `<em data-aos="u-fade-up-out" class=" u-heritage-green text-sm">${favs.length}</em>`);
+  }
 
-		if (!iconNodes.length || !favs.length) return;
+  /*
+   * On Load
+   * Header	Favs: Always load the header favs functionality.
+   * Megamenu Course Favs: Only load the course favs functionality if the megamenu is present in the DOM.
+   * @returns {void}
+   */
 
-		iconNodes.forEach((element) => {
-			stir.setHTML(element, renderIcon());
-		});
+  const COOKIE_ID = "favs=";
+  initHeader(COOKIE_ID);
 
-		if (!favs.length) return;
-		const iconNodeParent = stir.node("header [data-stiricon=heart-inactive]").parentNode;
-		iconNodeParent && iconNodeParent.insertAdjacentHTML("beforebegin", `<em data-aos="u-fade-up-out" class=" u-heritage-green text-sm">${favs.length}</em>`);
-	}
+  const callbackMegaMenu = (mutationList, observer) => {
+    for (const mutation of mutationList) {
+      for (const addedNode of mutation.addedNodes) {
+        if (addedNode.id == "mm__study") {
+          initMega(COOKIE_ID);
+        }
+      }
+    }
+  };
 
-	/*
-		On Load
-	*/
-
-	initHeader(COOKIE_ID);
-
-	const callbackMegaMenu = (mutationList, observer) => {
-		for (const mutation of mutationList) {
-			for (const addedNode of mutation.addedNodes) {
-				if (addedNode.id == "mm__study") {
-					initMega(COOKIE_ID, FB_URL);
-				}
-			}
-		}
-	};
-
-	const config = { attributes: true, childList: true, subtree: true };
-	const observer = new MutationObserver(callbackMegaMenu);
-	const menucontainer = stir.node("#megamenu__container");
-	menucontainer && observer.observe(menucontainer, config);
+  const config = { attributes: true, childList: true, subtree: true };
+  const observer = new MutationObserver(callbackMegaMenu);
+  const menucontainer = stir.node("#megamenu__container");
+  menucontainer && observer.observe(menucontainer, config);
 };
 
-TempateFavs();
+TemplateFavs();
+
 var stir = stir || {};
 (function () {
   const scriptSrc = UoS_env.name.includes("preview") ? '<t4 type="media" id="174054" formatter="path/*" />' : UoS_env.wc_path + "js/other/mobile-nav.js";
@@ -3824,6 +4103,341 @@ var stir = stir || {};
 })();
 
 
+
+(function () {
+  // const STORAGE_KEY = "stirsess";
+  // const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
+  // const SERVER_PATH = UoS_env.name === `prod` ? "/research/hub/test/personalisation/server.php" : "server.php";
+  // const JAN_COURSES_PATH = UoS_env.name === `prod` ? "/data/courses/pg/json/january-starts/index.json" : "./january-starts.json";
+  // const CLOSING_DATE = new Date("2025-11-27T23:59:59");
+  // const DEV_MODE = UoS_env.name === `dev`;
+  // const PROD_MODE = UoS_env.name === `prod`;
+  // const MAX_SHOWS = UoS_env.name === `prod` ? 2 : 1000;
+  // const EXEMPT_LIST = ["/courses/", "/shhsge/"]; // Add any paths here that should not show the message
+  // const SCHOLARSHIPS = [
+  //   { region: "India", value: "£7,000" },
+  //   { region: "Malaysia", value: "£7,000" },
+  //   { region: "Singapore", value: "£7,000" },
+  //   { region: "Cambodia", value: "£7,000" },
+  //   { region: "Indonesia", value: "£7,000" },
+  //   { region: "Philippines", value: "£7,000" },
+  //   { region: "Myanmar", value: "£7,000" },
+  //   { region: "Thailand", value: "£7,000" },
+  //   { region: "Vietnam", value: "£7,000" },
+  //   { region: "Africa", value: "£7,000" },
+  //   { region: "Asia", value: "£7,000" },
+  // ];
+  // // Dont fire on non-dev/prod envs
+  // if (UoS_env.name !== `dev` && UoS_env.name !== `prod`) {
+  //   return;
+  // }
+  // // Dont fire if we are on an exempt page
+  // if (EXEMPT_LIST.some((exempt) => window.location.pathname.startsWith(exempt))) {
+  //   return;
+  // }
+  // // Dont fire if past closing date
+  // if (Date.now() > CLOSING_DATE.getTime()) {
+  //   return;
+  // }
+  // /*
+  //  * Get a cookie value by name
+  //  * @param {string} name - The name of the cookie
+  //  * @returns {string|null}
+  //  */
+  // function getCookie(name) {
+  //   const value = `; ${document.cookie}`;
+  //   const parts = value.split(`; ${name}=`);
+  //   if (parts.length === 2) return parts.pop().split(";").shift();
+  //   return null;
+  // }
+  // /*
+  //  * Get the AID from cookie or return default for non-prod
+  //  * @returns {string}
+  //  */
+  // function getAID() {
+  //   if (UoS_env.name !== `prod`) {
+  //     return "yvdksi-t77z0d-sykh-8kujo";
+  //   }
+  //   // if (getCookie("_a_id") === "663rm-zvd-v9fu9-giaj") {
+  //   //   return "yvdksi-t77z0d-sykh-8kujo";
+  //   // }
+  //   return getCookie("_a_id") || ``;
+  // }
+  // /*
+  //  * Sets a cookie
+  //  * @param {string} name - The name of the cookie
+  //  * @param {string} value - The value to set (should be encoded)
+  //  * @param {number} maxAgeMS - Max age in milliseconds
+  //  */
+  // function setCookie(name, value, maxAgeMS) {
+  //   const expires = new Date(Date.now() + maxAgeMS).toUTCString();
+  //   document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
+  // }
+  // /*
+  //  * Render the scholarship message
+  //  * @param {Object|null} scholarship - The scholarship object or null
+  //  * @param {string} region - The user's region
+  //  * @returns {string}
+  //  */
+  // function renderMessage(scholarship, region) {
+  //   if (!scholarship) return " ";
+  //   return `<b>${scholarship.value}</b> ${region} scholarship`;
+  // }
+  // /*
+  //  * Add event listeners to dropdown buttons
+  //  * @returns {void}
+  //  */
+  // function addListener() {
+  //   var ddPanes = document.querySelectorAll(".dropdown-pane");
+  //   var ddBtns = document.querySelectorAll(".button--dropdown");
+  //   for (var i = 0; i < ddPanes.length; i++) {
+  //     ddPanes[i].classList.add("hide");
+  //   }
+  //   function doClick(el) {
+  //     el.onclick = function (e) {
+  //       e.target.nextElementSibling.classList.toggle("hide");
+  //       e.preventDefault();
+  //     };
+  //   }
+  //   for (var i = 0; i < ddPanes.length; i++) {
+  //     doClick(ddBtns[i]);
+  //   }
+  // }
+  // /*
+  //  * Render data onto the page
+  //  * @param {Array} data - The data to render
+  //  * @param {Date} closingDate - The closing date for applications
+  //  * @param {Object|null} scholarship - The scholarship object or null
+  //  * @returns {string} - The HTML string to insert
+  //  */
+  // function renderData(data, closingDate, scholarship) {
+  //   if (!data || !data.length) return ``;
+  //   const event = data[0];
+  //   //const daysLeft = Math.ceil((closingDate - Date.now()) / (1000 * 60 * 60 * 24));
+  //   const humanDate = closingDate.toLocaleDateString("en-GB", { month: "long", day: "numeric" });
+  //   const html = `<div class="grid-x grid-container">
+  //                   <div class="u-my-2 cell">
+  //                       <div class="grid-x flex-dir-column align-middle medium-flex-dir-row u-p-2 u-m-0 c-wrapper-2025 purples u-border-left-solid u-border-width-5 u-border-coloured">
+  //                           <p class="cell small-12 large-8 u-m-0 ">
+  //                               <span class="text-lg u-text-coloured u-mb-1 u-inline-block"><b>Still interested in starting a Masters in January 2026?</b></span><br>
+  //                               Apply by <b>${humanDate}</b> - ${renderMessage(scholarship, event.n)}<br /> Or check out our courses starting September 2026
+  //                           </p>
+  //                           <div class="cell small-12 large-4 ">
+  //                                 <div class="u-relative purples u-mt-2-medium-down" >
+  //                                   <button class="button button--dropdown expanded " type="button" data-toggle="dd-personalisation-janstarts"
+  //                                       id="btn-personalisation-janstarts">Apply for </button>
+  //                                   <div class="dropdown-pane u-absolute purples dark u-px-2" id="dd-personalisation-janstarts" data-dropdown="" data-auto-focus="true">
+  //                                       <ul>
+  //                                         ${data
+  //                                           .map(
+  //                                             (event) => `<li><a href="${event.p}" class="c-link text-sm link-personalisation-janstarts">${event.prefix} ${event.title}</a></li>`
+  //                                           )
+  //                                           .join("")}
+  //                                         <li><a href="/courses/pg-taught/" class="c-link text-sm link-personalisation-janstarts">View all postgraduate courses</a></li>
+  //                                       </ul>
+  //                                   </div>
+  //                                 </div>
+  //                           </div>
+  //                       </div>
+  //                   </div>
+  //               </div>`;
+  //   return html;
+  // }
+  // /*
+  //  * Determine if we should fetch new data based on stored data age
+  //  * @param {string|null} stored - The stored cookie value
+  //  * @param {number} maxAgeMS - Max age in milliseconds
+  //  * @returns {boolean}
+  //  */
+  // function shouldFetch(stored, maxAgeMS) {
+  //   if (!stored) return true;
+  //   try {
+  //     const parsed = JSON.parse(stored);
+  //     if (!parsed.ts) return true;
+  //     const age = Date.now() - new Date(parsed.ts).getTime(); // in ms
+  //     return age > maxAgeMS;
+  //   } catch {
+  //     return true;
+  //   }
+  // }
+  // /*
+  //  * Store data in cookie
+  //  * @param {string} cookieKey
+  //  * @param {string} timestamp
+  //  * @param {Object} data
+  //  * @param {number} shows
+  //  * @return {boolean} True if stored successfully
+  //  */
+  // function storeData(cookieKey, timestamp, data, shows) {
+  //   const stirsess = {
+  //     ts: timestamp,
+  //     data: data,
+  //     shows: shows,
+  //   };
+  //   setCookie(cookieKey, JSON.stringify(stirsess), MAX_AGE_MS);
+  //   return true;
+  // }
+  // /*
+  //  * Fetch data from the API, store with ts, and render
+  //  * @param {string} aid - The aid to send to the server
+  //  * @param {string} cookieKey - The cookie key
+  //  */
+  // function fetchAndStoreData(aid, cookieKey, path, shows) {
+  //   const formData = new FormData();
+  //   formData.append("aid", aid);
+  //   return fetch(path, {
+  //     method: "POST",
+  //     body: formData,
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const stirsess = {
+  //         ts: new Date().toISOString(),
+  //         data: data,
+  //         shows: shows,
+  //       };
+  //       setCookie(cookieKey, JSON.stringify(stirsess), MAX_AGE_MS);
+  //       return data;
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching  data:", error);
+  //       throw error;
+  //     });
+  // }
+  // /*
+  //  * Process data to filter for January starts
+  //  * @param {Array<Object>} data
+  //  * @returns {Promise<void>}
+  //  */
+  // function processData(janPath, data) {
+  //   if (!data || !data.length) return Promise.resolve();
+  //   return fetch(janPath)
+  //     .then((response) => response.json())
+  //     .then((janData) => {
+  //       // Process January starts data
+  //       const janUrls = janData.map((item) => item.url);
+  //       const filtered = data
+  //         .filter((event) => {
+  //           return janUrls.includes(event.p);
+  //         })
+  //         .map((event) => {
+  //           const janItem = janData.find((item) => item.url === event.p);
+  //           return {
+  //             ...event,
+  //             ...janItem,
+  //           };
+  //         });
+  //       return filtered;
+  //     });
+  // }
+  // /*
+  //  * Merges local page view data from 'stirsess2' cookie with server data.
+  //  * @param {Array} serverData - The data fetched from the server.
+  //  * @returns {Array} - The merged data array.
+  // function mergeWithLocalData(serverData) {
+  //   const localDataCookie = getCookie("stirsess2");
+  //   if (!localDataCookie) return serverData;
+  //   const localData = JSON.parse(decodeURIComponent(localDataCookie));
+  //   const localPages = localData && Array.isArray(localData.pages) ? localData.pages : [];
+  //   const country = serverData.length && serverData[0].c ? serverData[0].c : null;
+  //   const nationality = serverData.length && serverData[0].n ? serverData[0].n : null;
+  //   const notFound = localPages
+  //     .filter((item) => {
+  //       if (!serverData.find((page) => page.p === item.p)) {
+  //         return item;
+  //       }
+  //     })
+  //     .map((localItem) => {
+  //       return { p: localItem.p, v: Number(localItem.v), s: 0, c: country, n: nationality };
+  //     });
+  //   const found = serverData
+  //     .filter((item) => {
+  //       if (localPages.find((page) => page.p === item.p)) {
+  //         return item;
+  //       }
+  //     })
+  //     .map((serverItem) => {
+  //       if (localPages.find((page) => page.p === serverItem.p)) {
+  //         return { p: serverItem.p, v: Number(localPages.find((page) => page.p === serverItem.p).v) + Number(serverItem.v), s: serverItem.s, c: country, n: nationality };
+  //       }
+  //     });
+  //   return [...found, ...notFound];
+  // }
+  // */
+  // /*
+  //  * Get the message for the user's region
+  //  * @param {Array} scholarships - The array of SCHOLARSHIPS with regions
+  //  * @param {Object} data - The user data with region info
+  //  * @returns {Object|null}
+  //  */
+  // function getScholarshipForRegion(scholarships, data) {
+  //   if (!data) return null;
+  //   return scholarships.find((item) => item.region === data.n || item.region === data.c);
+  // }
+  // /*
+  //  * Checks if the user has consented to performance cookies.
+  //  * @param {string} cookieControl - The value of the CookieControl cookie.
+  //  * @returns {boolean} True if consent is given, false otherwise.
+  //  */
+  // const hasPerformanceCookieConsent = (cookieControl, dev) => {
+  //   if (dev) return true;
+  //   try {
+  //     if (!cookieControl) return false;
+  //     const consentData = JSON.parse(cookieControl);
+  //     return consentData?.optionalCookies?.performance === "accepted";
+  //   } catch (error) {
+  //     console.error("Error parsing CookieControl cookie:", error);
+  //     return false;
+  //   }
+  // };
+  // /*
+  //  * Main controller function
+  //  * @returns {Promise<void>}
+  //  */
+  // async function controller() {
+  //   const aid = getAID();
+  //   if (!aid.length) return;
+  //   const stored = getCookie(STORAGE_KEY) ? decodeURIComponent(getCookie(STORAGE_KEY)) : null;
+  //   if (shouldFetch(stored, MAX_AGE_MS)) {
+  //     // Fetch from the server
+  //     //console.log("Fetching from server...");
+  //     const parsed = await fetchAndStoreData(aid, STORAGE_KEY, SERVER_PATH, 1);
+  //     if (!parsed.length) return;
+  //     //const mergedData = mergeWithLocalData(parsed);
+  //     const janData = await processData(JAN_COURSES_PATH, parsed);
+  //     if (!janData || !janData.length) return;
+  //     const scholarship = getScholarshipForRegion(SCHOLARSHIPS, janData[0]);
+  //     const html = await renderData(janData, CLOSING_DATE, scholarship);
+  //     document.querySelector("main").insertAdjacentHTML("afterbegin", html);
+  //     addListener();
+  //     PROD_MODE && dataLayer.push({ event: "personalisation-janstarts" });
+  //   } else {
+  //     // Use cached data
+  //     //console.log("Fetching data from cookie...");
+  //     const parsed = JSON.parse(stored);
+  //     if (!parsed.data.length) return;
+  //     const shows = parsed.shows && Number.isInteger(parsed.shows) ? parsed.shows : 1;
+  //     // Only show 3 times in a day
+  //     if (shows > MAX_SHOWS) return;
+  //     //const mergedData = mergeWithLocalData(parsed.data);
+  //     const janData = await processData(JAN_COURSES_PATH, parsed.data);
+  //     if (!janData || !janData.length) return;
+  //     const scholarship = getScholarshipForRegion(SCHOLARSHIPS, janData[0]);
+  //     const html = await renderData(janData, CLOSING_DATE, scholarship);
+  //     document.querySelector("main").insertAdjacentHTML("afterbegin", html);
+  //     storeData(STORAGE_KEY, parsed.ts, parsed.data, shows + 1);
+  //     addListener();
+  //     PROD_MODE && dataLayer.push({ event: "personalisation-janstarts" });
+  //   }
+  // }
+  // // Dont fire if no cookie consent
+  // const cookieControl = getCookie("CookieControl");
+  // if (!hasPerformanceCookieConsent(cookieControl, DEV_MODE)) {
+  //   return;
+  // }
+  // // Away you go
+  // controller();
+})();
 
 (function() {
 
@@ -3893,6 +4507,41 @@ var stir = stir || {};
 
 })(document.querySelector(".c-scroll-to-top"));
 
+
+ stir.session = (()=>{
+	 
+	const debug = UoS_env.name === "dev" || UoS_env.name === "qa" ? true : false;
+	const session = {};
+	const ccc = window.Cookies && Cookies.getJSON("CookieControl");
+	const consent = ccc && ccc.optionalCookies && ccc.optionalCookies.performance === "accepted";
+	
+	if(!consent) {
+		debug && console.info("[Session] performance cookie consent: not given");
+		window.sessionStorage && sessionStorage.removeItem("session"); // remove any existing
+		session.id = generateID();
+		return session;
+	}
+
+	debug && console.info("[Session] performance cookie consent: given");
+	
+	function generateID() {
+		const time = Date.now();
+		const randomNumber = Math.floor(Math.random() * 1000000001);
+		return time + "_" + randomNumber;
+	}
+	
+	if (window.sessionStorage && sessionStorage.getItem("session")) {
+		session.id = sessionStorage.getItem("session");
+		debug && console.info("[Session] ongoing session:",session.id);
+	} else {
+		session.id = generateID();
+		window.sessionStorage && sessionStorage.setItem("session",session.id);
+		debug && console.info("[Session] new session:",session.id);
+	}
+	
+	return session;
+	 
+ })();
 var stir = stir || {};
 
 stir.share = (()=>{

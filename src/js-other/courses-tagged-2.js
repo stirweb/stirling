@@ -10,38 +10,17 @@
   const resultAreas = scope;
   const debug = window.location.hostname == "localhost" || window.location.hostname == "mediadev.stir.ac.uk" ? true : false;
 
-  /*
-	  @getDomFilters: Maps and filters (empty vals) all data-** attributes on the node. Returns an array of objects
-	*/
-  const getDomFilters = (domData) =>
-    stir.map((el) => {
-      return { name: el[0], value: el[1].trim() };
-    }, domData);
-
-  /* 
-	  @main: Controller
-	 */
-  const main = (node_, initialData_) => {
-    const filtersNode = node_.querySelector(".filtersbox");
-    const resultNode = node_.querySelector(".resultbox");
-
-    setDOMContent(filtersNode, renderEmptyFilter());
-    const filterSelect = filtersNode.querySelector("select");
-
-    filterSelect &&
-      filterSelect.addEventListener("change", (event) => {
-        event.preventDefault();
-        const val = event.target.options[event.target.selectedIndex].value;
-        return processData(node_, resultNode, filterSelect, initialData_, val);
-      });
-
-    return processData(node_, resultNode, filterSelect, initialData_, "");
-  };
-
-  /*
-    @processData: Control data flow
-	*/
-  const processData = (node_, resultNode, filterSelect, initialData_, subjectFilterValue) => {
+  /**
+   * Function: processData: No return value (SIDE EFFECT)
+   * Process the data and pass to render functions
+   * @param {HTMLElement} node - The container node
+   * @param {HTMLElement} resultNode - The node to output results to
+   * @param {HTMLElement} filterSelect - The subject filter select element
+   * @param {Array} initialData - The initial course data
+   * @param {String} subjectFilterValue - The currently selected subject filter value
+   * @returns {undefined} No return value (SIDE EFFECT)
+   */
+  const processData = (node, resultNode, filterSelect, initialData, subjectFilterValue) => {
     // Filters
     const filtersAttributes = Object.entries(resultNode.dataset);
     const filtersSubject = [{ name: "subject", value: subjectFilterValue }];
@@ -52,7 +31,7 @@
     const filtersAllSubject = stir.filter((el) => el.value !== "", filtersAllSubject1); // remove empties
 
     // Course data
-    const filteredData1 = stir.filter((el) => el.title, initialData_); // remove empties
+    const filteredData1 = stir.filter((el) => el.title, initialData); // remove empties
     const filteredData = stir.filter(filterData(filtersAll), filteredData1);
     const filteredDataSubject = stir.filter(filterData(filtersAllSubject), filteredData);
 
@@ -66,7 +45,7 @@
     setDOMContent(filterSelect, renderFilterOptions(subjectFilters, subjectFilterValue));
 
     // How the data should be displayed
-    const view = node_.dataset["render"] ? node_.dataset["render"] : "";
+    const view = node.dataset["render"] ? node.dataset["render"] : "";
 
     // Curry helper functions
     const sortDataCurry = stir.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0));
@@ -77,54 +56,72 @@
     stir.compose(setDOMResults, renderData, sortDataCurry)(filteredDataSubject);
   };
 
-  /*
-    @filterData: Filter an item (_element) based on params (_filters) supplied
-	  Returns an Array of JSON Objects
-	*/
-  const filterData = stir.curry((_filters, _element) => {
+  /**
+   * Function: filterData: Returns a Boolean
+   * Checks to see if an element matches all the filters provided
+   * @param {Array} filters - Array of filter objects with name and  value properties
+   * @param {Object} element - The course object to check against the filters
+   * @returns {Boolean} true if all filters match, false if not
+   */
+  const filterData = stir.curry((filters, course) => {
     const isTrue = (x) => x;
 
-    // Helper function: check to see if there is a match for each facet
-    // Map true or false for each split up (,) facet item - [use indexOf() for compat with IE]
-    const matchMapper = (f) => {
-      const tempMatches = stir.map((el) => f.value.indexOf(el.trim()) !== -1, _element[f.name].split(","));
+    // Helper function to check if a course matches a single filter
+    const matchMapper = (filterItem) => {
+      const tempMatches = course[filterItem.name].split(",").map((el) => {
+        if (el.trim() === "") return false;
+        return filterItem.value.indexOf(el.trim()) !== -1;
+      });
       return stir.any(isTrue, tempMatches);
     };
 
-    return stir.all(isTrue, stir.map(matchMapper, _filters));
+    return stir.all(isTrue, stir.map(matchMapper, filters));
   });
 
-  /*
-	   @render: Returns a String (HTML)
-	 */
+  /**
+   * Function: @render: Returns a String (HTML)
+   * Renders the course data based on the view type
+   * @param {String} view - The view type (compact or default)
+   * @param {Array} items - The course data to render
+   * @returns {String} The HTML string of rendered courses
+   */
   const render = stir.curry((view, items) => {
     if (view === "compact") return stir.map(renderItemsCompact, items).join("");
 
     return stir.map(renderItems, items).join("");
   });
 
-  /*
-	  @renderFilterOptions: Returns a String (HTML)
-	 */
+  /**
+   * Function: @renderFilterOptions: Returns a String (HTML)
+   * Renders the filter options for the subject select element
+   * @param {Array} filters - The array of filter options
+   * @param {String} selected - The currently selected filter option
+   * @returns {String} The HTML string of rendered filter options
+   */
   const renderFilterOptions = (filters, selected) => {
     return `<option value="">Filter by subject...</option>
 			${filters.map((item) => `<option value="${item}" ${item === selected ? "selected" : ""}>${item}</option>`).join("")}`;
   };
 
-  /*
-	   @renderEmptyFilter: Returns a String (HTML)
-	 */
+  /**
+   * Function: @renderEmptyFilter: Returns a String (HTML)
+   * Renders an empty filter select element when no data is available
+   * @returns {String} The HTML string of an empty filter select element
+   */
   const renderEmptyFilter = () => {
     return `
           <label class="show-for-sr" for="subjectsfilter">Filter by subject</label>
           <select id="subjectsfilter">
 			        <option value="">Filter by subject...</option>
-			      </select>`;
+			    </select>`;
   };
 
-  /*
-	   @renderItemsCompact: Returns a String (HTML)
-	 */
+  /**
+   * Function: @renderItemsCompact: Returns a String (HTML)
+   * Renders a course item in compact view
+   * @param {Object} item - The course object to render
+   * @returns {String} The HTML string of the rendered course item
+   */
   const renderItemsCompact = (item) => {
     return `
 			<div class="cell small-12 medium-4 u-pt-2">
@@ -136,9 +133,12 @@
 			</div>`;
   };
 
-  /*
-	   @renderItems: Returns a String (HTML)
-	 */
+  /**
+   * Function: @renderItems: Returns a String (HTML)
+   * Renders a course item in default view
+   * @param {Object} item - The course object to render
+   * @returns {String} The HTML string of the rendered course item
+   */
   const renderItems = (item) => {
     return `
 			<div class="cell small-12 medium-4  u-pt-2">
@@ -150,18 +150,54 @@
 			</div>`;
   };
 
-  /*
-	  @setDOMContent: Output the html content to the page (SIDE EFFECT)
-	 */
+  /**
+   * Function: @setDOMContent: Returns a Boolean
+   * Sets the inner HTML of a given element
+   * @param {HTMLElement} elem - The element to set the HTML for
+   * @param {String} html - The HTML string to set as the inner content
+   * @returns {Boolean} true after setting the HTML
+   */
   const setDOMContent = stir.curry((elem, html) => {
     stir.setHTML(elem, html);
-
     return true;
   });
 
-  /*
-	  On load
-	 */
+  /**
+   *  getDomFilters: Convert DOM dataset to array of objects
+   *  @param {Array} domData - The dataset from the result node
+   *  @returns {Array} Array of filter objects with name and value properties
+   */
+  const getDomFilters = (domData) =>
+    stir.map((el) => {
+      return { name: el[0], value: el[1].trim() };
+    }, domData);
+
+  /**
+   * Main controller function
+   * @param {HTMLElement} node - The container node
+   * @param {Array} initialData - The initial course data
+   * @returns {undefined} No return value (SIDE EFFECT)
+   */
+  const main = (node, initialData) => {
+    const filtersNode = node.querySelector(".filtersbox");
+    const resultNode = node.querySelector(".resultbox");
+
+    setDOMContent(filtersNode, renderEmptyFilter());
+    const filterSelect = filtersNode.querySelector("select");
+
+    filterSelect &&
+      filterSelect.addEventListener("change", (event) => {
+        event.preventDefault();
+        const val = event.target.options[event.target.selectedIndex].value;
+        return processData(node, resultNode, filterSelect, initialData, val);
+      });
+
+    return processData(node, resultNode, filterSelect, initialData, "");
+  };
+
+  /**
+   * Initialization
+   */
 
   const initialData = stir.courses || [];
 

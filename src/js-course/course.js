@@ -26,6 +26,7 @@ stir.components.id = (function () {
 })();
 
 stir.components.discoveruni.widget = function (options) {
+  /*
   var widget = document.createElement("div");
   //add this class if we want DiscoverUniWidget to trigger automatically:
   //widget.classList.add('kis-widget');
@@ -33,12 +34,26 @@ stir.components.discoveruni.widget = function (options) {
   widget.setAttribute("data-course", options.kiscode);
   widget.setAttribute("data-kismode", options.kismode);
   widget.setAttribute("data-orientation", "responsive");
-  widget.setAttribute("data-language", "en-GB");
+  widget.setAttribute("data-language", "en-GB");*/
+
+  var mode = options.kismode === "fulltime" ? "FullTime" : "PartTime";
+
+  var widget = document.createElement("embed");
+  var url = `https://discoveruni.gov.uk/v2/widget/10007804/${options.kiscode}/${mode}/en`;
+  //var styles = "width: 100%; min-height: 400px";
+
+  widget.setAttribute("src", url);
+  //widget.setAttribute("style", styles);
+
   return widget;
 };
+
 stir.components.html.details = function (options) {
   var widget = document.createElement("details");
   options.summary && (widget.innerHTML = "<summary>" + options.summary + "</summary>");
+
+  //TEMP until we can fix DiscoverUniWidget's script to allow us to insert widgets into an already-rendered <details> element:
+  //var widget = document.createElement("div");
   return widget;
 };
 
@@ -74,7 +89,7 @@ stir.components.accordion = function (options) {
 stir.renderKISWidgets = function (kiscodes, kiswidget) {
   var debug = window.location.hostname != "www.stir.ac.uk" ? true : false;
   var kiswidget = kiswidget || document.querySelector("#kis-widget");
-  var frag = document.createDocumentFragment();
+  //var frag = document.createDocumentFragment();
   var useUnistats = false;
   var pattern = /^U\d{2}-[A-Z]{2,3}([A-Z]{3})?$/;
   var widgets = [];
@@ -114,10 +129,10 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
         widgets.push(widget);
       }
 
-      widget && frag.appendChild(widget);
+      //widget && frag.appendChild(widget);
     }
 
-    kiswidget.appendChild(frag);
+    //kiswidget.appendChild(frag);
 
     (function (d) {
       if (useUnistats || d.getElementById("unistats-widget-script")) {
@@ -125,43 +140,39 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
       }
       var widgetScript = d.createElement("script");
 
+      var contentInsertionNode = new stir.components.html.details({
+        id: "morewidgets",
+        summary: "View more Discover Uni information",
+      });
+
       widgetScript.id = "unistats-widget-script";
       widgetScript.src = "https://widget.discoveruni.gov.uk/widget/embed-script/";
       widgetScript.addEventListener("load", function (event) {
         if (widgets.length > 1 && window.DiscoverUniWidget) {
           var widgetStylesAdded = false;
-          var widgetsReady = 0;
-          var contentInsertionNode = new stir.components.html.details({
-            id: "morewidgets",
-            summary: "View more Discover Uni information",
-          });
-
-          contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
-          kiswidget.insertAdjacentElement("afterend", contentInsertionNode);
-          //new stir.accord(contentInsertionNode);
           //contentInsertionNode = contentInsertionNode.querySelector("[data-tab-content]");
 
           // patch DiscoverUniWidget's addCss() function so it only runs once per page (not once per widget!)
           DiscoverUniWidget.prototype._addCss = DiscoverUniWidget.prototype.addCss;
           DiscoverUniWidget.prototype.addCss = function () {
-            widgetStylesAdded || this._addCss(), (widgetStylesAdded = true);
+            (widgetStylesAdded || this._addCss(), (widgetStylesAdded = true));
           };
 
           // patch DiscoverUniWidget's renderWidget() function so that we can manipulate
           // widgets *after* they've been initialised
-          DiscoverUniWidget.prototype._renderWidget = DiscoverUniWidget.prototype.renderWidget;
-          DiscoverUniWidget.prototype.renderWidget = function () {
-            // pass-through call to the original renderWidget function
-            this._renderWidget.apply(this, arguments);
-
-            // if the widget has no data we'll do nothing further
-            if (this.targetDiv.classList.contains("no-data")) return;
-
-            // skip the first widget but put the rest into a <details> accordion
-            if (++widgetsReady > 1) {
-              contentInsertionNode.appendChild(this.targetDiv);
-            }
-          };
+          //           DiscoverUniWidget.prototype._renderWidget = DiscoverUniWidget.prototype.renderWidget;
+          //           DiscoverUniWidget.prototype.renderWidget = function () {
+          //             // pass-through call to the original renderWidget function
+          //             this._renderWidget.apply(this, arguments);
+          //
+          //             // if the widget has no data we'll do nothing further
+          //             if (this.targetDiv.classList.contains("no-data")) return;
+          //
+          //             // skip the first widget but put the rest into a <details> accordion
+          //             if (++widgetsReady > 1) {
+          //               contentInsertionNode.appendChild(this.targetDiv);
+          //             }
+          //           };
 
           // this replaces (rather than patches) DiscoverUniWidget's init()
           // which is called as soon as the script is loaded. But since
@@ -171,7 +182,19 @@ stir.renderKISWidgets = function (kiscodes, kiswidget) {
         for (var i = 0; i < widgets.length; i++) {
           widgets[i].classList.add("kis-widget");
           widgets[i].id = "kis-widget_" + (i + 1);
-          new DiscoverUniWidget(widgets[i]);
+          if (0 === i) {
+            kiswidget.appendChild(widgets[i]);
+          } else {
+            contentInsertionNode.append(widgets[i]);
+            console.info("[Widget]", widget);
+            console.info("[Widget]", widget.contentDocument);
+          }
+          //new DiscoverUniWidget(widgets[i]);
+        }
+        if (widgets.length > 1) {
+          contentInsertionNode.classList.add("u-my-2", "u-cursor-pointer", "u-header--secondary-font", "text-larger");
+          kiswidget.append(contentInsertionNode);
+          new stir.accord(contentInsertionNode);
         }
       });
 
@@ -253,10 +276,10 @@ var KISWidgetCaller = function () {
         },
         init: function () {
           var n = t.createElement("script");
-          (n.async = !0), (n.type = "text/javascript"), (n.src = "https://cdn.livechatinc.com/tracking.js"), t.head.appendChild(n);
+          ((n.async = !0), (n.type = "text/javascript"), (n.src = "https://cdn.livechatinc.com/tracking.js"), t.head.appendChild(n));
         },
       };
-      !n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e);
+      (!n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e));
     })(window, document, [].slice);
   }
 
@@ -287,7 +310,7 @@ var KISWidgetCaller = function () {
   }
 })();
 
-/**
+/*
  * Favourites buttons
  * 2023-05-10
  */
@@ -295,3 +318,70 @@ if (stir.favourites && stir.coursefavs) {
   stir.coursefavs.attachEventHandlers();
   document.querySelectorAll("[data-nodeid=coursefavsbtn]").forEach(stir.coursefavs.doCourseBtn);
 }
+
+/*
+ * Webinars button fetch and render
+ * Uses AddSearch to find upcoming webinars for this course
+ * November 2025
+ */
+
+(function () {
+  /*
+   *  Fetch and render webinar button
+   */
+  const renderButton = (item, colour) => {
+    const data = JSON.parse(decodeURIComponent(item?.custom_fields?.data) || "{}");
+
+    if (!data.register) return ``;
+    return `<a href="${data.register}" id="cta-pg-webinar" class="button ${colour}"><span class="u-font-bold u-text-regular">Join our webinar</span></a>`;
+  };
+
+  /*
+   *  Build search object
+   */
+  const getSearchObject = (from, to, filter) => {
+    const obj = {
+      and: [
+        { "custom_fields.tag": filter },
+        {
+          range: { "custom_fields.d": { gt: from, lt: to } },
+        },
+      ],
+    };
+    return obj;
+  };
+
+  /*
+   * Initiate fetch
+   */
+
+  const breadcrumb = document.querySelector("meta[name='stir.breadcrumb']").getAttribute("content");
+  const colour = breadcrumb.includes("Undergraduate") ? "energy-turq" : breadcrumb.includes("Postgraduate") ? "heritage-berry" : "";
+
+  const sid = document.querySelector("meta[name='sid']") && document.querySelector("meta[name='sid']").getAttribute("content");
+  const suggestedNode = document.getElementById("course-suggested-actions");
+
+  if (!sid || !suggestedNode) return;
+
+  const now = new Date().toISOString();
+  const searchAPI = "https://api.addsearch.com/v1/search/dbe6bc5995c4296d93d74b99ab0ad7de";
+  const searchUrl = `${searchAPI}?term=*&resultType=organic&filter=${encodeURIComponent(JSON.stringify(getSearchObject(now, "2099-12-31", "sid" + sid)))}&limit=3`;
+
+  fetch(searchUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.total_hits > 0) {
+        //console.log("[Course] Upcoming webinar found for this course:", data.hits[0]);
+        // get the number of a elements already in suggested actions
+        const existingButtons = suggestedNode.querySelectorAll("a.button");
+        // if more then 2 buttons remove the last one then add the webinar button
+        if (existingButtons.length > 2) {
+          suggestedNode.removeChild(existingButtons[existingButtons.length - 1]);
+        }
+        suggestedNode.insertAdjacentHTML("afterbegin", renderButton(data.hits[0], colour));
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching search data:", error);
+    });
+})();

@@ -63,6 +63,13 @@
   }
 }
 
+/* Small only over-rides */
+@include breakpoint(small only) {
+  .text-center-small-only {
+    text-align: center;
+  }
+}
+
 .u-text-regular,
 .u-lead,
 .h5, // DEPRECATED
@@ -105,6 +112,9 @@
 }
 
 @media screen and #{breakpoint(medium up)} {
+  .text-md-medium {
+    font-size: 1.25rem;
+  }
   .text-xlg {
     font-size: 3.25rem;
   }
@@ -138,6 +148,10 @@
 
 .u-font-bold {
   font-weight: 700;
+}
+
+.u-text-nowrap {
+  text-wrap: nowrap;
 }
 
 .u-quote {

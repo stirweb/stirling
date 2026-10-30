@@ -1,13 +1,9 @@
 /*
-    SEARCH NAV TAB BUTTONS
+    TABS
  */
 
 .slide-tabs-2 {
-  background: rgba(245, 245, 245, 1);
-
-  .carousel > button {
-    height: 100px;
-  }
+  background: $light-gray-alt;
 
   .carousel-slides {
     overflow: scroll;
@@ -17,23 +13,24 @@
     &::-webkit-scrollbar {
       display: none;
     }
-
-    button {
-      width: 100px;
-    }
   }
 }
 
 /*
-      SEARCH RESULTS
-  */
+
+    RESULTS
+
+*/
 
 .c-search-results-area {
   /*  
-    Results summary  eg Showing 1-10 of 3969 results
+      RESULTS SUMMARY  eg Showing 1-10 of 3969 results
   */
   .c-search-results-summary,
   .c-search-result__body {
+    p {
+      margin: 0;
+    }
     .c-tag {
       padding: 0.3rem;
       border: 1px solid #ccc;
@@ -45,7 +42,7 @@
   }
 
   /*
-       Default result box styles
+       DEFAULT RESULT
   */
   .c-search-result {
     background-color: #fff;
@@ -53,20 +50,47 @@
     position: relative;
     margin: 0 0 3rem 0;
 
-    a {
-      border-bottom: 1px solid $heritage-green;
-      &:hover {
-        border-bottom: 1px solid tint($energy-green, 70%);
-      }
-    }
-
     li,
     p:not(.u-text-regular) {
       font-size: 1rem;
     }
 
+    &[data-result-type="news"] {
+      .c-search-result__image {
+        img {
+          aspect-ratio: 4/3;
+          object-fit: cover;
+          /* make images square */
+        }
+      }
+    }
+    &[data-result-type="person"] {
+      .c-search-result__image {
+        img {
+          aspect-ratio: 1;
+          object-fit: cover;
+          /* make images square */
+        }
+      }
+    }
+    &[data-result-group="research"] {
+      /* Research Hub lacks proper breadcrumb meta data
+       * and the default data is all lowercase. We can
+       * safely 'Sentence case-ify' it with CSS.
+       * (That is not so true for general pages) .
+      */
+      .c-search-result__trail {
+        a {
+          display: inline-block; /* needed for ::first-letter */
+          &::first-letter {
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+
     /*
-        POP UP result
+        POP UP PROMO
     */
     &.c-popout-result {
       border-left: 0px !important;
@@ -85,21 +109,23 @@
 
         > div {
           > p:first-of-type {
-            font-size: 2rem;
-            border-bottom: 1px solid $heritage-green;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 8px;
             display: inline-block;
           }
 
           [class^="uos-"],
           [class*=" uos-"]::before {
-            font-size: 3rem;
-            top: 7px;
+            font-size: 2.5rem;
+            top: 4px;
             position: relative;
           }
 
           .uos-chevron-right::before {
-            font-size: 3rem;
+            font-size: 2rem;
           }
         }
 
@@ -116,7 +142,9 @@
           color: $heritage-berry;
           > div {
             > p:first-of-type {
-              border-color: $heritage-berry;
+              &:hover {
+                text-decoration-color: #b56c94;
+              }
             }
           }
         }
@@ -139,6 +167,22 @@
       position: absolute;
       top: -15px;
     }
+
+    .c-search-result__trail {
+      a {
+        border: 0;
+        font-size: 0.875rem; /* 14px */
+        color: $black;
+        text-decoration-thickness: 1px;
+
+        &:hover {
+          color: $heritage-green;
+        }
+      }
+      + .c-search-taggroup {
+        margin-top: 2rem;
+      }
+    }
   }
 
   .c-search-result-curated {
@@ -151,7 +195,9 @@
   }
 
   /* 
-      Aside content panel eg recommended panel
+
+      ASIDE CONTENT PANEL
+
   */
   aside.c-search-results-asides {
     p:not(.u-text-regular) {
@@ -160,7 +206,9 @@
   }
 
   /*  
-    Aside Filters content panel 
+
+    FILTERS
+
   */
   aside.search-filters-area,
   aside.c-search-results-filters {
@@ -238,25 +286,25 @@
       }
     }
     form[data-filters] {
-		[data-facet] [role="region"] ul:empty::after {
-			content: "No filter options available";
-			font-size: 1rem;
-		}
-		label > span:last-of-type {
-			/* number-of-results label for facets: */
-			margin-left: auto;
-			background: #14315e;
-			color: white;
-			text-align: center;
-			padding: 0.5rem;
-			font-size: 0.5rem;
-			border-radius: 50%;
-			min-width: 1.5rem;
-			height: 1.5rem;
-			line-height: 0.5rem;
-			font-weight: bold;
-		}
-	}
+      [data-facet] [role="region"] ul:empty::after {
+        content: "No filter options available";
+        font-size: 1rem;
+      }
+      label > span:last-of-type {
+        /* number-of-results label for facets: */
+        margin-left: auto;
+        background: #14315e;
+        color: white;
+        text-align: center;
+        padding: 0.5rem;
+        font-size: 0.5rem;
+        border-radius: 50%;
+        min-width: 1.5rem;
+        height: 1.5rem;
+        line-height: 0.5rem;
+        font-weight: bold;
+      }
+    }
   }
 
   span.c-search-tag {
@@ -313,7 +361,7 @@
   }
 
   /* 
-       All results tab
+       ALL RESULTS PANEL
   */
   .c-search-results-all {
     .c-search-result::before {
@@ -332,6 +380,10 @@
     .c-course-search-result > div {
       display: grid;
       gap: 20px 30px;
+    }
+
+    [data-as-type="PINNED"]::before {
+      content: "\e964";
     }
 
     .c-course-search-result::before,
@@ -362,16 +414,29 @@
       content: "\e9a4";
     }
 
+    [data-result-type="scholarship"]::before {
+      content: "\e947";
+    }
+
     [data-result-type*="person"]::before {
       content: "\e9a5";
     }
+
+    [data-result-type="studentstory"]::before {
+      content: "\e991";
+    }
+
     [data-result-type="document"]::before {
       content: "\e92a";
+    }
+
+    [data-result-type="blog"]::before {
+      content: "\e908";
     }
   }
 
   /* 
-      Courses panel results
+      COURSES PANEL RESULTS
   */
   .c-search-result[data-delivery="online"] {
     &::after {
@@ -393,7 +458,7 @@
   }
 
   /* 
-      Staff, Events, News panel results
+      STAFF, EVENTS, NEWS PANEL RESULTS
   */
   .c-search-result {
     &[data-result-type="news"],
@@ -417,6 +482,10 @@
       }
     }
   }
+}
+
+.c-search-results__loadmore button[disabled] {
+  display: none;
 }
 
 /* Visual indicator for Clearing courses */
@@ -469,7 +538,7 @@ fieldset[data-facet*="mode"] span::first-letter {
  */
 @media screen and #{breakpoint(large up)} {
   /* 
-        Staff, Events, News panel results
+        STAFF, EVENTS, NEWS PANEL RESULTS
   */
   .c-search-results-area {
     .c-search-results-panel {
@@ -639,6 +708,11 @@ pre.debug {
   }
 }
 
-.c-search-results details.debug {
-  margin-bottom: 3rem;
+.c-search-results {
+  .c-search-result-spacer {
+    margin: 3rem;
+  }
+  details.debug {
+    margin-bottom: 3rem;
+  }
 }

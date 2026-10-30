@@ -21,6 +21,7 @@
     a {
       position: relative;
       border-bottom: 0 !important;
+      text-decoration: none;
 
       &:after {
         content: var(--icon-chevron-right);

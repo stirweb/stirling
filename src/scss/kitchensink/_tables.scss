@@ -44,6 +44,15 @@ table {
   }
 }
 
+table.u-stripyrows-pairs tbody {
+  tr:nth-child(4n-2),tr:nth-child(4n-3) {
+      background-color: transparent;
+  }
+  tr:nth-child(4n),tr:nth-child(4n-1) {
+      background-color: #f8f8f7;
+  }
+}
+
 .table--stripped {
   thead,
   tbody,

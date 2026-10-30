@@ -154,7 +154,7 @@ $megamenu__padding: 2rem 0;
     }
     .megamenu__prev-button:hover,
     .megamenu__next-button:hover {
-      background: darken($light-gray, 5%);
+      background: $heritage-green;
       color: $white;
     }
     .megamenu__prev-button {

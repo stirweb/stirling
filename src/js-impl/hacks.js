@@ -18,6 +18,15 @@
   });
 })();
 
+(function () {
+  document.querySelectorAll(".c-half-n-half-2026:nth-of-type(odd)").forEach((el) => {
+    // Make hook top - bottom by default
+    el.classList.add("u-hook-top-left");
+    el.classList.remove("u-hook-bottom-right");
+    el.classList.remove("u-margin-bottom");
+  });
+})();
+
 /**
  * Hide elements if JavaScript is enabled. Such as some fallback text
  */

@@ -12,7 +12,6 @@
     "Pages with this cookie": 1,
     "Purpose": "Authentication security cookie used to correlate sign-in requests",
     "Provider": "Microsoft",
-    "Applier": "Microsoft",
     "Type": "Necessary",
     "MoreInfoUrl": "https://privacy.microsoft.com/en-gb/privacystatement"
   },
@@ -653,7 +652,7 @@
     "Pages with this cookie": 1,
     "Purpose": "Microsoft 365 data center affinity cookie for load balancing",
     "Provider": "Microsoft",
-    "Type": "Performance"
+    "Type": "Necessary"
   },
   {
     "Name": "OH.FLID",
@@ -668,7 +667,7 @@
     "Pages with this cookie": 1,
     "Purpose": "Microsoft 365 feature level ID for service customization",
     "Provider": "Microsoft",
-    "Type": "Performance"
+    "Type": "Necessary"
   },
   {
     "Name": "SM",
@@ -1095,7 +1094,6 @@
     "Type": "Performance",
     "MoreInfoUrl": ""
   },
-
   {
     "Name": "_hjUserAttributesHash",
     "Provider": "Hotjar",
@@ -1243,8 +1241,7 @@
     "Expiry": "3 months",
     "Type": "Marketing",
     "MoreInfoUrl": "https://en-gb.facebook.com/policy/cookies/",
-    "Applier": "Facebook",
-    "Domain": ""
+    "Applier": "Facebook"
   },
   {
     "Name": "personalization_id",
@@ -1613,8 +1610,7 @@
     "Expiry": "3 months",
     "Type": "Marketing",
     "MoreInfoUrl": "https://en-gb.facebook.com/policy/cookies/",
-    "Applier": "Facebook",
-    "Domain": ""
+    "Applier": "Facebook"
   },
   {
     "Name": "personalization_id",
@@ -1837,203 +1833,123 @@
     "Domain": ""
   },
   {
-    "Name": "NID",
-    "Provider": "Google",
-    "Purpose": "Targeting/Advertising. Allows our website to remember information that changes the way the site behaves or looks, such as your preferred language or the region you are in.",
-    "Expiry": "180 Days",
-    "Type": "Marketing",
-    "MoreInfoUrl": "https://policies.google.com/technologies/cookies?hl=en",
-    "Applier": "Google",
-    "Domain": ""
-  },
-  {
-    "Name": "1P_JAR",
-    "Provider": "Google",
-    "Purpose": "To remember recent searches and interactions to save preferences and customise ads on Google websites.",
-    "Expiry": "30 Days",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "_gat",
-    "Provider": "Google",
-    "Purpose": "To throttle request rate and limit requests to Google Analytics.",
-    "Expiry": "1 Minute",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "_dc_gtm_",
-    "Provider": "Google",
-    "Purpose": "To improve website performance and limit data collection on high traffic websites.",
-    "Expiry": "1 Minute",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "CONSENT",
-    "Provider": "Google",
-    "Purpose": "To remember recent searches and interactions to save preferences and customise ads on Google websites.",
-    "Expiry": "1 Year",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "SID",
-    "Provider": "Google",
-    "Purpose": "To show customized ads on Google properties",
-    "Expiry": "End of session",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "ANID",
-    "Provider": "Google",
-    "Purpose": "For personalized advertising served across the web",
-    "Expiry": "End of session",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "SIDCC",
-    "Provider": "Google",
-    "Purpose": "This cookie carries out information about how the end user uses the website and any advertising that the end user may have seen before visiting the said website.",
-    "Expiry": "End of session",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "IDE",
-    "Provider": "Doubleclick",
-    "Purpose": "Ads targeting cookie for DoubleClick",
-    "Expiry": "2 Years",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "jvxsync",
-    "Provider": "JIVOX",
-    "Purpose": "This cookie is set by JIVOX audience manager to determine the time and frequencies of visitor data synchronization.",
-    "Expiry": "6 months",
-    "Type": "Marketing",
-    "MoreInfoUrl": "https://jivox.com/privacy/",
-    "Applier": "JIVOX",
-    "Domain": ""
-  },
-  {
-    "Name": "uids",
-    "Provider": "Xandr",
-    "Purpose": "This cookie contains a base64 encoded JSON object which contains external unique randomly generated values that enable other Prebid Server demand partners to distinguish browsers and mobile devices.",
-    "Expiry": "90 days",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "sess",
-    "Provider": "Xandr",
-    "Purpose": "The sess cookie is used by the Platform to test whether a browser is configured to accept cookies from Xandr.",
-    "Expiry": "End of session",
-    "Type": "Marketing",
-    "MoreInfoUrl": "https://www.xandr.com/privacy/platform-privacy-policy/",
-    "Applier": "Xandr",
-    "Domain": ""
-  },
-  {
-    "Name": "icu",
-    "Provider": "Xandr",
-    "Purpose": "The icu cookie is used to select ads and limit the number of times a user sees a particular ad.",
-    "Expiry": "90 days",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "anj",
-    "Provider": "Xandr",
-    "Purpose": "The anj cookie contains data denoting whether a cookie ID is synced with our partners.",
-    "Expiry": "Persistent. 90 days.",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "usersync",
-    "Provider": "Xandr",
-    "Purpose": "The usersync cookie contains data denoting whether a cookie ID is synced with our partners.",
-    "Expiry": "Persistent. 90 days.",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "token",
-    "Provider": "Xandr",
-    "Purpose": "Cookies that start with token are helper cookies used as a security measure with industry opt-out pages. They contain a unique value only to verify the origin of opt-out requests.",
-    "Expiry": "1440 Minutes",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "pses",
-    "Provider": "Xandr",
-    "Purpose": "The pses cookie is used to measure the time a user spends on a site.",
-    "Expiry": "End of session",
-    "Type": "Marketing",
-    "MoreInfoUrl": "",
-    "Applier": "",
-    "Domain": ""
-  },
-  {
-    "Name": "__tmbid",
-    "Provider": "University of Stirling",
-    "Purpose": "Supporting advertisement delivered by Crimtan.",
+    "Name": "m-b",
+    "Provider": "Quora",
+    "Purpose": "Used for tracking and personalization.",
     "Expiry": "1 year",
     "Type": "Marketing",
-    "MoreInfoUrl": "https://crimtan.com/privacy-policy/",
-    "Applier": "Crimtan",
-    "Domain": "www.stir.ac.uk"
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
+    "Domain": ".quora.com"
   },
   {
-    "Name": "ar_debug",
-    "Provider": "api.edkt.io",
-    "Purpose": "To measure the effectiveness of advertising campaigns and to personalize online content.",
-    "Expiry": "1 month",
-    "Type": "Third-party",
-    "MoreInfoUrl": "",
-    "Applier": "",
+    "Name": "m-b_lax",
+    "Provider": "Quora",
+    "Purpose": "Used for tracking and personalization with Lax SameSite attribute.",
+    "Expiry": "1 year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
+    "Domain": ".quora.com"
+  },
+  {
+    "Name": "m-b_strict",
+    "Provider": "Quora",
+    "Purpose": "Used for tracking and personalization with Strict SameSite attribute.",
+    "Expiry": "1 year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
+    "Domain": ".quora.com"
+  },
+  {
+    "Name": "m-dynamicFontSize",
+    "Provider": "Quora",
+    "Purpose": "Stores user's font size preference for accessibility.",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
     "Domain": ""
   },
   {
-    "Name": "ar_debug_uuid",
-    "Provider": "api.edkt.io",
-    "Purpose": "To measure the effectiveness of advertising campaigns and to personalize online content.",
+    "Name": "m-login",
+    "Provider": "Quora",
+    "Purpose": "Used for authentication and to maintain login state.",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
+    "Domain": ""
+  },
+  {
+    "Name": "m-s",
+    "Provider": "Quora",
+    "Purpose": "Used for session management.",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
+    "Domain": ""
+  },
+  {
+    "Name": "m-sa",
+    "Provider": "Quora",
+    "Purpose": "Used for session analytics.",
+    "Expiry": "End of session",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
+    "Domain": ""
+  },
+  {
+    "Name": "m-tgvs",
+    "Provider": "Quora",
+    "Purpose": "Used for tracking and analytics.",
+    "Expiry": "1 day",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
+    "Domain": ""
+  },
+  {
+    "Name": "m-theme",
+    "Provider": "Quora",
+    "Purpose": "Stores the user's preferred theme.",
     "Expiry": "6 months",
-    "Type": "Third-party",
-    "MoreInfoUrl": "",
-    "Applier": "",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
     "Domain": ""
+  },
+  {
+    "Name": "m-themeStrategy",
+    "Provider": "Quora",
+    "Purpose": "Stores the strategy for applying the user's theme.",
+    "Expiry": "6 months",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
+    "Domain": ""
+  },
+  {
+    "Name": "m-uid",
+    "Provider": "Quora",
+    "Purpose": "Unique user identifier for tracking and personalization.",
+    "Expiry": "1 year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
+    "Domain": ""
+  },
+  {
+    "Name": "OptanonConsent",
+    "Provider": "Quora",
+    "Purpose": "Stores the user's cookie consent preferences for the domain.",
+    "Expiry": "1 year",
+    "Type": "Marketing",
+    "MoreInfoUrl": "https://www.quora.com/about/privacy",
+    "Applier": "Quora",
+    "Domain": ".quora.com"
   }
 ]
