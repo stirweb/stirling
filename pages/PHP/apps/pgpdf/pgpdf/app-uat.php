@@ -2,23 +2,11 @@
 
 session_start();
 
-$ENV_MODE = 'QA'; // Change to 'PROD' for production or QA for UAT / Test mode
-
-// These only take effect if ENV_MODE is set to QA - in PROD mode everything is active
-$TEST_QS = false; // Set to false to test without sending data to QS
-$TEST_MAIL = false; // Set to false to test without sending emails via mailchimp
-
-
-require_once('vendor/autoload.php');
-require("app-qs/qs-api.php");
-
-$api_url = $ENV_MODE === 'QA' ? "https://integration-emea.qses-uat.com/crms/api/" : "https://integration-emea.qses.systems/crms/api/";
-
-
-/* 
-
-  ENVIRONMENTAL VARS: Load vars from .env
-
+/*
+* HubSpot integration index file
+* Base Url: https://api.hubapi.com/crm/v3/objects/
+* Auth: Bearer Token in the Authorization header
+* HTTP Method: POST
 */
 
 $env = parse_ini_file(dirname(__DIR__, 3) . '/' . '.env');
@@ -32,12 +20,57 @@ if (!$env) {
 
 
 
-/* 
+/*
+ * Get raw headers describing the schema of raw_row_json
+ * @description: a JSON-stringified schema describing the data type of each field in raw_row_json (string, boolean, datetime, array, object, etc.) 
+ * @return: string (escaped) JSON-encoded schema of raw_row_json
+ */
+function get_raw_headers()
+{
+    return json_encode(array(
+        "Name" => "string",
+        "Surname" => "string",
+        "EmailAddress" => "string",
+        "Mobile" => "string",
+        "CountryOfCitizenship" => "string",
+        "CountryOfResidence" => "string",
+        "SubscribedToDirectEmails" =>  "boolean",
+        "SubscribedToDirectPhoneCalls" => "boolean",
+        "SubscribedToDirectSms" => "boolean",
+        "WhatsApp Consent Given" => "boolean",
+        "Mobile Phone Number" => "string",
+        "SubChannel" => "string",
+        "Consents" => [
+            [
+                "Type" => "string",
+                "Consent" => "boolean"
+            ]
+        ],
+        "Tags" => [
+            [
+                "Tag" => "string",
+            ],
+        ],
+        "Intake" => "string",
+        "ContactStatus" => "string",
+        //"Courses" => "array",
+        "Courses" => [
+            [
+                "StudyLevel" => "string",
+                "Faculty" => "string",
+                "Course" => "string"
+            ]
+        ],
+        "HeatStatus" => "string"
+    ));
+}
 
-  FUNCTION: Helper for QS Consent 
-
-*/
-
+/*
+ * Check consent function
+ * @param: string $val The consent value
+ * @param: string $super_val The super consent value
+ * @return: boolean True if consent is given, false otherwise
+ */
 function check_consent($val, $super_val)
 {
     if ($super_val === "" || $super_val === "false")
@@ -49,38 +82,32 @@ function check_consent($val, $super_val)
     return false;
 }
 
-/* 
-
-  FUNCTION: Controller for QS
-
-*/
-function qs_init($api_url)
+/*
+ * Get raw row JSON
+ * @description: Creates a JSON-stringified object containing the actual row data
+ * @return: string (escaped) JSON-encoded raw row data
+ */
+function get_raw_row_json()
 {
-    // Check if there is a record already for this person
-    $api_geturl = $api_url . "/contacts?emailAddress=" .  $_POST['email'];
-    $get_data = QS_GET($api_geturl, null);
-
     $courses = json_decode($_POST['courses']);
     $superConsent = $_POST['wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses'];
     $heat_status = $superConsent === "" || $superConsent === "false" ? "COLD" : "WARM";
 
-    $contact_payload = [
+    return json_encode(array(
         "Name" => $_POST['first_name'],
         "Surname" => $_POST['last_name'],
         "Mobile" => $_POST['telephone'],
+        "EmailAddress" => $_POST['email'],
+
         "CountryOfCitizenship" => $_POST['country_of_origin'],
         "CountryOfResidence" => $_POST['country_of_residence'],
         "SubscribedToDirectEmails" => (check_consent($_POST['opt_in_for_email'], $superConsent)),
         "SubscribedToDirectPhoneCalls" => (check_consent($_POST['opt_in_for_phone'], $superConsent)),
         "SubscribedToDirectSms" => (check_consent($_POST['opt_in_for_sms'], $superConsent)),
 
+        "WhatsApp Consent Given" => (check_consent($_POST['opt_in_for_whatsapp'], $superConsent)),
+        "Mobile Phone Number" => $_POST['whatsapp_phone_number'],
         "SubChannel" => "WebEnquiry",
-
-        "Tags" => [
-            [
-                "Tag" => "stir_pgpr_xx_Personalised PG Prospectus_xx_xx_xx-xx-xx",
-            ],
-        ],
         "Consents" => [
             [
                 "Type" => "Would you like to keep receiving emails from us?",
@@ -89,115 +116,69 @@ function qs_init($api_url)
             [
                 "Type" => "Opt-In to Social Media?",
                 "Consent" => (check_consent($_POST['opt_in_for_social'], $superConsent))
+            ],
+            [
+                "Type" => "Opt-In to WhatsApp messaging?",
+                "Consent" => (check_consent($_POST['opt_in_for_whatsapp'], $superConsent))
             ]
         ],
-
-        "EmailAddress" => $_POST['email']
-    ];
-
-    $transaction_type = '';
-
-    // New record so add additional stuff
-    if (!isset($get_data->Data[0]->Id)) {
-        $contact_payload["Intake"] = $_POST['study_year'];
-        $contact_payload["ContactStatus"] = "Enquiry";
-        $contact_payload["Courses"] = $courses;
-        $contact_payload["HeatStatus"] = $heat_status;
-        $transaction_type = "added";
-    } else {
-        // Existing record fix id just to be safe
-        $contact_payload["CrmNumber"] = $get_data->Data[0]->Id;
-        $transaction_type = "updated";
-    }
-
-    // POST student data to QS
-    $url = $api_url . "/processes/upsertcontact";
-
-    $params = [
-        "contactMatchingMinConfirmedScore" => 82,
-        "contactMatchingMinNameSimilarity" => 0.4,
-        "contactMatchingEnabled" => "True"
-    ];
-
-    $result = QS_Post($url, $params, null, $contact_payload); // should return CrmNumber
-
-    // Other communication
-    $other_comm_payload = [
-        "CrmNumber" => $result,
-        "Incoming" => true,
-        "CommunicationCategoryID" => 8,
-        "CommunicationTypeID" => 1,
-        "Headline" => "Stirling Webform Prospectus Form Requested",
-        "SendExternal" => false,
-        "Source" => "Prospectus Form Requested",
-        "SubChannelID" => 101,
-        "Task" => [
-            "TaskTypeId" => 6,
-            "Description" => "Stirling Webform Prospectus Form Requested"
-        ]
-    ];
-
-    // Whole formData as a String
-    $post_data = $_POST;
-
-    unset($post_data["token"]);
-    unset($post_data["g-recaptcha-response"]);
-    unset($post_data["courses"]); // its already encoded so remove it to stop encoding twice
-    unset($post_data["pdfPath"]);
-
-    $post_data["courses"] = json_encode($courses);
-
-    $string_it = function ($key, $value) {
-        return $key . ": " . $value . "<br>\r";
-    };
-
-    $arr_posted_data = array_map($string_it, array_keys($post_data), $post_data);
-    $str_posted_data2 = implode("<br>\r", $arr_posted_data);
-
-    $other_comm_url = $api_url . "othercommunications";
-    $other_comm_result_id = QS_Post($other_comm_url, null, null, $other_comm_payload); // should return an id
-
-    // Other communication content
-    $comm_content_payload = [
-        "Content" => $str_posted_data2,
-    ];
-
-    $comm_content_url = $api_url . "/othercommunications/$other_comm_result_id/communicationcontent";
-    $comm_content_result = QS_Post($comm_content_url, $params, null, $comm_content_payload); // returns an id
-
-    return ["process" => "Data", "outcome" => "Success", "result" => "$result $transaction_type"];
+        "Tags" => [
+            [
+                "Tag" => "stir_pgpr_xx_Personalised PG Prospectus_xx_xx_xx-xx-xx",
+            ],
+        ],
+        "Intake" => $_POST['study_year'],
+        "ContactStatus" => "Enquiry",
+        "Courses" => $courses,
+        "HeatStatus" => $heat_status
+    ));
 }
-
 
 /* 
-
-    MailChimp: Send Email to User
-
-*/
-
-function run($message)
+ *   Create a new HubSpot object using the HubSpot API
+ *   @description: Creates a new HubSpot object with the specified import name and raw data then submits the data to the HubSpot endpoint.
+ *   @param: string $object_id The HubSpot object ID
+ *   @param: string $bearer_token The Bearer token for authentication
+ *   @param: string $import_name The import name to associate with the object
+ *   @return: array An array containing the process, outcome, and result of the operation 
+ *
+ */
+function qs_init($object_id, $bearer_token, $import_name)
 {
-    try {
-        $mailchimp = new MailchimpTransactional\ApiClient();
-        $mailchimp->setApiKey(getenv('MAIL'));
+    $url = "https://api.hubapi.com/crm/v3/objects/" . $object_id;
 
-        $response = $mailchimp->messages->sendTemplate($message);
-        return ["process" => "Mail", "outcome" => "Success", "result" => ""];
-    } catch (Error $e) {
-        return  ["process" => "Mail", "outcome" => "Fail", "result" => ""];;
+    $data = array(
+        "properties" => array(
+            "holding_import_name" => $import_name,
+            "raw_headers_json" => get_raw_headers(), // desribes the raw_row_json schema
+            "raw_row_json" => get_raw_row_json(), // contains the actual row data
+        )
+    );
+
+    $options = array(
+        "http" => array(
+            "header" => "Content-Type: application/json\r\n" .
+                "Authorization: Bearer " . $bearer_token . "\r\n",
+            "method" => "POST",
+            "content" => json_encode($data)
+        )
+    );
+
+    $context = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+
+    if ($result === FALSE) {
+        // Handle error
+        echo "Error creating HubSpot object.";
+        var_dump($result);
+        return ["process" => "Data", "outcome" => "Fail", "result" => ""];
     }
-}
 
-
-/*
-    FUNCTION: Check if testing
-*/
-function check_if_submitting($env, $testing)
-{
-    if ($env !== 'QA')
-        return true;
-
-    return $testing;
+    if ($result !== FALSE) {
+        echo "HubSpot object created successfully.";
+        var_dump($result);
+        return ["process" => "Data", "outcome" => "Success", "result" => ""];
+    } 
 }
 
 
@@ -208,80 +189,22 @@ function check_if_submitting($env, $testing)
 */
 
 
-if (!isset($_POST['email'])) {
-    echo json_encode([["process" => "Data", "outcome" => "Fail", "result" => ""], ["process" => "Mail", "outcome" => "Fail", "result" => ""]]);
-    exit();
-}
-
-if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-    echo json_encode([["process" => "Data", "outcome" => "Fail", "result" => ""], ["process" => "Mail", "outcome" => "Fail", "result" => ""]]);
-    exit();
-}
-
-
 /*
 
-  ON LOAD: QS
+  ON LOAD: QS (HUBSPOT)
 
 */
 
-$_SESSION["token"] = QS_get_token($api_url, $ENV_MODE);
 
+// Use environment variables for HubSpot object ID and bearer token
+$object_id = $env['HUBSPOT_QA_OBJECT_ID'] ;
+$bearer_token = $env['HUBSPOT_QA_BEARER_TOKEN'];
+$import_name = "ESI API Import – Stirling Webform Prospectus Form Requested";
 
-if (isset($_POST['email'])) {
-    $submitqs = check_if_submitting($ENV_MODE, $TEST_QS);
-    $qs_outcome = $submitqs ? qs_init($api_url) : ["process" => "Data", "outcome" => "Success", "result" => "Skipped sending"];
-} else {
-    $qs_outcome = ["process" => "Data", "outcome" => "Fail", "result" => ""];
-}
-
+qs_init($object_id, $bearer_token, $import_name);
 
 /*
 
 	ON LOAD: MailChimp
 
 */
-
-$from = "study@stir.ac.uk";
-$subject = "Your personalised prospectus is ready!";
-
-// Dynamic content
-$to = $_POST["email"];
-$first =  ucfirst($_POST["first_name"]);
-$link = $_POST["pdfPath"];
-
-$message = [
-    "message" => [
-        "from_email" => $from,
-        "subject" => $subject,
-        "text" => $subject,
-        "to" => [
-            [
-                "email" => $to,
-                "type" => "to"
-            ]
-        ],
-        "merge_vars" =>  [[
-            "rcpt" => $to,
-            "vars" => [
-                ["name" => "link", "content" => $link],
-                ["name" => "first", "content" => $first]
-            ]
-        ]],
-    ],
-    "template_name" => "pg-personalised-prospectus",
-    "template_content" => []
-];
-
-
-
-
-if (isset($_POST['email'])) {
-    $submitmail = check_if_submitting($ENV_MODE, $TEST_MAIL);
-    $mail_outcome = $submitmail ? run($message) : ["process" => "Mail", "outcome" => "Success", "result" => "Skipped sending"];
-} else {
-    $mail_outcome = ["process" => "Mail", "outcome" => "Fail", "result" => ""];
-}
-
-
-echo json_encode([$mail_outcome, $qs_outcome]);

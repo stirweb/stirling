@@ -6,10 +6,11 @@
    */
 
   const useUAT = typeof USE_UAT !== "undefined" ? USE_UAT : false;
+  const year = typeof YEAR !== "undefined" ? YEAR : "2026";
 
   const SERVER = {
     path: UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "",
-    year: `2026`,
+    year: year,
     app: useUAT ? "app-uat.php" : "app.php",
     verify: "verify.php",
   };
@@ -49,11 +50,11 @@
 
     return subjectSelected[0]
       ? subjectSelected[0].courses
-          .map((item) => {
-            const ident = item.newName.replaceAll(" ", "-").toLowerCase();
-            return `<div class="u-flex u-mb-1 u-gap-8 "><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}" value="${item.newName}" data-id="subject_course_${index}" data-type="subject_course"><label class="u-m-0" for="${ident}">${item.newName}</label></div>`;
-          })
-          .join(``)
+        .map((item) => {
+          const ident = item.newName.replaceAll(" ", "-").toLowerCase();
+          return `<div class="u-flex u-mb-1 u-gap-8 "><input class="u-m-0" type="checkbox" id="${ident}" name="subject_course_${index}" value="${item.newName}" data-id="subject_course_${index}" data-type="subject_course"><label class="u-m-0" for="${ident}">${item.newName}</label></div>`;
+        })
+        .join(``)
       : ``;
   };
 
