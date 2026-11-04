@@ -314,17 +314,19 @@
     const [firstPageCopy] = await pdfDoc.copyPages(frontPdf, [0]);
     const { width, height } = firstPageCopy.getSize();
 
-    const largeFontSize = 72;
-    const secondaryFontSize = 40;
+    const largeFontSize = 38;
+    const secondaryFontSize = 38;
 
     const fontSize = firstName.length > 8 ? secondaryFontSize : largeFontSize;
     const centre = width / 2;
     const textWidth = customFont.widthOfTextAtSize(firstName, fontSize);
 
     const xPos = centre - textWidth / 2;
-    const yPos = fontSize === largeFontSize ? 477 : 500;
+    const yPos = fontSize === largeFontSize ? 622 : 622;
 
-    firstPageCopy.drawText(firstName.toUpperCase(), {
+    const firstNameCapitalized = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase() + "’s";
+
+    firstPageCopy.drawText(firstNameCapitalized, {
       x: xPos,
       y: yPos,
       size: fontSize,
