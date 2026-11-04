@@ -6,9 +6,7 @@
    */
 
   const useUAT = typeof USE_UAT !== "undefined" ? USE_UAT : false;
-  const year = typeof YEAR !== "undefined" ? YEAR : "2026";
-
-  console.log(year);
+  const year = "2027";
 
   const SERVER = {
     path: UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "",
@@ -324,7 +322,7 @@
     const textWidth = customFont.widthOfTextAtSize(firstNameCapitalized, fontSize);
 
     const xPos = centre - textWidth / 2;
-    const yPos = fontSize === largeFontSize ? 618 : 618;
+    const yPos = fontSize === largeFontSize ? 615 : 615;
 
     firstPageCopy.drawText(firstNameCapitalized, {
       x: xPos,
