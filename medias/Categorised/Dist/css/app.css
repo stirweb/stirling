@@ -396,29 +396,6 @@
    white--all 
    will make any text within the element white
  */
-.u-white--all * {
-  color: #fff !important; }
-  .u-white--all *:after {
-    color: #fff !important; }
-
-.u-white--all a {
-  color: #fff !important; }
-  .u-white--all a:hover {
-    text-decoration-color: rgba(255, 255, 255, 0.5); }
-  .u-white--all a:before {
-    background-color: #fff !important; }
-  .u-white--all a.button--back:before {
-    background-color: transparent !important; }
-  .u-white--all a.c-link {
-    border-bottom: none; }
-    .u-white--all a.c-link:hover {
-      border-bottom: none; }
-
-.u-white--all select {
-  color: #3a3c39 !important; }
-  .u-white--all select option, .u-white--all select:focus {
-    color: #3a3c39 !important; }
-
 [class*="u-bg-"].u-white h2,
 [class*="u-bg-"].u-white h3,
 [class*="u-bg-"].u-white a {
@@ -431,53 +408,9 @@
    u-white--all auto overrides 
    table bg is white/grey, so should be inherited
  */
-.u-white--all table,
-.u-white--all td,
-.u-white--all td strong,
-.u-white--all th strong,
-.u-white--all table p,
-.u-white--all table p strong,
-.u-white--all th {
-  color: #000 !important; }
-  .u-white--all table a,
-  .u-white--all td a,
-  .u-white--all td strong a,
-  .u-white--all th strong a,
-  .u-white--all table p a,
-  .u-white--all table p strong a,
-  .u-white--all th a {
-    color: #006938 !important; }
-    .u-white--all table a:hover,
-    .u-white--all td a:hover,
-    .u-white--all td strong a:hover,
-    .u-white--all th strong a:hover,
-    .u-white--all table p a:hover,
-    .u-white--all table p strong a:hover,
-    .u-white--all th a:hover {
-      color: #006938 !important; }
-
-.u-white--all input[type="search"] {
-  color: #000 !important; }
-
 /*
   Override utility for u-white--all
 */
-.u-unwhite--all * {
-  color: #000 !important; }
-  .u-unwhite--all *:after {
-    color: #006938 !important; }
-  .u-unwhite--all *:before {
-    color: #006938 !important; }
-
-.u-unwhite--all h1,
-.u-unwhite--all h2 {
-  color: #006938; }
-
-.u-unwhite--all a {
-  color: #006938 !important; }
-  .u-unwhite--all a:hover {
-    color: #006938 !important; }
-
 a:has(img):hover {
   border-bottom: none !important; }
 
@@ -4073,9 +4006,6 @@ ul .c-link {
 
 .c-link.no-arrow:after {
   content: ""; }
-
-.u-white--all .c-link::after {
-  filter: brightness(0) invert(1); }
 
 /* 
 
@@ -9710,9 +9640,6 @@ svg.u-icon {
   width: 1.125rem;
   height: 1.125rem;
   display: inline-block; }
-
-.u-white--all .u-icon::before {
-  color: #fff; }
 
 .svg-icon {
   width: 100%;

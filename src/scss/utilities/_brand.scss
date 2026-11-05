@@ -267,11 +267,11 @@ svg.u-icon {
   display: inline-block;
 }
 
-.u-white--all .u-icon {
-  &::before {
-    color: $white;
-  }
-}
+// .u-white--all .u-icon {
+//   &::before {
+//     color: $white;
+//   }
+// }
 
 .svg-icon {
   width: 100%; /* Safari fix */
