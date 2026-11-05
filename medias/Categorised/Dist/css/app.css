@@ -9702,63 +9702,6 @@ svg.u-icon {
     Styles a hook under the content wrapped with the class '.hook'.
     NOT Brand 2026 HOOKS
 */
-.hook {
-  display: inline-block;
-  position: relative; }
-
-.hook-right {
-  padding: 0 20px 20px 0; }
-
-.hook-left {
-  padding: 0 0 20px 20px; }
-
-.hook::before,
-.hook::after {
-  background-color: currentColor;
-  bottom: 0;
-  content: "" !important;
-  position: absolute; }
-
-.hook::before {
-  height: 31px;
-  width: 7px; }
-
-.hook-right::before {
-  right: 0; }
-
-.hook-left::before {
-  left: 0; }
-
-.hook::after {
-  height: 8px;
-  left: 0;
-  width: 100%; }
-
-.hook-skinny::before {
-  height: 24px;
-  width: 5px; }
-
-.hook-skinny::after {
-  height: 5px; }
-
-.hook-infinite {
-  max-width: max-content; }
-  .hook-infinite::after {
-    width: 100vw; }
-  .hook-infinite.hook-right::after {
-    left: auto;
-    right: 0; }
-
-.hook-energy-green::after,
-.hook-energy-green::before {
-  background-color: #76b72a; }
-
-@media screen and (max-width: 39.99875em) {
-  .remove-hook-for-small > *::after {
-    content: none; }
-  .remove-hook-for-small > *::before {
-    content: none; } }
-
 /*
 
     New brand 2025 hooks
