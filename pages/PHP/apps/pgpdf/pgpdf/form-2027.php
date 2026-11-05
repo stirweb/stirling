@@ -643,1127 +643,1333 @@
     </nav>
 
     <main class="wrapper-content" aria-label="Main content" id="content">
-        <div class="grid-container">
+        <div class="grid-x grid-container">
+
+            <!-- Alt heading  -->
 
 
 
 
 
-            <div class="grid-x u-padding-y bg-heritage-green  u-bg-heritage-green u-bleed u-white--all">
-
+            <!-- Wrapper -->
+        </div>
+        <div>
+            <div id="d.en.209054" class="c-wrapper c-wrapper-2026 grid-container grid-x u-bleed   c-wrapper-heritage dark u-padding-y" data-ct="wrapper">
                 <!-- Text with Heading -->
-                <div class="cell small-12  medium-8 " id="d.en.120320">
-
-
-                    <h1 class="u-header-smaller u-header--margin-stripped ">Create your personalised prospectus</h1>
-
-                    <p class="u-mt-2">Build your bespoke postgraduate prospectus in a few simple steps and start your
-                        Masters journey with Stirling today.</p>
-
-                    <!-- <p>Complete the short form to customise your prospectus and ensure we only show you the
-            information that matters to you most. You’ll receive a download link straight to your inbox
-            within moments.</p>
-        <p>By choosing digital, you’re also doing your bit for the planet. As part of Stirling’s
-            commitment to sustainability, your personalised digital prospectus saves on paper and
-            delivery – helping to reduce our carbon footprint.</p> -->
-                    <!-- <p>You’re about to make a very exciting and important decision about where you choose to study –
-            and, with more than 90 taught and online Masters courses to choose from, we’re confident
-            Stirling is the right university for you.</p> -->
-
-                </div>
-
-                <div class="cell small medium-4">
-                    <img src="PGProspectus2025.jpg" width="800" height="580" alt="Photograph of the digital postgraduate guide" loading="lazy">
-                </div>
+                <div class="cell small-12  medium-8 large-8  " id="d.en.209049">
+                    <div class="c-wysiwyg-content">
+                        <h1 class="u-header-smaller u-header--margin-stripped ">Create your personalised prospectus</h1>
+                        <p class="u-mt-2">Build your bespoke postgraduate prospectus in a few simple steps and start your Masters journey with Stirling today.</p>
+                    </div>
+                </div><!-- End Text with Heading -->
+                <!-- Text with Heading -->
+                <div class="cell small-12  medium-4 large-4  " id="d.en.209050">
+                    <div class="c-wysiwyg-content">
+                        <p><img src="/media/stirling/global-assets/people/medium/PG-Personalised-Prospectus-2027.jpg" width="800" height="580" alt="PG Personalised Prospectus 2027 on mobile device" loading="lazy" />
+                        </p>
+                    </div>
+                </div><!-- End Text with Heading -->
             </div>
+        </div>
+        <!-- Wrapper End -->
 
 
 
-            <div class="grid-x  ">
+        <div class="grid-container grid-x"><!-- Wrapper --></div>
+        <div>
+            <div id="d.en.209052" class="c-wrapper c-wrapper-2026 grid-container grid-x u-bleed  c-wrapper-neutral u-padding-top" data-ct="wrapper">
+                <!-- Text with Heading -->
+                <div class="cell small-12  medium-10 large-10 medium-offset-1 large-offset-1" id="d.en.209051">
+                    <div class="c-wysiwyg-content">
+                        <p>Complete the short form to customise your prospectus and ensure we only show you the information that matters to you most. You&rsquo;ll receive a download link straight to your inbox within moments.</p>
+                        <p>By choosing digital, you&rsquo;re also doing your bit for the planet. As part of Stirling&rsquo;s commitment to sustainability, your personalised digital prospectus saves on paper and delivery &ndash; helping to reduce our carbon footprint.</p>
+                    </div>
+                </div><!-- End Text with Heading -->
+            </div>
+        </div>
+        <!-- Wrapper End -->
 
-                <!-- End Text with Heading -->
+        <div class="grid-container grid-x"> <!-- Step 1 -->
+            <div class="cell small-12 medium-10 medium-offset-1 u-padding-y c-wrapper c-wrapper-2026 u-bleed c-wrapper-neutral ">
+                <form id="generatePDFForm">
 
-                <div class="cell small-12 medium-10 medium-offset-1  u-padding-top u-bg-grey u-bleed bg-grey">
-                    <p>Complete the short form to customise your prospectus and ensure we only show you the
-                        information that matters to you most. You’ll receive a download link straight to your inbox
-                        within moments.</p>
-                    <p>By choosing digital, you’re also doing your bit for the planet. As part of Stirling’s
-                        commitment to sustainability, your personalised digital prospectus saves on paper and
-                        delivery – helping to reduce our carbon footprint.</p>
-                </div>
+                    <div class="u-mb-2 u-bg-white u-p-2 u-medium-grey-line" style=" border-radius: 5px;">
+                        <div id="formErrors"></div>
 
-                <!-- Step 1 -->
-                <div class="cell small-12 medium-10 medium-offset-1 u-padding-y  u-bg-grey u-bleed bg-grey">
-                    <form id="generatePDFForm">
+                        <h2 class="header-stripped text-lg">Your details </h2>
 
-                        <div class="u-mb-2 u-bg-white u-p-2 u-medium-grey-line" style=" border-radius: 5px;">
-                            <div id="formErrors"></div>
-
-                            <h2 class="header-stripped text-lg">Your details </h2>
-
-                            <div class="u-flex-medium-up  u-gap">
-                                <div class="u-flex1">
-                                    <label class="u-font-bold block u-mb-tiny " for="first_name">
-                                        First name
-                                        <span class="u-heritage-berry " data-alertlabel="first_name">*</span>
-                                    </label>
-
-                                    <input id="first_name" type="text" name="first_name" data-required>
-                                </div>
-
-                                <div class="u-flex1">
-                                    <label class="u-font-bold block u-mb-tiny " for="last_name">
-                                        Last name
-                                        <span class="u-heritage-berry " data-alertlabel="last_name">*</span>
-                                    </label>
-
-                                    <input id="last_name" type="text" name="last_name" data-required>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="u-font-bold block u-mb-tiny " for="email">
-                                    Email
-                                    <span class="u-heritage-berry " data-alertlabel="email">*</span>
+                        <div class="u-flex-medium-up  u-gap">
+                            <div class="u-flex1">
+                                <label class="u-font-bold block u-mb-tiny " for="first_name">
+                                    First name
+                                    <span class="u-heritage-berry " data-alertlabel="first_name">*</span>
                                 </label>
 
-                                <input id="email" type="email" name="email" data-required>
+                                <input id="first_name" type="text" name="first_name" data-required>
                             </div>
 
-
-                            <div>
-                                <label class="u-font-bold block u-mb-tiny " for="telephone">
-                                    Telephone
+                            <div class="u-flex1">
+                                <label class="u-font-bold block u-mb-tiny " for="last_name">
+                                    Last name
+                                    <span class="u-heritage-berry " data-alertlabel="last_name">*</span>
                                 </label>
 
-                                <input id="telephone" type="text" name="telephone">
-                            </div>
-
-                            <div class="u-flex-medium-up  u-gap">
-                                <div class="u-flex1">
-                                    <label class="u-font-bold block u-mb-tiny " for="country_of_origin">
-                                        Country of origin
-                                        <span class="u-heritage-berry " data-alertlabel="country_of_origin">*</span>
-                                    </label>
-
-                                    <select id="country_of_origin" name="country_of_origin">
-                                        <option value="">Select an option</option>
-                                        <option value="AFG">Afghanistan</option>
-                                        <option value="ALA">Aland Islands</option>
-                                        <option value="ALB">Albania</option>
-                                        <option value="DZA">Algeria</option>
-                                        <option value="ASM">American Samoa</option>
-                                        <option value="AND">Andorra</option>
-                                        <option value="AGO">Angola</option>
-                                        <option value="AIA">Anguilla</option>
-                                        <option value="ATA">Antarctica</option>
-                                        <option value="ATG">Antigua and Barbuda</option>
-                                        <option value="ARG">Argentina</option>
-                                        <option value="ARM">Armenia</option>
-                                        <option value="ABW">Aruba</option>
-                                        <option value="AUS">Australia</option>
-                                        <option value="AUT">Austria</option>
-                                        <option value="AZE">Azerbaijan</option>
-                                        <option value="BHS">Bahamas</option>
-                                        <option value="BHR">Bahrain</option>
-                                        <option value="BGD">Bangladesh</option>
-                                        <option value="BRB">Barbados</option>
-                                        <option value="BLR">Belarus</option>
-                                        <option value="BEL">Belgium</option>
-                                        <option value="BLZ">Belize</option>
-                                        <option value="BEN">Benin</option>
-                                        <option value="BMU">Bermuda</option>
-                                        <option value="BTN">Bhutan</option>
-                                        <option value="BOL">Bolivia</option>
-                                        <option value="BES">Bonaire</option>
-                                        <option value="BIH">Bosnia and Herzegovina</option>
-                                        <option value="BWA">Botswana</option>
-                                        <option value="BVT">Bouvet Island</option>
-                                        <option value="BRA">Brazil</option>
-                                        <option value="IOT">British Indian Ocean Territory</option>
-                                        <option value="BRN">Brunei Darussalam</option>
-                                        <option value="BGR">Bulgaria</option>
-                                        <option value="BFA">Burkina Faso</option>
-                                        <option value="BDI">Burundi</option>
-                                        <option value="KHM">Cambodia</option>
-                                        <option value="CMR">Cameroon</option>
-                                        <option value="CAN">Canada</option>
-                                        <option value="CPV">Cape Verde</option>
-                                        <option value="CYM">Cayman Islands</option>
-                                        <option value="CAF">Central African Republic</option>
-                                        <option value="TCD">Chad</option>
-                                        <option value="Channel Islands">Channel Islands</option>
-                                        <option value="CHL">Chile</option>
-                                        <option value="CHN">China</option>
-                                        <option value="CXR">Christmas Island</option>
-                                        <option value="CCK">Cocos (Keeling) Islands</option>
-                                        <option value="COL">Colombia</option>
-                                        <option value="COM">Comoros</option>
-                                        <option value="COG">Congo</option>
-                                        <option value="COD">Congo, the Democratic Republic of the</option>
-                                        <option value="COK">Cook Islands</option>
-                                        <option value="CRI">Costa Rica</option>
-                                        <option value="HRV">Croatia</option>
-                                        <option value="CUB">Cuba</option>
-                                        <option value="CUW">Curacao</option>
-                                        <option value="CYP">Cyprus</option>
-                                        <option value="CZE">Czech Republic</option>
-                                        <option value="DNK">Denmark</option>
-                                        <option value="DJI">Djibouti</option>
-                                        <option value="DMA">Dominica</option>
-                                        <option value="DOM">Dominican Republic</option>
-                                        <option value="ECU">Ecuador</option>
-                                        <option value="EGY">Egypt</option>
-                                        <option value="SLV">El Salvador</option>
-                                        <option value="England">England</option>
-                                        <option value="GNQ">Equatorial Guinea</option>
-                                        <option value="ERI">Eritrea</option>
-                                        <option value="EST">Estonia</option>
-                                        <option value="ETH">Ethiopia</option>
-                                        <option value="FLK">Falkland Islands (Malvinas)</option>
-                                        <option value="FRO">Faroe Islands</option>
-                                        <option value="FJI">Fiji</option>
-                                        <option value="FIN">Finland</option>
-                                        <option value="FRA">France</option>
-                                        <option value="GUF">French Guiana</option>
-                                        <option value="PYF">French Polynesia</option>
-                                        <option value="ATF">French Southern Territories</option>
-                                        <option value="GAB">Gabon</option>
-                                        <option value="GMB">Gambia</option>
-                                        <option value="GEO">Georgia</option>
-                                        <option value="DEU">Germany</option>
-                                        <option value="GHA">Ghana</option>
-                                        <option value="GIB">Gibraltar</option>
-                                        <option value="GRC">Greece</option>
-                                        <option value="GRL">Greenland</option>
-                                        <option value="GRD">Grenada</option>
-                                        <option value="GLP">Guadeloupe</option>
-                                        <option value="GUM">Guam</option>
-                                        <option value="GTM">Guatemala</option>
-                                        <option value="GGY">Guernsey</option>
-                                        <option value="GIN">Guinea</option>
-                                        <option value="GNB">Guinea-Bissau</option>
-                                        <option value="GUY">Guyana</option>
-                                        <option value="HTI">Haiti</option>
-                                        <option value="HMD">Heard Island and McDonald Islands</option>
-                                        <option value="VAT">Holy See (Vatican City State)</option>
-                                        <option value="HND">Honduras</option>
-                                        <option value="HKG">Hong Kong</option>
-                                        <option value="HUN">Hungary</option>
-                                        <option value="ISL">Iceland</option>
-                                        <option value="IND">India</option>
-                                        <option value="IDN">Indonesia</option>
-                                        <option value="IRN">Iran, Islamic Republic of</option>
-                                        <option value="IRQ">Iraq</option>
-                                        <option value="IRL">Ireland</option>
-                                        <option value="IMN">Isle of Man</option>
-                                        <option value="ISR">Israel</option>
-                                        <option value="ITA">Italy</option>
-                                        <option value="CIV">Ivory Coast</option>
-                                        <option value="JAM">Jamaica</option>
-                                        <option value="JPN">Japan</option>
-                                        <option value="JEY">Jersey</option>
-                                        <option value="JOR">Jordan</option>
-                                        <option value="KAZ">Kazakhstan</option>
-                                        <option value="KEN">Kenya</option>
-                                        <option value="KIR">Kiribati</option>
-                                        <option value="PRK">Korea (North)</option>
-                                        <option value="KOR">Korea (South)</option>
-                                        <option value="XK">Kosovo</option>
-                                        <option value="KWT">Kuwait</option>
-                                        <option value="KGZ">Kyrgyzstan</option>
-                                        <option value="LAO">Lao People's Democratic Republic</option>
-                                        <option value="LVA">Latvia</option>
-                                        <option value="LBN">Lebanon</option>
-                                        <option value="LSO">Lesotho</option>
-                                        <option value="LBR">Liberia</option>
-                                        <option value="LBY">Libya</option>
-                                        <option value="LIE">Liechtenstein</option>
-                                        <option value="LTU">Lithuania</option>
-                                        <option value="LUX">Luxembourg</option>
-                                        <option value="MAC">Macao</option>
-                                        <option value="MDG">Madagascar</option>
-                                        <option value="MWI">Malawi</option>
-                                        <option value="MYS">Malaysia</option>
-                                        <option value="MDV">Maldives</option>
-                                        <option value="MLI">Mali</option>
-                                        <option value="MLT">Malta</option>
-                                        <option value="MHL">Marshall Islands</option>
-                                        <option value="MTQ">Martinique</option>
-                                        <option value="MRT">Mauritania</option>
-                                        <option value="MUS">Mauritius</option>
-                                        <option value="MYT">Mayotte</option>
-                                        <option value="MEX">Mexico</option>
-                                        <option value="FSM">Micronesia, Federated States of</option>
-                                        <option value="MDA">Moldova</option>
-                                        <option value="MCO">Monaco</option>
-                                        <option value="MNG">Mongolia</option>
-                                        <option value="MNE">Montenegro</option>
-                                        <option value="MSR">Montserrat</option>
-                                        <option value="MAR">Morocco</option>
-                                        <option value="MOZ">Mozambique</option>
-                                        <option value="MMR">Myanmar</option>
-                                        <option value="NAM">Namibia</option>
-                                        <option value="NRU">Nauru</option>
-                                        <option value="NPL">Nepal</option>
-                                        <option value="NLD">Netherlands</option>
-                                        <option value="AN">Netherlands Antilles</option>
-                                        <option value="NCL">New Caledonia</option>
-                                        <option value="NZL">New Zealand</option>
-                                        <option value="NIC">Nicaragua</option>
-                                        <option value="NER">Niger</option>
-                                        <option value="NGA">Nigeria</option>
-                                        <option value="NIU">Niue</option>
-                                        <option value="NFK">Norfolk Island</option>
-                                        <option value="MKD">North Macedonia</option>
-                                        <option value="Northern Ireland">Northern Ireland</option>
-                                        <option value="MNP">Northern Mariana Islands</option>
-                                        <option value="NOR">Norway</option>
-                                        <option value="Not Provided by University">Not Provided by University</option>
-                                        <option value="OMN">Oman</option>
-                                        <option value="PAK">Pakistan</option>
-                                        <option value="PLW">Palau</option>
-                                        <option value="PSE">Palestine</option>
-                                        <option value="PAN">Panama</option>
-                                        <option value="PNG">Papua New Guinea</option>
-                                        <option value="PRY">Paraguay</option>
-                                        <option value="PER">Peru</option>
-                                        <option value="PHL">Philippines</option>
-                                        <option value="PCN">Pitcairn</option>
-                                        <option value="POL">Poland</option>
-                                        <option value="PRT">Portugal</option>
-                                        <option value="PRI">Puerto Rico</option>
-                                        <option value="QAT">Qatar</option>
-                                        <option value="REU">Reunion</option>
-                                        <option value="ROU">Romania</option>
-                                        <option value="RUS">Russia</option>
-                                        <option value="RWA">Rwanda</option>
-                                        <option value="BLM">Saint Barthelemy</option>
-                                        <option value="SHN">Saint Helena, Ascension and Tristan da Cunha</option>
-                                        <option value="KNA">Saint Kitts and Nevis</option>
-                                        <option value="LCA">Saint Lucia</option>
-                                        <option value="MAF">Saint Martin (French part)</option>
-                                        <option value="SPM">Saint Pierre and Miquelon</option>
-                                        <option value="VCT">Saint Vincent and the Grenadines</option>
-                                        <option value="WSM">Samoa</option>
-                                        <option value="SMR">San Marino</option>
-                                        <option value="STP">Sao Tome and Principe</option>
-                                        <option value="SAU">Saudi Arabia</option>
-                                        <option value="Scotland">Scotland</option>
-                                        <option value="SEN">Senegal</option>
-                                        <option value="SRB">Serbia</option>
-                                        <option value="SYC">Seychelles</option>
-                                        <option value="SLE">Sierra Leone</option>
-                                        <option value="SGP">Singapore</option>
-                                        <option value="SXM">Sint Maarten (Dutch part)</option>
-                                        <option value="SVK">Slovakia</option>
-                                        <option value="SVN">Slovenia</option>
-                                        <option value="SLB">Solomon Islands</option>
-                                        <option value="SOM">Somalia</option>
-                                        <option value="ZAF">South Africa</option>
-                                        <option value="SGS">South Georgia and the South Sandwich Islands</option>
-                                        <option value="SSD">South Sudan</option>
-                                        <option value="ESP">Spain</option>
-                                        <option value="LKA">Sri Lanka</option>
-                                        <option value="SDN">Sudan</option>
-                                        <option value="SUR">Suriname</option>
-                                        <option value="SJM">Svalbard and Jan Mayen</option>
-                                        <option value="SWZ">Swaziland</option>
-                                        <option value="SWE">Sweden</option>
-                                        <option value="CHE">Switzerland</option>
-                                        <option value="SYR">Syrian Arab Republic</option>
-                                        <option value="TWN">Taiwan</option>
-                                        <option value="TJK">Tajikistan</option>
-                                        <option value="TZA">Tanzania</option>
-                                        <option value="THA">Thailand</option>
-                                        <option value="TLS">Timor-Leste</option>
-                                        <option value="TGO">Togo</option>
-                                        <option value="TKL">Tokelau</option>
-                                        <option value="TON">Tonga</option>
-                                        <option value="TTO">Trinidad and Tobago</option>
-                                        <option value="TUN">Tunisia</option>
-                                        <option value="TUR">Turkey</option>
-                                        <option value="TKM">Turkmenistan</option>
-                                        <option value="TCA">Turks and Caicos Islands</option>
-                                        <option value="TUV">Tuvalu</option>
-                                        <option value="UGA">Uganda</option>
-                                        <option value="UKR">Ukraine</option>
-                                        <option value="ARE">United Arab Emirates</option>
-                                        <option value="GBR">United Kingdom</option>
-                                        <option value="USA">United States</option>
-                                        <option value="UMI">United States Minor Outlying Islands</option>
-                                        <option value="URY">Uruguay</option>
-                                        <option value="UZB">Uzbekistan</option>
-                                        <option value="VUT">Vanuatu</option>
-                                        <option value="VEN">Venezuela, Bolivarian Republic of</option>
-                                        <option value="VNM">Vietnam</option>
-                                        <option value="VGB">Virgin Islands, British</option>
-                                        <option value="VIR">Virgin Islands, U.S.</option>
-                                        <option value="Wales">Wales</option>
-                                        <option value="WLF">Wallis and Futuna</option>
-                                        <option value="ESH">Western Sahara</option>
-                                        <option value="YEM">Yemen</option>
-                                        <option value="ZMB">Zambia</option>
-                                        <option value="ZWE">Zimbabwe</option>
-                                    </select>
-
-                                </div>
-
-                                <div class="u-flex1">
-                                    <label class="u-font-bold block u-mb-tiny " for="country_of_residence">
-                                        Country of residence
-                                        <span class="u-heritage-berry " data-alertlabel="country_of_residence">*</span>
-                                    </label>
-
-                                    <select id="country_of_residence" name="country_of_residence">
-                                        <option value="">Select an option</option>
-                                        <option value="AFG">Afghanistan</option>
-                                        <option value="ALA">Aland Islands</option>
-                                        <option value="ALB">Albania</option>
-                                        <option value="DZA">Algeria</option>
-                                        <option value="ASM">American Samoa</option>
-                                        <option value="AND">Andorra</option>
-                                        <option value="AGO">Angola</option>
-                                        <option value="AIA">Anguilla</option>
-                                        <option value="ATA">Antarctica</option>
-                                        <option value="ATG">Antigua and Barbuda</option>
-                                        <option value="ARG">Argentina</option>
-                                        <option value="ARM">Armenia</option>
-                                        <option value="ABW">Aruba</option>
-                                        <option value="AUS">Australia</option>
-                                        <option value="AUT">Austria</option>
-                                        <option value="AZE">Azerbaijan</option>
-                                        <option value="BHS">Bahamas</option>
-                                        <option value="BHR">Bahrain</option>
-                                        <option value="BGD">Bangladesh</option>
-                                        <option value="BRB">Barbados</option>
-                                        <option value="BLR">Belarus</option>
-                                        <option value="BEL">Belgium</option>
-                                        <option value="BLZ">Belize</option>
-                                        <option value="BEN">Benin</option>
-                                        <option value="BMU">Bermuda</option>
-                                        <option value="BTN">Bhutan</option>
-                                        <option value="BOL">Bolivia</option>
-                                        <option value="BES">Bonaire</option>
-                                        <option value="BIH">Bosnia and Herzegovina</option>
-                                        <option value="BWA">Botswana</option>
-                                        <option value="BVT">Bouvet Island</option>
-                                        <option value="BRA">Brazil</option>
-                                        <option value="IOT">British Indian Ocean Territory</option>
-                                        <option value="BRN">Brunei Darussalam</option>
-                                        <option value="BGR">Bulgaria</option>
-                                        <option value="BFA">Burkina Faso</option>
-                                        <option value="BDI">Burundi</option>
-                                        <option value="KHM">Cambodia</option>
-                                        <option value="CMR">Cameroon</option>
-                                        <option value="CAN">Canada</option>
-                                        <option value="CPV">Cape Verde</option>
-                                        <option value="CYM">Cayman Islands</option>
-                                        <option value="CAF">Central African Republic</option>
-                                        <option value="TCD">Chad</option>
-                                        <option value="Channel Islands">Channel Islands</option>
-                                        <option value="CHL">Chile</option>
-                                        <option value="CHN">China</option>
-                                        <option value="CXR">Christmas Island</option>
-                                        <option value="CCK">Cocos (Keeling) Islands</option>
-                                        <option value="COL">Colombia</option>
-                                        <option value="COM">Comoros</option>
-                                        <option value="COG">Congo</option>
-                                        <option value="COD">Congo, the Democratic Republic of the</option>
-                                        <option value="COK">Cook Islands</option>
-                                        <option value="CRI">Costa Rica</option>
-                                        <option value="HRV">Croatia</option>
-                                        <option value="CUB">Cuba</option>
-                                        <option value="CUW">Curacao</option>
-                                        <option value="CYP">Cyprus</option>
-                                        <option value="CZE">Czech Republic</option>
-                                        <option value="DNK">Denmark</option>
-                                        <option value="DJI">Djibouti</option>
-                                        <option value="DMA">Dominica</option>
-                                        <option value="DOM">Dominican Republic</option>
-                                        <option value="ECU">Ecuador</option>
-                                        <option value="EGY">Egypt</option>
-                                        <option value="SLV">El Salvador</option>
-                                        <option value="England">England</option>
-                                        <option value="GNQ">Equatorial Guinea</option>
-                                        <option value="ERI">Eritrea</option>
-                                        <option value="EST">Estonia</option>
-                                        <option value="ETH">Ethiopia</option>
-                                        <option value="FLK">Falkland Islands (Malvinas)</option>
-                                        <option value="FRO">Faroe Islands</option>
-                                        <option value="FJI">Fiji</option>
-                                        <option value="FIN">Finland</option>
-                                        <option value="FRA">France</option>
-                                        <option value="GUF">French Guiana</option>
-                                        <option value="PYF">French Polynesia</option>
-                                        <option value="ATF">French Southern Territories</option>
-                                        <option value="GAB">Gabon</option>
-                                        <option value="GMB">Gambia</option>
-                                        <option value="GEO">Georgia</option>
-                                        <option value="DEU">Germany</option>
-                                        <option value="GHA">Ghana</option>
-                                        <option value="GIB">Gibraltar</option>
-                                        <option value="GRC">Greece</option>
-                                        <option value="GRL">Greenland</option>
-                                        <option value="GRD">Grenada</option>
-                                        <option value="GLP">Guadeloupe</option>
-                                        <option value="GUM">Guam</option>
-                                        <option value="GTM">Guatemala</option>
-                                        <option value="GGY">Guernsey</option>
-                                        <option value="GIN">Guinea</option>
-                                        <option value="GNB">Guinea-Bissau</option>
-                                        <option value="GUY">Guyana</option>
-                                        <option value="HTI">Haiti</option>
-                                        <option value="HMD">Heard Island and McDonald Islands</option>
-                                        <option value="VAT">Holy See (Vatican City State)</option>
-                                        <option value="HND">Honduras</option>
-                                        <option value="HKG">Hong Kong</option>
-                                        <option value="HUN">Hungary</option>
-                                        <option value="ISL">Iceland</option>
-                                        <option value="IND">India</option>
-                                        <option value="IDN">Indonesia</option>
-                                        <option value="IRN">Iran, Islamic Republic of</option>
-                                        <option value="IRQ">Iraq</option>
-                                        <option value="IRL">Ireland</option>
-                                        <option value="IMN">Isle of Man</option>
-                                        <option value="ISR">Israel</option>
-                                        <option value="ITA">Italy</option>
-                                        <option value="CIV">Ivory Coast</option>
-                                        <option value="JAM">Jamaica</option>
-                                        <option value="JPN">Japan</option>
-                                        <option value="JEY">Jersey</option>
-                                        <option value="JOR">Jordan</option>
-                                        <option value="KAZ">Kazakhstan</option>
-                                        <option value="KEN">Kenya</option>
-                                        <option value="KIR">Kiribati</option>
-                                        <option value="PRK">Korea (North)</option>
-                                        <option value="KOR">Korea (South)</option>
-                                        <option value="XK">Kosovo</option>
-                                        <option value="KWT">Kuwait</option>
-                                        <option value="KGZ">Kyrgyzstan</option>
-                                        <option value="LAO">Lao People's Democratic Republic</option>
-                                        <option value="LVA">Latvia</option>
-                                        <option value="LBN">Lebanon</option>
-                                        <option value="LSO">Lesotho</option>
-                                        <option value="LBR">Liberia</option>
-                                        <option value="LBY">Libya</option>
-                                        <option value="LIE">Liechtenstein</option>
-                                        <option value="LTU">Lithuania</option>
-                                        <option value="LUX">Luxembourg</option>
-                                        <option value="MAC">Macao</option>
-                                        <option value="MDG">Madagascar</option>
-                                        <option value="MWI">Malawi</option>
-                                        <option value="MYS">Malaysia</option>
-                                        <option value="MDV">Maldives</option>
-                                        <option value="MLI">Mali</option>
-                                        <option value="MLT">Malta</option>
-                                        <option value="MHL">Marshall Islands</option>
-                                        <option value="MTQ">Martinique</option>
-                                        <option value="MRT">Mauritania</option>
-                                        <option value="MUS">Mauritius</option>
-                                        <option value="MYT">Mayotte</option>
-                                        <option value="MEX">Mexico</option>
-                                        <option value="FSM">Micronesia, Federated States of</option>
-                                        <option value="MDA">Moldova</option>
-                                        <option value="MCO">Monaco</option>
-                                        <option value="MNG">Mongolia</option>
-                                        <option value="MNE">Montenegro</option>
-                                        <option value="MSR">Montserrat</option>
-                                        <option value="MAR">Morocco</option>
-                                        <option value="MOZ">Mozambique</option>
-                                        <option value="MMR">Myanmar</option>
-                                        <option value="NAM">Namibia</option>
-                                        <option value="NRU">Nauru</option>
-                                        <option value="NPL">Nepal</option>
-                                        <option value="NLD">Netherlands</option>
-                                        <option value="AN">Netherlands Antilles</option>
-                                        <option value="NCL">New Caledonia</option>
-                                        <option value="NZL">New Zealand</option>
-                                        <option value="NIC">Nicaragua</option>
-                                        <option value="NER">Niger</option>
-                                        <option value="NGA">Nigeria</option>
-                                        <option value="NIU">Niue</option>
-                                        <option value="NFK">Norfolk Island</option>
-                                        <option value="MKD">North Macedonia</option>
-                                        <option value="Northern Ireland">Northern Ireland</option>
-                                        <option value="MNP">Northern Mariana Islands</option>
-                                        <option value="NOR">Norway</option>
-                                        <option value="Not Provided by University">Not Provided by University</option>
-                                        <option value="OMN">Oman</option>
-                                        <option value="PAK">Pakistan</option>
-                                        <option value="PLW">Palau</option>
-                                        <option value="PSE">Palestine</option>
-                                        <option value="PAN">Panama</option>
-                                        <option value="PNG">Papua New Guinea</option>
-                                        <option value="PRY">Paraguay</option>
-                                        <option value="PER">Peru</option>
-                                        <option value="PHL">Philippines</option>
-                                        <option value="PCN">Pitcairn</option>
-                                        <option value="POL">Poland</option>
-                                        <option value="PRT">Portugal</option>
-                                        <option value="PRI">Puerto Rico</option>
-                                        <option value="QAT">Qatar</option>
-                                        <option value="REU">Reunion</option>
-                                        <option value="ROU">Romania</option>
-                                        <option value="RUS">Russia</option>
-                                        <option value="RWA">Rwanda</option>
-                                        <option value="BLM">Saint Barthelemy</option>
-                                        <option value="SHN">Saint Helena, Ascension and Tristan da Cunha</option>
-                                        <option value="KNA">Saint Kitts and Nevis</option>
-                                        <option value="LCA">Saint Lucia</option>
-                                        <option value="MAF">Saint Martin (French part)</option>
-                                        <option value="SPM">Saint Pierre and Miquelon</option>
-                                        <option value="VCT">Saint Vincent and the Grenadines</option>
-                                        <option value="WSM">Samoa</option>
-                                        <option value="SMR">San Marino</option>
-                                        <option value="STP">Sao Tome and Principe</option>
-                                        <option value="SAU">Saudi Arabia</option>
-                                        <option value="Scotland">Scotland</option>
-                                        <option value="SEN">Senegal</option>
-                                        <option value="SRB">Serbia</option>
-                                        <option value="SYC">Seychelles</option>
-                                        <option value="SLE">Sierra Leone</option>
-                                        <option value="SGP">Singapore</option>
-                                        <option value="SXM">Sint Maarten (Dutch part)</option>
-                                        <option value="SVK">Slovakia</option>
-                                        <option value="SVN">Slovenia</option>
-                                        <option value="SLB">Solomon Islands</option>
-                                        <option value="SOM">Somalia</option>
-                                        <option value="ZAF">South Africa</option>
-                                        <option value="SGS">South Georgia and the South Sandwich Islands</option>
-                                        <option value="SSD">South Sudan</option>
-                                        <option value="ESP">Spain</option>
-                                        <option value="LKA">Sri Lanka</option>
-                                        <option value="SDN">Sudan</option>
-                                        <option value="SUR">Suriname</option>
-                                        <option value="SJM">Svalbard and Jan Mayen</option>
-                                        <option value="SWZ">Swaziland</option>
-                                        <option value="SWE">Sweden</option>
-                                        <option value="CHE">Switzerland</option>
-                                        <option value="SYR">Syrian Arab Republic</option>
-                                        <option value="TWN">Taiwan</option>
-                                        <option value="TJK">Tajikistan</option>
-                                        <option value="TZA">Tanzania</option>
-                                        <option value="THA">Thailand</option>
-                                        <option value="TLS">Timor-Leste</option>
-                                        <option value="TGO">Togo</option>
-                                        <option value="TKL">Tokelau</option>
-                                        <option value="TON">Tonga</option>
-                                        <option value="TTO">Trinidad and Tobago</option>
-                                        <option value="TUN">Tunisia</option>
-                                        <option value="TUR">Turkey</option>
-                                        <option value="TKM">Turkmenistan</option>
-                                        <option value="TCA">Turks and Caicos Islands</option>
-                                        <option value="TUV">Tuvalu</option>
-                                        <option value="UGA">Uganda</option>
-                                        <option value="UKR">Ukraine</option>
-                                        <option value="ARE">United Arab Emirates</option>
-                                        <option value="GBR">United Kingdom</option>
-                                        <option value="USA">United States</option>
-                                        <option value="UMI">United States Minor Outlying Islands</option>
-                                        <option value="URY">Uruguay</option>
-                                        <option value="UZB">Uzbekistan</option>
-                                        <option value="VUT">Vanuatu</option>
-                                        <option value="VEN">Venezuela, Bolivarian Republic of</option>
-                                        <option value="VNM">Vietnam</option>
-                                        <option value="VGB">Virgin Islands, British</option>
-                                        <option value="VIR">Virgin Islands, U.S.</option>
-                                        <option value="Wales">Wales</option>
-                                        <option value="WLF">Wallis and Futuna</option>
-                                        <option value="ESH">Western Sahara</option>
-                                        <option value="YEM">Yemen</option>
-                                        <option value="ZMB">Zambia</option>
-                                        <option value="ZWE">Zimbabwe</option>
-                                    </select>
-                                </div>
+                                <input id="last_name" type="text" name="last_name" data-required>
                             </div>
                         </div>
 
-                        <!-- Step 2 -->
-                        <div class="u-mb-2 u-bg-white u-p-2 u-medium-grey-line" style=" border-radius: 5px;">
-                            <h2 class=" header-stripped text-lg">
-                                Personalise your guide
-                            </h2>
+                        <div>
+                            <label class="u-font-bold block u-mb-tiny " for="email">
+                                Email
+                                <span class="u-heritage-berry " data-alertlabel="email">*</span>
+                            </label>
 
-                            <p>First select a start date then choose up to three subject areas you are
-                                interested in:</p>
+                            <input id="email" type="email" name="email" data-required>
+                        </div>
+
+
+                        <div>
+                            <label class="u-font-bold block u-mb-tiny " for="telephone">
+                                Telephone
+                            </label>
+
+                            <input id="telephone" type="text" name="telephone">
+                        </div>
+
+                        <div class="u-flex-medium-up  u-gap">
+                            <div class="u-flex1">
+                                <label class="u-font-bold block u-mb-tiny " for="country_of_origin">
+                                    Country of origin
+                                    <span class="u-heritage-berry " data-alertlabel="country_of_origin">*</span>
+                                </label>
+
+
+
+
+                                <select id="country_of_origin" name="country_of_origin" data-required>
+                                    <option value="">Select an option</option>
+                                    <option value="AFG">Afghanistan</option>
+                                    <option value="ALA">Aland Islands</option>
+                                    <option value="ALB">Albania</option>
+                                    <option value="DZA">Algeria</option>
+                                    <option value="ASM">American Samoa</option>
+                                    <option value="AND">Andorra</option>
+                                    <option value="AGO">Angola</option>
+                                    <option value="AIA">Anguilla</option>
+                                    <option value="ATA">Antarctica</option>
+                                    <option value="ATG">Antigua and Barbuda</option>
+                                    <option value="ARG">Argentina</option>
+                                    <option value="ARM">Armenia</option>
+                                    <option value="ABW">Aruba</option>
+                                    <option value="AUS">Australia</option>
+                                    <option value="AUT">Austria</option>
+                                    <option value="AZE">Azerbaijan</option>
+                                    <option value="BHS">Bahamas</option>
+                                    <option value="BHR">Bahrain</option>
+                                    <option value="BGD">Bangladesh</option>
+                                    <option value="BRB">Barbados</option>
+                                    <option value="BLR">Belarus</option>
+                                    <option value="BEL">Belgium</option>
+                                    <option value="BLZ">Belize</option>
+                                    <option value="BEN">Benin</option>
+                                    <option value="BMU">Bermuda</option>
+                                    <option value="BTN">Bhutan</option>
+                                    <option value="BOL">Bolivia</option>
+                                    <option value="BES">Bonaire</option>
+                                    <option value="BIH">Bosnia and Herzegovina</option>
+                                    <option value="BWA">Botswana</option>
+                                    <option value="BVT">Bouvet Island</option>
+                                    <option value="BRA">Brazil</option>
+                                    <option value="IOT">British Indian Ocean Territory</option>
+                                    <option value="BRN">Brunei Darussalam</option>
+                                    <option value="BGR">Bulgaria</option>
+                                    <option value="BFA">Burkina Faso</option>
+                                    <option value="BDI">Burundi</option>
+                                    <option value="KHM">Cambodia</option>
+                                    <option value="CMR">Cameroon</option>
+                                    <option value="CAN">Canada</option>
+                                    <option value="CPV">Cape Verde</option>
+                                    <option value="CYM">Cayman Islands</option>
+                                    <option value="CAF">Central African Republic</option>
+                                    <option value="TCD">Chad</option>
+                                    <option value="Channel Islands">Channel Islands</option>
+                                    <option value="CHL">Chile</option>
+                                    <option value="CHN">China</option>
+                                    <option value="CXR">Christmas Island</option>
+                                    <option value="CCK">Cocos (Keeling) Islands</option>
+                                    <option value="COL">Colombia</option>
+                                    <option value="COM">Comoros</option>
+                                    <option value="COG">Congo</option>
+                                    <option value="COD">Congo, the Democratic Republic of the</option>
+                                    <option value="COK">Cook Islands</option>
+                                    <option value="CRI">Costa Rica</option>
+                                    <option value="HRV">Croatia</option>
+                                    <option value="CUB">Cuba</option>
+                                    <option value="CUW">Curacao</option>
+                                    <option value="CYP">Cyprus</option>
+                                    <option value="CZE">Czech Republic</option>
+                                    <option value="DNK">Denmark</option>
+                                    <option value="DJI">Djibouti</option>
+                                    <option value="DMA">Dominica</option>
+                                    <option value="DOM">Dominican Republic</option>
+                                    <option value="ECU">Ecuador</option>
+                                    <option value="EGY">Egypt</option>
+                                    <option value="SLV">El Salvador</option>
+                                    <option value="England">England</option>
+                                    <option value="GNQ">Equatorial Guinea</option>
+                                    <option value="ERI">Eritrea</option>
+                                    <option value="EST">Estonia</option>
+                                    <option value="ETH">Ethiopia</option>
+                                    <option value="FLK">Falkland Islands (Malvinas)</option>
+                                    <option value="FRO">Faroe Islands</option>
+                                    <option value="FJI">Fiji</option>
+                                    <option value="FIN">Finland</option>
+                                    <option value="FRA">France</option>
+                                    <option value="GUF">French Guiana</option>
+                                    <option value="PYF">French Polynesia</option>
+                                    <option value="ATF">French Southern Territories</option>
+                                    <option value="GAB">Gabon</option>
+                                    <option value="GMB">Gambia</option>
+                                    <option value="GEO">Georgia</option>
+                                    <option value="DEU">Germany</option>
+                                    <option value="GHA">Ghana</option>
+                                    <option value="GIB">Gibraltar</option>
+                                    <option value="GRC">Greece</option>
+                                    <option value="GRL">Greenland</option>
+                                    <option value="GRD">Grenada</option>
+                                    <option value="GLP">Guadeloupe</option>
+                                    <option value="GUM">Guam</option>
+                                    <option value="GTM">Guatemala</option>
+                                    <option value="GGY">Guernsey</option>
+                                    <option value="GIN">Guinea</option>
+                                    <option value="GNB">Guinea-Bissau</option>
+                                    <option value="GUY">Guyana</option>
+                                    <option value="HTI">Haiti</option>
+                                    <option value="HMD">Heard Island and McDonald Islands</option>
+                                    <option value="VAT">Holy See (Vatican City State)</option>
+                                    <option value="HND">Honduras</option>
+                                    <option value="HKG">Hong Kong</option>
+                                    <option value="HUN">Hungary</option>
+                                    <option value="ISL">Iceland</option>
+                                    <option value="IND">India</option>
+                                    <option value="IDN">Indonesia</option>
+                                    <option value="IRN">Iran, Islamic Republic of</option>
+                                    <option value="IRQ">Iraq</option>
+                                    <option value="IRL">Ireland</option>
+                                    <option value="IMN">Isle of Man</option>
+                                    <option value="ISR">Israel</option>
+                                    <option value="ITA">Italy</option>
+                                    <option value="CIV">Ivory Coast</option>
+                                    <option value="JAM">Jamaica</option>
+                                    <option value="JPN">Japan</option>
+                                    <option value="JEY">Jersey</option>
+                                    <option value="JOR">Jordan</option>
+                                    <option value="KAZ">Kazakhstan</option>
+                                    <option value="KEN">Kenya</option>
+                                    <option value="KIR">Kiribati</option>
+                                    <option value="PRK">Korea (North)</option>
+                                    <option value="KOR">Korea (South)</option>
+                                    <option value="XK">Kosovo</option>
+                                    <option value="KWT">Kuwait</option>
+                                    <option value="KGZ">Kyrgyzstan</option>
+                                    <option value="LAO">Lao People's Democratic Republic</option>
+                                    <option value="LVA">Latvia</option>
+                                    <option value="LBN">Lebanon</option>
+                                    <option value="LSO">Lesotho</option>
+                                    <option value="LBR">Liberia</option>
+                                    <option value="LBY">Libya</option>
+                                    <option value="LIE">Liechtenstein</option>
+                                    <option value="LTU">Lithuania</option>
+                                    <option value="LUX">Luxembourg</option>
+                                    <option value="MAC">Macao</option>
+                                    <option value="MDG">Madagascar</option>
+                                    <option value="MWI">Malawi</option>
+                                    <option value="MYS">Malaysia</option>
+                                    <option value="MDV">Maldives</option>
+                                    <option value="MLI">Mali</option>
+                                    <option value="MLT">Malta</option>
+                                    <option value="MHL">Marshall Islands</option>
+                                    <option value="MTQ">Martinique</option>
+                                    <option value="MRT">Mauritania</option>
+                                    <option value="MUS">Mauritius</option>
+                                    <option value="MYT">Mayotte</option>
+                                    <option value="MEX">Mexico</option>
+                                    <option value="FSM">Micronesia, Federated States of</option>
+                                    <option value="MDA">Moldova</option>
+                                    <option value="MCO">Monaco</option>
+                                    <option value="MNG">Mongolia</option>
+                                    <option value="MNE">Montenegro</option>
+                                    <option value="MSR">Montserrat</option>
+                                    <option value="MAR">Morocco</option>
+                                    <option value="MOZ">Mozambique</option>
+                                    <option value="MMR">Myanmar</option>
+                                    <option value="NAM">Namibia</option>
+                                    <option value="NRU">Nauru</option>
+                                    <option value="NPL">Nepal</option>
+                                    <option value="NLD">Netherlands</option>
+                                    <option value="AN">Netherlands Antilles</option>
+                                    <option value="NCL">New Caledonia</option>
+                                    <option value="NZL">New Zealand</option>
+                                    <option value="NIC">Nicaragua</option>
+                                    <option value="NER">Niger</option>
+                                    <option value="NGA">Nigeria</option>
+                                    <option value="NIU">Niue</option>
+                                    <option value="NFK">Norfolk Island</option>
+                                    <option value="MKD">North Macedonia</option>
+                                    <option value="Northern Ireland">Northern Ireland</option>
+                                    <option value="MNP">Northern Mariana Islands</option>
+                                    <option value="NOR">Norway</option>
+                                    <option value="Not Provided by University">Not Provided by University</option>
+                                    <option value="OMN">Oman</option>
+                                    <option value="PAK">Pakistan</option>
+                                    <option value="PLW">Palau</option>
+                                    <option value="PSE">Palestine</option>
+                                    <option value="PAN">Panama</option>
+                                    <option value="PNG">Papua New Guinea</option>
+                                    <option value="PRY">Paraguay</option>
+                                    <option value="PER">Peru</option>
+                                    <option value="PHL">Philippines</option>
+                                    <option value="PCN">Pitcairn</option>
+                                    <option value="POL">Poland</option>
+                                    <option value="PRT">Portugal</option>
+                                    <option value="PRI">Puerto Rico</option>
+                                    <option value="QAT">Qatar</option>
+                                    <option value="REU">Reunion</option>
+                                    <option value="ROU">Romania</option>
+                                    <option value="RUS">Russia</option>
+                                    <option value="RWA">Rwanda</option>
+                                    <option value="BLM">Saint Barthelemy</option>
+                                    <option value="SHN">Saint Helena, Ascension and Tristan da Cunha</option>
+                                    <option value="KNA">Saint Kitts and Nevis</option>
+                                    <option value="LCA">Saint Lucia</option>
+                                    <option value="MAF">Saint Martin (French part)</option>
+                                    <option value="SPM">Saint Pierre and Miquelon</option>
+                                    <option value="VCT">Saint Vincent and the Grenadines</option>
+                                    <option value="WSM">Samoa</option>
+                                    <option value="SMR">San Marino</option>
+                                    <option value="STP">Sao Tome and Principe</option>
+                                    <option value="SAU">Saudi Arabia</option>
+                                    <option value="Scotland">Scotland</option>
+                                    <option value="SEN">Senegal</option>
+                                    <option value="SRB">Serbia</option>
+                                    <option value="SYC">Seychelles</option>
+                                    <option value="SLE">Sierra Leone</option>
+                                    <option value="SGP">Singapore</option>
+                                    <option value="SXM">Sint Maarten (Dutch part)</option>
+                                    <option value="SVK">Slovakia</option>
+                                    <option value="SVN">Slovenia</option>
+                                    <option value="SLB">Solomon Islands</option>
+                                    <option value="SOM">Somalia</option>
+                                    <option value="ZAF">South Africa</option>
+                                    <option value="SGS">South Georgia and the South Sandwich Islands</option>
+                                    <option value="SSD">South Sudan</option>
+                                    <option value="ESP">Spain</option>
+                                    <option value="LKA">Sri Lanka</option>
+                                    <option value="SDN">Sudan</option>
+                                    <option value="SUR">Suriname</option>
+                                    <option value="SJM">Svalbard and Jan Mayen</option>
+                                    <option value="SWZ">Swaziland</option>
+                                    <option value="SWE">Sweden</option>
+                                    <option value="CHE">Switzerland</option>
+                                    <option value="SYR">Syrian Arab Republic</option>
+                                    <option value="TWN">Taiwan</option>
+                                    <option value="TJK">Tajikistan</option>
+                                    <option value="TZA">Tanzania</option>
+                                    <option value="THA">Thailand</option>
+                                    <option value="TLS">Timor-Leste</option>
+                                    <option value="TGO">Togo</option>
+                                    <option value="TKL">Tokelau</option>
+                                    <option value="TON">Tonga</option>
+                                    <option value="TTO">Trinidad and Tobago</option>
+                                    <option value="TUN">Tunisia</option>
+                                    <option value="TUR">Turkey</option>
+                                    <option value="TKM">Turkmenistan</option>
+                                    <option value="TCA">Turks and Caicos Islands</option>
+                                    <option value="TUV">Tuvalu</option>
+                                    <option value="UGA">Uganda</option>
+                                    <option value="UKR">Ukraine</option>
+                                    <option value="ARE">United Arab Emirates</option>
+                                    <option value="GBR">United Kingdom</option>
+                                    <option value="USA">United States</option>
+                                    <option value="UMI">United States Minor Outlying Islands</option>
+                                    <option value="URY">Uruguay</option>
+                                    <option value="UZB">Uzbekistan</option>
+                                    <option value="VUT">Vanuatu</option>
+                                    <option value="VEN">Venezuela, Bolivarian Republic of</option>
+                                    <option value="VNM">Vietnam</option>
+                                    <option value="VGB">Virgin Islands, British</option>
+                                    <option value="VIR">Virgin Islands, U.S.</option>
+                                    <option value="Wales">Wales</option>
+                                    <option value="WLF">Wallis and Futuna</option>
+                                    <option value="ESH">Western Sahara</option>
+                                    <option value="YEM">Yemen</option>
+                                    <option value="ZMB">Zambia</option>
+                                    <option value="ZWE">Zimbabwe</option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="u-flex1">
+                                <label class="u-font-bold block u-mb-tiny " for="country_of_residence">
+                                    Country of residence
+                                    <span class="u-heritage-berry " data-alertlabel="country_of_residence">*</span>
+                                </label>
+
+                                <select id="country_of_residence" name="country_of_residence" data-required>
+                                    <option value="">Select an option</option>
+                                    <option value="AFG">Afghanistan</option>
+                                    <option value="ALA">Aland Islands</option>
+                                    <option value="ALB">Albania</option>
+                                    <option value="DZA">Algeria</option>
+                                    <option value="ASM">American Samoa</option>
+                                    <option value="AND">Andorra</option>
+                                    <option value="AGO">Angola</option>
+                                    <option value="AIA">Anguilla</option>
+                                    <option value="ATA">Antarctica</option>
+                                    <option value="ATG">Antigua and Barbuda</option>
+                                    <option value="ARG">Argentina</option>
+                                    <option value="ARM">Armenia</option>
+                                    <option value="ABW">Aruba</option>
+                                    <option value="AUS">Australia</option>
+                                    <option value="AUT">Austria</option>
+                                    <option value="AZE">Azerbaijan</option>
+                                    <option value="BHS">Bahamas</option>
+                                    <option value="BHR">Bahrain</option>
+                                    <option value="BGD">Bangladesh</option>
+                                    <option value="BRB">Barbados</option>
+                                    <option value="BLR">Belarus</option>
+                                    <option value="BEL">Belgium</option>
+                                    <option value="BLZ">Belize</option>
+                                    <option value="BEN">Benin</option>
+                                    <option value="BMU">Bermuda</option>
+                                    <option value="BTN">Bhutan</option>
+                                    <option value="BOL">Bolivia</option>
+                                    <option value="BES">Bonaire</option>
+                                    <option value="BIH">Bosnia and Herzegovina</option>
+                                    <option value="BWA">Botswana</option>
+                                    <option value="BVT">Bouvet Island</option>
+                                    <option value="BRA">Brazil</option>
+                                    <option value="IOT">British Indian Ocean Territory</option>
+                                    <option value="BRN">Brunei Darussalam</option>
+                                    <option value="BGR">Bulgaria</option>
+                                    <option value="BFA">Burkina Faso</option>
+                                    <option value="BDI">Burundi</option>
+                                    <option value="KHM">Cambodia</option>
+                                    <option value="CMR">Cameroon</option>
+                                    <option value="CAN">Canada</option>
+                                    <option value="CPV">Cape Verde</option>
+                                    <option value="CYM">Cayman Islands</option>
+                                    <option value="CAF">Central African Republic</option>
+                                    <option value="TCD">Chad</option>
+                                    <option value="Channel Islands">Channel Islands</option>
+                                    <option value="CHL">Chile</option>
+                                    <option value="CHN">China</option>
+                                    <option value="CXR">Christmas Island</option>
+                                    <option value="CCK">Cocos (Keeling) Islands</option>
+                                    <option value="COL">Colombia</option>
+                                    <option value="COM">Comoros</option>
+                                    <option value="COG">Congo</option>
+                                    <option value="COD">Congo, the Democratic Republic of the</option>
+                                    <option value="COK">Cook Islands</option>
+                                    <option value="CRI">Costa Rica</option>
+                                    <option value="HRV">Croatia</option>
+                                    <option value="CUB">Cuba</option>
+                                    <option value="CUW">Curacao</option>
+                                    <option value="CYP">Cyprus</option>
+                                    <option value="CZE">Czech Republic</option>
+                                    <option value="DNK">Denmark</option>
+                                    <option value="DJI">Djibouti</option>
+                                    <option value="DMA">Dominica</option>
+                                    <option value="DOM">Dominican Republic</option>
+                                    <option value="ECU">Ecuador</option>
+                                    <option value="EGY">Egypt</option>
+                                    <option value="SLV">El Salvador</option>
+                                    <option value="England">England</option>
+                                    <option value="GNQ">Equatorial Guinea</option>
+                                    <option value="ERI">Eritrea</option>
+                                    <option value="EST">Estonia</option>
+                                    <option value="ETH">Ethiopia</option>
+                                    <option value="FLK">Falkland Islands (Malvinas)</option>
+                                    <option value="FRO">Faroe Islands</option>
+                                    <option value="FJI">Fiji</option>
+                                    <option value="FIN">Finland</option>
+                                    <option value="FRA">France</option>
+                                    <option value="GUF">French Guiana</option>
+                                    <option value="PYF">French Polynesia</option>
+                                    <option value="ATF">French Southern Territories</option>
+                                    <option value="GAB">Gabon</option>
+                                    <option value="GMB">Gambia</option>
+                                    <option value="GEO">Georgia</option>
+                                    <option value="DEU">Germany</option>
+                                    <option value="GHA">Ghana</option>
+                                    <option value="GIB">Gibraltar</option>
+                                    <option value="GRC">Greece</option>
+                                    <option value="GRL">Greenland</option>
+                                    <option value="GRD">Grenada</option>
+                                    <option value="GLP">Guadeloupe</option>
+                                    <option value="GUM">Guam</option>
+                                    <option value="GTM">Guatemala</option>
+                                    <option value="GGY">Guernsey</option>
+                                    <option value="GIN">Guinea</option>
+                                    <option value="GNB">Guinea-Bissau</option>
+                                    <option value="GUY">Guyana</option>
+                                    <option value="HTI">Haiti</option>
+                                    <option value="HMD">Heard Island and McDonald Islands</option>
+                                    <option value="VAT">Holy See (Vatican City State)</option>
+                                    <option value="HND">Honduras</option>
+                                    <option value="HKG">Hong Kong</option>
+                                    <option value="HUN">Hungary</option>
+                                    <option value="ISL">Iceland</option>
+                                    <option value="IND">India</option>
+                                    <option value="IDN">Indonesia</option>
+                                    <option value="IRN">Iran, Islamic Republic of</option>
+                                    <option value="IRQ">Iraq</option>
+                                    <option value="IRL">Ireland</option>
+                                    <option value="IMN">Isle of Man</option>
+                                    <option value="ISR">Israel</option>
+                                    <option value="ITA">Italy</option>
+                                    <option value="CIV">Ivory Coast</option>
+                                    <option value="JAM">Jamaica</option>
+                                    <option value="JPN">Japan</option>
+                                    <option value="JEY">Jersey</option>
+                                    <option value="JOR">Jordan</option>
+                                    <option value="KAZ">Kazakhstan</option>
+                                    <option value="KEN">Kenya</option>
+                                    <option value="KIR">Kiribati</option>
+                                    <option value="PRK">Korea (North)</option>
+                                    <option value="KOR">Korea (South)</option>
+                                    <option value="XK">Kosovo</option>
+                                    <option value="KWT">Kuwait</option>
+                                    <option value="KGZ">Kyrgyzstan</option>
+                                    <option value="LAO">Lao People's Democratic Republic</option>
+                                    <option value="LVA">Latvia</option>
+                                    <option value="LBN">Lebanon</option>
+                                    <option value="LSO">Lesotho</option>
+                                    <option value="LBR">Liberia</option>
+                                    <option value="LBY">Libya</option>
+                                    <option value="LIE">Liechtenstein</option>
+                                    <option value="LTU">Lithuania</option>
+                                    <option value="LUX">Luxembourg</option>
+                                    <option value="MAC">Macao</option>
+                                    <option value="MDG">Madagascar</option>
+                                    <option value="MWI">Malawi</option>
+                                    <option value="MYS">Malaysia</option>
+                                    <option value="MDV">Maldives</option>
+                                    <option value="MLI">Mali</option>
+                                    <option value="MLT">Malta</option>
+                                    <option value="MHL">Marshall Islands</option>
+                                    <option value="MTQ">Martinique</option>
+                                    <option value="MRT">Mauritania</option>
+                                    <option value="MUS">Mauritius</option>
+                                    <option value="MYT">Mayotte</option>
+                                    <option value="MEX">Mexico</option>
+                                    <option value="FSM">Micronesia, Federated States of</option>
+                                    <option value="MDA">Moldova</option>
+                                    <option value="MCO">Monaco</option>
+                                    <option value="MNG">Mongolia</option>
+                                    <option value="MNE">Montenegro</option>
+                                    <option value="MSR">Montserrat</option>
+                                    <option value="MAR">Morocco</option>
+                                    <option value="MOZ">Mozambique</option>
+                                    <option value="MMR">Myanmar</option>
+                                    <option value="NAM">Namibia</option>
+                                    <option value="NRU">Nauru</option>
+                                    <option value="NPL">Nepal</option>
+                                    <option value="NLD">Netherlands</option>
+                                    <option value="AN">Netherlands Antilles</option>
+                                    <option value="NCL">New Caledonia</option>
+                                    <option value="NZL">New Zealand</option>
+                                    <option value="NIC">Nicaragua</option>
+                                    <option value="NER">Niger</option>
+                                    <option value="NGA">Nigeria</option>
+                                    <option value="NIU">Niue</option>
+                                    <option value="NFK">Norfolk Island</option>
+                                    <option value="MKD">North Macedonia</option>
+                                    <option value="Northern Ireland">Northern Ireland</option>
+                                    <option value="MNP">Northern Mariana Islands</option>
+                                    <option value="NOR">Norway</option>
+                                    <option value="Not Provided by University">Not Provided by University</option>
+                                    <option value="OMN">Oman</option>
+                                    <option value="PAK">Pakistan</option>
+                                    <option value="PLW">Palau</option>
+                                    <option value="PSE">Palestine</option>
+                                    <option value="PAN">Panama</option>
+                                    <option value="PNG">Papua New Guinea</option>
+                                    <option value="PRY">Paraguay</option>
+                                    <option value="PER">Peru</option>
+                                    <option value="PHL">Philippines</option>
+                                    <option value="PCN">Pitcairn</option>
+                                    <option value="POL">Poland</option>
+                                    <option value="PRT">Portugal</option>
+                                    <option value="PRI">Puerto Rico</option>
+                                    <option value="QAT">Qatar</option>
+                                    <option value="REU">Reunion</option>
+                                    <option value="ROU">Romania</option>
+                                    <option value="RUS">Russia</option>
+                                    <option value="RWA">Rwanda</option>
+                                    <option value="BLM">Saint Barthelemy</option>
+                                    <option value="SHN">Saint Helena, Ascension and Tristan da Cunha</option>
+                                    <option value="KNA">Saint Kitts and Nevis</option>
+                                    <option value="LCA">Saint Lucia</option>
+                                    <option value="MAF">Saint Martin (French part)</option>
+                                    <option value="SPM">Saint Pierre and Miquelon</option>
+                                    <option value="VCT">Saint Vincent and the Grenadines</option>
+                                    <option value="WSM">Samoa</option>
+                                    <option value="SMR">San Marino</option>
+                                    <option value="STP">Sao Tome and Principe</option>
+                                    <option value="SAU">Saudi Arabia</option>
+                                    <option value="Scotland">Scotland</option>
+                                    <option value="SEN">Senegal</option>
+                                    <option value="SRB">Serbia</option>
+                                    <option value="SYC">Seychelles</option>
+                                    <option value="SLE">Sierra Leone</option>
+                                    <option value="SGP">Singapore</option>
+                                    <option value="SXM">Sint Maarten (Dutch part)</option>
+                                    <option value="SVK">Slovakia</option>
+                                    <option value="SVN">Slovenia</option>
+                                    <option value="SLB">Solomon Islands</option>
+                                    <option value="SOM">Somalia</option>
+                                    <option value="ZAF">South Africa</option>
+                                    <option value="SGS">South Georgia and the South Sandwich Islands</option>
+                                    <option value="SSD">South Sudan</option>
+                                    <option value="ESP">Spain</option>
+                                    <option value="LKA">Sri Lanka</option>
+                                    <option value="SDN">Sudan</option>
+                                    <option value="SUR">Suriname</option>
+                                    <option value="SJM">Svalbard and Jan Mayen</option>
+                                    <option value="SWZ">Swaziland</option>
+                                    <option value="SWE">Sweden</option>
+                                    <option value="CHE">Switzerland</option>
+                                    <option value="SYR">Syrian Arab Republic</option>
+                                    <option value="TWN">Taiwan</option>
+                                    <option value="TJK">Tajikistan</option>
+                                    <option value="TZA">Tanzania</option>
+                                    <option value="THA">Thailand</option>
+                                    <option value="TLS">Timor-Leste</option>
+                                    <option value="TGO">Togo</option>
+                                    <option value="TKL">Tokelau</option>
+                                    <option value="TON">Tonga</option>
+                                    <option value="TTO">Trinidad and Tobago</option>
+                                    <option value="TUN">Tunisia</option>
+                                    <option value="TUR">Turkey</option>
+                                    <option value="TKM">Turkmenistan</option>
+                                    <option value="TCA">Turks and Caicos Islands</option>
+                                    <option value="TUV">Tuvalu</option>
+                                    <option value="UGA">Uganda</option>
+                                    <option value="UKR">Ukraine</option>
+                                    <option value="ARE">United Arab Emirates</option>
+                                    <option value="GBR">United Kingdom</option>
+                                    <option value="USA">United States</option>
+                                    <option value="UMI">United States Minor Outlying Islands</option>
+                                    <option value="URY">Uruguay</option>
+                                    <option value="UZB">Uzbekistan</option>
+                                    <option value="VUT">Vanuatu</option>
+                                    <option value="VEN">Venezuela, Bolivarian Republic of</option>
+                                    <option value="VNM">Vietnam</option>
+                                    <option value="VGB">Virgin Islands, British</option>
+                                    <option value="VIR">Virgin Islands, U.S.</option>
+                                    <option value="Wales">Wales</option>
+                                    <option value="WLF">Wallis and Futuna</option>
+                                    <option value="ESH">Western Sahara</option>
+                                    <option value="YEM">Yemen</option>
+                                    <option value="ZMB">Zambia</option>
+                                    <option value="ZWE">Zimbabwe</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Step 2 -->
+                    <div class="u-mb-2 u-bg-white u-p-2 u-medium-grey-line" style=" border-radius: 5px;">
+                        <h2 class=" header-stripped text-lg">
+                            Personalise your guide
+                        </h2>
+
+                        <p>First select a start date then choose up to three subject areas you are
+                            interested in:</p>
+                        <div>
+                            <div class="u-mt-1">
+                                <label class="u-font-bold block u-mb-tiny " for="study_year">
+                                    When will you begin your studies?
+                                    <span class="u-heritage-berry " data-alertlabel="study_year">*</span>
+                                </label>
+
+                                <select id="study_year" name="study_year" data-required>
+                                    <option value="">Select an option</option>
+                                    <option value="jan-27">Jan-27</option>
+                                    <option value="may-27">May-27</option>
+                                    <option value="sep-27">Sep-27</option>
+                                    <option value="jan-28">Jan-28</option>
+                                    <option value="may-28">May-28</option>
+                                    <option value="sep-28">Sep-28</option>
+                                    <option value="jan-29">Jan-29</option>
+                                    <option value="may-29">May-29</option>
+                                    <option value="sep-29">Sep-29</option>
+                                </select>
+
+                            </div>
+
                             <div>
-                                <div class="u-mt-1">
-                                    <label class="u-font-bold block u-mb-tiny " for="study_year">
-                                        When will you begin your studies?
-                                        <span class="u-heritage-berry " data-alertlabel="study_year">*</span>
-                                    </label>
-
-                                    <select id="study_year" name="study_year">
+                                <div class="subject_area_0 u-mt-1">
+                                    <label class="u-font-bold block u-mb-tiny" for="subject_area_0">Subject area 1 <span class="u-heritage-berry " data-alertlabel="subject_area_1">*</span></label>
+                                    <select id="subject_area_0" name="subject_area_0" class="subjectSelect">
                                         <option value="">Select an option</option>
-                                        <option value="sep-24">Sep-24</option>
-                                        <option value="jan-25">Jan-25</option>
-                                        <option value="may-25">May-25</option>
-                                        <option value="sep-25">Sep-25</option>
-                                        <option value="jan-26">Jan-26</option>
-                                        <option value="sep-26">Sep-26</option>
-                                        <option value="jan-27">Jan-27</option>
-                                        <option value="sep-27">Sep-27</option>
-                                        <option value="jan-28">Jan-28</option>
-                                        <option value="sep-28">Sep-28</option>
                                     </select>
+                                    <div id="subject_area_0_courses" class="u-columns-2 u-mx-1"></div>
                                 </div>
 
-                                <div>
-                                    <div class="subject_area_0 u-mt-1">
-                                        <label class="u-font-bold block u-mb-tiny" for="subject_area_0">Subject area 1 <span class="u-heritage-berry " data-alertlabel="subject_area_1">*</span></label>
-                                        <select id="subject_area_0" name="subject_area_0" class="subjectSelect">
+                                <div class="subject_area_1 u-mt-1">
+                                    <div>
+                                        <label class="u-font-bold block u-mb-tiny" for="subject_area_1">Subject area 2</label>
+                                        <select id="subject_area_1" name="subject_area_1" class="subjectSelect">
                                             <option value="">Select an option</option>
                                         </select>
-                                        <div id="subject_area_0_courses" class="u-columns-2 u-mx-1"></div>
                                     </div>
-
-                                    <div class="subject_area_1 u-mt-1">
-                                        <div>
-                                            <label class="u-font-bold block u-mb-tiny" for="subject_area_1">Subject area 2</label>
-                                            <select id="subject_area_1" name="subject_area_1" class="subjectSelect">
-                                                <option value="">Select an option</option>
-                                            </select>
-                                        </div>
-                                        <div id="subject_area_1_courses" class="u-columns-2  u-mx-1"></div>
-                                    </div>
-
-                                    <div class="subject_area_2 u-mt-1">
-                                        <div>
-                                            <label class="u-font-bold block u-mb-tiny" for="subject_area_2">Subject area 3</label>
-                                            <select id="subject_area_2" name="subject_area_2" class="subjectSelect">
-                                                <option value="">Select an option</option>
-                                            </select>
-                                        </div>
-                                        <div id="subject_area_2_courses" class="u-columns-2  u-mx-1"></div>
-                                    </div>
-
+                                    <div id="subject_area_1_courses" class="u-columns-2  u-mx-1"></div>
                                 </div>
 
-                                <div class="u-bg-energy-turq--10 u-p-1 u-mt-2 text-sm u-heritage-teal u-border-solid u-flex u-gap" style="border-radius: 5px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="u-svg-32">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                                    </svg>
+                                <div class="subject_area_2 u-mt-1">
                                     <div>
-                                        <p class="u-m-0"><strong>Not sure what you want to study?</strong></p>
-                                        <p>Check this box to receive the full, non-personalised
-                                            guide</p>
-                                        <label for="full_prospectus" class="flex items-center text-sm u-font-bold">
-                                            <input id="full_prospectus" type="checkbox" name="full_prospectus" value="1">
-                                            <span> Send me the full guide</span>
-                                        </label>
+                                        <label class="u-font-bold block u-mb-tiny" for="subject_area_2">Subject area 3</label>
+                                        <select id="subject_area_2" name="subject_area_2" class="subjectSelect">
+                                            <option value="">Select an option</option>
+                                        </select>
                                     </div>
+                                    <div id="subject_area_2_courses" class="u-columns-2  u-mx-1"></div>
                                 </div>
 
                             </div>
-                        </div>
 
-                        <!-- Step 3 -->
-                        <div class="u-mb-2 u-bg-white u-p-2 u-medium-grey-line " style="border-radius: 5px;">
-                            <h2 class=" header-stripped text-lg" id="dataAgreeSection">
-                                Please confirm
-                            </h2>
-
-                            <div class="u-bg-energy-turq--10 u-p-1 u-mt-2 text-sm u-heritage-teal u-border-solid " style="border-radius: 5px;">
-                                <p>
-                                    The personal information you provide above will be used to build your personalised digital postgraduate prospectus. We'll only contact you about the prospectus itself unless you select to receive more information.
-                                    <br><br>
-                                    For more information on how the University uses your personal data, please read our privacy policy (<a href="https://www.stir.ac.uk/about/professional-services/student-academic-and-corporate-services/policy-and-planning/legal-compliance/data-protectiongdpr/privacy-notices/?sl=privacy" target="_blank" class="underline">University of Stirling privacy policy</a>).
-                                </p>
-
+                            <div class="u-bg-heritage-green--10 u-p-1 u-mt-2 text-sm u-heritage-green u-flex u-gap" style="border-radius: 5px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="u-svg-32">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                </svg>
                                 <div>
-                                    <div id="dataAgreeAlert"></div>
-                                    <label class="u-font-bold block u-mb-tiny  text-sm">
-                                        <input type="checkbox" id="data_agreement" name="data_agreement" value="1" class="">
-                                        Please confirm that you agree to your information being used in this way.
-                                        <span class="u-heritage-berry " data-alertlabel="data_agreement">*</span>
+                                    <p class="u-m-0"><strong>Not sure what you want to study?</strong></p>
+                                    <p>Check this box to receive the full, non-personalised
+                                        guide</p>
+                                    <label for="full_prospectus" class="flex items-center text-sm u-font-bold">
+                                        <input id="full_prospectus" type="checkbox" name="full_prospectus" value="1">
+                                        <span> Send me the full guide</span>
                                     </label>
                                 </div>
                             </div>
 
-                            <h2 class="u-mt-2 header-stripped text-lg">
-                                Keep in touch
-                            </h2>
-                            <div id="marketingAlert"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="u-mb-2 u-bg-white u-p-2 u-medium-grey-line " style="border-radius: 5px;">
+                        <h2 class=" header-stripped text-lg" id="dataAgreeSection">
+                            Please confirm
+                        </h2>
+
+                        <div class="u-bg-heritage-green--10 u-p-1 u-mt-2 text-sm u-heritage-green " style="border-radius: 5px;">
+                            <p>
+                                The personal information you provide above will be used to build your personalised digital postgraduate prospectus. We'll only contact you about the prospectus itself unless you select to receive more information.
+                                <br><br>
+                                For more information on how the University uses your personal data, please read our privacy policy (<a href="https://www.stir.ac.uk/about/professional-services/student-academic-and-corporate-services/policy-and-planning/legal-compliance/data-protectiongdpr/privacy-notices/?sl=privacy" target="_blank" class="underline">University of Stirling privacy policy</a>).
+                            </p>
 
                             <div>
-                                <label class="u-font-bold block u-mb-tiny " for="wed_love_to_keep_in_touch">
-                                    We'd love to keep in touch by sending you useful information about the
-                                    University and our courses
+                                <div id="dataAgreeAlert"></div>
+                                <label class="u-font-bold block u-mb-tiny  text-sm">
+                                    <input type="checkbox" id="data_agreement" name="data_agreement" value="1" class="">
+                                    Please confirm that you agree to your information being used in this way.
+                                    <span class="u-heritage-berry " data-alertlabel="data_agreement">*</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <h2 class="u-mt-2 header-stripped text-lg">
+                            Keep in touch
+                        </h2>
+                        <div id="marketingAlert"></div>
+
+                        <div>
+                            <label class="u-font-bold block u-mb-tiny " for="wed_love_to_keep_in_touch">
+                                We'd love to keep in touch by sending you useful information about the
+                                University and our courses
+                            </label>
+
+                            <select data-section="marketingglobal" id="wed_love_to_keep_in_touch" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses">
+                                <option value="">Select an option</option>
+                                <option value="true">Yes, keep me up to date with everything I need to know
+                                    about Stirling</option>
+                                <option value="false">No, thank you</option>
+                            </select>
+                        </div>
+
+                        <p class="text-sm text-gray-700">
+                            By submitting you are agreeing to the <a href="https://www.stir.ac.uk/about/policy-legal-and-cookies" target="_blank" class="underline">University's terms of use and privacy statement</a>.
+                        </p>
+
+                        <p class="text-sm text-gray-700">We'd love to keep in touch by sending you useful
+                            information about the University and our courses. I would like to be contacted
+                            by:</p>
+
+                        <div class="u-flex-medium-up  u-gap">
+
+                            <div class="u-flex1">
+                                <label class="u-font-bold block u-mb-tiny " for="opt_in_for_email">
+                                    Opt in for email
                                 </label>
 
-                                <select data-section="marketingglobal" id="wed_love_to_keep_in_touch" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="wed_love_to_keep_in_touch_by_sending_you_useful_information_about_the_university_and_our_courses">
+                                <select data-section="marketing" id="opt_in_for_email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_email">
                                     <option value="">Select an option</option>
-                                    <option value="true">Yes, keep me up to date with everything I need to know
-                                        about Stirling</option>
-                                    <option value="false">No, thank you</option>
+                                    <option value="true">Yes please</option>
+                                    <option value="false">No thanks</option>
                                 </select>
                             </div>
 
-                            <p class="text-sm text-gray-700">
-                                By submitting you are agreeing to the <a href="https://www.stir.ac.uk/about/policy-legal-and-cookies" target="_blank" class="underline">University's terms of use and privacy statement</a>.
-                            </p>
+                            <div class="u-flex1">
+                                <label class="u-font-bold block u-mb-tiny " for="opt_in_for_phone">
+                                    Opt in for phone
+                                </label>
 
-                            <p class="text-sm text-gray-700">We'd love to keep in touch by sending you useful
-                                information about the University and our courses. I would like to be contacted
-                                by:</p>
-
-                            <div class="u-flex-medium-up  u-gap">
-
-                                <div class="u-flex1">
-                                    <label class="u-font-bold block u-mb-tiny " for="opt_in_for_email">
-                                        Opt in for email
-                                    </label>
-
-                                    <select data-section="marketing" id="opt_in_for_email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_email">
-                                        <option value="">Select an option</option>
-                                        <option value="true">Yes please</option>
-                                        <option value="false">No thanks</option>
-                                    </select>
-                                </div>
-
-                                <div class="u-flex1">
-                                    <label class="u-font-bold block u-mb-tiny " for="opt_in_for_phone">
-                                        Opt in for phone
-                                    </label>
-
-                                    <select data-section="marketing" id="opt_in_for_phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_phone">
-                                        <option value="">Select an option</option>
-                                        <option value="true">Yes please</option>
-                                        <option value="false">No thanks</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="u-flex-medium-up  u-gap">
-
-                                <div class="u-flex1">
-                                    <label class="u-font-bold block u-mb-tiny " for="opt_in_for_sms">
-                                        Opt in for sms
-                                    </label>
-
-                                    <select data-section="marketing" id="opt_in_for_sms" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_sms">
-                                        <option value="">Select an option</option>
-                                        <option value="true">Yes please</option>
-                                        <option value="false">No thanks</option>
-                                    </select>
-
-                                </div>
-
-                                <div class="u-flex1">
-                                    <label class="u-font-bold block u-mb-tiny " for="opt_in_for_sms">
-                                        Opt in for social media
-                                    </label>
-
-                                    <select data-section="marketing" id="opt_in_for_social" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_social">
-                                        <option value="">Select an option</option>
-                                        <option value="true">Yes please</option>
-                                        <option value="false">No thanks</option>
-                                    </select>
-
-                                </div>
-                            </div>
-
-                            <div class="u-flex-medium-up  u-gap">
-                                <div class="u-flex1">
-                                    <label class="u-font-bold block u-mb-tiny " for="opt_in_for_whatsapp">
-                                        Opt in for WhatsApp messaging
-                                    </label>
-
-                                    <select data-section="marketing" id="opt_in_for_whatsapp" class="mt-1 block w-full " name="opt_in_for_whatsapp">
-                                        <option value="">Select an option</option>
-                                        <option value="true">Yes please</option>
-                                        <option value="false">No thanks</option>
-                                    </select>
-                                </div>
-
-                                <div class="u-flex1">
-                                    <label class="u-font-bold block u-mb-tiny " for="whatsapp_phone_number">
-                                        WhatsApp phone number
-                                        <span class="u-heritage-berry " data-alertlabel="whatsapp_phone_number"></span>
-                                    </label>
-                                    <input type="text" data-section="marketing" id="whatsapp_phone_number" class="mt-1 block w-full  " name="whatsapp_phone_number">
-                                </div>
-
-                            </div>
-
-                            <p class="text-sm text-gray-700 u-mt-1">
-                                You can unsubscribe at any time by emailing: <a href="mailto:study.stirling@stir.ac.uk" class="underline">study.stirling@stir.ac.uk</a>
-                            </p>
-
-                            <div class="g-recaptcha" data-sitekey="6LeLc_wpAAAAAK9XBEY5HhZcsYEgTTi1wukDL685" data-callback="onSubmit" data-size="invisible">
+                                <select data-section="marketing" id="opt_in_for_phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_phone">
+                                    <option value="">Select an option</option>
+                                    <option value="true">Yes please</option>
+                                    <option value="false">No thanks</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="u-mt-2">
-                            <button id="generatePDFBtn" class="button ">Generate</button>
+                        <div class="u-flex-medium-up  u-gap">
+
+                            <div class="u-flex1">
+                                <label class="u-font-bold block u-mb-tiny " for="opt_in_for_sms">
+                                    Opt in for sms
+                                </label>
+
+                                <select data-section="marketing" id="opt_in_for_sms" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_sms">
+                                    <option value="">Select an option</option>
+                                    <option value="true">Yes please</option>
+                                    <option value="false">No thanks</option>
+                                </select>
+
+                            </div>
+
+                            <div class="u-flex1">
+                                <label class="u-font-bold block u-mb-tiny " for="opt_in_for_social">
+                                    Opt in for social media
+                                </label>
+
+                                <select data-section="marketing" id="opt_in_for_social" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="opt_in_for_social">
+                                    <option value="">Select an option</option>
+                                    <option value="true">Yes please</option>
+                                    <option value="false">No thanks</option>
+                                </select>
+
+                            </div>
                         </div>
 
-                    </form>
+                        <div class="u-flex-medium-up  u-gap">
+                            <div class="u-flex1">
+                                <label class="u-font-bold block u-mb-tiny " for="opt_in_for_whatsapp">
+                                    Opt in for WhatsApp messaging
+                                </label>
 
-                    <div id="resultBox"></div>
-                </div>
+                                <select data-section="marketing" id="opt_in_for_whatsapp" class="mt-1 block w-full " name="opt_in_for_whatsapp">
+                                    <option value="">Select an option</option>
+                                    <option value="true">Yes please</option>
+                                    <option value="false">No thanks</option>
+                                </select>
+                            </div>
 
+                            <div class="u-flex1">
+                                <label class="u-font-bold block u-mb-tiny " for="whatsapp_phone_number">
+                                    WhatsApp phone number
+                                    <span class="u-heritage-berry " data-alertlabel="whatsapp_phone_number"></span>
+                                </label>
+                                <input type="text" data-section="marketing" id="whatsapp_phone_number" class="mt-1 block w-full  " name="whatsapp_phone_number">
+                            </div>
+
+                        </div>
+
+                        <p class="text-sm text-gray-700 u-mt-1">
+                            You can unsubscribe at any time by emailing: <a href="mailto:study.stirling@stir.ac.uk" class="underline">study.stirling@stir.ac.uk</a>
+                        </p>
+
+                        <div class="g-recaptcha" data-sitekey="6LeLc_wpAAAAAK9XBEY5HhZcsYEgTTi1wukDL685" data-callback="onSubmit" data-size="invisible">
+                        </div>
+                    </div>
+
+                    <div class="u-mt-2">
+                        <button id="generatePDFBtn" class="button ">Generate</button>
+                    </div>
+
+                </form>
+
+                <div id="resultBox"></div>
             </div>
         </div>
     </main>
 
     <script src="../../../../../../../medias/Categorised/Dist/js/app.min.js"></script>
 
-  		<script>
+    <script>
         const CAPTCHA = "6LeLc_wpAAAAAK9XBEY5HhZcsYEgTTi1wukDL685";
-        const subjectsData =  [{
+        const subjectsData = [{
                 "id": 1,
                 "subject": "Accounting, Finance and Economics",
                 "qsSubject": "Accounting, Finance, Banking and Economics",
-                "courses": [
-  { "newName": "MSc Behavioural Science" },
-  { "newName": "MSc Finance" },
-  { "newName": "MSc Finance and Data Analytics" },
-  { "newName": "MSc Finance and Risk Management" },
-  { "newName": "MSc International Accounting and Finance" },
-  { "newName": "MSc Investment Analysis" }
-]
+                "courses": [{
+                        "newName": "MSc Behavioural Science"
+                    },
+                    {
+                        "newName": "MSc Finance"
+                    },
+                    {
+                        "newName": "MSc Finance and Data Analytics"
+                    },
+                    {
+                        "newName": "MSc Finance and Risk Management"
+                    },
+                    {
+                        "newName": "MSc International Accounting and Finance"
+                    },
+                    {
+                        "newName": "MSc Investment Analysis"
+                    }
+                ]
             },
             {
                 "id": 2,
                 "subject": "Aquaculture",
                 "qsSubject": "Aquaculture",
-                "courses": [
-  { "newName": "MSc Sustainable Aquaculture" },
-  { "newName": "MSc Aquatic Pathobiology" }
-]
+                "courses": [{
+                        "newName": "MSc Sustainable Aquaculture"
+                    },
+                    {
+                        "newName": "MSc Aquatic Pathobiology"
+                    }
+                ]
             },
             {
                 "id": 7,
                 "subject": "Artificial Intelligence, Big Data, Data Science and Analytics",
                 "qsSubject": "Computing, Data Science and Mathematics",
-                "courses":[
-  { "newName": "MSc Advanced Computing with Artificial Intelligence" },
-  { "newName": "MSc Artificial Intelligence" },
-  { "newName": "MSc Big Data" },
-  { "newName": "MSc Business Analytics" },
-  { "newName": "MSc Data Science and Artificial Intelligence for Business" },
-  { "newName": "MSc Digital Health and Care (online)" },
-  { "newName": "MSc Environmental Data Science and Artificial Intelligence" },
-  { "newName": "MSc Ethical and Responsible Artificial Intelligence" },
-  { "newName": "MSc Finance and Data Analytics" },
-  { "newName": "MSc Financial Technology (FinTech)" },
-  { "newName": "MSc Health Data Science and Artificial Intelligence" },
-  { "newName": "MSc Marketing Analytics" },
-  { "newName": "MSc Mathematics and Data Science" },
-  { "newName": "MSc Sport Business Analytics" },
-  { "newName": "MSc Big Data (online)" }
-]
+                "courses": [{
+                        "newName": "MSc Advanced Computing with Artificial Intelligence"
+                    },
+                    {
+                        "newName": "MSc Artificial Intelligence"
+                    },
+                    {
+                        "newName": "MSc Big Data"
+                    },
+                    {
+                        "newName": "MSc Business Analytics"
+                    },
+                    {
+                        "newName": "MSc Data Science and Artificial Intelligence for Business"
+                    },
+                    {
+                        "newName": "MSc Digital Health and Care (online)"
+                    },
+                    {
+                        "newName": "MSc Environmental Data Science and Artificial Intelligence"
+                    },
+                    {
+                        "newName": "MSc Ethical and Responsible Artificial Intelligence"
+                    },
+                    {
+                        "newName": "MSc Finance and Data Analytics"
+                    },
+                    {
+                        "newName": "MSc Financial Technology (FinTech)"
+                    },
+                    {
+                        "newName": "MSc Health Data Science and Artificial Intelligence"
+                    },
+                    {
+                        "newName": "MSc Marketing Analytics"
+                    },
+                    {
+                        "newName": "MSc Mathematics and Data Science"
+                    },
+                    {
+                        "newName": "MSc Sport Business Analytics"
+                    },
+                    {
+                        "newName": "MSc Big Data (online)"
+                    }
+                ]
             },
             {
                 "id": 3,
                 "subject": "Business, Management, Marketing and Human Resources",
                 "qsSubject": "Business and Management",
-                "courses": [
-  { "newName": "MSc Behavioural Science" },
-  { "newName": "MSc Business Analytics" },
-  { "newName": "MSc Business and Management" },
-  { "newName": "MSc Data Science and Artificial Intelligence for Business" },
-  { "newName": "MSc Digital Marketing and Brand Management" },
-  { "newName": "MSc Human Resource Management" },
-  { "newName": "MSc International Business" },
-  { "newName": "MSc Marketing" },
-  { "newName": "MSc Marketing Analytics" },
-  { "newName": "MSc Project Management" },
-  { "newName": "MSc Sport Business Analytics" }
-]
+                "courses": [{
+                        "newName": "MSc Behavioural Science"
+                    },
+                    {
+                        "newName": "MSc Business Analytics"
+                    },
+                    {
+                        "newName": "MSc Business and Management"
+                    },
+                    {
+                        "newName": "MSc Data Science and Artificial Intelligence for Business"
+                    },
+                    {
+                        "newName": "MSc Digital Marketing and Brand Management"
+                    },
+                    {
+                        "newName": "MSc Human Resource Management"
+                    },
+                    {
+                        "newName": "MSc International Business"
+                    },
+                    {
+                        "newName": "MSc Marketing"
+                    },
+                    {
+                        "newName": "MSc Marketing Analytics"
+                    },
+                    {
+                        "newName": "MSc Project Management"
+                    },
+                    {
+                        "newName": "MSc Sport Business Analytics"
+                    }
+                ]
             },
- 
+
             {
                 "id": 5,
                 "subject": "Criminology",
                 "qsSubject": "Social Sciences",
-                "courses": [
-  { "newName": "MSc Criminology" },
-  { "newName": "MSc Criminological Research" }
-]
+                "courses": [{
+                        "newName": "MSc Criminology"
+                    },
+                    {
+                        "newName": "MSc Criminological Research"
+                    }
+                ]
             },
             {
                 "id": 6,
                 "subject": "Dementia and Ageing",
                 "qsSubject": "Social Sciences",
-                "courses": [
-  { "newName": "MSc Dementia Studies (Online)" },
-  { "newName": "MPH Master of Public Health Ageing and Dementia" }
-]
+                "courses": [{
+                        "newName": "MSc Dementia Studies (Online)"
+                    },
+                    {
+                        "newName": "MPH Master of Public Health Ageing and Dementia"
+                    }
+                ]
             },
-          
+
             {
                 "id": 8,
                 "subject": "Education",
                 "qsSubject": "Education",
-                "courses": [
-  { "newName": "MSc Education" },
-  { "newName": "MSc Educational Leadership" },
-  { "newName": "MSc English Language Teaching and Management" },
-  { "newName": "MRes Educational Research" },
-  { "newName": "MSc Professional Education and Leadership" },
-  { "newName": "PGDE Secondary Education: Physics with Science" },
-  { "newName": "PGDE Secondary Education: Chemistry with Science" },
-  { "newName": "MSc Teaching English to Speakers of Other Languages (TESOL)" },
-  { "newName": "MSc Teaching English to Speakers of Other Languages (TESOL) (Online)" },
-  { "newName": "PG Cert Teaching Qualification in Further Education (In-Service)" }
-]
+                "courses": [{
+                        "newName": "MSc Education"
+                    },
+                    {
+                        "newName": "MSc Educational Leadership"
+                    },
+                    {
+                        "newName": "MSc English Language Teaching and Management"
+                    },
+                    {
+                        "newName": "MRes Educational Research"
+                    },
+                    {
+                        "newName": "MSc Professional Education and Leadership"
+                    },
+                    {
+                        "newName": "PGDE Secondary Education: Physics with Science"
+                    },
+                    {
+                        "newName": "PGDE Secondary Education: Chemistry with Science"
+                    },
+                    {
+                        "newName": "MSc Teaching English to Speakers of Other Languages (TESOL)"
+                    },
+                    {
+                        "newName": "MSc Teaching English to Speakers of Other Languages (TESOL) (Online)"
+                    },
+                    {
+                        "newName": "PG Cert Teaching Qualification in Further Education (In-Service)"
+                    }
+                ]
             },
             {
                 "id": 9,
                 "subject": "Environmental Sciences, Law and Sustainability",
                 "qsSubject": "Environmental Sciences",
-                "courses": [
-  { "newName": "MSc Environmental Management" },
-  { "newName": "MSc Environmental Data Science and Artificial Intelligence" },
-  { "newName": "LLM Environmental Law and Climate Justice" },
-  { "newName": "MSc Environmental Remote Sensing and Geospatial Sciences" },
-  { "newName": "MSc Global Environmental Sustainability" }
-]
+                "courses": [{
+                        "newName": "MSc Environmental Management"
+                    },
+                    {
+                        "newName": "MSc Environmental Data Science and Artificial Intelligence"
+                    },
+                    {
+                        "newName": "LLM Environmental Law and Climate Justice"
+                    },
+                    {
+                        "newName": "MSc Environmental Remote Sensing and Geospatial Sciences"
+                    },
+                    {
+                        "newName": "MSc Global Environmental Sustainability"
+                    }
+                ]
             },
             {
                 "id": 10,
                 "subject": "Health Sciences",
                 "qsSubject": "Health Sciences",
-                "courses": [
-  { "newName": "MSc Advancing Practice" },
-  { "newName": "MSc Digital Health and Care (Online)" },
-  { "newName": "MRes Health Research (Online)" },
-  { "newName": "MSc Health Data Science and Artificial Intelligence" },
-  { "newName": "MSc Physiotherapy (pre-registration)" },
-  { "newName": "MSc Podiatry (pre-registration)" },
-  { "newName": "MPH Master of Public Health" },
-  { "newName": "MPH Master of Public Health (Online)" },
-  { "newName": "MPH Master of Public Health Ageing and Dementia" },
-  { "newName": "MSc Specialist Community Public Health Nurse (Health Visiting)" },
-  { "newName": "MSc Sport Exercise and Medicine" }
-]
+                "courses": [{
+                        "newName": "MSc Advancing Practice"
+                    },
+                    {
+                        "newName": "MSc Digital Health and Care (Online)"
+                    },
+                    {
+                        "newName": "MRes Health Research (Online)"
+                    },
+                    {
+                        "newName": "MSc Health Data Science and Artificial Intelligence"
+                    },
+                    {
+                        "newName": "MSc Physiotherapy (pre-registration)"
+                    },
+                    {
+                        "newName": "MSc Podiatry (pre-registration)"
+                    },
+                    {
+                        "newName": "MPH Master of Public Health"
+                    },
+                    {
+                        "newName": "MPH Master of Public Health (Online)"
+                    },
+                    {
+                        "newName": "MPH Master of Public Health Ageing and Dementia"
+                    },
+                    {
+                        "newName": "MSc Specialist Community Public Health Nurse (Health Visiting)"
+                    },
+                    {
+                        "newName": "MSc Sport Exercise and Medicine"
+                    }
+                ]
             },
             {
                 "id": 11,
                 "subject": "History and Heritage",
                 "qsSubject": "History, Heritage and Politics",
-                "courses":[
-  { "newName": "MSc Heritage" },
-  { "newName": "MSc Historical Research" },
-  { "newName": "MRes Historical Research" }
-]
+                "courses": [{
+                        "newName": "MSc Heritage"
+                    },
+                    {
+                        "newName": "MSc Historical Research"
+                    },
+                    {
+                        "newName": "MRes Historical Research"
+                    }
+                ]
             },
             {
                 "id": 13,
                 "subject": "Housing Studies",
                 "qsSubject": "Social Sciences",
-                "courses":[
-  { "newName": "MSc, PG Dip Housing Studies (Part time) (Online)" },
-  { "newName": "MSc, PG Dip Housing Studies (Internship)" }
-]
+                "courses": [{
+                        "newName": "MSc, PG Dip Housing Studies (Part time) (Online)"
+                    },
+                    {
+                        "newName": "MSc, PG Dip Housing Studies (Internship)"
+                    }
+                ]
             },
             {
                 "id": 14,
                 "subject": "Law and Philosophy",
                 "qsSubject": "Law and Philosophy",
-                "courses": [
-  { "newName": "LLM Environmental Law and Climate Justice" },
-  { "newName": "MSc, LLM Human Rights and Diplomacy" },
-  { "newName": "MLitt Philosophy" }
-]
+                "courses": [{
+                        "newName": "LLM Environmental Law and Climate Justice"
+                    },
+                    {
+                        "newName": "MSc, LLM Human Rights and Diplomacy"
+                    },
+                    {
+                        "newName": "MLitt Philosophy"
+                    }
+                ]
             },
-           {
+            {
                 "id": 15,
                 "subject": "Literature and Languages",
                 "qsSubject": "Literature and Languages",
-                "courses": [
-  { "newName": "MLitt Creative Writing" },
-  { "newName": "MSc English Language and Linguistics" },
-  { "newName": "MRes Humanities" },
-  { "newName": "MLitt Publishing Studies" },
-  { "newName": "MRes Publishing Studies" },
-  { "newName": "MSc Journalism and Communication" }
-]
+                "courses": [{
+                        "newName": "MLitt Creative Writing"
+                    },
+                    {
+                        "newName": "MSc English Language and Linguistics"
+                    },
+                    {
+                        "newName": "MRes Humanities"
+                    },
+                    {
+                        "newName": "MLitt Publishing Studies"
+                    },
+                    {
+                        "newName": "MRes Publishing Studies"
+                    },
+                    {
+                        "newName": "MSc Journalism and Communication"
+                    }
+                ]
             },
-           {
+            {
                 "id": 4,
                 "subject": "Marketing, Media, PR and Communications",
                 "qsSubject": "Communications, Media and Culture",
-                "courses": [
-  { "newName": "MSc Digital Marketing and Brand Management" },
-  { "newName": "MSc Digital Media and Communication" },
-  { "newName": "MSc Journalism and Communication" },
-  { "newName": "MSc Marketing" },
-  { "newName": "MSc Marketing Analytics" },
-  { "newName": "MRes Media Research" },
-  { "newName": "MSc Public Relations and Strategic Communication" },
-  { "newName": "MSc Public Relations and Strategic Communication (Online)" },
-  { "newName": "MSc Strategic Communication and Public Relations (Joint degree UPF Barcelona)" }
-]
+                "courses": [{
+                        "newName": "MSc Digital Marketing and Brand Management"
+                    },
+                    {
+                        "newName": "MSc Digital Media and Communication"
+                    },
+                    {
+                        "newName": "MSc Journalism and Communication"
+                    },
+                    {
+                        "newName": "MSc Marketing"
+                    },
+                    {
+                        "newName": "MSc Marketing Analytics"
+                    },
+                    {
+                        "newName": "MRes Media Research"
+                    },
+                    {
+                        "newName": "MSc Public Relations and Strategic Communication"
+                    },
+                    {
+                        "newName": "MSc Public Relations and Strategic Communication (Online)"
+                    },
+                    {
+                        "newName": "MSc Strategic Communication and Public Relations (Joint degree UPF Barcelona)"
+                    }
+                ]
             },
             {
                 "id": 12,
                 "subject": "Politics and International Relations",
                 "qsSubject": "History, Heritage and Politics",
-                "courses": [
-  { "newName": "MSc Global Politics" },
-  { "newName": "MSc International Conflict and Cooperation" },
-  { "newName": "MPP Public Policy" },
-  { "newName": "MSc Global Environmental Sustainability" },
-  { "newName": "MSc, LLM Human Rights and Diplomacy" }
-]
+                "courses": [{
+                        "newName": "MSc Global Politics"
+                    },
+                    {
+                        "newName": "MSc International Conflict and Cooperation"
+                    },
+                    {
+                        "newName": "MPP Public Policy"
+                    },
+                    {
+                        "newName": "MSc Global Environmental Sustainability"
+                    },
+                    {
+                        "newName": "MSc, LLM Human Rights and Diplomacy"
+                    }
+                ]
             },
             {
                 "id": 16,
                 "subject": "Psychology",
                 "qsSubject": "Psychology",
-                "courses": [
-  { "newName": "MSc Psychology (Accredited Conversion)" },
-  { "newName": "MSc Psychology of Sport (Accredited)" },
-  { "newName": "MSc Health Psychology" },
-  { "newName": "MSc Autism and Neurodevelopmental Conditions Research" },
-  { "newName": "MSc Behavioural Science" },
-  { "newName": "MA, MSc Human Animal Interaction" },
-  { "newName": "MSc Psychological Research Methods" },
-  { "newName": "MSc Psychological Therapy in Primary Care" }
-]
+                "courses": [{
+                        "newName": "MSc Psychology (Accredited Conversion)"
+                    },
+                    {
+                        "newName": "MSc Psychology of Sport (Accredited)"
+                    },
+                    {
+                        "newName": "MSc Health Psychology"
+                    },
+                    {
+                        "newName": "MSc Autism and Neurodevelopmental Conditions Research"
+                    },
+                    {
+                        "newName": "MSc Behavioural Science"
+                    },
+                    {
+                        "newName": "MA, MSc Human Animal Interaction"
+                    },
+                    {
+                        "newName": "MSc Psychological Research Methods"
+                    },
+                    {
+                        "newName": "MSc Psychological Therapy in Primary Care"
+                    }
+                ]
             },
             {
                 "id": 17,
                 "subject": "Social Sciences",
                 "qsSubject": "Social Sciences",
-                "courses":[
-  { "newName": "MSc Applied Social Research" },
-  { "newName": "MSc Social Statistics and Social Research" },
-  { "newName": "MRes Criminological Research" }
-]
+                "courses": [{
+                        "newName": "MSc Applied Social Research"
+                    },
+                    {
+                        "newName": "MSc Social Statistics and Social Research"
+                    },
+                    {
+                        "newName": "MRes Criminological Research"
+                    }
+                ]
             },
             {
                 "id": 18,
                 "subject": "Social Work",
                 "qsSubject": "Social Sciences",
-                "courses": [
-  { "newName": "MSc Applied Professional Studies" },
-  { "newName": "MSc Social Work Studies" },
-  { "newName": "MSc Substance Use (online)" }
-]
+                "courses": [{
+                        "newName": "MSc Applied Professional Studies"
+                    },
+                    {
+                        "newName": "MSc Social Work Studies"
+                    },
+                    {
+                        "newName": "MSc Substance Use (online)"
+                    }
+                ]
             },
             {
                 "id": 19,
                 "subject": "Sport",
                 "qsSubject": "Sport",
-                "courses": [
-  { "newName": "MSc Psychology of Sport (Accredited)" },
-  { "newName": "MSc Sport Exercise and Medicine" },
-  { "newName": "MSc Sport Management" },
-  { "newName": "MSc Sport Performance Coaching (Online)" },
-  { "newName": "MSc Physiotherapy (pre-registration)" },
-  { "newName": "MSc Sport Business Analytics" }
-]
+                "courses": [{
+                        "newName": "MSc Psychology of Sport (Accredited)"
+                    },
+                    {
+                        "newName": "MSc Sport Exercise and Medicine"
+                    },
+                    {
+                        "newName": "MSc Sport Management"
+                    },
+                    {
+                        "newName": "MSc Sport Performance Coaching (Online)"
+                    },
+                    {
+                        "newName": "MSc Physiotherapy (pre-registration)"
+                    },
+                    {
+                        "newName": "MSc Sport Business Analytics"
+                    }
+                ]
             },
         ];
-        
+
         const USE_UAT = true; // Set to false for production
         const YEAR = "2027";
-</script>
+    </script>
 
     <script src="../../../../../../../medias/Categorised/Dist/js/other/_unminified/pg-personalised-prospectus-2027.js"></script>
 

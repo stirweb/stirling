@@ -124,42 +124,42 @@ $bg-grey: $light-gray-alt; //tint($light-mink, 15%);
    will make any text within the element white
  */
 
-.u-white--all {
-  * {
-    color: $white !important;
+// .u-white--all {
+//   * {
+//     color: $white !important;
 
-    &:after {
-      color: $white !important;
-    }
-  }
+//     &:after {
+//       color: $white !important;
+//     }
+//   }
 
-  a {
-    color: $white !important;
+//   a {
+//     color: $white !important;
 
-    &:hover {
-      //border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-      text-decoration-color: rgba(255, 255, 255, 0.5);
-    }
+//     &:hover {
+//       //border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+//       text-decoration-color: rgba(255, 255, 255, 0.5);
+//     }
 
-    &:before {
-      background-color: $white !important; // <-- WHY?
-    }
+//     &:before {
+//       background-color: $white !important; // <-- WHY?
+//     }
 
-    &.button--back:before {
-      background-color: transparent !important;
-    }
+//     &.button--back:before {
+//       background-color: transparent !important;
+//     }
 
-    &.c-link {
-      border-bottom: none;
+//     &.c-link {
+//       border-bottom: none;
 
-      &:hover {
-        border-bottom: none;
-      }
-    }
-  }
-}
+//       &:hover {
+//         border-bottom: none;
+//       }
+//     }
+//   }
+// }
 
-.u-white--all {
+//.u-white--all {
   // .c-wysiwyg-content li a,
   // li a,
   // p a {
@@ -170,15 +170,15 @@ $bg-grey: $light-gray-alt; //tint($light-mink, 15%);
   //   border-bottom: none;
   // }
 
-  select {
-    option,
-    &:focus {
-      color: #3a3c39 !important;
-    }
+  // select {
+  //   option,
+  //   &:focus {
+  //     color: #3a3c39 !important;
+  //   }
 
-    color: #3a3c39 !important;
-  }
-}
+  //   color: #3a3c39 !important;
+  // }
+//}
 
 [class*="u-bg-"].u-white {
   h2,
@@ -196,59 +196,59 @@ $bg-grey: $light-gray-alt; //tint($light-mink, 15%);
    table bg is white/grey, so should be inherited
  */
 
-.u-white--all {
-  table,
-  td,
-  td strong,
-  th strong,
-  table p,
-  table p strong,
-  th {
-    color: $black !important;
+// .u-white--all {
+//   table,
+//   td,
+//   td strong,
+//   th strong,
+//   table p,
+//   table p strong,
+//   th {
+//     color: $black !important;
 
-    a {
-      color: $heritage-green !important;
+//     a {
+//       color: $heritage-green !important;
 
-      &:hover {
-        color: $heritage-green !important;
-      }
-    }
-  }
+//       &:hover {
+//         color: $heritage-green !important;
+//       }
+//     }
+//   }
 
-  input[type="search"] {
-    color: $black !important;
-  }
-}
+//   input[type="search"] {
+//     color: $black !important;
+//   }
+// }
 
 /*
   Override utility for u-white--all
 */
 
-.u-unwhite--all {
-  * {
-    color: $black !important;
+// .u-unwhite--all {
+//   * {
+//     color: $black !important;
 
-    &:after {
-      color: $heritage-green !important;
-    }
-    &:before {
-      color: $heritage-green !important;
-    }
-  }
+//     &:after {
+//       color: $heritage-green !important;
+//     }
+//     &:before {
+//       color: $heritage-green !important;
+//     }
+//   }
 
-  h1,
-  h2 {
-    color: $heritage-green;
-  }
+//   h1,
+//   h2 {
+//     color: $heritage-green;
+//   }
 
-  a {
-    color: $heritage-green !important;
+//   a {
+//     color: $heritage-green !important;
 
-    &:hover {
-      color: $heritage-green !important;
-    }
-  }
-}
+//     &:hover {
+//       color: $heritage-green !important;
+//     }
+//   }
+// }
 
 a:has(img):hover {
   border-bottom: none !important;
