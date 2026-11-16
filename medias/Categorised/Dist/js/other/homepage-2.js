@@ -6,7 +6,7 @@ var stir=stir||{};!function(n){if(!n)return;const d=stir.filter(e=>{if(e.id&&0!=
           </div>`,u=stir.curry(e=>`
       <!-- All Events -->
       <div class="cell large-4 medium-6 small-12">
-          <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-2 u-items-start-small">
+          <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-1 u-items-start-small">
               <h2>Events</h2>
               <span class="flex-container u-gap-16 align-middle">${s("/events/","See all events")}</span>
           </div>

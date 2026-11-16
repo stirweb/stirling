@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,5 +10,28 @@
     <div id="container"></div>
   </body>
 
-  <script></script>
+  <script>
+    // get the ul string
+    let uls = `<ul>
+                  <li><a href="/courses/pg-taught/sport-management/">MSc Sport Management </a></li>
+                  <li><a href="/courses/pg-taught/business-analytics/">MSc Business Analytics</a></li>
+                  <li><a href="/courses/pg-taught/marketing-analytics/">MSc Marketing Analytics </a></li>
+                  <li><a href="/courses/pg-taught/data-science-for-business/">MSc Data Science for Business</a></li>
+                  <li><a href="/courses/pg-taught/business-management/">MSc Business and Management</a>&nbsp;</li>
+                  <li><a href="/courses/pg-taught/big-data/">MSc Big Data</a></li>
+              </ul>`;
+
+    // duplicate uls to avoid modifying the original string
+    let ulsCopy = uls;
+
+    // remove the ul tags and the li tags
+    let uls2 = uls.replace(/<\/?ul>/g, "").replace(/<\/?li>/g, "");
+
+    let links = uls2
+      .split(/<a /)
+      .slice(1)
+      .map((s) => "<tr><td><a " + s + "</td></tr>");
+
+    console.log(links);
+  </script>
 </html>
