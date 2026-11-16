@@ -196,7 +196,7 @@ var stir = stir || {};
     return `
       <!-- All Events -->
       <div class="cell large-4 medium-6 small-12">
-          <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-1 u-items-start-small">
+          <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-1 u-items-start-small boo">
               <h2>Events</h2>
               <span class="flex-container u-gap-16 align-middle">${renderCTA("/events/", "See all events")}</span>
           </div>
