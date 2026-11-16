@@ -139,7 +139,7 @@ var stir = stir || {};
     const cellClasses = noOfNews === 3 ? "large-4 medium-6" : "large-6 medium-12";
 
     // Curry set ups
-    const renderItems = stir.map(renderItem(cellClasses, "article"));
+    const renderItems = stir.map(renderItem(cellClasses, "","article"));
     const limiterer = stir.filter((item, index) => filterLimit(noOfNews, item, index)); // limit to number we need
 
     // Run the data through the various processes
@@ -155,7 +155,7 @@ var stir = stir || {};
    */
   const getEvents = (noOfEvents, data) => {
     const limterer = stir.filter((item, index) => filterLimit(noOfEvents, item, index)); // Curry
-    const renderer = renderItem("", "div"); // Curry
+    const renderer = renderItem("","u-object-position-top", "div"); // Curry
 
     const events = stir.compose(limterer, filterEmpties)(data.events);
 
@@ -196,7 +196,7 @@ var stir = stir || {};
     return `
       <!-- All Events -->
       <div class="cell large-4 medium-6 small-12">
-          <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-1 u-items-start-small boo">
+          <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-1 u-items-start-small ">
               <h2>Events</h2>
               <span class="flex-container u-gap-16 align-middle">${renderCTA("/events/", "See all events")}</span>
           </div>
@@ -235,12 +235,12 @@ var stir = stir || {};
    * @param {Object} item - the data for the news or event item
    * @returns {String} - the HTML for the news or event item
    */
-  const renderItem = stir.curry((classes, node, item) => {
+  const renderItem = stir.curry((classes, imageClass, node, item) => {
     const placeholder = `<t4 type="media" id="207798" formatter="path/*" />`;
     return `
       <${node} class="small-12 cell ${classes}">
         <div class="u-aspect-ratio-16-9">
-          <a href="${item.url}"><img class=" u-object-cover" src="${item.image||placeholder}" alt="${item.imagealt|""}" loading="lazy"></a></div>
+          <a href="${item.url}"><img class="${imageClass} u-object-cover" src="${item.image||placeholder}" alt="${item.imagealt|""}" loading="lazy"></a></div>
         <div class="u-flex u-gap-8 cta-link u-my-1">
             <span>
               <strong><a href="${item.url}">${item.title}</a></strong>
