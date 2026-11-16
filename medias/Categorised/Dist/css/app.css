@@ -8773,6 +8773,9 @@ article.c-convo small {
 .u-object-scale-down {
   object-fit: scale-down; }
 
+.u-object-position-top {
+  object-position: top; }
+
 /* Widths / Heights */
 .u-w-16,
 .u-width-16 {
