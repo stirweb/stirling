@@ -1,5 +1,5 @@
 var stir=stir||{};!function(n){if(!n)return;const d=stir.filter(e=>{if(e.id&&0!==e.id)return e}),a=(e,i,t)=>{if(t.id!==e&&t.id!==i)return t},o=(e,i,t)=>{if(t<e)return i},c=(e,i,t)=>stir.filter(e=>a(i,t,e),e),s=(e,i)=>`<div class="u-flex u-gap-4 cta-link u-mb-tiny">
-              <span class="cta-link-icon"></span>
+              <span class="cta-link-icon "></span>
               <span>
                 <a href="${e}">${i}</a>
               </span>

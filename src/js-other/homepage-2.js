@@ -179,7 +179,7 @@ var stir = stir || {};
    */
   const renderCTA = (link, text) => {
     return `<div class="u-flex u-gap-4 cta-link u-mb-tiny">
-              <span class="cta-link-icon"></span>
+              <span class="cta-link-icon "></span>
               <span>
                 <a href="${link}">${text}</a>
               </span>
