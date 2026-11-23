@@ -9,9 +9,9 @@
   const year = "2027";
 
   const SERVER = {
-    path: UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "",
+    path: UoS_env.name === `prod` ? "/webteam/postgraduate-prospectus/" : "",
     year: year,
-    app: useUAT ? "app-uat.php" : "app.php",
+    app: useUAT ? "app-uat-hs.php" : "app-hs.php",
     verify: "verify.php",
   };
 

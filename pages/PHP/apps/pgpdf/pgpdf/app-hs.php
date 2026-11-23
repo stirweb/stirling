@@ -21,6 +21,13 @@ if (!$env) {
 
 
 /*
+*
+* App UAT HubSpot integration
+*
+*/
+
+
+/*
  * Get raw headers describing the schema of raw_row_json
  * @description: a JSON-stringified schema describing the data type of each field in raw_row_json (string, boolean, datetime, array, object, etc.) 
  * @return: string (escaped) JSON-encoded schema of raw_row_json
@@ -178,33 +185,40 @@ function qs_init($object_id, $bearer_token, $import_name)
         echo "HubSpot object created successfully.";
         var_dump($result);
         return ["process" => "Data", "outcome" => "Success", "result" => ""];
-    } 
+    }
 }
 
 
 /*
+*
+* App MailChimp integration
+*
+*/
 
-	ON LOAD
 
+
+/*
+*
+*	ON LOAD
+*
 */
 
 
 /*
-
-  ON LOAD: QS (HUBSPOT)
-
+*
+* ON LOAD: QS (HUBSPOT)
+*
 */
 
-
 // Use environment variables for HubSpot object ID and bearer token
-$object_id = $env['HUBSPOT_QA_OBJECT_ID'] ;
+$object_id = $env['HUBSPOT_QA_OBJECT_ID'];
 $bearer_token = $env['HUBSPOT_QA_BEARER_TOKEN'];
 $import_name = "ESI API Import – Stirling Webform Prospectus Form Requested";
 
 qs_init($object_id, $bearer_token, $import_name);
 
 /*
-
-	ON LOAD: MailChimp
-
+*
+*	ON LOAD: MailChimp
+*
 */
