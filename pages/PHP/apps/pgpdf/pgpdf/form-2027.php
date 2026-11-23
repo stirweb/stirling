@@ -1971,7 +1971,7 @@
         const YEAR = "2027";
     </script>
 
-    <script src="../../../../../../../medias/Categorised/Dist/js/other/_unminified/pg-personalised-prospectus-2027.js"></script>
+    <script src="../../../../../../../medias/Categorised/Dist/js/other/_unminified/pg-personalised-prospectus-hs-2027.js"></script>
 
 
 
