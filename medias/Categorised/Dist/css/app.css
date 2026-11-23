@@ -396,29 +396,6 @@
    white--all 
    will make any text within the element white
  */
-.u-white--all * {
-  color: #fff !important; }
-  .u-white--all *:after {
-    color: #fff !important; }
-
-.u-white--all a {
-  color: #fff !important; }
-  .u-white--all a:hover {
-    text-decoration-color: rgba(255, 255, 255, 0.5); }
-  .u-white--all a:before {
-    background-color: #fff !important; }
-  .u-white--all a.button--back:before {
-    background-color: transparent !important; }
-  .u-white--all a.c-link {
-    border-bottom: none; }
-    .u-white--all a.c-link:hover {
-      border-bottom: none; }
-
-.u-white--all select {
-  color: #3a3c39 !important; }
-  .u-white--all select option, .u-white--all select:focus {
-    color: #3a3c39 !important; }
-
 [class*="u-bg-"].u-white h2,
 [class*="u-bg-"].u-white h3,
 [class*="u-bg-"].u-white a {
@@ -431,53 +408,9 @@
    u-white--all auto overrides 
    table bg is white/grey, so should be inherited
  */
-.u-white--all table,
-.u-white--all td,
-.u-white--all td strong,
-.u-white--all th strong,
-.u-white--all table p,
-.u-white--all table p strong,
-.u-white--all th {
-  color: #000 !important; }
-  .u-white--all table a,
-  .u-white--all td a,
-  .u-white--all td strong a,
-  .u-white--all th strong a,
-  .u-white--all table p a,
-  .u-white--all table p strong a,
-  .u-white--all th a {
-    color: #006938 !important; }
-    .u-white--all table a:hover,
-    .u-white--all td a:hover,
-    .u-white--all td strong a:hover,
-    .u-white--all th strong a:hover,
-    .u-white--all table p a:hover,
-    .u-white--all table p strong a:hover,
-    .u-white--all th a:hover {
-      color: #006938 !important; }
-
-.u-white--all input[type="search"] {
-  color: #000 !important; }
-
 /*
   Override utility for u-white--all
 */
-.u-unwhite--all * {
-  color: #000 !important; }
-  .u-unwhite--all *:after {
-    color: #006938 !important; }
-  .u-unwhite--all *:before {
-    color: #006938 !important; }
-
-.u-unwhite--all h1,
-.u-unwhite--all h2 {
-  color: #006938; }
-
-.u-unwhite--all a {
-  color: #006938 !important; }
-  .u-unwhite--all a:hover {
-    color: #006938 !important; }
-
 a:has(img):hover {
   border-bottom: none !important; }
 
@@ -4073,9 +4006,6 @@ ul .c-link {
 
 .c-link.no-arrow:after {
   content: ""; }
-
-.u-white--all .c-link::after {
-  filter: brightness(0) invert(1); }
 
 /* 
 
@@ -8843,6 +8773,9 @@ article.c-convo small {
 .u-object-scale-down {
   object-fit: scale-down; }
 
+.u-object-position-top {
+  object-position: top; }
+
 /* Widths / Heights */
 .u-w-16,
 .u-width-16 {
@@ -9711,9 +9644,6 @@ svg.u-icon {
   height: 1.125rem;
   display: inline-block; }
 
-.u-white--all .u-icon::before {
-  color: #fff; }
-
 .svg-icon {
   width: 100%;
   /* Safari fix */ }
@@ -9775,63 +9705,6 @@ svg.u-icon {
     Styles a hook under the content wrapped with the class '.hook'.
     NOT Brand 2026 HOOKS
 */
-.hook {
-  display: inline-block;
-  position: relative; }
-
-.hook-right {
-  padding: 0 20px 20px 0; }
-
-.hook-left {
-  padding: 0 0 20px 20px; }
-
-.hook::before,
-.hook::after {
-  background-color: currentColor;
-  bottom: 0;
-  content: "" !important;
-  position: absolute; }
-
-.hook::before {
-  height: 31px;
-  width: 7px; }
-
-.hook-right::before {
-  right: 0; }
-
-.hook-left::before {
-  left: 0; }
-
-.hook::after {
-  height: 8px;
-  left: 0;
-  width: 100%; }
-
-.hook-skinny::before {
-  height: 24px;
-  width: 5px; }
-
-.hook-skinny::after {
-  height: 5px; }
-
-.hook-infinite {
-  max-width: max-content; }
-  .hook-infinite::after {
-    width: 100vw; }
-  .hook-infinite.hook-right::after {
-    left: auto;
-    right: 0; }
-
-.hook-energy-green::after,
-.hook-energy-green::before {
-  background-color: #76b72a; }
-
-@media screen and (max-width: 39.99875em) {
-  .remove-hook-for-small > *::after {
-    content: none; }
-  .remove-hook-for-small > *::before {
-    content: none; } }
-
 /*
 
     New brand 2025 hooks

@@ -139,7 +139,7 @@ var stir = stir || {};
     const cellClasses = noOfNews === 3 ? "large-4 medium-6" : "large-6 medium-12";
 
     // Curry set ups
-    const renderItems = stir.map(renderItem(cellClasses, "article"));
+    const renderItems = stir.map(renderItem(cellClasses,"article"));
     const limiterer = stir.filter((item, index) => filterLimit(noOfNews, item, index)); // limit to number we need
 
     // Run the data through the various processes
@@ -179,7 +179,7 @@ var stir = stir || {};
    */
   const renderCTA = (link, text) => {
     return `<div class="u-flex u-gap-4 cta-link u-mb-tiny">
-              <span class="cta-link-icon"></span>
+              <span class="cta-link-icon "></span>
               <span>
                 <a href="${link}">${text}</a>
               </span>
@@ -196,7 +196,7 @@ var stir = stir || {};
     return `
       <!-- All Events -->
       <div class="cell large-4 medium-6 small-12">
-          <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-2 u-items-start-small">
+          <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-1 u-items-start-small ">
               <h2>Events</h2>
               <span class="flex-container u-gap-16 align-middle">${renderCTA("/events/", "See all events")}</span>
           </div>
@@ -237,10 +237,11 @@ var stir = stir || {};
    */
   const renderItem = stir.curry((classes, node, item) => {
     const placeholder = `<t4 type="media" id="207798" formatter="path/*" />`;
+    const imageFocus = item.imagefocus || ""; 
     return `
       <${node} class="small-12 cell ${classes}">
         <div class="u-aspect-ratio-16-9">
-          <a href="${item.url}"><img class=" u-object-cover" src="${item.image||placeholder}" alt="${item.imagealt|""}" loading="lazy"></a></div>
+          <a href="${item.url}"><img class=" u-object-cover ${imageFocus ? `u-object-position-${imageFocus}` : ``}" src="${item.image||placeholder}" alt="${item.imagealt|""}" loading="lazy"></a></div>
         <div class="u-flex u-gap-8 cta-link u-my-1">
             <span>
               <strong><a href="${item.url}">${item.title}</a></strong>

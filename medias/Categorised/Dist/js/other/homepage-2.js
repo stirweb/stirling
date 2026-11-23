@@ -1,12 +1,12 @@
 var stir=stir||{};!function(n){if(!n)return;const d=stir.filter(e=>{if(e.id&&0!==e.id)return e}),a=(e,i,t)=>{if(t.id!==e&&t.id!==i)return t},o=(e,i,t)=>{if(t<e)return i},c=(e,i,t)=>stir.filter(e=>a(i,t,e),e),s=(e,i)=>`<div class="u-flex u-gap-4 cta-link u-mb-tiny">
-              <span class="cta-link-icon"></span>
+              <span class="cta-link-icon "></span>
               <span>
                 <a href="${e}">${i}</a>
               </span>
           </div>`,u=stir.curry(e=>`
       <!-- All Events -->
       <div class="cell large-4 medium-6 small-12">
-          <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-2 u-items-start-small">
+          <div class="flex-container flex-dir-column medium-flex-dir-row align-middle u-gap u-mb-1 u-items-start-small ">
               <h2>Events</h2>
               <span class="flex-container u-gap-16 align-middle">${s("/events/","See all events")}</span>
           </div>
@@ -20,10 +20,10 @@ var stir=stir||{};!function(n){if(!n)return;const d=stir.filter(e=>{if(e.id&&0!=
                 ${3===e?s("/events/","See our events"):""}
             </div>
             <div class="grid-x">${t}</div>
-        </div>`),p=stir.curry((e,i,t)=>{return`
+        </div>`),p=stir.curry((e,i,t)=>{var a=t.imagefocus||"";return`
       <${i} class="small-12 cell ${e}">
         <div class="u-aspect-ratio-16-9">
-          <a href="${t.url}"><img class=" u-object-cover" src="${t.image||'<t4 type="media" id="207798" formatter="path/*" />'}" alt="${""|t.imagealt}" loading="lazy"></a></div>
+          <a href="${t.url}"><img class=" u-object-cover ${a?"u-object-position-"+a:""}" src="${t.image||'<t4 type="media" id="207798" formatter="path/*" />'}" alt="${""|t.imagealt}" loading="lazy"></a></div>
         <div class="u-flex u-gap-8 cta-link u-my-1">
             <span>
               <strong><a href="${t.url}">${t.title}</a></strong>

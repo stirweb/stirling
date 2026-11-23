@@ -8,6 +8,8 @@
   const useUAT = typeof USE_UAT !== "undefined" ? USE_UAT : false;
   const year = typeof YEAR !== "undefined" ? YEAR : "2026";
 
+  console.log(year);
+
   const SERVER = {
     path: UoS_env.name === `prod` ? "/research/hub/test/pgpdf/" : "",
     year: year,
