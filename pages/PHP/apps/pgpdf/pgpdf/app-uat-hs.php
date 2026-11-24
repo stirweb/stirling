@@ -202,13 +202,11 @@ function initHubSpot($object_id, $bearer_token, $import_name)
 *
 */
 
-function initMailChimp($message)
+function initMailChimp($message, $token)
 {
-
-
     try {
         $mailchimp = new MailchimpTransactional\ApiClient();
-        $mailchimp->setApiKey(getenv('MAIL'));
+        $mailchimp->setApiKey($token);
 
         $response = $mailchimp->messages->sendTemplate($message);
         return ["process" => "Mail", "outcome" => "Success", "result" => ""];
@@ -228,9 +226,9 @@ function initMailChimp($message)
 /*
  *  FUNCTION: Check if testing
  */
-function check_if_submitting($env, $testing)
+function check_if_submitting($environment, $testing)
 {
-    if ($env !== 'QA')
+    if ($environment !== 'QA')
         return true;
 
     return $testing;
@@ -304,9 +302,14 @@ $message = [
 ];
 
 
+
+
 if (isset($_POST['email'])) {
+
+    //echo getenv('MAIL');
+
     $submitmail = check_if_submitting($ENV_MODE, $TEST_MAIL);
-    $mail_outcome = $submitmail ? initMailChimp($message) : ["process" => "Mail", "outcome" => "Success", "result" => "Skipped sending"];
+    $mail_outcome = $submitmail ? initMailChimp($message, $env['MAIL']) : ["process" => "Mail", "outcome" => "Success", "result" => "Skipped sending"];
 } else {
     $mail_outcome = ["process" => "Mail", "outcome" => "Fail", "result" => ""];
 }

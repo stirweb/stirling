@@ -9,6 +9,9 @@ session_start();
 * HTTP Method: POST
 */
 
+require_once('vendor/autoload.php');
+require("app-qs/qs-api.php");
+
 $env = parse_ini_file(dirname(__DIR__, 3) . '/' . '.env');
 
 if (!$env) {
