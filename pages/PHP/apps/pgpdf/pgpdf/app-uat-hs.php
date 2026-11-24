@@ -9,6 +9,16 @@ session_start();
 * HTTP Method: POST
 */
 
+
+$ENV_MODE = 'QA'; // Change to 'PROD' for production or QA for UAT / Test mode
+
+// These only take effect if ENV_MODE is set to QA - in PROD mode everything is active
+$TEST_HUBSPOT = false; // Set to false to test without sending data to QS
+$TEST_MAIL = true; // Set to false to test without sending emails via mailchimp
+
+// Load MailChimp SDK
+require_once('vendor/autoload.php');
+
 $env = parse_ini_file(dirname(__DIR__, 3) . '/' . '.env');
 
 if (!$env) {
@@ -19,6 +29,12 @@ if (!$env) {
 }
 
 
+
+/*
+*
+* App UAT HubSpot integration
+*
+*/
 
 /*
  * Get raw headers describing the schema of raw_row_json
@@ -143,7 +159,7 @@ function get_raw_row_json()
  *   @return: array An array containing the process, outcome, and result of the operation 
  *
  */
-function qs_init($object_id, $bearer_token, $import_name)
+function initHubSpot($object_id, $bearer_token, $import_name)
 {
     $url = "https://api.hubapi.com/crm/v3/objects/" . $object_id;
 
@@ -169,42 +185,134 @@ function qs_init($object_id, $bearer_token, $import_name)
 
     if ($result === FALSE) {
         // Handle error
-        echo "Error creating HubSpot object.";
-        var_dump($result);
-        return ["process" => "Data", "outcome" => "Fail", "result" => ""];
+        return ["process" => "Data", "outcome" => "Fail", "result" => $result];
     }
 
     if ($result !== FALSE) {
-        echo "HubSpot object created successfully.";
-        var_dump($result);
+        //echo "HubSpot object created successfully.";
+        //var_dump($result);
         return ["process" => "Data", "outcome" => "Success", "result" => ""];
-    } 
+    }
 }
 
 
 /*
-
-	ON LOAD
-
+*
+* App MailChimp integration
+*
 */
+
+function initMailChimp($message, $token)
+{
+    try {
+        $mailchimp = new MailchimpTransactional\ApiClient();
+        $mailchimp->setApiKey($token);
+
+        $response = $mailchimp->messages->sendTemplate($message);
+        return ["process" => "Mail", "outcome" => "Success", "result" => ""];
+    } catch (Error $e) {
+        echo $e;
+        return  ["process" => "Mail", "outcome" => "Fail", "result" => ""];;
+    }
+}
 
 
 /*
+ *
+ * Shared functions
+ *
+ */
 
-  ON LOAD: QS (HUBSPOT)
+/*
+ *  FUNCTION: Check if testing
+ */
+function check_if_submitting($environment, $testing)
+{
+    if ($environment !== 'QA')
+        return true;
 
-*/
+    return $testing;
+}
 
+
+/*
+ *
+ *	ON LOAD
+ *
+ */
+
+
+/*
+ *
+ * ON LOAD: QS (HUBSPOT)
+ *
+ */
 
 // Use environment variables for HubSpot object ID and bearer token
-$object_id = $env['HUBSPOT_QA_OBJECT_ID'] ;
+$object_id = $env['HUBSPOT_QA_OBJECT_ID'];
 $bearer_token = $env['HUBSPOT_QA_BEARER_TOKEN'];
 $import_name = "ESI API Import – Stirling Webform Prospectus Form Requested";
 
-qs_init($object_id, $bearer_token, $import_name);
+//initHubSpot($object_id, $bearer_token, $import_name);
+
+if (isset($_POST['email'])) {
+    $submitqs = check_if_submitting($ENV_MODE, $TEST_HUBSPOT);
+    $qs_outcome = $submitqs ? initHubSpot($object_id, $bearer_token, $import_name) : ["process" => "Data", "outcome" => "Success", "result" => "Skipped sending"];
+} else {
+    $qs_outcome = ["process" => "Data", "outcome" => "Fail", "result" => ""];
+}
+
 
 /*
+ *
+ *	ON LOAD: MailChimp
+ *
+ */
 
-	ON LOAD: MailChimp
 
-*/
+$from = "study@stir.ac.uk";
+$subject = "Your personalised prospectus is ready!";
+
+// Dynamic content
+$to = $_POST["email"];
+$first =  ucfirst($_POST["first_name"]);
+$link = $_POST["pdfPath"];
+
+$message = [
+    "message" => [
+        "from_email" => $from,
+        "subject" => $subject,
+        "text" => $subject,
+        "to" => [
+            [
+                "email" => $to,
+                "type" => "to"
+            ]
+        ],
+        "merge_vars" =>  [[
+            "rcpt" => $to,
+            "vars" => [
+                ["name" => "link", "content" => $link],
+                ["name" => "first", "content" => $first]
+            ]
+        ]],
+    ],
+    "template_name" => "pg-personalised-prospectus",
+    "template_content" => []
+];
+
+
+
+
+if (isset($_POST['email'])) {
+
+    //echo getenv('MAIL');
+
+    $submitmail = check_if_submitting($ENV_MODE, $TEST_MAIL);
+    $mail_outcome = $submitmail ? initMailChimp($message, $env['MAIL']) : ["process" => "Mail", "outcome" => "Success", "result" => "Skipped sending"];
+} else {
+    $mail_outcome = ["process" => "Mail", "outcome" => "Fail", "result" => ""];
+}
+
+
+echo json_encode([$mail_outcome, $qs_outcome]);

@@ -1677,6 +1677,11 @@
         "description": "pg-personalised-prospectus-2027.js",
         "projectPath": "medias/Categorised/Dist/js/other/pg-personalised-prospectus-2027.js"
       },
+            {
+        "id": 209620,
+        "description": "pg-personalised-prospectus-hs-2027.js",
+        "projectPath": "medias/Categorised/Dist/js/other/pg-personalised-prospectus-hs-2027.js"
+      },
       {
         "id": 181794,
         "description": "webinars5.js",
